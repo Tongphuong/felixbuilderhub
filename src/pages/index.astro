@@ -1,0 +1,104 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const socialLinks = [
+  {
+    label: 'Facebook',
+    href: '#',
+    path: 'M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z',
+  },
+  {
+    label: 'LinkedIn',
+    href: '#',
+    path: 'M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z M2 9h4v12H2z M4 6a2 2 0 1 0 0-4 2 2 0 0 0 0 4z',
+  },
+  {
+    label: 'GitHub',
+    href: '#',
+    path: 'M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c3.2-.4 6.5-1.6 6.5-7A5.4 5.4 0 0 0 20 4.8 5 5 0 0 0 19.9 1S18.7.6 16 2.5a13.4 13.4 0 0 0-7 0C6.3.6 5.1 1 5.1 1A5 5 0 0 0 5 4.8 5.4 5.4 0 0 0 3.5 8.5c0 5.4 3.3 6.6 6.5 7a3.4 3.4 0 0 0-1 2.6V22',
+  },
+];
+---
+
+<BaseLayout title="Felix Builder Hub — Một người Việt xây sản phẩm AI">
+  <header class="sticky top-0 z-50 border-b border-slate-800/80 bg-slate-950/80 backdrop-blur">
+    <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+      <a href="#" class="font-display text-lg font-semibold text-white">Felix Builder Hub</a>
+      <nav class="hidden items-center gap-6 text-sm font-medium text-slate-300 sm:flex">
+        <a href="#products" class="transition hover:text-accent">Sản phẩm</a>
+        <a href="#contact" class="transition hover:text-accent">Liên hệ</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="flex-1">
+    <section class="mx-auto flex min-h-[80vh] max-w-6xl flex-col items-center justify-center px-6 py-24 text-center">
+      <h1 class="max-w-4xl font-display text-5xl font-extrabold leading-tight text-white md:text-7xl">Một người Việt xây sản phẩm AI.</h1>
+      <p class="mt-6 max-w-2xl text-lg leading-relaxed text-slate-300 md:text-xl">Mỗi dự án giải một vấn đề thật. Đây là những gì tôi đang build.</p>
+      <a href="#products" class="mt-10 rounded-lg bg-accent px-6 py-3 font-semibold text-white transition hover:bg-accent-hover">Xem sản phẩm</a>
+    </section>
+
+    <section class="mx-auto max-w-6xl px-6 py-20">
+      <h2 class="font-display text-3xl font-bold text-white">Về Felix</h2>
+      <p class="mt-6 max-w-3xl text-lg leading-relaxed text-slate-300">Tôi là Felix Phương, một builder người Việt. Tôi xây các công cụ AI để giải các bài toán thật trong giáo dục và đời sống gia đình. Mỗi sản phẩm trên trang này đều xuất phát từ một câu hỏi cụ thể tôi gặp ngoài đời.</p>
+    </section>
+
+    <section id="products" class="bg-slate-900 px-6 py-20">
+      <div class="mx-auto max-w-6xl">
+        <h2 class="font-display text-3xl font-bold text-white">Sản phẩm</h2>
+        <div class="mt-8 grid gap-6 md:grid-cols-2">
+          <article class="rounded-lg border border-accent bg-slate-950/70 p-6">
+            <div class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+              <h3 class="font-display text-2xl font-bold text-white">MSMW — My Story, My World</h3>
+              <span class="w-fit rounded-full bg-green-500/20 px-3 py-1 text-xs font-semibold text-green-400">Sample sẵn sàng</span>
+            </div>
+            <p class="mt-5 leading-relaxed text-slate-300">Sách truyện cá nhân hoá cho bé yêu — món quà ý nghĩa hơn đồ chơi thường ngày.</p>
+            <a href="#contact" class="mt-6 inline-flex font-semibold text-accent transition hover:text-accent-hover">Liên hệ để đặt →</a>
+          </article>
+
+          <article class="rounded-lg border border-slate-700 bg-slate-950/70 p-6">
+            <div class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+              <h3 class="font-display text-2xl font-bold text-white">Read2Lead</h3>
+              <span class="w-fit rounded-full bg-yellow-500/20 px-3 py-1 text-xs font-semibold text-yellow-400">Đang phát triển</span>
+            </div>
+            <p class="mt-5 leading-relaxed text-slate-300">Tạo gói đọc tiếng Anh cá nhân hoá cho trẻ em Việt — in được, có audio.</p>
+            <a href="#contact" class="mt-6 inline-flex font-semibold text-accent transition hover:text-accent-hover">Liên hệ sớm →</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="mx-auto max-w-6xl px-6 py-20">
+      <h2 class="font-display text-3xl font-bold text-white">Liên hệ</h2>
+      <p class="mt-6 text-lg text-slate-300">Nhắn anh qua Zalo để trao đổi về sản phẩm hoặc cộng tác.</p>
+      <div class="mt-8 flex max-w-md flex-col gap-3 text-slate-300">
+        <div class="flex items-center gap-3">
+          <svg class="h-5 w-5 shrink-0 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z" />
+          </svg>
+          <span>Zalo: [Anh điền số Zalo sau]</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <svg class="h-5 w-5 shrink-0 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 4h16v16H4z" />
+            <path d="m22 6-10 7L2 6" />
+          </svg>
+          <a href="mailto:phuongtong474@gmail.com" class="transition hover:text-accent">phuongtong474@gmail.com</a>
+        </div>
+        <div class="flex items-center gap-4 pt-2">
+          {socialLinks.map((link) => (
+            <a href={link.href} aria-label={link.label} class="text-slate-400 transition hover:text-accent">
+              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d={link.path} />
+              </svg>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="mt-auto border-t border-slate-800 py-8 text-center text-sm text-slate-500">
+    © 2026 Felix Phương — Built in Vietnam
+  </footer>
+</BaseLayout>
