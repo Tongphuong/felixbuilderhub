@@ -1,0 +1,283 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const features = [
+  ['📖', 'Truyện cá nhân hoá', '5-8 trang. Tên con xuất hiện tự nhiên.'],
+  ['🔑', '5-6 power chunks', 'Cụm từ thực dụng, KHÔNG phải từ đơn lẻ.'],
+  ['✍️', 'Bài tập đa dạng', 'Match chunk, fill blank, build sentence, fix mistake.'],
+  ['❓', 'Comprehension + retell', 'Đọc hiểu, kể lại bằng chunks.'],
+  ['🎧', 'MP3 story audio', 'Đọc to truyện. Nghe trước hoặc trong khi đọc.'],
+  ['📋', 'Đáp án phụ huynh', 'Hướng dẫn riêng ở trang cuối.'],
+];
+
+const steps = [
+  ['Điền thông tin', 'Tên con + tuổi + level tiếng Anh'],
+  ['AI tạo pack', 'Đợi 2 phút trên trang'],
+  ['Tải về & in', 'PDF + MP3, in trên giấy A4 đen trắng'],
+];
+
+const faqItems = [
+  ['Pack có thật miễn phí?', 'Có. Giai đoạn beta để Felix gom feedback. Sau này có thể thành paid nhưng hiện 100% free.'],
+  ['Bao lâu nhận pack?', '~2 phút trực tiếp trên trang này, không cần đợi Felix làm tay.'],
+  ['Pack có thật cá nhân hoá hay chỉ đổi tên?', 'AI tự chọn chủ đề + viết truyện riêng cho con dựa trên tuổi và level. Hai pack của hai bé khác nhau sẽ có chủ đề + chunks khác nhau.'],
+  ['Nếu pack không phù hợp thì sao?', 'Tạo lại form là được. Free mà. Nếu liên tục không ưng → nhắn Zalo Felix.'],
+  ['Có thể đặt cho nhiều bé không?', 'Được. Mỗi lần tạo 1 pack. Lặp lại form cho bé tiếp theo.'],
+];
+---
+
+<BaseLayout
+  title="Read2Lead — Bộ học tiếng Anh in được, miễn phí cho con | Felix Builder Hub"
+  description="Pack học tiếng Anh cá nhân hoá AI tạo trong 2 phút: truyện + chunk practice + MP3. Miễn phí. Bố mẹ in tại nhà."
+>
+  <header class="sticky top-0 z-50 border-b border-slate-800/80 bg-slate-950/80 backdrop-blur">
+    <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+      <a href="/" class="font-display text-lg font-semibold text-white">Felix Builder Hub</a>
+      <nav class="hidden items-center gap-6 text-sm font-medium text-slate-300 sm:flex">
+        <a href="/#products" class="transition hover:text-accent">Sản phẩm</a>
+        <a href="/#contact" class="transition hover:text-accent">Liên hệ</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="flex-1">
+    <section class="mx-auto max-w-6xl px-6 py-20 text-center md:py-32">
+      <span class="inline-block rounded-full bg-green-500/20 px-4 py-1 text-sm font-semibold text-green-400">MIỄN PHÍ trong giai đoạn beta</span>
+      <h1 class="mx-auto mt-6 max-w-5xl font-display text-4xl font-extrabold leading-tight text-white md:text-6xl">Bộ học tiếng Anh in được, làm riêng cho con.</h1>
+      <p class="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-slate-300 md:text-xl">Truyện cá nhân hoá + bài tập chunk + audio MP3. AI tạo trong 2 phút, bố mẹ in tại nhà.</p>
+      <a href="#form" class="mt-10 inline-flex rounded-lg bg-accent px-6 py-3 font-semibold text-white transition hover:bg-accent-hover">Tạo pack cho con</a>
+    </section>
+
+    <section class="mx-auto max-w-6xl px-6 py-20">
+      <h2 class="text-center font-display text-3xl font-bold text-white md:text-4xl">Mỗi pack có những gì</h2>
+      <div class="mt-10 grid gap-6 md:grid-cols-2">
+        {features.map(([icon, title, description]) => (
+          <div class="flex gap-4 rounded-lg border border-slate-800 bg-slate-900/60 p-5">
+            <span class="text-3xl" aria-hidden="true">{icon}</span>
+            <div>
+              <h3 class="font-display text-xl font-bold text-white">{title}</h3>
+              <p class="mt-2 leading-relaxed text-slate-300">{description}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section class="bg-slate-900 px-6 py-20">
+      <div class="mx-auto max-w-6xl">
+        <h2 class="text-center font-display text-3xl font-bold text-white md:text-4xl">3 bước</h2>
+        <div class="mt-10 grid gap-6 md:grid-cols-3">
+          {steps.map(([title, description], index) => (
+            <div class="rounded-lg border border-slate-800 bg-slate-950/70 p-5">
+              <div class="flex h-10 w-10 items-center justify-center rounded-full bg-accent font-display text-lg font-bold text-white">{index + 1}</div>
+              <h3 class="mt-5 font-display text-xl font-bold text-white">{title}</h3>
+              <p class="mt-3 leading-relaxed text-slate-300">{description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section id="form" class="mx-auto max-w-6xl px-6 py-20">
+      <div id="form-section">
+        <div class="text-center">
+          <h2 class="font-display text-3xl font-bold text-white md:text-4xl">Tạo pack cho con</h2>
+          <p class="mt-4 text-slate-300">Felix sẽ liên hệ qua Zalo trong 24h nếu pack có vấn đề</p>
+        </div>
+
+        <form id="r2l-form" class="mx-auto mt-10 max-w-xl space-y-5">
+          <div>
+            <label for="child_name" class="mb-2 block text-sm text-slate-300">Tên con <span class="text-red-400">*</span></label>
+            <input id="child_name" name="child_name" required maxlength="50" placeholder="Vd: Linh" class="w-full rounded-lg border border-slate-700 bg-slate-900 px-4 py-3 text-base text-white focus:border-accent" />
+          </div>
+          <div>
+            <label for="age" class="mb-2 block text-sm text-slate-300">Tuổi con <span class="text-red-400">*</span></label>
+            <input id="age" type="number" name="age" min="5" max="14" required placeholder="5-14" class="w-full rounded-lg border border-slate-700 bg-slate-900 px-4 py-3 text-base text-white focus:border-accent" />
+          </div>
+          <fieldset>
+            <legend class="mb-2 block text-sm text-slate-300">Level tiếng Anh <span class="text-red-400">*</span></legend>
+            <div class="space-y-3 rounded-lg border border-slate-700 bg-slate-900 p-4">
+              <label class="flex items-start gap-3 text-base text-slate-200">
+                <input type="radio" name="level" value="L1" required class="mt-1 h-4 w-4 accent-indigo-500" />
+                <span>L1 Beginner (A1) — mới bắt đầu</span>
+              </label>
+              <label class="flex items-start gap-3 text-base text-slate-200">
+                <input type="radio" name="level" value="L2" required checked class="mt-1 h-4 w-4 accent-indigo-500" />
+                <span>L2 Early Reader (A2) — đọc được câu đơn</span>
+              </label>
+              <label class="flex items-start gap-3 text-base text-slate-200">
+                <input type="radio" name="level" value="L3" required class="mt-1 h-4 w-4 accent-indigo-500" />
+                <span>L3 Growing Reader (A2+) — đọc đoạn ngắn</span>
+              </label>
+            </div>
+          </fieldset>
+          <div class="absolute -left-[9999px]" aria-hidden="true">
+            <label for="website">Website</label>
+            <input id="website" name="website" tabindex="-1" />
+          </div>
+          <button type="submit" class="w-full rounded-lg bg-accent px-6 py-3 text-lg font-semibold text-white transition hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-70">Tạo pack — miễn phí</button>
+        </form>
+      </div>
+
+      <div id="progress-section" class="mx-auto hidden max-w-2xl rounded-lg border border-slate-800 bg-slate-900 p-6 text-center">
+        <div class="h-3 overflow-hidden rounded-full bg-slate-800">
+          <div class="h-full w-2/3 animate-pulse rounded-full bg-gradient-to-r from-accent via-green-400 to-accent"></div>
+        </div>
+        <p id="status-text" class="mt-6 text-lg font-semibold text-white"></p>
+        <p class="mt-3 text-sm text-slate-400">Lần đầu có thể chậm ~30s do server khởi động</p>
+      </div>
+
+      <div id="result-section" class="mx-auto hidden max-w-2xl rounded-lg border border-green-500/30 bg-green-500/10 p-6 text-center">
+        <h2 class="font-display text-3xl font-bold text-white">✅ Pack của <span id="result-child-name"></span> đã sẵn sàng!</h2>
+        <div class="mt-5 space-y-2 text-slate-300">
+          <p>Topic: <span id="result-topic" class="font-semibold text-white"></span></p>
+          <p>Story: <span id="result-story-title" class="font-semibold text-white"></span></p>
+        </div>
+        <div class="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
+          <a id="pdf-link" href="#" target="_blank" rel="noreferrer" class="rounded-lg bg-accent px-6 py-3 font-semibold text-white transition hover:bg-accent-hover">Tải PDF</a>
+          <a id="mp3-link" href="#" target="_blank" rel="noreferrer" class="rounded-lg border border-accent px-6 py-3 font-semibold text-accent transition hover:bg-accent hover:text-white">Tải MP3</a>
+        </div>
+        <p class="mt-6 text-sm text-slate-300">📌 Lưu file ngay — link chỉ tồn tại vài giờ. Tải về máy để giữ lại.</p>
+        <div class="mt-6">
+          <p class="text-slate-400">Tạo pack khác cho bé khác?</p>
+          <button id="reset-btn" type="button" class="mt-3 rounded-lg border border-slate-700 px-5 py-2 font-semibold text-white transition hover:border-accent hover:text-accent">Làm lại form</button>
+        </div>
+      </div>
+
+      <div id="error-section" class="mx-auto hidden max-w-2xl rounded-lg border border-red-500/30 bg-red-500/10 p-6 text-center">
+        <p class="text-lg font-semibold text-red-400">⚠️ Có lỗi xảy ra: <span id="error-message"></span></p>
+        <button id="retry-btn" type="button" class="mt-5 rounded-lg bg-accent px-5 py-2 font-semibold text-white transition hover:bg-accent-hover">Thử lại</button>
+        <p class="mt-4 text-sm text-slate-300">Nếu lỗi tiếp tục, nhắn Zalo +84 396868675</p>
+      </div>
+    </section>
+
+    <section class="bg-slate-900 px-6 py-20">
+      <div class="mx-auto max-w-3xl">
+        <h2 class="text-center font-display text-3xl font-bold text-white md:text-4xl">Câu hỏi thường gặp</h2>
+        <div class="mt-10 space-y-3">
+          {faqItems.map(([question, answer]) => (
+            <details class="rounded-lg border border-slate-800 bg-slate-950/70 p-5">
+              <summary class="cursor-pointer font-display text-lg font-bold text-white">{question}</summary>
+              <p class="mt-4 leading-relaxed text-slate-300">{answer}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-6xl px-6 py-20 text-center">
+      <p class="text-sm font-semibold uppercase tracking-wide text-slate-400">Bạn cũng có thể quan tâm</p>
+      <div class="mx-auto mt-6 max-w-2xl rounded-lg border border-accent bg-slate-900/60 p-8">
+        <h3 class="font-display text-2xl font-bold text-white">MSMW — Sách truyện cá nhân hoá làm quà tặng</h3>
+        <p class="mt-4 leading-relaxed text-slate-300">Quà ý nghĩa: cuốn sách 20 trang với con là nhân vật chính.</p>
+        <a href="/msmw" class="mt-6 inline-flex font-semibold text-accent transition hover:text-accent-hover">Xem MSMW →</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="mt-auto border-t border-slate-800 py-8 text-center text-sm text-slate-500">
+    © 2026 Tong Phuong - built in vietnam
+  </footer>
+
+  <script>
+    const form = document.getElementById('r2l-form');
+    const btn = form.querySelector('button[type="submit"]');
+    const progressSection = document.getElementById('progress-section');
+    const statusText = document.getElementById('status-text');
+    const resultSection = document.getElementById('result-section');
+    const errorSection = document.getElementById('error-section');
+    const formSection = document.getElementById('form-section');
+
+    let statusInterval = null;
+
+    const stages = [
+      '🤖 AI đang viết truyện cho con...',
+      '📝 Đang tạo bài tập chunk...',
+      '🎧 Đang ghi âm story...',
+      '📦 Đang chuẩn bị file...',
+    ];
+
+    function showProgress() {
+      formSection.classList.add('hidden');
+      errorSection.classList.add('hidden');
+      resultSection.classList.add('hidden');
+      progressSection.classList.remove('hidden');
+
+      let idx = 0;
+      statusText.textContent = stages[idx];
+      statusInterval = setInterval(() => {
+        idx = Math.min(idx + 1, stages.length - 1);
+        statusText.textContent = stages[idx];
+      }, 20000);
+
+      progressSection.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function showResult(data) {
+      clearInterval(statusInterval);
+      progressSection.classList.add('hidden');
+
+      document.getElementById('result-child-name').textContent = data.child_name || '';
+      document.getElementById('result-topic').textContent = data.topic || '';
+      document.getElementById('result-story-title').textContent = data.story_title || '';
+      document.getElementById('pdf-link').href = data.pdf_url;
+      document.getElementById('mp3-link').href = data.mp3_url;
+
+      resultSection.classList.remove('hidden');
+      resultSection.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function showError(msg) {
+      clearInterval(statusInterval);
+      progressSection.classList.add('hidden');
+      document.getElementById('error-message').textContent = msg;
+      errorSection.classList.remove('hidden');
+      errorSection.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function resetForm() {
+      formSection.classList.remove('hidden');
+      resultSection.classList.add('hidden');
+      errorSection.classList.add('hidden');
+      form.reset();
+      formSection.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    document.getElementById('reset-btn').addEventListener('click', resetForm);
+    document.getElementById('retry-btn').addEventListener('click', resetForm);
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const data = Object.fromEntries(new FormData(form));
+      if (data.website) {
+        showResult({ child_name: data.child_name, topic: 'spam', story_title: 'fake', pdf_url: '#', mp3_url: '#' });
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Đang tạo... (~2 phút)';
+      showProgress();
+
+      try {
+        const res = await fetch('/api/generate-read2lead-pack', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        });
+
+        const result = await res.json();
+
+        if (res.ok && result.ok && result.pdf_url) {
+          showResult({ ...result, child_name: data.child_name });
+        } else {
+          showError(result.error || 'Có lỗi xảy ra, vui lòng thử lại.');
+        }
+      } catch (err) {
+        showError('Mạng không ổn định. Vui lòng thử lại sau ít phút.');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Tạo pack — miễn phí';
+      }
+    });
+  </script>
+</BaseLayout>
