@@ -20,7 +20,7 @@ const socialLinks = [
 ];
 ---
 
-<BaseLayout title="Felix Builder Hub — Builder người Việt. AI cho cuộc sống thật.">
+<BaseLayout title="Felix Builder Hub — Sản phẩm giáo dục dành riêng cho mỗi bạn nhỏ">
   <header class="sticky top-0 z-50 border-b border-slate-800/80 bg-slate-950/80 backdrop-blur">
     <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
       <a href="#" class="font-display text-lg font-semibold text-white">Felix Builder Hub</a>
@@ -32,28 +32,49 @@ const socialLinks = [
   </header>
 
   <main class="flex-1">
-    <section class="mx-auto flex min-h-[80vh] max-w-6xl flex-col items-center justify-center px-6 py-24 text-center">
-      <h1 class="max-w-4xl font-display text-5xl font-extrabold leading-tight text-white md:text-7xl">Builder người Việt.<br />AI cho cuộc sống thật.</h1>
-      <p class="mt-6 max-w-2xl text-lg leading-relaxed text-slate-300 md:text-xl">Mỗi dự án giải một vấn đề thật. Đây là những gì tôi đang build.</p>
-      <a href="#products" class="mt-10 rounded-lg bg-accent px-6 py-3 font-semibold text-white transition hover:bg-accent-hover">Xem sản phẩm</a>
+    <section class="mx-auto max-w-6xl px-6 py-20 md:py-28">
+      <div class="flex flex-col items-center gap-10 md:flex-row md:gap-16">
+        <div class="shrink-0">
+          <img
+            src="/images/felix.jpg"
+            alt="Phương"
+            class="h-44 w-44 rounded-full object-cover shadow-2xl ring-4 ring-slate-800 md:h-52 md:w-52"
+          />
+        </div>
+        <div class="text-center md:text-left">
+          <h1 class="font-display text-3xl font-extrabold leading-tight text-white md:text-5xl">
+            Xin chào, tôi là Phương,<br class="hidden md:block" /> chào mừng bạn đến với thế giới của tôi.
+          </h1>
+          <p class="mt-6 max-w-xl text-lg leading-relaxed text-slate-300 md:text-xl">
+            Tôi xây dựng các sản phẩm giáo dục dành riêng cho mỗi bạn nhỏ.
+          </p>
+          <a href="#products" class="mt-8 inline-block rounded-lg bg-accent px-6 py-3 font-semibold text-white transition hover:bg-accent-hover">
+            Xem sản phẩm →
+          </a>
+        </div>
+      </div>
     </section>
 
     <section class="mx-auto max-w-6xl px-6 py-20">
-      <div class="grid items-center gap-10 md:grid-cols-[320px_1fr] md:gap-14">
-        <div class="mx-auto w-full max-w-[320px] md:mx-0">
-          <img
-            src="/images/felix.jpg"
-            alt="Felix Phương — builder người Việt xây sản phẩm AI"
-            width="320"
-            height="427"
-            loading="lazy"
-            class="w-full rounded-2xl object-cover shadow-2xl ring-1 ring-slate-800"
-          />
-        </div>
-        <div>
-          <h2 class="font-display text-3xl font-bold text-white md:text-4xl">Về Felix</h2>
-          <p class="mt-6 text-lg leading-relaxed text-slate-300">Tôi là Felix Phương, một builder người Việt. Tôi xây các công cụ AI để giải các bài toán thật trong giáo dục và đời sống gia đình. Mỗi sản phẩm trên trang này đều xuất phát từ một câu hỏi cụ thể tôi gặp ngoài đời.</p>
-        </div>
+      <h2 class="font-display text-3xl font-bold text-white md:text-4xl">Về tôi</h2>
+      <div class="mt-8 max-w-3xl space-y-5 text-lg leading-relaxed text-slate-300">
+        <p>Tôi là một huấn luyện viên kĩ năng giao tiếp tiếng Anh và nhà phát triển các dự án giáo dục cá nhân hóa cho trẻ em.</p>
+        <p>Hiện tại tôi đang xây dựng:</p>
+        <ul class="space-y-3 pl-1">
+          <li class="flex gap-3">
+            <span class="shrink-0 text-accent" aria-hidden="true">•</span>
+            <span><strong class="font-semibold text-white">My Story, My World</strong> — truyện cá nhân hóa làm quà tặng.</span>
+          </li>
+          <li class="flex gap-3">
+            <span class="shrink-0 text-accent" aria-hidden="true">•</span>
+            <span><strong class="font-semibold text-white">Read2Lead</strong> — khơi gợi cảm hứng đọc và học tiếng Anh với câu chuyện được thiết kế riêng cho con.</span>
+          </li>
+          <li class="flex gap-3">
+            <span class="shrink-0 text-accent" aria-hidden="true">•</span>
+            <span><strong class="font-semibold text-white">Felix Sharing Space</strong> — nơi tôi chia sẻ kiến thức, kinh nghiệm và các sản phẩm miễn phí.</span>
+          </li>
+        </ul>
+        <p>Mong rằng sản phẩm của tôi giúp ích cho cuộc sống của bạn.</p>
       </div>
     </section>
 
