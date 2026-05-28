@@ -12,14 +12,14 @@ const features = [
 
 const steps = [
   ['Điền thông tin', 'Tên con + tuổi + level tiếng Anh'],
-  ['AI tạo pack', 'Đợi 2 phút trên trang'],
+  ['Tạo pack tự động', 'Đợi 2 phút trên trang'],
   ['Tải về & in', 'PDF + MP3, in trên giấy A4 đen trắng'],
 ];
 
 const faqItems = [
   ['Pack có thật miễn phí?', 'Có. Giai đoạn beta để Felix gom feedback. Sau này có thể thành paid nhưng hiện 100% free.'],
-  ['Bao lâu nhận pack?', '~2 phút trực tiếp trên trang này, không cần đợi Felix làm tay.'],
-  ['Pack có thật cá nhân hoá hay chỉ đổi tên?', 'AI tự chọn chủ đề + viết truyện riêng cho con dựa trên tuổi và level. Hai pack của hai bé khác nhau sẽ có chủ đề + chunks khác nhau.'],
+  ['Bao lâu nhận pack?', '~2 phút trực tiếp trên trang này, Felix không cần làm tay.'],
+  ['Pack có thật cá nhân hoá hay chỉ đổi tên?', 'Mỗi pack được tạo riêng dựa trên tên, tuổi, giới tính và level của con. Hai pack của hai bé khác nhau sẽ có chủ đề + chunks khác nhau.'],
   ['Nếu pack không phù hợp thì sao?', 'Tạo lại form là được. Free mà. Nếu liên tục không ưng → nhắn Zalo Felix.'],
   ['Có thể đặt cho nhiều bé không?', 'Được. Mỗi lần tạo 1 pack. Lặp lại form cho bé tiếp theo.'],
 ];
@@ -27,7 +27,7 @@ const faqItems = [
 
 <BaseLayout
   title="Read2Lead — Bộ học tiếng Anh in được, miễn phí cho con | Felix Builder Hub"
-  description="Pack học tiếng Anh cá nhân hoá AI tạo trong 2 phút: truyện + chunk practice + MP3. Miễn phí. Bố mẹ in tại nhà."
+  description="Pack học tiếng Anh cá nhân hoá tạo riêng trong 2 phút: truyện + chunk practice + MP3. Miễn phí. Bố mẹ in tại nhà."
 >
   <header class="sticky top-0 z-50 border-b border-slate-800/80 bg-slate-950/80 backdrop-blur">
     <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
@@ -43,7 +43,7 @@ const faqItems = [
     <section class="mx-auto max-w-6xl px-6 py-20 text-center md:py-32">
       <span class="inline-block rounded-full bg-green-500/20 px-4 py-1 text-sm font-semibold text-green-400">MIỄN PHÍ trong giai đoạn beta</span>
       <h1 class="mx-auto mt-6 max-w-5xl font-display text-4xl font-extrabold leading-tight text-white md:text-6xl">Bộ học tiếng Anh in được, làm riêng cho con.</h1>
-      <p class="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-slate-300 md:text-xl">Truyện cá nhân hoá + bài tập chunk + audio MP3. AI tạo trong 2 phút, bố mẹ in tại nhà.</p>
+      <p class="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-slate-300 md:text-xl">Truyện cá nhân hoá + bài tập chunk + audio MP3. Tạo riêng cho con trong 2 phút, bố mẹ in tại nhà.</p>
       <a href="#form" class="mt-10 inline-flex rounded-lg bg-accent px-6 py-3 font-semibold text-white transition hover:bg-accent-hover">Tạo pack cho con</a>
     </section>
 
@@ -110,6 +110,19 @@ const faqItems = [
               </label>
             </div>
           </fieldset>
+          <div>
+            <label class="mb-2 block text-sm text-slate-300">Giới tính con <span class="text-red-400">*</span></label>
+            <div class="space-y-2">
+              <label class="flex cursor-pointer items-center gap-3">
+                <input type="radio" name="child_gender" value="boy" required class="h-4 w-4 accent-accent" checked />
+                <span>Bé trai</span>
+              </label>
+              <label class="flex cursor-pointer items-center gap-3">
+                <input type="radio" name="child_gender" value="girl" required class="h-4 w-4 accent-accent" />
+                <span>Bé gái</span>
+              </label>
+            </div>
+          </div>
           <div class="absolute -left-[9999px]" aria-hidden="true">
             <label for="website">Website</label>
             <input id="website" name="website" tabindex="-1" />
@@ -190,10 +203,10 @@ const faqItems = [
     let statusInterval = null;
 
     const stages = [
-      '🤖 AI đang viết truyện cho con...',
-      '📝 Đang tạo bài tập chunk...',
+      '✍️ Đang tạo truyện riêng cho con...',
+      '📝 Đang chuẩn bị bài tập...',
       '🎧 Đang ghi âm story...',
-      '📦 Đang chuẩn bị file...',
+      '📦 Sắp xong, đang đóng gói file...',
     ];
 
     function showProgress() {

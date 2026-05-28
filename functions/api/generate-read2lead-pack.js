@@ -30,6 +30,7 @@ export async function onRequestPost(context) {
         child_name: data.child_name,
         age: parseInt(data.age, 10),
         level: data.level,
+        child_gender: data.child_gender,
       }),
     });
 
@@ -47,6 +48,7 @@ function validate(data) {
   const age = parseInt(data.age, 10);
   if (isNaN(age) || age < 5 || age > 14) errors.push('age');
   if (!['L1', 'L2', 'L3'].includes(data.level)) errors.push('level');
+  if (!['boy', 'girl'].includes(data.child_gender)) errors.push('child_gender');
   return errors;
 }
 
