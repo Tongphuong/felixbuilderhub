@@ -17,17 +17,18 @@ const steps = [
 ];
 
 const faqItems = [
-  ['Pack có thật miễn phí?', 'Có. Giai đoạn beta để Felix gom feedback. Sau này có thể thành paid nhưng hiện 100% free.'],
+  ['Mã đăng nhập là gì?', 'Mỗi phụ huynh khi mua quyền sử dụng nhận 1 mã từ Felix (gửi qua Zalo). 1 mã cho phép tạo 10 packs trong 60 ngày. Hết uses hoặc hết hạn → nhắn Zalo Felix để gia hạn cùng mã đó.'],
+  ['Phí dùng Read2Lead bao nhiêu?', 'Read2Lead hiện tại đang thử nghiệm với học sinh hiện tại của Felix. Nhắn Zalo Felix để biết chi tiết về mã đăng nhập.'],
   ['Bao lâu nhận pack?', '~2 phút trực tiếp trên trang này, Felix không cần làm tay.'],
   ['Pack có thật cá nhân hoá hay chỉ đổi tên?', 'Mỗi pack được tạo riêng dựa trên tên, tuổi, giới tính và level của con. Hai pack của hai bé khác nhau sẽ có chủ đề + chunks khác nhau.'],
-  ['Nếu pack không phù hợp thì sao?', 'Tạo lại form là được. Free mà. Nếu liên tục không ưng → nhắn Zalo Felix.'],
+  ['Nếu pack không phù hợp thì sao?', 'Có thể tạo lại bằng mã đăng nhập nếu mã còn lượt. Nếu liên tục không ưng → nhắn Zalo Felix.'],
   ['Có thể đặt cho nhiều bé không?', 'Được. Mỗi lần tạo 1 pack. Lặp lại form cho bé tiếp theo.'],
 ];
 ---
 
 <BaseLayout
-  title="Read2Lead — Bộ học tiếng Anh in được, miễn phí cho con | Felix Builder Hub"
-  description="Pack học tiếng Anh cá nhân hoá tạo riêng trong 2 phút: truyện + chunk practice + MP3. Miễn phí. Bố mẹ in tại nhà."
+  title="Read2Lead — Bộ học tiếng Anh in được cho con | Felix Builder Hub"
+  description="Pack học tiếng Anh cá nhân hoá tạo riêng trong 2 phút: truyện + chunk practice + MP3. Bố mẹ nhập mã và in tại nhà."
 >
   <header class="sticky top-0 z-50 border-b border-cream-dim/20 bg-navy-950/85 backdrop-blur">
     <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
@@ -41,9 +42,9 @@ const faqItems = [
 
   <main class="flex-1">
     <section class="mx-auto max-w-6xl px-6 py-20 text-center md:py-32">
-      <span class="inline-block rounded-full bg-gold/15 px-4 py-1 text-sm font-semibold text-gold-light">MIỄN PHÍ trong giai đoạn beta</span>
+      <span class="inline-block rounded-full bg-accent/20 px-4 py-1 text-sm font-semibold text-accent">Cần mã đăng nhập từ Felix</span>
       <h1 class="mx-auto mt-6 max-w-5xl font-display text-4xl font-extrabold leading-snug text-cream md:text-6xl">Bộ học tiếng Anh in được, làm riêng cho con.</h1>
-      <p class="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-cream-muted md:text-xl">Truyện cá nhân hoá + bài tập chunk + audio MP3. Tạo riêng cho con trong 2 phút, bố mẹ in tại nhà.</p>
+      <p class="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-cream-muted md:text-xl">Truyện cá nhân hoá + bài tập chunk + audio MP3. Bố mẹ nhập mã, tạo pack trong 2 phút.</p>
       <a href="#form" class="mt-10 inline-flex rounded-lg bg-accent px-6 py-3 font-semibold text-navy-950 transition hover:bg-accent-hover">Tạo pack cho con</a>
     </section>
 
@@ -86,6 +87,21 @@ const faqItems = [
 
         <form id="r2l-form" class="mx-auto mt-10 max-w-xl space-y-5">
           <div>
+            <label class="mb-2 block text-sm text-cream-muted">
+              Mã đăng nhập <span class="text-red-400">*</span>
+            </label>
+            <input
+              type="text"
+              name="access_code"
+              required
+              maxlength="32"
+              autocomplete="off"
+              placeholder="VD: R2L-JUN-A4F2"
+              class="w-full rounded-lg border border-cream-dim/30 bg-navy-900 px-4 py-3 text-base uppercase text-cream placeholder:normal-case placeholder:text-cream-dim/80 focus:border-accent focus:outline-none"
+            />
+            <p class="mt-2 text-xs text-cream-dim">Chưa có mã? <a href="https://zalo.me/0396868675" class="text-accent underline">Nhắn Zalo Felix</a> để nhận.</p>
+          </div>
+          <div>
             <label for="child_name" class="mb-2 block text-sm text-cream-muted">Tên con <span class="text-red-400">*</span></label>
             <input id="child_name" name="child_name" required maxlength="50" placeholder="Vd: Linh" class="w-full rounded-lg border border-cream-dim/30 bg-navy-900 px-4 py-3 text-base text-cream focus:border-accent" />
           </div>
@@ -127,7 +143,7 @@ const faqItems = [
             <label for="website">Website</label>
             <input id="website" name="website" tabindex="-1" />
           </div>
-          <button type="submit" class="w-full rounded-lg bg-accent px-6 py-3 text-lg font-semibold text-navy-950 transition hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-70">Tạo pack — miễn phí</button>
+          <button type="submit" class="w-full rounded-lg bg-accent px-6 py-3 text-lg font-semibold text-navy-950 transition hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-70">Tạo pack bằng mã đăng nhập</button>
         </form>
       </div>
 
@@ -283,13 +299,13 @@ const faqItems = [
         if (res.ok && result.ok && result.pdf_url) {
           showResult({ ...result, child_name: data.child_name });
         } else {
-          showError(result.error || 'Có lỗi xảy ra, vui lòng thử lại.');
+          showError(result.message || result.error || 'Có lỗi xảy ra, vui lòng thử lại.');
         }
       } catch (err) {
         showError('Mạng không ổn định. Vui lòng thử lại sau ít phút.');
       } finally {
         btn.disabled = false;
-        btn.textContent = 'Tạo pack — miễn phí';
+        btn.textContent = 'Tạo pack bằng mã đăng nhập';
       }
     });
   </script>
