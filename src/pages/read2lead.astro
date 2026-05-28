@@ -21,6 +21,9 @@ const faqItems = [
   ['Phí dùng Read2Lead bao nhiêu?', 'Read2Lead hiện tại đang thử nghiệm với học sinh hiện tại của Felix. Nhắn Zalo Felix để biết chi tiết về mã đăng nhập.'],
   ['Bao lâu nhận pack?', '~2 phút trực tiếp trên trang này, Felix không cần làm tay.'],
   ['Pack có thật cá nhân hoá hay chỉ đổi tên?', 'Mỗi pack được tạo riêng dựa trên tên, tuổi, giới tính và level của con. Hai pack của hai bé khác nhau sẽ có chủ đề + chunks khác nhau.'],
+  ['Pack được in trên giấy gì?', 'Bố mẹ in trên giấy A4 thường. Pack thiết kế đen trắng OK, không cần in màu. Mỗi pack 5-8 trang tùy level.'],
+  ['Bé bao tuổi phù hợp?', 'Pack phù hợp bé từ 5-14 tuổi. Level L1 cho bé mới học, L2 cho bé đọc được câu đơn, L3 cho bé đọc đoạn ngắn. Felix tự chọn nếu anh chị không chắc.'],
+  ['Có thể yêu cầu chủ đề riêng không?', 'Hiện tại Felix Builder Hub tự chọn chủ đề phù hợp tuổi + level. Nếu muốn chủ đề cụ thể (vd bé thích bóng đá, robot, mèo...) → nhắn Zalo Felix sau khi nhận pack, lần sau Felix làm theo yêu cầu.'],
   ['Nếu pack không phù hợp thì sao?', 'Có thể tạo lại bằng mã đăng nhập nếu mã còn lượt. Nếu liên tục không ưng → nhắn Zalo Felix.'],
   ['Có thể đặt cho nhiều bé không?', 'Được. Mỗi lần tạo 1 pack. Lặp lại form cho bé tiếp theo.'],
 ];
@@ -60,6 +63,34 @@ const faqItems = [
             </div>
           </div>
         ))}
+      </div>
+    </section>
+
+    <section class="bg-navy-900 px-6 py-20">
+      <div class="mx-auto max-w-6xl">
+        <h2 class="text-center font-display text-3xl font-bold leading-snug text-cream md:text-4xl">Pack có gì bên trong</h2>
+        <p class="mx-auto mt-5 max-w-2xl text-center leading-relaxed text-cream-dim">Mỗi pack bao gồm truyện cá nhân hóa, bài tập chunk, và đáp án dành cho phụ huynh.</p>
+        <div class="mt-12 grid gap-6 md:grid-cols-3">
+          <figure class="overflow-hidden rounded-xl bg-navy-950 shadow-2xl ring-1 ring-cream-dim/25">
+            <div class="aspect-[3/4] overflow-hidden bg-navy-950">
+              <img src="/read2lead/sample-story.jpg" alt="Trang truyện cá nhân hóa" loading="lazy" class="h-full w-full object-contain" onerror="this.style.display='none'; this.parentElement.classList.add('flex','items-center','justify-center'); this.parentElement.innerHTML='<span class=\'text-cream-dim text-sm\'>📖 Trang truyện</span>'" />
+            </div>
+            <figcaption class="px-5 py-4 text-sm text-cream-muted">📖 <strong class="text-cream">Trang truyện</strong> — Tên con xuất hiện tự nhiên trong câu chuyện.</figcaption>
+          </figure>
+          <figure class="overflow-hidden rounded-xl bg-navy-950 shadow-2xl ring-1 ring-cream-dim/25">
+            <div class="aspect-[3/4] overflow-hidden bg-navy-950">
+              <img src="/read2lead/sample-exercises.jpg" alt="Trang bài tập chunk" loading="lazy" class="h-full w-full object-contain" onerror="this.style.display='none'; this.parentElement.classList.add('flex','items-center','justify-center'); this.parentElement.innerHTML='<span class=\'text-cream-dim text-sm\'>✍️ Trang bài tập</span>'" />
+            </div>
+            <figcaption class="px-5 py-4 text-sm text-cream-muted">✍️ <strong class="text-cream">Bài tập chunk</strong> — Match, fill blank, build sentence với chunks vừa học.</figcaption>
+          </figure>
+          <figure class="overflow-hidden rounded-xl bg-navy-950 shadow-2xl ring-1 ring-cream-dim/25">
+            <div class="aspect-[3/4] overflow-hidden bg-navy-950">
+              <img src="/read2lead/sample-answerkey.jpg" alt="Trang đáp án phụ huynh" loading="lazy" class="h-full w-full object-contain" onerror="this.style.display='none'; this.parentElement.classList.add('flex','items-center','justify-center'); this.parentElement.innerHTML='<span class=\'text-cream-dim text-sm\'>📋 Đáp án</span>'" />
+            </div>
+            <figcaption class="px-5 py-4 text-sm text-cream-muted">📋 <strong class="text-cream">Đáp án phụ huynh</strong> — Trang cuối có hướng dẫn riêng cho bố mẹ.</figcaption>
+          </figure>
+        </div>
+        <p class="mt-6 text-center text-sm text-cream-dim/80">* Đây là sample từ pack thật. Pack của con sẽ có chủ đề + chunks + tên riêng.</p>
       </div>
     </section>
 
