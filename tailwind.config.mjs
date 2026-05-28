@@ -10,8 +10,23 @@ export default {
       },
       colors: {
         accent: {
-          DEFAULT: '#6366f1',
-          hover: '#818cf8',
+          DEFAULT: '#c88f38',
+          hover: '#f2cc7e',
+        },
+        navy: {
+          950: '#10273a',
+          900: '#17354a',
+          850: '#1d3f58',
+          800: '#244a64',
+        },
+        cream: {
+          DEFAULT: '#f5e6c8',
+          muted: '#d9c7a4',
+          dim: '#aa9673',
+        },
+        gold: {
+          DEFAULT: '#c88f38',
+          light: '#f2cc7e',
         },
       },
     },
