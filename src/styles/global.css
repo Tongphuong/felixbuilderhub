@@ -31,3 +31,15 @@
     color: #10273a;
   }
 }
+
+/* Vietnamese diacritics need extra vertical room, especially in large display text. */
+h1.font-display {
+  line-height: 1.6 !important;
+  letter-spacing: 0;
+}
+
+h2.font-display,
+h3.font-display {
+  line-height: 1.45 !important;
+  letter-spacing: 0;
+}
