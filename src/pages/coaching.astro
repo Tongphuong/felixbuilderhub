@@ -1,0 +1,275 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const skillAreas = [
+  ['💬', 'Hội thoại', 'Phản xạ nhanh, đối đáp tự nhiên trong tình huống đời thường.'],
+  ['📖', 'Kể chuyện', 'Sắp xếp ý mạch lạc, dùng giọng diễn cảm, giữ người nghe theo dõi.'],
+  ['🎤', 'Thuyết trình', 'Đứng trước người khác tự tin, trình bày ý tưởng có cấu trúc.'],
+  ['⚖️', 'Tranh luận', 'Lập luận có lý lẽ, lắng nghe và phản biện văn minh.'],
+];
+
+const outcomes = [
+  ['💪', 'Tự tin', 'Dám nói trước đám đông, dám hỏi khi không hiểu.'],
+  ['🧠', 'Tư duy phản biện', 'Không vâng dạ thụ động. Biết đặt câu hỏi và suy luận.'],
+  ['🌟', 'Kĩ năng mềm', 'Giao tiếp, lắng nghe, hợp tác — nền tảng cho mọi nghề tương lai.'],
+];
+
+const videos = [
+  ['VIDEO_ID_1', 'Student video 1'],
+  ['VIDEO_ID_2', 'Student video 2'],
+  ['VIDEO_ID_3', 'Student video 3'],
+];
+
+const faqItems = [
+  ['Lớp 1-1 hay nhóm nhỏ?', 'Cả hai. 1-1 cho bé cần focus chuyên sâu hoặc còn rất ngại. Nhóm 2-4 bé cho phần tranh luận, đóng vai. Felix tư vấn sau khi gặp con.'],
+  ['Mất bao lâu để con tự tin nói tiếng Anh?', 'Tuỳ điểm khởi đầu. Trung bình: bé mới bắt đầu cần 6-12 tháng để giao tiếp tự nhiên. Bé đã có nền tảng — 3-6 tháng để luyện kĩ năng riêng, ví dụ thuyết trình.'],
+  ['Bé chưa biết gì có học được không?', 'Có. Felix có lộ trình riêng cho beginner — bắt đầu bằng hội thoại đơn giản, không grammar khô khan. Quan trọng là con quen với việc mở miệng nói trước.'],
+  ['Học online hay offline?', 'Online (Zoom/Google Meet) là chính. Offline (gặp trực tiếp) tuỳ khu vực, anh chị nhắn Zalo Felix xem có sắp xếp được không.'],
+  ['Phí học bao nhiêu?', 'Felix báo giá sau buổi tư vấn miễn phí. Giá tuỳ lộ trình (1-1 vs nhóm, số buổi/tuần, kĩ năng cụ thể). Có gói thử 4 buổi cho phụ huynh đánh giá.'],
+];
+---
+
+<BaseLayout
+  title="Coaching giao tiếp tiếng Anh — Lớp 1-1 cho con | Felix Builder Hub"
+  description="Felix là huấn luyện viên kĩ năng giao tiếp tiếng Anh. Hội thoại, kể chuyện, thuyết trình, tranh luận. Tư vấn miễn phí."
+>
+  <header class="sticky top-0 z-50 border-b border-cream-dim/20 bg-navy-950/85 backdrop-blur">
+    <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+      <a href="/" class="flex items-center" aria-label="Felix Builder Hub">
+        <img src="/logo/felixbuilderhub_website_header_logo.png" alt="Felix Builder Hub" class="h-9 w-auto md:h-10" />
+      </a>
+      <nav class="hidden items-center gap-6 text-sm font-medium text-cream-muted sm:flex">
+        <a href="/#products" class="transition hover:text-accent">Sản phẩm</a>
+        <a href="/#contact" class="transition hover:text-accent">Liên hệ</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="flex-1">
+    <section class="mx-auto max-w-6xl px-6 py-20 text-center md:py-28">
+      <span class="inline-block rounded-full bg-accent/20 px-4 py-1 text-sm font-semibold text-accent">Lớp 1-1 hoặc nhóm nhỏ</span>
+      <h1 class="mx-auto mt-6 max-w-5xl font-display text-4xl font-extrabold leading-snug text-cream md:text-6xl">Rèn kĩ năng giao tiếp tiếng Anh cho con</h1>
+      <p class="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-cream-muted md:text-xl">
+        Hội thoại, kể chuyện, thuyết trình, tranh luận — rèn tự tin và tư duy phản biện cho cuộc sống sau này.
+      </p>
+      <a href="#book" class="mt-10 inline-flex rounded-lg bg-accent px-6 py-3 font-semibold text-navy-950 transition hover:bg-accent-hover">
+        Đặt lịch tư vấn miễn phí
+      </a>
+    </section>
+
+    <section class="mx-auto max-w-6xl px-6 py-20">
+      <div class="text-center">
+        <h2 class="font-display text-3xl font-bold leading-snug text-cream md:text-4xl">Bốn kĩ năng giao tiếp con sẽ luyện</h2>
+        <p class="mx-auto mt-5 max-w-2xl leading-relaxed text-cream-dim">Mỗi buổi tập trung 1 kĩ năng. Lộ trình tăng dần độ khó theo level con.</p>
+      </div>
+      <div class="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+        {skillAreas.map(([icon, title, description]) => (
+          <article class="rounded-lg border border-cream-dim/20 bg-navy-900/70 p-6">
+            <div class="text-4xl" aria-hidden="true">{icon}</div>
+            <h3 class="mt-5 font-display text-xl font-bold leading-snug text-cream">{title}</h3>
+            <p class="mt-3 leading-relaxed text-cream-muted">{description}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="bg-navy-900 px-6 py-20">
+      <div class="mx-auto max-w-6xl">
+        <h2 class="text-center font-display text-3xl font-bold leading-snug text-cream md:text-4xl">Con sẽ phát triển gì</h2>
+        <div class="mt-10 grid gap-6 md:grid-cols-3">
+          {outcomes.map(([icon, title, description]) => (
+            <article class="rounded-lg border border-cream-dim/20 bg-navy-950/75 p-6">
+              <div class="text-4xl" aria-hidden="true">{icon}</div>
+              <h3 class="mt-5 font-display text-xl font-bold leading-snug text-cream">{title}</h3>
+              <p class="mt-3 leading-relaxed text-cream-muted">{description}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-6xl px-6 py-20">
+      <div class="text-center">
+        <h2 class="font-display text-3xl font-bold leading-snug text-cream md:text-4xl">Học sinh của Felix</h2>
+        <p class="mx-auto mt-5 max-w-2xl leading-relaxed text-cream-dim">Vài khoảnh khắc các bạn nhỏ trong lớp</p>
+      </div>
+      <div class="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {videos.map(([videoId, title], index) => (
+          <figure class="overflow-hidden rounded-xl bg-navy-950 shadow-2xl ring-1 ring-cream-dim/25">
+            <div class="aspect-video bg-navy-950">
+              <!-- TODO Felix: replace VIDEO_ID with actual YouTube ID -->
+              <iframe
+                class="h-full w-full"
+                src={`https://www.youtube.com/embed/${videoId}`}
+                title={title}
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+                loading="lazy"
+              ></iframe>
+            </div>
+            <figcaption class="px-5 py-4 text-sm text-cream-muted">[TODO: caption từ Felix {index + 1}]</figcaption>
+          </figure>
+        ))}
+      </div>
+      <p class="mt-6 text-center text-sm text-cream-dim/80">* Tất cả video được phụ huynh cho phép sử dụng. Khuôn mặt và tên đầy đủ được bảo mật khi cần thiết.</p>
+    </section>
+
+    <section class="bg-navy-900 px-6 py-20">
+      <div class="mx-auto grid max-w-6xl gap-10 md:grid-cols-[320px_1fr] md:items-center">
+        <img
+          src="/images/felix.jpg"
+          alt="Phương"
+          class="mx-auto aspect-square w-full max-w-xs rounded-xl object-cover shadow-2xl ring-1 ring-cream-dim/25 md:mx-0"
+        />
+        <div>
+          <h2 class="font-display text-3xl font-bold leading-snug text-cream md:text-4xl">Về Felix</h2>
+          <div class="mt-6 space-y-5 text-lg leading-relaxed text-cream-muted">
+            <p>Tôi là Phương — huấn luyện viên kĩ năng giao tiếp tiếng Anh.</p>
+            <p>[TODO Felix: viết 1-2 đoạn về background, số năm dạy, số học sinh, triết lý dạy. Vd: "Tôi đã dạy hơn 12 học sinh trong 3 năm qua. Triết lý của tôi: tiếng Anh là công cụ giao tiếp, không phải bài thi. Bé học bằng cách nói, kể, tranh luận về những gì bé thật sự quan tâm."]</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-6xl px-6 py-20 text-center">
+      <h2 class="font-display text-3xl font-bold leading-snug text-cream md:text-4xl">Đặt lịch tư vấn miễn phí</h2>
+      <p class="mx-auto mt-5 max-w-2xl leading-relaxed text-cream-dim">Trước khi bắt đầu, Felix tư vấn 30 phút miễn phí cho phụ huynh. Hiểu con và đề xuất lộ trình phù hợp.</p>
+      <ul class="mx-auto mt-8 max-w-2xl space-y-3 text-left text-cream-muted">
+        <li class="flex gap-3"><span class="text-gold-light">✓</span><span>Đánh giá level và mục tiêu của con</span></li>
+        <li class="flex gap-3"><span class="text-gold-light">✓</span><span>Đề xuất lộ trình (số buổi, kĩ năng cần luyện)</span></li>
+        <li class="flex gap-3"><span class="text-gold-light">✓</span><span>Báo giá rõ ràng sau khi tư vấn</span></li>
+      </ul>
+      <a href="#book" class="mt-10 inline-flex rounded-lg bg-accent px-6 py-3 font-semibold text-navy-950 transition hover:bg-accent-hover">
+        Đặt lịch tư vấn
+      </a>
+    </section>
+
+    <section id="book" class="mx-auto max-w-6xl px-6 py-20">
+      <div class="text-center">
+        <h2 class="font-display text-3xl font-bold leading-snug text-cream md:text-4xl">Để Felix liên hệ tư vấn</h2>
+        <p class="mt-4 text-cream-dim">Điền form, Felix sẽ nhắn Zalo trong 24h.</p>
+      </div>
+
+      <form id="coaching-form" class="mx-auto mt-10 max-w-xl space-y-5">
+        <div>
+          <label for="parent_name" class="mb-2 block text-sm text-cream-muted">Tên phụ huynh <span class="text-red-400">*</span></label>
+          <input id="parent_name" name="parent_name" required maxlength="100" class="w-full rounded-lg border border-cream-dim/30 bg-navy-900 px-4 py-3 text-base text-cream focus:border-accent focus:outline-none" />
+        </div>
+        <div>
+          <label for="child_name" class="mb-2 block text-sm text-cream-muted">Tên con <span class="text-red-400">*</span></label>
+          <input id="child_name" name="child_name" required maxlength="50" class="w-full rounded-lg border border-cream-dim/30 bg-navy-900 px-4 py-3 text-base text-cream focus:border-accent focus:outline-none" />
+        </div>
+        <div>
+          <label for="child_age" class="mb-2 block text-sm text-cream-muted">Tuổi con <span class="text-red-400">*</span></label>
+          <input id="child_age" type="number" name="child_age" min="5" max="16" required class="w-full rounded-lg border border-cream-dim/30 bg-navy-900 px-4 py-3 text-base text-cream focus:border-accent focus:outline-none" />
+        </div>
+        <div>
+          <label for="english_level" class="mb-2 block text-sm text-cream-muted">Level tiếng Anh hiện tại <span class="text-red-400">*</span></label>
+          <select id="english_level" name="english_level" required class="w-full rounded-lg border border-cream-dim/30 bg-navy-900 px-4 py-3 text-base text-cream focus:border-accent focus:outline-none">
+            <option value="" disabled selected>-- Chọn level --</option>
+            <option value="beginner">Mới bắt đầu (chưa giao tiếp được)</option>
+            <option value="basic">Cơ bản (nói được câu đơn)</option>
+            <option value="intermediate">Trung bình (giao tiếp được nhưng còn ngại)</option>
+            <option value="advanced">Khá (cần luyện chuyên sâu)</option>
+            <option value="unsure">Không chắc — Felix đánh giá giúp</option>
+          </select>
+        </div>
+        <div>
+          <label for="goals" class="mb-2 block text-sm text-cream-muted">Mục tiêu của phụ huynh</label>
+          <textarea id="goals" name="goals" maxlength="300" rows="3" placeholder="VD: Con tự tin nói trước lớp, kể chuyện mạch lạc, giao tiếp tự nhiên với người nước ngoài..." class="w-full rounded-lg border border-cream-dim/30 bg-navy-900 px-4 py-3 text-base text-cream placeholder:text-cream-dim/80 focus:border-accent focus:outline-none"></textarea>
+        </div>
+        <div>
+          <label for="zalo_phone" class="mb-2 block text-sm text-cream-muted">Số Zalo <span class="text-red-400">*</span></label>
+          <input id="zalo_phone" type="tel" name="zalo_phone" required pattern="^[+0-9\s\-()]{8,20}$" class="w-full rounded-lg border border-cream-dim/30 bg-navy-900 px-4 py-3 text-base text-cream focus:border-accent focus:outline-none" />
+        </div>
+        <div class="absolute -left-[9999px]" aria-hidden="true">
+          <label for="website">Website</label>
+          <input id="website" name="website" tabindex="-1" />
+        </div>
+        <button type="submit" class="w-full rounded-lg bg-accent px-6 py-3 text-lg font-semibold text-navy-950 transition hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-70">Đặt lịch tư vấn — miễn phí</button>
+        <p class="text-center text-xs text-cream-dim/80">Felix chỉ dùng thông tin để liên hệ tư vấn. Không spam.</p>
+      </form>
+
+      <div id="coaching-form-status" class="mx-auto mt-8 hidden max-w-xl rounded-lg border border-cream-dim/20 bg-navy-900 p-5 text-center font-semibold"></div>
+    </section>
+
+    <section class="bg-navy-900 px-6 py-20">
+      <div class="mx-auto max-w-3xl">
+        <h2 class="text-center font-display text-3xl font-bold leading-snug text-cream md:text-4xl">Câu hỏi thường gặp</h2>
+        <div class="mt-10 space-y-3">
+          {faqItems.map(([question, answer]) => (
+            <details class="rounded-lg border border-cream-dim/20 bg-navy-950/75 p-5">
+              <summary class="cursor-pointer font-display text-lg font-bold text-cream">{question}</summary>
+              <p class="mt-4 leading-relaxed text-cream-muted">{answer}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-6xl px-6 py-20 text-center">
+      <h2 class="font-display text-3xl font-bold leading-snug text-cream md:text-4xl">Mỗi bé một lộ trình riêng</h2>
+      <p class="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-cream-muted">Đặt lịch tư vấn miễn phí để Felix gặp con và đề xuất hướng đi phù hợp.</p>
+      <a href="#book" class="mt-8 inline-flex rounded-lg bg-accent px-6 py-3 font-semibold text-navy-950 transition hover:bg-accent-hover">
+        Đặt lịch tư vấn
+      </a>
+    </section>
+  </main>
+
+  <footer class="mt-auto border-t border-cream-dim/20 py-8 text-center text-sm text-cream-dim/80">
+    © 2026 Tong Phuong - built in vietnam
+  </footer>
+
+  <script>
+    const form = document.getElementById('coaching-form');
+    const btn = form.querySelector('button[type="submit"]');
+    const statusEl = document.getElementById('coaching-form-status');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(form));
+
+      if (data.website) {
+        showSuccess();
+        return;
+      }
+
+      btn.disabled = true;
+      const originalText = btn.textContent;
+      btn.textContent = 'Đang gửi...';
+
+      try {
+        const res = await fetch('/api/coaching-booking', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        });
+
+        if (res.ok) {
+          showSuccess();
+        } else {
+          showError();
+          btn.disabled = false;
+          btn.textContent = originalText;
+        }
+      } catch {
+        showError();
+        btn.disabled = false;
+        btn.textContent = originalText;
+      }
+    });
+
+    function showSuccess() {
+      form.style.display = 'none';
+      statusEl.className = 'mx-auto mt-8 max-w-xl rounded-lg border border-gold/40 bg-gold/10 p-5 text-center font-semibold text-gold-light';
+      statusEl.innerHTML = '✅ Gửi thành công! Felix sẽ nhắn Zalo cho anh chị trong 24h.';
+      statusEl.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function showError() {
+      statusEl.className = 'mx-auto mt-8 max-w-xl rounded-lg border border-red-500/30 bg-red-500/10 p-5 text-center font-semibold text-red-400';
+      statusEl.innerHTML = '⚠️ Có lỗi xảy ra. Vui lòng thử lại hoặc nhắn trực tiếp <a href="https://zalo.me/0396868675" class="underline">Zalo +84 396868675</a>';
+    }
+  </script>
+</BaseLayout>
