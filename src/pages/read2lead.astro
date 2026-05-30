@@ -1,5 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
 
 const features = [
   ['📖', 'Truyện cá nhân hoá', '5-8 trang. Tên con xuất hiện tự nhiên.'],
@@ -17,15 +19,16 @@ const steps = [
 ];
 
 const faqItems = [
-  ['Mã đăng nhập là gì?', 'Mỗi phụ huynh khi mua quyền sử dụng nhận 1 mã từ Felix (gửi qua Zalo). 1 mã cho phép tạo 10 packs trong 60 ngày. Hết uses hoặc hết hạn → nhắn Zalo Felix để gia hạn cùng mã đó.'],
-  ['Phí dùng Read2Lead bao nhiêu?', 'Read2Lead hiện tại đang thử nghiệm với học sinh hiện tại của Felix. Nhắn Zalo Felix để biết chi tiết về mã đăng nhập.'],
-  ['Bao lâu nhận pack?', '~2 phút trực tiếp trên trang này, Felix không cần làm tay.'],
-  ['Pack có thật cá nhân hoá hay chỉ đổi tên?', 'Mỗi pack được tạo riêng dựa trên tên, tuổi, giới tính và level của con. Hai pack của hai bé khác nhau sẽ có chủ đề + chunks khác nhau.'],
-  ['Pack được in trên giấy gì?', 'Bố mẹ in trên giấy A4 thường. Pack thiết kế đen trắng OK, không cần in màu. Mỗi pack 5-8 trang tùy level.'],
+  ['Có pack mẫu để xem trước không?', 'Có. Anh chị tải pack mẫu PDF ở nút "Xem pack mẫu" trên đầu trang — đây là bản thật của 1 học sinh hiện tại. Xem để hiểu pack có gì trước khi quyết định.'],
+  ['Mã đăng nhập là gì? Lấy ở đâu?', 'Mỗi phụ huynh khi đăng ký dùng Read2Lead nhận 1 mã từ Felix (gửi qua Zalo). 1 mã cho phép tạo 10 packs trong 60 ngày. Hết lượt hoặc hết hạn → nhắn Zalo Felix gia hạn cùng mã đó. Chưa có mã? Nhắn Zalo +84 396868675.'],
+  ['Phí dùng Read2Lead bao nhiêu?', 'Read2Lead hiện đang thử nghiệm với học sinh hiện tại của Felix. Nhắn Zalo Felix để biết chi tiết về mã đăng nhập và cách tham gia thử nghiệm.'],
+  ['Bao lâu nhận pack sau khi tạo?', '~2 phút trực tiếp trên trang này. Backend tự sinh PDF + MP3, Felix không cần làm tay.'],
+  ['Pack có thật sự cá nhân hoá hay chỉ đổi tên?', 'Mỗi pack được tạo riêng dựa trên tên, tuổi, giới tính và level của con. Hai pack của hai bé khác nhau sẽ có chủ đề + chunks + nhân vật khác nhau, không phải chỉ thay tên.'],
+  ['Pack được in trên giấy gì?', 'Bố mẹ in trên giấy A4 thường. Pack thiết kế đen trắng OK, không cần in màu. Mỗi pack 5-8 trang tuỳ level.'],
   ['Bé bao tuổi phù hợp?', 'Pack phù hợp bé từ 5-14 tuổi. Level L1 cho bé mới học, L2 cho bé đọc được câu đơn, L3 cho bé đọc đoạn ngắn. Felix tự chọn nếu anh chị không chắc.'],
-  ['Có thể yêu cầu chủ đề riêng không?', 'Hiện tại Felix Builder Hub tự chọn chủ đề phù hợp tuổi + level. Nếu muốn chủ đề cụ thể (vd bé thích bóng đá, robot, mèo...) → nhắn Zalo Felix sau khi nhận pack, lần sau Felix làm theo yêu cầu.'],
-  ['Nếu pack không phù hợp thì sao?', 'Có thể tạo lại bằng mã đăng nhập nếu mã còn lượt. Nếu liên tục không ưng → nhắn Zalo Felix.'],
-  ['Có thể đặt cho nhiều bé không?', 'Được. Mỗi lần tạo 1 pack. Lặp lại form cho bé tiếp theo.'],
+  ['Có thể yêu cầu chủ đề riêng không?', 'Hiện tại Read2Lead tự chọn chủ đề phù hợp tuổi + level. Nếu muốn chủ đề cụ thể (vd bé thích bóng đá, robot, mèo...) → nhắn Zalo Felix sau khi nhận pack, lần sau Felix làm theo yêu cầu.'],
+  ['Nếu pack không phù hợp thì sao?', 'Có thể tạo lại bằng mã nếu còn lượt. Nếu liên tục không ưng → nhắn Zalo Felix để được hỗ trợ.'],
+  ['Có thể đặt cho nhiều bé không?', 'Được. Mỗi lần tạo 1 pack. Lặp lại form cho bé tiếp theo. Cùng 1 mã dùng được cho nhiều bé.'],
 ];
 ---
 
@@ -33,45 +36,26 @@ const faqItems = [
   title="Read2Lead — Bộ học tiếng Anh in được cho con | Felix Builder Hub"
   description="Pack học tiếng Anh cá nhân hoá tạo riêng trong 2 phút: truyện + chunk practice + MP3. Bố mẹ nhập mã và in tại nhà."
 >
-  <header class="sticky top-0 z-50 border-b border-cream-dim/20 bg-navy-950/85 backdrop-blur">
-    <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-      <a href="/" class="flex items-center" aria-label="Felix Builder Hub">
-        <img src="/logo/felixbuilderhub_website_header_logo.png" alt="Felix Builder Hub" class="h-9 w-auto md:h-10" />
-      </a>
-      <nav class="hidden items-center gap-6 text-sm font-medium text-cream-muted sm:flex">
-        <a href="/#products" class="transition hover:text-accent">Sản phẩm</a>
-        <a href="/#contact" class="transition hover:text-accent">Liên hệ</a>
-      </nav>
-    </div>
-  </header>
+  <Header />
 
-  <main class="flex-1">
+  <main id="main" class="flex-1">
     <section class="mx-auto max-w-6xl px-6 py-20 text-center md:py-32">
-      <span class="inline-block rounded-full bg-accent/20 px-4 py-1 text-sm font-semibold text-accent">Cần mã đăng nhập từ Felix</span>
+      <span class="inline-block rounded-full bg-accent/20 px-4 py-1 text-sm font-semibold text-accent">Đang thử nghiệm với học sinh của Felix</span>
       <h1 class="mx-auto mt-6 max-w-5xl font-display text-4xl font-extrabold leading-snug text-cream md:text-6xl">Bộ học tiếng Anh in được, làm riêng cho con.</h1>
       <p class="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-cream-muted md:text-xl">Truyện cá nhân hoá + bài tập chunk + audio MP3. Bố mẹ nhập mã, tạo pack trong 2 phút.</p>
-      <a href="#form" class="mt-10 inline-flex rounded-lg bg-accent px-6 py-3 font-semibold text-navy-950 transition hover:bg-accent-hover">Tạo pack cho con</a>
-    </section>
-
-    <section class="mx-auto max-w-6xl px-6 py-20">
-      <h2 class="text-center font-display text-3xl font-bold text-cream md:text-4xl">Mỗi pack có những gì</h2>
-      <div class="mt-10 grid gap-6 md:grid-cols-2">
-        {features.map(([icon, title, description]) => (
-          <div class="flex gap-4 rounded-lg border border-cream-dim/20 bg-navy-900/70 p-5">
-            <span class="text-3xl" aria-hidden="true">{icon}</span>
-            <div>
-              <h3 class="font-display text-xl font-bold text-cream">{title}</h3>
-              <p class="mt-2 leading-relaxed text-cream-muted">{description}</p>
-            </div>
-          </div>
-        ))}
+      <div class="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
+        <a href="/read2lead/Read2Lead-Sample-Pack.pdf" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-lg border border-accent px-6 py-3 font-semibold text-accent transition hover:bg-accent hover:text-navy-950">
+          <span aria-hidden="true">📄</span> Xem pack mẫu (PDF)
+        </a>
+        <a href="#form" class="inline-flex rounded-lg bg-accent px-6 py-3 font-semibold text-navy-950 transition hover:bg-accent-hover">Tạo pack cho con →</a>
       </div>
+      <p class="mt-5 text-sm text-cream-dim">Pack mẫu là bản thật của 1 học sinh hiện tại. Tải về xem thử trước khi quyết định.</p>
     </section>
 
     <section class="bg-navy-900 px-6 py-20">
       <div class="mx-auto max-w-6xl">
         <h2 class="text-center font-display text-3xl font-bold leading-snug text-cream md:text-4xl">Pack có gì bên trong</h2>
-        <p class="mx-auto mt-5 max-w-2xl text-center leading-relaxed text-cream-dim">Mỗi pack bao gồm truyện cá nhân hóa, bài tập chunk, và đáp án dành cho phụ huynh.</p>
+        <p class="mx-auto mt-5 max-w-2xl text-center leading-relaxed text-cream-dim">Truyện cá nhân hoá, bài tập chunk, và đáp án dành cho phụ huynh — tất cả trong 1 pack in được.</p>
         <div class="mt-12 grid gap-6 md:grid-cols-3">
           <figure class="overflow-hidden rounded-xl bg-navy-950 shadow-2xl ring-1 ring-cream-dim/25">
             <div class="aspect-[3/4] overflow-hidden bg-navy-950">
@@ -93,6 +77,26 @@ const faqItems = [
           </figure>
         </div>
         <p class="mt-6 text-center text-sm text-cream-dim/80">* Đây là sample từ pack thật. Pack của con sẽ có chủ đề + chunks + tên riêng.</p>
+        <div class="mt-8 text-center">
+          <a href="/read2lead/Read2Lead-Sample-Pack.pdf" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-lg border border-accent px-5 py-2.5 text-sm font-semibold text-accent transition hover:bg-accent hover:text-navy-950">
+            <span aria-hidden="true">📄</span> Tải pack mẫu đầy đủ (PDF)
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-6xl px-6 py-20">
+      <h2 class="text-center font-display text-3xl font-bold text-cream md:text-4xl">Mỗi pack có những gì</h2>
+      <div class="mt-10 grid gap-6 md:grid-cols-2">
+        {features.map(([icon, title, description]) => (
+          <div class="flex gap-4 rounded-lg border border-cream-dim/20 bg-navy-900/70 p-5">
+            <span class="text-3xl" aria-hidden="true">{icon}</span>
+            <div>
+              <h3 class="font-display text-xl font-bold text-cream">{title}</h3>
+              <p class="mt-2 leading-relaxed text-cream-muted">{description}</p>
+            </div>
+          </div>
+        ))}
       </div>
     </section>
 
@@ -236,9 +240,7 @@ const faqItems = [
     </section>
   </main>
 
-  <footer class="mt-auto border-t border-cream-dim/20 py-8 text-center text-sm text-cream-dim/80">
-    © 2026 Tong Phuong - built in vietnam
-  </footer>
+  <Footer />
 
   <script>
     const form = document.getElementById('r2l-form');
@@ -312,7 +314,7 @@ const faqItems = [
 
       const data = Object.fromEntries(new FormData(form));
       if (data.website) {
-        showResult({ child_name: data.child_name, topic: 'spam', story_title: 'fake', pdf_url: '#', mp3_url: '#' });
+        formSection.classList.add('hidden');
         return;
       }
 
