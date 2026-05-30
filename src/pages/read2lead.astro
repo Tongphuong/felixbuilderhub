@@ -3,13 +3,20 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 
+const usp = [
+  ['🎯', 'Tên con là nhân vật chính', 'Không phải Tom hay Mary. Mỗi pack viết riêng với TÊN con + sở thích con. Không có 2 bé nào nhận cùng 1 câu chuyện.'],
+  ['🔑', 'Chunks thực dụng, không phải từ đơn', 'Bé học cụm từ ("take a deep breath", "try again slowly") dùng được ngay khi nói. Không phải danh sách từ vựng khô khan.'],
+  ['🖨️', 'In offline, không subscription', 'Không cần app. Không phí hàng tháng. Bé học bằng giấy + bút như sách thật. Lưu được mãi mãi.'],
+  ['🇻🇳', 'Bối cảnh gần trẻ Việt', 'Sau giờ học, bạn tên Minh/Bao/Linh, sân chơi gần nhà. Bé thấy mình trong truyện, không phải nhân vật Mỹ xa lạ.'],
+];
+
 const features = [
   ['📖', 'Truyện cá nhân hoá', '5-8 trang. Tên con xuất hiện tự nhiên.'],
   ['🔑', '5-6 power chunks', 'Cụm từ thực dụng, KHÔNG phải từ đơn lẻ.'],
   ['✍️', 'Bài tập đa dạng', 'Match chunk, fill blank, build sentence, fix mistake.'],
-  ['❓', 'Comprehension + retell', 'Đọc hiểu, kể lại bằng chunks.'],
+  ['❓', 'Comprehension + Open Question', 'Câu hỏi suy luận về truyện — bé viết 1-2 câu, không chỉ chọn đáp án.'],
   ['🎧', 'MP3 story audio', 'Đọc to truyện. Nghe trước hoặc trong khi đọc.'],
-  ['📋', 'Đáp án phụ huynh', 'Hướng dẫn riêng ở trang cuối.'],
+  ['📋', 'Bảng tham chiếu level', 'Trang cuối có bảng Read2Lead vs Cambridge YL vs Family and Friends.'],
 ];
 
 const steps = [
@@ -33,16 +40,21 @@ const faqItems = [
 ---
 
 <BaseLayout
-  title="Read2Lead — Bộ học tiếng Anh in được cho con | Felix Builder Hub"
-  description="Pack học tiếng Anh cá nhân hoá tạo riêng trong 2 phút: truyện + chunk practice + MP3. Bố mẹ nhập mã và in tại nhà."
+  title="Read2Lead — Truyện tiếng Anh viết riêng cho con | Felix Builder Hub"
+  description="Sách giáo trình dạy 1 nội dung cho mọi bé. Read2Lead viết truyện riêng với tên con là nhân vật chính. Chunks thực dụng + MP3 + in được offline."
 >
   <Header />
 
   <main id="main" class="flex-1">
-    <section class="mx-auto max-w-6xl px-6 py-20 text-center md:py-32">
+    <section class="mx-auto max-w-6xl px-6 py-20 text-center md:py-28">
       <span class="inline-block rounded-full bg-accent/20 px-4 py-1 text-sm font-semibold text-accent">Đang thử nghiệm với học sinh của Felix</span>
-      <h1 class="mx-auto mt-6 max-w-5xl font-display text-4xl font-extrabold leading-snug text-cream md:text-6xl">Bộ học tiếng Anh in được, làm riêng cho con.</h1>
-      <p class="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-cream-muted md:text-xl">Truyện cá nhân hoá + bài tập chunk + audio MP3. Bố mẹ nhập mã, tạo pack trong 2 phút.</p>
+      <h1 class="mx-auto mt-6 max-w-5xl font-display text-4xl font-extrabold leading-snug text-cream md:text-6xl">
+        Truyện tiếng Anh viết riêng cho con.<br class="hidden md:block" />
+        <span class="text-accent">Không phải sách generic cho mọi bé.</span>
+      </h1>
+      <p class="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-cream-muted md:text-xl">
+        Sách giáo trình dạy cùng 1 nội dung cho mọi bé. Read2Lead viết truyện mới với <strong class="text-cream">TÊN con là nhân vật chính</strong> + sở thích con là chủ đề. Học chunks thực dụng qua câu chuyện của chính mình.
+      </p>
       <div class="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
         <a href="/read2lead/Read2Lead-Sample-Pack.pdf" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-lg border border-accent px-6 py-3 font-semibold text-accent transition hover:bg-accent hover:text-navy-950">
           <span aria-hidden="true">📄</span> Xem pack mẫu (PDF)
@@ -50,6 +62,29 @@ const faqItems = [
         <a href="#form" class="inline-flex rounded-lg bg-accent px-6 py-3 font-semibold text-navy-950 transition hover:bg-accent-hover">Tạo pack cho con →</a>
       </div>
       <p class="mt-5 text-sm text-cream-dim">Pack mẫu là bản thật của 1 học sinh hiện tại. Tải về xem thử trước khi quyết định.</p>
+    </section>
+
+    <section class="mx-auto max-w-6xl px-6 py-16">
+      <div class="text-center">
+        <h2 class="font-display text-3xl font-bold leading-snug text-cream md:text-4xl">Khác gì với sách thông thường?</h2>
+        <p class="mx-auto mt-4 max-w-2xl leading-relaxed text-cream-dim">4 điều phụ huynh đã chọn Read2Lead thay vì sách giáo trình.</p>
+      </div>
+      <div class="mt-10 grid gap-5 md:grid-cols-2">
+        {usp.map(([icon, title, description]) => (
+          <div class="rounded-xl border border-accent/30 bg-navy-900/70 p-6">
+            <div class="flex items-start gap-4">
+              <span class="text-3xl" aria-hidden="true">{icon}</span>
+              <div>
+                <h3 class="font-display text-xl font-bold text-cream">{title}</h3>
+                <p class="mt-2 leading-relaxed text-cream-muted">{description}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+      <p class="mx-auto mt-8 max-w-2xl text-center text-sm leading-relaxed text-cream-dim">
+        So với sách bổ trợ phổ biến (Family and Friends, Tiny Talk) và app học tiếng Anh (Monkey Stories, Raz-Kids): không nơi nào viết truyện riêng cho từng bé như Read2Lead.
+      </p>
     </section>
 
     <section class="bg-navy-900 px-6 py-20">
