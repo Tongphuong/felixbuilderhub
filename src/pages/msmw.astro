@@ -1,5 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
 
 const features = [
   ['📖', '20 trang đầy đủ', 'Bìa, lời đề tặng, 16 trang câu chuyện, bìa sau'],
@@ -31,19 +33,9 @@ const faqItems = [
   title="MSMW — Sách truyện cá nhân hoá cho bé yêu | Felix Builder Hub"
   description="Sách truyện song ngữ Việt-Anh với chính con bạn là nhân vật chính. Bản số 69k, bản in 129k. Giao toàn quốc."
 >
-  <header class="sticky top-0 z-50 border-b border-cream-dim/20 bg-navy-950/85 backdrop-blur">
-    <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-      <a href="/" class="flex items-center" aria-label="Felix Builder Hub">
-        <img src="/logo/felixbuilderhub_website_header_logo.png" alt="Felix Builder Hub" class="h-9 w-auto md:h-10" />
-      </a>
-      <nav class="hidden items-center gap-6 text-sm font-medium text-cream-muted sm:flex">
-        <a href="/#products" class="transition hover:text-accent">Sản phẩm</a>
-        <a href="/#contact" class="transition hover:text-accent">Liên hệ</a>
-      </nav>
-    </div>
-  </header>
+  <Header />
 
-  <main class="flex-1">
+  <main id="main" class="flex-1">
     <section class="mx-auto max-w-6xl px-6 py-20 text-center md:py-32">
       <h1 class="mx-auto max-w-5xl font-display text-4xl font-extrabold leading-snug text-cream md:text-6xl">Con là nhân vật chính trong câu chuyện của riêng mình.</h1>
       <p class="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-cream-muted md:text-xl">Sách truyện cá nhân hoá song ngữ Việt–Anh, dành riêng cho bé yêu của bạn.</p>
@@ -214,9 +206,7 @@ const faqItems = [
     </section>
   </main>
 
-  <footer class="mt-auto border-t border-cream-dim/20 py-8 text-center text-sm text-cream-dim/80">
-    © 2026 Tong Phuong - built in vietnam
-  </footer>
+  <Footer />
 
   <script>
     const form = document.getElementById('msmw-form');

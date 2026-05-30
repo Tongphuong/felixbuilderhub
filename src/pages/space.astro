@@ -1,5 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
 
 const previewCards = [
   ['📚', 'Tài liệu miễn phí', 'Pack đọc, file in, template prompts cho phụ huynh và giáo viên.'],
@@ -12,19 +14,9 @@ const previewCards = [
   title="Felix Sharing Space — Tài liệu miễn phí cho phụ huynh | Felix Builder Hub"
   description="Nơi Felix chia sẻ tài liệu, kinh nghiệm dạy con và tài nguyên giáo dục miễn phí cho phụ huynh Việt."
 >
-  <header class="sticky top-0 z-50 border-b border-cream-dim/20 bg-navy-950/85 backdrop-blur">
-    <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-      <a href="/" class="flex items-center" aria-label="Felix Builder Hub">
-        <img src="/logo/felixbuilderhub_website_header_logo.png" alt="Felix Builder Hub" class="h-9 w-auto md:h-10" />
-      </a>
-      <nav class="hidden items-center gap-6 text-sm font-medium text-cream-muted sm:flex">
-        <a href="/#products" class="transition hover:text-accent">Sản phẩm</a>
-        <a href="/#contact" class="transition hover:text-accent">Liên hệ</a>
-      </nav>
-    </div>
-  </header>
+  <Header />
 
-  <main class="flex-1">
+  <main id="main" class="flex-1">
     <section class="mx-auto max-w-6xl px-6 py-20 text-center md:py-28">
       <span class="inline-block rounded-full bg-accent/20 px-4 py-1 text-sm font-semibold text-accent">Đang chuẩn bị</span>
       <h1 class="mx-auto mt-6 max-w-4xl font-display text-4xl font-extrabold leading-snug text-cream md:text-6xl">Felix Sharing Space</h1>
@@ -116,9 +108,7 @@ const previewCards = [
     </section>
   </main>
 
-  <footer class="mt-auto border-t border-cream-dim/20 py-8 text-center text-sm text-cream-dim/80">
-    © 2026 Tong Phuong - built in vietnam
-  </footer>
+  <Footer />
 
   <script>
     const form = document.getElementById('space-form');
