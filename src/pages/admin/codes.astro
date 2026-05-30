@@ -1,0 +1,299 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+<BaseLayout
+  title="Quản lý mã đăng nhập Read2Lead | Felix Admin"
+  description="Trang admin để tạo và quản lý access code Read2Lead."
+>
+  <header class="border-b border-cream-dim/20 bg-navy-950/85 backdrop-blur">
+    <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+      <a href="/" class="flex items-center" aria-label="Felix Builder Hub">
+        <img src="/logo/felixbuilderhub_website_header_logo.png" alt="Felix Builder Hub" class="h-9 w-auto md:h-10" />
+      </a>
+      <span class="rounded-md bg-accent/15 px-3 py-1 text-xs font-semibold text-accent">ADMIN — chỉ Felix dùng</span>
+    </div>
+  </header>
+
+  <main id="main" class="flex-1">
+    <section class="mx-auto max-w-6xl px-6 py-10">
+      <h1 class="font-display text-3xl font-bold text-cream">Quản lý mã Read2Lead</h1>
+      <p class="mt-2 text-cream-muted">Tạo mã mới + xem danh sách mã đã cấp + edit/revoke.</p>
+
+      <div class="mt-8 rounded-xl border border-cream-dim/20 bg-navy-900/70 p-6">
+        <h2 class="font-display text-xl font-bold text-cream">Tạo mã mới</h2>
+        <form id="create-form" class="mt-5 grid gap-4 md:grid-cols-2">
+          <div>
+            <label class="mb-1 block text-sm text-cream-muted">Tên phụ huynh <span class="text-red-400">*</span></label>
+            <input name="parent_name" required maxlength="100" placeholder="Chị Mai" class="w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-3 py-2 text-cream focus:border-accent focus:outline-none" />
+          </div>
+          <div>
+            <label class="mb-1 block text-sm text-cream-muted">Zalo / SĐT</label>
+            <input name="parent_zalo" maxlength="30" placeholder="0901234567" class="w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-3 py-2 text-cream focus:border-accent focus:outline-none" />
+          </div>
+          <div>
+            <label class="mb-1 block text-sm text-cream-muted">Số lượt</label>
+            <input name="uses" type="number" min="1" max="1000" value="10" required class="w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-3 py-2 text-cream focus:border-accent focus:outline-none" />
+          </div>
+          <div>
+            <label class="mb-1 block text-sm text-cream-muted">Hạn (ngày)</label>
+            <input name="expiry_days" type="number" min="1" max="3650" value="60" required class="w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-3 py-2 text-cream focus:border-accent focus:outline-none" />
+          </div>
+          <div class="md:col-span-2">
+            <label class="mb-1 block text-sm text-cream-muted">Ghi chú</label>
+            <input name="notes" maxlength="500" placeholder="Bé Linh, L2, thử nghiệm" class="w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-3 py-2 text-cream focus:border-accent focus:outline-none" />
+          </div>
+          <div class="md:col-span-2">
+            <button type="submit" class="w-full rounded-lg bg-accent px-5 py-2.5 font-semibold text-navy-950 transition hover:bg-accent-hover sm:w-auto">Tạo mã</button>
+          </div>
+        </form>
+        <div id="create-result" class="mt-5 hidden rounded-lg border border-gold/40 bg-gold/10 p-4 text-cream">
+          <p class="text-sm text-cream-muted">Mã mới (bấm để copy):</p>
+          <button id="copy-code" type="button" class="mt-2 inline-flex items-center gap-2 rounded-lg bg-navy-950 px-4 py-2 font-mono text-2xl font-bold text-gold-light transition hover:bg-navy-800"></button>
+          <p id="copy-status" class="mt-2 text-xs text-cream-dim"></p>
+        </div>
+        <div id="create-error" class="mt-5 hidden rounded-lg border border-red-500/30 bg-red-500/10 p-4 text-red-300"></div>
+      </div>
+
+      <div class="mt-10 rounded-xl border border-cream-dim/20 bg-navy-900/70 p-6">
+        <div class="flex items-center justify-between gap-4">
+          <h2 class="font-display text-xl font-bold text-cream">Danh sách mã</h2>
+          <button id="refresh-list" type="button" class="rounded-lg border border-cream-dim/30 px-3 py-1.5 text-sm text-cream transition hover:border-accent hover:text-accent">↻ Tải lại</button>
+        </div>
+        <p id="list-status" class="mt-3 text-sm text-cream-dim">Đang tải...</p>
+        <div id="codes-list" class="mt-5 space-y-3"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="mt-auto border-t border-cream-dim/20 py-6 text-center text-sm text-cream-dim/80">
+    Felix Admin — handle with care
+  </footer>
+
+  <script>
+    const createForm = document.getElementById('create-form');
+    const createResult = document.getElementById('create-result');
+    const createError = document.getElementById('create-error');
+    const copyCodeBtn = document.getElementById('copy-code');
+    const copyStatus = document.getElementById('copy-status');
+    const refreshBtn = document.getElementById('refresh-list');
+    const listEl = document.getElementById('codes-list');
+    const listStatus = document.getElementById('list-status');
+
+    function showCreateError(msg) {
+      createResult.classList.add('hidden');
+      createError.classList.remove('hidden');
+      createError.textContent = '⚠ ' + msg;
+    }
+
+    function showCreatedCode(code) {
+      createError.classList.add('hidden');
+      createResult.classList.remove('hidden');
+      copyCodeBtn.textContent = code;
+      copyStatus.textContent = 'Bấm vào mã để copy.';
+    }
+
+    copyCodeBtn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(copyCodeBtn.textContent);
+        copyStatus.textContent = '✓ Đã copy vào clipboard.';
+      } catch {
+        copyStatus.textContent = 'Không copy được — bôi đen mã và copy tay.';
+      }
+    });
+
+    createForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const submitBtn = createForm.querySelector('button[type="submit"]');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Đang tạo...';
+      const data = Object.fromEntries(new FormData(createForm));
+      try {
+        const res = await fetch('/api/admin/codes', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        });
+        const result = await res.json();
+        if (res.ok && result.ok) {
+          showCreatedCode(result.code);
+          createForm.reset();
+          createForm.querySelector('[name=uses]').value = '10';
+          createForm.querySelector('[name=expiry_days]').value = '60';
+          await loadList();
+        } else {
+          showCreateError(result.message || result.error || 'Lỗi không xác định');
+        }
+      } catch (err) {
+        showCreateError('Lỗi mạng: ' + err.message);
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Tạo mã';
+      }
+    });
+
+    function escapeHtml(s) {
+      if (s == null) return '';
+      return String(s)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function renderItem(item) {
+      const today = new Date().toISOString().slice(0, 10);
+      const expired = item.expires_at && item.expires_at < today;
+      const exhausted = (item.uses_remaining ?? 0) <= 0;
+      const status = expired ? 'Hết hạn' : exhausted ? 'Hết lượt' : 'Hoạt động';
+      const statusColor = expired || exhausted ? 'text-red-400 border-red-500/40' : 'text-green-400 border-green-500/40';
+      const usesTotal = item.uses_total ?? item.uses_remaining ?? '?';
+
+      return `
+        <article class="rounded-lg border border-cream-dim/20 bg-navy-950/60 p-4" data-code="${escapeHtml(item.code)}">
+          <div class="flex flex-wrap items-start justify-between gap-3">
+            <div>
+              <p class="font-mono text-lg font-bold text-gold-light">${escapeHtml(item.code)}</p>
+              <p class="mt-1 text-sm text-cream">
+                <strong>${escapeHtml(item.parent_name || '(chưa có thông tin)')}</strong>
+                ${item.parent_zalo ? ' · ' + escapeHtml(item.parent_zalo) : ''}
+              </p>
+              ${item.notes ? `<p class="mt-1 text-xs text-cream-dim">${escapeHtml(item.notes)}</p>` : ''}
+            </div>
+            <span class="rounded-md border px-2 py-1 text-xs font-semibold ${statusColor}">${status}</span>
+          </div>
+          <div class="mt-3 grid grid-cols-2 gap-2 text-xs text-cream-muted sm:grid-cols-4">
+            <div><span class="text-cream-dim">Lượt:</span> ${item.uses_remaining ?? '?'} / ${usesTotal}</div>
+            <div><span class="text-cream-dim">Cấp:</span> ${escapeHtml(item.issued_at || '?')}</div>
+            <div><span class="text-cream-dim">Hết hạn:</span> ${escapeHtml(item.expires_at || '?')}</div>
+            <div><span class="text-cream-dim">Dùng lần cuối:</span> ${escapeHtml(item.last_used_at || '—')}</div>
+          </div>
+          <div class="mt-3 flex flex-wrap gap-2">
+            <button type="button" data-action="edit" class="rounded border border-cream-dim/30 px-3 py-1 text-xs text-cream transition hover:border-accent hover:text-accent">Edit</button>
+            <button type="button" data-action="refund" class="rounded border border-cream-dim/30 px-3 py-1 text-xs text-cream transition hover:border-accent hover:text-accent">+1 lượt</button>
+            <button type="button" data-action="extend" class="rounded border border-cream-dim/30 px-3 py-1 text-xs text-cream transition hover:border-accent hover:text-accent">+30 ngày</button>
+            <button type="button" data-action="copy" class="rounded border border-cream-dim/30 px-3 py-1 text-xs text-cream transition hover:border-accent hover:text-accent">Copy code</button>
+            <button type="button" data-action="revoke" class="rounded border border-red-500/40 px-3 py-1 text-xs text-red-300 transition hover:bg-red-500/10">Revoke</button>
+          </div>
+        </article>
+      `;
+    }
+
+    async function loadList() {
+      listStatus.textContent = 'Đang tải...';
+      try {
+        const res = await fetch('/api/admin/codes');
+        const result = await res.json();
+        if (!res.ok || !result.ok) {
+          listStatus.textContent = '⚠ Lỗi: ' + (result.message || result.error || 'Không tải được');
+          return;
+        }
+        const items = result.items || [];
+        if (items.length === 0) {
+          listEl.innerHTML = '';
+          listStatus.textContent = 'Chưa có mã nào.';
+          return;
+        }
+        listStatus.textContent = `${items.length} mã.`;
+        listEl.innerHTML = items.map(renderItem).join('');
+      } catch (err) {
+        listStatus.textContent = '⚠ Lỗi mạng: ' + err.message;
+      }
+    }
+
+    async function patchCode(code, body) {
+      const res = await fetch(`/api/admin/codes/${encodeURIComponent(code)}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      });
+      return res.json();
+    }
+
+    function addDaysToISO(iso, days) {
+      const d = new Date(iso + 'T00:00:00Z');
+      d.setUTCDate(d.getUTCDate() + days);
+      return d.toISOString().slice(0, 10);
+    }
+
+    listEl.addEventListener('click', async (e) => {
+      const btn = e.target.closest('button[data-action]');
+      if (!btn) return;
+      const article = btn.closest('article[data-code]');
+      const code = article?.dataset.code;
+      if (!code) return;
+      const action = btn.dataset.action;
+
+      if (action === 'copy') {
+        try {
+          await navigator.clipboard.writeText(code);
+          btn.textContent = '✓ Copied';
+          setTimeout(() => (btn.textContent = 'Copy code'), 1500);
+        } catch {
+          alert('Copy thất bại — bôi đen mã và copy tay.');
+        }
+        return;
+      }
+
+      if (action === 'revoke') {
+        if (!confirm(`Revoke mã ${code}? Không thể khôi phục.`)) return;
+        const res = await fetch(`/api/admin/codes/${encodeURIComponent(code)}`, { method: 'DELETE' });
+        const result = await res.json();
+        if (res.ok && result.ok) {
+          await loadList();
+        } else {
+          alert('Lỗi: ' + (result.error || 'Không revoke được'));
+        }
+        return;
+      }
+
+      if (action === 'refund') {
+        // refund 1 use — fetch current value first to know what to add 1 to
+        const listRes = await fetch('/api/admin/codes');
+        const listData = await listRes.json();
+        const current = listData.items?.find((it) => it.code === code);
+        if (!current) return;
+        const result = await patchCode(code, { uses_remaining: (current.uses_remaining ?? 0) + 1 });
+        if (result.ok) await loadList();
+        else alert('Lỗi: ' + (result.error || 'patch failed'));
+        return;
+      }
+
+      if (action === 'extend') {
+        const listRes = await fetch('/api/admin/codes');
+        const listData = await listRes.json();
+        const current = listData.items?.find((it) => it.code === code);
+        if (!current) return;
+        const today = new Date().toISOString().slice(0, 10);
+        const base = (current.expires_at || today) < today ? today : current.expires_at || today;
+        const newExpiry = addDaysToISO(base, 30);
+        const result = await patchCode(code, { expires_at: newExpiry });
+        if (result.ok) await loadList();
+        else alert('Lỗi: ' + (result.error || 'patch failed'));
+        return;
+      }
+
+      if (action === 'edit') {
+        const listRes = await fetch('/api/admin/codes');
+        const listData = await listRes.json();
+        const current = listData.items?.find((it) => it.code === code);
+        if (!current) return;
+        const newName = prompt('Tên phụ huynh:', current.parent_name || '');
+        if (newName === null) return;
+        const newZalo = prompt('Zalo / SĐT:', current.parent_zalo || '');
+        if (newZalo === null) return;
+        const newNotes = prompt('Ghi chú:', current.notes || '');
+        if (newNotes === null) return;
+        const result = await patchCode(code, {
+          parent_name: newName,
+          parent_zalo: newZalo,
+          notes: newNotes,
+        });
+        if (result.ok) await loadList();
+        else alert('Lỗi: ' + (result.error || 'patch failed'));
+      }
+    });
+
+    refreshBtn.addEventListener('click', loadList);
+    loadList();
+  </script>
+</BaseLayout>
