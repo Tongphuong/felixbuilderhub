@@ -56,6 +56,8 @@ export async function onRequestPost(context) {
   // Forward to Render backend (do NOT pass access_code downstream)
   let upstreamResult;
   try {
+    const interests = (data.interests || '').toString().trim().slice(0, 120);
+    const topic = (data.topic || '').toString().trim().slice(0, 60);
     const upstream = await fetch(`${backendUrl}/generate`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -64,6 +66,8 @@ export async function onRequestPost(context) {
         age: parseInt(data.age, 10),
         level: data.level,
         child_gender: data.child_gender,
+        interests: interests || undefined,
+        topic: topic || undefined,
       }),
     });
     upstreamResult = { status: upstream.status, body: await upstream.json() };

@@ -3,6 +3,23 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 
+// 12 topic options — inspired by Raz-Kids themes, adapted for Vietnamese kids.
+// `value` is the English key sent to backend; `label` is the Vietnamese label parents see.
+const topics = [
+  ['animals_pets', '🐾 Động vật & thú cưng'],
+  ['family_friends', '👨‍👩‍👧 Gia đình & bạn bè'],
+  ['school', '🏫 Trường học'],
+  ['sports', '⚽ Thể thao'],
+  ['games_toys', '🎮 Game & đồ chơi'],
+  ['vehicles', '🚗 Phương tiện'],
+  ['food_cooking', '🍜 Đồ ăn & nấu ăn'],
+  ['nature', '🌳 Thiên nhiên'],
+  ['art_creativity', '🎨 Nghệ thuật & sáng tạo'],
+  ['heroes_jobs', '🦸 Anh hùng & nghề nghiệp'],
+  ['imagination', '✨ Tưởng tượng & phép màu'],
+  ['vietnamese_holidays', '🎉 Lễ hội Việt Nam'],
+];
+
 const usp = [
   ['🎯', 'Tên con là nhân vật chính', 'Không phải Tom hay Mary. Mỗi pack viết riêng với TÊN con + sở thích con. Không có 2 bé nào nhận cùng 1 câu chuyện.'],
   ['🔑', 'Chunks thực dụng, không phải từ đơn', 'Bé học cụm từ ("take a deep breath", "try again slowly") dùng được ngay khi nói. Không phải danh sách từ vựng khô khan.'],
@@ -211,6 +228,38 @@ const faqItems = [
                 <span>Bé gái</span>
               </label>
             </div>
+          </div>
+          <div>
+            <label for="interests" class="mb-2 block text-sm text-cream-muted">
+              Sở thích của con <span class="text-cream-dim">(tùy chọn)</span>
+            </label>
+            <input
+              id="interests"
+              name="interests"
+              type="text"
+              maxlength="120"
+              placeholder="VD: bóng đá, Roblox, mèo, vẽ tranh..."
+              class="w-full rounded-lg border border-cream-dim/30 bg-navy-900 px-4 py-3 text-base text-cream placeholder:text-cream-dim/80 focus:border-accent focus:outline-none"
+            />
+            <p class="mt-2 text-xs text-cream-dim">Felix sẽ lồng sở thích vào truyện. Để trống = Felix tự chọn.</p>
+          </div>
+          <div>
+            <label class="mb-2 block text-sm text-cream-muted">
+              Chủ đề pack <span class="text-cream-dim">(tùy chọn)</span>
+            </label>
+            <div class="grid grid-cols-2 gap-2 rounded-lg border border-cream-dim/30 bg-navy-900 p-3 sm:grid-cols-3">
+              <label class="flex cursor-pointer items-center gap-2 rounded-md p-2 transition hover:bg-navy-800 has-[:checked]:bg-accent/15 has-[:checked]:ring-1 has-[:checked]:ring-accent">
+                <input type="radio" name="topic" value="" class="h-3.5 w-3.5 accent-accent" checked />
+                <span class="text-sm text-cream">Felix tự chọn</span>
+              </label>
+              {topics.map(([value, label]) => (
+                <label class="flex cursor-pointer items-center gap-2 rounded-md p-2 transition hover:bg-navy-800 has-[:checked]:bg-accent/15 has-[:checked]:ring-1 has-[:checked]:ring-accent">
+                  <input type="radio" name="topic" value={value} class="h-3.5 w-3.5 accent-accent" />
+                  <span class="text-sm text-cream">{label}</span>
+                </label>
+              ))}
+            </div>
+            <p class="mt-2 text-xs text-cream-dim">12 chủ đề thân thuộc với trẻ. Chọn cái con thích nhất.</p>
           </div>
           <div class="absolute -left-[9999px]" aria-hidden="true">
             <label for="website">Website</label>
