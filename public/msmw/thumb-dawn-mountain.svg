@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1200" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3b2a4a"/>
+      <stop offset="0.35" stop-color="#a06a8b"/>
+      <stop offset="0.65" stop-color="#e8a884"/>
+      <stop offset="0.85" stop-color="#f3c989"/>
+      <stop offset="1" stop-color="#fadfab"/>
+    </linearGradient>
+    <radialGradient id="sun" cx="0.5" cy="0.62" r="0.18">
+      <stop offset="0" stop-color="#fff5d4"/>
+      <stop offset="0.5" stop-color="#ffd989" stop-opacity="0.85"/>
+      <stop offset="1" stop-color="#ffd989" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="800" height="1200" fill="url(#sky)"/>
+  <circle cx="400" cy="750" r="220" fill="url(#sun)"/>
+  <g opacity="0.55">
+    <circle cx="120" cy="120" r="1.8" fill="#fff"/>
+    <circle cx="250" cy="80" r="1.4" fill="#fff"/>
+    <circle cx="540" cy="100" r="2" fill="#fff"/>
+    <circle cx="670" cy="180" r="1.5" fill="#fff"/>
+  </g>
+  <polygon points="0,950 180,720 320,820 460,640 620,780 800,700 800,1200 0,1200" fill="#3a2d4f" opacity="0.95"/>
+  <polygon points="0,1000 160,860 320,920 480,800 640,900 800,820 800,1200 0,1200" fill="#2a1f3d"/>
+  <g transform="translate(380 1010)">
+    <circle cx="0" cy="0" r="6" fill="#a78bd6" opacity="0.85"/>
+    <path d="M -12 -4 Q -8 -16 0 -10 Q 8 -16 12 -4 Q 8 4 0 2 Q -8 4 -12 -4 Z" fill="#dfc8f0" opacity="0.85"/>
+  </g>
+  <text x="400" y="1095" text-anchor="middle" font-family="Georgia, serif" font-size="62" font-weight="700" fill="#fef3da" letter-spacing="1">Núi Bình Minh</text>
+  <text x="400" y="1145" text-anchor="middle" font-family="Georgia, serif" font-size="26" fill="#fde0aa" letter-spacing="2">DAWN MOUNTAIN</text>
+</svg>

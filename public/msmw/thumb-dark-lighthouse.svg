@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1200" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0c1631"/>
+      <stop offset="0.55" stop-color="#1a2f5a"/>
+      <stop offset="1" stop-color="#08152e"/>
+    </linearGradient>
+    <radialGradient id="beam" cx="0.5" cy="0.42" r="0.55">
+      <stop offset="0" stop-color="#ffd773" stop-opacity="0.95"/>
+      <stop offset="0.4" stop-color="#ffb14a" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#ffb14a" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="800" height="1200" fill="url(#bg)"/>
+  <circle cx="400" cy="500" r="320" fill="url(#beam)"/>
+  <g fill="#0a1226" stroke="#162648" stroke-width="3">
+    <rect x="360" y="540" width="80" height="280" rx="6"/>
+    <rect x="340" y="500" width="120" height="50" rx="4"/>
+    <rect x="375" y="455" width="50" height="50" rx="3"/>
+    <polygon points="400,420 420,455 380,455"/>
+  </g>
+  <circle cx="400" cy="475" r="14" fill="#ffd773"/>
+  <g opacity="0.55">
+    <circle cx="120" cy="180" r="2" fill="#fff"/>
+    <circle cx="240" cy="100" r="1.5" fill="#fff"/>
+    <circle cx="580" cy="160" r="2" fill="#fff"/>
+    <circle cx="680" cy="250" r="1.5" fill="#fff"/>
+    <circle cx="160" cy="320" r="1.5" fill="#fff"/>
+    <circle cx="720" cy="380" r="2" fill="#fff"/>
+    <circle cx="60" cy="450" r="1.5" fill="#fff"/>
+  </g>
+  <path d="M0 980 Q 200 950 400 985 T 800 980 L 800 1200 L 0 1200 Z" fill="#0a1226" opacity="0.92"/>
+  <path d="M0 1010 Q 200 985 400 1015 T 800 1010 L 800 1200 L 0 1200 Z" fill="#06101f"/>
+  <text x="400" y="1095" text-anchor="middle" font-family="Georgia, serif" font-size="58" font-weight="700" fill="#f5e9d3" letter-spacing="1">Ngọn Hải Đăng Tối</text>
+  <text x="400" y="1145" text-anchor="middle" font-family="Georgia, serif" font-size="26" fill="#c9b88c" letter-spacing="2">THE DARK LIGHTHOUSE</text>
+</svg>

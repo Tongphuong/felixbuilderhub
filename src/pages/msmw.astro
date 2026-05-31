@@ -19,6 +19,45 @@ const steps = [
   ['Nhận sách', 'File PDF hoặc bản in tận tay'],
 ];
 
+const stories = [
+  {
+    id: 'toy_brick_city_v4',
+    title_vi: 'Thành Phố Gạch Màu',
+    title_en: 'The Lost Toy Brick City',
+    hook: 'Bé giải cứu thành phố cùng robot Minny — học không bỏ rơi bạn bè.',
+    tags: ['Bé trai', 'Dũng cảm'],
+    thumb: '/msmw/thumb-toy-brick.jpg',
+    default_gender: 'boy',
+  },
+  {
+    id: 'heart_garden_v1',
+    title_vi: 'Khu Vườn Trái Tim',
+    title_en: 'The Heart Garden',
+    hook: 'Bé học cách trao đi yêu thương và chăm sóc người khác.',
+    tags: ['Bé gái', 'Yêu thương'],
+    thumb: '/msmw/thumb-heart-garden.jpg',
+    default_gender: 'girl',
+  },
+  {
+    id: 'dark_lighthouse_v1',
+    title_vi: 'Ngọn Hải Đăng Tối',
+    title_en: 'The Dark Lighthouse',
+    hook: 'Bé thắp lại ngọn đèn giữa biển bão — học cách ngồi xuống thay vì bỏ cuộc.',
+    tags: ['Bé trai', 'Kiên trì'],
+    thumb: '/msmw/thumb-dark-lighthouse.svg',
+    default_gender: 'boy',
+  },
+  {
+    id: 'dawn_mountain_v1',
+    title_vi: 'Núi Bình Minh',
+    title_en: 'Dawn Mountain',
+    hook: 'Bé giữ lời hứa với chính mình — đến đỉnh núi muộn nhất để thấy bình minh đẹp nhất.',
+    tags: ['Bé gái', 'Kiên trì'],
+    thumb: '/msmw/thumb-dawn-mountain.svg',
+    default_gender: 'girl',
+  },
+];
+
 const faqItems = [
   ['Tại sao cần ảnh của con?', 'Ảnh con là chất liệu để Felix tạo các cảnh minh hoạ có con xuất hiện như nhân vật chính. Không có ảnh, sách sẽ không cá nhân hoá được.'],
   ['Sách có thật sự cá nhân hoá hay chỉ đổi tên?', 'Mỗi cuốn có 16 trang minh hoạ riêng. Felix dùng AI để tạo cảnh có khuôn mặt và dáng người con trong câu chuyện. Hai cuốn sách của hai bé khác nhau sẽ trông hoàn toàn khác.'],
@@ -30,7 +69,7 @@ const faqItems = [
 ---
 
 <BaseLayout
-  title="MSMW — Sách truyện cá nhân hoá cho bé yêu | Felix Builder Hub"
+  title="MSMW — Sách truyện cá nhân hoá cho con của bạn | Felix Builder Hub"
   description="Sách truyện song ngữ Việt-Anh với chính con bạn là nhân vật chính. Bản số 69k, bản in 129k. Giao toàn quốc."
 >
   <Header />
@@ -38,32 +77,42 @@ const faqItems = [
   <main id="main" class="flex-1">
     <section class="mx-auto max-w-6xl px-6 py-20 text-center md:py-32">
       <h1 class="mx-auto max-w-5xl font-display text-4xl font-extrabold leading-snug text-cream md:text-6xl">Con là nhân vật chính trong câu chuyện của riêng mình.</h1>
-      <p class="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-cream-muted md:text-xl">Sách truyện cá nhân hoá song ngữ Việt–Anh, dành riêng cho bé yêu của bạn.</p>
+      <p class="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-cream-muted md:text-xl">Sách truyện cá nhân hoá song ngữ Việt–Anh, dành riêng cho con của bạn.</p>
       <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
         <a href="#form" class="w-full rounded-lg bg-accent px-6 py-3 text-center font-semibold text-navy-950 transition hover:bg-accent-hover sm:w-auto">Đặt sách cho con</a>
         <a href="https://zalo.me/0396868675" class="w-full rounded-lg border border-cream-dim/30 px-6 py-3 text-center font-semibold text-cream transition hover:border-accent hover:text-accent sm:w-auto">Liên hệ Zalo</a>
       </div>
     </section>
 
-    <section class="bg-navy-900 px-6 py-20">
-      <div class="mx-auto max-w-6xl text-center">
-        <h2 class="font-display text-3xl font-bold text-cream md:text-4xl">Mỗi bé một câu chuyện riêng</h2>
-        <p class="mx-auto mt-5 max-w-2xl leading-relaxed text-cream-dim">Cùng một câu chuyện 'Thành Phố Gạch Màu'. Nhân vật chính là chính con. Đây là sách thật của bé Việt và bé Hưng.</p>
-        <div class="mt-10 grid gap-6 md:grid-cols-2">
-          <div class="aspect-[4/3] overflow-hidden rounded-xl bg-navy-950 shadow-2xl ring-1 ring-cream-dim/25">
-            <img src="/msmw/viet-sample-1.jpg" alt="Sách của bé Việt — trang 1-8" loading="lazy" class="h-full w-full object-contain" />
-          </div>
-          <div class="aspect-[4/3] overflow-hidden rounded-xl bg-navy-950 shadow-2xl ring-1 ring-cream-dim/25">
-            <img src="/msmw/viet-sample-2.jpg" alt="Sách của bé Việt — trang 9-16" loading="lazy" class="h-full w-full object-contain" />
-          </div>
-          <div class="aspect-[4/3] overflow-hidden rounded-xl bg-navy-950 shadow-2xl ring-1 ring-cream-dim/25">
-            <img src="/msmw/hung-sample-1.jpg" alt="Sách của bé Hưng — trang 1-8" loading="lazy" class="h-full w-full object-contain" />
-          </div>
-          <div class="aspect-[4/3] overflow-hidden rounded-xl bg-navy-950 shadow-2xl ring-1 ring-cream-dim/25">
-            <img src="/msmw/hung-sample-2.jpg" alt="Sách của bé Hưng — trang 9-16" loading="lazy" class="h-full w-full object-contain" />
-          </div>
+    <section id="stories" class="bg-navy-900 px-6 py-20" aria-labelledby="story-picker-heading">
+      <div class="mx-auto max-w-6xl">
+        <div class="text-center">
+          <h2 id="story-picker-heading" class="font-display text-3xl font-bold text-cream md:text-4xl">Chọn câu chuyện cho con của bạn</h2>
+          <p class="mx-auto mt-5 max-w-2xl leading-relaxed text-cream-dim">4 câu chuyện gốc, mỗi câu chuyện một bài học khác nhau. Bé là nhân vật chính trong câu chuyện bạn chọn.</p>
         </div>
-        <p class="mt-6 text-sm text-cream-dim/80">* Khuôn mặt và chi tiết được giữ riêng tư cho phụ huynh đã đặt.</p>
+        <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {stories.map((s) => (
+            <article id={`story-${s.id}`} class="group flex flex-col overflow-hidden rounded-xl border border-cream-dim/20 bg-navy-950 transition hover:border-accent hover:shadow-xl">
+              <div class="aspect-[2/3] overflow-hidden bg-navy-800">
+                <img src={s.thumb} alt={`Bìa truyện ${s.title_vi}`} loading="lazy" class="h-full w-full object-cover transition duration-300 group-hover:scale-105" />
+              </div>
+              <div class="flex flex-1 flex-col p-5">
+                <h3 class="font-display text-xl font-bold text-cream">{s.title_vi}</h3>
+                <p class="mt-1 text-sm italic text-cream-dim">{s.title_en}</p>
+                <p class="mt-3 flex-1 text-sm leading-relaxed text-cream-muted">{s.hook}</p>
+                <div class="mt-3 flex flex-wrap gap-2">
+                  {s.tags.map((t) => (
+                    <span class="rounded-full bg-navy-800 px-3 py-1 text-xs font-semibold text-cream-dim">{t}</span>
+                  ))}
+                </div>
+                <button type="button" data-story={s.id} data-gender={s.default_gender} class="story-pick-btn mt-5 inline-flex w-full items-center justify-center rounded-lg border border-cream-dim/30 px-4 py-2.5 font-semibold text-cream transition hover:border-accent hover:bg-accent hover:text-navy-950">
+                  Chọn truyện này →
+                </button>
+              </div>
+            </article>
+          ))}
+        </div>
+        <p class="mt-8 text-center text-sm text-cream-dim/80">* Mỗi cuốn gồm 20 trang song ngữ Việt–Anh. Khuôn mặt bé được làm riêng từ ảnh bạn gửi.</p>
       </div>
     </section>
 
@@ -155,6 +204,18 @@ const faqItems = [
           </select>
         </div>
         <fieldset>
+          <legend class="mb-2 block text-sm text-cream-muted">Câu chuyện <span class="text-red-400">*</span></legend>
+          <div class="space-y-3 rounded-lg border border-cream-dim/30 bg-navy-900 p-4">
+            {stories.map((s) => (
+              <label class="flex items-start gap-3 text-base text-cream">
+                <input type="radio" name="story_template" value={s.id} required class="mt-1 h-4 w-4 accent-accent" />
+                <span class="leading-snug">{s.title_vi} <span class="text-cream-dim">— {s.tags[1]}</span></span>
+              </label>
+            ))}
+          </div>
+          <p class="mt-2 text-xs text-cream-dim/80">Chưa biết chọn? Xem mô tả 4 câu chuyện ở <a href="#stories" class="text-accent underline">phần trên</a>.</p>
+        </fieldset>
+        <fieldset>
           <legend class="mb-2 block text-sm text-cream-muted">Phiên bản <span class="text-red-400">*</span></legend>
           <div class="space-y-3 rounded-lg border border-cream-dim/30 bg-navy-900 p-4">
             <label class="flex items-center gap-3 text-base text-cream">
@@ -223,6 +284,42 @@ const faqItems = [
     const btn = form.querySelector('button[type="submit"]');
     const statusEl = document.getElementById('form-status');
 
+    const VALID_STORIES = ['toy_brick_city_v4', 'heart_garden_v1', 'dark_lighthouse_v1', 'dawn_mountain_v1'];
+    const STORY_DEFAULT_GENDER = {
+      toy_brick_city_v4: 'boy',
+      heart_garden_v1: 'girl',
+      dark_lighthouse_v1: 'boy',
+      dawn_mountain_v1: 'girl',
+    };
+
+    const pageUrl = new URL(window.location.href);
+    const urlRef = pageUrl.searchParams.get('ref') || '';
+    const urlStoryParam = pageUrl.searchParams.get('story') || '';
+    const urlStoryHash = location.hash.startsWith('#story-') ? location.hash.slice(7) : '';
+    const initialStory = VALID_STORIES.includes(urlStoryParam)
+      ? urlStoryParam
+      : VALID_STORIES.includes(urlStoryHash)
+        ? urlStoryHash
+        : '';
+
+    function selectStory(storyId, defaultGender) {
+      if (!VALID_STORIES.includes(storyId)) return;
+      const radio = form.querySelector(`input[name="story_template"][value="${storyId}"]`);
+      if (radio) radio.checked = true;
+      if (defaultGender) {
+        const genderEl = document.getElementById('child_gender');
+        if (genderEl && !genderEl.value) genderEl.value = defaultGender;
+      }
+      const formSection = document.getElementById('form');
+      if (formSection) formSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    document.querySelectorAll('.story-pick-btn').forEach((b) => {
+      b.addEventListener('click', () => {
+        selectStory(b.dataset.story, b.dataset.gender);
+      });
+    });
+
     document.querySelectorAll('[data-version]').forEach((link) => {
       link.addEventListener('click', () => {
         const radio = form.querySelector(`input[name="version"][value="${link.dataset.version}"]`);
@@ -230,10 +327,15 @@ const faqItems = [
       });
     });
 
+    if (initialStory) {
+      setTimeout(() => selectStory(initialStory, STORY_DEFAULT_GENDER[initialStory]), 150);
+    }
+
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
 
       const data = Object.fromEntries(new FormData(form));
+      if (urlRef) data.ref = urlRef;
 
       if (data.website) {
         showSuccess();
