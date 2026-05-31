@@ -4,7 +4,7 @@ export interface Props {
 }
 const { homeLinks = false } = Astro.props;
 const productsHref = homeLinks ? '#products' : '/#products';
-const contactHref = homeLinks ? '#contact' : '/#contact';
+const contactHref = 'https://zalo.me/0396868675';
 ---
 <header class="sticky top-0 z-50 border-b border-cream-dim/20 bg-navy-950/85 backdrop-blur">
   <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
@@ -13,8 +13,7 @@ const contactHref = homeLinks ? '#contact' : '/#contact';
     </a>
     <nav class="hidden items-center gap-6 text-sm font-medium text-cream-muted sm:flex">
       <a href={productsHref} class="transition hover:text-accent">Sản phẩm</a>
-      <a href={contactHref} class="transition hover:text-accent">Liên hệ</a>
-      <a href="https://zalo.me/0396868675" target="_blank" rel="noopener noreferrer" class="rounded-md border border-accent/60 px-3 py-1.5 text-accent transition hover:bg-accent hover:text-navy-950">Zalo</a>
+      <a href={contactHref} target="_blank" rel="noopener noreferrer" class="transition hover:text-accent">Liên hệ</a>
     </nav>
     <button
       type="button"
@@ -32,8 +31,7 @@ const contactHref = homeLinks ? '#contact' : '/#contact';
   <div id="mobile-nav" hidden class="border-t border-cream-dim/20 bg-navy-950/95 sm:hidden">
     <nav class="mx-auto flex max-w-6xl flex-col px-6 py-4 text-base font-medium text-cream-muted">
       <a href={productsHref} class="py-3 transition hover:text-accent">Sản phẩm</a>
-      <a href={contactHref} class="py-3 transition hover:text-accent">Liên hệ</a>
-      <a href="https://zalo.me/0396868675" target="_blank" rel="noopener noreferrer" class="mt-2 inline-flex w-fit rounded-md bg-accent px-4 py-2 font-semibold text-navy-950">Nhắn Zalo Felix</a>
+      <a href={contactHref} target="_blank" rel="noopener noreferrer" class="py-3 transition hover:text-accent">Liên hệ</a>
     </nav>
   </div>
 </header>
