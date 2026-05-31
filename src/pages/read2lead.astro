@@ -3,307 +3,307 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 
-// 12 topic options — inspired by Raz-Kids themes, adapted for Vietnamese kids.
-// `value` is the English key sent to backend; `label` is the Vietnamese label parents see.
 const topics = [
-  ['animals_pets', '🐾 Động vật & thú cưng'],
-  ['family_friends', '👨‍👩‍👧 Gia đình & bạn bè'],
-  ['school', '🏫 Trường học'],
-  ['sports', '⚽ Thể thao'],
-  ['games_toys', '🎮 Game & đồ chơi'],
-  ['vehicles', '🚗 Phương tiện'],
-  ['food_cooking', '🍜 Đồ ăn & nấu ăn'],
-  ['nature', '🌳 Thiên nhiên'],
-  ['art_creativity', '🎨 Nghệ thuật & sáng tạo'],
-  ['heroes_jobs', '🦸 Anh hùng & nghề nghiệp'],
-  ['imagination', '✨ Tưởng tượng & phép màu'],
-  ['vietnamese_holidays', '🎉 Lễ hội Việt Nam'],
+  ['animals_pets', 'Động vật & thú cưng'],
+  ['family_friends', 'Gia đình & bạn bè'],
+  ['school', 'Trường học'],
+  ['sports', 'Thể thao'],
+  ['games_toys', 'Trò chơi & đồ chơi'],
+  ['vehicles', 'Xe cộ & di chuyển'],
+  ['food_cooking', 'Đồ ăn & nấu ăn'],
+  ['nature', 'Thiên nhiên'],
+  ['art_creativity', 'Vẽ tranh & sáng tạo'],
+  ['heroes_jobs', 'Nghề nghiệp & ước mơ'],
+  ['imagination', 'Tưởng tượng & phép màu'],
+  ['vietnamese_holidays', 'Lễ hội Việt Nam'],
 ];
 
-const usp = [
-  ['🎯', 'Tên con là nhân vật chính', 'Không phải Tom hay Mary. Mỗi pack viết riêng với TÊN con + sở thích con. Không có 2 bé nào nhận cùng 1 câu chuyện.'],
-  ['🔑', 'Chunks thực dụng, không phải từ đơn', 'Bé học cụm từ ("take a deep breath", "try again slowly") dùng được ngay khi nói. Không phải danh sách từ vựng khô khan.'],
-  ['🖨️', 'In offline, không subscription', 'Không cần app. Không phí hàng tháng. Bé học bằng giấy + bút như sách thật. Lưu được mãi mãi.'],
-  ['🇻🇳', 'Bối cảnh gần trẻ Việt', 'Sau giờ học, bạn tên Minh/Bao/Linh, sân chơi gần nhà. Bé thấy mình trong truyện, không phải nhân vật Mỹ xa lạ.'],
+const parentBenefits = [
+  ['1', 'Có tên con trong câu chuyện', 'Con đọc một câu chuyện mới, trong đó con là nhân vật chính. Nội dung được viết theo tên, tuổi, giới tính và sở thích của con.'],
+  ['2', 'Có bài luyện ngay sau bài đọc', 'Sau khi đọc truyện, con làm vài bài ngắn để nhớ cách dùng câu tiếng Anh trong ngữ cảnh. Bố mẹ không cần tự soạn thêm.'],
+  ['3', 'Có file nghe kèm theo', 'Bố mẹ mở file MP3 cho con nghe trước, đọc theo, hoặc nghe lại sau khi làm bài.'],
+  ['4', 'In ra dùng được tại nhà', 'Tải file PDF, in trên giấy A4, cho con làm bằng bút chì hoặc bút màu. Không cần cài app.'],
 ];
 
-const features = [
-  ['📖', 'Truyện cá nhân hoá', '5-8 trang. Tên con xuất hiện tự nhiên.'],
-  ['🔑', '5-6 power chunks', 'Cụm từ thực dụng, KHÔNG phải từ đơn lẻ.'],
-  ['✍️', 'Bài tập đa dạng', 'Match chunk, fill blank, build sentence, fix mistake.'],
-  ['❓', 'Comprehension + Open Question', 'Câu hỏi suy luận về truyện — bé viết 1-2 câu, không chỉ chọn đáp án.'],
-  ['🎧', 'MP3 story audio', 'Đọc to truyện. Nghe trước hoặc trong khi đọc.'],
-  ['📋', 'Bảng tham chiếu level', 'Trang cuối có bảng Read2Lead vs Cambridge YL vs Family and Friends.'],
+const insideItems = [
+  ['Trang đọc', 'Một câu chuyện tiếng Anh ngắn, vừa với tuổi và khả năng đọc của con.'],
+  ['Câu cần nhớ', 'Những cách nói hữu ích được lặp lại trong truyện và bài luyện.'],
+  ['Bài điền từ', 'Con điền lại câu để tập dùng đúng cách nói mới học.'],
+  ['Bài sắp xếp câu', 'Con ghép từ thành câu đúng, để nhớ câu tốt hơn.'],
+  ['Câu hỏi sau khi đọc', 'Con trả lời câu hỏi đơn giản để hiểu câu chuyện, không học vẹt.'],
+  ['Trang cho bố mẹ', 'Có đáp án và gợi ý cách đọc cùng con ở trang cuối.'],
 ];
 
 const steps = [
-  ['Điền thông tin', 'Tên con + tuổi + level tiếng Anh'],
-  ['Tạo pack tự động', 'Đợi 2 phút trên trang'],
-  ['Tải về & in', 'PDF + MP3, in trên giấy A4 đen trắng'],
+  ['Nhập mã', 'Nhập mã đăng nhập Felix gửi qua Zalo.'],
+  ['Điền thông tin của con', 'Tên, tuổi, giới tính, mức đọc gần đúng và chủ đề con thích.'],
+  ['Chờ khoảng 2 phút', 'Trang sẽ tạo file đọc, bài luyện và file nghe cho con.'],
+  ['Tải về và dùng ngay', 'Tải PDF để in, tải MP3 để cho con nghe và đọc theo.'],
 ];
 
 const faqItems = [
-  ['Có pack mẫu để xem trước không?', 'Có. Anh chị tải pack mẫu PDF ở nút "Xem pack mẫu" trên đầu trang — đây là bản thật của 1 học sinh hiện tại. Xem để hiểu pack có gì trước khi quyết định.'],
-  ['Mã đăng nhập là gì? Lấy ở đâu?', 'Mỗi phụ huynh khi đăng ký dùng Read2Lead nhận 1 mã từ Felix (gửi qua Zalo). 1 mã cho phép tạo 10 packs trong 60 ngày. Hết lượt hoặc hết hạn → nhắn Zalo Felix gia hạn cùng mã đó. Chưa có mã? Nhắn Zalo +84 396868675.'],
-  ['Phí dùng Read2Lead bao nhiêu?', 'Read2Lead hiện đang thử nghiệm với học sinh hiện tại của Felix. Nhắn Zalo Felix để biết chi tiết về mã đăng nhập và cách tham gia thử nghiệm.'],
-  ['Bao lâu nhận pack sau khi tạo?', '~2 phút trực tiếp trên trang này. Backend tự sinh PDF + MP3, Felix không cần làm tay.'],
-  ['Pack có thật sự cá nhân hoá hay chỉ đổi tên?', 'Mỗi pack được tạo riêng dựa trên tên, tuổi, giới tính và level của con. Hai pack của hai bé khác nhau sẽ có chủ đề + chunks + nhân vật khác nhau, không phải chỉ thay tên.'],
-  ['Pack được in trên giấy gì?', 'Bố mẹ in trên giấy A4 thường. Pack thiết kế đen trắng OK, không cần in màu. Mỗi pack 5-8 trang tuỳ level.'],
-  ['Bé bao tuổi phù hợp?', 'Pack phù hợp bé từ 5-14 tuổi. Level L1 cho bé mới học, L2 cho bé đọc được câu đơn, L3 cho bé đọc đoạn ngắn. Felix tự chọn nếu anh chị không chắc.'],
-  ['Có thể yêu cầu chủ đề riêng không?', 'Hiện tại Read2Lead tự chọn chủ đề phù hợp tuổi + level. Nếu muốn chủ đề cụ thể (vd bé thích bóng đá, robot, mèo...) → nhắn Zalo Felix sau khi nhận pack, lần sau Felix làm theo yêu cầu.'],
-  ['Nếu pack không phù hợp thì sao?', 'Có thể tạo lại bằng mã nếu còn lượt. Nếu liên tục không ưng → nhắn Zalo Felix để được hỗ trợ.'],
-  ['Có thể đặt cho nhiều bé không?', 'Được. Mỗi lần tạo 1 pack. Lặp lại form cho bé tiếp theo. Cùng 1 mã dùng được cho nhiều bé.'],
+  ['Read2Lead dùng để làm gì?', 'Read2Lead giúp bố mẹ có ngay một bài đọc tiếng Anh ngắn cho con, kèm bài luyện và file nghe. Bố mẹ có thể in ra và ngồi đọc cùng con tại nhà.'],
+  ['Bố mẹ cần làm gì sau khi tải file?', 'In file PDF ra giấy A4. Mở file nghe cho con nghe 1 lần. Sau đó cho con đọc truyện, làm bài luyện, rồi xem đáp án ở trang cuối cùng con.'],
+  ['Cần biết dạy tiếng Anh mới dùng được không?', 'Không cần. Trang cuối có đáp án và gợi ý cho bố mẹ. Nếu con bị kẹt, bố mẹ chỉ cần cho con nghe lại file MP3 và thử lại từng phần nhỏ.'],
+  ['Mã đăng nhập là gì? Lấy ở đâu?', 'Mỗi phụ huynh khi đăng ký dùng Read2Lead sẽ nhận 1 mã từ Felix qua Zalo. Chưa có mã thì nhắn Zalo +84 396868675 để hỏi cách nhận mã.'],
+  ['Nên chọn mức đọc nào cho con?', 'Nếu con mới đọc từng từ hoặc câu rất ngắn, chọn mức 1. Nếu con đọc được câu đơn, chọn mức 2. Nếu con đọc được một đoạn ngắn, chọn mức 3. Không chắc thì chọn mức 2 trước.'],
+  ['Nếu bài quá khó hoặc quá dễ thì sao?', 'Bố mẹ có thể tạo lại một lần khác và chọn mức đọc thấp hơn hoặc cao hơn. Nếu vẫn chưa phù hợp, nhắn Zalo Felix để được hỗ trợ.'],
+  ['Có thể chọn chủ đề con thích không?', 'Có. Bố mẹ có thể điền sở thích của con và chọn một chủ đề gần nhất. Nếu để trống, Felix sẽ chọn chủ đề phù hợp với tuổi và mức đọc.'],
+  ['Một mã dùng cho nhiều bé được không?', 'Được, nếu mã còn lượt. Mỗi lần tạo nên điền thông tin riêng cho từng bé để bài đọc phù hợp hơn.'],
+  ['File tải về giữ được bao lâu?', 'Link tải về có thể chỉ tồn tại trong một thời gian ngắn. Bố mẹ nên tải PDF và MP3 về máy ngay sau khi tạo xong.'],
 ];
 ---
 
 <BaseLayout
-  title="Read2Lead — Truyện tiếng Anh viết riêng cho con | Felix Builder Hub"
-  description="Sách giáo trình dạy 1 nội dung cho mọi bé. Read2Lead viết truyện riêng với tên con là nhân vật chính. Chunks thực dụng + MP3 + in được offline."
+  title="Read2Lead - Bài đọc tiếng Anh riêng cho con | Felix Builder Hub"
+  description="Read2Lead tạo bài đọc tiếng Anh riêng cho con: có truyện ngắn, bài luyện, file nghe MP3 và PDF để bố mẹ in tại nhà."
 >
   <Header />
 
   <main id="main" class="flex-1">
     <section class="mx-auto max-w-6xl px-6 py-20 text-center md:py-28">
       <span class="inline-block rounded-full bg-accent/20 px-4 py-1 text-sm font-semibold text-accent">Đang thử nghiệm với học sinh của Felix</span>
-      <h1 class="mx-auto mt-6 max-w-5xl font-display text-4xl font-extrabold leading-snug text-cream md:text-6xl">Truyện tiếng Anh viết riêng cho con.</h1>
+      <h1 class="mx-auto mt-6 max-w-5xl font-display text-4xl font-extrabold leading-snug text-cream md:text-6xl">Tạo bài đọc tiếng Anh riêng cho con.</h1>
       <p class="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-cream-muted md:text-xl">
-        Sách giáo trình dạy cùng 1 nội dung cho mọi bé. Read2Lead viết truyện mới với <strong class="text-cream">TÊN con là nhân vật chính</strong> + sở thích con là chủ đề. Học chunks thực dụng qua câu chuyện của chính mình.
+        Bố mẹ nhập mã, điền thông tin của con, đợi khoảng 2 phút. Read2Lead sẽ tạo một file PDF để in và một file nghe MP3 để con đọc theo.
       </p>
-      <p class="mx-auto mt-6 inline-flex max-w-2xl flex-wrap items-center justify-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-4 py-2 text-sm text-gold-light">
-        <span aria-hidden="true">🎁</span>
-        <span><strong class="text-cream">Hiện miễn phí cho học sinh thử nghiệm.</strong> <a href="https://zalo.me/0396868675" target="_blank" rel="noopener noreferrer" class="underline transition hover:text-cream">Nhắn Zalo Felix xin mã</a>.</span>
+      <p class="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-cream-dim">
+        Phù hợp khi bố mẹ muốn có một bài đọc ngắn, dễ dùng ngay tại nhà, có tên con trong câu chuyện và có hướng dẫn ở trang cuối.
       </p>
       <div class="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
-        <a href="/read2lead/Read2Lead-Sample-Pack.pdf" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-lg border border-accent px-6 py-3 font-semibold text-accent transition hover:bg-accent hover:text-navy-950">
-          <span aria-hidden="true">📄</span> Xem pack mẫu (PDF)
-        </a>
-        <a href="#form" class="inline-flex rounded-lg bg-accent px-6 py-3 font-semibold text-navy-950 transition hover:bg-accent-hover">Tạo pack cho con →</a>
+        <a href="#form" class="inline-flex rounded-lg bg-accent px-6 py-3 font-semibold text-navy-950 transition hover:bg-accent-hover">Tạo bài đọc cho con</a>
+        <a href="/read2lead/Read2Lead-Sample-Pack.pdf" target="_blank" rel="noopener" class="inline-flex rounded-lg border border-accent px-6 py-3 font-semibold text-accent transition hover:bg-accent hover:text-navy-950">Xem file mẫu PDF</a>
       </div>
-      <p class="mt-5 text-sm text-cream-dim">Pack mẫu là bản thật của 1 học sinh hiện tại. Tải về xem thử trước khi quyết định.</p>
     </section>
 
-    <section class="mx-auto max-w-6xl px-6 py-16">
-      <div class="text-center">
-        <h2 class="font-display text-3xl font-bold leading-snug text-cream md:text-4xl">Khác gì với sách thông thường?</h2>
-        <p class="mx-auto mt-4 max-w-2xl leading-relaxed text-cream-dim">4 điều phụ huynh đã chọn Read2Lead thay vì sách giáo trình.</p>
-      </div>
-      <div class="mt-10 grid gap-5 md:grid-cols-2">
-        {usp.map(([icon, title, description]) => (
-          <div class="rounded-xl border border-accent/30 bg-navy-900/70 p-6">
-            <div class="flex items-start gap-4">
-              <span class="text-3xl" aria-hidden="true">{icon}</span>
-              <div>
-                <h3 class="font-display text-xl font-bold text-cream">{title}</h3>
-                <p class="mt-2 leading-relaxed text-cream-muted">{description}</p>
+    <section class="bg-navy-900 px-6 py-20">
+      <div class="mx-auto max-w-6xl">
+        <div class="text-center">
+          <h2 class="font-display text-3xl font-bold leading-snug text-cream md:text-4xl">Phụ huynh sẽ nhận được gì?</h2>
+          <p class="mx-auto mt-4 max-w-2xl leading-relaxed text-cream-dim">Mỗi lần tạo xong, bố mẹ có 2 file: một file để in ra cho con đọc và làm bài, một file để con nghe và đọc theo.</p>
+        </div>
+        <div class="mt-10 grid gap-5 md:grid-cols-2">
+          {parentBenefits.map(([number, title, description]) => (
+            <div class="rounded-xl border border-cream-dim/20 bg-navy-950/75 p-6">
+              <div class="flex items-start gap-4">
+                <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-accent font-display font-bold text-navy-950">{number}</span>
+                <div>
+                  <h3 class="font-display text-xl font-bold text-cream">{title}</h3>
+                  <p class="mt-2 leading-relaxed text-cream-muted">{description}</p>
+                </div>
               </div>
-            </div>
-          </div>
-        ))}
-      </div>
-      <p class="mx-auto mt-8 max-w-2xl text-center text-sm leading-relaxed text-cream-dim">
-        So với sách bổ trợ phổ biến (Family and Friends, Tiny Talk) và app học tiếng Anh (Monkey Stories, Raz-Kids): không nơi nào viết truyện riêng cho từng bé như Read2Lead.
-      </p>
-    </section>
-
-    <section class="bg-navy-900 px-6 py-20">
-      <div class="mx-auto max-w-6xl">
-        <h2 class="text-center font-display text-3xl font-bold leading-snug text-cream md:text-4xl">Pack có gì bên trong</h2>
-        <p class="mx-auto mt-5 max-w-2xl text-center leading-relaxed text-cream-dim">Truyện cá nhân hoá, bài tập chunk, và đáp án dành cho phụ huynh — tất cả trong 1 pack in được.</p>
-        <div class="mt-12 grid gap-6 md:grid-cols-3">
-          <figure class="overflow-hidden rounded-xl bg-navy-950 shadow-2xl ring-1 ring-cream-dim/25">
-            <div class="aspect-[3/4] overflow-hidden bg-navy-950">
-              <img src="/read2lead/story.png" alt="Trang truyện cá nhân hóa" loading="lazy" class="h-full w-full object-contain" onerror="this.style.display='none'; this.parentElement.classList.add('flex','items-center','justify-center'); this.parentElement.innerHTML='<span class=\'text-cream-dim text-sm\'>📖 Trang truyện</span>'" />
-            </div>
-            <figcaption class="px-5 py-4 text-sm text-cream-muted">📖 <strong class="text-cream">Trang truyện</strong> — Tên con xuất hiện tự nhiên trong câu chuyện.</figcaption>
-          </figure>
-          <figure class="overflow-hidden rounded-xl bg-navy-950 shadow-2xl ring-1 ring-cream-dim/25">
-            <div class="aspect-[3/4] overflow-hidden bg-navy-950">
-              <img src="/read2lead/chunk.png" alt="Trang bài tập chunk" loading="lazy" class="h-full w-full object-contain" onerror="this.style.display='none'; this.parentElement.classList.add('flex','items-center','justify-center'); this.parentElement.innerHTML='<span class=\'text-cream-dim text-sm\'>✍️ Trang bài tập</span>'" />
-            </div>
-            <figcaption class="px-5 py-4 text-sm text-cream-muted">✍️ <strong class="text-cream">Bài tập chunk</strong> — Match, fill blank, build sentence với chunks vừa học.</figcaption>
-          </figure>
-          <figure class="overflow-hidden rounded-xl bg-navy-950 shadow-2xl ring-1 ring-cream-dim/25">
-            <div class="aspect-[3/4] overflow-hidden bg-navy-950">
-              <img src="/read2lead/parents.png" alt="Trang đáp án phụ huynh" loading="lazy" class="h-full w-full object-contain" onerror="this.style.display='none'; this.parentElement.classList.add('flex','items-center','justify-center'); this.parentElement.innerHTML='<span class=\'text-cream-dim text-sm\'>📋 Đáp án</span>'" />
-            </div>
-            <figcaption class="px-5 py-4 text-sm text-cream-muted">📋 <strong class="text-cream">Đáp án phụ huynh</strong> — Trang cuối có hướng dẫn riêng cho bố mẹ.</figcaption>
-          </figure>
-        </div>
-        <p class="mt-6 text-center text-sm text-cream-dim/80">* Đây là sample từ pack thật. Pack của con sẽ có chủ đề + chunks + tên riêng.</p>
-        <div class="mt-8 text-center">
-          <a href="/read2lead/Read2Lead-Sample-Pack.pdf" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-lg border border-accent px-5 py-2.5 text-sm font-semibold text-accent transition hover:bg-accent hover:text-navy-950">
-            <span aria-hidden="true">📄</span> Tải pack mẫu đầy đủ (PDF)
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <section class="mx-auto max-w-6xl px-6 py-20">
-      <h2 class="text-center font-display text-3xl font-bold text-cream md:text-4xl">Mỗi pack có những gì</h2>
-      <div class="mt-10 grid gap-6 md:grid-cols-2">
-        {features.map(([icon, title, description]) => (
-          <div class="flex gap-4 rounded-lg border border-cream-dim/20 bg-navy-900/70 p-5">
-            <span class="text-3xl" aria-hidden="true">{icon}</span>
-            <div>
-              <h3 class="font-display text-xl font-bold text-cream">{title}</h3>
-              <p class="mt-2 leading-relaxed text-cream-muted">{description}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-    </section>
-
-    <section class="bg-navy-900 px-6 py-20">
-      <div class="mx-auto max-w-6xl">
-        <h2 class="text-center font-display text-3xl font-bold text-cream md:text-4xl">3 bước</h2>
-        <div class="mt-10 grid gap-6 md:grid-cols-3">
-          {steps.map(([title, description], index) => (
-            <div class="rounded-lg border border-cream-dim/20 bg-navy-950/75 p-5">
-              <div class="flex h-10 w-10 items-center justify-center rounded-full bg-accent font-display text-lg font-bold text-navy-950">{index + 1}</div>
-              <h3 class="mt-5 font-display text-xl font-bold text-cream">{title}</h3>
-              <p class="mt-3 leading-relaxed text-cream-muted">{description}</p>
             </div>
           ))}
         </div>
       </div>
     </section>
 
-    <section id="form" class="mx-auto max-w-6xl px-6 py-20">
-      <div id="form-section">
-        <div class="text-center">
-          <h2 class="font-display text-3xl font-bold text-cream md:text-4xl">Tạo pack cho con</h2>
-          <p class="mt-4 text-cream-muted">Felix sẽ liên hệ qua Zalo trong 24h nếu pack có vấn đề</p>
-        </div>
+    <section class="mx-auto max-w-6xl px-6 py-20">
+      <h2 class="text-center font-display text-3xl font-bold leading-snug text-cream md:text-4xl">Bên trong file có gì?</h2>
+      <p class="mx-auto mt-5 max-w-2xl text-center leading-relaxed text-cream-dim">Đây là các phần bố mẹ sẽ thấy trong file PDF sau khi tạo xong.</p>
+      <div class="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {insideItems.map(([title, description]) => (
+          <div class="rounded-lg border border-cream-dim/20 bg-navy-900/70 p-5">
+            <h3 class="font-display text-xl font-bold text-cream">{title}</h3>
+            <p class="mt-2 leading-relaxed text-cream-muted">{description}</p>
+          </div>
+        ))}
+      </div>
+    </section>
 
-        <form id="r2l-form" class="mx-auto mt-10 max-w-xl space-y-5">
-          <div>
-            <label class="mb-2 block text-sm text-cream-muted">
-              Mã đăng nhập <span class="text-red-400">*</span>
-            </label>
-            <input
-              type="text"
-              name="access_code"
-              required
-              maxlength="32"
-              autocomplete="off"
-              placeholder="VD: R2L-JUN-A4F2"
-              class="w-full rounded-lg border border-cream-dim/30 bg-navy-900 px-4 py-3 text-base uppercase text-cream placeholder:normal-case placeholder:text-cream-dim/80 focus:border-accent focus:outline-none"
-            />
-            <p class="mt-2 text-xs text-cream-dim">Chưa có mã? <a href="https://zalo.me/0396868675" class="text-accent underline">Nhắn Zalo Felix</a> để nhận.</p>
-          </div>
-          <div>
-            <label for="child_name" class="mb-2 block text-sm text-cream-muted">Tên con <span class="text-red-400">*</span></label>
-            <input id="child_name" name="child_name" required maxlength="50" placeholder="Vd: Linh" class="w-full rounded-lg border border-cream-dim/30 bg-navy-900 px-4 py-3 text-base text-cream focus:border-accent" />
-          </div>
-          <div>
-            <label for="age" class="mb-2 block text-sm text-cream-muted">Tuổi con <span class="text-red-400">*</span></label>
-            <input id="age" type="number" name="age" min="5" max="14" required placeholder="5-14" class="w-full rounded-lg border border-cream-dim/30 bg-navy-900 px-4 py-3 text-base text-cream focus:border-accent" />
-          </div>
-          <fieldset>
-            <legend class="mb-2 block text-sm text-cream-muted">Level tiếng Anh <span class="text-red-400">*</span></legend>
-            <div class="space-y-3 rounded-lg border border-cream-dim/30 bg-navy-900 p-4">
-              <label class="flex items-start gap-3 text-base text-cream">
-                <input type="radio" name="level" value="L1" required class="mt-1 h-4 w-4 accent-accent" />
-                <span>L1 Beginner (A1) — mới bắt đầu</span>
-              </label>
-              <label class="flex items-start gap-3 text-base text-cream">
-                <input type="radio" name="level" value="L2" required checked class="mt-1 h-4 w-4 accent-accent" />
-                <span>L2 Early Reader (A2) — đọc được câu đơn</span>
-              </label>
-              <label class="flex items-start gap-3 text-base text-cream">
-                <input type="radio" name="level" value="L3" required class="mt-1 h-4 w-4 accent-accent" />
-                <span>L3 Growing Reader (A2+) — đọc đoạn ngắn</span>
-              </label>
+    <section class="bg-navy-900 px-6 py-20">
+      <div class="mx-auto max-w-6xl">
+        <h2 class="text-center font-display text-3xl font-bold leading-snug text-cream md:text-4xl">Xem nhanh file mẫu</h2>
+        <p class="mx-auto mt-5 max-w-2xl text-center leading-relaxed text-cream-dim">Ba hình dưới đây cho bố mẹ hình dung: trang đọc, trang bài luyện, và trang đáp án.</p>
+        <div class="mt-12 grid gap-6 md:grid-cols-3">
+          <figure class="overflow-hidden rounded-xl bg-navy-950 shadow-2xl ring-1 ring-cream-dim/25">
+            <div class="aspect-[3/4] overflow-hidden bg-navy-950">
+              <img src="/read2lead/story.png" alt="Trang đọc của Read2Lead" loading="lazy" class="h-full w-full object-contain" />
             </div>
-          </fieldset>
-          <div>
-            <label class="mb-2 block text-sm text-cream-muted">Giới tính con <span class="text-red-400">*</span></label>
-            <div class="space-y-2">
-              <label class="flex cursor-pointer items-center gap-3">
-                <input type="radio" name="child_gender" value="boy" required class="h-4 w-4 accent-accent" checked />
-                <span>Bé trai</span>
-              </label>
-              <label class="flex cursor-pointer items-center gap-3">
-                <input type="radio" name="child_gender" value="girl" required class="h-4 w-4 accent-accent" />
-                <span>Bé gái</span>
-              </label>
+            <figcaption class="px-5 py-4 text-sm text-cream-muted"><strong class="text-cream">Trang đọc</strong> - Câu chuyện ngắn có tên con.</figcaption>
+          </figure>
+          <figure class="overflow-hidden rounded-xl bg-navy-950 shadow-2xl ring-1 ring-cream-dim/25">
+            <div class="aspect-[3/4] overflow-hidden bg-navy-950">
+              <img src="/read2lead/chunk.png" alt="Trang bài luyện của Read2Lead" loading="lazy" class="h-full w-full object-contain" />
             </div>
+            <figcaption class="px-5 py-4 text-sm text-cream-muted"><strong class="text-cream">Trang bài luyện</strong> - Con tập dùng lại câu vừa đọc.</figcaption>
+          </figure>
+          <figure class="overflow-hidden rounded-xl bg-navy-950 shadow-2xl ring-1 ring-cream-dim/25">
+            <div class="aspect-[3/4] overflow-hidden bg-navy-950">
+              <img src="/read2lead/parents.png" alt="Trang đáp án cho phụ huynh" loading="lazy" class="h-full w-full object-contain" />
+            </div>
+            <figcaption class="px-5 py-4 text-sm text-cream-muted"><strong class="text-cream">Trang cho bố mẹ</strong> - Có đáp án và gợi ý cách dùng.</figcaption>
+          </figure>
+        </div>
+        <div class="mt-8 text-center">
+          <a href="/read2lead/Read2Lead-Sample-Pack.pdf" target="_blank" rel="noopener" class="inline-flex rounded-lg border border-accent px-5 py-2.5 text-sm font-semibold text-accent transition hover:bg-accent hover:text-navy-950">Tải file mẫu đầy đủ</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-6xl px-6 py-20">
+      <h2 class="text-center font-display text-3xl font-bold leading-snug text-cream md:text-4xl">Cách dùng sau khi tải file</h2>
+      <div class="mt-10 grid gap-6 md:grid-cols-4">
+        {steps.map(([title, description], index) => (
+          <div class="rounded-lg border border-cream-dim/20 bg-navy-900/70 p-5">
+            <div class="flex h-10 w-10 items-center justify-center rounded-md bg-accent font-display text-lg font-bold text-navy-950">{index + 1}</div>
+            <h3 class="mt-5 font-display text-xl font-bold text-cream">{title}</h3>
+            <p class="mt-3 leading-relaxed text-cream-muted">{description}</p>
           </div>
-          <div>
-            <label for="interests" class="mb-2 block text-sm text-cream-muted">
-              Sở thích của con <span class="text-cream-dim">(tùy chọn)</span>
-            </label>
-            <input
-              id="interests"
-              name="interests"
-              type="text"
-              maxlength="120"
-              placeholder="VD: bóng đá, Roblox, mèo, vẽ tranh..."
-              class="w-full rounded-lg border border-cream-dim/30 bg-navy-900 px-4 py-3 text-base text-cream placeholder:text-cream-dim/80 focus:border-accent focus:outline-none"
-            />
-            <p class="mt-2 text-xs text-cream-dim">Felix sẽ lồng sở thích vào truyện. Để trống = Felix tự chọn.</p>
+        ))}
+      </div>
+    </section>
+
+    <section id="form" class="bg-navy-900 px-6 py-20">
+      <div class="mx-auto max-w-6xl">
+        <div id="form-section">
+          <div class="text-center">
+            <h2 class="font-display text-3xl font-bold leading-snug text-cream md:text-4xl">Tạo file cho con</h2>
+            <p class="mx-auto mt-4 max-w-2xl leading-relaxed text-cream-muted">Điền thông tin bên dưới. Nếu không chắc mức đọc nào phù hợp, hãy chọn mức 2 trước.</p>
           </div>
-          <div>
-            <label class="mb-2 block text-sm text-cream-muted">
-              Chủ đề pack <span class="text-cream-dim">(tùy chọn)</span>
-            </label>
-            <div class="grid grid-cols-2 gap-2 rounded-lg border border-cream-dim/30 bg-navy-900 p-3 sm:grid-cols-3">
-              <label class="flex cursor-pointer items-center gap-2 rounded-md p-2 transition hover:bg-navy-800 has-[:checked]:bg-accent/15 has-[:checked]:ring-1 has-[:checked]:ring-accent">
-                <input type="radio" name="topic" value="" class="h-3.5 w-3.5 accent-accent" checked />
-                <span class="text-sm text-cream">Felix tự chọn</span>
+
+          <form id="r2l-form" class="mx-auto mt-10 max-w-xl space-y-5">
+            <div>
+              <label class="mb-2 block text-sm text-cream-muted">
+                Mã đăng nhập <span class="text-red-400">*</span>
               </label>
-              {topics.map(([value, label]) => (
-                <label class="flex cursor-pointer items-center gap-2 rounded-md p-2 transition hover:bg-navy-800 has-[:checked]:bg-accent/15 has-[:checked]:ring-1 has-[:checked]:ring-accent">
-                  <input type="radio" name="topic" value={value} class="h-3.5 w-3.5 accent-accent" />
-                  <span class="text-sm text-cream">{label}</span>
+              <input
+                type="text"
+                name="access_code"
+                required
+                maxlength="32"
+                autocomplete="off"
+                placeholder="VD: R2L-JUN-A4F2"
+                class="w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-4 py-3 text-base uppercase text-cream placeholder:normal-case placeholder:text-cream-dim/80 focus:border-accent focus:outline-none"
+              />
+              <p class="mt-2 text-xs text-cream-dim">Chưa có mã? <a href="https://zalo.me/0396868675" class="text-accent underline">Nhắn Zalo Felix</a> để nhận.</p>
+            </div>
+            <div>
+              <label for="child_name" class="mb-2 block text-sm text-cream-muted">Tên con <span class="text-red-400">*</span></label>
+              <input id="child_name" name="child_name" required maxlength="50" placeholder="VD: Linh" class="w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-4 py-3 text-base text-cream placeholder:text-cream-dim/80 focus:border-accent focus:outline-none" />
+            </div>
+            <div>
+              <label for="age" class="mb-2 block text-sm text-cream-muted">Tuổi con <span class="text-red-400">*</span></label>
+              <input id="age" type="number" name="age" min="5" max="14" required placeholder="5-14" class="w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-4 py-3 text-base text-cream placeholder:text-cream-dim/80 focus:border-accent focus:outline-none" />
+            </div>
+            <fieldset>
+              <legend class="mb-2 block text-sm text-cream-muted">Khả năng đọc tiếng Anh của con <span class="text-red-400">*</span></legend>
+              <div class="space-y-3 rounded-lg border border-cream-dim/30 bg-navy-950 p-4">
+                <label class="flex items-start gap-3 text-base text-cream">
+                  <input type="radio" name="level" value="L1" required class="mt-1 h-4 w-4 accent-accent" />
+                  <span>Mức 1 - Con mới bắt đầu, đọc từng từ hoặc câu rất ngắn.</span>
                 </label>
-              ))}
+                <label class="flex items-start gap-3 text-base text-cream">
+                  <input type="radio" name="level" value="L2" required checked class="mt-1 h-4 w-4 accent-accent" />
+                  <span>Mức 2 - Con đọc được câu đơn và đoạn ngắn có hỗ trợ.</span>
+                </label>
+                <label class="flex items-start gap-3 text-base text-cream">
+                  <input type="radio" name="level" value="L3" required class="mt-1 h-4 w-4 accent-accent" />
+                  <span>Mức 3 - Con đọc được nhiều câu liên tiếp và cần bài dài hơn.</span>
+                </label>
+              </div>
+            </fieldset>
+            <div>
+              <label class="mb-2 block text-sm text-cream-muted">Giới tính con <span class="text-red-400">*</span></label>
+              <div class="space-y-2 rounded-lg border border-cream-dim/30 bg-navy-950 p-4">
+                <label class="flex cursor-pointer items-center gap-3">
+                  <input type="radio" name="child_gender" value="boy" required class="h-4 w-4 accent-accent" checked />
+                  <span>Bé trai</span>
+                </label>
+                <label class="flex cursor-pointer items-center gap-3">
+                  <input type="radio" name="child_gender" value="girl" required class="h-4 w-4 accent-accent" />
+                  <span>Bé gái</span>
+                </label>
+              </div>
             </div>
-            <p class="mt-2 text-xs text-cream-dim">12 chủ đề thân thuộc với trẻ. Chọn cái con thích nhất.</p>
+            <div>
+              <label for="interests" class="mb-2 block text-sm text-cream-muted">
+                Sở thích của con <span class="text-cream-dim">(tùy chọn)</span>
+              </label>
+              <input
+                id="interests"
+                name="interests"
+                type="text"
+                maxlength="120"
+                placeholder="VD: bóng đá, Roblox, mèo, vẽ tranh..."
+                class="w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-4 py-3 text-base text-cream placeholder:text-cream-dim/80 focus:border-accent focus:outline-none"
+              />
+              <p class="mt-2 text-xs text-cream-dim">Nếu điền, câu chuyện sẽ cố gắng đi theo điều con thích.</p>
+            </div>
+            <div>
+              <label class="mb-2 block text-sm text-cream-muted">
+                Chủ đề con thích <span class="text-cream-dim">(tùy chọn)</span>
+              </label>
+              <div class="grid grid-cols-2 gap-2 rounded-lg border border-cream-dim/30 bg-navy-950 p-3 sm:grid-cols-3">
+                <label class="flex cursor-pointer items-center gap-2 rounded-md p-2 transition hover:bg-navy-800 has-[:checked]:bg-accent/15 has-[:checked]:ring-1 has-[:checked]:ring-accent">
+                  <input type="radio" name="topic" value="" class="h-3.5 w-3.5 accent-accent" checked />
+                  <span class="text-sm text-cream">Felix chọn giúp</span>
+                </label>
+                {topics.map(([value, label]) => (
+                  <label class="flex cursor-pointer items-center gap-2 rounded-md p-2 transition hover:bg-navy-800 has-[:checked]:bg-accent/15 has-[:checked]:ring-1 has-[:checked]:ring-accent">
+                    <input type="radio" name="topic" value={value} class="h-3.5 w-3.5 accent-accent" />
+                    <span class="text-sm text-cream">{label}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+            <div class="absolute -left-[9999px]" aria-hidden="true">
+              <label for="website">Website</label>
+              <input id="website" name="website" tabindex="-1" />
+            </div>
+            <button type="submit" class="w-full rounded-lg bg-accent px-6 py-3 text-lg font-semibold text-navy-950 transition hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-70">Tạo file đọc cho con</button>
+          </form>
+        </div>
+
+        <div id="progress-section" class="mx-auto hidden max-w-2xl rounded-lg border border-cream-dim/20 bg-navy-950 p-6 text-center">
+          <div class="h-3 overflow-hidden rounded-full bg-navy-800">
+            <div class="h-full w-2/3 animate-pulse rounded-full bg-gradient-to-r from-accent via-gold-light to-accent"></div>
           </div>
-          <div class="absolute -left-[9999px]" aria-hidden="true">
-            <label for="website">Website</label>
-            <input id="website" name="website" tabindex="-1" />
+          <p id="status-text" class="mt-6 text-lg font-semibold text-cream"></p>
+          <p class="mt-3 text-sm text-cream-dim">Lần đầu có thể chậm hơn một chút vì máy chủ cần khởi động.</p>
+        </div>
+
+        <div id="result-section" class="mx-auto hidden max-w-2xl rounded-lg border border-gold/40 bg-gold/10 p-6 text-center">
+          <h2 class="font-display text-3xl font-bold leading-snug text-cream">File của <span id="result-child-name"></span> đã sẵn sàng</h2>
+          <div class="mt-5 space-y-2 text-cream-muted">
+            <p>Chủ đề: <span id="result-topic" class="font-semibold text-cream"></span></p>
+            <p>Tên truyện: <span id="result-story-title" class="font-semibold text-cream"></span></p>
           </div>
-          <button type="submit" class="w-full rounded-lg bg-accent px-6 py-3 text-lg font-semibold text-navy-950 transition hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-70">Tạo pack bằng mã đăng nhập</button>
-        </form>
-      </div>
+          <div class="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
+            <a id="pdf-link" href="#" target="_blank" rel="noreferrer" class="rounded-lg bg-accent px-6 py-3 font-semibold text-navy-950 transition hover:bg-accent-hover">Tải file in PDF</a>
+            <a id="mp3-link" href="#" target="_blank" rel="noreferrer" class="rounded-lg border border-accent px-6 py-3 font-semibold text-accent transition hover:bg-accent hover:text-navy-950">Tải file nghe MP3</a>
+          </div>
+          <p class="mt-6 text-sm leading-relaxed text-cream-muted">Hãy tải cả 2 file về máy ngay. Sau đó in PDF ra giấy A4, mở MP3 cho con nghe, rồi đọc và làm bài cùng con.</p>
+          <div class="mt-6">
+            <p class="text-cream-dim">Muốn tạo file khác cho bé khác?</p>
+            <button id="reset-btn" type="button" class="mt-3 rounded-lg border border-cream-dim/30 px-5 py-2 font-semibold text-cream transition hover:border-accent hover:text-accent">Làm lại form</button>
+          </div>
+        </div>
 
-      <div id="progress-section" class="mx-auto hidden max-w-2xl rounded-lg border border-cream-dim/20 bg-navy-900 p-6 text-center">
-        <div class="h-3 overflow-hidden rounded-full bg-navy-800">
-          <div class="h-full w-2/3 animate-pulse rounded-full bg-gradient-to-r from-accent via-gold-light to-accent"></div>
-        </div>
-        <p id="status-text" class="mt-6 text-lg font-semibold text-cream"></p>
-        <p class="mt-3 text-sm text-cream-dim">Lần đầu có thể chậm ~30s do server khởi động</p>
-      </div>
-
-      <div id="result-section" class="mx-auto hidden max-w-2xl rounded-lg border border-gold/40 bg-gold/10 p-6 text-center">
-        <h2 class="font-display text-3xl font-bold text-cream">✅ Pack của <span id="result-child-name"></span> đã sẵn sàng!</h2>
-        <div class="mt-5 space-y-2 text-cream-muted">
-          <p>Topic: <span id="result-topic" class="font-semibold text-cream"></span></p>
-          <p>Story: <span id="result-story-title" class="font-semibold text-cream"></span></p>
-        </div>
-        <div class="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
-          <a id="pdf-link" href="#" target="_blank" rel="noreferrer" class="rounded-lg bg-accent px-6 py-3 font-semibold text-navy-950 transition hover:bg-accent-hover">Tải PDF</a>
-          <a id="mp3-link" href="#" target="_blank" rel="noreferrer" class="rounded-lg border border-accent px-6 py-3 font-semibold text-accent transition hover:bg-accent hover:text-navy-950">Tải MP3</a>
-        </div>
-        <p class="mt-6 text-sm text-cream-muted">📌 Lưu file ngay — link chỉ tồn tại vài giờ. Tải về máy để giữ lại.</p>
-        <div class="mt-6">
-          <p class="text-cream-dim">Tạo pack khác cho bé khác?</p>
-          <button id="reset-btn" type="button" class="mt-3 rounded-lg border border-cream-dim/30 px-5 py-2 font-semibold text-cream transition hover:border-accent hover:text-accent">Làm lại form</button>
+        <div id="error-section" class="mx-auto hidden max-w-2xl rounded-lg border border-red-500/30 bg-red-500/10 p-6 text-center">
+          <p class="text-lg font-semibold text-red-400">Có lỗi xảy ra: <span id="error-message"></span></p>
+          <button id="retry-btn" type="button" class="mt-5 rounded-lg bg-accent px-5 py-2 font-semibold text-navy-950 transition hover:bg-accent-hover">Thử lại</button>
+          <p class="mt-4 text-sm text-cream-muted">Nếu lỗi tiếp tục, nhắn Zalo +84 396868675</p>
         </div>
       </div>
+    </section>
 
-      <div id="error-section" class="mx-auto hidden max-w-2xl rounded-lg border border-red-500/30 bg-red-500/10 p-6 text-center">
-        <p class="text-lg font-semibold text-red-400">⚠️ Có lỗi xảy ra: <span id="error-message"></span></p>
-        <button id="retry-btn" type="button" class="mt-5 rounded-lg bg-accent px-5 py-2 font-semibold text-navy-950 transition hover:bg-accent-hover">Thử lại</button>
-        <p class="mt-4 text-sm text-cream-muted">Nếu lỗi tiếp tục, nhắn Zalo +84 396868675</p>
+    <section class="mx-auto max-w-6xl px-6 py-20">
+      <div class="mx-auto max-w-3xl rounded-xl border border-gold/30 bg-gold/10 p-6">
+        <h2 class="font-display text-2xl font-bold leading-snug text-cream">Tóm tắt cách dùng trong 10 phút đầu</h2>
+        <ol class="mt-5 space-y-3 text-cream-muted">
+          <li><strong class="text-cream">1.</strong> Tải PDF và MP3 về máy.</li>
+          <li><strong class="text-cream">2.</strong> In PDF trên giấy A4, không cần in màu.</li>
+          <li><strong class="text-cream">3.</strong> Cho con nghe MP3 một lần trước khi đọc.</li>
+          <li><strong class="text-cream">4.</strong> Con đọc truyện, gạch chân câu hay, rồi làm bài luyện.</li>
+          <li><strong class="text-cream">5.</strong> Bố mẹ xem đáp án ở trang cuối và sửa nhẹ cho con.</li>
+        </ol>
       </div>
     </section>
 
     <section class="bg-navy-900 px-6 py-20">
       <div class="mx-auto max-w-3xl">
-        <h2 class="text-center font-display text-3xl font-bold text-cream md:text-4xl">Câu hỏi thường gặp</h2>
+        <h2 class="text-center font-display text-3xl font-bold leading-snug text-cream md:text-4xl">Câu hỏi thường gặp</h2>
         <div class="mt-10 space-y-3">
           {faqItems.map(([question, answer]) => (
             <details class="rounded-lg border border-cream-dim/20 bg-navy-950/75 p-5">
@@ -318,9 +318,9 @@ const faqItems = [
     <section class="mx-auto max-w-6xl px-6 py-20 text-center">
       <p class="text-sm font-semibold uppercase tracking-wide text-cream-dim">Bạn cũng có thể quan tâm</p>
       <div class="mx-auto mt-6 max-w-2xl rounded-lg border border-accent bg-navy-900/70 p-8">
-        <h3 class="font-display text-2xl font-bold text-cream">MSMW — Sách truyện cá nhân hoá làm quà tặng</h3>
-        <p class="mt-4 leading-relaxed text-cream-muted">Quà ý nghĩa: cuốn sách 20 trang với con là nhân vật chính.</p>
-        <a href="/msmw" class="mt-6 inline-flex font-semibold text-accent transition hover:text-accent-hover">Xem MSMW →</a>
+        <h3 class="font-display text-2xl font-bold leading-snug text-cream">MSMW - Sách truyện cá nhân hóa làm quà tặng</h3>
+        <p class="mt-4 leading-relaxed text-cream-muted">Một cuốn sách 20 trang với con là nhân vật chính, phù hợp làm quà sinh nhật hoặc dịp đặc biệt.</p>
+        <a href="/msmw" class="mt-6 inline-flex font-semibold text-accent transition hover:text-accent-hover">Xem MSMW</a>
       </div>
     </section>
   </main>
@@ -339,10 +339,10 @@ const faqItems = [
     let statusInterval = null;
 
     const stages = [
-      '✍️ Đang tạo truyện riêng cho con...',
-      '📝 Đang chuẩn bị bài tập...',
-      '🎧 Đang ghi âm story...',
-      '📦 Sắp xong, đang đóng gói file...',
+      'Đang viết câu chuyện riêng cho con...',
+      'Đang chuẩn bị bài luyện để in...',
+      'Đang tạo file nghe cho con...',
+      'Sắp xong, đang đóng gói file...',
     ];
 
     function showProgress() {
@@ -404,7 +404,7 @@ const faqItems = [
       }
 
       btn.disabled = true;
-      btn.textContent = 'Đang tạo... (~2 phút)';
+      btn.textContent = 'Đang tạo...';
       showProgress();
 
       try {
@@ -425,7 +425,7 @@ const faqItems = [
         showError('Mạng không ổn định. Vui lòng thử lại sau ít phút.');
       } finally {
         btn.disabled = false;
-        btn.textContent = 'Tạo pack bằng mã đăng nhập';
+        btn.textContent = 'Tạo file đọc cho con';
       }
     });
   </script>
