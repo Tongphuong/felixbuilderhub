@@ -1,3 +1,5 @@
+const GENERATION_LOCK_STALE_MS = 15 * 60 * 1000;
+
 export async function onRequestPost(context) {
   const { request, env } = context;
 
@@ -36,12 +38,15 @@ export async function onRequestPost(context) {
   if (availabilityError) return availabilityError;
 
   const progress = normalizeProgress(codeData, data);
-  if (progress.current_pack && !isPackReviewed(progress.current_pack)) {
+  if (currentPackBlocksGeneration(progress.current_pack)) {
     return json(
       {
         ok: false,
-        error: 'previous_pack_needs_review',
-        message: 'Bài trước cần nộp ảnh bài làm và ghi âm con kể lại câu chuyện trước khi mở bài mới.',
+        error: progress.current_pack.status === 'generation_in_progress' ? 'generation_in_progress' : 'previous_pack_needs_review',
+        message:
+          progress.current_pack.status === 'generation_in_progress'
+            ? 'Felixar đang tạo bài cho con. Vui lòng đợi thêm một chút, đừng bấm tạo lại.'
+            : 'Bài trước cần nộp ảnh bài làm và ghi âm con kể lại câu chuyện trước khi mở bài mới.',
         review_link: `/read2lead/review?code=${encodeURIComponent(accessCode)}`,
         current_pack: publicPack(progress.current_pack),
         progress: publicProgress(progress),
@@ -54,16 +59,53 @@ export async function onRequestPost(context) {
   if (!backendUrl) {
     return json({ ok: false, error: 'backend_not_configured', message: 'Backend chưa cấu hình.' }, 500);
   }
+  const backendSecret = env.READ2LEAD_BACKEND_SECRET;
+  if (!backendSecret) {
+    return json({ ok: false, error: 'backend_auth_not_configured', message: 'Backend chưa cấu hình bảo mật.' }, 500);
+  }
 
   let upstreamResult;
+  const interests = (data.interests || '').toString().trim().slice(0, 120);
+  const topic = (data.topic || '').toString().trim().slice(0, 60);
+  const levelForPack = progress.current_level || data.level;
+  const lockCreatedAt = new Date().toISOString();
+  const pendingPackId = crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+  const pendingPack = {
+    pack_id: pendingPackId,
+    status: 'generation_in_progress',
+    created_at: lockCreatedAt,
+    topic: topic || '',
+    story_title: 'Đang tạo bài Read2Lead',
+    level: levelForPack,
+  };
+  const lockedProgress = {
+    ...progress,
+    current_level: levelForPack,
+    current_pack: pendingPack,
+  };
+  await env.READ2LEAD_CODES.put(
+    accessCode,
+    JSON.stringify({
+      ...codeData,
+      student_profile: {
+        ...(codeData.student_profile || {}),
+        student_name: progress.student_name || data.child_name,
+        age: progress.age || parseInt(data.age, 10),
+        level: levelForPack,
+        child_gender: progress.child_gender || data.child_gender,
+      },
+      progress: lockedProgress,
+    }),
+  );
+
   try {
-    const interests = (data.interests || '').toString().trim().slice(0, 120);
-    const topic = (data.topic || '').toString().trim().slice(0, 60);
-    const levelForPack = progress.current_level || data.level;
     const reviewUrl = `${new URL(request.url).origin}/read2lead/review?code=${encodeURIComponent(accessCode)}`;
     const upstream = await fetch(`${backendUrl}/generate`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Read2Lead-Secret': backendSecret,
+      },
       body: JSON.stringify({
         child_name: progress.student_name || data.child_name,
         age: progress.age || parseInt(data.age, 10),
@@ -77,7 +119,13 @@ export async function onRequestPost(context) {
     upstreamResult = { status: upstream.status, body: await upstream.json() };
   } catch (err) {
     console.error('Backend call failed:', err.message);
+    await clearGenerationLock(env.READ2LEAD_CODES, accessCode, pendingPackId);
     return json({ ok: false, error: 'backend_unavailable', message: 'Backend không phản hồi. Thử lại sau.' }, 502);
+  }
+
+  if (!upstreamResult.body || !upstreamResult.body.ok) {
+    await clearGenerationLock(env.READ2LEAD_CODES, accessCode, pendingPackId);
+    return json(upstreamResult.body || { ok: false, error: 'generation_failed' }, upstreamResult.status || 500);
   }
 
   if (upstreamResult.body && upstreamResult.body.ok) {
@@ -91,7 +139,7 @@ export async function onRequestPost(context) {
       mp3_url: upstreamResult.body.mp3_url,
       topic: upstreamResult.body.topic,
       story_title: upstreamResult.body.story_title,
-      level: progress.current_level || data.level,
+      level: levelForPack,
       review_context: upstreamResult.body.review_context || null,
     };
 
@@ -177,6 +225,31 @@ function normalizeProgress(codeData, formData = {}) {
 
 function isPackReviewed(pack) {
   return ['reviewed_pass', 'reviewed_retry'].includes(pack.status);
+}
+
+function currentPackBlocksGeneration(pack) {
+  if (!pack || isPackReviewed(pack)) return false;
+  if (pack.status !== 'generation_in_progress') return true;
+
+  const startedAt = Date.parse(pack.created_at || '');
+  if (!Number.isFinite(startedAt)) return true;
+  return Date.now() - startedAt < GENERATION_LOCK_STALE_MS;
+}
+
+async function clearGenerationLock(kv, accessCode, pendingPackId) {
+  const current = await kv.get(accessCode, { type: 'json' });
+  if (!current?.progress?.current_pack || current.progress.current_pack.pack_id !== pendingPackId) return;
+
+  await kv.put(
+    accessCode,
+    JSON.stringify({
+      ...current,
+      progress: {
+        ...current.progress,
+        current_pack: null,
+      },
+    }),
+  );
 }
 
 function publicPack(pack) {

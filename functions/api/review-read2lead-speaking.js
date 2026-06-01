@@ -7,6 +7,10 @@ export async function onRequestPost(context) {
   if (!env.READ2LEAD_BACKEND_URL) {
     return json({ ok: false, error: 'backend_not_configured', message: 'Backend chưa cấu hình.' }, 500);
   }
+  const backendSecret = env.READ2LEAD_BACKEND_SECRET;
+  if (!backendSecret) {
+    return json({ ok: false, error: 'backend_auth_not_configured', message: 'Backend chưa cấu hình bảo mật.' }, 500);
+  }
 
   let form;
   try {
@@ -81,6 +85,9 @@ export async function onRequestPost(context) {
   try {
     const res = await fetch(`${env.READ2LEAD_BACKEND_URL}/review`, {
       method: 'POST',
+      headers: {
+        'X-Read2Lead-Secret': backendSecret,
+      },
       body: reviewForm,
     });
     upstream = { status: res.status, body: await res.json() };
