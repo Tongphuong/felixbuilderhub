@@ -31,6 +31,31 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
             <input name="parent_zalo" maxlength="30" placeholder="0901234567" class="w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-3 py-2 text-cream focus:border-accent focus:outline-none" />
           </div>
           <div>
+            <label class="mb-1 block text-sm text-cream-muted">Tên con</label>
+            <input name="student_name" maxlength="50" placeholder="Linh" class="w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-3 py-2 text-cream focus:border-accent focus:outline-none" />
+            <p class="mt-1 text-xs text-cream-dim">Nếu điền tên con, mã sẽ dễ nhớ hơn, ví dụ R2L-LINH-A4F2.</p>
+          </div>
+          <div>
+            <label class="mb-1 block text-sm text-cream-muted">Tuổi con</label>
+            <input name="student_age" type="number" min="5" max="14" placeholder="8" class="w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-3 py-2 text-cream focus:border-accent focus:outline-none" />
+          </div>
+          <div>
+            <label class="mb-1 block text-sm text-cream-muted">Level mặc định</label>
+            <select name="student_level" class="w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-3 py-2 text-cream focus:border-accent focus:outline-none">
+              <option value="L2">L2 - đọc được câu đơn</option>
+              <option value="L1">L1 - mới bắt đầu</option>
+              <option value="L3">L3 - đọc đoạn ngắn</option>
+            </select>
+          </div>
+          <div>
+            <label class="mb-1 block text-sm text-cream-muted">Giới tính</label>
+            <select name="child_gender" class="w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-3 py-2 text-cream focus:border-accent focus:outline-none">
+              <option value="">Chưa chọn</option>
+              <option value="girl">Bé gái</option>
+              <option value="boy">Bé trai</option>
+            </select>
+          </div>
+          <div>
             <label class="mb-1 block text-sm text-cream-muted">Số lượt</label>
             <input name="uses" type="number" min="1" max="1000" value="10" required class="w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-3 py-2 text-cream focus:border-accent focus:outline-none" />
           </div>
@@ -119,6 +144,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
           createForm.reset();
           createForm.querySelector('[name=uses]').value = '10';
           createForm.querySelector('[name=expiry_days]').value = '60';
+          createForm.querySelector('[name=student_level]').value = 'L2';
           await loadList();
         } else {
           showCreateError(result.message || result.error || 'Lỗi không xác định');
@@ -147,6 +173,11 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       const status = expired ? 'Hết hạn' : exhausted ? 'Hết lượt' : 'Hoạt động';
       const statusColor = expired || exhausted ? 'text-red-400 border-red-500/40' : 'text-green-400 border-green-500/40';
       const usesTotal = item.uses_total ?? item.uses_remaining ?? '?';
+      const profile = item.student_profile || {};
+      const progress = item.progress || {};
+      const studentName = profile.student_name || progress.student_name || '';
+      const studentAge = profile.age || progress.age || '';
+      const studentLevel = profile.level || progress.current_level || '';
 
       return `
         <article class="rounded-lg border border-cream-dim/20 bg-navy-950/60 p-4" data-code="${escapeHtml(item.code)}">
@@ -158,6 +189,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
                 ${item.parent_zalo ? ' · ' + escapeHtml(item.parent_zalo) : ''}
               </p>
               ${item.notes ? `<p class="mt-1 text-xs text-cream-dim">${escapeHtml(item.notes)}</p>` : ''}
+              ${studentName ? `<p class="mt-1 text-xs text-accent">Con: ${escapeHtml(studentName)}${studentAge ? ' · ' + escapeHtml(studentAge) + ' tuổi' : ''}${studentLevel ? ' · ' + escapeHtml(studentLevel) : ''}</p>` : ''}
             </div>
             <span class="rounded-md border px-2 py-1 text-xs font-semibold ${statusColor}">${status}</span>
           </div>

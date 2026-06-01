@@ -14,9 +14,25 @@ function randomChars(n) {
 }
 
 async function generateUniqueCode(kv) {
+  return generateUniqueCodeForName(kv, '');
+}
+
+function codeNamePart(studentName) {
+  const ascii = studentName
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[Đđ]/g, 'D')
+    .toUpperCase()
+    .replace(/[^A-Z0-9]+/g, '');
+
+  return ascii.slice(0, 10);
+}
+
+async function generateUniqueCodeForName(kv, studentName) {
   const month = MONTH_CODES[new Date().getUTCMonth()];
+  const namePart = codeNamePart(studentName) || month;
   for (let attempt = 0; attempt < 6; attempt++) {
-    const code = `R2L-${month}-${randomChars(4)}`;
+    const code = `R2L-${namePart}-${randomChars(4)}`;
     const exists = await kv.get(code);
     if (!exists) return code;
   }
@@ -70,7 +86,7 @@ export async function onRequestPost(context) {
     return json({ ok: false, error: 'expiry_days_invalid', message: 'expiry_days must be 1-3650' }, 400);
   }
 
-  const code = await generateUniqueCode(env.READ2LEAD_CODES);
+  const code = await generateUniqueCodeForName(env.READ2LEAD_CODES, student_name);
   const record = {
     parent_name,
     parent_zalo,
