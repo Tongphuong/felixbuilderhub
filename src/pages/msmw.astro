@@ -372,7 +372,7 @@ const faqItems = [
     function showSuccess() {
       form.style.display = 'none';
       statusEl.className = 'mx-auto mt-8 max-w-xl rounded-lg border border-gold/40 bg-gold/10 p-5 text-center font-semibold text-gold-light';
-      statusEl.innerHTML = '✅ Gửi thành công! Felix sẽ nhắn Zalo cho bạn trong 24h.';
+      statusEl.innerHTML = `✅ Gửi thành công! Felix sẽ Zalo cho anh chị trong 24h. Nếu gấp, anh chị nhắn <a href="${ZALO_URL}" class="underline">Zalo ${ZALO_DISPLAY}</a> ngay.`;
       statusEl.scrollIntoView({ behavior: 'smooth' });
     }
 
