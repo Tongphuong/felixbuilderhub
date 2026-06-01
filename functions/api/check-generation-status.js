@@ -20,6 +20,18 @@ export async function onRequestGet(context) {
   }
 
   const currentPack = codeData.progress?.current_pack;
+  if (currentPack?.generation_task_id === taskId && currentPack.pdf_url && currentPack.mp3_url) {
+    return json({
+      ok: true,
+      status: 'done',
+      pdf_url: currentPack.pdf_url,
+      mp3_url: currentPack.mp3_url,
+      topic: currentPack.topic,
+      story_title: currentPack.story_title,
+      review_link: `/read2lead/review?code=${encodeURIComponent(accessCode)}`,
+    });
+  }
+
   if (!currentPack || currentPack.task_id !== taskId) {
     return json({ ok: false, error: 'task_mismatch' }, 403);
   }
@@ -77,6 +89,7 @@ export async function onRequestGet(context) {
       topic: upstream.body.topic,
       story_title: upstream.body.story_title,
       level: currentPack.level,
+      generation_task_id: taskId,
       review_context: upstream.body.review_context || null,
     };
 
