@@ -88,10 +88,10 @@ export async function onRequestPost(context) {
       ...codeData,
       student_profile: {
         ...(codeData.student_profile || {}),
-        student_name: progress.student_name || data.child_name,
-        age: progress.age || parseInt(data.age, 10),
+        student_name: progress.student_name,
+        age: progress.age,
         level: levelForPack,
-        child_gender: progress.child_gender || data.child_gender,
+        child_gender: progress.child_gender,
       },
       progress: lockedProgress,
     }),
@@ -106,10 +106,10 @@ export async function onRequestPost(context) {
         'X-Read2Lead-Secret': backendSecret,
       },
       body: JSON.stringify({
-        child_name: progress.student_name || data.child_name,
-        age: progress.age || parseInt(data.age, 10),
+        child_name: progress.student_name,
+        age: progress.age,
         level: levelForPack,
-        child_gender: progress.child_gender || data.child_gender,
+        child_gender: progress.child_gender,
         interests: interests || undefined,
         topic: topic || undefined,
         review_url: reviewUrl,
@@ -139,10 +139,10 @@ export async function onRequestPost(context) {
       ...codeData,
       student_profile: {
         ...(codeData.student_profile || {}),
-        student_name: progress.student_name || data.child_name,
-        age: progress.age || parseInt(data.age, 10),
+        student_name: progress.student_name,
+        age: progress.age,
         level: levelForPack,
-        child_gender: progress.child_gender || data.child_gender,
+        child_gender: progress.child_gender,
       },
       progress: lockedProgressWithTaskId,
     };
@@ -191,11 +191,12 @@ function normalizeProgress(codeData, formData = {}) {
   const profile = codeData.student_profile || {};
   const progress = codeData.progress || {};
   const stars = Number.isFinite(progress.stars) ? progress.stars : 0;
+  const formAge = parseInt(formData.age, 10);
   return {
-    student_name: profile.student_name || formData.child_name || '',
-    age: profile.age || parseInt(formData.age, 10) || null,
-    child_gender: profile.child_gender || formData.child_gender || '',
-    current_level: progress.current_level || profile.level || formData.level || 'L2',
+    student_name: (formData.child_name || '').trim() || profile.student_name || '',
+    age: Number.isFinite(formAge) ? formAge : (profile.age || null),
+    child_gender: formData.child_gender || profile.child_gender || '',
+    current_level: formData.level || progress.current_level || profile.level || 'L2',
     stars,
     rank: progress.rank || rankForStars(stars),
     badges: Array.isArray(progress.badges) ? progress.badges : badgesForStars(stars),
