@@ -51,9 +51,9 @@ import Footer from '../../components/Footer.astro';
             <div id="progress-card" class="hidden rounded-lg border border-gold/30 bg-gold/10 p-4 text-sm text-cream-muted"></div>
 
             <div>
-              <label for="worksheet-photo" class="mb-2 block text-sm text-cream-muted">Ảnh bài làm của con</label>
-              <input id="worksheet-photo" name="worksheet_photo" type="file" accept="image/*" required class="block w-full rounded-lg border border-cream-dim/30 bg-navy-900 px-4 py-3 text-sm text-cream file:mr-4 file:rounded-md file:border-0 file:bg-accent file:px-3 file:py-2 file:font-semibold file:text-navy-950" />
-              <p class="mt-2 text-xs text-cream-dim">Chụp rõ trang bài làm. Không cần đẹp, chỉ cần thấy con đã làm bằng bút.</p>
+              <label for="worksheet-photo" class="mb-2 block text-sm text-cream-muted">Ảnh các trang bài làm của con</label>
+              <input id="worksheet-photo" name="worksheet_photos" type="file" accept="image/*" multiple required class="block w-full rounded-lg border border-cream-dim/30 bg-navy-900 px-4 py-3 text-sm text-cream file:mr-4 file:rounded-md file:border-0 file:bg-accent file:px-3 file:py-2 file:font-semibold file:text-navy-950" />
+              <p id="photo-count" class="mt-2 text-xs text-cream-dim">Có thể chọn nhiều ảnh cùng lúc, tối đa 8 ảnh. Chụp rõ các trang con đã làm bằng bút.</p>
             </div>
 
             <div>
@@ -102,6 +102,8 @@ import Footer from '../../components/Footer.astro';
     const audioPreview = document.getElementById('audio-preview');
     const submitBtn = document.getElementById('submit-review');
     const typedAnswers = document.getElementById('typed-answers');
+    const photoInput = document.getElementById('worksheet-photo');
+    const photoCount = document.getElementById('photo-count');
 
     let mediaRecorder = null;
     let chunks = [];
@@ -162,6 +164,13 @@ import Footer from '../../components/Footer.astro';
 
     loadBtn.addEventListener('click', loadProgress);
 
+    photoInput.addEventListener('change', () => {
+      const count = photoInput.files.length;
+      photoCount.textContent = count
+        ? `Đã chọn ${count} ảnh. Tối đa 8 ảnh, nên chụp từng trang rõ chữ.`
+        : 'Có thể chọn nhiều ảnh cùng lúc, tối đa 8 ảnh. Chụp rõ các trang con đã làm bằng bút.';
+    });
+
     recordBtn.addEventListener('click', async () => {
       clearError();
       try {
@@ -202,14 +211,24 @@ import Footer from '../../components/Footer.astro';
       resultCard.classList.add('hidden');
 
       const code = codeInput.value.trim().toUpperCase();
-      const photo = document.getElementById('worksheet-photo').files[0];
+      const photos = Array.from(photoInput.files);
       if (!code) return showError('Vui lòng nhập mã học sinh.');
-      if (!photo) return showError('Vui lòng tải lên ảnh bài làm.');
+      if (!photos.length) return showError('Vui lòng tải lên ít nhất 1 ảnh bài làm.');
+      if (photos.length > 8) return showError('Vui lòng chọn tối đa 8 ảnh cho một lần nộp.');
+      if (photos.some((photo) => photo.size > 8 * 1024 * 1024)) {
+        return showError('Mỗi ảnh cần dưới 8MB. Anh chị thử chụp lại hoặc chọn ảnh nhẹ hơn.');
+      }
+      const totalPhotoBytes = photos.reduce((sum, photo) => sum + photo.size, 0);
+      if (totalPhotoBytes > 24 * 1024 * 1024) {
+        return showError('Tổng dung lượng ảnh hơi lớn. Anh chị chọn tối đa khoảng 24MB ảnh cho một lần nộp.');
+      }
       if (!audioBlob) return showError('Vui lòng ghi âm phần con kể lại câu chuyện trước khi nộp.');
 
       const formData = new FormData();
       formData.set('access_code', code);
-      formData.set('worksheet_photo', photo);
+      photos.forEach((photo) => {
+        formData.append('worksheet_photos', photo, photo.name || 'worksheet.jpg');
+      });
       formData.set('retell_audio', audioBlob, 'retell.webm');
       if (typedAnswers.value.trim()) {
         formData.set('typed_answers', typedAnswers.value.trim());

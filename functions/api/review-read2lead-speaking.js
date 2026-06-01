@@ -26,21 +26,34 @@ export async function onRequestPost(context) {
   }
 
   const accessCode = (form.get('access_code') || '').toString().trim().toUpperCase();
-  const worksheetPhoto = form.get('worksheet_photo');
+  const legacyWorksheetPhoto = form.get('worksheet_photo');
+  const worksheetPhotos = form
+    .getAll('worksheet_photos')
+    .filter((item) => item instanceof File && item.size > 0);
+  if (!worksheetPhotos.length && legacyWorksheetPhoto instanceof File && legacyWorksheetPhoto.size > 0) {
+    worksheetPhotos.push(legacyWorksheetPhoto);
+  }
   const retellAudio = form.get('retell_audio');
   const typedAnswers = (form.get('typed_answers') || '').toString().trim().slice(0, 2000);
 
   if (!accessCode) {
     return json({ ok: false, error: 'code_missing', message: 'Vui lòng nhập mã học sinh.' }, 400);
   }
-  if (!(worksheetPhoto instanceof File) || worksheetPhoto.size === 0) {
-    return json({ ok: false, error: 'worksheet_photo_required', message: 'Vui lòng tải lên ảnh bài làm của con.' }, 400);
+  if (!worksheetPhotos.length) {
+    return json({ ok: false, error: 'worksheet_photo_required', message: 'Vui lòng tải lên ít nhất 1 ảnh bài làm của con.' }, 400);
+  }
+  if (worksheetPhotos.length > 8) {
+    return json({ ok: false, error: 'too_many_photos', message: 'Một lần nộp tối đa 8 ảnh bài làm.' }, 400);
   }
   if (!(retellAudio instanceof File) || retellAudio.size === 0) {
     return json({ ok: false, error: 'retell_audio_required', message: 'Vui lòng ghi âm phần con kể lại câu chuyện.' }, 400);
   }
-  if (worksheetPhoto.size > 8 * 1024 * 1024) {
-    return json({ ok: false, error: 'photo_too_large', message: 'Ảnh quá lớn. Vui lòng chụp/tải ảnh dưới 8MB.' }, 413);
+  if (worksheetPhotos.some((photo) => photo.size > 8 * 1024 * 1024)) {
+    return json({ ok: false, error: 'photo_too_large', message: 'Mỗi ảnh cần dưới 8MB. Vui lòng chụp/tải ảnh nhẹ hơn.' }, 413);
+  }
+  const totalPhotoBytes = worksheetPhotos.reduce((sum, photo) => sum + photo.size, 0);
+  if (totalPhotoBytes > 24 * 1024 * 1024) {
+    return json({ ok: false, error: 'photos_too_large', message: 'Tổng dung lượng ảnh cần dưới 24MB.' }, 413);
   }
   if (retellAudio.size > 15 * 1024 * 1024) {
     return json({ ok: false, error: 'audio_too_large', message: 'Audio quá lớn. Vui lòng ghi đoạn ngắn khoảng 30-60 giây.' }, 413);
@@ -72,7 +85,9 @@ export async function onRequestPost(context) {
   }
 
   const reviewForm = new FormData();
-  reviewForm.set('worksheet_photo', worksheetPhoto, worksheetPhoto.name || 'worksheet.jpg');
+  worksheetPhotos.forEach((photo, index) => {
+    reviewForm.append('worksheet_photos', photo, photo.name || `worksheet-${index + 1}.jpg`);
+  });
   reviewForm.set('retell_audio', retellAudio, retellAudio.name || 'retell.webm');
   if (typedAnswers) {
     reviewForm.set('typed_answers', typedAnswers);
