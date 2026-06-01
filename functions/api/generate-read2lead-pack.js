@@ -41,7 +41,7 @@ export async function onRequestPost(context) {
       {
         ok: false,
         error: 'previous_pack_needs_review',
-        message: 'Bài trước cần nộp ảnh bài làm và audio retell trước khi mở bài mới.',
+        message: 'Bài trước cần nộp ảnh bài làm và ghi âm con kể lại câu chuyện trước khi mở bài mới.',
         review_link: `/read2lead/review?code=${encodeURIComponent(accessCode)}`,
         current_pack: publicPack(progress.current_pack),
         progress: publicProgress(progress),

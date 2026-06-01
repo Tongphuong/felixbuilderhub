@@ -27,7 +27,7 @@ export async function onRequestPost(context) {
     return json({ ok: false, error: 'worksheet_photo_required', message: 'Vui lòng tải lên ảnh bài làm của con.' }, 400);
   }
   if (!(retellAudio instanceof File) || retellAudio.size === 0) {
-    return json({ ok: false, error: 'retell_audio_required', message: 'Vui lòng ghi âm phần retell của con.' }, 400);
+    return json({ ok: false, error: 'retell_audio_required', message: 'Vui lòng ghi âm phần con kể lại câu chuyện.' }, 400);
   }
   if (worksheetPhoto.size > 8 * 1024 * 1024) {
     return json({ ok: false, error: 'photo_too_large', message: 'Ảnh quá lớn. Vui lòng chụp/tải ảnh dưới 8MB.' }, 413);
@@ -50,7 +50,7 @@ export async function onRequestPost(context) {
     return json({
       ok: true,
       already_reviewed: true,
-      message: 'Bài này đã được AI review rồi. Con không bị mất sao, nhưng hệ thống không cộng sao lần hai.',
+      message: 'Bài này đã được nhận xét rồi. Con không bị mất sao, nhưng hệ thống không cộng sao lần hai.',
       progress: publicProgress(progress),
       current_pack: publicPack(currentPack),
       review: currentPack.review_summary || null,
@@ -86,7 +86,7 @@ export async function onRequestPost(context) {
     upstream = { status: res.status, body: await res.json() };
   } catch (err) {
     console.error('Review backend failed:', err.message);
-    return json({ ok: false, error: 'backend_unavailable', message: 'AI review chưa phản hồi. Vui lòng thử lại sau.' }, 502);
+    return json({ ok: false, error: 'backend_unavailable', message: 'Hệ thống nhận xét chưa phản hồi. Vui lòng thử lại sau.' }, 502);
   }
 
   if (!upstream.body || !upstream.body.ok) {
@@ -149,7 +149,7 @@ export async function onRequestPost(context) {
     next_pack_unlocked: true,
     message: passed
       ? 'Con đã hoàn thành bài này và được cộng 1 sao.'
-      : 'AI đã nhận xét bài này. Con chưa được cộng sao, nhưng bài tiếp theo cùng mức sẽ được mở để con luyện thêm.',
+      : 'Bài này đã được nhận xét. Con chưa được cộng sao, nhưng bài tiếp theo cùng mức sẽ được mở để con luyện thêm.',
     review: reviewSummary,
     progress: publicProgress(nextProgress),
     current_pack: publicPack(reviewedPack),
