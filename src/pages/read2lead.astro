@@ -19,12 +19,12 @@ const topics = [
   ['vietnamese_holidays', 'Lễ hội Việt Nam'],
 ];
 
-const usps = [
-  ['1', 'Tên con là nhân vật chính', 'Mỗi câu chuyện viết riêng theo tên, tuổi, giới tính, sở thích của con. Không phải sách giáo trình dạy cùng nội dung cho mọi bé.'],
-  ['2', 'Học theo câu, không học từ rời', 'Read2Lead dạy cụm câu hữu ích ("take a deep breath", "try again slowly") — con dùng được ngay, không phải nhớ từ vựng đứng một mình.'],
-  ['3', 'Không app, không subscription', 'Tải PDF + MP3 về máy. In trên giấy A4, dùng vĩnh viễn. Không cài app, không tài khoản, không tự gia hạn.'],
-  ['4', 'Gần cuộc sống Việt', 'Bạn Minh sau sân trường, mẹ gọi về ăn cơm, đi xe đạp ngang nhà. Không phải "Tom and Jerry trong vườn nho ở Mỹ".'],
-  ['5', 'Truyện vui, không phải bài thi', 'Con đọc vì câu chuyện hay, không phải để qua kiểm tra. Có nhiệm vụ nhỏ ("đọc thấy 3 cụm câu hay"), không phải trắc nghiệm A/B/C/D.'],
+const learningSkills = [
+  ['1', 'Luyện đọc hiểu', 'Con đọc một câu chuyện tiếng Anh ngắn, hợp với tuổi và mức đọc — đủ ngắn để không nản, đủ thú vị để con muốn đọc tiếp.'],
+  ['2', 'Học cụm câu hữu ích', 'Mỗi bài có 4-6 cụm câu tiếng Anh ("take a deep breath", "try again slowly") con học và dùng được ngay, không phải nhớ từ rời rạc.'],
+  ['3', 'Luyện viết qua bài tập', 'Sau truyện, con làm 3-4 bài tập ngắn: điền từ, sắp xếp câu, sửa câu sai — để tập dùng cụm câu vừa học.'],
+  ['4', 'Luyện nghe và phát âm', 'File MP3 đọc lại câu chuyện. Con nghe trước hoặc nghe theo để bắt giọng và cải thiện phát âm.'],
+  ['5', 'Luyện tư duy bằng tiếng Anh', 'Câu hỏi đọc hiểu và 1 câu hỏi mở để con tự viết 1-2 câu suy nghĩ — luyện viết câu hoàn chỉnh, không phải tick A/B/C/D.'],
 ];
 
 const insideItems = [
@@ -63,16 +63,16 @@ const faqItems = [
 
   <main id="main" class="flex-1">
     <section class="mx-auto max-w-6xl px-6 py-20 text-center md:py-28">
-      <span class="inline-block rounded-full bg-accent/20 px-4 py-1 text-sm font-semibold text-accent">12 bạn nhỏ đang đọc Read2Lead mỗi tuần</span>
+      <span class="inline-block rounded-full bg-accent/20 px-4 py-1 text-sm font-semibold text-accent">12 bạn nhỏ đang dùng Read2Lead mỗi tuần</span>
       <h1 class="mx-auto mt-6 max-w-4xl font-display text-4xl font-extrabold text-cream md:text-5xl lg:text-6xl">
-        <span class="block">Truyện tiếng Anh có TÊN con.</span>
-        <span class="block">Viết riêng cho con, không phải sách chung.</span>
+        <span class="block">Bài tập đọc tiếng Anh</span>
+        <span class="block">cho con tự học tại nhà.</span>
       </h1>
       <p class="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-cream-muted md:text-xl">
-        Mỗi tuần một câu chuyện mới — tên con là nhân vật chính, bạn Minh ở sân trường, cụm câu tiếng Anh tự nhiên. Bố mẹ in PDF và mở MP3 — không app, không subscription.
+        Mỗi bài có truyện ngắn, từ vựng cần nhớ, bài luyện và file nghe. Bố mẹ in PDF, mở MP3, ngồi cùng con 10 phút.
       </p>
       <p class="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-cream-dim">
-        Phù hợp khi bố mẹ muốn có một bài đọc ngắn, dễ dùng ngay tại nhà, có tên con trong câu chuyện và có hướng dẫn ở trang cuối.
+        Phù hợp khi bố mẹ muốn cho con thêm bài đọc tiếng Anh ở nhà, hợp với tuổi và mức đọc của con.
       </p>
       <div class="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
         <a href="/read2lead/Read2Lead-Sample-Pack.pdf" target="_blank" rel="noopener" class="inline-flex rounded-lg bg-accent px-6 py-3 font-semibold text-navy-950 transition hover:bg-accent-hover">Xem file mẫu PDF</a>
@@ -80,18 +80,18 @@ const faqItems = [
         <a href="/read2lead/review" class="inline-flex rounded-lg border border-cream-dim/40 px-6 py-3 font-semibold text-cream transition hover:border-gold hover:text-gold-light">Vào Felixar</a>
       </div>
       <p class="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-cream-dim">
-        Chưa có mã? Nhắn Zalo {ZALO_DISPLAY} để nhận — Felix đang nhận thêm 5 bé pilot tháng này.
+        Chưa có mã? Nhắn Zalo {ZALO_DISPLAY} để nhận.
       </p>
     </section>
 
     <section class="bg-navy-900 px-6 py-20">
       <div class="mx-auto max-w-6xl">
         <div class="text-center">
-          <h2 class="font-display text-3xl font-bold leading-snug text-cream md:text-4xl">5 điều Read2Lead khác sách tiếng Anh khác</h2>
-          <p class="mx-auto mt-4 max-w-2xl leading-relaxed text-cream-dim">Read2Lead được thiết kế để bố mẹ dùng ngay ở nhà: gần gũi, cá nhân hoá, và không biến giờ đọc thành một bài thi.</p>
+          <h2 class="font-display text-3xl font-bold leading-snug text-cream md:text-4xl">Mỗi bài Read2Lead luyện gì cho con?</h2>
+          <p class="mx-auto mt-4 max-w-2xl leading-relaxed text-cream-dim">5 kỹ năng con luyện qua mỗi bài đọc — viết, đọc, nghe, từ vựng, tư duy.</p>
         </div>
         <div class="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {usps.map(([number, title, description]) => (
+          {learningSkills.map(([number, title, description]) => (
             <div class="rounded-xl border border-cream-dim/20 bg-navy-950/75 p-6">
               <div class="flex items-start gap-4">
                 <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-accent font-display text-lg font-bold text-navy-950">{number}</span>
