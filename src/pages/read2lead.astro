@@ -19,11 +19,12 @@ const topics = [
   ['vietnamese_holidays', 'Lễ hội Việt Nam'],
 ];
 
-const parentBenefits = [
-  ['1', 'Có tên con trong câu chuyện', 'Con đọc một câu chuyện mới, trong đó con là nhân vật chính. Nội dung được viết theo tên, tuổi, giới tính và sở thích của con.'],
-  ['2', 'Có bài luyện ngay sau bài đọc', 'Sau khi đọc truyện, con làm vài bài ngắn để nhớ cách dùng câu tiếng Anh trong ngữ cảnh. Bố mẹ không cần tự soạn thêm.'],
-  ['3', 'Có file nghe kèm theo', 'Bố mẹ mở file MP3 cho con nghe trước, đọc theo, hoặc nghe lại sau khi làm bài.'],
-  ['4', 'In ra dùng được tại nhà', 'Tải file PDF, in trên giấy A4, cho con làm bằng bút chì hoặc bút màu. Không cần cài app.'],
+const usps = [
+  ['1', 'Tên con là nhân vật chính', 'Mỗi câu chuyện viết riêng theo tên, tuổi, giới tính, sở thích của con. Không phải sách giáo trình dạy cùng nội dung cho mọi bé.'],
+  ['2', 'Học theo câu, không học từ rời', 'Read2Lead dạy cụm câu hữu ích ("take a deep breath", "try again slowly") — con dùng được ngay, không phải nhớ từ vựng đứng một mình.'],
+  ['3', 'Không app, không subscription', 'Tải PDF + MP3 về máy. In trên giấy A4, dùng vĩnh viễn. Không cài app, không tài khoản, không tự gia hạn.'],
+  ['4', 'Gần cuộc sống Việt', 'Bạn Minh sau sân trường, mẹ gọi về ăn cơm, đi xe đạp ngang nhà. Không phải "Tom and Jerry trong vườn nho ở Mỹ".'],
+  ['5', 'Truyện vui, không phải bài thi', 'Con đọc vì câu chuyện hay, không phải để qua kiểm tra. Có nhiệm vụ nhỏ ("đọc thấy 3 cụm câu hay"), không phải trắc nghiệm A/B/C/D.'],
 ];
 
 const insideItems = [
@@ -32,25 +33,24 @@ const insideItems = [
   ['Bài điền từ', 'Con điền lại câu để tập dùng đúng cách nói mới học.'],
   ['Bài sắp xếp câu', 'Con ghép từ thành câu đúng, để nhớ câu tốt hơn.'],
   ['Câu hỏi sau khi đọc', 'Con trả lời câu hỏi đơn giản để hiểu câu chuyện, không học vẹt.'],
+  ['Câu hỏi mở', 'Một câu hỏi cho con viết 1-2 câu suy nghĩ — không phải trắc nghiệm, không có đáp án "đúng".'],
   ['Trang cho bố mẹ', 'Có đáp án và gợi ý cách đọc cùng con ở trang cuối.'],
 ];
 
-const steps = [
-  ['Nhập mã', 'Nhập mã đăng nhập Felix gửi qua Zalo.'],
-  ['Điền thông tin của con', 'Tên, tuổi, giới tính, mức đọc gần đúng và chủ đề con thích.'],
-  ['Chờ khoảng 2 phút', 'Trang sẽ tạo file đọc, bài luyện và file nghe cho con.'],
-  ['Tải về và dùng ngay', 'Tải PDF để in, tải MP3 để cho con nghe và đọc theo.'],
+const homeSteps = [
+  ['1', 'Tải PDF + MP3 về máy', 'Bố mẹ tải cả 2 file ngay sau khi tạo xong.'],
+  ['2', 'In PDF + mở MP3', 'In trên giấy A4 (không cần in màu). Mở MP3 cho con nghe 1 lần trước khi đọc.'],
+  ['3', 'Con đọc + làm bài bằng bút', 'Con đọc truyện trong PDF, làm 4-5 bài luyện ngắn bằng bút chì.'],
+  ['4', 'Chụp ảnh + ghi âm kể lại', 'Phụ huynh chụp bài làm. Con ghi âm 1-2 phút kể lại câu chuyện bằng lời của con.'],
+  ['5', 'Vào Felixar nộp bài', 'Felixar gửi nhận xét, cộng sao, mở bài mới.'],
 ];
 
 const faqItems = [
   ['Read2Lead dùng để làm gì?', 'Read2Lead giúp bố mẹ có ngay một bài đọc tiếng Anh ngắn cho con, kèm bài luyện và file nghe. Bố mẹ có thể in ra và ngồi đọc cùng con tại nhà.'],
   ['Bố mẹ cần làm gì sau khi tải file?', 'In file PDF ra giấy A4. Mở file nghe cho con nghe 1 lần. Sau đó cho con đọc truyện, làm bài luyện, rồi xem đáp án ở trang cuối cùng con.'],
-  ['Cần biết dạy tiếng Anh mới dùng được không?', 'Không cần. Trang cuối có đáp án và gợi ý cho bố mẹ. Nếu con bị kẹt, bố mẹ chỉ cần cho con nghe lại file MP3 và thử lại từng phần nhỏ.'],
   ['Mã đăng nhập là gì? Lấy ở đâu?', `Mỗi phụ huynh khi đăng ký dùng Read2Lead sẽ nhận 1 mã từ Felix qua Zalo. Chưa có mã thì nhắn Zalo ${ZALO_DISPLAY} để hỏi cách nhận mã.`],
   ['Nên chọn mức đọc nào cho con?', 'Nếu con mới đọc từng từ hoặc câu rất ngắn, chọn mức 1. Nếu con đọc được câu đơn, chọn mức 2. Nếu con đọc được một đoạn ngắn, chọn mức 3. Không chắc thì chọn mức 2 trước.'],
   ['Nếu bài quá khó hoặc quá dễ thì sao?', 'Bố mẹ có thể tạo lại một lần khác và chọn mức đọc thấp hơn hoặc cao hơn. Nếu vẫn chưa phù hợp, nhắn Zalo Felix để được hỗ trợ.'],
-  ['Có thể chọn chủ đề con thích không?', 'Có. Bố mẹ có thể điền sở thích của con và chọn một chủ đề gần nhất. Nếu để trống, Felix sẽ chọn chủ đề phù hợp với tuổi và mức đọc.'],
-  ['Một mã dùng cho nhiều bé được không?', 'Được, nếu mã còn lượt. Mỗi lần tạo nên điền thông tin riêng cho từng bé để bài đọc phù hợp hơn.'],
   ['File tải về giữ được bao lâu?', 'Link tải về có thể chỉ tồn tại trong một thời gian ngắn. Bố mẹ nên tải PDF và MP3 về máy ngay sau khi tạo xong.'],
 ];
 ---
@@ -63,39 +63,38 @@ const faqItems = [
 
   <main id="main" class="flex-1">
     <section class="mx-auto max-w-6xl px-6 py-20 text-center md:py-28">
-      <span class="inline-block rounded-full bg-accent/20 px-4 py-1 text-sm font-semibold text-accent">Đang thử nghiệm với học sinh của Felix</span>
+      <span class="inline-block rounded-full bg-accent/20 px-4 py-1 text-sm font-semibold text-accent">12 bạn nhỏ đang đọc Read2Lead mỗi tuần</span>
       <h1 class="mx-auto mt-6 max-w-4xl font-display text-4xl font-extrabold text-cream md:text-5xl lg:text-6xl">
-        <span class="block">Tạo bài đọc tiếng Anh</span>
-        <span class="block">riêng cho con.</span>
+        <span class="block">Truyện tiếng Anh có TÊN con.</span>
+        <span class="block">Viết riêng cho con, không phải sách chung.</span>
       </h1>
       <p class="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-cream-muted md:text-xl">
-        Bố mẹ nhập mã, điền thông tin của con, đợi khoảng 2 phút. Read2Lead sẽ tạo một file PDF để in và một file nghe MP3 để con đọc theo.
+        Mỗi tuần một câu chuyện mới — tên con là nhân vật chính, bạn Minh ở sân trường, cụm câu tiếng Anh tự nhiên. Bố mẹ in PDF và mở MP3 — không app, không subscription.
       </p>
       <p class="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-cream-dim">
         Phù hợp khi bố mẹ muốn có một bài đọc ngắn, dễ dùng ngay tại nhà, có tên con trong câu chuyện và có hướng dẫn ở trang cuối.
       </p>
       <div class="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
-        <a href="#form" class="inline-flex rounded-lg bg-accent px-6 py-3 font-semibold text-navy-950 transition hover:bg-accent-hover">Tạo bài đọc cho con</a>
-        <a href="/read2lead/review" class="inline-flex rounded-lg border border-gold px-6 py-3 font-semibold text-gold-light transition hover:bg-gold hover:text-navy-950">Vào Felixar</a>
-        <a href="/read2lead/leaderboard" class="inline-flex rounded-lg border border-cream-dim/40 px-6 py-3 font-semibold text-cream transition hover:border-gold hover:text-gold-light">Xem bảng vinh danh</a>
-        <a href="/read2lead/Read2Lead-Sample-Pack.pdf" target="_blank" rel="noopener" class="inline-flex rounded-lg border border-accent px-6 py-3 font-semibold text-accent transition hover:bg-accent hover:text-navy-950">Xem file mẫu PDF</a>
+        <a href="/read2lead/Read2Lead-Sample-Pack.pdf" target="_blank" rel="noopener" class="inline-flex rounded-lg bg-accent px-6 py-3 font-semibold text-navy-950 transition hover:bg-accent-hover">Xem file mẫu PDF</a>
+        <a href="#form" class="inline-flex rounded-lg border border-gold px-6 py-3 font-semibold text-gold-light transition hover:bg-gold hover:text-navy-950">Đã có mã — Tạo bài cho con</a>
+        <a href="/read2lead/review" class="inline-flex rounded-lg border border-cream-dim/40 px-6 py-3 font-semibold text-cream transition hover:border-gold hover:text-gold-light">Vào Felixar</a>
       </div>
       <p class="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-cream-dim">
-        Felixar - quản lí học tập ảo là nơi bố mẹ nộp bài, xem nhận xét, theo dõi số sao và mở bài tiếp theo cho con.
+        Chưa có mã? Nhắn Zalo {ZALO_DISPLAY} để nhận — Felix đang nhận thêm 5 bé pilot tháng này.
       </p>
     </section>
 
     <section class="bg-navy-900 px-6 py-20">
       <div class="mx-auto max-w-6xl">
         <div class="text-center">
-          <h2 class="font-display text-3xl font-bold leading-snug text-cream md:text-4xl">Phụ huynh sẽ nhận được gì?</h2>
-          <p class="mx-auto mt-4 max-w-2xl leading-relaxed text-cream-dim">Mỗi lần tạo xong, bố mẹ có 2 file: một file để in ra cho con đọc và làm bài, một file để con nghe và đọc theo.</p>
+          <h2 class="font-display text-3xl font-bold leading-snug text-cream md:text-4xl">5 điều Read2Lead khác sách tiếng Anh khác</h2>
+          <p class="mx-auto mt-4 max-w-2xl leading-relaxed text-cream-dim">Read2Lead được thiết kế để bố mẹ dùng ngay ở nhà: gần gũi, cá nhân hoá, và không biến giờ đọc thành một bài thi.</p>
         </div>
-        <div class="mt-10 grid gap-5 md:grid-cols-2">
-          {parentBenefits.map(([number, title, description]) => (
+        <div class="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          {usps.map(([number, title, description]) => (
             <div class="rounded-xl border border-cream-dim/20 bg-navy-950/75 p-6">
               <div class="flex items-start gap-4">
-                <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-accent font-display font-bold text-navy-950">{number}</span>
+                <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-accent font-display text-lg font-bold text-navy-950">{number}</span>
                 <div>
                   <h3 class="font-display text-xl font-bold text-cream">{title}</h3>
                   <p class="mt-2 leading-relaxed text-cream-muted">{description}</p>
@@ -144,6 +143,16 @@ const faqItems = [
             <figcaption class="px-5 py-4 text-sm text-cream-muted"><strong class="text-cream">Trang cho bố mẹ</strong> - Có đáp án và gợi ý cách dùng.</figcaption>
           </figure>
         </div>
+        <div class="mt-12 rounded-xl border border-gold/30 bg-gold/10 p-6 md:flex md:items-center md:gap-6">
+          <div class="text-center md:text-left">
+            <p class="font-display text-3xl font-bold text-gold-light">12 bạn nhỏ</p>
+            <p class="mt-1 text-sm text-cream-dim">đang đọc Read2Lead mỗi tuần</p>
+          </div>
+          <div class="mt-4 md:mt-0 md:flex-1">
+            <p class="italic leading-relaxed text-cream-muted">"Cháu đọc thấy tên mình trong truyện thì cười khoái chí. Tuần nào cũng hỏi 'mẹ ơi tuần này con là gì?'"</p>
+            <p class="mt-2 text-sm text-cream-dim">— Phụ huynh bé H. (9 tuổi), TP.HCM</p>
+          </div>
+        </div>
         <div class="mt-8 text-center">
           <a href="/read2lead/Read2Lead-Sample-Pack.pdf" target="_blank" rel="noopener" class="inline-flex rounded-lg border border-accent px-5 py-2.5 text-sm font-semibold text-accent transition hover:bg-accent hover:text-navy-950">Tải file mẫu đầy đủ</a>
         </div>
@@ -151,53 +160,28 @@ const faqItems = [
     </section>
 
     <section class="mx-auto max-w-6xl px-6 py-20">
-      <h2 class="text-center font-display text-3xl font-bold leading-snug text-cream md:text-4xl">Cách dùng sau khi tải file</h2>
-      <div class="mt-10 grid gap-6 md:grid-cols-4">
-        {steps.map(([title, description], index) => (
+      <div class="text-center">
+        <h2 class="font-display text-3xl font-bold leading-snug text-cream md:text-4xl">5 bước dùng tại nhà</h2>
+        <p class="mx-auto mt-4 max-w-2xl leading-relaxed text-cream-dim">Không cần học app mới. Quy trình chính vẫn là tải file, in ra, học trên giấy.</p>
+      </div>
+      <div class="mt-10 grid gap-5 md:grid-cols-5">
+        {homeSteps.map(([number, title, description]) => (
           <div class="rounded-lg border border-cream-dim/20 bg-navy-900/70 p-5">
-            <div class="flex h-10 w-10 items-center justify-center rounded-md bg-accent font-display text-lg font-bold text-navy-950">{index + 1}</div>
-            <h3 class="mt-5 font-display text-xl font-bold text-cream">{title}</h3>
-            <p class="mt-3 leading-relaxed text-cream-muted">{description}</p>
+            <div class="flex h-10 w-10 items-center justify-center rounded-md bg-accent font-display text-lg font-bold text-navy-950">{number}</div>
+            <h3 class="mt-5 font-display text-lg font-bold text-cream">{title}</h3>
+            <p class="mt-3 text-sm leading-relaxed text-cream-muted">{description}</p>
           </div>
         ))}
-      </div>
-    </section>
-
-    <section class="bg-navy-900 px-6 py-20">
-      <div class="mx-auto max-w-5xl">
-        <div class="text-center">
-          <h2 class="font-display text-3xl font-bold leading-snug text-cream md:text-4xl">Cách dùng Read2Lead tại nhà</h2>
-          <p class="mx-auto mt-4 max-w-2xl leading-relaxed text-cream-dim">Bố mẹ không cần học thêm một app mới. Quy trình chính vẫn là tải file, in ra, cho con học trên giấy, rồi vào Felixar ở bước cuối để nhận nhận xét.</p>
-        </div>
-        <div class="mt-10 grid gap-4 md:grid-cols-3">
-          {[
-            'Tải PDF và MP3 về máy.',
-            'In PDF cho con.',
-            'Cho con nghe MP3 một lần trước khi đọc.',
-            'Con đọc truyện trong PDF.',
-            'Con làm bài tập bằng bút.',
-            'Phụ huynh chụp ảnh bài làm.',
-            'Con ghi âm 1-2 phút kể lại câu chuyện bằng lời của con.',
-            'Felixar gửi nhận xét và cập nhật số sao.',
-            'Khi bài cũ đã có ảnh + ghi âm, bài mới sẽ được mở.',
-          ].map((item, index) => (
-            <div class="rounded-lg border border-cream-dim/20 bg-navy-950/70 p-5">
-              <div class="flex h-8 w-8 items-center justify-center rounded-md bg-accent font-display font-bold text-navy-950">{index + 1}</div>
-              <p class="mt-4 leading-relaxed text-cream-muted">{item}</p>
-            </div>
-          ))}
-        </div>
       </div>
     </section>
 
     <section class="mx-auto max-w-6xl px-6 py-20">
       <div class="rounded-xl border border-gold/30 bg-gold/10 p-6 md:flex md:items-center md:justify-between md:gap-10">
         <div>
-          <span class="inline-block rounded-md bg-gold/20 px-3 py-1 text-xs font-semibold text-gold-light">Felixar</span>
-          <h2 class="mt-4 font-display text-3xl font-bold leading-snug text-cream md:text-4xl">Quản lí học tập ảo cho Read2Lead</h2>
+          <span class="inline-block rounded-md bg-gold/20 px-3 py-1 text-xs font-semibold text-gold-light">Felixar — đua sao</span>
+          <h2 class="mt-4 font-display text-3xl font-bold leading-snug text-cream md:text-4xl">Đua sao với bạn — học vì vui, không vì điểm</h2>
           <p class="mt-4 max-w-2xl leading-relaxed text-cream-muted">
-            Sau khi con làm bài trên giấy, bố mẹ vào Felixar để nộp ảnh bài làm và ghi âm con kể lại câu chuyện. Felixar sẽ trả nhận xét ngắn gọn, cộng sao và cho biết khi nào bài tiếp theo đã được mở.
-            Bảng vinh danh cập nhật sau khi con nộp bài và được cộng sao.
+            Con nộp ảnh bài làm + ghi âm kể lại câu chuyện. Felixar gửi nhận xét ngắn, cộng sao, mở bài tiếp theo. Mỗi bài qua là 1 sao. Đủ 3 sao là rank Chunk Explorer, 6 sao là Mission Builder, 10 sao là Story Hero. Bảng vinh danh cập nhật mỗi tuần.
           </p>
         </div>
         <div class="mt-6 shrink-0 md:mt-0">
@@ -342,20 +326,6 @@ const faqItems = [
           <button id="retry-btn" type="button" class="mt-5 rounded-lg bg-accent px-5 py-2 font-semibold text-navy-950 transition hover:bg-accent-hover">Thử lại</button>
           <p class="mt-4 text-sm text-cream-muted">Nếu lỗi tiếp tục, nhắn Zalo {ZALO_DISPLAY}</p>
         </div>
-      </div>
-    </section>
-
-    <section class="mx-auto max-w-6xl px-6 py-20">
-      <div class="mx-auto max-w-3xl rounded-xl border border-gold/30 bg-gold/10 p-6">
-        <h2 class="font-display text-2xl font-bold leading-snug text-cream">Tóm tắt cách dùng trong 10 phút đầu</h2>
-        <ol class="mt-5 space-y-3 text-cream-muted">
-          <li><strong class="text-cream">1.</strong> Tải PDF và MP3 về máy.</li>
-          <li><strong class="text-cream">2.</strong> In PDF trên giấy A4, không cần in màu.</li>
-          <li><strong class="text-cream">3.</strong> Cho con nghe MP3 một lần trước khi đọc.</li>
-          <li><strong class="text-cream">4.</strong> Con đọc truyện, gạch chân câu hay, rồi làm bài luyện.</li>
-          <li><strong class="text-cream">5.</strong> Bố mẹ xem đáp án ở trang cuối và sửa nhẹ cho con.</li>
-          <li><strong class="text-cream">6.</strong> Chụp ảnh bài làm, cho con ghi âm kể lại câu chuyện, rồi vào Felixar để mở bài tiếp theo.</li>
-        </ol>
       </div>
     </section>
 
