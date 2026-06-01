@@ -32,14 +32,22 @@
   }
 }
 
-/* Vietnamese diacritics need extra vertical room, especially in large display text. */
+/* Vietnamese diacritics need room, but headings also need balanced line breaks. */
 h1.font-display {
-  line-height: 1.6 !important;
+  line-height: 1.35 !important;
   letter-spacing: 0;
+  text-wrap: balance;
 }
 
 h2.font-display,
 h3.font-display {
-  line-height: 1.45 !important;
+  line-height: 1.35 !important;
   letter-spacing: 0;
+  text-wrap: balance;
+}
+
+p,
+li,
+summary {
+  text-wrap: pretty;
 }
