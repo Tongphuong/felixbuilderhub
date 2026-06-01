@@ -33,6 +33,7 @@ export async function onRequestPost(context) {
   };
 
   const goals = data.goals?.trim() || '(không cung cấp)';
+  const refSource = (data.ref || '').trim().slice(0, 80) || '(không có)';
   const timestamp = new Date().toISOString().replace('T', ' ').slice(0, 19);
 
   const message = [
@@ -47,6 +48,8 @@ export async function onRequestPost(context) {
     '',
     '🎯 Mục tiêu:',
     goals,
+    '',
+    `🔗 Nguồn: ${refSource}`,
     '',
     `⏰ ${timestamp} UTC`,
   ].join('\n');

@@ -19,6 +19,7 @@ export async function onRequestPost(context) {
 
   const name = (data.name || '').trim().slice(0, 50) || '(không cung cấp)';
   const interest = (data.interest || '').trim().slice(0, 200) || '(không cung cấp)';
+  const refSource = (data.ref || '').trim().slice(0, 80) || '(không có)';
   const timestamp = new Date().toISOString().replace('T', ' ').slice(0, 19);
 
   const message = [
@@ -29,6 +30,8 @@ export async function onRequestPost(context) {
     '',
     '💬 Quan tâm:',
     interest,
+    '',
+    `🔗 Nguồn: ${refSource}`,
     '',
     `⏰ ${timestamp} UTC`,
   ].join('\n');

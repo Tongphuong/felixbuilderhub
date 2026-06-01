@@ -116,10 +116,13 @@ const previewCards = [
     const form = document.getElementById('space-form');
     const btn = form.querySelector('button[type="submit"]');
     const statusEl = document.getElementById('space-form-status');
+    const pageUrl = new URL(window.location.href);
+    const urlRef = pageUrl.searchParams.get('ref') || '';
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const data = Object.fromEntries(new FormData(form));
+      if (urlRef) data.ref = urlRef;
 
       if (data.website) {
         showSuccess();
