@@ -28,54 +28,49 @@ const socialLinks = [
 
   <main id="main" class="flex-1">
     <section class="mx-auto max-w-6xl px-6 py-20 md:py-28">
-      <div class="flex flex-col items-center gap-10 md:flex-row md:gap-16">
-        <div class="shrink-0">
-          <img
-            src="/images/felix.jpg"
-            alt="Phương"
-            width="208"
-            height="208"
-            class="h-44 w-44 rounded-full object-cover shadow-2xl ring-4 ring-cream-dim/25 md:h-52 md:w-52"
-          />
-        </div>
-        <div class="text-center md:text-left">
-          <h1 class="max-w-3xl font-display text-3xl font-extrabold leading-[1.6] text-cream md:text-5xl">
-            Xin chào, tôi là Phương,<br class="hidden md:block" /> chào mừng bạn đến với thế giới của tôi.
-          </h1>
-          <p class="mt-6 max-w-xl text-lg leading-relaxed text-cream-muted md:text-xl">
-            Tôi xây dựng các sản phẩm giáo dục dành riêng cho mỗi bạn nhỏ.
-          </p>
-          <a href="#products" class="mt-8 inline-block rounded-lg bg-accent px-6 py-3 font-semibold text-navy-950 transition hover:bg-accent-hover">
-            Xem sản phẩm →
+      <div class="text-center">
+        <h1 class="mx-auto max-w-4xl font-display text-4xl font-extrabold leading-[1.45] text-cream md:text-6xl">
+          Sản phẩm giáo dục cá nhân hoá<br class="hidden md:block" /> cho con bạn.
+        </h1>
+        <p class="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-cream-muted md:text-xl">
+          Sách truyện, worksheet tiếng Anh, coaching nhóm — mỗi bạn nhỏ một câu chuyện riêng.
+        </p>
+        <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+          <a href="/msmw" class="inline-flex rounded-lg bg-accent px-6 py-3 font-semibold text-navy-950 transition hover:bg-accent-hover">
+            Đặt sách MSMW →
+          </a>
+          <a href="/read2lead" class="inline-flex rounded-lg border border-cream-dim/40 px-6 py-3 font-semibold text-cream transition hover:border-accent hover:text-accent">
+            Thử Read2Lead miễn phí
           </a>
         </div>
+        <p class="mt-6 text-sm text-cream-dim">10 năm kinh nghiệm dạy tiếng Anh cho trẻ em Việt</p>
       </div>
     </section>
 
-    <section class="mx-auto max-w-6xl px-6 py-20">
-      <h2 class="font-display text-3xl font-bold leading-snug text-cream md:text-4xl">Về tôi</h2>
-      <div class="mt-8 max-w-3xl space-y-5 text-lg leading-relaxed text-cream-muted">
-        <p>Tôi là một huấn luyện viên kĩ năng giao tiếp tiếng Anh và nhà phát triển các dự án giáo dục cá nhân hóa cho trẻ em.</p>
-        <p>Hiện tại tôi đang xây dựng:</p>
-        <ul class="space-y-3 pl-1">
-          <li class="flex gap-3">
-            <span class="shrink-0 text-accent" aria-hidden="true">•</span>
-            <span><strong class="font-semibold text-cream">Coaching giao tiếp tiếng Anh</strong> — lớp 1-1 hoặc nhóm nhỏ rèn kĩ năng nói cho con.</span>
-          </li>
-          <li class="flex gap-3">
-            <span class="shrink-0 text-accent" aria-hidden="true">•</span>
-            <span><strong class="font-semibold text-cream">My Story, My World</strong> — truyện cá nhân hóa làm quà tặng.</span>
-          </li>
-          <li class="flex gap-3">
-            <span class="shrink-0 text-accent" aria-hidden="true">•</span>
-            <span><strong class="font-semibold text-cream">Read2Lead</strong> — khơi gợi cảm hứng đọc và học tiếng Anh với câu chuyện được thiết kế riêng cho con.</span>
-          </li>
-          <li class="flex gap-3">
-            <span class="shrink-0 text-accent" aria-hidden="true">•</span>
-            <span><strong class="font-semibold text-cream">Felix Sharing Space</strong> — nơi tôi chia sẻ kiến thức, kinh nghiệm và các sản phẩm miễn phí.</span>
-          </li>
-        </ul>
-        <p>Mong rằng sản phẩm của tôi giúp ích cho cuộc sống của bạn.</p>
+    <section class="bg-navy-900 px-6 py-16">
+      <div class="mx-auto grid max-w-5xl items-center gap-10 md:grid-cols-[auto_1fr]">
+        <img
+          src="/images/felix.jpg"
+          alt="Phương — người sáng lập Felix Builder Hub"
+          width="180"
+          height="180"
+          loading="lazy"
+          class="h-36 w-36 rounded-full object-cover ring-4 ring-cream-dim/25 md:h-44 md:w-44"
+        />
+        <div>
+          <h2 class="font-display text-2xl font-bold leading-snug text-cream md:text-3xl">Vì sao Felix Builder Hub?</h2>
+          <p class="mt-4 leading-relaxed text-cream-muted">
+            Tôi là Phương — 10 năm dạy tiếng Anh cho trẻ em Việt Nam.
+            Tôi xây Felix Builder Hub để giải một câu hỏi: <strong class="text-cream">làm sao
+            để mỗi bé có một câu chuyện, một worksheet, một bài học riêng — thay vì
+            cùng một giáo trình cho tất cả?</strong>
+          </p>
+          <p class="mt-3 leading-relaxed text-cream-muted">
+            Mỗi sản phẩm ở đây đều được cá nhân hoá: sách MSMW có ảnh con bạn làm
+            nhân vật chính; Read2Lead worksheet được viết theo sở thích
+            và level từng bé; coaching nhóm nhỏ tối đa 4 bé.
+          </p>
+        </div>
       </div>
     </section>
 
