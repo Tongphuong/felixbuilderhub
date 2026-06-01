@@ -212,10 +212,13 @@ function isPackReviewed(pack) {
 
 function currentPackBlocksGeneration(pack) {
   if (!pack) return false;
+
+  // Chi block luc dang generate de chong double-click. Khong enforce review
+  // progression: 1 ma co the dung cho nhieu be khac nhau.
   if (pack.status !== 'generation_in_progress') return false;
 
   const startedAt = Date.parse(pack.created_at || '');
-  if (!Number.isFinite(startedAt)) return true;
+  if (!Number.isFinite(startedAt)) return false;
   return Date.now() - startedAt < GENERATION_LOCK_STALE_MS;
 }
 
