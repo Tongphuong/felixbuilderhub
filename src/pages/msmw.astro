@@ -2,6 +2,8 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import { ZALO_DISPLAY, ZALO_URL } from '../config/contact';
+import { MSMW_DIGITAL_VND, MSMW_HARDCOPY_VND, formatVND } from '../config/pricing';
 
 const features = [
   ['📖', '20 trang đầy đủ', 'Bìa, lời đề tặng, 16 trang câu chuyện, bìa sau'],
@@ -80,7 +82,7 @@ const faqItems = [
       <p class="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-cream-muted md:text-xl">Sách truyện cá nhân hoá song ngữ Việt–Anh, dành riêng cho con của bạn.</p>
       <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
         <a href="#form" class="w-full rounded-lg bg-accent px-6 py-3 text-center font-semibold text-navy-950 transition hover:bg-accent-hover sm:w-auto">Đặt sách cho con</a>
-        <a href="https://zalo.me/0396868675" class="w-full rounded-lg border border-cream-dim/30 px-6 py-3 text-center font-semibold text-cream transition hover:border-accent hover:text-accent sm:w-auto">Liên hệ Zalo</a>
+        <a href={ZALO_URL} class="w-full rounded-lg border border-cream-dim/30 px-6 py-3 text-center font-semibold text-cream transition hover:border-accent hover:text-accent sm:w-auto">Liên hệ Zalo</a>
       </div>
     </section>
 
@@ -152,7 +154,7 @@ const faqItems = [
         <article class="rounded-lg border border-cream-dim/30 bg-navy-900/70 p-6">
           <span class="inline-flex rounded-full bg-navy-800 px-3 py-1 text-xs font-semibold text-cream-muted">Tự in tại nhà</span>
           <h3 class="mt-5 font-display text-2xl font-bold text-cream">Bản số (PDF)</h3>
-          <p class="mt-4 font-display text-5xl font-extrabold text-cream">69.000₫</p>
+          <p class="mt-4 font-display text-5xl font-extrabold text-cream">{formatVND(MSMW_DIGITAL_VND)}</p>
           <ul class="mt-6 space-y-3 text-cream-muted">
             <li class="flex gap-3"><span class="text-gold-light">✓</span>File PDF chất lượng cao</li>
             <li class="flex gap-3"><span class="text-gold-light">✓</span>Nhận trong 24h</li>
@@ -165,7 +167,7 @@ const faqItems = [
         <article class="relative rounded-lg border border-accent bg-navy-900/70 p-6">
           <span class="absolute right-5 top-5 rounded-full bg-accent px-3 py-1 text-xs font-semibold text-navy-950">Được chọn nhiều nhất</span>
           <h3 class="mt-10 font-display text-2xl font-bold text-cream sm:mt-0">Bản in giao tận nơi</h3>
-          <p class="mt-4 font-display text-5xl font-extrabold text-cream">129.000₫</p>
+          <p class="mt-4 font-display text-5xl font-extrabold text-cream">{formatVND(MSMW_HARDCOPY_VND)}</p>
           <ul class="mt-6 space-y-3 text-cream-muted">
             <li class="flex gap-3"><span class="text-gold-light">✓</span>Sách in bìa cứng / chất liệu cao cấp</li>
             <li class="flex gap-3"><span class="text-gold-light">✓</span>Giao tận nhà toàn quốc</li>
@@ -220,11 +222,11 @@ const faqItems = [
           <div class="space-y-3 rounded-lg border border-cream-dim/30 bg-navy-900 p-4">
             <label class="flex items-center gap-3 text-base text-cream">
               <input type="radio" name="version" value="digital" required class="h-4 w-4 accent-accent" />
-              <span>Bản số (PDF) — 69.000₫</span>
+              <span>Bản số (PDF) — {formatVND(MSMW_DIGITAL_VND)}</span>
             </label>
             <label class="flex items-center gap-3 text-base text-cream">
               <input type="radio" name="version" value="hardcopy" required checked class="h-4 w-4 accent-accent" />
-              <span>Bản in (giao tận nơi) — 129.000₫</span>
+              <span>Bản in (giao tận nơi) — {formatVND(MSMW_HARDCOPY_VND)}</span>
             </label>
           </div>
         </fieldset>
@@ -250,7 +252,7 @@ const faqItems = [
       <div class="rounded-2xl border border-cream-dim/20 bg-navy-900/60 p-8 text-center md:p-12">
         <h2 class="font-display text-2xl font-bold leading-snug text-cream md:text-3xl">Anh chị đã đặt MSMW?</h2>
         <p class="mx-auto mt-4 max-w-2xl leading-relaxed text-cream-muted">Nếu bé đã nhận sách và anh chị thấy thích, Felix rất biết ơn nếu được dùng vài dòng cảm nhận để giới thiệu với phụ huynh khác.</p>
-        <a href="https://zalo.me/0396868675" target="_blank" rel="noopener noreferrer" class="mt-6 inline-flex rounded-lg border border-accent px-5 py-2.5 font-semibold text-accent transition hover:bg-accent hover:text-navy-950">
+        <a href={ZALO_URL} target="_blank" rel="noopener noreferrer" class="mt-6 inline-flex rounded-lg border border-accent px-5 py-2.5 font-semibold text-accent transition hover:bg-accent hover:text-navy-950">
           Gửi cảm nhận qua Zalo
         </a>
       </div>
@@ -279,7 +281,7 @@ const faqItems = [
 
   <Footer />
 
-  <script>
+  <script define:vars={{ ZALO_URL, ZALO_DISPLAY }}>
     const form = document.getElementById('msmw-form');
     const btn = form.querySelector('button[type="submit"]');
     const statusEl = document.getElementById('form-status');
@@ -376,7 +378,7 @@ const faqItems = [
 
     function showError() {
       statusEl.className = 'mx-auto mt-8 max-w-xl rounded-lg border border-red-500/30 bg-red-500/10 p-5 text-center font-semibold text-red-400';
-      statusEl.innerHTML = '⚠️ Có lỗi xảy ra. Vui lòng thử lại hoặc nhắn trực tiếp <a href="https://zalo.me/0396868675" class="underline">Zalo +84 396868675</a>';
+      statusEl.innerHTML = `⚠️ Có lỗi xảy ra. Vui lòng thử lại hoặc nhắn trực tiếp <a href="${ZALO_URL}" class="underline">Zalo ${ZALO_DISPLAY}</a>`;
     }
   </script>
 </BaseLayout>

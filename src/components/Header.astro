@@ -2,9 +2,10 @@
 export interface Props {
   homeLinks?: boolean;
 }
+import { ZALO_URL } from '../config/contact';
 const { homeLinks = false } = Astro.props;
 const productsHref = homeLinks ? '#products' : '/#products';
-const contactHref = 'https://zalo.me/0396868675';
+const contactHref = ZALO_URL;
 ---
 <header class="sticky top-0 z-50 border-b border-cream-dim/20 bg-navy-950/85 backdrop-blur">
   <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">

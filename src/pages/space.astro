@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import { ZALO_URL } from '../config/contact';
 
 const previewCards = [
   ['📚', 'Tài liệu miễn phí', 'Pack đọc, file in, template prompts cho phụ huynh và giáo viên.'],
@@ -110,7 +111,7 @@ const previewCards = [
 
   <Footer />
 
-  <script>
+  <script define:vars={{ ZALO_URL }}>
     const form = document.getElementById('space-form');
     const btn = form.querySelector('button[type="submit"]');
     const statusEl = document.getElementById('space-form-status');
@@ -161,7 +162,7 @@ const previewCards = [
     function showError(msg) {
       statusEl.classList.remove('hidden', 'text-green-400');
       statusEl.classList.add('text-red-400');
-      statusEl.innerHTML = `⚠️ ${msg} <a href="https://zalo.me/0396868675" class="underline">Nhắn Zalo Felix</a>`;
+      statusEl.innerHTML = `⚠️ ${msg} <a href="${ZALO_URL}" class="underline">Nhắn Zalo Felix</a>`;
     }
   </script>
 </BaseLayout>

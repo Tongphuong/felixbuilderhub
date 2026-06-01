@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { ZALO_URL } from '../config/contact';
 
 export interface Props { title: string; description?: string; ogImage?: string; }
 const {
@@ -39,7 +40,7 @@ const ogImageUrl = new URL(ogImage, Astro.site ?? 'https://felixbuilderhub.com')
     <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-accent focus:px-4 focus:py-2 focus:font-semibold focus:text-navy-950">Bỏ qua tới nội dung chính</a>
     <slot />
     <a
-      href="https://zalo.me/0396868675"
+      href={ZALO_URL}
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Nhắn Zalo Felix"

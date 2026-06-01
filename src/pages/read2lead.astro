@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import { ZALO_DISPLAY, ZALO_URL } from '../config/contact';
 
 const topics = [
   ['animals_pets', 'Động vật & thú cưng'],
@@ -45,7 +46,7 @@ const faqItems = [
   ['Read2Lead dùng để làm gì?', 'Read2Lead giúp bố mẹ có ngay một bài đọc tiếng Anh ngắn cho con, kèm bài luyện và file nghe. Bố mẹ có thể in ra và ngồi đọc cùng con tại nhà.'],
   ['Bố mẹ cần làm gì sau khi tải file?', 'In file PDF ra giấy A4. Mở file nghe cho con nghe 1 lần. Sau đó cho con đọc truyện, làm bài luyện, rồi xem đáp án ở trang cuối cùng con.'],
   ['Cần biết dạy tiếng Anh mới dùng được không?', 'Không cần. Trang cuối có đáp án và gợi ý cho bố mẹ. Nếu con bị kẹt, bố mẹ chỉ cần cho con nghe lại file MP3 và thử lại từng phần nhỏ.'],
-  ['Mã đăng nhập là gì? Lấy ở đâu?', 'Mỗi phụ huynh khi đăng ký dùng Read2Lead sẽ nhận 1 mã từ Felix qua Zalo. Chưa có mã thì nhắn Zalo +84 396868675 để hỏi cách nhận mã.'],
+  ['Mã đăng nhập là gì? Lấy ở đâu?', `Mỗi phụ huynh khi đăng ký dùng Read2Lead sẽ nhận 1 mã từ Felix qua Zalo. Chưa có mã thì nhắn Zalo ${ZALO_DISPLAY} để hỏi cách nhận mã.`],
   ['Nên chọn mức đọc nào cho con?', 'Nếu con mới đọc từng từ hoặc câu rất ngắn, chọn mức 1. Nếu con đọc được câu đơn, chọn mức 2. Nếu con đọc được một đoạn ngắn, chọn mức 3. Không chắc thì chọn mức 2 trước.'],
   ['Nếu bài quá khó hoặc quá dễ thì sao?', 'Bố mẹ có thể tạo lại một lần khác và chọn mức đọc thấp hơn hoặc cao hơn. Nếu vẫn chưa phù hợp, nhắn Zalo Felix để được hỗ trợ.'],
   ['Có thể chọn chủ đề con thích không?', 'Có. Bố mẹ có thể điền sở thích của con và chọn một chủ đề gần nhất. Nếu để trống, Felix sẽ chọn chủ đề phù hợp với tuổi và mức đọc.'],
@@ -227,7 +228,7 @@ const faqItems = [
                 placeholder="VD: R2L-JUN-A4F2"
                 class="w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-4 py-3 text-base uppercase text-cream placeholder:normal-case placeholder:text-cream-dim/80 focus:border-accent focus:outline-none"
               />
-              <p class="mt-2 text-xs text-cream-dim">Chưa có mã? <a href="https://zalo.me/0396868675" class="text-accent underline">Nhắn Zalo Felix</a> để nhận.</p>
+              <p class="mt-2 text-xs text-cream-dim">Chưa có mã? <a href={ZALO_URL} class="text-accent underline">Nhắn Zalo Felix</a> để nhận.</p>
             </div>
             <div>
               <label for="child_name" class="mb-2 block text-sm text-cream-muted">Tên con <span class="text-red-400">*</span></label>
@@ -335,7 +336,7 @@ const faqItems = [
         <div id="error-section" class="mx-auto hidden max-w-2xl rounded-lg border border-red-500/30 bg-red-500/10 p-6 text-center">
           <p class="text-lg font-semibold text-red-400">Có lỗi xảy ra: <span id="error-message"></span></p>
           <button id="retry-btn" type="button" class="mt-5 rounded-lg bg-accent px-5 py-2 font-semibold text-navy-950 transition hover:bg-accent-hover">Thử lại</button>
-          <p class="mt-4 text-sm text-cream-muted">Nếu lỗi tiếp tục, nhắn Zalo +84 396868675</p>
+          <p class="mt-4 text-sm text-cream-muted">Nếu lỗi tiếp tục, nhắn Zalo {ZALO_DISPLAY}</p>
         </div>
       </div>
     </section>

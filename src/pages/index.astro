@@ -2,21 +2,22 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import { EMAIL, FB_URL, MESSENGER_URL, ZALO_DISPLAY, ZALO_URL } from '../config/contact';
 
 const socialLinks = [
   {
     label: 'Facebook',
-    href: 'https://www.facebook.com/phuong.tong.79230',
+    href: FB_URL,
     svg: '<path fill="currentColor" d="M22 12a10 10 0 1 0-11.6 9.9V14.9H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.3v7A10 10 0 0 0 22 12Z"/>',
   },
   {
     label: 'Messenger',
-    href: 'https://m.me/phuong.tong.79230',
+    href: MESSENGER_URL,
     svg: '<path fill="currentColor" d="M12 2C6.5 2 2 6.2 2 11.3c0 2.9 1.4 5.4 3.7 7.1V22l3.4-1.9c.9.3 1.9.4 2.9.4 5.5 0 10-4.2 10-9.3S17.5 2 12 2Zm1 12.5L10.5 12 5.6 14.5 11 8.8l2.6 2.5L18.5 8.8l-5.5 5.7Z"/>',
   },
   {
     label: 'Zalo',
-    href: 'https://zalo.me/0396868675',
+    href: ZALO_URL,
     svg: '<path fill="currentColor" d="M12 2a10 10 0 1 0 5.4 18.4l3.6 1.1-1.1-3.5A10 10 0 0 0 12 2Zm-4.1 8.5h2v.8c.5-.6 1.2-1 2.1-1 1.6 0 2.5 1 2.5 2.7v3.5h-2v-3.2c0-.9-.4-1.4-1.2-1.4-.8 0-1.4.6-1.4 1.5v3.1h-2v-6Zm-2.4 0h2v6h-2v-6Zm9.9 0h4.8v1.3l-3 3h3v1.7h-5v-1.3l3-3h-2.8v-1.7Z"/>',
   },
 ];
@@ -129,14 +130,14 @@ const socialLinks = [
           <svg class="h-5 w-5 shrink-0 text-cream-dim" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z" />
           </svg>
-          <span>Zalo: +84 396868675</span>
+          <span>Zalo: {ZALO_DISPLAY}</span>
         </div>
         <div class="flex items-center gap-3">
           <svg class="h-5 w-5 shrink-0 text-cream-dim" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M4 4h16v16H4z" />
             <path d="m22 6-10 7L2 6" />
           </svg>
-          <a href="mailto:phuongtong474@gmail.com" class="transition hover:text-accent">phuongtong474@gmail.com</a>
+          <a href={`mailto:${EMAIL}`} class="transition hover:text-accent">{EMAIL}</a>
         </div>
         <div class="flex items-center gap-3 pt-3">
           {socialLinks.map((link) => (
