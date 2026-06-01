@@ -24,7 +24,7 @@ export async function onRequestPost(context) {
 
   if (!env.READ2LEAD_CODES) {
     console.error('READ2LEAD_CODES KV binding missing');
-    return json({ ok: false, error: 'config_error', message: 'Hệ thống chưa cấu hình mã. Vui lòng nhắn Zalo Felix.' }, 500);
+    return json({ ok: false, error: 'config_error', message: 'Felixar chưa cấu hình mã. Vui lòng nhắn Zalo Felix.' }, 500);
   }
 
   const codeData = await env.READ2LEAD_CODES.get(accessCode, { type: 'json' });

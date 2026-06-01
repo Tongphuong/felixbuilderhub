@@ -5,29 +5,29 @@ import Footer from '../../components/Footer.astro';
 ---
 
 <BaseLayout
-  title="Read2Lead - Nộp bài và nhận nhận xét"
-  description="Phụ huynh nộp ảnh bài làm và ghi âm con kể lại câu chuyện để nhận nhận xét, cộng sao và mở bài Read2Lead tiếp theo."
+  title="Felixar - Quản lí học tập ảo cho Read2Lead"
+  description="Felixar giúp phụ huynh nộp ảnh bài làm, gửi ghi âm con kể lại câu chuyện, nhận nhận xét, cộng sao và mở bài Read2Lead tiếp theo."
 >
   <Header />
 
   <main id="main" class="flex-1">
     <section class="mx-auto max-w-5xl px-6 py-14 md:py-20">
-      <span class="inline-block rounded-full bg-accent/20 px-4 py-1 text-sm font-semibold text-accent">Read2Lead Tutor</span>
-      <h1 class="mt-5 max-w-4xl font-display text-4xl font-extrabold leading-snug text-cream md:text-5xl">Nộp bài và nhận nhận xét cho con.</h1>
+      <span class="inline-block rounded-full bg-accent/20 px-4 py-1 text-sm font-semibold text-accent">Felixar</span>
+      <h1 class="mt-5 max-w-4xl font-display text-4xl font-extrabold leading-snug text-cream md:text-5xl">Felixar - quản lí học tập ảo.</h1>
       <p class="mt-5 max-w-3xl text-lg leading-relaxed text-cream-muted">
-        Bố mẹ chụp ảnh bài con đã làm, cho con ghi âm kể lại câu chuyện trong 30-60 giây, rồi gửi lên để nhận nhận xét ngắn gọn bằng tiếng Việt.
+        Bố mẹ dùng Felixar để nộp ảnh bài con đã làm, gửi ghi âm con kể lại câu chuyện, nhận nhận xét ngắn gọn bằng tiếng Việt, theo dõi số sao và mở bài tiếp theo.
       </p>
     </section>
 
     <section class="bg-navy-900 px-6 py-14">
       <div class="mx-auto grid max-w-6xl gap-6 lg:grid-cols-[1fr_1.15fr]">
         <div class="rounded-xl border border-cream-dim/20 bg-navy-950/70 p-6">
-          <h2 class="font-display text-2xl font-bold leading-snug text-cream">Bố mẹ cần chuẩn bị gì?</h2>
+          <h2 class="font-display text-2xl font-bold leading-snug text-cream">Bố mẹ cần chuẩn bị gì để Felixar nhận xét?</h2>
           <ol class="mt-5 space-y-3 leading-relaxed text-cream-muted">
             <li><strong class="text-cream">1.</strong> Một ảnh chụp trang bài làm của con.</li>
             <li><strong class="text-cream">2.</strong> Một đoạn ghi âm con kể lại câu chuyện bằng tiếng Anh.</li>
             <li><strong class="text-cream">3.</strong> Nếu ảnh hơi mờ, bố mẹ có thể gõ thêm vài câu trả lời của con.</li>
-            <li><strong class="text-cream">4.</strong> Hệ thống sẽ nhận xét: con làm tốt gì, cần luyện gì, và bước tiếp theo nên làm gì.</li>
+            <li><strong class="text-cream">4.</strong> Felixar sẽ nhận xét: con làm tốt gì, cần luyện gì, và bước tiếp theo nên làm gì.</li>
           </ol>
 
           <div class="mt-6 rounded-lg border border-accent/40 bg-accent/10 p-4">
@@ -71,7 +71,7 @@ import Footer from '../../components/Footer.astro';
               <audio id="audio-preview" controls class="mt-3 hidden w-full"></audio>
             </div>
 
-            <button id="submit-review" type="submit" class="w-full rounded-lg bg-accent px-6 py-3 text-lg font-semibold text-navy-950 transition hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-60">Nộp bài và nhận nhận xét</button>
+            <button id="submit-review" type="submit" class="w-full rounded-lg bg-accent px-6 py-3 text-lg font-semibold text-navy-950 transition hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-60">Gửi cho Felixar nhận xét</button>
           </form>
 
           <div id="result-card" class="mt-6 hidden rounded-lg border border-gold/40 bg-gold/10 p-5"></div>
@@ -211,7 +211,7 @@ import Footer from '../../components/Footer.astro';
       }
 
       submitBtn.disabled = true;
-      submitBtn.textContent = 'Đang nhận xét...';
+      submitBtn.textContent = 'Felixar đang nhận xét...';
       try {
         const res = await fetch('/api/review-read2lead-speaking', {
           method: 'POST',
@@ -245,7 +245,7 @@ import Footer from '../../components/Footer.astro';
         showError('Mạng không ổn định. Vui lòng thử lại sau.');
       } finally {
         submitBtn.disabled = false;
-        submitBtn.textContent = 'Nộp bài và nhận nhận xét';
+        submitBtn.textContent = 'Gửi cho Felixar nhận xét';
       }
     });
   </script>

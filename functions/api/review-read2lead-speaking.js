@@ -2,7 +2,7 @@ export async function onRequestPost(context) {
   const { request, env } = context;
 
   if (!env.READ2LEAD_CODES) {
-    return json({ ok: false, error: 'config_error', message: 'Hệ thống chưa cấu hình mã học sinh.' }, 500);
+    return json({ ok: false, error: 'config_error', message: 'Felixar chưa cấu hình mã học sinh.' }, 500);
   }
   if (!env.READ2LEAD_BACKEND_URL) {
     return json({ ok: false, error: 'backend_not_configured', message: 'Backend chưa cấu hình.' }, 500);
@@ -50,7 +50,7 @@ export async function onRequestPost(context) {
     return json({
       ok: true,
       already_reviewed: true,
-      message: 'Bài này đã được nhận xét rồi. Con không bị mất sao, nhưng hệ thống không cộng sao lần hai.',
+      message: 'Bài này đã được nhận xét rồi. Con không bị mất sao, nhưng Felixar không cộng sao lần hai.',
       progress: publicProgress(progress),
       current_pack: publicPack(currentPack),
       review: currentPack.review_summary || null,
@@ -86,7 +86,7 @@ export async function onRequestPost(context) {
     upstream = { status: res.status, body: await res.json() };
   } catch (err) {
     console.error('Review backend failed:', err.message);
-    return json({ ok: false, error: 'backend_unavailable', message: 'Hệ thống nhận xét chưa phản hồi. Vui lòng thử lại sau.' }, 502);
+    return json({ ok: false, error: 'backend_unavailable', message: 'Felixar chưa phản hồi. Vui lòng thử lại sau.' }, 502);
   }
 
   if (!upstream.body || !upstream.body.ok) {
