@@ -19,6 +19,12 @@ export async function onRequestPost(context) {
     return json({ ok: false, error: 'invalid_form', message: 'Không đọc được dữ liệu nộp bài.' }, 400);
   }
 
+  // Honeypot — silently accept bot submissions so they think they succeeded.
+  const honeypot = (form.get('website') || '').toString().trim();
+  if (honeypot) {
+    return json({ ok: true, already_reviewed: true, message: 'Đã ghi nhận.' });
+  }
+
   const accessCode = (form.get('access_code') || '').toString().trim().toUpperCase();
   const worksheetPhoto = form.get('worksheet_photo');
   const retellAudio = form.get('retell_audio');
