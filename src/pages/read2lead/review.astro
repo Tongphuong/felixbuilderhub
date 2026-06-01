@@ -1,0 +1,252 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+---
+
+<BaseLayout
+  title="Read2Lead - Nộp bài và nhận nhận xét"
+  description="Phụ huynh nộp ảnh bài làm và ghi âm con kể lại câu chuyện để nhận nhận xét, cộng sao và mở bài Read2Lead tiếp theo."
+>
+  <Header />
+
+  <main id="main" class="flex-1">
+    <section class="mx-auto max-w-5xl px-6 py-14 md:py-20">
+      <span class="inline-block rounded-full bg-accent/20 px-4 py-1 text-sm font-semibold text-accent">Read2Lead Tutor</span>
+      <h1 class="mt-5 max-w-4xl font-display text-4xl font-extrabold leading-snug text-cream md:text-5xl">Nộp bài và nhận nhận xét cho con.</h1>
+      <p class="mt-5 max-w-3xl text-lg leading-relaxed text-cream-muted">
+        Bố mẹ chụp ảnh bài con đã làm, cho con ghi âm kể lại câu chuyện trong 30-60 giây, rồi gửi lên để nhận nhận xét ngắn gọn bằng tiếng Việt.
+      </p>
+    </section>
+
+    <section class="bg-navy-900 px-6 py-14">
+      <div class="mx-auto grid max-w-6xl gap-6 lg:grid-cols-[1fr_1.15fr]">
+        <div class="rounded-xl border border-cream-dim/20 bg-navy-950/70 p-6">
+          <h2 class="font-display text-2xl font-bold leading-snug text-cream">Bố mẹ cần chuẩn bị gì?</h2>
+          <ol class="mt-5 space-y-3 leading-relaxed text-cream-muted">
+            <li><strong class="text-cream">1.</strong> Một ảnh chụp trang bài làm của con.</li>
+            <li><strong class="text-cream">2.</strong> Một đoạn ghi âm con kể lại câu chuyện bằng tiếng Anh.</li>
+            <li><strong class="text-cream">3.</strong> Nếu ảnh hơi mờ, bố mẹ có thể gõ thêm vài câu trả lời của con.</li>
+            <li><strong class="text-cream">4.</strong> Hệ thống sẽ nhận xét: con làm tốt gì, cần luyện gì, và bước tiếp theo nên làm gì.</li>
+          </ol>
+
+          <div class="mt-6 rounded-lg border border-accent/40 bg-accent/10 p-4">
+            <h3 class="font-display text-lg font-bold text-cream">Cách cho con ghi âm</h3>
+            <p class="mt-2 leading-relaxed text-cream-muted">
+              Con nói ngắn gọn: câu chuyện nói về ai, chuyện gì xảy ra, cuối cùng ra sao. Không cần nói hoàn hảo, chỉ cần con tự kể lại được ý chính.
+            </p>
+          </div>
+        </div>
+
+        <div class="rounded-xl border border-cream-dim/20 bg-navy-950/80 p-6">
+          <form id="review-form" class="space-y-5">
+            <div>
+              <label for="access-code" class="mb-2 block text-sm text-cream-muted">Mã học sinh</label>
+              <div class="flex flex-col gap-2 sm:flex-row">
+                <input id="access-code" name="access_code" required maxlength="40" placeholder="VD: R2L-LINH-8F3KQ2" class="w-full rounded-lg border border-cream-dim/30 bg-navy-900 px-4 py-3 text-base uppercase text-cream placeholder:normal-case placeholder:text-cream-dim/80 focus:border-accent focus:outline-none" />
+                <button id="load-progress" type="button" class="rounded-lg border border-accent px-4 py-3 font-semibold text-accent transition hover:bg-accent hover:text-navy-950">Xem bài hiện tại</button>
+              </div>
+            </div>
+
+            <div id="progress-card" class="hidden rounded-lg border border-gold/30 bg-gold/10 p-4 text-sm text-cream-muted"></div>
+
+            <div>
+              <label for="worksheet-photo" class="mb-2 block text-sm text-cream-muted">Ảnh bài làm của con</label>
+              <input id="worksheet-photo" name="worksheet_photo" type="file" accept="image/*" required class="block w-full rounded-lg border border-cream-dim/30 bg-navy-900 px-4 py-3 text-sm text-cream file:mr-4 file:rounded-md file:border-0 file:bg-accent file:px-3 file:py-2 file:font-semibold file:text-navy-950" />
+              <p class="mt-2 text-xs text-cream-dim">Chụp rõ trang bài làm. Không cần đẹp, chỉ cần thấy con đã làm bằng bút.</p>
+            </div>
+
+            <div>
+              <label for="typed-answers" class="mb-2 block text-sm text-cream-muted">Nếu ảnh không rõ, bố mẹ gõ vài câu con trả lời ở đây <span class="text-cream-dim">(tùy chọn)</span></label>
+              <textarea id="typed-answers" name="typed_answers" maxlength="2000" rows="4" placeholder="VD: Con trả lời câu 1 là..., câu 2 là... hoặc con kể lại: ..." class="w-full rounded-lg border border-cream-dim/30 bg-navy-900 px-4 py-3 text-base text-cream placeholder:text-cream-dim/80 focus:border-accent focus:outline-none"></textarea>
+            </div>
+
+            <div class="rounded-lg border border-cream-dim/25 bg-navy-900 p-4">
+              <label class="block text-sm text-cream-muted">Ghi âm con kể lại câu chuyện</label>
+              <div class="mt-3 flex flex-wrap gap-3">
+                <button id="record-btn" type="button" class="rounded-lg bg-accent px-4 py-2 font-semibold text-navy-950 transition hover:bg-accent-hover">Bắt đầu ghi âm</button>
+                <button id="stop-btn" type="button" disabled class="rounded-lg border border-cream-dim/30 px-4 py-2 font-semibold text-cream transition enabled:hover:border-accent enabled:hover:text-accent disabled:cursor-not-allowed disabled:opacity-50">Dừng</button>
+              </div>
+              <p id="record-status" class="mt-3 text-sm text-cream-dim">Chưa có ghi âm.</p>
+              <audio id="audio-preview" controls class="mt-3 hidden w-full"></audio>
+            </div>
+
+            <button id="submit-review" type="submit" class="w-full rounded-lg bg-accent px-6 py-3 text-lg font-semibold text-navy-950 transition hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-60">Nộp bài và nhận nhận xét</button>
+          </form>
+
+          <div id="result-card" class="mt-6 hidden rounded-lg border border-gold/40 bg-gold/10 p-5"></div>
+          <div id="error-card" class="mt-6 hidden rounded-lg border border-red-500/30 bg-red-500/10 p-5 text-red-300"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const codeInput = document.getElementById('access-code');
+    const loadBtn = document.getElementById('load-progress');
+    const form = document.getElementById('review-form');
+    const progressCard = document.getElementById('progress-card');
+    const resultCard = document.getElementById('result-card');
+    const errorCard = document.getElementById('error-card');
+    const recordBtn = document.getElementById('record-btn');
+    const stopBtn = document.getElementById('stop-btn');
+    const recordStatus = document.getElementById('record-status');
+    const audioPreview = document.getElementById('audio-preview');
+    const submitBtn = document.getElementById('submit-review');
+    const typedAnswers = document.getElementById('typed-answers');
+
+    let mediaRecorder = null;
+    let chunks = [];
+    let audioBlob = null;
+    let stream = null;
+
+    const initialCode = params.get('code');
+    if (initialCode) {
+      codeInput.value = initialCode.toUpperCase();
+      loadProgress();
+    }
+
+    function escapeHtml(value) {
+      return String(value || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function showError(message) {
+      errorCard.textContent = message;
+      errorCard.classList.remove('hidden');
+      resultCard.classList.add('hidden');
+    }
+
+    function clearError() {
+      errorCard.classList.add('hidden');
+      errorCard.textContent = '';
+    }
+
+    async function loadProgress() {
+      clearError();
+      const code = codeInput.value.trim().toUpperCase();
+      if (!code) {
+        showError('Vui lòng nhập mã học sinh.');
+        return;
+      }
+      try {
+        const res = await fetch(`/api/read2lead-progress?code=${encodeURIComponent(code)}`);
+        const data = await res.json();
+        if (!res.ok || !data.ok) {
+          showError(data.message || 'Không tìm thấy mã học sinh.');
+          return;
+        }
+        const progress = data.progress;
+        const pack = progress.current_pack;
+        progressCard.innerHTML = `
+          <p><strong class="text-cream">${escapeHtml(progress.student_name || 'Học sinh')}</strong> · ${escapeHtml(progress.current_level)} · ${progress.stars} sao · ${escapeHtml(progress.rank)}</p>
+          <p class="mt-2">Bài hiện tại: <strong class="text-cream">${escapeHtml(pack?.story_title || 'Chưa có bài')}</strong></p>
+          <p class="mt-2">${data.next_pack_locked ? 'Bài mới đang khóa cho tới khi con nộp bài hiện tại.' : 'Bài tiếp theo đang mở.'}</p>
+        `;
+        progressCard.classList.remove('hidden');
+      } catch {
+        showError('Mạng không ổn định. Vui lòng thử lại.');
+      }
+    }
+
+    loadBtn.addEventListener('click', loadProgress);
+
+    recordBtn.addEventListener('click', async () => {
+      clearError();
+      try {
+        stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        chunks = [];
+        audioBlob = null;
+        mediaRecorder = new MediaRecorder(stream);
+        mediaRecorder.addEventListener('dataavailable', (event) => {
+          if (event.data.size > 0) chunks.push(event.data);
+        });
+        mediaRecorder.addEventListener('stop', () => {
+          audioBlob = new Blob(chunks, { type: mediaRecorder.mimeType || 'audio/webm' });
+          audioPreview.src = URL.createObjectURL(audioBlob);
+          audioPreview.classList.remove('hidden');
+          recordStatus.textContent = 'Đã có ghi âm. Bố mẹ có thể nghe lại trước khi nộp.';
+          stream?.getTracks().forEach((track) => track.stop());
+        });
+        mediaRecorder.start();
+        recordBtn.disabled = true;
+        stopBtn.disabled = false;
+        recordStatus.textContent = 'Đang ghi âm... con kể lại câu chuyện trong 30-60 giây.';
+      } catch {
+        showError('Không mở được micro. Vui lòng cho phép trình duyệt dùng micro rồi thử lại.');
+      }
+    });
+
+    stopBtn.addEventListener('click', () => {
+      if (mediaRecorder && mediaRecorder.state === 'recording') {
+        mediaRecorder.stop();
+      }
+      recordBtn.disabled = false;
+      stopBtn.disabled = true;
+    });
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      clearError();
+      resultCard.classList.add('hidden');
+
+      const code = codeInput.value.trim().toUpperCase();
+      const photo = document.getElementById('worksheet-photo').files[0];
+      if (!code) return showError('Vui lòng nhập mã học sinh.');
+      if (!photo) return showError('Vui lòng tải lên ảnh bài làm.');
+      if (!audioBlob) return showError('Vui lòng ghi âm phần con kể lại câu chuyện trước khi nộp.');
+
+      const formData = new FormData();
+      formData.set('access_code', code);
+      formData.set('worksheet_photo', photo);
+      formData.set('retell_audio', audioBlob, 'retell.webm');
+      if (typedAnswers.value.trim()) {
+        formData.set('typed_answers', typedAnswers.value.trim());
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Đang nhận xét...';
+      try {
+        const res = await fetch('/api/review-read2lead-speaking', {
+          method: 'POST',
+          body: formData,
+        });
+        const data = await res.json();
+        if (!res.ok || !data.ok) {
+          showError(data.message || data.error || 'Chưa nhận xét được bài. Vui lòng thử lại.');
+          return;
+        }
+        const feedback = data.review?.feedback_vi || {};
+        const progress = data.progress || {};
+        resultCard.innerHTML = `
+          <h2 class="font-display text-2xl font-bold leading-snug text-cream">${data.star_awarded ? 'Con được cộng 1 sao' : 'Đã có nhận xét cho bài này'}</h2>
+          <p class="mt-3 leading-relaxed text-cream-muted">${escapeHtml(feedback.summary || data.message || '')}</p>
+          <div class="mt-4 grid gap-3 sm:grid-cols-3">
+            <div class="rounded-lg bg-navy-950/70 p-3"><p class="text-xs text-cream-dim">Sao</p><p class="text-xl font-bold text-gold-light">${progress.stars ?? 0}</p></div>
+            <div class="rounded-lg bg-navy-950/70 p-3"><p class="text-xs text-cream-dim">Xếp hạng</p><p class="text-xl font-bold text-gold-light">${escapeHtml(progress.rank || 'Rookie Reader')}</p></div>
+            <div class="rounded-lg bg-navy-950/70 p-3"><p class="text-xs text-cream-dim">Bài tiếp theo</p><p class="text-xl font-bold text-gold-light">${data.next_pack_unlocked ? 'Đã mở' : 'Chưa mở'}</p></div>
+          </div>
+          <div class="mt-4 space-y-2 leading-relaxed text-cream-muted">
+            <p><strong class="text-cream">Điểm tốt:</strong> ${escapeHtml(feedback.strength || 'Con đã hoàn thành phần nộp bài.')}</p>
+            <p><strong class="text-cream">Cần luyện:</strong> ${escapeHtml(feedback.practice || 'Con nên nghe lại file MP3 và đọc rõ từng câu hơn.')}</p>
+            <p><strong class="text-cream">Bước tiếp theo:</strong> ${escapeHtml(feedback.parent_next_step || 'Bố mẹ có thể cho con luyện lại phần chưa chắc rồi tạo bài tiếp theo.')}</p>
+          </div>
+          <a href="/read2lead#form" class="mt-5 inline-flex rounded-lg bg-accent px-5 py-2.5 font-semibold text-navy-950 transition hover:bg-accent-hover">Tạo bài tiếp theo</a>
+        `;
+        resultCard.classList.remove('hidden');
+        await loadProgress();
+      } catch {
+        showError('Mạng không ổn định. Vui lòng thử lại sau.');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Nộp bài và nhận nhận xét';
+      }
+    });
+  </script>
+</BaseLayout>

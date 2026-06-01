@@ -52,6 +52,41 @@ export async function onRequestPatch(context) {
     }
   }
 
+  if (body.student_profile && typeof body.student_profile === 'object') {
+    const existingProfile = updated.student_profile || {};
+    const profile = { ...existingProfile };
+    if (typeof body.student_profile.student_name === 'string') {
+      profile.student_name = body.student_profile.student_name.trim().slice(0, 50);
+    }
+    if (body.student_profile.age !== undefined) {
+      const age = parseInt(body.student_profile.age, 10);
+      if (!Number.isFinite(age) || age < 5 || age > 14) return json({ ok: false, error: 'student_age_invalid' }, 400);
+      profile.age = age;
+    }
+    if (body.student_profile.level !== undefined) {
+      if (!['L1', 'L2', 'L3'].includes(body.student_profile.level)) return json({ ok: false, error: 'student_level_invalid' }, 400);
+      profile.level = body.student_profile.level;
+    }
+    if (body.student_profile.child_gender !== undefined) {
+      if (!['boy', 'girl'].includes(body.student_profile.child_gender)) return json({ ok: false, error: 'child_gender_invalid' }, 400);
+      profile.child_gender = body.student_profile.child_gender;
+    }
+    updated.student_profile = profile;
+    updated.progress = {
+      ...(updated.progress || {}),
+      student_name: profile.student_name || updated.progress?.student_name || '',
+      age: profile.age || updated.progress?.age || null,
+      child_gender: profile.child_gender || updated.progress?.child_gender || '',
+      current_level: profile.level || updated.progress?.current_level || 'L2',
+      stars: updated.progress?.stars || 0,
+      rank: updated.progress?.rank || 'Rookie Reader',
+      badges: Array.isArray(updated.progress?.badges) ? updated.progress.badges : [],
+      packs_created: updated.progress?.packs_created || 0,
+      current_pack: updated.progress?.current_pack || null,
+      review_history: Array.isArray(updated.progress?.review_history) ? updated.progress.review_history : [],
+    };
+  }
+
   await env.READ2LEAD_CODES.put(code, JSON.stringify(updated));
   return json({ ok: true, code, record: updated });
 }
