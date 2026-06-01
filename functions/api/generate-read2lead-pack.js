@@ -211,8 +211,8 @@ function isPackReviewed(pack) {
 }
 
 function currentPackBlocksGeneration(pack) {
-  if (!pack || isPackReviewed(pack)) return false;
-  if (pack.status !== 'generation_in_progress') return true;
+  if (!pack) return false;
+  if (pack.status !== 'generation_in_progress') return false;
 
   const startedAt = Date.parse(pack.created_at || '');
   if (!Number.isFinite(startedAt)) return true;
