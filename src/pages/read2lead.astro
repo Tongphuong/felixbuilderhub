@@ -365,6 +365,10 @@ const faqItems = [
     const formSection = document.getElementById('form-section');
 
     let statusInterval = null;
+    let pollInterval = null;
+    let pollAttempts = 0;
+    const MAX_POLL_ATTEMPTS = 60;
+    const POLL_INTERVAL_MS = 5000;
 
     const stages = [
       'Đang viết câu chuyện riêng cho con...',
@@ -413,6 +417,10 @@ const faqItems = [
     }
 
     function resetForm() {
+      if (pollInterval) {
+        clearInterval(pollInterval);
+        pollInterval = null;
+      }
       formSection.classList.remove('hidden');
       resultSection.classList.add('hidden');
       errorSection.classList.add('hidden');
@@ -422,6 +430,39 @@ const faqItems = [
 
     document.getElementById('reset-btn').addEventListener('click', resetForm);
     document.getElementById('retry-btn').addEventListener('click', resetForm);
+
+    async function pollGenerationStatus(accessCode, taskId, childName) {
+      try {
+        const res = await fetch(`/api/check-generation-status?access_code=${encodeURIComponent(accessCode)}&task_id=${encodeURIComponent(taskId)}`);
+        const result = await res.json();
+
+        if (result.status === 'pending') {
+          pollAttempts += 1;
+          if (pollAttempts >= MAX_POLL_ATTEMPTS) {
+            clearInterval(pollInterval);
+            pollInterval = null;
+            showError('Tạo bài quá lâu. Vui lòng thử lại hoặc nhắn Zalo Felix.');
+          }
+          return;
+        }
+
+        clearInterval(pollInterval);
+        pollInterval = null;
+
+        if (result.status === 'done' && result.pdf_url) {
+          showResult({
+            ...result,
+            child_name: childName,
+          });
+        } else {
+          showError(result.message || result.error || 'Tạo bài thất bại.');
+        }
+      } catch (err) {
+        clearInterval(pollInterval);
+        pollInterval = null;
+        showError('Mất kết nối khi kiểm tra trạng thái. Thử lại sau.');
+      }
+    }
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -435,6 +476,7 @@ const faqItems = [
       btn.disabled = true;
       btn.textContent = 'Đang tạo...';
       showProgress();
+      pollAttempts = 0;
 
       try {
         const res = await fetch('/api/generate-read2lead-pack', {
@@ -445,11 +487,20 @@ const faqItems = [
 
         const result = await res.json();
 
-        if (res.ok && result.ok && result.pdf_url) {
-          showResult({ ...result, child_name: data.child_name });
-        } else {
+        if (!res.ok || !result.ok) {
           showError(result.review_link ? `${result.message || result.error} Mở Felixar: ${result.review_link}` : (result.message || result.error || 'Có lỗi xảy ra, vui lòng thử lại.'));
+          return;
         }
+
+        if (!result.task_id) {
+          showError('Backend không trả task_id. Vui lòng thử lại.');
+          return;
+        }
+
+        pollInterval = setInterval(
+          () => pollGenerationStatus(data.access_code.toUpperCase(), result.task_id, data.child_name),
+          POLL_INTERVAL_MS,
+        );
       } catch (err) {
         showError('Mạng không ổn định. Vui lòng thử lại sau ít phút.');
       } finally {
