@@ -64,7 +64,6 @@ export async function onRequestPost(context) {
     return json({ ok: false, error: 'backend_auth_not_configured', message: 'Backend chưa cấu hình bảo mật.' }, 500);
   }
 
-  let upstreamResult;
   const interests = (data.interests || '').toString().trim().slice(0, 120);
   const topic = (data.topic || '').toString().trim().slice(0, 60);
   const levelForPack = progress.current_level || data.level;
@@ -100,7 +99,7 @@ export async function onRequestPost(context) {
 
   try {
     const reviewUrl = `${new URL(request.url).origin}/read2lead/review?code=${encodeURIComponent(accessCode)}`;
-    const upstream = await fetch(`${backendUrl}/generate`, {
+    const upstream = await fetch(`${backendUrl}/generate-async`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -116,69 +115,52 @@ export async function onRequestPost(context) {
         review_url: reviewUrl,
       }),
     });
-    upstreamResult = { status: upstream.status, body: await upstream.json() };
+    if (!upstream.ok) {
+      await clearGenerationLock(env.READ2LEAD_CODES, accessCode, pendingPackId);
+      const body = await upstream.json().catch(() => ({ ok: false, error: 'backend_error' }));
+      return json(body, upstream.status);
+    }
+
+    const upstreamBody = await upstream.json();
+    if (!upstreamBody.ok || !upstreamBody.task_id) {
+      await clearGenerationLock(env.READ2LEAD_CODES, accessCode, pendingPackId);
+      return json({ ok: false, error: 'backend_invalid_response' }, 502);
+    }
+
+    const pendingPackWithTaskId = {
+      ...pendingPack,
+      task_id: upstreamBody.task_id,
+    };
+    const lockedProgressWithTaskId = {
+      ...lockedProgress,
+      current_pack: pendingPackWithTaskId,
+    };
+    const lockedWithTaskId = {
+      ...codeData,
+      student_profile: {
+        ...(codeData.student_profile || {}),
+        student_name: progress.student_name || data.child_name,
+        age: progress.age || parseInt(data.age, 10),
+        level: levelForPack,
+        child_gender: progress.child_gender || data.child_gender,
+      },
+      progress: lockedProgressWithTaskId,
+    };
+    await env.READ2LEAD_CODES.put(accessCode, JSON.stringify(lockedWithTaskId));
+
+    return json({
+      ok: true,
+      task_id: upstreamBody.task_id,
+      status: 'pending',
+      current_pack: publicPack(pendingPackWithTaskId),
+      progress: publicProgress(lockedProgressWithTaskId),
+      level: levelForPack,
+    });
   } catch (err) {
     console.error('Backend call failed:', err.message);
     await clearGenerationLock(env.READ2LEAD_CODES, accessCode, pendingPackId);
     return json({ ok: false, error: 'backend_unavailable', message: 'Backend không phản hồi. Thử lại sau.' }, 502);
   }
-
-  if (!upstreamResult.body || !upstreamResult.body.ok) {
-    await clearGenerationLock(env.READ2LEAD_CODES, accessCode, pendingPackId);
-    return json(upstreamResult.body || { ok: false, error: 'generation_failed' }, upstreamResult.status || 500);
-  }
-
-  if (upstreamResult.body && upstreamResult.body.ok) {
-    const packId = crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random().toString(16).slice(2)}`;
-    const now = new Date().toISOString();
-    const pack = {
-      pack_id: packId,
-      status: 'awaiting_review',
-      created_at: now,
-      pdf_url: upstreamResult.body.pdf_url,
-      mp3_url: upstreamResult.body.mp3_url,
-      topic: upstreamResult.body.topic,
-      story_title: upstreamResult.body.story_title,
-      level: levelForPack,
-      review_context: upstreamResult.body.review_context || null,
-    };
-
-    const nextProgress = {
-      ...progress,
-      current_level: pack.level,
-      current_pack: pack,
-      packs_created: (progress.packs_created || 0) + 1,
-      rank: rankForStars(progress.stars || 0),
-      badges: badgesForStars(progress.stars || 0),
-    };
-
-    const updatedCode = {
-      ...codeData,
-      student_profile: {
-        student_name: progress.student_name || data.child_name,
-        age: progress.age || parseInt(data.age, 10),
-        level: nextProgress.current_level,
-        child_gender: progress.child_gender || data.child_gender,
-      },
-      progress: nextProgress,
-      uses_remaining: (codeData.uses_remaining ?? 0) - 1,
-      last_used_at: now.slice(0, 10),
-    };
-    await env.READ2LEAD_CODES.put(accessCode, JSON.stringify(updatedCode));
-
-    upstreamResult.body = {
-      ok: true,
-      pdf_url: pack.pdf_url,
-      mp3_url: pack.mp3_url,
-      topic: pack.topic,
-      story_title: pack.story_title,
-      review_link: `/read2lead/review?code=${encodeURIComponent(accessCode)}`,
-      current_pack: publicPack(pack),
-      progress: publicProgress(nextProgress),
-    };
-  }
-
-  return json(upstreamResult.body, upstreamResult.status);
 }
 
 function validate(data) {
