@@ -242,11 +242,14 @@ import Footer from '../../components/Footer.astro';
         `).join(''));
       }
 
-      if (['build_chunk', 'fill_blank', 'fix_chunk'].includes(activity.type)) {
+      if (activity.type === 'fill_blank') {
         return sectionWrap(title, activity.items.map((item) => `
           <label class="mb-4 block rounded-lg border border-cream-dim/20 bg-navy-900/75 p-4">
-            <span class="block text-cream-muted">${escapeHtml(item.prompt)}</span>
-            <input data-answer-type="${activity.type}" data-answer-index="${item.index}" class="mt-3 w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-4 py-3 text-base text-cream placeholder:text-cream-dim/70 focus:border-accent focus:outline-none" placeholder="Con gõ câu trả lời ở đây" required />
+            <span class="block text-base text-cream">${escapeHtml(item.prompt)}</span>
+            <select data-answer-type="fill_blank" data-answer-index="${item.index}" class="mt-3 w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-4 py-3 text-base text-cream focus:border-accent focus:outline-none" required>
+              ${optionHtml('', '-- Chọn cụm câu --')}
+              ${(item.options || []).map((option) => optionHtml(option)).join('')}
+            </select>
           </label>
         `).join(''));
       }

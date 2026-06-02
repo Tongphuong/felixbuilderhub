@@ -75,12 +75,24 @@ export function buildActivities(context) {
     });
   }
 
-  addLineActivity(activities, 'build_chunk', 'Sắp xếp thành cụm đúng', 'Con gõ lại cụm câu đúng theo các từ gợi ý.', context.build_the_chunk);
-  addLineActivity(activities, 'fill_blank', 'Điền vào chỗ trống', 'Con gõ cụm câu còn thiếu vào ô trống.', context.fill_in_the_blank);
-  addLineActivity(activities, 'fix_chunk', 'Sửa cụm câu', 'Con sửa lại cụm câu bị viết sai.', context.fix_the_chunk);
+  const chunkOptions = (Array.isArray(context.power_chunks) ? context.power_chunks : []).map((item) => item.chunk || '').filter(Boolean);
+
+  const fillBlanks = Array.isArray(context.fill_in_the_blank) ? context.fill_in_the_blank : [];
+  if (fillBlanks.length && chunkOptions.length) {
+    activities.push({
+      id: 'fill_blank',
+      type: 'fill_blank',
+      title_vi: 'Điền cụm câu vào chỗ trống',
+      instruction_vi: 'Con chọn cụm câu phù hợp nhất cho mỗi chỗ trống.',
+      items: fillBlanks.map((prompt, index) => ({
+        index,
+        prompt,
+        options: chunkOptions,
+      })),
+    });
+  }
 
   const contextSentences = Array.isArray(context.chunk_in_context) ? context.chunk_in_context : [];
-  const chunkOptions = (Array.isArray(context.power_chunks) ? context.power_chunks : []).map((item) => item.chunk || '').filter(Boolean);
   if (contextSentences.length && chunkOptions.length) {
     activities.push({
       id: 'chunk_in_context',
@@ -95,19 +107,9 @@ export function buildActivities(context) {
     });
   }
 
-  const storyOrder = Array.isArray(context.story_order) ? context.story_order : [];
-  if (storyOrder.length) {
-    activities.push({
-      id: 'story_order',
-      type: 'story_order',
-      title_vi: 'Sắp xếp thứ tự câu chuyện',
-      instruction_vi: 'Con chọn sự kiện đúng cho từng vị trí trong câu chuyện.',
-      items: storyOrder.map((event, index) => ({ index, event, options: storyOrder })),
-    });
-  }
-
   const questions = Array.isArray(context.comprehension_questions) ? context.comprehension_questions : [];
-  const comprehension = questions.filter((item) => !['Open Question', 'Your Turn'].includes(item.section));
+  const COMPREHENSION_KEEP = new Set(['Find It', 'Language in the Story']);
+  const comprehension = questions.filter((item) => COMPREHENSION_KEEP.has(item.section));
   if (comprehension.length) {
     activities.push({
       id: 'comprehension',
@@ -187,11 +189,8 @@ export function gradeLessonSubmission(context, answers = {}) {
   };
 
   addSection('matching', 'Nối nghĩa', ...gradeMatching(context, answers.matching));
-  addSection('build_chunk', 'Sắp xếp cụm câu', ...gradeArrayAnswers(context.answer_key?.build_the_chunk, answers.build_chunk));
   addSection('fill_blank', 'Điền chỗ trống', ...gradeArrayAnswers(context.answer_key?.fill_in_the_blank, answers.fill_blank));
-  addSection('fix_chunk', 'Sửa cụm câu', ...gradeArrayAnswers(context.answer_key?.fix_the_chunk, answers.fix_chunk));
   addSection('chunk_in_context', 'Tình huống mới', ...gradeArrayAnswers(context.answer_key?.chunk_in_context, answers.chunk_in_context));
-  addSection('story_order', 'Thứ tự câu chuyện', ...gradeStoryOrder(context.story_order, answers.story_order));
 
   const scorePercent = total ? Math.round((correct / total) * 100) : 0;
   const passed = total > 0 && scorePercent >= PASS_THRESHOLD;
