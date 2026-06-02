@@ -6,81 +6,92 @@ import Footer from '../../components/Footer.astro';
 
 <BaseLayout
   title="Felixar - Quản lí học tập ảo cho Read2Lead"
-  description="Felixar giúp phụ huynh nộp ảnh bài làm, gửi ghi âm con kể lại câu chuyện, nhận nhận xét, cộng sao và mở bài Read2Lead tiếp theo."
+  description="Felixar giúp phụ huynh xem trạng thái bài Read2Lead, nộp bài, nhận nhận xét, theo dõi sao và biết bước tiếp theo."
 >
   <Header />
 
   <main id="main" class="flex-1">
-    <section class="mx-auto max-w-5xl px-6 py-14 md:py-20">
-      <span class="inline-block rounded-full bg-accent/20 px-4 py-1 text-sm font-semibold text-accent">Felixar</span>
-      <h1 class="mt-5 max-w-4xl font-display text-4xl font-extrabold leading-snug text-cream md:text-5xl">Felixar - quản lí học tập ảo.</h1>
-      <p class="mt-5 max-w-3xl text-lg leading-relaxed text-cream-muted">
-        Bố mẹ dùng Felixar để nộp ảnh bài con đã làm, gửi ghi âm con kể lại câu chuyện, nhận nhận xét ngắn gọn bằng tiếng Việt, theo dõi số sao và mở bài tiếp theo.
-      </p>
+    <section class="mx-auto max-w-6xl px-6 py-14 md:py-20">
+      <div class="max-w-4xl">
+        <span class="inline-block rounded-md bg-accent/20 px-4 py-1 text-sm font-semibold text-accent">Felixar đang hỗ trợ Read2Lead</span>
+        <h1 class="mt-5 font-display text-4xl font-extrabold leading-snug text-cream md:text-5xl">Nhập mã để biết bước tiếp theo.</h1>
+        <p class="mt-5 max-w-3xl text-lg leading-relaxed text-cream-muted">
+          Felixar giúp bố mẹ xem bài hiện tại của con, nộp ảnh bài làm, gửi ghi âm kể lại câu chuyện, nhận nhận xét tiếng Việt và theo dõi sao.
+        </p>
+      </div>
     </section>
 
-    <section class="bg-navy-900 px-6 py-14">
-      <div class="mx-auto grid max-w-6xl gap-6 lg:grid-cols-[1fr_1.15fr]">
-        <div class="rounded-xl border border-cream-dim/20 bg-navy-950/70 p-6">
-          <h2 class="font-display text-2xl font-bold leading-snug text-cream">Bố mẹ cần chuẩn bị gì để Felixar nhận xét?</h2>
-          <ol class="mt-5 space-y-3 leading-relaxed text-cream-muted">
-            <li><strong class="text-cream">1.</strong> Một ảnh chụp trang bài làm của con.</li>
-            <li><strong class="text-cream">2.</strong> Một đoạn ghi âm con kể lại câu chuyện bằng tiếng Anh.</li>
-            <li><strong class="text-cream">3.</strong> Nếu ảnh hơi mờ, bố mẹ có thể gõ thêm vài câu trả lời của con.</li>
-            <li><strong class="text-cream">4.</strong> Felixar sẽ nhận xét: con làm tốt gì, cần luyện gì, và bước tiếp theo nên làm gì.</li>
-          </ol>
-
-          <div class="mt-6 rounded-lg border border-accent/40 bg-accent/10 p-4">
-            <h3 class="font-display text-lg font-bold text-cream">Cách cho con ghi âm</h3>
-            <p class="mt-2 leading-relaxed text-cream-muted">
-              Con nói ngắn gọn: câu chuyện nói về ai, chuyện gì xảy ra, cuối cùng ra sao. Không cần nói hoàn hảo, chỉ cần con tự kể lại được ý chính.
-            </p>
+    <section class="bg-navy-900 px-6 py-12">
+      <div class="mx-auto grid max-w-6xl gap-6 lg:grid-cols-[0.9fr_1.1fr]">
+        <aside class="rounded-xl border border-cream-dim/20 bg-navy-950/70 p-6">
+          <h2 class="font-display text-2xl font-bold leading-snug text-cream">Felixar làm gì?</h2>
+          <div class="mt-5 space-y-4 text-cream-muted">
+            <div class="rounded-lg border border-cream-dim/20 bg-navy-900/70 p-4">
+              <p class="font-semibold text-cream">1. Xem trạng thái</p>
+              <p class="mt-1 text-sm leading-relaxed">Bố mẹ biết ngay: chưa có bài, đang tạo bài, chờ nộp bài hay đã nhận xét xong.</p>
+            </div>
+            <div class="rounded-lg border border-cream-dim/20 bg-navy-900/70 p-4">
+              <p class="font-semibold text-cream">2. Nộp bài</p>
+              <p class="mt-1 text-sm leading-relaxed">Chọn ảnh các trang con đã làm và ghi âm con kể lại câu chuyện trong 30-60 giây.</p>
+            </div>
+            <div class="rounded-lg border border-cream-dim/20 bg-navy-900/70 p-4">
+              <p class="font-semibold text-cream">3. Nhận bước tiếp theo</p>
+              <p class="mt-1 text-sm leading-relaxed">Felixar nói con làm tốt gì, cần luyện gì, bố mẹ nên làm gì trong 5 phút tiếp theo.</p>
+            </div>
           </div>
-        </div>
+        </aside>
 
-        <div class="rounded-xl border border-cream-dim/20 bg-navy-950/80 p-6">
-          <form id="review-form" class="space-y-5">
-            <div>
-              <label for="access-code" class="mb-2 block text-sm text-cream-muted">Mã học sinh</label>
-              <div class="flex flex-col gap-2 sm:flex-row">
-                <input id="access-code" name="access_code" required maxlength="40" placeholder="VD: R2L-LINH-8F3KQ2" class="w-full rounded-lg border border-cream-dim/30 bg-navy-900 px-4 py-3 text-base uppercase text-cream placeholder:normal-case placeholder:text-cream-dim/80 focus:border-accent focus:outline-none" />
-                <button id="load-progress" type="button" class="rounded-lg border border-accent px-4 py-3 font-semibold text-accent transition hover:bg-accent hover:text-navy-950">Xem bài hiện tại</button>
+        <div class="space-y-6">
+          <section class="rounded-xl border border-cream-dim/20 bg-navy-950/80 p-6">
+            <label for="access-code" class="mb-2 block text-sm text-cream-muted">Mã học sinh</label>
+            <div class="flex flex-col gap-3 sm:flex-row">
+              <input id="access-code" name="access_code" required maxlength="40" placeholder="VD: R2L-LINH-8F3KQ2" class="w-full rounded-lg border border-cream-dim/30 bg-navy-900 px-4 py-3 text-base uppercase text-cream placeholder:normal-case placeholder:text-cream-dim/80 focus:border-accent focus:outline-none" />
+              <button id="load-progress" type="button" class="rounded-lg bg-accent px-5 py-3 font-semibold text-navy-950 transition hover:bg-accent-hover">Xem bước tiếp theo</button>
+            </div>
+            <p class="mt-3 text-sm leading-relaxed text-cream-dim">Không chắc phải làm gì? Chỉ cần nhập mã, Felixar sẽ chỉ đúng bước tiếp theo.</p>
+          </section>
+
+          <section id="dashboard-card" class="hidden rounded-xl border border-gold/30 bg-gold/10 p-6"></section>
+
+          <section id="submit-panel" class="hidden rounded-xl border border-cream-dim/20 bg-navy-950/80 p-6">
+            <div id="submit" class="scroll-mt-24">
+              <h2 class="font-display text-2xl font-bold leading-snug text-cream">Nộp bài hiện tại</h2>
+              <p class="mt-2 leading-relaxed text-cream-muted">Bố mẹ gửi ảnh bài làm và ghi âm con kể lại câu chuyện. Felixar sẽ nhận xét ngắn gọn bằng tiếng Việt.</p>
+            </div>
+
+            <form id="review-form" class="mt-6 space-y-5">
+              <div>
+                <label for="worksheet-photo" class="mb-2 block text-sm text-cream-muted">Ảnh các trang bài làm của con</label>
+                <input id="worksheet-photo" name="worksheet_photos" type="file" accept="image/*" multiple required class="block w-full rounded-lg border border-cream-dim/30 bg-navy-900 px-4 py-3 text-sm text-cream file:mr-4 file:rounded-md file:border-0 file:bg-accent file:px-3 file:py-2 file:font-semibold file:text-navy-950" />
+                <p id="photo-count" class="mt-2 text-xs text-cream-dim">Có thể chọn nhiều ảnh cùng lúc, tối đa 8 ảnh. Nên chụp từng trang rõ chữ.</p>
               </div>
-            </div>
 
-            <div id="progress-card" class="hidden rounded-lg border border-gold/30 bg-gold/10 p-4 text-sm text-cream-muted"></div>
-
-            <div>
-              <label for="worksheet-photo" class="mb-2 block text-sm text-cream-muted">Ảnh các trang bài làm của con</label>
-              <input id="worksheet-photo" name="worksheet_photos" type="file" accept="image/*" multiple required class="block w-full rounded-lg border border-cream-dim/30 bg-navy-900 px-4 py-3 text-sm text-cream file:mr-4 file:rounded-md file:border-0 file:bg-accent file:px-3 file:py-2 file:font-semibold file:text-navy-950" />
-              <p id="photo-count" class="mt-2 text-xs text-cream-dim">Có thể chọn nhiều ảnh cùng lúc, tối đa 8 ảnh. Chụp rõ các trang con đã làm bằng bút.</p>
-            </div>
-
-            <div>
-              <label for="typed-answers" class="mb-2 block text-sm text-cream-muted">Nếu ảnh không rõ, bố mẹ gõ vài câu con trả lời ở đây <span class="text-cream-dim">(tùy chọn)</span></label>
-              <textarea id="typed-answers" name="typed_answers" maxlength="2000" rows="4" placeholder="VD: Con trả lời câu 1 là..., câu 2 là... hoặc con kể lại: ..." class="w-full rounded-lg border border-cream-dim/30 bg-navy-900 px-4 py-3 text-base text-cream placeholder:text-cream-dim/80 focus:border-accent focus:outline-none"></textarea>
-            </div>
-
-            <div class="rounded-lg border border-cream-dim/25 bg-navy-900 p-4">
-              <label class="block text-sm text-cream-muted">Ghi âm con kể lại câu chuyện</label>
-              <div class="mt-3 flex flex-wrap gap-3">
-                <button id="record-btn" type="button" class="rounded-lg bg-accent px-4 py-2 font-semibold text-navy-950 transition hover:bg-accent-hover">Bắt đầu ghi âm</button>
-                <button id="stop-btn" type="button" disabled class="rounded-lg border border-cream-dim/30 px-4 py-2 font-semibold text-cream transition enabled:hover:border-accent enabled:hover:text-accent disabled:cursor-not-allowed disabled:opacity-50">Dừng</button>
+              <div>
+                <label for="typed-answers" class="mb-2 block text-sm text-cream-muted">Nếu ảnh không rõ, bố mẹ gõ thêm vài câu ở đây <span class="text-cream-dim">(tùy chọn)</span></label>
+                <textarea id="typed-answers" name="typed_answers" maxlength="2000" rows="4" placeholder="VD: Con trả lời câu 1 là..., hoặc con kể lại: ..." class="w-full rounded-lg border border-cream-dim/30 bg-navy-900 px-4 py-3 text-base text-cream placeholder:text-cream-dim/80 focus:border-accent focus:outline-none"></textarea>
               </div>
-              <p id="record-status" class="mt-3 text-sm text-cream-dim">Chưa có ghi âm.</p>
-              <audio id="audio-preview" controls class="mt-3 hidden w-full"></audio>
-            </div>
 
-            <div class="absolute -left-[9999px]" aria-hidden="true">
-              <label for="website">Website</label>
-              <input id="website" name="website" tabindex="-1" autocomplete="off" />
-            </div>
+              <div class="rounded-lg border border-cream-dim/25 bg-navy-900 p-4">
+                <label class="block text-sm text-cream-muted">Ghi âm con kể lại câu chuyện</label>
+                <div class="mt-3 flex flex-wrap gap-3">
+                  <button id="record-btn" type="button" class="rounded-lg bg-accent px-4 py-2 font-semibold text-navy-950 transition hover:bg-accent-hover">Bắt đầu ghi âm</button>
+                  <button id="stop-btn" type="button" disabled class="rounded-lg border border-cream-dim/30 px-4 py-2 font-semibold text-cream transition enabled:hover:border-accent enabled:hover:text-accent disabled:cursor-not-allowed disabled:opacity-50">Dừng</button>
+                </div>
+                <p id="record-status" class="mt-3 text-sm text-cream-dim">Chưa có ghi âm.</p>
+                <audio id="audio-preview" controls class="mt-3 hidden w-full"></audio>
+              </div>
 
-            <button id="submit-review" type="submit" class="w-full rounded-lg bg-accent px-6 py-3 text-lg font-semibold text-navy-950 transition hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-60">Gửi cho Felixar nhận xét</button>
-          </form>
+              <div class="absolute -left-[9999px]" aria-hidden="true">
+                <label for="website">Website</label>
+                <input id="website" name="website" tabindex="-1" autocomplete="off" />
+              </div>
 
-          <div id="result-card" class="mt-6 hidden rounded-lg border border-gold/40 bg-gold/10 p-5"></div>
-          <div id="error-card" class="mt-6 hidden rounded-lg border border-red-500/30 bg-red-500/10 p-5 text-red-300"></div>
+              <button id="submit-review" type="submit" class="w-full rounded-lg bg-accent px-6 py-3 text-lg font-semibold text-navy-950 transition hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-60">Gửi cho Felixar nhận xét</button>
+            </form>
+          </section>
+
+          <section id="result-card" class="hidden rounded-xl border border-gold/40 bg-gold/10 p-6"></section>
+          <section id="error-card" class="hidden rounded-xl border border-red-500/30 bg-red-500/10 p-5 text-red-300"></section>
         </div>
       </div>
     </section>
@@ -92,8 +103,9 @@ import Footer from '../../components/Footer.astro';
     const params = new URLSearchParams(window.location.search);
     const codeInput = document.getElementById('access-code');
     const loadBtn = document.getElementById('load-progress');
+    const dashboardCard = document.getElementById('dashboard-card');
+    const submitPanel = document.getElementById('submit-panel');
     const form = document.getElementById('review-form');
-    const progressCard = document.getElementById('progress-card');
     const resultCard = document.getElementById('result-card');
     const errorCard = document.getElementById('error-card');
     const recordBtn = document.getElementById('record-btn');
@@ -109,6 +121,7 @@ import Footer from '../../components/Footer.astro';
     let chunks = [];
     let audioBlob = null;
     let stream = null;
+    let latestDashboard = null;
 
     const initialCode = params.get('code');
     if (initialCode) {
@@ -127,7 +140,6 @@ import Footer from '../../components/Footer.astro';
     function showError(message) {
       errorCard.textContent = message;
       errorCard.classList.remove('hidden');
-      resultCard.classList.add('hidden');
     }
 
     function clearError() {
@@ -135,30 +147,131 @@ import Footer from '../../components/Footer.astro';
       errorCard.textContent = '';
     }
 
-    async function loadProgress() {
+    function levelRecommendationText(value) {
+      return {
+        easier: 'Nên chọn bài dễ hơn ở lần sau',
+        stay: 'Giữ mức hiện tại',
+        move_up: 'Có thể thử mức khó hơn',
+      }[value] || 'Giữ mức hiện tại';
+    }
+
+    function actionButton(action) {
+      if (!action || !action.href) return '';
+      return `<a href="${escapeHtml(action.href)}" class="inline-flex justify-center rounded-lg bg-accent px-5 py-3 font-semibold text-navy-950 transition hover:bg-accent-hover">${escapeHtml(action.label)}</a>`;
+    }
+
+    function renderReviewSummary(summary) {
+      if (!summary) return '';
+      const feedback = summary.feedback_vi || {};
+      const mini = summary.mini_practice_vi || {};
+      return `
+        <div class="mt-5 rounded-lg border border-cream-dim/20 bg-navy-950/70 p-4">
+          <p class="font-display text-lg font-bold text-cream">Nhận xét gần nhất</p>
+          <p class="mt-2 leading-relaxed text-cream-muted">${escapeHtml(feedback.summary || 'Felixar đã nhận xét bài này.')}</p>
+          <div class="mt-4 grid gap-3 md:grid-cols-3">
+            <div class="rounded-lg bg-navy-900 p-3"><p class="text-xs text-cream-dim">Điểm tốt</p><p class="mt-1 text-sm text-cream">${escapeHtml(feedback.strength || 'Con đã nộp bài đầy đủ.')}</p></div>
+            <div class="rounded-lg bg-navy-900 p-3"><p class="text-xs text-cream-dim">Cần luyện</p><p class="mt-1 text-sm text-cream">${escapeHtml(feedback.practice || 'Nghe lại MP3 và đọc chậm hơn.')}</p></div>
+            <div class="rounded-lg bg-navy-900 p-3"><p class="text-xs text-cream-dim">Level</p><p class="mt-1 text-sm text-cream">${escapeHtml(levelRecommendationText(summary.level_recommendation))}</p></div>
+          </div>
+          ${mini.read_again || mini.chunk_to_practice || mini.parent_question ? `
+            <div class="mt-4 rounded-lg border border-accent/30 bg-accent/10 p-4">
+              <p class="font-semibold text-cream">5 phút luyện thêm</p>
+              <ul class="mt-2 space-y-1 text-sm text-cream-muted">
+                <li><strong class="text-cream">Đọc lại:</strong> ${escapeHtml(mini.read_again || 'Một câu trong truyện.')}</li>
+                <li><strong class="text-cream">Cụm cần luyện:</strong> ${escapeHtml(mini.chunk_to_practice || 'Một cụm trong bài.')}</li>
+                <li><strong class="text-cream">Bố mẹ hỏi:</strong> ${escapeHtml(mini.parent_question || 'Con kể lại chuyện gì xảy ra nhé?')}</li>
+              </ul>
+            </div>
+          ` : ''}
+        </div>
+      `;
+    }
+
+    function renderDashboard(data) {
+      latestDashboard = data;
+      const progress = data.progress || {};
+      const pack = progress.current_pack;
+      const sharedNote = data.is_test || data.is_shared
+        ? '<p class="mt-3 rounded-lg border border-blue-500/30 bg-blue-500/10 p-3 text-sm text-blue-200">Mã này là mã test/dùng chung nên có thể tạo bài mới mà không cần nộp bài cũ. Nếu vẫn muốn nhận xét, bố mẹ vẫn có thể nộp bài hiện tại.</p>'
+        : '';
+      const canSubmit = data.state === 'awaiting_review';
+      const submitButton = canSubmit
+        ? '<button id="open-submit" type="button" class="inline-flex justify-center rounded-lg bg-accent px-5 py-3 font-semibold text-navy-950 transition hover:bg-accent-hover">Nộp bài hiện tại</button>'
+        : '';
+      const createButton = data.state === 'awaiting_review' && !data.next_pack_locked
+        ? '<a href="/read2lead#form" class="inline-flex justify-center rounded-lg border border-gold px-5 py-3 font-semibold text-gold-light transition hover:bg-gold hover:text-navy-950">Tạo thêm bài mới</a>'
+        : data.state === 'awaiting_review'
+          ? ''
+          : actionButton(data.primary_action);
+
+      dashboardCard.innerHTML = `
+        <div class="flex flex-col gap-5 md:flex-row md:items-start md:justify-between">
+          <div>
+            <p class="text-sm font-semibold text-gold-light">${escapeHtml(data.state_label || 'Trạng thái')}</p>
+            <h2 class="mt-2 font-display text-2xl font-bold leading-snug text-cream">${escapeHtml(progress.student_name || 'Học sinh Read2Lead')}</h2>
+            <p class="mt-2 text-cream-muted">${escapeHtml(progress.current_level || 'L2')} · ${progress.stars || 0} sao · ${escapeHtml(progress.rank || 'Rookie Reader')}</p>
+          </div>
+          <div class="grid grid-cols-3 gap-2 text-center text-sm">
+            <div class="rounded-lg bg-navy-950/70 p-3"><p class="text-cream-dim">Đã nộp</p><p class="font-display text-2xl font-bold text-gold-light">${progress.completed_packs || 0}</p></div>
+            <div class="rounded-lg bg-navy-950/70 p-3"><p class="text-cream-dim">Tuần này</p><p class="font-display text-2xl font-bold text-gold-light">${data.weekly_completed_count || 0}</p></div>
+            <div class="rounded-lg bg-navy-950/70 p-3"><p class="text-cream-dim">Streak</p><p class="font-display text-2xl font-bold text-gold-light">${data.streak_days || 0}</p></div>
+          </div>
+        </div>
+
+        <div class="mt-5 rounded-lg border border-cream-dim/20 bg-navy-950/70 p-4">
+          <p class="text-sm text-cream-dim">Bài hiện tại</p>
+          <p class="mt-1 font-display text-xl font-bold text-cream">${escapeHtml(pack?.story_title || 'Chưa có bài nào')}</p>
+          <p class="mt-2 text-sm text-cream-muted">${pack ? `Chủ đề: ${escapeHtml(pack.topic || 'Read2Lead')} · ${escapeHtml(pack.level || progress.current_level || 'L2')}` : 'Hãy tạo bài đầu tiên cho con.'}</p>
+        </div>
+
+        ${sharedNote}
+
+        <div class="mt-5 flex flex-col gap-3 sm:flex-row">
+          ${submitButton}
+          ${createButton}
+          ${pack?.pdf_url ? `<a href="${escapeHtml(pack.pdf_url)}" target="_blank" rel="noreferrer" class="inline-flex justify-center rounded-lg border border-cream-dim/30 px-5 py-3 font-semibold text-cream transition hover:border-accent hover:text-accent">Mở PDF</a>` : ''}
+          ${pack?.mp3_url ? `<a href="${escapeHtml(pack.mp3_url)}" target="_blank" rel="noreferrer" class="inline-flex justify-center rounded-lg border border-cream-dim/30 px-5 py-3 font-semibold text-cream transition hover:border-accent hover:text-accent">Mở MP3</a>` : ''}
+        </div>
+
+        ${renderReviewSummary(data.last_review_summary)}
+      `;
+      dashboardCard.classList.remove('hidden');
+
+      const openSubmit = document.getElementById('open-submit');
+      if (openSubmit) openSubmit.addEventListener('click', showSubmitPanel);
+    }
+
+    function showSubmitPanel() {
+      submitPanel.classList.remove('hidden');
+      submitPanel.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    async function loadProgress({ preserveResult = false } = {}) {
       clearError();
+      if (!preserveResult) resultCard.classList.add('hidden');
       const code = codeInput.value.trim().toUpperCase();
       if (!code) {
         showError('Vui lòng nhập mã học sinh.');
         return;
       }
+      loadBtn.disabled = true;
+      loadBtn.textContent = 'Đang kiểm tra...';
       try {
         const res = await fetch(`/api/read2lead-progress?code=${encodeURIComponent(code)}`);
         const data = await res.json();
         if (!res.ok || !data.ok) {
           showError(data.message || 'Không tìm thấy mã học sinh.');
+          dashboardCard.classList.add('hidden');
+          submitPanel.classList.add('hidden');
           return;
         }
-        const progress = data.progress;
-        const pack = progress.current_pack;
-        progressCard.innerHTML = `
-          <p><strong class="text-cream">${escapeHtml(progress.student_name || 'Học sinh')}</strong> · ${escapeHtml(progress.current_level)} · ${progress.stars} sao · ${escapeHtml(progress.rank)}</p>
-          <p class="mt-2">Bài hiện tại: <strong class="text-cream">${escapeHtml(pack?.story_title || 'Chưa có bài')}</strong></p>
-          <p class="mt-2">${data.next_pack_locked ? 'Bài mới đang khóa cho tới khi con nộp bài hiện tại.' : 'Bài tiếp theo đang mở.'}</p>
-        `;
-        progressCard.classList.remove('hidden');
+        renderDashboard(data);
+        if (data.state !== 'awaiting_review') submitPanel.classList.add('hidden');
       } catch {
         showError('Mạng không ổn định. Vui lòng thử lại.');
+      } finally {
+        loadBtn.disabled = false;
+        loadBtn.textContent = 'Xem bước tiếp theo';
       }
     }
 
@@ -168,7 +281,7 @@ import Footer from '../../components/Footer.astro';
       const count = photoInput.files.length;
       photoCount.textContent = count
         ? `Đã chọn ${count} ảnh. Tối đa 8 ảnh, nên chụp từng trang rõ chữ.`
-        : 'Có thể chọn nhiều ảnh cùng lúc, tối đa 8 ảnh. Chụp rõ các trang con đã làm bằng bút.';
+        : 'Có thể chọn nhiều ảnh cùng lúc, tối đa 8 ảnh. Nên chụp từng trang rõ chữ.';
     });
 
     recordBtn.addEventListener('click', async () => {
@@ -247,6 +360,7 @@ import Footer from '../../components/Footer.astro';
           return;
         }
         const feedback = data.review?.feedback_vi || {};
+        const mini = data.review?.mini_practice_vi || {};
         const progress = data.progress || {};
         resultCard.innerHTML = `
           <h2 class="font-display text-2xl font-bold leading-snug text-cream">${data.star_awarded ? 'Con được cộng 1 sao' : 'Đã có nhận xét cho bài này'}</h2>
@@ -254,17 +368,32 @@ import Footer from '../../components/Footer.astro';
           <div class="mt-4 grid gap-3 sm:grid-cols-3">
             <div class="rounded-lg bg-navy-950/70 p-3"><p class="text-xs text-cream-dim">Sao</p><p class="text-xl font-bold text-gold-light">${progress.stars ?? 0}</p></div>
             <div class="rounded-lg bg-navy-950/70 p-3"><p class="text-xs text-cream-dim">Xếp hạng</p><p class="text-xl font-bold text-gold-light">${escapeHtml(progress.rank || 'Rookie Reader')}</p></div>
-            <div class="rounded-lg bg-navy-950/70 p-3"><p class="text-xs text-cream-dim">Bài tiếp theo</p><p class="text-xl font-bold text-gold-light">${data.next_pack_unlocked ? 'Đã mở' : 'Chưa mở'}</p></div>
+            <div class="rounded-lg bg-navy-950/70 p-3"><p class="text-xs text-cream-dim">Level</p><p class="text-xl font-bold text-gold-light">${escapeHtml(levelRecommendationText(data.review?.level_recommendation))}</p></div>
           </div>
-          <div class="mt-4 space-y-2 leading-relaxed text-cream-muted">
-            <p><strong class="text-cream">Điểm tốt:</strong> ${escapeHtml(feedback.strength || 'Con đã hoàn thành phần nộp bài.')}</p>
-            <p><strong class="text-cream">Cần luyện:</strong> ${escapeHtml(feedback.practice || 'Con nên nghe lại file MP3 và đọc rõ từng câu hơn.')}</p>
-            <p><strong class="text-cream">Bước tiếp theo:</strong> ${escapeHtml(feedback.parent_next_step || 'Bố mẹ có thể cho con luyện lại phần chưa chắc rồi tạo bài tiếp theo.')}</p>
+          <div class="mt-4 grid gap-3 md:grid-cols-3">
+            <div class="rounded-lg border border-cream-dim/20 bg-navy-950/70 p-4"><p class="text-sm font-semibold text-cream">Con làm tốt</p><p class="mt-2 text-sm leading-relaxed text-cream-muted">${escapeHtml(feedback.strength || 'Con đã hoàn thành phần nộp bài.')}</p></div>
+            <div class="rounded-lg border border-cream-dim/20 bg-navy-950/70 p-4"><p class="text-sm font-semibold text-cream">Cần luyện</p><p class="mt-2 text-sm leading-relaxed text-cream-muted">${escapeHtml(feedback.practice || 'Con nên nghe lại file MP3 và đọc rõ từng câu hơn.')}</p></div>
+            <div class="rounded-lg border border-cream-dim/20 bg-navy-950/70 p-4"><p class="text-sm font-semibold text-cream">Bố mẹ làm gì</p><p class="mt-2 text-sm leading-relaxed text-cream-muted">${escapeHtml(feedback.parent_next_step || 'Bố mẹ cho con luyện lại phần chưa chắc rồi tạo bài tiếp theo.')}</p></div>
+          </div>
+          <div class="mt-4 rounded-lg border border-accent/30 bg-accent/10 p-4">
+            <p class="font-semibold text-cream">5 phút luyện thêm</p>
+            <ul class="mt-2 space-y-1 text-sm text-cream-muted">
+              <li><strong class="text-cream">Đọc lại:</strong> ${escapeHtml(mini.read_again || 'Một câu trong truyện.')}</li>
+              <li><strong class="text-cream">Cụm cần luyện:</strong> ${escapeHtml(mini.chunk_to_practice || 'Một cụm trong bài.')}</li>
+              <li><strong class="text-cream">Bố mẹ hỏi:</strong> ${escapeHtml(mini.parent_question || 'Con kể lại chuyện gì xảy ra nhé?')}</li>
+            </ul>
           </div>
           <a href="/read2lead#form" class="mt-5 inline-flex rounded-lg bg-accent px-5 py-2.5 font-semibold text-navy-950 transition hover:bg-accent-hover">Tạo bài tiếp theo</a>
         `;
         resultCard.classList.remove('hidden');
-        await loadProgress();
+        submitPanel.classList.add('hidden');
+        audioBlob = null;
+        audioPreview.classList.add('hidden');
+        photoInput.value = '';
+        typedAnswers.value = '';
+        recordStatus.textContent = 'Chưa có ghi âm.';
+        await loadProgress({ preserveResult: true });
+        resultCard.scrollIntoView({ behavior: 'smooth' });
       } catch {
         showError('Mạng không ổn định. Vui lòng thử lại sau.');
       } finally {

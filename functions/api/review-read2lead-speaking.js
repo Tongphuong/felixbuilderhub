@@ -133,6 +133,7 @@ export async function onRequestPost(context) {
     transcript: review.transcript || '',
     scores: review.scores || {},
     feedback_vi: review.feedback_vi || {},
+    mini_practice_vi: review.mini_practice_vi || {},
     level_recommendation: review.level_recommendation || 'stay',
     photo_review: review.photo_review || {},
   };
@@ -144,16 +145,23 @@ export async function onRequestPost(context) {
     review_summary: reviewSummary,
   };
 
+  const nextReviewHistory = [
+    reviewHistoryItem(reviewedPack),
+    ...(progress.review_history || []),
+  ].slice(0, 20);
   const nextProgress = {
     ...progress,
     stars: nextStars,
     rank: rankForStars(nextStars),
     badges: badgesForStars(nextStars),
+    completed_packs: (progress.completed_packs || 0) + 1,
+    weekly_completed_count: nextWeeklyCompletedCount(progress, reviewedAt),
+    weekly_key: weekKey(reviewedAt),
+    streak_days: nextStreakDays(progress.last_activity_at, reviewedAt, progress.streak_days),
+    last_activity_at: reviewedAt,
+    last_level_recommendation: reviewSummary.level_recommendation,
     current_pack: reviewedPack,
-    review_history: [
-      reviewHistoryItem(reviewedPack),
-      ...(progress.review_history || []),
-    ].slice(0, 20),
+    review_history: nextReviewHistory,
   };
 
   const updatedCode = {
@@ -169,6 +177,19 @@ export async function onRequestPost(context) {
     last_reviewed_at: reviewedAt,
   };
   await env.READ2LEAD_CODES.put(accessCode, JSON.stringify(updatedCode));
+
+  const alert = buildReviewAlert({
+    accessCode,
+    progress: nextProgress,
+    currentPack: reviewedPack,
+    reviewSummary,
+    origin: new URL(request.url).origin,
+  });
+  if (alert) {
+    const alertPromise = sendTelegramAlert(env, alert);
+    if (context.waitUntil) context.waitUntil(alertPromise);
+    else await alertPromise;
+  }
 
   return json({
     ok: true,
@@ -197,6 +218,12 @@ function normalizeProgress(codeData) {
     rank: progress.rank || rankForStars(stars),
     badges: Array.isArray(progress.badges) ? progress.badges : badgesForStars(stars),
     packs_created: progress.packs_created || 0,
+    completed_packs: numberOrZero(progress.completed_packs) || (Array.isArray(progress.review_history) ? progress.review_history.length : 0),
+    weekly_completed_count: numberOrZero(progress.weekly_completed_count),
+    weekly_key: progress.weekly_key || '',
+    streak_days: numberOrZero(progress.streak_days),
+    last_activity_at: progress.last_activity_at || null,
+    last_level_recommendation: progress.last_level_recommendation || 'stay',
     current_pack: progress.current_pack || null,
     review_history: Array.isArray(progress.review_history) ? progress.review_history : [],
   };
@@ -226,6 +253,11 @@ function publicProgress(progress) {
     stars: progress.stars || 0,
     rank: progress.rank || rankForStars(progress.stars || 0),
     badges: progress.badges || badgesForStars(progress.stars || 0),
+    completed_packs: progress.completed_packs || 0,
+    weekly_completed_count: progress.weekly_completed_count || 0,
+    streak_days: progress.streak_days || 0,
+    last_activity_at: progress.last_activity_at || null,
+    last_level_recommendation: progress.last_level_recommendation || 'stay',
     current_pack: publicPack(progress.current_pack),
   };
 }
@@ -241,7 +273,109 @@ function reviewHistoryItem(pack) {
     passed: summary.passed,
     star_awarded: summary.star_awarded,
     level_recommendation: summary.level_recommendation,
+    scores: summary.scores || {},
+    feedback_vi: summary.feedback_vi || {},
+    mini_practice_vi: summary.mini_practice_vi || {},
   };
+}
+
+function numberOrZero(value) {
+  const n = Number(value);
+  return Number.isFinite(n) && n > 0 ? n : 0;
+}
+
+function weekKey(iso) {
+  const date = new Date(iso);
+  if (Number.isNaN(date.getTime())) return '';
+  const d = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()));
+  const dayNum = d.getUTCDay() || 7;
+  d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+  const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+  const weekNo = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+  return `${d.getUTCFullYear()}-W${String(weekNo).padStart(2, '0')}`;
+}
+
+function nextWeeklyCompletedCount(progress, reviewedAt) {
+  const currentWeek = weekKey(reviewedAt);
+  if (!currentWeek) return 1;
+  return progress.weekly_key === currentWeek ? numberOrZero(progress.weekly_completed_count) + 1 : 1;
+}
+
+function nextStreakDays(lastActivityAt, reviewedAt, currentStreak = 0) {
+  if (!lastActivityAt) return 1;
+  if (sameUtcDate(lastActivityAt, reviewedAt)) return numberOrZero(currentStreak) || 1;
+  return previousUtcDate(lastActivityAt, reviewedAt) ? numberOrZero(currentStreak) + 1 : 1;
+}
+
+function sameUtcDate(a, b) {
+  return String(a || '').slice(0, 10) === String(b || '').slice(0, 10);
+}
+
+function previousUtcDate(previous, current) {
+  const prev = Date.parse(`${String(previous || '').slice(0, 10)}T00:00:00Z`);
+  const now = Date.parse(`${String(current || '').slice(0, 10)}T00:00:00Z`);
+  if (!Number.isFinite(prev) || !Number.isFinite(now)) return false;
+  return now - prev === 24 * 60 * 60 * 1000;
+}
+
+function buildReviewAlert({ accessCode, progress, currentPack, reviewSummary, origin }) {
+  const reasons = [];
+  if (!reviewSummary.passed) reasons.push('review_fail');
+  if (reviewSummary.level_recommendation === 'easier') reasons.push('level_easier');
+  if (hasConsecutiveUnpassed(progress.review_history, 2)) reasons.push('two_reviews_without_star');
+  if (!reasons.length) return null;
+
+  return [
+    '⚠️ FELIXAR NEEDS ATTENTION',
+    '',
+    `Lý do: ${reasons.join(', ')}`,
+    `Mã: ${maskAccessCode(accessCode)}`,
+    `Học sinh: ${progress.student_name || '(chưa rõ tên)'}`,
+    `Level: ${currentPack.level || progress.current_level || '(không rõ)'}`,
+    `Bài: ${currentPack.story_title || '(không rõ)'}`,
+    `Sao hiện tại: ${progress.stars || 0}`,
+    `Gợi ý level: ${levelRecommendationLabel(reviewSummary.level_recommendation)}`,
+    '',
+    `Tóm tắt: ${reviewSummary.feedback_vi?.summary || '(không có)'}`,
+    `Cần luyện: ${reviewSummary.feedback_vi?.practice || '(không có)'}`,
+    '',
+    `Admin: ${origin}/admin/codes`,
+  ].join('\n');
+}
+
+function hasConsecutiveUnpassed(reviewHistory, count) {
+  if (!Array.isArray(reviewHistory) || reviewHistory.length < count) return false;
+  return reviewHistory.slice(0, count).every((item) => item && item.passed === false);
+}
+
+async function sendTelegramAlert(env, message) {
+  if (!env.TELEGRAM_BOT_TOKEN || !env.TELEGRAM_CHAT_ID) return;
+  try {
+    await fetch(`https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        chat_id: env.TELEGRAM_CHAT_ID,
+        text: message,
+      }),
+    });
+  } catch (err) {
+    console.error('Felixar alert failed:', err.message);
+  }
+}
+
+function maskAccessCode(code) {
+  const clean = String(code || '').trim().toUpperCase();
+  if (clean.length <= 4) return '***';
+  return `${clean.slice(0, 4)}***${clean.slice(-4)}`;
+}
+
+function levelRecommendationLabel(value) {
+  return {
+    easier: 'Nên dễ hơn',
+    stay: 'Giữ level',
+    move_up: 'Có thể tăng level',
+  }[value] || 'Giữ level';
 }
 
 function rankForStars(stars) {

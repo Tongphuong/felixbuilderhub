@@ -193,6 +193,7 @@ function normalizeProgress(codeData, formData = {}) {
   const progress = codeData.progress || {};
   const stars = Number.isFinite(progress.stars) ? progress.stars : 0;
   const formAge = parseInt(formData.age, 10);
+  const reviewHistory = Array.isArray(progress.review_history) ? progress.review_history : [];
   return {
     student_name: (formData.child_name || '').trim() || profile.student_name || '',
     age: Number.isFinite(formAge) ? formAge : (profile.age || null),
@@ -202,8 +203,14 @@ function normalizeProgress(codeData, formData = {}) {
     rank: progress.rank || rankForStars(stars),
     badges: Array.isArray(progress.badges) ? progress.badges : badgesForStars(stars),
     packs_created: progress.packs_created || 0,
+    completed_packs: progress.completed_packs || reviewHistory.length || 0,
+    weekly_completed_count: progress.weekly_completed_count || 0,
+    weekly_key: progress.weekly_key || '',
+    streak_days: progress.streak_days || 0,
+    last_activity_at: progress.last_activity_at || null,
+    last_level_recommendation: progress.last_level_recommendation || 'stay',
     current_pack: progress.current_pack || null,
-    review_history: Array.isArray(progress.review_history) ? progress.review_history : [],
+    review_history: reviewHistory,
   };
 }
 
@@ -263,6 +270,11 @@ function publicProgress(progress) {
     stars: progress.stars || 0,
     rank: progress.rank || rankForStars(progress.stars || 0),
     badges: progress.badges || badgesForStars(progress.stars || 0),
+    completed_packs: progress.completed_packs || 0,
+    weekly_completed_count: progress.weekly_completed_count || 0,
+    streak_days: progress.streak_days || 0,
+    last_activity_at: progress.last_activity_at || null,
+    last_level_recommendation: progress.last_level_recommendation || 'stay',
     current_pack: publicPack(progress.current_pack),
   };
 }

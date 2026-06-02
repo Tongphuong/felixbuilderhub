@@ -49,7 +49,7 @@ function publicLeader(code, codeData) {
   const profile = codeData.student_profile || {};
   const stars = numberOrZero(progress.stars);
   const reviewHistory = Array.isArray(progress.review_history) ? progress.review_history : [];
-  const completedPacks = reviewHistory.length || stars;
+  const completedPacks = numberOrZero(progress.completed_packs) || reviewHistory.length || stars;
   const studentName = cleanName(profile.student_name || progress.student_name || '');
 
   if (!studentName && stars === 0 && completedPacks === 0) return null;
@@ -65,7 +65,7 @@ function publicLeader(code, codeData) {
     rank_vi: rankVi(rank),
     badges_vi: badgesVi(Array.isArray(progress.badges) ? progress.badges : badgesForStars(stars)),
     current_level: progress.current_level || profile.level || 'L2',
-    last_reviewed_at: codeData.last_reviewed_at || progress.last_reviewed_at || latestReviewDate(reviewHistory),
+    last_reviewed_at: codeData.last_reviewed_at || progress.last_activity_at || progress.last_reviewed_at || latestReviewDate(reviewHistory),
   };
 }
 
