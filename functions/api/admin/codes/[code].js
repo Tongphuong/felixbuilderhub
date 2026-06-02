@@ -10,6 +10,11 @@ function json(body, status = 200) {
 }
 
 const EDITABLE_STRING_FIELDS = ['parent_name', 'parent_zalo', 'notes', 'expires_at'];
+const EDITABLE_BOOLEAN_FIELDS = ['is_test', 'is_shared'];
+
+function boolFromBodyValue(value) {
+  return value === true || value === 'true' || value === 'on' || value === '1';
+}
 
 export async function onRequestPatch(context) {
   const { request, env, params } = context;
@@ -31,6 +36,12 @@ export async function onRequestPatch(context) {
   for (const field of EDITABLE_STRING_FIELDS) {
     if (typeof body[field] === 'string') {
       updated[field] = body[field].trim().slice(0, 500);
+    }
+  }
+
+  for (const field of EDITABLE_BOOLEAN_FIELDS) {
+    if (body[field] !== undefined) {
+      updated[field] = boolFromBodyValue(body[field]);
     }
   }
 

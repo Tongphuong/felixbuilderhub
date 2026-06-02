@@ -49,6 +49,10 @@ function addDaysISO(days) {
   return d.toISOString().slice(0, 10);
 }
 
+function boolFromFormValue(value) {
+  return value === true || value === 'true' || value === 'on' || value === '1';
+}
+
 function json(body, status = 200) {
   return new Response(JSON.stringify(body), {
     status,
@@ -78,6 +82,8 @@ export async function onRequestPost(context) {
   const child_gender = ['boy', 'girl'].includes(body.child_gender) ? body.child_gender : '';
   const uses = parseInt(body.uses, 10);
   const expiry_days = parseInt(body.expiry_days, 10);
+  const is_test = boolFromFormValue(body.is_test);
+  const is_shared = boolFromFormValue(body.is_shared);
 
   if (!Number.isFinite(uses) || uses < 1 || uses > 1000) {
     return json({ ok: false, error: 'uses_invalid', message: 'uses must be 1-1000' }, 400);
@@ -118,6 +124,8 @@ export async function onRequestPost(context) {
     uses_total: uses,
     uses_remaining: uses,
     last_used_at: null,
+    is_test,
+    is_shared,
   };
   await env.READ2LEAD_CODES.put(code, JSON.stringify(record));
   return json({ ok: true, code, record });

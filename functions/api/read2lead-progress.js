@@ -16,10 +16,11 @@ export async function onRequestGet(context) {
   }
 
   const progress = normalizeProgress(codeData);
+  const requireReviewBeforeNextPack = shouldRequireReviewBeforeNextPack(codeData);
   return json({
     ok: true,
     progress: publicProgress(progress),
-    next_pack_locked: Boolean(progress.current_pack && !isPackReviewed(progress.current_pack)),
+    next_pack_locked: currentPackBlocksGeneration(progress.current_pack, requireReviewBeforeNextPack),
     review_link: `/read2lead/review?code=${encodeURIComponent(code)}`,
   });
 }
@@ -41,6 +42,16 @@ function normalizeProgress(codeData) {
 
 function isPackReviewed(pack) {
   return ['reviewed_pass', 'reviewed_retry'].includes(pack.status);
+}
+
+function shouldRequireReviewBeforeNextPack(codeData) {
+  return !(codeData.is_test === true || codeData.is_shared === true);
+}
+
+function currentPackBlocksGeneration(pack, requireReviewBeforeNextPack = true) {
+  if (!pack) return false;
+  if (pack.status === 'generation_in_progress') return true;
+  return requireReviewBeforeNextPack && !isPackReviewed(pack);
 }
 
 function publicProgress(progress) {

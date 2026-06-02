@@ -38,7 +38,8 @@ export async function onRequestPost(context) {
   if (availabilityError) return availabilityError;
 
   const progress = normalizeProgress(codeData, data);
-  if (currentPackBlocksGeneration(progress.current_pack)) {
+  const requireReviewBeforeNextPack = shouldRequireReviewBeforeNextPack(codeData);
+  if (currentPackBlocksGeneration(progress.current_pack, requireReviewBeforeNextPack)) {
     return json(
       {
         ok: false,
@@ -210,12 +211,16 @@ function isPackReviewed(pack) {
   return ['reviewed_pass', 'reviewed_retry'].includes(pack.status);
 }
 
-function currentPackBlocksGeneration(pack) {
+function shouldRequireReviewBeforeNextPack(codeData) {
+  return !(codeData.is_test === true || codeData.is_shared === true);
+}
+
+function currentPackBlocksGeneration(pack, requireReviewBeforeNextPack = true) {
   if (!pack) return false;
 
-  // Chi block luc dang generate de chong double-click. Khong enforce review
-  // progression: 1 ma co the dung cho nhieu be khac nhau.
-  if (pack.status !== 'generation_in_progress') return false;
+  if (pack.status !== 'generation_in_progress') {
+    return requireReviewBeforeNextPack && !isPackReviewed(pack);
+  }
 
   const startedAt = Date.parse(pack.created_at || '');
   if (!Number.isFinite(startedAt)) return false;
