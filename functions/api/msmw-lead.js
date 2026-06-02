@@ -62,15 +62,13 @@ export async function onRequestPost(context) {
 
     if (!tgRes.ok) {
       const errText = await tgRes.text();
-      console.error('Telegram API failed:', tgRes.status, errText);
-      console.error('Lead data (for manual recovery):', JSON.stringify(data));
+      console.error('msmw-lead telegram_failed', { status: tgRes.status, errText, ref: refSource, ts: timestamp });
       return jsonResponse({ ok: false, error: 'Telegram delivery failed' }, 500);
     }
 
     return jsonResponse({ ok: true }, 200);
   } catch (err) {
-    console.error('Telegram call exception:', err.message);
-    console.error('Lead data (for manual recovery):', JSON.stringify(data));
+    console.error('msmw-lead telegram_exception', { message: err.message, ref: refSource, ts: timestamp });
     return jsonResponse({ ok: false, error: 'Network error' }, 500);
   }
 }

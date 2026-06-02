@@ -62,15 +62,13 @@ export async function onRequestPost(context) {
     });
 
     if (!tgRes.ok) {
-      console.error('Telegram failed:', tgRes.status);
-      console.error('Booking data:', JSON.stringify(data));
+      console.error('coaching-booking telegram_failed', { status: tgRes.status, ref: refSource, ts: timestamp });
       return json({ ok: false, error: 'Delivery failed' }, 500);
     }
 
     return json({ ok: true }, 200);
   } catch (err) {
-    console.error('Telegram exception:', err.message);
-    console.error('Booking data:', JSON.stringify(data));
+    console.error('coaching-booking telegram_exception', { message: err.message, ref: refSource, ts: timestamp });
     return json({ ok: false, error: 'Network error' }, 500);
   }
 }
