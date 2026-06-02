@@ -107,6 +107,20 @@ export function buildActivities(context) {
     });
   }
 
+  const challengeItems = Array.isArray(context.best_line_challenge) ? context.best_line_challenge : [];
+  if (challengeItems.length) {
+    activities.push({
+      id: 'best_line',
+      type: 'best_line',
+      title_vi: '🎯 Best Line Challenge',
+      instruction_vi: 'Mỗi câu hỏi có 3 cách viết. Con chọn cách nghe tự nhiên nhất trong tiếng Anh.',
+      items: challengeItems.map((item, index) => ({
+        index,
+        options: Array.isArray(item?.options) ? item.options : [],
+      })),
+    });
+  }
+
   const questions = Array.isArray(context.comprehension_questions) ? context.comprehension_questions : [];
   const COMPREHENSION_KEEP = new Set(['Find It', 'Language in the Story']);
   const comprehension = questions.filter((item) => COMPREHENSION_KEEP.has(item.section));
@@ -191,6 +205,7 @@ export function gradeLessonSubmission(context, answers = {}) {
   addSection('matching', 'Nối nghĩa', ...gradeMatching(context, answers.matching));
   addSection('fill_blank', 'Điền chỗ trống', ...gradeArrayAnswers(context.answer_key?.fill_in_the_blank, answers.fill_blank));
   addSection('chunk_in_context', 'Tình huống mới', ...gradeArrayAnswers(context.answer_key?.chunk_in_context, answers.chunk_in_context));
+  addSection('best_line', 'Best Line', ...gradeBestLine(context, answers.best_line));
 
   const scorePercent = total ? Math.round((correct / total) * 100) : 0;
   const passed = total > 0 && scorePercent >= PASS_THRESHOLD;
@@ -205,6 +220,16 @@ export function gradeLessonSubmission(context, answers = {}) {
       open_response: answers.open_response || {},
     },
   };
+}
+
+function gradeBestLine(context, answerMap = {}) {
+  const expected = Array.isArray(context.answer_key?.best_line_challenge) ? context.answer_key.best_line_challenge : [];
+  let correct = 0;
+  expected.forEach((expectedIdx, index) => {
+    const actual = getIndexedAnswer(answerMap, index);
+    if (actual !== '' && actual !== null && actual !== undefined && Number(actual) === Number(expectedIdx)) correct += 1;
+  });
+  return [correct, expected.length];
 }
 
 function gradeMatching(context, answerMap = {}) {

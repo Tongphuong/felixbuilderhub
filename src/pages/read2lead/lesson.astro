@@ -281,6 +281,21 @@ import Footer from '../../components/Footer.astro';
         `).join(''));
       }
 
+      if (activity.type === 'best_line') {
+        return sectionWrap(title, activity.items.map((item) => `
+          <fieldset class="mb-4 rounded-lg border border-cream-dim/20 bg-navy-900/75 p-4">
+            <legend class="px-2 text-sm font-semibold text-gold-light">Câu ${item.index + 1}</legend>
+            <p class="mb-3 text-sm text-cream-dim">Câu nào nghe tự nhiên nhất?</p>
+            ${item.options.map((option, optIdx) => `
+              <label class="flex cursor-pointer items-start gap-3 py-2">
+                <input type="radio" name="best_line_${item.index}" value="${optIdx}" data-answer-type="best_line" data-answer-index="${item.index}" required class="mt-1 accent-accent" />
+                <span class="text-base text-cream">${escapeHtml(option)}</span>
+              </label>
+            `).join('')}
+          </fieldset>
+        `).join(''));
+      }
+
       if (activity.type === 'story_order') {
         const seed = hashSeed(packId || 'lesson') + 7;
         const sharedOptions = activity.items.length
@@ -321,6 +336,7 @@ import Footer from '../../components/Footer.astro';
         fill_blank: {},
         fix_chunk: {},
         chunk_in_context: {},
+        best_line: {},
         story_order: {},
         comprehension: {},
         open_response: {},
