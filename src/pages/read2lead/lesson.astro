@@ -48,11 +48,11 @@ import Footer from '../../components/Footer.astro';
             </div>
           </div>
 
-          <ol id="step-progress" class="mt-6 grid grid-cols-3 gap-2 text-center text-xs font-semibold uppercase tracking-wide text-cream-dim">
-            <li data-step-indicator="listen" class="rounded-md border border-cream-dim/20 bg-navy-900/60 px-3 py-2">1 · Nghe</li>
-            <li data-step-indicator="read" class="rounded-md border border-cream-dim/20 bg-navy-900/60 px-3 py-2">2 · Đọc</li>
-            <li data-step-indicator="practice" class="rounded-md border border-cream-dim/20 bg-navy-900/60 px-3 py-2">3 · Làm bài</li>
-          </ol>
+          <div id="step-progress" class="mt-6 grid grid-cols-3 gap-2 text-center text-xs font-semibold uppercase tracking-wide text-cream-dim">
+            <button type="button" data-step-indicator="listen" data-step-jump="listen" class="rounded-md border border-cream-dim/20 bg-navy-900/60 px-3 py-2 transition hover:border-accent hover:text-cream">1 · Nghe</button>
+            <button type="button" data-step-indicator="read" data-step-jump="read" class="rounded-md border border-cream-dim/20 bg-navy-900/60 px-3 py-2 transition hover:border-accent hover:text-cream">2 · Đọc</button>
+            <button type="button" data-step-indicator="practice" data-step-jump="practice" class="rounded-md border border-cream-dim/20 bg-navy-900/60 px-3 py-2 transition hover:border-accent hover:text-cream">3 · Làm bài</button>
+          </div>
 
           <section id="step-listen" class="mt-8 hidden">
             <p class="text-sm font-semibold text-gold-light">Bước 1</p>
@@ -335,6 +335,13 @@ import Footer from '../../components/Footer.astro';
 
     document.querySelectorAll('[data-step-back]').forEach((btn) => {
       btn.addEventListener('click', () => showStep(btn.getAttribute('data-step-back'), { scroll: true }));
+    });
+
+    document.querySelectorAll('[data-step-jump]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        if (!lesson) return;
+        showStep(btn.getAttribute('data-step-jump'), { scroll: true });
+      });
     });
 
     async function loadLesson() {
