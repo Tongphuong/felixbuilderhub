@@ -69,7 +69,7 @@ const faqItems = [
         <span class="block">cho con tự học tại nhà.</span>
       </h1>
       <p class="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-cream-muted md:text-xl">
-        Mỗi bài có truyện ngắn, từ vựng cần nhớ, bài luyện và file nghe. Bố mẹ in PDF, mở MP3, ngồi cùng con 10 phút.
+        Mỗi bài có truyện ngắn, từ vựng cần nhớ, bài luyện và file nghe. Bố mẹ in PDF, mở MP3, ngồi cùng con 10 phút. <span class="font-semibold text-cream">Miễn phí trong giai đoạn thử nghiệm.</span>
       </p>
       <p class="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-cream-dim">
         Phù hợp khi bố mẹ muốn cho con thêm bài đọc tiếng Anh ở nhà, hợp với tuổi và mức đọc của con.
@@ -80,7 +80,7 @@ const faqItems = [
         <a href="/read2lead/review" class="inline-flex rounded-lg border border-cream-dim/40 px-6 py-3 font-semibold text-cream transition hover:border-gold hover:text-gold-light">Vào Felixar</a>
       </div>
       <p class="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-cream-dim">
-        Chưa có mã? Nhắn Zalo {ZALO_DISPLAY} để nhận.
+        Miễn phí cho học sinh của Felix trong giai đoạn thử nghiệm. Chưa có mã? Nhắn Zalo {ZALO_DISPLAY} để nhận.
       </p>
     </section>
 
@@ -255,37 +255,48 @@ const faqItems = [
                 </label>
               </div>
             </div>
-            <div>
-              <label for="interests" class="mb-2 block text-sm text-cream-muted">
-                Sở thích của con <span class="text-cream-dim">(tùy chọn)</span>
-              </label>
-              <input
-                id="interests"
-                name="interests"
-                type="text"
-                maxlength="120"
-                placeholder="VD: bóng đá, Roblox, mèo, vẽ tranh..."
-                class="w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-4 py-3 text-base text-cream placeholder:text-cream-dim/80 focus:border-accent focus:outline-none"
-              />
-              <p class="mt-2 text-xs text-cream-dim">Nếu điền, câu chuyện sẽ cố gắng đi theo điều con thích.</p>
-            </div>
-            <div>
-              <label class="mb-2 block text-sm text-cream-muted">
-                Chủ đề con thích <span class="text-cream-dim">(tùy chọn)</span>
-              </label>
-              <div class="grid grid-cols-2 gap-2 rounded-lg border border-cream-dim/30 bg-navy-950 p-3 sm:grid-cols-3">
-                <label class="flex cursor-pointer items-center gap-2 rounded-md p-2 transition hover:bg-navy-800 has-[:checked]:bg-accent/15 has-[:checked]:ring-1 has-[:checked]:ring-accent">
-                  <input type="radio" name="topic" value="" class="h-3.5 w-3.5 accent-accent" checked />
-                  <span class="text-sm text-cream">Felix chọn giúp</span>
-                </label>
-                {topics.map(([value, label]) => (
-                  <label class="flex cursor-pointer items-center gap-2 rounded-md p-2 transition hover:bg-navy-800 has-[:checked]:bg-accent/15 has-[:checked]:ring-1 has-[:checked]:ring-accent">
-                    <input type="radio" name="topic" value={value} class="h-3.5 w-3.5 accent-accent" />
-                    <span class="text-sm text-cream">{label}</span>
+            <details class="group rounded-lg border border-cream-dim/30 bg-navy-950/60">
+              <summary class="flex cursor-pointer list-none items-center justify-between px-4 py-3 text-sm font-semibold text-cream-muted transition hover:text-accent">
+                <span>
+                  Tùy chọn thêm: sở thích &amp; chủ đề của con
+                  <span class="mt-0.5 block text-xs font-normal text-cream-dim">Không bắt buộc — bỏ qua thì Felix chọn giúp.</span>
+                </span>
+                <span class="ml-3 shrink-0 text-cream-dim transition group-open:rotate-180" aria-hidden="true">▾</span>
+              </summary>
+              <div class="space-y-5 px-4 pb-4 pt-1">
+                <div>
+                  <label for="interests" class="mb-2 block text-sm text-cream-muted">
+                    Sở thích của con
                   </label>
-                ))}
+                  <input
+                    id="interests"
+                    name="interests"
+                    type="text"
+                    maxlength="120"
+                    placeholder="VD: bóng đá, Roblox, mèo, vẽ tranh..."
+                    class="w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-4 py-3 text-base text-cream placeholder:text-cream-dim/80 focus:border-accent focus:outline-none"
+                  />
+                  <p class="mt-2 text-xs text-cream-dim">Nếu điền, câu chuyện sẽ cố gắng đi theo điều con thích.</p>
+                </div>
+                <div>
+                  <label class="mb-2 block text-sm text-cream-muted">
+                    Chủ đề con thích
+                  </label>
+                  <div class="grid grid-cols-2 gap-2 rounded-lg border border-cream-dim/30 bg-navy-950 p-3 sm:grid-cols-3">
+                    <label class="flex cursor-pointer items-center gap-2 rounded-md p-2 transition hover:bg-navy-800 has-[:checked]:bg-accent/15 has-[:checked]:ring-1 has-[:checked]:ring-accent">
+                      <input type="radio" name="topic" value="" class="h-3.5 w-3.5 accent-accent" checked />
+                      <span class="text-sm text-cream">Felix chọn giúp</span>
+                    </label>
+                    {topics.map(([value, label]) => (
+                      <label class="flex cursor-pointer items-center gap-2 rounded-md p-2 transition hover:bg-navy-800 has-[:checked]:bg-accent/15 has-[:checked]:ring-1 has-[:checked]:ring-accent">
+                        <input type="radio" name="topic" value={value} class="h-3.5 w-3.5 accent-accent" />
+                        <span class="text-sm text-cream">{label}</span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
               </div>
-            </div>
+            </details>
             <div class="absolute -left-[9999px]" aria-hidden="true">
               <label for="website">Website</label>
               <input id="website" name="website" tabindex="-1" />
