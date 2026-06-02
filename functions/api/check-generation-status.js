@@ -53,34 +53,34 @@ export async function onRequestGet(context) {
     return json({ ok: false, error: 'timeout', message: 'Generation quá thời gian cho phép. Vui lòng thử lại.' }, 504);
   }
 
-  const backendUrl = env.READ2LEAD_BACKEND_URL;
-  const backendSecret = env.READ2LEAD_BACKEND_SECRET;
-  if (!backendUrl || !backendSecret) {
-    return json({ ok: false, error: 'backend_not_configured' }, 500);
-  }
-
-  let upstream;
-  try {
-    const res = await fetch(`${backendUrl}/status/${encodeURIComponent(taskId)}`, {
-      method: 'GET',
-      headers: { 'X-Read2Lead-Secret': backendSecret },
-    });
-    upstream = { status: res.status, body: await res.json() };
-  } catch (err) {
-    return json({ ok: false, error: 'backend_unavailable' }, 502);
-  }
-
-  if (!upstream.body?.ok) {
-    if (upstream.body?.error === 'task_not_found') {
-      await clearGenerationLockSimple(env.READ2LEAD_CODES, accessCode, taskId);
+  // Đọc task state trực tiếp từ KV (Render Python publish state qua /api/task-state).
+  // Loại bỏ phụ thuộc vào Render in-memory dict — state persist qua Render restart.
+  const taskValue = await env.READ2LEAD_CODES.get(`task:${taskId}`, { type: 'json' });
+  if (!taskValue) {
+    // Chưa publish hoặc đã expire (TTL 30 phút). Vẫn pending nếu lock còn dưới 60s.
+    const startedAtIso = currentPack.created_at || '';
+    const startedAtMs = Date.parse(startedAtIso);
+    if (Number.isFinite(startedAtMs) && Date.now() - startedAtMs < 60_000) {
+      return json({ ok: true, status: 'pending' });
     }
-    return json(upstream.body || { ok: false, error: 'unknown' }, upstream.status || 500);
+    await clearGenerationLockSimple(env.READ2LEAD_CODES, accessCode, taskId);
+    return json({ ok: false, error: 'task_not_found', message: 'Bài đã hết phiên (hoặc máy chủ vừa khởi động lại). Vui lòng thử lại.' }, 404);
   }
 
+  const upstream = {
+    status: 200,
+    body: {
+      ok: true,
+      status: taskValue.status,
+      queue_position: typeof taskValue.queue_position === 'number' ? taskValue.queue_position : null,
+      ...(taskValue.result || {}),
+      error: taskValue.error,
+    },
+  };
   const status = upstream.body.status;
 
   if (status === 'pending') {
-    return json({ ok: true, status: 'pending' });
+    return json({ ok: true, status: 'pending', queue_position: upstream.body.queue_position });
   }
 
   if (status === 'error') {

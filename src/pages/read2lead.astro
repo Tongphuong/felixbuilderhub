@@ -471,6 +471,17 @@ const faqItems = [
 
         if (result.status === 'pending') {
           pollAttempts += 1;
+          const statusEl = document.getElementById('status-text');
+          if (statusEl) {
+            const pos = typeof result.queue_position === 'number' ? result.queue_position : null;
+            if (pos && pos > 3) {
+              const ahead = pos - 3;
+              const estMinutes = Math.max(1, Math.ceil((ahead * 60) / 60));
+              statusEl.textContent = `Hệ thống đang bận: còn ${ahead} bài trước con. Đợi khoảng ${estMinutes} phút...`;
+            } else if (pos && pos > 0) {
+              statusEl.textContent = 'Bài của con đang được tạo. Đợi khoảng 1 phút...';
+            }
+          }
           if (pollAttempts >= MAX_POLL_ATTEMPTS) {
             clearInterval(pollInterval);
             pollInterval = null;
