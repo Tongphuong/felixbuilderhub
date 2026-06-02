@@ -56,7 +56,7 @@ export function buildActivities(context) {
     activities.push({
       id: 'story',
       type: 'story',
-      title_vi: 'Đọc câu chuyện',
+      title_vi: '🎯 Nhiệm vụ 1: Đọc câu chuyện',
       instruction_vi: 'Con đọc câu chuyện một lần. Sau đó nghe MP3 và đọc lại nếu cần.',
       items: storyText.map((text, index) => ({ index, text })),
     });
@@ -69,7 +69,7 @@ export function buildActivities(context) {
     activities.push({
       id: 'matching',
       type: 'matching',
-      title_vi: 'Nối cụm câu với nghĩa',
+      title_vi: '🔗 Nhiệm vụ: Nối cụm câu',
       instruction_vi: 'Con chọn nghĩa đúng cho từng cụm câu.',
       items: matchingItems.map((chunk, index) => ({ index, chunk, options: meanings })),
     });
@@ -82,7 +82,7 @@ export function buildActivities(context) {
     activities.push({
       id: 'fill_blank',
       type: 'fill_blank',
-      title_vi: 'Điền cụm câu vào chỗ trống',
+      title_vi: '✏️ Nhiệm vụ: Điền cụm câu',
       instruction_vi: 'Con chọn cụm câu phù hợp nhất cho mỗi chỗ trống.',
       items: fillBlanks.map((prompt, index) => ({
         index,
@@ -97,7 +97,7 @@ export function buildActivities(context) {
     activities.push({
       id: 'chunk_in_context',
       type: 'chunk_in_context',
-      title_vi: 'Dùng cụm câu trong tình huống mới',
+      title_vi: '🌍 Nhiệm vụ: Dùng trong đời thật',
       instruction_vi: 'Mỗi câu là một tình huống KHÁC truyện chính. Con chọn cụm câu phù hợp nhất từ danh sách bên dưới.',
       items: contextSentences.map((sentence, index) => ({
         index,
@@ -114,7 +114,7 @@ export function buildActivities(context) {
     activities.push({
       id: 'comprehension',
       type: 'comprehension',
-      title_vi: 'Câu hỏi sau khi đọc',
+      title_vi: '🔍 Quick Check: Con hiểu chuyện chưa?',
       instruction_vi: 'Con trả lời bằng câu ngắn. Phần này để bố mẹ đọc cùng con, chưa tính điểm tự động.',
       items: comprehension.map((item, index) => ({
         index,
@@ -129,7 +129,7 @@ export function buildActivities(context) {
     activities.push({
       id: 'power_chunks',
       type: 'power_chunks',
-      title_vi: 'Thư viện cụm câu',
+      title_vi: '📚 Power Chunks — Để tham khảo',
       instruction_vi: 'Con xem lại các cụm câu đã học để chuẩn bị kể lại câu chuyện ở phần tiếp theo.',
       items: chunks.map((item, index) => ({
         index,
@@ -145,7 +145,7 @@ export function buildActivities(context) {
     activities.push({
       id: 'open_response',
       type: 'open_response',
-      title_vi: 'Con tự trả lời',
+      title_vi: '💭 Use It About You',
       instruction_vi: 'Con viết 1-2 câu theo suy nghĩ của mình. Không cần trả lời giống đáp án.',
       items: openQuestions.map((item, index) => ({
         index,
