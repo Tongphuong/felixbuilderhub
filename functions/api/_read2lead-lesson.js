@@ -62,22 +62,6 @@ export function buildActivities(context) {
     });
   }
 
-  const chunks = Array.isArray(context.power_chunks) ? context.power_chunks : [];
-  if (chunks.length) {
-    activities.push({
-      id: 'power_chunks',
-      type: 'power_chunks',
-      title_vi: 'Cụm câu cần nhớ',
-      instruction_vi: 'Con đọc các cụm câu này trước khi làm bài.',
-      items: chunks.map((item, index) => ({
-        index,
-        chunk: item.chunk || '',
-        meaning: item.meaning || '',
-        example: item.example || '',
-      })),
-    });
-  }
-
   const matching = context.matching_activity || {};
   const matchingItems = Array.isArray(matching.items) ? matching.items : [];
   const meanings = Array.isArray(matching.meanings) ? matching.meanings : [];
@@ -118,6 +102,22 @@ export function buildActivities(context) {
         index,
         section: item.section || '',
         question: item.question || '',
+      })),
+    });
+  }
+
+  const chunks = Array.isArray(context.power_chunks) ? context.power_chunks : [];
+  if (chunks.length) {
+    activities.push({
+      id: 'power_chunks',
+      type: 'power_chunks',
+      title_vi: 'Thư viện cụm câu',
+      instruction_vi: 'Con xem lại các cụm câu đã học để chuẩn bị kể lại câu chuyện ở phần tiếp theo.',
+      items: chunks.map((item, index) => ({
+        index,
+        chunk: item.chunk || '',
+        meaning: item.meaning || '',
+        example: item.example || '',
       })),
     });
   }
@@ -197,6 +197,9 @@ function gradeMatching(context, answerMap = {}) {
   let correct = 0;
   items.forEach((chunk, index) => {
     const expected = chunks.find((item) => normalizeText(item.chunk) === normalizeText(chunk))?.meaning || '';
+    if (!expected) {
+      console.warn(`[read2lead-lesson][matching] chunk "${chunk}" không tìm thấy meaning tương ứng trong power_chunks — pack có thể bị lệch data`);
+    }
     const actual = getIndexedAnswer(answerMap, index);
     if (expected && normalizeText(actual) === normalizeText(expected)) correct += 1;
   });

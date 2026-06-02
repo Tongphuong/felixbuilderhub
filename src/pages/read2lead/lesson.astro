@@ -44,24 +44,55 @@ import Footer from '../../components/Footer.astro';
               <p id="lesson-subtitle" class="mt-2 text-cream-muted"></p>
             </div>
             <div class="flex shrink-0 flex-col gap-3 sm:flex-row md:flex-col">
-              <a id="mp3-link" href="#" target="_blank" rel="noreferrer" class="hidden rounded-lg border border-gold px-5 py-3 text-center font-semibold text-gold-light transition hover:bg-gold hover:text-navy-950">Nghe MP3</a>
               <a id="pdf-link" href="#" target="_blank" rel="noreferrer" class="hidden rounded-lg border border-cream-dim/30 px-5 py-3 text-center font-semibold text-cream transition hover:border-accent hover:text-accent">Mở PDF</a>
             </div>
           </div>
 
-          <div class="mt-6 rounded-lg border border-accent/25 bg-accent/10 p-4">
-            <p class="font-semibold text-cream">Cách làm</p>
-            <p class="mt-2 text-sm leading-relaxed text-cream-muted">Con làm từ trên xuống dưới. Các ô viết tự do để bố mẹ đọc cùng con, chưa tính điểm tự động. Các phần nối, điền, sửa và sắp xếp sẽ được chấm ngay.</p>
-          </div>
+          <ol id="step-progress" class="mt-6 grid grid-cols-3 gap-2 text-center text-xs font-semibold uppercase tracking-wide text-cream-dim">
+            <li data-step-indicator="listen" class="rounded-md border border-cream-dim/20 bg-navy-900/60 px-3 py-2">1 · Nghe</li>
+            <li data-step-indicator="read" class="rounded-md border border-cream-dim/20 bg-navy-900/60 px-3 py-2">2 · Đọc</li>
+            <li data-step-indicator="practice" class="rounded-md border border-cream-dim/20 bg-navy-900/60 px-3 py-2">3 · Làm bài</li>
+          </ol>
 
-          <form id="lesson-form" class="mt-8 space-y-6">
-            <div id="activities"></div>
-            <div class="absolute -left-[9999px]" aria-hidden="true">
-              <label for="website">Website</label>
-              <input id="website" name="website" tabindex="-1" autocomplete="off" />
+          <section id="step-listen" class="mt-8 hidden">
+            <p class="text-sm font-semibold text-gold-light">Bước 1</p>
+            <h3 class="mt-1 font-display text-2xl font-bold leading-snug text-cream">Con nghe câu chuyện</h3>
+            <p class="mt-2 text-sm leading-relaxed text-cream-muted">Mở loa hoặc tai nghe. Con nghe ít nhất 1 lần để quen âm thanh, sau đó mới sang phần đọc.</p>
+            <audio id="step-audio" controls preload="none" class="mt-5 w-full"></audio>
+            <p id="step-audio-missing" class="mt-3 hidden text-sm text-red-300">Bài này chưa có file MP3. Con có thể chuyển sang bước Đọc.</p>
+            <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-end">
+              <button data-step-next="read" type="button" class="rounded-lg bg-accent px-6 py-3 font-semibold text-navy-950 transition hover:bg-accent-hover">Con đã nghe xong</button>
             </div>
-            <button id="submit-lesson" type="submit" class="w-full rounded-lg bg-accent px-6 py-3 text-lg font-semibold text-navy-950 transition hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-60">Nộp bài trên web</button>
-          </form>
+          </section>
+
+          <section id="step-read" class="mt-8 hidden">
+            <p class="text-sm font-semibold text-gold-light">Bước 2</p>
+            <h3 class="mt-1 font-display text-2xl font-bold leading-snug text-cream">Con đọc câu chuyện</h3>
+            <p class="mt-2 text-sm leading-relaxed text-cream-muted">Con đọc to thành tiếng từng đoạn. Bố mẹ ngồi cạnh giúp con đọc chuẩn nhé.</p>
+            <div id="step-read-body" class="mt-5"></div>
+            <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-between">
+              <button data-step-back="listen" type="button" class="rounded-lg border border-cream-dim/30 px-6 py-3 font-semibold text-cream transition hover:border-accent hover:text-accent">Nghe lại</button>
+              <button data-step-next="practice" type="button" class="rounded-lg bg-accent px-6 py-3 font-semibold text-navy-950 transition hover:bg-accent-hover">Con đã đọc xong</button>
+            </div>
+          </section>
+
+          <section id="step-practice" class="mt-8 hidden">
+            <p class="text-sm font-semibold text-gold-light">Bước 3</p>
+            <h3 class="mt-1 font-display text-2xl font-bold leading-snug text-cream">Con làm bài luyện tập</h3>
+            <p class="mt-2 text-sm leading-relaxed text-cream-muted">Các phần nối, điền, sửa và sắp xếp sẽ được chấm ngay. Ô viết tự do để bố mẹ đọc cùng con, chưa tính điểm tự động.</p>
+
+            <form id="lesson-form" class="mt-6 space-y-6">
+              <div id="activities"></div>
+              <div class="absolute -left-[9999px]" aria-hidden="true">
+                <label for="website">Website</label>
+                <input id="website" name="website" tabindex="-1" autocomplete="off" />
+              </div>
+              <div class="flex flex-col gap-3 sm:flex-row sm:justify-between">
+                <button data-step-back="read" type="button" class="rounded-lg border border-cream-dim/30 px-6 py-3 font-semibold text-cream transition hover:border-accent hover:text-accent">Đọc lại truyện</button>
+                <button id="submit-lesson" type="submit" class="rounded-lg bg-accent px-6 py-3 text-lg font-semibold text-navy-950 transition hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-60">Nộp bài trên web</button>
+              </div>
+            </form>
+          </section>
         </article>
 
         <section id="result-card" class="mt-6 hidden rounded-xl border border-gold/40 bg-gold/10 p-6"></section>
@@ -81,10 +112,24 @@ import Footer from '../../components/Footer.astro';
     const lessonCard = document.getElementById('lesson-card');
     const resultCard = document.getElementById('result-card');
     const activitiesEl = document.getElementById('activities');
+    const stepReadBody = document.getElementById('step-read-body');
+    const stepAudio = document.getElementById('step-audio');
+    const stepAudioMissing = document.getElementById('step-audio-missing');
+    const stepSections = {
+      listen: document.getElementById('step-listen'),
+      read: document.getElementById('step-read'),
+      practice: document.getElementById('step-practice'),
+    };
+    const stepIndicators = document.querySelectorAll('[data-step-indicator]');
+    const stepOrder = ['listen', 'read', 'practice'];
+
     const form = document.getElementById('lesson-form');
     const submitBtn = document.getElementById('submit-lesson');
 
     let lesson = null;
+    let currentStep = 'listen';
+    let listenCompletedAt = null;
+    let readCompletedAt = null;
 
     function escapeHtml(value) {
       return String(value || '')
@@ -92,6 +137,26 @@ import Footer from '../../components/Footer.astro';
         .replace(/</g, '&lt;')
         .replace(/>/g, '&gt;')
         .replace(/"/g, '&quot;');
+    }
+
+    function hashSeed(str) {
+      let h = 0;
+      const s = String(str || '');
+      for (let i = 0; i < s.length; i += 1) {
+        h = (h * 31 + s.charCodeAt(i)) | 0;
+      }
+      return Math.abs(h) || 1;
+    }
+
+    function seededShuffle(arr, seed) {
+      const out = arr.slice();
+      let s = seed;
+      for (let i = out.length - 1; i > 0; i -= 1) {
+        s = (s * 9301 + 49297) % 233280;
+        const j = Math.floor((s / 233280) * (i + 1));
+        [out[i], out[j]] = [out[j], out[i]];
+      }
+      return out;
     }
 
     function showError(message) {
@@ -154,12 +219,16 @@ import Footer from '../../components/Footer.astro';
       }
 
       if (activity.type === 'story_order') {
+        const seed = hashSeed(packId || 'lesson') + 7;
+        const sharedOptions = activity.items.length
+          ? seededShuffle(activity.items[0].options || [], seed)
+          : [];
         return sectionWrap(title, activity.items.map((item) => `
           <label class="mb-4 block rounded-lg border border-cream-dim/20 bg-navy-900/75 p-4">
             <span class="block font-semibold text-cream">Vị trí ${item.index + 1}</span>
             <select data-answer-type="story_order" data-answer-index="${item.index}" class="mt-3 w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-4 py-3 text-base text-cream focus:border-accent focus:outline-none" required>
               ${optionHtml('', '-- Chọn sự kiện --')}
-              ${item.options.map((option) => optionHtml(option)).join('')}
+              ${sharedOptions.map((option) => optionHtml(option)).join('')}
             </select>
           </label>
         `).join(''));
@@ -201,27 +270,72 @@ import Footer from '../../components/Footer.astro';
       return answers;
     }
 
+    function showStep(name, { scroll = false } = {}) {
+      if (!stepSections[name]) return;
+      currentStep = name;
+      stepOrder.forEach((step) => {
+        stepSections[step].classList.toggle('hidden', step !== name);
+      });
+      stepIndicators.forEach((el) => {
+        const step = el.getAttribute('data-step-indicator');
+        const reached = stepOrder.indexOf(step) <= stepOrder.indexOf(name);
+        el.classList.toggle('border-accent', step === name);
+        el.classList.toggle('bg-accent/15', step === name);
+        el.classList.toggle('text-cream', reached);
+        el.classList.toggle('text-cream-dim', !reached);
+      });
+      if (scroll) lessonCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
     function renderLesson(data) {
       lesson = data.lesson;
       document.getElementById('lesson-meta').textContent = `${lesson.student_name || 'Học sinh Read2Lead'} · ${lesson.level || 'L2'} · ${lesson.topic || 'Read2Lead'}`;
       document.getElementById('lesson-title').textContent = lesson.story_title || 'Bài đọc Read2Lead';
       document.getElementById('lesson-subtitle').textContent = `Mã: ${lesson.access_code_masked || '***'}`;
 
-      const mp3Link = document.getElementById('mp3-link');
       const pdfLink = document.getElementById('pdf-link');
-      if (lesson.mp3_url) {
-        mp3Link.href = lesson.mp3_url;
-        mp3Link.classList.remove('hidden');
-      }
-      if (lesson.pdf_url) {
+      if (lesson.pdf_url && pdfLink) {
         pdfLink.href = lesson.pdf_url;
         pdfLink.classList.remove('hidden');
       }
 
-      activitiesEl.innerHTML = lesson.activities.map((activity, index) => renderActivity(activity, index + 1)).join('');
+      if (lesson.mp3_url) {
+        stepAudio.src = lesson.mp3_url;
+        stepAudio.classList.remove('hidden');
+        stepAudioMissing.classList.add('hidden');
+      } else {
+        stepAudio.classList.add('hidden');
+        stepAudioMissing.classList.remove('hidden');
+      }
+
+      const storyActivity = lesson.activities.find((a) => a.type === 'story');
+      const practiceActivities = lesson.activities.filter((a) => a.type !== 'story');
+
+      if (storyActivity) {
+        stepReadBody.innerHTML = storyActivity.items.map((item) => `<p class="mb-4 leading-8 text-lg text-cream">${escapeHtml(item.text)}</p>`).join('');
+      } else {
+        stepReadBody.innerHTML = '<p class="text-cream-muted">Bài này chưa có truyện. Con có thể chuyển sang bước làm bài.</p>';
+      }
+
+      activitiesEl.innerHTML = practiceActivities.map((activity, index) => renderActivity(activity, index + 1)).join('');
       loadingCard.classList.add('hidden');
       lessonCard.classList.remove('hidden');
+      showStep('listen');
     }
+
+    document.querySelectorAll('[data-step-next]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const next = btn.getAttribute('data-step-next');
+        const nowIso = new Date().toISOString();
+        if (currentStep === 'listen' && !listenCompletedAt) listenCompletedAt = nowIso;
+        if (currentStep === 'read' && !readCompletedAt) readCompletedAt = nowIso;
+        showStep(next, { scroll: true });
+      });
+    });
+
+    document.querySelectorAll('[data-step-back]').forEach((btn) => {
+      btn.addEventListener('click', () => showStep(btn.getAttribute('data-step-back'), { scroll: true }));
+    });
 
     async function loadLesson() {
       if (!accessCode || !packId) {
@@ -288,6 +402,10 @@ import Footer from '../../components/Footer.astro';
             access_code: accessCode,
             pack_id: packId,
             answers: collectAnswers(),
+            steps: {
+              listen_completed_at: listenCompletedAt,
+              read_completed_at: readCompletedAt,
+            },
           }),
         });
         const result = await res.json();

@@ -146,6 +146,7 @@ function publicPack(pack) {
     pdf_url: pack.pdf_url,
     mp3_url: pack.mp3_url,
     reviewed_at: pack.reviewed_at,
+    web_lesson_steps: pack.web_lesson_steps || null,
   };
 }
 

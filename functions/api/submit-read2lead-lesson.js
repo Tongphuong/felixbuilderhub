@@ -37,6 +37,13 @@ export async function onRequestPost(context) {
     return json({ ok: false, error: 'missing_fields', message: 'Thiếu mã học sinh, mã bài hoặc đáp án.' }, 400);
   }
 
+  const stepInput = data.steps && typeof data.steps === 'object' ? data.steps : {};
+  const sanitizeIso = (value) => (typeof value === 'string' && value ? value.slice(0, 40) : null);
+  const stepStamps = {
+    listen_completed_at: sanitizeIso(stepInput.listen_completed_at),
+    read_completed_at: sanitizeIso(stepInput.read_completed_at),
+  };
+
   const clientIp = getClientIp(request);
   const rl = await checkCodeRateLimit(env.READ2LEAD_CODES, clientIp);
   if (rl.blocked) {
@@ -94,6 +101,10 @@ export async function onRequestPost(context) {
       ...currentPack,
       web_attempts: webAttempts,
       web_lesson_summary: attempt,
+      web_lesson_steps: {
+        ...stepStamps,
+        lesson_completed_at: null,
+      },
     };
     const nextProgress = {
       ...progress,
@@ -129,6 +140,10 @@ export async function onRequestPost(context) {
     reviewed_at: submittedAt,
     web_attempts: webAttempts,
     web_lesson_summary: attempt,
+    web_lesson_steps: {
+      ...stepStamps,
+      lesson_completed_at: submittedAt,
+    },
     review_summary: reviewSummary,
   };
   const nextReviewHistory = [
