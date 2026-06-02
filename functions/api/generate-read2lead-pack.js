@@ -1,3 +1,5 @@
+import { getClientIp, checkCodeRateLimit, recordCodeFailure, rateLimitedResponse } from './_rate-limit.js';
+
 const GENERATION_LOCK_STALE_MS = 15 * 60 * 1000;
 
 export async function onRequestPost(context) {
@@ -29,8 +31,15 @@ export async function onRequestPost(context) {
     return json({ ok: false, error: 'config_error', message: 'Felixar chưa cấu hình mã. Vui lòng nhắn Zalo Felix.' }, 500);
   }
 
+  const clientIp = getClientIp(request);
+  const rl = await checkCodeRateLimit(env.READ2LEAD_CODES, clientIp);
+  if (rl.blocked) {
+    return rateLimitedResponse(rl.retryAfter);
+  }
+
   const codeData = await env.READ2LEAD_CODES.get(accessCode, { type: 'json' });
   if (!codeData) {
+    await recordCodeFailure(env.READ2LEAD_CODES, clientIp);
     return json({ ok: false, error: 'code_not_found', message: 'Mã không tồn tại. Kiểm tra lại hoặc nhắn Zalo Felix.' }, 403);
   }
 

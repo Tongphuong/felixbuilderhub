@@ -1,3 +1,5 @@
+import { getClientIp, checkCodeRateLimit, recordCodeFailure, rateLimitedResponse } from './_rate-limit.js';
+
 const STATUS_POLL_TIMEOUT_MS = 5 * 60 * 1000;
 
 export async function onRequestGet(context) {
@@ -14,8 +16,15 @@ export async function onRequestGet(context) {
     return json({ ok: false, error: 'config_error' }, 500);
   }
 
+  const clientIp = getClientIp(request);
+  const rl = await checkCodeRateLimit(env.READ2LEAD_CODES, clientIp);
+  if (rl.blocked) {
+    return rateLimitedResponse(rl.retryAfter);
+  }
+
   const codeData = await env.READ2LEAD_CODES.get(accessCode, { type: 'json' });
   if (!codeData) {
+    await recordCodeFailure(env.READ2LEAD_CODES, clientIp);
     return json({ ok: false, error: 'code_not_found' }, 403);
   }
 
