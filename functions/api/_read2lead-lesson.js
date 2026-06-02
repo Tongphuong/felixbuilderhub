@@ -107,6 +107,33 @@ export function buildActivities(context) {
     });
   }
 
+  const shadowSentences = Array.isArray(context.shadowing_sentences) ? context.shadowing_sentences : [];
+  const sentenceAudios = (context.sentence_audio_urls && typeof context.sentence_audio_urls === 'object') ? context.sentence_audio_urls : {};
+
+  if (shadowSentences.length) {
+    activities.push({
+      id: 'dictation',
+      type: 'dictation',
+      title_vi: '🎧 Mission: Nghe và chép chính tả',
+      instruction_vi: 'Bấm 🔊 để nghe câu. Sau đó gõ lại CHÍNH XÁC câu con vừa nghe. Con có thể nghe nhiều lần. Viết hoa hay thường đều được, không cần chính xác dấu câu.',
+      items: shadowSentences.map((sentence, index) => ({
+        index,
+        audio_url: sentenceAudios[sentence] || '',
+      })),
+    });
+
+    activities.push({
+      id: 'shadowing',
+      type: 'shadowing',
+      title_vi: '🗣️ Mission: Nghe và đọc theo (Shadowing)',
+      instruction_vi: 'Bấm 🔊 nghe câu mẫu (có thể nghe nhiều lần). Sau đó bấm 🎤 đọc lại y hệt câu mẫu. Bấm ▶ nghe lại bản ghi của con để tự so sánh.',
+      items: shadowSentences.map((sentence, index) => ({
+        index,
+        audio_url: sentenceAudios[sentence] || '',
+      })),
+    });
+  }
+
   const challengeItems = Array.isArray(context.best_line_challenge) ? context.best_line_challenge : [];
   if (challengeItems.length) {
     activities.push({
@@ -139,19 +166,17 @@ export function buildActivities(context) {
   }
 
   const chunks = Array.isArray(context.power_chunks) ? context.power_chunks : [];
-  const chunkAudioUrls = (context.chunk_audio_urls && typeof context.chunk_audio_urls === 'object') ? context.chunk_audio_urls : {};
   if (chunks.length) {
     activities.push({
       id: 'power_chunks',
       type: 'power_chunks',
-      title_vi: '📚 Power Chunks — Nghe + Đọc lại',
-      instruction_vi: 'Bấm 🔊 để nghe cụm câu, sau đó bấm 🎤 để con đọc theo. Nghe và nói nhiều lần để ghi nhớ.',
+      title_vi: '📚 Power Chunks — Để tham khảo',
+      instruction_vi: 'Con xem lại các cụm câu đã học để chuẩn bị kể lại câu chuyện ở phần tiếp theo.',
       items: chunks.map((item, index) => ({
         index,
         chunk: item.chunk || '',
         meaning: item.meaning || '',
         example: item.example || '',
-        audio_url: chunkAudioUrls[item.chunk || ''] || '',
       })),
     });
   }
@@ -208,6 +233,7 @@ export function gradeLessonSubmission(context, answers = {}) {
   addSection('fill_blank', 'Điền chỗ trống', ...gradeArrayAnswers(context.answer_key?.fill_in_the_blank, answers.fill_blank));
   addSection('chunk_in_context', 'Tình huống mới', ...gradeArrayAnswers(context.answer_key?.chunk_in_context, answers.chunk_in_context));
   addSection('best_line', 'Best Line', ...gradeBestLine(context, answers.best_line));
+  addSection('dictation', 'Chính tả', ...gradeDictation(context, answers.dictation));
 
   const scorePercent = total ? Math.round((correct / total) * 100) : 0;
   const passed = total > 0 && scorePercent >= PASS_THRESHOLD;
@@ -230,6 +256,16 @@ function gradeBestLine(context, answerMap = {}) {
   expected.forEach((expectedIdx, index) => {
     const actual = getIndexedAnswer(answerMap, index);
     if (actual !== '' && actual !== null && actual !== undefined && Number(actual) === Number(expectedIdx)) correct += 1;
+  });
+  return [correct, expected.length];
+}
+
+function gradeDictation(context, answerMap = {}) {
+  const expected = Array.isArray(context.shadowing_sentences) ? context.shadowing_sentences : [];
+  let correct = 0;
+  expected.forEach((sentence, index) => {
+    const actual = getIndexedAnswer(answerMap, index);
+    if (normalizeText(actual) === normalizeText(sentence)) correct += 1;
   });
   return [correct, expected.length];
 }

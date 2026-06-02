@@ -163,6 +163,8 @@ import Footer from '../../components/Footer.astro';
     let currentStep = 'listen';
     let listenCompletedAt = null;
     let readCompletedAt = null;
+    const shadowRecordings = new Map();
+    let sentenceListenAudio = null;
 
     function escapeHtml(value) {
       return String(value || '')
@@ -170,6 +172,14 @@ import Footer from '../../components/Footer.astro';
         .replace(/</g, '&lt;')
         .replace(/>/g, '&gt;')
         .replace(/"/g, '&quot;');
+    }
+
+    function levelRecommendationText(value) {
+      return {
+        easier: 'Nên chọn bài dễ hơn ở lần sau',
+        stay: 'Giữ mức hiện tại',
+        move_up: 'Có thể thử mức khó hơn',
+      }[value] || 'Giữ mức hiện tại';
     }
 
     function escapeRegExp(value) {
@@ -293,16 +303,10 @@ import Footer from '../../components/Footer.astro';
         return sectionWrap(title, `
           <div class="grid gap-3 md:grid-cols-2">
             ${activity.items.map((item) => `
-              <div class="rounded-lg border border-cream-dim/20 bg-navy-900/75 p-4" data-chunk-card data-chunk-index="${item.index}">
+              <div class="rounded-lg border border-cream-dim/20 bg-navy-900/75 p-4">
                 <p class="font-semibold text-cream">${escapeHtml(item.chunk)}</p>
                 <p class="mt-1 text-sm text-cream-muted">${escapeHtml(item.meaning)}</p>
                 ${item.example ? `<p class="mt-2 text-sm italic text-cream-dim">${escapeHtml(item.example)}</p>` : ''}
-                <div class="mt-3 flex flex-wrap gap-2">
-                  ${item.audio_url ? `<button type="button" data-chunk-listen="${escapeHtml(item.audio_url)}" class="inline-flex items-center gap-1 rounded-md border border-gold/40 bg-gold/10 px-3 py-1.5 text-sm font-semibold text-gold-light transition hover:bg-gold hover:text-navy-950" aria-label="Nghe cụm câu">🔊 Nghe</button>` : ''}
-                  <button type="button" data-chunk-record class="inline-flex items-center gap-1 rounded-md border border-accent/40 bg-accent/10 px-3 py-1.5 text-sm font-semibold text-accent transition hover:bg-accent hover:text-navy-950" aria-label="Ghi âm con đọc lại">🎤 Đọc theo</button>
-                  <span data-chunk-record-status class="text-xs text-cream-dim"></span>
-                </div>
-                <audio data-chunk-playback controls preload="none" class="mt-3 hidden w-full"></audio>
               </div>
             `).join('')}
           </div>
@@ -342,6 +346,36 @@ import Footer from '../../components/Footer.astro';
               ${item.options.map((option) => optionHtml(option)).join('')}
             </select>
           </label>
+        `).join(''));
+      }
+
+      if (activity.type === 'dictation') {
+        return sectionWrap(title, activity.items.map((item) => `
+          <div class="mb-4 rounded-lg border border-cream-dim/20 bg-navy-900/75 p-4">
+            <p class="text-sm font-semibold text-gold-light">Câu ${item.index + 1}</p>
+            <div class="mt-3 flex flex-wrap gap-2">
+              ${item.audio_url
+                ? `<button type="button" data-sentence-listen="${escapeHtml(item.audio_url)}" class="inline-flex items-center gap-1 rounded-md border border-gold/40 bg-gold/10 px-3 py-1.5 text-sm font-semibold text-gold-light transition hover:bg-gold hover:text-navy-950" aria-label="Nghe câu">🔊 Nghe câu</button>`
+                : '<span class="text-sm text-red-300">Câu này thiếu file nghe.</span>'}
+            </div>
+            <input type="text" data-answer-type="dictation" data-answer-index="${item.index}" autocomplete="off" autocapitalize="none" spellcheck="false" class="mt-3 w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-4 py-3 text-base text-cream placeholder:text-cream-dim/70 focus:border-accent focus:outline-none" placeholder="Con gõ lại câu vừa nghe..." required />
+          </div>
+        `).join(''));
+      }
+
+      if (activity.type === 'shadowing') {
+        return sectionWrap(title, activity.items.map((item) => `
+          <div class="mb-4 rounded-lg border border-cream-dim/20 bg-navy-900/75 p-4" data-shadow-card data-shadow-index="${item.index}">
+            <p class="text-sm font-semibold text-gold-light">Câu ${item.index + 1}</p>
+            <div class="mt-3 flex flex-wrap gap-2">
+              ${item.audio_url
+                ? `<button type="button" data-sentence-listen="${escapeHtml(item.audio_url)}" class="inline-flex items-center gap-1 rounded-md border border-gold/40 bg-gold/10 px-3 py-1.5 text-sm font-semibold text-gold-light transition hover:bg-gold hover:text-navy-950" aria-label="Nghe câu mẫu">🔊 Nghe câu mẫu</button>`
+                : ''}
+              <button type="button" data-shadow-record class="inline-flex items-center gap-1 rounded-md border border-accent/40 bg-accent/10 px-3 py-1.5 text-sm font-semibold text-accent transition hover:bg-accent hover:text-navy-950" aria-label="Ghi âm con đọc lại">🎤 Đọc theo</button>
+              <span data-shadow-status class="text-xs text-cream-dim"></span>
+            </div>
+            <audio data-shadow-playback controls preload="none" class="mt-3 hidden w-full"></audio>
+          </div>
         `).join(''));
       }
 
@@ -400,6 +434,7 @@ import Footer from '../../components/Footer.astro';
         fill_blank: {},
         fix_chunk: {},
         chunk_in_context: {},
+        dictation: {},
         best_line: {},
         story_order: {},
         comprehension: {},
@@ -520,36 +555,32 @@ import Footer from '../../components/Footer.astro';
       });
     });
 
-    // V4 — Power Chunks audio: 🔊 listen + 🎤 record + playback
-    const chunkRecordings = new Map(); // chunkIndex → { mediaRecorder, chunks, stream, blobUrl }
-    let chunkListenAudio = null;
-
     activitiesEl.addEventListener('click', async (event) => {
-      const listenBtn = event.target.closest('[data-chunk-listen]');
+      const listenBtn = event.target.closest('[data-sentence-listen]');
       if (listenBtn) {
-        const url = listenBtn.getAttribute('data-chunk-listen');
+        const url = listenBtn.getAttribute('data-sentence-listen');
         if (!url) return;
         try {
-          if (chunkListenAudio) {
-            chunkListenAudio.pause();
-            chunkListenAudio.currentTime = 0;
+          if (sentenceListenAudio) {
+            sentenceListenAudio.pause();
+            sentenceListenAudio.currentTime = 0;
           }
-          chunkListenAudio = new Audio(url);
-          await chunkListenAudio.play();
+          sentenceListenAudio = new Audio(url);
+          await sentenceListenAudio.play();
         } catch (err) {
-          console.warn('[chunk-listen] play failed:', err);
+          console.warn('[sentence-listen] play failed:', err);
         }
         return;
       }
 
-      const recordBtn = event.target.closest('[data-chunk-record]');
+      const recordBtn = event.target.closest('[data-shadow-record]');
       if (recordBtn) {
-        const card = recordBtn.closest('[data-chunk-card]');
+        const card = recordBtn.closest('[data-shadow-card]');
         if (!card) return;
-        const idx = card.getAttribute('data-chunk-index');
-        const status = card.querySelector('[data-chunk-record-status]');
-        const playback = card.querySelector('[data-chunk-playback]');
-        const existing = chunkRecordings.get(idx);
+        const idx = card.getAttribute('data-shadow-index');
+        const status = card.querySelector('[data-shadow-status]');
+        const playback = card.querySelector('[data-shadow-playback]');
+        const existing = shadowRecordings.get(idx);
 
         if (existing?.mediaRecorder && existing.mediaRecorder.state === 'recording') {
           existing.mediaRecorder.stop();
@@ -566,9 +597,9 @@ import Footer from '../../components/Footer.astro';
           mediaRecorder.addEventListener('stop', () => {
             const blob = new Blob(chunks, { type: mediaRecorder.mimeType || 'audio/webm' });
             const blobUrl = URL.createObjectURL(blob);
-            const prev = chunkRecordings.get(idx);
+            const prev = shadowRecordings.get(idx);
             if (prev?.blobUrl) URL.revokeObjectURL(prev.blobUrl);
-            chunkRecordings.set(idx, { mediaRecorder: null, chunks: [], stream: null, blobUrl });
+            shadowRecordings.set(idx, { mediaRecorder: null, chunks: [], stream: null, blobUrl });
             if (playback) {
               playback.src = blobUrl;
               playback.classList.remove('hidden');
@@ -578,7 +609,7 @@ import Footer from '../../components/Footer.astro';
             stream.getTracks().forEach((track) => track.stop());
           });
           mediaRecorder.start();
-          chunkRecordings.set(idx, { mediaRecorder, chunks, stream });
+          shadowRecordings.set(idx, { mediaRecorder, chunks, stream });
           recordBtn.textContent = '⏹ Dừng ghi';
           if (status) status.textContent = '🔴 Đang ghi âm...';
         } catch (err) {
@@ -624,7 +655,8 @@ import Footer from '../../components/Footer.astro';
 
     function renderResult(result) {
       const sections = Array.isArray(result.sections) ? result.sections : [];
-      const feedback = result.review?.feedback_vi || {};
+      const feedbackVi = result.review?.feedback_vi || {};
+      const miniVi = result.review?.mini_practice_vi || {};
       const passed = Boolean(result.passed);
       const scorePercent = result.score_percent || 0;
       const headingText = passed ? 'Con được 1 sao! 🌟' : 'Con cần xem lại một chút';
@@ -650,9 +682,37 @@ import Footer from '../../components/Footer.astro';
           </ul>
         </div>
       `;
+      const recommendationsHtml = `
+        <div class="mt-6 grid gap-3 md:grid-cols-3">
+          <div class="rounded-lg border border-cream-dim/20 bg-navy-900/70 p-4">
+            <p class="text-xs uppercase tracking-wide text-cream-dim">Điểm tốt</p>
+            <p class="mt-2 text-sm text-cream">${escapeHtml(feedbackVi.strength || 'Con đã hoàn thành bài đầy đủ.')}</p>
+          </div>
+          <div class="rounded-lg border border-cream-dim/20 bg-navy-900/70 p-4">
+            <p class="text-xs uppercase tracking-wide text-cream-dim">Cần luyện</p>
+            <p class="mt-2 text-sm text-cream">${escapeHtml(feedbackVi.practice || 'Con có thể nghe lại MP3 chậm hơn lần sau.')}</p>
+          </div>
+          <div class="rounded-lg border border-cream-dim/20 bg-navy-900/70 p-4">
+            <p class="text-xs uppercase tracking-wide text-cream-dim">Level</p>
+            <p class="mt-2 text-sm text-cream">${escapeHtml(levelRecommendationText(result.review?.level_recommendation))}</p>
+          </div>
+        </div>
+      `;
+      const miniPracticeHtml = (miniVi.read_again || miniVi.chunk_to_practice || miniVi.parent_question) ? `
+        <div class="mt-4 rounded-lg border border-accent/30 bg-accent/10 p-4">
+          <p class="font-semibold text-cream">5 phút luyện thêm</p>
+          <ul class="mt-2 space-y-2 text-sm text-cream-muted">
+            <li><strong class="text-cream">Đọc lại:</strong> ${escapeHtml(miniVi.read_again || 'Một câu trong truyện.')}</li>
+            <li><strong class="text-cream">Cụm cần luyện:</strong> ${escapeHtml(miniVi.chunk_to_practice || 'Một cụm trong bài.')}</li>
+            <li><strong class="text-cream">Bố mẹ hỏi:</strong> ${escapeHtml(miniVi.parent_question || 'Con kể lại chuyện gì xảy ra nhé?')}</li>
+          </ul>
+        </div>
+      ` : '';
       resultCard.innerHTML = `
         <h2 class="${headingClass}">${headingText}</h2>
         ${missionBox}
+        ${recommendationsHtml}
+        ${miniPracticeHtml}
         <p class="mt-3 text-lg text-cream-muted">Điểm: <strong class="text-gold-light">${scorePercent}%</strong> · Đúng ${result.correct_count || 0}/${result.total_count || 0} phần được chấm</p>
         <div class="mt-5 grid gap-3 md:grid-cols-2">
           ${sections.map((section) => `
@@ -663,8 +723,8 @@ import Footer from '../../components/Footer.astro';
           `).join('')}
         </div>
         <div class="mt-5 rounded-lg border border-cream-dim/20 bg-navy-950/70 p-4">
-          <p class="font-semibold text-cream">${escapeHtml(feedback.summary || result.message || '')}</p>
-          <p class="mt-2 text-sm leading-relaxed text-cream-muted">${escapeHtml(feedback.parent_next_step || (passed ? 'Bố mẹ có thể tạo bài tiếp theo cho con.' : 'Bố mẹ cho con sửa lại rồi nộp lại nhé.'))}</p>
+          <p class="font-semibold text-cream">${escapeHtml(feedbackVi.summary || result.message || '')}</p>
+          <p class="mt-2 text-sm leading-relaxed text-cream-muted">${escapeHtml(feedbackVi.parent_next_step || (passed ? 'Bố mẹ có thể tạo bài tiếp theo cho con.' : 'Bố mẹ cho con sửa lại rồi nộp lại nhé.'))}</p>
         </div>
         <div class="mt-6 flex flex-col gap-3 sm:flex-row">
           ${passed ? '<a href="/read2lead#form" class="inline-flex justify-center rounded-lg bg-accent px-5 py-3 font-semibold text-navy-950 transition hover:bg-accent-hover">Tạo bài tiếp theo</a>' : '<button id="retry-lesson" type="button" class="inline-flex justify-center rounded-lg bg-accent px-5 py-3 font-semibold text-navy-950 transition hover:bg-accent-hover">Làm lại phần chưa chắc</button>'}
