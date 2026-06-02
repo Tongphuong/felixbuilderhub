@@ -33,11 +33,13 @@ export async function onRequestGet(context) {
     return json({
       ok: true,
       status: 'done',
+      pack_id: currentPack.pack_id,
       pdf_url: currentPack.pdf_url,
       mp3_url: currentPack.mp3_url,
       topic: currentPack.topic,
       story_title: currentPack.story_title,
       review_link: `/read2lead/review?code=${encodeURIComponent(accessCode)}`,
+      lesson_link: `/read2lead/lesson?code=${encodeURIComponent(accessCode)}&pack_id=${encodeURIComponent(currentPack.pack_id)}`,
     });
   }
 
@@ -119,11 +121,13 @@ export async function onRequestGet(context) {
     return json({
       ok: true,
       status: 'done',
+      pack_id: finalPack.pack_id,
       pdf_url: finalPack.pdf_url,
       mp3_url: finalPack.mp3_url,
       topic: finalPack.topic,
       story_title: finalPack.story_title,
       review_link: `/read2lead/review?code=${encodeURIComponent(accessCode)}`,
+      lesson_link: `/read2lead/lesson?code=${encodeURIComponent(accessCode)}&pack_id=${encodeURIComponent(finalPack.pack_id)}`,
     });
   }
 

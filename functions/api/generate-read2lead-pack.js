@@ -224,7 +224,7 @@ function normalizeProgress(codeData, formData = {}) {
 }
 
 function isPackReviewed(pack) {
-  return ['reviewed_pass', 'reviewed_retry'].includes(pack.status);
+  return ['reviewed_pass', 'reviewed_retry', 'reviewed_pass_web', 'reviewed_retry_web'].includes(pack.status);
 }
 
 function shouldRequireReviewBeforeNextPack(codeData) {

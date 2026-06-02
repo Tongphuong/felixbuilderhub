@@ -1,0 +1,309 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+---
+
+<BaseLayout
+  title="Làm bài Read2Lead trên web | Felix Builder Hub"
+  description="Phụ huynh có thể cho con làm bài Read2Lead trực tiếp trên web, nghe MP3, nộp bài và nhận điểm cơ bản."
+>
+  <Header />
+
+  <main id="main" class="flex-1">
+    <section class="mx-auto max-w-5xl px-6 py-14 md:py-20">
+      <span class="inline-block rounded-md bg-accent/20 px-4 py-1 text-sm font-semibold text-accent">Read2Lead Web Lesson</span>
+      <h1 class="mt-5 font-display text-4xl font-extrabold leading-snug text-cream md:text-5xl">Cho con làm bài ngay trên web.</h1>
+      <p class="mt-5 max-w-3xl text-lg leading-relaxed text-cream-muted">
+        Con đọc truyện, nghe MP3, làm các phần luyện tập rồi bấm nộp. Felixar chấm các phần có đáp án rõ ràng và mở bài tiếp theo khi con đạt.
+      </p>
+    </section>
+
+    <section class="bg-navy-900 px-6 py-12">
+      <div class="mx-auto max-w-5xl">
+        <div id="missing-link-card" class="hidden rounded-xl border border-cream-dim/20 bg-navy-950/75 p-6">
+          <h2 class="font-display text-2xl font-bold leading-snug text-cream">Cần mở từ đúng bài Read2Lead</h2>
+          <p class="mt-3 leading-relaxed text-cream-muted">Bố mẹ mở trang này từ nút <strong class="text-cream">Cho con làm trên web</strong> sau khi tạo bài, hoặc từ Felixar dashboard.</p>
+          <a href="/read2lead/review" class="mt-5 inline-flex rounded-lg bg-accent px-5 py-3 font-semibold text-navy-950 transition hover:bg-accent-hover">Vào Felixar</a>
+        </div>
+
+        <div id="loading-card" class="rounded-xl border border-cream-dim/20 bg-navy-950/75 p-6">
+          <div class="h-3 overflow-hidden rounded-full bg-navy-800">
+            <div class="h-full w-2/3 animate-pulse rounded-full bg-gradient-to-r from-accent via-gold-light to-accent"></div>
+          </div>
+          <p class="mt-5 text-lg font-semibold text-cream">Đang mở bài cho con...</p>
+        </div>
+
+        <div id="error-card" class="hidden rounded-xl border border-red-500/30 bg-red-500/10 p-6 text-red-300"></div>
+
+        <article id="lesson-card" class="hidden rounded-xl border border-cream-dim/20 bg-navy-950/80 p-6">
+          <div class="flex flex-col gap-5 md:flex-row md:items-start md:justify-between">
+            <div>
+              <p id="lesson-meta" class="text-sm font-semibold text-gold-light"></p>
+              <h2 id="lesson-title" class="mt-2 font-display text-3xl font-bold leading-snug text-cream"></h2>
+              <p id="lesson-subtitle" class="mt-2 text-cream-muted"></p>
+            </div>
+            <div class="flex shrink-0 flex-col gap-3 sm:flex-row md:flex-col">
+              <a id="mp3-link" href="#" target="_blank" rel="noreferrer" class="hidden rounded-lg border border-gold px-5 py-3 text-center font-semibold text-gold-light transition hover:bg-gold hover:text-navy-950">Nghe MP3</a>
+              <a id="pdf-link" href="#" target="_blank" rel="noreferrer" class="hidden rounded-lg border border-cream-dim/30 px-5 py-3 text-center font-semibold text-cream transition hover:border-accent hover:text-accent">Mở PDF</a>
+            </div>
+          </div>
+
+          <div class="mt-6 rounded-lg border border-accent/25 bg-accent/10 p-4">
+            <p class="font-semibold text-cream">Cách làm</p>
+            <p class="mt-2 text-sm leading-relaxed text-cream-muted">Con làm từ trên xuống dưới. Các ô viết tự do để bố mẹ đọc cùng con, chưa tính điểm tự động. Các phần nối, điền, sửa và sắp xếp sẽ được chấm ngay.</p>
+          </div>
+
+          <form id="lesson-form" class="mt-8 space-y-6">
+            <div id="activities"></div>
+            <div class="absolute -left-[9999px]" aria-hidden="true">
+              <label for="website">Website</label>
+              <input id="website" name="website" tabindex="-1" autocomplete="off" />
+            </div>
+            <button id="submit-lesson" type="submit" class="w-full rounded-lg bg-accent px-6 py-3 text-lg font-semibold text-navy-950 transition hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-60">Nộp bài trên web</button>
+          </form>
+        </article>
+
+        <section id="result-card" class="mt-6 hidden rounded-xl border border-gold/40 bg-gold/10 p-6"></section>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const accessCode = (params.get('code') || '').trim().toUpperCase();
+    const packId = (params.get('pack_id') || '').trim();
+    const missingLinkCard = document.getElementById('missing-link-card');
+    const loadingCard = document.getElementById('loading-card');
+    const errorCard = document.getElementById('error-card');
+    const lessonCard = document.getElementById('lesson-card');
+    const resultCard = document.getElementById('result-card');
+    const activitiesEl = document.getElementById('activities');
+    const form = document.getElementById('lesson-form');
+    const submitBtn = document.getElementById('submit-lesson');
+
+    let lesson = null;
+
+    function escapeHtml(value) {
+      return String(value || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function showError(message) {
+      loadingCard.classList.add('hidden');
+      lessonCard.classList.add('hidden');
+      errorCard.textContent = message;
+      errorCard.classList.remove('hidden');
+    }
+
+    function optionHtml(value, label = value) {
+      return `<option value="${escapeHtml(value)}">${escapeHtml(label)}</option>`;
+    }
+
+    function renderActivity(activity, number) {
+      const title = `
+        <div class="mb-4">
+          <p class="text-sm font-semibold text-gold-light">Phần ${number}</p>
+          <h3 class="mt-1 font-display text-2xl font-bold leading-snug text-cream">${escapeHtml(activity.title_vi)}</h3>
+          <p class="mt-2 text-sm leading-relaxed text-cream-muted">${escapeHtml(activity.instruction_vi)}</p>
+        </div>
+      `;
+
+      if (activity.type === 'story') {
+        return sectionWrap(title, activity.items.map((item) => `<p class="mb-4 leading-8 text-cream-muted">${escapeHtml(item.text)}</p>`).join(''));
+      }
+
+      if (activity.type === 'power_chunks') {
+        return sectionWrap(title, `
+          <div class="grid gap-3 md:grid-cols-2">
+            ${activity.items.map((item) => `
+              <div class="rounded-lg border border-cream-dim/20 bg-navy-900/75 p-4">
+                <p class="font-semibold text-cream">${escapeHtml(item.chunk)}</p>
+                <p class="mt-1 text-sm text-cream-muted">${escapeHtml(item.meaning)}</p>
+                ${item.example ? `<p class="mt-2 text-sm italic text-cream-dim">${escapeHtml(item.example)}</p>` : ''}
+              </div>
+            `).join('')}
+          </div>
+        `);
+      }
+
+      if (activity.type === 'matching') {
+        return sectionWrap(title, activity.items.map((item) => `
+          <label class="mb-4 block rounded-lg border border-cream-dim/20 bg-navy-900/75 p-4">
+            <span class="block font-semibold text-cream">${escapeHtml(item.chunk)}</span>
+            <select data-answer-type="matching" data-answer-index="${item.index}" class="mt-3 w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-4 py-3 text-base text-cream focus:border-accent focus:outline-none" required>
+              ${optionHtml('', '-- Chọn nghĩa --')}
+              ${item.options.map((option) => optionHtml(option)).join('')}
+            </select>
+          </label>
+        `).join(''));
+      }
+
+      if (['build_chunk', 'fill_blank', 'fix_chunk'].includes(activity.type)) {
+        return sectionWrap(title, activity.items.map((item) => `
+          <label class="mb-4 block rounded-lg border border-cream-dim/20 bg-navy-900/75 p-4">
+            <span class="block text-cream-muted">${escapeHtml(item.prompt)}</span>
+            <input data-answer-type="${activity.type}" data-answer-index="${item.index}" class="mt-3 w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-4 py-3 text-base text-cream placeholder:text-cream-dim/70 focus:border-accent focus:outline-none" placeholder="Con gõ câu trả lời ở đây" required />
+          </label>
+        `).join(''));
+      }
+
+      if (activity.type === 'story_order') {
+        return sectionWrap(title, activity.items.map((item) => `
+          <label class="mb-4 block rounded-lg border border-cream-dim/20 bg-navy-900/75 p-4">
+            <span class="block font-semibold text-cream">Vị trí ${item.index + 1}</span>
+            <select data-answer-type="story_order" data-answer-index="${item.index}" class="mt-3 w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-4 py-3 text-base text-cream focus:border-accent focus:outline-none" required>
+              ${optionHtml('', '-- Chọn sự kiện --')}
+              ${item.options.map((option) => optionHtml(option)).join('')}
+            </select>
+          </label>
+        `).join(''));
+      }
+
+      if (['comprehension', 'open_response'].includes(activity.type)) {
+        return sectionWrap(title, activity.items.map((item) => `
+          <label class="mb-4 block rounded-lg border border-cream-dim/20 bg-navy-900/75 p-4">
+            <span class="block text-sm font-semibold text-gold-light">${escapeHtml(item.section)}</span>
+            <span class="mt-1 block font-semibold text-cream">${escapeHtml(item.question)}</span>
+            <textarea data-answer-type="${activity.type}" data-answer-index="${item.index}" rows="3" class="mt-3 w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-4 py-3 text-base text-cream placeholder:text-cream-dim/70 focus:border-accent focus:outline-none" placeholder="Con viết câu trả lời ở đây"></textarea>
+          </label>
+        `).join(''));
+      }
+
+      return '';
+    }
+
+    function sectionWrap(title, body) {
+      return `<section class="mb-6 rounded-xl border border-cream-dim/20 bg-navy-950/70 p-5">${title}${body}</section>`;
+    }
+
+    function collectAnswers() {
+      const answers = {
+        matching: {},
+        build_chunk: {},
+        fill_blank: {},
+        fix_chunk: {},
+        story_order: {},
+        comprehension: {},
+        open_response: {},
+      };
+      document.querySelectorAll('[data-answer-type]').forEach((field) => {
+        const type = field.getAttribute('data-answer-type');
+        const index = field.getAttribute('data-answer-index');
+        if (!answers[type]) answers[type] = {};
+        answers[type][index] = field.value || '';
+      });
+      return answers;
+    }
+
+    function renderLesson(data) {
+      lesson = data.lesson;
+      document.getElementById('lesson-meta').textContent = `${lesson.student_name || 'Học sinh Read2Lead'} · ${lesson.level || 'L2'} · ${lesson.topic || 'Read2Lead'}`;
+      document.getElementById('lesson-title').textContent = lesson.story_title || 'Bài đọc Read2Lead';
+      document.getElementById('lesson-subtitle').textContent = `Mã: ${lesson.access_code_masked || '***'}`;
+
+      const mp3Link = document.getElementById('mp3-link');
+      const pdfLink = document.getElementById('pdf-link');
+      if (lesson.mp3_url) {
+        mp3Link.href = lesson.mp3_url;
+        mp3Link.classList.remove('hidden');
+      }
+      if (lesson.pdf_url) {
+        pdfLink.href = lesson.pdf_url;
+        pdfLink.classList.remove('hidden');
+      }
+
+      activitiesEl.innerHTML = lesson.activities.map((activity, index) => renderActivity(activity, index + 1)).join('');
+      loadingCard.classList.add('hidden');
+      lessonCard.classList.remove('hidden');
+    }
+
+    async function loadLesson() {
+      if (!accessCode || !packId) {
+        loadingCard.classList.add('hidden');
+        missingLinkCard.classList.remove('hidden');
+        return;
+      }
+
+      try {
+        const res = await fetch(`/api/read2lead-lesson?code=${encodeURIComponent(accessCode)}&pack_id=${encodeURIComponent(packId)}`);
+        const data = await res.json();
+        if (!res.ok || !data.ok) {
+          showError(data.message || 'Không mở được bài này.');
+          return;
+        }
+        renderLesson(data);
+      } catch {
+        showError('Mạng không ổn định. Vui lòng thử lại.');
+      }
+    }
+
+    function renderResult(result) {
+      const sections = Array.isArray(result.sections) ? result.sections : [];
+      const feedback = result.review?.feedback_vi || {};
+      const passed = Boolean(result.passed);
+      resultCard.innerHTML = `
+        <h2 class="font-display text-3xl font-bold leading-snug text-cream">${passed ? 'Con đã hoàn thành bài này' : 'Con cần xem lại một chút'}</h2>
+        <p class="mt-3 text-lg text-cream-muted">Điểm: <strong class="text-gold-light">${result.score_percent || 0}%</strong> · Đúng ${result.correct_count || 0}/${result.total_count || 0} phần được chấm</p>
+        <div class="mt-5 grid gap-3 md:grid-cols-2">
+          ${sections.map((section) => `
+            <div class="rounded-lg border ${section.passed ? 'border-green-500/30 bg-green-500/10' : 'border-red-500/30 bg-red-500/10'} p-4">
+              <p class="font-semibold ${section.passed ? 'text-green-300' : 'text-red-300'}">${escapeHtml(section.title)}</p>
+              <p class="mt-1 text-sm text-cream-muted">${section.correct}/${section.total} đúng</p>
+            </div>
+          `).join('')}
+        </div>
+        <div class="mt-5 rounded-lg border border-cream-dim/20 bg-navy-950/70 p-4">
+          <p class="font-semibold text-cream">${escapeHtml(feedback.summary || result.message || '')}</p>
+          <p class="mt-2 text-sm leading-relaxed text-cream-muted">${escapeHtml(feedback.parent_next_step || (passed ? 'Bố mẹ có thể tạo bài tiếp theo cho con.' : 'Bố mẹ cho con sửa lại rồi nộp lại nhé.'))}</p>
+        </div>
+        <div class="mt-6 flex flex-col gap-3 sm:flex-row">
+          ${passed ? '<a href="/read2lead#form" class="inline-flex justify-center rounded-lg bg-accent px-5 py-3 font-semibold text-navy-950 transition hover:bg-accent-hover">Tạo bài tiếp theo</a>' : '<button id="retry-lesson" type="button" class="inline-flex justify-center rounded-lg bg-accent px-5 py-3 font-semibold text-navy-950 transition hover:bg-accent-hover">Làm lại phần chưa chắc</button>'}
+          <a href="/read2lead/review" class="inline-flex justify-center rounded-lg border border-gold px-5 py-3 font-semibold text-gold-light transition hover:bg-gold hover:text-navy-950">Về Felixar</a>
+        </div>
+      `;
+      resultCard.classList.remove('hidden');
+      resultCard.scrollIntoView({ behavior: 'smooth' });
+      const retry = document.getElementById('retry-lesson');
+      if (retry) retry.addEventListener('click', () => lessonCard.scrollIntoView({ behavior: 'smooth' }));
+    }
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (!lesson) return;
+      resultCard.classList.add('hidden');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Đang chấm bài...';
+
+      try {
+        const res = await fetch('/api/submit-read2lead-lesson', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            access_code: accessCode,
+            pack_id: packId,
+            answers: collectAnswers(),
+          }),
+        });
+        const result = await res.json();
+        if (!res.ok || !result.ok) {
+          showError(result.message || 'Chưa nộp được bài. Vui lòng thử lại.');
+          return;
+        }
+        renderResult(result);
+      } catch {
+        showError('Mạng không ổn định. Vui lòng thử lại.');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Nộp bài trên web';
+      }
+    });
+
+    loadLesson();
+  </script>
+</BaseLayout>

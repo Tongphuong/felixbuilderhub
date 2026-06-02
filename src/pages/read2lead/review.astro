@@ -191,12 +191,16 @@ import Footer from '../../components/Footer.astro';
       latestDashboard = data;
       const progress = data.progress || {};
       const pack = progress.current_pack;
+      const code = codeInput.value.trim().toUpperCase();
       const sharedNote = data.is_test || data.is_shared
         ? '<p class="mt-3 rounded-lg border border-blue-500/30 bg-blue-500/10 p-3 text-sm text-blue-200">Mã này là mã test/dùng chung nên có thể tạo bài mới mà không cần nộp bài cũ. Nếu vẫn muốn nhận xét, bố mẹ vẫn có thể nộp bài hiện tại.</p>'
         : '';
       const canSubmit = data.state === 'awaiting_review';
       const submitButton = canSubmit
         ? '<button id="open-submit" type="button" class="inline-flex justify-center rounded-lg bg-accent px-5 py-3 font-semibold text-navy-950 transition hover:bg-accent-hover">Nộp bài hiện tại</button>'
+        : '';
+      const lessonButton = pack?.pack_id && data.state !== 'generation_in_progress'
+        ? `<a href="/read2lead/lesson?code=${encodeURIComponent(code)}&pack_id=${encodeURIComponent(pack.pack_id)}" class="inline-flex justify-center rounded-lg border border-gold px-5 py-3 font-semibold text-gold-light transition hover:bg-gold hover:text-navy-950">Làm bài trên web</a>`
         : '';
       const createButton = data.state === 'awaiting_review' && !data.next_pack_locked
         ? '<a href="/read2lead#form" class="inline-flex justify-center rounded-lg border border-gold px-5 py-3 font-semibold text-gold-light transition hover:bg-gold hover:text-navy-950">Tạo thêm bài mới</a>'
@@ -228,6 +232,7 @@ import Footer from '../../components/Footer.astro';
 
         <div class="mt-5 flex flex-col gap-3 sm:flex-row">
           ${submitButton}
+          ${lessonButton}
           ${createButton}
           ${pack?.pdf_url ? `<a href="${escapeHtml(pack.pdf_url)}" target="_blank" rel="noreferrer" class="inline-flex justify-center rounded-lg border border-cream-dim/30 px-5 py-3 font-semibold text-cream transition hover:border-accent hover:text-accent">Mở PDF</a>` : ''}
           ${pack?.mp3_url ? `<a href="${escapeHtml(pack.mp3_url)}" target="_blank" rel="noreferrer" class="inline-flex justify-center rounded-lg border border-cream-dim/30 px-5 py-3 font-semibold text-cream transition hover:border-accent hover:text-accent">Mở MP3</a>` : ''}
