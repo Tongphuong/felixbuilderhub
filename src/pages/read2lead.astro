@@ -387,10 +387,11 @@ const faqItems = [
     const POLL_INTERVAL_MS = 5000;
 
     const stages = [
-      'Đang viết câu chuyện riêng cho con...',
-      'Đang chuẩn bị bài luyện để in...',
-      'Đang tạo file nghe cho con...',
-      'Sắp xong, đang đóng gói file...',
+      '✍️ Đang viết câu chuyện riêng cho con...',
+      '🎙️ Đang ghi âm câu chuyện thành file nghe...',
+      '🔊 Đang ghi âm các cụm câu để con tập đọc...',
+      '📄 Đang chuẩn bị bài luyện và file PDF...',
+      '✨ Sắp xong rồi, đang đóng gói file...',
     ];
 
     function showProgress() {
@@ -404,7 +405,7 @@ const faqItems = [
       statusInterval = setInterval(() => {
         idx = Math.min(idx + 1, stages.length - 1);
         statusText.textContent = stages[idx];
-      }, 20000);
+      }, 15000);
 
       progressSection.scrollIntoView({ behavior: 'smooth' });
     }

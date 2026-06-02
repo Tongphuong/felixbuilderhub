@@ -48,7 +48,7 @@ import Footer from '../../components/Footer.astro';
             </div>
           </div>
 
-          <div id="step-progress" class="mt-6 grid grid-cols-3 gap-2 text-center text-[11px] font-semibold leading-tight text-cream-dim sm:text-xs">
+          <div id="step-progress" class="sticky top-2 z-20 mt-6 grid grid-cols-3 gap-2 rounded-lg border border-cream-dim/20 bg-navy-950/95 p-2 text-center text-[11px] font-semibold leading-tight text-cream-dim shadow-lg backdrop-blur sm:text-xs">
             <button type="button" data-step-indicator="listen" data-step-jump="listen" class="rounded-md border border-cream-dim/20 bg-navy-900/60 px-2 py-2 transition hover:border-accent hover:text-cream sm:px-3">🎧 Bước 1: Nghe</button>
             <button type="button" data-step-indicator="read" data-step-jump="read" class="rounded-md border border-cream-dim/20 bg-navy-900/60 px-2 py-2 transition hover:border-accent hover:text-cream sm:px-3">📖 Bước 2: Đọc</button>
             <button type="button" data-step-indicator="practice" data-step-jump="practice" class="rounded-md border border-cream-dim/20 bg-navy-900/60 px-2 py-2 transition hover:border-accent hover:text-cream sm:px-3">🎯 Bước 3: Mission</button>
@@ -212,6 +212,64 @@ import Footer from '../../components/Footer.astro';
       lessonCard.classList.add('hidden');
       errorCard.textContent = message;
       errorCard.classList.remove('hidden');
+    }
+
+    // Draft autosave — restore khi reload bất ngờ, clear khi submit pass.
+    const DRAFT_TTL_MS = 7 * 24 * 60 * 60 * 1000;
+    const draftKey = () => `r2l-draft:${accessCode}:${packId}`;
+
+    function saveDraft() {
+      if (!packId || !lesson) return;
+      try {
+        const payload = {
+          answers: collectAnswers(),
+          listen_completed_at: listenCompletedAt,
+          read_completed_at: readCompletedAt,
+          current_step: currentStep,
+          saved_at: Date.now(),
+        };
+        localStorage.setItem(draftKey(), JSON.stringify(payload));
+      } catch {}
+    }
+
+    function loadDraft() {
+      try {
+        const raw = localStorage.getItem(draftKey());
+        if (!raw) return null;
+        const data = JSON.parse(raw);
+        if (!data?.saved_at || Date.now() - data.saved_at > DRAFT_TTL_MS) {
+          localStorage.removeItem(draftKey());
+          return null;
+        }
+        return data;
+      } catch {
+        return null;
+      }
+    }
+
+    function clearDraft() {
+      try { localStorage.removeItem(draftKey()); } catch {}
+    }
+
+    function applyDraft(draft) {
+      if (!draft) return;
+      if (draft.listen_completed_at) listenCompletedAt = draft.listen_completed_at;
+      if (draft.read_completed_at) readCompletedAt = draft.read_completed_at;
+      const answers = draft.answers || {};
+      Object.entries(answers).forEach(([type, byIndex]) => {
+        if (!byIndex || typeof byIndex !== 'object') return;
+        Object.entries(byIndex).forEach(([index, value]) => {
+          if (value == null || value === '') return;
+          // Radio buttons match by name+value, others by data-answer-type + index
+          document.querySelectorAll(`[data-answer-type="${type}"][data-answer-index="${index}"]`).forEach((el) => {
+            if (el.type === 'radio') {
+              if (el.value === String(value)) el.checked = true;
+            } else {
+              el.value = value;
+            }
+          });
+        });
+      });
     }
 
     function optionHtml(value, label = value) {
@@ -422,7 +480,22 @@ import Footer from '../../components/Footer.astro';
       activitiesEl.innerHTML = practiceActivities.map((activity, index) => renderActivity(activity, index + 1)).join('');
       loadingCard.classList.add('hidden');
       lessonCard.classList.remove('hidden');
-      showStep('listen');
+
+      const draft = loadDraft();
+      applyDraft(draft);
+      const startStep = (draft && stepOrder.includes(draft.current_step)) ? draft.current_step : 'listen';
+      showStep(startStep);
+
+      // Autosave on any input change inside practice form
+      const debouncedSave = (() => {
+        let t = null;
+        return () => {
+          if (t) clearTimeout(t);
+          t = setTimeout(saveDraft, 400);
+        };
+      })();
+      activitiesEl.addEventListener('input', debouncedSave);
+      activitiesEl.addEventListener('change', debouncedSave);
     }
 
     document.querySelectorAll('[data-step-next]').forEach((btn) => {
@@ -432,6 +505,7 @@ import Footer from '../../components/Footer.astro';
         if (currentStep === 'listen' && !listenCompletedAt) listenCompletedAt = nowIso;
         if (currentStep === 'read' && !readCompletedAt) readCompletedAt = nowIso;
         showStep(next, { scroll: true });
+        saveDraft();
       });
     });
 
@@ -630,6 +704,7 @@ import Footer from '../../components/Footer.astro';
           showError(result.message || 'Chưa nộp được bài. Vui lòng thử lại.');
           return;
         }
+        if (result.passed) clearDraft();
         renderResult(result);
       } catch {
         showError('Mạng không ổn định. Vui lòng thử lại.');
