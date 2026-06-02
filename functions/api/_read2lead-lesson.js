@@ -79,6 +79,22 @@ export function buildActivities(context) {
   addLineActivity(activities, 'fill_blank', 'Điền vào chỗ trống', 'Con gõ cụm câu còn thiếu vào ô trống.', context.fill_in_the_blank);
   addLineActivity(activities, 'fix_chunk', 'Sửa cụm câu', 'Con sửa lại cụm câu bị viết sai.', context.fix_the_chunk);
 
+  const contextSentences = Array.isArray(context.chunk_in_context) ? context.chunk_in_context : [];
+  const chunkOptions = (Array.isArray(context.power_chunks) ? context.power_chunks : []).map((item) => item.chunk || '').filter(Boolean);
+  if (contextSentences.length && chunkOptions.length) {
+    activities.push({
+      id: 'chunk_in_context',
+      type: 'chunk_in_context',
+      title_vi: 'Dùng cụm câu trong tình huống mới',
+      instruction_vi: 'Mỗi câu là một tình huống KHÁC truyện chính. Con chọn cụm câu phù hợp nhất từ danh sách bên dưới.',
+      items: contextSentences.map((sentence, index) => ({
+        index,
+        sentence,
+        options: chunkOptions,
+      })),
+    });
+  }
+
   const storyOrder = Array.isArray(context.story_order) ? context.story_order : [];
   if (storyOrder.length) {
     activities.push({
@@ -174,6 +190,7 @@ export function gradeLessonSubmission(context, answers = {}) {
   addSection('build_chunk', 'Sắp xếp cụm câu', ...gradeArrayAnswers(context.answer_key?.build_the_chunk, answers.build_chunk));
   addSection('fill_blank', 'Điền chỗ trống', ...gradeArrayAnswers(context.answer_key?.fill_in_the_blank, answers.fill_blank));
   addSection('fix_chunk', 'Sửa cụm câu', ...gradeArrayAnswers(context.answer_key?.fix_the_chunk, answers.fix_chunk));
+  addSection('chunk_in_context', 'Tình huống mới', ...gradeArrayAnswers(context.answer_key?.chunk_in_context, answers.chunk_in_context));
   addSection('story_order', 'Thứ tự câu chuyện', ...gradeStoryOrder(context.story_order, answers.story_order));
 
   const scorePercent = total ? Math.round((correct / total) * 100) : 0;
