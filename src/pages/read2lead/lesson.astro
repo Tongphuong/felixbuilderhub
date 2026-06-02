@@ -69,7 +69,7 @@ import Footer from '../../components/Footer.astro';
             <p class="text-sm font-semibold text-gold-light">Bước 2</p>
             <h3 class="mt-1 font-display text-2xl font-bold leading-snug text-cream">Con đọc câu chuyện</h3>
             <p class="mt-2 text-sm leading-relaxed text-cream-muted">Con đọc to thành tiếng từng đoạn. Bố mẹ ngồi cạnh giúp con đọc chuẩn nhé.</p>
-            <div id="step-read-body" class="mt-5"></div>
+            <div id="step-read-body" class="mt-5 mx-auto max-w-prose"></div>
             <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-between">
               <button data-step-back="listen" type="button" class="rounded-lg border border-cream-dim/30 px-6 py-3 font-semibold text-cream transition hover:border-accent hover:text-accent">Nghe lại</button>
               <button data-step-next="practice" type="button" class="rounded-lg bg-accent px-6 py-3 font-semibold text-navy-950 transition hover:bg-accent-hover">Con đã đọc xong</button>
@@ -100,7 +100,38 @@ import Footer from '../../components/Footer.astro';
     </section>
   </main>
 
+  <div id="sticky-audio" class="fixed inset-x-0 bottom-0 z-30 hidden border-t border-cream-dim/20 bg-navy-900/95 px-4 py-3 shadow-2xl backdrop-blur">
+    <div class="mx-auto flex max-w-5xl items-center gap-3">
+      <span class="hidden text-xs font-semibold uppercase tracking-wide text-gold-light sm:inline">🎧 Nghe lại</span>
+      <audio id="sticky-audio-el" controls preload="none" class="w-full"></audio>
+    </div>
+  </div>
+
   <Footer />
+
+  <style is:global>
+    @keyframes r2l-confetti-fall {
+      0% { transform: translate3d(0, -10vh, 0) rotate(0deg); opacity: 1; }
+      100% { transform: translate3d(0, 110vh, 0) rotate(720deg); opacity: 0; }
+    }
+    @keyframes r2l-reward-pop {
+      0% { transform: scale(0.5); opacity: 0; }
+      55% { transform: scale(1.15); opacity: 1; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .r2l-confetti {
+      position: fixed;
+      top: 0;
+      font-size: 2.25rem;
+      line-height: 1;
+      pointer-events: none;
+      z-index: 50;
+      animation: r2l-confetti-fall 3s ease-out forwards;
+    }
+    .r2l-reward-pop {
+      animation: r2l-reward-pop 0.7s ease-out;
+    }
+  </style>
 
   <script>
     const params = new URLSearchParams(window.location.search);
@@ -122,6 +153,8 @@ import Footer from '../../components/Footer.astro';
     };
     const stepIndicators = document.querySelectorAll('[data-step-indicator]');
     const stepOrder = ['listen', 'read', 'practice'];
+    const stickyAudio = document.getElementById('sticky-audio');
+    const stickyAudioEl = document.getElementById('sticky-audio-el');
 
     const form = document.getElementById('lesson-form');
     const submitBtn = document.getElementById('submit-lesson');
@@ -284,6 +317,11 @@ import Footer from '../../components/Footer.astro';
         el.classList.toggle('text-cream', reached);
         el.classList.toggle('text-cream-dim', !reached);
       });
+      if (stickyAudio && lesson?.mp3_url) {
+        const showSticky = name !== 'listen';
+        stickyAudio.classList.toggle('hidden', !showSticky);
+        document.body.style.paddingBottom = showSticky ? '6rem' : '';
+      }
       if (scroll) lessonCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
@@ -303,6 +341,7 @@ import Footer from '../../components/Footer.astro';
         stepAudio.src = lesson.mp3_url;
         stepAudio.classList.remove('hidden');
         stepAudioMissing.classList.add('hidden');
+        if (stickyAudioEl) stickyAudioEl.src = lesson.mp3_url;
       } else {
         stepAudio.classList.add('hidden');
         stepAudioMissing.classList.remove('hidden');
@@ -312,7 +351,7 @@ import Footer from '../../components/Footer.astro';
       const practiceActivities = lesson.activities.filter((a) => a.type !== 'story');
 
       if (storyActivity) {
-        stepReadBody.innerHTML = storyActivity.items.map((item) => `<p class="mb-4 leading-8 text-lg text-cream">${escapeHtml(item.text)}</p>`).join('');
+        stepReadBody.innerHTML = storyActivity.items.map((item) => `<p class="mb-6 text-xl leading-relaxed text-cream md:text-2xl md:leading-loose">${escapeHtml(item.text)}</p>`).join('');
       } else {
         stepReadBody.innerHTML = '<p class="text-cream-muted">Bài này chưa có truyện. Con có thể chuyển sang bước làm bài.</p>';
       }
@@ -364,12 +403,29 @@ import Footer from '../../components/Footer.astro';
       }
     }
 
+    function spawnConfetti() {
+      const emojis = ['⭐', '🎉', '✨', '🌟', '💫', '🏆'];
+      const total = 22;
+      for (let i = 0; i < total; i += 1) {
+        const el = document.createElement('div');
+        el.className = 'r2l-confetti';
+        el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        el.style.left = `${Math.random() * 100}%`;
+        el.style.animationDelay = `${Math.random() * 0.9}s`;
+        el.style.animationDuration = `${2.4 + Math.random() * 1.6}s`;
+        document.body.appendChild(el);
+        setTimeout(() => el.remove(), 4800);
+      }
+    }
+
     function renderResult(result) {
       const sections = Array.isArray(result.sections) ? result.sections : [];
       const feedback = result.review?.feedback_vi || {};
       const passed = Boolean(result.passed);
+      const headingText = passed ? 'Con được 1 sao! 🌟' : 'Con cần xem lại một chút';
+      const headingClass = passed ? 'r2l-reward-pop font-display text-4xl font-bold leading-snug text-gold-light md:text-5xl' : 'font-display text-3xl font-bold leading-snug text-cream';
       resultCard.innerHTML = `
-        <h2 class="font-display text-3xl font-bold leading-snug text-cream">${passed ? 'Con đã hoàn thành bài này' : 'Con cần xem lại một chút'}</h2>
+        <h2 class="${headingClass}">${headingText}</h2>
         <p class="mt-3 text-lg text-cream-muted">Điểm: <strong class="text-gold-light">${result.score_percent || 0}%</strong> · Đúng ${result.correct_count || 0}/${result.total_count || 0} phần được chấm</p>
         <div class="mt-5 grid gap-3 md:grid-cols-2">
           ${sections.map((section) => `
@@ -390,6 +446,7 @@ import Footer from '../../components/Footer.astro';
       `;
       resultCard.classList.remove('hidden');
       resultCard.scrollIntoView({ behavior: 'smooth' });
+      if (passed) spawnConfetti();
       const retry = document.getElementById('retry-lesson');
       if (retry) retry.addEventListener('click', () => lessonCard.scrollIntoView({ behavior: 'smooth' }));
     }
