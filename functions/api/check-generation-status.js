@@ -85,7 +85,12 @@ export async function onRequestGet(context) {
 
   if (status === 'error') {
     await clearGenerationLockSimple(env.READ2LEAD_CODES, accessCode, taskId);
-    return json({ ok: false, error: upstream.body.error || 'generation_failed', message: 'Tạo bài thất bại. Vui lòng thử lại hoặc nhắn Zalo Felix.' }, 500);
+    const upstreamError = upstream.body.error || 'generation_failed';
+    return json({
+      ok: false,
+      error: upstreamError,
+      message: `Tạo bài thất bại: ${upstreamError}. Vui lòng thử lại hoặc nhắn Zalo Felix.`,
+    }, 500);
   }
 
   if (status === 'done') {
