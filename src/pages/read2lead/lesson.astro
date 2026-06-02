@@ -235,10 +235,16 @@ import Footer from '../../components/Footer.astro';
         return sectionWrap(title, `
           <div class="grid gap-3 md:grid-cols-2">
             ${activity.items.map((item) => `
-              <div class="rounded-lg border border-cream-dim/20 bg-navy-900/75 p-4">
+              <div class="rounded-lg border border-cream-dim/20 bg-navy-900/75 p-4" data-chunk-card data-chunk-index="${item.index}">
                 <p class="font-semibold text-cream">${escapeHtml(item.chunk)}</p>
                 <p class="mt-1 text-sm text-cream-muted">${escapeHtml(item.meaning)}</p>
                 ${item.example ? `<p class="mt-2 text-sm italic text-cream-dim">${escapeHtml(item.example)}</p>` : ''}
+                <div class="mt-3 flex flex-wrap gap-2">
+                  ${item.audio_url ? `<button type="button" data-chunk-listen="${escapeHtml(item.audio_url)}" class="inline-flex items-center gap-1 rounded-md border border-gold/40 bg-gold/10 px-3 py-1.5 text-sm font-semibold text-gold-light transition hover:bg-gold hover:text-navy-950" aria-label="Nghe cụm câu">🔊 Nghe</button>` : ''}
+                  <button type="button" data-chunk-record class="inline-flex items-center gap-1 rounded-md border border-accent/40 bg-accent/10 px-3 py-1.5 text-sm font-semibold text-accent transition hover:bg-accent hover:text-navy-950" aria-label="Ghi âm con đọc lại">🎤 Đọc theo</button>
+                  <span data-chunk-record-status class="text-xs text-cream-dim"></span>
+                </div>
+                <audio data-chunk-playback controls preload="none" class="mt-3 hidden w-full"></audio>
               </div>
             `).join('')}
           </div>
@@ -438,6 +444,73 @@ import Footer from '../../components/Footer.astro';
         if (!lesson) return;
         showStep(btn.getAttribute('data-step-jump'), { scroll: true });
       });
+    });
+
+    // V4 — Power Chunks audio: 🔊 listen + 🎤 record + playback
+    const chunkRecordings = new Map(); // chunkIndex → { mediaRecorder, chunks, stream, blobUrl }
+    let chunkListenAudio = null;
+
+    activitiesEl.addEventListener('click', async (event) => {
+      const listenBtn = event.target.closest('[data-chunk-listen]');
+      if (listenBtn) {
+        const url = listenBtn.getAttribute('data-chunk-listen');
+        if (!url) return;
+        try {
+          if (chunkListenAudio) {
+            chunkListenAudio.pause();
+            chunkListenAudio.currentTime = 0;
+          }
+          chunkListenAudio = new Audio(url);
+          await chunkListenAudio.play();
+        } catch (err) {
+          console.warn('[chunk-listen] play failed:', err);
+        }
+        return;
+      }
+
+      const recordBtn = event.target.closest('[data-chunk-record]');
+      if (recordBtn) {
+        const card = recordBtn.closest('[data-chunk-card]');
+        if (!card) return;
+        const idx = card.getAttribute('data-chunk-index');
+        const status = card.querySelector('[data-chunk-record-status]');
+        const playback = card.querySelector('[data-chunk-playback]');
+        const existing = chunkRecordings.get(idx);
+
+        if (existing?.mediaRecorder && existing.mediaRecorder.state === 'recording') {
+          existing.mediaRecorder.stop();
+          return;
+        }
+
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+          const chunks = [];
+          const mediaRecorder = new MediaRecorder(stream);
+          mediaRecorder.addEventListener('dataavailable', (e) => {
+            if (e.data.size > 0) chunks.push(e.data);
+          });
+          mediaRecorder.addEventListener('stop', () => {
+            const blob = new Blob(chunks, { type: mediaRecorder.mimeType || 'audio/webm' });
+            const blobUrl = URL.createObjectURL(blob);
+            const prev = chunkRecordings.get(idx);
+            if (prev?.blobUrl) URL.revokeObjectURL(prev.blobUrl);
+            chunkRecordings.set(idx, { mediaRecorder: null, chunks: [], stream: null, blobUrl });
+            if (playback) {
+              playback.src = blobUrl;
+              playback.classList.remove('hidden');
+            }
+            if (status) status.textContent = '✅ Đã ghi âm — bấm ▶ nghe lại';
+            recordBtn.textContent = '🎤 Đọc lại';
+            stream.getTracks().forEach((track) => track.stop());
+          });
+          mediaRecorder.start();
+          chunkRecordings.set(idx, { mediaRecorder, chunks, stream });
+          recordBtn.textContent = '⏹ Dừng ghi';
+          if (status) status.textContent = '🔴 Đang ghi âm...';
+        } catch (err) {
+          if (status) status.textContent = 'Không mở được micro. Cho phép quyền rồi thử lại.';
+        }
+      }
     });
 
     async function loadLesson() {

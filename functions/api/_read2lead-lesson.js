@@ -139,17 +139,19 @@ export function buildActivities(context) {
   }
 
   const chunks = Array.isArray(context.power_chunks) ? context.power_chunks : [];
+  const chunkAudioUrls = (context.chunk_audio_urls && typeof context.chunk_audio_urls === 'object') ? context.chunk_audio_urls : {};
   if (chunks.length) {
     activities.push({
       id: 'power_chunks',
       type: 'power_chunks',
-      title_vi: '📚 Power Chunks — Để tham khảo',
-      instruction_vi: 'Con xem lại các cụm câu đã học để chuẩn bị kể lại câu chuyện ở phần tiếp theo.',
+      title_vi: '📚 Power Chunks — Nghe + Đọc lại',
+      instruction_vi: 'Bấm 🔊 để nghe cụm câu, sau đó bấm 🎤 để con đọc theo. Nghe và nói nhiều lần để ghi nhớ.',
       items: chunks.map((item, index) => ({
         index,
         chunk: item.chunk || '',
         meaning: item.meaning || '',
         example: item.example || '',
+        audio_url: chunkAudioUrls[item.chunk || ''] || '',
       })),
     });
   }
