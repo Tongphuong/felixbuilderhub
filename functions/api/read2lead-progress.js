@@ -18,11 +18,17 @@ export async function onRequestGet(context) {
     return rateLimitedResponse(rl.retryAfter);
   }
 
-  const codeData = await env.READ2LEAD_CODES.get(code, { type: 'json' });
+  let codeData = await env.READ2LEAD_CODES.get(code, { type: 'json' });
   if (!codeData) {
     await recordCodeFailure(env.READ2LEAD_CODES, clientIp);
     return json({ ok: false, error: 'code_not_found', message: 'Mã học sinh không tồn tại.' }, 404);
   }
+
+  // Self-heal stale generation_in_progress: if Render finished but the user
+  // never re-opened the "đang tạo" page (so check-generation-status never
+  // promoted the pack), Felixar dashboard would stay stuck "Đang tạo bài"
+  // forever. Reconcile by reading task state KV directly here.
+  codeData = await reconcileGenerationState(env.READ2LEAD_CODES, code, codeData);
 
   const progress = normalizeProgress(codeData);
   const requireReviewBeforeNextPack = shouldRequireReviewBeforeNextPack(codeData);
@@ -191,6 +197,79 @@ function badgesForStars(stars) {
   if (stars >= 5) badges.push('Retell Rookie');
   if (stars >= 10) badges.push('Story Hero');
   return badges;
+}
+
+// Reconcile current_pack against task state KV. Returns possibly-updated codeData.
+// Idempotent: if task already promoted (status != generation_in_progress) we no-op.
+// Mirrors the promote logic in check-generation-status.js so the dashboard
+// recovers without depending on the polling page being open.
+const GENERATION_STALE_AFTER_MS = 10 * 60 * 1000; // 10 min: Render gen typically <60s
+
+async function reconcileGenerationState(kv, accessCode, codeData) {
+  const currentPack = codeData?.progress?.current_pack;
+  if (!currentPack || currentPack.status !== 'generation_in_progress' || !currentPack.task_id) {
+    return codeData;
+  }
+  const taskValue = await kv.get(`task:${currentPack.task_id}`, { type: 'json' });
+
+  // CASE 1: Render finished, promote pack so dashboard shows "Chờ nộp bài"
+  if (taskValue?.status === 'done' && taskValue.result?.pdf_url && taskValue.result?.mp3_url) {
+    const now = new Date().toISOString();
+    const newPackId = (typeof crypto !== 'undefined' && crypto.randomUUID)
+      ? crypto.randomUUID()
+      : `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+    const finalPack = {
+      pack_id: newPackId,
+      status: 'awaiting_review',
+      created_at: now,
+      pdf_url: taskValue.result.pdf_url,
+      mp3_url: taskValue.result.mp3_url,
+      topic: taskValue.result.topic,
+      story_title: taskValue.result.story_title,
+      level: currentPack.level,
+      generation_task_id: currentPack.task_id,
+      review_context: taskValue.result.review_context || null,
+    };
+    const updated = {
+      ...codeData,
+      progress: {
+        ...codeData.progress,
+        current_pack: finalPack,
+        packs_created: (codeData.progress?.packs_created || 0) + 1,
+      },
+      uses_remaining: Math.max(0, (codeData.uses_remaining ?? 0) - 1),
+      last_used_at: now.slice(0, 10),
+    };
+    await kv.put(accessCode, JSON.stringify(updated));
+    return updated;
+  }
+
+  // CASE 2: Render failed (or repair after error) — clear lock so user can retry
+  if (taskValue?.status === 'error') {
+    const updated = {
+      ...codeData,
+      progress: { ...codeData.progress, current_pack: null },
+    };
+    await kv.put(accessCode, JSON.stringify(updated));
+    return updated;
+  }
+
+  // CASE 3: Task KV gone (TTL 30 min expired) AND lock older than 10 min →
+  // assume orphaned, clear lock so user isn't blocked from creating new pack.
+  // Anything younger we leave alone — Render might still be working.
+  if (!taskValue) {
+    const startedAt = Date.parse(currentPack.created_at || '');
+    if (Number.isFinite(startedAt) && Date.now() - startedAt > GENERATION_STALE_AFTER_MS) {
+      const updated = {
+        ...codeData,
+        progress: { ...codeData.progress, current_pack: null },
+      };
+      await kv.put(accessCode, JSON.stringify(updated));
+      return updated;
+    }
+  }
+
+  return codeData;
 }
 
 function json(body, status = 200) {
