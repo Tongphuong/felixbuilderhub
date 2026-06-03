@@ -44,6 +44,7 @@ import Footer from '../../components/Footer.astro';
               <p id="lesson-subtitle" class="mt-2 text-cream-muted"></p>
             </div>
             <div class="flex shrink-0 flex-col gap-3 sm:flex-row md:flex-col">
+              <button id="sfx-toggle" type="button" aria-label="Bật tắt âm thanh" onclick="toggleSfx()" class="rounded-lg border border-cream-dim/30 px-4 py-3 text-center text-lg font-semibold text-cream transition hover:border-accent hover:text-accent">🔊</button>
               <a id="pdf-link" href="#" target="_blank" rel="noreferrer" class="hidden rounded-lg border border-cream-dim/30 px-5 py-3 text-center font-semibold text-cream transition hover:border-accent hover:text-accent">Mở PDF</a>
             </div>
           </div>
@@ -158,6 +159,89 @@ import Footer from '../../components/Footer.astro';
 
     const form = document.getElementById('lesson-form');
     const submitBtn = document.getElementById('submit-lesson');
+
+    // ===== Audio SFX (kid dopamine layer) =====
+    const SFX_VOLUME_KEY = 'r2l-sfx-on';
+    let sfxEnabled = (localStorage.getItem(SFX_VOLUME_KEY) ?? 'on') === 'on';
+    let audioCtxUnlocked = false;
+    const sfxCache = new Map();
+
+    function unlockAudioOnce() {
+      if (audioCtxUnlocked) return;
+      try {
+        const Ctx = window.AudioContext || window.webkitAudioContext;
+        if (Ctx) {
+          const ctx = new Ctx();
+          const buf = ctx.createBuffer(1, 1, 22050);
+          const src = ctx.createBufferSource();
+          src.buffer = buf;
+          src.connect(ctx.destination);
+          src.start(0);
+        }
+      } catch {}
+      audioCtxUnlocked = true;
+    }
+
+    function playSfx(filename, volume = 0.5) {
+      if (!sfxEnabled) return;
+      unlockAudioOnce();
+      let audio = sfxCache.get(filename);
+      if (!audio) {
+        audio = new Audio(`/sfx/r2l/${filename}`);
+        audio.volume = volume;
+        sfxCache.set(filename, audio);
+      }
+      try {
+        audio.currentTime = 0;
+        audio.play().catch(() => {});
+      } catch {}
+    }
+
+    const SUCCESS_POOL = ['success-1.mp3', 'success-2.mp3', 'success-3.mp3'];
+    // Mid-flow celebrations rotate through warm/encouraging voices.
+    // Final result voices are tier-specific (see getRewardTier below).
+    const MID_VOICE_POOL = ['voice-tuyetvoi.mp3', 'voice-gioiqua.mp3', 'voice-colen.mp3', 'voice-tienbo.mp3'];
+    const VOICE_TEXT = {
+      'voice-tuyetvoi.mp3': 'Tuyệt vời!',
+      'voice-gioiqua.mp3': 'Giỏi quá!',
+      'voice-colen.mp3': 'Cố lên nhé!',
+      'voice-xuatsac.mp3': 'Xuất sắc!',
+      'voice-tienbo.mp3': 'Tiến bộ rồi!',
+    };
+
+    function randomFrom(arr) {
+      return arr[Math.floor(Math.random() * arr.length)];
+    }
+
+    function playPageComplete() {
+      playSfx(randomFrom(SUCCESS_POOL), 0.45);
+      const voiceFile = randomFrom(MID_VOICE_POOL);
+      setTimeout(() => playSfx(voiceFile, 0.7), 200);
+      return VOICE_TEXT[voiceFile] || 'Tuyệt vời!';
+    }
+
+    function playSoftBoop() {
+      playSfx('soft-boop.mp3', 0.4);
+    }
+
+    function playFinalReward(volume = 0.6) {
+      playSfx('final-reward.mp3', volume);
+    }
+
+    function toggleSfx() {
+      sfxEnabled = !sfxEnabled;
+      localStorage.setItem(SFX_VOLUME_KEY, sfxEnabled ? 'on' : 'off');
+      const btn = document.getElementById('sfx-toggle');
+      if (btn) btn.textContent = sfxEnabled ? '🔊' : '🔇';
+      if (sfxEnabled) playSfx('success-1.mp3', 0.4);
+    }
+
+    window.toggleSfx = toggleSfx;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const sfxBtn = document.getElementById('sfx-toggle');
+      if (sfxBtn) sfxBtn.textContent = sfxEnabled ? '🔊' : '🔇';
+    });
 
     let lesson = null;
     let currentStep = 'listen';
