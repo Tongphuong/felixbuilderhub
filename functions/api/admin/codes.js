@@ -141,6 +141,9 @@ export async function onRequestGet(context) {
   const list = await env.READ2LEAD_CODES.list({ limit: 100, cursor });
   const items = [];
   for (const key of list.keys) {
+    // Skip task state entries — they share namespace with codes but are not codes.
+    // Backend pipeline (server.py) puts pack generation state with prefix `task:` (TTL 30min).
+    if (key.name.startsWith('task:')) continue;
     const value = await env.READ2LEAD_CODES.get(key.name, { type: 'json' });
     items.push({ code: key.name, ...(value || {}) });
   }
