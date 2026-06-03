@@ -486,13 +486,19 @@ import Footer from '../../components/Footer.astro';
         }).join('');
       }
       if (part.kind === 'comprehension' || part.kind === 'open_response') {
-        return sub + part.items.map((item) => `
-          <label class="mb-4 block rounded-lg border border-cream-dim/20 bg-navy-900/75 p-4">
-            <span class="block text-sm font-semibold text-gold-light">${escapeHtml(item.section)}</span>
-            <span class="mt-1 block font-semibold text-cream">${escapeHtml(item.question)}</span>
-            <textarea data-answer-type="${part.kind}" data-answer-index="${item.index}" rows="3" class="mt-3 w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-4 py-3 text-base text-cream placeholder:text-cream-dim/70 focus:border-accent focus:outline-none" placeholder="Con viết câu trả lời ở đây"></textarea>
-          </label>
-        `).join('');
+        return sub + part.items.map((item) => {
+          const hint = item.hint_vi
+            ? `<p class="mt-2 text-sm italic text-cream-dim">💭 ${escapeHtml(item.hint_vi)}</p>`
+            : '';
+          return `
+            <label class="mb-4 block rounded-lg border border-cream-dim/20 bg-navy-900/75 p-4">
+              <span class="block text-sm font-semibold text-gold-light">${escapeHtml(item.section)}</span>
+              <span class="mt-1 block font-semibold text-cream">${escapeHtml(item.question)}</span>
+              ${hint}
+              <textarea data-answer-type="${part.kind}" data-answer-index="${item.index}" rows="3" class="mt-3 w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-4 py-3 text-base text-cream placeholder:text-cream-dim/70 focus:border-accent focus:outline-none" placeholder="Con viết câu trả lời ở đây"></textarea>
+            </label>
+          `;
+        }).join('');
       }
       if (part.kind === 'best_line') {
         return sub + part.items.map((item) => `
@@ -523,7 +529,20 @@ import Footer from '../../components/Footer.astro';
       if (['cum_cau_con', 'dung_cum_cau', 'nghe_doc_theo', 'hieu_truyen', 'ke_chuyen_con'].includes(activity.type)) {
         const parts = Array.isArray(activity.parts) ? activity.parts : [];
         const body = parts.map((part) => renderPart(part, packId || 'lesson')).join('');
-        return sectionWrap(title, body);
+        // Slot 4 (Hiểu truyện) and slot 5 (Kể chuyện): show collapsible story so kid can
+        // re-read without paginating back. Default collapsed to not spoil glance reading.
+        let storyPanel = '';
+        if (['hieu_truyen', 'ke_chuyen_con'].includes(activity.type) && Array.isArray(activity.story_text) && activity.story_text.length) {
+          storyPanel = `
+            <details class="mb-4 rounded-lg border border-cream-dim/20 bg-navy-950/40 p-3">
+              <summary class="cursor-pointer font-semibold text-gold-light">📖 Đọc lại truyện</summary>
+              <div class="mt-3 space-y-2 text-sm leading-relaxed text-cream">
+                ${activity.story_text.map((p) => `<p>${escapeHtml(p)}</p>`).join('')}
+              </div>
+            </details>
+          `;
+        }
+        return sectionWrap(title, storyPanel + body);
       }
 
       if (activity.type === 'story') {

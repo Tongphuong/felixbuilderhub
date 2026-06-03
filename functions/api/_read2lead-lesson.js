@@ -161,6 +161,7 @@ export function buildActivities(context) {
           index,
           section: item.section || '',
           question: item.question || '',
+          hint_vi: item.hint_vi || '',
         })),
       });
     }
@@ -179,6 +180,7 @@ export function buildActivities(context) {
       type: 'hieu_truyen',
       title_vi: '💭 Hiểu truyện',
       instruction_vi: 'Phần A — trả lời câu hỏi về câu chuyện. Phần B — chọn câu nghe tự nhiên nhất.',
+      story_text: storyText,
       parts,
     });
   }
@@ -190,6 +192,7 @@ export function buildActivities(context) {
       type: 'ke_chuyen_con',
       title_vi: '✍️ Kể chuyện của con',
       instruction_vi: 'Con viết 1-2 câu theo suy nghĩ của mình. Không cần trả lời giống đáp án.',
+      story_text: storyText,
       parts: [
         {
           kind: 'open_response',
@@ -197,6 +200,7 @@ export function buildActivities(context) {
             index,
             section: item.section || '',
             question: item.question || '',
+            hint_vi: item.hint_vi || '',
           })),
         },
       ],
