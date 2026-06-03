@@ -82,6 +82,11 @@ import Footer from '../../components/Footer.astro';
             <h3 class="mt-1 font-display text-2xl font-bold leading-snug text-cream">Con làm bài luyện tập</h3>
             <p class="mt-2 text-sm leading-relaxed text-cream-muted">Các phần nối, điền, sửa và sắp xếp sẽ được chấm ngay. Ô viết tự do để bố mẹ đọc cùng con, chưa tính điểm tự động.</p>
 
+            <div id="activity-progress" class="mt-4 hidden rounded-lg border border-cream-dim/20 bg-navy-900/60 p-3">
+              <div id="activity-dots" class="flex flex-wrap items-center gap-1.5"></div>
+              <p class="mt-2 text-sm text-cream-muted">Phần <span id="activity-current-num" class="font-semibold text-cream">1</span>/<span id="activity-total-num">1</span>: <span id="activity-current-name" class="text-gold-light"></span></p>
+            </div>
+
             <form id="lesson-form" class="mt-6 space-y-6">
               <div id="activities"></div>
               <div class="absolute -left-[9999px]" aria-hidden="true">
@@ -90,7 +95,11 @@ import Footer from '../../components/Footer.astro';
               </div>
               <div class="flex flex-col gap-3 sm:flex-row sm:justify-between">
                 <button data-step-back="read" type="button" class="rounded-lg border border-cream-dim/30 px-6 py-3 font-semibold text-cream transition hover:border-accent hover:text-accent">Đọc lại truyện</button>
-                <button id="submit-lesson" type="submit" class="rounded-lg bg-accent px-6 py-3 text-lg font-semibold text-navy-950 transition hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-60">Nộp bài trên web</button>
+                <div class="flex gap-3">
+                  <button id="activity-back" type="button" class="rounded-lg border border-cream-dim/30 px-5 py-3 font-semibold text-cream transition hover:border-accent hover:text-accent">← Quay lại</button>
+                  <button id="activity-next" type="button" class="rounded-lg bg-accent px-6 py-3 font-semibold text-navy-950 transition hover:bg-accent-hover">Tiếp theo →</button>
+                  <button id="submit-lesson" type="submit" class="hidden rounded-lg bg-accent px-6 py-3 text-lg font-semibold text-navy-950 transition hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-60">Nộp bài 🚀</button>
+                </div>
               </div>
             </form>
           </section>
@@ -99,6 +108,13 @@ import Footer from '../../components/Footer.astro';
         <section id="result-card" class="mt-6 hidden rounded-xl border border-gold/40 bg-gold/10 p-6"></section>
       </div>
     </section>
+
+    <div id="celebration-overlay" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-navy-950/85 backdrop-blur">
+      <div class="text-center r2l-reward-pop">
+        <p id="celebration-emoji" class="text-7xl">🎉</p>
+        <p id="celebration-text" class="mt-4 font-display text-4xl font-bold text-gold-light md:text-5xl">Tuyệt vời!</p>
+      </div>
+    </div>
   </main>
 
   <div id="sticky-audio" class="fixed inset-x-0 bottom-0 z-30 hidden border-t border-cream-dim/20 bg-navy-900/95 px-4 py-3 shadow-2xl backdrop-blur">
@@ -131,6 +147,14 @@ import Footer from '../../components/Footer.astro';
     }
     .r2l-reward-pop {
       animation: r2l-reward-pop 0.7s ease-out;
+    }
+    @keyframes r2l-shake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-6px); }
+      40%, 80% { transform: translateX(6px); }
+    }
+    .r2l-shake {
+      animation: r2l-shake 0.5s ease;
     }
   </style>
 
@@ -249,6 +273,8 @@ import Footer from '../../components/Footer.astro';
     let readCompletedAt = null;
     const shadowRecordings = new Map();
     let sentenceListenAudio = null;
+    let activitySequence = [];
+    let currentActivityIdx = 0;
 
     function escapeHtml(value) {
       return String(value || '')
@@ -597,7 +623,13 @@ import Footer from '../../components/Footer.astro';
         stepReadBody.innerHTML = '<p class="text-cream-muted">Bài này chưa có truyện. Con có thể chuyển sang bước làm bài.</p>';
       }
 
-      activitiesEl.innerHTML = practiceActivities.map((activity, index) => renderActivity(activity, index + 1)).join('');
+      activitiesEl.innerHTML = practiceActivities.map((activity, index) => {
+        const inner = renderActivity(activity, index + 1);
+        return `<div data-activity-slot="${index}" class="${index === 0 ? '' : 'hidden'}">${inner}</div>`;
+      }).join('');
+      activitySequence = practiceActivities.map((activity) => activity.id || activity.type);
+      currentActivityIdx = 0;
+      showActivity(0);
       loadingCard.classList.add('hidden');
       lessonCard.classList.remove('hidden');
 
@@ -617,6 +649,188 @@ import Footer from '../../components/Footer.astro';
       activitiesEl.addEventListener('input', debouncedSave);
       activitiesEl.addEventListener('change', debouncedSave);
     }
+
+    const ACTIVITY_NAME_BY_ID = {
+      power_chunks: '📚 Từ vựng',
+      matching: '🔗 Nối nghĩa',
+      fill_blank: '✏️ Điền chỗ trống',
+      chunk_in_context: '🎯 Tình huống mới',
+      dictation: '🎧 Nghe chép',
+      shadowing: '🗣️ Đọc theo',
+      best_line: '🌟 Câu tự nhiên',
+      story_order: '📖 Sắp xếp',
+      comprehension: '💭 Hiểu bài',
+      open_response: '✍️ Viết tự do',
+    };
+    const CELEBRATION_EMOJIS = ['🎉', '⭐', '✨', '🚀', '💪', '🌟', '🎊'];
+
+    // ===== Proportional reward (P1.2) =====
+    function getRewardTier(scorePercent, passed, totalCount) {
+      if (!passed || totalCount <= 0) return { tier: 'fail', confettiCount: 0, voice: null };
+      if (scorePercent === 100) return { tier: 'perfect', confettiCount: 50, voice: 'voice-xuatsac.mp3', volume: 0.7 };
+      if (scorePercent >= 85) return { tier: 'great', confettiCount: 30, voice: 'voice-gioiqua.mp3', volume: 0.6 };
+      return { tier: 'pass', confettiCount: 15, voice: 'voice-tuyetvoi.mp3', volume: 0.5 };
+    }
+
+    function neededForPass(correct, total) {
+      if (total === 0) return 0;
+      return Math.max(0, Math.ceil(0.7 * total) - correct);
+    }
+
+    function renderActivityProgress() {
+      const total = activitySequence.length;
+      const dotsEl = document.getElementById('activity-dots');
+      const totalEl = document.getElementById('activity-total-num');
+      const progressEl = document.getElementById('activity-progress');
+      if (!dotsEl || !totalEl || !progressEl || total === 0) return;
+      progressEl.classList.remove('hidden');
+      totalEl.textContent = total;
+      dotsEl.innerHTML = activitySequence.map((id, idx) => {
+        const isCurrent = idx === currentActivityIdx;
+        const isDone = idx < currentActivityIdx;
+        const cls = isCurrent
+          ? 'h-3 w-8 rounded-full bg-accent'
+          : isDone
+            ? 'h-3 w-3 rounded-full bg-gold-light'
+            : 'h-3 w-3 rounded-full bg-cream-dim/30';
+        return `<span class="${cls}" aria-label="Phần ${idx + 1}"></span>`;
+      }).join('');
+    }
+
+    function showActivity(idx) {
+      if (!activitySequence.length) return;
+      currentActivityIdx = Math.max(0, Math.min(idx, activitySequence.length - 1));
+      document.querySelectorAll('[data-activity-slot]').forEach((slot) => {
+        const slotIdx = Number(slot.getAttribute('data-activity-slot'));
+        slot.classList.toggle('hidden', slotIdx !== currentActivityIdx);
+      });
+      const currentNum = document.getElementById('activity-current-num');
+      const currentName = document.getElementById('activity-current-name');
+      if (currentNum) currentNum.textContent = currentActivityIdx + 1;
+      if (currentName) currentName.textContent = ACTIVITY_NAME_BY_ID[activitySequence[currentActivityIdx]] || activitySequence[currentActivityIdx];
+      renderActivityProgress();
+      updateActivityNavButtons();
+      const active = document.querySelector(`[data-activity-slot="${currentActivityIdx}"]`);
+      if (active && !lessonCard.classList.contains('hidden')) active.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function updateActivityNavButtons() {
+      const backBtn = document.getElementById('activity-back');
+      const nextBtn = document.getElementById('activity-next');
+      const submitBtnEl = document.getElementById('submit-lesson');
+      if (!backBtn || !nextBtn || !submitBtnEl || !activitySequence.length) return;
+      backBtn.disabled = currentActivityIdx === 0;
+      backBtn.classList.toggle('opacity-40', currentActivityIdx === 0);
+      const isLast = currentActivityIdx === activitySequence.length - 1;
+      nextBtn.classList.toggle('hidden', isLast);
+      submitBtnEl.classList.toggle('hidden', !isLast);
+    }
+
+    function isActivitySlotComplete(slot) {
+      if (!slot) return true;
+      const requiredFields = slot.querySelectorAll('[required]');
+      if (requiredFields.length === 0) return true;
+      const radioNames = new Set();
+      for (const field of requiredFields) {
+        if (field.type === 'radio') {
+          radioNames.add(field.name);
+          continue;
+        }
+        if (!field.value || !field.value.trim()) return false;
+      }
+      for (const name of radioNames) {
+        if (!slot.querySelector(`input[name="${CSS.escape(name)}"]:checked`)) return false;
+      }
+      return true;
+    }
+
+    function findFirstEmpty(slot) {
+      if (!slot) return null;
+      const required = slot.querySelectorAll('[required]');
+      for (const field of required) {
+        if (field.type === 'radio') {
+          if (!slot.querySelector(`input[name="${CSS.escape(field.name)}"]:checked`)) return field;
+        } else if (!field.value || !field.value.trim()) {
+          return field;
+        }
+      }
+      return null;
+    }
+
+    function shakeField(field) {
+      if (!field) return;
+      const target = field.closest('label, fieldset, [data-shadow-card], [data-tap-card], [data-activity-slot] > *') || field;
+      target.classList.add('r2l-shake');
+      setTimeout(() => target.classList.remove('r2l-shake'), 600);
+    }
+
+    function showToast(message) {
+      let toast = document.getElementById('r2l-toast');
+      if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'r2l-toast';
+        toast.className = 'fixed left-1/2 top-6 z-[60] -translate-x-1/2 rounded-lg border border-gold/40 bg-navy-900/95 px-5 py-3 font-semibold text-cream shadow-2xl';
+        document.body.appendChild(toast);
+      }
+      toast.textContent = message;
+      toast.style.opacity = '1';
+      setTimeout(() => { toast.style.transition = 'opacity 0.4s'; toast.style.opacity = '0'; }, 2200);
+    }
+
+    function showCelebration(text) {
+      const overlay = document.getElementById('celebration-overlay');
+      const emojiEl = document.getElementById('celebration-emoji');
+      const textEl = document.getElementById('celebration-text');
+      if (!overlay || !emojiEl || !textEl) return;
+      emojiEl.textContent = randomFrom(CELEBRATION_EMOJIS);
+      textEl.textContent = text || 'Tuyệt vời!';
+      overlay.classList.remove('hidden');
+      const popEl = overlay.querySelector('.r2l-reward-pop');
+      if (popEl) {
+        popEl.classList.remove('r2l-reward-pop');
+        void popEl.offsetWidth;
+        popEl.classList.add('r2l-reward-pop');
+      }
+      setTimeout(() => overlay.classList.add('hidden'), 1500);
+    }
+
+    function goNextActivity() {
+      const slot = document.querySelector(`[data-activity-slot="${currentActivityIdx}"]`);
+      if (!isActivitySlotComplete(slot)) {
+        playSoftBoop();
+        showToast('Con làm hết các câu trong phần này nhé 💪');
+        const empty = findFirstEmpty(slot);
+        if (empty) {
+          shakeField(empty);
+          empty.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          if (typeof empty.focus === 'function') {
+            try { empty.focus({ preventScroll: true }); } catch { empty.focus(); }
+          }
+        }
+        return;
+      }
+      const voiceText = playPageComplete();
+      showCelebration(voiceText);
+      if (currentActivityIdx < activitySequence.length - 1) {
+        currentActivityIdx += 1;
+        setTimeout(() => showActivity(currentActivityIdx), 900);
+      } else {
+        updateActivityNavButtons();
+      }
+    }
+
+    function goBackActivity() {
+      if (currentActivityIdx === 0) return;
+      currentActivityIdx -= 1;
+      showActivity(currentActivityIdx);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const nextBtn = document.getElementById('activity-next');
+      const backBtn = document.getElementById('activity-back');
+      if (nextBtn) nextBtn.addEventListener('click', goNextActivity);
+      if (backBtn) backBtn.addEventListener('click', goBackActivity);
+    });
 
     document.querySelectorAll('[data-step-next]').forEach((btn) => {
       btn.addEventListener('click', () => {
@@ -723,10 +937,9 @@ import Footer from '../../components/Footer.astro';
       }
     }
 
-    function spawnConfetti() {
+    function spawnConfetti(count = 25) {
       const emojis = ['⭐', '🎉', '✨', '🌟', '💫', '🏆'];
-      const total = 22;
-      for (let i = 0; i < total; i += 1) {
+      for (let i = 0; i < count; i += 1) {
         const el = document.createElement('div');
         el.className = 'r2l-confetti';
         el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
@@ -744,8 +957,25 @@ import Footer from '../../components/Footer.astro';
       const miniVi = result.review?.mini_practice_vi || {};
       const passed = Boolean(result.passed);
       const scorePercent = result.score_percent || 0;
-      const headingText = passed ? 'Con được 1 sao! 🌟' : 'Con cần xem lại một chút';
-      const headingClass = passed ? 'r2l-reward-pop font-display text-4xl font-bold leading-snug text-gold-light md:text-5xl' : 'font-display text-3xl font-bold leading-snug text-cream';
+      const totalCount = result.total_count || 0;
+      const correctCount = result.correct_count || 0;
+      const reward = getRewardTier(scorePercent, passed, totalCount);
+      const needed = neededForPass(correctCount, totalCount);
+
+      let headingText;
+      let headingClass;
+      if (!passed) {
+        headingText = needed === 0
+          ? 'Con sắp pass rồi — sửa 1 chút thôi! 💪'
+          : `Cố lên! Còn ${needed} câu nữa là pass 💪`;
+        headingClass = 'font-display text-3xl font-bold leading-snug text-cream';
+      } else if (reward.tier === 'perfect') {
+        headingText = 'Siêu sao! 💯⭐';
+        headingClass = 'r2l-reward-pop font-display text-5xl font-bold leading-snug text-gold-light md:text-6xl';
+      } else {
+        headingText = 'Con được 1 sao! 🌟';
+        headingClass = 'r2l-reward-pop font-display text-4xl font-bold leading-snug text-gold-light md:text-5xl';
+      }
       const missionBox = passed ? `
         <div class="mt-6 rounded-lg border border-accent/30 bg-accent/10 p-5">
           <p class="font-display text-lg font-bold text-cream">Mission Complete ✨</p>
@@ -763,7 +993,7 @@ import Footer from '../../components/Footer.astro';
             <li>✅ Con đã nghe câu chuyện</li>
             <li>✅ Con đã đọc to câu chuyện</li>
             <li>✅ Con đã làm bài luyện tập (${scorePercent}%)</li>
-            <li>⏳ Bài tiếp theo mở khi con đạt 70%+</li>
+            <li>💪 ${needed === 0 ? 'Con sắp pass rồi — sửa 1 chút và nộp lại!' : `Con chỉ cần đúng thêm <strong class="text-gold-light">${needed}</strong> câu nữa là pass!`}</li>
           </ul>
         </div>
       `;
@@ -818,7 +1048,11 @@ import Footer from '../../components/Footer.astro';
       `;
       resultCard.classList.remove('hidden');
       resultCard.scrollIntoView({ behavior: 'smooth' });
-      if (passed) spawnConfetti();
+      if (reward.confettiCount > 0) spawnConfetti(reward.confettiCount);
+      if (passed) {
+        playFinalReward(reward.volume || 0.6);
+        if (reward.voice) setTimeout(() => playSfx(reward.voice, 0.75), 600);
+      }
       const retry = document.getElementById('retry-lesson');
       if (retry) retry.addEventListener('click', () => lessonCard.scrollIntoView({ behavior: 'smooth' }));
     }
@@ -855,7 +1089,7 @@ import Footer from '../../components/Footer.astro';
         showError('Mạng không ổn định. Vui lòng thử lại.');
       } finally {
         submitBtn.disabled = false;
-        submitBtn.textContent = 'Nộp bài trên web';
+        submitBtn.textContent = 'Nộp bài 🚀';
       }
     });
 
