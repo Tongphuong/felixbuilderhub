@@ -473,6 +473,29 @@ import Footer from '../../components/Footer.astro';
         `).join(''));
       }
 
+      if (activity.type === 'tap_words') {
+        return sectionWrap(title, activity.items.map((item) => {
+          const chips = (item.shuffled_words || []).map((word, wIdx) => `
+            <button type="button" data-tap-word data-tap-sentence="${item.index}" data-tap-source="pool" data-tap-word-text="${escapeHtml(word)}" data-tap-id="${item.index}-${wIdx}" class="inline-flex items-center rounded-md border border-gold/40 bg-gold/10 px-3 py-2 text-sm font-semibold text-gold-light transition hover:bg-gold hover:text-navy-950">${escapeHtml(word)}</button>
+          `).join('');
+          return `
+            <div class="mb-4 rounded-lg border border-cream-dim/20 bg-navy-900/75 p-4" data-tap-card data-tap-card-index="${item.index}">
+              <p class="text-sm font-semibold text-gold-light">Câu ${item.index + 1}</p>
+              <div class="mt-3 flex flex-wrap gap-2">
+                ${item.audio_url
+                  ? `<button type="button" data-sentence-listen="${escapeHtml(item.audio_url)}" class="inline-flex items-center gap-1 rounded-md border border-gold/40 bg-gold/10 px-3 py-1.5 text-sm font-semibold text-gold-light transition hover:bg-gold hover:text-navy-950" aria-label="Nghe câu">🔊 Nghe câu</button>`
+                  : '<span class="text-sm text-red-300">Câu này thiếu file nghe.</span>'}
+              </div>
+              <p class="mt-3 text-xs text-cream-dim">Khung trả lời:</p>
+              <div data-tap-answer="${item.index}" class="mt-1 flex min-h-[3rem] flex-wrap gap-2 rounded-lg border border-dashed border-cream-dim/40 bg-navy-950/60 p-2"></div>
+              <p class="mt-3 text-xs text-cream-dim">Bấm vào từ để thêm vào câu:</p>
+              <div data-tap-pool="${item.index}" class="mt-1 flex flex-wrap gap-2">${chips}</div>
+              <input type="hidden" data-answer-type="dictation" data-answer-index="${item.index}" value="" required />
+            </div>
+          `;
+        }).join(''));
+      }
+
       if (activity.type === 'shadowing') {
         return sectionWrap(title, activity.items.map((item) => `
           <div class="mb-4 rounded-lg border border-cream-dim/20 bg-navy-900/75 p-4" data-shadow-card data-shadow-index="${item.index}">
@@ -855,6 +878,29 @@ import Footer from '../../components/Footer.astro';
     });
 
     activitiesEl.addEventListener('click', async (event) => {
+      const chip = event.target.closest('[data-tap-word]');
+      if (chip) {
+        const sentenceIdx = chip.getAttribute('data-tap-sentence');
+        const source = chip.getAttribute('data-tap-source');
+        const card = chip.closest('[data-tap-card]');
+        if (!card) return;
+        const answerArea = card.querySelector(`[data-tap-answer="${sentenceIdx}"]`);
+        const poolArea = card.querySelector(`[data-tap-pool="${sentenceIdx}"]`);
+        const hiddenInput = card.querySelector(`input[data-answer-type="dictation"][data-answer-index="${sentenceIdx}"]`);
+        if (!answerArea || !poolArea || !hiddenInput) return;
+        if (source === 'pool') {
+          chip.setAttribute('data-tap-source', 'answer');
+          answerArea.appendChild(chip);
+        } else {
+          chip.setAttribute('data-tap-source', 'pool');
+          poolArea.appendChild(chip);
+        }
+        const words = Array.from(answerArea.querySelectorAll('[data-tap-word]')).map((el) => el.getAttribute('data-tap-word-text') || '');
+        hiddenInput.value = words.join(' ');
+        hiddenInput.dispatchEvent(new Event('input', { bubbles: true }));
+        return;
+      }
+
       const listenBtn = event.target.closest('[data-sentence-listen]');
       if (listenBtn) {
         const url = listenBtn.getAttribute('data-sentence-listen');

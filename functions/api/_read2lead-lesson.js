@@ -50,6 +50,8 @@ export function buildLessonPayload({ accessCode, codeData, pack }) {
 }
 
 export function buildActivities(context) {
+  const levelLabel = String(context.level_label || '').trim();
+  const isL1 = /^L1\b/i.test(levelLabel) || /Beginner/i.test(levelLabel);
   const activities = [];
   const storyText = Array.isArray(context.story_text) ? context.story_text : [];
   if (storyText.length) {
@@ -111,14 +113,23 @@ export function buildActivities(context) {
   const sentenceAudios = (context.sentence_audio_urls && typeof context.sentence_audio_urls === 'object') ? context.sentence_audio_urls : {};
 
   if (shadowSentences.length) {
+    const dictationType = isL1 ? 'tap_words' : 'dictation';
+    const dictationTitle = isL1
+      ? '🎧 Mission: Nghe và sắp chữ thành câu'
+      : '🎧 Mission: Nghe và chép chính tả';
+    const dictationInstruction = isL1
+      ? 'Bấm 🔊 nghe câu. Sau đó bấm từng từ theo đúng thứ tự con vừa nghe. Bấm vào từ trong khung trả lời để bỏ ra.'
+      : 'Bấm 🔊 nghe câu. Sau đó gõ lại CHÍNH XÁC câu con vừa nghe. Con có thể nghe nhiều lần. Viết hoa hay thường đều được, không cần chính xác dấu câu.';
     activities.push({
       id: 'dictation',
-      type: 'dictation',
-      title_vi: '🎧 Mission: Nghe và chép chính tả',
-      instruction_vi: 'Bấm 🔊 để nghe câu. Sau đó gõ lại CHÍNH XÁC câu con vừa nghe. Con có thể nghe nhiều lần. Viết hoa hay thường đều được, không cần chính xác dấu câu.',
+      type: dictationType,
+      title_vi: dictationTitle,
+      instruction_vi: dictationInstruction,
       items: shadowSentences.map((sentence, index) => ({
         index,
         audio_url: sentenceAudios[sentence] || '',
+        expected: sentence,
+        shuffled_words: isL1 ? shuffleWordsForTap(sentence, `${context.student_name || 'r2l'}_${index}`) : undefined,
       })),
     });
 
@@ -199,6 +210,23 @@ export function buildActivities(context) {
   return activities;
 }
 
+function shuffleWordsForTap(sentence, seed) {
+  const words = String(sentence || '').trim().split(/\s+/).filter(Boolean);
+  let h = 0;
+  for (let i = 0; i < seed.length; i++) h = (h * 31 + seed.charCodeAt(i)) | 0;
+  let s = Math.abs(h) || 1;
+  const out = words.slice();
+  for (let i = out.length - 1; i > 0; i--) {
+    s = (s * 9301 + 49297) % 233280;
+    const j = Math.floor((s / 233280) * (i + 1));
+    [out[i], out[j]] = [out[j], out[i]];
+  }
+  if (out.length >= 2 && out.every((word, index) => word === words[index])) {
+    [out[0], out[1]] = [out[1], out[0]];
+  }
+  return out;
+}
+
 function addLineActivity(activities, id, title, instruction, source) {
   const items = Array.isArray(source) ? source : [];
   if (!items.length) return;
@@ -233,7 +261,13 @@ export function gradeLessonSubmission(context, answers = {}) {
   addSection('fill_blank', 'Điền chỗ trống', ...gradeArrayAnswers(context.answer_key?.fill_in_the_blank, answers.fill_blank));
   addSection('chunk_in_context', 'Tình huống mới', ...gradeArrayAnswers(context.answer_key?.chunk_in_context, answers.chunk_in_context));
   addSection('best_line', 'Best Line', ...gradeBestLine(context, answers.best_line));
-  addSection('dictation', 'Chính tả', ...gradeDictation(context, answers.dictation));
+  const levelLabelGrade = String(context.level_label || '').trim();
+  const isL1Grade = /^L1\b/i.test(levelLabelGrade) || /Beginner/i.test(levelLabelGrade);
+  if (isL1Grade) {
+    addSection('dictation', 'Sắp chữ thành câu', ...gradeTapWords(context, answers.dictation));
+  } else {
+    addSection('dictation', 'Chính tả', ...gradeDictation(context, answers.dictation));
+  }
 
   const scorePercent = total ? Math.round((correct / total) * 100) : 0;
   const passed = total > 0 && scorePercent >= PASS_THRESHOLD;
@@ -265,9 +299,48 @@ function gradeDictation(context, answerMap = {}) {
   let correct = 0;
   expected.forEach((sentence, index) => {
     const actual = getIndexedAnswer(answerMap, index);
+    const normA = normalizeText(actual);
+    const normE = normalizeText(sentence);
+    if (!normA) return;
+    // Tolerance: 1 edit per ~8 chars, minimum 2, max 15% of length
+    const tolerance = Math.max(2, Math.min(Math.floor(normE.length / 8), Math.floor(normE.length * 0.15)));
+    if (levenshtein(normA, normE) <= tolerance) correct += 1;
+  });
+  return [correct, expected.length];
+}
+
+function gradeTapWords(context, answerMap = {}) {
+  const expected = Array.isArray(context.shadowing_sentences) ? context.shadowing_sentences : [];
+  let correct = 0;
+  expected.forEach((sentence, index) => {
+    const actual = getIndexedAnswer(answerMap, index);
+    if (!actual) return;
     if (normalizeText(actual) === normalizeText(sentence)) correct += 1;
   });
   return [correct, expected.length];
+}
+
+function levenshtein(a, b) {
+  const m = a.length;
+  const n = b.length;
+  if (m === 0) return n;
+  if (n === 0) return m;
+  let prev = new Array(n + 1);
+  let curr = new Array(n + 1);
+  for (let j = 0; j <= n; j++) prev[j] = j;
+  for (let i = 1; i <= m; i++) {
+    curr[0] = i;
+    for (let j = 1; j <= n; j++) {
+      const cost = a.charCodeAt(i - 1) === b.charCodeAt(j - 1) ? 0 : 1;
+      curr[j] = Math.min(
+        prev[j] + 1,
+        curr[j - 1] + 1,
+        prev[j - 1] + cost,
+      );
+    }
+    [prev, curr] = [curr, prev];
+  }
+  return prev[n];
 }
 
 function gradeMatching(context, answerMap = {}) {
