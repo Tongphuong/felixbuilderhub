@@ -1,4 +1,4 @@
-export const PASS_THRESHOLD = 70;
+﻿export const PASS_THRESHOLD = 70;
 
 const REVIEWED_STATUSES = new Set(['reviewed_pass', 'reviewed_retry', 'reviewed_pass_web', 'reviewed_retry_web']);
 
@@ -258,8 +258,8 @@ export function gradeLessonSubmission(context, answers = {}) {
   };
 
   addSection('matching', 'Nối nghĩa', ...gradeMatching(context, answers.matching));
-  addSection('fill_blank', 'Điền chỗ trống', ...gradeArrayAnswers(context.answer_key?.fill_in_the_blank, answers.fill_blank));
-  addSection('chunk_in_context', 'Tình huống mới', ...gradeArrayAnswers(context.answer_key?.chunk_in_context, answers.chunk_in_context));
+  addSection('fill_blank', 'Điền chỗ trống', ...gradeArrayAnswers(context.answer_key?.fill_in_the_blank, answers.fill_blank, context.fill_in_the_blank));
+  addSection('chunk_in_context', 'Tình huống mới', ...gradeArrayAnswers(context.answer_key?.chunk_in_context, answers.chunk_in_context, context.chunk_in_context));
   addSection('best_line', 'Best Line', ...gradeBestLine(context, answers.best_line));
   const levelLabelGrade = String(context.level_label || '').trim();
   const isL1Grade = /^L1\b/i.test(levelLabelGrade) || /Beginner/i.test(levelLabelGrade);
@@ -285,13 +285,30 @@ export function gradeLessonSubmission(context, answers = {}) {
 }
 
 function gradeBestLine(context, answerMap = {}) {
-  const expected = Array.isArray(context.answer_key?.best_line_challenge) ? context.answer_key.best_line_challenge : [];
+  const items = Array.isArray(context.best_line_challenge) ? context.best_line_challenge : [];
+  const keyList = Array.isArray(context.answer_key?.best_line_challenge) ? context.answer_key.best_line_challenge : [];
+  // Defensive: prefer answer_key, fall back to item.correct_index. Skip if both unavailable.
   let correct = 0;
-  expected.forEach((expectedIdx, index) => {
+  let gradeable = 0;
+  items.forEach((item, index) => {
+    const fromKey = keyList[index];
+    const fromItem = item && typeof item.correct_index === 'number' ? item.correct_index : undefined;
+    let expectedIdx;
+    if (typeof fromKey === 'number' && typeof fromItem === 'number' && fromKey !== fromItem) {
+      console.warn(`[grader][best_line] item[${index}] correct_index desync: answer_key=${fromKey}, item=${fromItem}. Skipping for fair grading.`);
+      return;
+    }
+    if (typeof fromKey === 'number') expectedIdx = fromKey;
+    else if (typeof fromItem === 'number') expectedIdx = fromItem;
+    else {
+      console.warn(`[grader][best_line] item[${index}] missing correct_index in both sources — skipping`);
+      return;
+    }
+    gradeable += 1;
     const actual = getIndexedAnswer(answerMap, index);
     if (actual !== '' && actual !== null && actual !== undefined && Number(actual) === Number(expectedIdx)) correct += 1;
   });
-  return [correct, expected.length];
+  return [correct, gradeable];
 }
 
 function gradeDictation(context, answerMap = {}) {
@@ -345,26 +362,48 @@ function levenshtein(a, b) {
 
 function gradeMatching(context, answerMap = {}) {
   const items = Array.isArray(context.matching_activity?.items) ? context.matching_activity.items : [];
+  const availableMeanings = Array.isArray(context.matching_activity?.meanings) ? context.matching_activity.meanings : [];
   const chunks = Array.isArray(context.power_chunks) ? context.power_chunks : [];
   let correct = 0;
+  let gradeable = 0;
   items.forEach((chunk, index) => {
-    const expected = chunks.find((item) => normalizeText(item.chunk) === normalizeText(chunk))?.meaning || '';
-    if (!expected) {
-      console.warn(`[read2lead-lesson][matching] chunk "${chunk}" không tìm thấy meaning tương ứng trong power_chunks — pack có thể bị lệch data`);
+    const chunkEntry = chunks.find((item) => normalizeText(item.chunk) === normalizeText(chunk));
+    const expectedMeaning = chunkEntry?.meaning || '';
+    // Defensive: skip grading this item if pack data is inconsistent
+    if (!expectedMeaning) {
+      console.warn(`[grader][matching] item[${index}] chunk "${chunk}" has no meaning in power_chunks — skipping`);
+      return;
     }
+    // Defensive: if expected meaning is not present in dropdown options, kid cannot pick it
+    const meaningInOptions = availableMeanings.some((meaning) => normalizeText(meaning) === normalizeText(expectedMeaning));
+    if (!meaningInOptions) {
+      console.warn(`[grader][matching] item[${index}] expected meaning "${expectedMeaning}" not in matching_activity.meanings — skipping`);
+      return;
+    }
+    gradeable += 1;
     const actual = getIndexedAnswer(answerMap, index);
-    if (expected && normalizeText(actual) === normalizeText(expected)) correct += 1;
+    if (normalizeText(actual) === normalizeText(expectedMeaning)) correct += 1;
   });
-  return [correct, items.length];
+  return [correct, gradeable];
 }
 
-function gradeArrayAnswers(expectedList, answerMap = {}) {
+function gradeArrayAnswers(expectedList, answerMap = {}, promptList = null) {
   const expected = Array.isArray(expectedList) ? expectedList : [];
+  const prompts = Array.isArray(promptList) ? promptList : null;
+  // Defensive: use the smaller of prompts vs answers length to avoid penalizing
+  // kid for missing answers when UI rendered N items but answer_key has M.
+  let gradeable = expected.length;
+  if (prompts && prompts.length !== expected.length) {
+    console.warn(`[grader] length mismatch — prompts=${prompts.length}, answers=${expected.length}. Using min for fair grading.`);
+    gradeable = Math.min(prompts.length, expected.length);
+  }
   let correct = 0;
-  expected.forEach((item, index) => {
+  for (let index = 0; index < gradeable; index += 1) {
+    const item = expected[index];
+    if (item === undefined) continue;
     if (normalizeText(getIndexedAnswer(answerMap, index)) === normalizeText(item)) correct += 1;
-  });
-  return [correct, expected.length];
+  }
+  return [correct, gradeable];
 }
 
 function gradeStoryOrder(expectedList, answerMap = {}) {

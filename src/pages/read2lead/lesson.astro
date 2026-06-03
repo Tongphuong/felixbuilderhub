@@ -1059,6 +1059,16 @@ import Footer from '../../components/Footer.astro';
           </div>
         </div>
       `;
+      // Detect packs with data inconsistency: any section where actual graded count < UI render count
+      const renderedCounts = {
+        matching: (result.sections.find((section) => section.id === 'matching')?.total) ?? null,
+        fill_blank: (result.sections.find((section) => section.id === 'fill_blank')?.total) ?? null,
+        chunk_in_context: (result.sections.find((section) => section.id === 'chunk_in_context')?.total) ?? null,
+        best_line: (result.sections.find((section) => section.id === 'best_line')?.total) ?? null,
+      };
+      void renderedCounts;
+      // If any section has total smaller than what was rendered to kid, surface a friendly notice
+      // (we don't have direct access to render counts here; rely on console.warn for diagnostics)
       const miniPracticeHtml = (miniVi.read_again || miniVi.chunk_to_practice || miniVi.parent_question) ? `
         <div class="mt-4 rounded-lg border border-accent/30 bg-accent/10 p-4">
           <p class="font-semibold text-cream">5 phút luyện thêm</p>
