@@ -64,48 +64,63 @@ export function buildActivities(context) {
     });
   }
 
+  const chunks = Array.isArray(context.power_chunks) ? context.power_chunks : [];
   const matching = context.matching_activity || {};
   const matchingItems = Array.isArray(matching.items) ? matching.items : [];
   const meanings = Array.isArray(matching.meanings) ? matching.meanings : [];
-  if (matchingItems.length && meanings.length) {
+  if (chunks.length) {
+    const parts = [
+      {
+        kind: 'chunks_glossary',
+        items: chunks.map((item, index) => ({
+          index,
+          chunk: item.chunk || '',
+          meaning: item.meaning || '',
+          example: item.example || '',
+        })),
+      },
+    ];
+    if (matchingItems.length && meanings.length) {
+      parts.push({
+        kind: 'matching',
+        items: matchingItems.map((chunk, index) => ({ index, chunk, options: meanings })),
+      });
+    }
     activities.push({
-      id: 'matching',
-      type: 'matching',
-      title_vi: '🔗 Nhiệm vụ: Nối cụm câu',
-      instruction_vi: 'Con chọn nghĩa đúng cho từng cụm câu.',
-      items: matchingItems.map((chunk, index) => ({ index, chunk, options: meanings })),
+      id: 'cum_cau_con',
+      type: 'cum_cau_con',
+      title_vi: '📚 Cụm câu của con',
+      instruction_vi: 'Xem ý nghĩa các cụm câu, sau đó nối chunk với nghĩa đúng ở phần dưới.',
+      parts,
     });
   }
 
-  const chunkOptions = (Array.isArray(context.power_chunks) ? context.power_chunks : []).map((item) => item.chunk || '').filter(Boolean);
-
+  const chunkOptions = chunks.map((item) => item.chunk || '').filter(Boolean);
   const fillBlanks = Array.isArray(context.fill_in_the_blank) ? context.fill_in_the_blank : [];
-  if (fillBlanks.length && chunkOptions.length) {
-    activities.push({
-      id: 'fill_blank',
-      type: 'fill_blank',
-      title_vi: '✏️ Nhiệm vụ: Điền cụm câu',
-      instruction_vi: 'Con chọn cụm câu phù hợp nhất cho mỗi chỗ trống.',
-      items: fillBlanks.map((prompt, index) => ({
-        index,
-        prompt,
-        options: chunkOptions,
-      })),
-    });
-  }
-
   const contextSentences = Array.isArray(context.chunk_in_context) ? context.chunk_in_context : [];
-  if (contextSentences.length && chunkOptions.length) {
+
+  if ((fillBlanks.length || contextSentences.length) && chunkOptions.length) {
+    const parts = [];
+    if (fillBlanks.length) {
+      parts.push({
+        kind: 'fill_blank',
+        sub_title_vi: 'Phần A — Điền cụm câu vào chỗ trống (theo truyện)',
+        items: fillBlanks.map((prompt, index) => ({ index, prompt, options: chunkOptions })),
+      });
+    }
+    if (contextSentences.length) {
+      parts.push({
+        kind: 'chunk_in_context',
+        sub_title_vi: 'Phần B — Dùng cụm câu trong tình huống mới',
+        items: contextSentences.map((sentence, index) => ({ index, sentence, options: chunkOptions })),
+      });
+    }
     activities.push({
-      id: 'chunk_in_context',
-      type: 'chunk_in_context',
-      title_vi: '🌍 Nhiệm vụ: Dùng trong đời thật',
-      instruction_vi: 'Mỗi câu là một tình huống KHÁC truyện chính. Con chọn cụm câu phù hợp nhất từ danh sách bên dưới.',
-      items: contextSentences.map((sentence, index) => ({
-        index,
-        sentence,
-        options: chunkOptions,
-      })),
+      id: 'dung_cum_cau',
+      type: 'dung_cum_cau',
+      title_vi: '✏️ Dùng cụm câu',
+      instruction_vi: 'Chọn cụm câu phù hợp cho mỗi chỗ trống. Có 2 phần nhỏ phía dưới.',
+      parts,
     });
   }
 
@@ -113,97 +128,83 @@ export function buildActivities(context) {
   const sentenceAudios = (context.sentence_audio_urls && typeof context.sentence_audio_urls === 'object') ? context.sentence_audio_urls : {};
 
   if (shadowSentences.length) {
-    const dictationType = isL1 ? 'tap_words' : 'dictation';
-    const dictationTitle = isL1
-      ? '🎧 Mission: Nghe và sắp chữ thành câu'
-      : '🎧 Mission: Nghe và chép chính tả';
-    const dictationInstruction = isL1
-      ? 'Bấm 🔊 nghe câu. Sau đó bấm từng từ theo đúng thứ tự con vừa nghe. Bấm vào từ trong khung trả lời để bỏ ra.'
-      : 'Bấm 🔊 nghe câu. Sau đó gõ lại CHÍNH XÁC câu con vừa nghe. Con có thể nghe nhiều lần. Viết hoa hay thường đều được, không cần chính xác dấu câu.';
+    const sentenceUnits = shadowSentences.map((sentence, index) => ({
+      index,
+      audio_url: sentenceAudios[sentence] || '',
+      expected: sentence,
+      shuffled_words: isL1 ? shuffleWordsForTap(sentence, `${context.student_name || 'r2l'}_${index}`) : undefined,
+    }));
     activities.push({
-      id: 'dictation',
-      type: dictationType,
-      title_vi: dictationTitle,
-      instruction_vi: dictationInstruction,
-      items: shadowSentences.map((sentence, index) => ({
-        index,
-        audio_url: sentenceAudios[sentence] || '',
-        expected: sentence,
-        shuffled_words: isL1 ? shuffleWordsForTap(sentence, `${context.student_name || 'r2l'}_${index}`) : undefined,
-      })),
-    });
-
-    activities.push({
-      id: 'shadowing',
-      type: 'shadowing',
-      title_vi: '🗣️ Mission: Nghe và đọc theo (Shadowing)',
-      instruction_vi: 'Bấm 🔊 nghe câu mẫu (có thể nghe nhiều lần). Sau đó bấm 🎤 đọc lại y hệt câu mẫu. Bấm ▶ nghe lại bản ghi của con để tự so sánh.',
-      items: shadowSentences.map((sentence, index) => ({
-        index,
-        audio_url: sentenceAudios[sentence] || '',
-      })),
+      id: 'nghe_doc_theo',
+      type: 'nghe_doc_theo',
+      title_vi: '🎧 Nghe & Đọc theo',
+      instruction_vi: isL1
+        ? 'Với mỗi câu: 🔊 Nghe → bấm từng từ theo đúng thứ tự → 🎤 Đọc theo câu mẫu.'
+        : 'Với mỗi câu: 🔊 Nghe → gõ lại câu vừa nghe → 🎤 Đọc theo câu mẫu.',
+      parts: [
+        {
+          kind: 'sentence_unit',
+          is_l1: isL1,
+          items: sentenceUnits,
+        },
+      ],
     });
   }
 
   const challengeItems = Array.isArray(context.best_line_challenge) ? context.best_line_challenge : [];
-  if (challengeItems.length) {
-    activities.push({
-      id: 'best_line',
-      type: 'best_line',
-      title_vi: '🎯 Best Line Challenge',
-      instruction_vi: 'Mỗi câu hỏi có 3 cách viết. Con chọn cách nghe tự nhiên nhất trong tiếng Anh.',
-      items: challengeItems.map((item, index) => ({
-        index,
-        options: Array.isArray(item?.options) ? item.options : [],
-      })),
-    });
-  }
-
   const questions = Array.isArray(context.comprehension_questions) ? context.comprehension_questions : [];
   const COMPREHENSION_KEEP = new Set(['Find It', 'Language in the Story']);
   const comprehension = questions.filter((item) => COMPREHENSION_KEEP.has(item.section));
-  if (comprehension.length) {
-    activities.push({
-      id: 'comprehension',
-      type: 'comprehension',
-      title_vi: '🔍 Quick Check: Con hiểu chuyện chưa?',
-      instruction_vi: 'Con trả lời bằng câu ngắn. Phần này để bố mẹ đọc cùng con, chưa tính điểm tự động.',
-      items: comprehension.map((item, index) => ({
-        index,
-        section: item.section || '',
-        question: item.question || '',
-      })),
-    });
-  }
 
-  const chunks = Array.isArray(context.power_chunks) ? context.power_chunks : [];
-  if (chunks.length) {
+  if (comprehension.length || challengeItems.length) {
+    const parts = [];
+    if (comprehension.length) {
+      parts.push({
+        kind: 'comprehension',
+        sub_title_vi: 'Phần A — Câu hỏi hiểu bài',
+        items: comprehension.map((item, index) => ({
+          index,
+          section: item.section || '',
+          question: item.question || '',
+        })),
+      });
+    }
+    if (challengeItems.length) {
+      parts.push({
+        kind: 'best_line',
+        sub_title_vi: 'Phần B — Câu nào nghe tự nhiên nhất?',
+        items: challengeItems.map((item, index) => ({
+          index,
+          options: Array.isArray(item?.options) ? item.options : [],
+        })),
+      });
+    }
     activities.push({
-      id: 'power_chunks',
-      type: 'power_chunks',
-      title_vi: '📚 Power Chunks — Để tham khảo',
-      instruction_vi: 'Con xem lại các cụm câu đã học để chuẩn bị kể lại câu chuyện ở phần tiếp theo.',
-      items: chunks.map((item, index) => ({
-        index,
-        chunk: item.chunk || '',
-        meaning: item.meaning || '',
-        example: item.example || '',
-      })),
+      id: 'hieu_truyen',
+      type: 'hieu_truyen',
+      title_vi: '💭 Hiểu truyện',
+      instruction_vi: 'Phần A — trả lời câu hỏi về câu chuyện. Phần B — chọn câu nghe tự nhiên nhất.',
+      parts,
     });
   }
 
   const openQuestions = questions.filter((item) => ['Open Question', 'Your Turn'].includes(item.section));
   if (openQuestions.length) {
     activities.push({
-      id: 'open_response',
-      type: 'open_response',
-      title_vi: '💭 Use It About You',
+      id: 'ke_chuyen_con',
+      type: 'ke_chuyen_con',
+      title_vi: '✍️ Kể chuyện của con',
       instruction_vi: 'Con viết 1-2 câu theo suy nghĩ của mình. Không cần trả lời giống đáp án.',
-      items: openQuestions.map((item, index) => ({
-        index,
-        section: item.section || '',
-        question: item.question || '',
-      })),
+      parts: [
+        {
+          kind: 'open_response',
+          items: openQuestions.map((item, index) => ({
+            index,
+            section: item.section || '',
+            question: item.question || '',
+          })),
+        },
+      ],
     });
   }
 
@@ -257,17 +258,36 @@ export function gradeLessonSubmission(context, answers = {}) {
     });
   };
 
-  addSection('matching', 'Nối nghĩa', ...gradeMatching(context, answers.matching));
-  addSection('fill_blank', 'Điền chỗ trống', ...gradeArrayAnswers(context.answer_key?.fill_in_the_blank, answers.fill_blank, context.fill_in_the_blank));
-  addSection('chunk_in_context', 'Tình huống mới', ...gradeArrayAnswers(context.answer_key?.chunk_in_context, answers.chunk_in_context, context.chunk_in_context));
-  addSection('best_line', 'Best Line', ...gradeBestLine(context, answers.best_line));
   const levelLabelGrade = String(context.level_label || '').trim();
   const isL1Grade = /^L1\b/i.test(levelLabelGrade) || /Beginner/i.test(levelLabelGrade);
+
+  // Cluster 1: Cụm câu của con (matching only — chunks_glossary not graded)
+  addSection('cum_cau_con', '📚 Cụm câu của con', ...gradeMatching(context, answers.matching));
+
+  // Cluster 2: Dùng cụm câu (fill_blank + chunk_in_context combined)
+  const [fbCorrect, fbTotal] = gradeArrayAnswers(
+    context.answer_key?.fill_in_the_blank,
+    answers.fill_blank,
+    context.fill_in_the_blank,
+  );
+  const [cicCorrect, cicTotal] = gradeArrayAnswers(
+    context.answer_key?.chunk_in_context,
+    answers.chunk_in_context,
+    context.chunk_in_context,
+  );
+  addSection('dung_cum_cau', '✏️ Dùng cụm câu', fbCorrect + cicCorrect, fbTotal + cicTotal);
+
+  // Cluster 3: Nghe & Đọc theo (dictation OR tap_words; shadowing not graded)
   if (isL1Grade) {
-    addSection('dictation', 'Sắp chữ thành câu', ...gradeTapWords(context, answers.dictation));
+    addSection('nghe_doc_theo', '🎧 Nghe & Đọc theo', ...gradeTapWords(context, answers.dictation));
   } else {
-    addSection('dictation', 'Chính tả', ...gradeDictation(context, answers.dictation));
+    addSection('nghe_doc_theo', '🎧 Nghe & Đọc theo', ...gradeDictation(context, answers.dictation));
   }
+
+  // Cluster 4: Hiểu truyện (best_line only — comprehension text is parent-reviewed)
+  addSection('hieu_truyen', '💭 Hiểu truyện', ...gradeBestLine(context, answers.best_line));
+
+  // Cluster 5: Kể chuyện của con — no auto-grade (open_response is parent-reviewed)
 
   const scorePercent = total ? Math.round((correct / total) * 100) : 0;
   const passed = total > 0 && scorePercent >= PASS_THRESHOLD;
