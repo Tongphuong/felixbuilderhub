@@ -239,6 +239,53 @@ function addLineActivity(activities, id, title, instruction, source) {
   });
 }
 
+// Grade just one slot's answers and return wrong_items tagged by data-answer-type.
+// Used by POST /api/grade-slot for inline per-slot feedback before the kid hits
+// the final submit. Idempotent / read-only — does NOT touch KV state.
+//
+// slot_id values map to the activity IDs emitted by buildActivities:
+//   cum_cau_con / dung_cum_cau / nghe_doc_theo / hieu_truyen / ke_chuyen_con
+//
+// Returns: { wrong_items: [{ type, index }] }
+export function gradeSingleSlot(context, answers = {}, slotId = '') {
+  const tag = (type, indices) => (Array.isArray(indices) ? indices : []).map((index) => ({ type, index }));
+  const wrong = [];
+
+  if (slotId === 'cum_cau_con') {
+    const [, , w] = gradeMatching(context, answers.matching);
+    wrong.push(...tag('matching', w));
+  } else if (slotId === 'dung_cum_cau') {
+    const [, , fbW] = gradeArrayAnswers(
+      context.answer_key?.fill_in_the_blank,
+      answers.fill_blank,
+      context.fill_in_the_blank,
+    );
+    const [, , cicW] = gradeArrayAnswers(
+      context.answer_key?.chunk_in_context,
+      answers.chunk_in_context,
+      context.chunk_in_context,
+    );
+    wrong.push(...tag('fill_blank', fbW), ...tag('chunk_in_context', cicW));
+  } else if (slotId === 'nghe_doc_theo') {
+    const [, , w] = gradeTapWords(context, answers.dictation);
+    wrong.push(...tag('dictation', w));
+  } else if (slotId === 'hieu_truyen') {
+    const [, , blW] = gradeBestLine(context, answers.best_line);
+    wrong.push(...tag('best_line', blW));
+    const compItems = (Array.isArray(context.comprehension_questions) ? context.comprehension_questions : [])
+      .filter((q) => ['Find It', 'Language in the Story'].includes(q.section));
+    const [, , compW] = gradeSoftWritten(compItems, answers.comprehension, context);
+    wrong.push(...tag('comprehension', compW));
+  } else if (slotId === 'ke_chuyen_con') {
+    const openItems = (Array.isArray(context.comprehension_questions) ? context.comprehension_questions : [])
+      .filter((q) => ['Open Question', 'Your Turn'].includes(q.section));
+    const [, , w] = gradeSoftWritten(openItems, answers.open_response, context);
+    wrong.push(...tag('open_response', w));
+  }
+
+  return { wrong_items: wrong };
+}
+
 export function gradeLessonSubmission(context, answers = {}) {
   const sections = [];
   let correct = 0;
