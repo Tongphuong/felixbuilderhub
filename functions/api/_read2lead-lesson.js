@@ -50,8 +50,6 @@ export function buildLessonPayload({ accessCode, codeData, pack }) {
 }
 
 export function buildActivities(context) {
-  const levelLabel = String(context.level_label || '').trim();
-  const isL1 = /^L1\b/i.test(levelLabel) || /Beginner/i.test(levelLabel);
   const activities = [];
   const storyText = Array.isArray(context.story_text) ? context.story_text : [];
   if (storyText.length) {
@@ -132,19 +130,16 @@ export function buildActivities(context) {
       index,
       audio_url: sentenceAudios[sentence] || '',
       expected: sentence,
-      shuffled_words: isL1 ? shuffleWordsForTap(sentence, `${context.student_name || 'r2l'}_${index}`) : undefined,
+      shuffled_words: shuffleWordsForTap(sentence, `${context.student_name || 'r2l'}_${index}`),
     }));
     activities.push({
       id: 'nghe_doc_theo',
       type: 'nghe_doc_theo',
       title_vi: '🎧 Nghe & Đọc theo',
-      instruction_vi: isL1
-        ? 'Với mỗi câu: 🔊 Nghe → bấm từng từ theo đúng thứ tự → 🎤 Đọc theo câu mẫu.'
-        : 'Với mỗi câu: 🔊 Nghe → gõ lại câu vừa nghe → 🎤 Đọc theo câu mẫu.',
+      instruction_vi: 'Với mỗi câu: 🔊 Nghe câu mẫu → bấm các từ theo đúng thứ tự để ghép lại câu vừa nghe → 🎤 Đọc theo câu mẫu.',
       parts: [
         {
           kind: 'sentence_unit',
-          is_l1: isL1,
           items: sentenceUnits,
         },
       ],
@@ -258,9 +253,6 @@ export function gradeLessonSubmission(context, answers = {}) {
     });
   };
 
-  const levelLabelGrade = String(context.level_label || '').trim();
-  const isL1Grade = /^L1\b/i.test(levelLabelGrade) || /Beginner/i.test(levelLabelGrade);
-
   // Cluster 1: Cụm câu của con (matching only — chunks_glossary not graded)
   addSection('cum_cau_con', '📚 Cụm câu của con', ...gradeMatching(context, answers.matching));
 
@@ -277,17 +269,25 @@ export function gradeLessonSubmission(context, answers = {}) {
   );
   addSection('dung_cum_cau', '✏️ Dùng cụm câu', fbCorrect + cicCorrect, fbTotal + cicTotal);
 
-  // Cluster 3: Nghe & Đọc theo (dictation OR tap_words; shadowing not graded)
-  if (isL1Grade) {
-    addSection('nghe_doc_theo', '🎧 Nghe & Đọc theo', ...gradeTapWords(context, answers.dictation));
-  } else {
-    addSection('nghe_doc_theo', '🎧 Nghe & Đọc theo', ...gradeDictation(context, answers.dictation));
-  }
+  // Cluster 3: Nghe & Đọc theo (tap_words for every level; shadowing not graded)
+  addSection('nghe_doc_theo', '🎧 Nghe & Đọc theo', ...gradeTapWords(context, answers.dictation));
 
-  // Cluster 4: Hiểu truyện (best_line only — comprehension text is parent-reviewed)
-  addSection('hieu_truyen', '💭 Hiểu truyện', ...gradeBestLine(context, answers.best_line));
+  const comprehensionQuestions = Array.isArray(context.comprehension_questions)
+    ? context.comprehension_questions
+    : [];
 
-  // Cluster 5: Kể chuyện của con — no auto-grade (open_response is parent-reviewed)
+  // Cluster 4: Hiểu truyện (best_line + soft written answers)
+  addSection('hieu_truyen_best', '💭 Hiểu truyện — Câu nghe tự nhiên', ...gradeBestLine(context, answers.best_line));
+  const comprehensionItems = comprehensionQuestions.filter((q) => ['Find It', 'Language in the Story'].includes(q.section));
+  addSection(
+    'hieu_truyen_text',
+    '💭 Hiểu truyện — Trả lời câu hỏi',
+    ...gradeSoftWritten(comprehensionItems, answers.comprehension),
+  );
+
+  // Cluster 5: Kể chuyện của con (soft grade: any writing passes)
+  const openItems = comprehensionQuestions.filter((q) => ['Open Question', 'Your Turn'].includes(q.section));
+  addSection('ke_chuyen_con', '✍️ Kể chuyện của con', ...gradeSoftWritten(openItems, answers.open_response));
 
   const scorePercent = total ? Math.round((correct / total) * 100) : 0;
   const passed = total > 0 && scorePercent >= PASS_THRESHOLD;
@@ -329,6 +329,17 @@ function gradeBestLine(context, answerMap = {}) {
     if (actual !== '' && actual !== null && actual !== undefined && Number(actual) === Number(expectedIdx)) correct += 1;
   });
   return [correct, gradeable];
+}
+
+function gradeSoftWritten(items, answerMap = {}) {
+  const list = Array.isArray(items) ? items : [];
+  if (!list.length) return [0, 0];
+  let correct = 0;
+  list.forEach((_, index) => {
+    const value = answerMap?.[index];
+    if (typeof value === 'string' && value.trim().length > 0) correct += 1;
+  });
+  return [correct, list.length];
 }
 
 function gradeDictation(context, answerMap = {}) {
