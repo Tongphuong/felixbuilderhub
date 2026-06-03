@@ -441,6 +441,7 @@ import Footer from '../../components/Footer.astro';
         open_response: {},
       };
       document.querySelectorAll('[data-answer-type]').forEach((field) => {
+        if (field.type === 'radio' && !field.checked) return;
         const type = field.getAttribute('data-answer-type');
         const index = field.getAttribute('data-answer-index');
         if (!answers[type]) answers[type] = {};
