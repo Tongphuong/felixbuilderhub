@@ -302,14 +302,14 @@ export function gradeLessonSubmission(context, answers = {}) {
   }
   const comprehensionItems = comprehensionQuestions.filter((q) => ['Find It', 'Language in the Story'].includes(q.section));
   {
-    const [c, t, wrong] = gradeSoftWritten(comprehensionItems, answers.comprehension);
+    const [c, t, wrong] = gradeSoftWritten(comprehensionItems, answers.comprehension, context);
     addSection('hieu_truyen_text', '💭 Hiểu truyện — Trả lời câu hỏi', c, t, tagWrong('comprehension', wrong));
   }
 
-  // Cluster 5: Kể chuyện của con (soft grade: any writing passes)
+  // Cluster 5: Kể chuyện của con (soft grade with bilingual keyword pool)
   const openItems = comprehensionQuestions.filter((q) => ['Open Question', 'Your Turn'].includes(q.section));
   {
-    const [c, t, wrong] = gradeSoftWritten(openItems, answers.open_response);
+    const [c, t, wrong] = gradeSoftWritten(openItems, answers.open_response, context);
     addSection('ke_chuyen_con', '✍️ Kể chuyện của con', c, t, tagWrong('open_response', wrong));
   }
 
@@ -357,14 +357,59 @@ function gradeBestLine(context, answerMap = {}) {
   return [correct, gradeable, wrong];
 }
 
-function gradeSoftWritten(items, answerMap = {}) {
+// Tokenize a string into normalized lowercase words ≥2 letters.
+// Pattern accepts Latin (a-z), Vietnamese diacritics (À-ỹ), and digits
+// so kid answers in English OR Vietnamese both tokenize correctly.
+const _WORD_RE = /[a-zA-ZÀ-ỹĐđÀ-ɏ]{2,}/g;
+function _tokenize(value) {
+  const s = String(value || '').toLowerCase();
+  return s.match(_WORD_RE) || [];
+}
+
+function _buildSoftKeywordPool(items, context, currentQuestion = '') {
+  const pool = new Set();
+  const add = (text) => _tokenize(text).forEach((t) => pool.add(t));
+  const ctx = context || {};
+  // Story (EN + VN)
+  if (Array.isArray(ctx.story_text)) ctx.story_text.forEach(add);
+  if (Array.isArray(ctx.story_text_vi)) ctx.story_text_vi.forEach(add);
+  // Power chunks (EN chunk + VN meaning)
+  if (Array.isArray(ctx.power_chunks)) {
+    ctx.power_chunks.forEach((c) => {
+      add(c?.chunk);
+      add(c?.meaning);
+      add(c?.example);
+    });
+  }
+  // All questions text in the items set (gives kid credit for repeating any keyword from any question)
+  (Array.isArray(items) ? items : []).forEach((it) => add(it?.question));
+  add(currentQuestion);
+  return pool;
+}
+
+// Soft-grade rule (after pilot feedback that "asdf" was passing):
+//   Pass requires BOTH:
+//     (a) ≥3 word tokens (letters only, length ≥2 each)
+//     (b) ≥1 token overlap with a bilingual keyword pool built from
+//         story_text + story_text_vi + power_chunks + question text
+//   Bilingual: works whether kid writes in English or Vietnamese.
+function gradeSoftWritten(items, answerMap = {}, context = {}) {
   const list = Array.isArray(items) ? items : [];
   if (!list.length) return [0, 0, []];
+  const pool = _buildSoftKeywordPool(list, context);
+  const MIN_TOKENS = 3;
   let correct = 0;
   const wrong = [];
-  list.forEach((_, index) => {
-    const value = answerMap?.[index];
-    if (typeof value === 'string' && value.trim().length > 0) correct += 1;
+  list.forEach((item, index) => {
+    const tokens = _tokenize(answerMap?.[index]);
+    if (tokens.length < MIN_TOKENS) {
+      wrong.push(index);
+      return;
+    }
+    // Allow per-item question keywords too (already in pool from buildKeywordPool,
+    // but kept here for clarity if pool building changes later)
+    const overlap = tokens.some((t) => pool.has(t));
+    if (overlap) correct += 1;
     else wrong.push(index);
   });
   return [correct, list.length, wrong];
