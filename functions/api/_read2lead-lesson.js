@@ -240,7 +240,7 @@ export function gradeLessonSubmission(context, answers = {}) {
   let correct = 0;
   let total = 0;
 
-  const addSection = (id, title, sectionCorrect, sectionTotal) => {
+  const addSection = (id, title, sectionCorrect, sectionTotal, wrongItems = []) => {
     if (!sectionTotal) return;
     correct += sectionCorrect;
     total += sectionTotal;
@@ -250,44 +250,64 @@ export function gradeLessonSubmission(context, answers = {}) {
       correct: sectionCorrect,
       total: sectionTotal,
       passed: sectionCorrect === sectionTotal,
+      wrong_items: Array.isArray(wrongItems) ? wrongItems : [],
     });
   };
 
+  const tagWrong = (type, indices) => (Array.isArray(indices) ? indices : []).map((index) => ({ type, index }));
+
   // Cluster 1: Cụm câu của con (matching only — chunks_glossary not graded)
-  addSection('cum_cau_con', '📚 Cụm câu của con', ...gradeMatching(context, answers.matching));
+  {
+    const [c, t, wrong] = gradeMatching(context, answers.matching);
+    addSection('cum_cau_con', '📚 Cụm câu của con', c, t, tagWrong('matching', wrong));
+  }
 
   // Cluster 2: Dùng cụm câu (fill_blank + chunk_in_context combined)
-  const [fbCorrect, fbTotal] = gradeArrayAnswers(
+  const [fbCorrect, fbTotal, fbWrong] = gradeArrayAnswers(
     context.answer_key?.fill_in_the_blank,
     answers.fill_blank,
     context.fill_in_the_blank,
   );
-  const [cicCorrect, cicTotal] = gradeArrayAnswers(
+  const [cicCorrect, cicTotal, cicWrong] = gradeArrayAnswers(
     context.answer_key?.chunk_in_context,
     answers.chunk_in_context,
     context.chunk_in_context,
   );
-  addSection('dung_cum_cau', '✏️ Dùng cụm câu', fbCorrect + cicCorrect, fbTotal + cicTotal);
+  addSection(
+    'dung_cum_cau',
+    '✏️ Dùng cụm câu',
+    fbCorrect + cicCorrect,
+    fbTotal + cicTotal,
+    [...tagWrong('fill_blank', fbWrong), ...tagWrong('chunk_in_context', cicWrong)],
+  );
 
   // Cluster 3: Nghe & Đọc theo (tap_words for every level; shadowing not graded)
-  addSection('nghe_doc_theo', '🎧 Nghe & Đọc theo', ...gradeTapWords(context, answers.dictation));
+  {
+    const [c, t, wrong] = gradeTapWords(context, answers.dictation);
+    addSection('nghe_doc_theo', '🎧 Nghe & Đọc theo', c, t, tagWrong('dictation', wrong));
+  }
 
   const comprehensionQuestions = Array.isArray(context.comprehension_questions)
     ? context.comprehension_questions
     : [];
 
   // Cluster 4: Hiểu truyện (best_line + soft written answers)
-  addSection('hieu_truyen_best', '💭 Hiểu truyện — Câu nghe tự nhiên', ...gradeBestLine(context, answers.best_line));
+  {
+    const [c, t, wrong] = gradeBestLine(context, answers.best_line);
+    addSection('hieu_truyen_best', '💭 Hiểu truyện — Câu nghe tự nhiên', c, t, tagWrong('best_line', wrong));
+  }
   const comprehensionItems = comprehensionQuestions.filter((q) => ['Find It', 'Language in the Story'].includes(q.section));
-  addSection(
-    'hieu_truyen_text',
-    '💭 Hiểu truyện — Trả lời câu hỏi',
-    ...gradeSoftWritten(comprehensionItems, answers.comprehension),
-  );
+  {
+    const [c, t, wrong] = gradeSoftWritten(comprehensionItems, answers.comprehension);
+    addSection('hieu_truyen_text', '💭 Hiểu truyện — Trả lời câu hỏi', c, t, tagWrong('comprehension', wrong));
+  }
 
   // Cluster 5: Kể chuyện của con (soft grade: any writing passes)
   const openItems = comprehensionQuestions.filter((q) => ['Open Question', 'Your Turn'].includes(q.section));
-  addSection('ke_chuyen_con', '✍️ Kể chuyện của con', ...gradeSoftWritten(openItems, answers.open_response));
+  {
+    const [c, t, wrong] = gradeSoftWritten(openItems, answers.open_response);
+    addSection('ke_chuyen_con', '✍️ Kể chuyện của con', c, t, tagWrong('open_response', wrong));
+  }
 
   const scorePercent = total ? Math.round((correct / total) * 100) : 0;
   const passed = total > 0 && scorePercent >= PASS_THRESHOLD;
@@ -310,6 +330,7 @@ function gradeBestLine(context, answerMap = {}) {
   // Defensive: prefer answer_key, fall back to item.correct_index. Skip if both unavailable.
   let correct = 0;
   let gradeable = 0;
+  const wrong = [];
   items.forEach((item, index) => {
     const fromKey = keyList[index];
     const fromItem = item && typeof item.correct_index === 'number' ? item.correct_index : undefined;
@@ -327,45 +348,52 @@ function gradeBestLine(context, answerMap = {}) {
     gradeable += 1;
     const actual = getIndexedAnswer(answerMap, index);
     if (actual !== '' && actual !== null && actual !== undefined && Number(actual) === Number(expectedIdx)) correct += 1;
+    else wrong.push(index);
   });
-  return [correct, gradeable];
+  return [correct, gradeable, wrong];
 }
 
 function gradeSoftWritten(items, answerMap = {}) {
   const list = Array.isArray(items) ? items : [];
-  if (!list.length) return [0, 0];
+  if (!list.length) return [0, 0, []];
   let correct = 0;
+  const wrong = [];
   list.forEach((_, index) => {
     const value = answerMap?.[index];
     if (typeof value === 'string' && value.trim().length > 0) correct += 1;
+    else wrong.push(index);
   });
-  return [correct, list.length];
+  return [correct, list.length, wrong];
 }
 
 function gradeDictation(context, answerMap = {}) {
   const expected = Array.isArray(context.shadowing_sentences) ? context.shadowing_sentences : [];
   let correct = 0;
+  const wrong = [];
   expected.forEach((sentence, index) => {
     const actual = getIndexedAnswer(answerMap, index);
     const normA = normalizeText(actual);
     const normE = normalizeText(sentence);
-    if (!normA) return;
+    if (!normA) { wrong.push(index); return; }
     // Tolerance: 1 edit per ~8 chars, minimum 2, max 15% of length
     const tolerance = Math.max(2, Math.min(Math.floor(normE.length / 8), Math.floor(normE.length * 0.15)));
     if (levenshtein(normA, normE) <= tolerance) correct += 1;
+    else wrong.push(index);
   });
-  return [correct, expected.length];
+  return [correct, expected.length, wrong];
 }
 
 function gradeTapWords(context, answerMap = {}) {
   const expected = Array.isArray(context.shadowing_sentences) ? context.shadowing_sentences : [];
   let correct = 0;
+  const wrong = [];
   expected.forEach((sentence, index) => {
     const actual = getIndexedAnswer(answerMap, index);
-    if (!actual) return;
+    if (!actual) { wrong.push(index); return; }
     if (normalizeText(actual) === normalizeText(sentence)) correct += 1;
+    else wrong.push(index);
   });
-  return [correct, expected.length];
+  return [correct, expected.length, wrong];
 }
 
 function levenshtein(a, b) {
@@ -397,6 +425,7 @@ function gradeMatching(context, answerMap = {}) {
   const chunks = Array.isArray(context.power_chunks) ? context.power_chunks : [];
   let correct = 0;
   let gradeable = 0;
+  const wrong = [];
   items.forEach((chunk, index) => {
     const chunkEntry = chunks.find((item) => normalizeText(item.chunk) === normalizeText(chunk));
     const expectedMeaning = chunkEntry?.meaning || '';
@@ -414,8 +443,9 @@ function gradeMatching(context, answerMap = {}) {
     gradeable += 1;
     const actual = getIndexedAnswer(answerMap, index);
     if (normalizeText(actual) === normalizeText(expectedMeaning)) correct += 1;
+    else wrong.push(index);
   });
-  return [correct, gradeable];
+  return [correct, gradeable, wrong];
 }
 
 function gradeArrayAnswers(expectedList, answerMap = {}, promptList = null) {
@@ -429,12 +459,14 @@ function gradeArrayAnswers(expectedList, answerMap = {}, promptList = null) {
     gradeable = Math.min(prompts.length, expected.length);
   }
   let correct = 0;
+  const wrong = [];
   for (let index = 0; index < gradeable; index += 1) {
     const item = expected[index];
     if (item === undefined) continue;
     if (normalizeText(getIndexedAnswer(answerMap, index)) === normalizeText(item)) correct += 1;
+    else wrong.push(index);
   }
-  return [correct, gradeable];
+  return [correct, gradeable, wrong];
 }
 
 function gradeStoryOrder(expectedList, answerMap = {}) {

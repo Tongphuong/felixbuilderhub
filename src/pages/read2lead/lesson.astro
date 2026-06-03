@@ -1207,19 +1207,26 @@ import Footer from '../../components/Footer.astro';
         ${miniPracticeHtml}
         <p class="mt-3 text-lg text-cream-muted">Điểm: <strong class="text-gold-light">${scorePercent}%</strong> · Đúng ${result.correct_count || 0}/${result.total_count || 0} phần được chấm</p>
         <div class="mt-5 grid gap-3 md:grid-cols-2">
-          ${sections.map((section) => `
-            <div class="rounded-lg border ${section.passed ? 'border-green-500/30 bg-green-500/10' : 'border-red-500/30 bg-red-500/10'} p-4">
-              <p class="font-semibold ${section.passed ? 'text-green-300' : 'text-red-300'}">${section.passed ? '✅' : '🔄'} ${escapeHtml(section.title)}</p>
-              <p class="mt-1 text-sm text-cream-muted">${section.correct}/${section.total} đúng</p>
-            </div>
-          `).join('')}
+          ${sections.map((section) => {
+            const wrongCount = Array.isArray(section.wrong_items) ? section.wrong_items.length : 0;
+            const wrongLabel = (!section.passed && wrongCount > 0)
+              ? `<p class="mt-1 text-xs text-red-200">Câu cần sửa: ${section.wrong_items.map((w) => Number(w.index) + 1).join(', ')}</p>`
+              : '';
+            return `
+              <div class="rounded-lg border ${section.passed ? 'border-green-500/30 bg-green-500/10' : 'border-red-500/30 bg-red-500/10'} p-4">
+                <p class="font-semibold ${section.passed ? 'text-green-300' : 'text-red-300'}">${section.passed ? '✅' : '🔄'} ${escapeHtml(section.title)}</p>
+                <p class="mt-1 text-sm text-cream-muted">${section.correct}/${section.total} đúng</p>
+                ${wrongLabel}
+              </div>
+            `;
+          }).join('')}
         </div>
         <div class="mt-5 rounded-lg border border-cream-dim/20 bg-navy-950/70 p-4">
           <p class="font-semibold text-cream">${escapeHtml(feedbackVi.summary || result.message || '')}</p>
           <p class="mt-2 text-sm leading-relaxed text-cream-muted">${escapeHtml(feedbackVi.parent_next_step || (passed ? 'Bố mẹ có thể tạo bài tiếp theo cho con.' : 'Bố mẹ cho con sửa lại rồi nộp lại nhé.'))}</p>
         </div>
         <div class="mt-6 flex flex-col gap-3 sm:flex-row">
-          ${passed ? '<a href="/read2lead#form" class="inline-flex justify-center rounded-lg bg-accent px-5 py-3 font-semibold text-navy-950 transition hover:bg-accent-hover">Tạo bài tiếp theo</a>' : '<button id="retry-lesson" type="button" class="inline-flex justify-center rounded-lg bg-accent px-5 py-3 font-semibold text-navy-950 transition hover:bg-accent-hover">Làm lại phần chưa chắc</button>'}
+          ${passed ? '<a href="/read2lead#form" class="inline-flex justify-center rounded-lg bg-accent px-5 py-3 font-semibold text-navy-950 transition hover:bg-accent-hover">Tạo bài tiếp theo</a>' : '<button id="retry-lesson" type="button" class="inline-flex justify-center rounded-lg bg-accent px-5 py-3 font-semibold text-navy-950 transition hover:bg-accent-hover">🔄 Sửa câu sai</button>'}
           <a href="/read2lead/review" class="inline-flex justify-center rounded-lg border border-gold px-5 py-3 font-semibold text-gold-light transition hover:bg-gold hover:text-navy-950">Về Felixar</a>
         </div>
       `;
@@ -1231,7 +1238,94 @@ import Footer from '../../components/Footer.astro';
         if (reward.voice) setTimeout(() => playSfx(reward.voice, 0.75), 600);
       }
       const retry = document.getElementById('retry-lesson');
-      if (retry) retry.addEventListener('click', () => lessonCard.scrollIntoView({ behavior: 'smooth' }));
+      if (retry) retry.addEventListener('click', () => highlightAndJumpToWrong(sections));
+    }
+
+    // Section ID -> activity slot ID mapping (cluster 4 has 2 sections in 1 slot)
+    const SECTION_TO_SLOT_ID = {
+      cum_cau_con: 'cum_cau_con',
+      dung_cum_cau: 'dung_cum_cau',
+      nghe_doc_theo: 'nghe_doc_theo',
+      hieu_truyen_best: 'hieu_truyen',
+      hieu_truyen_text: 'hieu_truyen',
+      ke_chuyen_con: 'ke_chuyen_con',
+    };
+
+    function highlightAndJumpToWrong(sections) {
+      // Clear stale highlights from previous attempt
+      document.querySelectorAll('[data-wrong-marked]').forEach((el) => {
+        el.classList.remove('ring-2', 'ring-red-500', 'border-red-500');
+        el.removeAttribute('data-wrong-marked');
+      });
+      const failed = (sections || []).filter((s) => !s.passed && Array.isArray(s.wrong_items) && s.wrong_items.length);
+      if (!failed.length) {
+        lessonCard.scrollIntoView({ behavior: 'smooth' });
+        return;
+      }
+      let firstWrongEl = null;
+      failed.forEach((section) => {
+        section.wrong_items.forEach((item) => {
+          const type = item && item.type;
+          const idx = item && item.index;
+          if (typeof type !== 'string' || typeof idx !== 'number') return;
+          document.querySelectorAll(`[data-answer-type="${type}"][data-answer-index="${idx}"]`).forEach((el) => {
+            el.setAttribute('data-wrong-marked', '1');
+            // Visual: red ring around the input
+            el.classList.add('ring-2', 'ring-red-500');
+            // Clear the value so kid re-answers
+            if (el.tagName === 'SELECT') {
+              el.value = '';
+            } else if (el.tagName === 'TEXTAREA') {
+              el.value = '';
+            } else if (el.tagName === 'INPUT') {
+              if (el.type === 'radio') {
+                el.checked = false;
+                // For tap-words hidden input, also clear the visual answer slots
+                if (el.getAttribute('data-answer-type') === 'dictation') el.value = '';
+              } else {
+                el.value = '';
+              }
+            }
+            // Mark surrounding card too
+            const card = el.closest('[data-shadow-card], [data-tap-card], label, fieldset');
+            if (card) {
+              card.classList.add('border-red-500');
+              card.setAttribute('data-wrong-marked', '1');
+            }
+            if (!firstWrongEl) firstWrongEl = el;
+          });
+          // Tap-words special: clear visible answer pool + reset pool chips
+          if (type === 'dictation') {
+            const tapCard = document.querySelector(`[data-tap-card-index="${idx}"]`);
+            if (tapCard) {
+              const answerBox = tapCard.querySelector(`[data-tap-answer="${idx}"]`);
+              if (answerBox) answerBox.innerHTML = '';
+              tapCard.querySelectorAll('[data-tap-word][data-tap-source="answer"]').forEach((chip) => {
+                chip.setAttribute('data-tap-source', 'pool');
+                const pool = tapCard.querySelector(`[data-tap-pool="${idx}"]`);
+                if (pool) pool.appendChild(chip);
+              });
+            }
+          }
+        });
+      });
+      // Jump pagination to the slot containing the first failed section
+      const firstFailedSection = failed[0];
+      const targetSlotId = SECTION_TO_SLOT_ID[firstFailedSection.id];
+      if (targetSlotId && Array.isArray(activitySequence)) {
+        const slotIdx = activitySequence.indexOf(targetSlotId);
+        if (slotIdx >= 0 && typeof showActivity === 'function') {
+          showActivity(slotIdx);
+        }
+      }
+      // Scroll to first wrong input
+      setTimeout(() => {
+        if (firstWrongEl && typeof firstWrongEl.scrollIntoView === 'function') {
+          firstWrongEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        } else {
+          lessonCard.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 50);
     }
 
     form.addEventListener('submit', async (event) => {
