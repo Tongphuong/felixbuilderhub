@@ -1,0 +1,61 @@
+# Environment bindings — felixbuilderhub.com
+Reference for all `env.X` references inside Cloudflare Pages Functions.
+Bindings are configured in Cloudflare Pages dashboard → Settings →
+Environment variables and bindings. This doc is the source of truth;
+when adding a new binding, update this file FIRST, then add to Cloudflare,
+then reference in code.
+## KV Namespaces
+| Binding | Purpose | Used by |
+|---|---|---|
+| `READ2LEAD_CODES` | Single KV namespace storing per-student access codes + nested pack data (progress, current_pack, review_context). Acts as primary persistence for Read2Lead. | 13 endpoints: generate-read2lead-pack, check-generation-status, read2lead-lesson, read2lead-progress, read2lead-leaderboard, submit-read2lead-lesson, grade-slot, review-read2lead-speaking, task-state, admin/codes (list + create), admin/codes/[code] (read + update + delete) |
+## Secrets
+| Binding | Purpose | Used by | Source |
+|---|---|---|---|
+| `READ2LEAD_BACKEND_URL` | Base URL of the Read2Lead Python service on Render (e.g., `https://read2lead-api-xxx.onrender.com`). Used to forward generation requests + voice samples. | generate-read2lead-pack, review-read2lead-speaking | Render service URL |
+| `READ2LEAD_BACKEND_SECRET` | Shared HMAC-style token. Hub sends as header when calling backend; backend sends as header on task-state callback to hub. Bidirectional auth. | generate-read2lead-pack, task-state, review-read2lead-speaking | Manually set (must match `READ2LEAD_BACKEND_SECRET` on Render side) |
+| `ADMIN_PASSWORD` | Password for `/admin/*` routes. Validated by `functions/_middleware.js`. | _middleware | Manually set |
+| `TELEGRAM_BOT_TOKEN` | Bot token for the Felix lead-bot Telegram bot. Used to push lead notifications. | coaching-booking, msmw-lead, sharing-subscribe, review-read2lead-speaking | https://t.me/BotFather |
+| `TELEGRAM_CHAT_ID` | Chat ID where bot messages land (Phương's chat). | Same as `TELEGRAM_BOT_TOKEN` consumers | Bot getUpdates response |
+## Variables (non-secret)
+None currently. Add to this table when introduced.
+## Per-endpoint binding matrix
+| Endpoint | KV | Backend URL | Backend Secret | Admin PW | Telegram |
+|---|---|---|---|---|---|
+| `_middleware.js` | — | — | — | ✓ | — |
+| `api/generate-read2lead-pack.js` | ✓ | ✓ | ✓ | — | — |
+| `api/check-generation-status.js` | ✓ | — | — | — | — |
+| `api/task-state.js` | ✓ | — | ✓ | — | — |
+| `api/read2lead-lesson.js` | ✓ | — | — | — | — |
+| `api/read2lead-progress.js` | ✓ | — | — | — | — |
+| `api/read2lead-leaderboard.js` | ✓ | — | — | — | — |
+| `api/submit-read2lead-lesson.js` | ✓ | — | — | — | — |
+| `api/grade-slot.js` | ✓ | — | — | — | — |
+| `api/review-read2lead-speaking.js` | ✓ | ✓ | ✓ | — | ✓ |
+| `api/admin/codes.js` | ✓ | — | — | — | — |
+| `api/admin/codes/[code].js` | ✓ | — | — | — | — |
+| `api/coaching-booking.js` | — | — | — | — | ✓ |
+| `api/msmw-lead.js` | — | — | — | — | ✓ |
+| `api/sharing-subscribe.js` | — | — | — | — | ✓ |
+Endpoints `_rate-limit.js` and `_read2lead-lesson.js` are internal
+helpers and consume `env` only via callers above.
+## Setup checklist (Cloudflare Pages dashboard)
+When deploying to a fresh Cloudflare Pages project (e.g., preview branch
+or new account):
+1. KV → create namespace, bind as `READ2LEAD_CODES` (same name for both
+   Production and Preview environments).
+2. Environment variables → add (Encrypt for all secrets):
+   - `READ2LEAD_BACKEND_URL`
+   - `READ2LEAD_BACKEND_SECRET`
+   - `ADMIN_PASSWORD`
+   - `TELEGRAM_BOT_TOKEN`
+   - `TELEGRAM_CHAT_ID`
+3. On the Render side, ensure `READ2LEAD_BACKEND_SECRET` matches exactly.
+4. Verify by hitting `/api/check-generation-status?code=...&pack_id=...`
+   — should return JSON, not 500.
+## Drift detection (manual)
+Run this grep periodically; new bindings must appear in this doc:
+cd D:/felixbuilderhub
+grep -rohE "env\.[A-Z][A-Z0-9_]+" functions/ | sort -u
+
+Compare output to the bindings listed in the Secrets and KV tables
+above. Any binding in the grep output but not in this doc = undocumented.
