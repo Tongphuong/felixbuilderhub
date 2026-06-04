@@ -723,6 +723,49 @@ import Footer from '../../components/Footer.astro';
       return answers;
     }
 
+    // Per-slot subset of collectAnswers used by inline grade-slot fetch.
+    function collectAnswersInSlot(slot) {
+      const answers = {};
+      if (!slot) return answers;
+      slot.querySelectorAll('[data-answer-type]').forEach((field) => {
+        if (field.type === 'radio' && !field.checked) return;
+        const type = field.getAttribute('data-answer-type');
+        const index = field.getAttribute('data-answer-index');
+        if (!answers[type]) answers[type] = {};
+        answers[type][index] = field.value || '';
+      });
+      return answers;
+    }
+
+    // After /api/grade-slot returns, mark wrong cells with red ring + label
+    // but DO NOT clear values (kid keeps their answer to compare). The next
+    // submit re-evaluates everything; the retry button from 68f04a5 still
+    // handles full-clear if kid wants a clean slate.
+    function markSlotWrongInline(slot, wrongItems) {
+      if (!slot || !Array.isArray(wrongItems) || !wrongItems.length) return;
+      // Clear stale per-slot marks from a previous "Tiếp theo" press
+      slot.querySelectorAll('[data-slot-wrong]').forEach((el) => {
+        el.classList.remove('ring-2', 'ring-red-500');
+        el.removeAttribute('data-slot-wrong');
+      });
+      slot.querySelectorAll('[data-slot-wrong-label]').forEach((el) => el.remove());
+      wrongItems.forEach((w) => {
+        if (!w || typeof w.type !== 'string' || typeof w.index !== 'number') return;
+        slot.querySelectorAll(`[data-answer-type="${w.type}"][data-answer-index="${w.index}"]`).forEach((el) => {
+          el.classList.add('ring-2', 'ring-red-500');
+          el.setAttribute('data-slot-wrong', '1');
+          const card = el.closest('[data-shadow-card], [data-tap-card], label, fieldset');
+          if (card && !card.querySelector('[data-slot-wrong-label]')) {
+            const label = document.createElement('p');
+            label.setAttribute('data-slot-wrong-label', '1');
+            label.className = 'mt-2 text-xs font-semibold text-red-300';
+            label.textContent = '🔄 Câu này sai — kiểm tra lại';
+            card.appendChild(label);
+          }
+        });
+      });
+    }
+
     function showStep(name, { scroll = false } = {}) {
       if (!stepSections[name]) return;
       currentStep = name;
@@ -957,7 +1000,7 @@ import Footer from '../../components/Footer.astro';
       setTimeout(() => overlay.classList.add('hidden'), 1500);
     }
 
-    function goNextActivity() {
+    async function goNextActivity() {
       const slot = document.querySelector(`[data-activity-slot="${currentActivityIdx}"]`);
       if (!isActivitySlotComplete(slot)) {
         playSoftBoop();
@@ -971,6 +1014,43 @@ import Footer from '../../components/Footer.astro';
           }
         }
         return;
+      }
+      // Inline per-slot grade so kid sees "Câu này sai" before advancing.
+      // Fail-open: any network/api error just skips the inline mark and advances.
+      const nextBtn = document.getElementById('activity-next');
+      const slotId = activitySequence[currentActivityIdx];
+      let wrongItems = [];
+      const originalLabel = nextBtn ? nextBtn.textContent : '';
+      if (nextBtn) {
+        nextBtn.disabled = true;
+        nextBtn.textContent = 'Đang chấm…';
+      }
+      try {
+        const res = await fetch('/api/grade-slot', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            access_code: accessCode,
+            pack_id: packId,
+            slot_id: slotId,
+            answers: collectAnswersInSlot(slot),
+          }),
+        });
+        if (res.ok) {
+          const data = await res.json().catch(() => ({}));
+          if (data && Array.isArray(data.wrong_items)) wrongItems = data.wrong_items;
+        }
+      } catch (err) {
+        console.warn('[grade-slot] fetch failed, advancing without inline grade:', err);
+      } finally {
+        if (nextBtn) {
+          nextBtn.disabled = false;
+          nextBtn.textContent = originalLabel;
+        }
+      }
+      if (wrongItems.length) {
+        markSlotWrongInline(slot, wrongItems);
+        showToast(`Có ${wrongItems.length} câu sai. Con có thể qua tiếp hoặc sửa lại 💪`);
       }
       const voiceText = playPageComplete();
       showCelebration(voiceText);
