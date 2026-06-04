@@ -291,6 +291,7 @@ import Footer from '../../components/Footer.astro';
     let listenCompletedAt = null;
     let readCompletedAt = null;
     const shadowRecordings = new Map();
+    const voiceRecordings = new Map();
     let sentenceListenAudio = null;
     let activitySequence = [];
     let currentActivityIdx = 0;
@@ -529,7 +530,10 @@ import Footer from '../../components/Footer.astro';
               <span class="block text-sm font-semibold text-gold-light">${escapeHtml(item.section)}</span>
               <span class="mt-1 block font-semibold text-cream">${escapeHtml(item.question)}</span>
               ${hint}
-              <textarea data-answer-type="${part.kind}" data-answer-index="${item.index}" rows="3" class="mt-3 w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-4 py-3 text-base text-cream placeholder:text-cream-dim/70 focus:border-accent focus:outline-none" placeholder="Con viết câu trả lời ở đây"></textarea>
+              <div class="mt-3 flex items-start gap-2">
+                <textarea data-answer-type="${part.kind}" data-answer-index="${item.index}" rows="3" class="flex-1 rounded-lg border border-cream-dim/30 bg-navy-950 px-4 py-3 text-base text-cream placeholder:text-cream-dim/70 focus:border-accent focus:outline-none" placeholder="Con kể cho Minny nghe 🐦 (viết hoặc bấm 🎤 để nói)"></textarea>
+                <button type="button" data-voice-record data-voice-target-type="${part.kind}" data-voice-target-index="${item.index}" class="rounded-md border border-accent/40 bg-accent/10 p-2 text-accent transition hover:bg-accent hover:text-navy-950" title="Bấm để nói thay vì viết">🎤</button>
+              </div>
             </label>
           `;
         }).join('');
@@ -1185,6 +1189,61 @@ import Footer from '../../components/Footer.astro';
           await sentenceListenAudio.play();
         } catch (err) {
           console.warn('[sentence-listen] play failed:', err);
+        }
+        return;
+      }
+
+      const voiceBtn = event.target.closest('[data-voice-record]');
+      if (voiceBtn) {
+        const type = voiceBtn.getAttribute('data-voice-target-type');
+        const idx = voiceBtn.getAttribute('data-voice-target-index');
+        if (!type || idx === null) return;
+        const key = `${type}:${idx}`;
+        const existing = voiceRecordings.get(key);
+        if (existing?.mediaRecorder && existing.mediaRecorder.state === 'recording') {
+          existing.mediaRecorder.stop();
+          return;
+        }
+
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+          const chunks = [];
+          const mediaRecorder = new MediaRecorder(stream);
+          mediaRecorder.addEventListener('dataavailable', (e) => {
+            if (e.data.size > 0) chunks.push(e.data);
+          });
+          mediaRecorder.addEventListener('stop', () => {
+            const blob = new Blob(chunks, { type: mediaRecorder.mimeType || 'audio/webm' });
+            const blobUrl = URL.createObjectURL(blob);
+            const prev = voiceRecordings.get(key);
+            if (prev?.blobUrl) URL.revokeObjectURL(prev.blobUrl);
+            voiceRecordings.set(key, { mediaRecorder: null, blobUrl });
+            const textarea = document.querySelector(`textarea[data-answer-type="${CSS.escape(type)}"][data-answer-index="${CSS.escape(idx)}"]`);
+            if (textarea) {
+              const seconds = Math.max(1, Math.round(blob.size / 16000));
+              if (!textarea.value.trim()) {
+                textarea.value = `[Con đã ghi âm câu trả lời ${seconds} giây — bố mẹ nghe lại với con]`;
+                textarea.dispatchEvent(new Event('input', { bubbles: true }));
+              }
+              let audio = textarea.parentElement.querySelector('audio[data-voice-playback]');
+              if (!audio) {
+                audio = document.createElement('audio');
+                audio.setAttribute('data-voice-playback', '1');
+                audio.controls = true;
+                audio.className = 'mt-2 w-full';
+                textarea.parentElement.appendChild(audio);
+              }
+              audio.src = blobUrl;
+            }
+            voiceBtn.textContent = '🎤';
+            stream.getTracks().forEach((track) => track.stop());
+          });
+          voiceRecordings.set(key, { mediaRecorder, blobUrl: existing?.blobUrl || null });
+          voiceBtn.textContent = '⏹ Dừng';
+          mediaRecorder.start();
+        } catch (err) {
+          console.warn('[voice-record] mic permission denied or unavailable:', err);
+          showToast('Bố mẹ cho phép microphone để con nói nhé');
         }
         return;
       }
