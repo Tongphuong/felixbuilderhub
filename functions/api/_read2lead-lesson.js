@@ -6,6 +6,35 @@ export function isPackReviewed(pack) {
   return Boolean(pack && REVIEWED_STATUSES.has(pack.status));
 }
 
+export function pickPackAssets(context) {
+  const topic = String(context?.topic || '').toLowerCase();
+  let setting = 'park';
+  if (/school|class|recess|classroom/.test(topic)) setting = 'school';
+  else if (/home|family|cook|kitchen/.test(topic)) setting = 'home';
+  else if (/garden|outdoor|nature|park/.test(topic)) setting = 'park';
+
+  const chunkText = (Array.isArray(context?.power_chunks) ? context.power_chunks : [])
+    .map((chunk) => String(chunk?.chunk || ''))
+    .join(' ')
+    .toLowerCase();
+  let animal = '';
+  for (const candidate of ['puppy', 'kitten', 'hamster', 'bird', 'fish', 'rabbit']) {
+    if (chunkText.includes(candidate)) {
+      animal = candidate;
+      break;
+    }
+  }
+
+  return {
+    minny_idle: '/assets/r2l/minny/idle.png',
+    minny_clap: '/assets/r2l/minny/clap.png',
+    minny_dance: '/assets/r2l/minny/dance.png',
+    kid_reading: '/assets/r2l/kid/reading.png',
+    setting: `/assets/r2l/settings/${setting}.png`,
+    animal: animal ? `/assets/r2l/animals/${animal}.png` : '',
+  };
+}
+
 export function normalizeProgress(codeData) {
   const profile = codeData.student_profile || {};
   const progress = codeData.progress || {};
@@ -45,6 +74,7 @@ export function buildLessonPayload({ accessCode, codeData, pack }) {
     mp3_url: pack.mp3_url || '',
     pdf_url: pack.pdf_url || '',
     status: pack.status,
+    assets: pickPackAssets(context),
     activities,
   };
 }
