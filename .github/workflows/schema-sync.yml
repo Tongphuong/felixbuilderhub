@@ -1,0 +1,42 @@
+name: schema-sync
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'schemas/pack.schema.json'
+  push:
+    branches: [main]
+    paths:
+      - 'schemas/pack.schema.json'
+
+jobs:
+  drift-check:
+    name: Diff hub schema vs R2L mirror (warn-only)
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - name: Checkout hub
+        uses: actions/checkout@v4
+        with:
+          path: hub
+
+      - name: Checkout R2L backend (sister repo)
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.repository_owner }}/read2lead_v0_codex
+          path: r2l
+          token: ${{ secrets.GITHUB_TOKEN }}
+        continue-on-error: true
+
+      - name: Diff schemas
+        run: |
+          if [ ! -f r2l/schemas/pack.schema.json ]; then
+            echo "::warning::R2L mirror schema not found. Either the repo name in this workflow is wrong, or R2L hasn't created schemas/ yet."
+            exit 0
+          fi
+          if diff -u hub/schemas/pack.schema.json r2l/schemas/pack.schema.json; then
+            echo "Schemas are in sync."
+          else
+            echo "::warning::DRIFT: hub schemas/pack.schema.json differs from R2L schemas/pack.schema.json. After merging this PR, copy the hub schema verbatim to D:/Read2lead/read2lead_v0_codex/schemas/pack.schema.json and commit there too."
+          fi
