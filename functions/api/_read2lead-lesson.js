@@ -125,7 +125,7 @@ export function buildActivities(context) {
 
   const chunkOptions = chunks.map((item) => item.chunk || '').filter(Boolean);
   const fillBlanks = Array.isArray(context.fill_in_the_blank) ? context.fill_in_the_blank : [];
-  const contextSentences = Array.isArray(context.chunk_in_context) ? context.chunk_in_context : [];
+  const contextSentences = Array.isArray(context.story_cloze) ? context.story_cloze : [];
 
   if ((fillBlanks.length || contextSentences.length) && chunkOptions.length) {
     const parts = [];
@@ -138,8 +138,8 @@ export function buildActivities(context) {
     }
     if (contextSentences.length) {
       parts.push({
-        kind: 'chunk_in_context',
-        sub_title_vi: 'Phần B — Dùng cụm câu trong tình huống mới',
+        kind: 'story_cloze',
+        sub_title_vi: 'Phần B — Tìm cụm câu đúng trong truyện',
         items: contextSentences.map((sentence, index) => ({ index, sentence, options: chunkOptions })),
       });
     }
@@ -147,7 +147,9 @@ export function buildActivities(context) {
       id: 'dung_cum_cau',
       type: 'dung_cum_cau',
       title_vi: '✏️ Dùng cụm câu',
-      instruction_vi: 'Chọn cụm câu phù hợp cho mỗi chỗ trống 🎯. Có 2 phần nhỏ phía dưới.',
+      instruction_vi: parts.length > 1
+        ? 'Chọn cụm câu phù hợp cho mỗi chỗ trống 🎯. Có 2 phần nhỏ phía dưới.'
+        : 'Chọn cụm câu phù hợp cho mỗi chỗ trống 🎯.',
       parts,
     });
   }
@@ -290,12 +292,15 @@ export function gradeSingleSlot(context, answers = {}, slotId = '') {
       answers.fill_blank,
       context.fill_in_the_blank,
     );
-    const [, , cicW] = gradeArrayAnswers(
-      context.answer_key?.chunk_in_context,
-      answers.chunk_in_context,
-      context.chunk_in_context,
-    );
-    wrong.push(...tag('fill_blank', fbW), ...tag('chunk_in_context', cicW));
+    let scW = [];
+    if (Array.isArray(context.story_cloze) && context.story_cloze.length) {
+      [, , scW] = gradeArrayAnswers(
+        context.answer_key?.story_cloze,
+        answers.story_cloze,
+        context.story_cloze,
+      );
+    }
+    wrong.push(...tag('fill_blank', fbW), ...tag('story_cloze', scW));
   } else if (slotId === 'nghe_doc_theo') {
     const [, , w] = gradeTapWords(context, answers.dictation);
     wrong.push(...tag('dictation', w));
@@ -343,23 +348,28 @@ export function gradeLessonSubmission(context, answers = {}) {
     addSection('cum_cau_con', '📚 Cụm câu của con', c, t, tagWrong('matching', wrong));
   }
 
-  // Cluster 2: Dùng cụm câu (fill_blank + chunk_in_context combined)
+  // Cluster 2: Dùng cụm câu (fill_blank + story_cloze combined)
   const [fbCorrect, fbTotal, fbWrong] = gradeArrayAnswers(
     context.answer_key?.fill_in_the_blank,
     answers.fill_blank,
     context.fill_in_the_blank,
   );
-  const [cicCorrect, cicTotal, cicWrong] = gradeArrayAnswers(
-    context.answer_key?.chunk_in_context,
-    answers.chunk_in_context,
-    context.chunk_in_context,
-  );
+  let scCorrect = 0;
+  let scTotal = 0;
+  let scWrong = [];
+  if (Array.isArray(context.story_cloze) && context.story_cloze.length) {
+    [scCorrect, scTotal, scWrong] = gradeArrayAnswers(
+      context.answer_key?.story_cloze,
+      answers.story_cloze,
+      context.story_cloze,
+    );
+  }
   addSection(
     'dung_cum_cau',
     '✏️ Dùng cụm câu',
-    fbCorrect + cicCorrect,
-    fbTotal + cicTotal,
-    [...tagWrong('fill_blank', fbWrong), ...tagWrong('chunk_in_context', cicWrong)],
+    fbCorrect + scCorrect,
+    fbTotal + scTotal,
+    [...tagWrong('fill_blank', fbWrong), ...tagWrong('story_cloze', scWrong)],
   );
 
   // Cluster 3: Nghe & Đọc theo (tap_words for every level; shadowing not graded)

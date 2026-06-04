@@ -486,11 +486,11 @@ import Footer from '../../components/Footer.astro';
           </label>
         `).join('');
       }
-      if (part.kind === 'chunk_in_context') {
+      if (part.kind === 'story_cloze') {
         return sub + part.items.map((item) => `
           <label class="mb-4 block rounded-lg border border-cream-dim/20 bg-navy-900/75 p-4">
             <span class="block text-base text-cream">${escapeHtml(item.sentence)}</span>
-            <select data-answer-type="chunk_in_context" data-answer-index="${item.index}" class="mt-3 w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-4 py-3 text-base text-cream focus:border-accent focus:outline-none" required>
+            <select data-answer-type="story_cloze" data-answer-index="${item.index}" class="mt-3 w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-4 py-3 text-base text-cream focus:border-accent focus:outline-none" required>
               ${optionHtml('', '-- Chọn cụm câu --')}
               ${item.options.map((option) => optionHtml(option)).join('')}
             </select>
@@ -625,11 +625,11 @@ import Footer from '../../components/Footer.astro';
         `).join(''));
       }
 
-      if (activity.type === 'chunk_in_context') {
+      if (activity.type === 'story_cloze') {
         return sectionWrap(title, activity.items.map((item) => `
           <label class="mb-4 block rounded-lg border border-cream-dim/20 bg-navy-900/75 p-4">
             <span class="block text-base text-cream">${escapeHtml(item.sentence)}</span>
-            <select data-answer-type="chunk_in_context" data-answer-index="${item.index}" class="mt-3 w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-4 py-3 text-base text-cream focus:border-accent focus:outline-none" required>
+            <select data-answer-type="story_cloze" data-answer-index="${item.index}" class="mt-3 w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-4 py-3 text-base text-cream focus:border-accent focus:outline-none" required>
               ${optionHtml('', '-- Chọn cụm câu --')}
               ${item.options.map((option) => optionHtml(option)).join('')}
             </select>
@@ -744,7 +744,7 @@ import Footer from '../../components/Footer.astro';
         build_chunk: {},
         fill_blank: {},
         fix_chunk: {},
-        chunk_in_context: {},
+        story_cloze: {},
         dictation: {},
         best_line: {},
         story_order: {},
@@ -1403,7 +1403,7 @@ import Footer from '../../components/Footer.astro';
       const renderedCounts = {
         matching: (result.sections.find((section) => section.id === 'matching')?.total) ?? null,
         fill_blank: (result.sections.find((section) => section.id === 'fill_blank')?.total) ?? null,
-        chunk_in_context: (result.sections.find((section) => section.id === 'chunk_in_context')?.total) ?? null,
+        story_cloze: (result.sections.find((section) => section.id === 'story_cloze')?.total) ?? null,
         best_line: (result.sections.find((section) => section.id === 'best_line')?.total) ?? null,
       };
       void renderedCounts;
