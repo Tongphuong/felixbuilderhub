@@ -156,6 +156,15 @@ import Footer from '../../components/Footer.astro';
     .r2l-shake {
       animation: r2l-shake 0.5s ease;
     }
+    @keyframes r2l-mascot-pop {
+      0% { transform: translate(-50%, -50%) scale(0.4); opacity: 0; }
+      30% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
+      60% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+      100% { transform: translate(-50%, -50%) scale(1); opacity: 0; }
+    }
+    .r2l-mascot-pop {
+      animation: r2l-mascot-pop 1.8s ease forwards;
+    }
   </style>
 
   <script>
@@ -268,6 +277,7 @@ import Footer from '../../components/Footer.astro';
     });
 
     let lesson = null;
+    let assets = {};
     let currentStep = 'listen';
     let listenCompletedAt = null;
     let readCompletedAt = null;
@@ -305,6 +315,21 @@ import Footer from '../../components/Footer.astro';
       if (!sorted.length) return html;
       const regex = new RegExp(`(${sorted.map((chunk) => escapeRegExp(chunk)).join('|')})`, 'gi');
       return html.replace(regex, '<mark class="rounded bg-gold/30 px-1 text-cream">$1</mark>');
+    }
+
+    function renderAssetHero() {
+      if (!assets?.minny_idle) return '';
+      const setting = assets.setting
+        ? `<img src="${escapeHtml(assets.setting)}" alt="" class="absolute inset-x-0 bottom-0 mx-auto h-28 w-auto opacity-45" />`
+        : '';
+      return `
+        <div class="relative mb-5 flex min-h-36 items-end justify-center gap-3 overflow-hidden rounded-lg border border-cream-dim/20 bg-navy-900/60 p-4">
+          ${setting}
+          <img src="${escapeHtml(assets.minny_idle)}" alt="Minny" class="relative h-24 w-auto" />
+          ${assets.kid_reading ? `<img src="${escapeHtml(assets.kid_reading)}" alt="" class="relative h-32 w-auto" />` : ''}
+          ${assets.animal ? `<img src="${escapeHtml(assets.animal)}" alt="" class="relative h-20 w-auto" />` : ''}
+        </div>
+      `;
     }
 
     function hashSeed(str) {
@@ -546,7 +571,7 @@ import Footer from '../../components/Footer.astro';
       }
 
       if (activity.type === 'story') {
-        return sectionWrap(title, activity.items.map((item) => `<p class="mb-4 leading-8 text-cream-muted">${escapeHtml(item.text)}</p>`).join(''));
+        return sectionWrap(title, renderAssetHero() + activity.items.map((item) => `<p class="mb-4 leading-8 text-cream-muted">${escapeHtml(item.text)}</p>`).join(''));
       }
 
       if (activity.type === 'power_chunks') {
@@ -790,6 +815,7 @@ import Footer from '../../components/Footer.astro';
 
     function renderLesson(data) {
       lesson = data.lesson;
+      assets = lesson.assets || {};
       document.getElementById('lesson-meta').textContent = `${lesson.student_name || 'Học sinh Read2Lead'} · ${lesson.level || 'L2'} · ${lesson.topic || 'Read2Lead'}`;
       document.getElementById('lesson-title').textContent = lesson.story_title || 'Bài đọc Read2Lead';
       document.getElementById('lesson-subtitle').textContent = `Mã: ${lesson.access_code_masked || '***'}`;
@@ -825,7 +851,7 @@ import Footer from '../../components/Footer.astro';
       });
 
       if (storyActivity) {
-        stepReadBody.innerHTML = storyActivity.items.map((item) => `<p class="mb-6 text-xl leading-relaxed text-cream md:text-2xl md:leading-loose">${highlightChunks(item.text, chunks)}</p>`).join('');
+        stepReadBody.innerHTML = renderAssetHero() + storyActivity.items.map((item) => `<p class="mb-6 text-xl leading-relaxed text-cream md:text-2xl md:leading-loose">${highlightChunks(item.text, chunks)}</p>`).join('');
         stepReadBody.querySelectorAll('mark').forEach((el) => {
           el.style.cursor = 'pointer';
           el.title = chunkMeanings[el.textContent.toLowerCase().trim()] || '';
@@ -1217,6 +1243,16 @@ import Footer from '../../components/Footer.astro';
       }
     }
 
+    function showMascotDance() {
+      if (!assets?.minny_dance) return;
+      const img = document.createElement('img');
+      img.src = assets.minny_dance;
+      img.alt = '';
+      img.className = 'r2l-mascot-pop fixed left-1/2 top-1/2 z-[60] h-48 w-auto -translate-x-1/2 -translate-y-1/2';
+      document.body.appendChild(img);
+      setTimeout(() => img.remove(), 1800);
+    }
+
     function renderResult(result) {
       const sections = Array.isArray(result.sections) ? result.sections : [];
       const feedbackVi = result.review?.feedback_vi || {};
@@ -1334,6 +1370,7 @@ import Footer from '../../components/Footer.astro';
       if (reward.confettiCount > 0) spawnConfetti(reward.confettiCount);
       if (passed) {
         playFinalReward(reward.volume || 0.6);
+        showMascotDance();
         if (reward.voice) setTimeout(() => playSfx(reward.voice, 0.75), 600);
       }
       const retry = document.getElementById('retry-lesson');
