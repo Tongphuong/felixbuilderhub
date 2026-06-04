@@ -165,6 +165,15 @@ import Footer from '../../components/Footer.astro';
     .r2l-mascot-pop {
       animation: r2l-mascot-pop 1.8s ease forwards;
     }
+    @keyframes r2l-mascot-pop-corner {
+      0% { transform: translateY(20px); opacity: 0; }
+      20% { transform: translateY(0); opacity: 1; }
+      80% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(-10px); opacity: 0; }
+    }
+    .r2l-mascot-pop-corner {
+      animation: r2l-mascot-pop-corner 1s ease forwards;
+    }
   </style>
 
   <script>
@@ -996,7 +1005,7 @@ import Footer from '../../components/Footer.astro';
       setTimeout(() => target.classList.remove('r2l-shake'), 600);
     }
 
-    function showToast(message) {
+    function showToast(message, duration = 2200) {
       let toast = document.getElementById('r2l-toast');
       if (!toast) {
         toast = document.createElement('div');
@@ -1006,7 +1015,17 @@ import Footer from '../../components/Footer.astro';
       }
       toast.textContent = message;
       toast.style.opacity = '1';
-      setTimeout(() => { toast.style.transition = 'opacity 0.4s'; toast.style.opacity = '0'; }, 2200);
+      setTimeout(() => { toast.style.transition = 'opacity 0.4s'; toast.style.opacity = '0'; }, duration);
+    }
+
+    function showMascotClapCorner() {
+      if (!assets?.minny_clap) return;
+      const img = document.createElement('img');
+      img.src = assets.minny_clap;
+      img.alt = '';
+      img.className = 'r2l-mascot-pop-corner fixed right-4 top-20 z-[60] h-24 w-auto';
+      document.body.appendChild(img);
+      setTimeout(() => img.remove(), 1000);
     }
 
     function showCelebration(text) {
@@ -1075,11 +1094,17 @@ import Footer from '../../components/Footer.astro';
         }
       }
       if (wrongItems.length) {
+        playSoftBoop();
         markSlotWrongInline(slot, wrongItems);
-        showToast(`Có ${wrongItems.length} câu sai. Con có thể qua tiếp hoặc sửa lại 💪`);
+        showToast(`Còn ${wrongItems.length} câu nữa muốn ghé. Con thử lại hoặc qua tiếp cũng được 🌟`, 1000);
+      } else {
+        playSfx('success-1.mp3', 0.6);
+        spawnConfetti(15);
+        showMascotClapCorner();
+        showToast('Tuyệt vời! 💯', 1800);
+        const voiceText = playPageComplete();
+        showCelebration(voiceText);
       }
-      const voiceText = playPageComplete();
-      showCelebration(voiceText);
       if (currentActivityIdx < activitySequence.length - 1) {
         currentActivityIdx += 1;
         setTimeout(() => showActivity(currentActivityIdx), 900);
