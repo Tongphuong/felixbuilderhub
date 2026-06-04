@@ -6,11 +6,16 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "gen:types": "json2ts -i schemas/pack.schema.json -o src/types/pack.d.ts --bannerComment \"/* eslint-disable */ /* AUTO-GENERATED from schemas/pack.schema.json — do not edit by hand. Run npm run gen:types to regenerate. */\"",
+    "check:types-fresh": "npm run gen:types && git diff --exit-code src/types/pack.d.ts || (echo 'Pack types are stale; run npm run gen:types and commit.' && exit 1)"
   },
   "dependencies": {
     "@astrojs/tailwind": "^6.0.2",
     "astro": "5.18.2",
     "tailwindcss": "^3.4.19"
+  },
+  "devDependencies": {
+    "json-schema-to-typescript": "^15.0.0"
   }
 }
