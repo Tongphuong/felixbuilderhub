@@ -87,7 +87,7 @@ export function buildActivities(context) {
       id: 'story',
       type: 'story',
       title_vi: '🎯 Nhiệm vụ 1: Đọc câu chuyện',
-      instruction_vi: 'Con đọc câu chuyện một lần. Sau đó nghe MP3 và đọc lại nếu cần.',
+      instruction_vi: 'Con đọc câu chuyện một lần 📖. Sau đó nghe MP3 và đọc lại nếu cần.',
       items: storyText.map((text, index) => ({ index, text })),
     });
   }
@@ -118,7 +118,7 @@ export function buildActivities(context) {
       id: 'cum_cau_con',
       type: 'cum_cau_con',
       title_vi: '📚 Cụm câu của con',
-      instruction_vi: 'Xem ý nghĩa các cụm câu, sau đó nối chunk với nghĩa đúng ở phần dưới.',
+      instruction_vi: 'Xem ý nghĩa các cụm câu ✨, sau đó nối chunk với nghĩa đúng ở phần dưới.',
       parts,
     });
   }
@@ -147,7 +147,7 @@ export function buildActivities(context) {
       id: 'dung_cum_cau',
       type: 'dung_cum_cau',
       title_vi: '✏️ Dùng cụm câu',
-      instruction_vi: 'Chọn cụm câu phù hợp cho mỗi chỗ trống. Có 2 phần nhỏ phía dưới.',
+      instruction_vi: 'Chọn cụm câu phù hợp cho mỗi chỗ trống 🎯. Có 2 phần nhỏ phía dưới.',
       parts,
     });
   }
@@ -166,7 +166,7 @@ export function buildActivities(context) {
       id: 'nghe_doc_theo',
       type: 'nghe_doc_theo',
       title_vi: '🎧 Nghe & Đọc theo',
-      instruction_vi: 'Với mỗi câu: 🔊 Nghe câu mẫu → bấm các từ theo đúng thứ tự để ghép lại câu vừa nghe → 🎤 Đọc theo câu mẫu.',
+      instruction_vi: 'Cùng Minny luyện nói nhé! Bấm 🔊 nghe, sau đó ghép từ lại đúng thứ tự, rồi 🎤 đọc theo cho thật vui.',
       parts: [
         {
           kind: 'sentence_unit',
@@ -208,8 +208,8 @@ export function buildActivities(context) {
     activities.push({
       id: 'hieu_truyen',
       type: 'hieu_truyen',
-      title_vi: '💭 Hiểu truyện',
-      instruction_vi: 'Phần A — trả lời câu hỏi về câu chuyện. Phần B — chọn câu nghe tự nhiên nhất.',
+      title_vi: '💭 Minny hỏi con xíu nhé',
+      instruction_vi: 'Phần A — Minny hỏi con vài câu về truyện. Phần B — chọn câu nào ‘ngon tai’ nhất nhé 👂',
       story_text: storyText,
       parts,
     });
@@ -220,8 +220,8 @@ export function buildActivities(context) {
     activities.push({
       id: 'ke_chuyen_con',
       type: 'ke_chuyen_con',
-      title_vi: '✍️ Kể chuyện của con',
-      instruction_vi: 'Con viết 1-2 câu theo suy nghĩ của mình. Không cần trả lời giống đáp án.',
+      title_vi: '✍️ Con kể cho Minny nghe',
+      instruction_vi: 'Đây là phần con kể chuyện cho Minny. Viết hay nói gì cũng được nhé — không có đúng sai 💭',
       story_text: storyText,
       parts: [
         {
@@ -372,22 +372,22 @@ export function gradeLessonSubmission(context, answers = {}) {
     ? context.comprehension_questions
     : [];
 
-  // Cluster 4: Hiểu truyện (best_line + soft written answers)
+  // Cluster 4: Minny asks story questions (best_line + soft written answers)
   {
     const [c, t, wrong] = gradeBestLine(context, answers.best_line);
-    addSection('hieu_truyen_best', '💭 Hiểu truyện — Câu nghe tự nhiên', c, t, tagWrong('best_line', wrong));
+    addSection('hieu_truyen_best', '💭 Minny hỏi con xíu nhé — Câu nghe tự nhiên', c, t, tagWrong('best_line', wrong));
   }
   const comprehensionItems = comprehensionQuestions.filter((q) => ['Find It', 'Language in the Story'].includes(q.section));
   {
     const [c, t, wrong] = gradeSoftWritten(comprehensionItems, answers.comprehension, context);
-    addSection('hieu_truyen_text', '💭 Hiểu truyện — Trả lời câu hỏi', c, t, tagWrong('comprehension', wrong));
+    addSection('hieu_truyen_text', '💭 Minny hỏi con xíu nhé — Trả lời câu hỏi', c, t, tagWrong('comprehension', wrong));
   }
 
-  // Cluster 5: Kể chuyện của con (soft grade with bilingual keyword pool)
+  // Cluster 5: child tells Minny (soft grade with bilingual keyword pool)
   const openItems = comprehensionQuestions.filter((q) => ['Open Question', 'Your Turn'].includes(q.section));
   {
     const [c, t, wrong] = gradeSoftWritten(openItems, answers.open_response, context);
-    addSection('ke_chuyen_con', '✍️ Kể chuyện của con', c, t, tagWrong('open_response', wrong));
+    addSection('ke_chuyen_con', '✍️ Con kể cho Minny nghe', c, t, tagWrong('open_response', wrong));
   }
 
   const scorePercent = total ? Math.round((correct / total) * 100) : 0;
