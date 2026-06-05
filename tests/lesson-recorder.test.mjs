@@ -27,4 +27,16 @@ test('lesson page cleans up blob URLs on activity exit', () => {
 
 test('lesson page mounts a recorder slot per item', () => {
   assert.match(lessonPage, /data-recorder-slot/);
+  assert.match(lessonPage, /data-speak-card="\$\{itemIndex\}"/);
+});
+
+test('MCQ renderer does not reference speak activity itemIndex', () => {
+  const mcqStart = lessonPage.indexOf('function renderMcqActivity');
+  const orderStart = lessonPage.indexOf('function renderOrderActivity');
+  const mcqRenderer = lessonPage.slice(mcqStart, orderStart);
+
+  assert.ok(mcqStart > -1, 'renderMcqActivity should exist');
+  assert.ok(orderStart > mcqStart, 'renderOrderActivity should appear after renderMcqActivity');
+  assert.doesNotMatch(mcqRenderer, /itemIndex/);
+  assert.doesNotMatch(mcqRenderer, /data-speak-card/);
 });

@@ -617,7 +617,7 @@ import RewardBurst from '../../components/read2lead/v2/RewardBurst.astro';
         ${(activity.questions || [])
           .map(
             (question, questionIndex) => `
-              <article class="rounded-md border border-cream/10 bg-navy-950/45 p-4" data-speak-card="${itemIndex}">
+              <article class="rounded-md border border-cream/10 bg-navy-950/45 p-4">
                 <p class="font-bold text-cream">${escapeHtml(question.question_en)}</p>
                 <p class="mt-1 text-sm text-cream/65">${escapeHtml(question.question_vi)}</p>
                 <div class="mt-3 grid gap-2">
@@ -748,7 +748,7 @@ import RewardBurst from '../../components/read2lead/v2/RewardBurst.astro';
         ${(activity.items || [])
           .map(
             (item, itemIndex) => `
-              <article class="rounded-md border border-cream/10 bg-navy-950/45 p-4">
+              <article class="rounded-md border border-cream/10 bg-navy-950/45 p-4" data-speak-card="${itemIndex}">
                 <div class="flex flex-wrap items-center justify-between gap-3">
                   <div>
                     <p class="font-bold text-cream">${escapeHtml(item.text_en)}</p>
