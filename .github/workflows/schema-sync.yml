@@ -4,11 +4,11 @@ on:
   pull_request:
     branches: [main]
     paths:
-      - 'schemas/pack.schema.json'
+      - 'schemas/pack.schema.v2.json'
   push:
     branches: [main]
     paths:
-      - 'schemas/pack.schema.json'
+      - 'schemas/pack.schema.v2.json'
 
 jobs:
   drift-check:
@@ -31,12 +31,12 @@ jobs:
 
       - name: Diff schemas
         run: |
-          if [ ! -f r2l/schemas/pack.schema.json ]; then
+          if [ ! -f r2l/schemas/pack.schema.v2.json ]; then
             echo "::warning::R2L mirror schema not found. Either the repo name in this workflow is wrong, or R2L hasn't created schemas/ yet."
             exit 0
           fi
-          if diff -u hub/schemas/pack.schema.json r2l/schemas/pack.schema.json; then
+          if diff -u hub/schemas/pack.schema.v2.json r2l/schemas/pack.schema.v2.json; then
             echo "Schemas are in sync."
           else
-            echo "::warning::DRIFT: hub schemas/pack.schema.json differs from R2L schemas/pack.schema.json. After merging this PR, copy the hub schema verbatim to D:/Read2lead/read2lead_v0_codex/schemas/pack.schema.json and commit there too."
+            echo "::warning::DRIFT: hub schemas/pack.schema.v2.json differs from R2L schemas/pack.schema.v2.json. After merging this PR, copy the hub schema verbatim to D:/Read2lead/read2lead_v0_codex/schemas/pack.schema.v2.json and commit there too."
           fi

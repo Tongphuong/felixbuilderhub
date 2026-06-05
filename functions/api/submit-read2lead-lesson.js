@@ -1,18 +1,5 @@
 import { getClientIp, checkCodeRateLimit, recordCodeFailure, rateLimitedResponse } from './_rate-limit.js';
 import {
-  badgesForStars,
-  buildWebReviewSummary,
-  gradeLessonSubmission,
-  isPackReviewed,
-  nextStreakDays,
-  nextWeeklyCompletedCount,
-  normalizeProgress,
-  publicPack,
-  publicProgress,
-  rankForStars,
-  reviewHistoryItem,
-} from './_read2lead-lesson.js';
-import {
   applyPackCompletion,
   loadProgressState,
   publicProgressState,
@@ -22,33 +9,26 @@ import {
 export async function onRequestPost(context) {
   const { request, env } = context;
   if (!env.READ2LEAD_CODES) {
-    return json({ ok: false, error: 'config_error', message: 'Felixar chưa cấu hình mã học sinh.' }, 500);
+    return json({ ok: false, error: 'config_error', message: 'Felixar chua cau hinh ma hoc sinh.' }, 500);
   }
 
   let data;
   try {
     data = await request.json();
   } catch {
-    return json({ ok: false, error: 'invalid_json', message: 'Không đọc được bài nộp.' }, 400);
+    return json({ ok: false, error: 'invalid_json', message: 'Khong doc duoc bai nop.' }, 400);
   }
 
   if (data.website) {
-    return json({ ok: true, message: 'Đã ghi nhận.' });
+    return json({ ok: true, message: 'Da ghi nhan.' });
   }
 
   const accessCode = (data.access_code || '').toString().trim().toUpperCase();
   const packId = (data.pack_id || '').toString().trim();
   const answers = data.answers && typeof data.answers === 'object' ? data.answers : null;
   if (!accessCode || !packId || !answers) {
-    return json({ ok: false, error: 'missing_fields', message: 'Thiếu mã học sinh, mã bài hoặc đáp án.' }, 400);
+    return json({ ok: false, error: 'missing_fields', message: 'Thieu ma hoc sinh, ma bai hoac dap an.' }, 400);
   }
-
-  const stepInput = data.steps && typeof data.steps === 'object' ? data.steps : {};
-  const sanitizeIso = (value) => (typeof value === 'string' && value ? value.slice(0, 40) : null);
-  const stepStamps = {
-    listen_completed_at: sanitizeIso(stepInput.listen_completed_at),
-    read_completed_at: sanitizeIso(stepInput.read_completed_at),
-  };
 
   const clientIp = getClientIp(request);
   const rl = await checkCodeRateLimit(env.READ2LEAD_CODES, clientIp);
@@ -59,13 +39,13 @@ export async function onRequestPost(context) {
   const codeData = await env.READ2LEAD_CODES.get(accessCode, { type: 'json' });
   if (!codeData) {
     await recordCodeFailure(env.READ2LEAD_CODES, clientIp);
-    return json({ ok: false, error: 'code_not_found', message: 'Mã học sinh không tồn tại.' }, 404);
+    return json({ ok: false, error: 'code_not_found', message: 'Ma hoc sinh khong ton tai.' }, 404);
   }
 
   const progress = normalizeProgress(codeData);
   const currentPack = progress.current_pack;
   if (!currentPack || currentPack.pack_id !== packId) {
-    return json({ ok: false, error: 'pack_not_found', message: 'Không tìm thấy bài này trong mã học sinh.' }, 404);
+    return json({ ok: false, error: 'pack_not_found', message: 'Khong tim thay bai nay trong ma hoc sinh.' }, 404);
   }
 
   if (isV2PackReviewed(currentPack)) {
@@ -74,7 +54,7 @@ export async function onRequestPost(context) {
       schema_version: 2,
       already_completed: true,
       passed: true,
-      message: 'Bài này đã hoàn thành rồi. Read2Lead giữ kết quả cũ để con không phải làm lại.',
+      message: 'Bai nay da hoan thanh roi. Read2Lead giu ket qua cu de con khong phai lam lai.',
       review: currentPack.review_summary || currentPack.web_lesson_summary || null,
       progress: publicProgress(progress),
       current_pack: publicPack(currentPack),
@@ -82,164 +62,35 @@ export async function onRequestPost(context) {
     });
   }
 
-  if (isPackReviewed(currentPack)) {
-    return json({
-      ok: true,
-      already_completed: true,
-      passed: true,
-      message: 'Bài này đã được hoàn thành rồi. Felixar không cộng sao lần hai.',
-      review: currentPack.review_summary || currentPack.web_lesson_summary || null,
-      progress: publicProgress(progress),
-      current_pack: publicPack(currentPack),
-      next_pack_unlocked: true,
-    });
-  }
-
-  const lessonContext = extractLessonContext(currentPack);
+  const lessonContext = extractV2LessonContext(currentPack);
   if (!lessonContext) {
-    return json({ ok: false, error: 'missing_context', message: 'Bài này thiếu dữ liệu để chấm trên web.' }, 400);
-  }
-
-  if (isV2LessonContext(lessonContext)) {
-    return submitV2Lesson({
-      accessCode,
-      codeData,
-      currentPack,
-      env,
-      lessonContext,
-      progress,
-      submittedAnswers: answers,
-    });
-  }
-
-  const grading = gradeLessonSubmission(lessonContext, answers);
-  const submittedAt = new Date().toISOString();
-  const attempt = {
-    submitted_at: submittedAt,
-    passed: grading.passed,
-    score_percent: grading.score_percent,
-    correct_count: grading.correct_count,
-    total_count: grading.total_count,
-    sections: grading.sections,
-    open_answers: grading.open_answers,
-  };
-  const webAttempts = [
-    ...(Array.isArray(currentPack.web_attempts) ? currentPack.web_attempts : []),
-    attempt,
-  ].slice(-5);
-
-  if (!grading.passed) {
-    const updatedPack = {
-      ...currentPack,
-      web_attempts: webAttempts,
-      web_lesson_summary: attempt,
-      web_lesson_steps: {
-        ...stepStamps,
-        lesson_completed_at: null,
-      },
-    };
-    const nextProgress = {
-      ...progress,
-      current_pack: updatedPack,
-    };
-    await env.READ2LEAD_CODES.put(
-      accessCode,
-      JSON.stringify({
-        ...codeData,
-        progress: nextProgress,
-      }),
-    );
     return json({
-      ok: true,
-      passed: false,
-      score_percent: grading.score_percent,
-      correct_count: grading.correct_count,
-      total_count: grading.total_count,
-      sections: grading.sections,
-      message: 'Con chưa qua bài này. Bố mẹ cho con xem lại rồi làm lại nhé.',
-      progress: publicProgress(nextProgress),
-      current_pack: publicPack(updatedPack),
-      next_pack_unlocked: false,
-    });
+      ok: false,
+      error: 'legacy_pack_removed',
+      message: 'Bai nay la format cu. V2 submit chi nhan pack schema_version = 2.',
+    }, 410);
   }
 
-  const oldStars = progress.stars || 0;
-  const nextStars = oldStars + 1;
-  const reviewSummary = buildWebReviewSummary({ grading, context: lessonContext, completedAt: submittedAt });
-  const reviewedPack = {
-    ...currentPack,
-    status: 'reviewed_pass_web',
-    reviewed_at: submittedAt,
-    web_attempts: webAttempts,
-    web_lesson_summary: attempt,
-    web_lesson_steps: {
-      ...stepStamps,
-      lesson_completed_at: submittedAt,
-    },
-    review_summary: reviewSummary,
-  };
-  const nextReviewHistory = [
-    reviewHistoryItem(reviewedPack),
-    ...(progress.review_history || []),
-  ].slice(0, 20);
-  const nextProgress = {
-    ...progress,
-    stars: nextStars,
-    rank: rankForStars(nextStars),
-    badges: badgesForStars(nextStars),
-    completed_packs: (progress.completed_packs || 0) + 1,
-    weekly_completed_count: nextWeeklyCompletedCount(progress, submittedAt),
-    weekly_key: weekKey(submittedAt),
-    streak_days: nextStreakDays(progress.last_activity_at, submittedAt, progress.streak_days),
-    last_activity_at: submittedAt,
-    last_level_recommendation: 'stay',
-    current_pack: reviewedPack,
-    review_history: nextReviewHistory,
-  };
-
-  await env.READ2LEAD_CODES.put(
+  return submitV2Lesson({
     accessCode,
-    JSON.stringify({
-      ...codeData,
-      progress: nextProgress,
-      student_profile: {
-        ...(codeData.student_profile || {}),
-        student_name: progress.student_name,
-        age: progress.age,
-        level: nextProgress.current_level,
-        child_gender: progress.child_gender,
-      },
-      last_reviewed_at: submittedAt,
-    }),
-  );
-
-  return json({
-    ok: true,
-    passed: true,
-    star_awarded: true,
-    score_percent: grading.score_percent,
-    correct_count: grading.correct_count,
-    total_count: grading.total_count,
-    sections: grading.sections,
-    message: 'Con đã hoàn thành bài này và được cộng 1 sao.',
-    review: reviewSummary,
-    progress: publicProgress(nextProgress),
-    current_pack: publicPack(reviewedPack),
-    next_pack_unlocked: true,
+    codeData,
+    currentPack,
+    env,
+    lessonContext,
+    progress,
+    submittedAnswers: answers,
   });
 }
 
-function extractLessonContext(pack) {
+function extractV2LessonContext(pack) {
   const candidates = [
     pack?.review_context,
     pack?.pack,
     pack?.pack_json,
     pack?.result?.pack,
+    pack,
   ];
-
-  const nestedContext = candidates.find((candidate) => candidate && typeof candidate === 'object');
-  if (nestedContext) return nestedContext;
-  return isV2LessonContext(pack) ? pack : null;
+  return candidates.find(isV2LessonContext) || null;
 }
 
 function isV2LessonContext(context) {
@@ -329,7 +180,7 @@ async function submitV2Lesson({
       correct_count: correctCount,
       total_count: totalCount,
       rewards_earned: rewardsEarned,
-      message: 'Con còn một mảnh nhiệm vụ chưa chạm tới. Mình quay lại hoàn thành nốt nhé.',
+      message: 'Con con mot manh nhiem vu chua cham toi. Minh quay lai hoan thanh not nhe.',
       progress: publicProgress(nextProgress),
       current_pack: publicPack(updatedPack),
       next_pack_unlocked: false,
@@ -403,7 +254,7 @@ async function submitV2Lesson({
     rewards_earned: rewardsEarned,
     level_up: stateResult.level_up,
     read2lead_state: publicProgressState(savedProgressState),
-    message: 'Con đã hoàn thành nhiệm vụ V2 hôm nay.',
+    message: 'Con da hoan thanh nhiem vu V2 hom nay.',
     review: reviewedPack.review_summary,
     progress: publicProgress(nextProgress),
     current_pack: publicPack(reviewedPack),
@@ -411,9 +262,81 @@ async function submitV2Lesson({
   });
 }
 
-function numberOrZero(value) {
-  const parsed = Number(value);
-  return Number.isFinite(parsed) ? parsed : 0;
+function normalizeProgress(codeData) {
+  const profile = codeData.student_profile || {};
+  const progress = codeData.progress || {};
+  const stars = Number.isFinite(progress.stars) ? progress.stars : 0;
+  const reviewHistory = Array.isArray(progress.review_history) ? progress.review_history : [];
+  return {
+    student_name: profile.student_name || progress.student_name || '',
+    age: profile.age || progress.age || null,
+    current_level: progress.current_level || profile.level || 'L2',
+    stars,
+    rank: progress.rank || rankForStars(stars),
+    badges: Array.isArray(progress.badges) ? progress.badges : badgesForStars(stars),
+    packs_created: progress.packs_created || 0,
+    completed_packs: progress.completed_packs || reviewHistory.length || 0,
+    weekly_completed_count: progress.weekly_completed_count || 0,
+    weekly_key: progress.weekly_key || '',
+    streak_days: progress.streak_days || 0,
+    last_activity_at: progress.last_activity_at || codeData.last_reviewed_at || null,
+    last_level_recommendation: progress.last_level_recommendation || 'stay',
+    current_pack: progress.current_pack || null,
+    review_history: reviewHistory,
+  };
+}
+
+function publicPack(pack) {
+  if (!pack) return null;
+  return {
+    pack_id: pack.pack_id,
+    status: pack.status,
+    topic: pack.topic,
+    story_title: pack.story_title,
+    level: pack.level,
+    pdf_url: pack.pdf_url,
+    mp3_url: pack.mp3_url,
+    schema_version: pack.schema_version || pack.review_context?.schema_version || null,
+    reviewed_at: pack.reviewed_at,
+    web_lesson_steps: pack.web_lesson_steps || null,
+  };
+}
+
+function publicProgress(progress) {
+  return {
+    student_name: progress.student_name,
+    age: progress.age,
+    current_level: progress.current_level,
+    stars: progress.stars || 0,
+    rank: progress.rank || rankForStars(progress.stars || 0),
+    badges: progress.badges || badgesForStars(progress.stars || 0),
+    packs_created: progress.packs_created || 0,
+    completed_packs: progress.completed_packs || 0,
+    weekly_completed_count: progress.weekly_completed_count || 0,
+    streak_days: progress.streak_days || 0,
+    last_activity_at: progress.last_activity_at || null,
+    last_level_recommendation: progress.last_level_recommendation || 'stay',
+    current_pack: publicPack(progress.current_pack),
+  };
+}
+
+function nextWeeklyCompletedCount(progress, iso) {
+  const key = weekKey(iso);
+  return progress.weekly_key === key ? (progress.weekly_completed_count || 0) + 1 : 1;
+}
+
+function nextStreakDays(lastActivityAt, submittedAt, currentStreak = 0) {
+  if (!lastActivityAt) return 1;
+  const last = new Date(lastActivityAt);
+  const now = new Date(submittedAt);
+  if (Number.isNaN(last.getTime()) || Number.isNaN(now.getTime())) return 1;
+  const lastKey = last.toISOString().slice(0, 10);
+  const nowKey = now.toISOString().slice(0, 10);
+  if (lastKey === nowKey) return Math.max(1, currentStreak || 0);
+  const oneDayMs = 24 * 60 * 60 * 1000;
+  return Math.abs(Date.parse(nowKey) - Date.parse(lastKey)) <= oneDayMs
+    ? (currentStreak || 0) + 1
+    : 1;
 }
 
 function weekKey(iso) {
@@ -425,6 +348,29 @@ function weekKey(iso) {
   const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
   const weekNo = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
   return `${d.getUTCFullYear()}-W${String(weekNo).padStart(2, '0')}`;
+}
+
+function rankForStars(stars) {
+  if (stars >= 15) return 'Reading Champion';
+  if (stars >= 10) return 'Story Hero';
+  if (stars >= 6) return 'Mission Builder';
+  if (stars >= 3) return 'Chunk Explorer';
+  if (stars >= 1) return 'Story Starter';
+  return 'Rookie Reader';
+}
+
+function badgesForStars(stars) {
+  const badges = [];
+  if (stars >= 1) badges.push('First Mission Complete');
+  if (stars >= 3) badges.push('Chunk Hunter');
+  if (stars >= 5) badges.push('Retell Rookie');
+  if (stars >= 10) badges.push('Story Hero');
+  return badges;
+}
+
+function numberOrZero(value) {
+  const parsed = Number(value);
+  return Number.isFinite(parsed) && parsed > 0 ? parsed : 0;
 }
 
 function json(body, status = 200) {

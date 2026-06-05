@@ -33,27 +33,27 @@ Pages auto-build from `main`.
 | `/privacy` | Privacy policy |
 | `/404` | Not-found |
 
-## Edge API (17 functions)
+## Edge API (V2 launch)
 
 Helpers (underscore prefix, not directly callable):
 - `_middleware.js` — admin auth gate for `/admin/*`
 - `api/_rate-limit.js` — per-IP rate limit helpers
-- `api/_read2lead-lesson.js` — buildActivities + grader logic shared by lesson/submit/grade-slot
+- `api/_read2lead-v2-state.js` — V2 rank, XP, coins, streak, badges, and level state helpers
 
 Read2Lead automation:
-- `POST /api/generate-read2lead-pack` — accept parent form, forward to Render backend
+- `POST /api/generate-read2lead-pack` — accept parent form, forward to Render V2 backend
 - `GET  /api/check-generation-status` — poll backend task state
 - `POST /api/task-state` — backend → hub callback (updates KV)
 - `GET  /api/read2lead-lesson` — fetch lesson payload by code+pack_id
 - `GET  /api/read2lead-progress` — fetch student progress
 - `GET  /api/read2lead-leaderboard` — class leaderboard
-- `POST /api/submit-read2lead-lesson` — final grade + persist result
-- `POST /api/grade-slot` — inline per-slot grading during lesson
-- `POST /api/review-read2lead-speaking` — voice review (Whisper TBD)
+- `POST /api/submit-read2lead-lesson` — V2 completion + rewards + persist result
+- `POST /api/read2lead-progress-update` — persist V2 progress state events
 
 Admin:
 - `GET/POST /api/admin/codes` — list + create access codes
 - `GET/PATCH/DELETE /api/admin/codes/[code]` — single-code ops
+- `POST /api/admin/read2lead-set-level` — admin override for V2 level state
 
 Lead bots (Telegram delivery):
 - `POST /api/coaching-booking`
@@ -94,9 +94,8 @@ created for other branches automatically.
 
 - Files >800 lines are flagged for future split (see god-file list in
   Phase γ roadmap, internal docs)
-- Pack JSON schema additive-only (never breaking)
-- Submit payload keys frozen (`fill_blank`, `story_cloze`, `dictation`,
-  `best_line`, etc.) — backward compat required for old packs in KV
+- V2 pack schema lives at `schemas/pack.schema.v2.json`
+- Submit payload is V2 activity-result based; old V1 worksheet keys are retired
 - Hub-first deploy rule: when changing pack schema, hub frontend adds
   graceful skip BEFORE R2L backend emits new field
 

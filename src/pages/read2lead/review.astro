@@ -226,7 +226,7 @@ import Footer from '../../components/Footer.astro';
       const sharedNote = data.is_test || data.is_shared
         ? '<p class="mt-3 rounded-lg border border-blue-500/30 bg-blue-500/10 p-3 text-sm text-blue-200">Mã này là mã test/dùng chung nên có thể tạo bài mới bất cứ lúc nào.</p>'
         : '';
-      const canSubmitPaper = data.state === 'awaiting_review';
+      const canSubmitPaper = false;
       const canCreateExtra = data.state === 'awaiting_review' && !data.next_pack_locked;
 
       const primary = buildPrimaryAction(pack, data, code);
@@ -370,88 +370,9 @@ import Footer from '../../components/Footer.astro';
       stopBtn.disabled = true;
     });
 
-    form.addEventListener('submit', async (event) => {
+    form.addEventListener('submit', (event) => {
       event.preventDefault();
-      clearError();
-      resultCard.classList.add('hidden');
-
-      const code = codeInput.value.trim().toUpperCase();
-      const photos = Array.from(photoInput.files);
-      if (!code) return showError('Vui lòng nhập mã học sinh.');
-      if (!photos.length) return showError('Vui lòng tải lên ít nhất 1 ảnh bài làm.');
-      if (photos.length > 8) return showError('Vui lòng chọn tối đa 8 ảnh cho một lần nộp.');
-      if (photos.some((photo) => photo.size > 8 * 1024 * 1024)) {
-        return showError('Mỗi ảnh cần dưới 8MB. Anh chị thử chụp lại hoặc chọn ảnh nhẹ hơn.');
-      }
-      const totalPhotoBytes = photos.reduce((sum, photo) => sum + photo.size, 0);
-      if (totalPhotoBytes > 24 * 1024 * 1024) {
-        return showError('Tổng dung lượng ảnh hơi lớn. Anh chị chọn tối đa khoảng 24MB ảnh cho một lần nộp.');
-      }
-      if (!audioBlob) return showError('Vui lòng ghi âm phần con kể lại câu chuyện trước khi nộp.');
-
-      const formData = new FormData();
-      formData.set('access_code', code);
-      photos.forEach((photo) => {
-        formData.append('worksheet_photos', photo, photo.name || 'worksheet.jpg');
-      });
-      formData.set('retell_audio', audioBlob, 'retell.webm');
-      if (typedAnswers.value.trim()) {
-        formData.set('typed_answers', typedAnswers.value.trim());
-      }
-
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'Felixar đang nhận xét...';
-      try {
-        const res = await fetch('/api/review-read2lead-speaking', {
-          method: 'POST',
-          body: formData,
-        });
-        const data = await res.json();
-        if (!res.ok || !data.ok) {
-          showError(data.message || data.error || 'Chưa nhận xét được bài. Vui lòng thử lại.');
-          return;
-        }
-        const feedback = data.review?.feedback_vi || {};
-        const mini = data.review?.mini_practice_vi || {};
-        const progress = data.progress || {};
-        resultCard.innerHTML = `
-          <h2 class="font-display text-2xl font-bold leading-snug text-cream">${data.star_awarded ? 'Con được cộng 1 sao' : 'Đã có nhận xét cho bài này'}</h2>
-          <p class="mt-3 leading-relaxed text-cream-muted">${escapeHtml(feedback.summary || data.message || '')}</p>
-          <div class="mt-4 grid gap-3 sm:grid-cols-3">
-            <div class="rounded-lg bg-navy-950/70 p-3"><p class="text-xs text-cream-dim">Sao</p><p class="text-xl font-bold text-gold-light">${progress.stars ?? 0}</p></div>
-            <div class="rounded-lg bg-navy-950/70 p-3"><p class="text-xs text-cream-dim">Xếp hạng</p><p class="text-xl font-bold text-gold-light">${escapeHtml(progress.rank || 'Rookie Reader')}</p></div>
-            <div class="rounded-lg bg-navy-950/70 p-3"><p class="text-xs text-cream-dim">Level</p><p class="text-xl font-bold text-gold-light">${escapeHtml(levelRecommendationText(data.review?.level_recommendation))}</p></div>
-          </div>
-          <div class="mt-4 grid gap-3 md:grid-cols-3">
-            <div class="rounded-lg border border-cream-dim/20 bg-navy-950/70 p-4"><p class="text-sm font-semibold text-cream">Con làm tốt</p><p class="mt-2 text-sm leading-relaxed text-cream-muted">${escapeHtml(feedback.strength || 'Con đã hoàn thành phần nộp bài.')}</p></div>
-            <div class="rounded-lg border border-cream-dim/20 bg-navy-950/70 p-4"><p class="text-sm font-semibold text-cream">Cần luyện</p><p class="mt-2 text-sm leading-relaxed text-cream-muted">${escapeHtml(feedback.practice || 'Con nên nghe lại file MP3 và đọc rõ từng câu hơn.')}</p></div>
-            <div class="rounded-lg border border-cream-dim/20 bg-navy-950/70 p-4"><p class="text-sm font-semibold text-cream">Bố mẹ làm gì</p><p class="mt-2 text-sm leading-relaxed text-cream-muted">${escapeHtml(feedback.parent_next_step || 'Bố mẹ cho con luyện lại phần chưa chắc rồi tạo bài tiếp theo.')}</p></div>
-          </div>
-          <div class="mt-4 rounded-lg border border-accent/30 bg-accent/10 p-4">
-            <p class="font-semibold text-cream">5 phút luyện thêm</p>
-            <ul class="mt-2 space-y-1 text-sm text-cream-muted">
-              <li><strong class="text-cream">Đọc lại:</strong> ${escapeHtml(mini.read_again || 'Một câu trong truyện.')}</li>
-              <li><strong class="text-cream">Cụm cần luyện:</strong> ${escapeHtml(mini.chunk_to_practice || 'Một cụm trong bài.')}</li>
-              <li><strong class="text-cream">Bố mẹ hỏi:</strong> ${escapeHtml(mini.parent_question || 'Con kể lại chuyện gì xảy ra nhé?')}</li>
-            </ul>
-          </div>
-          <a href="/read2lead#form" class="mt-5 inline-flex rounded-lg bg-accent px-5 py-2.5 font-semibold text-navy-950 transition hover:bg-accent-hover">Tạo bài tiếp theo</a>
-        `;
-        resultCard.classList.remove('hidden');
-        submitPanel.classList.add('hidden');
-        audioBlob = null;
-        audioPreview.classList.add('hidden');
-        photoInput.value = '';
-        typedAnswers.value = '';
-        recordStatus.textContent = 'Chưa có ghi âm.';
-        await loadProgress({ preserveResult: true });
-        resultCard.scrollIntoView({ behavior: 'smooth' });
-      } catch {
-        showError('Mạng không ổn định. Vui lòng thử lại sau.');
-      } finally {
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Gửi cho Felixar nhận xét';
-      }
+      showError('Read2Lead V2 nộp bài ngay trong màn hình bài học. Bố mẹ bấm nút Cho con làm bài trên web để con hoàn thành nhiệm vụ.');
     });
   </script>
 </BaseLayout>

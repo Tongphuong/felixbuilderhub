@@ -1,17 +1,16 @@
 import { getClientIp, checkCodeRateLimit, recordCodeFailure, rateLimitedResponse } from './_rate-limit.js';
-import { buildLessonPayload } from './_read2lead-lesson.js';
 
 export async function onRequestGet(context) {
   const { request, env } = context;
   if (!env.READ2LEAD_CODES) {
-    return json({ ok: false, error: 'config_error', message: 'Felixar chưa cấu hình mã học sinh.' }, 500);
+    return json({ ok: false, error: 'config_error', message: 'Felixar chua cau hinh ma hoc sinh.' }, 500);
   }
 
   const url = new URL(request.url);
   const accessCode = (url.searchParams.get('code') || '').trim().toUpperCase();
   const packId = (url.searchParams.get('pack_id') || '').trim();
   if (!accessCode || !packId) {
-    return json({ ok: false, error: 'missing_params', message: 'Thiếu mã học sinh hoặc mã bài.' }, 400);
+    return json({ ok: false, error: 'missing_params', message: 'Thieu ma hoc sinh hoac ma bai.' }, 400);
   }
 
   const clientIp = getClientIp(request);
@@ -23,33 +22,30 @@ export async function onRequestGet(context) {
   const codeData = await env.READ2LEAD_CODES.get(accessCode, { type: 'json' });
   if (!codeData) {
     await recordCodeFailure(env.READ2LEAD_CODES, clientIp);
-    return json({ ok: false, error: 'code_not_found', message: 'Mã học sinh không tồn tại.' }, 404);
+    return json({ ok: false, error: 'code_not_found', message: 'Ma hoc sinh khong ton tai.' }, 404);
   }
 
   const pack = codeData.progress?.current_pack;
   if (!pack || pack.pack_id !== packId) {
-    return json({ ok: false, error: 'pack_not_found', message: 'Không tìm thấy bài này trong mã học sinh.' }, 404);
+    return json({ ok: false, error: 'pack_not_found', message: 'Khong tim thay bai nay trong ma hoc sinh.' }, 404);
   }
 
   if (pack.status === 'generation_in_progress') {
-    return json({ ok: false, error: 'generation_in_progress', message: 'Bài vẫn đang được tạo. Vui lòng đợi thêm một chút.' }, 409);
+    return json({ ok: false, error: 'generation_in_progress', message: 'Bai van dang duoc tao. Vui long doi them mot chut.' }, 409);
   }
 
   const v2Pack = extractV2Pack(pack);
-  if (v2Pack) {
+  if (!v2Pack) {
     return json({
-      ok: true,
-      lesson: buildV2LessonPayload({ accessCode, codeData, pack, v2Pack }),
-    });
-  }
-
-  if (!pack.review_context) {
-    return json({ ok: false, error: 'missing_context', message: 'Bài này thiếu dữ liệu để làm trên web. Vui lòng dùng PDF hoặc tạo lại bài.' }, 400);
+      ok: false,
+      error: 'legacy_pack_removed',
+      message: 'Bai nay la format cu. Read2Lead V2 chi mo bai schema_version = 2.',
+    }, 410);
   }
 
   return json({
     ok: true,
-    lesson: buildLessonPayload({ accessCode, codeData, pack }),
+    lesson: buildV2LessonPayload({ accessCode, codeData, pack, v2Pack }),
   });
 }
 
@@ -101,8 +97,8 @@ function buildV2LessonPayload({ accessCode, codeData, pack, v2Pack }) {
 }
 
 function maskAccessCode(code) {
-  if (!code || code.length <= 4) return '••••';
-  return `${code.slice(0, 2)}••${code.slice(-2)}`;
+  if (!code || code.length <= 4) return '****';
+  return `${code.slice(0, 2)}**${code.slice(-2)}`;
 }
 
 function json(body, status = 200) {

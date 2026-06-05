@@ -1,93 +1,87 @@
-# Read2Lead pack schema
+# Read2Lead V2 pack schema
 
-Canonical: [pack.schema.json](pack.schema.json). Versioned alongside hub
-repo. R2L backend mirrors this file (see Phase β.3).
+Canonical: [pack.schema.v2.json](pack.schema.v2.json). Versioned alongside
+the hub repo. R2L backend mirrors this file.
 
-## Why a schema
+## Why V2
 
-Before β, every schema change required updating 3 places by hand
-(`api/prompt.py` SYSTEM_PROMPT, `api/validator.py` required fields, hub
-JS readers). Drift produced Phase G/I/L/N bugs. The schema is now the
-single source of truth.
+V1 was a printable worksheet contract: chunks, blanks, answer keys, PDF links.
+V2 is a web-first lesson contract: story audio, sentence audio, four activity
+blocks, rewards, and rank-state readiness. Keeping the schema explicit prevents
+backend, hub functions, and lesson UI from drifting apart.
 
 ## Top-level fields
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `student_name` | string | yes | Child name used throughout the story and activities. |
-| `level_label` | string enum | yes | Exact level label emitted by current backend prompt. |
-| `topic` | string | yes | Short English topic name. |
-| `slug` | string | yes | Lowercase underscore slug for generated file names. |
-| `worksheet_title` | string | yes | Printable reading pack title. |
-| `audio_filename` | string | yes | Story narration filename ending in `.mp3`. |
-| `story_title` | string | yes | English story title. |
-| `story_text` | string[] | yes | English story paragraphs, at least 2. |
-| `story_text_vi` | string[] | yes | Vietnamese parent/teacher reference paragraphs, at least 2. |
-| `power_chunks` | object[] | yes | 4-6 chunk objects with chunk, meaning, and example. |
-| `matching_activity` | object | yes | Chunk strings and Vietnamese meanings for the matching task. |
-| `build_the_chunk` | string[] | yes | Word-order prompts for building chunks. |
-| `fill_in_the_blank` | string[] | yes | Scenario blanks using target chunks. |
-| `fix_the_chunk` | string[] | yes | Incorrect chunk versions for correction. |
-| `story_cloze` | string[] | yes | Exactly 3 story-recall sentences, each with one blank. |
-| `shadowing_sentences` | string[] | yes | One short speak-aloud sentence per power chunk. |
-| `best_line_challenge` | object[] | yes | Exactly 3 natural-English choice items. |
-| `comprehension_questions` | object[] | yes | Exactly 7 comprehension/open-response questions. |
-| `story_order` | string[] | yes | Story event ordering prompts. |
-| `retell_frame` | string[] | yes | Exactly 3 retell sentence starters. |
-| `answer_key` | object | yes | Teacher/parent answers for all graded tasks. |
-| `parent_teacher_note` | string | yes | Vietnamese note for parent or teacher. |
-| `next_lesson_suggestion` | string | yes | Vietnamese suggestion for the next pack. |
+| `schema_version` | integer const `2` | yes | Version marker. V2 lesson only opens packs with this value. |
+| `student_name` | string | yes | Child name used in story and UI. |
+| `level` | enum | yes | `L1` through `L5`. |
+| `level_label` | string | yes | Human-readable level label. |
+| `topic` | string | yes | Topic/theme of the pack. |
+| `slug` | string | yes | Lowercase file-safe slug. |
+| `audio_filename` | string | yes | MP3 filename. Kept for future audio packaging. |
+| `story` | object | yes | Story title, paragraphs, translations, sentence audio map. |
+| `activities` | array | yes | Exactly four V2 activities. |
+| `rewards` | object | yes | Coins/XP awarded on completion. |
+| `parent_note_vi` | string | yes | Short Vietnamese parent note. |
+| `next_suggestion_vi` | string | yes | Suggested next lesson direction. |
 
 ## Nested types
 
-### power_chunks[i]
+### story
 
-- `chunk` — base-form collocation, e.g., "kick the ball"
-- `meaning` — Vietnamese gloss, e.g., "đá quả bóng"
-- `example` — example sentence using the chunk
+- `title` — story title shown in the lesson UI.
+- `paragraphs_en` — English story paragraphs.
+- `paragraphs_vi` — Vietnamese support paragraphs.
+- `full_audio_url` — full story audio URL when available.
+- `sentences[]` — sentence-level English, Vietnamese, audio URL, and paragraph index.
 
-### comprehension_questions[i]
+### activities[]
 
-- `section` — enum: "Find It" | "Think About It" | "Language in the Story" | "Open Question" | "Your Turn"
-- `question` — English question text
-- `hint_vi` — Vietnamese sentence-starter or hint
+Exactly four activity types are allowed:
 
-### best_line_challenge[i]
+- `listening_comprehension` — listen to story, answer multiple-choice questions.
+- `listen_and_order` — listen to sentence audio and rebuild sentence order.
+- `listen_and_speak` — listen and repeat; currently self-rated/soft-checked.
+- `reading_comprehension` — read story, answer comprehension questions.
 
-- `options` — exactly 3 grammatical English variants
-- `correct_index` — 0, 1, or 2
+Each activity carries:
 
-### answer_key
+- `type`
+- `title_vi`
+- `identity_vi`
+- `instructions_vi`
+- `items` or `questions`, depending on activity type
 
-- `matching` — matching answer string, e.g., "1-X, 2-Y"
-- `build_the_chunk` — array of correct chunk strings
-- `fill_in_the_blank` — array of correct chunk strings
-- `fix_the_chunk` — array of corrected chunk strings
-- `story_cloze` — exactly 3 base-form chunk answers
-- `best_line_challenge` — exactly 3 indices, each 0-2
-- `comprehension` — exactly 7 answer strings
-- `story_order` — correct event order string
-- `suggested_retell` — model retell answer
+### rewards
+
+- `coins_on_complete` — base coins for completing the lesson.
+- `xp_on_complete` — XP earned on completion.
+- `bonus_coins_per_activity_attempted` — small reward per attempted activity.
 
 ## What the schema does NOT enforce
 
-Semantic rules stay in Python validator:
+Semantic rules stay in the R2L backend validator:
 
-- Every power_chunk must appear (substring) in story_text
-- story_cloze sentences should resemble story_text sentences
-- Story word count within level range (L1 60-130, L2 110-210, L3 170-310)
-- answer_key.story_cloze[i] must be a base-form chunk from power_chunks
-- best_line_challenge correct_index matches answer_key.best_line_challenge
+- Story should be natural and level-appropriate.
+- Audio URLs may be empty during early V2 pilot if audio generation is deferred.
+- Activity questions should be answerable from the story.
+- Listen-and-order tokens must reconstruct the original sentence.
+- Reward values should feel motivating without inflating the economy.
 
-These require domain knowledge JSON Schema can't express.
+JSON Schema enforces structure. Product quality still lives in prompt,
+validator, tests, and Felix's pilot review.
 
-## Schema versioning
+## Versioning
 
-When making a breaking change (renaming a field, removing required):
+Breaking changes require:
 
-1. Bump the schema's `version` property (add if not present)
-2. Update CHANGELOG.md in hub
-3. Sync to R2L mirror via Phase β.4 CI check
-4. Hub frontend graceful-skip new field BEFORE backend emits it
+1. Update `schemas/pack.schema.v2.json`.
+2. Regenerate `src/types/pack.d.ts` with `npm run gen:types`.
+3. Mirror the schema to R2L backend.
+4. Update both CHANGELOG files.
+5. Deploy hub graceful handling before backend emits changed data.
 
-Additive changes (new optional field) do not require version bump.
+Additive optional fields can ship without a major version bump, but must still
+update this doc and regenerate types.

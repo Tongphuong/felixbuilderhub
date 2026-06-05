@@ -7,15 +7,15 @@ then reference in code.
 ## KV Namespaces
 | Binding | Purpose | Used by |
 |---|---|---|
-| `READ2LEAD_CODES` | Single KV namespace storing per-student access codes + nested pack data (progress, current_pack, review_context). Acts as primary persistence for Read2Lead. | 13 endpoints: generate-read2lead-pack, check-generation-status, read2lead-lesson, read2lead-progress, read2lead-leaderboard, submit-read2lead-lesson, grade-slot, review-read2lead-speaking, task-state, admin/codes (list + create), admin/codes/[code] (read + update + delete) |
+| `READ2LEAD_CODES` | Single KV namespace storing per-student access codes + nested pack data (progress, current_pack, review_context). Acts as primary persistence for Read2Lead. | 11 endpoints: generate-read2lead-pack, check-generation-status, read2lead-lesson, read2lead-progress, read2lead-progress-update, read2lead-leaderboard, submit-read2lead-lesson, task-state, admin/codes (list + create), admin/codes/[code] (read + update + delete), admin/read2lead-set-level |
 | `READ2LEAD_PROGRESS` | V2 persistent kid state (level, XP, coins, streak, starter badges, forward-compatible avatar placeholders). Code falls back to `READ2LEAD_CODES` if this binding is not configured yet. | read2lead-progress, read2lead-progress-update, submit-read2lead-lesson, admin/read2lead-set-level |
 ## Secrets
 | Binding | Purpose | Used by | Source |
 |---|---|---|---|
-| `READ2LEAD_BACKEND_URL` | Base URL of the Read2Lead Python service on Render (e.g., `https://read2lead-api-xxx.onrender.com`). Used to forward generation requests + voice samples. | generate-read2lead-pack, review-read2lead-speaking | Render service URL |
-| `READ2LEAD_BACKEND_SECRET` | Shared HMAC-style token. Hub sends as header when calling backend; backend sends as header on task-state callback to hub. Bidirectional auth. | generate-read2lead-pack, task-state, review-read2lead-speaking | Manually set (must match `READ2LEAD_BACKEND_SECRET` on Render side) |
+| `READ2LEAD_BACKEND_URL` | Base URL of the Read2Lead Python service on Render (e.g., `https://read2lead-api-xxx.onrender.com`). Used to forward generation requests + voice samples. | generate-read2lead-pack | Render service URL |
+| `READ2LEAD_BACKEND_SECRET` | Shared HMAC-style token. Hub sends as header when calling backend; backend sends as header on task-state callback to hub. Bidirectional auth. | generate-read2lead-pack, task-state | Manually set (must match `READ2LEAD_BACKEND_SECRET` on Render side) |
 | `ADMIN_PASSWORD` | Password for `/admin/*` routes. Validated by `functions/_middleware.js`. | _middleware | Manually set |
-| `TELEGRAM_BOT_TOKEN` | Bot token for the Felix lead-bot Telegram bot. Used to push lead notifications. | coaching-booking, msmw-lead, sharing-subscribe, review-read2lead-speaking | https://t.me/BotFather |
+| `TELEGRAM_BOT_TOKEN` | Bot token for the Felix lead-bot Telegram bot. Used to push lead notifications. | coaching-booking, msmw-lead, sharing-subscribe | https://t.me/BotFather |
 | `TELEGRAM_CHAT_ID` | Chat ID where bot messages land (Phương's chat). | Same as `TELEGRAM_BOT_TOKEN` consumers | Bot getUpdates response |
 ## Variables (non-secret)
 None currently. Add to this table when introduced.
@@ -31,16 +31,15 @@ None currently. Add to this table when introduced.
 | `api/read2lead-progress-update.js` | ✓ | — | — | — | — |
 | `api/read2lead-leaderboard.js` | ✓ | — | — | — | — |
 | `api/submit-read2lead-lesson.js` | ✓ | — | — | — | — |
-| `api/grade-slot.js` | ✓ | — | — | — | — |
-| `api/review-read2lead-speaking.js` | ✓ | ✓ | ✓ | — | ✓ |
 | `api/admin/codes.js` | ✓ | — | — | — | — |
 | `api/admin/codes/[code].js` | ✓ | — | — | — | — |
 | `api/admin/read2lead-set-level.js` | ✓ | — | — | — | — |
 | `api/coaching-booking.js` | — | — | — | — | ✓ |
 | `api/msmw-lead.js` | — | — | — | — | ✓ |
 | `api/sharing-subscribe.js` | — | — | — | — | ✓ |
-Endpoints `_rate-limit.js` and `_read2lead-lesson.js` are internal
-helpers and consume `env` only via callers above.
+Endpoint `_rate-limit.js` is an internal helper and consumes `env` only via
+callers above. `_read2lead-v2-state.js` is also internal but uses the same
+KV binding through callers above.
 ## Setup checklist (Cloudflare Pages dashboard)
 When deploying to a fresh Cloudflare Pages project (e.g., preview branch
 or new account):

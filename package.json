@@ -7,7 +7,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "gen:types": "json2ts -i schemas/pack.schema.json -o src/types/pack.d.ts --bannerComment \"/* eslint-disable */ /* AUTO-GENERATED from schemas/pack.schema.json — do not edit by hand. Run npm run gen:types to regenerate. */\"",
+    "gen:types": "json2ts -i schemas/pack.schema.v2.json -o src/types/pack.d.ts --bannerComment \"/* eslint-disable */ /* AUTO-GENERATED from schemas/pack.schema.v2.json — do not edit by hand. Run npm run gen:types to regenerate. */\"",
     "check:types-fresh": "npm run gen:types && git diff --exit-code src/types/pack.d.ts || (echo 'Pack types are stale; run npm run gen:types and commit.' && exit 1)"
   },
   "dependencies": {

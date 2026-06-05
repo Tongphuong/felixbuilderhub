@@ -3,6 +3,28 @@
 Format: [Keep a Changelog](https://keepachangelog.com/). Versioning:
 [SemVer](https://semver.org/) — MAJOR.MINOR.PATCH.
 
+## [2.0.0] - 2026-06-05 — Read2Lead V2 Core Launch
+
+### Added
+- V2 lesson flow: story-first web lesson with four activity blocks,
+  dopamine UI, completion rewards, and rank-state payload.
+- Persistent Read2Lead state for level, XP, coins, streak, badges, and
+  admin level override.
+- V2 schema contract (`schemas/pack.schema.v2.json`) and generated
+  TypeScript definition from the V2 schema.
+
+### Changed
+- Read2Lead generation now routes to the R2L backend `/generate-async-v2`
+  path and stores schema_version 2 packs in KV.
+- Lesson fetch and submit endpoints are V2-only.
+- Check-generation and dashboard self-heal treat schema_version 2 as the
+  completion marker, not PDF/MP3 URLs.
+
+### Removed
+- Removed V1 lesson helper, inline grade-slot endpoint, speaking review
+  endpoint, and V1 schema/type source.
+- Old V1 packs no longer open in the V2 lesson surface.
+
 ## v1.0.1 - 2026-06-05 — Pilot Launch
 
 ### Removed

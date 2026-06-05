@@ -1,161 +1,3387 @@
-/* eslint-disable */ /* AUTO-GENERATED from schemas/pack.schema.json — do not edit by hand. Run npm run gen:types to regenerate. */
+/* eslint-disable */ /* AUTO-GENERATED from schemas/pack.schema.v2.json — do not edit by hand. Run npm run gen:types to regenerate. */
 
 /**
- * Canonical schema for a Read2Lead reading pack. Hub-owned source of truth; R2L backend mirrors via schemas/pack.schema.json.
+ * Schema for a V2 Read2Lead pack: story + 4 activities + rewards. Replaces V1 chunk-based schema.
  */
-export interface Read2LeadPack {
-  /**
-   * Child name used throughout the pack.
-   */
+export interface Read2LeadPackV2 {
+  schema_version: 2;
   student_name: string;
-  /**
-   * Exact label emitted by the backend prompt for the requested level.
-   */
-  level_label: "L1 Beginner (A1/A1+)" | "L2 Early Reader (A2)" | "L3 Growing Reader (A2+/low B1)";
-  /**
-   * Short English topic name.
-   */
+  level: "L1" | "L2" | "L3" | "L4" | "L5";
+  level_label: string;
   topic: string;
-  /**
-   * Lowercase underscore slug used for generated asset names.
-   */
   slug: string;
-  worksheet_title: string;
-  /**
-   * Story narration filename.
-   */
   audio_filename: string;
-  story_title: string;
-  /**
-   * English story paragraphs. Semantic word count is enforced by the Python validator.
-   *
-   * @minItems 2
-   */
-  story_text: [string, string, ...string[]];
-  /**
-   * Vietnamese parent/teacher reference paragraphs.
-   *
-   * @minItems 2
-   */
-  story_text_vi: [string, string, ...string[]];
+  story: {
+    title: string;
+    /**
+     * @minItems 2
+     * @maxItems 6
+     */
+    paragraphs_en:
+      | [string, string]
+      | [string, string, string]
+      | [string, string, string, string]
+      | [string, string, string, string, string]
+      | [string, string, string, string, string, string];
+    /**
+     * @minItems 2
+     * @maxItems 6
+     */
+    paragraphs_vi:
+      | [string, string]
+      | [string, string, string]
+      | [string, string, string, string]
+      | [string, string, string, string, string]
+      | [string, string, string, string, string, string];
+    full_audio_url: string;
+    /**
+     * @minItems 6
+     * @maxItems 35
+     */
+    sentences: [
+      {
+        text_en: string;
+        text_vi: string;
+        audio_url: string;
+        paragraph_index: number;
+      },
+      {
+        text_en: string;
+        text_vi: string;
+        audio_url: string;
+        paragraph_index: number;
+      },
+      {
+        text_en: string;
+        text_vi: string;
+        audio_url: string;
+        paragraph_index: number;
+      },
+      {
+        text_en: string;
+        text_vi: string;
+        audio_url: string;
+        paragraph_index: number;
+      },
+      {
+        text_en: string;
+        text_vi: string;
+        audio_url: string;
+        paragraph_index: number;
+      },
+      {
+        text_en: string;
+        text_vi: string;
+        audio_url: string;
+        paragraph_index: number;
+      },
+      ...{
+        text_en: string;
+        text_vi: string;
+        audio_url: string;
+        paragraph_index: number;
+      }[]
+    ];
+  };
   /**
    * @minItems 4
-   * @maxItems 6
+   * @maxItems 4
    */
-  power_chunks:
-    | [PowerChunk, PowerChunk, PowerChunk, PowerChunk]
-    | [PowerChunk, PowerChunk, PowerChunk, PowerChunk, PowerChunk]
-    | [PowerChunk, PowerChunk, PowerChunk, PowerChunk, PowerChunk, PowerChunk];
-  matching_activity: MatchingActivity;
-  build_the_chunk: string[];
-  fill_in_the_blank: string[];
-  fix_the_chunk: string[];
-  /**
-   * @minItems 3
-   * @maxItems 3
-   */
-  story_cloze: [string, string, string];
-  /**
-   * One sentence per power chunk. Pairing and level word ranges are semantic validator rules.
-   */
-  shadowing_sentences: string[];
-  /**
-   * @minItems 3
-   * @maxItems 3
-   */
-  best_line_challenge: [BestLineChallenge, BestLineChallenge, BestLineChallenge];
-  /**
-   * @minItems 7
-   * @maxItems 7
-   */
-  comprehension_questions: [
-    ComprehensionQuestion,
-    ComprehensionQuestion,
-    ComprehensionQuestion,
-    ComprehensionQuestion,
-    ComprehensionQuestion,
-    ComprehensionQuestion,
-    ComprehensionQuestion
+  activities: [
+    ListeningComprehension | ListenAndOrder | ListenAndSpeak | ReadingComprehension,
+    ListeningComprehension | ListenAndOrder | ListenAndSpeak | ReadingComprehension,
+    ListeningComprehension | ListenAndOrder | ListenAndSpeak | ReadingComprehension,
+    ListeningComprehension | ListenAndOrder | ListenAndSpeak | ReadingComprehension
   ];
-  story_order: string[];
+  rewards: {
+    coins_on_complete: number;
+    xp_on_complete: number;
+    bonus_coins_per_activity_attempted: number;
+  };
+  parent_note_vi: string;
+  next_suggestion_vi: string;
+}
+export interface ListeningComprehension {
+  type: "listening_comprehension";
+  title_vi: string;
+  identity_vi: string;
+  instructions_vi: string;
+  full_story_audio_url: string;
+  /**
+   * @minItems 2
+   * @maxItems 5
+   */
+  questions:
+    | [McqQuestion, McqQuestion]
+    | [McqQuestion, McqQuestion, McqQuestion]
+    | [McqQuestion, McqQuestion, McqQuestion, McqQuestion]
+    | [McqQuestion, McqQuestion, McqQuestion, McqQuestion, McqQuestion];
+}
+export interface McqQuestion {
+  id: string;
+  question_en: string;
+  question_vi: string;
   /**
    * @minItems 3
    * @maxItems 3
    */
-  retell_frame: [string, string, string];
-  answer_key: AnswerKey;
-  parent_teacher_note: string;
-  next_lesson_suggestion: string;
+  options_en: [string, string, string];
+  /**
+   * @minItems 3
+   * @maxItems 3
+   */
+  options_vi: [string, string, string];
+  correct_index: number;
+  explanation_vi: string;
 }
-export interface PowerChunk {
+export interface ListenAndOrder {
+  type: "listen_and_order";
+  title_vi: string;
+  identity_vi: string;
+  instructions_vi: string;
   /**
-   * Base-form collocation or useful phrase.
-   */
-  chunk: string;
-  /**
-   * Vietnamese gloss.
-   */
-  meaning: string;
-  /**
-   * Example sentence using the chunk.
-   */
-  example: string;
-}
-export interface MatchingActivity {
-  /**
-   * Same chunk strings as power_chunks, usually shuffled for display.
-   *
-   * @minItems 4
+   * @minItems 3
    * @maxItems 6
    */
   items:
-    | [string, string, string, string]
-    | [string, string, string, string, string]
-    | [string, string, string, string, string, string];
+    | [
+        {
+          id: string;
+          audio_url: string;
+          original_sentence: string;
+          /**
+           * @minItems 3
+           * @maxItems 16
+           */
+          scrambled_tokens:
+            | [string, string, string]
+            | [string, string, string, string]
+            | [string, string, string, string, string]
+            | [string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string, string, string, string]
+            | [
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string
+              ]
+            | [
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string
+              ]
+            | [
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string
+              ];
+          /**
+           * @minItems 3
+           * @maxItems 16
+           */
+          correct_order_indices:
+            | [number, number, number]
+            | [number, number, number, number]
+            | [number, number, number, number, number]
+            | [number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number, number, number, number]
+            | [
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number
+              ]
+            | [
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number
+              ]
+            | [
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number
+              ];
+          translation_vi: string;
+        },
+        {
+          id: string;
+          audio_url: string;
+          original_sentence: string;
+          /**
+           * @minItems 3
+           * @maxItems 16
+           */
+          scrambled_tokens:
+            | [string, string, string]
+            | [string, string, string, string]
+            | [string, string, string, string, string]
+            | [string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string, string, string, string]
+            | [
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string
+              ]
+            | [
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string
+              ]
+            | [
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string
+              ];
+          /**
+           * @minItems 3
+           * @maxItems 16
+           */
+          correct_order_indices:
+            | [number, number, number]
+            | [number, number, number, number]
+            | [number, number, number, number, number]
+            | [number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number, number, number, number]
+            | [
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number
+              ]
+            | [
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number
+              ]
+            | [
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number
+              ];
+          translation_vi: string;
+        },
+        {
+          id: string;
+          audio_url: string;
+          original_sentence: string;
+          /**
+           * @minItems 3
+           * @maxItems 16
+           */
+          scrambled_tokens:
+            | [string, string, string]
+            | [string, string, string, string]
+            | [string, string, string, string, string]
+            | [string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string, string, string, string]
+            | [
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string
+              ]
+            | [
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string
+              ]
+            | [
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string
+              ];
+          /**
+           * @minItems 3
+           * @maxItems 16
+           */
+          correct_order_indices:
+            | [number, number, number]
+            | [number, number, number, number]
+            | [number, number, number, number, number]
+            | [number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number, number, number, number]
+            | [
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number
+              ]
+            | [
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number
+              ]
+            | [
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number
+              ];
+          translation_vi: string;
+        }
+      ]
+    | [
+        {
+          id: string;
+          audio_url: string;
+          original_sentence: string;
+          /**
+           * @minItems 3
+           * @maxItems 16
+           */
+          scrambled_tokens:
+            | [string, string, string]
+            | [string, string, string, string]
+            | [string, string, string, string, string]
+            | [string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string, string, string, string]
+            | [
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string
+              ]
+            | [
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string
+              ]
+            | [
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string
+              ];
+          /**
+           * @minItems 3
+           * @maxItems 16
+           */
+          correct_order_indices:
+            | [number, number, number]
+            | [number, number, number, number]
+            | [number, number, number, number, number]
+            | [number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number, number, number, number]
+            | [
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number
+              ]
+            | [
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number
+              ]
+            | [
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number
+              ];
+          translation_vi: string;
+        },
+        {
+          id: string;
+          audio_url: string;
+          original_sentence: string;
+          /**
+           * @minItems 3
+           * @maxItems 16
+           */
+          scrambled_tokens:
+            | [string, string, string]
+            | [string, string, string, string]
+            | [string, string, string, string, string]
+            | [string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string, string, string, string]
+            | [
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string
+              ]
+            | [
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string
+              ]
+            | [
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string
+              ];
+          /**
+           * @minItems 3
+           * @maxItems 16
+           */
+          correct_order_indices:
+            | [number, number, number]
+            | [number, number, number, number]
+            | [number, number, number, number, number]
+            | [number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number, number, number, number]
+            | [
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number
+              ]
+            | [
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number
+              ]
+            | [
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number
+              ];
+          translation_vi: string;
+        },
+        {
+          id: string;
+          audio_url: string;
+          original_sentence: string;
+          /**
+           * @minItems 3
+           * @maxItems 16
+           */
+          scrambled_tokens:
+            | [string, string, string]
+            | [string, string, string, string]
+            | [string, string, string, string, string]
+            | [string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string, string, string, string]
+            | [
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string
+              ]
+            | [
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string
+              ]
+            | [
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string
+              ];
+          /**
+           * @minItems 3
+           * @maxItems 16
+           */
+          correct_order_indices:
+            | [number, number, number]
+            | [number, number, number, number]
+            | [number, number, number, number, number]
+            | [number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number, number, number, number]
+            | [
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number
+              ]
+            | [
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number
+              ]
+            | [
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number
+              ];
+          translation_vi: string;
+        },
+        {
+          id: string;
+          audio_url: string;
+          original_sentence: string;
+          /**
+           * @minItems 3
+           * @maxItems 16
+           */
+          scrambled_tokens:
+            | [string, string, string]
+            | [string, string, string, string]
+            | [string, string, string, string, string]
+            | [string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string, string, string, string]
+            | [
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string
+              ]
+            | [
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string
+              ]
+            | [
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string
+              ];
+          /**
+           * @minItems 3
+           * @maxItems 16
+           */
+          correct_order_indices:
+            | [number, number, number]
+            | [number, number, number, number]
+            | [number, number, number, number, number]
+            | [number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number, number, number, number]
+            | [
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number
+              ]
+            | [
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number
+              ]
+            | [
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number
+              ];
+          translation_vi: string;
+        }
+      ]
+    | [
+        {
+          id: string;
+          audio_url: string;
+          original_sentence: string;
+          /**
+           * @minItems 3
+           * @maxItems 16
+           */
+          scrambled_tokens:
+            | [string, string, string]
+            | [string, string, string, string]
+            | [string, string, string, string, string]
+            | [string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string, string, string, string]
+            | [
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string
+              ]
+            | [
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string
+              ]
+            | [
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string
+              ];
+          /**
+           * @minItems 3
+           * @maxItems 16
+           */
+          correct_order_indices:
+            | [number, number, number]
+            | [number, number, number, number]
+            | [number, number, number, number, number]
+            | [number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number, number, number, number]
+            | [
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number
+              ]
+            | [
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number
+              ]
+            | [
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number
+              ];
+          translation_vi: string;
+        },
+        {
+          id: string;
+          audio_url: string;
+          original_sentence: string;
+          /**
+           * @minItems 3
+           * @maxItems 16
+           */
+          scrambled_tokens:
+            | [string, string, string]
+            | [string, string, string, string]
+            | [string, string, string, string, string]
+            | [string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string, string, string, string]
+            | [
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string
+              ]
+            | [
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string
+              ]
+            | [
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string
+              ];
+          /**
+           * @minItems 3
+           * @maxItems 16
+           */
+          correct_order_indices:
+            | [number, number, number]
+            | [number, number, number, number]
+            | [number, number, number, number, number]
+            | [number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number, number, number, number]
+            | [
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number
+              ]
+            | [
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number
+              ]
+            | [
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number
+              ];
+          translation_vi: string;
+        },
+        {
+          id: string;
+          audio_url: string;
+          original_sentence: string;
+          /**
+           * @minItems 3
+           * @maxItems 16
+           */
+          scrambled_tokens:
+            | [string, string, string]
+            | [string, string, string, string]
+            | [string, string, string, string, string]
+            | [string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string, string, string, string]
+            | [
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string
+              ]
+            | [
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string
+              ]
+            | [
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string
+              ];
+          /**
+           * @minItems 3
+           * @maxItems 16
+           */
+          correct_order_indices:
+            | [number, number, number]
+            | [number, number, number, number]
+            | [number, number, number, number, number]
+            | [number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number, number, number, number]
+            | [
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number
+              ]
+            | [
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number
+              ]
+            | [
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number
+              ];
+          translation_vi: string;
+        },
+        {
+          id: string;
+          audio_url: string;
+          original_sentence: string;
+          /**
+           * @minItems 3
+           * @maxItems 16
+           */
+          scrambled_tokens:
+            | [string, string, string]
+            | [string, string, string, string]
+            | [string, string, string, string, string]
+            | [string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string, string, string, string]
+            | [
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string
+              ]
+            | [
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string
+              ]
+            | [
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string
+              ];
+          /**
+           * @minItems 3
+           * @maxItems 16
+           */
+          correct_order_indices:
+            | [number, number, number]
+            | [number, number, number, number]
+            | [number, number, number, number, number]
+            | [number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number, number, number, number]
+            | [
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number
+              ]
+            | [
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number
+              ]
+            | [
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number
+              ];
+          translation_vi: string;
+        },
+        {
+          id: string;
+          audio_url: string;
+          original_sentence: string;
+          /**
+           * @minItems 3
+           * @maxItems 16
+           */
+          scrambled_tokens:
+            | [string, string, string]
+            | [string, string, string, string]
+            | [string, string, string, string, string]
+            | [string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string, string, string, string]
+            | [
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string
+              ]
+            | [
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string
+              ]
+            | [
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string
+              ];
+          /**
+           * @minItems 3
+           * @maxItems 16
+           */
+          correct_order_indices:
+            | [number, number, number]
+            | [number, number, number, number]
+            | [number, number, number, number, number]
+            | [number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number, number, number, number]
+            | [
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number
+              ]
+            | [
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number
+              ]
+            | [
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number
+              ];
+          translation_vi: string;
+        }
+      ]
+    | [
+        {
+          id: string;
+          audio_url: string;
+          original_sentence: string;
+          /**
+           * @minItems 3
+           * @maxItems 16
+           */
+          scrambled_tokens:
+            | [string, string, string]
+            | [string, string, string, string]
+            | [string, string, string, string, string]
+            | [string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string, string, string, string]
+            | [
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string
+              ]
+            | [
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string
+              ]
+            | [
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string
+              ];
+          /**
+           * @minItems 3
+           * @maxItems 16
+           */
+          correct_order_indices:
+            | [number, number, number]
+            | [number, number, number, number]
+            | [number, number, number, number, number]
+            | [number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number, number, number, number]
+            | [
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number
+              ]
+            | [
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number
+              ]
+            | [
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number
+              ];
+          translation_vi: string;
+        },
+        {
+          id: string;
+          audio_url: string;
+          original_sentence: string;
+          /**
+           * @minItems 3
+           * @maxItems 16
+           */
+          scrambled_tokens:
+            | [string, string, string]
+            | [string, string, string, string]
+            | [string, string, string, string, string]
+            | [string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string, string, string, string]
+            | [
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string
+              ]
+            | [
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string
+              ]
+            | [
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string
+              ];
+          /**
+           * @minItems 3
+           * @maxItems 16
+           */
+          correct_order_indices:
+            | [number, number, number]
+            | [number, number, number, number]
+            | [number, number, number, number, number]
+            | [number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number, number, number, number]
+            | [
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number
+              ]
+            | [
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number
+              ]
+            | [
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number
+              ];
+          translation_vi: string;
+        },
+        {
+          id: string;
+          audio_url: string;
+          original_sentence: string;
+          /**
+           * @minItems 3
+           * @maxItems 16
+           */
+          scrambled_tokens:
+            | [string, string, string]
+            | [string, string, string, string]
+            | [string, string, string, string, string]
+            | [string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string, string, string, string]
+            | [
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string
+              ]
+            | [
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string
+              ]
+            | [
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string
+              ];
+          /**
+           * @minItems 3
+           * @maxItems 16
+           */
+          correct_order_indices:
+            | [number, number, number]
+            | [number, number, number, number]
+            | [number, number, number, number, number]
+            | [number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number, number, number, number]
+            | [
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number
+              ]
+            | [
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number
+              ]
+            | [
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number
+              ];
+          translation_vi: string;
+        },
+        {
+          id: string;
+          audio_url: string;
+          original_sentence: string;
+          /**
+           * @minItems 3
+           * @maxItems 16
+           */
+          scrambled_tokens:
+            | [string, string, string]
+            | [string, string, string, string]
+            | [string, string, string, string, string]
+            | [string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string, string, string, string]
+            | [
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string
+              ]
+            | [
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string
+              ]
+            | [
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string
+              ];
+          /**
+           * @minItems 3
+           * @maxItems 16
+           */
+          correct_order_indices:
+            | [number, number, number]
+            | [number, number, number, number]
+            | [number, number, number, number, number]
+            | [number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number, number, number, number]
+            | [
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number
+              ]
+            | [
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number
+              ]
+            | [
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number
+              ];
+          translation_vi: string;
+        },
+        {
+          id: string;
+          audio_url: string;
+          original_sentence: string;
+          /**
+           * @minItems 3
+           * @maxItems 16
+           */
+          scrambled_tokens:
+            | [string, string, string]
+            | [string, string, string, string]
+            | [string, string, string, string, string]
+            | [string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string, string, string, string]
+            | [
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string
+              ]
+            | [
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string
+              ]
+            | [
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string
+              ];
+          /**
+           * @minItems 3
+           * @maxItems 16
+           */
+          correct_order_indices:
+            | [number, number, number]
+            | [number, number, number, number]
+            | [number, number, number, number, number]
+            | [number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number, number, number, number]
+            | [
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number
+              ]
+            | [
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number
+              ]
+            | [
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number
+              ];
+          translation_vi: string;
+        },
+        {
+          id: string;
+          audio_url: string;
+          original_sentence: string;
+          /**
+           * @minItems 3
+           * @maxItems 16
+           */
+          scrambled_tokens:
+            | [string, string, string]
+            | [string, string, string, string]
+            | [string, string, string, string, string]
+            | [string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string, string, string]
+            | [string, string, string, string, string, string, string, string, string, string, string, string, string]
+            | [
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string
+              ]
+            | [
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string
+              ]
+            | [
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string,
+                string
+              ];
+          /**
+           * @minItems 3
+           * @maxItems 16
+           */
+          correct_order_indices:
+            | [number, number, number]
+            | [number, number, number, number]
+            | [number, number, number, number, number]
+            | [number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number, number, number]
+            | [number, number, number, number, number, number, number, number, number, number, number, number, number]
+            | [
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number
+              ]
+            | [
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number
+              ]
+            | [
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number,
+                number
+              ];
+          translation_vi: string;
+        }
+      ];
+}
+export interface ListenAndSpeak {
+  type: "listen_and_speak";
+  title_vi: string;
+  identity_vi: string;
+  instructions_vi: string;
+  scoring_mode: "self_rate" | "whisper_stt";
   /**
-   * Same Vietnamese meanings as power_chunks, in a different order.
-   *
    * @minItems 4
+   * @maxItems 10
+   */
+  items:
+    | [
+        {
+          id: string;
+          audio_url: string;
+          text_en: string;
+          text_vi: string;
+          tip_vi: string;
+        },
+        {
+          id: string;
+          audio_url: string;
+          text_en: string;
+          text_vi: string;
+          tip_vi: string;
+        },
+        {
+          id: string;
+          audio_url: string;
+          text_en: string;
+          text_vi: string;
+          tip_vi: string;
+        },
+        {
+          id: string;
+          audio_url: string;
+          text_en: string;
+          text_vi: string;
+          tip_vi: string;
+        }
+      ]
+    | [
+        {
+          id: string;
+          audio_url: string;
+          text_en: string;
+          text_vi: string;
+          tip_vi: string;
+        },
+        {
+          id: string;
+          audio_url: string;
+          text_en: string;
+          text_vi: string;
+          tip_vi: string;
+        },
+        {
+          id: string;
+          audio_url: string;
+          text_en: string;
+          text_vi: string;
+          tip_vi: string;
+        },
+        {
+          id: string;
+          audio_url: string;
+          text_en: string;
+          text_vi: string;
+          tip_vi: string;
+        },
+        {
+          id: string;
+          audio_url: string;
+          text_en: string;
+          text_vi: string;
+          tip_vi: string;
+        }
+      ]
+    | [
+        {
+          id: string;
+          audio_url: string;
+          text_en: string;
+          text_vi: string;
+          tip_vi: string;
+        },
+        {
+          id: string;
+          audio_url: string;
+          text_en: string;
+          text_vi: string;
+          tip_vi: string;
+        },
+        {
+          id: string;
+          audio_url: string;
+          text_en: string;
+          text_vi: string;
+          tip_vi: string;
+        },
+        {
+          id: string;
+          audio_url: string;
+          text_en: string;
+          text_vi: string;
+          tip_vi: string;
+        },
+        {
+          id: string;
+          audio_url: string;
+          text_en: string;
+          text_vi: string;
+          tip_vi: string;
+        },
+        {
+          id: string;
+          audio_url: string;
+          text_en: string;
+          text_vi: string;
+          tip_vi: string;
+        }
+      ]
+    | [
+        {
+          id: string;
+          audio_url: string;
+          text_en: string;
+          text_vi: string;
+          tip_vi: string;
+        },
+        {
+          id: string;
+          audio_url: string;
+          text_en: string;
+          text_vi: string;
+          tip_vi: string;
+        },
+        {
+          id: string;
+          audio_url: string;
+          text_en: string;
+          text_vi: string;
+          tip_vi: string;
+        },
+        {
+          id: string;
+          audio_url: string;
+          text_en: string;
+          text_vi: string;
+          tip_vi: string;
+        },
+        {
+          id: string;
+          audio_url: string;
+          text_en: string;
+          text_vi: string;
+          tip_vi: string;
+        },
+        {
+          id: string;
+          audio_url: string;
+          text_en: string;
+          text_vi: string;
+          tip_vi: string;
+        },
+        {
+          id: string;
+          audio_url: string;
+          text_en: string;
+          text_vi: string;
+          tip_vi: string;
+        }
+      ]
+    | [
+        {
+          id: string;
+          audio_url: string;
+          text_en: string;
+          text_vi: string;
+          tip_vi: string;
+        },
+        {
+          id: string;
+          audio_url: string;
+          text_en: string;
+          text_vi: string;
+          tip_vi: string;
+        },
+        {
+          id: string;
+          audio_url: string;
+          text_en: string;
+          text_vi: string;
+          tip_vi: string;
+        },
+        {
+          id: string;
+          audio_url: string;
+          text_en: string;
+          text_vi: string;
+          tip_vi: string;
+        },
+        {
+          id: string;
+          audio_url: string;
+          text_en: string;
+          text_vi: string;
+          tip_vi: string;
+        },
+        {
+          id: string;
+          audio_url: string;
+          text_en: string;
+          text_vi: string;
+          tip_vi: string;
+        },
+        {
+          id: string;
+          audio_url: string;
+          text_en: string;
+          text_vi: string;
+          tip_vi: string;
+        },
+        {
+          id: string;
+          audio_url: string;
+          text_en: string;
+          text_vi: string;
+          tip_vi: string;
+        }
+      ]
+    | [
+        {
+          id: string;
+          audio_url: string;
+          text_en: string;
+          text_vi: string;
+          tip_vi: string;
+        },
+        {
+          id: string;
+          audio_url: string;
+          text_en: string;
+          text_vi: string;
+          tip_vi: string;
+        },
+        {
+          id: string;
+          audio_url: string;
+          text_en: string;
+          text_vi: string;
+          tip_vi: string;
+        },
+        {
+          id: string;
+          audio_url: string;
+          text_en: string;
+          text_vi: string;
+          tip_vi: string;
+        },
+        {
+          id: string;
+          audio_url: string;
+          text_en: string;
+          text_vi: string;
+          tip_vi: string;
+        },
+        {
+          id: string;
+          audio_url: string;
+          text_en: string;
+          text_vi: string;
+          tip_vi: string;
+        },
+        {
+          id: string;
+          audio_url: string;
+          text_en: string;
+          text_vi: string;
+          tip_vi: string;
+        },
+        {
+          id: string;
+          audio_url: string;
+          text_en: string;
+          text_vi: string;
+          tip_vi: string;
+        },
+        {
+          id: string;
+          audio_url: string;
+          text_en: string;
+          text_vi: string;
+          tip_vi: string;
+        }
+      ]
+    | [
+        {
+          id: string;
+          audio_url: string;
+          text_en: string;
+          text_vi: string;
+          tip_vi: string;
+        },
+        {
+          id: string;
+          audio_url: string;
+          text_en: string;
+          text_vi: string;
+          tip_vi: string;
+        },
+        {
+          id: string;
+          audio_url: string;
+          text_en: string;
+          text_vi: string;
+          tip_vi: string;
+        },
+        {
+          id: string;
+          audio_url: string;
+          text_en: string;
+          text_vi: string;
+          tip_vi: string;
+        },
+        {
+          id: string;
+          audio_url: string;
+          text_en: string;
+          text_vi: string;
+          tip_vi: string;
+        },
+        {
+          id: string;
+          audio_url: string;
+          text_en: string;
+          text_vi: string;
+          tip_vi: string;
+        },
+        {
+          id: string;
+          audio_url: string;
+          text_en: string;
+          text_vi: string;
+          tip_vi: string;
+        },
+        {
+          id: string;
+          audio_url: string;
+          text_en: string;
+          text_vi: string;
+          tip_vi: string;
+        },
+        {
+          id: string;
+          audio_url: string;
+          text_en: string;
+          text_vi: string;
+          tip_vi: string;
+        },
+        {
+          id: string;
+          audio_url: string;
+          text_en: string;
+          text_vi: string;
+          tip_vi: string;
+        }
+      ];
+}
+export interface ReadingComprehension {
+  type: "reading_comprehension";
+  title_vi: string;
+  identity_vi: string;
+  instructions_vi: string;
+  /**
+   * @minItems 3
    * @maxItems 6
    */
-  meanings:
-    | [string, string, string, string]
-    | [string, string, string, string, string]
-    | [string, string, string, string, string, string];
-}
-export interface BestLineChallenge {
-  /**
-   * @minItems 3
-   * @maxItems 3
-   */
-  options: [string, string, string];
-  correct_index: number;
-}
-export interface ComprehensionQuestion {
-  section: "Find It" | "Think About It" | "Language in the Story" | "Open Question" | "Your Turn";
-  question: string;
-  hint_vi: string;
-}
-export interface AnswerKey {
-  matching: string;
-  build_the_chunk: string[];
-  fill_in_the_blank: string[];
-  fix_the_chunk: string[];
-  /**
-   * @minItems 3
-   * @maxItems 3
-   */
-  story_cloze: [string, string, string];
-  /**
-   * @minItems 3
-   * @maxItems 3
-   */
-  best_line_challenge: [number, number, number];
-  /**
-   * @minItems 7
-   * @maxItems 7
-   */
-  comprehension: [string, string, string, string, string, string, string];
-  story_order: string;
-  suggested_retell: string;
+  questions:
+    | [
+        {
+          id: string;
+          section: "Find It" | "Think About It" | "Open Question";
+          question_en: string;
+          question_vi: string;
+          /**
+           * @minItems 3
+           * @maxItems 3
+           */
+          options_en: [string, string, string];
+          /**
+           * @minItems 3
+           * @maxItems 3
+           */
+          options_vi: [string, string, string];
+          correct_index: number;
+          explanation_vi: string;
+        },
+        {
+          id: string;
+          section: "Find It" | "Think About It" | "Open Question";
+          question_en: string;
+          question_vi: string;
+          /**
+           * @minItems 3
+           * @maxItems 3
+           */
+          options_en: [string, string, string];
+          /**
+           * @minItems 3
+           * @maxItems 3
+           */
+          options_vi: [string, string, string];
+          correct_index: number;
+          explanation_vi: string;
+        },
+        {
+          id: string;
+          section: "Find It" | "Think About It" | "Open Question";
+          question_en: string;
+          question_vi: string;
+          /**
+           * @minItems 3
+           * @maxItems 3
+           */
+          options_en: [string, string, string];
+          /**
+           * @minItems 3
+           * @maxItems 3
+           */
+          options_vi: [string, string, string];
+          correct_index: number;
+          explanation_vi: string;
+        }
+      ]
+    | [
+        {
+          id: string;
+          section: "Find It" | "Think About It" | "Open Question";
+          question_en: string;
+          question_vi: string;
+          /**
+           * @minItems 3
+           * @maxItems 3
+           */
+          options_en: [string, string, string];
+          /**
+           * @minItems 3
+           * @maxItems 3
+           */
+          options_vi: [string, string, string];
+          correct_index: number;
+          explanation_vi: string;
+        },
+        {
+          id: string;
+          section: "Find It" | "Think About It" | "Open Question";
+          question_en: string;
+          question_vi: string;
+          /**
+           * @minItems 3
+           * @maxItems 3
+           */
+          options_en: [string, string, string];
+          /**
+           * @minItems 3
+           * @maxItems 3
+           */
+          options_vi: [string, string, string];
+          correct_index: number;
+          explanation_vi: string;
+        },
+        {
+          id: string;
+          section: "Find It" | "Think About It" | "Open Question";
+          question_en: string;
+          question_vi: string;
+          /**
+           * @minItems 3
+           * @maxItems 3
+           */
+          options_en: [string, string, string];
+          /**
+           * @minItems 3
+           * @maxItems 3
+           */
+          options_vi: [string, string, string];
+          correct_index: number;
+          explanation_vi: string;
+        },
+        {
+          id: string;
+          section: "Find It" | "Think About It" | "Open Question";
+          question_en: string;
+          question_vi: string;
+          /**
+           * @minItems 3
+           * @maxItems 3
+           */
+          options_en: [string, string, string];
+          /**
+           * @minItems 3
+           * @maxItems 3
+           */
+          options_vi: [string, string, string];
+          correct_index: number;
+          explanation_vi: string;
+        }
+      ]
+    | [
+        {
+          id: string;
+          section: "Find It" | "Think About It" | "Open Question";
+          question_en: string;
+          question_vi: string;
+          /**
+           * @minItems 3
+           * @maxItems 3
+           */
+          options_en: [string, string, string];
+          /**
+           * @minItems 3
+           * @maxItems 3
+           */
+          options_vi: [string, string, string];
+          correct_index: number;
+          explanation_vi: string;
+        },
+        {
+          id: string;
+          section: "Find It" | "Think About It" | "Open Question";
+          question_en: string;
+          question_vi: string;
+          /**
+           * @minItems 3
+           * @maxItems 3
+           */
+          options_en: [string, string, string];
+          /**
+           * @minItems 3
+           * @maxItems 3
+           */
+          options_vi: [string, string, string];
+          correct_index: number;
+          explanation_vi: string;
+        },
+        {
+          id: string;
+          section: "Find It" | "Think About It" | "Open Question";
+          question_en: string;
+          question_vi: string;
+          /**
+           * @minItems 3
+           * @maxItems 3
+           */
+          options_en: [string, string, string];
+          /**
+           * @minItems 3
+           * @maxItems 3
+           */
+          options_vi: [string, string, string];
+          correct_index: number;
+          explanation_vi: string;
+        },
+        {
+          id: string;
+          section: "Find It" | "Think About It" | "Open Question";
+          question_en: string;
+          question_vi: string;
+          /**
+           * @minItems 3
+           * @maxItems 3
+           */
+          options_en: [string, string, string];
+          /**
+           * @minItems 3
+           * @maxItems 3
+           */
+          options_vi: [string, string, string];
+          correct_index: number;
+          explanation_vi: string;
+        },
+        {
+          id: string;
+          section: "Find It" | "Think About It" | "Open Question";
+          question_en: string;
+          question_vi: string;
+          /**
+           * @minItems 3
+           * @maxItems 3
+           */
+          options_en: [string, string, string];
+          /**
+           * @minItems 3
+           * @maxItems 3
+           */
+          options_vi: [string, string, string];
+          correct_index: number;
+          explanation_vi: string;
+        }
+      ]
+    | [
+        {
+          id: string;
+          section: "Find It" | "Think About It" | "Open Question";
+          question_en: string;
+          question_vi: string;
+          /**
+           * @minItems 3
+           * @maxItems 3
+           */
+          options_en: [string, string, string];
+          /**
+           * @minItems 3
+           * @maxItems 3
+           */
+          options_vi: [string, string, string];
+          correct_index: number;
+          explanation_vi: string;
+        },
+        {
+          id: string;
+          section: "Find It" | "Think About It" | "Open Question";
+          question_en: string;
+          question_vi: string;
+          /**
+           * @minItems 3
+           * @maxItems 3
+           */
+          options_en: [string, string, string];
+          /**
+           * @minItems 3
+           * @maxItems 3
+           */
+          options_vi: [string, string, string];
+          correct_index: number;
+          explanation_vi: string;
+        },
+        {
+          id: string;
+          section: "Find It" | "Think About It" | "Open Question";
+          question_en: string;
+          question_vi: string;
+          /**
+           * @minItems 3
+           * @maxItems 3
+           */
+          options_en: [string, string, string];
+          /**
+           * @minItems 3
+           * @maxItems 3
+           */
+          options_vi: [string, string, string];
+          correct_index: number;
+          explanation_vi: string;
+        },
+        {
+          id: string;
+          section: "Find It" | "Think About It" | "Open Question";
+          question_en: string;
+          question_vi: string;
+          /**
+           * @minItems 3
+           * @maxItems 3
+           */
+          options_en: [string, string, string];
+          /**
+           * @minItems 3
+           * @maxItems 3
+           */
+          options_vi: [string, string, string];
+          correct_index: number;
+          explanation_vi: string;
+        },
+        {
+          id: string;
+          section: "Find It" | "Think About It" | "Open Question";
+          question_en: string;
+          question_vi: string;
+          /**
+           * @minItems 3
+           * @maxItems 3
+           */
+          options_en: [string, string, string];
+          /**
+           * @minItems 3
+           * @maxItems 3
+           */
+          options_vi: [string, string, string];
+          correct_index: number;
+          explanation_vi: string;
+        },
+        {
+          id: string;
+          section: "Find It" | "Think About It" | "Open Question";
+          question_en: string;
+          question_vi: string;
+          /**
+           * @minItems 3
+           * @maxItems 3
+           */
+          options_en: [string, string, string];
+          /**
+           * @minItems 3
+           * @maxItems 3
+           */
+          options_vi: [string, string, string];
+          correct_index: number;
+          explanation_vi: string;
+        }
+      ];
 }

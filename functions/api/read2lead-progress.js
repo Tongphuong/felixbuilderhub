@@ -226,7 +226,7 @@ async function reconcileGenerationState(kv, accessCode, codeData) {
   const taskValue = await kv.get(`task:${currentPack.task_id}`, { type: 'json' });
 
   // CASE 1: Render finished, promote pack so dashboard shows "Chờ nộp bài"
-  if (taskValue?.status === 'done' && taskValue.result?.pdf_url && taskValue.result?.mp3_url) {
+  if (taskValue?.status === 'done' && taskValue.result?.review_context?.schema_version === 2) {
     const now = new Date().toISOString();
     const newPackId = (typeof crypto !== 'undefined' && crypto.randomUUID)
       ? crypto.randomUUID()
