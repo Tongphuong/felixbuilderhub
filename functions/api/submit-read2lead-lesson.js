@@ -294,8 +294,6 @@ function publicPack(pack) {
     topic: pack.topic,
     story_title: pack.story_title,
     level: pack.level,
-    pdf_url: pack.pdf_url,
-    mp3_url: pack.mp3_url,
     schema_version: pack.schema_version || pack.review_context?.schema_version || null,
     reviewed_at: pack.reviewed_at,
     web_lesson_steps: pack.web_lesson_steps || null,

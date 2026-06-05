@@ -164,8 +164,6 @@ export async function onRequestPost(context) {
         ok: true,
         status: 'done',
         pack_id: finalPack.pack_id,
-        pdf_url: finalPack.pdf_url,
-        mp3_url: finalPack.mp3_url,
         topic: finalPack.topic,
         story_title: finalPack.story_title,
         child_name: progress.student_name,
@@ -313,8 +311,6 @@ function buildFinalV2Pack({ pendingPack, pack, createdAt }) {
     topic: pack.topic || pendingPack.topic || '',
     story_title: pack.story?.title || pack.story_title || 'Read2Lead V2 Mission',
     level: pack.level || pendingPack.level,
-    pdf_url: '',
-    mp3_url: pack.story?.full_audio_url || '',
     schema_version: 2,
     review_context: pack,
   };
@@ -344,8 +340,6 @@ function publicPack(pack) {
     topic: pack.topic,
     story_title: pack.story_title,
     level: pack.level,
-    pdf_url: pack.pdf_url,
-    mp3_url: pack.mp3_url,
     schema_version: pack.schema_version || pack.review_context?.schema_version || null,
   };
 }

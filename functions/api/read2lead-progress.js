@@ -162,8 +162,6 @@ function publicPack(pack) {
     topic: pack.topic,
     story_title: pack.story_title,
     level: pack.level,
-    pdf_url: pack.pdf_url,
-    mp3_url: pack.mp3_url,
     reviewed_at: pack.reviewed_at,
     web_lesson_steps: pack.web_lesson_steps || null,
   };
@@ -235,8 +233,6 @@ async function reconcileGenerationState(kv, accessCode, codeData) {
       pack_id: newPackId,
       status: 'awaiting_review',
       created_at: now,
-      pdf_url: taskValue.result.pdf_url,
-      mp3_url: taskValue.result.mp3_url,
       topic: taskValue.result.topic,
       story_title: taskValue.result.story_title,
       level: currentPack.level,

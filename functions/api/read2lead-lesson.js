@@ -72,7 +72,7 @@ function buildV2LessonPayload({ accessCode, codeData, pack, v2Pack }) {
   const profile = codeData.student_profile || {};
   const story = {
     ...v2Pack.story,
-    full_audio_url: v2Pack.story?.full_audio_url || pack.mp3_url || pack.audio_url || '',
+    full_audio_url: v2Pack.story?.full_audio_url || '',
   };
 
   return {

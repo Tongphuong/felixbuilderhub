@@ -23,41 +23,40 @@ const learningSkills = [
   ['1', 'Luyện đọc hiểu', 'Con đọc một câu chuyện tiếng Anh ngắn, hợp với tuổi và mức đọc — đủ ngắn để không nản, đủ thú vị để con muốn đọc tiếp.'],
   ['2', 'Học cụm câu hữu ích', 'Mỗi bài có 4-6 cụm câu tiếng Anh ("take a deep breath", "try again slowly") con học và dùng được ngay, không phải nhớ từ rời rạc.'],
   ['3', 'Luyện viết qua bài tập', 'Sau truyện, con làm 3-4 bài tập ngắn: điền từ, sắp xếp câu, sửa câu sai — để tập dùng cụm câu vừa học.'],
-  ['4', 'Luyện nghe và phát âm', 'File MP3 đọc lại câu chuyện. Con nghe trước hoặc nghe theo để bắt giọng và cải thiện phát âm.'],
+  ['4', 'Luyện nghe và phát âm', 'Con nghe trực tiếp trên web: nghe truyện, nghe từng câu, rồi nói lại theo nhịp riêng.'],
   ['5', 'Luyện tư duy bằng tiếng Anh', 'Câu hỏi đọc hiểu và 1 câu hỏi mở để con tự viết 1-2 câu suy nghĩ — luyện viết câu hoàn chỉnh, không phải tick A/B/C/D.'],
 ];
 
 const insideItems = [
-  ['Trang đọc', 'Một câu chuyện tiếng Anh ngắn, vừa với tuổi và khả năng đọc của con.'],
-  ['Câu cần nhớ', 'Những cách nói hữu ích được lặp lại trong truyện và bài luyện.'],
-  ['Bài điền từ', 'Con điền lại câu để tập dùng đúng cách nói mới học.'],
-  ['Bài sắp xếp câu', 'Con ghép từ thành câu đúng, để nhớ câu tốt hơn.'],
-  ['Câu hỏi sau khi đọc', 'Con trả lời câu hỏi đơn giản để hiểu câu chuyện, không học vẹt.'],
-  ['Câu hỏi mở', 'Một câu hỏi cho con viết 1-2 câu suy nghĩ — không phải trắc nghiệm, không có đáp án "đúng".'],
-  ['Trang cho bố mẹ', 'Có đáp án và gợi ý cách đọc cùng con ở trang cuối.'],
+  ['Nghe truyện', 'Con nghe câu chuyện trực tiếp trên web trước khi làm nhiệm vụ.'],
+  ['Nghe hiểu', 'Con trả lời câu hỏi ngắn sau khi nghe để nắm ý chính.'],
+  ['Sắp xếp câu', 'Con nghe từng câu, ghép từ lại đúng thứ tự để nhớ cấu trúc.'],
+  ['Nói lại', 'Con nghe câu mẫu, ghi âm thử và tự luyện phát âm.'],
+  ['Đọc hiểu', 'Con đọc lại truyện và trả lời câu hỏi về nội dung.'],
+  ['XP và xu', 'Hoàn thành bài sẽ nhận XP và xu để mở level tiếp theo.'],
 ];
 
 const homeSteps = [
-  ['1', 'Tải PDF + MP3 về máy', 'Bố mẹ tải cả 2 file ngay sau khi tạo xong.'],
-  ['2', 'In PDF + mở MP3', 'In trên giấy A4 (không cần in màu). Mở MP3 cho con nghe 1 lần trước khi đọc.'],
-  ['3', 'Con đọc + làm bài bằng bút', 'Con đọc truyện trong PDF, làm 4-5 bài luyện ngắn bằng bút chì.'],
-  ['4', 'Chụp ảnh + ghi âm kể lại', 'Phụ huynh chụp bài làm. Con ghi âm 1-2 phút kể lại câu chuyện bằng lời của con.'],
-  ['5', 'Vào Felixar nộp bài', 'Felixar gửi nhận xét, cộng sao, mở bài mới.'],
+  ['1', 'Nhập mã học sinh', 'Bố mẹ nhập mã Read2Lead của con để mở quyền tạo bài.'],
+  ['2', 'Tạo bài trên web', 'Felixar tạo câu chuyện, audio và 4 nhiệm vụ nghe-đọc-nói ngay trong trình duyệt.'],
+  ['3', 'Con làm bài online', 'Con nghe truyện, sắp xếp câu, nói lại và trả lời câu hỏi trên web.'],
+  ['4', 'Nhận XP và xu', 'Hoàn thành bài sẽ cộng XP, xu và streak cho con.'],
+  ['5', 'Mở level tiếp theo', 'Đủ XP thì hệ thống tự mở L2, L3 và các level cao hơn.'],
 ];
 
 const faqItems = [
-  ['Read2Lead dùng để làm gì?', 'Read2Lead giúp bố mẹ có ngay một bài đọc tiếng Anh ngắn cho con, kèm bài luyện và file nghe. Bố mẹ có thể in ra và ngồi đọc cùng con tại nhà.'],
-  ['Bố mẹ cần làm gì sau khi tải file?', 'In file PDF ra giấy A4. Mở file nghe cho con nghe 1 lần. Sau đó cho con đọc truyện, làm bài luyện, rồi xem đáp án ở trang cuối cùng con.'],
+  ['Read2Lead dùng để làm gì?', 'Read2Lead giúp con luyện nghe, đọc, sắp xếp câu và nói lại qua một bài học tiếng Anh ngắn trên web.'],
+  ['Bố mẹ cần làm gì sau khi tạo bài?', 'Cho con mở bài học trên web, nghe truyện, làm đủ 4 nhiệm vụ rồi bấm lưu chiến công để nhận XP và xu.'],
   ['Mã đăng nhập là gì? Lấy ở đâu?', `Mỗi phụ huynh khi đăng ký dùng Read2Lead sẽ nhận 1 mã từ Felix qua Zalo. Chưa có mã thì nhắn Zalo ${ZALO_DISPLAY} để hỏi cách nhận mã.`],
-  ['Nên chọn mức đọc nào cho con?', 'Nếu con mới đọc từng từ hoặc câu rất ngắn, chọn mức 1. Nếu con đọc được câu đơn, chọn mức 2. Nếu con đọc được một đoạn ngắn, chọn mức 3. Không chắc thì chọn mức 2 trước.'],
-  ['Nếu bài quá khó hoặc quá dễ thì sao?', 'Bố mẹ có thể tạo lại một lần khác và chọn mức đọc thấp hơn hoặc cao hơn. Nếu vẫn chưa phù hợp, nhắn Zalo Felix để được hỗ trợ.'],
-  ['File tải về giữ được bao lâu?', 'Link tải về có thể chỉ tồn tại trong một thời gian ngắn. Bố mẹ nên tải PDF và MP3 về máy ngay sau khi tạo xong.'],
+  ['Nên chọn mức đọc nào cho con?', 'Không cần chọn. Mọi bạn nhỏ bắt đầu từ L1, làm bài để tích XP rồi hệ thống tự mở level tiếp theo.'],
+  ['Nếu bài quá khó hoặc quá dễ thì sao?', 'Bố mẹ nhắn Zalo Felix để được hỗ trợ. Hệ thống sẽ được tinh chỉnh dần theo kết quả làm bài thật của con.'],
+  ['Bài học có cần tải file không?', 'Không cần. Toàn bộ bài học, audio, ghi âm và lưu kết quả đều làm trực tiếp trên web.'],
 ];
 ---
 
 <BaseLayout
   title="Read2Lead - Bài đọc tiếng Anh riêng cho con | Felix Builder Hub"
-  description="Read2Lead tạo bài đọc tiếng Anh riêng cho con: có truyện ngắn, bài luyện, file nghe MP3 và PDF để bố mẹ in tại nhà."
+  description="Read2Lead tạo bài học tiếng Anh riêng cho con trên web: có truyện ngắn, audio, nhiệm vụ nghe-đọc-nói, XP và xu."
 >
   <Header />
 
@@ -69,14 +68,13 @@ const faqItems = [
         <span class="block">cho con tự học tại nhà.</span>
       </h1>
       <p class="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-cream-muted md:text-xl">
-        Mỗi bài có truyện ngắn, từ vựng cần nhớ, bài luyện và file nghe. Bố mẹ in PDF, mở MP3, ngồi cùng con 10 phút. <span class="font-semibold text-cream">Miễn phí trong giai đoạn thử nghiệm.</span>
+        Mỗi bài có truyện ngắn, audio, nhiệm vụ nghe-đọc-nói và phần thưởng XP/xu. Con làm trực tiếp trên web, không cần tải PDF hay MP3. <span class="font-semibold text-cream">Miễn phí trong giai đoạn thử nghiệm.</span>
       </p>
       <p class="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-cream-dim">
         Phù hợp khi bố mẹ muốn cho con thêm bài đọc tiếng Anh ở nhà, hợp với tuổi và mức đọc của con.
       </p>
       <div class="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
-        <a href="/read2lead/Read2Lead-Sample-Pack.pdf" target="_blank" rel="noopener" class="inline-flex rounded-lg bg-accent px-6 py-3 font-semibold text-navy-950 transition hover:bg-accent-hover">Xem file mẫu PDF</a>
-        <a href="#form" class="inline-flex rounded-lg border border-gold px-6 py-3 font-semibold text-gold-light transition hover:bg-gold hover:text-navy-950">Đã có mã — Tạo bài cho con</a>
+        <a href="#form" class="inline-flex rounded-lg bg-accent px-6 py-3 font-semibold text-navy-950 transition hover:bg-accent-hover">Đã có mã — Tạo bài cho con</a>
         <a href="/read2lead/review" class="inline-flex rounded-lg border border-cream-dim/40 px-6 py-3 font-semibold text-cream transition hover:border-gold hover:text-gold-light">Vào Felixar</a>
       </div>
       <p class="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-cream-dim">
@@ -107,8 +105,8 @@ const faqItems = [
     </section>
 
     <section class="mx-auto max-w-6xl px-6 py-20">
-      <h2 class="text-center font-display text-3xl font-bold leading-snug text-cream md:text-4xl">Bên trong file có gì?</h2>
-      <p class="mx-auto mt-5 max-w-2xl text-center leading-relaxed text-cream-dim">Đây là các phần bố mẹ sẽ thấy trong file PDF sau khi tạo xong.</p>
+      <h2 class="text-center font-display text-3xl font-bold leading-snug text-cream md:text-4xl">Bên trong bài học có gì?</h2>
+      <p class="mx-auto mt-5 max-w-2xl text-center leading-relaxed text-cream-dim">Đây là các phần con sẽ làm trực tiếp trên web sau khi tạo bài xong.</p>
       <div class="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {insideItems.map(([title, description]) => (
           <div class="rounded-lg border border-cream-dim/20 bg-navy-900/70 p-5">
@@ -121,26 +119,26 @@ const faqItems = [
 
     <section class="bg-navy-900 px-6 py-20">
       <div class="mx-auto max-w-6xl">
-        <h2 class="text-center font-display text-3xl font-bold leading-snug text-cream md:text-4xl">Xem nhanh file mẫu</h2>
-        <p class="mx-auto mt-5 max-w-2xl text-center leading-relaxed text-cream-dim">Ba hình dưới đây cho bố mẹ hình dung: trang đọc, trang bài luyện, và trang đáp án.</p>
+        <h2 class="text-center font-display text-3xl font-bold leading-snug text-cream md:text-4xl">Bài học web hoạt động thế nào?</h2>
+        <p class="mx-auto mt-5 max-w-2xl text-center leading-relaxed text-cream-dim">Con đi qua 4 nhiệm vụ: nghe truyện, xếp câu, nói lại và đọc hiểu. Mỗi phần hoàn thành sẽ cộng tiến trình cho con.</p>
         <div class="mt-12 grid gap-6 md:grid-cols-3">
           <figure class="overflow-hidden rounded-xl bg-navy-950 shadow-2xl ring-1 ring-cream-dim/25">
             <div class="aspect-[3/4] overflow-hidden bg-navy-950">
               <img src="/read2lead/story.png" alt="Trang đọc của Read2Lead" loading="lazy" class="h-full w-full object-contain" />
             </div>
-            <figcaption class="px-5 py-4 text-sm text-cream-muted"><strong class="text-cream">Trang đọc</strong> - Câu chuyện ngắn có tên con.</figcaption>
+            <figcaption class="px-5 py-4 text-sm text-cream-muted"><strong class="text-cream">Nghe truyện</strong> - Câu chuyện ngắn có tên con.</figcaption>
           </figure>
           <figure class="overflow-hidden rounded-xl bg-navy-950 shadow-2xl ring-1 ring-cream-dim/25">
             <div class="aspect-[3/4] overflow-hidden bg-navy-950">
               <img src="/read2lead/chunk.png" alt="Trang bài luyện của Read2Lead" loading="lazy" class="h-full w-full object-contain" />
             </div>
-            <figcaption class="px-5 py-4 text-sm text-cream-muted"><strong class="text-cream">Trang bài luyện</strong> - Con tập dùng lại câu vừa đọc.</figcaption>
+            <figcaption class="px-5 py-4 text-sm text-cream-muted"><strong class="text-cream">Nhiệm vụ luyện</strong> - Con nghe, xếp câu và nói lại.</figcaption>
           </figure>
           <figure class="overflow-hidden rounded-xl bg-navy-950 shadow-2xl ring-1 ring-cream-dim/25">
             <div class="aspect-[3/4] overflow-hidden bg-navy-950">
               <img src="/read2lead/parents.png" alt="Trang đáp án cho phụ huynh" loading="lazy" class="h-full w-full object-contain" />
             </div>
-            <figcaption class="px-5 py-4 text-sm text-cream-muted"><strong class="text-cream">Trang cho bố mẹ</strong> - Có đáp án và gợi ý cách dùng.</figcaption>
+            <figcaption class="px-5 py-4 text-sm text-cream-muted"><strong class="text-cream">Lưu chiến công</strong> - Con nhận XP, xu và tiến dần lên level mới.</figcaption>
           </figure>
         </div>
         <div class="mt-12 rounded-xl border border-gold/30 bg-gold/10 p-6 md:flex md:items-center md:gap-6">
@@ -153,16 +151,13 @@ const faqItems = [
             <p class="mt-2 text-sm text-cream-dim">— Phụ huynh bé H. (9 tuổi), TP.HCM</p>
           </div>
         </div>
-        <div class="mt-8 text-center">
-          <a href="/read2lead/Read2Lead-Sample-Pack.pdf" target="_blank" rel="noopener" class="inline-flex rounded-lg border border-accent px-5 py-2.5 text-sm font-semibold text-accent transition hover:bg-accent hover:text-navy-950">Tải file mẫu đầy đủ</a>
-        </div>
       </div>
     </section>
 
     <section class="mx-auto max-w-6xl px-6 py-20">
       <div class="text-center">
         <h2 class="font-display text-3xl font-bold leading-snug text-cream md:text-4xl">5 bước dùng tại nhà</h2>
-        <p class="mx-auto mt-4 max-w-2xl leading-relaxed text-cream-dim">Không cần học app mới. Quy trình chính vẫn là tải file, in ra, học trên giấy.</p>
+        <p class="mx-auto mt-4 max-w-2xl leading-relaxed text-cream-dim">Không cần tải file. Con làm bài, nghe audio và lưu kết quả ngay trên web.</p>
       </div>
       <div class="mt-10 grid gap-5 md:grid-cols-5">
         {homeSteps.map(([number, title, description]) => (
@@ -301,18 +296,16 @@ const faqItems = [
         </div>
 
         <div id="result-section" class="mx-auto hidden max-w-2xl rounded-lg border border-gold/40 bg-gold/10 p-6 text-center">
-          <h2 class="font-display text-3xl font-bold leading-snug text-cream">File của <span id="result-child-name"></span> đã sẵn sàng</h2>
+          <h2 class="font-display text-3xl font-bold leading-snug text-cream">Bài học của <span id="result-child-name"></span> đã sẵn sàng</h2>
           <div class="mt-5 space-y-2 text-cream-muted">
             <p>Chủ đề: <span id="result-topic" class="font-semibold text-cream"></span></p>
             <p>Tên truyện: <span id="result-story-title" class="font-semibold text-cream"></span></p>
           </div>
           <div class="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
-            <a id="pdf-link" href="#" target="_blank" rel="noreferrer" class="rounded-lg bg-accent px-6 py-3 font-semibold text-navy-950 transition hover:bg-accent-hover">Tải file in PDF</a>
-            <a id="mp3-link" href="#" target="_blank" rel="noreferrer" class="rounded-lg border border-accent px-6 py-3 font-semibold text-accent transition hover:bg-accent hover:text-navy-950">Tải file nghe MP3</a>
-            <a id="lesson-link" href="/read2lead/lesson" class="rounded-lg border border-gold px-6 py-3 font-semibold text-gold-light transition hover:bg-gold hover:text-navy-950">Cho con làm trên web</a>
+            <a id="lesson-link" href="/read2lead/lesson" class="rounded-lg bg-accent px-6 py-3 font-semibold text-navy-950 transition hover:bg-accent-hover">Mở bài học trên web</a>
           </div>
           <p class="mt-6 text-sm leading-relaxed text-cream-muted">
-            Bố mẹ có thể tải PDF/MP3 về máy để in, hoặc cho con làm luôn trên web. Nếu con làm trên giấy, mở <a id="review-link" href="/read2lead/review" class="font-semibold text-gold-light underline">Felixar</a> để nộp ảnh bài làm và ghi âm con kể lại câu chuyện.
+            Con nghe truyện, làm 4 nhiệm vụ và lưu chiến công trực tiếp trên web. Bố mẹ có thể mở <a id="review-link" href="/read2lead/review" class="font-semibold text-gold-light underline">Felixar</a> để xem tiến trình.
           </p>
           <div class="mt-6">
             <p class="text-cream-dim">Muốn tạo file khác cho bé khác?</p>
@@ -376,7 +369,7 @@ const faqItems = [
       '✍️ Đang viết câu chuyện riêng cho con...',
       '🎙️ Đang ghi âm câu chuyện thành file nghe...',
       '🔊 Đang ghi âm các cụm câu để con tập đọc...',
-      '📄 Đang chuẩn bị bài luyện và file PDF...',
+      '🎮 Đang chuẩn bị nhiệm vụ web cho con...',
       '✨ Sắp xong rồi, đang đóng gói file...',
     ];
 
@@ -410,12 +403,6 @@ const faqItems = [
       document.getElementById('result-child-name').textContent = data.child_name || '';
       document.getElementById('result-topic').textContent = data.topic || '';
       document.getElementById('result-story-title').textContent = data.story_title || '';
-      const pdfLink = document.getElementById('pdf-link');
-      const mp3Link = document.getElementById('mp3-link');
-      pdfLink.href = data.pdf_url || '#';
-      mp3Link.href = data.mp3_url || '#';
-      pdfLink.classList.toggle('hidden', !data.pdf_url);
-      mp3Link.classList.toggle('hidden', !data.mp3_url);
       document.getElementById('lesson-link').href = data.lesson_link || '/read2lead/lesson';
       document.getElementById('review-link').href = data.review_link || '/read2lead/review';
 
@@ -486,7 +473,7 @@ const faqItems = [
         pollInterval = null;
         activeTaskId = null;
 
-        if (result.status === 'done' && (result.lesson_link || result.pdf_url)) {
+        if (result.status === 'done' && result.lesson_link) {
           showResult({
             ...result,
             child_name: childName,
