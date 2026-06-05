@@ -19,6 +19,7 @@ test('Read2Lead landing page does not expose PDF or MP3 download surfaces', () =
   assert.doesNotMatch(landingPage, /pdf_url/);
   assert.doesNotMatch(landingPage, /mp3_url/);
   assert.doesNotMatch(landingPage, /Read2Lead-Sample-Pack\.pdf/);
+  assert.doesNotMatch(landingPage, /\bPDF\b|\bMP3\b/);
 });
 
 test('public Read2Lead API payloads do not expose standalone PDF or MP3 urls', () => {
