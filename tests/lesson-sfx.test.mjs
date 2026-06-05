@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync, existsSync } from 'node:fs';
 
 const lessonPage = readFileSync('src/pages/read2lead/lesson.astro', 'utf-8');
+const rewardBurst = readFileSync('src/components/read2lead/v2/RewardBurst.astro', 'utf-8');
 
 test('all SFX files exist in public/sfx/r2l/', () => {
   const expected = [
@@ -35,6 +36,15 @@ test('lesson page wires pack-complete sequence', () => {
   assert.match(lessonPage, /playSfxSequence\(\[SFX\.packComplete/);
 });
 
+test('lesson page plays Felix voice on correct reward', () => {
+  assert.match(lessonPage, /function playCorrectVoice/);
+  assert.match(lessonPage, /showReward\(\{ withVoice: true \}\)/);
+});
+
+test('lesson page uses celebrate mode for activity and pack completion', () => {
+  assert.match(lessonPage, /showReward\(\{ mode: 'celebrate', withVoice: true \}\)/);
+});
+
 test('lesson page wires level-up SFX', () => {
   assert.match(lessonPage, /SFX\.levelUp/);
 });
@@ -50,4 +60,10 @@ test('lesson page handles autoplay block gracefully', () => {
 
 test('mute toggle button present in markup', () => {
   assert.match(lessonPage, /id="sfx-toggle"/);
+});
+
+test('reward burst includes confetti and firework layers', () => {
+  assert.match(rewardBurst, /reward-confetti-layer/);
+  assert.match(rewardBurst, /r2l-confetti/);
+  assert.match(rewardBurst, /r2l-firework/);
 });

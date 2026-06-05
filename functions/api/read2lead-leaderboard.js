@@ -64,7 +64,7 @@ function publicLeader(code, codeData) {
     rank,
     rank_vi: rankVi(rank),
     badges_vi: badgesVi(Array.isArray(progress.badges) ? progress.badges : badgesForStars(stars)),
-    current_level: progress.current_level || profile.level || 'L2',
+    current_level: progress.current_level || profile.level || 'L1',
     last_reviewed_at: codeData.last_reviewed_at || progress.last_activity_at || progress.last_reviewed_at || latestReviewDate(reviewHistory),
   };
 }

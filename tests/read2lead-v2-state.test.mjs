@@ -27,6 +27,8 @@ test('pack completion increments coins and XP once', () => {
     codeData: { student_profile: { student_name: 'Bin', level: 'L2' } },
     nowIso: '2026-06-05T01:00:00.000Z',
   });
+  assert.equal(base.current_level, 'L1');
+
   const first = applyPackCompletion(base, {
     packId: 'pack-1',
     completedAt: '2026-06-05T02:00:00.000Z',
@@ -69,9 +71,9 @@ test('third pack in level triggers level-up and resets level XP', () => {
   });
   const publicState = publicProgressState(third.state);
 
-  assert.equal(third.level_up.from_level, 'L2');
-  assert.equal(third.level_up.to_level, 'L3');
-  assert.equal(publicState.current_level, 'L3');
+  assert.equal(third.level_up.from_level, 'L1');
+  assert.equal(third.level_up.to_level, 'L2');
+  assert.equal(publicState.current_level, 'L2');
   assert.equal(publicState.xp_in_level, 0);
   assert.equal(publicState.packs_until_level_up, 3);
 });

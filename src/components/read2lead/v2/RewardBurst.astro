@@ -1,27 +1,119 @@
 <div
   id="reward-burst"
-  class="pointer-events-none fixed inset-x-0 top-24 z-50 mx-auto hidden w-fit rounded-md border border-gold/40 bg-navy-950/95 px-5 py-3 text-center shadow-2xl shadow-gold/20"
+  class="pointer-events-none fixed inset-0 z-50 hidden"
   role="status"
   aria-live="polite"
 >
-  <div id="reward-burst-title" class="font-display text-lg font-bold text-gold">Hay lắm!</div>
-  <div id="reward-burst-copy" class="text-sm text-cream/80">Con vừa mở thêm năng lượng.</div>
+  <div id="reward-confetti-layer" aria-hidden="true">
+    {
+      Array.from({ length: 18 }).map((_, index) => (
+        <span
+          class="r2l-confetti"
+          style={`--x:${-46 + index * 5.4}vw; --delay:${index * 34}ms; --rot:${index * 23}deg;`}
+        />
+      ))
+    }
+    <span class="r2l-firework r2l-firework-a"></span>
+    <span class="r2l-firework r2l-firework-b"></span>
+    <span class="r2l-firework r2l-firework-c"></span>
+  </div>
+  <div class="r2l-reward-card">
+    <div id="reward-burst-title" class="font-display text-lg font-bold text-gold">Hay lắm!</div>
+    <div id="reward-burst-copy" class="text-sm text-cream/80">Con vừa mở thêm năng lượng.</div>
+  </div>
 </div>
 
 <style>
   #reward-burst[data-show='true'] {
     display: block;
+  }
+
+  .r2l-reward-card {
+    position: fixed;
+    left: 50%;
+    top: 6rem;
+    width: fit-content;
+    max-width: min(88vw, 28rem);
+    transform: translateX(-50%);
+    border: 1px solid rgb(212 166 78 / 0.4);
+    border-radius: 8px;
+    background: rgb(10 14 26 / 0.95);
+    padding: 0.75rem 1.25rem;
+    text-align: center;
+    box-shadow: 0 18px 50px rgb(212 166 78 / 0.2);
+  }
+
+  #reward-burst[data-show='true'] .r2l-reward-card {
     animation: r2l-reward-pop 900ms ease both;
   }
 
-  #reward-burst[data-tier='rare'] {
+  #reward-burst[data-tier='rare'] .r2l-reward-card {
     border-color: rgb(74 222 128 / 0.7);
     box-shadow: 0 18px 50px rgb(74 222 128 / 0.22);
   }
 
-  #reward-burst[data-tier='legendary'] {
+  #reward-burst[data-tier='legendary'] .r2l-reward-card {
     border-color: rgb(212 166 78 / 0.9);
     box-shadow: 0 18px 60px rgb(212 166 78 / 0.32);
+  }
+
+  #reward-confetti-layer {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+  }
+
+  .r2l-confetti,
+  .r2l-firework {
+    display: none;
+    position: fixed;
+  }
+
+  #reward-burst[data-show='true'][data-mode='celebrate'] .r2l-confetti {
+    display: block;
+    left: 50%;
+    top: -1rem;
+    width: 0.55rem;
+    height: 0.9rem;
+    border-radius: 2px;
+    background: rgb(212 166 78);
+    transform: translateX(var(--x)) rotate(var(--rot));
+    animation: r2l-confetti-fall 1250ms cubic-bezier(0.18, 0.82, 0.28, 1) both;
+    animation-delay: var(--delay);
+  }
+
+  #reward-burst[data-show='true'][data-mode='celebrate'] .r2l-confetti:nth-child(3n) {
+    background: rgb(74 222 128);
+  }
+
+  #reward-burst[data-show='true'][data-mode='celebrate'] .r2l-confetti:nth-child(4n) {
+    background: rgb(245 230 211);
+  }
+
+  #reward-burst[data-show='true'][data-mode='celebrate'] .r2l-firework {
+    display: block;
+    width: 0.4rem;
+    height: 0.4rem;
+    border-radius: 999px;
+    background: transparent;
+    animation: r2l-firework-pop 900ms ease-out both;
+  }
+
+  .r2l-firework-a {
+    left: 22%;
+    top: 28%;
+  }
+
+  .r2l-firework-b {
+    right: 20%;
+    top: 22%;
+    animation-delay: 180ms;
+  }
+
+  .r2l-firework-c {
+    left: 50%;
+    top: 38%;
+    animation-delay: 320ms;
   }
 
   @keyframes r2l-reward-pop {
@@ -40,10 +132,54 @@
     }
   }
 
+  @keyframes r2l-confetti-fall {
+    0% {
+      opacity: 0;
+      transform: translateX(var(--x)) translateY(-1rem) rotate(var(--rot));
+    }
+    14% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      transform: translateX(calc(var(--x) * 0.68)) translateY(82vh) rotate(calc(var(--rot) + 290deg));
+    }
+  }
+
+  @keyframes r2l-firework-pop {
+    0% {
+      opacity: 0;
+      box-shadow:
+        0 0 0 0 rgb(212 166 78),
+        0 0 0 0 rgb(74 222 128),
+        0 0 0 0 rgb(245 230 211);
+    }
+    20% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      box-shadow:
+        0 -34px 0 2px rgb(212 166 78),
+        30px -18px 0 2px rgb(74 222 128),
+        30px 22px 0 2px rgb(245 230 211),
+        0 36px 0 2px rgb(212 166 78),
+        -32px 20px 0 2px rgb(74 222 128),
+        -32px -18px 0 2px rgb(245 230 211);
+      transform: scale(1.5);
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
-    #reward-burst[data-show='true'] {
+    #reward-burst[data-show='true'] .r2l-reward-card {
       animation: none;
       display: block;
+    }
+
+    .r2l-confetti,
+    .r2l-firework {
+      animation: none !important;
+      display: none !important;
     }
   }
 </style>

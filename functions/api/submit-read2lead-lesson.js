@@ -270,7 +270,7 @@ function normalizeProgress(codeData) {
   return {
     student_name: profile.student_name || progress.student_name || '',
     age: profile.age || progress.age || null,
-    current_level: progress.current_level || profile.level || 'L2',
+    current_level: progress.current_level || profile.level || 'L1',
     stars,
     rank: progress.rank || rankForStars(stars),
     badges: Array.isArray(progress.badges) ? progress.badges : badgesForStars(stars),

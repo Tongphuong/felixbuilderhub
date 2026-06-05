@@ -1,4 +1,5 @@
 import { getClientIp, checkCodeRateLimit, recordCodeFailure, rateLimitedResponse } from './_rate-limit.js';
+import { loadProgressState } from './_read2lead-v2-state.js';
 
 const GENERATION_LOCK_STALE_MS = 15 * 60 * 1000;
 
@@ -46,7 +47,8 @@ export async function onRequestPost(context) {
   const availabilityError = checkCodeAvailability(codeData);
   if (availabilityError) return availabilityError;
 
-  const progress = normalizeProgress(codeData, data);
+  const progressState = await loadProgressState(env, accessCode, codeData);
+  const progress = normalizeProgress(codeData, data, progressState);
   const requireReviewBeforeNextPack = shouldRequireReviewBeforeNextPack(codeData);
   if (currentPackBlocksGeneration(progress.current_pack, requireReviewBeforeNextPack)) {
     return json(
@@ -76,7 +78,7 @@ export async function onRequestPost(context) {
 
   const interests = (data.interests || '').toString().trim().slice(0, 120);
   const topic = (data.topic || '').toString().trim().slice(0, 60);
-  const levelForPack = progress.current_level || data.level;
+  const levelForPack = progress.current_level || 'L1';
   const lockCreatedAt = new Date().toISOString();
   const pendingPackId = crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random().toString(16).slice(2)}`;
   const pendingPack = {
@@ -221,7 +223,6 @@ function validate(data) {
   if (!data.child_name || data.child_name.trim().length === 0 || data.child_name.length > 50) errors.push('child_name');
   const age = parseInt(data.age, 10);
   if (isNaN(age) || age < 5 || age > 14) errors.push('age');
-  if (!['L1', 'L2', 'L3'].includes(data.level)) errors.push('level');
   if (!['boy', 'girl'].includes(data.child_gender)) errors.push('child_gender');
   return errors;
 }
@@ -240,7 +241,7 @@ function checkCodeAvailability(codeData) {
   return null;
 }
 
-function normalizeProgress(codeData, formData = {}) {
+function normalizeProgress(codeData, formData = {}, progressState = null) {
   const profile = codeData.student_profile || {};
   const progress = codeData.progress || {};
   const stars = Number.isFinite(progress.stars) ? progress.stars : 0;
@@ -250,7 +251,7 @@ function normalizeProgress(codeData, formData = {}) {
     student_name: (formData.child_name || '').trim() || profile.student_name || '',
     age: Number.isFinite(formAge) ? formAge : (profile.age || null),
     child_gender: formData.child_gender || profile.child_gender || '',
-    current_level: formData.level || progress.current_level || profile.level || 'L2',
+    current_level: progressState?.current_level || earnedCurrentLevel(progress, reviewHistory),
     stars,
     rank: progress.rank || rankForStars(stars),
     badges: Array.isArray(progress.badges) ? progress.badges : badgesForStars(stars),
@@ -294,6 +295,14 @@ function isV2Pack(pack) {
       pack?.pack?.schema_version === 2 ||
       pack?.pack_json?.schema_version === 2,
   );
+}
+
+function earnedCurrentLevel(progress, reviewHistory = []) {
+  const completedPacks = numberOrZero(progress.completed_packs) || reviewHistory.length;
+  if (completedPacks > 0 && ['L1', 'L2', 'L3'].includes(progress.current_level)) {
+    return progress.current_level;
+  }
+  return 'L1';
 }
 
 function buildFinalV2Pack({ pendingPack, pack, createdAt }) {

@@ -1,6 +1,7 @@
 export const LEVELS = ['L1', 'L2', 'L3', 'L4', 'L5'];
 export const PACKS_PER_LEVEL = 3;
 export const XP_PER_LEVEL = 60;
+export const START_LEVEL = 'L1';
 export const COINS_TOOLTIP = 'Tiết kiệm xu cho cửa hàng sắp mở! 🛒';
 
 const STARTER_BADGE_DEFINITIONS = [
@@ -64,10 +65,9 @@ export async function saveProgressState(env, accessCode, state) {
 export function normalizeProgressState(raw, { accessCode, codeData = null, nowIso = new Date().toISOString() } = {}) {
   const profile = codeData?.student_profile || {};
   const legacyProgress = codeData?.progress || {};
-  const initialLevel = safeLevel(
-    raw?.initial_level || legacyProgress.current_level || profile.level || 'L2',
-  );
-  const currentLevel = safeLevel(raw?.current_level || raw?.level || initialLevel);
+  const hasStoredV2State = raw?.schema_version === 2;
+  const initialLevel = hasStoredV2State ? safeLevel(raw?.initial_level) : START_LEVEL;
+  const currentLevel = hasStoredV2State ? safeLevel(raw?.current_level || raw?.level || initialLevel) : START_LEVEL;
   const completedPacks = numberOrZero(raw?.completed_packs ?? legacyProgress.completed_packs);
   const coins = numberOrZero(raw?.coins);
   const totalXp = numberOrZero(raw?.total_xp);
@@ -87,7 +87,7 @@ export function normalizeProgressState(raw, { accessCode, codeData = null, nowIs
     current_level: currentLevel,
     initial_level: initialLevel,
     unlocked_levels: Array.from(new Set([...unlockedLevels, currentLevel])),
-    rank_title: RANK_TITLES[currentLevel] || RANK_TITLES.L2,
+    rank_title: RANK_TITLES[currentLevel] || RANK_TITLES[START_LEVEL],
     coins,
     total_xp: totalXp,
     xp_in_level: xpInLevel,
@@ -137,11 +137,12 @@ export function applyPackCompletion(
   const nextCompleted = state.completed_packs + 1;
   const nextCompletedIds = [...state.completed_pack_ids, id].slice(-100);
   let nextCurrentLevel = currentLevel;
-  let xpInLevel = Math.min(XP_PER_LEVEL, state.xp_in_level + earnedXp);
+  const nextXpTotal = state.xp_in_level + earnedXp;
+  let xpInLevel = Math.min(XP_PER_LEVEL, nextXpTotal);
   let levelUp = null;
 
   levelProgress[currentLevel] = nextLevelCount;
-  if (nextLevelCount >= PACKS_PER_LEVEL) {
+  if (nextXpTotal >= XP_PER_LEVEL) {
     const nextLevel = levelAfter(currentLevel);
     if (nextLevel) {
       levelUp = {
@@ -264,7 +265,7 @@ function normalizeLevelProgress(levelProgress) {
 }
 
 function safeLevel(level) {
-  return LEVELS.includes(level) ? level : 'L2';
+  return LEVELS.includes(level) ? level : START_LEVEL;
 }
 
 function levelAfter(level) {

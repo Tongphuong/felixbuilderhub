@@ -308,6 +308,10 @@ import RewardBurst from '../../components/read2lead/v2/RewardBurst.astro';
     return VOICE_POOL[Math.floor(Math.random() * VOICE_POOL.length)];
   }
 
+  function playCorrectVoice(delayMs = 360) {
+    window.setTimeout(() => playSfx(pickVoiceClip(), { volume: 0.95 }), delayMs);
+  }
+
   function setSfxMuted(muted) {
     _r2lSfxState.muted = !!muted;
     try {
@@ -653,7 +657,7 @@ import RewardBurst from '../../components/read2lead/v2/RewardBurst.astro';
         if (isCorrect && !answered.has(questionIndex)) {
           answered.add(questionIndex);
           clearWrongStreak(questionId);
-          showReward();
+          if (answered.size < (activity.questions || []).length) showReward({ withVoice: true });
         } else if (!isCorrect) {
           playWrongSfx(questionId);
         }
@@ -719,7 +723,7 @@ import RewardBurst from '../../components/read2lead/v2/RewardBurst.astro';
           if (correct) {
             solved.add(itemIndex);
             clearWrongStreak(questionId);
-            showReward();
+            if (solved.size < (activity.items || []).length) showReward({ withVoice: true });
           } else {
             playWrongSfx(questionId);
             root.querySelector(`[data-order-hint="${itemIndex}"]`)?.classList.remove('hidden');
@@ -783,7 +787,7 @@ import RewardBurst from '../../components/read2lead/v2/RewardBurst.astro';
         const itemIndex = Number(button.dataset.rateSpeak);
         rated.add(itemIndex);
         button.dataset.state = 'correct';
-        showReward();
+        if (rated.size < (activity.items || []).length) showReward({ withVoice: true });
         if (rated.size === (activity.items || []).length) completeActivity(activity.type, {
           correct_count: rated.size,
           total_count: activity.items.length,
@@ -804,6 +808,7 @@ import RewardBurst from '../../components/read2lead/v2/RewardBurst.astro';
       ...details,
     };
     updateProgress();
+    showReward({ mode: 'celebrate', withVoice: true });
     if (state.completedTypes.size < 4) {
       const nextIndex = Math.min(state.activityIndex + 1, 3);
       if (nextIndex !== state.activityIndex) {
@@ -830,7 +835,7 @@ import RewardBurst from '../../components/read2lead/v2/RewardBurst.astro';
     });
   }
 
-  function showReward() {
+  function showReward({ mode = 'mini', withVoice = false } = {}) {
     const tier = rollRewardTier();
     const burst = qs('#reward-burst');
     const title = qs('#reward-burst-title');
@@ -843,6 +848,7 @@ import RewardBurst from '../../components/read2lead/v2/RewardBurst.astro';
     title.textContent = messages[tier][0];
     copy.textContent = messages[tier][1];
     burst.dataset.tier = tier;
+    burst.dataset.mode = mode;
     burst.dataset.show = 'false';
     window.setTimeout(() => {
       burst.dataset.show = 'true';
@@ -852,10 +858,13 @@ import RewardBurst from '../../components/read2lead/v2/RewardBurst.astro';
         legendary: SFX.correctLegendary,
       };
       playSfx(tierSfx[tier] || SFX.correctCommon);
+      if (withVoice || tier === 'rare' || tier === 'legendary') {
+        playCorrectVoice(mode === 'celebrate' ? 420 : 320);
+      }
     }, 20);
     window.setTimeout(() => {
       burst.dataset.show = 'false';
-    }, 950);
+    }, mode === 'celebrate' ? 1450 : 950);
   }
 
   function playWrongSfx(questionId) {
@@ -879,7 +888,7 @@ import RewardBurst from '../../components/read2lead/v2/RewardBurst.astro';
 
   function playAudio(url) {
     if (!url) {
-      showReward();
+      showReward({ mode: 'celebrate', withVoice: true });
       return;
     }
     const audio = new Audio(url);
@@ -917,7 +926,7 @@ import RewardBurst from '../../components/read2lead/v2/RewardBurst.astro';
         playSfxSequence([SFX.packComplete, pickVoiceClip()], 600);
       }
       showLevelUp(data.level_up);
-      showReward();
+      showReward({ mode: 'celebrate', withVoice: true });
     } catch (error) {
       qs('#submit-lesson').disabled = false;
       qs('#submit-hint').textContent = error.message || 'Chưa lưu được kết quả. Anh Phương thử lại giúp con nhé.';

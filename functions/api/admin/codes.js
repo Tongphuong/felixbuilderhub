@@ -78,7 +78,6 @@ export async function onRequestPost(context) {
   const notes = (body.notes || '').trim().slice(0, 500);
   const student_name = (body.student_name || '').trim().slice(0, 50);
   const student_age = parseInt(body.student_age, 10);
-  const student_level = ['L1', 'L2', 'L3'].includes(body.student_level) ? body.student_level : '';
   const child_gender = ['boy', 'girl'].includes(body.child_gender) ? body.child_gender : '';
   const uses = parseInt(body.uses, 10);
   const expiry_days = parseInt(body.expiry_days, 10);
@@ -101,7 +100,7 @@ export async function onRequestPost(context) {
       ? {
           student_name,
           age: Number.isFinite(student_age) && student_age >= 5 && student_age <= 14 ? student_age : null,
-          level: student_level || 'L2',
+          level: 'L1',
           child_gender: child_gender || null,
         }
       : null,
@@ -110,7 +109,7 @@ export async function onRequestPost(context) {
           student_name,
           age: Number.isFinite(student_age) && student_age >= 5 && student_age <= 14 ? student_age : null,
           child_gender: child_gender || null,
-          current_level: student_level || 'L2',
+          current_level: 'L1',
           stars: 0,
           rank: 'Rookie Reader',
           badges: [],

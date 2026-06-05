@@ -39,13 +39,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
             <label class="mb-1 block text-sm text-cream-muted">Tuổi con</label>
             <input name="student_age" type="number" min="5" max="14" placeholder="8" class="w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-3 py-2 text-cream focus:border-accent focus:outline-none" />
           </div>
-          <div>
-            <label class="mb-1 block text-sm text-cream-muted">Level mặc định</label>
-            <select name="student_level" class="w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-3 py-2 text-cream focus:border-accent focus:outline-none">
-              <option value="L2">L2 - đọc được câu đơn</option>
-              <option value="L1">L1 - mới bắt đầu</option>
-              <option value="L3">L3 - đọc đoạn ngắn</option>
-            </select>
+          <div class="rounded-lg border border-accent/30 bg-accent/10 p-4 text-sm leading-relaxed text-cream-muted">
+            Tài khoản mới luôn bắt đầu ở L1. Level sẽ tự mở khi con tích lũy đủ XP.
           </div>
           <div>
             <label class="mb-1 block text-sm text-cream-muted">Giới tính</label>
@@ -160,7 +155,6 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
           createForm.reset();
           createForm.querySelector('[name=uses]').value = '10';
           createForm.querySelector('[name=expiry_days]').value = '60';
-          createForm.querySelector('[name=student_level]').value = 'L2';
           await loadList();
         } else {
           showCreateError(result.message || result.error || 'Lỗi không xác định');
@@ -193,7 +187,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       const progress = item.progress || {};
       const studentName = profile.student_name || progress.student_name || '';
       const studentAge = profile.age || progress.age || '';
-      const studentLevel = profile.level || progress.current_level || '';
+      const studentLevel = progress.current_level || profile.level || '';
       const flags = [
         item.is_test ? '<span class="rounded-md border border-yellow-500/40 px-2 py-0.5 text-[11px] font-semibold text-yellow-300">TEST</span>' : '',
         item.is_shared ? '<span class="rounded-md border border-blue-500/40 px-2 py-0.5 text-[11px] font-semibold text-blue-300">SHARED</span>' : '',
