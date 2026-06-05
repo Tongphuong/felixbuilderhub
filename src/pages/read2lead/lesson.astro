@@ -21,6 +21,16 @@ import RewardBurst from '../../components/read2lead/v2/RewardBurst.astro';
   <main id="main" class="min-h-screen bg-navy-950">
     <IdentityBanner />
     <ProgressBar initialPercent={20} />
+    <div class="mx-auto flex max-w-6xl justify-end px-4 pt-3 sm:px-6 lg:px-8">
+      <button
+        id="sfx-toggle"
+        type="button"
+        class="rounded-md border border-cream/30 bg-navy-900 px-3 py-1 text-xs font-medium text-cream hover:bg-navy-800"
+        aria-label="Bật/tắt âm thanh"
+      >
+        Tắt âm
+      </button>
+    </div>
 
     <section class="mx-auto max-w-6xl px-4 py-6 sm:px-6 lg:px-8">
       <div id="loading-card" class="rounded-md border border-cream/10 bg-cream/5 p-6 text-cream">
@@ -178,9 +188,151 @@ import RewardBurst from '../../components/read2lead/v2/RewardBurst.astro';
     border-color: rgb(212 166 78 / 0.75);
     background: rgb(212 166 78 / 0.14);
   }
+
+  .r2l-rec-row {
+    margin-top: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .r2l-rec-btn {
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid rgba(245, 239, 224, 0.3);
+    background: #0f172a;
+    color: #f5efe0;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+  }
+
+  .r2l-rec-btn:hover {
+    background: #1e293b;
+  }
+
+  .r2l-rec-start,
+  .r2l-rec-play {
+    border-color: rgba(16, 185, 129, 0.5);
+  }
+
+  .r2l-rec-stop {
+    border-color: rgba(239, 68, 68, 0.6);
+    background: rgba(127, 29, 29, 0.3);
+  }
+
+  .r2l-rec-redo {
+    border-color: rgba(245, 158, 11, 0.4);
+  }
+
+  .r2l-rec-indicator {
+    color: #f87171;
+    font-size: 0.85rem;
+    animation: r2l-pulse 1.2s infinite;
+  }
+
+  @keyframes r2l-pulse {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.4;
+    }
+  }
 </style>
 
 <script is:inline>
+  /* ----- W4.4 SFX library ----- */
+  const SFX = {
+    correctCommon: '/sfx/r2l/success-1.mp3',
+    correctRare: '/sfx/r2l/success-2.mp3',
+    correctLegendary: '/sfx/r2l/success-3.mp3',
+    wrong: '/sfx/r2l/soft-boop.mp3',
+    encouragement: '/sfx/r2l/voice-colen.mp3',
+    activityComplete: '/sfx/r2l/page-complete.mp3',
+    packComplete: '/sfx/r2l/final-reward.mp3',
+    levelUp: '/sfx/r2l/voice-xuatsac.mp3',
+  };
+
+  const VOICE_POOL = [
+    '/sfx/r2l/voice-tuyetvoi.mp3',
+    '/sfx/r2l/voice-gioiqua.mp3',
+    '/sfx/r2l/voice-tienbo.mp3',
+    '/sfx/r2l/voice-xuatsac.mp3',
+  ];
+
+  const _r2lSfxState = {
+    muted: (() => {
+      try { return localStorage.getItem('r2l_sfx_muted') === '1'; } catch { return false; }
+    })(),
+    wrongStreak: new Map(),
+    audioCache: new Map(),
+  };
+
+  function _r2lGetAudio(src) {
+    let audio = _r2lSfxState.audioCache.get(src);
+    if (!audio) {
+      audio = new Audio(src);
+      audio.preload = 'auto';
+      _r2lSfxState.audioCache.set(src, audio);
+    }
+    return audio;
+  }
+
+  function playSfx(src, { volume = 0.85 } = {}) {
+    if (_r2lSfxState.muted || !src) return;
+    try {
+      const audio = _r2lGetAudio(src);
+      audio.volume = volume;
+      audio.currentTime = 0;
+      audio.play().catch((err) => {
+        console.debug('[r2l-sfx] play blocked:', src, err.message);
+      });
+    } catch (err) {
+      console.warn('[r2l-sfx] error:', err);
+    }
+  }
+
+  function playSfxSequence(sources, gapMs = 600) {
+    if (_r2lSfxState.muted) return;
+    if (!sources.length) return;
+    playSfx(sources[0]);
+    if (sources.length > 1) {
+      window.setTimeout(() => playSfxSequence(sources.slice(1), gapMs), gapMs);
+    }
+  }
+
+  function pickVoiceClip() {
+    return VOICE_POOL[Math.floor(Math.random() * VOICE_POOL.length)];
+  }
+
+  function setSfxMuted(muted) {
+    _r2lSfxState.muted = !!muted;
+    try {
+      localStorage.setItem('r2l_sfx_muted', muted ? '1' : '0');
+    } catch {}
+    const btn = document.getElementById('sfx-toggle');
+    if (btn) btn.textContent = muted ? 'Bật âm' : 'Tắt âm';
+  }
+
+  let _r2lSfxPreloaded = false;
+  function preloadSfxOnce() {
+    if (_r2lSfxPreloaded) return;
+    _r2lSfxPreloaded = true;
+    [SFX.correctCommon, SFX.wrong, SFX.activityComplete, SFX.packComplete].forEach((src) => {
+      try { _r2lGetAudio(src).load(); } catch {}
+    });
+  }
+  document.addEventListener('click', preloadSfxOnce, { once: true });
+
+  const sfxToggle = document.getElementById('sfx-toggle');
+  if (sfxToggle) {
+    sfxToggle.textContent = _r2lSfxState.muted ? 'Bật âm' : 'Tắt âm';
+    sfxToggle.addEventListener('click', () => setSfxMuted(!_r2lSfxState.muted));
+  }
+
   const state = {
     accessCode: '',
     packId: '',
@@ -222,6 +374,139 @@ import RewardBurst from '../../components/read2lead/v2/RewardBurst.astro';
 
   window.__r2lRollRewardTier = rollRewardTier;
   window.__r2lTestRewardDistribution = testRewardDistribution;
+
+  /* ----- Activity C audio recorder (W4.3) ----- */
+  const _r2lRecorderState = {
+    // Map of itemKey -> { mediaRecorder, chunks, blobUrl, status: 'idle'|'recording'|'recorded'|'denied' }
+    perItem: new Map(),
+    micPermissionDenied: false,
+  };
+
+  const _r2lSupportsRecording = (() => {
+    try {
+      return !!(navigator.mediaDevices &&
+        typeof navigator.mediaDevices.getUserMedia === 'function' &&
+        typeof window.MediaRecorder !== 'undefined');
+    } catch {
+      return false;
+    }
+  })();
+
+  async function _r2lStartRecording(itemKey, cardEl) {
+    if (_r2lRecorderState.micPermissionDenied) return;
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const mr = new MediaRecorder(stream);
+      const chunks = [];
+      mr.addEventListener('dataavailable', (e) => {
+        if (e.data && e.data.size > 0) chunks.push(e.data);
+      });
+      mr.addEventListener('stop', () => {
+        const blob = new Blob(chunks, { type: mr.mimeType || 'audio/webm' });
+        const url = URL.createObjectURL(blob);
+        const prev = _r2lRecorderState.perItem.get(itemKey);
+        if (prev?.blobUrl) URL.revokeObjectURL(prev.blobUrl);
+        _r2lRecorderState.perItem.set(itemKey, {
+          mediaRecorder: null,
+          chunks: [],
+          blobUrl: url,
+          status: 'recorded',
+        });
+        stream.getTracks().forEach((t) => t.stop());
+        _r2lRenderRecorderUi(itemKey, cardEl);
+      });
+      _r2lRecorderState.perItem.set(itemKey, {
+        mediaRecorder: mr,
+        chunks,
+        blobUrl: null,
+        status: 'recording',
+      });
+      mr.start();
+      _r2lRenderRecorderUi(itemKey, cardEl);
+    } catch (err) {
+      console.warn('[r2l-recorder] Permission denied or error:', err);
+      _r2lRecorderState.micPermissionDenied = true;
+      _r2lRecorderState.perItem.set(itemKey, {
+        mediaRecorder: null,
+        chunks: [],
+        blobUrl: null,
+        status: 'denied',
+      });
+      _r2lRenderRecorderUi(itemKey, cardEl);
+    }
+  }
+
+  function _r2lStopRecording(itemKey, cardEl) {
+    const entry = _r2lRecorderState.perItem.get(itemKey);
+    if (entry?.mediaRecorder && entry.status === 'recording') {
+      entry.mediaRecorder.stop();
+      // UI re-renders on 'stop' event handler above.
+    }
+  }
+
+  function _r2lDiscardRecording(itemKey, cardEl) {
+    const entry = _r2lRecorderState.perItem.get(itemKey);
+    if (entry?.blobUrl) URL.revokeObjectURL(entry.blobUrl);
+    _r2lRecorderState.perItem.delete(itemKey);
+    _r2lRenderRecorderUi(itemKey, cardEl);
+  }
+
+  function _r2lPlayRecording(itemKey) {
+    const entry = _r2lRecorderState.perItem.get(itemKey);
+    if (!entry?.blobUrl) return;
+    const audio = new Audio(entry.blobUrl);
+    audio.play().catch((e) => console.warn('[r2l-recorder] playback failed', e));
+  }
+
+  function _r2lCleanupRecorderState() {
+    _r2lRecorderState.perItem.forEach((entry) => {
+      if (entry.blobUrl) URL.revokeObjectURL(entry.blobUrl);
+    });
+    _r2lRecorderState.perItem.clear();
+  }
+
+  function _r2lRenderRecorderUi(itemKey, cardEl) {
+    const slot = cardEl.querySelector('[data-recorder-slot]');
+    if (!slot) return;
+    if (!_r2lSupportsRecording) {
+      slot.innerHTML = '';
+      return;
+    }
+    const entry = _r2lRecorderState.perItem.get(itemKey);
+    const status = entry?.status || 'idle';
+
+    if (status === 'denied') {
+      slot.innerHTML = '<p class="text-sm text-cream/60">Vui lòng cấp quyền micro để con nghe lại bài thu của mình.</p>';
+      return;
+    }
+
+    if (status === 'recording') {
+      slot.innerHTML = `
+        <button type="button" class="r2l-rec-btn r2l-rec-stop" data-action="stop">Dừng thu</button>
+        <span class="r2l-rec-indicator">đang thu...</span>
+      `;
+    } else if (status === 'recorded') {
+      slot.innerHTML = `
+        <button type="button" class="r2l-rec-btn r2l-rec-play" data-action="play">Nghe lại bài thu</button>
+        <button type="button" class="r2l-rec-btn r2l-rec-redo" data-action="redo">Thu lại</button>
+      `;
+    } else {
+      slot.innerHTML = '<button type="button" class="r2l-rec-btn r2l-rec-start" data-action="start">Thu âm</button>';
+    }
+
+    slot.querySelectorAll('button[data-action]').forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const action = btn.getAttribute('data-action');
+        if (action === 'start') _r2lStartRecording(itemKey, cardEl);
+        else if (action === 'stop') _r2lStopRecording(itemKey, cardEl);
+        else if (action === 'play') _r2lPlayRecording(itemKey);
+        else if (action === 'redo') _r2lDiscardRecording(itemKey, cardEl);
+      });
+    });
+  }
+
+  window.addEventListener('beforeunload', _r2lCleanupRecorderState);
 
   init();
 
@@ -290,8 +575,13 @@ import RewardBurst from '../../components/read2lead/v2/RewardBurst.astro';
   }
 
   function renderActivity(index) {
-    state.activityIndex = Math.max(0, Math.min(index, 3));
     const activities = state.lesson.activities || [];
+    const nextIndex = Math.max(0, Math.min(index, 3));
+    const previousActivity = activities[state.activityIndex];
+    if (previousActivity?.type === 'listen_and_speak' && nextIndex !== state.activityIndex) {
+      _r2lCleanupRecorderState();
+    }
+    state.activityIndex = nextIndex;
     qsa('[data-activity-shell]').forEach((shell) => {
       shell.hidden = true;
     });
@@ -327,7 +617,7 @@ import RewardBurst from '../../components/read2lead/v2/RewardBurst.astro';
         ${(activity.questions || [])
           .map(
             (question, questionIndex) => `
-              <article class="rounded-md border border-cream/10 bg-navy-950/45 p-4">
+              <article class="rounded-md border border-cream/10 bg-navy-950/45 p-4" data-speak-card="${itemIndex}">
                 <p class="font-bold text-cream">${escapeHtml(question.question_en)}</p>
                 <p class="mt-1 text-sm text-cream/65">${escapeHtml(question.question_vi)}</p>
                 <div class="mt-3 grid gap-2">
@@ -357,11 +647,15 @@ import RewardBurst from '../../components/read2lead/v2/RewardBurst.astro';
         const optionIndex = Number(button.dataset.optionIndex);
         const question = activity.questions[questionIndex];
         const isCorrect = optionIndex === question.correct_index;
+        const questionId = `${activity.type}:${question.id || questionIndex}`;
         button.dataset.state = isCorrect ? 'correct' : 'retry';
         root.querySelector(`[data-explanation="${questionIndex}"]`)?.classList.remove('hidden');
         if (isCorrect && !answered.has(questionIndex)) {
           answered.add(questionIndex);
+          clearWrongStreak(questionId);
           showReward();
+        } else if (!isCorrect) {
+          playWrongSfx(questionId);
         }
         if (answered.size === (activity.questions || []).length) completeActivity(activity.type, {
           correct_count: answered.size,
@@ -421,10 +715,13 @@ import RewardBurst from '../../components/read2lead/v2/RewardBurst.astro';
         root.querySelector(`[data-built="${itemIndex}"]`).textContent = built;
         if (picked[itemIndex].length === item.correct_order_indices.length) {
           const correct = item.correct_order_indices.every((idx, i) => idx === picked[itemIndex][i]);
+          const questionId = `${activity.type}:${item.id || itemIndex}`;
           if (correct) {
             solved.add(itemIndex);
+            clearWrongStreak(questionId);
             showReward();
           } else {
+            playWrongSfx(questionId);
             root.querySelector(`[data-order-hint="${itemIndex}"]`)?.classList.remove('hidden');
             picked[itemIndex] = [];
             setTimeout(() => resetOrderCard(root, itemIndex), 500);
@@ -460,6 +757,7 @@ import RewardBurst from '../../components/read2lead/v2/RewardBurst.astro';
                   <button class="r2l-primary" type="button" data-play-speak="${itemIndex}">Nghe</button>
                 </div>
                 <p class="mt-3 text-sm text-gold">${escapeHtml(item.tip_vi || '')}</p>
+                <div class="r2l-rec-row" data-recorder-slot></div>
                 <div class="mt-3 flex flex-wrap gap-2">
                   <button class="r2l-option" type="button" data-rate-speak="${itemIndex}" data-rate-value="ready">Con nói được</button>
                   <button class="r2l-option" type="button" data-rate-speak="${itemIndex}" data-rate-value="practice">Con luyện thêm</button>
@@ -474,6 +772,11 @@ import RewardBurst from '../../components/read2lead/v2/RewardBurst.astro';
     const rated = new Set();
     root.querySelectorAll('[data-play-speak]').forEach((button) => {
       button.addEventListener('click', () => playAudio(activity.items[Number(button.dataset.playSpeak)]?.audio_url || ''));
+    });
+    root.querySelectorAll('[data-speak-card]').forEach((cardEl) => {
+      const itemIndex = Number(cardEl.dataset.speakCard);
+      const item = activity.items?.[itemIndex] || {};
+      _r2lRenderRecorderUi(item.id || `ls_${itemIndex}`, cardEl);
     });
     root.querySelectorAll('[data-rate-speak]').forEach((button) => {
       button.addEventListener('click', () => {
@@ -491,6 +794,9 @@ import RewardBurst from '../../components/read2lead/v2/RewardBurst.astro';
   }
 
   function completeActivity(type, details) {
+    if (type === 'listen_and_speak') {
+      _r2lCleanupRecorderState();
+    }
     state.completedTypes.add(type);
     state.activityResults[type] = {
       type,
@@ -500,6 +806,9 @@ import RewardBurst from '../../components/read2lead/v2/RewardBurst.astro';
     updateProgress();
     if (state.completedTypes.size < 4) {
       const nextIndex = Math.min(state.activityIndex + 1, 3);
+      if (nextIndex !== state.activityIndex) {
+        playSfx(SFX.activityComplete);
+      }
       setTimeout(() => renderActivity(nextIndex), 450);
     }
   }
@@ -537,10 +846,35 @@ import RewardBurst from '../../components/read2lead/v2/RewardBurst.astro';
     burst.dataset.show = 'false';
     window.setTimeout(() => {
       burst.dataset.show = 'true';
+      const tierSfx = {
+        common: SFX.correctCommon,
+        rare: SFX.correctRare,
+        legendary: SFX.correctLegendary,
+      };
+      playSfx(tierSfx[tier] || SFX.correctCommon);
     }, 20);
     window.setTimeout(() => {
       burst.dataset.show = 'false';
     }, 950);
+  }
+
+  function playWrongSfx(questionId) {
+    if (!questionId) {
+      playSfx(SFX.wrong);
+      return;
+    }
+    const current = _r2lSfxState.wrongStreak.get(questionId) || 0;
+    const next = current + 1;
+    _r2lSfxState.wrongStreak.set(questionId, next);
+    if (next >= 2) {
+      playSfx(SFX.encouragement);
+    } else {
+      playSfx(SFX.wrong);
+    }
+  }
+
+  function clearWrongStreak(questionId) {
+    if (questionId) _r2lSfxState.wrongStreak.delete(questionId);
   }
 
   function playAudio(url) {
@@ -577,6 +911,11 @@ import RewardBurst from '../../components/read2lead/v2/RewardBurst.astro';
       qs('#completion-copy').textContent = `Con nhận ${rewards.coins || 0} xu và ${rewards.xp || 0} XP cho nhiệm vụ này.`;
       qs('#completion-card').classList.remove('hidden');
       updateStateHeader(data.read2lead_state);
+      if (data.level_up) {
+        playSfxSequence([SFX.packComplete, SFX.levelUp], 700);
+      } else {
+        playSfxSequence([SFX.packComplete, pickVoiceClip()], 600);
+      }
       showLevelUp(data.level_up);
       showReward();
     } catch (error) {
