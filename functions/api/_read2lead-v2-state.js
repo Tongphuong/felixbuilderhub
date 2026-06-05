@@ -192,19 +192,6 @@ export function applyPackCompletion(
   };
 }
 
-export function setProgressLevel(state, level, nowIso = new Date().toISOString()) {
-  const nextLevel = safeLevel(level);
-  const nextState = {
-    ...state,
-    current_level: nextLevel,
-    unlocked_levels: Array.from(new Set([...state.unlocked_levels, nextLevel])),
-    rank_title: RANK_TITLES[nextLevel] || state.rank_title,
-    xp_in_level: 0,
-    updated_at: nowIso,
-  };
-  return refreshBadges(nextState);
-}
-
 export function publicProgressState(state) {
   const currentLevel = safeLevel(state.current_level);
   const completedInLevel = numberOrZero(state.level_progress?.[currentLevel]);
