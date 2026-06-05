@@ -1,0 +1,255 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://read2lead.felixbuilderhub.com/schemas/pack.schema.v2.json",
+  "title": "Read2Lead Pack V2",
+  "description": "Schema for a V2 Read2Lead pack: story + 4 activities + rewards. Replaces V1 chunk-based schema.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "student_name",
+    "level",
+    "level_label",
+    "topic",
+    "slug",
+    "audio_filename",
+    "story",
+    "activities",
+    "rewards",
+    "parent_note_vi",
+    "next_suggestion_vi"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "type": "integer", "const": 2 },
+    "student_name": { "type": "string", "minLength": 1, "maxLength": 50 },
+    "level": { "type": "string", "enum": ["L1", "L2", "L3", "L4", "L5"] },
+    "level_label": { "type": "string", "minLength": 1 },
+    "topic": { "type": "string", "minLength": 1, "maxLength": 80 },
+    "slug": { "type": "string", "pattern": "^[a-z0-9_]+$", "minLength": 1, "maxLength": 100 },
+    "audio_filename": { "type": "string", "pattern": "\\.mp3$" },
+
+    "story": {
+      "type": "object",
+      "required": ["title", "paragraphs_en", "paragraphs_vi", "full_audio_url", "sentences"],
+      "additionalProperties": false,
+      "properties": {
+        "title": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "paragraphs_en": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 6,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "paragraphs_vi": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 6,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "full_audio_url": { "type": "string" },
+        "sentences": {
+          "type": "array",
+          "minItems": 6,
+          "maxItems": 35,
+          "items": {
+            "type": "object",
+            "required": ["text_en", "text_vi", "audio_url", "paragraph_index"],
+            "additionalProperties": false,
+            "properties": {
+              "text_en": { "type": "string", "minLength": 1 },
+              "text_vi": { "type": "string", "minLength": 1 },
+              "audio_url": { "type": "string" },
+              "paragraph_index": { "type": "integer", "minimum": 0 }
+            }
+          }
+        }
+      }
+    },
+
+    "activities": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": {
+        "oneOf": [
+          { "$ref": "#/definitions/listening_comprehension" },
+          { "$ref": "#/definitions/listen_and_order" },
+          { "$ref": "#/definitions/listen_and_speak" },
+          { "$ref": "#/definitions/reading_comprehension" }
+        ]
+      }
+    },
+
+    "rewards": {
+      "type": "object",
+      "required": ["coins_on_complete", "xp_on_complete", "bonus_coins_per_activity_attempted"],
+      "additionalProperties": false,
+      "properties": {
+        "coins_on_complete": { "type": "integer", "minimum": 10, "maximum": 30 },
+        "xp_on_complete": { "type": "integer", "minimum": 10, "maximum": 40 },
+        "bonus_coins_per_activity_attempted": { "type": "integer", "minimum": 0, "maximum": 5 }
+      }
+    },
+
+    "parent_note_vi": { "type": "string", "minLength": 10, "maxLength": 400 },
+    "next_suggestion_vi": { "type": "string", "minLength": 10, "maxLength": 200 }
+  },
+
+  "definitions": {
+    "listening_comprehension": {
+      "type": "object",
+      "required": ["type", "title_vi", "identity_vi", "instructions_vi", "full_story_audio_url", "questions"],
+      "additionalProperties": false,
+      "properties": {
+        "type": { "const": "listening_comprehension" },
+        "title_vi": { "type": "string", "minLength": 1 },
+        "identity_vi": { "type": "string", "minLength": 1 },
+        "instructions_vi": { "type": "string", "minLength": 1 },
+        "full_story_audio_url": { "type": "string" },
+        "questions": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 5,
+          "items": { "$ref": "#/definitions/mcq_question" }
+        }
+      }
+    },
+
+    "listen_and_order": {
+      "type": "object",
+      "required": ["type", "title_vi", "identity_vi", "instructions_vi", "items"],
+      "additionalProperties": false,
+      "properties": {
+        "type": { "const": "listen_and_order" },
+        "title_vi": { "type": "string", "minLength": 1 },
+        "identity_vi": { "type": "string", "minLength": 1 },
+        "instructions_vi": { "type": "string", "minLength": 1 },
+        "items": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 6,
+          "items": {
+            "type": "object",
+            "required": ["id", "audio_url", "original_sentence", "scrambled_tokens", "correct_order_indices", "translation_vi"],
+            "additionalProperties": false,
+            "properties": {
+              "id": { "type": "string", "minLength": 1 },
+              "audio_url": { "type": "string" },
+              "original_sentence": { "type": "string", "minLength": 1 },
+              "scrambled_tokens": {
+                "type": "array",
+                "minItems": 3,
+                "maxItems": 16,
+                "items": { "type": "string", "minLength": 1 }
+              },
+              "correct_order_indices": {
+                "type": "array",
+                "minItems": 3,
+                "maxItems": 16,
+                "items": { "type": "integer", "minimum": 0 }
+              },
+              "translation_vi": { "type": "string", "minLength": 1 }
+            }
+          }
+        }
+      }
+    },
+
+    "listen_and_speak": {
+      "type": "object",
+      "required": ["type", "title_vi", "identity_vi", "instructions_vi", "items", "scoring_mode"],
+      "additionalProperties": false,
+      "properties": {
+        "type": { "const": "listen_and_speak" },
+        "title_vi": { "type": "string", "minLength": 1 },
+        "identity_vi": { "type": "string", "minLength": 1 },
+        "instructions_vi": { "type": "string", "minLength": 1 },
+        "scoring_mode": { "type": "string", "enum": ["self_rate", "whisper_stt"] },
+        "items": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 10,
+          "items": {
+            "type": "object",
+            "required": ["id", "audio_url", "text_en", "text_vi", "tip_vi"],
+            "additionalProperties": false,
+            "properties": {
+              "id": { "type": "string", "minLength": 1 },
+              "audio_url": { "type": "string" },
+              "text_en": { "type": "string", "minLength": 1 },
+              "text_vi": { "type": "string", "minLength": 1 },
+              "tip_vi": { "type": "string", "minLength": 1 }
+            }
+          }
+        }
+      }
+    },
+
+    "reading_comprehension": {
+      "type": "object",
+      "required": ["type", "title_vi", "identity_vi", "instructions_vi", "questions"],
+      "additionalProperties": false,
+      "properties": {
+        "type": { "const": "reading_comprehension" },
+        "title_vi": { "type": "string", "minLength": 1 },
+        "identity_vi": { "type": "string", "minLength": 1 },
+        "instructions_vi": { "type": "string", "minLength": 1 },
+        "questions": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 6,
+          "items": {
+            "type": "object",
+            "required": ["id", "section", "question_en", "question_vi", "options_en", "options_vi", "correct_index", "explanation_vi"],
+            "additionalProperties": false,
+            "properties": {
+              "id": { "type": "string", "minLength": 1 },
+              "section": { "type": "string", "enum": ["Find It", "Think About It", "Open Question"] },
+              "question_en": { "type": "string", "minLength": 1 },
+              "question_vi": { "type": "string", "minLength": 1 },
+              "options_en": {
+                "type": "array",
+                "minItems": 3,
+                "maxItems": 3,
+                "items": { "type": "string", "minLength": 1 }
+              },
+              "options_vi": {
+                "type": "array",
+                "minItems": 3,
+                "maxItems": 3,
+                "items": { "type": "string", "minLength": 1 }
+              },
+              "correct_index": { "type": "integer", "minimum": 0, "maximum": 2 },
+              "explanation_vi": { "type": "string", "minLength": 1 }
+            }
+          }
+        }
+      }
+    },
+
+    "mcq_question": {
+      "type": "object",
+      "required": ["id", "question_en", "question_vi", "options_en", "options_vi", "correct_index", "explanation_vi"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "question_en": { "type": "string", "minLength": 1 },
+        "question_vi": { "type": "string", "minLength": 1 },
+        "options_en": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "options_vi": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "correct_index": { "type": "integer", "minimum": 0, "maximum": 2 },
+        "explanation_vi": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}
