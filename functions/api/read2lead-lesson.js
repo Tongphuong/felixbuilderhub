@@ -35,6 +35,14 @@ export async function onRequestGet(context) {
     return json({ ok: false, error: 'generation_in_progress', message: 'Bài vẫn đang được tạo. Vui lòng đợi thêm một chút.' }, 409);
   }
 
+  const v2Pack = extractV2Pack(pack);
+  if (v2Pack) {
+    return json({
+      ok: true,
+      lesson: buildV2LessonPayload({ accessCode, codeData, pack, v2Pack }),
+    });
+  }
+
   if (!pack.review_context) {
     return json({ ok: false, error: 'missing_context', message: 'Bài này thiếu dữ liệu để làm trên web. Vui lòng dùng PDF hoặc tạo lại bài.' }, 400);
   }
@@ -43,6 +51,58 @@ export async function onRequestGet(context) {
     ok: true,
     lesson: buildLessonPayload({ accessCode, codeData, pack }),
   });
+}
+
+function extractV2Pack(pack) {
+  const candidates = [
+    pack?.review_context,
+    pack?.pack,
+    pack?.pack_json,
+    pack?.result?.pack,
+    pack,
+  ];
+
+  return candidates.find(
+    (candidate) =>
+      candidate &&
+      candidate.schema_version === 2 &&
+      candidate.story &&
+      Array.isArray(candidate.activities),
+  );
+}
+
+function buildV2LessonPayload({ accessCode, codeData, pack, v2Pack }) {
+  const progress = codeData.progress || {};
+  const profile = codeData.student_profile || {};
+  const story = {
+    ...v2Pack.story,
+    full_audio_url: v2Pack.story?.full_audio_url || pack.mp3_url || pack.audio_url || '',
+  };
+
+  return {
+    schema_version: 2,
+    pack_id: pack.pack_id,
+    access_code_masked: maskAccessCode(accessCode),
+    student_name: v2Pack.student_name || profile.student_name || progress.student_name || '',
+    level: v2Pack.level || pack.level || progress.current_level || '',
+    level_label: v2Pack.level_label || pack.level_label || '',
+    topic: v2Pack.topic || pack.topic || '',
+    story,
+    activities: v2Pack.activities,
+    rewards: v2Pack.rewards || {
+      coins_on_complete: 15,
+      xp_on_complete: 20,
+      bonus_coins_per_activity_attempted: 2,
+    },
+    parent_note_vi: v2Pack.parent_note_vi || '',
+    next_suggestion_vi: v2Pack.next_suggestion_vi || '',
+    status: pack.status,
+  };
+}
+
+function maskAccessCode(code) {
+  if (!code || code.length <= 4) return '••••';
+  return `${code.slice(0, 2)}••${code.slice(-2)}`;
 }
 
 function json(body, status = 200) {

@@ -1,0 +1,26 @@
+---
+export interface Props {
+  studentName?: string;
+  level?: string;
+  topic?: string;
+}
+
+const { studentName = 'bạn nhỏ', level = 'V2', topic = 'nhiệm vụ hôm nay' } = Astro.props;
+---
+
+<section class="border-b border-cream/10 bg-navy-950/95">
+  <div class="mx-auto flex max-w-6xl flex-col gap-3 px-4 py-5 sm:px-6 lg:px-8">
+    <div class="flex flex-wrap items-center gap-2 text-xs font-semibold uppercase tracking-wide text-gold">
+      <span class="rounded-full border border-gold/30 px-3 py-1">Read2Lead V2</span>
+      <span class="rounded-full border border-cream/15 px-3 py-1 text-cream/80">{level}</span>
+    </div>
+    <div>
+      <h1 class="font-display text-2xl font-bold text-cream sm:text-3xl">
+        Nhiệm vụ nghe truyện của {studentName}
+      </h1>
+      <p class="mt-1 max-w-2xl text-sm text-cream/70 sm:text-base">
+        Chủ đề: {topic}. Con nghe, đọc, sắp xếp câu và nói lại theo nhịp riêng.
+      </p>
+    </div>
+  </div>
+</section>

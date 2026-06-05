@@ -1,0 +1,49 @@
+<div
+  id="reward-burst"
+  class="pointer-events-none fixed inset-x-0 top-24 z-50 mx-auto hidden w-fit rounded-md border border-gold/40 bg-navy-950/95 px-5 py-3 text-center shadow-2xl shadow-gold/20"
+  role="status"
+  aria-live="polite"
+>
+  <div id="reward-burst-title" class="font-display text-lg font-bold text-gold">Hay lắm!</div>
+  <div id="reward-burst-copy" class="text-sm text-cream/80">Con vừa mở thêm năng lượng.</div>
+</div>
+
+<style>
+  #reward-burst[data-show='true'] {
+    display: block;
+    animation: r2l-reward-pop 900ms ease both;
+  }
+
+  #reward-burst[data-tier='rare'] {
+    border-color: rgb(74 222 128 / 0.7);
+    box-shadow: 0 18px 50px rgb(74 222 128 / 0.22);
+  }
+
+  #reward-burst[data-tier='legendary'] {
+    border-color: rgb(212 166 78 / 0.9);
+    box-shadow: 0 18px 60px rgb(212 166 78 / 0.32);
+  }
+
+  @keyframes r2l-reward-pop {
+    0% {
+      opacity: 0;
+      transform: translateY(-10px) scale(0.96);
+    }
+    18%,
+    78% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-8px) scale(0.98);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #reward-burst[data-show='true'] {
+      animation: none;
+      display: block;
+    }
+  }
+</style>

@@ -2,1588 +2,589 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
+import ActivityProgress from '../../components/read2lead/v2/ActivityProgress.astro';
+import IdentityBanner from '../../components/read2lead/v2/IdentityBanner.astro';
+import ListeningComprehension from '../../components/read2lead/v2/ListeningComprehension.astro';
+import ListenAndOrder from '../../components/read2lead/v2/ListenAndOrder.astro';
+import ListenAndSpeak from '../../components/read2lead/v2/ListenAndSpeak.astro';
+import ProgressBar from '../../components/read2lead/v2/ProgressBar.astro';
+import ReadingComprehension from '../../components/read2lead/v2/ReadingComprehension.astro';
+import RewardBurst from '../../components/read2lead/v2/RewardBurst.astro';
 ---
 
 <BaseLayout
-  title="Làm bài Read2Lead trên web | Felix Builder Hub"
-  description="Phụ huynh có thể cho con làm bài Read2Lead trực tiếp trên web, nghe MP3, nộp bài và nhận điểm cơ bản."
+  title="Read2Lead V2 Lesson | Felix Builder Hub"
+  description="Bài học Read2Lead V2: nghe truyện, xếp câu, nói lại và đọc hiểu theo nhịp nhẹ nhàng."
 >
   <Header />
+  <main id="main" class="min-h-screen bg-navy-950">
+    <IdentityBanner />
+    <ProgressBar initialPercent={20} />
 
-  <main id="main" class="flex-1">
-    <section class="mx-auto max-w-5xl px-6 py-14 md:py-20">
-      <span class="inline-block rounded-md bg-accent/20 px-4 py-1 text-sm font-semibold text-accent">Read2Lead Web Lesson</span>
-      <h1 class="mt-5 font-display text-4xl font-extrabold leading-snug text-cream md:text-5xl">Cho con làm bài ngay trên web.</h1>
-      <p class="mt-5 max-w-3xl text-lg leading-relaxed text-cream-muted">
-        Con đọc truyện, nghe MP3, làm các phần luyện tập rồi bấm nộp. Felixar chấm các phần có đáp án rõ ràng và mở bài tiếp theo khi con đạt.
-      </p>
+    <section class="mx-auto max-w-6xl px-4 py-6 sm:px-6 lg:px-8">
+      <div id="loading-card" class="rounded-md border border-cream/10 bg-cream/5 p-6 text-cream">
+        Minny đang mở nhiệm vụ cho con...
+      </div>
+
+      <div id="error-card" class="hidden rounded-md border border-gold/30 bg-gold/10 p-6 text-cream">
+        <p class="font-semibold text-gold">Chưa mở được bài học</p>
+        <p id="error-message" class="mt-2 text-sm text-cream/80"></p>
+      </div>
+
+      <article id="lesson-shell" class="hidden space-y-6">
+        <section class="grid gap-4 lg:grid-cols-[1.15fr_0.85fr]">
+          <div class="rounded-md border border-cream/10 bg-cream/[0.04] p-5">
+            <div class="flex flex-wrap items-start justify-between gap-3">
+              <div>
+                <p class="text-sm font-semibold uppercase tracking-wide text-gold">Câu chuyện hôm nay</p>
+                <h2 id="story-title" class="mt-1 font-display text-2xl font-bold text-cream"></h2>
+              </div>
+              <button id="play-story" class="r2l-primary" type="button">Nghe cả truyện</button>
+            </div>
+            <div id="story-paragraphs" class="mt-5 space-y-4 text-base leading-8 text-cream/85"></div>
+          </div>
+
+          <aside class="rounded-md border border-cream/10 bg-cream/[0.04] p-5">
+            <p class="text-sm font-semibold uppercase tracking-wide text-gold">Tap-to-play</p>
+            <h3 class="mt-1 font-display text-xl font-bold text-cream">Nghe từng câu</h3>
+            <p class="mt-2 text-sm text-cream/70">
+              Con bấm từng câu để nghe lại phần mình thích, rồi quay sang nhiệm vụ bên dưới.
+            </p>
+            <div id="sentence-list" class="mt-4 max-h-[420px] space-y-2 overflow-y-auto pr-1"></div>
+          </aside>
+        </section>
+
+        <section class="rounded-md border border-cream/10 bg-cream/[0.04] p-4">
+          <ActivityProgress />
+        </section>
+
+        <section class="space-y-4">
+          <ListeningComprehension />
+          <ListenAndOrder />
+          <ListenAndSpeak />
+          <ReadingComprehension />
+        </section>
+
+        <section class="flex flex-col gap-3 rounded-md border border-accent/25 bg-accent/10 p-5 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <p class="font-display text-xl font-bold text-cream">Hoàn thành nhiệm vụ</p>
+            <p id="submit-hint" class="mt-1 text-sm text-cream/70">
+              Con hoàn thành đủ 4 phần rồi bấm nút này để lưu kết quả.
+            </p>
+          </div>
+          <button id="submit-lesson" class="r2l-primary" type="button" disabled>Lưu chiến công</button>
+        </section>
+
+        <section id="completion-card" class="hidden rounded-md border border-gold/40 bg-gold/10 p-6 text-center">
+          <p class="font-display text-2xl font-bold text-gold">Nhiệm vụ xong!</p>
+          <p id="completion-copy" class="mt-2 text-cream/80"></p>
+        </section>
+      </article>
     </section>
 
-    <section class="bg-navy-900 px-6 py-12">
-      <div class="mx-auto max-w-5xl">
-        <div id="missing-link-card" class="hidden rounded-xl border border-cream-dim/20 bg-navy-950/75 p-6">
-          <h2 class="font-display text-2xl font-bold leading-snug text-cream">Cần mở từ đúng bài Read2Lead</h2>
-          <p class="mt-3 leading-relaxed text-cream-muted">Bố mẹ mở trang này từ nút <strong class="text-cream">Cho con làm trên web</strong> sau khi tạo bài, hoặc từ Felixar dashboard.</p>
-          <a href="/read2lead/review" class="mt-5 inline-flex rounded-lg bg-accent px-5 py-3 font-semibold text-navy-950 transition hover:bg-accent-hover">Khoe Felixar cho ba mẹ xem 🌟</a>
-        </div>
-
-        <div id="loading-card" class="rounded-xl border border-cream-dim/20 bg-navy-950/75 p-6">
-          <div class="h-3 overflow-hidden rounded-full bg-navy-800">
-            <div class="h-full w-2/3 animate-pulse rounded-full bg-gradient-to-r from-accent via-gold-light to-accent"></div>
-          </div>
-          <p class="mt-5 text-lg font-semibold text-cream">Đang mở bài cho con...</p>
-        </div>
-
-        <div id="error-card" class="hidden rounded-xl border border-red-500/30 bg-red-500/10 p-6 text-red-300"></div>
-
-        <article id="lesson-card" class="hidden rounded-xl border border-cream-dim/20 bg-navy-950/80 p-6">
-          <div class="flex flex-col gap-5 md:flex-row md:items-start md:justify-between">
-            <div>
-              <p id="lesson-meta" class="text-sm font-semibold text-gold-light"></p>
-              <h2 id="lesson-title" class="mt-2 font-display text-3xl font-bold leading-snug text-cream"></h2>
-              <p id="lesson-subtitle" class="mt-2 text-cream-muted"></p>
-            </div>
-            <div class="flex shrink-0 flex-col gap-3 sm:flex-row md:flex-col">
-              <button id="sfx-toggle" type="button" aria-label="Bật tắt âm thanh" onclick="toggleSfx()" class="rounded-lg border border-cream-dim/30 px-4 py-3 text-center text-lg font-semibold text-cream transition hover:border-accent hover:text-accent">🔊</button>
-              <a id="pdf-link" href="#" target="_blank" rel="noreferrer" class="hidden rounded-lg border border-cream-dim/30 px-5 py-3 text-center font-semibold text-cream transition hover:border-accent hover:text-accent">Mở PDF</a>
-            </div>
-          </div>
-
-          <div id="step-progress" class="sticky top-2 z-20 mt-6 grid grid-cols-3 gap-2 rounded-lg border border-cream-dim/20 bg-navy-950/95 p-2 text-center text-[11px] font-semibold leading-tight text-cream-dim shadow-lg backdrop-blur sm:text-xs">
-            <button type="button" data-step-indicator="listen" data-step-jump="listen" class="rounded-md border border-cream-dim/20 bg-navy-900/60 px-2 py-2 transition hover:border-accent hover:text-cream sm:px-3">🎧 Bước 1: Nghe</button>
-            <button type="button" data-step-indicator="read" data-step-jump="read" class="rounded-md border border-cream-dim/20 bg-navy-900/60 px-2 py-2 transition hover:border-accent hover:text-cream sm:px-3">📖 Bước 2: Đọc</button>
-            <button type="button" data-step-indicator="practice" data-step-jump="practice" class="rounded-md border border-cream-dim/20 bg-navy-900/60 px-2 py-2 transition hover:border-accent hover:text-cream sm:px-3">🎯 Bước 3: Mission</button>
-          </div>
-
-          <section id="step-listen" class="mt-8 hidden">
-            <p class="text-sm font-semibold text-gold-light">Bước 1</p>
-            <h3 class="mt-1 font-display text-2xl font-bold leading-snug text-cream">Con nghe câu chuyện</h3>
-            <p class="mt-2 text-sm leading-relaxed text-cream-muted">Mở loa hoặc tai nghe. Con nghe ít nhất 1 lần để quen âm thanh, sau đó mới sang phần đọc.</p>
-            <audio id="step-audio" controls preload="none" class="mt-5 w-full"></audio>
-            <p id="step-audio-missing" class="mt-3 hidden text-sm text-red-300">Bài này chưa có file MP3. Con có thể chuyển sang bước Đọc.</p>
-            <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-end">
-              <button data-step-next="read" type="button" class="rounded-lg bg-accent px-6 py-3 font-semibold text-navy-950 transition hover:bg-accent-hover">Con đã nghe xong</button>
-            </div>
-          </section>
-
-          <section id="step-read" class="mt-8 hidden">
-            <p class="text-sm font-semibold text-gold-light">Bước 2</p>
-            <h3 class="mt-1 font-display text-2xl font-bold leading-snug text-cream">Con đọc câu chuyện</h3>
-            <p class="mt-2 text-sm leading-relaxed text-cream-muted">Con đọc to thành tiếng từng đoạn. Bố mẹ ngồi cạnh giúp con đọc chuẩn nhé.</p>
-            <div id="step-read-body" class="mt-5 mx-auto max-w-prose"></div>
-            <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-between">
-              <button data-step-back="listen" type="button" class="rounded-lg border border-cream-dim/30 px-6 py-3 font-semibold text-cream transition hover:border-accent hover:text-accent">Nghe lại</button>
-              <button data-step-next="practice" type="button" class="rounded-lg bg-accent px-6 py-3 font-semibold text-navy-950 transition hover:bg-accent-hover">Con đã đọc xong</button>
-            </div>
-          </section>
-
-          <section id="step-practice" class="mt-8 hidden">
-            <p class="text-sm font-semibold text-gold-light">Bước 3</p>
-            <h3 class="mt-1 font-display text-2xl font-bold leading-snug text-cream">Con làm bài luyện tập</h3>
-            <p class="mt-2 text-sm leading-relaxed text-cream-muted">Các phần nối, điền, sửa và sắp xếp sẽ được chấm ngay. Ô viết tự do để bố mẹ đọc cùng con, chưa tính điểm tự động.</p>
-
-            <div id="activity-progress" class="mt-4 hidden rounded-lg border border-cream-dim/20 bg-navy-900/60 p-3">
-              <div id="activity-dots" class="flex flex-wrap items-center gap-1.5"></div>
-              <p class="mt-2 text-sm text-cream-muted">Phần <span id="activity-current-num" class="font-semibold text-cream">1</span>/<span id="activity-total-num">1</span>: <span id="activity-current-name" class="text-gold-light"></span></p>
-            </div>
-
-            <form id="lesson-form" class="mt-6 space-y-6">
-              <div id="activities"></div>
-              <div class="absolute -left-[9999px]" aria-hidden="true">
-                <label for="website">Website</label>
-                <input id="website" name="website" tabindex="-1" autocomplete="off" />
-              </div>
-              <div class="flex flex-col gap-3 sm:flex-row sm:justify-between">
-                <button data-step-back="read" type="button" class="rounded-lg border border-cream-dim/30 px-6 py-3 font-semibold text-cream transition hover:border-accent hover:text-accent">Đọc lại truyện</button>
-                <div class="flex gap-3">
-                  <button id="activity-back" type="button" class="rounded-lg border border-cream-dim/30 px-5 py-3 font-semibold text-cream transition hover:border-accent hover:text-accent">← Quay lại</button>
-                  <button id="activity-next" type="button" class="rounded-lg bg-accent px-6 py-3 font-semibold text-navy-950 transition hover:bg-accent-hover">Tiếp theo →</button>
-                  <button id="submit-lesson" type="submit" class="hidden rounded-lg bg-accent px-6 py-3 text-lg font-semibold text-navy-950 transition hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-60">Nộp bài 🚀</button>
-                </div>
-              </div>
-            </form>
-          </section>
-        </article>
-
-        <section id="result-card" class="mt-6 hidden rounded-xl border border-gold/40 bg-gold/10 p-6"></section>
-      </div>
-    </section>
-
-    <div id="celebration-overlay" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-navy-950/85 backdrop-blur">
-      <div class="text-center r2l-reward-pop">
-        <p id="celebration-emoji" class="text-7xl">🎉</p>
-        <p id="celebration-text" class="mt-4 font-display text-4xl font-bold text-gold-light md:text-5xl">Tuyệt vời!</p>
-      </div>
-    </div>
+    <RewardBurst />
   </main>
-
-  <div id="sticky-audio" class="fixed inset-x-0 bottom-0 z-30 hidden border-t border-cream-dim/20 bg-navy-900/95 px-4 py-3 shadow-2xl backdrop-blur">
-    <div class="mx-auto flex max-w-5xl items-center gap-3">
-      <span class="hidden text-xs font-semibold uppercase tracking-wide text-gold-light sm:inline">🎧 Nghe lại</span>
-      <audio id="sticky-audio-el" controls preload="none" class="w-full"></audio>
-    </div>
-  </div>
-
   <Footer />
-
-  <style is:global>
-    @keyframes r2l-confetti-fall {
-      0% { transform: translate3d(0, -10vh, 0) rotate(0deg); opacity: 1; }
-      100% { transform: translate3d(0, 110vh, 0) rotate(720deg); opacity: 0; }
-    }
-    @keyframes r2l-reward-pop {
-      0% { transform: scale(0.5); opacity: 0; }
-      55% { transform: scale(1.15); opacity: 1; }
-      100% { transform: scale(1); opacity: 1; }
-    }
-    .r2l-confetti {
-      position: fixed;
-      top: 0;
-      font-size: 2.25rem;
-      line-height: 1;
-      pointer-events: none;
-      z-index: 50;
-      animation: r2l-confetti-fall 3s ease-out forwards;
-    }
-    .r2l-reward-pop {
-      animation: r2l-reward-pop 0.7s ease-out;
-    }
-    @keyframes r2l-shake {
-      0%, 100% { transform: translateX(0); }
-      20%, 60% { transform: translateX(-6px); }
-      40%, 80% { transform: translateX(6px); }
-    }
-    .r2l-shake {
-      animation: r2l-shake 0.5s ease;
-    }
-    @keyframes r2l-mascot-pop {
-      0% { transform: translate(-50%, -50%) scale(0.4); opacity: 0; }
-      30% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
-      60% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-      100% { transform: translate(-50%, -50%) scale(1); opacity: 0; }
-    }
-    .r2l-mascot-pop {
-      animation: r2l-mascot-pop 1.8s ease forwards;
-    }
-    @keyframes r2l-mascot-pop-corner {
-      0% { transform: translateY(20px); opacity: 0; }
-      20% { transform: translateY(0); opacity: 1; }
-      80% { transform: translateY(0); opacity: 1; }
-      100% { transform: translateY(-10px); opacity: 0; }
-    }
-    .r2l-mascot-pop-corner {
-      animation: r2l-mascot-pop-corner 1s ease forwards;
-    }
-  </style>
-
-  <script>
-    const params = new URLSearchParams(window.location.search);
-    const accessCode = (params.get('code') || '').trim().toUpperCase();
-    const packId = (params.get('pack_id') || '').trim();
-    const missingLinkCard = document.getElementById('missing-link-card');
-    const loadingCard = document.getElementById('loading-card');
-    const errorCard = document.getElementById('error-card');
-    const lessonCard = document.getElementById('lesson-card');
-    const resultCard = document.getElementById('result-card');
-    const activitiesEl = document.getElementById('activities');
-    const stepReadBody = document.getElementById('step-read-body');
-    const stepAudio = document.getElementById('step-audio');
-    const stepAudioMissing = document.getElementById('step-audio-missing');
-    const stepSections = {
-      listen: document.getElementById('step-listen'),
-      read: document.getElementById('step-read'),
-      practice: document.getElementById('step-practice'),
-    };
-    const stepIndicators = document.querySelectorAll('[data-step-indicator]');
-    const stepOrder = ['listen', 'read', 'practice'];
-    const stickyAudio = document.getElementById('sticky-audio');
-    const stickyAudioEl = document.getElementById('sticky-audio-el');
-
-    const form = document.getElementById('lesson-form');
-    const submitBtn = document.getElementById('submit-lesson');
-
-    // ===== Audio SFX (kid dopamine layer) =====
-    const SFX_VOLUME_KEY = 'r2l-sfx-on';
-    let sfxEnabled = (localStorage.getItem(SFX_VOLUME_KEY) ?? 'on') === 'on';
-    let audioCtxUnlocked = false;
-    const sfxCache = new Map();
-
-    function unlockAudioOnce() {
-      if (audioCtxUnlocked) return;
-      try {
-        const Ctx = window.AudioContext || window.webkitAudioContext;
-        if (Ctx) {
-          const ctx = new Ctx();
-          const buf = ctx.createBuffer(1, 1, 22050);
-          const src = ctx.createBufferSource();
-          src.buffer = buf;
-          src.connect(ctx.destination);
-          src.start(0);
-        }
-      } catch {}
-      audioCtxUnlocked = true;
-    }
-
-    function playSfx(filename, volume = 0.5) {
-      if (!sfxEnabled) return;
-      unlockAudioOnce();
-      let audio = sfxCache.get(filename);
-      if (!audio) {
-        audio = new Audio(`/sfx/r2l/${filename}`);
-        audio.volume = volume;
-        sfxCache.set(filename, audio);
-      }
-      try {
-        audio.currentTime = 0;
-        audio.play().catch(() => {});
-      } catch {}
-    }
-
-    const SUCCESS_POOL = ['success-1.mp3', 'success-2.mp3', 'success-3.mp3'];
-    // Mid-flow celebrations rotate through warm/encouraging voices.
-    // Final result voices are tier-specific (see getRewardTier below).
-    const MID_VOICE_POOL = ['voice-tuyetvoi.mp3', 'voice-gioiqua.mp3', 'voice-colen.mp3', 'voice-tienbo.mp3'];
-    const VOICE_TEXT = {
-      'voice-tuyetvoi.mp3': 'Tuyệt vời!',
-      'voice-gioiqua.mp3': 'Giỏi quá!',
-      'voice-colen.mp3': 'Cố lên nhé!',
-      'voice-xuatsac.mp3': 'Xuất sắc!',
-      'voice-tienbo.mp3': 'Tiến bộ rồi!',
-    };
-
-    function randomFrom(arr) {
-      return arr[Math.floor(Math.random() * arr.length)];
-    }
-
-    function playPageComplete() {
-      playSfx(randomFrom(SUCCESS_POOL), 0.45);
-      const voiceFile = randomFrom(MID_VOICE_POOL);
-      setTimeout(() => playSfx(voiceFile, 0.7), 200);
-      return VOICE_TEXT[voiceFile] || 'Tuyệt vời!';
-    }
-
-    function playSoftBoop() {
-      playSfx('soft-boop.mp3', 0.4);
-    }
-
-    function playFinalReward(volume = 0.6) {
-      playSfx('final-reward.mp3', volume);
-    }
-
-    function toggleSfx() {
-      sfxEnabled = !sfxEnabled;
-      localStorage.setItem(SFX_VOLUME_KEY, sfxEnabled ? 'on' : 'off');
-      const btn = document.getElementById('sfx-toggle');
-      if (btn) btn.textContent = sfxEnabled ? '🔊' : '🔇';
-      if (sfxEnabled) playSfx('success-1.mp3', 0.4);
-    }
-
-    window.toggleSfx = toggleSfx;
-
-    document.addEventListener('DOMContentLoaded', () => {
-      const sfxBtn = document.getElementById('sfx-toggle');
-      if (sfxBtn) sfxBtn.textContent = sfxEnabled ? '🔊' : '🔇';
-    });
-
-    let lesson = null;
-    let assets = {};
-    let currentStep = 'listen';
-    let listenCompletedAt = null;
-    let readCompletedAt = null;
-    const shadowRecordings = new Map();
-    const voiceRecordings = new Map();
-    let sentenceListenAudio = null;
-    let activitySequence = [];
-    let currentActivityIdx = 0;
-
-    function escapeHtml(value) {
-      return String(value || '')
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;');
-    }
-
-    function levelRecommendationText(value) {
-      return {
-        easier: 'Nên chọn bài dễ hơn ở lần sau',
-        stay: 'Giữ mức hiện tại',
-        move_up: 'Có thể thử mức khó hơn',
-      }[value] || 'Giữ mức hiện tại';
-    }
-
-    function escapeRegExp(value) {
-      return String(value || '').replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    }
-
-    function highlightChunks(text, chunkList) {
-      const sorted = (Array.isArray(chunkList) ? chunkList : [])
-        .filter(Boolean)
-        .map((chunk) => escapeHtml(chunk))
-        .sort((a, b) => b.length - a.length);
-      const html = escapeHtml(text);
-      if (!sorted.length) return html;
-      const regex = new RegExp(`(${sorted.map((chunk) => escapeRegExp(chunk)).join('|')})`, 'gi');
-      return html.replace(regex, '<mark class="rounded bg-gold/30 px-1 text-cream">$1</mark>');
-    }
-
-    function renderAssetHero() {
-      if (!assets?.minny_idle) return '';
-      const setting = assets.setting
-        ? `<img src="${escapeHtml(assets.setting)}" alt="" class="absolute inset-x-0 bottom-0 mx-auto h-28 w-auto opacity-45" />`
-        : '';
-      return `
-        <div class="relative mb-5 flex min-h-36 items-end justify-center gap-3 overflow-hidden rounded-lg border border-cream-dim/20 bg-navy-900/60 p-4">
-          ${setting}
-          <img src="${escapeHtml(assets.minny_idle)}" alt="Minny" class="relative h-24 w-auto" />
-          ${assets.kid_reading ? `<img src="${escapeHtml(assets.kid_reading)}" alt="" class="relative h-32 w-auto" />` : ''}
-          ${assets.animal ? `<img src="${escapeHtml(assets.animal)}" alt="" class="relative h-20 w-auto" />` : ''}
-        </div>
-      `;
-    }
-
-    function hashSeed(str) {
-      let h = 0;
-      const s = String(str || '');
-      for (let i = 0; i < s.length; i += 1) {
-        h = (h * 31 + s.charCodeAt(i)) | 0;
-      }
-      return Math.abs(h) || 1;
-    }
-
-    function seededShuffle(arr, seed) {
-      const out = arr.slice();
-      let s = seed;
-      for (let i = out.length - 1; i > 0; i -= 1) {
-        s = (s * 9301 + 49297) % 233280;
-        const j = Math.floor((s / 233280) * (i + 1));
-        [out[i], out[j]] = [out[j], out[i]];
-      }
-      return out;
-    }
-
-    function showError(message) {
-      loadingCard.classList.add('hidden');
-      lessonCard.classList.add('hidden');
-      errorCard.textContent = message;
-      errorCard.classList.remove('hidden');
-    }
-
-    // Draft autosave — restore khi reload bất ngờ, clear khi submit pass.
-    const DRAFT_TTL_MS = 7 * 24 * 60 * 60 * 1000;
-    const draftKey = () => `r2l-draft:${accessCode}:${packId}`;
-
-    function saveDraft() {
-      if (!packId || !lesson) return;
-      try {
-        const payload = {
-          answers: collectAnswers(),
-          listen_completed_at: listenCompletedAt,
-          read_completed_at: readCompletedAt,
-          current_step: currentStep,
-          saved_at: Date.now(),
-        };
-        localStorage.setItem(draftKey(), JSON.stringify(payload));
-      } catch {}
-    }
-
-    function loadDraft() {
-      try {
-        const raw = localStorage.getItem(draftKey());
-        if (!raw) return null;
-        const data = JSON.parse(raw);
-        if (!data?.saved_at || Date.now() - data.saved_at > DRAFT_TTL_MS) {
-          localStorage.removeItem(draftKey());
-          return null;
-        }
-        return data;
-      } catch {
-        return null;
-      }
-    }
-
-    function clearDraft() {
-      try { localStorage.removeItem(draftKey()); } catch {}
-    }
-
-    function applyDraft(draft) {
-      if (!draft) return;
-      if (draft.listen_completed_at) listenCompletedAt = draft.listen_completed_at;
-      if (draft.read_completed_at) readCompletedAt = draft.read_completed_at;
-      const answers = draft.answers || {};
-      Object.entries(answers).forEach(([type, byIndex]) => {
-        if (!byIndex || typeof byIndex !== 'object') return;
-        Object.entries(byIndex).forEach(([index, value]) => {
-          if (value == null || value === '') return;
-          // Radio buttons match by name+value, others by data-answer-type + index
-          document.querySelectorAll(`[data-answer-type="${type}"][data-answer-index="${index}"]`).forEach((el) => {
-            if (el.type === 'radio') {
-              if (el.value === String(value)) el.checked = true;
-            } else {
-              el.value = value;
-            }
-          });
-        });
-      });
-    }
-
-    function optionHtml(value, label = value) {
-      return `<option value="${escapeHtml(value)}">${escapeHtml(label)}</option>`;
-    }
-
-    function renderTapWordsCard(item) {
-      const chips = (item.shuffled_words || []).map((word, wIdx) => `
-        <button type="button" data-tap-word data-tap-sentence="${item.index}" data-tap-source="pool" data-tap-word-text="${escapeHtml(word)}" data-tap-id="${item.index}-${wIdx}" class="inline-flex items-center rounded-md border border-gold/40 bg-gold/10 px-3 py-2 text-sm font-semibold text-gold-light transition hover:bg-gold hover:text-navy-950">${escapeHtml(word)}</button>
-      `).join('');
-      return `
-        <div data-tap-card data-tap-card-index="${item.index}">
-          <p class="mt-3 text-xs text-cream-dim">Khung trả lời:</p>
-          <div data-tap-answer="${item.index}" class="mt-1 flex min-h-[3rem] flex-wrap gap-2 rounded-lg border border-dashed border-cream-dim/40 bg-navy-950/60 p-2"></div>
-          <p class="mt-3 text-xs text-cream-dim">Bấm vào từ để thêm vào câu:</p>
-          <div data-tap-pool="${item.index}" class="mt-1 flex flex-wrap gap-2">${chips}</div>
-          <input type="hidden" data-answer-type="dictation" data-answer-index="${item.index}" value="" required />
-        </div>
-      `;
-    }
-
-    function renderPart(part, activitySeed) {
-      void activitySeed;
-      const sub = part.sub_title_vi
-        ? `<h4 class="mt-4 mb-3 font-display text-lg font-bold text-gold-light">${escapeHtml(part.sub_title_vi)}</h4>`
-        : '';
-      if (part.kind === 'chunks_glossary') {
-        return sub + `
-          <div class="grid gap-3 md:grid-cols-2">
-            ${part.items.map((item) => `
-              <div class="rounded-lg border border-cream-dim/20 bg-navy-900/75 p-4">
-                <p class="font-semibold text-cream">${escapeHtml(item.chunk)}</p>
-                <p class="mt-1 text-sm text-cream-muted">${escapeHtml(item.meaning)}</p>
-                ${item.example ? `<p class="mt-2 text-sm italic text-cream-dim">${escapeHtml(item.example)}</p>` : ''}
-              </div>
-            `).join('')}
-          </div>
-        `;
-      }
-      if (part.kind === 'matching') {
-        return sub + part.items.map((item) => `
-          <label class="mb-4 block rounded-lg border border-cream-dim/20 bg-navy-900/75 p-4">
-            <span class="block font-semibold text-cream">${escapeHtml(item.chunk)}</span>
-            <select data-answer-type="matching" data-answer-index="${item.index}" class="mt-3 w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-4 py-3 text-base text-cream focus:border-accent focus:outline-none" required>
-              ${optionHtml('', '-- Chọn nghĩa --')}
-              ${item.options.map((option) => optionHtml(option)).join('')}
-            </select>
-          </label>
-        `).join('');
-      }
-      if (part.kind === 'fill_blank') {
-        return sub + part.items.map((item) => `
-          <label class="mb-4 block rounded-lg border border-cream-dim/20 bg-navy-900/75 p-4">
-            <span class="block text-base text-cream">${escapeHtml(item.prompt)}</span>
-            <select data-answer-type="fill_blank" data-answer-index="${item.index}" class="mt-3 w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-4 py-3 text-base text-cream focus:border-accent focus:outline-none" required>
-              ${optionHtml('', '-- Chọn cụm câu --')}
-              ${(item.options || []).map((option) => optionHtml(option)).join('')}
-            </select>
-          </label>
-        `).join('');
-      }
-      if (part.kind === 'story_cloze') {
-        return sub + part.items.map((item) => `
-          <label class="mb-4 block rounded-lg border border-cream-dim/20 bg-navy-900/75 p-4">
-            <span class="block text-base text-cream">${escapeHtml(item.sentence)}</span>
-            <select data-answer-type="story_cloze" data-answer-index="${item.index}" class="mt-3 w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-4 py-3 text-base text-cream focus:border-accent focus:outline-none" required>
-              ${optionHtml('', '-- Chọn cụm câu --')}
-              ${item.options.map((option) => optionHtml(option)).join('')}
-            </select>
-          </label>
-        `).join('');
-      }
-      if (part.kind === 'sentence_unit') {
-        return sub + part.items.map((item) => {
-          const inputBlock = renderTapWordsCard(item);
-          const listenBtn = item.audio_url
-            ? `<button type="button" data-sentence-listen="${escapeHtml(item.audio_url)}" class="inline-flex items-center gap-1 rounded-md border border-gold/40 bg-gold/10 px-3 py-1.5 text-sm font-semibold text-gold-light transition hover:bg-gold hover:text-navy-950">🔊 Nghe câu</button>`
-            : '<span class="text-sm text-red-300">Câu này thiếu file nghe.</span>';
-          return `
-            <div class="mb-4 rounded-lg border border-cream-dim/20 bg-navy-900/75 p-4" data-shadow-card data-shadow-index="${item.index}">
-              <p class="text-sm font-semibold text-gold-light">Câu ${item.index + 1}</p>
-              <div class="mt-3 flex flex-wrap gap-2">${listenBtn}</div>
-              ${inputBlock}
-              <div class="mt-4 border-t border-cream-dim/15 pt-3">
-                <p class="mb-2 text-xs text-cream-dim">🎤 Đọc theo câu mẫu:</p>
-                <div class="flex flex-wrap gap-2">
-                  <button type="button" data-shadow-record class="inline-flex items-center gap-1 rounded-md border border-accent/40 bg-accent/10 px-3 py-1.5 text-sm font-semibold text-accent transition hover:bg-accent hover:text-navy-950">🎤 Đọc theo</button>
-                  <span data-shadow-status class="text-xs text-cream-dim"></span>
-                </div>
-                <audio data-shadow-playback controls preload="none" class="mt-3 hidden w-full"></audio>
-              </div>
-            </div>
-          `;
-        }).join('');
-      }
-      if (part.kind === 'comprehension' || part.kind === 'open_response') {
-        return sub + part.items.map((item) => {
-          const hint = item.hint_vi
-            ? `<p class="mt-2 text-sm italic text-cream-dim">💭 ${escapeHtml(item.hint_vi)}</p>`
-            : '';
-          return `
-            <label class="mb-4 block rounded-lg border border-cream-dim/20 bg-navy-900/75 p-4">
-              <span class="block text-sm font-semibold text-gold-light">${escapeHtml(item.section)}</span>
-              <span class="mt-1 block font-semibold text-cream">${escapeHtml(item.question)}</span>
-              ${hint}
-              <div class="mt-3 flex items-start gap-2">
-                <textarea data-answer-type="${part.kind}" data-answer-index="${item.index}" rows="3" class="flex-1 rounded-lg border border-cream-dim/30 bg-navy-950 px-4 py-3 text-base text-cream placeholder:text-cream-dim/70 focus:border-accent focus:outline-none" placeholder="Con kể cho Minny nghe 🐦 (viết hoặc bấm 🎤 để nói)"></textarea>
-                <button type="button" data-voice-record data-voice-target-type="${part.kind}" data-voice-target-index="${item.index}" class="rounded-md border border-accent/40 bg-accent/10 p-2 text-accent transition hover:bg-accent hover:text-navy-950" title="Bấm để nói thay vì viết">🎤</button>
-              </div>
-            </label>
-          `;
-        }).join('');
-      }
-      if (part.kind === 'best_line') {
-        return sub + part.items.map((item) => `
-          <fieldset class="mb-4 rounded-lg border border-cream-dim/20 bg-navy-900/75 p-4">
-            <legend class="px-2 text-sm font-semibold text-gold-light">Câu ${item.index + 1}</legend>
-            <p class="mb-3 text-sm text-cream-dim">Câu nào nghe tự nhiên nhất?</p>
-            ${item.options.map((option, optIdx) => `
-              <label class="flex cursor-pointer items-start gap-3 py-2">
-                <input type="radio" name="best_line_${item.index}" value="${optIdx}" data-answer-type="best_line" data-answer-index="${item.index}" required class="mt-1 accent-accent" />
-                <span class="text-base text-cream">${escapeHtml(option)}</span>
-              </label>
-            `).join('')}
-          </fieldset>
-        `).join('');
-      }
-      return '';
-    }
-
-    function renderActivity(activity, number) {
-      const title = `
-        <div class="mb-4">
-          <p class="text-sm font-semibold text-gold-light">Phần ${number}</p>
-          <h3 class="mt-1 font-display text-2xl font-bold leading-snug text-cream">${escapeHtml(activity.title_vi)}</h3>
-          <p class="mt-2 text-sm leading-relaxed text-cream-muted">${escapeHtml(activity.instruction_vi)}</p>
-        </div>
-      `;
-
-      if (['cum_cau_con', 'dung_cum_cau', 'nghe_doc_theo', 'hieu_truyen', 'ke_chuyen_con'].includes(activity.type)) {
-        const parts = Array.isArray(activity.parts) ? activity.parts : [];
-        const body = parts.map((part) => renderPart(part, packId || 'lesson')).join('');
-        // Slot 4 and slot 5: show collapsible story so kid can
-        // re-read without paginating back. Default collapsed to not spoil glance reading.
-        let storyPanel = '';
-        if (['hieu_truyen', 'ke_chuyen_con'].includes(activity.type) && Array.isArray(activity.story_text) && activity.story_text.length) {
-          storyPanel = `
-            <details class="mb-4 rounded-lg border border-cream-dim/20 bg-navy-950/40 p-3">
-              <summary class="cursor-pointer font-semibold text-gold-light">📖 Đọc lại truyện</summary>
-              <div class="mt-3 space-y-2 text-sm leading-relaxed text-cream">
-                ${activity.story_text.map((p) => `<p>${escapeHtml(p)}</p>`).join('')}
-              </div>
-            </details>
-          `;
-        }
-        return sectionWrap(title, storyPanel + body);
-      }
-
-      if (activity.type === 'story') {
-        return sectionWrap(title, renderAssetHero() + activity.items.map((item) => `<p class="mb-4 leading-8 text-cream-muted">${escapeHtml(item.text)}</p>`).join(''));
-      }
-
-      if (activity.type === 'power_chunks') {
-        return sectionWrap(title, `
-          <div class="grid gap-3 md:grid-cols-2">
-            ${activity.items.map((item) => `
-              <div class="rounded-lg border border-cream-dim/20 bg-navy-900/75 p-4">
-                <p class="font-semibold text-cream">${escapeHtml(item.chunk)}</p>
-                <p class="mt-1 text-sm text-cream-muted">${escapeHtml(item.meaning)}</p>
-                ${item.example ? `<p class="mt-2 text-sm italic text-cream-dim">${escapeHtml(item.example)}</p>` : ''}
-              </div>
-            `).join('')}
-          </div>
-        `);
-      }
-
-      if (activity.type === 'matching') {
-        return sectionWrap(title, activity.items.map((item) => `
-          <label class="mb-4 block rounded-lg border border-cream-dim/20 bg-navy-900/75 p-4">
-            <span class="block font-semibold text-cream">${escapeHtml(item.chunk)}</span>
-            <select data-answer-type="matching" data-answer-index="${item.index}" class="mt-3 w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-4 py-3 text-base text-cream focus:border-accent focus:outline-none" required>
-              ${optionHtml('', '-- Chọn nghĩa --')}
-              ${item.options.map((option) => optionHtml(option)).join('')}
-            </select>
-          </label>
-        `).join(''));
-      }
-
-      if (activity.type === 'fill_blank') {
-        return sectionWrap(title, activity.items.map((item) => `
-          <label class="mb-4 block rounded-lg border border-cream-dim/20 bg-navy-900/75 p-4">
-            <span class="block text-base text-cream">${escapeHtml(item.prompt)}</span>
-            <select data-answer-type="fill_blank" data-answer-index="${item.index}" class="mt-3 w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-4 py-3 text-base text-cream focus:border-accent focus:outline-none" required>
-              ${optionHtml('', '-- Chọn cụm câu --')}
-              ${(item.options || []).map((option) => optionHtml(option)).join('')}
-            </select>
-          </label>
-        `).join(''));
-      }
-
-      if (activity.type === 'story_cloze') {
-        return sectionWrap(title, activity.items.map((item) => `
-          <label class="mb-4 block rounded-lg border border-cream-dim/20 bg-navy-900/75 p-4">
-            <span class="block text-base text-cream">${escapeHtml(item.sentence)}</span>
-            <select data-answer-type="story_cloze" data-answer-index="${item.index}" class="mt-3 w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-4 py-3 text-base text-cream focus:border-accent focus:outline-none" required>
-              ${optionHtml('', '-- Chọn cụm câu --')}
-              ${item.options.map((option) => optionHtml(option)).join('')}
-            </select>
-          </label>
-        `).join(''));
-      }
-
-      if (activity.type === 'dictation') {
-        return sectionWrap(title, activity.items.map((item) => `
-          <div class="mb-4 rounded-lg border border-cream-dim/20 bg-navy-900/75 p-4">
-            <p class="text-sm font-semibold text-gold-light">Câu ${item.index + 1}</p>
-            <div class="mt-3 flex flex-wrap gap-2">
-              ${item.audio_url
-                ? `<button type="button" data-sentence-listen="${escapeHtml(item.audio_url)}" class="inline-flex items-center gap-1 rounded-md border border-gold/40 bg-gold/10 px-3 py-1.5 text-sm font-semibold text-gold-light transition hover:bg-gold hover:text-navy-950" aria-label="Nghe câu">🔊 Nghe câu</button>`
-                : '<span class="text-sm text-red-300">Câu này thiếu file nghe.</span>'}
-            </div>
-            <input type="text" data-answer-type="dictation" data-answer-index="${item.index}" autocomplete="off" autocapitalize="none" spellcheck="false" class="mt-3 w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-4 py-3 text-base text-cream placeholder:text-cream-dim/70 focus:border-accent focus:outline-none" placeholder="Con gõ lại câu vừa nghe..." required />
-          </div>
-        `).join(''));
-      }
-
-      if (activity.type === 'tap_words') {
-        return sectionWrap(title, activity.items.map((item) => {
-          const chips = (item.shuffled_words || []).map((word, wIdx) => `
-            <button type="button" data-tap-word data-tap-sentence="${item.index}" data-tap-source="pool" data-tap-word-text="${escapeHtml(word)}" data-tap-id="${item.index}-${wIdx}" class="inline-flex items-center rounded-md border border-gold/40 bg-gold/10 px-3 py-2 text-sm font-semibold text-gold-light transition hover:bg-gold hover:text-navy-950">${escapeHtml(word)}</button>
-          `).join('');
-          return `
-            <div class="mb-4 rounded-lg border border-cream-dim/20 bg-navy-900/75 p-4" data-tap-card data-tap-card-index="${item.index}">
-              <p class="text-sm font-semibold text-gold-light">Câu ${item.index + 1}</p>
-              <div class="mt-3 flex flex-wrap gap-2">
-                ${item.audio_url
-                  ? `<button type="button" data-sentence-listen="${escapeHtml(item.audio_url)}" class="inline-flex items-center gap-1 rounded-md border border-gold/40 bg-gold/10 px-3 py-1.5 text-sm font-semibold text-gold-light transition hover:bg-gold hover:text-navy-950" aria-label="Nghe câu">🔊 Nghe câu</button>`
-                  : '<span class="text-sm text-red-300">Câu này thiếu file nghe.</span>'}
-              </div>
-              <p class="mt-3 text-xs text-cream-dim">Khung trả lời:</p>
-              <div data-tap-answer="${item.index}" class="mt-1 flex min-h-[3rem] flex-wrap gap-2 rounded-lg border border-dashed border-cream-dim/40 bg-navy-950/60 p-2"></div>
-              <p class="mt-3 text-xs text-cream-dim">Bấm vào từ để thêm vào câu:</p>
-              <div data-tap-pool="${item.index}" class="mt-1 flex flex-wrap gap-2">${chips}</div>
-              <input type="hidden" data-answer-type="dictation" data-answer-index="${item.index}" value="" required />
-            </div>
-          `;
-        }).join(''));
-      }
-
-      if (activity.type === 'shadowing') {
-        return sectionWrap(title, activity.items.map((item) => `
-          <div class="mb-4 rounded-lg border border-cream-dim/20 bg-navy-900/75 p-4" data-shadow-card data-shadow-index="${item.index}">
-            <p class="text-sm font-semibold text-gold-light">Câu ${item.index + 1}</p>
-            <div class="mt-3 flex flex-wrap gap-2">
-              ${item.audio_url
-                ? `<button type="button" data-sentence-listen="${escapeHtml(item.audio_url)}" class="inline-flex items-center gap-1 rounded-md border border-gold/40 bg-gold/10 px-3 py-1.5 text-sm font-semibold text-gold-light transition hover:bg-gold hover:text-navy-950" aria-label="Nghe câu mẫu">🔊 Nghe câu mẫu</button>`
-                : ''}
-              <button type="button" data-shadow-record class="inline-flex items-center gap-1 rounded-md border border-accent/40 bg-accent/10 px-3 py-1.5 text-sm font-semibold text-accent transition hover:bg-accent hover:text-navy-950" aria-label="Ghi âm con đọc lại">🎤 Đọc theo</button>
-              <span data-shadow-status class="text-xs text-cream-dim"></span>
-            </div>
-            <audio data-shadow-playback controls preload="none" class="mt-3 hidden w-full"></audio>
-          </div>
-        `).join(''));
-      }
-
-      if (activity.type === 'best_line') {
-        return sectionWrap(title, activity.items.map((item) => `
-          <fieldset class="mb-4 rounded-lg border border-cream-dim/20 bg-navy-900/75 p-4">
-            <legend class="px-2 text-sm font-semibold text-gold-light">Câu ${item.index + 1}</legend>
-            <p class="mb-3 text-sm text-cream-dim">Câu nào nghe tự nhiên nhất?</p>
-            ${item.options.map((option, optIdx) => `
-              <label class="flex cursor-pointer items-start gap-3 py-2">
-                <input type="radio" name="best_line_${item.index}" value="${optIdx}" data-answer-type="best_line" data-answer-index="${item.index}" required class="mt-1 accent-accent" />
-                <span class="text-base text-cream">${escapeHtml(option)}</span>
-              </label>
-            `).join('')}
-          </fieldset>
-        `).join(''));
-      }
-
-      if (activity.type === 'story_order') {
-        const seed = hashSeed(packId || 'lesson') + 7;
-        const sharedOptions = activity.items.length
-          ? seededShuffle(activity.items[0].options || [], seed)
-          : [];
-        return sectionWrap(title, activity.items.map((item) => `
-          <label class="mb-4 block rounded-lg border border-cream-dim/20 bg-navy-900/75 p-4">
-            <span class="block font-semibold text-cream">Vị trí ${item.index + 1}</span>
-            <select data-answer-type="story_order" data-answer-index="${item.index}" class="mt-3 w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-4 py-3 text-base text-cream focus:border-accent focus:outline-none" required>
-              ${optionHtml('', '-- Chọn sự kiện --')}
-              ${sharedOptions.map((option) => optionHtml(option)).join('')}
-            </select>
-          </label>
-        `).join(''));
-      }
-
-      if (['comprehension', 'open_response'].includes(activity.type)) {
-        return sectionWrap(title, activity.items.map((item) => `
-          <label class="mb-4 block rounded-lg border border-cream-dim/20 bg-navy-900/75 p-4">
-            <span class="block text-sm font-semibold text-gold-light">${escapeHtml(item.section)}</span>
-            <span class="mt-1 block font-semibold text-cream">${escapeHtml(item.question)}</span>
-            <textarea data-answer-type="${activity.type}" data-answer-index="${item.index}" rows="3" class="mt-3 w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-4 py-3 text-base text-cream placeholder:text-cream-dim/70 focus:border-accent focus:outline-none" placeholder="Con kể cho Minny nghe 🐦 (viết hoặc bấm 🎤 để nói)"></textarea>
-          </label>
-        `).join(''));
-      }
-
-      return '';
-    }
-
-    function sectionWrap(title, body) {
-      return `<section class="mb-6 rounded-xl border border-cream-dim/20 bg-navy-950/70 p-5">${title}${body}</section>`;
-    }
-
-    function collectAnswers() {
-      const answers = {
-        matching: {},
-        build_chunk: {},
-        fill_blank: {},
-        fix_chunk: {},
-        story_cloze: {},
-        dictation: {},
-        best_line: {},
-        story_order: {},
-        comprehension: {},
-        open_response: {},
-      };
-      document.querySelectorAll('[data-answer-type]').forEach((field) => {
-        if (field.type === 'radio' && !field.checked) return;
-        const type = field.getAttribute('data-answer-type');
-        const index = field.getAttribute('data-answer-index');
-        if (!answers[type]) answers[type] = {};
-        answers[type][index] = field.value || '';
-      });
-      return answers;
-    }
-
-    // Per-slot subset of collectAnswers used by inline grade-slot fetch.
-    function collectAnswersInSlot(slot) {
-      const answers = {};
-      if (!slot) return answers;
-      slot.querySelectorAll('[data-answer-type]').forEach((field) => {
-        if (field.type === 'radio' && !field.checked) return;
-        const type = field.getAttribute('data-answer-type');
-        const index = field.getAttribute('data-answer-index');
-        if (!answers[type]) answers[type] = {};
-        answers[type][index] = field.value || '';
-      });
-      return answers;
-    }
-
-    // After /api/grade-slot returns, mark wrong cells with red ring + label
-    // but DO NOT clear values (kid keeps their answer to compare). The next
-    // submit re-evaluates everything; the retry button from 68f04a5 still
-    // handles full-clear if kid wants a clean slate.
-    function markSlotWrongInline(slot, wrongItems) {
-      if (!slot || !Array.isArray(wrongItems) || !wrongItems.length) return;
-      // Clear stale per-slot marks from a previous "Tiếp theo" press
-      slot.querySelectorAll('[data-slot-wrong]').forEach((el) => {
-        el.classList.remove('ring-2', 'ring-red-500');
-        el.removeAttribute('data-slot-wrong');
-      });
-      slot.querySelectorAll('[data-slot-wrong-label]').forEach((el) => el.remove());
-      wrongItems.forEach((w) => {
-        if (!w || typeof w.type !== 'string' || typeof w.index !== 'number') return;
-        slot.querySelectorAll(`[data-answer-type="${w.type}"][data-answer-index="${w.index}"]`).forEach((el) => {
-          el.classList.add('ring-2', 'ring-red-500');
-          el.setAttribute('data-slot-wrong', '1');
-          const card = el.closest('[data-shadow-card], [data-tap-card], label, fieldset');
-          if (card && !card.querySelector('[data-slot-wrong-label]')) {
-            const label = document.createElement('p');
-            label.setAttribute('data-slot-wrong-label', '1');
-            label.className = 'mt-2 text-xs font-semibold text-red-300';
-            label.textContent = '🔄 Câu này cần xem lại nhé';
-            card.appendChild(label);
-          }
-        });
-      });
-    }
-
-    function showStep(name, { scroll = false } = {}) {
-      if (!stepSections[name]) return;
-      currentStep = name;
-      stepOrder.forEach((step) => {
-        stepSections[step].classList.toggle('hidden', step !== name);
-      });
-      stepIndicators.forEach((el) => {
-        const step = el.getAttribute('data-step-indicator');
-        const reached = stepOrder.indexOf(step) <= stepOrder.indexOf(name);
-        el.classList.toggle('border-accent', step === name);
-        el.classList.toggle('bg-accent/15', step === name);
-        el.classList.toggle('text-cream', reached);
-        el.classList.toggle('text-cream-dim', !reached);
-      });
-      if (stickyAudio && lesson?.mp3_url) {
-        const showSticky = name !== 'listen';
-        stickyAudio.classList.toggle('hidden', !showSticky);
-        document.body.style.paddingBottom = showSticky ? '6rem' : '';
-      }
-      if (scroll) lessonCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-
-    function renderLesson(data) {
-      lesson = data.lesson;
-      assets = lesson.assets || {};
-      document.getElementById('lesson-meta').textContent = `${lesson.student_name || 'Học sinh Read2Lead'} · ${lesson.level || 'L2'} · ${lesson.topic || 'Read2Lead'}`;
-      document.getElementById('lesson-title').textContent = lesson.story_title || 'Bài đọc Read2Lead';
-      document.getElementById('lesson-subtitle').textContent = `Mã: ${lesson.access_code_masked || '***'}`;
-
-      const pdfLink = document.getElementById('pdf-link');
-      if (lesson.pdf_url && pdfLink) {
-        pdfLink.href = lesson.pdf_url;
-        pdfLink.classList.remove('hidden');
-      }
-
-      if (lesson.mp3_url) {
-        stepAudio.src = lesson.mp3_url;
-        stepAudio.classList.remove('hidden');
-        stepAudioMissing.classList.add('hidden');
-        if (stickyAudioEl) stickyAudioEl.src = lesson.mp3_url;
-      } else {
-        stepAudio.classList.add('hidden');
-        stepAudioMissing.classList.remove('hidden');
-      }
-
-      const storyActivity = lesson.activities.find((a) => a.type === 'story');
-      const practiceActivities = lesson.activities.filter((a) => a.type !== 'story');
-      const oldPowerChunkItems = lesson.activities.find((a) => a.id === 'power_chunks')?.items || [];
-      const groupedPowerChunkItems = lesson.activities
-        .find((a) => a.id === 'cum_cau_con')
-        ?.parts?.find((part) => part.kind === 'chunks_glossary')
-        ?.items || [];
-      const powerChunkItems = oldPowerChunkItems.length ? oldPowerChunkItems : groupedPowerChunkItems;
-      const chunks = powerChunkItems.map((item) => item.chunk).filter(Boolean);
-      const chunkMeanings = {};
-      powerChunkItems.forEach((item) => {
-        if (item.chunk) chunkMeanings[item.chunk.toLowerCase().trim()] = item.meaning || '';
-      });
-
-      if (storyActivity) {
-        stepReadBody.innerHTML = renderAssetHero() + storyActivity.items.map((item) => `<p class="mb-6 text-xl leading-relaxed text-cream md:text-2xl md:leading-loose">${highlightChunks(item.text, chunks)}</p>`).join('');
-        stepReadBody.querySelectorAll('mark').forEach((el) => {
-          el.style.cursor = 'pointer';
-          el.title = chunkMeanings[el.textContent.toLowerCase().trim()] || '';
-        });
-      } else {
-        stepReadBody.innerHTML = '<p class="text-cream-muted">Bài này chưa có truyện. Con có thể chuyển sang bước làm bài.</p>';
-      }
-
-      activitiesEl.innerHTML = practiceActivities.map((activity, index) => {
-        const inner = renderActivity(activity, index + 1);
-        return `<div data-activity-slot="${index}" class="${index === 0 ? '' : 'hidden'}">${inner}</div>`;
-      }).join('');
-      activitySequence = practiceActivities.map((activity) => activity.id || activity.type);
-      currentActivityIdx = 0;
-      showActivity(0);
-      loadingCard.classList.add('hidden');
-      lessonCard.classList.remove('hidden');
-
-      const draft = loadDraft();
-      applyDraft(draft);
-      const startStep = (draft && stepOrder.includes(draft.current_step)) ? draft.current_step : 'listen';
-      showStep(startStep);
-
-      // Autosave on any input change inside practice form
-      const debouncedSave = (() => {
-        let t = null;
-        return () => {
-          if (t) clearTimeout(t);
-          t = setTimeout(saveDraft, 400);
-        };
-      })();
-      activitiesEl.addEventListener('input', debouncedSave);
-      activitiesEl.addEventListener('change', debouncedSave);
-    }
-
-    const ACTIVITY_NAME_BY_ID = {
-      cum_cau_con: '📚 Cụm câu của con',
-      dung_cum_cau: '✏️ Dùng cụm câu',
-      nghe_doc_theo: '🎧 Nghe & Đọc theo',
-      hieu_truyen: '💭 Minny hỏi con xíu nhé',
-      ke_chuyen_con: '✍️ Con kể cho Minny nghe',
-    };
-    const CELEBRATION_EMOJIS = ['🎉', '⭐', '✨', '🚀', '💪', '🌟', '🎊'];
-
-    // ===== Proportional reward (P1.2) =====
-    function getRewardTier(scorePercent, passed, totalCount) {
-      if (!passed || totalCount <= 0) return { tier: 'fail', confettiCount: 0, voice: null };
-      if (scorePercent === 100) return { tier: 'perfect', confettiCount: 50, voice: 'voice-xuatsac.mp3', volume: 0.7 };
-      if (scorePercent >= 85) return { tier: 'great', confettiCount: 30, voice: 'voice-gioiqua.mp3', volume: 0.6 };
-      return { tier: 'pass', confettiCount: 15, voice: 'voice-tuyetvoi.mp3', volume: 0.5 };
-    }
-
-    function neededForPass(correct, total) {
-      if (total === 0) return 0;
-      return Math.max(0, Math.ceil(0.7 * total) - correct);
-    }
-
-    function renderActivityProgress() {
-      const total = activitySequence.length;
-      const dotsEl = document.getElementById('activity-dots');
-      const totalEl = document.getElementById('activity-total-num');
-      const progressEl = document.getElementById('activity-progress');
-      if (!dotsEl || !totalEl || !progressEl || total === 0) return;
-      progressEl.classList.remove('hidden');
-      totalEl.textContent = total;
-      dotsEl.innerHTML = activitySequence.map((id, idx) => {
-        const isCurrent = idx === currentActivityIdx;
-        const isDone = idx < currentActivityIdx;
-        const cls = isCurrent
-          ? 'h-3 w-8 rounded-full bg-accent'
-          : isDone
-            ? 'h-3 w-3 rounded-full bg-gold-light'
-            : 'h-3 w-3 rounded-full bg-cream-dim/30';
-        return `<span class="${cls}" aria-label="Phần ${idx + 1}"></span>`;
-      }).join('');
-    }
-
-    function showActivity(idx) {
-      if (!activitySequence.length) return;
-      currentActivityIdx = Math.max(0, Math.min(idx, activitySequence.length - 1));
-      document.querySelectorAll('[data-activity-slot]').forEach((slot) => {
-        const slotIdx = Number(slot.getAttribute('data-activity-slot'));
-        slot.classList.toggle('hidden', slotIdx !== currentActivityIdx);
-      });
-      const currentNum = document.getElementById('activity-current-num');
-      const currentName = document.getElementById('activity-current-name');
-      if (currentNum) currentNum.textContent = currentActivityIdx + 1;
-      if (currentName) currentName.textContent = ACTIVITY_NAME_BY_ID[activitySequence[currentActivityIdx]] || activitySequence[currentActivityIdx];
-      renderActivityProgress();
-      updateActivityNavButtons();
-      const active = document.querySelector(`[data-activity-slot="${currentActivityIdx}"]`);
-      if (active && !lessonCard.classList.contains('hidden')) active.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-
-    function updateActivityNavButtons() {
-      const backBtn = document.getElementById('activity-back');
-      const nextBtn = document.getElementById('activity-next');
-      const submitBtnEl = document.getElementById('submit-lesson');
-      if (!backBtn || !nextBtn || !submitBtnEl || !activitySequence.length) return;
-      backBtn.disabled = currentActivityIdx === 0;
-      backBtn.classList.toggle('opacity-40', currentActivityIdx === 0);
-      const isLast = currentActivityIdx === activitySequence.length - 1;
-      nextBtn.classList.toggle('hidden', isLast);
-      submitBtnEl.classList.toggle('hidden', !isLast);
-    }
-
-    function isActivitySlotComplete(slot) {
-      if (!slot) return true;
-      const requiredFields = slot.querySelectorAll('[required]');
-      if (requiredFields.length === 0) return true;
-      const radioNames = new Set();
-      for (const field of requiredFields) {
-        if (field.type === 'radio') {
-          radioNames.add(field.name);
-          continue;
-        }
-        if (!field.value || !field.value.trim()) return false;
-      }
-      for (const name of radioNames) {
-        if (!slot.querySelector(`input[name="${CSS.escape(name)}"]:checked`)) return false;
-      }
-      return true;
-    }
-
-    function findFirstEmpty(slot) {
-      if (!slot) return null;
-      const required = slot.querySelectorAll('[required]');
-      for (const field of required) {
-        if (field.type === 'radio') {
-          if (!slot.querySelector(`input[name="${CSS.escape(field.name)}"]:checked`)) return field;
-        } else if (!field.value || !field.value.trim()) {
-          return field;
-        }
-      }
-      return null;
-    }
-
-    function shakeField(field) {
-      if (!field) return;
-      const target = field.closest('label, fieldset, [data-shadow-card], [data-tap-card], [data-activity-slot] > *') || field;
-      target.classList.add('r2l-shake');
-      setTimeout(() => target.classList.remove('r2l-shake'), 600);
-    }
-
-    function showToast(message, duration = 2200) {
-      let toast = document.getElementById('r2l-toast');
-      if (!toast) {
-        toast = document.createElement('div');
-        toast.id = 'r2l-toast';
-        toast.className = 'fixed left-1/2 top-6 z-[60] -translate-x-1/2 rounded-lg border border-gold/40 bg-navy-900/95 px-5 py-3 font-semibold text-cream shadow-2xl';
-        document.body.appendChild(toast);
-      }
-      toast.textContent = message;
-      toast.style.opacity = '1';
-      setTimeout(() => { toast.style.transition = 'opacity 0.4s'; toast.style.opacity = '0'; }, duration);
-    }
-
-    function showMascotClapCorner() {
-      if (!assets?.minny_clap) return;
-      const img = document.createElement('img');
-      img.src = assets.minny_clap;
-      img.alt = '';
-      img.className = 'r2l-mascot-pop-corner fixed right-4 top-20 z-[60] h-24 w-auto';
-      document.body.appendChild(img);
-      setTimeout(() => img.remove(), 1000);
-    }
-
-    function showCelebration(text) {
-      const overlay = document.getElementById('celebration-overlay');
-      const emojiEl = document.getElementById('celebration-emoji');
-      const textEl = document.getElementById('celebration-text');
-      if (!overlay || !emojiEl || !textEl) return;
-      emojiEl.textContent = randomFrom(CELEBRATION_EMOJIS);
-      textEl.textContent = text || 'Tuyệt vời!';
-      overlay.classList.remove('hidden');
-      const popEl = overlay.querySelector('.r2l-reward-pop');
-      if (popEl) {
-        popEl.classList.remove('r2l-reward-pop');
-        void popEl.offsetWidth;
-        popEl.classList.add('r2l-reward-pop');
-      }
-      setTimeout(() => overlay.classList.add('hidden'), 1500);
-    }
-
-    async function goNextActivity() {
-      const slot = document.querySelector(`[data-activity-slot="${currentActivityIdx}"]`);
-      if (!isActivitySlotComplete(slot)) {
-        playSoftBoop();
-        showToast('Con thử trả lời thêm vài câu nhé! 💪');
-        const empty = findFirstEmpty(slot);
-        if (empty) {
-          shakeField(empty);
-          empty.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          if (typeof empty.focus === 'function') {
-            try { empty.focus({ preventScroll: true }); } catch { empty.focus(); }
-          }
-        }
-        return;
-      }
-      // Inline per-slot grade so kid sees what to review before advancing.
-      // Fail-open: any network/api error just skips the inline mark and advances.
-      const nextBtn = document.getElementById('activity-next');
-      const slotId = activitySequence[currentActivityIdx];
-      let wrongItems = [];
-      const originalLabel = nextBtn ? nextBtn.textContent : '';
-      if (nextBtn) {
-        nextBtn.disabled = true;
-        nextBtn.textContent = 'Minny đang xem… 👀';
-      }
-      try {
-        const res = await fetch('/api/grade-slot', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            access_code: accessCode,
-            pack_id: packId,
-            slot_id: slotId,
-            answers: collectAnswersInSlot(slot),
-          }),
-        });
-        if (res.ok) {
-          const data = await res.json().catch(() => ({}));
-          if (data && Array.isArray(data.wrong_items)) wrongItems = data.wrong_items;
-        }
-      } catch (err) {
-        console.warn('[grade-slot] fetch failed, advancing without inline grade:', err);
-      } finally {
-        if (nextBtn) {
-          nextBtn.disabled = false;
-          nextBtn.textContent = originalLabel;
-        }
-      }
-      if (wrongItems.length) {
-        playSoftBoop();
-        markSlotWrongInline(slot, wrongItems);
-        showToast(`Còn ${wrongItems.length} câu nữa muốn ghé. Con thử lại hoặc qua tiếp cũng được 🌟`, 1000);
-      } else {
-        playSfx('success-1.mp3', 0.6);
-        spawnConfetti(15);
-        showMascotClapCorner();
-        showToast('Tuyệt vời! 💯', 1800);
-        const voiceText = playPageComplete();
-        showCelebration(voiceText);
-      }
-      if (currentActivityIdx < activitySequence.length - 1) {
-        currentActivityIdx += 1;
-        setTimeout(() => showActivity(currentActivityIdx), 900);
-      } else {
-        updateActivityNavButtons();
-      }
-    }
-
-    function goBackActivity() {
-      if (currentActivityIdx === 0) return;
-      currentActivityIdx -= 1;
-      showActivity(currentActivityIdx);
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      const nextBtn = document.getElementById('activity-next');
-      const backBtn = document.getElementById('activity-back');
-      if (nextBtn) nextBtn.addEventListener('click', goNextActivity);
-      if (backBtn) backBtn.addEventListener('click', goBackActivity);
-    });
-
-    document.querySelectorAll('[data-step-next]').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const next = btn.getAttribute('data-step-next');
-        const nowIso = new Date().toISOString();
-        if (currentStep === 'listen' && !listenCompletedAt) listenCompletedAt = nowIso;
-        if (currentStep === 'read' && !readCompletedAt) readCompletedAt = nowIso;
-        showStep(next, { scroll: true });
-        saveDraft();
-      });
-    });
-
-    document.querySelectorAll('[data-step-back]').forEach((btn) => {
-      btn.addEventListener('click', () => showStep(btn.getAttribute('data-step-back'), { scroll: true }));
-    });
-
-    document.querySelectorAll('[data-step-jump]').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        if (!lesson) return;
-        showStep(btn.getAttribute('data-step-jump'), { scroll: true });
-      });
-    });
-
-    activitiesEl.addEventListener('click', async (event) => {
-      const chip = event.target.closest('[data-tap-word]');
-      if (chip) {
-        const sentenceIdx = chip.getAttribute('data-tap-sentence');
-        const source = chip.getAttribute('data-tap-source');
-        const card = chip.closest('[data-tap-card]');
-        if (!card) return;
-        const answerArea = card.querySelector(`[data-tap-answer="${sentenceIdx}"]`);
-        const poolArea = card.querySelector(`[data-tap-pool="${sentenceIdx}"]`);
-        const hiddenInput = card.querySelector(`input[data-answer-type="dictation"][data-answer-index="${sentenceIdx}"]`);
-        if (!answerArea || !poolArea || !hiddenInput) return;
-        if (source === 'pool') {
-          chip.setAttribute('data-tap-source', 'answer');
-          answerArea.appendChild(chip);
-        } else {
-          chip.setAttribute('data-tap-source', 'pool');
-          poolArea.appendChild(chip);
-        }
-        const words = Array.from(answerArea.querySelectorAll('[data-tap-word]')).map((el) => el.getAttribute('data-tap-word-text') || '');
-        hiddenInput.value = words.join(' ');
-        hiddenInput.dispatchEvent(new Event('input', { bubbles: true }));
-        return;
-      }
-
-      const listenBtn = event.target.closest('[data-sentence-listen]');
-      if (listenBtn) {
-        const url = listenBtn.getAttribute('data-sentence-listen');
-        if (!url) return;
-        try {
-          if (sentenceListenAudio) {
-            sentenceListenAudio.pause();
-            sentenceListenAudio.currentTime = 0;
-          }
-          sentenceListenAudio = new Audio(url);
-          await sentenceListenAudio.play();
-        } catch (err) {
-          console.warn('[sentence-listen] play failed:', err);
-        }
-        return;
-      }
-
-      const voiceBtn = event.target.closest('[data-voice-record]');
-      if (voiceBtn) {
-        const type = voiceBtn.getAttribute('data-voice-target-type');
-        const idx = voiceBtn.getAttribute('data-voice-target-index');
-        if (!type || idx === null) return;
-        const key = `${type}:${idx}`;
-        const existing = voiceRecordings.get(key);
-        if (existing?.mediaRecorder && existing.mediaRecorder.state === 'recording') {
-          existing.mediaRecorder.stop();
-          return;
-        }
-
-        try {
-          const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-          const chunks = [];
-          const mediaRecorder = new MediaRecorder(stream);
-          mediaRecorder.addEventListener('dataavailable', (e) => {
-            if (e.data.size > 0) chunks.push(e.data);
-          });
-          mediaRecorder.addEventListener('stop', () => {
-            const blob = new Blob(chunks, { type: mediaRecorder.mimeType || 'audio/webm' });
-            const blobUrl = URL.createObjectURL(blob);
-            const prev = voiceRecordings.get(key);
-            if (prev?.blobUrl) URL.revokeObjectURL(prev.blobUrl);
-            voiceRecordings.set(key, { mediaRecorder: null, blobUrl });
-            const textarea = document.querySelector(`textarea[data-answer-type="${CSS.escape(type)}"][data-answer-index="${CSS.escape(idx)}"]`);
-            if (textarea) {
-              const seconds = Math.max(1, Math.round(blob.size / 16000));
-              if (!textarea.value.trim()) {
-                textarea.value = `[Con đã ghi âm câu trả lời ${seconds} giây — bố mẹ nghe lại với con]`;
-                textarea.dispatchEvent(new Event('input', { bubbles: true }));
-              }
-              let audio = textarea.parentElement.querySelector('audio[data-voice-playback]');
-              if (!audio) {
-                audio = document.createElement('audio');
-                audio.setAttribute('data-voice-playback', '1');
-                audio.controls = true;
-                audio.className = 'mt-2 w-full';
-                textarea.parentElement.appendChild(audio);
-              }
-              audio.src = blobUrl;
-            }
-            voiceBtn.textContent = '🎤';
-            stream.getTracks().forEach((track) => track.stop());
-          });
-          voiceRecordings.set(key, { mediaRecorder, blobUrl: existing?.blobUrl || null });
-          voiceBtn.textContent = '⏹ Dừng';
-          mediaRecorder.start();
-        } catch (err) {
-          console.warn('[voice-record] mic permission denied or unavailable:', err);
-          showToast('Bố mẹ cho phép microphone để con nói nhé');
-        }
-        return;
-      }
-
-      const recordBtn = event.target.closest('[data-shadow-record]');
-      if (recordBtn) {
-        const card = recordBtn.closest('[data-shadow-card]');
-        if (!card) return;
-        const idx = card.getAttribute('data-shadow-index');
-        const status = card.querySelector('[data-shadow-status]');
-        const playback = card.querySelector('[data-shadow-playback]');
-        const existing = shadowRecordings.get(idx);
-
-        if (existing?.mediaRecorder && existing.mediaRecorder.state === 'recording') {
-          existing.mediaRecorder.stop();
-          return;
-        }
-
-        try {
-          const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-          const chunks = [];
-          const mediaRecorder = new MediaRecorder(stream);
-          mediaRecorder.addEventListener('dataavailable', (e) => {
-            if (e.data.size > 0) chunks.push(e.data);
-          });
-          mediaRecorder.addEventListener('stop', () => {
-            const blob = new Blob(chunks, { type: mediaRecorder.mimeType || 'audio/webm' });
-            const blobUrl = URL.createObjectURL(blob);
-            const prev = shadowRecordings.get(idx);
-            if (prev?.blobUrl) URL.revokeObjectURL(prev.blobUrl);
-            shadowRecordings.set(idx, { mediaRecorder: null, chunks: [], stream: null, blobUrl });
-            if (playback) {
-              playback.src = blobUrl;
-              playback.classList.remove('hidden');
-            }
-            if (status) status.textContent = '✅ Đã ghi âm — bấm ▶ nghe lại';
-            recordBtn.textContent = '🎤 Đọc lại';
-            stream.getTracks().forEach((track) => track.stop());
-          });
-          mediaRecorder.start();
-          shadowRecordings.set(idx, { mediaRecorder, chunks, stream });
-          recordBtn.textContent = '⏹ Dừng ghi';
-          if (status) status.textContent = '🔴 Đang ghi âm...';
-        } catch (err) {
-          if (status) status.textContent = 'Không mở được micro. Cho phép quyền rồi thử lại.';
-        }
-      }
-    });
-
-    async function loadLesson() {
-      if (!accessCode || !packId) {
-        loadingCard.classList.add('hidden');
-        missingLinkCard.classList.remove('hidden');
-        return;
-      }
-
-      try {
-        const res = await fetch(`/api/read2lead-lesson?code=${encodeURIComponent(accessCode)}&pack_id=${encodeURIComponent(packId)}`);
-        const data = await res.json();
-        if (!res.ok || !data.ok) {
-          showError(data.message || 'Không mở được bài này.');
-          return;
-        }
-        renderLesson(data);
-      } catch {
-        showError('Mạng không ổn định. Vui lòng thử lại.');
-      }
-    }
-
-    function spawnConfetti(count = 25) {
-      const emojis = ['⭐', '🎉', '✨', '🌟', '💫', '🏆'];
-      for (let i = 0; i < count; i += 1) {
-        const el = document.createElement('div');
-        el.className = 'r2l-confetti';
-        el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-        el.style.left = `${Math.random() * 100}%`;
-        el.style.animationDelay = `${Math.random() * 0.9}s`;
-        el.style.animationDuration = `${2.4 + Math.random() * 1.6}s`;
-        document.body.appendChild(el);
-        setTimeout(() => el.remove(), 4800);
-      }
-    }
-
-    function showMascotDance() {
-      if (!assets?.minny_dance) return;
-      const img = document.createElement('img');
-      img.src = assets.minny_dance;
-      img.alt = '';
-      img.className = 'r2l-mascot-pop fixed left-1/2 top-1/2 z-[60] h-48 w-auto -translate-x-1/2 -translate-y-1/2';
-      document.body.appendChild(img);
-      setTimeout(() => img.remove(), 1800);
-    }
-
-    function renderResult(result) {
-      const sections = Array.isArray(result.sections) ? result.sections : [];
-      const feedbackVi = result.review?.feedback_vi || {};
-      const miniVi = result.review?.mini_practice_vi || {};
-      const passed = Boolean(result.passed);
-      const scorePercent = result.score_percent || 0;
-      const totalCount = result.total_count || 0;
-      const correctCount = result.correct_count || 0;
-      const reward = getRewardTier(scorePercent, passed, totalCount);
-      const needed = neededForPass(correctCount, totalCount);
-
-      let headingText;
-      let headingClass;
-      if (!passed) {
-        headingText = needed === 0
-          ? 'Con sắp pass rồi — sửa 1 chút thôi! 💪'
-          : `Cố lên! Còn ${needed} câu nữa là pass 💪`;
-        headingClass = 'font-display text-3xl font-bold leading-snug text-cream';
-      } else if (reward.tier === 'perfect') {
-        headingText = 'Siêu sao! 💯⭐';
-        headingClass = 'r2l-reward-pop font-display text-5xl font-bold leading-snug text-gold-light md:text-6xl';
-      } else {
-        headingText = 'Con được 1 sao! 🌟';
-        headingClass = 'r2l-reward-pop font-display text-4xl font-bold leading-snug text-gold-light md:text-5xl';
-      }
-      const missionBox = passed ? `
-        <div class="mt-6 rounded-lg border border-accent/30 bg-accent/10 p-5">
-          <p class="font-display text-lg font-bold text-cream">Mission Complete ✨</p>
-          <ul class="mt-3 space-y-2 text-cream-muted">
-            <li>✅ Con đã nghe câu chuyện</li>
-            <li>✅ Con đã đọc to câu chuyện</li>
-            <li>✅ Con đã làm bài luyện tập (${scorePercent}%)</li>
-            <li>⭐ Con được +1 sao!</li>
-          </ul>
-        </div>
-      ` : `
-        <div class="mt-6 rounded-lg border border-gold/30 bg-gold/10 p-5">
-          <p class="font-display text-lg font-bold text-cream">Mission In Progress</p>
-          <ul class="mt-3 space-y-2 text-cream-muted">
-            <li>✅ Con đã nghe câu chuyện</li>
-            <li>✅ Con đã đọc to câu chuyện</li>
-            <li>✅ Con đã làm bài luyện tập (${scorePercent}%)</li>
-            <li>💪 ${needed === 0 ? 'Con sắp pass rồi — sửa 1 chút và nộp lại!' : `Con chỉ cần đúng thêm <strong class="text-gold-light">${needed}</strong> câu nữa là pass!`}</li>
-          </ul>
-        </div>
-      `;
-      const recommendationsHtml = `
-        <div class="mt-6 grid gap-3 md:grid-cols-3">
-          <div class="rounded-lg border border-cream-dim/20 bg-navy-900/70 p-4">
-            <p class="text-xs uppercase tracking-wide text-cream-dim">Điểm tốt</p>
-            <p class="mt-2 text-sm text-cream">${escapeHtml(feedbackVi.strength || 'Con đã hoàn thành bài đầy đủ.')}</p>
-          </div>
-          <div class="rounded-lg border border-cream-dim/20 bg-navy-900/70 p-4">
-            <p class="text-xs uppercase tracking-wide text-cream-dim">Cần luyện</p>
-            <p class="mt-2 text-sm text-cream">${escapeHtml(feedbackVi.practice || 'Con có thể nghe lại MP3 chậm hơn lần sau.')}</p>
-          </div>
-          <div class="rounded-lg border border-cream-dim/20 bg-navy-900/70 p-4">
-            <p class="text-xs uppercase tracking-wide text-cream-dim">Level</p>
-            <p class="mt-2 text-sm text-cream">${escapeHtml(levelRecommendationText(result.review?.level_recommendation))}</p>
-          </div>
-        </div>
-      `;
-      // Detect packs with data inconsistency: any section where actual graded count < UI render count
-      const renderedCounts = {
-        matching: (result.sections.find((section) => section.id === 'matching')?.total) ?? null,
-        fill_blank: (result.sections.find((section) => section.id === 'fill_blank')?.total) ?? null,
-        story_cloze: (result.sections.find((section) => section.id === 'story_cloze')?.total) ?? null,
-        best_line: (result.sections.find((section) => section.id === 'best_line')?.total) ?? null,
-      };
-      void renderedCounts;
-      // If any section has total smaller than what was rendered to kid, surface a friendly notice
-      // (we don't have direct access to render counts here; rely on console.warn for diagnostics)
-      const miniPracticeHtml = (miniVi.read_again || miniVi.chunk_to_practice || miniVi.parent_question) ? `
-        <div class="mt-4 rounded-lg border border-accent/30 bg-accent/10 p-4">
-          <p class="font-semibold text-cream">5 phút luyện thêm</p>
-          <ul class="mt-2 space-y-2 text-sm text-cream-muted">
-            <li><strong class="text-cream">Đọc lại:</strong> ${escapeHtml(miniVi.read_again || 'Một câu trong truyện.')}</li>
-            <li><strong class="text-cream">Cụm cần luyện:</strong> ${escapeHtml(miniVi.chunk_to_practice || 'Một cụm trong bài.')}</li>
-            <li><strong class="text-cream">Bố mẹ hỏi:</strong> ${escapeHtml(miniVi.parent_question || 'Con kể lại chuyện gì xảy ra nhé?')}</li>
-          </ul>
-        </div>
-      ` : '';
-      resultCard.innerHTML = `
-        <h2 class="${headingClass}">${headingText}</h2>
-        ${missionBox}
-        ${recommendationsHtml}
-        ${miniPracticeHtml}
-        <p class="mt-3 text-lg text-cream-muted">Điểm: <strong class="text-gold-light">${scorePercent}%</strong> · Đúng ${result.correct_count || 0}/${result.total_count || 0} phần được chấm</p>
-        <div class="mt-5 grid gap-3 md:grid-cols-2">
-          ${sections.map((section) => {
-            const wrongCount = Array.isArray(section.wrong_items) ? section.wrong_items.length : 0;
-            const wrongLabel = (!section.passed && wrongCount > 0)
-              ? `<p class="mt-1 text-xs text-red-200">Câu cần xem lại: ${section.wrong_items.map((w) => Number(w.index) + 1).join(', ')}</p>`
-              : '';
-            return `
-              <div class="rounded-lg border ${section.passed ? 'border-green-500/30 bg-green-500/10' : 'border-red-500/30 bg-red-500/10'} p-4">
-                <p class="font-semibold ${section.passed ? 'text-green-300' : 'text-red-300'}">${section.passed ? '✅' : '🔄'} ${escapeHtml(section.title)}</p>
-                <p class="mt-1 text-sm text-cream-muted">${section.correct}/${section.total} đúng</p>
-                ${wrongLabel}
-              </div>
-            `;
-          }).join('')}
-        </div>
-        <div class="mt-5 rounded-lg border border-cream-dim/20 bg-navy-950/70 p-4">
-          <p class="font-semibold text-cream">${escapeHtml(feedbackVi.summary || result.message || '')}</p>
-          <p class="mt-2 text-sm leading-relaxed text-cream-muted">${escapeHtml(feedbackVi.parent_next_step || (passed ? 'Bố mẹ có thể tạo bài tiếp theo cho con.' : 'Bố mẹ cho con sửa lại rồi nộp lại nhé.'))}</p>
-        </div>
-        <div class="mt-6 flex flex-col gap-3 sm:flex-row">
-          ${passed ? '<a href="/read2lead#form" class="inline-flex justify-center rounded-lg bg-accent px-5 py-3 font-semibold text-navy-950 transition hover:bg-accent-hover">Khám phá bài mới 🚀</a>' : '<button id="retry-lesson" type="button" class="inline-flex justify-center rounded-lg bg-accent px-5 py-3 font-semibold text-navy-950 transition hover:bg-accent-hover">🔄 Xem lại vài câu</button>'}
-          <a href="/read2lead/review" class="inline-flex justify-center rounded-lg border border-gold px-5 py-3 font-semibold text-gold-light transition hover:bg-gold hover:text-navy-950">Khoe Felixar cho ba mẹ xem 🌟</a>
-        </div>
-      `;
-      resultCard.classList.remove('hidden');
-      resultCard.scrollIntoView({ behavior: 'smooth' });
-      if (reward.confettiCount > 0) spawnConfetti(reward.confettiCount);
-      if (passed) {
-        playFinalReward(reward.volume || 0.6);
-        showMascotDance();
-        if (reward.voice) setTimeout(() => playSfx(reward.voice, 0.75), 600);
-      }
-      const retry = document.getElementById('retry-lesson');
-      if (retry) retry.addEventListener('click', () => highlightAndJumpToWrong(sections));
-    }
-
-    // Section ID -> activity slot ID mapping (cluster 4 has 2 sections in 1 slot)
-    const SECTION_TO_SLOT_ID = {
-      cum_cau_con: 'cum_cau_con',
-      dung_cum_cau: 'dung_cum_cau',
-      nghe_doc_theo: 'nghe_doc_theo',
-      hieu_truyen_best: 'hieu_truyen',
-      hieu_truyen_text: 'hieu_truyen',
-      ke_chuyen_con: 'ke_chuyen_con',
-    };
-
-    function highlightAndJumpToWrong(sections) {
-      // Clear stale highlights from previous attempt
-      document.querySelectorAll('[data-wrong-marked]').forEach((el) => {
-        el.classList.remove('ring-2', 'ring-red-500', 'border-red-500');
-        el.removeAttribute('data-wrong-marked');
-      });
-      const failed = (sections || []).filter((s) => !s.passed && Array.isArray(s.wrong_items) && s.wrong_items.length);
-      if (!failed.length) {
-        lessonCard.scrollIntoView({ behavior: 'smooth' });
-        return;
-      }
-      let firstWrongEl = null;
-      failed.forEach((section) => {
-        section.wrong_items.forEach((item) => {
-          const type = item && item.type;
-          const idx = item && item.index;
-          if (typeof type !== 'string' || typeof idx !== 'number') return;
-          document.querySelectorAll(`[data-answer-type="${type}"][data-answer-index="${idx}"]`).forEach((el) => {
-            el.setAttribute('data-wrong-marked', '1');
-            // Visual: red ring around the input
-            el.classList.add('ring-2', 'ring-red-500');
-            // Clear the value so kid re-answers
-            if (el.tagName === 'SELECT') {
-              el.value = '';
-            } else if (el.tagName === 'TEXTAREA') {
-              el.value = '';
-            } else if (el.tagName === 'INPUT') {
-              if (el.type === 'radio') {
-                el.checked = false;
-                // For tap-words hidden input, also clear the visual answer slots
-                if (el.getAttribute('data-answer-type') === 'dictation') el.value = '';
-              } else {
-                el.value = '';
-              }
-            }
-            // Mark surrounding card too
-            const card = el.closest('[data-shadow-card], [data-tap-card], label, fieldset');
-            if (card) {
-              card.classList.add('border-red-500');
-              card.setAttribute('data-wrong-marked', '1');
-            }
-            if (!firstWrongEl) firstWrongEl = el;
-          });
-          // Tap-words special: clear visible answer pool + reset pool chips
-          if (type === 'dictation') {
-            const tapCard = document.querySelector(`[data-tap-card-index="${idx}"]`);
-            if (tapCard) {
-              const answerBox = tapCard.querySelector(`[data-tap-answer="${idx}"]`);
-              if (answerBox) answerBox.innerHTML = '';
-              tapCard.querySelectorAll('[data-tap-word][data-tap-source="answer"]').forEach((chip) => {
-                chip.setAttribute('data-tap-source', 'pool');
-                const pool = tapCard.querySelector(`[data-tap-pool="${idx}"]`);
-                if (pool) pool.appendChild(chip);
-              });
-            }
-          }
-        });
-      });
-      // Jump pagination to the slot containing the first failed section
-      const firstFailedSection = failed[0];
-      const targetSlotId = SECTION_TO_SLOT_ID[firstFailedSection.id];
-      if (targetSlotId && Array.isArray(activitySequence)) {
-        const slotIdx = activitySequence.indexOf(targetSlotId);
-        if (slotIdx >= 0 && typeof showActivity === 'function') {
-          showActivity(slotIdx);
-        }
-      }
-      // Scroll to first wrong input
-      setTimeout(() => {
-        if (firstWrongEl && typeof firstWrongEl.scrollIntoView === 'function') {
-          firstWrongEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        } else {
-          lessonCard.scrollIntoView({ behavior: 'smooth' });
-        }
-      }, 50);
-    }
-
-    form.addEventListener('submit', async (event) => {
-      event.preventDefault();
-      if (!lesson) return;
-      resultCard.classList.add('hidden');
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'Minny đang xem... 👀';
-
-      try {
-        const res = await fetch('/api/submit-read2lead-lesson', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            access_code: accessCode,
-            pack_id: packId,
-            answers: collectAnswers(),
-            steps: {
-              listen_completed_at: listenCompletedAt,
-              read_completed_at: readCompletedAt,
-            },
-          }),
-        });
-        const result = await res.json();
-        if (!res.ok || !result.ok) {
-          showError(result.message || 'Chưa nộp được bài. Vui lòng thử lại.');
-          return;
-        }
-        if (result.passed) clearDraft();
-        renderResult(result);
-      } catch {
-        showError('Mạng không ổn định. Vui lòng thử lại.');
-      } finally {
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Nộp bài 🚀';
-      }
-    });
-
-    loadLesson();
-  </script>
 </BaseLayout>
+
+<style is:global>
+  .r2l-primary {
+    min-height: 44px;
+    border-radius: 8px;
+    background: rgb(74 222 128);
+    padding: 0.75rem 1rem;
+    font-weight: 800;
+    color: rgb(10 14 26);
+    transition:
+      transform 180ms ease,
+      opacity 180ms ease;
+  }
+
+  .r2l-primary:hover:not(:disabled) {
+    transform: translateY(-1px);
+  }
+
+  .r2l-primary:disabled {
+    cursor: not-allowed;
+    opacity: 0.45;
+  }
+
+  .r2l-step {
+    min-height: 44px;
+    border-radius: 8px;
+    border: 1px solid rgb(245 230 211 / 0.14);
+    padding: 0.75rem;
+    text-align: left;
+    font-weight: 700;
+    color: rgb(245 230 211 / 0.72);
+  }
+
+  .r2l-step[data-active='true'] {
+    border-color: rgb(212 166 78 / 0.5);
+    color: rgb(212 166 78);
+  }
+
+  .r2l-step[data-done='true'] {
+    border-color: rgb(74 222 128 / 0.55);
+    color: rgb(74 222 128);
+  }
+
+  .r2l-activity {
+    border-radius: 8px;
+    border: 1px solid rgb(245 230 211 / 0.12);
+    background: rgb(245 230 211 / 0.04);
+    padding: 1.25rem;
+  }
+
+  .r2l-activity-head h2 {
+    margin-top: 0.25rem;
+    font-family: Manrope, Inter, sans-serif;
+    font-size: clamp(1.35rem, 2vw, 1.75rem);
+    font-weight: 800;
+    color: rgb(245 230 211);
+  }
+
+  .r2l-activity-head p {
+    color: rgb(245 230 211 / 0.72);
+  }
+
+  .r2l-identity {
+    font-weight: 800;
+    color: rgb(212 166 78) !important;
+  }
+
+  .r2l-option,
+  .r2l-token,
+  .r2l-sentence {
+    min-height: 44px;
+    border-radius: 8px;
+    border: 1px solid rgb(245 230 211 / 0.14);
+    background: rgb(10 14 26 / 0.45);
+    padding: 0.75rem 0.9rem;
+    text-align: left;
+    color: rgb(245 230 211);
+  }
+
+  .r2l-option[data-state='correct'],
+  .r2l-token[data-picked='true'],
+  .r2l-sentence:hover {
+    border-color: rgb(74 222 128 / 0.7);
+    background: rgb(74 222 128 / 0.14);
+  }
+
+  .r2l-option[data-state='retry'] {
+    border-color: rgb(212 166 78 / 0.75);
+    background: rgb(212 166 78 / 0.14);
+  }
+</style>
+
+<script is:inline>
+  const state = {
+    accessCode: '',
+    packId: '',
+    lesson: null,
+    activityIndex: 0,
+    completedTypes: new Set(),
+    activityResults: {},
+  };
+
+  const ACTIVITY_LABELS = {
+    listening_comprehension: 'Nghe hiểu',
+    listen_and_order: 'Xếp câu',
+    listen_and_speak: 'Nói lại',
+    reading_comprehension: 'Đọc hiểu',
+  };
+
+  const qs = (selector) => document.querySelector(selector);
+  const qsa = (selector) => Array.from(document.querySelectorAll(selector));
+  const escapeHtml = (value) =>
+    String(value || '')
+      .replaceAll('&', '&amp;')
+      .replaceAll('<', '&lt;')
+      .replaceAll('>', '&gt;')
+      .replaceAll('"', '&quot;')
+      .replaceAll("'", '&#39;');
+
+  function rollRewardTier() {
+    const roll = Math.random();
+    if (roll < 0.05) return 'legendary';
+    if (roll < 0.3) return 'rare';
+    return 'common';
+  }
+
+  function testRewardDistribution(count = 100) {
+    const result = { common: 0, rare: 0, legendary: 0 };
+    for (let i = 0; i < count; i += 1) result[rollRewardTier()] += 1;
+    return result;
+  }
+
+  window.__r2lRollRewardTier = rollRewardTier;
+  window.__r2lTestRewardDistribution = testRewardDistribution;
+
+  init();
+
+  async function init() {
+    const params = new URLSearchParams(window.location.search);
+    state.accessCode = (params.get('code') || '').trim().toUpperCase();
+    state.packId = (params.get('pack_id') || '').trim();
+    if (!state.accessCode || !state.packId) {
+      showError('Thiếu mã học sinh hoặc mã bài. Anh Phương mở lại từ link bài học nhé.');
+      return;
+    }
+
+    try {
+      const res = await fetch(
+        `/api/read2lead-lesson?code=${encodeURIComponent(state.accessCode)}&pack_id=${encodeURIComponent(state.packId)}`,
+      );
+      const data = await res.json();
+      if (!res.ok || !data.ok) throw new Error(data.message || data.error || 'Không tải được bài.');
+      if (data.lesson?.schema_version !== 2) {
+        throw new Error('Bài này vẫn là format cũ. V2 lesson chỉ nhận pack schema_version = 2.');
+      }
+      state.lesson = data.lesson;
+      renderLesson(data.lesson);
+    } catch (error) {
+      showError(error.message || 'Có lỗi khi mở bài học.');
+    }
+  }
+
+  function renderLesson(lesson) {
+    qs('#loading-card').classList.add('hidden');
+    qs('#lesson-shell').classList.remove('hidden');
+    qs('#story-title').textContent = lesson.story?.title || 'Câu chuyện của con';
+
+    const paragraphs = Array.isArray(lesson.story?.paragraphs_en) ? lesson.story.paragraphs_en : [];
+    qs('#story-paragraphs').innerHTML = paragraphs
+      .map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`)
+      .join('');
+
+    const fullAudio = lesson.story?.full_audio_url || '';
+    qs('#play-story').addEventListener('click', () => playAudio(fullAudio));
+    if (!fullAudio) qs('#play-story').textContent = 'Chưa có audio';
+
+    renderSentences(lesson.story?.sentences || []);
+    renderActivity(0);
+    updateProgress();
+  }
+
+  function renderSentences(sentences) {
+    qs('#sentence-list').innerHTML = sentences
+      .map(
+        (sentence, index) => `
+          <button class="r2l-sentence block w-full" type="button" data-sentence-index="${index}">
+            <span class="block text-sm font-bold text-gold">Câu ${index + 1}</span>
+            <span>${escapeHtml(sentence.text_en)}</span>
+          </button>
+        `,
+      )
+      .join('');
+
+    qsa('[data-sentence-index]').forEach((button) => {
+      button.addEventListener('click', () => {
+        const sentence = sentences[Number(button.dataset.sentenceIndex)];
+        playAudio(sentence?.audio_url || '');
+      });
+    });
+  }
+
+  function renderActivity(index) {
+    state.activityIndex = Math.max(0, Math.min(index, 3));
+    const activities = state.lesson.activities || [];
+    qsa('[data-activity-shell]').forEach((shell) => {
+      shell.hidden = true;
+    });
+    const activity = activities[state.activityIndex];
+    if (!activity) return;
+
+    const shell = qs(`[data-activity-shell="${activity.type}"]`);
+    if (!shell) return;
+    shell.hidden = false;
+    shell.querySelector('[data-activity-title]').textContent = activity.title_vi || ACTIVITY_LABELS[activity.type] || '';
+    shell.querySelector('[data-activity-identity]').textContent = activity.identity_vi || '';
+    shell.querySelector('[data-activity-instructions]').textContent = activity.instructions_vi || '';
+
+    if (activity.type === 'listening_comprehension' || activity.type === 'reading_comprehension') {
+      renderMcqActivity(shell.querySelector('[data-activity-body]'), activity);
+    } else if (activity.type === 'listen_and_order') {
+      renderOrderActivity(shell.querySelector('[data-activity-body]'), activity);
+    } else if (activity.type === 'listen_and_speak') {
+      renderSpeakActivity(shell.querySelector('[data-activity-body]'), activity);
+    }
+
+    qsa('[data-step-button]').forEach((button, buttonIndex) => {
+      button.dataset.active = String(buttonIndex === state.activityIndex);
+      const type = activities[buttonIndex]?.type;
+      button.dataset.done = String(type && state.completedTypes.has(type));
+      button.onclick = () => renderActivity(buttonIndex);
+    });
+  }
+
+  function renderMcqActivity(root, activity) {
+    root.innerHTML = `
+      <div class="mt-5 space-y-5">
+        ${(activity.questions || [])
+          .map(
+            (question, questionIndex) => `
+              <article class="rounded-md border border-cream/10 bg-navy-950/45 p-4">
+                <p class="font-bold text-cream">${escapeHtml(question.question_en)}</p>
+                <p class="mt-1 text-sm text-cream/65">${escapeHtml(question.question_vi)}</p>
+                <div class="mt-3 grid gap-2">
+                  ${(question.options_en || [])
+                    .map(
+                      (option, optionIndex) => `
+                        <button class="r2l-option" type="button" data-question-index="${questionIndex}" data-option-index="${optionIndex}">
+                          ${escapeHtml(option)}
+                          <span class="block text-xs text-cream/55">${escapeHtml(question.options_vi?.[optionIndex] || '')}</span>
+                        </button>
+                      `,
+                    )
+                    .join('')}
+                </div>
+                <p class="mt-2 hidden text-sm text-gold" data-explanation="${questionIndex}">${escapeHtml(question.explanation_vi || '')}</p>
+              </article>
+            `,
+          )
+          .join('')}
+      </div>
+    `;
+
+    const answered = new Set();
+    root.querySelectorAll('[data-question-index]').forEach((button) => {
+      button.addEventListener('click', () => {
+        const questionIndex = Number(button.dataset.questionIndex);
+        const optionIndex = Number(button.dataset.optionIndex);
+        const question = activity.questions[questionIndex];
+        const isCorrect = optionIndex === question.correct_index;
+        button.dataset.state = isCorrect ? 'correct' : 'retry';
+        root.querySelector(`[data-explanation="${questionIndex}"]`)?.classList.remove('hidden');
+        if (isCorrect && !answered.has(questionIndex)) {
+          answered.add(questionIndex);
+          showReward();
+        }
+        if (answered.size === (activity.questions || []).length) completeActivity(activity.type, {
+          correct_count: answered.size,
+          total_count: activity.questions.length,
+        });
+      });
+    });
+  }
+
+  function renderOrderActivity(root, activity) {
+    root.innerHTML = `
+      <div class="mt-5 space-y-5">
+        ${(activity.items || [])
+          .map(
+            (item, itemIndex) => `
+              <article class="rounded-md border border-cream/10 bg-navy-950/45 p-4" data-order-card="${itemIndex}">
+                <div class="flex flex-wrap items-center justify-between gap-2">
+                  <p class="font-bold text-cream">Câu ${itemIndex + 1}</p>
+                  <button class="r2l-primary" type="button" data-play-order="${itemIndex}">Nghe câu</button>
+                </div>
+                <p class="mt-2 text-sm text-cream/65">${escapeHtml(item.translation_vi || '')}</p>
+                <div class="mt-3 min-h-12 rounded-md border border-cream/10 bg-cream/5 p-3 text-cream" data-built="${itemIndex}"></div>
+                <div class="mt-3 flex flex-wrap gap-2">
+                  ${(item.scrambled_tokens || [])
+                    .map(
+                      (token, tokenIndex) => `
+                        <button class="r2l-token" type="button" data-order-item="${itemIndex}" data-token-index="${tokenIndex}">
+                          ${escapeHtml(token)}
+                        </button>
+                      `,
+                    )
+                    .join('')}
+                </div>
+                <p class="mt-2 hidden text-sm text-gold" data-order-hint="${itemIndex}">Gần đúng rồi, con thử đổi thứ tự nhé.</p>
+              </article>
+            `,
+          )
+          .join('')}
+      </div>
+    `;
+
+    const solved = new Set();
+    const picked = {};
+    root.querySelectorAll('[data-play-order]').forEach((button) => {
+      button.addEventListener('click', () => playAudio(activity.items[Number(button.dataset.playOrder)]?.audio_url || ''));
+    });
+    root.querySelectorAll('[data-order-item]').forEach((button) => {
+      button.addEventListener('click', () => {
+        const itemIndex = Number(button.dataset.orderItem);
+        const tokenIndex = Number(button.dataset.tokenIndex);
+        const item = activity.items[itemIndex];
+        picked[itemIndex] = picked[itemIndex] || [];
+        if (picked[itemIndex].includes(tokenIndex)) return;
+        picked[itemIndex].push(tokenIndex);
+        button.dataset.picked = 'true';
+        const built = picked[itemIndex].map((idx) => item.scrambled_tokens[idx]).join(' ');
+        root.querySelector(`[data-built="${itemIndex}"]`).textContent = built;
+        if (picked[itemIndex].length === item.correct_order_indices.length) {
+          const correct = item.correct_order_indices.every((idx, i) => idx === picked[itemIndex][i]);
+          if (correct) {
+            solved.add(itemIndex);
+            showReward();
+          } else {
+            root.querySelector(`[data-order-hint="${itemIndex}"]`)?.classList.remove('hidden');
+            picked[itemIndex] = [];
+            setTimeout(() => resetOrderCard(root, itemIndex), 500);
+          }
+        }
+        if (solved.size === (activity.items || []).length) completeActivity(activity.type, {
+          correct_count: solved.size,
+          total_count: activity.items.length,
+        });
+      });
+    });
+  }
+
+  function resetOrderCard(root, itemIndex) {
+    root.querySelector(`[data-built="${itemIndex}"]`).textContent = '';
+    root.querySelectorAll(`[data-order-item="${itemIndex}"]`).forEach((button) => {
+      button.dataset.picked = 'false';
+    });
+  }
+
+  function renderSpeakActivity(root, activity) {
+    root.innerHTML = `
+      <div class="mt-5 space-y-4">
+        ${(activity.items || [])
+          .map(
+            (item, itemIndex) => `
+              <article class="rounded-md border border-cream/10 bg-navy-950/45 p-4">
+                <div class="flex flex-wrap items-center justify-between gap-3">
+                  <div>
+                    <p class="font-bold text-cream">${escapeHtml(item.text_en)}</p>
+                    <p class="mt-1 text-sm text-cream/65">${escapeHtml(item.text_vi || '')}</p>
+                  </div>
+                  <button class="r2l-primary" type="button" data-play-speak="${itemIndex}">Nghe</button>
+                </div>
+                <p class="mt-3 text-sm text-gold">${escapeHtml(item.tip_vi || '')}</p>
+                <div class="mt-3 flex flex-wrap gap-2">
+                  <button class="r2l-option" type="button" data-rate-speak="${itemIndex}" data-rate-value="ready">Con nói được</button>
+                  <button class="r2l-option" type="button" data-rate-speak="${itemIndex}" data-rate-value="practice">Con luyện thêm</button>
+                </div>
+              </article>
+            `,
+          )
+          .join('')}
+      </div>
+    `;
+
+    const rated = new Set();
+    root.querySelectorAll('[data-play-speak]').forEach((button) => {
+      button.addEventListener('click', () => playAudio(activity.items[Number(button.dataset.playSpeak)]?.audio_url || ''));
+    });
+    root.querySelectorAll('[data-rate-speak]').forEach((button) => {
+      button.addEventListener('click', () => {
+        const itemIndex = Number(button.dataset.rateSpeak);
+        rated.add(itemIndex);
+        button.dataset.state = 'correct';
+        showReward();
+        if (rated.size === (activity.items || []).length) completeActivity(activity.type, {
+          correct_count: rated.size,
+          total_count: activity.items.length,
+          self_rate: true,
+        });
+      });
+    });
+  }
+
+  function completeActivity(type, details) {
+    state.completedTypes.add(type);
+    state.activityResults[type] = {
+      type,
+      attempted: true,
+      ...details,
+    };
+    updateProgress();
+    if (state.completedTypes.size < 4) {
+      const nextIndex = Math.min(state.activityIndex + 1, 3);
+      setTimeout(() => renderActivity(nextIndex), 450);
+    }
+  }
+
+  function updateProgress() {
+    const percent = 20 + state.completedTypes.size * 20;
+    qs('#progress-fill').style.width = `${percent}%`;
+    qs('#progress-label').textContent = `${percent}%`;
+    qs('#submit-lesson').disabled = state.completedTypes.size < 4;
+    renderStepStates();
+  }
+
+  function renderStepStates() {
+    const activities = state.lesson?.activities || [];
+    qsa('[data-step-button]').forEach((button, index) => {
+      const type = activities[index]?.type;
+      button.dataset.active = String(index === state.activityIndex);
+      button.dataset.done = String(type && state.completedTypes.has(type));
+    });
+  }
+
+  function showReward() {
+    const tier = rollRewardTier();
+    const burst = qs('#reward-burst');
+    const title = qs('#reward-burst-title');
+    const copy = qs('#reward-burst-copy');
+    const messages = {
+      common: ['Hay lắm!', 'Con vừa mở thêm năng lượng.'],
+      rare: ['Combo đẹp!', 'Minny thấy con đang bắt nhịp rất tốt.'],
+      legendary: ['Khoảnh khắc vàng!', 'Một cú nghe cực sáng vừa xuất hiện.'],
+    };
+    title.textContent = messages[tier][0];
+    copy.textContent = messages[tier][1];
+    burst.dataset.tier = tier;
+    burst.dataset.show = 'false';
+    window.setTimeout(() => {
+      burst.dataset.show = 'true';
+    }, 20);
+    window.setTimeout(() => {
+      burst.dataset.show = 'false';
+    }, 950);
+  }
+
+  function playAudio(url) {
+    if (!url) {
+      showReward();
+      return;
+    }
+    const audio = new Audio(url);
+    audio.preload = 'auto';
+    audio.play().catch(() => {
+      showError('Trình duyệt chưa cho phát audio. Con bấm lại một lần nữa nhé.');
+    });
+  }
+
+  qs('#submit-lesson').addEventListener('click', async () => {
+    qs('#submit-lesson').disabled = true;
+    qs('#submit-hint').textContent = 'Minny đang lưu kết quả...';
+    try {
+      const res = await fetch('/api/submit-read2lead-lesson', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          access_code: state.accessCode,
+          pack_id: state.packId,
+          answers: {
+            schema_version: 2,
+            activity_results: Object.values(state.activityResults),
+          },
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.ok || !data.passed) throw new Error(data.message || data.error || 'Chưa lưu được.');
+      const rewards = data.rewards_earned || {};
+      qs('#completion-copy').textContent = `Con nhận ${rewards.coins || 0} xu và ${rewards.xp || 0} XP cho nhiệm vụ này.`;
+      qs('#completion-card').classList.remove('hidden');
+      showReward();
+    } catch (error) {
+      qs('#submit-lesson').disabled = false;
+      qs('#submit-hint').textContent = error.message || 'Chưa lưu được kết quả. Anh Phương thử lại giúp con nhé.';
+    }
+  });
+
+  function showError(message) {
+    qs('#loading-card')?.classList.add('hidden');
+    qs('#lesson-shell')?.classList.add('hidden');
+    qs('#error-card')?.classList.remove('hidden');
+    qs('#error-message').textContent = message;
+  }
+</script>

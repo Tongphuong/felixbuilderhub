@@ -1,0 +1,23 @@
+---
+export interface Props {
+  initialPercent?: number;
+}
+
+const { initialPercent = 20 } = Astro.props;
+---
+
+<section class="sticky top-0 z-30 border-b border-cream/10 bg-navy-950/95 backdrop-blur">
+  <div class="mx-auto flex max-w-6xl flex-col gap-3 px-4 py-3 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between gap-4 text-sm">
+      <span class="font-semibold text-cream">Tiến trình nhiệm vụ</span>
+      <span id="progress-label" class="font-semibold text-gold">{initialPercent}%</span>
+    </div>
+    <div class="h-3 overflow-hidden rounded-full bg-cream/10" aria-hidden="true">
+      <div
+        id="progress-fill"
+        class="h-full rounded-full bg-accent transition-all duration-500"
+        style={`width: ${initialPercent}%`}
+      ></div>
+    </div>
+  </div>
+</section>
