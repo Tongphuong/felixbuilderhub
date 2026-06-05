@@ -8,6 +8,7 @@ then reference in code.
 | Binding | Purpose | Used by |
 |---|---|---|
 | `READ2LEAD_CODES` | Single KV namespace storing per-student access codes + nested pack data (progress, current_pack, review_context). Acts as primary persistence for Read2Lead. | 13 endpoints: generate-read2lead-pack, check-generation-status, read2lead-lesson, read2lead-progress, read2lead-leaderboard, submit-read2lead-lesson, grade-slot, review-read2lead-speaking, task-state, admin/codes (list + create), admin/codes/[code] (read + update + delete) |
+| `READ2LEAD_PROGRESS` | V2 persistent kid state (level, XP, coins, streak, starter badges, forward-compatible avatar placeholders). Code falls back to `READ2LEAD_CODES` if this binding is not configured yet. | read2lead-progress, read2lead-progress-update, submit-read2lead-lesson, admin/read2lead-set-level |
 ## Secrets
 | Binding | Purpose | Used by | Source |
 |---|---|---|---|
@@ -27,12 +28,14 @@ None currently. Add to this table when introduced.
 | `api/task-state.js` | ✓ | — | ✓ | — | — |
 | `api/read2lead-lesson.js` | ✓ | — | — | — | — |
 | `api/read2lead-progress.js` | ✓ | — | — | — | — |
+| `api/read2lead-progress-update.js` | ✓ | — | — | — | — |
 | `api/read2lead-leaderboard.js` | ✓ | — | — | — | — |
 | `api/submit-read2lead-lesson.js` | ✓ | — | — | — | — |
 | `api/grade-slot.js` | ✓ | — | — | — | — |
 | `api/review-read2lead-speaking.js` | ✓ | ✓ | ✓ | — | ✓ |
 | `api/admin/codes.js` | ✓ | — | — | — | — |
 | `api/admin/codes/[code].js` | ✓ | — | — | — | — |
+| `api/admin/read2lead-set-level.js` | ✓ | — | — | — | — |
 | `api/coaching-booking.js` | — | — | — | — | ✓ |
 | `api/msmw-lead.js` | — | — | — | — | ✓ |
 | `api/sharing-subscribe.js` | — | — | — | — | ✓ |
@@ -42,7 +45,9 @@ helpers and consume `env` only via callers above.
 When deploying to a fresh Cloudflare Pages project (e.g., preview branch
 or new account):
 1. KV → create namespace, bind as `READ2LEAD_CODES` (same name for both
-   Production and Preview environments).
+   Production and Preview environments). For V2 state, also bind
+   `READ2LEAD_PROGRESS`; until configured, code falls back to
+   `READ2LEAD_CODES`.
 2. Environment variables → add (Encrypt for all secrets):
    - `READ2LEAD_BACKEND_URL`
    - `READ2LEAD_BACKEND_SECRET`

@@ -12,6 +12,12 @@ import {
   rankForStars,
   reviewHistoryItem,
 } from './_read2lead-lesson.js';
+import {
+  applyPackCompletion,
+  loadProgressState,
+  publicProgressState,
+  saveProgressState,
+} from './_read2lead-v2-state.js';
 
 export async function onRequestPost(context) {
   const { request, env } = context;
@@ -330,6 +336,15 @@ async function submitV2Lesson({
     });
   }
 
+  const progressState = await loadProgressState(env, accessCode, codeData);
+  const stateResult = applyPackCompletion(progressState, {
+    packId: currentPack.pack_id,
+    completedAt: submittedAt,
+    rewardsEarned,
+    activityResults,
+  });
+  const savedProgressState = await saveProgressState(env, accessCode, stateResult.state);
+
   const reviewedPack = {
     ...currentPack,
     status: 'reviewed_pass_web_v2',
@@ -386,6 +401,8 @@ async function submitV2Lesson({
     correct_count: correctCount,
     total_count: totalCount,
     rewards_earned: rewardsEarned,
+    level_up: stateResult.level_up,
+    read2lead_state: publicProgressState(savedProgressState),
     message: 'Con đã hoàn thành nhiệm vụ V2 hôm nay.',
     review: reviewedPack.review_summary,
     progress: publicProgress(nextProgress),

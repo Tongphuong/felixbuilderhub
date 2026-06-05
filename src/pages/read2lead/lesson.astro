@@ -7,6 +7,7 @@ import IdentityBanner from '../../components/read2lead/v2/IdentityBanner.astro';
 import ListeningComprehension from '../../components/read2lead/v2/ListeningComprehension.astro';
 import ListenAndOrder from '../../components/read2lead/v2/ListenAndOrder.astro';
 import ListenAndSpeak from '../../components/read2lead/v2/ListenAndSpeak.astro';
+import LevelUpModal from '../../components/read2lead/v2/LevelUpModal.astro';
 import ProgressBar from '../../components/read2lead/v2/ProgressBar.astro';
 import ReadingComprehension from '../../components/read2lead/v2/ReadingComprehension.astro';
 import RewardBurst from '../../components/read2lead/v2/RewardBurst.astro';
@@ -16,7 +17,7 @@ import RewardBurst from '../../components/read2lead/v2/RewardBurst.astro';
   title="Read2Lead V2 Lesson | Felix Builder Hub"
   description="Bài học Read2Lead V2: nghe truyện, xếp câu, nói lại và đọc hiểu theo nhịp nhẹ nhàng."
 >
-  <Header />
+  <Header read2LeadState={true} />
   <main id="main" class="min-h-screen bg-navy-950">
     <IdentityBanner />
     <ProgressBar initialPercent={20} />
@@ -83,6 +84,7 @@ import RewardBurst from '../../components/read2lead/v2/RewardBurst.astro';
     </section>
 
     <RewardBurst />
+    <LevelUpModal />
   </main>
   <Footer />
 </BaseLayout>
@@ -574,6 +576,8 @@ import RewardBurst from '../../components/read2lead/v2/RewardBurst.astro';
       const rewards = data.rewards_earned || {};
       qs('#completion-copy').textContent = `Con nhận ${rewards.coins || 0} xu và ${rewards.xp || 0} XP cho nhiệm vụ này.`;
       qs('#completion-card').classList.remove('hidden');
+      updateStateHeader(data.read2lead_state);
+      showLevelUp(data.level_up);
       showReward();
     } catch (error) {
       qs('#submit-lesson').disabled = false;
@@ -587,4 +591,32 @@ import RewardBurst from '../../components/read2lead/v2/RewardBurst.astro';
     qs('#error-card')?.classList.remove('hidden');
     qs('#error-message').textContent = message;
   }
+
+  function updateStateHeader(read2LeadState) {
+    if (!read2LeadState) return;
+    const header = document.querySelector('[data-r2l-state-header]');
+    if (!header) return;
+    header.classList.remove('hidden');
+    header.classList.add('flex');
+    header.querySelector('[data-r2l-level]').textContent = read2LeadState.current_level || 'LV';
+    header.querySelector('[data-r2l-rank]').textContent = read2LeadState.rank_title || 'Read2Lead';
+    header.querySelector('[data-r2l-xp-label]').textContent = `${read2LeadState.xp_in_level || 0}/${read2LeadState.xp_to_next_level || 60} XP`;
+    header.querySelector('[data-r2l-xp-fill]').style.width = `${read2LeadState.xp_percent || 0}%`;
+    header.querySelector('[data-r2l-coins]').textContent = `${read2LeadState.coins || 0} xu`;
+    header.querySelector('[data-r2l-streak]').textContent = `${read2LeadState.streak_days || 0} ngày`;
+  }
+
+  function showLevelUp(levelUp) {
+    if (!levelUp) return;
+    const modal = qs('#level-up-modal');
+    qs('#level-up-copy').textContent = `Từ ${levelUp.from_level} lên ${levelUp.to_level}. Con đã mở thêm một nấc đọc mới.`;
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+  }
+
+  qs('#level-up-close')?.addEventListener('click', () => {
+    const modal = qs('#level-up-modal');
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  });
 </script>

@@ -1,4 +1,5 @@
 import { getClientIp, checkCodeRateLimit, recordCodeFailure, rateLimitedResponse } from './_rate-limit.js';
+import { loadProgressState, publicProgressState } from './_read2lead-v2-state.js';
 
 export async function onRequestGet(context) {
   const { request, env } = context;
@@ -31,6 +32,7 @@ export async function onRequestGet(context) {
   codeData = await reconcileGenerationState(env.READ2LEAD_CODES, code, codeData);
 
   const progress = normalizeProgress(codeData);
+  const v2State = await loadProgressState(env, code, codeData);
   const requireReviewBeforeNextPack = shouldRequireReviewBeforeNextPack(codeData);
   const nextPackLocked = currentPackBlocksGeneration(progress.current_pack, requireReviewBeforeNextPack);
   const state = dashboardState(progress.current_pack);
@@ -41,6 +43,7 @@ export async function onRequestGet(context) {
     state_label: stateLabel(state),
     primary_action: primaryAction(state, code, nextPackLocked),
     progress: publicProgress(progress),
+    read2lead_state: publicProgressState(v2State),
     next_pack_locked: nextPackLocked,
     review_link: `/read2lead/review?code=${encodeURIComponent(code)}`,
     last_review_summary: lastReviewSummary(progress.current_pack, progress.review_history),

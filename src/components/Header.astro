@@ -1,17 +1,58 @@
 ---
 export interface Props {
   homeLinks?: boolean;
+  read2LeadState?: boolean;
 }
+
 import { ZALO_URL } from '../config/contact';
-const { homeLinks = false } = Astro.props;
+
+const { homeLinks = false, read2LeadState = false } = Astro.props;
 const productsHref = homeLinks ? '#products' : '/#products';
 const contactHref = ZALO_URL;
 ---
+
 <header class="sticky top-0 z-50 border-b border-cream-dim/20 bg-navy-950/85 backdrop-blur">
-  <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+  <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-4">
     <a href="/" class="flex items-center" aria-label="Felix Builder Hub">
       <img src="/logo/felixbuilderhub_website_header_logo.webp" alt="Felix Builder Hub" class="h-9 w-auto md:h-10" width="525" height="190" />
     </a>
+
+    {read2LeadState && (
+      <div
+        id="r2l-state-header"
+        class="hidden flex-1 items-center justify-end gap-2 text-xs sm:flex"
+        data-r2l-state-header
+      >
+        <span class="rounded-md border border-gold/40 px-2 py-1 font-bold text-gold" data-r2l-level>LV --</span>
+        <span class="hidden min-w-28 sm:block">
+          <span class="mb-1 flex justify-between text-[11px] text-cream-muted">
+            <span data-r2l-rank>Read2Lead</span>
+            <span data-r2l-xp-label>0/60 XP</span>
+          </span>
+          <span class="block h-2 overflow-hidden rounded-full bg-cream/10">
+            <span class="block h-full rounded-full bg-accent transition-all" style="width: 0%" data-r2l-xp-fill></span>
+          </span>
+        </span>
+        <span class="group relative">
+          <button
+            type="button"
+            class="rounded-md border border-cream-dim/25 px-2 py-1 font-bold text-cream"
+            title="Tiết kiệm xu cho cửa hàng sắp mở! 🛒"
+            aria-label="Xu Read2Lead. Tiết kiệm xu cho cửa hàng sắp mở!"
+            aria-describedby="r2l-coins-tooltip"
+            data-r2l-coins
+          >0 xu</button>
+          <span
+            id="r2l-coins-tooltip"
+            class="pointer-events-none absolute right-0 top-8 w-52 rounded-md border border-gold/30 bg-navy-950 px-3 py-2 text-left text-xs font-semibold text-gold opacity-0 shadow-xl transition group-focus-within:opacity-100 group-hover:opacity-100"
+          >
+            Tiết kiệm xu cho cửa hàng sắp mở! 🛒
+          </span>
+        </span>
+        <span class="rounded-md border border-cream-dim/25 px-2 py-1 font-bold text-cream" data-r2l-streak>0 ngày</span>
+      </div>
+    )}
+
     <nav class="hidden items-center gap-6 text-sm font-medium text-cream-muted sm:flex">
       <a href={productsHref} class="transition hover:text-accent">Sản phẩm</a>
       <a href={contactHref} target="_blank" rel="noopener noreferrer" class="transition hover:text-accent">Liên hệ</a>
@@ -51,5 +92,28 @@ const contactHref = ZALO_URL;
         toggle.setAttribute('aria-expanded', 'true');
       }
     });
+  }
+
+  const stateHeader = document.querySelector('[data-r2l-state-header]');
+  if (stateHeader) {
+    const params = new URLSearchParams(window.location.search);
+    const code = (params.get('code') || '').trim().toUpperCase();
+    if (code) {
+      fetch(`/api/read2lead-progress?code=${encodeURIComponent(code)}`)
+        .then((response) => response.json())
+        .then((data) => {
+          const state = data.read2lead_state;
+          if (!data.ok || !state) return;
+          stateHeader.classList.remove('hidden');
+          stateHeader.classList.add('flex');
+          stateHeader.querySelector('[data-r2l-level]').textContent = state.current_level || 'LV';
+          stateHeader.querySelector('[data-r2l-rank]').textContent = state.rank_title || 'Read2Lead';
+          stateHeader.querySelector('[data-r2l-xp-label]').textContent = `${state.xp_in_level || 0}/${state.xp_to_next_level || 60} XP`;
+          stateHeader.querySelector('[data-r2l-xp-fill]').style.width = `${state.xp_percent || 0}%`;
+          stateHeader.querySelector('[data-r2l-coins]').textContent = `${state.coins || 0} xu`;
+          stateHeader.querySelector('[data-r2l-streak]').textContent = `${state.streak_days || 0} ngày`;
+        })
+        .catch(() => {});
+    }
   }
 </script>
