@@ -3,6 +3,12 @@
 Format: [Keep a Changelog](https://keepachangelog.com/). Versioning:
 [SemVer](https://semver.org/) — MAJOR.MINOR.PATCH.
 
+## v1.0.1 - 2026-06-05 — Pilot Launch
+
+### Removed
+- Maintenance banner on `/read2lead` landing page. Backend now resilient
+  enough for 20-kid pilot self-serve (see read2lead v1.0.1 release).
+
 ## [Unreleased]
 
 (future α.1.3+ entries land here)
