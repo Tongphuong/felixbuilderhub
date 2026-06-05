@@ -107,6 +107,7 @@ export async function onRequestGet(context) {
       level: currentPack.level,
       generation_task_id: taskId,
       review_context: upstream.body.review_context || null,
+      schema_version: upstream.body.review_context?.schema_version || null,
     };
 
     const nextProgress = {

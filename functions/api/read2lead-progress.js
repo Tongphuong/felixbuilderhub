@@ -113,7 +113,7 @@ function primaryAction(state, code, nextPackLocked) {
 }
 
 function isPackReviewed(pack) {
-  return ['reviewed_pass', 'reviewed_retry', 'reviewed_pass_web', 'reviewed_retry_web'].includes(pack.status);
+  return ['reviewed_pass', 'reviewed_retry', 'reviewed_pass_web', 'reviewed_retry_web', 'reviewed_pass_web_v2'].includes(pack.status);
 }
 
 function shouldRequireReviewBeforeNextPack(codeData) {
@@ -123,7 +123,17 @@ function shouldRequireReviewBeforeNextPack(codeData) {
 function currentPackBlocksGeneration(pack, requireReviewBeforeNextPack = true) {
   if (!pack) return false;
   if (pack.status === 'generation_in_progress') return true;
+  if (!isV2Pack(pack)) return false;
   return requireReviewBeforeNextPack && !isPackReviewed(pack);
+}
+
+function isV2Pack(pack) {
+  return Boolean(
+    pack?.schema_version === 2 ||
+      pack?.review_context?.schema_version === 2 ||
+      pack?.pack?.schema_version === 2 ||
+      pack?.pack_json?.schema_version === 2,
+  );
 }
 
 function publicProgress(progress) {
@@ -232,6 +242,7 @@ async function reconcileGenerationState(kv, accessCode, codeData) {
       level: currentPack.level,
       generation_task_id: currentPack.task_id,
       review_context: taskValue.result.review_context || null,
+      schema_version: taskValue.result.review_context?.schema_version || null,
     };
     const updated = {
       ...codeData,

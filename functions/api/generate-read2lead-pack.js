@@ -109,7 +109,7 @@ export async function onRequestPost(context) {
 
   try {
     const reviewUrl = `${new URL(request.url).origin}/read2lead/review?code=${encodeURIComponent(accessCode)}`;
-    const upstream = await fetch(`${backendUrl}/generate-async`, {
+    const upstream = await fetch(`${backendUrl}/generate-async-v2`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -132,6 +132,49 @@ export async function onRequestPost(context) {
     }
 
     const upstreamBody = await upstream.json();
+    if (upstreamBody.ok && upstreamBody.pack?.schema_version === 2) {
+      const finalPack = buildFinalV2Pack({
+        pendingPack,
+        pack: upstreamBody.pack,
+        createdAt: new Date().toISOString(),
+      });
+      const nextProgress = {
+        ...lockedProgress,
+        current_pack: finalPack,
+        packs_created: (progress.packs_created || 0) + 1,
+      };
+      const updatedCode = {
+        ...codeData,
+        student_profile: {
+          ...(codeData.student_profile || {}),
+          student_name: progress.student_name,
+          age: progress.age,
+          level: finalPack.level,
+          child_gender: progress.child_gender,
+        },
+        progress: nextProgress,
+        uses_remaining: Math.max(0, (codeData.uses_remaining ?? 0) - 1),
+        last_used_at: finalPack.created_at.slice(0, 10),
+      };
+      await env.READ2LEAD_CODES.put(accessCode, JSON.stringify(updatedCode));
+
+      return json({
+        ok: true,
+        status: 'done',
+        pack_id: finalPack.pack_id,
+        pdf_url: finalPack.pdf_url,
+        mp3_url: finalPack.mp3_url,
+        topic: finalPack.topic,
+        story_title: finalPack.story_title,
+        child_name: progress.student_name,
+        review_link: `/read2lead/review?code=${encodeURIComponent(accessCode)}`,
+        lesson_link: `/read2lead/lesson?code=${encodeURIComponent(accessCode)}&pack_id=${encodeURIComponent(finalPack.pack_id)}`,
+        current_pack: publicPack(finalPack),
+        progress: publicProgress(nextProgress),
+        level: finalPack.level,
+      });
+    }
+
     if (!upstreamBody.ok || !upstreamBody.task_id) {
       await clearGenerationLock(env.READ2LEAD_CODES, accessCode, pendingPackId);
       return json({ ok: false, error: 'backend_invalid_response' }, 502);
@@ -224,7 +267,7 @@ function normalizeProgress(codeData, formData = {}) {
 }
 
 function isPackReviewed(pack) {
-  return ['reviewed_pass', 'reviewed_retry', 'reviewed_pass_web', 'reviewed_retry_web'].includes(pack.status);
+  return ['reviewed_pass', 'reviewed_retry', 'reviewed_pass_web', 'reviewed_retry_web', 'reviewed_pass_web_v2'].includes(pack.status);
 }
 
 function shouldRequireReviewBeforeNextPack(codeData) {
@@ -235,12 +278,37 @@ function currentPackBlocksGeneration(pack, requireReviewBeforeNextPack = true) {
   if (!pack) return false;
 
   if (pack.status !== 'generation_in_progress') {
+    if (!isV2Pack(pack)) return false;
     return requireReviewBeforeNextPack && !isPackReviewed(pack);
   }
 
   const startedAt = Date.parse(pack.created_at || '');
   if (!Number.isFinite(startedAt)) return false;
   return Date.now() - startedAt < GENERATION_LOCK_STALE_MS;
+}
+
+function isV2Pack(pack) {
+  return Boolean(
+    pack?.schema_version === 2 ||
+      pack?.review_context?.schema_version === 2 ||
+      pack?.pack?.schema_version === 2 ||
+      pack?.pack_json?.schema_version === 2,
+  );
+}
+
+function buildFinalV2Pack({ pendingPack, pack, createdAt }) {
+  return {
+    ...pendingPack,
+    status: 'awaiting_review',
+    created_at: createdAt,
+    topic: pack.topic || pendingPack.topic || '',
+    story_title: pack.story?.title || pack.story_title || 'Read2Lead V2 Mission',
+    level: pack.level || pendingPack.level,
+    pdf_url: '',
+    mp3_url: pack.story?.full_audio_url || '',
+    schema_version: 2,
+    review_context: pack,
+  };
 }
 
 async function clearGenerationLock(kv, accessCode, pendingPackId) {
@@ -269,6 +337,7 @@ function publicPack(pack) {
     level: pack.level,
     pdf_url: pack.pdf_url,
     mp3_url: pack.mp3_url,
+    schema_version: pack.schema_version || pack.review_context?.schema_version || null,
   };
 }
 

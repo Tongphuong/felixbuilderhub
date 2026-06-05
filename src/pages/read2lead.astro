@@ -424,8 +424,12 @@ const faqItems = [
       document.getElementById('result-child-name').textContent = data.child_name || '';
       document.getElementById('result-topic').textContent = data.topic || '';
       document.getElementById('result-story-title').textContent = data.story_title || '';
-      document.getElementById('pdf-link').href = data.pdf_url;
-      document.getElementById('mp3-link').href = data.mp3_url;
+      const pdfLink = document.getElementById('pdf-link');
+      const mp3Link = document.getElementById('mp3-link');
+      pdfLink.href = data.pdf_url || '#';
+      mp3Link.href = data.mp3_url || '#';
+      pdfLink.classList.toggle('hidden', !data.pdf_url);
+      mp3Link.classList.toggle('hidden', !data.mp3_url);
       document.getElementById('lesson-link').href = data.lesson_link || '/read2lead/lesson';
       document.getElementById('review-link').href = data.review_link || '/read2lead/review';
 
@@ -496,7 +500,7 @@ const faqItems = [
         pollInterval = null;
         activeTaskId = null;
 
-        if (result.status === 'done' && result.pdf_url) {
+        if (result.status === 'done' && (result.lesson_link || result.pdf_url)) {
           showResult({
             ...result,
             child_name: childName,
@@ -544,8 +548,16 @@ const faqItems = [
           return;
         }
 
+        if (result.status === 'done' && result.lesson_link) {
+          showResult({
+            ...result,
+            child_name: data.child_name,
+          });
+          return;
+        }
+
         if (!result.task_id) {
-          showError('Backend không trả task_id. Vui lòng thử lại.');
+          showError('Backend không trả task_id hoặc lesson_link. Vui lòng thử lại.');
           return;
         }
 
