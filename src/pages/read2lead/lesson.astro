@@ -4,13 +4,14 @@ import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import ActivityProgress from '../../components/read2lead/v2/ActivityProgress.astro';
 import IdentityBanner from '../../components/read2lead/v2/IdentityBanner.astro';
-import ListeningComprehension from '../../components/read2lead/v2/ListeningComprehension.astro';
+import ListeningFillBlank from '../../components/read2lead/v2/ListeningFillBlank.astro';
 import ListenAndOrder from '../../components/read2lead/v2/ListenAndOrder.astro';
 import ListenAndSpeak from '../../components/read2lead/v2/ListenAndSpeak.astro';
 import LevelUpModal from '../../components/read2lead/v2/LevelUpModal.astro';
 import ProgressBar from '../../components/read2lead/v2/ProgressBar.astro';
 import ReadingComprehension from '../../components/read2lead/v2/ReadingComprehension.astro';
 import RewardBurst from '../../components/read2lead/v2/RewardBurst.astro';
+import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro';
 ---
 
 <BaseLayout
@@ -20,7 +21,7 @@ import RewardBurst from '../../components/read2lead/v2/RewardBurst.astro';
   <Header read2LeadState={true} />
   <main id="main" class="min-h-screen bg-navy-950">
     <IdentityBanner />
-    <ProgressBar initialPercent={20} />
+    <ProgressBar initialPercent={0} />
     <div class="mx-auto flex max-w-6xl justify-end px-4 pt-3 sm:px-6 lg:px-8">
       <button
         id="sfx-toggle"
@@ -70,17 +71,18 @@ import RewardBurst from '../../components/read2lead/v2/RewardBurst.astro';
         </section>
 
         <section class="space-y-4">
-          <ListeningComprehension />
+          <ListeningFillBlank />
           <ListenAndOrder />
-          <ListenAndSpeak />
           <ReadingComprehension />
+          <WrittenResponse />
+          <ListenAndSpeak />
         </section>
 
         <section class="flex flex-col gap-3 rounded-md border border-accent/25 bg-accent/10 p-5 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <p class="font-display text-xl font-bold text-cream">Hoàn thành nhiệm vụ</p>
             <p id="submit-hint" class="mt-1 text-sm text-cream/70">
-              Con hoàn thành đủ 4 phần rồi bấm nút này để lưu kết quả.
+              Con hoàn thành đủ 5 phần rồi bấm nút này để lưu kết quả.
             </p>
           </div>
           <button id="submit-lesson" class="r2l-primary" type="button" disabled>Lưu chiến công</button>
@@ -353,10 +355,11 @@ import RewardBurst from '../../components/read2lead/v2/RewardBurst.astro';
   };
 
   const ACTIVITY_LABELS = {
-    listening_comprehension: 'Nghe hiểu',
+    listening_fill_blank: 'Nghe điền',
     listen_and_order: 'Xếp câu',
-    listen_and_speak: 'Nói lại',
     reading_comprehension: 'Đọc hiểu',
+    written_response: 'Viết đáp án',
+    listen_and_speak: 'Nói lại',
   };
 
   const qs = (selector) => document.querySelector(selector);
@@ -620,7 +623,8 @@ import RewardBurst from '../../components/read2lead/v2/RewardBurst.astro';
 
   function renderActivity(index) {
     const activities = state.lesson.activities || [];
-    const nextIndex = Math.max(0, Math.min(index, 3));
+    const maxIndex = Math.max(0, activities.length - 1);
+    const nextIndex = Math.max(0, Math.min(index, maxIndex));
     const previousActivity = activities[state.activityIndex];
     if (nextIndex !== state.activityIndex) stopLessonAudio();
     if (previousActivity?.type === 'listen_and_speak' && nextIndex !== state.activityIndex) {
@@ -640,10 +644,14 @@ import RewardBurst from '../../components/read2lead/v2/RewardBurst.astro';
     shell.querySelector('[data-activity-identity]').textContent = activity.identity_vi || '';
     shell.querySelector('[data-activity-instructions]').textContent = activity.instructions_vi || '';
 
-    if (activity.type === 'listening_comprehension' || activity.type === 'reading_comprehension') {
+    if (activity.type === 'listening_fill_blank') {
+      renderFillBlankActivity(shell.querySelector('[data-activity-body]'), activity);
+    } else if (activity.type === 'reading_comprehension') {
       renderMcqActivity(shell.querySelector('[data-activity-body]'), activity);
     } else if (activity.type === 'listen_and_order') {
       renderOrderActivity(shell.querySelector('[data-activity-body]'), activity);
+    } else if (activity.type === 'written_response') {
+      renderWrittenActivity(shell.querySelector('[data-activity-body]'), activity);
     } else if (activity.type === 'listen_and_speak') {
       renderSpeakActivity(shell.querySelector('[data-activity-body]'), activity);
     }
@@ -653,6 +661,68 @@ import RewardBurst from '../../components/read2lead/v2/RewardBurst.astro';
       const type = activities[buttonIndex]?.type;
       button.dataset.done = String(type && state.completedTypes.has(type));
       button.onclick = () => renderActivity(buttonIndex);
+    });
+  }
+
+  function renderFillBlankActivity(root, activity) {
+    root.innerHTML = `
+      <div class="mt-5 space-y-5">
+        ${(activity.items || [])
+          .map(
+            (item, itemIndex) => `
+              <article class="rounded-md border border-cream/10 bg-navy-950/45 p-4">
+                <div class="flex flex-wrap items-center justify-between gap-2">
+                  <p class="font-bold text-cream">Câu ${itemIndex + 1}</p>
+                  <button class="r2l-primary" type="button" data-play-fill="${itemIndex}">Nghe câu</button>
+                </div>
+                <p class="mt-3 text-lg font-bold text-cream">${escapeHtml(item.sentence_with_blank || '')}</p>
+                <div class="mt-3 grid gap-2">
+                  ${(item.options_en || [])
+                    .map(
+                      (option, optionIndex) => `
+                        <button class="r2l-option" type="button" data-fill-item="${itemIndex}" data-option-index="${optionIndex}">
+                          ${escapeHtml(option)}
+                        </button>
+                      `,
+                    )
+                    .join('')}
+                </div>
+                <p class="mt-2 hidden text-sm text-gold" data-fill-explanation="${itemIndex}">${escapeHtml(item.explanation_vi || '')}</p>
+              </article>
+            `,
+          )
+          .join('')}
+      </div>
+    `;
+
+    const answered = new Set();
+    let wrongCount = 0;
+    root.querySelectorAll('[data-play-fill]').forEach((button) => {
+      button.addEventListener('click', () => playAudio(activity.items[Number(button.dataset.playFill)]?.audio_url || '', button));
+    });
+    root.querySelectorAll('[data-fill-item]').forEach((button) => {
+      button.addEventListener('click', () => {
+        const itemIndex = Number(button.dataset.fillItem);
+        const optionIndex = Number(button.dataset.optionIndex);
+        const item = activity.items[itemIndex];
+        const isCorrect = optionIndex === item.correct_index;
+        const questionId = `${activity.type}:${item.id || itemIndex}`;
+        button.dataset.state = isCorrect ? 'correct' : 'retry';
+        root.querySelector(`[data-fill-explanation="${itemIndex}"]`)?.classList.remove('hidden');
+        if (isCorrect && !answered.has(itemIndex)) {
+          answered.add(itemIndex);
+          clearWrongStreak(questionId);
+          if (answered.size < (activity.items || []).length) showReward({ withVoice: true });
+        } else if (!isCorrect) {
+          wrongCount += 1;
+          playWrongSfx(questionId);
+        }
+        if (answered.size === (activity.items || []).length) completeActivity(activity.type, {
+          correct_count: answered.size,
+          total_count: activity.items.length,
+          wrong_count: wrongCount,
+        });
+      });
     });
   }
 
@@ -793,6 +863,53 @@ import RewardBurst from '../../components/read2lead/v2/RewardBurst.astro';
     });
   }
 
+  function renderWrittenActivity(root, activity) {
+    root.innerHTML = `
+      <div class="mt-5 space-y-5">
+        ${(activity.questions || [])
+          .map(
+            (question, questionIndex) => `
+              <article class="rounded-md border border-cream/10 bg-navy-950/45 p-4">
+                <label class="block">
+                  <span class="block font-bold text-cream">${escapeHtml(question.question_en)}</span>
+                  <span class="mt-1 block text-sm text-cream/65">${escapeHtml(question.question_vi || '')}</span>
+                  <span class="mt-2 block text-sm text-gold">${escapeHtml(question.hint_vi || '')}</span>
+                  <textarea
+                    class="mt-3 min-h-24 w-full rounded-md border border-cream/15 bg-navy-950/65 p-3 text-cream outline-none focus:border-accent"
+                    data-written-answer="${questionIndex}"
+                    placeholder="Con viết câu trả lời ở đây..."
+                  ></textarea>
+                </label>
+                <p class="mt-2 hidden text-sm text-cream/65" data-written-model="${questionIndex}">Gợi ý đáp án: ${escapeHtml(question.expected_answer_en || '')}</p>
+              </article>
+            `,
+          )
+          .join('')}
+      </div>
+    `;
+
+    const answered = new Set();
+    const answers = {};
+    root.querySelectorAll('[data-written-answer]').forEach((input) => {
+      input.addEventListener('input', () => {
+        const questionIndex = Number(input.dataset.writtenAnswer);
+        const value = input.value.trim();
+        answers[questionIndex] = value;
+        if (value.length >= 2) {
+          answered.add(questionIndex);
+          root.querySelector(`[data-written-model="${questionIndex}"]`)?.classList.remove('hidden');
+        } else {
+          answered.delete(questionIndex);
+        }
+        if (answered.size === (activity.questions || []).length) completeActivity(activity.type, {
+          correct_count: answered.size,
+          total_count: activity.questions.length,
+          written_answers: answers,
+        });
+      });
+    });
+  }
+
   function renderSpeakActivity(root, activity) {
     root.innerHTML = `
       <div class="mt-5 space-y-4">
@@ -849,6 +966,7 @@ import RewardBurst from '../../components/read2lead/v2/RewardBurst.astro';
   }
 
   function completeActivity(type, details) {
+    if (state.completedTypes.has(type)) return;
     if (type === 'listen_and_speak') {
       _r2lCleanupRecorderState();
     }
@@ -860,8 +978,9 @@ import RewardBurst from '../../components/read2lead/v2/RewardBurst.astro';
     };
     updateProgress();
     showReward({ mode: 'celebrate', withVoice: true });
-    if (state.completedTypes.size < 4) {
-      const nextIndex = Math.min(state.activityIndex + 1, 3);
+    const totalActivities = state.lesson?.activities?.length || 5;
+    if (state.completedTypes.size < totalActivities) {
+      const nextIndex = Math.min(state.activityIndex + 1, totalActivities - 1);
       if (nextIndex !== state.activityIndex) {
         playSfx(SFX.activityComplete);
       }
@@ -870,10 +989,13 @@ import RewardBurst from '../../components/read2lead/v2/RewardBurst.astro';
   }
 
   function updateProgress() {
-    const percent = 20 + state.completedTypes.size * 20;
+    const totalActivities = state.lesson?.activities?.length || 5;
+    const percent = totalActivities
+      ? Math.round((state.completedTypes.size / totalActivities) * 100)
+      : 0;
     qs('#progress-fill').style.width = `${percent}%`;
     qs('#progress-label').textContent = `${percent}%`;
-    qs('#submit-lesson').disabled = state.completedTypes.size < 4;
+    qs('#submit-lesson').disabled = state.completedTypes.size < totalActivities;
     renderStepStates();
   }
 
