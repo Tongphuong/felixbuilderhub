@@ -44,3 +44,16 @@ test('listen_and_order uses editable drag-drop slots instead of one-way token pi
   assert.match(lessonPage, /Bấm chữ trong ô để lấy ra/);
   assert.doesNotMatch(lessonPage, /setTimeout\(\(\) => resetOrderCard/);
 });
+
+test('written_response hides answer hints, saves drafts, and uses manual navigation', () => {
+  assert.match(lessonPage, /writtenDrafts/);
+  assert.match(lessonPage, /function collectWrittenAnswers/);
+  assert.match(lessonPage, /data-activity-prev/);
+  assert.match(lessonPage, /data-activity-next/);
+  assert.match(lessonPage, /Quay lại/);
+  assert.match(lessonPage, /Tiếp theo/);
+  assert.doesNotMatch(lessonPage, /data-written-model/);
+  assert.doesNotMatch(lessonPage, /Gợi ý đáp án/);
+  assert.doesNotMatch(lessonPage, /question\.hint_vi/);
+  assert.doesNotMatch(lessonPage, /setTimeout\(\(\) => renderActivity/);
+});

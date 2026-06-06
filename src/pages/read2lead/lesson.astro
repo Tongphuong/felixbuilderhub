@@ -123,6 +123,21 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
     opacity: 0.45;
   }
 
+  .r2l-secondary {
+    min-height: 44px;
+    border-radius: 8px;
+    border: 1px solid rgb(245 230 211 / 0.24);
+    background: rgb(245 230 211 / 0.05);
+    padding: 0.75rem 1rem;
+    font-weight: 800;
+    color: rgb(245 230 211);
+  }
+
+  .r2l-secondary:disabled {
+    cursor: not-allowed;
+    opacity: 0.45;
+  }
+
   .r2l-step {
     min-height: 44px;
     border-radius: 8px;
@@ -384,6 +399,7 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
     activityIndex: 0,
     completedTypes: new Set(),
     activityResults: {},
+    writtenDrafts: {},
   };
 
   const lessonAudioState = {
@@ -693,6 +709,7 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
     } else if (activity.type === 'listen_and_speak') {
       renderSpeakActivity(shell.querySelector('[data-activity-body]'), activity);
     }
+    renderActivityNav(shell);
 
     qsa('[data-step-button]').forEach((button, buttonIndex) => {
       button.dataset.active = String(buttonIndex === state.activityIndex);
@@ -700,6 +717,53 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
       button.dataset.done = String(type && state.completedTypes.has(type));
       button.onclick = () => renderActivity(buttonIndex);
     });
+  }
+
+  function renderActivityNav(shell) {
+    const body = shell.querySelector('[data-activity-body]');
+    const totalActivities = state.lesson?.activities?.length || 5;
+    const isFirst = state.activityIndex <= 0;
+    const isLast = state.activityIndex >= totalActivities - 1;
+    body.insertAdjacentHTML('beforeend', `
+      <div class="mt-6 flex flex-col gap-3 border-t border-cream/10 pt-4 sm:flex-row sm:items-center sm:justify-between" data-activity-nav>
+        <button class="r2l-secondary" type="button" data-activity-prev ${isFirst ? 'disabled' : ''}>Quay lại</button>
+        <button class="r2l-primary" type="button" data-activity-next ${isLast ? 'disabled' : ''}>Tiếp theo</button>
+      </div>
+    `);
+    body.querySelector('[data-activity-prev]')?.addEventListener('click', () => {
+      renderActivity(state.activityIndex - 1);
+    });
+    body.querySelector('[data-activity-next]')?.addEventListener('click', () => {
+      finalizeCurrentActivityIfReady();
+      renderActivity(state.activityIndex + 1);
+    });
+  }
+
+  function finalizeCurrentActivityIfReady() {
+    const activity = state.lesson?.activities?.[state.activityIndex];
+    if (!activity || activity.type !== 'written_response' || state.completedTypes.has(activity.type)) return;
+    const answers = collectWrittenAnswers(activity);
+    const answeredCount = Object.values(answers).filter((value) => value.trim().length >= 2).length;
+    if (answeredCount === (activity.questions || []).length) {
+      completeActivity(activity.type, {
+        correct_count: answeredCount,
+        total_count: activity.questions.length,
+        written_answers: answers,
+      });
+    }
+  }
+
+  function writtenDraftKey(activity, question, questionIndex) {
+    return `${activity.type}:${question.id || questionIndex}`;
+  }
+
+  function collectWrittenAnswers(activity) {
+    const answers = {};
+    (activity.questions || []).forEach((question, questionIndex) => {
+      const key = writtenDraftKey(activity, question, questionIndex);
+      answers[questionIndex] = state.writtenDrafts[key] || '';
+    });
+    return answers;
   }
 
   function renderFillBlankActivity(root, activity) {
@@ -1034,14 +1098,12 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
                 <label class="block">
                   <span class="block font-bold text-cream">${escapeHtml(question.question_en)}</span>
                   <span class="mt-1 block text-sm text-cream/65">${escapeHtml(question.question_vi || '')}</span>
-                  <span class="mt-2 block text-sm text-gold">${escapeHtml(question.hint_vi || '')}</span>
                   <textarea
                     class="mt-3 min-h-24 w-full rounded-md border border-cream/15 bg-navy-950/65 p-3 text-cream outline-none focus:border-accent"
                     data-written-answer="${questionIndex}"
                     placeholder="Con viết câu trả lời ở đây..."
-                  ></textarea>
+                  >${escapeHtml(state.writtenDrafts[writtenDraftKey(activity, question, questionIndex)] || '')}</textarea>
                 </label>
-                <p class="mt-2 hidden text-sm text-cream/65" data-written-model="${questionIndex}">Gợi ý đáp án: ${escapeHtml(question.expected_answer_en || '')}</p>
               </article>
             `,
           )
@@ -1049,24 +1111,11 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
       </div>
     `;
 
-    const answered = new Set();
-    const answers = {};
     root.querySelectorAll('[data-written-answer]').forEach((input) => {
       input.addEventListener('input', () => {
         const questionIndex = Number(input.dataset.writtenAnswer);
-        const value = input.value.trim();
-        answers[questionIndex] = value;
-        if (value.length >= 2) {
-          answered.add(questionIndex);
-          root.querySelector(`[data-written-model="${questionIndex}"]`)?.classList.remove('hidden');
-        } else {
-          answered.delete(questionIndex);
-        }
-        if (answered.size === (activity.questions || []).length) completeActivity(activity.type, {
-          correct_count: answered.size,
-          total_count: activity.questions.length,
-          written_answers: answers,
-        });
+        const question = activity.questions?.[questionIndex] || {};
+        state.writtenDrafts[writtenDraftKey(activity, question, questionIndex)] = input.value;
       });
     });
   }
@@ -1128,9 +1177,6 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
 
   function completeActivity(type, details) {
     if (state.completedTypes.has(type)) return;
-    if (type === 'listen_and_speak') {
-      _r2lCleanupRecorderState();
-    }
     state.completedTypes.add(type);
     state.activityResults[type] = {
       type,
@@ -1139,14 +1185,7 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
     };
     updateProgress();
     showReward({ mode: 'celebrate', withVoice: true });
-    const totalActivities = state.lesson?.activities?.length || 5;
-    if (state.completedTypes.size < totalActivities) {
-      const nextIndex = Math.min(state.activityIndex + 1, totalActivities - 1);
-      if (nextIndex !== state.activityIndex) {
-        playSfx(SFX.activityComplete);
-      }
-      setTimeout(() => renderActivity(nextIndex), 450);
-    }
+    playSfx(SFX.activityComplete);
   }
 
   function updateProgress() {
