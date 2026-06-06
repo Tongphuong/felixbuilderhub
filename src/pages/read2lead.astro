@@ -20,73 +20,104 @@ const topics = [
 ];
 
 const learningSkills = [
-  ['1', 'Luyện đọc hiểu', 'Con đọc một câu chuyện tiếng Anh ngắn, hợp với tuổi và mức đọc — đủ ngắn để không nản, đủ thú vị để con muốn đọc tiếp.'],
-  ['2', 'Học cụm câu hữu ích', 'Mỗi bài có 4-6 cụm câu tiếng Anh ("take a deep breath", "try again slowly") con học và dùng được ngay, không phải nhớ từ rời rạc.'],
-  ['3', 'Luyện viết qua bài tập', 'Sau truyện, con làm 3-4 bài tập ngắn: điền từ, sắp xếp câu, sửa câu sai — để tập dùng cụm câu vừa học.'],
-  ['4', 'Luyện nghe và phát âm', 'Con nghe trực tiếp trên web: nghe truyện, nghe từng câu, rồi nói lại theo nhịp riêng.'],
-  ['5', 'Luyện tư duy bằng tiếng Anh', 'Câu hỏi đọc hiểu và 1 câu hỏi mở để con tự viết 1-2 câu suy nghĩ — luyện viết câu hoàn chỉnh, không phải tick A/B/C/D.'],
+  ['1', 'Chọn câu chuyện', 'Con chọn chủ đề mình thích như thú cưng, bóng đá, vẽ tranh, trường học hoặc để Felix chọn giúp.'],
+  ['2', 'Nghe trước', 'Con bấm nghe câu chuyện và có thể nghe lại từng câu nếu muốn.'],
+  ['3', 'Xếp câu', 'Con nghe một câu rồi chạm các từ theo đúng thứ tự.'],
+  ['4', 'Nói lại', 'Con nghe câu mẫu, thu âm thử và tự nghe lại giọng của mình.'],
+  ['5', 'Đọc hiểu', 'Con đọc lại câu chuyện, trả lời câu hỏi và lưu chiến công để nhận XP/xu.'],
 ];
 
 const insideItems = [
-  ['Nghe truyện', 'Con nghe câu chuyện trực tiếp trên web trước khi làm nhiệm vụ.'],
-  ['Nghe hiểu', 'Con trả lời câu hỏi ngắn sau khi nghe để nắm ý chính.'],
-  ['Sắp xếp câu', 'Con nghe từng câu, ghép từ lại đúng thứ tự để nhớ cấu trúc.'],
-  ['Nói lại', 'Con nghe câu mẫu, ghi âm thử và tự luyện phát âm.'],
-  ['Đọc hiểu', 'Con đọc lại truyện và trả lời câu hỏi về nội dung.'],
-  ['XP và xu', 'Hoàn thành bài sẽ nhận XP và xu để mở level tiếp theo.'],
+  ['1. Nhập mã', 'Mỗi bé có một mã riêng. Mã này mở đúng hồ sơ của bé.'],
+  ['2. Chọn chủ đề', 'Bé chọn điều mình thích hoặc bỏ qua để Felix chọn giúp.'],
+  ['3. Bấm tạo bài', 'Trang sẽ chuẩn bị một câu chuyện và 4 nhiệm vụ theo level hiện tại.'],
+  ['4. Vào bài học', 'Bé làm lần lượt: nghe hiểu, xếp câu, nói lại, đọc hiểu.'],
+  ['5. Nhận tiến trình', 'Kết quả được lưu vào hồ sơ: level, XP, xu và streak.'],
 ];
 
 const homeSteps = [
-  ['1', 'Nhập mã học sinh', 'Bố mẹ nhập mã Read2Lead của con để mở quyền tạo bài.'],
-  ['2', 'Tạo bài trên web', 'Felixar tạo câu chuyện, audio và 4 nhiệm vụ nghe-đọc-nói ngay trong trình duyệt.'],
-  ['3', 'Con làm bài online', 'Con nghe truyện, sắp xếp câu, nói lại và trả lời câu hỏi trên web.'],
-  ['4', 'Nhận XP và xu', 'Hoàn thành bài sẽ cộng XP, xu và streak cho con.'],
-  ['5', 'Mở level tiếp theo', 'Đủ XP thì hệ thống tự mở L2, L3 và các level cao hơn.'],
+  ['1', 'Mở Read2Lead', 'Bé hoặc phụ huynh vào trang này và nhập mã học sinh.'],
+  ['2', 'Chọn điều bé thích', 'Chủ đề giúp câu chuyện gần với bé hơn: bóng đá, thú cưng, vẽ tranh, trường học...'],
+  ['3', 'Bấm tạo bài', 'Khi bài sẵn sàng, nút mở bài học sẽ hiện ra.'],
+  ['4', 'Làm 4 nhiệm vụ', 'Bé nghe, xếp câu, nói lại và đọc hiểu theo từng màn rõ ràng.'],
+  ['5', 'Lưu chiến công', 'Bé nhận XP/xu, giữ streak và tiến dần từ L1 tới L5.'],
 ];
 
 const faqItems = [
-  ['Read2Lead dùng để làm gì?', 'Read2Lead giúp con luyện nghe, đọc, sắp xếp câu và nói lại qua một bài học tiếng Anh ngắn trên web.'],
-  ['Bố mẹ cần làm gì sau khi tạo bài?', 'Cho con mở bài học trên web, nghe truyện, làm đủ 4 nhiệm vụ rồi bấm lưu chiến công để nhận XP và xu.'],
+  ['Read2Lead dùng để làm gì?', 'Read2Lead giúp bé tự học nghe và đọc tiếng Anh thông qua câu chuyện bé tự chọn.'],
+  ['Bé dùng web như thế nào?', 'Nhập mã, chọn chủ đề, bấm tạo bài, làm 4 nhiệm vụ rồi bấm lưu chiến công.'],
   ['Mã đăng nhập là gì? Lấy ở đâu?', `Mỗi phụ huynh khi đăng ký dùng Read2Lead sẽ nhận 1 mã từ Felix qua Zalo. Chưa có mã thì nhắn Zalo ${ZALO_DISPLAY} để hỏi cách nhận mã.`],
   ['Nên chọn mức đọc nào cho con?', 'Không cần chọn. Mọi bạn nhỏ bắt đầu từ L1, làm bài để tích XP rồi hệ thống tự mở level tiếp theo.'],
   ['Nếu bài quá khó hoặc quá dễ thì sao?', 'Bố mẹ nhắn Zalo Felix để được hỗ trợ. Hệ thống sẽ được tinh chỉnh dần theo kết quả làm bài thật của con.'],
-  ['Bài học có cần tải file không?', 'Không cần. Toàn bộ bài học, audio, ghi âm và lưu kết quả đều làm trực tiếp trên web.'],
+  ['Mỗi bé có hồ sơ riêng không?', 'Có. Tên, level, XP, xu và lịch sử học được gắn với mã riêng của bé. Nếu cần đổi tên, Felix chỉnh trong admin/codes.'],
 ];
 ---
 
 <BaseLayout
-  title="Read2Lead - Bài đọc tiếng Anh riêng cho con | Felix Builder Hub"
-  description="Read2Lead tạo bài học tiếng Anh riêng cho con trên web: có truyện ngắn, audio, nhiệm vụ nghe-đọc-nói, XP và xu."
+  title="Read2Lead - Tự học nghe và đọc tiếng Anh qua câu chuyện | Felix Builder Hub"
+  description="Read2Lead giúp bé tự học nghe và đọc tiếng Anh thông qua câu chuyện bé tự chọn, với hồ sơ riêng, XP, xu và level."
 >
   <Header />
 
   <main id="main" class="flex-1">
-    <section class="mx-auto max-w-6xl px-6 py-20 text-center md:py-28">
-      <span class="inline-block rounded-full bg-accent/20 px-4 py-1 text-sm font-semibold text-accent">12 bạn nhỏ đang dùng Read2Lead mỗi tuần</span>
-      <h1 class="mx-auto mt-6 max-w-4xl font-display text-4xl font-extrabold text-cream md:text-5xl lg:text-6xl">
-        <span class="block">Bài tập đọc tiếng Anh</span>
-        <span class="block">cho con tự học tại nhà.</span>
-      </h1>
-      <p class="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-cream-muted md:text-xl">
-        Mỗi bài có truyện ngắn, audio, nhiệm vụ nghe-đọc-nói và phần thưởng XP/xu. Con làm trực tiếp trên web từ đầu đến cuối. <span class="font-semibold text-cream">Miễn phí trong giai đoạn thử nghiệm.</span>
-      </p>
-      <p class="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-cream-dim">
-        Phù hợp khi bố mẹ muốn cho con thêm bài đọc tiếng Anh ở nhà, hợp với tuổi và mức đọc của con.
-      </p>
-      <div class="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
-        <a href="#form" class="inline-flex rounded-lg bg-accent px-6 py-3 font-semibold text-navy-950 transition hover:bg-accent-hover">Đã có mã — Tạo bài cho con</a>
-        <a href="/read2lead/review" class="inline-flex rounded-lg border border-cream-dim/40 px-6 py-3 font-semibold text-cream transition hover:border-gold hover:text-gold-light">Vào Felixar</a>
+    <section class="mx-auto grid max-w-6xl items-center gap-10 px-6 py-16 md:grid-cols-[1.02fr_0.98fr] md:py-24">
+      <div>
+        <span class="inline-block rounded-full bg-accent/20 px-4 py-1 text-sm font-semibold text-accent">Mỗi bé một hồ sơ học riêng</span>
+        <h1 class="mt-6 max-w-4xl font-display text-4xl font-extrabold leading-tight text-cream md:text-5xl lg:text-6xl">
+          Tự học nghe và đọc tiếng Anh thông qua câu chuyện con tự chọn
+        </h1>
+        <p class="mt-6 max-w-2xl text-lg leading-relaxed text-cream-muted md:text-xl">
+          Bé nhập mã, chọn chủ đề mình thích, nghe câu chuyện rồi hoàn thành 4 nhiệm vụ trên web. Tiến trình được lưu vào hồ sơ riêng của bé: level, XP, xu và streak.
+        </p>
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+          <a href="#form" class="inline-flex justify-center rounded-lg bg-accent px-6 py-3 font-semibold text-navy-950 transition hover:bg-accent-hover">Bắt đầu với mã học sinh</a>
+          <a href="/read2lead/review" class="inline-flex justify-center rounded-lg border border-cream-dim/40 px-6 py-3 font-semibold text-cream transition hover:border-gold hover:text-gold-light">Xem hồ sơ học</a>
+        </div>
+        <p class="mt-4 max-w-2xl text-sm leading-relaxed text-cream-dim">
+          Chưa có mã? Nhắn Zalo {ZALO_DISPLAY} để Felix tạo hồ sơ cho bé.
+        </p>
       </div>
-      <p class="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-cream-dim">
-        Miễn phí cho học sinh của Felix trong giai đoạn thử nghiệm. Chưa có mã? Nhắn Zalo {ZALO_DISPLAY} để nhận.
-      </p>
+
+      <div class="rounded-xl border border-cream-dim/20 bg-navy-900/75 p-5 shadow-2xl">
+        <div class="rounded-lg border border-gold/25 bg-navy-950 p-4">
+          <div class="flex items-center justify-between gap-3">
+            <div>
+              <p class="text-xs font-semibold uppercase tracking-wide text-gold">Hồ sơ của bé</p>
+              <p class="mt-1 font-display text-2xl font-bold text-cream">Linh · L1</p>
+            </div>
+            <div class="rounded-md bg-accent px-3 py-1 text-sm font-bold text-navy-950">80 XP</div>
+          </div>
+          <div class="mt-4 h-2 overflow-hidden rounded-full bg-navy-800">
+            <div class="h-full w-4/5 rounded-full bg-accent"></div>
+          </div>
+          <div class="mt-4 grid gap-3 sm:grid-cols-2">
+            <div class="rounded-md bg-navy-900 p-3">
+              <p class="text-xs text-cream-dim">Câu chuyện</p>
+              <p class="mt-1 font-semibold text-cream">Linh chọn: thú cưng</p>
+            </div>
+            <div class="rounded-md bg-navy-900 p-3">
+              <p class="text-xs text-cream-dim">Nhiệm vụ</p>
+              <p class="mt-1 font-semibold text-cream">Nghe · Xếp · Nói · Đọc</p>
+            </div>
+            <div class="rounded-md bg-navy-900 p-3">
+              <p class="text-xs text-cream-dim">Phần thưởng</p>
+              <p class="mt-1 font-semibold text-cream">XP, xu, streak</p>
+            </div>
+            <div class="rounded-md bg-navy-900 p-3">
+              <p class="text-xs text-cream-dim">Mục tiêu</p>
+              <p class="mt-1 font-semibold text-cream">Mở dần tới L5</p>
+            </div>
+          </div>
+        </div>
+        <p class="mt-4 text-center text-sm text-cream-dim">Giao diện một màn một nhiệm vụ, để bé nhỏ tuổi cũng biết bấm gì tiếp theo.</p>
+      </div>
     </section>
 
     <section class="bg-navy-900 px-6 py-20">
       <div class="mx-auto max-w-6xl">
         <div class="text-center">
-          <h2 class="font-display text-3xl font-bold leading-snug text-cream md:text-4xl">Mỗi bài Read2Lead luyện gì cho con?</h2>
-          <p class="mx-auto mt-4 max-w-2xl leading-relaxed text-cream-dim">5 kỹ năng con luyện qua mỗi bài đọc — viết, đọc, nghe, từ vựng, tư duy.</p>
+          <h2 class="font-display text-3xl font-bold leading-snug text-cream md:text-4xl">Bé sẽ làm gì trên web?</h2>
+          <p class="mx-auto mt-4 max-w-2xl leading-relaxed text-cream-dim">Luồng học rõ ràng để bé nhỏ tuổi nhìn vào là biết bước tiếp theo.</p>
         </div>
         <div class="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
           {learningSkills.map(([number, title, description]) => (
@@ -105,8 +136,8 @@ const faqItems = [
     </section>
 
     <section class="mx-auto max-w-6xl px-6 py-20">
-      <h2 class="text-center font-display text-3xl font-bold leading-snug text-cream md:text-4xl">Bên trong bài học có gì?</h2>
-      <p class="mx-auto mt-5 max-w-2xl text-center leading-relaxed text-cream-dim">Đây là các phần con sẽ làm trực tiếp trên web sau khi tạo bài xong.</p>
+      <h2 class="text-center font-display text-3xl font-bold leading-snug text-cream md:text-4xl">Cách dùng Read2Lead trên web</h2>
+      <p class="mx-auto mt-5 max-w-2xl text-center leading-relaxed text-cream-dim">Không cần phụ huynh hướng dẫn từng bước. Bé đi theo các nút và màn hình đã sắp sẵn.</p>
       <div class="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {insideItems.map(([title, description]) => (
           <div class="rounded-lg border border-cream-dim/20 bg-navy-900/70 p-5">
@@ -119,36 +150,24 @@ const faqItems = [
 
     <section class="bg-navy-900 px-6 py-20">
       <div class="mx-auto max-w-6xl">
-        <h2 class="text-center font-display text-3xl font-bold leading-snug text-cream md:text-4xl">Bài học web hoạt động thế nào?</h2>
-        <p class="mx-auto mt-5 max-w-2xl text-center leading-relaxed text-cream-dim">Con đi qua 4 nhiệm vụ: nghe truyện, xếp câu, nói lại và đọc hiểu. Mỗi phần hoàn thành sẽ cộng tiến trình cho con.</p>
-        <div class="mt-12 grid gap-6 md:grid-cols-3">
-          <figure class="overflow-hidden rounded-xl bg-navy-950 shadow-2xl ring-1 ring-cream-dim/25">
-            <div class="aspect-[3/4] overflow-hidden bg-navy-950">
-              <img src="/read2lead/story.png" alt="Trang đọc của Read2Lead" loading="lazy" class="h-full w-full object-contain" />
-            </div>
-            <figcaption class="px-5 py-4 text-sm text-cream-muted"><strong class="text-cream">Nghe truyện</strong> - Câu chuyện ngắn có tên con.</figcaption>
-          </figure>
-          <figure class="overflow-hidden rounded-xl bg-navy-950 shadow-2xl ring-1 ring-cream-dim/25">
-            <div class="aspect-[3/4] overflow-hidden bg-navy-950">
-              <img src="/read2lead/chunk.png" alt="Trang bài luyện của Read2Lead" loading="lazy" class="h-full w-full object-contain" />
-            </div>
-            <figcaption class="px-5 py-4 text-sm text-cream-muted"><strong class="text-cream">Nhiệm vụ luyện</strong> - Con nghe, xếp câu và nói lại.</figcaption>
-          </figure>
-          <figure class="overflow-hidden rounded-xl bg-navy-950 shadow-2xl ring-1 ring-cream-dim/25">
-            <div class="aspect-[3/4] overflow-hidden bg-navy-950">
-              <img src="/read2lead/parents.png" alt="Trang đáp án cho phụ huynh" loading="lazy" class="h-full w-full object-contain" />
-            </div>
-            <figcaption class="px-5 py-4 text-sm text-cream-muted"><strong class="text-cream">Lưu chiến công</strong> - Con nhận XP, xu và tiến dần lên level mới.</figcaption>
-          </figure>
-        </div>
-        <div class="mt-12 rounded-xl border border-gold/30 bg-gold/10 p-6 md:flex md:items-center md:gap-6">
-          <div class="text-center md:text-left">
-            <p class="font-display text-3xl font-bold text-gold-light">12 bạn nhỏ</p>
-            <p class="mt-1 text-sm text-cream-dim">đang đọc Read2Lead mỗi tuần</p>
+        <h2 class="text-center font-display text-3xl font-bold leading-snug text-cream md:text-4xl">Mỗi bé có một profile học riêng</h2>
+        <p class="mx-auto mt-5 max-w-2xl text-center leading-relaxed text-cream-dim">Mã học sinh không chỉ để đăng nhập. Mã đó giữ tên bé, level, XP, xu, streak và lịch sử bài học.</p>
+        <div class="mt-12 grid gap-5 md:grid-cols-4">
+          <div class="rounded-lg border border-cream-dim/20 bg-navy-950/70 p-5">
+            <p class="text-sm font-semibold uppercase tracking-wide text-gold">Tên bé</p>
+            <p class="mt-2 text-cream-muted">Câu chuyện gọi đúng tên bé, không cần nhập lại mỗi lần.</p>
           </div>
-          <div class="mt-4 md:mt-0 md:flex-1">
-            <p class="italic leading-relaxed text-cream-muted">"Cháu đọc thấy tên mình trong truyện thì cười khoái chí. Tuần nào cũng hỏi 'mẹ ơi tuần này con là gì?'"</p>
-            <p class="mt-2 text-sm text-cream-dim">— Phụ huynh bé H. (9 tuổi), TP.HCM</p>
+          <div class="rounded-lg border border-cream-dim/20 bg-navy-950/70 p-5">
+            <p class="text-sm font-semibold uppercase tracking-wide text-gold">Level</p>
+            <p class="mt-2 text-cream-muted">Bé bắt đầu từ L1 và mở dần tới L5 bằng XP.</p>
+          </div>
+          <div class="rounded-lg border border-cream-dim/20 bg-navy-950/70 p-5">
+            <p class="text-sm font-semibold uppercase tracking-wide text-gold">XP và xu</p>
+            <p class="mt-2 text-cream-muted">Mỗi bài đạt sẽ cộng tiến trình để bé thấy mình đang lớn lên.</p>
+          </div>
+          <div class="rounded-lg border border-cream-dim/20 bg-navy-950/70 p-5">
+            <p class="text-sm font-semibold uppercase tracking-wide text-gold">Streak</p>
+            <p class="mt-2 text-cream-muted">Bé thấy chuỗi ngày học và có thêm lý do quay lại.</p>
           </div>
         </div>
       </div>
@@ -156,8 +175,8 @@ const faqItems = [
 
     <section class="mx-auto max-w-6xl px-6 py-20">
       <div class="text-center">
-        <h2 class="font-display text-3xl font-bold leading-snug text-cream md:text-4xl">5 bước dùng tại nhà</h2>
-        <p class="mx-auto mt-4 max-w-2xl leading-relaxed text-cream-dim">Không cần tải file. Con làm bài, nghe audio và lưu kết quả ngay trên web.</p>
+        <h2 class="font-display text-3xl font-bold leading-snug text-cream md:text-4xl">5 bước sử dụng trên web</h2>
+        <p class="mx-auto mt-4 max-w-2xl leading-relaxed text-cream-dim">Từ lúc nhập mã tới lúc lưu chiến công đều nằm trong một luồng web rõ ràng.</p>
       </div>
       <div class="mt-10 grid gap-5 md:grid-cols-5">
         {homeSteps.map(([number, title, description]) => (
@@ -173,15 +192,15 @@ const faqItems = [
     <section class="mx-auto max-w-6xl px-6 py-20">
       <div class="rounded-xl border border-gold/30 bg-gold/10 p-6 md:flex md:items-center md:justify-between md:gap-10">
         <div>
-          <span class="inline-block rounded-md bg-gold/20 px-3 py-1 text-xs font-semibold text-gold-light">Felixar — đua sao</span>
-          <h2 class="mt-4 font-display text-3xl font-bold leading-snug text-cream md:text-4xl">Đua sao với bạn — học vì vui, không vì điểm</h2>
+          <span class="inline-block rounded-md bg-gold/20 px-3 py-1 text-xs font-semibold text-gold-light">Felixar — hồ sơ học</span>
+          <h2 class="mt-4 font-display text-3xl font-bold leading-snug text-cream md:text-4xl">Xem level, XP, xu và bài hiện tại của bé</h2>
           <p class="mt-4 max-w-2xl leading-relaxed text-cream-muted">
-            Con nộp ảnh bài làm + ghi âm kể lại câu chuyện. Felixar gửi nhận xét ngắn, cộng sao, mở bài tiếp theo. Mỗi bài qua là 1 sao. Đủ 3 sao là rank Chunk Explorer, 6 sao là Mission Builder, 10 sao là Story Hero. Bảng vinh danh cập nhật mỗi tuần.
+            Felixar là nơi phụ huynh xem bé đang ở level nào, bài nào đang mở, đã nhận bao nhiêu XP/xu và bước tiếp theo là gì.
           </p>
         </div>
         <div class="mt-6 shrink-0 md:mt-0">
           <div class="flex flex-col gap-3 sm:flex-row md:flex-col">
-            <a href="/read2lead/review" class="inline-flex justify-center rounded-lg bg-accent px-6 py-3 font-semibold text-navy-950 transition hover:bg-accent-hover">Vào Felixar</a>
+            <a href="/read2lead/review" class="inline-flex justify-center rounded-lg bg-accent px-6 py-3 font-semibold text-navy-950 transition hover:bg-accent-hover">Xem hồ sơ học</a>
             <a href="/read2lead/leaderboard" class="inline-flex justify-center rounded-lg border border-gold px-6 py-3 font-semibold text-gold-light transition hover:bg-gold hover:text-navy-950">Xem bảng vinh danh</a>
           </div>
         </div>
@@ -346,10 +365,10 @@ const faqItems = [
 
     const stages = [
       '✍️ Đang viết câu chuyện riêng cho con...',
-      '🎙️ Đang ghi âm câu chuyện thành file nghe...',
+      '🎧 Đang chuẩn bị phần nghe cho câu chuyện...',
       '🔊 Đang ghi âm các cụm câu để con tập đọc...',
       '🎮 Đang chuẩn bị nhiệm vụ web cho con...',
-      '✨ Sắp xong rồi, đang đóng gói file...',
+      '✨ Sắp xong rồi, đang mở bài học...',
     ];
 
     function showProgress() {

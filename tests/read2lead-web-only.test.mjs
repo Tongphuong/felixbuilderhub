@@ -19,7 +19,18 @@ test('Read2Lead landing page does not expose PDF or MP3 download surfaces', () =
   assert.doesNotMatch(landingPage, /pdf_url/);
   assert.doesNotMatch(landingPage, /mp3_url/);
   assert.doesNotMatch(landingPage, /Read2Lead-Sample-Pack\.pdf/);
-  assert.doesNotMatch(landingPage, /\bPDF\b|\bMP3\b/);
+  assert.doesNotMatch(landingPage, /\bAI\b|\bPDF\b|\bMP3\b|\/read2lead\/(story|chunk|parents)\.png/);
+  assert.doesNotMatch(landingPage, /tự học tại nhà|học tại nhà|file nghe|đóng gói file/i);
+});
+
+test('Read2Lead landing page is profile-first and web-first', () => {
+  assert.match(
+    landingPage,
+    /Tự học nghe và đọc tiếng Anh thông qua câu chuyện con tự chọn/,
+  );
+  assert.match(landingPage, /Mỗi bé có một profile học riêng/);
+  assert.match(landingPage, /Bắt đầu với mã học sinh/);
+  assert.match(landingPage, /5 bước sử dụng trên web/);
 });
 
 test('public Read2Lead API payloads do not expose standalone PDF or MP3 urls', () => {
@@ -33,6 +44,7 @@ test('review dashboard does not offer PDF or MP3 action links', () => {
   assert.doesNotMatch(reviewPage, /Mở PDF/);
   assert.doesNotMatch(reviewPage, /Mở MP3/);
   assert.doesNotMatch(reviewPage, /Nghe lại MP3/);
+  assert.doesNotMatch(reviewPage, /nộp ảnh|bài giấy|phiếu giấy/i);
 });
 
 test('web lesson still keeps internal story audio for in-browser playback', () => {

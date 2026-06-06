@@ -5,18 +5,18 @@ import Footer from '../../components/Footer.astro';
 ---
 
 <BaseLayout
-  title="Felixar - Quản lí học tập ảo cho Read2Lead"
-  description="Felixar giúp phụ huynh xem trạng thái bài Read2Lead, nộp bài, nhận nhận xét, theo dõi sao và biết bước tiếp theo."
+  title="Felixar - Hồ sơ học Read2Lead"
+  description="Felixar giúp phụ huynh xem hồ sơ Read2Lead của con: level, XP, xu, streak, bài hiện tại và bước tiếp theo trên web."
 >
   <Header />
 
   <main id="main" class="flex-1">
     <section class="mx-auto max-w-6xl px-6 py-14 md:py-20">
       <div class="max-w-4xl">
-        <span class="inline-block rounded-md bg-accent/20 px-4 py-1 text-sm font-semibold text-accent">Felixar đang hỗ trợ Read2Lead</span>
-        <h1 class="mt-5 font-display text-4xl font-extrabold leading-snug text-cream md:text-5xl">Nhập mã để biết bước tiếp theo.</h1>
+        <span class="inline-block rounded-md bg-accent/20 px-4 py-1 text-sm font-semibold text-accent">Hồ sơ học của bé</span>
+        <h1 class="mt-5 font-display text-4xl font-extrabold leading-snug text-cream md:text-5xl">Nhập mã để xem level, XP và bài hiện tại.</h1>
         <p class="mt-5 max-w-3xl text-lg leading-relaxed text-cream-muted">
-          Felixar giúp bố mẹ xem bài hiện tại của con, nộp ảnh bài làm, gửi ghi âm kể lại câu chuyện, nhận nhận xét tiếng Việt và theo dõi sao.
+          Felixar giúp bố mẹ xem con đang ở level nào, đã tích lũy bao nhiêu XP/xu, streak hiện tại ra sao và nên bấm bước nào tiếp theo trên web.
         </p>
       </div>
     </section>
@@ -27,16 +27,16 @@ import Footer from '../../components/Footer.astro';
           <h2 class="font-display text-2xl font-bold leading-snug text-cream">Felixar làm gì?</h2>
           <div class="mt-5 space-y-4 text-cream-muted">
             <div class="rounded-lg border border-cream-dim/20 bg-navy-900/70 p-4">
-              <p class="font-semibold text-cream">1. Xem trạng thái</p>
-              <p class="mt-1 text-sm leading-relaxed">Bố mẹ biết ngay: chưa có bài, đang tạo bài, chờ nộp bài hay đã nhận xét xong.</p>
+              <p class="font-semibold text-cream">1. Xem hồ sơ học</p>
+              <p class="mt-1 text-sm leading-relaxed">Bố mẹ biết ngay tên bé, level, XP, xu, streak và số bài đã hoàn thành.</p>
             </div>
             <div class="rounded-lg border border-cream-dim/20 bg-navy-900/70 p-4">
-              <p class="font-semibold text-cream">2. Nộp bài</p>
-              <p class="mt-1 text-sm leading-relaxed">Chọn ảnh các trang con đã làm và ghi âm con kể lại câu chuyện trong 30-60 giây.</p>
+              <p class="font-semibold text-cream">2. Mở đúng bài hiện tại</p>
+              <p class="mt-1 text-sm leading-relaxed">Nếu bé có bài đang mở, Felixar đưa thẳng tới màn hình học trên web.</p>
             </div>
             <div class="rounded-lg border border-cream-dim/20 bg-navy-900/70 p-4">
               <p class="font-semibold text-cream">3. Nhận bước tiếp theo</p>
-              <p class="mt-1 text-sm leading-relaxed">Felixar nói con làm tốt gì, cần luyện gì, bố mẹ nên làm gì trong 5 phút tiếp theo.</p>
+              <p class="mt-1 text-sm leading-relaxed">Nếu chưa có bài hoặc đã xong bài cũ, Felixar chỉ rõ nên tạo bài mới hay tiếp tục bài đang làm.</p>
             </div>
           </div>
         </aside>
@@ -55,20 +55,20 @@ import Footer from '../../components/Footer.astro';
 
           <section id="submit-panel" class="hidden rounded-xl border border-cream-dim/20 bg-navy-950/80 p-6">
             <div id="submit" class="scroll-mt-24">
-              <h2 class="font-display text-2xl font-bold leading-snug text-cream">Nộp bài hiện tại</h2>
-              <p class="mt-2 leading-relaxed text-cream-muted">Bố mẹ gửi ảnh bài làm và ghi âm con kể lại câu chuyện. Felixar sẽ nhận xét ngắn gọn bằng tiếng Việt.</p>
+              <h2 class="font-display text-2xl font-bold leading-snug text-cream">Gửi bổ sung cho Felixar</h2>
+              <p class="mt-2 leading-relaxed text-cream-muted">Mục này chỉ dùng khi Felix cần thêm thông tin ngoài kết quả học trên web.</p>
             </div>
 
             <form id="review-form" class="mt-6 space-y-5">
               <div>
-                <label for="worksheet-photo" class="mb-2 block text-sm text-cream-muted">Ảnh các trang bài làm của con</label>
+                <label for="worksheet-photo" class="mb-2 block text-sm text-cream-muted">Thông tin bổ sung</label>
                 <input id="worksheet-photo" name="worksheet_photos" type="file" accept="image/*" multiple required class="block w-full rounded-lg border border-cream-dim/30 bg-navy-900 px-4 py-3 text-sm text-cream file:mr-4 file:rounded-md file:border-0 file:bg-accent file:px-3 file:py-2 file:font-semibold file:text-navy-950" />
-                <p id="photo-count" class="mt-2 text-xs text-cream-dim">Có thể chọn nhiều ảnh cùng lúc, tối đa 8 ảnh. Nên chụp từng trang rõ chữ.</p>
+                <p id="photo-count" class="mt-2 text-xs text-cream-dim">Có thể chọn nhiều mục cùng lúc, tối đa 8 mục.</p>
               </div>
 
               <div>
-                <label for="typed-answers" class="mb-2 block text-sm text-cream-muted">Nếu ảnh không rõ, bố mẹ gõ thêm vài câu ở đây <span class="text-cream-dim">(tùy chọn)</span></label>
-                <textarea id="typed-answers" name="typed_answers" maxlength="2000" rows="4" placeholder="VD: Con trả lời câu 1 là..., hoặc con kể lại: ..." class="w-full rounded-lg border border-cream-dim/30 bg-navy-900 px-4 py-3 text-base text-cream placeholder:text-cream-dim/80 focus:border-accent focus:outline-none"></textarea>
+                <label for="typed-answers" class="mb-2 block text-sm text-cream-muted">Ghi chú thêm cho Felix <span class="text-cream-dim">(tùy chọn)</span></label>
+                <textarea id="typed-answers" name="typed_answers" maxlength="2000" rows="4" placeholder="VD: Con thấy phần nghe khó, hoặc con thích chủ đề thú cưng hơn..." class="w-full rounded-lg border border-cream-dim/30 bg-navy-900 px-4 py-3 text-base text-cream placeholder:text-cream-dim/80 focus:border-accent focus:outline-none"></textarea>
               </div>
 
               <div class="rounded-lg border border-cream-dim/25 bg-navy-900 p-4">
@@ -236,7 +236,7 @@ import Footer from '../../components/Footer.astro';
 
       const secondaryParts = [];
       if (canSubmitPaper) {
-        secondaryParts.push('<button id="open-submit" type="button" class="rounded-md border border-cream-dim/30 px-4 py-2 text-sm font-semibold text-cream transition hover:border-accent hover:text-accent">Nộp ảnh + ghi âm thay vì web</button>');
+        secondaryParts.push('<button id="open-submit" type="button" class="rounded-md border border-cream-dim/30 px-4 py-2 text-sm font-semibold text-cream transition hover:border-accent hover:text-accent">Gửi bổ sung cho Felixar</button>');
       }
       if (canCreateExtra && primary.kind !== 'create') {
         secondaryParts.push('<a href="/read2lead#form" class="rounded-md border border-cream-dim/30 px-4 py-2 text-sm font-semibold text-cream transition hover:border-accent hover:text-accent">Tạo bài mới</a>');
@@ -255,7 +255,7 @@ import Footer from '../../components/Footer.astro';
             <p class="mt-2 text-cream-muted">${escapeHtml(progress.current_level || 'L1')} · ${progress.stars || 0} sao · ${escapeHtml(progress.rank || 'Rookie Reader')}</p>
           </div>
           <div class="grid grid-cols-3 gap-2 text-center text-sm">
-            <div class="rounded-lg bg-navy-950/70 p-3"><p class="text-cream-dim">Đã nộp</p><p class="font-display text-2xl font-bold text-gold-light">${progress.completed_packs || 0}</p></div>
+            <div class="rounded-lg bg-navy-950/70 p-3"><p class="text-cream-dim">Đã hoàn thành</p><p class="font-display text-2xl font-bold text-gold-light">${progress.completed_packs || 0}</p></div>
             <div class="rounded-lg bg-navy-950/70 p-3"><p class="text-cream-dim">Tuần này</p><p class="font-display text-2xl font-bold text-gold-light">${data.weekly_completed_count || 0}</p></div>
             <div class="rounded-lg bg-navy-950/70 p-3"><p class="text-cream-dim">Streak</p><p class="font-display text-2xl font-bold text-gold-light">${data.streak_days || 0}</p></div>
           </div>
@@ -326,8 +326,8 @@ import Footer from '../../components/Footer.astro';
     photoInput.addEventListener('change', () => {
       const count = photoInput.files.length;
       photoCount.textContent = count
-        ? `Đã chọn ${count} ảnh. Tối đa 8 ảnh, nên chụp từng trang rõ chữ.`
-        : 'Có thể chọn nhiều ảnh cùng lúc, tối đa 8 ảnh. Nên chụp từng trang rõ chữ.';
+        ? `Đã chọn ${count} mục. Tối đa 8 mục.`
+        : 'Có thể chọn nhiều mục cùng lúc, tối đa 8 mục.';
     });
 
     recordBtn.addEventListener('click', async () => {
