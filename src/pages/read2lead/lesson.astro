@@ -91,6 +91,11 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
         <section id="completion-card" class="hidden rounded-md border border-gold/40 bg-gold/10 p-6 text-center">
           <p class="font-display text-2xl font-bold text-gold">Nhiệm vụ xong!</p>
           <p id="completion-copy" class="mt-2 text-cream/80"></p>
+          <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-center">
+            <a id="completion-new-pack" href="/read2lead#form" class="r2l-primary inline-flex items-center justify-center">Tạo bài mới</a>
+            <a href="/read2lead/leaderboard" class="r2l-secondary inline-flex items-center justify-center">Bảng xếp hạng</a>
+            <a href="/read2lead" class="r2l-secondary inline-flex items-center justify-center">Trang chính</a>
+          </div>
         </section>
       </article>
     </section>
@@ -1332,6 +1337,9 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
       const rewards = data.rewards_earned || {};
       qs('#completion-copy').textContent = `Con nhận ${rewards.coins || 0} xu và ${rewards.xp || 0} XP cho nhiệm vụ này.`;
       qs('#completion-card').classList.remove('hidden');
+      if (state.accessCode) {
+        qs('#completion-new-pack').href = `/read2lead?code=${encodeURIComponent(state.accessCode)}#form`;
+      }
       updateStateHeader(data.read2lead_state);
       if (data.level_up) {
         playSfxSequence([SFX.packComplete, SFX.levelUp], 700);
