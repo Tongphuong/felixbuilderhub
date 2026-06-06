@@ -7,8 +7,8 @@ export const PACKS_TO_NEXT_LEVEL = {
   L5: 0,
 };
 export const XP_PER_PASSED_PACK = 20;
-export const XP_PENALTY_BELOW_THRESHOLD = 10;
-export const PASS_THRESHOLD_PERCENT = 70;
+export const XP_PENALTY_BELOW_THRESHOLD = 0;
+export const PASS_THRESHOLD_PERCENT = 50;
 export const LEVEL_RESET_VERSION = 20260606;
 export const START_LEVEL = 'L1';
 export const COINS_TOOLTIP = 'Tiết kiệm xu cho cửa hàng sắp mở! 🛒';

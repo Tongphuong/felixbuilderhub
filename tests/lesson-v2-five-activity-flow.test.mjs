@@ -4,6 +4,8 @@ import { readFileSync } from 'node:fs';
 
 const lessonPage = readFileSync('src/pages/read2lead/lesson.astro', 'utf-8');
 const activityProgress = readFileSync('src/components/read2lead/v2/ActivityProgress.astro', 'utf-8');
+const stateModule = readFileSync('functions/api/_read2lead-v2-state.js', 'utf-8');
+const submitModule = readFileSync('functions/api/submit-read2lead-lesson.js', 'utf-8');
 
 test('lesson page supports the 5-activity V2 flow', () => {
   for (const type of [
@@ -56,4 +58,38 @@ test('written_response hides answer hints, saves drafts, and uses manual navigat
   assert.doesNotMatch(lessonPage, /Gợi ý đáp án/);
   assert.doesNotMatch(lessonPage, /question\.hint_vi/);
   assert.doesNotMatch(lessonPage, /setTimeout\(\(\) => renderActivity/);
+});
+
+test('render-once architecture: renderAllActivitiesOnce + showActivity', () => {
+  assert.match(lessonPage, /function renderAllActivitiesOnce/);
+  assert.match(lessonPage, /function showActivity/);
+  assert.doesNotMatch(lessonPage, /function renderActivity\(/);
+});
+
+test('attempt-based completion uses attempted set and per-item wrong counts', () => {
+  assert.match(lessonPage, /const attempted = new Set/);
+  assert.match(lessonPage, /const itemWrongCounts = new Map/);
+  assert.match(lessonPage, /MAX_WRONG_PER_ITEM/);
+  assert.match(lessonPage, /data-state='revealed'/);
+});
+
+test('speak re-rating allows changing self-rate selection', () => {
+  assert.match(lessonPage, /const currentRating = new Map/);
+  assert.doesNotMatch(lessonPage, /if \(rated\.has\(itemIndex\)\) return;/);
+});
+
+test('scoring formula uses soft penalty (wrong * 0.5)', () => {
+  assert.match(lessonPage, /Math\.floor\(wrong \* 0\.5\)/);
+  assert.match(submitModule, /Math\.floor\(wrong \* 0\.5\)/);
+});
+
+test('pass threshold is 50% and XP penalty is 0', () => {
+  assert.match(stateModule, /PASS_THRESHOLD_PERCENT = 50/);
+  assert.match(stateModule, /XP_PENALTY_BELOW_THRESHOLD = 0/);
+});
+
+test('student name is wired to IdentityBanner via id', () => {
+  assert.match(lessonPage, /identity-student-name/);
+  const banner = readFileSync('src/components/read2lead/v2/IdentityBanner.astro', 'utf-8');
+  assert.match(banner, /id="identity-student-name"/);
 });

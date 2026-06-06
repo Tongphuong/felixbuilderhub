@@ -28,9 +28,9 @@ test('Read2Lead landing page is profile-first and web-first', () => {
     landingPage,
     /Tự học nghe và đọc tiếng Anh thông qua câu chuyện con tự chọn/,
   );
-  assert.match(landingPage, /Mỗi bé có một profile học riêng/);
-  assert.match(landingPage, /Bắt đầu với mã học sinh/);
-  assert.match(landingPage, /5 bước sử dụng trên web/);
+  assert.match(landingPage, /Tạo bài cho con/);
+  assert.match(landingPage, /Bảng xếp hạng/);
+  assert.match(landingPage, /Hồ sơ học sinh/);
 });
 
 test('public Read2Lead API payloads do not expose standalone PDF or MP3 urls', () => {

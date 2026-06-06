@@ -16,7 +16,7 @@ test('parent intake form does not expose child identity fields', () => {
   assert.doesNotMatch(read2LeadPage, /name="child_name"/);
   assert.doesNotMatch(read2LeadPage, /name="age"/);
   assert.doesNotMatch(read2LeadPage, /name="child_gender"/);
-  assert.match(read2LeadPage, /hồ sơ đã lưu trong admin\/codes/);
+  assert.match(read2LeadPage, /Mã học sinh là gì/);
 });
 
 test('admin create-code form does not expose a level selector', () => {

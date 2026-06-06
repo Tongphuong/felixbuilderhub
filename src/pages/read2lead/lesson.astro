@@ -211,6 +211,12 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
     background: rgb(212 166 78 / 0.14);
   }
 
+  .r2l-option[data-state='revealed'] {
+    border-color: rgb(74 222 128 / 0.5);
+    background: rgb(74 222 128 / 0.1);
+    opacity: 0.85;
+  }
+
   .r2l-order-slots {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(96px, 1fr));
@@ -243,6 +249,17 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
   .r2l-order-slot[data-correct='true'] {
     border-color: rgb(74 222 128 / 0.85);
     background: rgb(74 222 128 / 0.18);
+  }
+
+  .r2l-order-slot[data-misplaced='true'] {
+    border-color: rgb(239 68 68 / 0.7);
+    background: rgb(239 68 68 / 0.12);
+    animation: pulse-hint 0.6s ease-in-out;
+  }
+
+  @keyframes pulse-hint {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
   }
 
   .r2l-token[hidden] {
@@ -642,6 +659,12 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
     qs('#lesson-shell').classList.remove('hidden');
     qs('#story-title').textContent = lesson.story?.title || 'Câu chuyện của con';
 
+    const studentName = lesson.student_name || '';
+    if (studentName) {
+      const banner = qs('#identity-student-name');
+      if (banner) banner.textContent = studentName;
+    }
+
     const paragraphs = Array.isArray(lesson.story?.paragraphs_en) ? lesson.story.paragraphs_en : [];
     qs('#story-paragraphs').innerHTML = paragraphs
       .map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`)
@@ -656,8 +679,32 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
     }
 
     renderSentences(lesson.story?.sentences || []);
-    renderActivity(0);
+    renderAllActivitiesOnce(lesson.activities || []);
+    showActivity(0);
     updateProgress();
+  }
+
+  function renderAllActivitiesOnce(activities) {
+    activities.forEach((activity, index) => {
+      const shell = qs(`[data-activity-shell="${activity.type}"]`);
+      if (!shell) return;
+      shell.querySelector('[data-activity-title]').textContent = activity.title_vi || ACTIVITY_LABELS[activity.type] || '';
+      shell.querySelector('[data-activity-identity]').textContent = activity.identity_vi || '';
+      shell.querySelector('[data-activity-instructions]').textContent = activity.instructions_vi || '';
+      const body = shell.querySelector('[data-activity-body]');
+      if (activity.type === 'listening_fill_blank') {
+        renderFillBlankActivity(body, activity);
+      } else if (activity.type === 'reading_comprehension') {
+        renderMcqActivity(body, activity);
+      } else if (activity.type === 'listen_and_order') {
+        renderOrderActivity(body, activity);
+      } else if (activity.type === 'written_response') {
+        renderWrittenActivity(body, activity);
+      } else if (activity.type === 'listen_and_speak') {
+        renderSpeakActivity(body, activity);
+      }
+      renderActivityNav(shell, index, activities.length);
+    });
   }
 
   function renderSentences(sentences) {
@@ -680,15 +727,11 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
     });
   }
 
-  function renderActivity(index) {
+  function showActivity(index) {
     const activities = state.lesson.activities || [];
     const maxIndex = Math.max(0, activities.length - 1);
     const nextIndex = Math.max(0, Math.min(index, maxIndex));
-    const previousActivity = activities[state.activityIndex];
     if (nextIndex !== state.activityIndex) stopLessonAudio();
-    if (previousActivity?.type === 'listen_and_speak' && nextIndex !== state.activityIndex) {
-      _r2lCleanupRecorderState();
-    }
     state.activityIndex = nextIndex;
     qsa('[data-activity-shell]').forEach((shell) => {
       shell.hidden = true;
@@ -699,36 +742,22 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
     const shell = qs(`[data-activity-shell="${activity.type}"]`);
     if (!shell) return;
     shell.hidden = false;
-    shell.querySelector('[data-activity-title]').textContent = activity.title_vi || ACTIVITY_LABELS[activity.type] || '';
-    shell.querySelector('[data-activity-identity]').textContent = activity.identity_vi || '';
-    shell.querySelector('[data-activity-instructions]').textContent = activity.instructions_vi || '';
-
-    if (activity.type === 'listening_fill_blank') {
-      renderFillBlankActivity(shell.querySelector('[data-activity-body]'), activity);
-    } else if (activity.type === 'reading_comprehension') {
-      renderMcqActivity(shell.querySelector('[data-activity-body]'), activity);
-    } else if (activity.type === 'listen_and_order') {
-      renderOrderActivity(shell.querySelector('[data-activity-body]'), activity);
-    } else if (activity.type === 'written_response') {
-      renderWrittenActivity(shell.querySelector('[data-activity-body]'), activity);
-    } else if (activity.type === 'listen_and_speak') {
-      renderSpeakActivity(shell.querySelector('[data-activity-body]'), activity);
-    }
-    renderActivityNav(shell);
 
     qsa('[data-step-button]').forEach((button, buttonIndex) => {
       button.dataset.active = String(buttonIndex === state.activityIndex);
       const type = activities[buttonIndex]?.type;
       button.dataset.done = String(type && state.completedTypes.has(type));
-      button.onclick = () => renderActivity(buttonIndex);
+      button.onclick = () => {
+        finalizeCurrentActivityIfReady();
+        showActivity(buttonIndex);
+      };
     });
   }
 
-  function renderActivityNav(shell) {
+  function renderActivityNav(shell, activityIndex, totalActivities) {
     const body = shell.querySelector('[data-activity-body]');
-    const totalActivities = state.lesson?.activities?.length || 5;
-    const isFirst = state.activityIndex <= 0;
-    const isLast = state.activityIndex >= totalActivities - 1;
+    const isFirst = activityIndex <= 0;
+    const isLast = activityIndex >= totalActivities - 1;
     body.insertAdjacentHTML('beforeend', `
       <div class="mt-6 flex flex-col gap-3 border-t border-cream/10 pt-4 sm:flex-row sm:items-center sm:justify-between" data-activity-nav>
         <button class="r2l-secondary" type="button" data-activity-prev ${isFirst ? 'disabled' : ''}>Quay lại</button>
@@ -736,11 +765,12 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
       </div>
     `);
     body.querySelector('[data-activity-prev]')?.addEventListener('click', () => {
-      renderActivity(state.activityIndex - 1);
+      finalizeCurrentActivityIfReady();
+      showActivity(activityIndex - 1);
     });
     body.querySelector('[data-activity-next]')?.addEventListener('click', () => {
       finalizeCurrentActivityIfReady();
-      renderActivity(state.activityIndex + 1);
+      showActivity(activityIndex + 1);
     });
   }
 
@@ -772,6 +802,7 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
   }
 
   function renderFillBlankActivity(root, activity) {
+    const MAX_WRONG_PER_ITEM = 3;
     root.innerHTML = `
       <div class="mt-5 space-y-5">
         ${(activity.items || [])
@@ -803,6 +834,8 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
     `;
 
     const answered = new Set();
+    const attempted = new Set();
+    const itemWrongCounts = new Map();
     let wrongCount = 0;
     root.querySelectorAll('[data-play-fill]').forEach((button) => {
       button.addEventListener('click', () => playAudio(activity.items[Number(button.dataset.playFill)]?.audio_url || '', button));
@@ -810,30 +843,47 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
     root.querySelectorAll('[data-fill-item]').forEach((button) => {
       button.addEventListener('click', () => {
         const itemIndex = Number(button.dataset.fillItem);
+        if (attempted.has(itemIndex)) return;
         const optionIndex = Number(button.dataset.optionIndex);
         const item = activity.items[itemIndex];
         const isCorrect = optionIndex === item.correct_index;
         const questionId = `${activity.type}:${item.id || itemIndex}`;
         button.dataset.state = isCorrect ? 'correct' : 'retry';
-        root.querySelector(`[data-fill-explanation="${itemIndex}"]`)?.classList.remove('hidden');
-        if (isCorrect && !answered.has(itemIndex)) {
+        if (isCorrect) {
           answered.add(itemIndex);
+          attempted.add(itemIndex);
           clearWrongStreak(questionId);
-          if (answered.size < (activity.items || []).length) showReward({ withVoice: true });
-        } else if (!isCorrect) {
+          root.querySelector(`[data-fill-explanation="${itemIndex}"]`)?.classList.remove('hidden');
+          if (attempted.size < (activity.items || []).length) showReward({ withVoice: true });
+        } else {
           wrongCount += 1;
+          const itemWrongs = (itemWrongCounts.get(itemIndex) || 0) + 1;
+          itemWrongCounts.set(itemIndex, itemWrongs);
           playWrongSfx(questionId);
+          if (itemWrongs >= MAX_WRONG_PER_ITEM) {
+            attempted.add(itemIndex);
+            const correctBtn = root.querySelector(`[data-fill-item="${itemIndex}"][data-option-index="${item.correct_index}"]`);
+            if (correctBtn) correctBtn.dataset.state = 'revealed';
+            root.querySelector(`[data-fill-explanation="${itemIndex}"]`)?.classList.remove('hidden');
+          }
         }
-        if (answered.size === (activity.items || []).length) completeActivity(activity.type, {
+        checkFillBlankComplete();
+      });
+    });
+
+    function checkFillBlankComplete() {
+      if (attempted.size === (activity.items || []).length) {
+        completeActivity(activity.type, {
           correct_count: answered.size,
           total_count: activity.items.length,
           wrong_count: wrongCount,
         });
-      });
-    });
+      }
+    }
   }
 
   function renderMcqActivity(root, activity) {
+    const MAX_WRONG_PER_ITEM = 3;
     root.innerHTML = `
       <div class="mt-5 space-y-5">
         ${(activity.questions || [])
@@ -863,34 +913,53 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
     `;
 
     const answered = new Set();
+    const attempted = new Set();
+    const itemWrongCounts = new Map();
     let wrongCount = 0;
     root.querySelectorAll('[data-question-index]').forEach((button) => {
       button.addEventListener('click', () => {
         const questionIndex = Number(button.dataset.questionIndex);
+        if (attempted.has(questionIndex)) return;
         const optionIndex = Number(button.dataset.optionIndex);
         const question = activity.questions[questionIndex];
         const isCorrect = optionIndex === question.correct_index;
         const questionId = `${activity.type}:${question.id || questionIndex}`;
         button.dataset.state = isCorrect ? 'correct' : 'retry';
-        root.querySelector(`[data-explanation="${questionIndex}"]`)?.classList.remove('hidden');
-        if (isCorrect && !answered.has(questionIndex)) {
+        if (isCorrect) {
           answered.add(questionIndex);
+          attempted.add(questionIndex);
           clearWrongStreak(questionId);
-          if (answered.size < (activity.questions || []).length) showReward({ withVoice: true });
-        } else if (!isCorrect) {
+          root.querySelector(`[data-explanation="${questionIndex}"]`)?.classList.remove('hidden');
+          if (attempted.size < (activity.questions || []).length) showReward({ withVoice: true });
+        } else {
           wrongCount += 1;
+          const itemWrongs = (itemWrongCounts.get(questionIndex) || 0) + 1;
+          itemWrongCounts.set(questionIndex, itemWrongs);
           playWrongSfx(questionId);
+          if (itemWrongs >= MAX_WRONG_PER_ITEM) {
+            attempted.add(questionIndex);
+            const correctBtn = root.querySelector(`[data-question-index="${questionIndex}"][data-option-index="${question.correct_index}"]`);
+            if (correctBtn) correctBtn.dataset.state = 'revealed';
+            root.querySelector(`[data-explanation="${questionIndex}"]`)?.classList.remove('hidden');
+          }
         }
-        if (answered.size === (activity.questions || []).length) completeActivity(activity.type, {
+        checkMcqComplete();
+      });
+    });
+
+    function checkMcqComplete() {
+      if (attempted.size === (activity.questions || []).length) {
+        completeActivity(activity.type, {
           correct_count: answered.size,
           total_count: activity.questions.length,
           wrong_count: wrongCount,
         });
-      });
-    });
+      }
+    }
   }
 
   function renderOrderActivity(root, activity) {
+    const MAX_WRONG_PER_ITEM = 5;
     root.innerHTML = `
       <div class="mt-5 space-y-5">
         ${(activity.items || [])
@@ -941,20 +1010,56 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
     `;
 
     const solved = new Set();
+    const attempted = new Set();
     let wrongCount = 0;
     const picked = {};
     const wrongSignatures = {};
+    const itemWrongCounts = new Map();
     let draggedToken = null;
+
+    function afterCheck(itemIndex) {
+      if (attempted.size === (activity.items || []).length) {
+        completeActivity(activity.type, {
+          correct_count: solved.size,
+          total_count: activity.items.length,
+          wrong_count: wrongCount,
+        });
+      }
+    }
+
+    function revealCorrectOrder(itemIndex) {
+      if (attempted.has(itemIndex)) return;
+      attempted.add(itemIndex);
+      const item = activity.items[itemIndex];
+      const correctState = item.correct_order_indices.map((_, i) => {
+        const targetScrambledIdx = item.correct_order_indices.indexOf(i);
+        return targetScrambledIdx;
+      });
+      const rebuiltState = [];
+      for (let slotIdx = 0; slotIdx < item.scrambled_tokens.length; slotIdx++) {
+        const neededOrigIdx = slotIdx;
+        const scrambledIdx = item.correct_order_indices.indexOf(neededOrigIdx);
+        rebuiltState.push(scrambledIdx);
+      }
+      picked[itemIndex] = item.correct_order_indices.slice();
+      renderOrderSlots(root, activity, picked, itemIndex, true);
+      root.querySelector(`[data-order-hint="${itemIndex}"]`)?.classList.add('hidden');
+    }
+
     root.querySelectorAll('[data-play-order]').forEach((button) => {
       button.addEventListener('click', () => playAudio(activity.items[Number(button.dataset.playOrder)]?.audio_url || '', button));
     });
     root.querySelectorAll('[data-order-slot]').forEach((slot) => {
       const itemIndex = Number(slot.dataset.orderSlot);
       const slotIndex = Number(slot.dataset.slotIndex);
-      slot.addEventListener('click', () => removeOrderToken(root, activity, picked, itemIndex, slotIndex, solved));
+      slot.addEventListener('click', () => {
+        if (attempted.has(itemIndex)) return;
+        removeOrderToken(root, activity, picked, itemIndex, slotIndex, solved);
+      });
       slot.addEventListener('dragstart', (event) => {
-        const state = picked[itemIndex] || [];
-        const tokenIndex = state[slotIndex];
+        if (attempted.has(itemIndex)) return;
+        const st = picked[itemIndex] || [];
+        const tokenIndex = st[slotIndex];
         if (tokenIndex == null) return;
         draggedToken = { itemIndex, tokenIndex, fromSlot: slotIndex };
         event.dataTransfer?.setData('text/plain', JSON.stringify(draggedToken));
@@ -969,17 +1074,18 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
       slot.addEventListener('drop', (event) => {
         event.preventDefault();
         slot.dataset.dropActive = 'false';
+        if (attempted.has(itemIndex)) return;
         const payload = readOrderDragPayload(event, draggedToken);
         if (!payload || payload.itemIndex !== itemIndex) return;
         placeOrderToken(root, activity, picked, itemIndex, payload.tokenIndex, slotIndex, solved);
         checkOrderItem(root, activity, picked, wrongSignatures, solved, itemIndex, () => {
           wrongCount += 1;
+          const itemWrongs = (itemWrongCounts.get(itemIndex) || 0) + 1;
+          itemWrongCounts.set(itemIndex, itemWrongs);
+          if (itemWrongs >= MAX_WRONG_PER_ITEM) revealCorrectOrder(itemIndex);
         });
-        if (solved.size === (activity.items || []).length) completeActivity(activity.type, {
-          correct_count: solved.size,
-          total_count: activity.items.length,
-          wrong_count: wrongCount,
-        });
+        if (!attempted.has(itemIndex) && solved.has(itemIndex)) attempted.add(itemIndex);
+        afterCheck(itemIndex);
       });
     });
     root.querySelectorAll('[data-order-item]').forEach((button) => {
@@ -996,21 +1102,22 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
       });
       button.addEventListener('click', () => {
         const itemIndex = Number(button.dataset.orderItem);
+        if (attempted.has(itemIndex)) return;
         const tokenIndex = Number(button.dataset.tokenIndex);
         const item = activity.items[itemIndex];
-        const state = ensureOrderState(picked, itemIndex, item.scrambled_tokens.length);
-        if (state.includes(tokenIndex)) return;
-        const firstEmptySlot = state.findIndex((value) => value == null);
+        const st = ensureOrderState(picked, itemIndex, item.scrambled_tokens.length);
+        if (st.includes(tokenIndex)) return;
+        const firstEmptySlot = st.findIndex((value) => value == null);
         if (firstEmptySlot === -1) return;
         placeOrderToken(root, activity, picked, itemIndex, tokenIndex, firstEmptySlot, solved);
         checkOrderItem(root, activity, picked, wrongSignatures, solved, itemIndex, () => {
           wrongCount += 1;
+          const itemWrongs = (itemWrongCounts.get(itemIndex) || 0) + 1;
+          itemWrongCounts.set(itemIndex, itemWrongs);
+          if (itemWrongs >= MAX_WRONG_PER_ITEM) revealCorrectOrder(itemIndex);
         });
-        if (solved.size === (activity.items || []).length) completeActivity(activity.type, {
-          correct_count: solved.size,
-          total_count: activity.items.length,
-          wrong_count: wrongCount,
-        });
+        if (!attempted.has(itemIndex) && solved.has(itemIndex)) attempted.add(itemIndex);
+        afterCheck(itemIndex);
       });
     });
   }
@@ -1071,26 +1178,33 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
 
   function checkOrderItem(root, activity, picked, wrongSignatures, solved, itemIndex, onWrong) {
     const item = activity.items[itemIndex];
-    const state = ensureOrderState(picked, itemIndex, item.scrambled_tokens.length);
-    if (state.some((value) => value == null)) return;
-    const correct = item.correct_order_indices.every((idx, i) => idx === state[i]);
+    const st = ensureOrderState(picked, itemIndex, item.scrambled_tokens.length);
+    if (st.some((value) => value == null)) return;
+    const correct = item.correct_order_indices.every((idx, i) => idx === st[i]);
     const questionId = `${activity.type}:${item.id || itemIndex}`;
     if (correct) {
       solved.add(itemIndex);
       clearWrongStreak(questionId);
       root.querySelector(`[data-order-hint="${itemIndex}"]`)?.classList.add('hidden');
+      root.querySelectorAll(`[data-order-slot="${itemIndex}"]`).forEach((s) => { s.dataset.misplaced = 'false'; });
       renderOrderSlots(root, activity, picked, itemIndex, true);
       if (solved.size < (activity.items || []).length) showReward({ withVoice: true });
       return;
     }
     wrongSignatures[itemIndex] = wrongSignatures[itemIndex] || new Set();
-    const signature = state.join(',');
+    const signature = st.join(',');
     if (!wrongSignatures[itemIndex].has(signature)) {
       wrongSignatures[itemIndex].add(signature);
       onWrong();
       playWrongSfx(questionId);
     }
     root.querySelector(`[data-order-hint="${itemIndex}"]`)?.classList.remove('hidden');
+    root.querySelectorAll(`[data-order-slot="${itemIndex}"]`).forEach((s) => { s.dataset.misplaced = 'false'; });
+    const firstMisplaced = st.findIndex((tokenIdx, slotIdx) => tokenIdx !== item.correct_order_indices[slotIdx]);
+    if (firstMisplaced !== -1) {
+      const slot = root.querySelector(`[data-order-slot="${itemIndex}"][data-slot-index="${firstMisplaced}"]`);
+      if (slot) slot.dataset.misplaced = 'true';
+    }
   }
 
   function renderWrittenActivity(root, activity) {
@@ -1153,6 +1267,7 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
     `;
 
     const rated = new Set();
+    const currentRating = new Map();
     let readyCount = 0;
     root.querySelectorAll('[data-play-speak]').forEach((button) => {
       button.addEventListener('click', () => playAudio(activity.items[Number(button.dataset.playSpeak)]?.audio_url || '', button));
@@ -1165,12 +1280,22 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
     root.querySelectorAll('[data-rate-speak]').forEach((button) => {
       button.addEventListener('click', () => {
         const itemIndex = Number(button.dataset.rateSpeak);
-        if (rated.has(itemIndex)) return;
-        rated.add(itemIndex);
-        const isReady = button.dataset.rateValue === 'ready';
+        const newValue = button.dataset.rateValue;
+        const prevValue = currentRating.get(itemIndex);
+        if (prevValue === newValue) return;
+        if (prevValue) {
+          root.querySelectorAll(`[data-rate-speak="${itemIndex}"]`).forEach((btn) => {
+            delete btn.dataset.state;
+          });
+          if (prevValue === 'ready') readyCount -= 1;
+        }
+        currentRating.set(itemIndex, newValue);
+        const isReady = newValue === 'ready';
         if (isReady) readyCount += 1;
         button.dataset.state = isReady ? 'correct' : 'retry';
-        if (rated.size < (activity.items || []).length) showReward({ withVoice: true });
+        const isFirstRating = !rated.has(itemIndex);
+        rated.add(itemIndex);
+        if (isFirstRating && rated.size < (activity.items || []).length) showReward({ withVoice: true });
         if (rated.size === (activity.items || []).length) completeActivity(activity.type, {
           correct_count: readyCount,
           total_count: activity.items.length,
@@ -1300,7 +1425,7 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
       correct += Math.min(resultTotal, Number(result.correct_count || 0));
       wrong += Number(result.wrong_count || 0);
     });
-    const denominator = total + wrong;
+    const denominator = total + Math.floor(wrong * 0.5);
     return {
       correct_count: correct,
       total_count: total,
@@ -1329,8 +1454,7 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
       const data = await res.json();
       if (!res.ok || !data.ok) throw new Error(data.message || data.error || 'Chưa lưu được.');
       if (!data.passed) {
-        const rewards = data.rewards_earned || {};
-        qs('#submit-hint').textContent = `${data.message || 'Bài này chưa đạt 70%.'} XP: ${rewards.xp || -10}.`;
+        qs('#submit-hint').textContent = data.message || 'Chưa đạt điểm tối thiểu. Không sao, mình thử lại nhé!';
         qs('#submit-lesson').disabled = false;
         return;
       }

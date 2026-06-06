@@ -190,7 +190,7 @@ test('L3 and L4 use the longer V2 level-up ladder', () => {
   assert.equal(publicProgressState(l5Unlock.state).packs_until_level_up, 0);
 });
 
-test('below-threshold attempt subtracts 10 XP once per pack', () => {
+test('below-threshold attempt records penalty but does not subtract XP (penalty = 0)', () => {
   const base = normalizeProgressState(
     {
       schema_version: 2,
@@ -215,9 +215,9 @@ test('below-threshold attempt subtracts 10 XP once per pack', () => {
     completedAt: '2026-06-05T03:00:00.000Z',
   });
 
-  assert.equal(first.state.xp_in_level, 30);
-  assert.equal(first.state.total_xp, 30);
+  assert.equal(first.state.xp_in_level, 40);
+  assert.equal(first.state.total_xp, 40);
   assert.equal(first.already_penalized, false);
-  assert.equal(duplicate.state.xp_in_level, 30);
+  assert.equal(duplicate.state.xp_in_level, 40);
   assert.equal(duplicate.already_penalized, true);
 });

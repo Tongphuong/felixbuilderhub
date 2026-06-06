@@ -19,37 +19,19 @@ const topics = [
   ['vietnamese_holidays', 'Lễ hội Việt Nam'],
 ];
 
-const learningSkills = [
-  ['1', 'Chọn câu chuyện', 'Con chọn chủ đề mình thích như thú cưng, bóng đá, vẽ tranh, trường học hoặc để Felix chọn giúp.'],
-  ['2', 'Nghe trước', 'Con bấm nghe câu chuyện và có thể nghe lại từng câu nếu muốn.'],
-  ['3', 'Xếp câu', 'Con nghe một câu rồi chạm các từ theo đúng thứ tự.'],
-  ['4', 'Nói lại', 'Con nghe câu mẫu, thu âm thử và tự nghe lại giọng của mình.'],
-  ['5', 'Đọc hiểu', 'Con đọc lại câu chuyện, trả lời câu hỏi và lưu chiến công để nhận XP/xu.'],
-];
-
-const insideItems = [
-  ['1. Nhập mã', 'Mỗi bé có một mã riêng. Mã này mở đúng hồ sơ của bé.'],
-  ['2. Chọn chủ đề', 'Bé chọn điều mình thích hoặc bỏ qua để Felix chọn giúp.'],
-  ['3. Bấm tạo bài', 'Trang sẽ chuẩn bị một câu chuyện và 4 nhiệm vụ theo level hiện tại.'],
-  ['4. Vào bài học', 'Bé làm lần lượt: nghe hiểu, xếp câu, nói lại, đọc hiểu.'],
-  ['5. Nhận tiến trình', 'Kết quả được lưu vào hồ sơ: level, XP, xu và streak.'],
-];
-
-const homeSteps = [
-  ['1', 'Mở Read2Lead', 'Bé hoặc phụ huynh vào trang này và nhập mã học sinh.'],
-  ['2', 'Chọn điều bé thích', 'Chủ đề giúp câu chuyện gần với bé hơn: bóng đá, thú cưng, vẽ tranh, trường học...'],
-  ['3', 'Bấm tạo bài', 'Khi bài sẵn sàng, nút mở bài học sẽ hiện ra.'],
-  ['4', 'Làm 4 nhiệm vụ', 'Bé nghe, xếp câu, nói lại và đọc hiểu theo từng màn rõ ràng.'],
-  ['5', 'Lưu chiến công', 'Bé nhận XP/xu, giữ streak và tiến dần từ L1 tới L5.'],
+const activityCards = [
+  ['Nghe điền cụm', 'Con nghe câu, chọn từ đúng để điền vào chỗ trống.'],
+  ['Sắp xếp câu', 'Con nghe rồi kéo các từ theo đúng thứ tự.'],
+  ['Đọc hiểu', 'Con đọc truyện và trả lời câu hỏi.'],
+  ['Viết câu trả lời', 'Con tự viết câu trả lời ngắn.'],
+  ['Nghe và nói lại', 'Con nghe câu mẫu, thu âm rồi tự đánh giá.'],
 ];
 
 const faqItems = [
-  ['Read2Lead dùng để làm gì?', 'Read2Lead giúp bé tự học nghe và đọc tiếng Anh thông qua câu chuyện bé tự chọn.'],
-  ['Bé dùng web như thế nào?', 'Nhập mã, chọn chủ đề, bấm tạo bài, làm 4 nhiệm vụ rồi bấm lưu chiến công.'],
-  ['Mã đăng nhập là gì? Lấy ở đâu?', `Mỗi phụ huynh khi đăng ký dùng Read2Lead sẽ nhận 1 mã từ Felix qua Zalo. Chưa có mã thì nhắn Zalo ${ZALO_DISPLAY} để hỏi cách nhận mã.`],
-  ['Nên chọn mức đọc nào cho con?', 'Không cần chọn. Mọi bạn nhỏ bắt đầu từ L1, làm bài để tích XP rồi hệ thống tự mở level tiếp theo.'],
-  ['Nếu bài quá khó hoặc quá dễ thì sao?', 'Bố mẹ nhắn Zalo Felix để được hỗ trợ. Hệ thống sẽ được tinh chỉnh dần theo kết quả làm bài thật của con.'],
-  ['Mỗi bé có hồ sơ riêng không?', 'Có. Tên, level, XP, xu và lịch sử học được gắn với mã riêng của bé. Nếu cần đổi tên, Felix chỉnh trong admin/codes.'],
+  ['Chưa có mã thì làm gì?', `Nhắn Zalo ${ZALO_DISPLAY} để Felix tạo hồ sơ cho bé. Sau đó anh/chị sẽ nhận mã qua Zalo.`],
+  ['Có cần chọn level không?', 'Không. Mọi bạn nhỏ bắt đầu từ L1 và hệ thống tự mở level tiếp theo khi bé tích đủ XP.'],
+  ['Con làm bài ở đâu?', 'Ngay trên web. Sau khi bấm "Tạo bài học", bé bấm "Mở bài học" để làm trực tiếp trên điện thoại hoặc máy tính.'],
+  ['Xem tiến trình ở đâu?', 'Bấm "Hồ sơ học sinh" ở đầu trang, nhập mã là thấy level, XP, xu, streak và bài đang mở.'],
 ];
 ---
 
@@ -60,176 +42,80 @@ const faqItems = [
   <Header />
 
   <main id="main" class="flex-1">
-    <section class="mx-auto grid max-w-6xl items-center gap-10 px-6 py-16 md:grid-cols-[1.02fr_0.98fr] md:py-24">
-      <div>
-        <span class="inline-block rounded-full bg-accent/20 px-4 py-1 text-sm font-semibold text-accent">Mỗi bé một hồ sơ học riêng</span>
-        <h1 class="mt-6 max-w-4xl font-display text-4xl font-extrabold leading-tight text-cream md:text-5xl lg:text-6xl">
-          Tự học nghe và đọc tiếng Anh thông qua câu chuyện con tự chọn
-        </h1>
-        <p class="mt-6 max-w-2xl text-lg leading-relaxed text-cream-muted md:text-xl">
-          Bé nhập mã, chọn chủ đề mình thích, nghe câu chuyện rồi hoàn thành 4 nhiệm vụ trên web. Tiến trình được lưu vào hồ sơ riêng của bé: level, XP, xu và streak.
-        </p>
-        <div class="mt-8 flex flex-col gap-3 sm:flex-row">
-          <a href="#form" class="inline-flex justify-center rounded-lg bg-accent px-6 py-3 font-semibold text-navy-950 transition hover:bg-accent-hover">Bắt đầu với mã học sinh</a>
-          <a href="/read2lead/review" class="inline-flex justify-center rounded-lg border border-cream-dim/40 px-6 py-3 font-semibold text-cream transition hover:border-gold hover:text-gold-light">Mở hồ sơ Felixar</a>
-          <a href="/read2lead/leaderboard" class="inline-flex justify-center rounded-lg border border-gold px-6 py-3 font-semibold text-gold-light transition hover:bg-gold hover:text-navy-950">Bảng xếp hạng</a>
-        </div>
-        <div class="mt-6 grid gap-3 sm:grid-cols-2">
-          <a href="/read2lead/leaderboard" class="rounded-lg border border-gold/35 bg-gold/10 p-4 transition hover:border-gold hover:bg-gold/15">
-            <p class="text-sm font-semibold uppercase tracking-wide text-gold-light">Bảng xếp hạng - Ranking Arena</p>
-            <p class="mt-1 text-sm leading-relaxed text-cream-muted">Xem rank Đồng, Bạc, Vàng, Kim cương, Huyền thoại của các bạn nhỏ.</p>
-          </a>
-          <a href="/read2lead/review" class="rounded-lg border border-accent/35 bg-accent/10 p-4 transition hover:border-accent hover:bg-accent/15">
-            <p class="text-sm font-semibold uppercase tracking-wide text-accent">Hồ sơ Felixar</p>
-            <p class="mt-1 text-sm leading-relaxed text-cream-muted">Nhập mã để xem level, XP, xu, streak và bài đang mở của bé.</p>
-          </a>
-        </div>
-        <p class="mt-4 max-w-2xl text-sm leading-relaxed text-cream-dim">
-          Chưa có mã? Nhắn Zalo {ZALO_DISPLAY} để Felix tạo hồ sơ cho bé.
-        </p>
-      </div>
+    <!-- ===== HERO ===== -->
+    <section class="mx-auto max-w-5xl px-5 pb-6 pt-12 text-center sm:pt-16">
+      <h1 class="mx-auto max-w-3xl font-display text-3xl font-extrabold leading-tight text-cream sm:text-4xl md:text-5xl">
+        Tự học nghe và đọc tiếng Anh thông qua câu chuyện con tự chọn
+      </h1>
+      <p class="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-cream-muted sm:text-lg">
+        Nhập mã học sinh, chọn chủ đề con thích, rồi bấm tạo bài. Bé làm bài trực tiếp trên web và nhận XP/xu để leo rank.
+      </p>
+    </section>
 
-      <div class="rounded-xl border border-cream-dim/20 bg-navy-900/75 p-5 shadow-2xl">
-        <div class="rounded-lg border border-gold/25 bg-navy-950 p-4">
-          <div class="flex items-center justify-between gap-3">
-            <div>
-              <p class="text-xs font-semibold uppercase tracking-wide text-gold">Hồ sơ Felixar</p>
-              <p class="mt-1 font-display text-2xl font-bold text-cream">Linh · L1</p>
-            </div>
-            <div class="rounded-md bg-accent px-3 py-1 text-sm font-bold text-navy-950">80 XP</div>
-          </div>
-          <div class="mt-4 h-2 overflow-hidden rounded-full bg-navy-800">
-            <div class="h-full w-4/5 rounded-full bg-accent"></div>
-          </div>
-          <div class="mt-4 grid gap-3 sm:grid-cols-2">
-            <div class="rounded-md bg-navy-900 p-3">
-              <p class="text-xs text-cream-dim">Câu chuyện</p>
-              <p class="mt-1 font-semibold text-cream">Linh chọn: thú cưng</p>
-            </div>
-            <div class="rounded-md bg-navy-900 p-3">
-              <p class="text-xs text-cream-dim">Nhiệm vụ</p>
-              <p class="mt-1 font-semibold text-cream">Nghe · Xếp · Nói · Đọc</p>
-            </div>
-            <div class="rounded-md bg-navy-900 p-3">
-              <p class="text-xs text-cream-dim">Phần thưởng</p>
-              <p class="mt-1 font-semibold text-cream">XP, xu, streak</p>
-            </div>
-            <div class="rounded-md bg-navy-900 p-3">
-              <p class="text-xs text-cream-dim">Mục tiêu</p>
-              <p class="mt-1 font-semibold text-cream">Mở dần tới L5</p>
-            </div>
-          </div>
-        </div>
-        <p class="mt-4 text-center text-sm text-cream-dim">Giao diện một màn một nhiệm vụ, để bé nhỏ tuổi cũng biết bấm gì tiếp theo.</p>
+    <!-- ===== 3 BIG ACTION CARDS ===== -->
+    <section class="mx-auto max-w-5xl px-5 pb-10">
+      <div class="grid gap-4 sm:grid-cols-3">
+        <a
+          href="#form"
+          class="flex flex-col items-center gap-3 rounded-xl border-2 border-accent/60 bg-accent/10 p-6 text-center transition hover:border-accent hover:bg-accent/20 sm:p-8"
+        >
+          <span class="flex h-14 w-14 items-center justify-center rounded-full bg-accent text-2xl font-bold text-navy-950">+</span>
+          <span class="text-xl font-extrabold text-cream sm:text-2xl">Tạo bài cho con</span>
+          <span class="text-sm text-cream-muted">Nhập mã, chọn chủ đề, bấm tạo</span>
+        </a>
+        <a
+          href="/read2lead/leaderboard"
+          class="flex flex-col items-center gap-3 rounded-xl border-2 border-gold/50 bg-gold/10 p-6 text-center transition hover:border-gold hover:bg-gold/20 sm:p-8"
+        >
+          <span class="flex h-14 w-14 items-center justify-center rounded-full bg-gold text-2xl font-bold text-navy-950">&#9733;</span>
+          <span class="text-xl font-extrabold text-cream sm:text-2xl">Bảng xếp hạng</span>
+          <span class="text-sm text-cream-muted">Xem rank của các bạn nhỏ</span>
+        </a>
+        <a
+          href="/read2lead/review"
+          class="flex flex-col items-center gap-3 rounded-xl border-2 border-cream/30 bg-cream/5 p-6 text-center transition hover:border-cream/50 hover:bg-cream/10 sm:p-8"
+        >
+          <span class="flex h-14 w-14 items-center justify-center rounded-full bg-cream/20 text-2xl text-cream">&#128100;</span>
+          <span class="text-xl font-extrabold text-cream sm:text-2xl">Hồ sơ học sinh</span>
+          <span class="text-sm text-cream-muted">Level, XP, xu, bài đang mở</span>
+        </a>
       </div>
     </section>
 
-    <section class="bg-navy-900 px-6 py-20">
-      <div class="mx-auto max-w-6xl">
-        <div class="text-center">
-          <h2 class="font-display text-3xl font-bold leading-snug text-cream md:text-4xl">Bé sẽ làm gì trên web?</h2>
-          <p class="mx-auto mt-4 max-w-2xl leading-relaxed text-cream-dim">Luồng học rõ ràng để bé nhỏ tuổi nhìn vào là biết bước tiếp theo.</p>
-        </div>
-        <div class="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {learningSkills.map(([number, title, description]) => (
-            <div class="rounded-xl border border-cream-dim/20 bg-navy-950/75 p-6">
-              <div class="flex items-start gap-4">
-                <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-accent font-display text-lg font-bold text-navy-950">{number}</span>
-                <div>
-                  <h3 class="font-display text-xl font-bold text-cream">{title}</h3>
-                  <p class="mt-2 leading-relaxed text-cream-muted">{description}</p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-
-    <section class="mx-auto max-w-6xl px-6 py-20">
-      <h2 class="text-center font-display text-3xl font-bold leading-snug text-cream md:text-4xl">Cách dùng Read2Lead trên web</h2>
-      <p class="mx-auto mt-5 max-w-2xl text-center leading-relaxed text-cream-dim">Không cần phụ huynh hướng dẫn từng bước. Bé đi theo các nút và màn hình đã sắp sẵn.</p>
-      <div class="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {insideItems.map(([title, description]) => (
-          <div class="rounded-lg border border-cream-dim/20 bg-navy-900/70 p-5">
-            <h3 class="font-display text-xl font-bold text-cream">{title}</h3>
-            <p class="mt-2 leading-relaxed text-cream-muted">{description}</p>
-          </div>
-        ))}
-      </div>
-    </section>
-
-    <section class="bg-navy-900 px-6 py-20">
-      <div class="mx-auto max-w-6xl">
-        <h2 class="text-center font-display text-3xl font-bold leading-snug text-cream md:text-4xl">Mỗi bé có một profile học riêng</h2>
-        <p class="mx-auto mt-5 max-w-2xl text-center leading-relaxed text-cream-dim">Mã học sinh không chỉ để đăng nhập. Mã đó giữ tên bé, level, XP, xu, streak và lịch sử bài học.</p>
-        <div class="mt-12 grid gap-5 md:grid-cols-4">
-          <div class="rounded-lg border border-cream-dim/20 bg-navy-950/70 p-5">
-            <p class="text-sm font-semibold uppercase tracking-wide text-gold">Tên bé</p>
-            <p class="mt-2 text-cream-muted">Câu chuyện gọi đúng tên bé, không cần nhập lại mỗi lần.</p>
-          </div>
-          <div class="rounded-lg border border-cream-dim/20 bg-navy-950/70 p-5">
-            <p class="text-sm font-semibold uppercase tracking-wide text-gold">Level</p>
-            <p class="mt-2 text-cream-muted">Bé bắt đầu từ L1 và mở dần tới L5 bằng XP.</p>
-          </div>
-          <div class="rounded-lg border border-cream-dim/20 bg-navy-950/70 p-5">
-            <p class="text-sm font-semibold uppercase tracking-wide text-gold">XP và xu</p>
-            <p class="mt-2 text-cream-muted">Mỗi bài đạt sẽ cộng tiến trình để bé thấy mình đang lớn lên.</p>
-          </div>
-          <div class="rounded-lg border border-cream-dim/20 bg-navy-950/70 p-5">
-            <p class="text-sm font-semibold uppercase tracking-wide text-gold">Streak</p>
-            <p class="mt-2 text-cream-muted">Bé thấy chuỗi ngày học và có thêm lý do quay lại.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="mx-auto max-w-6xl px-6 py-20">
-      <div class="text-center">
-        <h2 class="font-display text-3xl font-bold leading-snug text-cream md:text-4xl">5 bước sử dụng trên web</h2>
-        <p class="mx-auto mt-4 max-w-2xl leading-relaxed text-cream-dim">Từ lúc nhập mã tới lúc lưu chiến công đều nằm trong một luồng web rõ ràng.</p>
-      </div>
-      <div class="mt-10 grid gap-5 md:grid-cols-5">
-        {homeSteps.map(([number, title, description]) => (
-          <div class="rounded-lg border border-cream-dim/20 bg-navy-900/70 p-5">
-            <div class="flex h-10 w-10 items-center justify-center rounded-md bg-accent font-display text-lg font-bold text-navy-950">{number}</div>
-            <h3 class="mt-5 font-display text-lg font-bold text-cream">{title}</h3>
-            <p class="mt-3 text-sm leading-relaxed text-cream-muted">{description}</p>
-          </div>
-        ))}
-      </div>
-    </section>
-
-    <section class="mx-auto max-w-6xl px-6 py-20">
-      <div class="rounded-xl border border-gold/30 bg-gold/10 p-6 md:flex md:items-center md:justify-between md:gap-10">
-        <div>
-          <span class="inline-block rounded-md bg-gold/20 px-3 py-1 text-xs font-semibold text-gold-light">Felixar — hồ sơ học</span>
-          <h2 class="mt-4 font-display text-3xl font-bold leading-snug text-cream md:text-4xl">Xem level, XP, xu và bài hiện tại của bé</h2>
-          <p class="mt-4 max-w-2xl leading-relaxed text-cream-muted">
-            Felixar là nơi phụ huynh xem bé đang ở level nào, bài nào đang mở, đã nhận bao nhiêu XP/xu và bước tiếp theo là gì.
-          </p>
-        </div>
-        <div class="mt-6 shrink-0 md:mt-0">
-          <div class="flex flex-col gap-3 sm:flex-row md:flex-col">
-            <a href="/read2lead/review" class="inline-flex justify-center rounded-lg bg-accent px-6 py-3 font-semibold text-navy-950 transition hover:bg-accent-hover">Mở hồ sơ Felixar</a>
-            <a href="/read2lead/leaderboard" class="inline-flex justify-center rounded-lg border border-gold px-6 py-3 font-semibold text-gold-light transition hover:bg-gold hover:text-navy-950">Bảng xếp hạng - Ranking Arena</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="form" class="bg-navy-900 px-6 py-20">
-      <div class="mx-auto max-w-6xl">
+    <!-- ===== CREATE LESSON FORM ===== -->
+    <section id="form" class="bg-navy-900 px-5 py-14 sm:py-16">
+      <div class="mx-auto max-w-xl">
         <div id="form-section">
-          <div class="text-center">
-            <h2 class="font-display text-3xl font-bold leading-snug text-cream md:text-4xl">Tạo bài học cho con</h2>
-            <p class="mx-auto mt-4 max-w-2xl leading-relaxed text-cream-muted">Nhập mã học sinh. Read2Lead sẽ dùng hồ sơ đã lưu trong admin/codes để tạo đúng bài cho con.</p>
+          <h2 class="text-center font-display text-2xl font-bold text-cream sm:text-3xl">Tạo bài học mới</h2>
+
+          <!-- mini stepper -->
+          <div class="mx-auto mt-6 flex max-w-md items-start justify-between gap-1 text-center text-xs font-semibold sm:text-sm">
+            <div class="flex-1">
+              <span class="mx-auto flex h-8 w-8 items-center justify-center rounded-full bg-accent font-bold text-navy-950 sm:h-9 sm:w-9">1</span>
+              <p class="mt-1.5 text-cream">Nhập mã</p>
+            </div>
+            <div class="mt-4 h-px flex-1 bg-cream/20"></div>
+            <div class="flex-1">
+              <span class="mx-auto flex h-8 w-8 items-center justify-center rounded-full bg-cream/20 font-bold text-cream sm:h-9 sm:w-9">2</span>
+              <p class="mt-1.5 text-cream-muted">Chọn chủ đề</p>
+            </div>
+            <div class="mt-4 h-px flex-1 bg-cream/20"></div>
+            <div class="flex-1">
+              <span class="mx-auto flex h-8 w-8 items-center justify-center rounded-full bg-cream/20 font-bold text-cream sm:h-9 sm:w-9">3</span>
+              <p class="mt-1.5 text-cream-muted">Tạo bài</p>
+            </div>
+            <div class="mt-4 h-px flex-1 bg-cream/20"></div>
+            <div class="flex-1">
+              <span class="mx-auto flex h-8 w-8 items-center justify-center rounded-full bg-cream/20 font-bold text-cream sm:h-9 sm:w-9">4</span>
+              <p class="mt-1.5 text-cream-muted">Mở bài</p>
+            </div>
           </div>
 
-          <form id="r2l-form" class="mx-auto mt-10 max-w-xl space-y-5">
+          <form id="r2l-form" class="mt-8 space-y-5">
+            <!-- Step 1: Code -->
             <div>
-              <label class="mb-2 block text-sm text-cream-muted">
-                Mã đăng nhập <span class="text-red-400">*</span>
+              <label class="mb-2 block text-sm font-semibold text-cream">
+                Bước 1 — Nhập mã học sinh <span class="text-red-400">*</span>
               </label>
               <input
                 type="text"
@@ -238,65 +124,81 @@ const faqItems = [
                 maxlength="32"
                 autocomplete="off"
                 placeholder="VD: R2L-JUN-A4F2"
-                class="w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-4 py-3 text-base uppercase text-cream placeholder:normal-case placeholder:text-cream-dim/80 focus:border-accent focus:outline-none"
+                class="w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-4 py-3.5 text-lg uppercase text-cream placeholder:normal-case placeholder:text-cream-dim/80 focus:border-accent focus:outline-none"
               />
-              <p class="mt-2 text-xs text-cream-dim">Chưa có mã? <a href={ZALO_URL} class="text-accent underline">Nhắn Zalo Felix</a> để nhận.</p>
             </div>
-            <div class="rounded-lg border border-accent/30 bg-accent/10 p-4 text-sm leading-relaxed text-cream-muted">
-              Tên, tuổi và giới tính của con đã lưu sẵn trong mã học sinh. Nếu cần đổi tên, Felix sửa ở trang admin/codes. Mọi bạn nhỏ bắt đầu từ L1, tích lũy XP để mở dần tới L5.
+
+            <!-- Help: Mã học sinh là gì? -->
+            <div class="rounded-lg border border-cream/20 bg-cream/5 p-4">
+              <p class="text-sm font-semibold text-gold">Mã học sinh là gì?</p>
+              <p class="mt-1 text-sm leading-relaxed text-cream-muted">
+                Đây là mã riêng của bé. Felix gửi mã này cho phụ huynh qua Zalo. Chưa có mã? <a href={ZALO_URL} class="font-semibold text-accent underline">Nhắn Zalo Felix</a>.
+              </p>
             </div>
-            <details class="group rounded-lg border border-cream-dim/30 bg-navy-950/60">
+
+            <!-- Step 2: Topic -->
+            <div>
+              <label class="mb-2 block text-sm font-semibold text-cream">
+                Bước 2 — Con thích chủ đề gì? <span class="text-cream-dim">(không bắt buộc)</span>
+              </label>
+              <div class="grid grid-cols-2 gap-2 rounded-lg border border-cream-dim/30 bg-navy-950 p-3 sm:grid-cols-3">
+                <label class="flex cursor-pointer items-center gap-2 rounded-md p-2 transition hover:bg-navy-800 has-[:checked]:bg-accent/15 has-[:checked]:ring-1 has-[:checked]:ring-accent">
+                  <input type="radio" name="topic" value="" class="h-4 w-4 accent-accent" checked />
+                  <span class="text-sm font-semibold text-cream">Felix chọn giúp</span>
+                </label>
+                {topics.map(([value, label]) => (
+                  <label class="flex cursor-pointer items-center gap-2 rounded-md p-2 transition hover:bg-navy-800 has-[:checked]:bg-accent/15 has-[:checked]:ring-1 has-[:checked]:ring-accent">
+                    <input type="radio" name="topic" value={value} class="h-4 w-4 accent-accent" />
+                    <span class="text-sm text-cream">{label}</span>
+                  </label>
+                ))}
+              </div>
+              <p class="mt-2 text-xs text-cream-dim">Nếu không chọn, Felix sẽ chọn chủ đề giúp con.</p>
+            </div>
+
+            <!-- Optional: interests (collapsed) -->
+            <details class="group rounded-lg border border-cream-dim/20 bg-navy-950/60">
               <summary class="flex cursor-pointer list-none items-center justify-between px-4 py-3 text-sm font-semibold text-cream-muted transition hover:text-accent">
-                <span>
-                  Tùy chọn thêm: sở thích &amp; chủ đề của con
-                  <span class="mt-0.5 block text-xs font-normal text-cream-dim">Không bắt buộc — bỏ qua thì Felix chọn giúp.</span>
-                </span>
+                <span>Ghi thêm sở thích của con <span class="text-xs font-normal text-cream-dim">(không bắt buộc)</span></span>
                 <span class="ml-3 shrink-0 text-cream-dim transition group-open:rotate-180" aria-hidden="true">▾</span>
               </summary>
-              <div class="space-y-5 px-4 pb-4 pt-1">
-                <div>
-                  <label for="interests" class="mb-2 block text-sm text-cream-muted">
-                    Sở thích của con
-                  </label>
-                  <input
-                    id="interests"
-                    name="interests"
-                    type="text"
-                    maxlength="120"
-                    placeholder="VD: bóng đá, Roblox, mèo, vẽ tranh..."
-                    class="w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-4 py-3 text-base text-cream placeholder:text-cream-dim/80 focus:border-accent focus:outline-none"
-                  />
-                  <p class="mt-2 text-xs text-cream-dim">Nếu điền, câu chuyện sẽ cố gắng đi theo điều con thích.</p>
-                </div>
-                <div>
-                  <label class="mb-2 block text-sm text-cream-muted">
-                    Chủ đề con thích
-                  </label>
-                  <div class="grid grid-cols-2 gap-2 rounded-lg border border-cream-dim/30 bg-navy-950 p-3 sm:grid-cols-3">
-                    <label class="flex cursor-pointer items-center gap-2 rounded-md p-2 transition hover:bg-navy-800 has-[:checked]:bg-accent/15 has-[:checked]:ring-1 has-[:checked]:ring-accent">
-                      <input type="radio" name="topic" value="" class="h-3.5 w-3.5 accent-accent" checked />
-                      <span class="text-sm text-cream">Felix chọn giúp</span>
-                    </label>
-                    {topics.map(([value, label]) => (
-                      <label class="flex cursor-pointer items-center gap-2 rounded-md p-2 transition hover:bg-navy-800 has-[:checked]:bg-accent/15 has-[:checked]:ring-1 has-[:checked]:ring-accent">
-                        <input type="radio" name="topic" value={value} class="h-3.5 w-3.5 accent-accent" />
-                        <span class="text-sm text-cream">{label}</span>
-                      </label>
-                    ))}
-                  </div>
-                </div>
+              <div class="px-4 pb-4 pt-1">
+                <input
+                  name="interests"
+                  type="text"
+                  maxlength="120"
+                  placeholder="VD: bóng đá, Roblox, mèo, vẽ tranh..."
+                  class="w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-4 py-3 text-base text-cream placeholder:text-cream-dim/80 focus:border-accent focus:outline-none"
+                />
+                <p class="mt-2 text-xs text-cream-dim">Nếu điền, câu chuyện sẽ cố gắng đi theo điều con thích.</p>
               </div>
             </details>
+
+            <!-- Honeypot -->
             <div class="absolute -left-[9999px]" aria-hidden="true">
               <label for="website">Website</label>
               <input id="website" name="website" tabindex="-1" />
             </div>
-            <button type="submit" class="w-full rounded-lg bg-accent px-6 py-3 text-lg font-semibold text-navy-950 transition hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-70">Tạo bài học cho con</button>
+
+            <!-- Step 3: Submit -->
+            <button type="submit" class="w-full rounded-xl bg-accent px-6 py-4 text-xl font-extrabold text-navy-950 transition hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-70">
+              Tạo bài học cho con
+            </button>
+
             <p class="text-center text-xs text-cream-dim/80">Gửi form đồng nghĩa anh chị đồng ý <a href="/privacy" class="underline transition hover:text-accent">chính sách dữ liệu</a> của Felix.</p>
           </form>
+
+          <!-- Help: Không biết bắt đầu -->
+          <div class="mt-6 rounded-lg border border-gold/30 bg-gold/10 p-4">
+            <p class="text-sm font-semibold text-gold">Không biết bắt đầu từ đâu?</p>
+            <p class="mt-1 text-sm leading-relaxed text-cream-muted">
+              Chỉ cần nhập mã học sinh rồi bấm <strong class="text-cream">Tạo bài học</strong>. Nếu chưa có mã, nhắn Zalo Felix.
+            </p>
+          </div>
         </div>
 
-        <div id="progress-section" class="mx-auto hidden max-w-2xl rounded-lg border border-cream-dim/20 bg-navy-950 p-6 text-center">
+        <!-- Progress state -->
+        <div id="progress-section" class="hidden rounded-lg border border-cream-dim/20 bg-navy-950 p-6 text-center">
           <div class="h-3 overflow-hidden rounded-full bg-navy-800">
             <div class="h-full w-2/3 animate-pulse rounded-full bg-gradient-to-r from-accent via-gold-light to-accent"></div>
           </div>
@@ -304,52 +206,91 @@ const faqItems = [
           <p class="mt-3 text-sm text-cream-dim">Lần đầu có thể chậm hơn một chút vì máy chủ cần khởi động.</p>
         </div>
 
-        <div id="result-section" class="mx-auto hidden max-w-2xl rounded-lg border border-gold/40 bg-gold/10 p-6 text-center">
-          <h2 class="font-display text-3xl font-bold leading-snug text-cream">Bài học của <span id="result-child-name"></span> đã sẵn sàng</h2>
+        <!-- Result state -->
+        <div id="result-section" class="hidden rounded-lg border border-gold/40 bg-gold/10 p-6 text-center">
+          <h2 class="font-display text-2xl font-bold leading-snug text-cream sm:text-3xl">Bài học của <span id="result-child-name"></span> đã sẵn sàng</h2>
           <div class="mt-5 space-y-2 text-cream-muted">
             <p>Chủ đề: <span id="result-topic" class="font-semibold text-cream"></span></p>
             <p>Tên truyện: <span id="result-story-title" class="font-semibold text-cream"></span></p>
           </div>
-          <div class="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
-            <a id="lesson-link" href="/read2lead/lesson" class="rounded-lg bg-accent px-6 py-3 font-semibold text-navy-950 transition hover:bg-accent-hover">Mở bài học trên web</a>
+          <div class="mt-8">
+            <a id="lesson-link" href="/read2lead/lesson" class="inline-block w-full rounded-xl bg-accent px-6 py-4 text-xl font-extrabold text-navy-950 transition hover:bg-accent-hover sm:w-auto sm:px-10">Mở bài học</a>
           </div>
           <p class="mt-6 text-sm leading-relaxed text-cream-muted">
-            Con nghe truyện, làm 4 nhiệm vụ và lưu chiến công trực tiếp trên web. Bố mẹ có thể mở <a id="review-link" href="/read2lead/review" class="font-semibold text-gold-light underline">Felixar</a> để xem tiến trình.
+            Con nghe truyện, làm 5 nhiệm vụ và lưu chiến công trực tiếp trên web. Bố mẹ có thể mở <a id="review-link" href="/read2lead/review" class="font-semibold text-gold-light underline">hồ sơ học sinh</a> để xem tiến trình.
           </p>
           <div class="mt-6">
             <p class="text-cream-dim">Muốn tạo bài khác?</p>
-            <button id="reset-btn" type="button" class="mt-3 rounded-lg border border-cream-dim/30 px-5 py-2 font-semibold text-cream transition hover:border-accent hover:text-accent">Làm lại form</button>
+            <button id="reset-btn" type="button" class="mt-3 rounded-lg border border-cream-dim/30 px-5 py-2.5 font-semibold text-cream transition hover:border-accent hover:text-accent">Tạo bài mới</button>
           </div>
         </div>
 
-        <div id="error-section" class="mx-auto hidden max-w-2xl rounded-lg border border-red-500/30 bg-red-500/10 p-6 text-center">
+        <!-- Error state -->
+        <div id="error-section" class="hidden rounded-lg border border-red-500/30 bg-red-500/10 p-6 text-center">
           <p class="text-lg font-semibold text-red-400">Có lỗi xảy ra: <span id="error-message"></span></p>
-          <button id="retry-btn" type="button" class="mt-5 rounded-lg bg-accent px-5 py-2 font-semibold text-navy-950 transition hover:bg-accent-hover">Thử lại</button>
+          <button id="retry-btn" type="button" class="mt-5 rounded-lg bg-accent px-5 py-2.5 font-semibold text-navy-950 transition hover:bg-accent-hover">Thử lại</button>
           <p class="mt-4 text-sm text-cream-muted">Nếu lỗi tiếp tục, nhắn Zalo {ZALO_DISPLAY}</p>
         </div>
       </div>
     </section>
 
-    <section class="bg-navy-900 px-6 py-20">
-      <div class="mx-auto max-w-3xl">
-        <h2 class="text-center font-display text-3xl font-bold leading-snug text-cream md:text-4xl">Câu hỏi thường gặp</h2>
-        <div class="mt-10 space-y-3">
-          {faqItems.map(([question, answer]) => (
-            <details class="rounded-lg border border-cream-dim/20 bg-navy-950/75 p-5">
-              <summary class="cursor-pointer font-display text-lg font-bold text-cream">{question}</summary>
-              <p class="mt-4 leading-relaxed text-cream-muted">{answer}</p>
-            </details>
-          ))}
+    <!-- ===== HOW IT WORKS ===== -->
+    <section class="mx-auto max-w-5xl px-5 py-14 sm:py-16">
+      <h2 class="text-center font-display text-2xl font-bold text-cream sm:text-3xl">Bé sẽ làm gì trong bài?</h2>
+      <p class="mx-auto mt-3 max-w-xl text-center text-sm leading-relaxed text-cream-muted sm:text-base">
+        Mỗi bài có 5 nhiệm vụ ngắn. Con đi từ đầu tới cuối rồi bấm lưu chiến công.
+      </p>
+      <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+        {activityCards.map(([title, description], i) => (
+          <div class="rounded-xl border border-cream-dim/20 bg-navy-900/70 p-5">
+            <span class="flex h-9 w-9 items-center justify-center rounded-md bg-accent text-sm font-bold text-navy-950">{i + 1}</span>
+            <h3 class="mt-3 font-display text-lg font-bold text-cream">{title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-cream-muted">{description}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- ===== PROGRESS / MOTIVATION ===== -->
+    <section class="bg-navy-900 px-5 py-14 sm:py-16">
+      <div class="mx-auto max-w-5xl">
+        <h2 class="text-center font-display text-2xl font-bold text-cream sm:text-3xl">Mỗi bé có một hồ sơ học riêng</h2>
+        <p class="mx-auto mt-3 max-w-xl text-center text-sm leading-relaxed text-cream-muted sm:text-base">
+          Mã học sinh giữ tên bé, level, XP, xu, streak và lịch sử bài học. Bé bắt đầu từ L1 và mở dần tới L5.
+        </p>
+        <div class="mx-auto mt-8 grid max-w-3xl gap-4 sm:grid-cols-2">
+          <a href="/read2lead/leaderboard" class="rounded-xl border border-gold/35 bg-gold/10 p-5 transition hover:border-gold hover:bg-gold/15">
+            <p class="text-sm font-semibold uppercase tracking-wide text-gold-light">Bảng xếp hạng</p>
+            <p class="mt-2 text-sm leading-relaxed text-cream-muted">Xem rank Đồng, Bạc, Vàng, Kim cương, Huyền thoại của các bạn nhỏ.</p>
+          </a>
+          <a href="/read2lead/review" class="rounded-xl border border-accent/35 bg-accent/10 p-5 transition hover:border-accent hover:bg-accent/15">
+            <p class="text-sm font-semibold uppercase tracking-wide text-accent">Hồ sơ học sinh</p>
+            <p class="mt-2 text-sm leading-relaxed text-cream-muted">Nhập mã để xem level, XP, xu, streak và bài đang mở của bé.</p>
+          </a>
         </div>
       </div>
     </section>
 
-    <section class="mx-auto max-w-6xl px-6 py-20 text-center">
-      <p class="text-sm font-semibold uppercase tracking-wide text-cream-dim">Bạn cũng có thể quan tâm</p>
-      <div class="mx-auto mt-6 max-w-2xl rounded-lg border border-accent bg-navy-900/70 p-8">
-        <h3 class="font-display text-2xl font-bold leading-snug text-cream">MSMW - Sách truyện cá nhân hóa làm quà tặng</h3>
-        <p class="mt-4 leading-relaxed text-cream-muted">Một cuốn sách 20 trang với con là nhân vật chính, phù hợp làm quà sinh nhật hoặc dịp đặc biệt.</p>
-        <a href="/msmw" class="mt-6 inline-flex font-semibold text-accent transition hover:text-accent-hover">Xem MSMW</a>
+    <!-- ===== FAQ ===== -->
+    <section class="mx-auto max-w-3xl px-5 py-14 sm:py-16">
+      <h2 class="text-center font-display text-2xl font-bold text-cream sm:text-3xl">Câu hỏi thường gặp</h2>
+      <div class="mt-8 space-y-3">
+        {faqItems.map(([question, answer]) => (
+          <details class="rounded-lg border border-cream-dim/20 bg-navy-900/70 p-5">
+            <summary class="cursor-pointer text-base font-bold text-cream sm:text-lg">{question}</summary>
+            <p class="mt-3 text-sm leading-relaxed text-cream-muted sm:text-base">{answer}</p>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <!-- ===== CROSS-SELL ===== -->
+    <section class="mx-auto max-w-5xl px-5 pb-14 sm:pb-16">
+      <div class="rounded-xl border border-accent/30 bg-navy-900/70 p-6 text-center sm:p-8">
+        <p class="text-xs font-semibold uppercase tracking-wide text-cream-dim">Bạn cũng có thể quan tâm</p>
+        <h3 class="mt-3 font-display text-xl font-bold text-cream sm:text-2xl">MSMW - Sách truyện cá nhân hóa làm quà tặng</h3>
+        <p class="mx-auto mt-3 max-w-lg text-sm leading-relaxed text-cream-muted">Một cuốn sách 20 trang với con là nhân vật chính, phù hợp làm quà sinh nhật hoặc dịp đặc biệt.</p>
+        <a href="/msmw" class="mt-4 inline-flex font-semibold text-accent transition hover:text-accent-hover">Xem MSMW</a>
       </div>
     </section>
   </main>
@@ -365,6 +306,14 @@ const faqItems = [
     const errorSection = document.getElementById('error-section');
     const formSection = document.getElementById('form-section');
 
+    {
+      const prefillCode = new URLSearchParams(window.location.search).get('code');
+      if (prefillCode) {
+        const codeInput = form.querySelector('input[name="access_code"]');
+        if (codeInput) codeInput.value = prefillCode.toUpperCase();
+      }
+    }
+
     let statusInterval = null;
     let pollInterval = null;
     let pollAttempts = 0;
@@ -375,11 +324,11 @@ const faqItems = [
     const POLL_INTERVAL_MS = 5000;
 
     const stages = [
-      '✍️ Đang viết câu chuyện riêng cho con...',
-      '🎧 Đang chuẩn bị phần nghe cho câu chuyện...',
-      '🔊 Đang ghi âm các cụm câu để con tập đọc...',
-      '🎮 Đang chuẩn bị nhiệm vụ web cho con...',
-      '✨ Sắp xong rồi, đang mở bài học...',
+      'Đang viết câu chuyện riêng cho con...',
+      'Đang chuẩn bị phần nghe cho câu chuyện...',
+      'Đang ghi âm các cụm câu để con tập đọc...',
+      'Đang chuẩn bị nhiệm vụ web cho con...',
+      'Sắp xong rồi, đang mở bài học...',
     ];
 
     function showProgress() {
@@ -523,7 +472,7 @@ const faqItems = [
         const result = await res.json();
 
         if (!res.ok || !result.ok) {
-          showError(result.review_link ? `${result.message || result.error} Mở Felixar: ${result.review_link}` : (result.message || result.error || 'Có lỗi xảy ra, vui lòng thử lại.'));
+          showError(result.review_link ? `${result.message || result.error} Mở hồ sơ: ${result.review_link}` : (result.message || result.error || 'Có lỗi xảy ra, vui lòng thử lại.'));
           return;
         }
 
@@ -533,7 +482,7 @@ const faqItems = [
         }
 
         if (!result.task_id) {
-          showError('Backend không trả task_id hoặc lesson_link. Vui lòng thử lại.');
+          showError('Chưa nhận được phản hồi từ hệ thống. Vui lòng thử lại.');
           return;
         }
 

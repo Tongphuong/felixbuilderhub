@@ -195,7 +195,7 @@ async function submitV2Lesson({
       correct_count: correctCount,
       total_count: totalCount,
       rewards_earned: rewardsEarned,
-      message: `Bai nay chua dat ${PASS_THRESHOLD_PERCENT}%. Con bi tru ${XP_PENALTY_BELOW_THRESHOLD} XP, minh quay lai luyen them nhe.`,
+      message: `Chua dat ${PASS_THRESHOLD_PERCENT}%. Khong sao, minh thu lai nhe!`,
       read2lead_state: publicProgressState(savedProgressState),
       penalty_already_counted: penaltyResult.already_penalized,
       progress: publicProgress(nextProgress),
@@ -308,7 +308,7 @@ function scoreActivityResults(activityResults, lessonContext) {
     }
   }
 
-  const denominator = total + wrong;
+  const denominator = total + Math.floor(wrong * 0.5);
   const scorePercent = denominator > 0 ? Math.round((correct / denominator) * 100) : 0;
   return {
     correct_count: correct,
