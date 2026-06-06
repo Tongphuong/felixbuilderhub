@@ -13,8 +13,8 @@ const rankLadder = [
 ---
 
 <BaseLayout
-  title="Bảng vinh danh leo rank | Read2Lead"
-  description="Bảng vinh danh Read2Lead xếp hạng bằng XP, xu, số bài hoàn thành và rank L1-L5."
+  title="Bảng xếp hạng - Ranking Arena | Read2Lead"
+  description="Bảng xếp hạng Read2Lead xếp hạng bằng XP, xu, số bài hoàn thành và rank L1-L5."
 >
   <Header />
 
@@ -23,8 +23,8 @@ const rankLadder = [
       <div class="mx-auto max-w-6xl">
         <div class="mb-8 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
           <div>
-            <span class="inline-block rounded-md bg-gold/20 px-3 py-1 text-sm font-semibold text-gold-light">Felixar Rank Arena</span>
-            <h1 class="mt-4 font-display text-4xl font-extrabold leading-snug text-cream md:text-5xl">Bảng vinh danh leo rank</h1>
+            <span class="inline-block rounded-md bg-gold/20 px-3 py-1 text-sm font-semibold text-gold-light">Felixar Ranking Arena</span>
+            <h1 class="mt-4 font-display text-4xl font-extrabold leading-snug text-cream md:text-5xl">Bảng xếp hạng - Ranking Arena</h1>
             <p class="mt-3 max-w-2xl leading-relaxed text-cream-muted">
               Xếp hạng bằng XP, xu và số bài hoàn thành. Bé bắt đầu từ Đồng rồi leo dần lên Bạc, Vàng, Kim cương và Huyền thoại.
             </p>
@@ -37,17 +37,17 @@ const rankLadder = [
 
         <div id="loading-state" class="rounded-xl border border-cream-dim/20 bg-navy-950/70 p-8 text-center">
           <div class="mx-auto h-14 w-14 animate-pulse rounded-full bg-gold/30"></div>
-          <p class="mt-5 text-cream-muted">Đang tải bảng vinh danh...</p>
+          <p class="mt-5 text-cream-muted">Đang tải bảng xếp hạng...</p>
         </div>
 
         <div id="error-state" class="hidden rounded-xl border border-red-500/30 bg-red-500/10 p-8 text-center text-red-300">
-          Không tải được bảng vinh danh. Vui lòng thử lại sau ít phút.
+          Không tải được bảng xếp hạng. Vui lòng thử lại sau ít phút.
         </div>
 
         <div id="empty-state" class="hidden rounded-xl border border-gold/30 bg-gold/10 p-8 text-center">
           <img src="/assets/r2l/ranks/rank-l1-bronze.svg" alt="Rank Đồng" class="mx-auto h-24 w-24" />
           <h2 class="mt-4 font-display text-3xl font-bold leading-snug text-cream">Chưa có bạn nào trên bảng.</h2>
-          <p class="mx-auto mt-3 max-w-xl leading-relaxed text-cream-muted">Bé hoàn thành bài học đầu tiên trên web để nhận XP, xu và xuất hiện trong bảng vinh danh.</p>
+          <p class="mx-auto mt-3 max-w-xl leading-relaxed text-cream-muted">Bé hoàn thành bài học đầu tiên trên web để nhận XP, xu và xuất hiện trong bảng xếp hạng.</p>
           <a href="/read2lead" class="mt-6 inline-flex rounded-lg bg-accent px-6 py-3 font-semibold text-navy-950 transition hover:bg-accent-hover">Tạo bài đầu tiên</a>
         </div>
 
@@ -63,7 +63,7 @@ const rankLadder = [
           <div id="podium" class="grid gap-5 md:grid-cols-3 md:items-end"></div>
 
           <div class="mt-10 rounded-xl border border-cream-dim/20 bg-navy-950/70 p-4 shadow-2xl md:p-6">
-            <h2 class="mb-4 font-display text-2xl font-bold leading-snug text-cream">Danh sách vinh danh</h2>
+            <h2 class="mb-4 font-display text-2xl font-bold leading-snug text-cream">Danh sách xếp hạng</h2>
             <div id="leader-list" class="space-y-3"></div>
           </div>
         </div>

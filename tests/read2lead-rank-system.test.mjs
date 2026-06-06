@@ -96,3 +96,20 @@ test('rank image slot is present in the shared Read2Lead header', () => {
   const source = readFileSync(join(ROOT, 'src/components/Header.astro'), 'utf8');
   assert.match(source, /data-r2l-rank-image/);
 });
+
+test('Read2Lead landing surfaces Felixar and Ranking Arena before the form', () => {
+  const source = readFileSync(join(ROOT, 'src/pages/read2lead.astro'), 'utf8');
+  const formIndex = source.indexOf('<section id="form"');
+  assert.ok(formIndex > 0, 'form section should exist');
+  assert.ok(source.indexOf('Hồ sơ Felixar') > 0);
+  assert.ok(source.indexOf('Bảng xếp hạng - Ranking Arena') > 0);
+  assert.ok(source.indexOf('Hồ sơ Felixar') < formIndex);
+  assert.ok(source.indexOf('Bảng xếp hạng - Ranking Arena') < formIndex);
+  assert.equal(/bảng vinh danh/i.test(source), false);
+});
+
+test('leaderboard page uses Ranking Arena wording instead of old honor-board wording', () => {
+  const source = readFileSync(join(ROOT, 'src/pages/read2lead/leaderboard.astro'), 'utf8');
+  assert.match(source, /Bảng xếp hạng - Ranking Arena/);
+  assert.equal(/bảng vinh danh/i.test(source), false);
+});

@@ -4,7 +4,7 @@ export async function onRequestGet(context) {
   const { request, env } = context;
 
   if (!env.READ2LEAD_CODES) {
-    return json({ ok: false, error: 'config_error', message: 'Felixar chua cau hinh bang vinh danh.' }, 500);
+    return json({ ok: false, error: 'config_error', message: 'Felixar chua cau hinh bang xep hang.' }, 500);
   }
 
   const url = new URL(request.url);
