@@ -346,6 +346,12 @@ import RewardBurst from '../../components/read2lead/v2/RewardBurst.astro';
     activityResults: {},
   };
 
+  const lessonAudioState = {
+    audio: null,
+    url: '',
+    button: null,
+  };
+
   const ACTIVITY_LABELS = {
     listening_comprehension: 'Nghe hiểu',
     listen_and_order: 'Xếp câu',
@@ -378,6 +384,36 @@ import RewardBurst from '../../components/read2lead/v2/RewardBurst.astro';
 
   window.__r2lRollRewardTier = rollRewardTier;
   window.__r2lTestRewardDistribution = testRewardDistribution;
+
+  function resetAudioButton(button) {
+    if (!button) return;
+    const label = button.dataset.audioDefaultLabel || button.textContent || 'Nghe';
+    button.textContent = label;
+    button.setAttribute('aria-pressed', 'false');
+  }
+
+  function markAudioButtonPlaying(button) {
+    if (!button) return;
+    if (!button.dataset.audioDefaultLabel) button.dataset.audioDefaultLabel = button.textContent || 'Nghe';
+    button.textContent = 'Dừng nghe';
+    button.setAttribute('aria-pressed', 'true');
+  }
+
+  function stopLessonAudio({ resetTime = true } = {}) {
+    const audio = lessonAudioState.audio;
+    if (audio) {
+      audio.pause();
+      if (resetTime) {
+        try {
+          audio.currentTime = 0;
+        } catch {}
+      }
+    }
+    resetAudioButton(lessonAudioState.button);
+    lessonAudioState.audio = null;
+    lessonAudioState.url = '';
+    lessonAudioState.button = null;
+  }
 
   /* ----- Activity C audio recorder (W4.3) ----- */
   const _r2lRecorderState = {
@@ -550,8 +586,12 @@ import RewardBurst from '../../components/read2lead/v2/RewardBurst.astro';
       .join('');
 
     const fullAudio = lesson.story?.full_audio_url || '';
-    qs('#play-story').addEventListener('click', () => playAudio(fullAudio));
-    if (!fullAudio) qs('#play-story').textContent = 'Chưa có audio';
+    const playStoryButton = qs('#play-story');
+    playStoryButton.addEventListener('click', () => playAudio(fullAudio, playStoryButton));
+    if (!fullAudio) {
+      playStoryButton.textContent = 'Chưa có audio';
+      playStoryButton.disabled = true;
+    }
 
     renderSentences(lesson.story?.sentences || []);
     renderActivity(0);
@@ -573,7 +613,7 @@ import RewardBurst from '../../components/read2lead/v2/RewardBurst.astro';
     qsa('[data-sentence-index]').forEach((button) => {
       button.addEventListener('click', () => {
         const sentence = sentences[Number(button.dataset.sentenceIndex)];
-        playAudio(sentence?.audio_url || '');
+        playAudio(sentence?.audio_url || '', button);
       });
     });
   }
@@ -582,6 +622,7 @@ import RewardBurst from '../../components/read2lead/v2/RewardBurst.astro';
     const activities = state.lesson.activities || [];
     const nextIndex = Math.max(0, Math.min(index, 3));
     const previousActivity = activities[state.activityIndex];
+    if (nextIndex !== state.activityIndex) stopLessonAudio();
     if (previousActivity?.type === 'listen_and_speak' && nextIndex !== state.activityIndex) {
       _r2lCleanupRecorderState();
     }
@@ -708,7 +749,7 @@ import RewardBurst from '../../components/read2lead/v2/RewardBurst.astro';
     let wrongCount = 0;
     const picked = {};
     root.querySelectorAll('[data-play-order]').forEach((button) => {
-      button.addEventListener('click', () => playAudio(activity.items[Number(button.dataset.playOrder)]?.audio_url || ''));
+      button.addEventListener('click', () => playAudio(activity.items[Number(button.dataset.playOrder)]?.audio_url || '', button));
     });
     root.querySelectorAll('[data-order-item]').forEach((button) => {
       button.addEventListener('click', () => {
@@ -782,7 +823,7 @@ import RewardBurst from '../../components/read2lead/v2/RewardBurst.astro';
     const rated = new Set();
     let readyCount = 0;
     root.querySelectorAll('[data-play-speak]').forEach((button) => {
-      button.addEventListener('click', () => playAudio(activity.items[Number(button.dataset.playSpeak)]?.audio_url || ''));
+      button.addEventListener('click', () => playAudio(activity.items[Number(button.dataset.playSpeak)]?.audio_url || '', button));
     });
     root.querySelectorAll('[data-speak-card]').forEach((cardEl) => {
       const itemIndex = Number(cardEl.dataset.speakCard);
@@ -896,14 +937,27 @@ import RewardBurst from '../../components/read2lead/v2/RewardBurst.astro';
     if (questionId) _r2lSfxState.wrongStreak.delete(questionId);
   }
 
-  function playAudio(url) {
+  function playAudio(url, button = null) {
     if (!url) {
       showReward({ mode: 'celebrate', withVoice: true });
       return;
     }
+    if (lessonAudioState.audio && lessonAudioState.url === url && !lessonAudioState.audio.paused) {
+      stopLessonAudio();
+      return;
+    }
+    stopLessonAudio();
     const audio = new Audio(url);
     audio.preload = 'auto';
+    lessonAudioState.audio = audio;
+    lessonAudioState.url = url;
+    lessonAudioState.button = button;
+    markAudioButtonPlaying(button);
+    audio.addEventListener('ended', () => {
+      if (lessonAudioState.audio === audio) stopLessonAudio({ resetTime: false });
+    });
     audio.play().catch(() => {
+      if (lessonAudioState.audio === audio) stopLessonAudio();
       showError('Trình duyệt chưa cho phát audio. Con bấm lại một lần nữa nhé.');
     });
   }
