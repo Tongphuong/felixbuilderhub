@@ -34,7 +34,7 @@ export async function onRequestGet(context) {
     return json({ ok: false, error: 'generation_in_progress', message: 'Bai van dang duoc tao. Vui long doi them mot chut.' }, 409);
   }
 
-  const v2Pack = extractV2Pack(pack);
+  let v2Pack = extractV2Pack(pack);
   if (!v2Pack) {
     return json({
       ok: false,
@@ -43,10 +43,32 @@ export async function onRequestGet(context) {
     }, 410);
   }
 
+  v2Pack = await mergeDeferredFullStoryAudio(env, pack, v2Pack);
+
   return json({
     ok: true,
     lesson: buildV2LessonPayload({ accessCode, codeData, pack, v2Pack }),
   });
+}
+
+async function mergeDeferredFullStoryAudio(env, pack, v2Pack) {
+  if (!v2Pack?.story?.full_audio_url) {
+    const taskId = pack.generation_task_id || pack.task_id;
+    if (taskId && env.READ2LEAD_CODES) {
+      const taskValue = await env.READ2LEAD_CODES.get(`task:${taskId}`, { type: 'json' });
+      const mergedUrl =
+        taskValue?.result?.review_context?.story?.full_audio_url ||
+        taskValue?.result?.pack?.story?.full_audio_url ||
+        '';
+      if (mergedUrl) {
+        return {
+          ...v2Pack,
+          story: { ...v2Pack.story, full_audio_url: mergedUrl },
+        };
+      }
+    }
+  }
+  return v2Pack;
 }
 
 function extractV2Pack(pack) {
