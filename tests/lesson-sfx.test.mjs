@@ -67,3 +67,9 @@ test('reward burst includes confetti and firework layers', () => {
   assert.match(rewardBurst, /r2l-confetti/);
   assert.match(rewardBurst, /r2l-firework/);
 });
+
+test('lesson submit sends score percent and wrong attempts affect score', () => {
+  assert.match(lessonPage, /function calculateLessonScore/);
+  assert.match(lessonPage, /wrong_count/);
+  assert.match(lessonPage, /score_percent: calculateLessonScore\(\)\.score_percent/);
+});

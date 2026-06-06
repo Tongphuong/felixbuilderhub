@@ -1,7 +1,11 @@
 import { getClientIp, checkCodeRateLimit, recordCodeFailure, rateLimitedResponse } from './_rate-limit.js';
 import {
   applyPackCompletion,
+  applyPackPenalty,
   loadProgressState,
+  PASS_THRESHOLD_PERCENT,
+  XP_PENALTY_BELOW_THRESHOLD,
+  XP_PER_PASSED_PACK,
   publicProgressState,
   saveProgressState,
 } from './_read2lead-v2-state.js';
@@ -128,13 +132,17 @@ async function submitV2Lesson({
       .map((result) => result.type)
       .filter(Boolean),
   );
-  const totalCount = expectedTypes.length || 4;
-  const correctCount = expectedTypes.filter((type) => completedTypes.has(type)).length;
-  const scorePercent = Math.round((correctCount / totalCount) * 100);
-  const passed = correctCount === totalCount;
+  const score = scoreActivityResults(activityResults, lessonContext);
+  const totalCount = score.total_count || expectedTypes.length || 4;
+  const correctCount = score.correct_count;
+  const allActivitiesAttempted = expectedTypes.length > 0
+    ? expectedTypes.every((type) => completedTypes.has(type))
+    : completedTypes.size >= 4;
+  const scorePercent = score.score_percent;
+  const passed = allActivitiesAttempted && scorePercent >= PASS_THRESHOLD_PERCENT;
   const rewards = lessonContext.rewards || {
     coins_on_complete: 15,
-    xp_on_complete: 20,
+    xp_on_complete: XP_PER_PASSED_PACK,
     bonus_coins_per_activity_attempted: 2,
   };
   const rewardsEarned = passed
@@ -142,9 +150,9 @@ async function submitV2Lesson({
         coins:
           numberOrZero(rewards.coins_on_complete) +
           correctCount * numberOrZero(rewards.bonus_coins_per_activity_attempted),
-        xp: numberOrZero(rewards.xp_on_complete),
+        xp: XP_PER_PASSED_PACK,
       }
-    : { coins: 0, xp: 0 };
+    : { coins: 0, xp: -XP_PENALTY_BELOW_THRESHOLD };
   const attempt = {
     schema_version: 2,
     submitted_at: submittedAt,
@@ -161,6 +169,13 @@ async function submitV2Lesson({
   ].slice(-5);
 
   if (!passed) {
+    const progressState = await loadProgressState(env, accessCode, codeData);
+    const penaltyResult = applyPackPenalty(progressState, {
+      packId: currentPack.pack_id,
+      completedAt: submittedAt,
+      penaltyXp: XP_PENALTY_BELOW_THRESHOLD,
+    });
+    const savedProgressState = await saveProgressState(env, accessCode, penaltyResult.state);
     const updatedPack = {
       ...currentPack,
       web_attempts: webAttempts,
@@ -180,7 +195,9 @@ async function submitV2Lesson({
       correct_count: correctCount,
       total_count: totalCount,
       rewards_earned: rewardsEarned,
-      message: 'Con con mot manh nhiem vu chua cham toi. Minh quay lai hoan thanh not nhe.',
+      message: `Bai nay chua dat ${PASS_THRESHOLD_PERCENT}%. Con bi tru ${XP_PENALTY_BELOW_THRESHOLD} XP, minh quay lai luyen them nhe.`,
+      read2lead_state: publicProgressState(savedProgressState),
+      penalty_already_counted: penaltyResult.already_penalized,
       progress: publicProgress(nextProgress),
       current_pack: publicPack(updatedPack),
       next_pack_unlocked: false,
@@ -260,6 +277,52 @@ async function submitV2Lesson({
     current_pack: publicPack(reviewedPack),
     next_pack_unlocked: true,
   });
+}
+
+function scoreActivityResults(activityResults, lessonContext) {
+  const expectedActivities = Array.isArray(lessonContext.activities) ? lessonContext.activities : [];
+  const resultsByType = new Map(
+    (Array.isArray(activityResults) ? activityResults : [])
+      .filter((result) => result?.type)
+      .map((result) => [result.type, result]),
+  );
+  let correct = 0;
+  let total = 0;
+  let wrong = 0;
+
+  for (const activity of expectedActivities) {
+    const result = resultsByType.get(activity?.type);
+    const fallbackTotal = activityItemCount(activity);
+    const resultTotal = numberOrZero(result?.total_count) || fallbackTotal;
+    total += resultTotal;
+    correct += Math.min(resultTotal, numberOrZero(result?.correct_count));
+    wrong += numberOrZero(result?.wrong_count);
+  }
+
+  if (!expectedActivities.length) {
+    for (const result of resultsByType.values()) {
+      const resultTotal = numberOrZero(result?.total_count);
+      total += resultTotal;
+      correct += Math.min(resultTotal, numberOrZero(result?.correct_count));
+      wrong += numberOrZero(result?.wrong_count);
+    }
+  }
+
+  const denominator = total + wrong;
+  const scorePercent = denominator > 0 ? Math.round((correct / denominator) * 100) : 0;
+  return {
+    correct_count: correct,
+    total_count: total,
+    wrong_count: wrong,
+    score_percent: scorePercent,
+  };
+}
+
+function activityItemCount(activity) {
+  if (!activity || typeof activity !== 'object') return 0;
+  if (Array.isArray(activity.questions)) return activity.questions.length;
+  if (Array.isArray(activity.items)) return activity.items.length;
+  return 0;
 }
 
 function normalizeProgress(codeData) {

@@ -108,8 +108,8 @@ const contactHref = ZALO_URL;
           stateHeader.classList.add('flex');
           stateHeader.querySelector('[data-r2l-level]').textContent = state.current_level || 'LV';
           stateHeader.querySelector('[data-r2l-rank]').textContent = state.rank_title || 'Read2Lead';
-          stateHeader.querySelector('[data-r2l-xp-label]').textContent = `${state.xp_in_level || 0}/${state.xp_to_next_level || 60} XP`;
-          stateHeader.querySelector('[data-r2l-xp-fill]').style.width = `${state.xp_percent || 0}%`;
+          stateHeader.querySelector('[data-r2l-xp-label]').textContent = `${state.xp_in_level ?? 0}/${state.xp_to_next_level ?? 60} XP`;
+          stateHeader.querySelector('[data-r2l-xp-fill]').style.width = `${state.xp_percent ?? 0}%`;
           stateHeader.querySelector('[data-r2l-coins]').textContent = `${state.coins || 0} xu`;
           stateHeader.querySelector('[data-r2l-streak]').textContent = `${state.streak_days || 0} ngày`;
         })

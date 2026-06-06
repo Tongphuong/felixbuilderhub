@@ -192,8 +192,8 @@ const faqItems = [
       <div class="mx-auto max-w-6xl">
         <div id="form-section">
           <div class="text-center">
-            <h2 class="font-display text-3xl font-bold leading-snug text-cream md:text-4xl">Tạo file cho con</h2>
-            <p class="mx-auto mt-4 max-w-2xl leading-relaxed text-cream-muted">Điền thông tin bên dưới. Nếu không chắc mức đọc nào phù hợp, hãy chọn mức 2 trước.</p>
+            <h2 class="font-display text-3xl font-bold leading-snug text-cream md:text-4xl">Tạo bài học cho con</h2>
+            <p class="mx-auto mt-4 max-w-2xl leading-relaxed text-cream-muted">Nhập mã học sinh. Read2Lead sẽ dùng hồ sơ đã lưu trong admin/codes để tạo đúng bài cho con.</p>
           </div>
 
           <form id="r2l-form" class="mx-auto mt-10 max-w-xl space-y-5">
@@ -212,29 +212,8 @@ const faqItems = [
               />
               <p class="mt-2 text-xs text-cream-dim">Chưa có mã? <a href={ZALO_URL} class="text-accent underline">Nhắn Zalo Felix</a> để nhận.</p>
             </div>
-            <div>
-              <label for="child_name" class="mb-2 block text-sm text-cream-muted">Tên con <span class="text-red-400">*</span></label>
-              <input id="child_name" name="child_name" required maxlength="50" placeholder="VD: Linh" class="w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-4 py-3 text-base text-cream placeholder:text-cream-dim/80 focus:border-accent focus:outline-none" />
-            </div>
-            <div>
-              <label for="age" class="mb-2 block text-sm text-cream-muted">Tuổi con <span class="text-red-400">*</span></label>
-              <input id="age" type="number" name="age" min="5" max="14" required placeholder="5-14" class="w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-4 py-3 text-base text-cream placeholder:text-cream-dim/80 focus:border-accent focus:outline-none" />
-            </div>
             <div class="rounded-lg border border-accent/30 bg-accent/10 p-4 text-sm leading-relaxed text-cream-muted">
-              Mọi bạn nhỏ bắt đầu từ L1. Sau khi làm bài và tích lũy đủ XP, Read2Lead sẽ tự mở L2, L3 cho con.
-            </div>
-            <div>
-              <label class="mb-2 block text-sm text-cream-muted">Giới tính con <span class="text-red-400">*</span></label>
-              <div class="space-y-2 rounded-lg border border-cream-dim/30 bg-navy-950 p-4">
-                <label class="flex cursor-pointer items-center gap-3">
-                  <input type="radio" name="child_gender" value="boy" required class="h-4 w-4 accent-accent" checked />
-                  <span>Bé trai</span>
-                </label>
-                <label class="flex cursor-pointer items-center gap-3">
-                  <input type="radio" name="child_gender" value="girl" required class="h-4 w-4 accent-accent" />
-                  <span>Bé gái</span>
-                </label>
-              </div>
+              Tên, tuổi và giới tính của con đã lưu sẵn trong mã học sinh. Nếu cần đổi tên, Felix sửa ở trang admin/codes. Mọi bạn nhỏ bắt đầu từ L1, tích lũy XP để mở L2 và L3.
             </div>
             <details class="group rounded-lg border border-cream-dim/30 bg-navy-950/60">
               <summary class="flex cursor-pointer list-none items-center justify-between px-4 py-3 text-sm font-semibold text-cream-muted transition hover:text-accent">
@@ -282,7 +261,7 @@ const faqItems = [
               <label for="website">Website</label>
               <input id="website" name="website" tabindex="-1" />
             </div>
-            <button type="submit" class="w-full rounded-lg bg-accent px-6 py-3 text-lg font-semibold text-navy-950 transition hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-70">Tạo file đọc cho con</button>
+            <button type="submit" class="w-full rounded-lg bg-accent px-6 py-3 text-lg font-semibold text-navy-950 transition hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-70">Tạo bài học cho con</button>
             <p class="text-center text-xs text-cream-dim/80">Gửi form đồng nghĩa anh chị đồng ý <a href="/privacy" class="underline transition hover:text-accent">chính sách dữ liệu</a> của Felix.</p>
           </form>
         </div>
@@ -308,7 +287,7 @@ const faqItems = [
             Con nghe truyện, làm 4 nhiệm vụ và lưu chiến công trực tiếp trên web. Bố mẹ có thể mở <a id="review-link" href="/read2lead/review" class="font-semibold text-gold-light underline">Felixar</a> để xem tiến trình.
           </p>
           <div class="mt-6">
-            <p class="text-cream-dim">Muốn tạo file khác cho bé khác?</p>
+            <p class="text-cream-dim">Muốn tạo bài khác?</p>
             <button id="reset-btn" type="button" class="mt-3 rounded-lg border border-cream-dim/30 px-5 py-2 font-semibold text-cream transition hover:border-accent hover:text-accent">Làm lại form</button>
           </div>
         </div>
@@ -438,7 +417,7 @@ const faqItems = [
     document.getElementById('reset-btn').addEventListener('click', resetForm);
     document.getElementById('retry-btn').addEventListener('click', resetForm);
 
-    async function pollGenerationStatus(accessCode, taskId, childName) {
+    async function pollGenerationStatus(accessCode, taskId) {
       if (generationComplete || activeTaskId !== taskId || pollInFlight) return;
       pollInFlight = true;
       try {
@@ -474,10 +453,7 @@ const faqItems = [
         activeTaskId = null;
 
         if (result.status === 'done' && result.lesson_link) {
-          showResult({
-            ...result,
-            child_name: childName,
-          });
+          showResult(result);
         } else {
           showError(result.message || result.error || 'Tạo bài thất bại.');
         }
@@ -522,10 +498,7 @@ const faqItems = [
         }
 
         if (result.status === 'done' && result.lesson_link) {
-          showResult({
-            ...result,
-            child_name: data.child_name,
-          });
+          showResult(result);
           return;
         }
 
@@ -535,16 +508,16 @@ const faqItems = [
         }
 
         activeTaskId = result.task_id;
-        pollGenerationStatus(data.access_code.toUpperCase(), result.task_id, data.child_name);
+        pollGenerationStatus(data.access_code.toUpperCase(), result.task_id);
         pollInterval = setInterval(
-          () => pollGenerationStatus(data.access_code.toUpperCase(), result.task_id, data.child_name),
+          () => pollGenerationStatus(data.access_code.toUpperCase(), result.task_id),
           POLL_INTERVAL_MS,
         );
       } catch (err) {
         showError('Mạng không ổn định. Vui lòng thử lại sau ít phút.');
       } finally {
         btn.disabled = false;
-        btn.textContent = 'Tạo file đọc cho con';
+        btn.textContent = 'Tạo bài học cho con';
       }
     });
   </script>

@@ -645,6 +645,7 @@ import RewardBurst from '../../components/read2lead/v2/RewardBurst.astro';
     `;
 
     const answered = new Set();
+    let wrongCount = 0;
     root.querySelectorAll('[data-question-index]').forEach((button) => {
       button.addEventListener('click', () => {
         const questionIndex = Number(button.dataset.questionIndex);
@@ -659,11 +660,13 @@ import RewardBurst from '../../components/read2lead/v2/RewardBurst.astro';
           clearWrongStreak(questionId);
           if (answered.size < (activity.questions || []).length) showReward({ withVoice: true });
         } else if (!isCorrect) {
+          wrongCount += 1;
           playWrongSfx(questionId);
         }
         if (answered.size === (activity.questions || []).length) completeActivity(activity.type, {
           correct_count: answered.size,
           total_count: activity.questions.length,
+          wrong_count: wrongCount,
         });
       });
     });
@@ -702,6 +705,7 @@ import RewardBurst from '../../components/read2lead/v2/RewardBurst.astro';
     `;
 
     const solved = new Set();
+    let wrongCount = 0;
     const picked = {};
     root.querySelectorAll('[data-play-order]').forEach((button) => {
       button.addEventListener('click', () => playAudio(activity.items[Number(button.dataset.playOrder)]?.audio_url || ''));
@@ -725,6 +729,7 @@ import RewardBurst from '../../components/read2lead/v2/RewardBurst.astro';
             clearWrongStreak(questionId);
             if (solved.size < (activity.items || []).length) showReward({ withVoice: true });
           } else {
+            wrongCount += 1;
             playWrongSfx(questionId);
             root.querySelector(`[data-order-hint="${itemIndex}"]`)?.classList.remove('hidden');
             picked[itemIndex] = [];
@@ -734,6 +739,7 @@ import RewardBurst from '../../components/read2lead/v2/RewardBurst.astro';
         if (solved.size === (activity.items || []).length) completeActivity(activity.type, {
           correct_count: solved.size,
           total_count: activity.items.length,
+          wrong_count: wrongCount,
         });
       });
     });
@@ -774,6 +780,7 @@ import RewardBurst from '../../components/read2lead/v2/RewardBurst.astro';
     `;
 
     const rated = new Set();
+    let readyCount = 0;
     root.querySelectorAll('[data-play-speak]').forEach((button) => {
       button.addEventListener('click', () => playAudio(activity.items[Number(button.dataset.playSpeak)]?.audio_url || ''));
     });
@@ -785,11 +792,14 @@ import RewardBurst from '../../components/read2lead/v2/RewardBurst.astro';
     root.querySelectorAll('[data-rate-speak]').forEach((button) => {
       button.addEventListener('click', () => {
         const itemIndex = Number(button.dataset.rateSpeak);
+        if (rated.has(itemIndex)) return;
         rated.add(itemIndex);
-        button.dataset.state = 'correct';
+        const isReady = button.dataset.rateValue === 'ready';
+        if (isReady) readyCount += 1;
+        button.dataset.state = isReady ? 'correct' : 'retry';
         if (rated.size < (activity.items || []).length) showReward({ withVoice: true });
         if (rated.size === (activity.items || []).length) completeActivity(activity.type, {
-          correct_count: rated.size,
+          correct_count: readyCount,
           total_count: activity.items.length,
           self_rate: true,
         });
@@ -898,6 +908,26 @@ import RewardBurst from '../../components/read2lead/v2/RewardBurst.astro';
     });
   }
 
+  function calculateLessonScore() {
+    const results = Object.values(state.activityResults || {});
+    let correct = 0;
+    let total = 0;
+    let wrong = 0;
+    results.forEach((result) => {
+      const resultTotal = Number(result.total_count || 0);
+      total += resultTotal;
+      correct += Math.min(resultTotal, Number(result.correct_count || 0));
+      wrong += Number(result.wrong_count || 0);
+    });
+    const denominator = total + wrong;
+    return {
+      correct_count: correct,
+      total_count: total,
+      wrong_count: wrong,
+      score_percent: denominator > 0 ? Math.round((correct / denominator) * 100) : 0,
+    };
+  }
+
   qs('#submit-lesson').addEventListener('click', async () => {
     qs('#submit-lesson').disabled = true;
     qs('#submit-hint').textContent = 'Minny đang lưu kết quả...';
@@ -911,11 +941,18 @@ import RewardBurst from '../../components/read2lead/v2/RewardBurst.astro';
           answers: {
             schema_version: 2,
             activity_results: Object.values(state.activityResults),
+            score_percent: calculateLessonScore().score_percent,
           },
         }),
       });
       const data = await res.json();
-      if (!res.ok || !data.ok || !data.passed) throw new Error(data.message || data.error || 'Chưa lưu được.');
+      if (!res.ok || !data.ok) throw new Error(data.message || data.error || 'Chưa lưu được.');
+      if (!data.passed) {
+        const rewards = data.rewards_earned || {};
+        qs('#submit-hint').textContent = `${data.message || 'Bài này chưa đạt 70%.'} XP: ${rewards.xp || -10}.`;
+        qs('#submit-lesson').disabled = false;
+        return;
+      }
       const rewards = data.rewards_earned || {};
       qs('#completion-copy').textContent = `Con nhận ${rewards.coins || 0} xu và ${rewards.xp || 0} XP cho nhiệm vụ này.`;
       qs('#completion-card').classList.remove('hidden');
@@ -948,8 +985,8 @@ import RewardBurst from '../../components/read2lead/v2/RewardBurst.astro';
     header.classList.add('flex');
     header.querySelector('[data-r2l-level]').textContent = read2LeadState.current_level || 'LV';
     header.querySelector('[data-r2l-rank]').textContent = read2LeadState.rank_title || 'Read2Lead';
-    header.querySelector('[data-r2l-xp-label]').textContent = `${read2LeadState.xp_in_level || 0}/${read2LeadState.xp_to_next_level || 60} XP`;
-    header.querySelector('[data-r2l-xp-fill]').style.width = `${read2LeadState.xp_percent || 0}%`;
+    header.querySelector('[data-r2l-xp-label]').textContent = `${read2LeadState.xp_in_level ?? 0}/${read2LeadState.xp_to_next_level ?? 60} XP`;
+    header.querySelector('[data-r2l-xp-fill]').style.width = `${read2LeadState.xp_percent ?? 0}%`;
     header.querySelector('[data-r2l-coins]').textContent = `${read2LeadState.coins || 0} xu`;
     header.querySelector('[data-r2l-streak]').textContent = `${read2LeadState.streak_days || 0} ngày`;
   }

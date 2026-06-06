@@ -12,6 +12,13 @@ test('parent intake form does not expose a level selector', () => {
   assert.match(read2LeadPage, /bắt đầu từ L1/);
 });
 
+test('parent intake form does not expose child identity fields', () => {
+  assert.doesNotMatch(read2LeadPage, /name="child_name"/);
+  assert.doesNotMatch(read2LeadPage, /name="age"/);
+  assert.doesNotMatch(read2LeadPage, /name="child_gender"/);
+  assert.match(read2LeadPage, /hồ sơ đã lưu trong admin\/codes/);
+});
+
 test('admin create-code form does not expose a level selector', () => {
   assert.doesNotMatch(adminCodesPage, /student_level/);
   assert.match(adminCodesPage, /bắt đầu ở L1/);
@@ -21,7 +28,13 @@ test('generate endpoint does not accept client-provided level as source of truth
   assert.match(generateEndpoint, /loadProgressState/);
   assert.match(generateEndpoint, /progressState\?\.current_level/);
   assert.doesNotMatch(generateEndpoint, /data\.level/);
+  assert.doesNotMatch(generateEndpoint, /data\.child_name/);
   assert.doesNotMatch(generateEndpoint, /includes\(data\.level\)/);
+});
+
+test('admin has bulk L1 reset action for old codes', () => {
+  assert.equal(existsSync('functions/api/admin/codes/reset-levels.js'), true);
+  assert.match(adminCodesPage, /Reset tất cả về L1/);
 });
 
 test('manual level override endpoint is removed', () => {

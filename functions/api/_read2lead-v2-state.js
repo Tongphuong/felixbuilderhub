@@ -1,6 +1,13 @@
-export const LEVELS = ['L1', 'L2', 'L3', 'L4', 'L5'];
-export const PACKS_PER_LEVEL = 3;
-export const XP_PER_LEVEL = 60;
+export const LEVELS = ['L1', 'L2', 'L3'];
+export const PACKS_TO_NEXT_LEVEL = {
+  L1: 5,
+  L2: 15,
+  L3: 0,
+};
+export const XP_PER_PASSED_PACK = 20;
+export const XP_PENALTY_BELOW_THRESHOLD = 10;
+export const PASS_THRESHOLD_PERCENT = 70;
+export const LEVEL_RESET_VERSION = 20260606;
 export const START_LEVEL = 'L1';
 export const COINS_TOOLTIP = 'Tiết kiệm xu cho cửa hàng sắp mở! 🛒';
 
@@ -17,8 +24,6 @@ const RANK_TITLES = {
   L1: 'Story Starter',
   L2: 'Listening Explorer',
   L3: 'Sentence Builder',
-  L4: 'Reading Ranger',
-  L5: 'Story Captain',
 };
 
 export function progressNamespace(env) {
@@ -66,14 +71,21 @@ export function normalizeProgressState(raw, { accessCode, codeData = null, nowIs
   const profile = codeData?.student_profile || {};
   const legacyProgress = codeData?.progress || {};
   const hasStoredV2State = raw?.schema_version === 2;
-  const initialLevel = hasStoredV2State ? safeLevel(raw?.initial_level) : START_LEVEL;
-  const currentLevel = hasStoredV2State ? safeLevel(raw?.current_level || raw?.level || initialLevel) : START_LEVEL;
+  const hasCurrentLevelReset = raw?.level_reset_version === LEVEL_RESET_VERSION;
+  const initialLevel = hasStoredV2State && hasCurrentLevelReset ? safeLevel(raw?.initial_level) : START_LEVEL;
+  const currentLevel = hasStoredV2State && hasCurrentLevelReset
+    ? safeLevel(raw?.current_level || raw?.level || initialLevel)
+    : START_LEVEL;
   const completedPacks = numberOrZero(raw?.completed_packs ?? legacyProgress.completed_packs);
   const coins = numberOrZero(raw?.coins);
-  const totalXp = numberOrZero(raw?.total_xp);
-  const xpInLevel = Math.min(XP_PER_LEVEL, numberOrZero(raw?.xp_in_level ?? raw?.xp));
+  const totalXp = hasCurrentLevelReset ? numberOrZero(raw?.total_xp) : 0;
+  const xpInLevel = hasCurrentLevelReset
+    ? Math.min(xpToNextLevel(currentLevel), numberOrZero(raw?.xp_in_level ?? raw?.xp))
+    : 0;
   const levelProgress =
-    raw?.level_progress && typeof raw.level_progress === 'object' ? raw.level_progress : {};
+    hasCurrentLevelReset && raw?.level_progress && typeof raw.level_progress === 'object'
+      ? raw.level_progress
+      : {};
   const defaultUnlockedLevels = currentLevel === initialLevel
     ? [initialLevel]
     : [initialLevel, currentLevel];
@@ -82,6 +94,7 @@ export function normalizeProgressState(raw, { accessCode, codeData = null, nowIs
     : defaultUnlockedLevels;
   const base = {
     schema_version: 2,
+    level_reset_version: LEVEL_RESET_VERSION,
     access_code: String(accessCode || raw?.access_code || '').trim().toUpperCase(),
     student_name: raw?.student_name || profile.student_name || legacyProgress.student_name || '',
     current_level: currentLevel,
@@ -91,9 +104,10 @@ export function normalizeProgressState(raw, { accessCode, codeData = null, nowIs
     coins,
     total_xp: totalXp,
     xp_in_level: xpInLevel,
-    xp_to_next_level: XP_PER_LEVEL,
+    xp_to_next_level: xpToNextLevel(currentLevel),
     completed_packs: completedPacks,
     completed_pack_ids: Array.isArray(raw?.completed_pack_ids) ? raw.completed_pack_ids.slice(-100) : [],
+    penalized_pack_ids: Array.isArray(raw?.penalized_pack_ids) ? raw.penalized_pack_ids.slice(-100) : [],
     level_progress: normalizeLevelProgress(levelProgress),
     streak_days: numberOrZero(raw?.streak_days ?? legacyProgress.streak_days),
     last_activity_date_vn: raw?.last_activity_date_vn || vietnamDateKey(legacyProgress.last_activity_at || ''),
@@ -137,12 +151,13 @@ export function applyPackCompletion(
   const nextCompleted = state.completed_packs + 1;
   const nextCompletedIds = [...state.completed_pack_ids, id].slice(-100);
   let nextCurrentLevel = currentLevel;
+  const xpTarget = xpToNextLevel(currentLevel);
   const nextXpTotal = state.xp_in_level + earnedXp;
-  let xpInLevel = Math.min(XP_PER_LEVEL, nextXpTotal);
+  let xpInLevel = xpTarget ? Math.min(xpTarget, nextXpTotal) : nextXpTotal;
   let levelUp = null;
 
   levelProgress[currentLevel] = nextLevelCount;
-  if (nextXpTotal >= XP_PER_LEVEL) {
+  if (xpTarget && nextXpTotal >= xpTarget) {
     const nextLevel = levelAfter(currentLevel);
     if (nextLevel) {
       levelUp = {
@@ -151,10 +166,10 @@ export function applyPackCompletion(
         message_vi: `Con đã mở khóa ${nextLevel}.`,
       };
       nextCurrentLevel = nextLevel;
-      levelProgress[currentLevel] = 0;
+      levelProgress[nextLevel] = 0;
       xpInLevel = 0;
     } else {
-      xpInLevel = XP_PER_LEVEL;
+      xpInLevel = xpTarget;
     }
   }
 
@@ -166,6 +181,7 @@ export function applyPackCompletion(
     coins: state.coins + numberOrZero(rewardsEarned.coins),
     total_xp: state.total_xp + earnedXp,
     xp_in_level: xpInLevel,
+    xp_to_next_level: xpToNextLevel(nextCurrentLevel),
     completed_packs: nextCompleted,
     completed_pack_ids: nextCompletedIds,
     level_progress: levelProgress,
@@ -192,9 +208,55 @@ export function applyPackCompletion(
   };
 }
 
+export function applyPackPenalty(
+  state,
+  {
+    packId,
+    completedAt = new Date().toISOString(),
+    penaltyXp = XP_PENALTY_BELOW_THRESHOLD,
+  } = {},
+) {
+  const id = String(packId || '').trim();
+  if (!id) throw new Error('pack_id required');
+  const penalizedPackIds = Array.isArray(state.penalized_pack_ids) ? state.penalized_pack_ids : [];
+  if (penalizedPackIds.includes(id)) {
+    return { state: refreshBadges(state), already_penalized: true };
+  }
+
+  const currentLevel = safeLevel(state.current_level);
+  const currentDateKey = vietnamDateKey(completedAt);
+  const loss = Math.max(0, numberOrZero(penaltyXp));
+  const nextState = {
+    ...state,
+    current_level: currentLevel,
+    rank_title: RANK_TITLES[currentLevel] || state.rank_title,
+    total_xp: Math.max(0, state.total_xp - loss),
+    xp_in_level: Math.max(0, state.xp_in_level - loss),
+    xp_to_next_level: xpToNextLevel(currentLevel),
+    penalized_pack_ids: [...penalizedPackIds, id].slice(-100),
+    streak_days: nextStreakDays(state.last_activity_date_vn, currentDateKey, state.streak_days),
+    last_activity_date_vn: currentDateKey,
+    last_activity_at: completedAt,
+    pack_history: [
+      {
+        pack_id: id,
+        completed_at: completedAt,
+        level: currentLevel,
+        coins: 0,
+        xp: -loss,
+        passed: false,
+      },
+      ...state.pack_history,
+    ].slice(0, 50),
+  };
+
+  return { state: refreshBadges(nextState), already_penalized: false };
+}
+
 export function publicProgressState(state) {
   const currentLevel = safeLevel(state.current_level);
   const completedInLevel = numberOrZero(state.level_progress?.[currentLevel]);
+  const xpTarget = xpToNextLevel(currentLevel);
   return {
     schema_version: 2,
     student_name: state.student_name,
@@ -206,17 +268,27 @@ export function publicProgressState(state) {
     total_xp: state.total_xp,
     xp: state.xp_in_level,
     xp_in_level: state.xp_in_level,
-    xp_to_next_level: state.xp_to_next_level,
-    xp_percent: Math.min(100, Math.round((state.xp_in_level / state.xp_to_next_level) * 100)),
+    xp_to_next_level: xpTarget,
+    xp_percent: xpTarget ? Math.min(100, Math.round((state.xp_in_level / xpTarget) * 100)) : 100,
     streak_days: state.streak_days,
     completed_packs: state.completed_packs,
     packs_completed_in_level: completedInLevel,
-    packs_until_level_up: Math.max(0, PACKS_PER_LEVEL - completedInLevel),
+    packs_until_level_up: packsUntilLevelUp(currentLevel, state.xp_in_level),
     badges: state.badges,
     avatar: state.avatar,
     last_activity_at: state.last_activity_at,
     last_activity_date_vn: state.last_activity_date_vn,
   };
+}
+
+export function xpToNextLevel(level) {
+  return numberOrZero(PACKS_TO_NEXT_LEVEL[safeLevel(level)]) * XP_PER_PASSED_PACK;
+}
+
+export function packsUntilLevelUp(level, xpInLevel = 0) {
+  const xpTarget = xpToNextLevel(level);
+  if (!xpTarget) return 0;
+  return Math.max(0, Math.ceil((xpTarget - numberOrZero(xpInLevel)) / XP_PER_PASSED_PACK));
 }
 
 function refreshBadges(state) {

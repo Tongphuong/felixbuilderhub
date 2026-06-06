@@ -31,8 +31,13 @@ export async function onRequestGet(context) {
   // forever. Reconcile by reading task state KV directly here.
   codeData = await reconcileGenerationState(env.READ2LEAD_CODES, code, codeData);
 
-  const progress = normalizeProgress(codeData);
+  const legacyProgress = normalizeProgress(codeData);
   const v2State = await loadProgressState(env, code, codeData);
+  const progress = {
+    ...legacyProgress,
+    student_name: v2State.student_name || legacyProgress.student_name,
+    current_level: v2State.current_level,
+  };
   const requireReviewBeforeNextPack = shouldRequireReviewBeforeNextPack(codeData);
   const nextPackLocked = currentPackBlocksGeneration(progress.current_pack, requireReviewBeforeNextPack);
   const state = dashboardState(progress.current_pack);

@@ -48,7 +48,9 @@ export async function onRequestPost(context) {
   if (availabilityError) return availabilityError;
 
   const progressState = await loadProgressState(env, accessCode, codeData);
-  const progress = normalizeProgress(codeData, data, progressState);
+  const progress = normalizeProgress(codeData, progressState);
+  const profileError = checkStudentProfile(progress);
+  if (profileError) return profileError;
   const requireReviewBeforeNextPack = shouldRequireReviewBeforeNextPack(codeData);
   if (currentPackBlocksGeneration(progress.current_pack, requireReviewBeforeNextPack)) {
     return json(
@@ -218,11 +220,20 @@ export async function onRequestPost(context) {
 
 function validate(data) {
   const errors = [];
-  if (!data.child_name || data.child_name.trim().length === 0 || data.child_name.length > 50) errors.push('child_name');
-  const age = parseInt(data.age, 10);
-  if (isNaN(age) || age < 5 || age > 14) errors.push('age');
-  if (!['boy', 'girl'].includes(data.child_gender)) errors.push('child_gender');
   return errors;
+}
+
+function checkStudentProfile(progress) {
+  if (!progress.student_name) {
+    return json({ ok: false, error: 'student_profile_missing', message: 'Mã này chưa có tên học sinh. Vào admin/codes để cập nhật tên con trước khi tạo bài.' }, 400);
+  }
+  if (!Number.isFinite(progress.age) || progress.age < 5 || progress.age > 14) {
+    return json({ ok: false, error: 'student_age_missing', message: 'Mã này chưa có tuổi học sinh. Vào admin/codes để cập nhật tuổi con trước khi tạo bài.' }, 400);
+  }
+  if (!['boy', 'girl'].includes(progress.child_gender)) {
+    return json({ ok: false, error: 'student_gender_missing', message: 'Mã này chưa có giới tính học sinh. Vào admin/codes để cập nhật trước khi tạo bài.' }, 400);
+  }
+  return null;
 }
 
 function checkCodeAvailability(codeData) {
@@ -239,16 +250,15 @@ function checkCodeAvailability(codeData) {
   return null;
 }
 
-function normalizeProgress(codeData, formData = {}, progressState = null) {
+function normalizeProgress(codeData, progressState = null) {
   const profile = codeData.student_profile || {};
   const progress = codeData.progress || {};
   const stars = Number.isFinite(progress.stars) ? progress.stars : 0;
-  const formAge = parseInt(formData.age, 10);
   const reviewHistory = Array.isArray(progress.review_history) ? progress.review_history : [];
   return {
-    student_name: (formData.child_name || '').trim() || profile.student_name || '',
-    age: Number.isFinite(formAge) ? formAge : (profile.age || null),
-    child_gender: formData.child_gender || profile.child_gender || '',
+    student_name: profile.student_name || progress.student_name || '',
+    age: Number.isFinite(profile.age) ? profile.age : (Number.isFinite(progress.age) ? progress.age : null),
+    child_gender: profile.child_gender || progress.child_gender || '',
     current_level: progressState?.current_level || earnedCurrentLevel(progress, reviewHistory),
     stars,
     rank: progress.rank || rankForStars(stars),

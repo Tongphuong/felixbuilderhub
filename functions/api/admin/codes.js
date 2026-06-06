@@ -90,34 +90,39 @@ export async function onRequestPost(context) {
   if (!Number.isFinite(expiry_days) || expiry_days < 1 || expiry_days > 3650) {
     return json({ ok: false, error: 'expiry_days_invalid', message: 'expiry_days must be 1-3650' }, 400);
   }
+  if (!student_name) {
+    return json({ ok: false, error: 'student_name_required', message: 'student_name is required' }, 400);
+  }
+  if (!Number.isFinite(student_age) || student_age < 5 || student_age > 14) {
+    return json({ ok: false, error: 'student_age_invalid', message: 'student_age must be 5-14' }, 400);
+  }
+  if (!child_gender) {
+    return json({ ok: false, error: 'child_gender_required', message: 'child_gender is required' }, 400);
+  }
 
   const code = await generateUniqueCodeForName(env.READ2LEAD_CODES, student_name);
   const record = {
     parent_name,
     parent_zalo,
     notes,
-    student_profile: student_name
-      ? {
-          student_name,
-          age: Number.isFinite(student_age) && student_age >= 5 && student_age <= 14 ? student_age : null,
-          level: 'L1',
-          child_gender: child_gender || null,
-        }
-      : null,
-    progress: student_name
-      ? {
-          student_name,
-          age: Number.isFinite(student_age) && student_age >= 5 && student_age <= 14 ? student_age : null,
-          child_gender: child_gender || null,
-          current_level: 'L1',
-          stars: 0,
-          rank: 'Rookie Reader',
-          badges: [],
-          packs_created: 0,
-          current_pack: null,
-          review_history: [],
-        }
-      : null,
+    student_profile: {
+      student_name,
+      age: student_age,
+      level: 'L1',
+      child_gender,
+    },
+    progress: {
+      student_name,
+      age: student_age,
+      child_gender,
+      current_level: 'L1',
+      stars: 0,
+      rank: 'Rookie Reader',
+      badges: [],
+      packs_created: 0,
+      current_pack: null,
+      review_history: [],
+    },
     issued_at: todayISO(),
     expires_at: addDaysISO(expiry_days),
     uses_total: uses,
