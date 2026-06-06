@@ -1039,6 +1039,11 @@ import RewardBurst from '../../components/read2lead/v2/RewardBurst.astro';
     header.classList.add('flex');
     header.querySelector('[data-r2l-level]').textContent = read2LeadState.current_level || 'LV';
     header.querySelector('[data-r2l-rank]').textContent = read2LeadState.rank_title || 'Read2Lead';
+    const rankImage = header.querySelector('[data-r2l-rank-image]');
+    if (rankImage && read2LeadState.rank_asset_url) {
+      rankImage.src = read2LeadState.rank_asset_url;
+      rankImage.alt = `Rank ${read2LeadState.rank_title || read2LeadState.current_level || 'Read2Lead'}`;
+    }
     header.querySelector('[data-r2l-xp-label]').textContent = `${read2LeadState.xp_in_level ?? 0}/${read2LeadState.xp_to_next_level ?? 60} XP`;
     header.querySelector('[data-r2l-xp-fill]').style.width = `${read2LeadState.xp_percent ?? 0}%`;
     header.querySelector('[data-r2l-coins]').textContent = `${read2LeadState.coins || 0} xu`;

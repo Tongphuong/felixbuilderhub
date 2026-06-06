@@ -1,8 +1,10 @@
+import { loadProgressState, publicProgressState, RANK_ASSETS, RANK_TITLES } from './_read2lead-v2-state.js';
+
 export async function onRequestGet(context) {
   const { request, env } = context;
 
   if (!env.READ2LEAD_CODES) {
-    return json({ ok: false, error: 'config_error', message: 'Felixar chưa cấu hình bảng vinh danh.' }, 500);
+    return json({ ok: false, error: 'config_error', message: 'Felixar chua cau hinh bang vinh danh.' }, 500);
   }
 
   const url = new URL(request.url);
@@ -18,8 +20,9 @@ export async function onRequestGet(context) {
 
     const records = await Promise.all(
       list.keys.map(async (key) => {
+        if (key.name.startsWith('task:') || key.name.startsWith('progress:')) return null;
         const value = await env.READ2LEAD_CODES.get(key.name, { type: 'json' });
-        return value ? publicLeader(key.name, value) : null;
+        return value ? publicLeader(context, key.name, value) : null;
       }),
     );
 
@@ -29,7 +32,8 @@ export async function onRequestGet(context) {
   } while (cursor);
 
   leaders.sort((a, b) => {
-    if (b.stars !== a.stars) return b.stars - a.stars;
+    if (b.total_xp !== a.total_xp) return b.total_xp - a.total_xp;
+    if (b.coins !== a.coins) return b.coins - a.coins;
     if (b.completed_packs !== a.completed_packs) return b.completed_packs - a.completed_packs;
     return Date.parse(b.last_reviewed_at || 0) - Date.parse(a.last_reviewed_at || 0);
   });
@@ -44,28 +48,44 @@ export async function onRequestGet(context) {
   });
 }
 
-function publicLeader(code, codeData) {
+async function publicLeader(context, code, codeData) {
   const progress = codeData.progress || {};
   const profile = codeData.student_profile || {};
-  const stars = numberOrZero(progress.stars);
   const reviewHistory = Array.isArray(progress.review_history) ? progress.review_history : [];
-  const completedPacks = numberOrZero(progress.completed_packs) || reviewHistory.length || stars;
   const studentName = cleanName(profile.student_name || progress.student_name || '');
+  const v2State = await loadProgressState(context.env, code, codeData);
+  const publicState = publicProgressState(v2State);
+  const currentLevel = publicState.current_level || progress.current_level || profile.level || 'L1';
+  const completedPacks =
+    numberOrZero(publicState.completed_packs) ||
+    numberOrZero(progress.completed_packs) ||
+    reviewHistory.length;
 
-  if (!studentName && stars === 0 && completedPacks === 0) return null;
-
-  const rank = progress.rank || rankForStars(stars);
+  if (!studentName && numberOrZero(publicState.total_xp) === 0 && numberOrZero(publicState.coins) === 0 && completedPacks === 0) {
+    return null;
+  }
 
   return {
     display_name: studentName || 'Bạn đọc bí mật',
     masked_code: maskCode(code),
-    stars,
+    total_xp: numberOrZero(publicState.total_xp),
+    xp_in_level: numberOrZero(publicState.xp_in_level),
+    xp_to_next_level: numberOrZero(publicState.xp_to_next_level),
+    xp_percent: numberOrZero(publicState.xp_percent),
+    coins: numberOrZero(publicState.coins),
     completed_packs: completedPacks,
-    rank,
-    rank_vi: rankVi(rank),
-    badges_vi: badgesVi(Array.isArray(progress.badges) ? progress.badges : badgesForStars(stars)),
-    current_level: progress.current_level || profile.level || 'L1',
-    last_reviewed_at: codeData.last_reviewed_at || progress.last_activity_at || progress.last_reviewed_at || latestReviewDate(reviewHistory),
+    rank: RANK_TITLES[currentLevel] || RANK_TITLES.L1,
+    rank_vi: RANK_TITLES[currentLevel] || RANK_TITLES.L1,
+    rank_asset_url: RANK_ASSETS[currentLevel] || RANK_ASSETS.L1,
+    current_level: currentLevel,
+    streak_days: numberOrZero(publicState.streak_days),
+    packs_until_level_up: numberOrZero(publicState.packs_until_level_up),
+    last_reviewed_at:
+      codeData.last_reviewed_at ||
+      publicState.last_activity_at ||
+      progress.last_activity_at ||
+      progress.last_reviewed_at ||
+      latestReviewDate(reviewHistory),
   };
 }
 
@@ -89,46 +109,8 @@ function latestReviewDate(reviewHistory) {
 }
 
 function numberOrZero(value) {
-  return Number.isFinite(value) ? value : 0;
-}
-
-function rankForStars(stars) {
-  if (stars >= 15) return 'Reading Champion';
-  if (stars >= 10) return 'Story Hero';
-  if (stars >= 6) return 'Mission Builder';
-  if (stars >= 3) return 'Chunk Explorer';
-  if (stars >= 1) return 'Story Starter';
-  return 'Rookie Reader';
-}
-
-function rankVi(rank) {
-  return {
-    'Rookie Reader': 'Mầm Đọc Sách',
-    'Story Starter': 'Người Kể Chuyện Nhí',
-    'Chunk Explorer': 'Nhà Khám Phá Câu',
-    'Mission Builder': 'Người Hoàn Thành Nhiệm Vụ',
-    'Story Hero': 'Anh Hùng Câu Chuyện',
-    'Reading Champion': 'Nhà Vô Địch Đọc',
-  }[rank] || rank;
-}
-
-function badgesForStars(stars) {
-  const badges = [];
-  if (stars >= 1) badges.push('First Mission Complete');
-  if (stars >= 3) badges.push('Chunk Hunter');
-  if (stars >= 5) badges.push('Retell Rookie');
-  if (stars >= 10) badges.push('Story Hero');
-  return badges;
-}
-
-function badgesVi(badges) {
-  const labels = {
-    'First Mission Complete': 'Hoàn thành bài đầu tiên',
-    'Chunk Hunter': 'Nhà săn sao',
-    'Retell Rookie': 'Kể lại tự tin',
-    'Story Hero': 'Anh hùng câu chuyện',
-  };
-  return badges.map((badge) => labels[badge] || badge).slice(0, 4);
+  const parsed = Number(value);
+  return Number.isFinite(parsed) && parsed > 0 ? parsed : 0;
 }
 
 function json(body, status = 200) {

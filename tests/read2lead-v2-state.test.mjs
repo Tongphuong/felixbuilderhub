@@ -8,11 +8,25 @@ import {
   nextStreakDays,
   normalizeProgressState,
   publicProgressState,
+  RANK_ASSETS,
+  RANK_TITLES,
   vietnamDateKey,
 } from '../functions/api/_read2lead-v2-state.js';
 
 test('V2 keeps 5 active generation levels', () => {
   assert.deepEqual(LEVELS, ['L1', 'L2', 'L3', 'L4', 'L5']);
+});
+
+test('V2 rank titles and assets are game-style Vietnamese ladder', () => {
+  assert.deepEqual(RANK_TITLES, {
+    L1: 'Đồng',
+    L2: 'Bạc',
+    L3: 'Vàng',
+    L4: 'Kim cương',
+    L5: 'Huyền thoại',
+  });
+  assert.equal(RANK_ASSETS.L1, '/assets/r2l/ranks/rank-l1-bronze.svg');
+  assert.equal(RANK_ASSETS.L5, '/assets/r2l/ranks/rank-l5-legend.svg');
 });
 
 test('Vietnam date key uses UTC+7 day boundary', () => {

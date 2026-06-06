@@ -22,12 +22,20 @@ const STARTER_BADGE_DEFINITIONS = [
   { id: 'brave_voice', label_vi: 'Dám nói thành tiếng', description_vi: 'Hoàn thành phần nghe và nói lại.' },
 ];
 
-const RANK_TITLES = {
-  L1: 'Story Starter',
-  L2: 'Listening Explorer',
-  L3: 'Sentence Builder',
-  L4: 'Reading Ranger',
-  L5: 'Story Captain',
+export const RANK_TITLES = {
+  L1: 'Đồng',
+  L2: 'Bạc',
+  L3: 'Vàng',
+  L4: 'Kim cương',
+  L5: 'Huyền thoại',
+};
+
+export const RANK_ASSETS = {
+  L1: '/assets/r2l/ranks/rank-l1-bronze.svg',
+  L2: '/assets/r2l/ranks/rank-l2-silver.svg',
+  L3: '/assets/r2l/ranks/rank-l3-gold.svg',
+  L4: '/assets/r2l/ranks/rank-l4-diamond.svg',
+  L5: '/assets/r2l/ranks/rank-l5-legend.svg',
 };
 
 export function progressNamespace(env) {
@@ -105,6 +113,7 @@ export function normalizeProgressState(raw, { accessCode, codeData = null, nowIs
     initial_level: initialLevel,
     unlocked_levels: Array.from(new Set([...unlockedLevels, currentLevel])),
     rank_title: RANK_TITLES[currentLevel] || RANK_TITLES[START_LEVEL],
+    rank_asset_url: RANK_ASSETS[currentLevel] || RANK_ASSETS[START_LEVEL],
     coins,
     total_xp: totalXp,
     xp_in_level: xpInLevel,
@@ -182,6 +191,7 @@ export function applyPackCompletion(
     current_level: nextCurrentLevel,
     unlocked_levels: Array.from(new Set([...state.unlocked_levels, nextCurrentLevel])),
     rank_title: RANK_TITLES[nextCurrentLevel] || state.rank_title,
+    rank_asset_url: RANK_ASSETS[nextCurrentLevel] || state.rank_asset_url || RANK_ASSETS[START_LEVEL],
     coins: state.coins + numberOrZero(rewardsEarned.coins),
     total_xp: state.total_xp + earnedXp,
     xp_in_level: xpInLevel,
@@ -234,6 +244,7 @@ export function applyPackPenalty(
     ...state,
     current_level: currentLevel,
     rank_title: RANK_TITLES[currentLevel] || state.rank_title,
+    rank_asset_url: RANK_ASSETS[currentLevel] || state.rank_asset_url || RANK_ASSETS[START_LEVEL],
     total_xp: Math.max(0, state.total_xp - loss),
     xp_in_level: Math.max(0, state.xp_in_level - loss),
     xp_to_next_level: xpToNextLevel(currentLevel),
@@ -267,6 +278,7 @@ export function publicProgressState(state) {
     current_level: currentLevel,
     unlocked_levels: state.unlocked_levels,
     rank_title: state.rank_title,
+    rank_asset_url: state.rank_asset_url || RANK_ASSETS[currentLevel] || RANK_ASSETS[START_LEVEL],
     coins: state.coins,
     coins_tooltip: COINS_TOOLTIP,
     total_xp: state.total_xp,

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title">
+  <title id="title">Read2Lead rank Vàng</title>
+  <defs>
+    <linearGradient id="g" x1="45" y1="18" x2="210" y2="234" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fff8ba"/>
+      <stop offset=".42" stop-color="#e5ae35"/>
+      <stop offset="1" stop-color="#7b4b05"/>
+    </linearGradient>
+    <radialGradient id="core" cx="50%" cy="38%" r="58%">
+      <stop stop-color="#fffbe0"/>
+      <stop offset=".48" stop-color="#ffd95a"/>
+      <stop offset="1" stop-color="#c47b0b"/>
+    </radialGradient>
+  </defs>
+  <path fill="#1b1608" d="M128 8 224 44v72c0 63-39 105-96 134C71 221 32 179 32 116V44Z"/>
+  <path fill="url(#g)" d="M128 20 210 51v64c0 54-33 91-82 116-49-25-82-62-82-116V51Z"/>
+  <path fill="#5c3706" opacity=".34" d="M128 35 194 60v52c0 43-26 73-66 94-40-21-66-51-66-94V60Z"/>
+  <circle cx="128" cy="121" r="58" fill="url(#core)"/>
+  <path fill="#fff8cf" d="M128 62 140 101 181 101 148 125 160 164 128 140 96 164 108 125 75 101 116 101Z"/>
+  <path fill="#7b4b05" opacity=".28" d="M128 83 136 108 162 108 141 124 149 149 128 134 107 149 115 124 94 108 120 108Z"/>
+  <text x="128" y="218" text-anchor="middle" font-family="Arial, sans-serif" font-size="28" font-weight="800" fill="#fff8cf">VÀNG</text>
+</svg>

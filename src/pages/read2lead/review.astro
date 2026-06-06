@@ -169,6 +169,7 @@ import Footer from '../../components/Footer.astro';
     function renderDashboard(data) {
       latestDashboard = data;
       const progress = data.progress || {};
+      const read2LeadState = data.read2lead_state || {};
       const pack = progress.current_pack;
       const code = codeInput.value.trim().toUpperCase();
       const sharedNote = data.is_test || data.is_shared
@@ -196,11 +197,11 @@ import Footer from '../../components/Footer.astro';
           <div>
             <p class="text-sm font-semibold text-gold-light">${escapeHtml(data.state_label || 'Trạng thái')}</p>
             <h2 class="mt-2 font-display text-2xl font-bold leading-snug text-cream">${escapeHtml(progress.student_name || 'Học sinh Read2Lead')}</h2>
-            <p class="mt-2 text-cream-muted">${escapeHtml(progress.current_level || 'L1')} · ${progress.stars || 0} sao · ${escapeHtml(progress.rank || 'Rookie Reader')}</p>
+            <p class="mt-2 text-cream-muted">${escapeHtml(read2LeadState.current_level || progress.current_level || 'L1')} · ${escapeHtml(read2LeadState.rank_title || 'Đồng')} · ${read2LeadState.total_xp || 0} XP</p>
           </div>
           <div class="grid grid-cols-3 gap-2 text-center text-sm">
             <div class="rounded-lg bg-navy-950/70 p-3"><p class="text-cream-dim">Đã hoàn thành</p><p class="font-display text-2xl font-bold text-gold-light">${progress.completed_packs || 0}</p></div>
-            <div class="rounded-lg bg-navy-950/70 p-3"><p class="text-cream-dim">Tuần này</p><p class="font-display text-2xl font-bold text-gold-light">${data.weekly_completed_count || 0}</p></div>
+            <div class="rounded-lg bg-navy-950/70 p-3"><p class="text-cream-dim">Xu</p><p class="font-display text-2xl font-bold text-gold-light">${read2LeadState.coins || 0}</p></div>
             <div class="rounded-lg bg-navy-950/70 p-3"><p class="text-cream-dim">Streak</p><p class="font-display text-2xl font-bold text-gold-light">${data.streak_days || 0}</p></div>
           </div>
         </div>

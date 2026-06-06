@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title">
+  <title id="title">Read2Lead rank Huyền thoại</title>
+  <defs>
+    <linearGradient id="shield" x1="40" y1="18" x2="215" y2="236" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fff7ed"/>
+      <stop offset=".25" stop-color="#f472b6"/>
+      <stop offset=".6" stop-color="#7c3aed"/>
+      <stop offset="1" stop-color="#1e1b4b"/>
+    </linearGradient>
+    <radialGradient id="core" cx="50%" cy="40%" r="56%">
+      <stop stop-color="#ffffff"/>
+      <stop offset=".35" stop-color="#fde68a"/>
+      <stop offset=".7" stop-color="#f472b6"/>
+      <stop offset="1" stop-color="#7c3aed"/>
+    </radialGradient>
+  </defs>
+  <path fill="#0f1028" d="M128 8 224 44v72c0 63-39 105-96 134C71 221 32 179 32 116V44Z"/>
+  <path fill="url(#shield)" d="M128 20 210 51v64c0 54-33 91-82 116-49-25-82-62-82-116V51Z"/>
+  <path fill="#08071f" opacity=".38" d="M128 35 194 60v52c0 43-26 73-66 94-40-21-66-51-66-94V60Z"/>
+  <path fill="url(#core)" d="M128 48 146 90 191 95 157 124 167 169 128 146 89 169 99 124 65 95 110 90Z"/>
+  <path fill="#ffffff" opacity=".8" d="m128 72 10 23 25 3-19 16 6 25-22-13-22 13 6-25-19-16 25-3Z"/>
+  <path fill="#fff" opacity=".75" d="M58 72h15v15H58zM197 78h13v13h-13zM188 154h18v18h-18zM50 159h12v12H50z"/>
+  <text x="128" y="222" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="800" fill="#fff7ed">HUYỀN THOẠI</text>
+</svg>

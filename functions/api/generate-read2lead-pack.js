@@ -253,16 +253,12 @@ function checkCodeAvailability(codeData) {
 function normalizeProgress(codeData, progressState = null) {
   const profile = codeData.student_profile || {};
   const progress = codeData.progress || {};
-  const stars = Number.isFinite(progress.stars) ? progress.stars : 0;
   const reviewHistory = Array.isArray(progress.review_history) ? progress.review_history : [];
   return {
     student_name: profile.student_name || progress.student_name || '',
     age: Number.isFinite(profile.age) ? profile.age : (Number.isFinite(progress.age) ? progress.age : null),
     child_gender: profile.child_gender || progress.child_gender || '',
     current_level: progressState?.current_level || earnedCurrentLevel(progress, reviewHistory),
-    stars,
-    rank: progress.rank || rankForStars(stars),
-    badges: Array.isArray(progress.badges) ? progress.badges : badgesForStars(stars),
     packs_created: progress.packs_created || 0,
     completed_packs: progress.completed_packs || reviewHistory.length || 0,
     weekly_completed_count: progress.weekly_completed_count || 0,
@@ -358,9 +354,6 @@ function publicProgress(progress) {
   return {
     student_name: progress.student_name,
     current_level: progress.current_level,
-    stars: progress.stars || 0,
-    rank: progress.rank || rankForStars(progress.stars || 0),
-    badges: progress.badges || badgesForStars(progress.stars || 0),
     completed_packs: progress.completed_packs || 0,
     weekly_completed_count: progress.weekly_completed_count || 0,
     streak_days: progress.streak_days || 0,
@@ -368,24 +361,6 @@ function publicProgress(progress) {
     last_level_recommendation: progress.last_level_recommendation || 'stay',
     current_pack: publicPack(progress.current_pack),
   };
-}
-
-function rankForStars(stars) {
-  if (stars >= 15) return 'Reading Champion';
-  if (stars >= 10) return 'Story Hero';
-  if (stars >= 6) return 'Mission Builder';
-  if (stars >= 3) return 'Chunk Explorer';
-  if (stars >= 1) return 'Story Starter';
-  return 'Rookie Reader';
-}
-
-function badgesForStars(stars) {
-  const badges = [];
-  if (stars >= 1) badges.push('First Mission Complete');
-  if (stars >= 3) badges.push('Chunk Hunter');
-  if (stars >= 5) badges.push('Retell Rookie');
-  if (stars >= 10) badges.push('Story Hero');
-  return badges;
 }
 
 function json(body, status = 200) {

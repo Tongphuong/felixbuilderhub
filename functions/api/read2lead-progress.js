@@ -63,7 +63,6 @@ export async function onRequestGet(context) {
 function normalizeProgress(codeData) {
   const profile = codeData.student_profile || {};
   const progress = codeData.progress || {};
-  const stars = Number.isFinite(progress.stars) ? progress.stars : 0;
   const reviewHistory = Array.isArray(progress.review_history) ? progress.review_history : [];
   const completedPacks = numberOrZero(progress.completed_packs) || reviewHistory.length;
 
@@ -71,9 +70,6 @@ function normalizeProgress(codeData) {
     student_name: profile.student_name || progress.student_name || '',
     age: profile.age || progress.age || null,
     current_level: progress.current_level || profile.level || 'L1',
-    stars,
-    rank: progress.rank || rankForStars(stars),
-    badges: Array.isArray(progress.badges) ? progress.badges : badgesForStars(stars),
     packs_created: numberOrZero(progress.packs_created),
     completed_packs: completedPacks,
     weekly_completed_count: numberOrZero(progress.weekly_completed_count),
@@ -146,9 +142,6 @@ function publicProgress(progress) {
     student_name: progress.student_name,
     age: progress.age,
     current_level: progress.current_level,
-    stars: progress.stars || 0,
-    rank: progress.rank || rankForStars(progress.stars || 0),
-    badges: progress.badges || badgesForStars(progress.stars || 0),
     packs_created: progress.packs_created || 0,
     completed_packs: progress.completed_packs || 0,
     weekly_completed_count: progress.weekly_completed_count || 0,
@@ -184,7 +177,6 @@ function publicReviewSummary(summary) {
   return {
     reviewed_at: summary.reviewed_at,
     passed: summary.passed,
-    star_awarded: summary.star_awarded,
     scores: summary.scores || {},
     feedback_vi: summary.feedback_vi || {},
     mini_practice_vi: summary.mini_practice_vi || {},
@@ -195,24 +187,6 @@ function publicReviewSummary(summary) {
 function numberOrZero(value) {
   const n = Number(value);
   return Number.isFinite(n) && n > 0 ? n : 0;
-}
-
-function rankForStars(stars) {
-  if (stars >= 15) return 'Reading Champion';
-  if (stars >= 10) return 'Story Hero';
-  if (stars >= 6) return 'Mission Builder';
-  if (stars >= 3) return 'Chunk Explorer';
-  if (stars >= 1) return 'Story Starter';
-  return 'Rookie Reader';
-}
-
-function badgesForStars(stars) {
-  const badges = [];
-  if (stars >= 1) badges.push('First Mission Complete');
-  if (stars >= 3) badges.push('Chunk Hunter');
-  if (stars >= 5) badges.push('Retell Rookie');
-  if (stars >= 10) badges.push('Story Hero');
-  return badges;
 }
 
 // Reconcile current_pack against task state KV. Returns possibly-updated codeData.
