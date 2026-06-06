@@ -62,7 +62,7 @@ function resetCodeRecord(record) {
       xp_in_level: 0,
       total_xp: 0,
       unlocked_levels: [START_LEVEL],
-      level_progress: { L1: 0, L2: 0, L3: 0 },
+      level_progress: { L1: 0, L2: 0, L3: 0, L4: 0, L5: 0 },
       level_reset_version: LEVEL_RESET_VERSION,
     },
   };
@@ -88,7 +88,7 @@ function resetProgressState(accessCode, record) {
     completed_packs: 0,
     completed_pack_ids: [],
     penalized_pack_ids: [],
-    level_progress: { L1: 0, L2: 0, L3: 0 },
+    level_progress: { L1: 0, L2: 0, L3: 0, L4: 0, L5: 0 },
     streak_days: 0,
     last_activity_date_vn: '',
     last_activity_at: null,

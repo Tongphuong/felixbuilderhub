@@ -11,8 +11,8 @@ import {
   vietnamDateKey,
 } from '../functions/api/_read2lead-v2-state.js';
 
-test('V2 keeps 3 active generation levels', () => {
-  assert.deepEqual(LEVELS, ['L1', 'L2', 'L3']);
+test('V2 keeps 5 active generation levels', () => {
+  assert.deepEqual(LEVELS, ['L1', 'L2', 'L3', 'L4', 'L5']);
 });
 
 test('Vietnam date key uses UTC+7 day boundary', () => {
@@ -121,6 +121,59 @@ test('L2 needs 15 passed packs to unlock L3', () => {
   });
   assert.equal(fifteenth.level_up.to_level, 'L3');
   assert.equal(publicProgressState(fifteenth.state).current_level, 'L3');
+});
+
+test('L3 and L4 use the longer V2 level-up ladder', () => {
+  let l3State = normalizeProgressState(
+    {
+      schema_version: 2,
+      level_reset_version: 20260606,
+      current_level: 'L3',
+      initial_level: 'L1',
+      unlocked_levels: ['L1', 'L2', 'L3'],
+      xp_in_level: 0,
+      total_xp: 400,
+      level_progress: { L1: 5, L2: 15, L3: 0, L4: 0, L5: 0 },
+    },
+    {
+      accessCode: 'R2L-TEST-1234',
+      codeData: { student_profile: { student_name: 'Bin', level: 'L3' } },
+      nowIso: '2026-06-05T01:00:00.000Z',
+    },
+  );
+  for (let i = 1; i <= 24; i += 1) {
+    l3State = applyPackCompletion(l3State, {
+      packId: `l3-pack-${i}`,
+      completedAt: '2026-06-05T02:00:00.000Z',
+      rewardsEarned: { coins: 20, xp: 20 },
+    }).state;
+  }
+  assert.equal(publicProgressState(l3State).current_level, 'L3');
+  assert.equal(publicProgressState(l3State).packs_until_level_up, 1);
+
+  const l4Unlock = applyPackCompletion(l3State, {
+    packId: 'l3-pack-25',
+    completedAt: '2026-06-06T02:00:00.000Z',
+    rewardsEarned: { coins: 20, xp: 20 },
+  });
+  assert.equal(l4Unlock.level_up.to_level, 'L4');
+  assert.equal(publicProgressState(l4Unlock.state).packs_until_level_up, 35);
+
+  let l4State = l4Unlock.state;
+  for (let i = 1; i <= 34; i += 1) {
+    l4State = applyPackCompletion(l4State, {
+      packId: `l4-pack-${i}`,
+      completedAt: '2026-06-07T02:00:00.000Z',
+      rewardsEarned: { coins: 20, xp: 20 },
+    }).state;
+  }
+  const l5Unlock = applyPackCompletion(l4State, {
+    packId: 'l4-pack-35',
+    completedAt: '2026-06-08T02:00:00.000Z',
+    rewardsEarned: { coins: 20, xp: 20 },
+  });
+  assert.equal(l5Unlock.level_up.to_level, 'L5');
+  assert.equal(publicProgressState(l5Unlock.state).packs_until_level_up, 0);
 });
 
 test('below-threshold attempt subtracts 10 XP once per pack', () => {

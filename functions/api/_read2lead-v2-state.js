@@ -1,8 +1,10 @@
-export const LEVELS = ['L1', 'L2', 'L3'];
+export const LEVELS = ['L1', 'L2', 'L3', 'L4', 'L5'];
 export const PACKS_TO_NEXT_LEVEL = {
   L1: 5,
   L2: 15,
-  L3: 0,
+  L3: 25,
+  L4: 35,
+  L5: 0,
 };
 export const XP_PER_PASSED_PACK = 20;
 export const XP_PENALTY_BELOW_THRESHOLD = 10;
@@ -24,6 +26,8 @@ const RANK_TITLES = {
   L1: 'Story Starter',
   L2: 'Listening Explorer',
   L3: 'Sentence Builder',
+  L4: 'Reading Ranger',
+  L5: 'Story Captain',
 };
 
 export function progressNamespace(env) {
