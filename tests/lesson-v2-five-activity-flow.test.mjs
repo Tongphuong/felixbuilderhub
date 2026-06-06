@@ -66,6 +66,21 @@ test('render-once architecture: renderAllActivitiesOnce + showActivity', () => {
   assert.doesNotMatch(lessonPage, /function renderActivity\(/);
 });
 
+test('activity navigation preserves existing answers by hiding and showing shells only', () => {
+  const showStart = lessonPage.indexOf('function showActivity');
+  const navStart = lessonPage.indexOf('function renderActivityNav');
+  assert.ok(showStart > -1, 'showActivity should exist');
+  assert.ok(navStart > showStart, 'renderActivityNav should appear after showActivity');
+  const showBody = lessonPage.slice(showStart, navStart);
+  assert.match(showBody, /shell\.hidden = true/);
+  assert.match(showBody, /shell\.hidden = false/);
+  assert.doesNotMatch(showBody, /renderFillBlankActivity/);
+  assert.doesNotMatch(showBody, /renderMcqActivity/);
+  assert.doesNotMatch(showBody, /renderOrderActivity/);
+  assert.doesNotMatch(showBody, /renderWrittenActivity/);
+  assert.doesNotMatch(showBody, /renderSpeakActivity/);
+});
+
 test('attempt-based completion uses attempted set and per-item wrong counts', () => {
   assert.match(lessonPage, /const attempted = new Set/);
   assert.match(lessonPage, /const itemWrongCounts = new Map/);
