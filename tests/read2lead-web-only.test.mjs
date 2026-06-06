@@ -45,6 +45,7 @@ test('review dashboard does not offer PDF or MP3 action links', () => {
   assert.doesNotMatch(reviewPage, /Mở MP3/);
   assert.doesNotMatch(reviewPage, /Nghe lại MP3/);
   assert.doesNotMatch(reviewPage, /nộp ảnh|bài giấy|phiếu giấy/i);
+  assert.doesNotMatch(reviewPage, /review-form|worksheet-photo|record-btn|audio-preview/);
 });
 
 test('web lesson still keeps internal story audio for in-browser playback', () => {

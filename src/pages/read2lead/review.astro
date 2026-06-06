@@ -52,44 +52,6 @@ import Footer from '../../components/Footer.astro';
           </section>
 
           <section id="dashboard-card" class="hidden rounded-xl border border-gold/30 bg-gold/10 p-6"></section>
-
-          <section id="submit-panel" class="hidden rounded-xl border border-cream-dim/20 bg-navy-950/80 p-6">
-            <div id="submit" class="scroll-mt-24">
-              <h2 class="font-display text-2xl font-bold leading-snug text-cream">Gửi bổ sung cho Felixar</h2>
-              <p class="mt-2 leading-relaxed text-cream-muted">Mục này chỉ dùng khi Felix cần thêm thông tin ngoài kết quả học trên web.</p>
-            </div>
-
-            <form id="review-form" class="mt-6 space-y-5">
-              <div>
-                <label for="worksheet-photo" class="mb-2 block text-sm text-cream-muted">Thông tin bổ sung</label>
-                <input id="worksheet-photo" name="worksheet_photos" type="file" accept="image/*" multiple required class="block w-full rounded-lg border border-cream-dim/30 bg-navy-900 px-4 py-3 text-sm text-cream file:mr-4 file:rounded-md file:border-0 file:bg-accent file:px-3 file:py-2 file:font-semibold file:text-navy-950" />
-                <p id="photo-count" class="mt-2 text-xs text-cream-dim">Có thể chọn nhiều mục cùng lúc, tối đa 8 mục.</p>
-              </div>
-
-              <div>
-                <label for="typed-answers" class="mb-2 block text-sm text-cream-muted">Ghi chú thêm cho Felix <span class="text-cream-dim">(tùy chọn)</span></label>
-                <textarea id="typed-answers" name="typed_answers" maxlength="2000" rows="4" placeholder="VD: Con thấy phần nghe khó, hoặc con thích chủ đề thú cưng hơn..." class="w-full rounded-lg border border-cream-dim/30 bg-navy-900 px-4 py-3 text-base text-cream placeholder:text-cream-dim/80 focus:border-accent focus:outline-none"></textarea>
-              </div>
-
-              <div class="rounded-lg border border-cream-dim/25 bg-navy-900 p-4">
-                <label class="block text-sm text-cream-muted">Ghi âm con kể lại câu chuyện</label>
-                <div class="mt-3 flex flex-wrap gap-3">
-                  <button id="record-btn" type="button" class="rounded-lg bg-accent px-4 py-2 font-semibold text-navy-950 transition hover:bg-accent-hover">Bắt đầu ghi âm</button>
-                  <button id="stop-btn" type="button" disabled class="rounded-lg border border-cream-dim/30 px-4 py-2 font-semibold text-cream transition enabled:hover:border-accent enabled:hover:text-accent disabled:cursor-not-allowed disabled:opacity-50">Dừng</button>
-                </div>
-                <p id="record-status" class="mt-3 text-sm text-cream-dim">Chưa có ghi âm.</p>
-                <audio id="audio-preview" controls class="mt-3 hidden w-full"></audio>
-              </div>
-
-              <div class="absolute -left-[9999px]" aria-hidden="true">
-                <label for="website">Website</label>
-                <input id="website" name="website" tabindex="-1" autocomplete="off" />
-              </div>
-
-              <button id="submit-review" type="submit" class="w-full rounded-lg bg-accent px-6 py-3 text-lg font-semibold text-navy-950 transition hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-60">Gửi cho Felixar nhận xét</button>
-            </form>
-          </section>
-
           <section id="result-card" class="hidden rounded-xl border border-gold/40 bg-gold/10 p-6"></section>
           <section id="error-card" class="hidden rounded-xl border border-red-500/30 bg-red-500/10 p-5 text-red-300"></section>
         </div>
@@ -104,23 +66,9 @@ import Footer from '../../components/Footer.astro';
     const codeInput = document.getElementById('access-code');
     const loadBtn = document.getElementById('load-progress');
     const dashboardCard = document.getElementById('dashboard-card');
-    const submitPanel = document.getElementById('submit-panel');
-    const form = document.getElementById('review-form');
     const resultCard = document.getElementById('result-card');
     const errorCard = document.getElementById('error-card');
-    const recordBtn = document.getElementById('record-btn');
-    const stopBtn = document.getElementById('stop-btn');
-    const recordStatus = document.getElementById('record-status');
-    const audioPreview = document.getElementById('audio-preview');
-    const submitBtn = document.getElementById('submit-review');
-    const typedAnswers = document.getElementById('typed-answers');
-    const photoInput = document.getElementById('worksheet-photo');
-    const photoCount = document.getElementById('photo-count');
 
-    let mediaRecorder = null;
-    let chunks = [];
-    let audioBlob = null;
-    let stream = null;
     let latestDashboard = null;
 
     const initialCode = params.get('code');
@@ -200,8 +148,8 @@ import Footer from '../../components/Footer.astro';
           <p class="font-display text-lg font-bold text-cream">Nhận xét gần nhất</p>
           <p class="mt-2 leading-relaxed text-cream-muted">${escapeHtml(feedback.summary || 'Felixar đã nhận xét bài này.')}</p>
           <div class="mt-4 grid gap-3 md:grid-cols-3">
-            <div class="rounded-lg bg-navy-900 p-3"><p class="text-xs text-cream-dim">Điểm tốt</p><p class="mt-1 text-sm text-cream">${escapeHtml(feedback.strength || 'Con đã nộp bài đầy đủ.')}</p></div>
-            <div class="rounded-lg bg-navy-900 p-3"><p class="text-xs text-cream-dim">Cần luyện</p><p class="mt-1 text-sm text-cream">${escapeHtml(feedback.practice || 'Nghe lại audio trên web và đọc chậm hơn.')}</p></div>
+            <div class="rounded-lg bg-navy-900 p-3"><p class="text-xs text-cream-dim">Điểm tốt</p><p class="mt-1 text-sm text-cream">${escapeHtml(feedback.strength || 'Con đã hoàn thành bài trên web.')}</p></div>
+            <div class="rounded-lg bg-navy-900 p-3"><p class="text-xs text-cream-dim">Cần luyện</p><p class="mt-1 text-sm text-cream">${escapeHtml(feedback.practice || 'Nghe lại phần nghe trên web và đọc chậm hơn.')}</p></div>
             <div class="rounded-lg bg-navy-900 p-3"><p class="text-xs text-cream-dim">Level</p><p class="mt-1 text-sm text-cream">${escapeHtml(levelRecommendationText(summary.level_recommendation))}</p></div>
           </div>
           ${mini.read_again || mini.chunk_to_practice || mini.parent_question ? `
@@ -226,7 +174,6 @@ import Footer from '../../components/Footer.astro';
       const sharedNote = data.is_test || data.is_shared
         ? '<p class="mt-3 rounded-lg border border-blue-500/30 bg-blue-500/10 p-3 text-sm text-blue-200">Mã này là mã test/dùng chung nên có thể tạo bài mới bất cứ lúc nào.</p>'
         : '';
-      const canSubmitPaper = false;
       const canCreateExtra = data.state === 'awaiting_review' && !data.next_pack_locked;
 
       const primary = buildPrimaryAction(pack, data, code);
@@ -235,9 +182,6 @@ import Footer from '../../components/Footer.astro';
         : `<span class="inline-flex w-full items-center justify-center rounded-lg border border-cream-dim/30 px-6 py-4 text-lg font-semibold text-cream-muted sm:w-auto">${escapeHtml(primary.label)}</span>`;
 
       const secondaryParts = [];
-      if (canSubmitPaper) {
-        secondaryParts.push('<button id="open-submit" type="button" class="rounded-md border border-cream-dim/30 px-4 py-2 text-sm font-semibold text-cream transition hover:border-accent hover:text-accent">Gửi bổ sung cho Felixar</button>');
-      }
       if (canCreateExtra && primary.kind !== 'create') {
         secondaryParts.push('<a href="/read2lead#form" class="rounded-md border border-cream-dim/30 px-4 py-2 text-sm font-semibold text-cream transition hover:border-accent hover:text-accent">Tạo bài mới</a>');
       }
@@ -282,14 +226,6 @@ import Footer from '../../components/Footer.astro';
         ${renderReviewSummary(data.last_review_summary)}
       `;
       dashboardCard.classList.remove('hidden');
-
-      const openSubmit = document.getElementById('open-submit');
-      if (openSubmit) openSubmit.addEventListener('click', showSubmitPanel);
-    }
-
-    function showSubmitPanel() {
-      submitPanel.classList.remove('hidden');
-      submitPanel.scrollIntoView({ behavior: 'smooth' });
     }
 
     async function loadProgress({ preserveResult = false } = {}) {
@@ -308,11 +244,9 @@ import Footer from '../../components/Footer.astro';
         if (!res.ok || !data.ok) {
           showError(data.message || 'Không tìm thấy mã học sinh.');
           dashboardCard.classList.add('hidden');
-          submitPanel.classList.add('hidden');
           return;
         }
         renderDashboard(data);
-        if (data.state !== 'awaiting_review') submitPanel.classList.add('hidden');
       } catch {
         showError('Mạng không ổn định. Vui lòng thử lại.');
       } finally {
@@ -322,51 +256,5 @@ import Footer from '../../components/Footer.astro';
     }
 
     loadBtn.addEventListener('click', loadProgress);
-
-    photoInput.addEventListener('change', () => {
-      const count = photoInput.files.length;
-      photoCount.textContent = count
-        ? `Đã chọn ${count} mục. Tối đa 8 mục.`
-        : 'Có thể chọn nhiều mục cùng lúc, tối đa 8 mục.';
-    });
-
-    recordBtn.addEventListener('click', async () => {
-      clearError();
-      try {
-        stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        chunks = [];
-        audioBlob = null;
-        mediaRecorder = new MediaRecorder(stream);
-        mediaRecorder.addEventListener('dataavailable', (event) => {
-          if (event.data.size > 0) chunks.push(event.data);
-        });
-        mediaRecorder.addEventListener('stop', () => {
-          audioBlob = new Blob(chunks, { type: mediaRecorder.mimeType || 'audio/webm' });
-          audioPreview.src = URL.createObjectURL(audioBlob);
-          audioPreview.classList.remove('hidden');
-          recordStatus.textContent = 'Đã có ghi âm. Bố mẹ có thể nghe lại trước khi nộp.';
-          stream?.getTracks().forEach((track) => track.stop());
-        });
-        mediaRecorder.start();
-        recordBtn.disabled = true;
-        stopBtn.disabled = false;
-        recordStatus.textContent = 'Đang ghi âm... con kể lại câu chuyện trong 30-60 giây.';
-      } catch {
-        showError('Không mở được micro. Vui lòng cho phép trình duyệt dùng micro rồi thử lại.');
-      }
-    });
-
-    stopBtn.addEventListener('click', () => {
-      if (mediaRecorder && mediaRecorder.state === 'recording') {
-        mediaRecorder.stop();
-      }
-      recordBtn.disabled = false;
-      stopBtn.disabled = true;
-    });
-
-    form.addEventListener('submit', (event) => {
-      event.preventDefault();
-      showError('Read2Lead V2 nộp bài ngay trong màn hình bài học. Bố mẹ bấm nút Cho con làm bài trên web để con hoàn thành nhiệm vụ.');
-    });
   </script>
 </BaseLayout>
