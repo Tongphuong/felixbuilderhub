@@ -34,3 +34,13 @@ test('activity progress shows exactly 5 steps in the new order', () => {
   }
   assert.equal((activityProgress.match(/data-step-button=/g) || []).length, 5);
 });
+
+test('listen_and_order uses editable drag-drop slots instead of one-way token picking', () => {
+  assert.match(lessonPage, /data-order-slot=/);
+  assert.match(lessonPage, /draggable="true" data-order-item=/);
+  assert.match(lessonPage, /function placeOrderToken/);
+  assert.match(lessonPage, /function removeOrderToken/);
+  assert.match(lessonPage, /addEventListener\('drop'/);
+  assert.match(lessonPage, /Bấm chữ trong ô để lấy ra/);
+  assert.doesNotMatch(lessonPage, /setTimeout\(\(\) => resetOrderCard/);
+});

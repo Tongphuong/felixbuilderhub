@@ -191,6 +191,44 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
     background: rgb(212 166 78 / 0.14);
   }
 
+  .r2l-order-slots {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(96px, 1fr));
+    gap: 0.5rem;
+  }
+
+  .r2l-order-slot {
+    min-height: 48px;
+    border-radius: 8px;
+    border: 1px dashed rgb(245 230 211 / 0.24);
+    background: rgb(245 230 211 / 0.05);
+    padding: 0.7rem 0.8rem;
+    text-align: center;
+    font-weight: 700;
+    color: rgb(245 230 211 / 0.82);
+  }
+
+  .r2l-order-slot[data-filled='true'] {
+    border-style: solid;
+    border-color: rgb(74 222 128 / 0.52);
+    background: rgb(74 222 128 / 0.12);
+    color: rgb(245 230 211);
+  }
+
+  .r2l-order-slot[data-drop-active='true'] {
+    border-color: rgb(212 166 78 / 0.85);
+    background: rgb(212 166 78 / 0.14);
+  }
+
+  .r2l-order-slot[data-correct='true'] {
+    border-color: rgb(74 222 128 / 0.85);
+    background: rgb(74 222 128 / 0.18);
+  }
+
+  .r2l-token[hidden] {
+    display: none;
+  }
+
   .r2l-rec-row {
     margin-top: 8px;
     display: flex;
@@ -795,12 +833,30 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
                   <button class="r2l-primary" type="button" data-play-order="${itemIndex}">Nghe câu</button>
                 </div>
                 <p class="mt-2 text-sm text-cream/65">${escapeHtml(item.translation_vi || '')}</p>
-                <div class="mt-3 min-h-12 rounded-md border border-cream/10 bg-cream/5 p-3 text-cream" data-built="${itemIndex}"></div>
+                <div class="mt-3">
+                  <p class="mb-2 text-xs font-semibold uppercase tracking-wide text-cream/55">Kéo từng chữ vào ô. Bấm chữ trong ô để lấy ra.</p>
+                  <div class="r2l-order-slots" data-order-slots="${itemIndex}">
+                    ${(item.scrambled_tokens || [])
+                      .map(
+                        (_, slotIndex) => `
+                          <button
+                            class="r2l-order-slot"
+                            type="button"
+                            data-order-slot="${itemIndex}"
+                            data-slot-index="${slotIndex}"
+                            data-filled="false"
+                            aria-label="Ô số ${slotIndex + 1}"
+                          >Ô ${slotIndex + 1}</button>
+                        `,
+                      )
+                      .join('')}
+                  </div>
+                </div>
                 <div class="mt-3 flex flex-wrap gap-2">
                   ${(item.scrambled_tokens || [])
                     .map(
                       (token, tokenIndex) => `
-                        <button class="r2l-token" type="button" data-order-item="${itemIndex}" data-token-index="${tokenIndex}">
+                        <button class="r2l-token" type="button" draggable="true" data-order-item="${itemIndex}" data-token-index="${tokenIndex}">
                           ${escapeHtml(token)}
                         </button>
                       `,
@@ -818,35 +874,69 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
     const solved = new Set();
     let wrongCount = 0;
     const picked = {};
+    const wrongSignatures = {};
+    let draggedToken = null;
     root.querySelectorAll('[data-play-order]').forEach((button) => {
       button.addEventListener('click', () => playAudio(activity.items[Number(button.dataset.playOrder)]?.audio_url || '', button));
     });
+    root.querySelectorAll('[data-order-slot]').forEach((slot) => {
+      const itemIndex = Number(slot.dataset.orderSlot);
+      const slotIndex = Number(slot.dataset.slotIndex);
+      slot.addEventListener('click', () => removeOrderToken(root, activity, picked, itemIndex, slotIndex, solved));
+      slot.addEventListener('dragstart', (event) => {
+        const state = picked[itemIndex] || [];
+        const tokenIndex = state[slotIndex];
+        if (tokenIndex == null) return;
+        draggedToken = { itemIndex, tokenIndex, fromSlot: slotIndex };
+        event.dataTransfer?.setData('text/plain', JSON.stringify(draggedToken));
+      });
+      slot.addEventListener('dragover', (event) => {
+        event.preventDefault();
+        slot.dataset.dropActive = 'true';
+      });
+      slot.addEventListener('dragleave', () => {
+        slot.dataset.dropActive = 'false';
+      });
+      slot.addEventListener('drop', (event) => {
+        event.preventDefault();
+        slot.dataset.dropActive = 'false';
+        const payload = readOrderDragPayload(event, draggedToken);
+        if (!payload || payload.itemIndex !== itemIndex) return;
+        placeOrderToken(root, activity, picked, itemIndex, payload.tokenIndex, slotIndex, solved);
+        checkOrderItem(root, activity, picked, wrongSignatures, solved, itemIndex, () => {
+          wrongCount += 1;
+        });
+        if (solved.size === (activity.items || []).length) completeActivity(activity.type, {
+          correct_count: solved.size,
+          total_count: activity.items.length,
+          wrong_count: wrongCount,
+        });
+      });
+    });
     root.querySelectorAll('[data-order-item]').forEach((button) => {
+      button.addEventListener('dragstart', (event) => {
+        draggedToken = {
+          itemIndex: Number(button.dataset.orderItem),
+          tokenIndex: Number(button.dataset.tokenIndex),
+          fromSlot: null,
+        };
+        event.dataTransfer?.setData('text/plain', JSON.stringify(draggedToken));
+      });
+      button.addEventListener('dragend', () => {
+        draggedToken = null;
+      });
       button.addEventListener('click', () => {
         const itemIndex = Number(button.dataset.orderItem);
         const tokenIndex = Number(button.dataset.tokenIndex);
         const item = activity.items[itemIndex];
-        picked[itemIndex] = picked[itemIndex] || [];
-        if (picked[itemIndex].includes(tokenIndex)) return;
-        picked[itemIndex].push(tokenIndex);
-        button.dataset.picked = 'true';
-        const built = picked[itemIndex].map((idx) => item.scrambled_tokens[idx]).join(' ');
-        root.querySelector(`[data-built="${itemIndex}"]`).textContent = built;
-        if (picked[itemIndex].length === item.correct_order_indices.length) {
-          const correct = item.correct_order_indices.every((idx, i) => idx === picked[itemIndex][i]);
-          const questionId = `${activity.type}:${item.id || itemIndex}`;
-          if (correct) {
-            solved.add(itemIndex);
-            clearWrongStreak(questionId);
-            if (solved.size < (activity.items || []).length) showReward({ withVoice: true });
-          } else {
-            wrongCount += 1;
-            playWrongSfx(questionId);
-            root.querySelector(`[data-order-hint="${itemIndex}"]`)?.classList.remove('hidden');
-            picked[itemIndex] = [];
-            setTimeout(() => resetOrderCard(root, itemIndex), 500);
-          }
-        }
+        const state = ensureOrderState(picked, itemIndex, item.scrambled_tokens.length);
+        if (state.includes(tokenIndex)) return;
+        const firstEmptySlot = state.findIndex((value) => value == null);
+        if (firstEmptySlot === -1) return;
+        placeOrderToken(root, activity, picked, itemIndex, tokenIndex, firstEmptySlot, solved);
+        checkOrderItem(root, activity, picked, wrongSignatures, solved, itemIndex, () => {
+          wrongCount += 1;
+        });
         if (solved.size === (activity.items || []).length) completeActivity(activity.type, {
           correct_count: solved.size,
           total_count: activity.items.length,
@@ -856,11 +946,82 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
     });
   }
 
-  function resetOrderCard(root, itemIndex) {
-    root.querySelector(`[data-built="${itemIndex}"]`).textContent = '';
-    root.querySelectorAll(`[data-order-item="${itemIndex}"]`).forEach((button) => {
-      button.dataset.picked = 'false';
+  function ensureOrderState(picked, itemIndex, length) {
+    if (!picked[itemIndex]) picked[itemIndex] = Array.from({ length }, () => null);
+    return picked[itemIndex];
+  }
+
+  function readOrderDragPayload(event, fallback) {
+    const raw = event.dataTransfer?.getData('text/plain');
+    if (!raw) return fallback;
+    try {
+      return JSON.parse(raw);
+    } catch {
+      return fallback;
+    }
+  }
+
+  function placeOrderToken(root, activity, picked, itemIndex, tokenIndex, slotIndex, solved) {
+    if (solved.has(itemIndex)) return;
+    const item = activity.items[itemIndex];
+    const state = ensureOrderState(picked, itemIndex, item.scrambled_tokens.length);
+    const previousSlot = state.findIndex((value) => value === tokenIndex);
+    if (previousSlot !== -1) state[previousSlot] = null;
+    state[slotIndex] = tokenIndex;
+    renderOrderSlots(root, activity, picked, itemIndex, false);
+  }
+
+  function removeOrderToken(root, activity, picked, itemIndex, slotIndex, solved) {
+    if (solved.has(itemIndex)) return;
+    const item = activity.items[itemIndex];
+    const state = ensureOrderState(picked, itemIndex, item.scrambled_tokens.length);
+    if (state[slotIndex] == null) return;
+    state[slotIndex] = null;
+    renderOrderSlots(root, activity, picked, itemIndex, false);
+    root.querySelector(`[data-order-hint="${itemIndex}"]`)?.classList.add('hidden');
+  }
+
+  function renderOrderSlots(root, activity, picked, itemIndex, isCorrect) {
+    const item = activity.items[itemIndex];
+    const state = ensureOrderState(picked, itemIndex, item.scrambled_tokens.length);
+    root.querySelectorAll(`[data-order-slot="${itemIndex}"]`).forEach((slot) => {
+      const slotIndex = Number(slot.dataset.slotIndex);
+      const tokenIndex = state[slotIndex];
+      slot.textContent = tokenIndex == null ? `Ô ${slotIndex + 1}` : item.scrambled_tokens[tokenIndex];
+      slot.dataset.filled = tokenIndex == null ? 'false' : 'true';
+      slot.dataset.correct = isCorrect ? 'true' : 'false';
+      slot.draggable = tokenIndex != null && !isCorrect;
     });
+    root.querySelectorAll(`[data-order-item="${itemIndex}"]`).forEach((button) => {
+      const tokenIndex = Number(button.dataset.tokenIndex);
+      const pickedAlready = state.includes(tokenIndex);
+      button.hidden = pickedAlready;
+      button.dataset.picked = pickedAlready ? 'true' : 'false';
+    });
+  }
+
+  function checkOrderItem(root, activity, picked, wrongSignatures, solved, itemIndex, onWrong) {
+    const item = activity.items[itemIndex];
+    const state = ensureOrderState(picked, itemIndex, item.scrambled_tokens.length);
+    if (state.some((value) => value == null)) return;
+    const correct = item.correct_order_indices.every((idx, i) => idx === state[i]);
+    const questionId = `${activity.type}:${item.id || itemIndex}`;
+    if (correct) {
+      solved.add(itemIndex);
+      clearWrongStreak(questionId);
+      root.querySelector(`[data-order-hint="${itemIndex}"]`)?.classList.add('hidden');
+      renderOrderSlots(root, activity, picked, itemIndex, true);
+      if (solved.size < (activity.items || []).length) showReward({ withVoice: true });
+      return;
+    }
+    wrongSignatures[itemIndex] = wrongSignatures[itemIndex] || new Set();
+    const signature = state.join(',');
+    if (!wrongSignatures[itemIndex].has(signature)) {
+      wrongSignatures[itemIndex].add(signature);
+      onWrong();
+      playWrongSfx(questionId);
+    }
+    root.querySelector(`[data-order-hint="${itemIndex}"]`)?.classList.remove('hidden');
   }
 
   function renderWrittenActivity(root, activity) {
