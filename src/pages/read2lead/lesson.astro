@@ -66,29 +66,6 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
           </aside>
         </section>
 
-        <section
-          id="speaking-check-section"
-          class="hidden rounded-md border border-gold/25 bg-gold/[0.06] p-5"
-        >
-          <div class="flex flex-wrap items-start justify-between gap-3">
-            <div>
-              <p class="text-sm font-semibold uppercase tracking-wide text-gold">Thử thách bonus</p>
-              <h3 class="mt-1 font-display text-xl font-bold text-cream">Con đọc to đoạn truyện nhé</h3>
-              <p class="mt-2 text-sm text-cream/70">
-                Phần này là thử thách thêm — con có thể bỏ qua và vẫn hoàn thành bài bình thường.
-              </p>
-            </div>
-            <button id="speaking-check-skip" class="r2l-secondary" type="button">Bỏ qua</button>
-          </div>
-          <p id="speaking-check-expected" class="mt-4 rounded-md border border-cream/10 bg-navy-950/45 p-4 text-sm leading-7 text-cream/85"></p>
-          <div id="speaking-check-controls" class="mt-4 flex flex-wrap items-center gap-3">
-            <button id="speaking-check-record" class="r2l-primary" type="button">🎤 Đọc to</button>
-            <span id="speaking-check-timer" class="hidden text-sm font-semibold text-gold"></span>
-            <span id="speaking-check-status" class="text-sm text-cream/65"></span>
-          </div>
-          <div id="speaking-check-result" class="mt-4 hidden rounded-md border border-cream/10 bg-navy-950/45 p-4"></div>
-        </section>
-
         <section class="rounded-md border border-cream/10 bg-cream/[0.04] p-4">
           <ActivityProgress />
         </section>
@@ -99,6 +76,32 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
           <ReadingComprehension />
           <WrittenResponse />
           <ListenAndSpeak />
+        </section>
+
+        <section
+          id="speaking-check-section"
+          class="hidden rounded-md border border-gold/25 bg-gold/[0.06] p-5"
+        >
+          <div class="flex flex-wrap items-start justify-between gap-3">
+            <div>
+              <p class="text-sm font-semibold uppercase tracking-wide text-gold">Câu hỏi mở bonus</p>
+              <h3 class="mt-1 font-display text-xl font-bold text-cream">Con trả lời thêm một câu về truyện nhé</h3>
+              <p class="mt-2 text-sm text-cream/70">
+                Con đã xong 5 nhiệm vụ rồi! Trả lời bằng tiếng Anh — bỏ qua cũng được, không ảnh hưởng điểm bài.
+              </p>
+            </div>
+            <button id="speaking-check-skip" class="r2l-secondary" type="button">Bỏ qua</button>
+          </div>
+          <div class="mt-4 rounded-md border border-cream/10 bg-navy-950/45 p-4">
+            <p id="speaking-check-question-vi" class="text-base font-semibold leading-7 text-cream"></p>
+            <p id="speaking-check-question-en" class="mt-2 text-sm leading-6 text-cream/65"></p>
+          </div>
+          <div id="speaking-check-controls" class="mt-4 flex flex-wrap items-center gap-3">
+            <button id="speaking-check-record" class="r2l-primary" type="button">🎤 Trả lời</button>
+            <span id="speaking-check-timer" class="hidden text-sm font-semibold text-gold"></span>
+            <span id="speaking-check-status" class="text-sm text-cream/65"></span>
+          </div>
+          <div id="speaking-check-result" class="mt-4 hidden rounded-md border border-cream/10 bg-navy-950/45 p-4"></div>
         </section>
 
         <section class="flex flex-col gap-3 rounded-md border border-accent/25 bg-accent/10 p-5 sm:flex-row sm:items-center sm:justify-between">
@@ -541,9 +544,9 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
     lessonAudioState.button = null;
   }
 
-  /* ----- Activity C audio recorder (W4.3) ----- */
+  /* ----- Activity C audio recorder (W4.3) + W10 Whisper scoring ----- */
   const _r2lRecorderState = {
-    // Map of itemKey -> { mediaRecorder, chunks, blobUrl, status: 'idle'|'recording'|'recorded'|'denied' }
+    // Map of itemKey -> { mediaRecorder, chunks, blob, blobUrl, status, expectedText, checkStatus, checkResult }
     perItem: new Map(),
     micPermissionDenied: false,
   };
@@ -558,45 +561,192 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
     }
   })();
 
+  async function _r2lPostSpeakingCheck(blob, expectedText, checkMode = 'read') {
+    const formData = new FormData();
+    formData.append('audio', blob, blob.type.includes('mp4') ? 'audio.mp4' : 'audio.webm');
+    formData.append('access_code', state.accessCode);
+    formData.append('pack_id', state.packId);
+    formData.append('expected_text', expectedText);
+    formData.append('check_mode', checkMode);
+
+    const response = await fetch('/api/read2lead-speaking-check', {
+      method: 'POST',
+      body: formData,
+    });
+    return response.json();
+  }
+
+  function _r2lBuildSpeakingFeedbackHtml(result, { compact = false } = {}) {
+    if (result?.loading) {
+      return '<p class="text-sm text-gold">Minny đang nghe và nhận xét bài đọc của con...</p>';
+    }
+    if (!result?.ok) {
+      return `<p class="font-semibold text-gold">${escapeHtml(result?.message || 'Chưa chấm được. Con thử thu lại nhé!')}</p>`;
+    }
+
+    const missed = Array.isArray(result.words_missed) ? result.words_missed : [];
+    const close = Array.isArray(result.words_close) ? result.words_close : [];
+    const missedHtml = missed.length
+      ? `<p class="mt-2 text-sm text-cream/75"><span class="font-semibold text-cream">Luyện thêm:</span> ${missed.map((word) => `<span class="r2l-speaking-word" data-tone="miss">${escapeHtml(word)}</span>`).join('')}</p>`
+      : '';
+    const closeHtml = close.length
+      ? `<p class="mt-2 text-sm text-cream/75"><span class="font-semibold text-cream">Gần đúng:</span> ${close.map((word) => `<span class="r2l-speaking-word" data-tone="close">${escapeHtml(word)}</span>`).join('')}</p>`
+      : '';
+    const transcriptHtml = result.transcript && !compact
+      ? `<p class="mt-2 text-xs text-cream/55">Minny nghe: “${escapeHtml(result.transcript)}”</p>`
+      : '';
+
+    return `
+      <p class="font-semibold text-gold">${escapeHtml(result.feedback_vi || '')}</p>
+      <p class="mt-1 text-sm text-cream/75">Điểm đọc: <strong class="text-cream">${Number(result.score_percent || 0)}%</strong> (${Number(result.correct_count || 0)}/${Number(result.total_count || 0)} từ)</p>
+      ${transcriptHtml}
+      ${closeHtml}
+      ${missedHtml}
+    `;
+  }
+
+  function _r2lRenderSpeakFeedback(cardEl, result) {
+    const slot = cardEl?.querySelector('[data-speak-feedback]');
+    if (!slot) return;
+    if (!result) {
+      slot.classList.add('hidden');
+      slot.innerHTML = '';
+      return;
+    }
+    slot.classList.remove('hidden');
+    slot.innerHTML = _r2lBuildSpeakingFeedbackHtml(result);
+  }
+
+  async function _r2lScoreSpeakRecording(itemKey, cardEl, blob) {
+    const entry = _r2lRecorderState.perItem.get(itemKey);
+    const expectedText = entry?.expectedText || '';
+    if (!expectedText || !blob) return;
+
+    _r2lRenderSpeakFeedback(cardEl, { loading: true });
+
+    try {
+      const payload = await _r2lPostSpeakingCheck(blob, expectedText);
+      const current = _r2lRecorderState.perItem.get(itemKey);
+      if (!current) return;
+      _r2lRecorderState.perItem.set(itemKey, {
+        ...current,
+        checkStatus: payload?.ok ? 'done' : 'error',
+        checkResult: payload,
+      });
+      _r2lRenderSpeakFeedback(cardEl, payload);
+      if (payload?.ok) _r2lMergeSpeakActivityScores();
+    } catch (error) {
+      const current = _r2lRecorderState.perItem.get(itemKey);
+      if (current) {
+        _r2lRecorderState.perItem.set(itemKey, {
+          ...current,
+          checkStatus: 'error',
+          checkResult: null,
+        });
+      }
+      _r2lRenderSpeakFeedback(cardEl, {
+        ok: false,
+        message: error.message || 'Chưa gửi được bài đọc. Con thử lại nhé!',
+      });
+    }
+  }
+
+  function _r2lMergeSpeakActivityScores() {
+    let correctTotal = 0;
+    let wordTotal = 0;
+    let scoredItems = 0;
+    _r2lRecorderState.perItem.forEach((entry) => {
+      if (entry?.checkResult?.ok) {
+        scoredItems += 1;
+        correctTotal += Number(entry.checkResult.correct_count || 0);
+        wordTotal += Number(entry.checkResult.total_count || 0);
+      }
+    });
+    if (!scoredItems) return;
+    state.activityResults.speaking = {
+      type: 'speaking',
+      attempted: true,
+      correct_count: correctTotal,
+      total_count: wordTotal,
+      wrong_count: Math.max(0, wordTotal - correctTotal),
+      score_percent: wordTotal > 0 ? Math.round((correctTotal / wordTotal) * 100) : 0,
+      whisper_scored_items: scoredItems,
+    };
+  }
+
+  function _r2lInitSpeakRecorder(itemKey, cardEl, expectedText) {
+    const existing = _r2lRecorderState.perItem.get(itemKey);
+    if (!existing) {
+      _r2lRecorderState.perItem.set(itemKey, {
+        mediaRecorder: null,
+        chunks: [],
+        blob: null,
+        blobUrl: null,
+        status: 'idle',
+        expectedText: expectedText || '',
+        checkStatus: 'idle',
+        checkResult: null,
+      });
+    } else if (expectedText && !existing.expectedText) {
+      existing.expectedText = expectedText;
+    }
+    _r2lRenderRecorderUi(itemKey, cardEl);
+  }
+
   async function _r2lStartRecording(itemKey, cardEl) {
     if (_r2lRecorderState.micPermissionDenied) return;
+    const prev = _r2lRecorderState.perItem.get(itemKey);
+    if (prev?.blobUrl) URL.revokeObjectURL(prev.blobUrl);
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      const mr = new MediaRecorder(stream);
+      const mimeType = _r2lPickRecordingMimeType();
+      const mr = mimeType ? new MediaRecorder(stream, { mimeType }) : new MediaRecorder(stream);
       const chunks = [];
       mr.addEventListener('dataavailable', (e) => {
         if (e.data && e.data.size > 0) chunks.push(e.data);
       });
       mr.addEventListener('stop', () => {
-        const blob = new Blob(chunks, { type: mr.mimeType || 'audio/webm' });
+        const blob = new Blob(chunks, { type: mr.mimeType || mimeType || 'audio/webm' });
         const url = URL.createObjectURL(blob);
-        const prev = _r2lRecorderState.perItem.get(itemKey);
-        if (prev?.blobUrl) URL.revokeObjectURL(prev.blobUrl);
         _r2lRecorderState.perItem.set(itemKey, {
           mediaRecorder: null,
           chunks: [],
+          blob,
           blobUrl: url,
           status: 'recorded',
+          expectedText: prev?.expectedText || '',
+          checkStatus: 'uploading',
+          checkResult: null,
         });
         stream.getTracks().forEach((t) => t.stop());
         _r2lRenderRecorderUi(itemKey, cardEl);
+        _r2lScoreSpeakRecording(itemKey, cardEl, blob);
       });
       _r2lRecorderState.perItem.set(itemKey, {
         mediaRecorder: mr,
         chunks,
+        blob: null,
         blobUrl: null,
         status: 'recording',
+        expectedText: prev?.expectedText || '',
+        checkStatus: 'idle',
+        checkResult: null,
       });
       mr.start();
       _r2lRenderRecorderUi(itemKey, cardEl);
+      _r2lRenderSpeakFeedback(cardEl, null);
     } catch (err) {
       console.warn('[r2l-recorder] Permission denied or error:', err);
       _r2lRecorderState.micPermissionDenied = true;
       _r2lRecorderState.perItem.set(itemKey, {
         mediaRecorder: null,
         chunks: [],
+        blob: null,
         blobUrl: null,
         status: 'denied',
+        expectedText: prev?.expectedText || '',
+        checkStatus: 'idle',
+        checkResult: null,
       });
       _r2lRenderRecorderUi(itemKey, cardEl);
     }
@@ -613,7 +763,21 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
   function _r2lDiscardRecording(itemKey, cardEl) {
     const entry = _r2lRecorderState.perItem.get(itemKey);
     if (entry?.blobUrl) URL.revokeObjectURL(entry.blobUrl);
+    const expectedText = entry?.expectedText || '';
     _r2lRecorderState.perItem.delete(itemKey);
+    if (expectedText) {
+      _r2lRecorderState.perItem.set(itemKey, {
+        mediaRecorder: null,
+        chunks: [],
+        blob: null,
+        blobUrl: null,
+        status: 'idle',
+        expectedText,
+        checkStatus: 'idle',
+        checkResult: null,
+      });
+    }
+    _r2lRenderSpeakFeedback(cardEl, null);
     _r2lRenderRecorderUi(itemKey, cardEl);
   }
 
@@ -652,9 +816,11 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
         <span class="r2l-rec-indicator">đang thu...</span>
       `;
     } else if (status === 'recorded') {
+      const checking = entry?.checkStatus === 'uploading';
       slot.innerHTML = `
-        <button type="button" class="r2l-rec-btn r2l-rec-play" data-action="play">Nghe lại bài thu</button>
-        <button type="button" class="r2l-rec-btn r2l-rec-redo" data-action="redo">Thu lại</button>
+        <button type="button" class="r2l-rec-btn r2l-rec-play" data-action="play" ${checking ? 'disabled' : ''}>Nghe lại bài thu</button>
+        <button type="button" class="r2l-rec-btn r2l-rec-redo" data-action="redo" ${checking ? 'disabled' : ''}>Thu lại</button>
+        ${checking ? '<span class="r2l-rec-indicator">đang chấm...</span>' : ''}
       `;
     } else {
       slot.innerHTML = '<button type="button" class="r2l-rec-btn r2l-rec-start" data-action="start">Thu âm</button>';
@@ -685,10 +851,56 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
     status: 'idle',
     timerId: null,
     secondsLeft: SPEAKING_CHECK_MAX_SECONDS,
-    expectedText: '',
+    storyContext: '',
+    openQuestion: null,
+    checkMode: 'open',
     result: null,
     skipped: false,
+    revealed: false,
   };
+
+  function _r2lResolveBonusOpenQuestion(lesson) {
+    if (lesson?.story?.trivia_vi) {
+      return {
+        vi: String(lesson.story.trivia_vi),
+        en: String(lesson.story.trivia_en || lesson.story.trivia_vi),
+      };
+    }
+
+    const comprehension = (lesson?.activities || []).find((activity) => activity.type === 'reading_comprehension');
+    const openMcq = (comprehension?.questions || []).find((question) => question.section === 'Open Question');
+    if (openMcq?.question_vi) {
+      return {
+        vi: String(openMcq.question_vi),
+        en: String(openMcq.question_en || openMcq.question_vi),
+      };
+    }
+
+    const written = (lesson?.activities || []).find((activity) => activity.type === 'written_response');
+    const writtenQuestion = written?.questions?.[0];
+    if (writtenQuestion?.question_vi) {
+      return {
+        vi: String(writtenQuestion.question_vi),
+        en: String(writtenQuestion.question_en || writtenQuestion.question_vi),
+      };
+    }
+
+    const title = lesson?.story?.title || 'câu chuyện hôm nay';
+    return {
+      vi: `Con thích nhất điều gì trong câu chuyện “${title}”? Vì sao?`,
+      en: `What did you like most about "${title}"? Why?`,
+    };
+  }
+
+  function _r2lBuildStoryContext(lesson) {
+    const chunks = [];
+    if (lesson?.story?.title) chunks.push(String(lesson.story.title));
+    if (lesson?.topic) chunks.push(String(lesson.topic));
+    for (const paragraph of lesson?.story?.paragraphs_en || []) {
+      chunks.push(String(paragraph));
+    }
+    return chunks.join(' ').trim();
+  }
 
   function _r2lPickRecordingMimeType() {
     if (typeof MediaRecorder === 'undefined') return '';
@@ -698,12 +910,23 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
   }
 
   function _r2lResolveSpeakingExpectedText(lesson) {
-    const speakingActivity = (lesson?.activities || []).find((activity) => activity.type === 'speaking');
-    if (speakingActivity?.text) return String(speakingActivity.text);
-    if (speakingActivity?.expected_text) return String(speakingActivity.expected_text);
-    if (lesson?.story?.text) return String(lesson.story.text);
-    const paragraphs = Array.isArray(lesson?.story?.paragraphs_en) ? lesson.story.paragraphs_en : [];
-    return paragraphs.join(' ').trim();
+    return _r2lBuildStoryContext(lesson);
+  }
+
+  function _r2lMaybeRevealBonusSection() {
+    const section = qs('#speaking-check-section');
+    if (!section || _r2lSpeakingCheckState.skipped || _r2lSpeakingCheckState.revealed) return;
+
+    const totalActivities = state.lesson?.activities?.length || 5;
+    if (state.completedTypes.size < totalActivities) return;
+    if (!_r2lSpeakingCheckState.openQuestion?.vi || !_r2lSupportsRecording) return;
+
+    _r2lSpeakingCheckState.revealed = true;
+    section.classList.remove('hidden');
+    _r2lRenderSpeakingCheckControls();
+    window.setTimeout(() => {
+      section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 120);
   }
 
   function _r2lCleanupSpeakingCheckRecording() {
@@ -741,7 +964,7 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
       recordButton.textContent = '⏹ Dừng thu';
       timerEl.classList.remove('hidden');
       timerEl.textContent = `${_r2lSpeakingCheckState.secondsLeft}s`;
-      statusEl.textContent = 'Minny đang nghe con đọc...';
+      statusEl.textContent = 'Minny đang nghe con trả lời...';
       recordButton.disabled = false;
       return;
     }
@@ -749,16 +972,16 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
     timerEl.classList.add('hidden');
     if (_r2lSpeakingCheckState.status === 'uploading') {
       recordButton.disabled = true;
-      recordButton.textContent = '🎤 Đọc to';
-      statusEl.textContent = 'Minny đang chấm bài đọc...';
+      recordButton.textContent = '🎤 Trả lời';
+      statusEl.textContent = 'Minny đang nhận xét câu trả lời...';
       return;
     }
 
     recordButton.disabled = false;
-    recordButton.textContent = '🎤 Đọc to';
+    recordButton.textContent = '🎤 Trả lời';
     statusEl.textContent = _r2lSpeakingCheckState.skipped
-      ? 'Con đã bỏ qua thử thách bonus.'
-      : 'Con bấm nút, đọc to rồi bấm dừng (tối đa 30 giây).';
+      ? 'Con đã bỏ qua câu hỏi mở bonus.'
+      : 'Con bấm nút rồi trả lời bằng tiếng Anh (tối đa 30 giây).';
   }
 
   function _r2lRenderSpeakingCheckResult(result) {
@@ -779,19 +1002,32 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
       return;
     }
 
+    const isOpen = result?.check_mode === 'open' || _r2lSpeakingCheckState.checkMode === 'open';
     const missed = Array.isArray(result.words_missed) ? result.words_missed : [];
     const close = Array.isArray(result.words_close) ? result.words_close : [];
-    const missedHtml = missed.length
+    const matched = Array.isArray(result.words_matched) ? result.words_matched : [];
+    const missedHtml = !isOpen && missed.length
       ? `<p class="mt-3 text-sm text-cream/75"><span class="font-semibold text-cream">Luyện thêm:</span> ${missed.map((word) => `<span class="r2l-speaking-word" data-tone="miss">${escapeHtml(word)}</span>`).join('')}</p>`
       : '';
-    const closeHtml = close.length
+    const closeHtml = !isOpen && close.length
       ? `<p class="mt-3 text-sm text-cream/75"><span class="font-semibold text-cream">Gần đúng:</span> ${close.map((word) => `<span class="r2l-speaking-word" data-tone="close">${escapeHtml(word)}</span>`).join('')}</p>`
       : '';
+    const matchedHtml = isOpen && matched.length
+      ? `<p class="mt-3 text-sm text-cream/75"><span class="font-semibold text-cream">Con nhắc tới:</span> ${matched.map((word) => `<span class="r2l-speaking-word" data-tone="good">${escapeHtml(word)}</span>`).join('')}</p>`
+      : '';
+    const transcriptHtml = result.transcript
+      ? `<p class="mt-2 text-sm text-cream/75">Minny nghe con nói: “${escapeHtml(result.transcript)}”</p>`
+      : '';
+    const scoreHtml = isOpen
+      ? ''
+      : `<p class="mt-2 text-sm text-cream/75">Điểm đọc: <strong class="text-cream">${Number(result.score_percent || 0)}%</strong> (${Number(result.correct_count || 0)}/${Number(result.total_count || 0)} từ)</p>`;
 
     resultEl.classList.remove('hidden');
     resultEl.innerHTML = `
       <p class="font-display text-xl font-bold text-gold">${escapeHtml(result.feedback_vi || '')}</p>
-      <p class="mt-2 text-sm text-cream/75">Điểm đọc: <strong class="text-cream">${Number(result.score_percent || 0)}%</strong> (${Number(result.correct_count || 0)}/${Number(result.total_count || 0)} từ)</p>
+      ${scoreHtml}
+      ${transcriptHtml}
+      ${matchedHtml}
       ${closeHtml}
       ${missedHtml}
       <button id="speaking-check-retry" class="r2l-secondary mt-4" type="button">Thử lại</button>
@@ -823,17 +1059,11 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
     resultEl?.classList.add('hidden');
 
     try {
-      const formData = new FormData();
-      formData.append('audio', blob, blob.type.includes('mp4') ? 'audio.mp4' : 'audio.webm');
-      formData.append('access_code', state.accessCode);
-      formData.append('pack_id', state.packId);
-      formData.append('expected_text', _r2lSpeakingCheckState.expectedText);
-
-      const response = await fetch('/api/read2lead-speaking-check', {
-        method: 'POST',
-        body: formData,
-      });
-      const payload = await response.json();
+      const payload = await _r2lPostSpeakingCheck(
+        blob,
+        _r2lSpeakingCheckState.storyContext,
+        _r2lSpeakingCheckState.checkMode,
+      );
       _r2lSpeakingCheckState.result = payload;
       _r2lSpeakingCheckState.status = 'done';
       if (payload?.ok) _r2lStoreSpeakingActivityResult(payload);
@@ -850,7 +1080,7 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
   }
 
   async function _r2lStartSpeakingCheckRecording() {
-    if (!_r2lSupportsRecording || !_r2lSpeakingCheckState.expectedText) return;
+    if (!_r2lSupportsRecording || !_r2lSpeakingCheckState.openQuestion?.vi) return;
     _r2lCleanupSpeakingCheckRecording();
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -890,7 +1120,7 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
       _r2lSpeakingCheckState.status = 'idle';
       _r2lRenderSpeakingCheckResult({
         ok: false,
-        message: 'Vui lòng cấp quyền micro để con thử thách đọc to nhé.',
+        message: 'Vui lòng cấp quyền micro để con trả lời câu hỏi mở nhé.',
       });
       _r2lRenderSpeakingCheckControls();
     }
@@ -910,15 +1140,20 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
     const section = qs('#speaking-check-section');
     if (!section) return;
 
-    _r2lSpeakingCheckState.expectedText = _r2lResolveSpeakingExpectedText(lesson);
-    if (!_r2lSpeakingCheckState.expectedText || !_r2lSupportsRecording) {
+    _r2lSpeakingCheckState.openQuestion = _r2lResolveBonusOpenQuestion(lesson);
+    _r2lSpeakingCheckState.storyContext = _r2lBuildStoryContext(lesson);
+    _r2lSpeakingCheckState.checkMode = 'open';
+
+    if (!_r2lSpeakingCheckState.openQuestion?.vi || !_r2lSupportsRecording) {
       section.classList.add('hidden');
       return;
     }
 
-    section.classList.remove('hidden');
-    const expectedEl = qs('#speaking-check-expected');
-    if (expectedEl) expectedEl.textContent = _r2lSpeakingCheckState.expectedText;
+    section.classList.add('hidden');
+    const questionViEl = qs('#speaking-check-question-vi');
+    const questionEnEl = qs('#speaking-check-question-en');
+    if (questionViEl) questionViEl.textContent = _r2lSpeakingCheckState.openQuestion.vi;
+    if (questionEnEl) questionEnEl.textContent = _r2lSpeakingCheckState.openQuestion.en;
 
     qs('#speaking-check-record')?.addEventListener('click', () => {
       if (_r2lSpeakingCheckState.status === 'recording') {
@@ -1645,6 +1880,7 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
                 </div>
                 <p class="mt-3 text-sm text-gold">${escapeHtml(item.tip_vi || '')}</p>
                 <div class="r2l-rec-row" data-recorder-slot></div>
+                <div class="mt-3 hidden rounded-md border border-cream/10 bg-navy-950/35 p-3 text-sm text-cream/80" data-speak-feedback></div>
                 <div class="mt-3 flex flex-wrap gap-2">
                   <button class="r2l-option" type="button" data-rate-speak="${itemIndex}" data-rate-value="ready">Con nói được</button>
                   <button class="r2l-option" type="button" data-rate-speak="${itemIndex}" data-rate-value="practice">Con luyện thêm</button>
@@ -1668,7 +1904,7 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
     root.querySelectorAll('[data-speak-card]').forEach((cardEl) => {
       const itemIndex = Number(cardEl.dataset.speakCard);
       const item = activity.items?.[itemIndex] || {};
-      _r2lRenderRecorderUi(item.id || `ls_${itemIndex}`, cardEl);
+      _r2lInitSpeakRecorder(item.id || `ls_${itemIndex}`, cardEl, item.text_en || '');
     });
     root.querySelectorAll('[data-rate-speak]').forEach((button) => {
       button.addEventListener('click', () => {
@@ -1720,6 +1956,7 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
     qs('#progress-label').textContent = `${percent}%`;
     qs('#submit-lesson').disabled = state.completedTypes.size < totalActivities;
     renderStepStates();
+    _r2lMaybeRevealBonusSection();
   }
 
   function renderStepStates() {

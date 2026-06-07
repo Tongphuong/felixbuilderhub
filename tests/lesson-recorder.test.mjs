@@ -28,6 +28,14 @@ test('lesson page cleans up blob URLs on activity exit', () => {
 test('lesson page mounts a recorder slot per item', () => {
   assert.match(lessonPage, /data-recorder-slot/);
   assert.match(lessonPage, /data-speak-card="\$\{itemIndex\}"/);
+  assert.match(lessonPage, /data-speak-feedback/);
+});
+
+test('listen_and_speak recorder submits Whisper scoring after stop', () => {
+  assert.match(lessonPage, /_r2lScoreSpeakRecording/);
+  assert.match(lessonPage, /read2lead-speaking-check/);
+  assert.match(lessonPage, /item\.text_en/);
+  assert.match(lessonPage, /Minny đang nghe và nhận xét bài đọc của con/);
 });
 
 test('MCQ renderer does not reference speak activity itemIndex', () => {

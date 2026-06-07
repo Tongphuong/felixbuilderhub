@@ -4,9 +4,11 @@ import { readFileSync } from 'node:fs';
 
 import {
   MAX_AUDIO_BYTES,
+  feedbackOpenVi,
   feedbackVi,
   onRequestPost,
   runSpeakingCheck,
+  scoreOpenTranscript,
   scoreTranscript,
   wordSimilarity,
 } from '../functions/api/read2lead-speaking-check.js';
@@ -134,11 +136,46 @@ test('speaking endpoint uses Groq whisper-large-v3', () => {
   assert.match(speakingEndpoint, /GROQ_API_KEY/);
 });
 
+test('open response scores story relevance instead of read-aloud match', () => {
+  const result = scoreOpenTranscript(
+    'I liked when Pilot holds the rabbit softly and walks the dog',
+    'Pilot learns how to hold the rabbit softly and feed the turtle with small leaves.',
+  );
+  assert.equal(result.check_mode, 'open');
+  assert.ok(result.words_matched.length >= 2);
+  assert.ok(result.score_percent >= 35);
+  assert.match(result.feedback_vi, /Minny|truyện|Giỏi|Hay/);
+});
+
+test('open response feedback thresholds', () => {
+  assert.match(feedbackOpenVi(85), /Hay quá/);
+  assert.match(feedbackOpenVi(60), /Minny thấy con hiểu/);
+  assert.match(feedbackOpenVi(40), /Thử nói thêm/);
+});
+
+test('runSpeakingCheck supports open check_mode', async () => {
+  const payload = await runSpeakingCheck({
+    audioBlob: new Blob(['audio'], { type: 'audio/webm' }),
+    expectedText: 'Pilot walks the dog in the park every morning.',
+    checkMode: 'open',
+    groqApiKey: 'test-key',
+    fetchFn: async () => ({
+      ok: true,
+      json: async () => ({ text: 'Pilot walks the dog every morning because he likes animals.' }),
+    }),
+  });
+  assert.equal(payload.check_mode, 'open');
+  assert.ok(payload.score_percent >= 35);
+});
+
 test('lesson page wires optional speaking check widget', () => {
   assert.match(lessonPage, /speaking-check-section/);
   assert.match(lessonPage, /read2lead-speaking-check/);
-  assert.match(lessonPage, /Đọc to/);
+  assert.match(lessonPage, /Trả lời/);
   assert.match(lessonPage, /Bỏ qua/);
   assert.match(lessonPage, /Thử lại/);
-  assert.match(lessonPage, /type:\s*'speaking'/);
+  assert.match(lessonPage, /Câu hỏi mở bonus/);
+  assert.match(lessonPage, /_r2lMaybeRevealBonusSection/);
+  assert.match(lessonPage, /Open Question/);
+  assert.match(lessonPage, /data-speak-feedback/);
 });

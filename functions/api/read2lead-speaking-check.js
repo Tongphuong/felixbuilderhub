@@ -109,6 +109,59 @@ export function feedbackVi(scorePercent) {
   return 'Không sao, thử lại nào! Đọc to hơn một chút nhé!';
 }
 
+export function feedbackOpenVi(scorePercent) {
+  if (scorePercent >= 80) return 'Hay quá! Con kể và suy nghĩ về truyện rất tốt!';
+  if (scorePercent >= 55) return 'Giỏi lắm! Minny thấy con hiểu câu chuyện rồi!';
+  if (scorePercent >= 35) return 'Con đã cố trả lời! Thử nói thêm một chút về truyện nhé.';
+  return 'Con thử trả lời bằng tiếng Anh, nói to và rõ hơn một chút nhé!';
+}
+
+export function extractStoryKeywords(storyContext) {
+  const seen = new Set();
+  const keywords = [];
+  for (const word of tokenize(storyContext)) {
+    const norm = normalizeWord(word);
+    if (!norm || norm.length < 4 || SKIP_WORDS.has(norm) || seen.has(norm)) continue;
+    seen.add(norm);
+    keywords.push(word);
+    if (keywords.length >= 12) break;
+  }
+  return keywords;
+}
+
+export function scoreOpenTranscript(transcript, storyContext) {
+  const transcriptWords = tokenize(transcript)
+    .map((word) => normalizeWord(word))
+    .filter(Boolean);
+  const spokenCount = transcriptWords.length;
+  const keywords = extractStoryKeywords(storyContext);
+  const wordsMatched = [];
+
+  for (const keyword of keywords) {
+    const norm = normalizeWord(keyword);
+    const hit = transcriptWords.some((spoken) => wordSimilarity(spoken, norm) >= SIMILARITY_THRESHOLD);
+    if (hit) wordsMatched.push(keyword);
+  }
+
+  const effortScore = Math.min(100, Math.round((spokenCount / 10) * 100));
+  const relevanceScore = keywords.length
+    ? Math.round((wordsMatched.length / keywords.length) * 100)
+    : Math.min(100, effortScore);
+  const scorePercent = Math.round(effortScore * 0.45 + relevanceScore * 0.55);
+
+  return {
+    transcript: String(transcript || '').trim(),
+    score_percent: scorePercent,
+    correct_count: wordsMatched.length,
+    total_count: Math.max(keywords.length, 1),
+    words_missed: [],
+    words_close: [],
+    words_matched: wordsMatched,
+    feedback_vi: feedbackOpenVi(scorePercent),
+    check_mode: 'open',
+  };
+}
+
 export async function transcribeWithGroq(audioBlob, apiKey, fetchFn = fetch) {
   const formData = new FormData();
   formData.append('file', audioBlob, 'audio.webm');
@@ -135,6 +188,7 @@ export async function transcribeWithGroq(audioBlob, apiKey, fetchFn = fetch) {
 export async function runSpeakingCheck({
   audioBlob,
   expectedText,
+  checkMode = 'read',
   groqApiKey,
   fetchFn = fetch,
 }) {
@@ -145,9 +199,17 @@ export async function runSpeakingCheck({
     throw error;
   }
 
+  if (checkMode === 'open') {
+    return {
+      ok: true,
+      ...scoreOpenTranscript(transcript, expectedText),
+    };
+  }
+
   return {
     ok: true,
     ...scoreTranscript(expectedText, transcript),
+    check_mode: 'read',
   };
 }
 
@@ -182,6 +244,7 @@ export async function onRequestPost(context) {
   const accessCode = String(formData.get('access_code') || '').trim().toUpperCase();
   const packId = String(formData.get('pack_id') || '').trim();
   const expectedText = String(formData.get('expected_text') || '').trim();
+  const checkMode = String(formData.get('check_mode') || 'read').trim().toLowerCase();
   const audio = formData.get('audio');
 
   if (!accessCode || !packId || !expectedText || !audio) {
@@ -227,6 +290,7 @@ export async function onRequestPost(context) {
     const result = await runSpeakingCheck({
       audioBlob: audio,
       expectedText,
+      checkMode: checkMode === 'open' ? 'open' : 'read',
       groqApiKey: env.GROQ_API_KEY,
     });
     return json(result);
