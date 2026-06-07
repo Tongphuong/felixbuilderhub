@@ -1,5 +1,6 @@
 import { getClientIp, checkCodeRateLimit, recordCodeFailure, rateLimitedResponse } from './_rate-limit.js';
 import { buildStoryProgressForProfile } from './_read2lead-library.js';
+import { buildWeeklyGrowthForProfile } from './_read2lead-growth.js';
 import { loadProgressState, PACKS_TO_NEXT_LEVEL, publicProgressState } from './_read2lead-v2-state.js';
 
 export async function onRequestGet(context) {
@@ -65,6 +66,11 @@ export async function onRequestGet(context) {
       packsCompletedInLevel: numberOrZero(v2State.level_progress?.[v2State.current_level]),
       packsNeededForLevelUp: numberOrZero(PACKS_TO_NEXT_LEVEL[v2State.current_level]),
       accessCode: code,
+    }),
+    weekly_growth: buildWeeklyGrowthForProfile({
+      packHistory: v2State.pack_history,
+      reviewHistory: progress.review_history,
+      studentName: v2State.student_name || progress.student_name,
     }),
   });
 }

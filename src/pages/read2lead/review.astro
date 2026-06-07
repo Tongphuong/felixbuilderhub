@@ -325,6 +325,68 @@ import Footer from '../../components/Footer.astro';
       border-color: rgb(212 166 78 / 0.45);
       color: rgb(250 220 160);
     }
+
+    .profile-growth-card {
+      border-radius: 1.25rem;
+      border: 1px solid rgb(96 165 250 / 0.22);
+      background: rgb(96 165 250 / 0.06);
+      padding: 1.1rem 1.25rem;
+    }
+
+    .profile-growth-bars {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 0.5rem;
+      align-items: end;
+      min-height: 8.5rem;
+      margin-top: 1rem;
+    }
+
+    .profile-growth-bar {
+      display: flex;
+      min-height: 8.5rem;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 0.35rem;
+    }
+
+    .profile-growth-track {
+      display: flex;
+      width: 100%;
+      height: 6rem;
+      align-items: flex-end;
+      justify-content: center;
+      border-radius: 0.75rem;
+      background: rgb(10 14 26 / 0.35);
+      padding: 0.35rem;
+    }
+
+    .profile-growth-fill {
+      width: 100%;
+      min-height: 0.35rem;
+      border-radius: 0.55rem;
+      background: linear-gradient(180deg, rgb(96 165 250), rgb(59 130 246));
+      transition: height 0.35s ease;
+    }
+
+    .profile-growth-fill--current {
+      background: linear-gradient(180deg, rgb(74 222 128), rgb(34 197 94));
+    }
+
+    .profile-growth-label {
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-align: center;
+      line-height: 1.2;
+      color: rgb(245 230 211 / 0.72);
+    }
+
+    .profile-growth-value {
+      font-size: 0.62rem;
+      font-weight: 800;
+      color: rgb(191 219 254);
+    }
   </style>
 
   <script>
@@ -576,6 +638,39 @@ import Footer from '../../components/Footer.astro';
       `;
     }
 
+    function renderGrowthSection(weeklyGrowth) {
+      const growth = weeklyGrowth || {};
+      const weeks = Array.isArray(growth.weeks) ? growth.weeks : [];
+      if (!weeks.length) return '';
+
+      const bars = weeks
+        .map((week) => {
+          const height = week.bar_percent || 0;
+          return `
+            <div class="profile-growth-bar">
+              <span class="profile-growth-value">${escapeHtml(week.bar_label || '0')}</span>
+              <div class="profile-growth-track" aria-hidden="true">
+                <span
+                  class="profile-growth-fill ${week.is_current ? 'profile-growth-fill--current' : ''}"
+                  style="height: ${height}%"
+                ></span>
+              </div>
+              <span class="profile-growth-label">${escapeHtml(week.label_vi || '')}</span>
+            </div>
+          `;
+        })
+        .join('');
+
+      return `
+        <div class="profile-growth-card">
+          <p class="font-display text-lg font-bold text-cream">Tiến bộ theo tuần</p>
+          <p class="mt-1 text-sm text-cream-muted">${escapeHtml(growth.headline || '')}</p>
+          <div class="profile-growth-bars" role="img" aria-label="Biểu đồ số truyện hoàn thành mỗi tuần">${bars}</div>
+          <p class="mt-3 text-xs leading-relaxed text-cream-dim">${escapeHtml(growth.empty_hint || '')}</p>
+        </div>
+      `;
+    }
+
     function renderBadges(badges) {
       const list = Array.isArray(badges) ? badges : [];
       if (!list.length) return '';
@@ -610,6 +705,7 @@ import Footer from '../../components/Footer.astro';
       const progress = data.progress || {};
       const read2LeadState = data.read2lead_state || {};
       const storyProgress = data.story_progress || {};
+      const weeklyGrowth = data.weekly_growth || {};
       const pack = progress.current_pack;
       const code = codeInput.value.trim().toUpperCase();
       const status = statusMeta(data.state, pack);
@@ -625,6 +721,7 @@ import Footer from '../../components/Footer.astro';
         ${renderHero(progress, read2LeadState, storyProgress)}
         ${renderStats(read2LeadState, progress, storyProgress)}
         ${renderStreakFreezeNote(read2LeadState)}
+        ${renderGrowthSection(weeklyGrowth)}
         ${renderNextStep(primary, status)}
         ${renderCurrentLesson(pack, progress, status)}
         ${renderStoryPortfolio(storyProgress, code)}
