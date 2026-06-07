@@ -37,6 +37,8 @@
           "items": { "type": "string", "minLength": 1 }
         },
         "full_audio_url": { "type": "string" },
+        "trivia_vi": { "type": "string", "minLength": 20, "maxLength": 200 },
+        "trivia_en": { "type": "string", "minLength": 20, "maxLength": 200 },
         "sentences": {
           "type": "array",
           "minItems": 6,
