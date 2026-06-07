@@ -455,6 +455,16 @@ import Footer from '../../components/Footer.astro';
     }
 
     function renderStats(read2LeadState, progress, storyProgress) {
+      const freezeTokens = read2LeadState.streak_freeze_tokens || 0;
+      const freezeCap = read2LeadState.streak_freeze_cap || 5;
+      const nextIn = read2LeadState.streak_freeze_next_in_days;
+      const freezeNote =
+        freezeTokens > 0
+          ? `<p class="mt-1 text-[10px] font-bold text-orange-200/90">❄️ ${freezeTokens}/${freezeCap} giữ streak</p>`
+          : typeof nextIn === 'number'
+            ? `<p class="mt-1 text-[10px] text-cream-dim">+1 lượt sau ${nextIn} ngày</p>`
+            : '';
+
       return `
         <div class="profile-stats">
           <div class="profile-stat profile-stat--coins">
@@ -464,11 +474,31 @@ import Footer from '../../components/Footer.astro';
           <div class="profile-stat profile-stat--streak">
             <p class="profile-stat-value">${read2LeadState.streak_days || 0}</p>
             <p class="profile-stat-label">🔥 Ngày liên tiếp</p>
+            ${freezeNote}
           </div>
           <div class="profile-stat profile-stat--stories">
             <p class="profile-stat-value">${storyProgress?.total_completed ?? progress.completed_packs ?? 0}</p>
             <p class="profile-stat-label">📚 Truyện xong</p>
           </div>
+        </div>
+      `;
+    }
+
+    function renderStreakFreezeNote(read2LeadState) {
+      const tokens = read2LeadState.streak_freeze_tokens || 0;
+      const hint = read2LeadState.streak_freeze_hint_vi;
+      const nextIn = read2LeadState.streak_freeze_next_in_days;
+      if (!tokens && typeof nextIn !== 'number') return '';
+
+      return `
+        <div class="profile-lesson-card border-orange-400/25 bg-orange-500/10">
+          <p class="text-sm font-bold text-orange-100">Giữ streak cho con</p>
+          <p class="mt-1 text-sm leading-relaxed text-cream-muted">${escapeHtml(hint || 'Cứ 7 ngày học liên tiếp, con nhận thêm lượt giữ streak.')}</p>
+          ${
+            tokens
+              ? `<p class="mt-2 text-xs font-semibold text-orange-200">Con đang có ${tokens} lượt — tự dùng nếu nghỉ đúng 1 ngày.</p>`
+              : `<p class="mt-2 text-xs text-cream-dim">Còn ${nextIn} ngày nữa để nhận lượt tiếp theo.</p>`
+          }
         </div>
       `;
     }
@@ -594,6 +624,7 @@ import Footer from '../../components/Footer.astro';
       dashboardCard.innerHTML = `
         ${renderHero(progress, read2LeadState, storyProgress)}
         ${renderStats(read2LeadState, progress, storyProgress)}
+        ${renderStreakFreezeNote(read2LeadState)}
         ${renderNextStep(primary, status)}
         ${renderCurrentLesson(pack, progress, status)}
         ${renderStoryPortfolio(storyProgress, code)}

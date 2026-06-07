@@ -12,6 +12,10 @@ export const PASS_THRESHOLD_PERCENT = 50;
 export const LEVEL_RESET_VERSION = 20260606;
 export const START_LEVEL = 'L1';
 export const COINS_TOOLTIP = 'Tiết kiệm xu cho cửa hàng sắp mở! 🛒';
+export const STREAK_FREEZE_MILESTONE_DAYS = 7;
+export const STREAK_FREEZE_TOKEN_CAP = 5;
+export const STREAK_FREEZE_HINT_VI =
+  'Cứ 7 ngày học liên tiếp, con nhận 1 lượt giữ streak (tối đa 5). Tự dùng khi nghỉ đúng 1 ngày.';
 
 const STARTER_BADGE_DEFINITIONS = [
   { id: 'first_story', label_vi: 'Mở truyện đầu tiên', description_vi: 'Hoàn thành 1 nhiệm vụ Read2Lead.' },
@@ -58,6 +62,76 @@ export function nextStreakDays(lastDateKey, currentDateKey, currentStreak = 0) {
   if (lastDateKey === currentDateKey) return Math.max(1, numberOrZero(currentStreak));
   if (isPreviousDate(lastDateKey, currentDateKey)) return numberOrZero(currentStreak) + 1;
   return 1;
+}
+
+export function daysBetweenDateKeys(fromKey, toKey) {
+  const from = Date.parse(`${fromKey}T00:00:00Z`);
+  const to = Date.parse(`${toKey}T00:00:00Z`);
+  if (!Number.isFinite(from) || !Number.isFinite(to)) return null;
+  return Math.round((to - from) / (24 * 60 * 60 * 1000));
+}
+
+export function daysUntilNextStreakFreezeMilestone(streakDays, freezeTokens = 0) {
+  if (clampFreezeTokenCount(freezeTokens) >= STREAK_FREEZE_TOKEN_CAP) return null;
+  const streak = Math.max(0, numberOrZero(streakDays));
+  if (streak === 0) return STREAK_FREEZE_MILESTONE_DAYS;
+  const remainder = streak % STREAK_FREEZE_MILESTONE_DAYS;
+  return remainder === 0 ? STREAK_FREEZE_MILESTONE_DAYS : STREAK_FREEZE_MILESTONE_DAYS - remainder;
+}
+
+export function computeStreakAdvance(state, activityDateKey) {
+  const lastDateKey = state.last_activity_date_vn || '';
+  let streakDays = numberOrZero(state.streak_days);
+  let freezeTokens = clampFreezeTokenCount(state.streak_freeze_tokens);
+  let milestonesGranted = clampFreezeTokenCount(state.streak_freeze_milestones_granted);
+  let freezeUsed = false;
+  let freezeEarned = 0;
+
+  if (!activityDateKey) {
+    return {
+      streak_days: streakDays,
+      streak_freeze_tokens: freezeTokens,
+      streak_freeze_milestones_granted: milestonesGranted,
+      streak_freeze_earned: 0,
+      streak_freeze_used: false,
+    };
+  }
+
+  if (!lastDateKey) {
+    streakDays = 1;
+  } else if (lastDateKey === activityDateKey) {
+    streakDays = Math.max(1, streakDays);
+  } else if (isPreviousDate(lastDateKey, activityDateKey)) {
+    streakDays = streakDays + 1;
+  } else {
+    const gap = daysBetweenDateKeys(lastDateKey, activityDateKey);
+    if (gap === 2 && freezeTokens > 0) {
+      streakDays = streakDays + 1;
+      freezeTokens -= 1;
+      freezeUsed = true;
+    } else {
+      streakDays = 1;
+      milestonesGranted = 0;
+    }
+  }
+
+  const eligibleMilestones = Math.min(
+    Math.floor(streakDays / STREAK_FREEZE_MILESTONE_DAYS),
+    STREAK_FREEZE_TOKEN_CAP,
+  );
+  const pendingAwards = Math.max(0, eligibleMilestones - milestonesGranted);
+  const room = STREAK_FREEZE_TOKEN_CAP - freezeTokens;
+  freezeEarned = Math.min(pendingAwards, room);
+  freezeTokens += freezeEarned;
+  milestonesGranted += freezeEarned;
+
+  return {
+    streak_days: streakDays,
+    streak_freeze_tokens: freezeTokens,
+    streak_freeze_milestones_granted: milestonesGranted,
+    streak_freeze_earned: freezeEarned,
+    streak_freeze_used: freezeUsed,
+  };
 }
 
 export async function loadProgressState(env, accessCode, codeData = null, nowIso = new Date().toISOString()) {
@@ -123,6 +197,8 @@ export function normalizeProgressState(raw, { accessCode, codeData = null, nowIs
     penalized_pack_ids: Array.isArray(raw?.penalized_pack_ids) ? raw.penalized_pack_ids.slice(-100) : [],
     level_progress: normalizeLevelProgress(levelProgress),
     streak_days: numberOrZero(raw?.streak_days ?? legacyProgress.streak_days),
+    streak_freeze_tokens: clampFreezeTokenCount(raw?.streak_freeze_tokens),
+    streak_freeze_milestones_granted: clampFreezeTokenCount(raw?.streak_freeze_milestones_granted),
     last_activity_date_vn: raw?.last_activity_date_vn || vietnamDateKey(legacyProgress.last_activity_at || ''),
     last_activity_at: raw?.last_activity_at || legacyProgress.last_activity_at || null,
     voice_attempts: numberOrZero(raw?.voice_attempts),
@@ -161,6 +237,7 @@ export function applyPackCompletion(
   const currentDateKey = vietnamDateKey(completedAt);
   const voiceAttempts = hasVoiceAttempt(activityResults) ? state.voice_attempts + 1 : state.voice_attempts;
   const earnedXp = numberOrZero(rewardsEarned.xp);
+  const streakUpdate = computeStreakAdvance(state, currentDateKey);
   const nextCompleted = state.completed_packs + 1;
   const nextCompletedIds = [...state.completed_pack_ids, id].slice(-100);
   let nextCurrentLevel = currentLevel;
@@ -199,7 +276,7 @@ export function applyPackCompletion(
     completed_packs: nextCompleted,
     completed_pack_ids: nextCompletedIds,
     level_progress: levelProgress,
-    streak_days: nextStreakDays(state.last_activity_date_vn, currentDateKey, state.streak_days),
+    ...streakUpdate,
     last_activity_date_vn: currentDateKey,
     last_activity_at: completedAt,
     voice_attempts: voiceAttempts,
@@ -240,6 +317,7 @@ export function applyPackPenalty(
   const currentLevel = safeLevel(state.current_level);
   const currentDateKey = vietnamDateKey(completedAt);
   const loss = Math.max(0, numberOrZero(penaltyXp));
+  const streakUpdate = computeStreakAdvance(state, currentDateKey);
   const nextState = {
     ...state,
     current_level: currentLevel,
@@ -249,7 +327,7 @@ export function applyPackPenalty(
     xp_in_level: Math.max(0, state.xp_in_level - loss),
     xp_to_next_level: xpToNextLevel(currentLevel),
     penalized_pack_ids: [...penalizedPackIds, id].slice(-100),
-    streak_days: nextStreakDays(state.last_activity_date_vn, currentDateKey, state.streak_days),
+    ...streakUpdate,
     last_activity_date_vn: currentDateKey,
     last_activity_at: completedAt,
     pack_history: [
@@ -287,6 +365,13 @@ export function publicProgressState(state) {
     xp_to_next_level: xpTarget,
     xp_percent: xpTarget ? Math.min(100, Math.round((state.xp_in_level / xpTarget) * 100)) : 100,
     streak_days: state.streak_days,
+    streak_freeze_tokens: clampFreezeTokenCount(state.streak_freeze_tokens),
+    streak_freeze_cap: STREAK_FREEZE_TOKEN_CAP,
+    streak_freeze_hint_vi: STREAK_FREEZE_HINT_VI,
+    streak_freeze_next_in_days: daysUntilNextStreakFreezeMilestone(
+      state.streak_days,
+      state.streak_freeze_tokens,
+    ),
     completed_packs: state.completed_packs,
     packs_completed_in_level: completedInLevel,
     packs_until_level_up: packsUntilLevelUp(currentLevel, state.xp_in_level),
@@ -401,4 +486,10 @@ function isPreviousDate(previous, current) {
 function numberOrZero(value) {
   const parsed = Number(value);
   return Number.isFinite(parsed) && parsed > 0 ? parsed : 0;
+}
+
+function clampFreezeTokenCount(value) {
+  const parsed = Number(value);
+  if (!Number.isFinite(parsed) || parsed <= 0) return 0;
+  return Math.min(STREAK_FREEZE_TOKEN_CAP, Math.floor(parsed));
 }

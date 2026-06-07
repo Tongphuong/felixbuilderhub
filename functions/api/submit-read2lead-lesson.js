@@ -245,7 +245,7 @@ async function submitV2Lesson({
     completed_packs: (progress.completed_packs || 0) + 1,
     weekly_completed_count: nextWeeklyCompletedCount(progress, submittedAt),
     weekly_key: weekKey(submittedAt),
-    streak_days: nextStreakDays(progress.last_activity_at, submittedAt, progress.streak_days),
+    streak_days: savedProgressState.streak_days,
     last_activity_at: submittedAt,
     last_level_recommendation: 'stay',
     current_pack: reviewedPack,

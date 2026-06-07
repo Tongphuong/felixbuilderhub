@@ -2,6 +2,7 @@ import { getClientIp, checkCodeRateLimit, recordCodeFailure, rateLimitedResponse
 import { loadProgressState } from './_read2lead-v2-state.js';
 
 const GENERATION_LOCK_STALE_MS = 15 * 60 * 1000;
+const BACKEND_CHILD_NAME_RE = /^[^\W\d_]+(?:[\s\-'][^\W\d_]+)*$/u;
 
 export async function onRequestPost(context) {
   const { request, env } = context;
@@ -132,7 +133,7 @@ export async function onRequestPost(context) {
     if (!upstream.ok) {
       await clearGenerationLock(env.READ2LEAD_CODES, accessCode, pendingPackId);
       const body = await upstream.json().catch(() => ({ ok: false, error: 'backend_error' }));
-      return json(body, upstream.status);
+      return json(mapBackendGenerateError(body), upstream.status);
     }
 
     const upstreamBody = await upstream.json();
@@ -227,6 +228,17 @@ function checkStudentProfile(progress) {
   if (!progress.student_name) {
     return json({ ok: false, error: 'student_profile_missing', message: 'Mã này chưa có tên học sinh. Vào admin/codes để cập nhật tên con trước khi tạo bài.' }, 400);
   }
+  if (!isValidBackendChildName(progress.student_name)) {
+    return json(
+      {
+        ok: false,
+        error: 'student_name_invalid',
+        message:
+          'Tên con chỉ dùng chữ cái (không số, không ký tự đặc biệt). Vào admin/codes → Edit — ví dụ dùng "Pilot" thay vì "Pilot L3".',
+      },
+      400,
+    );
+  }
   if (!Number.isFinite(progress.age) || progress.age < 5 || progress.age > 14) {
     return json({ ok: false, error: 'student_age_missing', message: 'Mã này chưa có tuổi học sinh. Vào admin/codes để cập nhật tuổi con trước khi tạo bài.' }, 400);
   }
@@ -255,7 +267,7 @@ function normalizeProgress(codeData, progressState = null) {
   const progress = codeData.progress || {};
   const reviewHistory = Array.isArray(progress.review_history) ? progress.review_history : [];
   return {
-    student_name: profile.student_name || progress.student_name || '',
+    student_name: profile.student_name || progressState?.student_name || progress.student_name || '',
     age: Number.isFinite(profile.age) ? profile.age : (Number.isFinite(progress.age) ? progress.age : null),
     child_gender: profile.child_gender || progress.child_gender || '',
     current_level: progressState?.current_level || earnedCurrentLevel(progress, reviewHistory),
@@ -368,4 +380,22 @@ function json(body, status = 200) {
     status,
     headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' },
   });
+}
+
+function isValidBackendChildName(name) {
+  const trimmed = String(name || '').trim();
+  return trimmed.length > 0 && trimmed.length <= 50 && BACKEND_CHILD_NAME_RE.test(trimmed);
+}
+
+function mapBackendGenerateError(body) {
+  if (!body || typeof body !== 'object') return { ok: false, error: 'backend_error' };
+  if (body.error === 'Invalid child_name') {
+    return {
+      ...body,
+      error: 'student_name_invalid',
+      message:
+        'Tên con chỉ dùng chữ cái (không số). Vào admin/codes → Edit — ví dụ "Pilot" thay vì "Pilot L3".',
+    };
+  }
+  return body;
 }

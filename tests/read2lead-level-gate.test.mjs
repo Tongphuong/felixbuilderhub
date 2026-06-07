@@ -24,6 +24,12 @@ test('admin create-code form does not expose a level selector', () => {
   assert.match(adminCodesPage, /bắt đầu ở L1/);
 });
 
+test('generate endpoint validates child name before calling backend', () => {
+  assert.match(generateEndpoint, /isValidBackendChildName/);
+  assert.match(generateEndpoint, /student_name_invalid/);
+  assert.match(generateEndpoint, /mapBackendGenerateError/);
+});
+
 test('generate endpoint does not accept client-provided level as source of truth', () => {
   assert.match(generateEndpoint, /loadProgressState/);
   assert.match(generateEndpoint, /progressState\?\.current_level/);

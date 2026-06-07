@@ -91,6 +91,8 @@ function resetProgressState(accessCode, record) {
     penalized_pack_ids: [],
     level_progress: { L1: 0, L2: 0, L3: 0, L4: 0, L5: 0 },
     streak_days: 0,
+    streak_freeze_tokens: 0,
+    streak_freeze_milestones_granted: 0,
     last_activity_date_vn: '',
     last_activity_at: null,
     voice_attempts: 0,
