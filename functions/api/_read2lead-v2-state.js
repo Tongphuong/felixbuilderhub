@@ -307,6 +307,48 @@ export function packsUntilLevelUp(level, xpInLevel = 0) {
   return Math.max(0, Math.ceil((xpTarget - numberOrZero(xpInLevel)) / XP_PER_PASSED_PACK));
 }
 
+/** Admin-only: snap a test account to L1–L5 with plausible ladder progress. */
+export function buildAdminTestLevelState(existingState, targetLevel, { accessCode, codeData = null, nowIso = new Date().toISOString() } = {}) {
+  const level = safeLevel(targetLevel);
+  const levelIndex = LEVELS.indexOf(level);
+  const unlockedLevels = LEVELS.slice(0, levelIndex + 1);
+  const levelProgress = normalizeLevelProgress({});
+  for (let i = 0; i < levelIndex; i += 1) {
+    levelProgress[LEVELS[i]] = PACKS_TO_NEXT_LEVEL[LEVELS[i]];
+  }
+  levelProgress[level] = 0;
+
+  const base =
+    existingState && existingState.schema_version === 2
+      ? { ...existingState }
+      : normalizeProgressState(null, { accessCode, codeData, nowIso });
+
+  const xpTarget = xpToNextLevel(level);
+  let totalXp = numberOrZero(base.total_xp);
+  for (let i = 0; i < levelIndex; i += 1) {
+    const floor = PACKS_TO_NEXT_LEVEL[LEVELS[i]] * XP_PER_PASSED_PACK;
+    if (totalXp < floor) totalXp = floor;
+  }
+
+  return refreshBadges({
+    ...base,
+    schema_version: 2,
+    level_reset_version: LEVEL_RESET_VERSION,
+    access_code: String(accessCode || base.access_code || '').trim().toUpperCase(),
+    student_name: base.student_name || codeData?.student_profile?.student_name || codeData?.progress?.student_name || '',
+    current_level: level,
+    initial_level: base.initial_level || START_LEVEL,
+    unlocked_levels: unlockedLevels,
+    rank_title: RANK_TITLES[level],
+    rank_asset_url: RANK_ASSETS[level],
+    total_xp: totalXp,
+    xp_in_level: 0,
+    xp_to_next_level: xpTarget,
+    level_progress: levelProgress,
+    updated_at: nowIso,
+  });
+}
+
 function refreshBadges(state) {
   const previous = new Map((state.badges || []).map((badge) => [badge.id, badge]));
   const badges = STARTER_BADGE_DEFINITIONS.map((badge) => {

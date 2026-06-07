@@ -7,8 +7,8 @@ then reference in code.
 ## KV Namespaces
 | Binding | Purpose | Used by |
 |---|---|---|
-| `READ2LEAD_CODES` | Single KV namespace storing per-student access codes + nested pack data (progress, current_pack, review_context). Acts as primary persistence for Read2Lead. | 11 endpoints: generate-read2lead-pack, check-generation-status, read2lead-lesson, read2lead-progress, read2lead-progress-update, read2lead-leaderboard, submit-read2lead-lesson, task-state, admin/codes (list + create), admin/codes/[code] (read + update + delete), admin/read2lead-set-level |
-| `READ2LEAD_PROGRESS` | V2 persistent kid state (level, XP, coins, streak, starter badges, forward-compatible avatar placeholders). Code falls back to `READ2LEAD_CODES` if this binding is not configured yet. | read2lead-progress, read2lead-progress-update, submit-read2lead-lesson, admin/read2lead-set-level |
+| `READ2LEAD_CODES` | Single KV namespace storing per-student access codes + nested pack data (progress, current_pack, review_context). Acts as primary persistence for Read2Lead. | generate-read2lead-pack, check-generation-status, read2lead-lesson, read2lead-progress, read2lead-progress-update, read2lead-leaderboard, submit-read2lead-lesson, task-state, admin/codes (list + create), admin/codes/[code] (read + update + delete), admin/codes/[code]/set-level (test only) |
+| `READ2LEAD_PROGRESS` | V2 persistent kid state (level, XP, coins, streak, starter badges, forward-compatible avatar placeholders). Code falls back to `READ2LEAD_CODES` if this binding is not configured yet. | read2lead-progress, read2lead-progress-update, submit-read2lead-lesson, admin/codes/[code]/set-level |
 ## Secrets
 | Binding | Purpose | Used by | Source |
 |---|---|---|---|
@@ -33,7 +33,7 @@ None currently. Add to this table when introduced.
 | `api/submit-read2lead-lesson.js` | ✓ | — | — | — | — |
 | `api/admin/codes.js` | ✓ | — | — | — | — |
 | `api/admin/codes/[code].js` | ✓ | — | — | — | — |
-| `api/admin/read2lead-set-level.js` | ✓ | — | — | — | — |
+| `api/admin/codes/[code]/set-level.js` | ✓ | — | — | — | — |
 | `api/coaching-booking.js` | — | — | — | — | ✓ |
 | `api/msmw-lead.js` | — | — | — | — | ✓ |
 | `api/sharing-subscribe.js` | — | — | — | — | ✓ |

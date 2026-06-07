@@ -41,3 +41,13 @@ test('manual level override endpoint is removed', () => {
   assert.equal(existsSync('functions/api/admin/read2lead-set-level.js'), false);
   assert.doesNotMatch(stateModule, /setProgressLevel/);
 });
+
+test('admin set-level endpoint exists and is restricted to test codes', () => {
+  assert.equal(existsSync('functions/api/admin/codes/[code]/set-level.js'), true);
+  const setLevelEndpoint = readFileSync('functions/api/admin/codes/[code]/set-level.js', 'utf-8');
+  assert.match(setLevelEndpoint, /is_test/);
+  assert.match(setLevelEndpoint, /buildAdminTestLevelState/);
+  assert.match(setLevelEndpoint, /LEVELS\.includes\(level\)/);
+  assert.match(adminCodesPage, /set-level/);
+  assert.match(adminCodesPage, /Set level \(test\)/);
+});

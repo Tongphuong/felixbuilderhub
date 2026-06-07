@@ -4,6 +4,7 @@ import assert from 'node:assert/strict';
 import {
   applyPackCompletion,
   applyPackPenalty,
+  buildAdminTestLevelState,
   LEVELS,
   nextStreakDays,
   normalizeProgressState,
@@ -220,4 +221,24 @@ test('below-threshold attempt records penalty but does not subtract XP (penalty 
   assert.equal(first.already_penalized, false);
   assert.equal(duplicate.state.xp_in_level, 40);
   assert.equal(duplicate.already_penalized, true);
+});
+
+test('buildAdminTestLevelState snaps test accounts to any ladder level', () => {
+  const l3 = buildAdminTestLevelState(null, 'L3', {
+    accessCode: 'R2L-PILOT-L3',
+    codeData: { student_profile: { student_name: 'Pilot L3' } },
+  });
+  assert.equal(l3.current_level, 'L3');
+  assert.deepEqual(l3.unlocked_levels, ['L1', 'L2', 'L3']);
+  assert.equal(l3.level_progress.L1, 5);
+  assert.equal(l3.level_progress.L2, 15);
+  assert.equal(l3.level_progress.L3, 0);
+  assert.equal(l3.xp_in_level, 0);
+  assert.equal(l3.xp_to_next_level, 500);
+  assert.equal(l3.rank_title, 'Vàng');
+
+  const l1 = buildAdminTestLevelState(l3, 'L1', { accessCode: 'R2L-PILOT-L3' });
+  assert.equal(l1.current_level, 'L1');
+  assert.deepEqual(l1.unlocked_levels, ['L1']);
+  assert.equal(l1.level_progress.L1, 0);
 });
