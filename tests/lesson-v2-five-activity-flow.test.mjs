@@ -47,6 +47,12 @@ test('listen_and_order uses editable drag-drop slots instead of one-way token pi
   assert.doesNotMatch(lessonPage, /setTimeout\(\(\) => resetOrderCard/);
 });
 
+test('listen_and_order accepts duplicate tokens by sentence text, not strict index match', () => {
+  assert.match(lessonPage, /function isOrderAnswerCorrect/);
+  assert.match(lessonPage, /normalizeOrderSentence\(reconstructed\) === normalizeOrderSentence\(item\.original_sentence/);
+  assert.doesNotMatch(lessonPage, /correct_order_indices\.every\(\(idx, i\) => idx === st\[i\]\)/);
+});
+
 test('written_response hides answer hints, saves drafts, and uses manual navigation', () => {
   assert.match(lessonPage, /writtenDrafts/);
   assert.match(lessonPage, /function collectWrittenAnswers/);

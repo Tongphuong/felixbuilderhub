@@ -654,6 +654,41 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
     }
   }
 
+  function setStoryAudioButtonState(button, audioUrl) {
+    if (audioUrl) {
+      button.textContent = 'Nghe cả truyện';
+      button.disabled = false;
+      return;
+    }
+    button.textContent = 'Chưa có audio';
+    button.disabled = true;
+  }
+
+  async function pollDeferredFullStoryAudio(button) {
+    button.textContent = 'Đang tạo audio truyện...';
+    button.disabled = true;
+    const maxAttempts = 12;
+    const intervalMs = 3000;
+    for (let attempt = 0; attempt < maxAttempts; attempt += 1) {
+      await new Promise((resolve) => window.setTimeout(resolve, intervalMs));
+      try {
+        const res = await fetch(
+          `/api/read2lead-lesson?code=${encodeURIComponent(state.accessCode)}&pack_id=${encodeURIComponent(state.packId)}`,
+        );
+        const data = await res.json();
+        const mergedUrl = data.lesson?.story?.full_audio_url || '';
+        if (res.ok && data.ok && mergedUrl) {
+          state.lesson.story.full_audio_url = mergedUrl;
+          setStoryAudioButtonState(button, mergedUrl);
+          return;
+        }
+      } catch {
+        // keep polling until attempts exhausted
+      }
+    }
+    setStoryAudioButtonState(button, '');
+  }
+
   function renderLesson(lesson) {
     qs('#loading-card').classList.add('hidden');
     qs('#lesson-shell').classList.remove('hidden');
@@ -670,12 +705,13 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
       .map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`)
       .join('');
 
-    const fullAudio = lesson.story?.full_audio_url || '';
     const playStoryButton = qs('#play-story');
-    playStoryButton.addEventListener('click', () => playAudio(fullAudio, playStoryButton));
-    if (!fullAudio) {
-      playStoryButton.textContent = 'Chưa có audio';
-      playStoryButton.disabled = true;
+    playStoryButton.addEventListener('click', () => {
+      playAudio(state.lesson?.story?.full_audio_url || '', playStoryButton);
+    });
+    setStoryAudioButtonState(playStoryButton, lesson.story?.full_audio_url || '');
+    if (!lesson.story?.full_audio_url) {
+      pollDeferredFullStoryAudio(playStoryButton);
     }
 
     renderSentences(lesson.story?.sentences || []);
@@ -1127,6 +1163,41 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
     return picked[itemIndex];
   }
 
+  /** Match backend validator_v2 _normalize_for_reconstruction — trailing punct only. */
+  function normalizeOrderSentence(text) {
+    let value = (text || '').trim();
+    if (value && /[.!?,;:]$/.test(value)) {
+      value = value.slice(0, -1).trim();
+    }
+    return value.replace(/\s+/g, ' ').toLowerCase();
+  }
+
+  function splitOrderTokens(sentence) {
+    return (sentence || '').trim().split(/\s+/).filter(Boolean);
+  }
+
+  function reconstructOrderSentence(item, state) {
+    const tokens = item.scrambled_tokens || [];
+    return state.map((tokenIdx) => tokens[tokenIdx]).join(' ');
+  }
+
+  function isOrderAnswerCorrect(item, state) {
+    if (state.some((value) => value == null)) return false;
+    const reconstructed = reconstructOrderSentence(item, state);
+    return normalizeOrderSentence(reconstructed) === normalizeOrderSentence(item.original_sentence || '');
+  }
+
+  function firstMisplacedOrderSlot(item, state) {
+    const tokens = item.scrambled_tokens || [];
+    const expected = splitOrderTokens(item.original_sentence || '');
+    return state.findIndex((tokenIdx, slotIdx) => {
+      if (tokenIdx == null) return false;
+      const placed = tokens[tokenIdx] || '';
+      const target = expected[slotIdx] || '';
+      return normalizeOrderSentence(placed) !== normalizeOrderSentence(target);
+    });
+  }
+
   function readOrderDragPayload(event, fallback) {
     const raw = event.dataTransfer?.getData('text/plain');
     if (!raw) return fallback;
@@ -1180,7 +1251,7 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
     const item = activity.items[itemIndex];
     const st = ensureOrderState(picked, itemIndex, item.scrambled_tokens.length);
     if (st.some((value) => value == null)) return;
-    const correct = item.correct_order_indices.every((idx, i) => idx === st[i]);
+    const correct = isOrderAnswerCorrect(item, st);
     const questionId = `${activity.type}:${item.id || itemIndex}`;
     if (correct) {
       solved.add(itemIndex);
@@ -1192,7 +1263,7 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
       return;
     }
     wrongSignatures[itemIndex] = wrongSignatures[itemIndex] || new Set();
-    const signature = st.join(',');
+    const signature = normalizeOrderSentence(reconstructOrderSentence(item, st));
     if (!wrongSignatures[itemIndex].has(signature)) {
       wrongSignatures[itemIndex].add(signature);
       onWrong();
@@ -1200,7 +1271,7 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
     }
     root.querySelector(`[data-order-hint="${itemIndex}"]`)?.classList.remove('hidden');
     root.querySelectorAll(`[data-order-slot="${itemIndex}"]`).forEach((s) => { s.dataset.misplaced = 'false'; });
-    const firstMisplaced = st.findIndex((tokenIdx, slotIdx) => tokenIdx !== item.correct_order_indices[slotIdx]);
+    const firstMisplaced = firstMisplacedOrderSlot(item, st);
     if (firstMisplaced !== -1) {
       const slot = root.querySelector(`[data-order-slot="${itemIndex}"][data-slot-index="${firstMisplaced}"]`);
       if (slot) slot.dataset.misplaced = 'true';
