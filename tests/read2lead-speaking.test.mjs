@@ -177,5 +177,6 @@ test('lesson page wires optional speaking check widget', () => {
   assert.match(lessonPage, /Câu hỏi mở bonus/);
   assert.match(lessonPage, /_r2lMaybeRevealBonusSection/);
   assert.match(lessonPage, /Open Question/);
+  assert.match(lessonPage, /_r2lMicIsReady/);
   assert.match(lessonPage, /data-speak-feedback/);
 });

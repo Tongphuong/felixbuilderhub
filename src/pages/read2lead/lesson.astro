@@ -548,18 +548,82 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
   const _r2lRecorderState = {
     // Map of itemKey -> { mediaRecorder, chunks, blob, blobUrl, status, expectedText, checkStatus, checkResult }
     perItem: new Map(),
-    micPermissionDenied: false,
+    micPermissionBlocked: false,
   };
 
-  const _r2lSupportsRecording = (() => {
+  function _r2lIsPermissionError(err) {
+    const name = err?.name || '';
+    return name === 'NotAllowedError' || name === 'PermissionDeniedError' || name === 'SecurityError';
+  }
+
+  function _r2lHasMicInput() {
     try {
-      return !!(navigator.mediaDevices &&
-        typeof navigator.mediaDevices.getUserMedia === 'function' &&
-        typeof window.MediaRecorder !== 'undefined');
+      return !!(navigator.mediaDevices && typeof navigator.mediaDevices.getUserMedia === 'function');
     } catch {
       return false;
     }
-  })();
+  }
+
+  function _r2lHasMediaRecorder() {
+    try {
+      return typeof window.MediaRecorder !== 'undefined';
+    } catch {
+      return false;
+    }
+  }
+
+  function _r2lHasRecordingCapability() {
+    return _r2lHasMicInput() && _r2lHasMediaRecorder();
+  }
+
+  function _r2lRecorderHelpMessage(error) {
+    if (error && _r2lIsPermissionError(error)) {
+      return 'Vui lòng cấp quyền micro cho trình duyệt (Safari/Chrome), rồi tải lại trang nhé.';
+    }
+    if (error?.name === 'NotFoundError') {
+      return 'Không tìm thấy micro trên máy. Con thử tai nghe hoặc kiểm tra cài đặt micro.';
+    }
+    if (!_r2lHasMicInput()) {
+      return 'Thiết bị chưa bật micro hoặc trình duyệt chưa cho phép. Con thử Chrome/Safari mới nhất trên máy tính nhé.';
+    }
+    if (!_r2lHasMediaRecorder()) {
+      return 'Trình duyệt này chưa hỗ trợ thu âm. Con thử Safari hoặc Chrome mới nhất trên MacBook nhé.';
+    }
+    return 'Không mở được micro. Con nhờ ba mẹ kiểm tra quyền micro trong Cài đặt hệ thống > Quyền riêng tư > Micro.';
+  }
+
+  function _r2lMicIsReady() {
+    return _r2lHasMicInput() && _r2lHasMediaRecorder();
+  }
+
+  function _r2lCreateMediaRecorder(stream) {
+    if (!_r2lHasMediaRecorder()) {
+      throw new Error('MediaRecorder unavailable');
+    }
+    const candidates = [
+      'audio/mp4',
+      'audio/aac',
+      'audio/webm;codecs=opus',
+      'audio/webm',
+      'audio/ogg;codecs=opus',
+    ];
+    for (const mimeType of candidates) {
+      try {
+        if (typeof MediaRecorder.isTypeSupported === 'function' && !MediaRecorder.isTypeSupported(mimeType)) {
+          continue;
+        }
+        const mediaRecorder = new MediaRecorder(stream, { mimeType });
+        return { mediaRecorder, mimeType: mediaRecorder.mimeType || mimeType };
+      } catch {
+        // try next Safari-friendly codec
+      }
+    }
+    const mediaRecorder = new MediaRecorder(stream);
+    return { mediaRecorder, mimeType: mediaRecorder.mimeType || 'audio/mp4' };
+  }
+
+  // Backward-compatible alias used in tests and legacy checks.
+  const _r2lSupportsRecording = _r2lHasRecordingCapability();
 
   async function _r2lPostSpeakingCheck(blob, expectedText, checkMode = 'read') {
     const formData = new FormData();
@@ -694,19 +758,29 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
   }
 
   async function _r2lStartRecording(itemKey, cardEl) {
-    if (_r2lRecorderState.micPermissionDenied) return;
+    if (!_r2lHasMicInput()) {
+      _r2lRenderSpeakFeedback(cardEl, { ok: false, message: _r2lRecorderHelpMessage() });
+      return;
+    }
+    if (!_r2lHasMediaRecorder()) {
+      _r2lRenderSpeakFeedback(cardEl, { ok: false, message: _r2lRecorderHelpMessage() });
+      return;
+    }
+    if (_r2lRecorderState.micPermissionBlocked) {
+      _r2lRenderSpeakFeedback(cardEl, { ok: false, message: _r2lRecorderHelpMessage({ name: 'NotAllowedError' }) });
+      return;
+    }
     const prev = _r2lRecorderState.perItem.get(itemKey);
     if (prev?.blobUrl) URL.revokeObjectURL(prev.blobUrl);
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      const mimeType = _r2lPickRecordingMimeType();
-      const mr = mimeType ? new MediaRecorder(stream, { mimeType }) : new MediaRecorder(stream);
+      const { mediaRecorder: mr, mimeType } = _r2lCreateMediaRecorder(stream);
       const chunks = [];
       mr.addEventListener('dataavailable', (e) => {
         if (e.data && e.data.size > 0) chunks.push(e.data);
       });
       mr.addEventListener('stop', () => {
-        const blob = new Blob(chunks, { type: mr.mimeType || mimeType || 'audio/webm' });
+        const blob = new Blob(chunks, { type: mr.mimeType || mimeType || 'audio/mp4' });
         const url = URL.createObjectURL(blob);
         _r2lRecorderState.perItem.set(itemKey, {
           mediaRecorder: null,
@@ -715,12 +789,19 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
           blobUrl: url,
           status: 'recorded',
           expectedText: prev?.expectedText || '',
-          checkStatus: 'uploading',
+          checkStatus: blob.size > 0 ? 'uploading' : 'error',
           checkResult: null,
         });
         stream.getTracks().forEach((t) => t.stop());
         _r2lRenderRecorderUi(itemKey, cardEl);
-        _r2lScoreSpeakRecording(itemKey, cardEl, blob);
+        if (blob.size > 0) {
+          _r2lScoreSpeakRecording(itemKey, cardEl, blob);
+        } else {
+          _r2lRenderSpeakFeedback(cardEl, {
+            ok: false,
+            message: 'Minny chưa nghe được giọng con. Con thử bấm Thu âm lại và nói to hơn nhé.',
+          });
+        }
       });
       _r2lRecorderState.perItem.set(itemKey, {
         mediaRecorder: mr,
@@ -732,12 +813,19 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
         checkStatus: 'idle',
         checkResult: null,
       });
-      mr.start();
+      try {
+        mr.start(250);
+      } catch (startError) {
+        stream.getTracks().forEach((t) => t.stop());
+        throw startError;
+      }
       _r2lRenderRecorderUi(itemKey, cardEl);
       _r2lRenderSpeakFeedback(cardEl, null);
     } catch (err) {
       console.warn('[r2l-recorder] Permission denied or error:', err);
-      _r2lRecorderState.micPermissionDenied = true;
+      if (_r2lIsPermissionError(err)) {
+        _r2lRecorderState.micPermissionBlocked = true;
+      }
       _r2lRecorderState.perItem.set(itemKey, {
         mediaRecorder: null,
         chunks: [],
@@ -749,6 +837,7 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
         checkResult: null,
       });
       _r2lRenderRecorderUi(itemKey, cardEl);
+      _r2lRenderSpeakFeedback(cardEl, { ok: false, message: _r2lRecorderHelpMessage(err) });
     }
   }
 
@@ -798,19 +887,23 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
   function _r2lRenderRecorderUi(itemKey, cardEl) {
     const slot = cardEl.querySelector('[data-recorder-slot]');
     if (!slot) return;
-    if (!_r2lSupportsRecording) {
-      slot.innerHTML = '';
+    if (!_r2lHasMicInput()) {
+      slot.innerHTML = `<p class="text-sm text-cream/60">${escapeHtml(_r2lRecorderHelpMessage())}</p>`;
+      return;
+    }
+    if (!_r2lHasMediaRecorder()) {
+      slot.innerHTML = `<p class="text-sm text-cream/60">${escapeHtml(_r2lRecorderHelpMessage())}</p>`;
       return;
     }
     const entry = _r2lRecorderState.perItem.get(itemKey);
     const status = entry?.status || 'idle';
 
     if (status === 'denied') {
-      slot.innerHTML = '<p class="text-sm text-cream/60">Vui lòng cấp quyền micro để con nghe lại bài thu của mình.</p>';
-      return;
-    }
-
-    if (status === 'recording') {
+      slot.innerHTML = `
+        <button type="button" class="r2l-rec-btn r2l-rec-start" data-action="start">Thử thu lại</button>
+        <p class="text-sm text-cream/60">${escapeHtml(_r2lRecorderHelpMessage({ name: 'NotAllowedError' }))}</p>
+      `;
+    } else if (status === 'recording') {
       slot.innerHTML = `
         <button type="button" class="r2l-rec-btn r2l-rec-stop" data-action="stop">Dừng thu</button>
         <span class="r2l-rec-indicator">đang thu...</span>
@@ -830,8 +923,12 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
       btn.addEventListener('click', (e) => {
         e.preventDefault();
         const action = btn.getAttribute('data-action');
-        if (action === 'start') _r2lStartRecording(itemKey, cardEl);
-        else if (action === 'stop') _r2lStopRecording(itemKey, cardEl);
+        if (action === 'start') {
+          if (entry?.status === 'denied') {
+            _r2lRecorderState.micPermissionBlocked = false;
+          }
+          _r2lStartRecording(itemKey, cardEl);
+        } else if (action === 'stop') _r2lStopRecording(itemKey, cardEl);
         else if (action === 'play') _r2lPlayRecording(itemKey);
         else if (action === 'redo') _r2lDiscardRecording(itemKey, cardEl);
       });
@@ -919,7 +1016,7 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
 
     const totalActivities = state.lesson?.activities?.length || 5;
     if (state.completedTypes.size < totalActivities) return;
-    if (!_r2lSpeakingCheckState.openQuestion?.vi || !_r2lSupportsRecording) return;
+    if (!_r2lSpeakingCheckState.openQuestion?.vi) return;
 
     _r2lSpeakingCheckState.revealed = true;
     section.classList.remove('hidden');
@@ -960,6 +1057,8 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
     const statusEl = qs('#speaking-check-status');
     if (!recordButton || !timerEl || !statusEl) return;
 
+    const micReady = _r2lMicIsReady();
+
     if (_r2lSpeakingCheckState.status === 'recording') {
       recordButton.textContent = '⏹ Dừng thu';
       timerEl.classList.remove('hidden');
@@ -977,11 +1076,15 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
       return;
     }
 
-    recordButton.disabled = false;
+    recordButton.disabled = !micReady;
     recordButton.textContent = '🎤 Trả lời';
-    statusEl.textContent = _r2lSpeakingCheckState.skipped
-      ? 'Con đã bỏ qua câu hỏi mở bonus.'
-      : 'Con bấm nút rồi trả lời bằng tiếng Anh (tối đa 30 giây).';
+    if (_r2lSpeakingCheckState.skipped) {
+      statusEl.textContent = 'Con đã bỏ qua câu hỏi mở bonus.';
+    } else if (!micReady) {
+      statusEl.textContent = 'Micro chưa sẵn sàng trên trình duyệt này. Con vẫn có thể bỏ qua và lưu bài.';
+    } else {
+      statusEl.textContent = 'Con bấm nút rồi trả lời bằng tiếng Anh (tối đa 30 giây).';
+    }
   }
 
   function _r2lRenderSpeakingCheckResult(result) {
@@ -1080,24 +1183,40 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
   }
 
   async function _r2lStartSpeakingCheckRecording() {
-    if (!_r2lSupportsRecording || !_r2lSpeakingCheckState.openQuestion?.vi) return;
+    if (!_r2lSpeakingCheckState.openQuestion?.vi) return;
+    if (!_r2lMicIsReady()) {
+      _r2lRenderSpeakingCheckResult({
+        ok: false,
+        message: _r2lRecorderHelpMessage(),
+      });
+      return;
+    }
     _r2lCleanupSpeakingCheckRecording();
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      const mimeType = _r2lPickRecordingMimeType();
-      const mediaRecorder = mimeType ? new MediaRecorder(stream, { mimeType }) : new MediaRecorder(stream);
+      const { mediaRecorder, mimeType } = _r2lCreateMediaRecorder(stream);
       const chunks = [];
       mediaRecorder.addEventListener('dataavailable', (event) => {
         if (event.data && event.data.size > 0) chunks.push(event.data);
       });
       mediaRecorder.addEventListener('stop', () => {
-        const blob = new Blob(chunks, { type: mediaRecorder.mimeType || mimeType || 'audio/webm' });
+        const blobType = mediaRecorder.mimeType || mimeType || 'audio/mp4';
+        const blob = new Blob(chunks, { type: blobType });
         _r2lSpeakingCheckState.blob = blob;
         _r2lSpeakingCheckState.blobUrl = URL.createObjectURL(blob);
         _r2lSpeakingCheckState.status = 'uploading';
         stream.getTracks().forEach((track) => track.stop());
         _r2lSpeakingCheckState.stream = null;
-        _r2lSubmitSpeakingCheck(blob);
+        if (blob.size > 0) {
+          _r2lSubmitSpeakingCheck(blob);
+        } else {
+          _r2lSpeakingCheckState.status = 'idle';
+          _r2lRenderSpeakingCheckResult({
+            ok: false,
+            message: 'Không thu được tiếng. Con thử nói to hơn và bấm Dừng thu nhé.',
+          });
+          _r2lRenderSpeakingCheckControls();
+        }
       });
 
       _r2lSpeakingCheckState.stream = stream;
@@ -1105,7 +1224,12 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
       _r2lSpeakingCheckState.chunks = chunks;
       _r2lSpeakingCheckState.status = 'recording';
       _r2lSpeakingCheckState.secondsLeft = SPEAKING_CHECK_MAX_SECONDS;
-      mediaRecorder.start();
+      try {
+        mediaRecorder.start(250);
+      } catch (startError) {
+        stream.getTracks().forEach((track) => track.stop());
+        throw startError;
+      }
       _r2lRenderSpeakingCheckControls();
 
       _r2lSpeakingCheckState.timerId = window.setInterval(() => {
@@ -1120,7 +1244,7 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
       _r2lSpeakingCheckState.status = 'idle';
       _r2lRenderSpeakingCheckResult({
         ok: false,
-        message: 'Vui lòng cấp quyền micro để con trả lời câu hỏi mở nhé.',
+        message: _r2lRecorderHelpMessage(error),
       });
       _r2lRenderSpeakingCheckControls();
     }
@@ -1144,7 +1268,7 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
     _r2lSpeakingCheckState.storyContext = _r2lBuildStoryContext(lesson);
     _r2lSpeakingCheckState.checkMode = 'open';
 
-    if (!_r2lSpeakingCheckState.openQuestion?.vi || !_r2lSupportsRecording) {
+    if (!_r2lSpeakingCheckState.openQuestion?.vi) {
       section.classList.add('hidden');
       return;
     }
@@ -1155,21 +1279,30 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
     if (questionViEl) questionViEl.textContent = _r2lSpeakingCheckState.openQuestion.vi;
     if (questionEnEl) questionEnEl.textContent = _r2lSpeakingCheckState.openQuestion.en;
 
-    qs('#speaking-check-record')?.addEventListener('click', () => {
-      if (_r2lSpeakingCheckState.status === 'recording') {
-        _r2lStopSpeakingCheckRecording();
-      } else if (_r2lSpeakingCheckState.status !== 'uploading') {
-        _r2lStartSpeakingCheckRecording();
-      }
-    });
+    const recordButton = qs('#speaking-check-record');
+    if (recordButton && !recordButton.dataset.bound) {
+      recordButton.dataset.bound = 'true';
+      recordButton.addEventListener('click', () => {
+        if (_r2lSpeakingCheckState.status === 'recording') {
+          _r2lStopSpeakingCheckRecording();
+        } else if (_r2lSpeakingCheckState.status !== 'uploading') {
+          _r2lStartSpeakingCheckRecording();
+        }
+      });
+    }
 
-    qs('#speaking-check-skip')?.addEventListener('click', () => {
-      _r2lCleanupSpeakingCheckRecording();
-      _r2lSpeakingCheckState.skipped = true;
-      section.classList.add('hidden');
-    });
+    const skipButton = qs('#speaking-check-skip');
+    if (skipButton && !skipButton.dataset.bound) {
+      skipButton.dataset.bound = 'true';
+      skipButton.addEventListener('click', () => {
+        _r2lCleanupSpeakingCheckRecording();
+        _r2lSpeakingCheckState.skipped = true;
+        section.classList.add('hidden');
+      });
+    }
 
     _r2lRenderSpeakingCheckControls();
+    _r2lMaybeRevealBonusSection();
   }
 
   window.addEventListener('beforeunload', _r2lCleanupSpeakingCheckRecording);

@@ -5,13 +5,15 @@ import { readFileSync } from 'node:fs';
 const lessonPage = readFileSync('src/pages/read2lead/lesson.astro', 'utf-8');
 
 test('lesson page registers MediaRecorder support detection', () => {
-  assert.match(lessonPage, /_r2lSupportsRecording/);
+  assert.match(lessonPage, /_r2lMicIsReady/);
+  assert.match(lessonPage, /_r2lCreateMediaRecorder/);
   assert.match(lessonPage, /MediaRecorder/);
 });
 
 test('lesson page handles permission denial gracefully', () => {
-  assert.match(lessonPage, /micPermissionDenied/);
+  assert.match(lessonPage, /micPermissionBlocked/);
   assert.match(lessonPage, /Vui lòng cấp quyền micro/);
+  assert.match(lessonPage, /Thử thu lại/);
 });
 
 test('lesson page implements record / stop / play / redo actions', () => {
