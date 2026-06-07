@@ -16,7 +16,7 @@ import Footer from '../../components/Footer.astro';
         <span class="inline-block rounded-md bg-accent/20 px-4 py-1 text-sm font-semibold text-accent">Hồ sơ học của bé</span>
         <h1 class="mt-5 font-display text-4xl font-extrabold leading-snug text-cream md:text-5xl">Nhập mã để xem level, XP và bài hiện tại.</h1>
         <p class="mt-5 max-w-3xl text-lg leading-relaxed text-cream-muted">
-          Felixar giúp bố mẹ xem con đang ở level nào, đã tích lũy bao nhiêu XP/xu, streak hiện tại ra sao và nên bấm bước nào tiếp theo trên web.
+          Felixar giúp bố mẹ xem con đang ở level nào, đã học những truyện nào, và nên bấm bước nào tiếp theo trên web.
         </p>
       </div>
     </section>
@@ -31,11 +31,15 @@ import Footer from '../../components/Footer.astro';
               <p class="mt-1 text-sm leading-relaxed">Bố mẹ biết ngay tên bé, level, XP, xu, streak và số bài đã hoàn thành.</p>
             </div>
             <div class="rounded-lg border border-cream-dim/20 bg-navy-900/70 p-4">
-              <p class="font-semibold text-cream">2. Mở đúng bài hiện tại</p>
+              <p class="font-semibold text-cream">2. Xem các truyện con đã học</p>
+              <p class="mt-1 text-sm leading-relaxed">Danh sách bài con đã làm xong — bấm để cho con nghe và luyện lại.</p>
+            </div>
+            <div class="rounded-lg border border-cream-dim/20 bg-navy-900/70 p-4">
+              <p class="font-semibold text-cream">3. Mở đúng bài hiện tại</p>
               <p class="mt-1 text-sm leading-relaxed">Nếu bé có bài đang mở, Felixar đưa thẳng tới màn hình học trên web.</p>
             </div>
             <div class="rounded-lg border border-cream-dim/20 bg-navy-900/70 p-4">
-              <p class="font-semibold text-cream">3. Nhận bước tiếp theo</p>
+              <p class="font-semibold text-cream">4. Nhận bước tiếp theo</p>
               <p class="mt-1 text-sm leading-relaxed">Nếu chưa có bài hoặc đã xong bài cũ, Felixar chỉ rõ nên tạo bài mới hay tiếp tục bài đang làm.</p>
             </div>
           </div>
@@ -166,6 +170,53 @@ import Footer from '../../components/Footer.astro';
       `;
     }
 
+    function renderStoryProgress(storyProgress, code) {
+      if (!storyProgress) return '';
+      const stories = Array.isArray(storyProgress.stories) ? storyProgress.stories : [];
+
+      if (!stories.length) {
+        return `
+          <div class="mt-6 rounded-lg border border-cream-dim/20 bg-navy-950/70 p-5">
+            <p class="font-display text-xl font-bold text-cream">Các truyện con đã học</p>
+            <p class="mt-2 text-sm leading-relaxed text-cream-muted">${escapeHtml(storyProgress.empty_hint || 'Con chưa có truyện nào hoàn thành.')}</p>
+          </div>
+        `;
+      }
+
+      const storyCards = stories
+        .map((story) => {
+          const href = story.lesson_path || `/read2lead/lesson?code=${encodeURIComponent(code)}&pack_id=${encodeURIComponent(story.pack_id || '')}`;
+          const topicLine = [story.level, story.topic].filter(Boolean).join(' · ');
+          return `
+            <article class="flex flex-col gap-3 rounded-lg border border-cream-dim/20 bg-navy-900/70 p-4 sm:flex-row sm:items-center sm:justify-between">
+              <div class="flex items-start gap-3">
+                <span class="text-3xl leading-none" aria-hidden="true">${escapeHtml(story.emoji || '📖')}</span>
+                <div>
+                  <p class="font-display text-lg font-bold text-cream">${escapeHtml(story.title || 'Câu chuyện')}</p>
+                  ${topicLine ? `<p class="mt-1 text-sm text-cream-muted">${escapeHtml(topicLine)}</p>` : ''}
+                </div>
+              </div>
+              <a href="${escapeHtml(href)}" class="inline-flex min-h-[44px] items-center justify-center rounded-lg bg-accent px-4 py-2 text-sm font-semibold text-navy-950 transition hover:bg-accent-hover">Cho con làm lại</a>
+            </article>
+          `;
+        })
+        .join('');
+
+      const levelHint = storyProgress.level_hint
+        ? `<p class="mt-3 rounded-lg border border-gold/30 bg-gold/10 px-4 py-3 text-sm text-cream">${escapeHtml(storyProgress.level_hint)}</p>`
+        : '';
+
+      return `
+        <div class="mt-6 rounded-lg border border-cream-dim/20 bg-navy-950/70 p-5">
+          <p class="font-display text-xl font-bold text-cream">Các truyện con đã học</p>
+          <p class="mt-2 text-sm leading-relaxed text-cream-muted">${escapeHtml(storyProgress.headline || '')}</p>
+          <p class="mt-1 text-sm text-cream-dim">${escapeHtml(storyProgress.parent_hint || '')}</p>
+          ${levelHint}
+          <div class="mt-4 space-y-3">${storyCards}</div>
+        </div>
+      `;
+    }
+
     function renderDashboard(data) {
       latestDashboard = data;
       const progress = data.progress || {};
@@ -225,6 +276,7 @@ import Footer from '../../components/Footer.astro';
         </div>
 
         ${renderReviewSummary(data.last_review_summary)}
+        ${renderStoryProgress(data.story_progress, code)}
       `;
       dashboardCard.classList.remove('hidden');
     }

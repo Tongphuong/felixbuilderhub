@@ -1,5 +1,6 @@
 import { getClientIp, checkCodeRateLimit, recordCodeFailure, rateLimitedResponse } from './_rate-limit.js';
-import { loadProgressState, publicProgressState } from './_read2lead-v2-state.js';
+import { buildStoryProgressForProfile } from './_read2lead-library.js';
+import { loadProgressState, PACKS_TO_NEXT_LEVEL, publicProgressState } from './_read2lead-v2-state.js';
 
 export async function onRequestGet(context) {
   const { request, env } = context;
@@ -57,6 +58,14 @@ export async function onRequestGet(context) {
     last_level_recommendation: progress.last_level_recommendation,
     is_test: codeData.is_test === true,
     is_shared: codeData.is_shared === true,
+    story_progress: buildStoryProgressForProfile({
+      reviewHistory: progress.review_history,
+      studentName: progress.student_name,
+      currentLevel: v2State.current_level,
+      packsCompletedInLevel: numberOrZero(v2State.level_progress?.[v2State.current_level]),
+      packsNeededForLevelUp: numberOrZero(PACKS_TO_NEXT_LEVEL[v2State.current_level]),
+      accessCode: code,
+    }),
   });
 }
 
