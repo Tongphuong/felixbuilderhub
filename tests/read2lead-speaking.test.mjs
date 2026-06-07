@@ -22,15 +22,29 @@ test('exact match → 100%', () => {
     'boy runs fast green park',
   );
   assert.equal(result.score_percent, 100);
+  assert.equal(result.exact_count, 5);
+  assert.equal(result.close_count, 0);
   assert.equal(result.correct_count, 5);
   assert.equal(result.total_count, 5);
   assert.deepEqual(result.words_missed, []);
 });
 
-test('mispronounced words within threshold → counted correct', () => {
-  const result = scoreTranscript('The boy runs fast', 'the boy run fast');
-  assert.ok(result.score_percent >= 66);
-  assert.ok(result.words_close.includes('runs') || result.correct_count >= 2);
+test('close words count as partial credit, not full 100%', () => {
+  const result = scoreTranscript(
+    'bird landed near him and pecked seed',
+    'bird land near him and peck at seed',
+  );
+  assert.ok(result.close_count >= 1);
+  assert.ok(result.score_percent < 100);
+  assert.ok(result.exact_count < result.total_count);
+  assert.deepEqual(result.words_close, result.words_close.filter(Boolean));
+});
+
+test('mispronounced words within threshold → counted as close', () => {
+  const result = scoreTranscript('bird landed pecked', 'bird land peck');
+  assert.equal(result.close_count, 2);
+  assert.equal(result.exact_count, 1);
+  assert.equal(result.score_percent, 67);
 });
 
 test('completely wrong words → counted missed', () => {

@@ -4,6 +4,7 @@ export const SKIP_WORDS = new Set([
   'a', 'an', 'the', 'is', 'are', 'was', 'were', 'to', 'of', 'in', 'on', 'at',
 ]);
 
+export const CLOSE_SCORE_WEIGHT = 0.5;
 export const SIMILARITY_THRESHOLD = 0.75;
 export const CLOSE_THRESHOLD = 0.5;
 export const MAX_AUDIO_BYTES = 5 * 1024 * 1024;
@@ -88,13 +89,18 @@ export function scoreTranscript(expectedText, transcript) {
   }
 
   const totalCount = expectedWords.length;
-  const correctCount = correct + close;
-  const scorePercent = totalCount > 0 ? Math.round((correctCount / totalCount) * 100) : 0;
+  const exactCount = correct;
+  const closeCount = close;
+  const scorePercent = totalCount > 0
+    ? Math.round(((exactCount + closeCount * CLOSE_SCORE_WEIGHT) / totalCount) * 100)
+    : 0;
 
   return {
     transcript: String(transcript || '').trim(),
     score_percent: scorePercent,
-    correct_count: correctCount,
+    exact_count: exactCount,
+    close_count: closeCount,
+    correct_count: exactCount,
     total_count: totalCount,
     words_missed: wordsMissed,
     words_close: wordsClose,
