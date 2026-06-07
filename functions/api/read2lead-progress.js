@@ -121,9 +121,23 @@ function shouldRequireReviewBeforeNextPack(codeData) {
   return !(codeData.is_test === true || codeData.is_shared === true);
 }
 
+const GENERATION_LOCK_STALE_MS = 15 * 60 * 1000;
+
+function generationLockAgeMs(pack) {
+  const startedAt = Date.parse(pack?.created_at || '');
+  return Number.isFinite(startedAt) ? Date.now() - startedAt : Number.POSITIVE_INFINITY;
+}
+
+function isStaleGenerationLock(pack) {
+  if (!pack || pack.status !== 'generation_in_progress') return false;
+  return generationLockAgeMs(pack) >= GENERATION_LOCK_STALE_MS;
+}
+
 function currentPackBlocksGeneration(pack, requireReviewBeforeNextPack = true) {
   if (!pack) return false;
-  if (pack.status === 'generation_in_progress') return true;
+  if (pack.status === 'generation_in_progress') {
+    return generationLockAgeMs(pack) < GENERATION_LOCK_STALE_MS;
+  }
   if (!isV2Pack(pack)) return false;
   return requireReviewBeforeNextPack && !isPackReviewed(pack);
 }
@@ -193,13 +207,19 @@ function numberOrZero(value) {
 // Idempotent: if task already promoted (status != generation_in_progress) we no-op.
 // Mirrors the promote logic in check-generation-status.js so the dashboard
 // recovers without depending on the polling page being open.
-const GENERATION_STALE_AFTER_MS = 10 * 60 * 1000; // 10 min: Render gen typically <60s
-
 async function reconcileGenerationState(kv, accessCode, codeData) {
   const currentPack = codeData?.progress?.current_pack;
-  if (!currentPack || currentPack.status !== 'generation_in_progress' || !currentPack.task_id) {
+  if (!currentPack || currentPack.status !== 'generation_in_progress') {
     return codeData;
   }
+
+  if (!currentPack.task_id && isStaleGenerationLock(currentPack)) {
+    return clearGenerationLock(kv, accessCode, codeData);
+  }
+  if (!currentPack.task_id) {
+    return codeData;
+  }
+
   const taskValue = await kv.get(`task:${currentPack.task_id}`, { type: 'json' });
 
   // CASE 1: Render finished, promote pack so dashboard shows "Chờ nộp bài"
@@ -235,30 +255,29 @@ async function reconcileGenerationState(kv, accessCode, codeData) {
 
   // CASE 2: Render failed (or repair after error) — clear lock so user can retry
   if (taskValue?.status === 'error') {
-    const updated = {
-      ...codeData,
-      progress: { ...codeData.progress, current_pack: null },
-    };
-    await kv.put(accessCode, JSON.stringify(updated));
-    return updated;
+    return clearGenerationLock(kv, accessCode, codeData);
   }
 
-  // CASE 3: Task KV gone (TTL 30 min expired) AND lock older than 10 min →
-  // assume orphaned, clear lock so user isn't blocked from creating new pack.
-  // Anything younger we leave alone — Render might still be working.
-  if (!taskValue) {
-    const startedAt = Date.parse(currentPack.created_at || '');
-    if (Number.isFinite(startedAt) && Date.now() - startedAt > GENERATION_STALE_AFTER_MS) {
-      const updated = {
-        ...codeData,
-        progress: { ...codeData.progress, current_pack: null },
-      };
-      await kv.put(accessCode, JSON.stringify(updated));
-      return updated;
-    }
+  // CASE 3: Task KV gone (TTL 30 min expired) AND lock stale → orphaned, clear lock.
+  if (!taskValue && isStaleGenerationLock(currentPack)) {
+    return clearGenerationLock(kv, accessCode, codeData);
+  }
+
+  // CASE 4: Task KV stuck on pending after Render restart — clear when lock is stale.
+  if (taskValue?.status === 'pending' && isStaleGenerationLock(currentPack)) {
+    return clearGenerationLock(kv, accessCode, codeData);
   }
 
   return codeData;
+}
+
+async function clearGenerationLock(kv, accessCode, codeData) {
+  const updated = {
+    ...codeData,
+    progress: { ...codeData.progress, current_pack: null },
+  };
+  await kv.put(accessCode, JSON.stringify(updated));
+  return updated;
 }
 
 function json(body, status = 200) {
