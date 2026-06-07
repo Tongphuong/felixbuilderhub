@@ -1,0 +1,261 @@
+import { getClientIp, checkCodeRateLimit, recordCodeFailure, rateLimitedResponse } from './_rate-limit.js';
+
+export const SKIP_WORDS = new Set([
+  'a', 'an', 'the', 'is', 'are', 'was', 'were', 'to', 'of', 'in', 'on', 'at',
+]);
+
+export const SIMILARITY_THRESHOLD = 0.75;
+export const CLOSE_THRESHOLD = 0.5;
+export const MAX_AUDIO_BYTES = 5 * 1024 * 1024;
+
+export function normalizeWord(word) {
+  return String(word || '').toLowerCase().replace(/[^a-z]/g, '');
+}
+
+export function wordSimilarity(a, b) {
+  if (!a && !b) return 1;
+  if (!a || !b) return 0;
+  if (a === b) return 1;
+  const maxLen = Math.max(a.length, b.length);
+  if (maxLen === 0) return 1;
+  return 1 - levenshteinDistance(a, b) / maxLen;
+}
+
+function levenshteinDistance(a, b) {
+  const rows = a.length + 1;
+  const cols = b.length + 1;
+  const matrix = Array.from({ length: rows }, () => Array(cols).fill(0));
+  for (let i = 0; i < rows; i += 1) matrix[i][0] = i;
+  for (let j = 0; j < cols; j += 1) matrix[0][j] = j;
+  for (let i = 1; i < rows; i += 1) {
+    for (let j = 1; j < cols; j += 1) {
+      const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+      matrix[i][j] = Math.min(
+        matrix[i - 1][j] + 1,
+        matrix[i][j - 1] + 1,
+        matrix[i - 1][j - 1] + cost,
+      );
+    }
+  }
+  return matrix[a.length][b.length];
+}
+
+function tokenize(text) {
+  return String(text || '')
+    .split(/\s+/)
+    .map((word) => word.trim())
+    .filter(Boolean);
+}
+
+export function scoreTranscript(expectedText, transcript) {
+  const expectedWords = tokenize(expectedText)
+    .map((word) => ({ raw: word, norm: normalizeWord(word) }))
+    .filter((word) => word.norm && !SKIP_WORDS.has(word.norm));
+
+  const transcriptWords = tokenize(transcript)
+    .map((word) => normalizeWord(word))
+    .filter(Boolean);
+
+  const used = new Set();
+  let correct = 0;
+  let close = 0;
+  const wordsMissed = [];
+  const wordsClose = [];
+
+  for (const expectedWord of expectedWords) {
+    let bestIndex = -1;
+    let bestSimilarity = 0;
+
+    for (let index = 0; index < transcriptWords.length; index += 1) {
+      if (used.has(index)) continue;
+      const similarity = wordSimilarity(expectedWord.norm, transcriptWords[index]);
+      if (similarity > bestSimilarity) {
+        bestSimilarity = similarity;
+        bestIndex = index;
+      }
+    }
+
+    if (bestIndex >= 0 && bestSimilarity >= SIMILARITY_THRESHOLD) {
+      used.add(bestIndex);
+      correct += 1;
+    } else if (bestIndex >= 0 && bestSimilarity >= CLOSE_THRESHOLD) {
+      used.add(bestIndex);
+      close += 1;
+      wordsClose.push(expectedWord.raw);
+    } else {
+      wordsMissed.push(expectedWord.raw);
+    }
+  }
+
+  const totalCount = expectedWords.length;
+  const correctCount = correct + close;
+  const scorePercent = totalCount > 0 ? Math.round((correctCount / totalCount) * 100) : 0;
+
+  return {
+    transcript: String(transcript || '').trim(),
+    score_percent: scorePercent,
+    correct_count: correctCount,
+    total_count: totalCount,
+    words_missed: wordsMissed,
+    words_close: wordsClose,
+    feedback_vi: feedbackVi(scorePercent),
+  };
+}
+
+export function feedbackVi(scorePercent) {
+  if (scorePercent >= 90) return 'Tuyệt vời! Con đọc cực kỳ rõ ràng!';
+  if (scorePercent >= 70) return 'Giỏi lắm! Con đọc được hầu hết các từ rồi!';
+  if (scorePercent >= 50) return 'Cố lên! Con đang tiến bộ rất tốt!';
+  return 'Không sao, thử lại nào! Đọc to hơn một chút nhé!';
+}
+
+export async function transcribeWithGroq(audioBlob, apiKey, fetchFn = fetch) {
+  const formData = new FormData();
+  formData.append('file', audioBlob, 'audio.webm');
+  formData.append('model', 'whisper-large-v3');
+  formData.append('language', 'en');
+  formData.append('response_format', 'json');
+
+  const response = await fetchFn('https://api.groq.com/openai/v1/audio/transcriptions', {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${apiKey}` },
+    body: formData,
+  });
+
+  if (!response.ok) {
+    const error = new Error('groq_transcription_failed');
+    error.status = response.status;
+    throw error;
+  }
+
+  const payload = await response.json();
+  return String(payload?.text || '').trim();
+}
+
+export async function runSpeakingCheck({
+  audioBlob,
+  expectedText,
+  groqApiKey,
+  fetchFn = fetch,
+}) {
+  const transcript = await transcribeWithGroq(audioBlob, groqApiKey, fetchFn);
+  if (!transcript) {
+    const error = new Error('empty_transcript');
+    error.code = 'transcription_failed';
+    throw error;
+  }
+
+  return {
+    ok: true,
+    ...scoreTranscript(expectedText, transcript),
+  };
+}
+
+export async function onRequestPost(context) {
+  const { request, env } = context;
+
+  if (!env.READ2LEAD_CODES) {
+    return json(
+      { ok: false, error: 'config_error', message: 'Felixar chua cau hinh ma hoc sinh.' },
+      500,
+    );
+  }
+
+  if (!env.GROQ_API_KEY) {
+    return json(
+      { ok: false, error: 'config_error', message: 'Speaking check chua duoc cau hinh.' },
+      500,
+    );
+  }
+
+  let formData;
+  try {
+    formData = await request.formData();
+  } catch {
+    return json({ ok: false, error: 'invalid_form', message: 'Khong doc duoc du lieu thu am.' }, 400);
+  }
+
+  if (formData.get('website')) {
+    return json({ ok: true, message: 'Da ghi nhan.' });
+  }
+
+  const accessCode = String(formData.get('access_code') || '').trim().toUpperCase();
+  const packId = String(formData.get('pack_id') || '').trim();
+  const expectedText = String(formData.get('expected_text') || '').trim();
+  const audio = formData.get('audio');
+
+  if (!accessCode || !packId || !expectedText || !audio) {
+    return json(
+      { ok: false, error: 'missing_fields', message: 'Thieu ma hoc sinh, ma bai, noi dung hoac file thu am.' },
+      400,
+    );
+  }
+
+  const audioSize = typeof audio.size === 'number' ? audio.size : 0;
+  if (audioSize > MAX_AUDIO_BYTES) {
+    return json(
+      {
+        ok: false,
+        error: 'audio_too_large',
+        message: 'File thu am qua lon. Con thu lai voi doan ngan hon nhe!',
+      },
+      413,
+    );
+  }
+
+  const clientIp = getClientIp(request);
+  const rateLimit = await checkCodeRateLimit(env.READ2LEAD_CODES, clientIp);
+  if (rateLimit.blocked) {
+    return rateLimitedResponse(rateLimit.retryAfter);
+  }
+
+  const codeData = await env.READ2LEAD_CODES.get(accessCode, { type: 'json' });
+  if (!codeData) {
+    await recordCodeFailure(env.READ2LEAD_CODES, clientIp);
+    return json({ ok: false, error: 'code_not_found', message: 'Ma hoc sinh khong ton tai.' }, 404);
+  }
+
+  const currentPack = codeData.progress?.current_pack;
+  if (!currentPack || currentPack.pack_id !== packId) {
+    return json(
+      { ok: false, error: 'pack_not_found', message: 'Khong tim thay bai nay trong ma hoc sinh.' },
+      404,
+    );
+  }
+
+  try {
+    const result = await runSpeakingCheck({
+      audioBlob: audio,
+      expectedText,
+      groqApiKey: env.GROQ_API_KEY,
+    });
+    return json(result);
+  } catch (error) {
+    if (error?.code === 'transcription_failed' || error?.message === 'groq_transcription_failed') {
+      return json(
+        {
+          ok: false,
+          error: 'transcription_failed',
+          message: 'Khong nghe duoc ro. Con thu doc to hon nhe!',
+        },
+        422,
+      );
+    }
+    console.error('[read2lead-speaking-check]', error);
+    return json(
+      {
+        ok: false,
+        error: 'transcription_failed',
+        message: 'Khong nghe duoc ro. Con thu doc to hon nhe!',
+      },
+      422,
+    );
+  }
+}
+
+function json(body, status = 200) {
+  return new Response(JSON.stringify(body), {
+    status,
+    headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' },
+  });
+}
