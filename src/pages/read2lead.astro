@@ -258,10 +258,14 @@ const faqItems = [
         <p class="mx-auto mt-3 max-w-xl text-center text-sm leading-relaxed text-cream-muted sm:text-base">
           Mã học sinh giữ tên bé, level, XP, xu, streak và lịch sử bài học. Bé bắt đầu từ L1 và mở dần tới L5.
         </p>
-        <div class="mx-auto mt-8 grid max-w-3xl gap-4 sm:grid-cols-2">
+        <div class="mx-auto mt-8 grid max-w-4xl gap-4 sm:grid-cols-2 lg:grid-cols-3">
           <a href="/read2lead/leaderboard" class="rounded-xl border border-gold/35 bg-gold/10 p-5 transition hover:border-gold hover:bg-gold/15">
             <p class="text-sm font-semibold uppercase tracking-wide text-gold-light">Bảng xếp hạng</p>
             <p class="mt-2 text-sm leading-relaxed text-cream-muted">Xem rank Đồng, Bạc, Vàng, Kim cương, Huyền thoại của các bạn nhỏ.</p>
+          </a>
+          <a id="library-card-link" href="/read2lead/library" class="rounded-xl border border-cream/25 bg-cream/5 p-5 transition hover:border-cream/45 hover:bg-cream/10">
+            <p class="text-sm font-semibold uppercase tracking-wide text-cream">Thư viện truyện</p>
+            <p class="mt-2 text-sm leading-relaxed text-cream-muted">Sổ sticker các câu chuyện con đã hoàn thành — đọc lại bất cứ lúc nào.</p>
           </a>
           <a href="/read2lead/review" class="rounded-xl border border-accent/35 bg-accent/10 p-5 transition hover:border-accent hover:bg-accent/15">
             <p class="text-sm font-semibold uppercase tracking-wide text-accent">Hồ sơ học sinh</p>
@@ -311,6 +315,10 @@ const faqItems = [
       if (prefillCode) {
         const codeInput = form.querySelector('input[name="access_code"]');
         if (codeInput) codeInput.value = prefillCode.toUpperCase();
+        const libraryLink = document.getElementById('library-card-link');
+        if (libraryLink) {
+          libraryLink.href = `/read2lead/library?code=${encodeURIComponent(prefillCode.toUpperCase())}`;
+        }
       }
     }
 

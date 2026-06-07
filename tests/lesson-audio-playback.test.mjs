@@ -29,7 +29,10 @@ test('new lesson audio stops the previous lesson audio before playing', () => {
 });
 
 test('story and sentence play buttons pass their button to playAudio', () => {
-  assert.match(lessonPage, /playAudio\(fullAudio, playStoryButton\)/);
+  assert.match(
+    lessonPage,
+    /playAudio\(state\.lesson\?\.story\?\.full_audio_url \|\| '', playStoryButton\)/,
+  );
   assert.match(lessonPage, /playAudio\(sentence\?\.audio_url \|\| '', button\)/);
   assert.match(lessonPage, /playAudio\(activity\.items\[Number\(button\.dataset\.playOrder\)\]\?\.audio_url \|\| '', button\)/);
   assert.match(lessonPage, /playAudio\(activity\.items\[Number\(button\.dataset\.playSpeak\)\]\?\.audio_url \|\| '', button\)/);
