@@ -51,7 +51,12 @@ test('review dashboard does not offer PDF or MP3 action links', () => {
 test('student profile shows completed stories in plain parent language', () => {
   assert.match(reviewPage, /Các truyện con đã học/);
   assert.match(reviewPage, /Cho con làm lại/);
-  assert.doesNotMatch(reviewPage, /Thư viện truyện|Rừng kỳ diệu|sticker/i);
+  assert.match(reviewPage, /Bước tiếp theo cho con/);
+  assert.match(reviewPage, /profile-hero/);
+  assert.match(reviewPage, /robots="noindex, follow"/);
+  assert.match(reviewPage, /for="access-code"/);
+  assert.match(reviewPage, /<h1[^>]*>Hồ sơ học sinh<\/h1>/);
+  assert.doesNotMatch(reviewPage, /Thư viện truyện|Rừng kỳ diệu|Felixar làm gì\?/i);
 });
 
 test('web lesson still keeps internal story audio for in-browser playback', () => {

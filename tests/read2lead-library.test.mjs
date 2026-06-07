@@ -63,7 +63,7 @@ test('buildStoryProgressForProfile handles empty state for parents', () => {
 test('student profile page renders story progress section', () => {
   const reviewPage = readFileSync('src/pages/read2lead/review.astro', 'utf-8');
   assert.match(reviewPage, /Các truyện con đã học/);
-  assert.match(reviewPage, /renderStoryProgress/);
+  assert.match(reviewPage, /renderStoryPortfolio/);
   assert.match(reviewPage, /Cho con làm lại/);
   assert.doesNotMatch(reviewPage, /Rừng kỳ diệu/);
 });

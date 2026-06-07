@@ -2,11 +2,12 @@
 import '../styles/global.css';
 import { ZALO_URL } from '../config/contact';
 
-export interface Props { title: string; description?: string; ogImage?: string; }
+export interface Props { title: string; description?: string; ogImage?: string; robots?: string; }
 const {
   title,
   description = 'Phương xây dựng các sản phẩm giáo dục dành riêng cho mỗi bạn nhỏ. My Story My World, Read2Lead, Felix Sharing Space.',
   ogImage = '/logo/felixbuilderhub_website_header_logo.png',
+  robots,
 } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://felixbuilderhub.com').toString();
 const ogImageUrl = new URL(ogImage, Astro.site ?? 'https://felixbuilderhub.com').toString();
@@ -17,6 +18,7 @@ const ogImageUrl = new URL(ogImage, Astro.site ?? 'https://felixbuilderhub.com')
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
+    {robots ? <meta name="robots" content={robots} /> : null}
     <link rel="canonical" href={canonical} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
