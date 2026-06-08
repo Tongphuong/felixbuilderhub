@@ -750,11 +750,10 @@ import Footer from '../../components/Footer.astro';
               <span class="profile-action-tile-title">💬 Đặt lịch coaching</span>
               <span class="profile-action-tile-desc">Tư vấn miễn phí hoặc đổi lịch học với Felix.</span>
             </a>
-            <div class="profile-action-tile profile-action-tile--soon" aria-disabled="true">
-              <span class="profile-action-tile-badge">Sắp ra mắt</span>
-              <span class="profile-action-tile-title">🎤 Luyện nói riêng với Minny</span>
-              <span class="profile-action-tile-desc">Minny — robot bạn từ truyện Lost Toy Brick City — giúp con luyện phát âm và thuyết trình trước lớp coaching.</span>
-            </div>
+            <a href="/read2lead/speaking?code=${encoded}" class="profile-action-tile">
+              <span class="profile-action-tile-title">🎤 Luyện nói với Minny</span>
+              <span class="profile-action-tile-desc">Luyện trước buổi coaching với Felix — nói, nghe gợi ý, nói tiếp.</span>
+            </a>
           </div>
         </div>
       `;

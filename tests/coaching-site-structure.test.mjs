@@ -44,8 +44,8 @@ test('parent portal supports code login and coaching hub', () => {
   assert.match(parentPortal, /Xem tiến độ của con/);
   assert.match(parentPortal, /Đăng nhập/);
   assert.match(parentPortal, /read2lead-progress/);
-  assert.match(parentPortal, /Luyện nói riêng/);
-  assert.match(parentPortal, /Sắp ra mắt/);
+  assert.match(parentPortal, /Luyện nói với Minny/);
+  assert.match(parentPortal, /\/read2lead\/speaking/);
 });
 
 test('parent portal disables header gamification HUD', () => {

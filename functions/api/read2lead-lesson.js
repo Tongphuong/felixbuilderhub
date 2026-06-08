@@ -1,4 +1,6 @@
 import { getClientIp, checkCodeRateLimit, recordCodeFailure, rateLimitedResponse } from './_rate-limit.js';
+import { resolveAccessiblePack } from './_read2lead-pack-access.js';
+import { extractV2Pack } from './_read2lead-lesson-extract.js';
 
 export async function onRequestGet(context) {
   const { request, env } = context;
@@ -25,8 +27,8 @@ export async function onRequestGet(context) {
     return json({ ok: false, error: 'code_not_found', message: 'Ma hoc sinh khong ton tai.' }, 404);
   }
 
-  const pack = codeData.progress?.current_pack;
-  if (!pack || pack.pack_id !== packId) {
+  const pack = resolveAccessiblePack(codeData, packId);
+  if (!pack) {
     return json({ ok: false, error: 'pack_not_found', message: 'Khong tim thay bai nay trong ma hoc sinh.' }, 404);
   }
 
@@ -69,24 +71,6 @@ async function mergeDeferredFullStoryAudio(env, pack, v2Pack) {
     }
   }
   return v2Pack;
-}
-
-function extractV2Pack(pack) {
-  const candidates = [
-    pack?.review_context,
-    pack?.pack,
-    pack?.pack_json,
-    pack?.result?.pack,
-    pack,
-  ];
-
-  return candidates.find(
-    (candidate) =>
-      candidate &&
-      candidate.schema_version === 2 &&
-      candidate.story &&
-      Array.isArray(candidate.activities),
-  );
 }
 
 function buildV2LessonPayload({ accessCode, codeData, pack, v2Pack }) {

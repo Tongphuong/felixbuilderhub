@@ -1,0 +1,518 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+---
+
+<BaseLayout
+  title="Luyện nói với Minny — Felix Coaching"
+  description="Con luyện nói với Minny trước buổi coaching với Felix — nhận gợi ý nhẹ nhàng và luyện tiếp."
+  robots="noindex, follow"
+>
+  <Header read2LeadState={false} />
+
+  <main id="main" class="min-h-screen bg-navy-950">
+    <section class="mx-auto max-w-lg px-4 py-8 sm:px-6">
+      <p class="text-xs font-extrabold uppercase tracking-widest text-accent">Felix Coaching</p>
+      <h1 class="mt-2 font-display text-2xl font-extrabold text-cream">Luyện nói với Minny</h1>
+      <p class="mt-2 text-sm leading-relaxed text-cream-muted">
+        Luyện trước buổi học với Felix — nói, nghe gợi ý, rồi nói tiếp.
+      </p>
+
+      <div id="speaking-code-card" class="mt-6 rounded-2xl border-2 border-cream/15 bg-navy-900/80 p-5">
+        <label for="speaking-code" class="text-sm font-semibold text-cream">Mã học sinh</label>
+        <div class="mt-3 flex flex-col gap-3 sm:flex-row">
+          <input
+            id="speaking-code"
+            maxlength="40"
+            autocomplete="off"
+            placeholder="VD: R2L-LINH-8F3KQ2"
+            class="min-h-[48px] w-full rounded-xl border border-cream/15 bg-navy-950 px-4 text-base uppercase text-cream placeholder:normal-case placeholder:text-cream-dim/70 focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/30"
+          />
+          <button id="speaking-load" type="button" class="minny-btn minny-btn--primary shrink-0 px-6">
+            Bắt đầu
+          </button>
+        </div>
+      </div>
+
+      <p id="speaking-error" class="mt-4 hidden rounded-xl border border-red-400/40 bg-red-500/10 px-4 py-3 text-sm text-red-200"></p>
+
+      <div id="speaking-shell" class="mt-6 hidden space-y-5">
+        <div class="minny-hero rounded-2xl border-2 border-cream/15 bg-navy-900/80 p-5 text-center">
+          <img
+            id="minny-sprite"
+            src="/assets/minny/minny_idle.png"
+            alt="Minny"
+            width="160"
+            height="160"
+            class="mx-auto h-40 w-40 object-contain"
+          />
+          <p id="minny-greeting" class="mt-4 text-base leading-relaxed text-cream"></p>
+        </div>
+
+        <div class="rounded-2xl border-2 border-accent/35 bg-accent/10 p-5">
+          <p class="text-xs font-extrabold uppercase tracking-wide text-accent">Hôm nay</p>
+          <p id="prompt-label" class="mt-1 text-sm font-bold text-cream"></p>
+          <p id="prompt-en" class="mt-3 text-lg font-semibold leading-relaxed text-cream"></p>
+          <p id="prompt-progress" class="mt-2 text-xs text-cream-muted"></p>
+        </div>
+
+        <div class="flex flex-col gap-3">
+          <button id="speaking-record" type="button" class="minny-btn minny-btn--record">🎤 Bắt đầu nói</button>
+          <p id="speaking-status" class="text-center text-sm text-cream-muted"></p>
+          <span id="speaking-timer" class="hidden text-center text-sm font-bold text-gold"></span>
+        </div>
+
+        <div id="speaking-result" class="hidden rounded-2xl border border-cream/15 bg-navy-900/80 p-5"></div>
+
+        <div id="speaking-actions" class="hidden flex flex-col gap-3 sm:flex-row">
+          <button id="speaking-retry" type="button" class="minny-btn minny-btn--secondary flex-1">Luyện lại</button>
+          <button id="speaking-next" type="button" class="minny-btn minny-btn--primary flex-1">Câu tiếp theo</button>
+        </div>
+
+        <div class="rounded-xl border border-cream/10 bg-cream/5 px-4 py-3 text-center text-sm text-cream-muted">
+          <p id="practice-stats"></p>
+          <a id="coaching-link" href="/coaching#book" class="mt-2 inline-block font-bold text-accent underline">
+            Đặt lịch / vào lớp coaching với Felix
+          </a>
+          <span class="mx-2 text-cream-dim">·</span>
+          <a id="profile-link" href="/hoc-sinh" class="font-semibold text-cream underline">Hồ sơ con</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+
+  <style>
+    .minny-btn {
+      display: flex;
+      min-height: 52px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 0.9rem;
+      border: 3px solid transparent;
+      padding: 0.85rem 1rem;
+      font-size: 1.05rem;
+      font-weight: 800;
+      transition: transform 0.15s ease, background 0.15s ease;
+    }
+
+    .minny-btn--primary {
+      background: rgb(74 222 128);
+      color: rgb(10 14 26);
+      border-color: rgb(134 239 172);
+    }
+
+    .minny-btn--primary:hover:not(:disabled) {
+      transform: translateY(-1px);
+      background: rgb(134 239 172);
+    }
+
+    .minny-btn--record {
+      background: rgb(212 166 78);
+      color: rgb(10 14 26);
+      border-color: rgb(250 220 160);
+    }
+
+    .minny-btn--secondary {
+      background: rgb(245 230 211 / 0.08);
+      color: rgb(245 230 211);
+      border-color: rgb(245 230 211 / 0.25);
+    }
+
+    .minny-btn:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+
+    .minny-word {
+      display: inline-block;
+      margin: 0.15rem;
+      border-radius: 0.4rem;
+      padding: 0.15rem 0.45rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+
+    .minny-word--good {
+      background: rgb(74 222 128 / 0.2);
+      color: rgb(187 247 208);
+    }
+
+    .minny-word--close {
+      background: rgb(251 191 36 / 0.2);
+      color: rgb(254 215 170);
+    }
+
+    .minny-word--miss {
+      background: rgb(245 230 211 / 0.1);
+      color: rgb(245 230 211 / 0.75);
+    }
+  </style>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const codeInput = document.getElementById('speaking-code');
+    const loadBtn = document.getElementById('speaking-load');
+    const codeCard = document.getElementById('speaking-code-card');
+    const shell = document.getElementById('speaking-shell');
+    const errorEl = document.getElementById('speaking-error');
+    const MAX_SECONDS = 30;
+
+    const state = {
+      accessCode: '',
+      packId: '',
+      prompts: [],
+      promptIndex: 0,
+      recording: null,
+      status: 'idle',
+      secondsLeft: MAX_SECONDS,
+      timerId: null,
+      lastResult: null,
+    };
+
+    if (params.get('code')) {
+      codeInput.value = params.get('code').toUpperCase();
+      loadSession();
+    }
+
+    function escapeHtml(value) {
+      return String(value || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function setMinnyMood(mood) {
+      const img = document.getElementById('minny-sprite');
+      if (!img) return;
+      const file = ['idle', 'listen', 'celebrate', 'encourage'].includes(mood) ? mood : 'idle';
+      img.src = `/assets/minny/minny_${file}.png`;
+    }
+
+    function showError(message) {
+      errorEl.textContent = message;
+      errorEl.classList.remove('hidden');
+    }
+
+    function clearError() {
+      errorEl.classList.add('hidden');
+      errorEl.textContent = '';
+    }
+
+    function currentPrompt() {
+      return state.prompts[state.promptIndex] || null;
+    }
+
+    function renderPrompt() {
+      const prompt = currentPrompt();
+      if (!prompt) return;
+      document.getElementById('prompt-label').textContent = prompt.label_vi || 'Luyện nói';
+      document.getElementById('prompt-en').textContent = prompt.prompt_en || prompt.expected_text || '';
+      document.getElementById('prompt-progress').textContent =
+        state.prompts.length > 1
+          ? `Câu ${state.promptIndex + 1} / ${state.prompts.length}`
+          : '';
+      setMinnyMood('idle');
+      document.getElementById('speaking-result').classList.add('hidden');
+      document.getElementById('speaking-actions').classList.add('hidden');
+      document.getElementById('speaking-record').disabled = false;
+      document.getElementById('speaking-status').textContent = 'Con bấm nút rồi nói to, rõ (tối đa 30 giây).';
+    }
+
+    function wordChips(words, tone) {
+      if (!Array.isArray(words) || !words.length) return '';
+      return words.map((w) => `<span class="minny-word minny-word--${tone}">${escapeHtml(w)}</span>`).join('');
+    }
+
+    function renderResult(result) {
+      const resultEl = document.getElementById('speaking-result');
+      const actionsEl = document.getElementById('speaking-actions');
+      if (!result?.ok) {
+        setMinnyMood('encourage');
+        resultEl.classList.remove('hidden');
+        resultEl.innerHTML = `<p class="font-semibold text-gold">${escapeHtml(result?.message || 'Chưa nghe rõ — thử lại nhé!')}</p>`;
+        actionsEl.classList.remove('hidden');
+        document.getElementById('speaking-next').classList.add('hidden');
+        return;
+      }
+
+      const isOpen = result.check_mode === 'open';
+      const passed = Number(result.score_percent) >= 50;
+      setMinnyMood(passed ? 'celebrate' : 'encourage');
+
+      const missed = !isOpen && result.words_missed?.length
+        ? `<p class="mt-3 text-sm text-cream/80"><strong>Luyện thêm:</strong> ${wordChips(result.words_missed, 'miss')}</p>`
+        : '';
+      const close = !isOpen && result.words_close?.length
+        ? `<p class="mt-3 text-sm text-cream/80"><strong>Gần đúng:</strong> ${wordChips(result.words_close, 'close')}</p>`
+        : '';
+      const matched = isOpen && result.words_matched?.length
+        ? `<p class="mt-3 text-sm text-cream/80"><strong>Con nhắc tới:</strong> ${wordChips(result.words_matched, 'good')}</p>`
+        : '';
+      const transcript = result.transcript
+        ? `<p class="mt-2 text-sm text-cream/75">Minny nghe: “${escapeHtml(result.transcript)}”</p>`
+        : '';
+
+      resultEl.classList.remove('hidden');
+      resultEl.innerHTML = `
+        <p class="font-display text-xl font-bold text-gold">${escapeHtml(result.feedback_vi || 'Hay lắm!')}</p>
+        ${transcript}
+        ${matched}
+        ${close}
+        ${missed}
+      `;
+      actionsEl.classList.remove('hidden');
+      document.getElementById('speaking-next').classList.toggle('hidden', state.promptIndex >= state.prompts.length - 1);
+
+      logPractice(result);
+    }
+
+    async function logPractice(result, readyForClass = false) {
+      const prompt = currentPrompt();
+      if (!state.accessCode || !state.packId) return;
+      try {
+        await fetch('/api/minny-practice-log', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            access_code: state.accessCode,
+            pack_id: state.packId,
+            prompt_id: prompt?.id || '',
+            score_percent: result?.score_percent,
+            ready_for_class: readyForClass,
+          }),
+        });
+      } catch {
+        /* non-blocking */
+      }
+    }
+
+    function micReady() {
+      return !!(navigator.mediaDevices?.getUserMedia && window.MediaRecorder);
+    }
+
+    function pickMimeType() {
+      if (typeof MediaRecorder === 'undefined') return '';
+      if (MediaRecorder.isTypeSupported('audio/webm')) return 'audio/webm';
+      if (MediaRecorder.isTypeSupported('audio/mp4')) return 'audio/mp4';
+      return '';
+    }
+
+    function createRecorder(stream) {
+      const mimeType = pickMimeType();
+      if (mimeType && MediaRecorder.isTypeSupported(mimeType)) {
+        return { mediaRecorder: new MediaRecorder(stream, { mimeType }), mimeType };
+      }
+      return { mediaRecorder: new MediaRecorder(stream), mimeType: '' };
+    }
+
+    function cleanupRecording() {
+      if (state.timerId) {
+        clearInterval(state.timerId);
+        state.timerId = null;
+      }
+      if (state.recording?.stream) {
+        state.recording.stream.getTracks().forEach((t) => t.stop());
+      }
+      state.recording = null;
+      state.status = 'idle';
+      state.secondsLeft = MAX_SECONDS;
+      document.getElementById('speaking-timer').classList.add('hidden');
+    }
+
+    function updateRecordUi() {
+      const btn = document.getElementById('speaking-record');
+      const statusEl = document.getElementById('speaking-status');
+      const timerEl = document.getElementById('speaking-timer');
+
+      if (state.status === 'recording') {
+        btn.textContent = '⏹ Dừng';
+        btn.disabled = false;
+        timerEl.classList.remove('hidden');
+        timerEl.textContent = `${state.secondsLeft}s`;
+        statusEl.textContent = 'Minny đang nghe con...';
+        setMinnyMood('listen');
+        return;
+      }
+
+      if (state.status === 'uploading') {
+        btn.disabled = true;
+        btn.textContent = '🎤 Bắt đầu nói';
+        timerEl.classList.add('hidden');
+        statusEl.textContent = 'Minny đang nhận xét...';
+        setMinnyMood('listen');
+        return;
+      }
+
+      btn.disabled = !micReady();
+      btn.textContent = '🎤 Bắt đầu nói';
+      timerEl.classList.add('hidden');
+      statusEl.textContent = micReady()
+        ? 'Con bấm nút rồi nói to, rõ (tối đa 30 giây).'
+        : 'Micro chưa sẵn sàng trên trình duyệt này.';
+      setMinnyMood('idle');
+    }
+
+    async function submitAudio(blob, prompt) {
+      state.status = 'uploading';
+      updateRecordUi();
+      const formData = new FormData();
+      formData.append('access_code', state.accessCode);
+      formData.append('pack_id', state.packId || 'practice');
+      formData.append('expected_text', prompt.expected_text || prompt.story_context || '');
+      formData.append('check_mode', prompt.check_mode || 'read');
+      formData.append('practice_mode', '1');
+      formData.append('audio', blob, 'audio.webm');
+
+      try {
+        const res = await fetch('/api/read2lead-speaking-check', { method: 'POST', body: formData });
+        const data = await res.json();
+        state.lastResult = data;
+        state.status = 'done';
+        renderResult(data);
+      } catch {
+        renderResult({ ok: false, message: 'Mạng không ổn định. Con thử lại nhé!' });
+      } finally {
+        state.status = 'idle';
+        updateRecordUi();
+      }
+    }
+
+    async function startRecording() {
+      const prompt = currentPrompt();
+      if (!prompt) return;
+      if (!micReady()) {
+        renderResult({ ok: false, message: 'Micro chưa sẵn sàng. Con thử trình duyệt khác hoặc cho phép micro nhé.' });
+        return;
+      }
+
+      cleanupRecording();
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        const { mediaRecorder, mimeType } = createRecorder(stream);
+        const chunks = [];
+
+        mediaRecorder.addEventListener('dataavailable', (event) => {
+          if (event.data?.size > 0) chunks.push(event.data);
+        });
+
+        mediaRecorder.addEventListener('stop', () => {
+          const blob = new Blob(chunks, { type: mediaRecorder.mimeType || mimeType || 'audio/mp4' });
+          stream.getTracks().forEach((t) => t.stop());
+          if (blob.size > 0) {
+            submitAudio(blob, prompt);
+          } else {
+            renderResult({ ok: false, message: 'Không thu được tiếng. Con thử nói to hơn nhé.' });
+            updateRecordUi();
+          }
+        });
+
+        state.recording = { stream, mediaRecorder };
+        state.status = 'recording';
+        state.secondsLeft = MAX_SECONDS;
+        mediaRecorder.start(250);
+        updateRecordUi();
+
+        state.timerId = window.setInterval(() => {
+          state.secondsLeft -= 1;
+          updateRecordUi();
+          if (state.secondsLeft <= 0) {
+            mediaRecorder.stop();
+            cleanupRecording();
+          }
+        }, 1000);
+      } catch {
+        renderResult({ ok: false, message: 'Không mở được micro. Con nhờ bố mẹ cho phép micro nhé.' });
+        cleanupRecording();
+        updateRecordUi();
+      }
+    }
+
+    function stopRecording() {
+      if (state.recording?.mediaRecorder?.state === 'recording') {
+        state.recording.mediaRecorder.stop();
+      }
+      if (state.timerId) {
+        clearInterval(state.timerId);
+        state.timerId = null;
+      }
+    }
+
+    async function loadSession() {
+      clearError();
+      const code = codeInput.value.trim().toUpperCase();
+      if (!code) {
+        showError('Vui lòng nhập mã học sinh.');
+        return;
+      }
+
+      loadBtn.disabled = true;
+      loadBtn.textContent = 'Đang tải...';
+
+      try {
+        const res = await fetch(`/api/minny-speaking-context?code=${encodeURIComponent(code)}`);
+        const data = await res.json();
+        if (!res.ok || !data.ok) {
+          showError(data.message || 'Không tìm thấy mã học sinh.');
+          shell.classList.add('hidden');
+          return;
+        }
+
+        state.accessCode = code;
+        state.packId = data.pack_id || 'practice';
+        state.prompts = Array.isArray(data.prompts) ? data.prompts : [];
+        state.promptIndex = 0;
+
+        document.getElementById('minny-greeting').textContent = data.greeting_vi || 'Chào con! Minny sẵn sàng luyện nói.';
+        document.getElementById('practice-stats').textContent =
+          data.practice_count_this_week > 0
+            ? `Tuần này con đã luyện ${data.practice_count_this_week} lần.`
+            : 'Buổi luyện đầu tuần — cứ thoải mái thử nhé!';
+        document.getElementById('profile-link').href = data.profile_link || `/hoc-sinh?code=${encodeURIComponent(code)}`;
+
+        if (!data.has_story && !data.pack_id) {
+          document.getElementById('minny-greeting').textContent = data.message_vi || data.greeting_vi;
+        }
+
+        codeCard.classList.add('hidden');
+        shell.classList.remove('hidden');
+        renderPrompt();
+        updateRecordUi();
+
+        const url = new URL(window.location.href);
+        url.searchParams.set('code', code);
+        window.history.replaceState({}, '', url);
+      } catch {
+        showError('Mạng không ổn định. Vui lòng thử lại.');
+      } finally {
+        loadBtn.disabled = false;
+        loadBtn.textContent = 'Bắt đầu';
+      }
+    }
+
+    document.getElementById('speaking-record')?.addEventListener('click', () => {
+      if (state.status === 'recording') stopRecording();
+      else startRecording();
+    });
+
+    document.getElementById('speaking-retry')?.addEventListener('click', () => {
+      document.getElementById('speaking-result').classList.add('hidden');
+      document.getElementById('speaking-actions').classList.add('hidden');
+      renderPrompt();
+      updateRecordUi();
+    });
+
+    document.getElementById('speaking-next')?.addEventListener('click', () => {
+      if (state.promptIndex < state.prompts.length - 1) {
+        state.promptIndex += 1;
+        renderPrompt();
+        updateRecordUi();
+      }
+    });
+
+    loadBtn?.addEventListener('click', loadSession);
+  </script>
+</BaseLayout>

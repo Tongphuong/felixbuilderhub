@@ -1,4 +1,5 @@
 import { getClientIp, checkCodeRateLimit, recordCodeFailure, rateLimitedResponse } from './_rate-limit.js';
+import { canAccessPackForPractice } from './_read2lead-pack-access.js';
 
 export const SKIP_WORDS = new Set([
   'a', 'an', 'the', 'is', 'are', 'was', 'were', 'to', 'of', 'in', 'on', 'at',
@@ -254,6 +255,7 @@ export async function onRequestPost(context) {
   const packId = String(formData.get('pack_id') || '').trim();
   const expectedText = String(formData.get('expected_text') || '').trim();
   const checkMode = String(formData.get('check_mode') || 'read').trim().toLowerCase();
+  const practiceMode = String(formData.get('practice_mode') || '').trim() === '1';
   const audio = formData.get('audio');
 
   if (!accessCode || !packId || !expectedText || !audio) {
@@ -288,7 +290,10 @@ export async function onRequestPost(context) {
   }
 
   const currentPack = codeData.progress?.current_pack;
-  if (!currentPack || currentPack.pack_id !== packId) {
+  const packAllowed = practiceMode
+    ? canAccessPackForPractice(codeData, packId)
+    : Boolean(currentPack && currentPack.pack_id === packId);
+  if (!packAllowed) {
     return json(
       { ok: false, error: 'pack_not_found', message: 'Khong tim thay bai nay trong ma hoc sinh.' },
       404,
