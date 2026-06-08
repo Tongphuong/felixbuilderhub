@@ -72,6 +72,17 @@ test('retell_summary activity uses open mode with 60s limit', () => {
   assert.match(speakingEndpoint, /max_seconds/);
 });
 
+test('retell_summary shows guided Vietnamese questions before recording', () => {
+  assert.match(lessonPage, /function _r2lBuildRetellGuideQuestions/);
+  assert.match(lessonPage, /function _r2lResolveRetellGuideQuestions/);
+  assert.match(lessonPage, /function _r2lBuildRetellGuideHtml/);
+  assert.match(lessonPage, /data-retell-guide/);
+  assert.match(lessonPage, /r2l-retell-guide/);
+  assert.match(lessonPage, /Con trả lời từng câu bằng tiếng Anh khi kể nhé/);
+  assert.match(lessonPage, /Dùng câu gợi ý/);
+  assert.match(readFileSync('functions/api/_read2lead-retell-guide.js', 'utf-8'), /buildRetellGuideQuestions/);
+});
+
 test('listen_and_order uses editable drag-drop slots instead of one-way token picking', () => {
   assert.match(lessonPage, /data-order-slot=/);
   assert.match(lessonPage, /draggable="true" data-order-item=/);

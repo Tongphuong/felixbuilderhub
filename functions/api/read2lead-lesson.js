@@ -91,7 +91,11 @@ function buildV2LessonPayload({ accessCode, codeData, pack, v2Pack }) {
     level_label: v2Pack.level_label || pack.level_label || '',
     topic: v2Pack.topic || pack.topic || '',
     story,
-    activities: ensureSixActivities(v2Pack.activities),
+    activities: ensureSixActivities(v2Pack.activities, {
+      story: v2Pack.story,
+      topic: v2Pack.topic || pack.topic || '',
+      activities: v2Pack.activities,
+    }),
     rewards: v2Pack.rewards || {
       coins_on_complete: 15,
       xp_on_complete: 20,

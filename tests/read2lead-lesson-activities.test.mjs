@@ -16,6 +16,8 @@ test('ensureSixActivities appends retell_summary after listen_and_speak', () => 
   assert.equal(activities[4].type, 'listen_and_speak');
   assert.equal(activities[5].type, 'retell_summary');
   assert.equal(activities[5].title_vi, 'Kể truyện');
+  assert.ok(Array.isArray(activities[5].guide_questions_vi));
+  assert.ok(activities[5].guide_questions_vi.length >= 3);
 });
 
 test('ensureSixActivities is idempotent when retell already exists', () => {

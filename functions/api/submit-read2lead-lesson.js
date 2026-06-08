@@ -99,7 +99,11 @@ function extractV2LessonContext(pack) {
   if (!context) return null;
   return {
     ...context,
-    activities: ensureSixActivities(context.activities),
+    activities: ensureSixActivities(context.activities, {
+      story: context.story,
+      topic: context.topic || '',
+      activities: context.activities,
+    }),
   };
 }
 
