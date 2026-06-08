@@ -26,6 +26,7 @@ test('exact match → 100%', () => {
   assert.equal(result.close_count, 0);
   assert.equal(result.correct_count, 5);
   assert.equal(result.total_count, 5);
+  assert.deepEqual(result.words_exact, ['Boy', 'runs', 'fast', 'green', 'park']);
   assert.deepEqual(result.words_missed, []);
 });
 

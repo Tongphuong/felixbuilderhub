@@ -719,6 +719,10 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
 
     const missed = Array.isArray(result.words_missed) ? result.words_missed : [];
     const close = Array.isArray(result.words_close) ? result.words_close : [];
+    const exact = Array.isArray(result.words_exact) ? result.words_exact : [];
+    const exactHtml = exact.length
+      ? `<p class="mt-2 text-sm text-cream/75"><span class="font-semibold text-cream">Từ đúng:</span> ${_r2lSpeakingWordChips(exact, 'good')}</p>`
+      : '';
     const missedHtml = missed.length
       ? `<p class="mt-2 text-sm text-cream/75"><span class="font-semibold text-cream">Luyện thêm:</span> ${_r2lSpeakingWordChips(missed, 'miss')}</p>`
       : '';
@@ -733,6 +737,7 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
       <p class="font-semibold text-gold">${escapeHtml(result.feedback_vi || '')}</p>
       <p class="mt-1 text-sm text-cream/75">${_r2lFormatReadScoreLine(result)}</p>
       ${transcriptHtml}
+      ${exactHtml}
       ${closeHtml}
       ${missedHtml}
     `;
@@ -755,28 +760,30 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
     const expectedText = entry?.expectedText || '';
     if (!expectedText || !blob) return;
 
+    const scoringBlob = blob;
     _r2lRenderSpeakFeedback(cardEl, { loading: true });
 
     try {
       const payload = await _r2lPostSpeakingCheck(blob, expectedText);
       const current = _r2lRecorderState.perItem.get(itemKey);
-      if (!current) return;
+      if (!current || current.blob !== scoringBlob) return;
       _r2lRecorderState.perItem.set(itemKey, {
         ...current,
         checkStatus: payload?.ok ? 'done' : 'error',
         checkResult: payload,
       });
+      _r2lRenderRecorderUi(itemKey, cardEl);
       _r2lRenderSpeakFeedback(cardEl, payload);
       if (payload?.ok) _r2lMergeSpeakActivityScores();
     } catch (error) {
       const current = _r2lRecorderState.perItem.get(itemKey);
-      if (current) {
-        _r2lRecorderState.perItem.set(itemKey, {
-          ...current,
-          checkStatus: 'error',
-          checkResult: null,
-        });
-      }
+      if (!current || current.blob !== scoringBlob) return;
+      _r2lRecorderState.perItem.set(itemKey, {
+        ...current,
+        checkStatus: 'error',
+        checkResult: null,
+      });
+      _r2lRenderRecorderUi(itemKey, cardEl);
       _r2lRenderSpeakFeedback(cardEl, {
         ok: false,
         message: error.message || 'Chưa gửi được bài đọc. Con thử lại nhé!',
@@ -828,7 +835,11 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
     } else if (expectedText && !existing.expectedText) {
       existing.expectedText = expectedText;
     }
+    const latest = _r2lRecorderState.perItem.get(itemKey);
     _r2lRenderRecorderUi(itemKey, cardEl);
+    if (latest?.checkResult?.ok) {
+      _r2lRenderSpeakFeedback(cardEl, latest.checkResult);
+    }
   }
 
   async function _r2lStartRecording(itemKey, cardEl) {

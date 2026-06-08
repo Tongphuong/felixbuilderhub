@@ -31,6 +31,9 @@ test('lesson page mounts a recorder slot per item', () => {
   assert.match(lessonPage, /data-recorder-slot/);
   assert.match(lessonPage, /data-speak-card="\$\{itemIndex\}"/);
   assert.match(lessonPage, /data-speak-feedback/);
+  assert.match(lessonPage, /words_exact/);
+  assert.match(lessonPage, /_r2lRenderRecorderUi\(itemKey, cardEl\)/);
+  assert.match(lessonPage, /current\.blob !== scoringBlob/);
 });
 
 test('listen_and_speak recorder submits Whisper scoring after stop', () => {

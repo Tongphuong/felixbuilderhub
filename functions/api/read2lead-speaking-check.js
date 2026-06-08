@@ -62,6 +62,7 @@ export function scoreTranscript(expectedText, transcript) {
   let close = 0;
   const wordsMissed = [];
   const wordsClose = [];
+  const wordsExact = [];
 
   for (const expectedWord of expectedWords) {
     let bestIndex = -1;
@@ -79,6 +80,7 @@ export function scoreTranscript(expectedText, transcript) {
     if (bestIndex >= 0 && bestSimilarity >= SIMILARITY_THRESHOLD) {
       used.add(bestIndex);
       correct += 1;
+      wordsExact.push(expectedWord.raw);
     } else if (bestIndex >= 0 && bestSimilarity >= CLOSE_THRESHOLD) {
       used.add(bestIndex);
       close += 1;
@@ -104,6 +106,7 @@ export function scoreTranscript(expectedText, transcript) {
     total_count: totalCount,
     words_missed: wordsMissed,
     words_close: wordsClose,
+    words_exact: wordsExact,
     feedback_vi: feedbackVi(scorePercent),
   };
 }
