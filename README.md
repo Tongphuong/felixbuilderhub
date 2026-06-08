@@ -98,7 +98,9 @@ created for other branches automatically.
   not a generic mascot); student memory personalizes practice; `/hoc-sinh` tile =
   discovery entry; skills apply in **`/coaching`**. Runtime sprites:
   `public/assets/minny/` (source: `D:/MSMW/marketing/seedance_minny/references/`).
-  M0 design session next (docs only, no code yet)
+  M0 design session next (docs only, no code yet). **Assets:** `minny.png` imported;
+  mood sprites (`minny_idle`, `listen`, `celebrate`, `encourage`) pending M0/M2 — see
+  `public/assets/minny/README.md`
 
 ## Conventions
 
