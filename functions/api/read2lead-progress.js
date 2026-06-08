@@ -107,7 +107,7 @@ function stateLabel(state) {
   return {
     no_pack: 'Chưa có bài',
     generation_in_progress: 'Đang tạo bài',
-    awaiting_review: 'Chờ nộp bài',
+    awaiting_review: 'Chưa hoàn thành bài',
     reviewed: 'Đã nhận xét',
   }[state] || 'Đang kiểm tra';
 }
@@ -117,7 +117,7 @@ function primaryAction(state, code, nextPackLocked) {
     return { type: 'wait', label: 'Đang tạo bài', href: null };
   }
   if (state === 'awaiting_review' && nextPackLocked) {
-    return { type: 'submit_review', label: 'Nộp bài hiện tại', href: `/hoc-sinh?code=${encodeURIComponent(code)}#submit` };
+    return { type: 'open_lesson', label: 'Mở bài con đang học', href: null };
   }
   if (state === 'awaiting_review') {
     return { type: 'create_pack', label: 'Tạo thêm bài mới', href: '/read2lead#form' };

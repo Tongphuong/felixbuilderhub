@@ -61,7 +61,7 @@ export async function onRequestPost(context) {
         message:
           progress.current_pack.status === 'generation_in_progress'
             ? 'Felixar đang tạo bài cho con. Vui lòng đợi thêm một chút, đừng bấm tạo lại.'
-            : 'Bài trước cần nộp ảnh bài làm và ghi âm con kể lại câu chuyện trước khi mở bài mới.',
+            : 'Con cần hoàn thành bài đang mở trên web trước khi tạo bài mới. Mở bài học, làm xong 5 nhiệm vụ rồi bấm lưu chiến công.',
         review_link: `/hoc-sinh?code=${encodeURIComponent(accessCode)}`,
         current_pack: publicPack(progress.current_pack),
         progress: publicProgress(progress),

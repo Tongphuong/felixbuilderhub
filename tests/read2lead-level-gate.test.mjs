@@ -9,7 +9,7 @@ const stateModule = readFileSync('functions/api/_read2lead-v2-state.js', 'utf-8'
 
 test('parent intake form does not expose a level selector', () => {
   assert.doesNotMatch(read2LeadPage, /name="level"/);
-  assert.match(read2LeadPage, /bắt đầu từ L1/);
+  assert.match(read2LeadPage, /bắt đầu từ cấp đầu/);
 });
 
 test('parent intake form does not expose child identity fields', () => {
