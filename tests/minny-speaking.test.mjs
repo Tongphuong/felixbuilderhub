@@ -19,9 +19,22 @@ test('speaking page exists with coaching-first copy and no AI marketing', () => 
   assert.match(speakingPage, /read2lead-speaking-check/);
   assert.match(speakingPage, /practice_mode/);
   assert.match(speakingPage, /data\.modes/);
-  assert.match(speakingPage, /Kể cho Minny nghe/);
+  assert.match(speakingPage, /🎤 Con nói/);
   assert.doesNotMatch(speakingPage, /tăng cường bởi AI/i);
   assert.doesNotMatch(speakingPage, /\bAI\b/);
+});
+
+test('speaking page has kid-friendly mode cards and video fallback', () => {
+  assert.match(speakingPage, /minny-mode-card/);
+  assert.match(speakingPage, /mode-picker/);
+  assert.match(speakingPage, /practice-screen/);
+  assert.match(speakingPage, /id="minny-video"/);
+  assert.match(speakingPage, /id="minny-fallback"/);
+  assert.match(speakingPage, /tryPlay\('mp4'\)/);
+  assert.match(speakingPage, /\.webm/);
+  assert.match(speakingPage, /showMinnyPng/);
+  assert.match(speakingPage, /back-to-modes/);
+  assert.match(speakingPage, /progress-dots/);
 });
 
 test('parent portal links to speaking page without coming-soon badge', () => {

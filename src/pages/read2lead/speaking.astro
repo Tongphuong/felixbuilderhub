@@ -12,14 +12,14 @@ import Footer from '../../components/Footer.astro';
   <Header read2LeadState={false} />
 
   <main id="main" class="min-h-screen bg-navy-950">
-    <section class="mx-auto max-w-lg px-4 py-8 sm:px-6">
-      <p class="text-xs font-extrabold uppercase tracking-widest text-accent">Felix Coaching</p>
-      <h1 class="mt-2 font-display text-2xl font-extrabold text-cream">Luyện nói với Minny</h1>
-      <p class="mt-2 text-sm leading-relaxed text-cream-muted">
-        Con nói — Minny nghe: kể lại truyện hoặc trả lời câu hỏi — chuẩn bị cho buổi coaching với Felix.
+    <section class="mx-auto max-w-lg px-4 py-6 sm:px-6 sm:py-8">
+      <p class="text-center text-xs font-extrabold uppercase tracking-widest text-accent">Felix Coaching</p>
+      <h1 class="mt-1 text-center font-display text-2xl font-extrabold text-cream sm:text-3xl">Luyện nói với Minny</h1>
+      <p class="mt-2 text-center text-sm text-cream-muted">
+        Con nói — Minny nghe — chuẩn bị cho buổi coaching với Felix.
       </p>
 
-      <div id="speaking-code-card" class="mt-6 rounded-2xl border-2 border-cream/15 bg-navy-900/80 p-5">
+      <div id="speaking-code-card" class="mt-6 rounded-3xl bg-navy-900/60 p-5 shadow-lg shadow-black/20">
         <label for="speaking-code" class="text-sm font-semibold text-cream">Mã học sinh</label>
         <div class="mt-3 flex flex-col gap-3 sm:flex-row">
           <input
@@ -27,64 +27,86 @@ import Footer from '../../components/Footer.astro';
             maxlength="40"
             autocomplete="off"
             placeholder="VD: R2L-LINH-8F3KQ2"
-            class="min-h-[48px] w-full rounded-xl border border-cream/15 bg-navy-950 px-4 text-base uppercase text-cream placeholder:normal-case placeholder:text-cream-dim/70 focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/30"
+            class="min-h-[52px] w-full rounded-2xl border border-cream/10 bg-navy-950 px-4 text-base uppercase text-cream placeholder:normal-case placeholder:text-cream-dim/70 focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/30"
           />
-          <button id="speaking-load" type="button" class="minny-btn minny-btn--primary shrink-0 px-6">
+          <button id="speaking-load" type="button" class="minny-btn minny-btn--primary shrink-0 px-8">
             Bắt đầu
           </button>
         </div>
       </div>
 
-      <p id="speaking-error" class="mt-4 hidden rounded-xl border border-red-400/40 bg-red-500/10 px-4 py-3 text-sm text-red-200"></p>
+      <p id="speaking-error" class="mt-4 hidden rounded-2xl bg-red-500/15 px-4 py-3 text-sm text-red-200"></p>
 
-      <div id="speaking-shell" class="mt-6 hidden space-y-5">
-        <div class="minny-hero rounded-2xl border-2 border-cream/15 bg-navy-900/80 p-5 text-center">
-          <img
-            id="minny-sprite"
-            src="/assets/minny/minny_idle.png"
-            alt="Minny"
-            width="160"
-            height="160"
-            class="mx-auto h-40 w-40 object-contain"
-          />
-          <p id="minny-greeting" class="mt-4 text-base leading-relaxed text-cream"></p>
+      <div id="speaking-shell" class="mt-6 hidden space-y-6">
+        <!-- Hero: Minny + greeting -->
+        <div class="minny-hero rounded-3xl bg-navy-900/50 p-6 text-center shadow-lg shadow-black/15">
+          <div class="minny-avatar mx-auto">
+            <video
+              id="minny-video"
+              class="minny-avatar__media hidden"
+              poster="/assets/minny/minny_idle.png"
+              autoplay
+              loop
+              muted
+              playsinline
+              aria-hidden="true"
+            ></video>
+            <img
+              id="minny-fallback"
+              src="/assets/minny/minny_idle.png"
+              alt="Minny"
+              width="200"
+              height="200"
+              class="minny-avatar__media"
+            />
+          </div>
+          <p id="minny-greeting" class="mt-4 text-lg font-bold leading-snug text-cream"></p>
         </div>
 
-        <div id="mode-tabs" class="grid grid-cols-1 gap-2 sm:grid-cols-2"></div>
+        <!-- Mode picker: large tap cards -->
+        <div id="mode-picker" class="space-y-3">
+          <p class="text-center text-sm font-semibold text-cream-muted">Con chọn cách luyện hôm nay</p>
+          <div id="mode-cards" class="grid grid-cols-1 gap-4 sm:grid-cols-2"></div>
+        </div>
 
-        <div class="rounded-2xl border-2 border-accent/35 bg-accent/10 p-5">
-          <p id="mode-title" class="text-xs font-extrabold uppercase tracking-wide text-accent"></p>
-          <p id="mode-subtitle" class="mt-1 text-sm text-cream-muted"></p>
-          <p id="prompt-label" class="mt-3 text-sm font-bold text-cream"></p>
-          <p id="prompt-instruction" class="mt-1 text-sm text-cream-muted"></p>
-          <p id="prompt-vi" class="mt-3 hidden text-base font-semibold leading-relaxed text-cream"></p>
-          <p id="prompt-en" class="mt-3 text-lg font-semibold leading-relaxed text-cream"></p>
-          <p id="prompt-progress" class="mt-2 text-xs text-cream-muted"></p>
-          <button id="speaking-listen" type="button" class="minny-btn minny-btn--listen mt-4 w-full">
+        <!-- Practice wizard (hidden until mode picked) -->
+        <div id="practice-screen" class="hidden space-y-5">
+          <div class="flex items-center justify-between gap-3">
+            <button id="back-to-modes" type="button" class="minny-back-link">← Chọn cách luyện</button>
+            <div id="progress-dots" class="flex items-center gap-2" aria-label="Tiến độ"></div>
+          </div>
+
+          <div class="minny-bubble rounded-3xl bg-cream/10 p-5 shadow-md shadow-black/10">
+            <p id="prompt-vi" class="text-lg font-bold leading-relaxed text-cream"></p>
+            <p id="prompt-en" class="mt-2 text-sm leading-relaxed text-cream-muted"></p>
+          </div>
+
+          <button id="speaking-listen" type="button" class="minny-btn minny-btn--listen w-full">
             🔊 Nghe Minny
           </button>
+
+          <div class="space-y-2">
+            <button id="speaking-record" type="button" class="minny-btn minny-btn--record w-full">🎤 Con nói</button>
+            <p id="speaking-status" class="text-center text-sm text-cream-muted"></p>
+            <span id="speaking-timer" class="hidden block text-center text-lg font-bold text-gold"></span>
+          </div>
+
+          <div id="speaking-result" class="hidden rounded-3xl bg-navy-900/70 p-5 shadow-md shadow-black/10"></div>
+
+          <div id="speaking-actions" class="hidden grid grid-cols-1 gap-3 sm:grid-cols-2">
+            <button id="speaking-retry" type="button" class="minny-btn minny-btn--secondary">Luyện lại</button>
+            <button id="speaking-next" type="button" class="minny-btn minny-btn--primary">Tiếp theo</button>
+          </div>
         </div>
 
-        <div class="flex flex-col gap-3">
-          <button id="speaking-record" type="button" class="minny-btn minny-btn--record">🎤 Bắt đầu nói</button>
-          <p id="speaking-status" class="text-center text-sm text-cream-muted"></p>
-          <span id="speaking-timer" class="hidden text-center text-sm font-bold text-gold"></span>
-        </div>
-
-        <div id="speaking-result" class="hidden rounded-2xl border border-cream/15 bg-navy-900/80 p-5"></div>
-
-        <div id="speaking-actions" class="hidden flex flex-col gap-3 sm:flex-row">
-          <button id="speaking-retry" type="button" class="minny-btn minny-btn--secondary flex-1">Luyện lại</button>
-          <button id="speaking-next" type="button" class="minny-btn minny-btn--primary flex-1">Câu tiếp theo</button>
-        </div>
-
-        <div class="rounded-xl border border-cream/10 bg-cream/5 px-4 py-3 text-center text-sm text-cream-muted">
-          <p id="practice-stats"></p>
-          <a id="coaching-link" href="/coaching#book" class="mt-2 inline-block font-bold text-accent underline">
-            Đặt lịch / vào lớp coaching với Felix
-          </a>
-          <span class="mx-2 text-cream-dim">·</span>
-          <a id="profile-link" href="/hoc-sinh" class="font-semibold text-cream underline">Hồ sơ con</a>
+        <!-- Compact footer -->
+        <div class="rounded-2xl bg-cream/5 px-4 py-3 text-center text-sm text-cream-muted">
+          <p id="practice-stats" class="font-medium"></p>
+          <p class="mt-2">
+            <a id="coaching-link" href="/coaching#book" class="font-bold text-accent underline">Đặt lịch coaching</a>
+            <span class="mx-2 text-cream-dim">·</span>
+            <a id="profile-link" href="/hoc-sinh" class="font-semibold text-cream underline">Hồ sơ con</a>
+          </p>
         </div>
       </div>
     </section>
@@ -93,27 +115,49 @@ import Footer from '../../components/Footer.astro';
   <Footer />
 
   <style>
+    .minny-avatar {
+      width: 11rem;
+      height: 11rem;
+    }
+
+    @media (min-width: 640px) {
+      .minny-avatar {
+        width: 13rem;
+        height: 13rem;
+      }
+    }
+
+    .minny-avatar__media {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
     .minny-btn {
       display: flex;
-      min-height: 52px;
+      min-height: 56px;
       align-items: center;
       justify-content: center;
-      border-radius: 0.9rem;
+      border-radius: 1.25rem;
       border: 3px solid transparent;
-      padding: 0.85rem 1rem;
-      font-size: 1.05rem;
+      padding: 0.9rem 1.25rem;
+      font-size: 1.125rem;
       font-weight: 800;
-      transition: transform 0.15s ease, background 0.15s ease;
+      transition: transform 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .minny-btn:active:not(:disabled) {
+      transform: scale(0.98);
     }
 
     .minny-btn--primary {
       background: rgb(74 222 128);
       color: rgb(10 14 26);
       border-color: rgb(134 239 172);
+      box-shadow: 0 4px 0 rgb(22 101 52);
     }
 
     .minny-btn--primary:hover:not(:disabled) {
-      transform: translateY(-1px);
       background: rgb(134 239 172);
     }
 
@@ -121,47 +165,70 @@ import Footer from '../../components/Footer.astro';
       background: rgb(212 166 78);
       color: rgb(10 14 26);
       border-color: rgb(250 220 160);
+      box-shadow: 0 4px 0 rgb(120 90 40);
+    }
+
+    .minny-btn--record:hover:not(:disabled) {
+      background: rgb(242 204 126);
     }
 
     .minny-btn--listen {
-      background: rgb(96 165 250 / 0.2);
-      color: rgb(191 219 254);
-      border-color: rgb(96 165 250 / 0.45);
-      min-height: 48px;
-      font-size: 0.95rem;
+      background: rgb(200 143 56 / 0.18);
+      color: rgb(242 204 126);
+      border-color: rgb(200 143 56 / 0.45);
+      min-height: 52px;
     }
 
-    .minny-mode-tab {
-      border-radius: 0.9rem;
-      border: 3px solid rgb(245 230 211 / 0.15);
-      background: rgb(10 14 26 / 0.5);
-      padding: 0.85rem 1rem;
-      text-align: left;
-      transition: border-color 0.15s ease, background 0.15s ease;
+    .minny-btn--listen:hover:not(:disabled) {
+      background: rgb(200 143 56 / 0.28);
     }
 
-    .minny-mode-tab--active {
-      border-color: rgb(74 222 128 / 0.55);
-      background: rgb(74 222 128 / 0.12);
+    .minny-mode-card {
+      display: flex;
+      min-height: 7.5rem;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      border-radius: 1.5rem;
+      border: 3px solid rgb(245 230 211 / 0.12);
+      background: rgb(23 53 74 / 0.7);
+      padding: 1.5rem 1rem;
+      text-align: center;
+      box-shadow: 0 6px 0 rgb(0 0 0 / 0.2);
+      transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
     }
 
-    .minny-mode-tab-title {
-      display: block;
-      font-size: 0.95rem;
+    .minny-mode-card:hover {
+      border-color: rgb(200 143 56 / 0.45);
+      background: rgb(29 63 88 / 0.85);
+      transform: translateY(-2px);
+    }
+
+    .minny-mode-card:active {
+      transform: translateY(2px);
+      box-shadow: 0 2px 0 rgb(0 0 0 / 0.2);
+    }
+
+    .minny-mode-card__emoji {
+      font-size: 2.25rem;
+      line-height: 1;
+    }
+
+    .minny-mode-card__title {
+      font-size: 1.125rem;
       font-weight: 800;
       color: rgb(245 230 211);
     }
 
-    .minny-mode-tab-desc {
-      display: block;
-      margin-top: 0.25rem;
-      font-size: 0.75rem;
+    .minny-mode-card__desc {
+      font-size: 0.8rem;
       line-height: 1.4;
-      color: rgb(245 230 211 / 0.65);
+      color: rgb(245 230 211 / 0.6);
     }
 
     .minny-btn--secondary {
-      background: rgb(245 230 211 / 0.08);
+      background: rgb(245 230 211 / 0.1);
       color: rgb(245 230 211);
       border-color: rgb(245 230 211 / 0.25);
     }
@@ -171,11 +238,40 @@ import Footer from '../../components/Footer.astro';
       cursor: not-allowed;
     }
 
+    .minny-back-link {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: rgb(217 199 164);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .minny-back-link:hover {
+      color: rgb(245 230 211);
+    }
+
+    .minny-dot {
+      width: 0.65rem;
+      height: 0.65rem;
+      border-radius: 9999px;
+      background: rgb(245 230 211 / 0.2);
+      transition: background 0.15s ease, transform 0.15s ease;
+    }
+
+    .minny-dot--active {
+      background: rgb(200 143 56);
+      transform: scale(1.2);
+    }
+
+    .minny-dot--done {
+      background: rgb(74 222 128 / 0.6);
+    }
+
     .minny-word {
       display: inline-block;
       margin: 0.15rem;
-      border-radius: 0.4rem;
-      padding: 0.15rem 0.45rem;
+      border-radius: 0.5rem;
+      padding: 0.2rem 0.5rem;
       font-size: 0.85rem;
       font-weight: 700;
     }
@@ -203,13 +299,18 @@ import Footer from '../../components/Footer.astro';
     const codeCard = document.getElementById('speaking-code-card');
     const shell = document.getElementById('speaking-shell');
     const errorEl = document.getElementById('speaking-error');
+    const modePicker = document.getElementById('mode-picker');
+    const practiceScreen = document.getElementById('practice-screen');
     const DEFAULT_MAX_SECONDS = 30;
+
+    const MODE_EMOJI = { retell: '📖', questions: '💬' };
 
     const state = {
       accessCode: '',
       packId: '',
       modes: [],
       activeModeId: 'retell',
+      modePicked: false,
       stepIndex: 0,
       recording: null,
       status: 'idle',
@@ -217,6 +318,7 @@ import Footer from '../../components/Footer.astro';
       timerId: null,
       lastResult: null,
       activeAudio: null,
+      videoAvailable: {},
     };
 
     if (params.get('code')) {
@@ -232,11 +334,78 @@ import Footer from '../../components/Footer.astro';
         .replace(/"/g, '&quot;');
     }
 
-    function setMinnyMood(mood) {
-      const img = document.getElementById('minny-sprite');
-      if (!img) return;
+    function minnyAssetBase(mood) {
       const file = ['idle', 'listen', 'celebrate', 'encourage'].includes(mood) ? mood : 'idle';
-      img.src = `/assets/minny/minny_${file}.png`;
+      return `/assets/minny/minny_${file}`;
+    }
+
+    function showMinnyPng(mood) {
+      const img = document.getElementById('minny-fallback');
+      const video = document.getElementById('minny-video');
+      if (!img) return;
+      img.src = `${minnyAssetBase(mood)}.png`;
+      img.classList.remove('hidden');
+      if (video) video.classList.add('hidden');
+    }
+
+    function setMinnyMood(mood) {
+      const video = document.getElementById('minny-video');
+      const img = document.getElementById('minny-fallback');
+      const base = minnyAssetBase(mood);
+
+      if (!video) {
+        showMinnyPng(mood);
+        return;
+      }
+
+      if (state.videoAvailable[mood] === false) {
+        showMinnyPng(mood);
+        return;
+      }
+
+      const tryPlay = (ext) => {
+        video.onerror = () => {
+          if (ext === 'mp4') {
+            video.src = `${base}.webm`;
+            video.onerror = () => {
+              state.videoAvailable[mood] = false;
+              showMinnyPng(mood);
+            };
+          } else {
+            state.videoAvailable[mood] = false;
+            showMinnyPng(mood);
+          }
+        };
+        video.onloadeddata = () => {
+          state.videoAvailable[mood] = true;
+          video.classList.remove('hidden');
+          if (img) img.classList.add('hidden');
+          video.play().catch(() => showMinnyPng(mood));
+        };
+        video.poster = `${base}.png`;
+        video.src = `${base}.${ext}`;
+        video.load();
+      };
+
+      tryPlay('mp4');
+    }
+
+    function showModePicker() {
+      state.modePicked = false;
+      modePicker?.classList.remove('hidden');
+      practiceScreen?.classList.add('hidden');
+      setMinnyMood('idle');
+    }
+
+    function enterPracticeMode(modeId) {
+      state.activeModeId = modeId;
+      state.stepIndex = 0;
+      state.modePicked = true;
+      stopPlayback();
+      modePicker?.classList.add('hidden');
+      practiceScreen?.classList.remove('hidden');
+      renderStep();
+      updateRecordUi();
     }
 
     function showError(message) {
@@ -302,34 +471,50 @@ import Footer from '../../components/Footer.astro';
       window.speechSynthesis.speak(utterance);
     }
 
-    function renderModeTabs() {
-      const tabsEl = document.getElementById('mode-tabs');
-      if (!tabsEl) return;
-      tabsEl.innerHTML = state.modes
+    function renderModeCards() {
+      const cardsEl = document.getElementById('mode-cards');
+      if (!cardsEl) return;
+      cardsEl.innerHTML = state.modes
         .map(
           (mode) => `
             <button
               type="button"
-              class="minny-mode-tab ${mode.id === state.activeModeId ? 'minny-mode-tab--active' : ''}"
+              class="minny-mode-card"
               data-mode-id="${escapeHtml(mode.id)}"
             >
-              <span class="minny-mode-tab-title">${escapeHtml(mode.title_vi)}</span>
-              <span class="minny-mode-tab-desc">${escapeHtml(mode.subtitle_vi || '')}</span>
+              <span class="minny-mode-card__emoji">${MODE_EMOJI[mode.id] || '✨'}</span>
+              <span class="minny-mode-card__title">${escapeHtml(mode.title_vi)}</span>
+              <span class="minny-mode-card__desc">${escapeHtml(mode.subtitle_vi || '')}</span>
             </button>
           `,
         )
         .join('');
 
-      tabsEl.querySelectorAll('[data-mode-id]').forEach((button) => {
-        button.addEventListener('click', () => {
-          state.activeModeId = button.dataset.modeId;
-          state.stepIndex = 0;
-          stopPlayback();
-          renderModeTabs();
-          renderStep();
-          updateRecordUi();
-        });
+      cardsEl.querySelectorAll('[data-mode-id]').forEach((button) => {
+        button.addEventListener('click', () => enterPracticeMode(button.dataset.modeId));
       });
+    }
+
+    function renderProgressDots() {
+      const dotsEl = document.getElementById('progress-dots');
+      const mode = activeMode();
+      if (!dotsEl || !mode) return;
+
+      if (mode.steps.length <= 1) {
+        dotsEl.innerHTML = '';
+        dotsEl.classList.add('hidden');
+        return;
+      }
+
+      dotsEl.classList.remove('hidden');
+      dotsEl.innerHTML = mode.steps
+        .map((_, i) => {
+          let cls = 'minny-dot';
+          if (i < state.stepIndex) cls += ' minny-dot--done';
+          else if (i === state.stepIndex) cls += ' minny-dot--active';
+          return `<span class="${cls}" title="Bước ${i + 1}"></span>`;
+        })
+        .join('');
     }
 
     function renderStep() {
@@ -337,33 +522,24 @@ import Footer from '../../components/Footer.astro';
       const step = currentStep();
       if (!mode || !step) return;
 
-      document.getElementById('mode-title').textContent = mode.title_vi;
-      document.getElementById('mode-subtitle').textContent = mode.subtitle_vi || '';
-      document.getElementById('prompt-label').textContent = step.label_vi || '';
-      document.getElementById('prompt-instruction').textContent = step.instruction_vi || '';
-
       const viEl = document.getElementById('prompt-vi');
       const enEl = document.getElementById('prompt-en');
       const recordBtn = document.getElementById('speaking-record');
 
-      const maxSec = stepMaxSeconds(step);
-      const isQuestion = step.kind === 'question';
-
-      viEl.classList.remove('hidden');
-      viEl.textContent = step.prompt_vi || step.question_vi || '';
+      viEl.textContent = step.prompt_vi || step.question_vi || step.label_vi || '';
       enEl.textContent = step.prompt_en || step.question_en || '';
-      recordBtn.textContent = isQuestion ? '🎤 Trả lời Minny' : '🎤 Kể cho Minny nghe';
 
-      document.getElementById('prompt-progress').textContent =
-        mode.steps.length > 1 ? `${step.label_vi} · ${state.stepIndex + 1}/${mode.steps.length}` : '';
+      const isQuestion = step.kind === 'question';
+      recordBtn.textContent = isQuestion ? '🎤 Trả lời Minny' : '🎤 Con nói';
 
+      renderProgressDots();
       setMinnyMood('idle');
       document.getElementById('speaking-result').classList.add('hidden');
       document.getElementById('speaking-actions').classList.add('hidden');
       document.getElementById('speaking-record').disabled = false;
       document.getElementById('speaking-status').textContent = isQuestion
-        ? `Nghe Minny hỏi trước, rồi con trả lời bằng tiếng Anh (tối đa ${maxSec} giây).`
-        : `Nghe Minny nhắc trước, rồi con kể bằng lời của mình (tối đa ${maxSec} giây).`;
+        ? 'Nghe Minny hỏi, rồi con trả lời nhé.'
+        : 'Nghe Minny nhắc, rồi con kể nhé.';
     }
 
     function wordChips(words, tone) {
@@ -377,7 +553,7 @@ import Footer from '../../components/Footer.astro';
       if (!result?.ok) {
         setMinnyMood('encourage');
         resultEl.classList.remove('hidden');
-        resultEl.innerHTML = `<p class="font-semibold text-gold">${escapeHtml(result?.message || 'Chưa nghe rõ — thử lại nhé!')}</p>`;
+        resultEl.innerHTML = `<p class="text-lg font-bold text-gold">${escapeHtml(result?.message || 'Chưa nghe rõ — thử lại nhé!')}</p>`;
         actionsEl.classList.remove('hidden');
         document.getElementById('speaking-next').classList.add('hidden');
         return;
@@ -414,7 +590,7 @@ import Footer from '../../components/Footer.astro';
       document.getElementById('speaking-next').classList.toggle('hidden', isLast);
       const stepKind = currentStep()?.kind;
       document.getElementById('speaking-next').textContent =
-        stepKind === 'question' ? 'Câu hỏi tiếp theo' : 'Bước tiếp theo';
+        stepKind === 'question' ? 'Câu tiếp theo' : 'Bước tiếp theo';
 
       logPractice(result);
     }
@@ -477,6 +653,9 @@ import Footer from '../../components/Footer.astro';
       const btn = document.getElementById('speaking-record');
       const statusEl = document.getElementById('speaking-status');
       const timerEl = document.getElementById('speaking-timer');
+      const step = currentStep();
+      const isQuestion = step?.kind === 'question';
+      const idleLabel = isQuestion ? '🎤 Trả lời Minny' : '🎤 Con nói';
 
       if (state.status === 'recording') {
         btn.textContent = '⏹ Dừng';
@@ -490,7 +669,7 @@ import Footer from '../../components/Footer.astro';
 
       if (state.status === 'uploading') {
         btn.disabled = true;
-        btn.textContent = '🎤 Bắt đầu nói';
+        btn.textContent = idleLabel;
         timerEl.classList.add('hidden');
         statusEl.textContent = 'Minny đang nhận xét...';
         setMinnyMood('listen');
@@ -498,12 +677,10 @@ import Footer from '../../components/Footer.astro';
       }
 
       btn.disabled = !micReady();
-      btn.textContent = '🎤 Bắt đầu nói';
+      btn.textContent = idleLabel;
       timerEl.classList.add('hidden');
-      statusEl.textContent = micReady()
-        ? 'Con bấm nút rồi nói to, rõ (tối đa 30 giây).'
-        : 'Micro chưa sẵn sàng trên trình duyệt này.';
-      setMinnyMood('idle');
+      statusEl.textContent = micReady() ? 'Bấm nút rồi nói to, rõ nhé.' : 'Micro chưa sẵn sàng.';
+      if (state.modePicked) setMinnyMood('idle');
     }
 
     async function submitAudio(blob, prompt) {
@@ -620,11 +797,12 @@ import Footer from '../../components/Footer.astro';
         state.modes = Array.isArray(data.modes) ? data.modes : [];
         state.activeModeId = state.modes[0]?.id || 'retell';
         state.stepIndex = 0;
+        state.modePicked = false;
 
         document.getElementById('minny-greeting').textContent = data.greeting_vi || 'Chào con! Minny sẵn sàng luyện nói.';
         document.getElementById('practice-stats').textContent =
           data.practice_count_this_week > 0
-            ? `Tuần này con đã luyện ${data.practice_count_this_week} lần.`
+            ? `Tuần này con luyện ${data.practice_count_this_week} lần`
             : 'Buổi luyện đầu tuần — cứ thoải mái thử nhé!';
         document.getElementById('profile-link').href = data.profile_link || `/hoc-sinh?code=${encodeURIComponent(code)}`;
 
@@ -634,9 +812,9 @@ import Footer from '../../components/Footer.astro';
 
         codeCard.classList.add('hidden');
         shell.classList.remove('hidden');
-        renderModeTabs();
-        renderStep();
-        updateRecordUi();
+        showModePicker();
+        renderModeCards();
+        setMinnyMood('idle');
 
         const url = new URL(window.location.href);
         url.searchParams.set('code', code);
@@ -672,6 +850,14 @@ import Footer from '../../components/Footer.astro';
         renderStep();
         updateRecordUi();
       }
+    });
+
+    document.getElementById('back-to-modes')?.addEventListener('click', () => {
+      stopPlayback();
+      cleanupRecording();
+      document.getElementById('speaking-result').classList.add('hidden');
+      document.getElementById('speaking-actions').classList.add('hidden');
+      showModePicker();
     });
 
     loadBtn?.addEventListener('click', loadSession);
