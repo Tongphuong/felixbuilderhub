@@ -1,6 +1,7 @@
 import { getClientIp, checkCodeRateLimit, recordCodeFailure, rateLimitedResponse } from './_rate-limit.js';
 import { resolveAccessiblePack } from './_read2lead-pack-access.js';
 import { extractV2Pack } from './_read2lead-lesson-extract.js';
+import { ensureSixActivities } from './_read2lead-lesson-activities.js';
 
 export async function onRequestGet(context) {
   const { request, env } = context;
@@ -90,7 +91,7 @@ function buildV2LessonPayload({ accessCode, codeData, pack, v2Pack }) {
     level_label: v2Pack.level_label || pack.level_label || '',
     topic: v2Pack.topic || pack.topic || '',
     story,
-    activities: v2Pack.activities,
+    activities: ensureSixActivities(v2Pack.activities),
     rewards: v2Pack.rewards || {
       coins_on_complete: 15,
       xp_on_complete: 20,

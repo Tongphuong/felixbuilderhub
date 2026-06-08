@@ -10,6 +10,12 @@ const stateModule = readFileSync('functions/api/_read2lead-v2-state.js', 'utf-8'
 const submitModule = readFileSync('functions/api/submit-read2lead-lesson.js', 'utf-8');
 const speakingEndpoint = readFileSync('functions/api/read2lead-speaking-check.js', 'utf-8');
 
+test('lesson page injects retell_summary when pack only has five backend activities', () => {
+  assert.match(lessonPage, /function ensureLessonActivities/);
+  assert.match(lessonPage, /retell_summary/);
+  assert.match(readFileSync('functions/api/read2lead-lesson.js', 'utf-8'), /ensureSixActivities/);
+});
+
 test('lesson page supports the 6-activity V2 flow', () => {
   for (const type of [
     'listening_fill_blank',

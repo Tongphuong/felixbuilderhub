@@ -1,4 +1,5 @@
 import { getClientIp, checkCodeRateLimit, recordCodeFailure, rateLimitedResponse } from './_rate-limit.js';
+import { ensureSixActivities } from './_read2lead-lesson-activities.js';
 import {
   applyPackCompletion,
   applyPackPenalty,
@@ -94,7 +95,12 @@ function extractV2LessonContext(pack) {
     pack?.result?.pack,
     pack,
   ];
-  return candidates.find(isV2LessonContext) || null;
+  const context = candidates.find(isV2LessonContext) || null;
+  if (!context) return null;
+  return {
+    ...context,
+    activities: ensureSixActivities(context.activities),
+  };
 }
 
 function isV2LessonContext(context) {

@@ -1616,7 +1616,6 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
       if (data.lesson?.schema_version !== 2) {
         throw new Error('Bài này vẫn là format cũ. V2 lesson chỉ nhận pack schema_version = 2.');
       }
-      state.lesson = data.lesson;
       renderLesson(data.lesson);
     } catch (error) {
       showError(error.message || 'Có lỗi khi mở bài học.');
@@ -1658,7 +1657,31 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
     setStoryAudioButtonState(button, '');
   }
 
+  function ensureLessonActivities(lesson) {
+    const activities = Array.isArray(lesson?.activities) ? [...lesson.activities] : [];
+    if (activities.some((activity) => activity?.type === 'retell_summary')) {
+      lesson.activities = activities;
+      return lesson;
+    }
+    const retell = {
+      type: 'retell_summary',
+      title_vi: 'Kể truyện',
+      identity_vi: 'Minny muốn nghe con kể lại',
+      instructions_vi: 'Con kể lại câu chuyện bằng tiếng Anh trong khoảng 1 phút nhé.',
+    };
+    const speakIndex = activities.findIndex((activity) => activity?.type === 'listen_and_speak');
+    if (speakIndex >= 0) {
+      activities.splice(speakIndex + 1, 0, retell);
+    } else {
+      activities.push(retell);
+    }
+    lesson.activities = activities;
+    return lesson;
+  }
+
   function renderLesson(lesson) {
+    lesson = ensureLessonActivities(lesson);
+    state.lesson = lesson;
     qs('#loading-card').classList.add('hidden');
     qs('#lesson-shell').classList.remove('hidden');
     qs('#story-title').textContent = lesson.story?.title || 'Câu chuyện của con';
