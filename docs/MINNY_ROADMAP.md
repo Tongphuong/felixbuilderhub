@@ -1,7 +1,3 @@
-> **Hub mirror** — synced from canonical source:
-> `D:\Read2lead\read2lead_v0_codex\_claude\MINNY_ROADMAP.md`.
-> Edit the Read2Lead copy first; re-sync this file when Phase 5 docs change.
-
 # Minny Learning Companion — Roadmap (Phase 5)
 
 **Doc type**: PRD (product vision) + design brief — no code in this doc.
@@ -9,7 +5,7 @@
 **Author**: Cursor (from Felix design session brief)
 **Executor**: Codex / Cursor (per sub-phase after Felix approves design)
 **Audience**: Felix (PM), Claude (spec), Codex (build). Read after `V2_PIVOT_ROADMAP.md`.
-**Status**: **Design session next** — not scheduled in active W11/W5 queue until Felix picks slot.
+**Status**: **M0 complete** — Felix sign-off §8 in `MINNY_M0_DESIGN_OUTCOME.md`; next **M1** (recommended) or M2.
 
 **Canonical path (Claude + Codex)**: `D:\Read2lead\read2lead_v0_codex\_claude\MINNY_ROADMAP.md`  
 **Hub mirror**: `D:\felixbuilderhub\docs\MINNY_ROADMAP.md` (synced copy for hub-first workflows)
@@ -18,7 +14,7 @@
 
 | Phase | Status | Notes |
 |---|---|---|
-| **M0** Design session | ⬜ Not started | Privacy Q1–Q9 (§7); mood sprite derivation |
+| **M0** Design session | ✅ Complete | `MINNY_M0_DESIGN_OUTCOME.md` — Felix sign-off pending |
 | **M1** MVP memory | ⬜ Not started | Post-lesson `minny_memory` ingest |
 | **M2** Presentation practice | ⬜ Not started | Ship `/read2lead/speaking` — Minny primary UI |
 | **M3** Felix assistant | ⬜ Not started | Coach brief; align W13 if resumed |
@@ -104,12 +100,12 @@ Felix **đã lưu ảnh thiết kế Minny** (approved character reference). Imp
 | **MSMW marketing docs** | `D:\MSMW\marketing\seedance_minny\` (prompts, storyboard, QA) | ✅ In repo |
 | **Hub deploy (runtime)** | `D:\felixbuilderhub\public\assets\minny\minny.png` (~228 KB) | ✅ Committed hub `b0e08b4` (2026-06-08) |
 | **Hub asset README** | `D:\felixbuilderhub\public\assets\minny\README.md` | ✅ Sprite conventions + mood set plan |
-| **Suggested sprite set** | `minny_idle.png`, `minny_listen.png`, `minny_celebrate.png`, `minny_encourage.png` | ⏳ **Pending** — derive from `minny_ref_final.png` at M0/M2 |
+| **Suggested sprite set** | `minny_idle.png`, `minny_listen.png`, `minny_celebrate.png`, `minny_encourage.png` | ✅ **Placeholder** (copies of `minny.png`); distinct art optional later |
 | **Story thumb (existing)** | `felixbuilderhub/public/msmw/thumb-toy-brick.jpg` | Referenced in `msmw.astro`; separate from Minny character sheet |
 
 **W5 avatar dependency (partial unblock)**: W5 vẫn **blocked** cho *kid avatar presets* (5 SVG + gender pick). Nhưng **Minny character art đã sẵn** từ MSMW — M2 **Luyện nói riêng** và polish lesson Minny face **không cần chờ** full W5 kid-avatar pack. W8 shop items = cosmetics cho *kid avatar*, không phải Minny.
 
-**M0 action (remaining)**: Derive mood sprites (`idle`, `listen`, `celebrate`, `encourage`) from `minny_ref_final.png` → hub `public/assets/minny/`. Reference import ✅ done (`minny.png` + `minny_ref_final.png`).
+**M0 action**: Mood sprites shipped as placeholders (same art as `minny.png`). Felix may export distinct poses later without blocking M2.
 
 ---
 
@@ -245,19 +241,19 @@ W13 (deferred) → M3 Felix dashboard may share parent shell
 
 > Sub-phases **M0–M3**. Each needs Felix approval before Codex execution spec (same pattern as `V2_WAVE_N_SPEC.md`).
 
-### M0 — Design session (next)
+### M0 — Design session ✅
 
 **Goal**: Lock scope, privacy, UX wireframes, data contract sketch.
 
-**Outputs**:
-- Confirm MSMW visual canon matches approved `minny_ref_final.png` (import ✅ §0.3); derive mood sprites
-- Persona + voice guidelines for Minny (VN/EN mix?) — align Toy Brick City story tone
-- Wireframe: `/hoc-sinh` tile → **`/read2lead/speaking`** (Minny hero) → 1 practice mode E2E
-- `minny_memory` JSON sketch (fields in §2)
-- Privacy & consent matrix (parent / kid / Felix)
-- Confirm `/read2lead/speaking` layout — Minny primary character states (idle, listen, celebrate)
+**Outcome doc**: `_claude/MINNY_M0_DESIGN_OUTCOME.md` (hub mirror: `felixbuilderhub/docs/MINNY_M0_DESIGN_OUTCOME.md`)
 
-**Effort**: 1 Felix + Claude/Cursor session (~2h); no code.
+**Delivered**:
+- MSMW visual canon + mood sprite placeholders in hub `public/assets/minny/`
+- Persona + voice guidelines (§3)
+- Wireframe `/read2lead/speaking` (§5)
+- `minny_memory` JSON sketch (§6)
+- Privacy & consent matrix — Q1–Q9 defaults (§4)
+- Felix sign-off checklist (§8)
 
 ---
 
@@ -369,10 +365,9 @@ W13 (deferred) → M3 Felix dashboard may share parent shell
 
 ## 10. Next actions
 
-1. **Felix schedules M0 design session** — walk §7 questions, pick M1 vs M2 priority if bandwidth tight.
-2. **Claude/Cursor writes `MINNY_M0_DESIGN_OUTCOME.md`** after session (not before).
-3. **Do not implement code** until M0 outcomes merged and Felix says go on M1 or M2.
-4. **W11 trivia reveal** remains independent — can ship before Minny.
+1. **Felix signs off** `MINNY_M0_DESIGN_OUTCOME.md` §8 (privacy defaults, wireframe).
+2. **Write `MINNY_M1_SPEC.md`** when Felix says go M1 (recommended before M2).
+3. **W11 trivia reveal** remains independent — can ship in parallel.
 
 ---
 
