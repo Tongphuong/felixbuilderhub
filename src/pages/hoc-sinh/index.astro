@@ -488,50 +488,6 @@ import Footer from '../../components/Footer.astro';
       color: rgb(191 219 254);
     }
 
-    .profile-coaching-hub {
-      border-radius: 1.25rem;
-      border: 1px solid rgb(74 222 128 / 0.28);
-      background: linear-gradient(135deg, rgb(74 222 128 / 0.1), rgb(10 14 26 / 0.5));
-      padding: 1.1rem 1.25rem;
-    }
-
-    .profile-coaching-tool {
-      display: flex;
-      flex-direction: column;
-      gap: 0.35rem;
-      border-radius: 1rem;
-      border: 1px solid rgb(245 230 211 / 0.14);
-      background: rgb(10 14 26 / 0.45);
-      padding: 1rem;
-    }
-
-    .profile-coaching-tool--soon {
-      opacity: 0.72;
-      border-style: dashed;
-    }
-
-    .profile-coaching-tool-title {
-      font-size: 0.95rem;
-      font-weight: 800;
-      color: rgb(245 230 211);
-    }
-
-    .profile-coaching-tool-desc {
-      font-size: 0.8rem;
-      line-height: 1.45;
-      color: rgb(245 230 211 / 0.68);
-    }
-
-    .profile-coaching-tool-badge {
-      display: inline-flex;
-      width: fit-content;
-      border-radius: 9999px;
-      background: rgb(212 166 78 / 0.16);
-      padding: 0.2rem 0.6rem;
-      font-size: 0.68rem;
-      font-weight: 800;
-      color: rgb(250 220 160);
-    }
   </style>
 
   <script>
@@ -620,12 +576,20 @@ import Footer from '../../components/Footer.astro';
         data.state === 'reviewed' ||
         pack.status === 'reviewed_pass' ||
         pack.status === 'reviewed_pass_web' ||
-        pack.status === 'reviewed_pass_web_v2' ||
+        pack.status === 'reviewed_pass_web_v2'
+      ) {
+        return { label: 'Tạo bài mới cho con', href: `/read2lead?code=${encoded}#form`, kind: 'create' };
+      }
+      if (
         pack.status === 'reviewed_retry' ||
         pack.status === 'reviewed_retry_web' ||
         pack.status === 'reviewed_retry_web_v2'
       ) {
-        return { label: 'Tạo bài mới cho con', href: `/read2lead?code=${encoded}#form`, kind: 'create' };
+        return {
+          label: 'Cho con làm lại bài này',
+          href: `/read2lead/lesson?code=${encoded}&pack_id=${encodeURIComponent(pack.pack_id || '')}`,
+          kind: 'lesson',
+        };
       }
       return {
         label: 'Cho con làm bài ngay',
@@ -659,9 +623,10 @@ import Footer from '../../components/Footer.astro';
       const rankAsset = read2LeadState.rank_asset_url || '/assets/r2l/ranks/rank-l1-bronze.svg';
       const xpPercent = read2LeadState.xp_percent ?? 0;
       const xpLabel = `${read2LeadState.xp_in_level ?? 0}/${read2LeadState.xp_to_next_level ?? 60} XP`;
-      const levelHint = storyProgress?.level_hint || read2LeadState.packs_until_level_up
-        ? `Còn ${read2LeadState.packs_until_level_up ?? '?'} truyện nữa để lên level tiếp theo.`
-        : '';
+      const levelHint = storyProgress?.level_hint
+        ?? (read2LeadState.packs_until_level_up != null
+          ? `Còn ${read2LeadState.packs_until_level_up} truyện nữa để lên level tiếp theo.`
+          : '');
 
       return `
         <div class="profile-hero">
@@ -677,7 +642,7 @@ import Footer from '../../components/Footer.astro';
             <div class="profile-xp-track" role="progressbar" aria-valuenow="${xpPercent}" aria-valuemin="0" aria-valuemax="100" aria-label="Tiến trình XP">
               <span class="profile-xp-fill" style="width: ${xpPercent}%"></span>
             </div>
-            <p class="mt-2 text-xs font-semibold text-cream-muted">${escapeHtml(xpLabel)}${levelHint ? ` · ${escapeHtml(storyProgress?.level_hint || levelHint)}` : ''}</p>
+            <p class="mt-2 text-xs font-semibold text-cream-muted">${escapeHtml(xpLabel)}${levelHint ? ` · ${escapeHtml(levelHint)}` : ''}</p>
           </div>
         </div>
       `;
@@ -812,7 +777,7 @@ import Footer from '../../components/Footer.astro';
       const cards = stories
         .map((story) => {
           const href = story.lesson_path || `/read2lead/lesson?code=${encodeURIComponent(code)}&pack_id=${encodeURIComponent(story.pack_id || '')}`;
-          const meta = [story.level, story.topic].filter(Boolean).join(' · ');
+          const meta = [story.level ? formatLevel(story.level) : '', story.topic].filter(Boolean).join(' · ');
           return `
             <article class="profile-story-card">
               <div class="flex items-start gap-3">

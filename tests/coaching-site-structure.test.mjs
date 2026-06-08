@@ -75,6 +75,17 @@ test('buildPrimaryAction offers create-next when data.state is reviewed', () => 
   assert.doesNotMatch(parentPortal, /coaching-lesson-link/);
 });
 
+test('buildPrimaryAction opens lesson again for reviewed_retry packs', () => {
+  assert.match(parentPortal, /pack\.status === 'reviewed_retry_web_v2'/);
+  assert.match(parentPortal, /Cho con làm lại bài này/);
+  assert.match(parentPortal, /kind: 'lesson'/);
+});
+
+test('parent portal formats story portfolio levels for parents', () => {
+  assert.match(parentPortal, /formatLevel\(story\.level\)/);
+  assert.doesNotMatch(parentPortal, /profile-coaching-hub/);
+});
+
 test('parent portal dashboard puts primary CTA above fold before stats', () => {
   const heroIdx = parentPortal.indexOf('${renderHero(progress, read2LeadState, storyProgress)}');
   const nextIdx = parentPortal.indexOf('${renderNextStep(primary, status)}');
