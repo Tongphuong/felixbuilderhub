@@ -90,6 +90,16 @@ created for other branches automatically.
 - **MSMW PDF generator** (Python on local Windows): `D:/MSMW/` — manual
   workflow triggered after Telegram lead
 
+## Roadmap (internal)
+
+- **V2 waves W1–W13**: `D:/Read2lead/read2lead_v0_codex/_claude/V2_PIVOT_ROADMAP.md`
+- **Minny Learning Companion (Phase 5)**: `D:/Read2lead/read2lead_v0_codex/_claude/MINNY_ROADMAP.md`
+  — MSMW *Lost Toy Brick City* robot (not a new mascot); student memory,
+  **Luyện nói riêng** on `/hoc-sinh` (Minny face), Felix coach brief.
+  Runtime sprites target: `public/assets/minny/` (source:
+  `D:/MSMW/marketing/seedance_minny/references/` — assets ready, pending import).
+  M0 design session next (docs only, no code yet)
+
 ## Conventions
 
 - Files >800 lines are flagged for future split (see god-file list in
