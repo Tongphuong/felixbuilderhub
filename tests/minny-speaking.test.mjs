@@ -2,7 +2,11 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 
-import { buildPracticePrompts, pickPracticePack } from '../functions/api/minny-speaking-context.js';
+import {
+  buildPracticePrompts,
+  buildSpeakingModes,
+  pickPracticePack,
+} from '../functions/api/minny-speaking-context.js';
 import { canAccessPackForPractice } from '../functions/api/_read2lead-pack-access.js';
 
 const speakingPage = readFileSync('src/pages/read2lead/speaking.astro', 'utf-8');
@@ -14,6 +18,8 @@ test('speaking page exists with coaching-first copy and no AI marketing', () => 
   assert.match(speakingPage, /minny-speaking-context/);
   assert.match(speakingPage, /read2lead-speaking-check/);
   assert.match(speakingPage, /practice_mode/);
+  assert.match(speakingPage, /data\.modes/);
+  assert.match(speakingPage, /Kể cho Minny nghe/);
   assert.doesNotMatch(speakingPage, /tăng cường bởi AI/i);
   assert.doesNotMatch(speakingPage, /\bAI\b/);
 });
@@ -24,7 +30,45 @@ test('parent portal links to speaking page without coming-soon badge', () => {
   assert.doesNotMatch(parentPortal, /Sắp ra mắt[\s\S]*Luyện nói với Minny/);
 });
 
-test('buildPracticePrompts uses story sentences and retell open prompt', () => {
+test('buildSpeakingModes returns output-focused retell and questions modes', () => {
+  const modes = buildSpeakingModes({
+    studentName: 'Linh',
+    storyTitle: 'The Puppy',
+    topic: 'animals',
+    v2Pack: {
+      story: {
+        title: 'The Puppy',
+        paragraphs_en: ['A small puppy plays in the park.'],
+      },
+      topic: 'animals',
+      activities: [
+        {
+          type: 'reading_comprehension',
+          questions: [
+            {
+              section: 'Open Question',
+              question_vi: 'Con thích nhân vật nào nhất?',
+              question_en: 'Which character did you like most?',
+            },
+          ],
+        },
+      ],
+    },
+  });
+
+  assert.equal(modes.length, 2);
+  assert.equal(modes[0].id, 'retell');
+  assert.equal(modes[1].id, 'questions');
+  assert.match(modes[0].title_vi, /Kể lại truyện/);
+  assert.match(modes[1].title_vi, /Minny hỏi/);
+  assert.equal(modes[0].steps[0].kind, 'retell');
+  assert.equal(modes[0].steps[0].check_mode, 'open');
+  assert.equal(modes[1].steps[0].kind, 'question');
+  assert.equal(modes[1].steps[0].check_mode, 'open');
+  assert.ok(modes[0].steps.length >= 2, 'retell mode includes say-more follow-up');
+});
+
+test('buildPracticePrompts flattens modes without sentence read-back', () => {
   const prompts = buildPracticePrompts({
     studentName: 'Linh',
     storyTitle: 'The Puppy',
@@ -32,16 +76,15 @@ test('buildPracticePrompts uses story sentences and retell open prompt', () => {
     v2Pack: {
       story: {
         title: 'The Puppy',
-        sentences: [{ text_en: 'The puppy runs fast.' }, { text_en: 'It is happy.' }],
         paragraphs_en: ['A small puppy plays in the park.'],
       },
       topic: 'animals',
     },
   });
-  assert.ok(prompts.length >= 3);
-  assert.equal(prompts[0].check_mode, 'read');
-  assert.equal(prompts[prompts.length - 1].check_mode, 'open');
-  assert.match(prompts[prompts.length - 1].label_vi, /Kể về truyện/);
+  assert.ok(prompts.length >= 2);
+  assert.ok(prompts.every((step) => step.check_mode === 'open'));
+  assert.ok(prompts.every((step) => step.kind !== 'repeat'));
+  assert.match(prompts[0].label_vi, /Kể lại truyện/);
 });
 
 test('pickPracticePack prefers current pack with story', () => {

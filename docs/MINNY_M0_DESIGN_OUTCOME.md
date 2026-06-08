@@ -133,36 +133,43 @@ Until Felix exports distinct poses, **all moods use the same sprite** (`minny.pn
 **Route**: `/read2lead/speaking?code={ACCESS_CODE}`  
 **Auth**: Same as lesson — valid `READ2LEAD_CODES` KV entry.
 
+**Hub focus — student SPEAKS (output), not read-back.** Sentence-by-sentence read-along stays in Read2Lead lesson W10 only; Minny hub does not duplicate that flow.
+
 ### 5.1 Layout (mobile-first)
 
 ```
 ┌─────────────────────────────────────────┐
 │ [← Hồ sơ]              [Cấp 1 · 12 xu]  │  ← kid stats strip (reuse r2l state)
 ├─────────────────────────────────────────┤
-│                                         │
-│         [ minny_idle.png  large ]       │  ← hero ~40% width, mood swaps
-│                                         │
-│  "Chào Linh! Tuần trước con đọc         │  ← Minny bubble (personalized)
-│   về Dinosaurs — kể lại 1 phút nhé?"    │
-│                                         │
+│         [ minny_idle.png  large ]       │
+│  "Chào Linh! Hôm nay mình luyện nói     │  ← personalized greeting
+│   về The Lost Puppy nhé?"               │
 ├─────────────────────────────────────────┤
-│  HÔM NAY — Kể lại truyện gần nhất       │  ← single mode MVP (M2)
-│  📖 "The Lost Puppy" · Cấp 1             │
-│                                         │
-│  [ 🎤 Bắt đầu luyện ]  (chunky green)    │
+│  [ Kể lại truyện ] [ Minny hỏi — con    │  ← two mode tabs (output only)
+│    trả lời ]                            │
+├─────────────────────────────────────────┤
+│  MODE A — Kể lại truyện                 │
+│  📖 "The Lost Puppy"                     │
+│  Prompt VN + EN (speechSynthesis)       │
+│  [ 🔊 Nghe Minny ]                      │
+│  [ 🎤 Kể cho Minny nghe ]  (30–60s)     │
+│  → optional step 2: "Kể thêm"           │
+├─────────────────────────────────────────┤
+│  MODE B — Minny hỏi — con trả lời       │
+│  Questions from lesson activities       │
+│  [ 🔊 Nghe Minny ]  [ 🎤 Trả lời ]      │
+│  open check_mode — relevance/effort     │
 ├─────────────────────────────────────────┤
 │  (after record)                         │
-│  [ minny_listen.png ]                   │
-│  "Minny đang nghe..."                   │
-│  [ waveform / timer ]                   │
-│  [ Dừng ]                               │
-├─────────────────────────────────────────┤
-│  (after score)                          │
+│  [ minny_listen.png ]  timer            │
+│  (after feedback)                       │
 │  [ minny_celebrate | minny_encourage ]  │
-│  Score band + encouragement (no red X)  │
-│  [ Luyện lại ]  [ Con sẵn sàng lớp Felix]│
+│  encouragement only (no red X)          │
+│  [ Luyện lại ]  [ Câu tiếp theo ]       │
 └─────────────────────────────────────────┘
 ```
+
+**API**: `GET /api/minny-speaking-context` returns `modes[]` — each mode has `id`, `title_vi`, `subtitle_vi`, `steps[]` with `check_mode: open`.
 
 ### 5.2 States
 
@@ -183,6 +190,7 @@ Until Felix exports distinct poses, **all moods use the same sprite** (`minny.pn
 
 ### 5.4 Out of scope M2 MVP
 
+- Sentence-by-sentence read-back in hub (W10 in-lesson only)
 - Multi-mode library (free talk, deck upload)
 - Live Minny TTS voice
 - Parent transcript view
