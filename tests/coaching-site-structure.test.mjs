@@ -48,6 +48,46 @@ test('parent portal supports code login and coaching hub', () => {
   assert.match(parentPortal, /Sắp ra mắt/);
 });
 
+test('parent portal disables header gamification HUD', () => {
+  assert.match(parentPortal, /<Header read2LeadState=\{false\} \/>/);
+  assert.doesNotMatch(parentPortal, /syncHeaderState/);
+});
+
+test('parent portal hides login form after session and offers change-code', () => {
+  assert.match(parentPortal, /id="profile-entry"/);
+  assert.match(parentPortal, /id="profile-session-bar"/);
+  assert.match(parentPortal, /Đổi mã/);
+  assert.match(parentPortal, /showLoggedInSession/);
+  assert.match(parentPortal, /profileEntry\.classList\.add\('hidden'\)/);
+});
+
+test('statusMeta treats reviewed_pass_web_v2 and reviewed state as completed', () => {
+  assert.match(parentPortal, /pack\.status === 'reviewed_pass_web_v2'/);
+  assert.match(parentPortal, /pack\.status === 'reviewed_retry_web_v2'/);
+  assert.match(parentPortal, /state === 'reviewed'/);
+  assert.match(parentPortal, /completed: true/);
+  assert.match(parentPortal, /Bài vừa xong/);
+});
+
+test('buildPrimaryAction offers create-next when data.state is reviewed', () => {
+  assert.match(parentPortal, /data\.state === 'reviewed'/);
+  assert.match(parentPortal, /Tạo bài mới cho con/);
+  assert.doesNotMatch(parentPortal, /coaching-lesson-link/);
+});
+
+test('parent portal dashboard puts primary CTA above fold before stats', () => {
+  const heroIdx = parentPortal.indexOf('${renderHero(progress, read2LeadState, storyProgress)}');
+  const nextIdx = parentPortal.indexOf('${renderNextStep(primary, status)}');
+  const statsIdx = parentPortal.indexOf('${renderStats(read2LeadState, progress, storyProgress)}');
+  assert.ok(heroIdx >= 0 && nextIdx > heroIdx, 'hero should precede next step');
+  assert.ok(nextIdx < statsIdx, 'primary CTA should precede stats row');
+});
+
+test('parent portal uses parent-friendly level labels', () => {
+  assert.match(parentPortal, /function formatLevel/);
+  assert.match(parentPortal, /Cấp \$\{match\[1\]\}/);
+});
+
 test('legacy review route redirects to parent portal', () => {
   assert.match(reviewRedirect, /Astro\.redirect/);
   assert.match(reviewRedirect, /\/hoc-sinh/);

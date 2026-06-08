@@ -9,7 +9,7 @@ import Footer from '../../components/Footer.astro';
   description="Bố mẹ nhập mã Felix cấp qua Zalo để xem cấp độ, bài đang học, truyện đã hoàn thành và lộ trình coaching của con."
   robots="noindex, follow"
 >
-  <Header read2LeadState={true} />
+  <Header read2LeadState={false} />
 
   <main id="main" class="profile-page flex-1 bg-navy-950">
     <section class="mx-auto max-w-3xl px-4 py-8 sm:px-6 sm:py-10">
@@ -19,7 +19,7 @@ import Footer from '../../components/Footer.astro';
         Nhập mã học sinh Felix gửi qua Zalo để xem bài con đang học, truyện đã hoàn thành và tiến độ luyện đọc. Một mã — một hồ sơ.
       </p>
 
-      <div class="profile-entry mt-6 rounded-2xl border border-cream/10 bg-navy-900/80 p-5 shadow-lg">
+      <div id="profile-entry" class="profile-entry mt-6 rounded-2xl border-[3px] border-cream/15 bg-navy-900/80 p-5 shadow-lg">
         <label for="access-code" class="text-sm font-semibold text-cream">Nhập mã học sinh của con</label>
         <p class="mt-1 text-xs leading-relaxed text-cream-muted">Giống như mã vào lớp trên ClassDojo.</p>
         <div class="mt-4 flex flex-col gap-3 sm:flex-row">
@@ -30,16 +30,30 @@ import Footer from '../../components/Footer.astro';
             maxlength="40"
             autocomplete="off"
             placeholder="VD: R2L-LINH-8F3KQ2"
-            class="min-h-[48px] w-full rounded-xl border border-cream/15 bg-navy-950 px-4 text-base uppercase text-cream placeholder:normal-case placeholder:text-cream-dim/70 focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/30"
+            class="min-h-[52px] w-full rounded-xl border-[3px] border-cream/15 bg-navy-950 px-4 text-base uppercase text-cream placeholder:normal-case placeholder:text-cream-dim/70 focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/30"
           />
           <button
             id="load-progress"
             type="button"
-            class="min-h-[48px] shrink-0 rounded-xl bg-accent px-6 text-base font-bold text-navy-950 transition hover:bg-accent-hover"
+            class="min-h-[52px] shrink-0 rounded-xl border-[3px] border-accent bg-accent px-6 text-base font-extrabold text-navy-950 shadow-md transition hover:bg-accent-hover"
           >
             Đăng nhập
           </button>
         </div>
+      </div>
+
+      <div id="profile-session-bar" class="profile-session-bar mt-6 hidden items-center justify-between gap-3 rounded-2xl border-[3px] border-cream/15 bg-navy-900/80 px-4 py-3 shadow-lg">
+        <p class="min-w-0 truncate text-sm font-bold text-cream">
+          <span class="text-cream-muted">Đang xem:</span>
+          <span id="session-student-name" class="ml-1"></span>
+        </p>
+        <button
+          id="change-code"
+          type="button"
+          class="min-h-[44px] shrink-0 rounded-xl border-[3px] border-cream/20 bg-navy-950 px-4 text-sm font-extrabold text-cream transition hover:border-gold/50 hover:text-gold"
+        >
+          Đổi mã
+        </button>
       </div>
 
       <section id="error-card" class="mt-4 hidden rounded-2xl border border-red-400/40 bg-red-500/10 px-5 py-4 text-sm text-red-200"></section>
@@ -60,14 +74,19 @@ import Footer from '../../components/Footer.astro';
         rgb(10 14 26);
     }
 
+    .profile-session-bar {
+      display: flex;
+    }
+
     .profile-hero {
       display: flex;
       gap: 1rem;
       align-items: center;
-      padding: 1.25rem;
+      padding: 1.35rem;
       border-radius: 1.25rem;
-      border: 1px solid rgb(245 230 211 / 0.12);
-      background: linear-gradient(135deg, rgb(245 230 211 / 0.08), rgb(74 222 128 / 0.06));
+      border: 3px solid rgb(212 166 78 / 0.35);
+      background: linear-gradient(135deg, rgb(245 230 211 / 0.1), rgb(74 222 128 / 0.08));
+      box-shadow: 0 6px 20px rgb(0 0 0 / 0.22);
     }
 
     .profile-avatar {
@@ -126,7 +145,8 @@ import Footer from '../../components/Footer.astro';
       border-radius: 1rem;
       padding: 0.85rem 0.5rem;
       text-align: center;
-      border: 1px solid transparent;
+      border: 3px solid transparent;
+      box-shadow: 0 2px 8px rgb(0 0 0 / 0.12);
     }
 
     .profile-stat-value {
@@ -165,24 +185,27 @@ import Footer from '../../components/Footer.astro';
 
     .profile-next-card {
       border-radius: 1.25rem;
-      border: 2px solid rgb(74 222 128 / 0.45);
-      background: linear-gradient(180deg, rgb(74 222 128 / 0.16), rgb(74 222 128 / 0.06));
+      border: 3px solid rgb(74 222 128 / 0.5);
+      background: linear-gradient(180deg, rgb(74 222 128 / 0.18), rgb(74 222 128 / 0.06));
       padding: 1.25rem;
+      box-shadow: 0 6px 20px rgb(74 222 128 / 0.12);
     }
 
     .profile-next-btn {
       display: flex;
-      min-height: 52px;
+      min-height: 56px;
       width: 100%;
       align-items: center;
       justify-content: center;
-      border-radius: 0.9rem;
+      border-radius: 1rem;
+      border: 3px solid rgb(34 197 94);
       background: rgb(74 222 128);
-      padding: 0.85rem 1rem;
-      font-size: 1.05rem;
+      padding: 0.9rem 1rem;
+      font-size: 1.1rem;
       font-weight: 800;
       color: rgb(10 14 26);
       text-align: center;
+      box-shadow: 0 4px 0 rgb(22 163 74);
       transition: transform 0.15s ease, background 0.15s ease;
     }
 
@@ -194,14 +217,77 @@ import Footer from '../../components/Footer.astro';
     .profile-next-btn--wait {
       background: rgb(245 230 211 / 0.08);
       color: rgb(245 230 211 / 0.6);
-      border: 1px dashed rgb(245 230 211 / 0.25);
+      border: 3px dashed rgb(245 230 211 / 0.25);
+      box-shadow: none;
     }
 
     .profile-lesson-card {
       border-radius: 1.25rem;
-      border: 1px solid rgb(245 230 211 / 0.12);
+      border: 3px solid rgb(245 230 211 / 0.14);
       background: rgb(245 230 211 / 0.04);
       padding: 1.1rem 1.25rem;
+      box-shadow: 0 4px 14px rgb(0 0 0 / 0.14);
+    }
+
+    .profile-lesson-card--done {
+      border-color: rgb(74 222 128 / 0.25);
+      background: rgb(74 222 128 / 0.04);
+      opacity: 0.92;
+    }
+
+    .profile-action-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.75rem;
+    }
+
+    .profile-action-tile {
+      display: flex;
+      min-height: 5.5rem;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0.35rem;
+      border-radius: 1rem;
+      border: 3px solid rgb(245 230 211 / 0.16);
+      background: rgb(10 14 26 / 0.5);
+      padding: 1rem;
+      box-shadow: 0 4px 12px rgb(0 0 0 / 0.16);
+      transition: border-color 0.15s ease, transform 0.15s ease;
+    }
+
+    .profile-action-tile:hover {
+      border-color: rgb(212 166 78 / 0.45);
+      transform: translateY(-1px);
+    }
+
+    .profile-action-tile--soon {
+      opacity: 0.72;
+      border-style: dashed;
+      pointer-events: none;
+    }
+
+    .profile-action-tile-title {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: rgb(245 230 211);
+      line-height: 1.25;
+    }
+
+    .profile-action-tile-desc {
+      font-size: 0.72rem;
+      line-height: 1.35;
+      color: rgb(245 230 211 / 0.62);
+    }
+
+    .profile-action-tile-badge {
+      display: inline-flex;
+      width: fit-content;
+      border-radius: 0.5rem;
+      background: rgb(212 166 78 / 0.16);
+      padding: 0.15rem 0.5rem;
+      font-size: 0.65rem;
+      font-weight: 800;
+      color: rgb(250 220 160);
     }
 
     .profile-status-pill {
@@ -248,9 +334,10 @@ import Footer from '../../components/Footer.astro';
       flex-direction: column;
       gap: 0.75rem;
       border-radius: 1rem;
-      border: 1px solid rgb(245 230 211 / 0.12);
+      border: 3px solid rgb(245 230 211 / 0.14);
       background: rgb(10 14 26 / 0.45);
       padding: 1rem;
+      box-shadow: 0 3px 10px rgb(0 0 0 / 0.12);
     }
 
     .profile-story-card:hover {
@@ -270,13 +357,13 @@ import Footer from '../../components/Footer.astro';
 
     .profile-story-btn {
       display: inline-flex;
-      min-height: 44px;
+      min-height: 48px;
       align-items: center;
       justify-content: center;
-      border-radius: 0.75rem;
-      border: 1px solid rgb(74 222 128 / 0.4);
+      border-radius: 0.85rem;
+      border: 3px solid rgb(74 222 128 / 0.4);
       background: rgb(74 222 128 / 0.12);
-      padding: 0.5rem 0.85rem;
+      padding: 0.55rem 0.85rem;
       font-size: 0.85rem;
       font-weight: 800;
       color: rgb(134 239 172);
@@ -331,9 +418,19 @@ import Footer from '../../components/Footer.astro';
 
     .profile-growth-card {
       border-radius: 1.25rem;
-      border: 1px solid rgb(96 165 250 / 0.22);
+      border: 3px solid rgb(96 165 250 / 0.22);
       background: rgb(96 165 250 / 0.06);
       padding: 1.1rem 1.25rem;
+      box-shadow: 0 3px 12px rgb(0 0 0 / 0.1);
+    }
+
+    .profile-collapsed-section summary {
+      cursor: pointer;
+      list-style: none;
+    }
+
+    .profile-collapsed-section summary::-webkit-details-marker {
+      display: none;
     }
 
     .profile-growth-bars {
@@ -441,6 +538,10 @@ import Footer from '../../components/Footer.astro';
     const params = new URLSearchParams(window.location.search);
     const codeInput = document.getElementById('access-code');
     const loadBtn = document.getElementById('load-progress');
+    const profileEntry = document.getElementById('profile-entry');
+    const sessionBar = document.getElementById('profile-session-bar');
+    const sessionStudentName = document.getElementById('session-student-name');
+    const changeCodeBtn = document.getElementById('change-code');
     const dashboardCard = document.getElementById('dashboard-card');
     const resultCard = document.getElementById('result-card');
     const errorCard = document.getElementById('error-card');
@@ -469,45 +570,42 @@ import Footer from '../../components/Footer.astro';
       errorCard.textContent = '';
     }
 
-    function syncHeaderState(read2LeadState) {
-      const header = document.querySelector('[data-r2l-state-header]');
-      if (!header || !read2LeadState) return;
-      header.classList.remove('hidden');
-      header.classList.add('flex');
-      header.querySelector('[data-r2l-level]').textContent = read2LeadState.current_level || 'LV';
-      header.querySelector('[data-r2l-rank]').textContent = read2LeadState.rank_title || 'Read2Lead';
-      const rankImage = header.querySelector('[data-r2l-rank-image]');
-      if (rankImage && read2LeadState.rank_asset_url) {
-        rankImage.src = read2LeadState.rank_asset_url;
-        rankImage.alt = `Rank ${read2LeadState.rank_title || read2LeadState.current_level || 'Read2Lead'}`;
-      }
-      header.querySelector('[data-r2l-xp-label]').textContent = `${read2LeadState.xp_in_level ?? 0}/${read2LeadState.xp_to_next_level ?? 60} XP`;
-      header.querySelector('[data-r2l-xp-fill]').style.width = `${read2LeadState.xp_percent ?? 0}%`;
-      header.querySelector('[data-r2l-coins]').textContent = `${read2LeadState.coins || 0} xu`;
-      header.querySelector('[data-r2l-streak]').textContent = `${read2LeadState.streak_days || 0} ngày`;
+    function formatLevel(level) {
+      const raw = String(level || 'L1');
+      const match = raw.match(/^L(\d+)$/i);
+      return match ? `Cấp ${match[1]}` : raw;
     }
 
     function statusMeta(state, pack) {
       if (!pack) {
-        return { label: 'Chưa có bài', pillClass: 'profile-status-pill--empty', step: 'Hãy tạo bài đầu tiên cho con.' };
+        return { label: 'Chưa có bài', pillClass: 'profile-status-pill--empty', step: 'Hãy tạo bài đầu tiên cho con.', completed: false };
       }
       if (state === 'generation_in_progress' || pack.status === 'generation_in_progress') {
-        return { label: 'Đang tạo bài', pillClass: 'profile-status-pill--progress', step: 'Hệ thống đang viết truyện — khoảng 1–2 phút.' };
+        return { label: 'Đang tạo bài', pillClass: 'profile-status-pill--progress', step: 'Hệ thống đang viết truyện — khoảng 1–2 phút.', completed: false };
       }
-      if (pack.status === 'reviewed_pass' || pack.status === 'reviewed_pass_web') {
-        return { label: 'Đã xong', pillClass: 'profile-status-pill--done', step: 'Bài này con đã hoàn thành. Có thể tạo bài mới.' };
+      if (
+        state === 'reviewed' ||
+        pack.status === 'reviewed_pass' ||
+        pack.status === 'reviewed_pass_web' ||
+        pack.status === 'reviewed_pass_web_v2'
+      ) {
+        return { label: 'Đã xong', pillClass: 'profile-status-pill--done', step: 'Bài này con đã hoàn thành. Có thể tạo bài mới.', completed: true };
       }
-      if (pack.status === 'reviewed_retry' || pack.status === 'reviewed_retry_web') {
-        return { label: 'Làm lại', pillClass: 'profile-status-pill--wait', step: 'Con cần làm lại bài này trên web.' };
+      if (
+        pack.status === 'reviewed_retry' ||
+        pack.status === 'reviewed_retry_web' ||
+        pack.status === 'reviewed_retry_web_v2'
+      ) {
+        return { label: 'Làm lại', pillClass: 'profile-status-pill--wait', step: 'Con cần làm lại bài này trên web.', completed: false };
       }
       const steps = pack.web_lesson_steps || {};
       if (steps.read_completed_at) {
-        return { label: 'Đang học', pillClass: 'profile-status-pill--progress', step: 'Con đang làm phần luyện tập.' };
+        return { label: 'Đang học', pillClass: 'profile-status-pill--progress', step: 'Con đang làm phần luyện tập.', completed: false };
       }
       if (steps.listen_completed_at) {
-        return { label: 'Đang nghe', pillClass: 'profile-status-pill--progress', step: 'Con đang nghe và đọc truyện.' };
+        return { label: 'Đang nghe', pillClass: 'profile-status-pill--progress', step: 'Con đang nghe và đọc truyện.', completed: false };
       }
-      return { label: 'Sẵn sàng', pillClass: 'profile-status-pill--wait', step: 'Bài đã sẵn sàng — cho con bấm làm bài nhé.' };
+      return { label: 'Sẵn sàng', pillClass: 'profile-status-pill--wait', step: 'Bài đã sẵn sàng — cho con bấm làm bài nhé.', completed: false };
     }
 
     function buildPrimaryAction(pack, data, code) {
@@ -519,11 +617,13 @@ import Footer from '../../components/Footer.astro';
         return { label: 'Đang tạo bài — đợi thêm chút nhé', href: null, kind: 'wait' };
       }
       if (
+        data.state === 'reviewed' ||
         pack.status === 'reviewed_pass' ||
         pack.status === 'reviewed_pass_web' ||
         pack.status === 'reviewed_pass_web_v2' ||
         pack.status === 'reviewed_retry' ||
-        pack.status === 'reviewed_retry_web'
+        pack.status === 'reviewed_retry_web' ||
+        pack.status === 'reviewed_retry_web_v2'
       ) {
         return { label: 'Tạo bài mới cho con', href: `/read2lead?code=${encoded}#form`, kind: 'create' };
       }
@@ -534,9 +634,27 @@ import Footer from '../../components/Footer.astro';
       };
     }
 
+    function showLoggedInSession(studentName) {
+      profileEntry.classList.add('hidden');
+      sessionBar.classList.remove('hidden');
+      sessionStudentName.textContent = studentName || 'Bé yêu';
+    }
+
+    function showLoginForm() {
+      profileEntry.classList.remove('hidden');
+      sessionBar.classList.add('hidden');
+      dashboardCard.classList.add('hidden');
+      dashboardCard.innerHTML = '';
+      codeInput.value = '';
+      codeInput.focus();
+      const url = new URL(window.location.href);
+      url.searchParams.delete('code');
+      window.history.replaceState({}, '', url);
+    }
+
     function renderHero(progress, read2LeadState, storyProgress) {
       const name = progress.student_name || 'Bé yêu';
-      const level = read2LeadState.current_level || progress.current_level || 'L1';
+      const level = formatLevel(read2LeadState.current_level || progress.current_level || 'L1');
       const rankTitle = read2LeadState.rank_title || 'Đồng';
       const rankAsset = read2LeadState.rank_asset_url || '/assets/r2l/ranks/rank-l1-bronze.svg';
       const xpPercent = read2LeadState.xp_percent ?? 0;
@@ -621,7 +739,7 @@ import Footer from '../../components/Footer.astro';
 
       return `
         <div class="profile-next-card">
-          <p class="text-xs font-extrabold uppercase tracking-wide text-accent">Bước tiếp theo cho con</p>
+          <p class="text-xs font-extrabold uppercase tracking-wide text-accent">Hôm nay</p>
           <p class="mt-2 text-sm leading-relaxed text-cream/85">${escapeHtml(status.step)}</p>
           <div class="mt-4">${btn}</div>
         </div>
@@ -629,14 +747,50 @@ import Footer from '../../components/Footer.astro';
     }
 
     function renderCurrentLesson(pack, progress, status) {
+      const sectionLabel = status.completed ? 'Bài vừa xong' : 'Bài đang mở';
+      const cardClass = status.completed ? 'profile-lesson-card profile-lesson-card--done' : 'profile-lesson-card';
+      const levelLabel = pack ? formatLevel(pack.level || progress.current_level || 'L1') : '';
       return `
-        <div class="profile-lesson-card">
+        <div class="${cardClass}">
           <div class="flex flex-wrap items-center justify-between gap-2">
-            <p class="text-sm font-bold text-cream">Bài đang mở</p>
+            <p class="text-sm font-bold text-cream">${sectionLabel}</p>
             <span class="profile-status-pill ${status.pillClass}">${escapeHtml(status.label)}</span>
           </div>
           <p class="mt-2 font-display text-lg font-bold text-cream">${escapeHtml(pack?.story_title || 'Chưa có bài nào')}</p>
-          <p class="mt-1 text-sm text-cream-muted">${pack ? `${escapeHtml(pack.topic || 'Read2Lead')} · ${escapeHtml(pack.level || progress.current_level || 'L1')}` : 'Tạo bài đầu tiên ở nút xanh phía trên.'}</p>
+          <p class="mt-1 text-sm text-cream-muted">${pack ? `${escapeHtml(pack.topic || 'Read2Lead')} · ${escapeHtml(levelLabel)}` : 'Tạo bài đầu tiên ở nút xanh phía trên.'}</p>
+        </div>
+      `;
+    }
+
+    function renderActionMenu(code, pack, primary) {
+      const encoded = encodeURIComponent(code);
+      const lessonTile =
+        primary.kind === 'lesson' && pack?.pack_id
+          ? `<a href="/read2lead/lesson?code=${encoded}&pack_id=${encodeURIComponent(pack.pack_id)}" class="profile-action-tile">
+              <span class="profile-action-tile-title">📖 Bài đọc hôm nay</span>
+              <span class="profile-action-tile-desc">Mở bài Read2Lead con đang làm.</span>
+            </a>`
+          : '';
+
+      return `
+        <div>
+          <p class="mb-3 text-sm font-bold text-cream">Menu học tập</p>
+          <div class="profile-action-grid">
+            ${lessonTile}
+            <a href="/read2lead?code=${encoded}#form" class="profile-action-tile">
+              <span class="profile-action-tile-title">✨ Tạo bài mới</span>
+              <span class="profile-action-tile-desc">Truyện tiếng Anh cá nhân hoá theo sở thích con.</span>
+            </a>
+            <a href="/coaching#book" class="profile-action-tile">
+              <span class="profile-action-tile-title">💬 Đặt lịch coaching</span>
+              <span class="profile-action-tile-desc">Tư vấn miễn phí hoặc đổi lịch học với Felix.</span>
+            </a>
+            <div class="profile-action-tile profile-action-tile--soon" aria-disabled="true">
+              <span class="profile-action-tile-badge">Sắp ra mắt</span>
+              <span class="profile-action-tile-title">🎤 Luyện nói riêng</span>
+              <span class="profile-action-tile-desc">Trang luyện phát âm và hội thoại dành riêng cho học sinh coaching.</span>
+            </div>
+          </div>
         </div>
       `;
     }
@@ -711,12 +865,12 @@ import Footer from '../../components/Footer.astro';
         .join('');
 
       return `
-        <div class="profile-growth-card">
-          <p class="font-display text-lg font-bold text-cream">Tiến bộ theo tuần</p>
-          <p class="mt-1 text-sm text-cream-muted">${escapeHtml(growth.headline || '')}</p>
+        <details class="profile-collapsed-section profile-growth-card">
+          <summary class="font-display text-lg font-bold text-cream">Tiến bộ theo tuần ▾</summary>
+          <p class="mt-2 text-sm text-cream-muted">${escapeHtml(growth.headline || '')}</p>
           <div class="profile-growth-bars" role="img" aria-label="Biểu đồ số truyện hoàn thành mỗi tuần">${bars}</div>
           <p class="mt-3 text-xs leading-relaxed text-cream-dim">${escapeHtml(growth.empty_hint || '')}</p>
-        </div>
+        </details>
       `;
     }
 
@@ -731,40 +885,11 @@ import Footer from '../../components/Footer.astro';
         })
         .join('');
       return `
-        <div class="profile-lesson-card">
-          <p class="text-sm font-bold text-cream">Huy hiệu của con</p>
-          <p class="mt-1 text-xs text-cream-muted">Giống điểm thưởng trên ClassDojo — con mở dần khi học đều.</p>
+        <details class="profile-collapsed-section profile-lesson-card">
+          <summary class="text-sm font-bold text-cream">Huy hiệu của con ▾</summary>
+          <p class="mt-2 text-xs text-cream-muted">Giống điểm thưởng trên ClassDojo — con mở dần khi học đều.</p>
           <div class="profile-badge-row mt-3">${pills}</div>
-        </div>
-      `;
-    }
-
-    function renderCoachingHub(code) {
-      const encoded = encodeURIComponent(code);
-      return `
-        <div class="profile-coaching-hub">
-          <p class="font-display text-lg font-bold text-cream">Công cụ học tập của con</p>
-          <p class="mt-1 text-sm text-cream-muted">Felix gắn bài luyện đọc và luyện nói vào cùng một hồ sơ theo mã học sinh.</p>
-          <div class="mt-4 grid gap-3 sm:grid-cols-2">
-            <a href="/read2lead/lesson?code=${encoded}&pack_id=" class="profile-coaching-tool" id="coaching-lesson-link" hidden>
-              <span class="profile-coaching-tool-title">📖 Bài đọc hôm nay</span>
-              <span class="profile-coaching-tool-desc">Mở bài Read2Lead con đang làm.</span>
-            </a>
-            <a href="/read2lead?code=${encoded}#form" class="profile-coaching-tool">
-              <span class="profile-coaching-tool-title">✨ Tạo bài đọc mới</span>
-              <span class="profile-coaching-tool-desc">Truyện tiếng Anh cá nhân hoá theo sở thích con.</span>
-            </a>
-            <div class="profile-coaching-tool profile-coaching-tool--soon" aria-disabled="true">
-              <span class="profile-coaching-tool-badge">Sắp ra mắt</span>
-              <span class="profile-coaching-tool-title">🎤 Luyện nói riêng</span>
-              <span class="profile-coaching-tool-desc">Trang luyện phát âm và hội thoại dành riêng cho học sinh coaching của Felix.</span>
-            </div>
-            <a href="/coaching#book" class="profile-coaching-tool">
-              <span class="profile-coaching-tool-title">💬 Đặt lịch coaching</span>
-              <span class="profile-coaching-tool-desc">Tư vấn miễn phí hoặc đổi lịch học với Felix.</span>
-            </a>
-          </div>
-        </div>
+        </details>
       `;
     }
 
@@ -789,32 +914,26 @@ import Footer from '../../components/Footer.astro';
       const status = statusMeta(data.state, pack);
       const primary = buildPrimaryAction(pack, data, code);
 
-      syncHeaderState(read2LeadState);
+      showLoggedInSession(progress.student_name);
 
       const sharedNote = data.is_test || data.is_shared
-        ? '<p class="rounded-xl border border-blue-400/30 bg-blue-500/10 px-4 py-3 text-sm text-blue-100">Mã test/dùng chung — có thể tạo bài mới bất cứ lúc nào.</p>'
+        ? '<p class="rounded-xl border-[3px] border-blue-400/30 bg-blue-500/10 px-4 py-3 text-sm text-blue-100">Mã test/dùng chung — có thể tạo bài mới bất cứ lúc nào.</p>'
         : '';
 
       dashboardCard.innerHTML = `
         ${renderHero(progress, read2LeadState, storyProgress)}
-        ${renderStats(read2LeadState, progress, storyProgress)}
-        ${renderCoachingHub(code)}
-        ${renderStreakFreezeNote(read2LeadState)}
-        ${renderGrowthSection(weeklyGrowth)}
         ${renderNextStep(primary, status)}
+        ${renderStats(read2LeadState, progress, storyProgress)}
+        ${renderActionMenu(code, pack, primary)}
         ${renderCurrentLesson(pack, progress, status)}
         ${renderStoryPortfolio(storyProgress, code)}
+        ${renderStreakFreezeNote(read2LeadState)}
+        ${renderGrowthSection(weeklyGrowth)}
         ${renderBadges(read2LeadState.badges)}
         ${sharedNote}
         ${renderQuickLinks(code)}
       `;
       dashboardCard.classList.remove('hidden');
-
-      const lessonLink = document.getElementById('coaching-lesson-link');
-      if (lessonLink && pack?.pack_id && primary.kind === 'lesson') {
-        lessonLink.href = `/read2lead/lesson?code=${encodeURIComponent(code)}&pack_id=${encodeURIComponent(pack.pack_id)}`;
-        lessonLink.hidden = false;
-      }
     }
 
     async function loadProgress() {
@@ -848,5 +967,9 @@ import Footer from '../../components/Footer.astro';
     }
 
     loadBtn.addEventListener('click', loadProgress);
+    changeCodeBtn.addEventListener('click', () => {
+      clearError();
+      showLoginForm();
+    });
   </script>
 </BaseLayout>

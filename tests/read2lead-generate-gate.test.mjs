@@ -12,5 +12,7 @@ test('generate gate uses web-first copy when previous pack is unfinished', () =>
 
 test('parent portal offers create-next after V2 lesson completion', () => {
   assert.match(parentPortal, /reviewed_pass_web_v2/);
+  assert.match(parentPortal, /data\.state === 'reviewed'/);
   assert.match(parentPortal, /Tạo bài mới cho con/);
+  assert.match(parentPortal, /primary\.kind === 'lesson'/);
 });

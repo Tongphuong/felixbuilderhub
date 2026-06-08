@@ -52,7 +52,7 @@ test('review dashboard does not offer PDF or MP3 action links', () => {
 test('student profile shows completed stories in plain parent language', () => {
   assert.match(reviewPage, /Các truyện con đã học/);
   assert.match(reviewPage, /Cho con làm lại/);
-  assert.match(reviewPage, /Bước tiếp theo cho con/);
+  assert.match(reviewPage, /Hôm nay/);
   assert.match(reviewPage, /profile-hero/);
   assert.match(reviewPage, /robots="noindex, follow"/);
   assert.match(reviewPage, /for="access-code"/);
