@@ -93,7 +93,8 @@ created for other branches automatically.
 ## Roadmap (internal)
 
 - **V2 waves W1–W13**: `D:/Read2lead/read2lead_v0_codex/_claude/V2_PIVOT_ROADMAP.md`
-- **Minny Learning Companion (Phase 5)**: `D:/Read2lead/read2lead_v0_codex/_claude/MINNY_ROADMAP.md`
+- **Minny Learning Companion (Phase 5)**: `docs/MINNY_ROADMAP.md` (hub mirror) · canonical:
+  `D:/Read2lead/read2lead_v0_codex/_claude/MINNY_ROADMAP.md`
   — MSMW *Lost Toy Brick City* robot (primary UI character on **`/read2lead/speaking`**,
   not a generic mascot); student memory personalizes practice; `/hoc-sinh` tile =
   discovery entry; skills apply in **`/coaching`**. Runtime sprites:
