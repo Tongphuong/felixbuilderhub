@@ -54,11 +54,21 @@ test('lesson audio playback rejects reward sfx urls', () => {
 });
 
 test('lesson nghe cau buttons never call reward voice helpers', () => {
-  for (const marker of ['data-play-fill', 'data-play-order', 'data-play-speak', 'data-sentence-index']) {
-    const markerIndex = lessonPage.indexOf(`[${marker}]`);
-    assert.ok(markerIndex > -1, `${marker} play buttons should exist`);
-    const snippet = lessonPage.slice(markerIndex, markerIndex + 500);
-    assert.match(snippet, /playAudio\(url, button\)/);
+  const markers = [
+    { name: 'data-play-fill', anchor: '[data-play-fill]' },
+    { name: 'data-play-order', anchor: '[data-play-order]' },
+    { name: 'data-speak-listen', anchor: "querySelectorAll('[data-speak-listen]')" },
+    { name: 'data-sentence-index', anchor: '[data-sentence-index]' },
+  ];
+  for (const { name, anchor } of markers) {
+    const markerIndex = lessonPage.indexOf(anchor);
+    assert.ok(markerIndex > -1, `${name} play buttons should exist`);
+    const snippet = lessonPage.slice(markerIndex, markerIndex + 700);
+    if (name !== 'data-speak-listen') {
+      assert.match(snippet, /playAudio\(url, button\)/);
+    } else {
+      assert.match(snippet, /playAudio\(url, button\)|_r2lSpeakEnglishLine/);
+    }
     assert.doesNotMatch(snippet, /playSfx\(/);
     assert.doesNotMatch(snippet, /playCorrectVoice\(/);
     assert.doesNotMatch(snippet, /pickVoiceClip\(/);

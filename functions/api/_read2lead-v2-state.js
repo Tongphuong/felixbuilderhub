@@ -459,7 +459,9 @@ function badgeUnlocked(id, state) {
 }
 
 function hasVoiceAttempt(activityResults) {
-  return Array.isArray(activityResults) && activityResults.some((item) => item?.type === 'listen_and_speak');
+  return Array.isArray(activityResults) && activityResults.some(
+    (item) => item?.type === 'listen_and_speak' || item?.type === 'retell_summary',
+  );
 }
 
 function normalizeLevelProgress(levelProgress) {

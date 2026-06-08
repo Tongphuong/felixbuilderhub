@@ -27,12 +27,12 @@ test('lesson page cleans up blob URLs on activity exit', () => {
   assert.match(lessonPage, /_r2lRecorderState\.perItem\.clear\(\)/);
 });
 
-test('lesson page mounts a recorder slot per item', () => {
-  assert.match(lessonPage, /data-recorder-slot/);
+test('lesson page mounts Minny speak controls per sentence', () => {
+  assert.match(lessonPage, /data-speak-record/);
   assert.match(lessonPage, /data-speak-card="\$\{itemIndex\}"/);
   assert.match(lessonPage, /data-speak-feedback/);
   assert.match(lessonPage, /words_exact/);
-  assert.match(lessonPage, /_r2lRenderRecorderUi\(itemKey, cardEl\)/);
+  assert.match(lessonPage, /_r2lSyncMinnyRecordButton/);
   assert.match(lessonPage, /current\.blob !== scoringBlob/);
 });
 

@@ -37,10 +37,12 @@ test('speaking page has kid-friendly mode cards and video fallback', () => {
   assert.match(speakingPage, /progress-dots/);
 });
 
-test('parent portal links to speaking page without coming-soon badge', () => {
-  assert.match(parentPortal, /\/read2lead\/speaking\?code=/);
+test('parent portal deprioritizes standalone speaking page', () => {
   assert.match(parentPortal, /Luyện nói với Minny/);
-  assert.doesNotMatch(parentPortal, /Sắp ra mắt[\s\S]*Luyện nói với Minny/);
+  assert.match(parentPortal, /profile-action-tile--soon/);
+  assert.match(parentPortal, /Sắp ra mắt/);
+  assert.match(parentPortal, /luyện nói ngay trong bài Read2Lead/i);
+  assert.doesNotMatch(parentPortal, /href="\/read2lead\/speaking/);
 });
 
 test('buildSpeakingModes returns output-focused retell and questions modes', () => {

@@ -133,11 +133,11 @@ async function submitV2Lesson({
       .filter(Boolean),
   );
   const score = scoreActivityResults(activityResults, lessonContext);
-  const totalCount = score.total_count || expectedTypes.length || 4;
+  const totalCount = score.total_count || expectedTypes.length || 6;
   const correctCount = score.correct_count;
   const allActivitiesAttempted = expectedTypes.length > 0
     ? expectedTypes.every((type) => completedTypes.has(type))
-    : completedTypes.size >= 4;
+    : completedTypes.size >= 6;
   const scorePercent = score.score_percent;
   const passed = allActivitiesAttempted && scorePercent >= PASS_THRESHOLD_PERCENT;
   const rewards = lessonContext.rewards || {

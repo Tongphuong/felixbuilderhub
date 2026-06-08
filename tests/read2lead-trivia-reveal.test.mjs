@@ -18,11 +18,11 @@ test('lesson page wires W11 trivia reveal after lesson pass', () => {
   assert.match(lessonPage, /r2l-trivia-reveal/);
 });
 
-test('bonus open question does not reuse trivia_vi reveal text', () => {
-  const resolveStart = lessonPage.indexOf('function _r2lResolveBonusOpenQuestion');
-  const resolveEnd = lessonPage.indexOf('function _r2lBuildStoryContext');
+test('retell prompt uses story context, not trivia reveal text', () => {
+  const resolveStart = lessonPage.indexOf('function _r2lResolveRetellPrompt');
+  const resolveEnd = lessonPage.indexOf('function _r2lCleanupRetellRecording');
   assert.ok(resolveStart > -1 && resolveEnd > resolveStart);
   const resolveBody = lessonPage.slice(resolveStart, resolveEnd);
   assert.doesNotMatch(resolveBody, /story\.trivia_vi/);
-  assert.match(resolveBody, /Open Question/);
+  assert.match(resolveBody, /story\?\.title/);
 });

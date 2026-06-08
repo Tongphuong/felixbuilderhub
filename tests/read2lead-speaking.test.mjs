@@ -183,15 +183,12 @@ test('runSpeakingCheck supports open check_mode', async () => {
   assert.ok(payload.score_percent >= 35);
 });
 
-test('lesson page wires optional speaking check widget', () => {
-  assert.match(lessonPage, /speaking-check-section/);
+test('lesson page wires retell activity with open speaking check', () => {
+  assert.match(lessonPage, /retell_summary/);
   assert.match(lessonPage, /read2lead-speaking-check/);
-  assert.match(lessonPage, /Trả lời/);
-  assert.match(lessonPage, /Bỏ qua/);
-  assert.match(lessonPage, /Thử lại/);
-  assert.match(lessonPage, /Câu hỏi mở bonus/);
-  assert.match(lessonPage, /_r2lMaybeRevealBonusSection/);
-  assert.match(lessonPage, /Open Question/);
+  assert.match(lessonPage, /RETELL_MAX_SECONDS = 60/);
+  assert.match(lessonPage, /data-retell-record/);
   assert.match(lessonPage, /_r2lMicIsReady/);
   assert.match(lessonPage, /data-speak-feedback/);
+  assert.doesNotMatch(lessonPage, /speaking-check-section/);
 });

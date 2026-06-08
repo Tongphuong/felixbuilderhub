@@ -7,6 +7,7 @@ import IdentityBanner from '../../components/read2lead/v2/IdentityBanner.astro';
 import ListeningFillBlank from '../../components/read2lead/v2/ListeningFillBlank.astro';
 import ListenAndOrder from '../../components/read2lead/v2/ListenAndOrder.astro';
 import ListenAndSpeak from '../../components/read2lead/v2/ListenAndSpeak.astro';
+import RetellSummary from '../../components/read2lead/v2/RetellSummary.astro';
 import LevelUpModal from '../../components/read2lead/v2/LevelUpModal.astro';
 import ProgressBar from '../../components/read2lead/v2/ProgressBar.astro';
 import ReadingComprehension from '../../components/read2lead/v2/ReadingComprehension.astro';
@@ -77,32 +78,7 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
           <ReadingComprehension />
           <WrittenResponse />
           <ListenAndSpeak />
-        </section>
-
-        <section
-          id="speaking-check-section"
-          class="hidden rounded-md border border-gold/25 bg-gold/[0.06] p-5"
-        >
-          <div class="flex flex-wrap items-start justify-between gap-3">
-            <div>
-              <p class="text-sm font-semibold uppercase tracking-wide text-gold">Câu hỏi mở bonus</p>
-              <h3 class="mt-1 font-display text-xl font-bold text-cream">Con trả lời thêm một câu về truyện nhé</h3>
-              <p class="mt-2 text-sm text-cream/70">
-                Con đã xong 5 nhiệm vụ rồi! Trả lời bằng tiếng Anh — bỏ qua cũng được, không ảnh hưởng điểm bài.
-              </p>
-            </div>
-            <button id="speaking-check-skip" class="r2l-secondary" type="button">Bỏ qua</button>
-          </div>
-          <div class="mt-4 rounded-md border border-cream/10 bg-navy-950/45 p-4">
-            <p id="speaking-check-question-vi" class="text-base font-semibold leading-7 text-cream"></p>
-            <p id="speaking-check-question-en" class="mt-2 text-sm leading-6 text-cream/65"></p>
-          </div>
-          <div id="speaking-check-controls" class="mt-4 flex flex-wrap items-center gap-3">
-            <button id="speaking-check-record" class="r2l-primary" type="button">🎤 Trả lời</button>
-            <span id="speaking-check-timer" class="hidden text-sm font-semibold text-gold"></span>
-            <span id="speaking-check-status" class="text-sm text-cream/65"></span>
-          </div>
-          <div id="speaking-check-result" class="mt-4 hidden rounded-md border border-cream/10 bg-navy-950/45 p-4"></div>
+          <RetellSummary />
         </section>
 
         <section
@@ -126,7 +102,7 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
           <div>
             <p class="font-display text-xl font-bold text-cream">Hoàn thành nhiệm vụ</p>
             <p id="submit-hint" class="mt-1 text-sm text-cream/70">
-              Con hoàn thành đủ 5 phần rồi bấm nút này để lưu kết quả.
+              Con hoàn thành đủ 6 phần rồi bấm nút này để lưu kết quả.
             </p>
           </div>
           <button id="submit-lesson" class="r2l-primary" type="button" disabled>Lưu chiến công</button>
@@ -395,6 +371,109 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
     vertical-align: middle;
   }
 
+  .r2l-minny-hero-wrap {
+    display: flex;
+    justify-content: center;
+    margin: 1rem 0 0.5rem;
+  }
+
+  .r2l-minny-hero {
+    width: 9rem;
+    height: 9rem;
+  }
+
+  .r2l-minny-video,
+  .r2l-minny-fallback {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .r2l-minny-sentence-en {
+    font-size: clamp(1.35rem, 3vw, 1.85rem);
+    font-weight: 800;
+    line-height: 1.45;
+    color: rgb(245 230 211);
+  }
+
+  .r2l-minny-sentence-vi {
+    margin-top: 0.5rem;
+    font-size: 0.95rem;
+    color: rgb(245 230 211 / 0.65);
+  }
+
+  .r2l-minny-sentence-card {
+    border-radius: 12px;
+    border: 1px solid rgb(245 230 211 / 0.12);
+    background: rgb(10 14 26 / 0.45);
+    padding: 1.25rem;
+  }
+
+  .r2l-minny-speak-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1rem;
+  }
+
+  .minny-btn {
+    display: inline-flex;
+    min-height: 52px;
+    flex: 1 1 140px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    border: 3px solid transparent;
+    padding: 0.75rem 1rem;
+    font-size: 1.05rem;
+    font-weight: 800;
+    transition: transform 0.15s ease, opacity 0.15s ease;
+  }
+
+  .minny-btn:active:not(:disabled) {
+    transform: scale(0.98);
+  }
+
+  .minny-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.42;
+  }
+
+  .minny-btn--listen {
+    background: rgb(200 143 56 / 0.18);
+    color: rgb(242 204 126);
+    border-color: rgb(200 143 56 / 0.45);
+  }
+
+  .minny-btn--listen:hover:not(:disabled) {
+    background: rgb(200 143 56 / 0.28);
+  }
+
+  .minny-btn--record {
+    background: rgb(212 166 78);
+    color: rgb(10 14 26);
+    border-color: rgb(250 220 160);
+    box-shadow: 0 3px 0 rgb(120 90 40);
+  }
+
+  .minny-btn--record:hover:not(:disabled) {
+    background: rgb(242 204 126);
+  }
+
+  .r2l-minny-retell-prompt {
+    margin-top: 0.75rem;
+    border-radius: 12px;
+    border: 1px solid rgb(245 230 211 / 0.12);
+    background: rgb(245 230 211 / 0.06);
+    padding: 1rem 1.1rem;
+  }
+
+  .r2l-minny-retell-prompt-en {
+    margin-top: 0.35rem;
+    font-size: 0.9rem;
+    color: rgb(245 230 211 / 0.65);
+  }
+
   .r2l-trivia-reveal {
     opacity: 0;
     transform: translateY(8px);
@@ -541,6 +620,7 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
     reading_comprehension: 'Đọc hiểu',
     written_response: 'Viết đáp án',
     listen_and_speak: 'Nói lại',
+    retell_summary: 'Kể truyện',
   };
 
   const qs = (selector) => document.querySelector(selector);
@@ -680,13 +760,16 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
   // Backward-compatible alias used in tests and legacy checks.
   const _r2lSupportsRecording = _r2lHasRecordingCapability();
 
-  async function _r2lPostSpeakingCheck(blob, expectedText, checkMode = 'read') {
+  async function _r2lPostSpeakingCheck(blob, expectedText, checkMode = 'read', maxSeconds = 0) {
     const formData = new FormData();
     formData.append('audio', blob, blob.type.includes('mp4') ? 'audio.mp4' : 'audio.webm');
     formData.append('access_code', state.accessCode);
     formData.append('pack_id', state.packId);
     formData.append('expected_text', expectedText);
     formData.append('check_mode', checkMode);
+    if (maxSeconds > 0) {
+      formData.append('max_seconds', String(maxSeconds));
+    }
 
     const response = await fetch('/api/read2lead-speaking-check', {
       method: 'POST',
@@ -708,6 +791,27 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
     const total = Number(result.total_count || 0);
     const closePart = close > 0 ? `, ${close} gần đúng` : '';
     return `Điểm đọc: <strong class="text-cream">${Number(result.score_percent || 0)}%</strong> (${exact}/${total} từ đúng${closePart})`;
+  }
+
+  function _r2lBuildOpenSpeakingFeedbackHtml(result) {
+    if (result?.loading) {
+      return '<p class="text-sm text-gold">Minny đang nghe con kể truyện...</p>';
+    }
+    if (!result?.ok) {
+      return `<p class="font-semibold text-gold">${escapeHtml(result?.message || 'Chưa chấm được. Con thử thu lại nhé!')}</p>`;
+    }
+    const matched = Array.isArray(result.words_matched) ? result.words_matched : [];
+    const matchedHtml = matched.length
+      ? `<p class="mt-2 text-sm text-cream/75"><span class="font-semibold text-cream">Con nhắc tới:</span> ${_r2lSpeakingWordChips(matched, 'good')}</p>`
+      : '';
+    const transcriptHtml = result.transcript
+      ? `<p class="mt-2 text-xs text-cream/55">Minny nghe: “${escapeHtml(result.transcript)}”</p>`
+      : '';
+    return `
+      <p class="font-semibold text-gold">${escapeHtml(result.feedback_vi || '')}</p>
+      ${transcriptHtml}
+      ${matchedHtml}
+    `;
   }
 
   function _r2lBuildSpeakingFeedbackHtml(result, { compact = false } = {}) {
@@ -775,7 +879,11 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
       });
       _r2lRenderRecorderUi(itemKey, cardEl);
       _r2lRenderSpeakFeedback(cardEl, payload);
-      if (payload?.ok) _r2lMergeSpeakActivityScores();
+      if (payload?.ok) {
+        const heroEl = cardEl.closest('[data-activity-shell="listen_and_speak"]')?.querySelector('[data-minny-hero]');
+        _r2lSetMinnyMood(_r2lMinnyMoodForScore(payload.score_percent), heroEl);
+        _r2lMergeSpeakActivityScores(activityItemsFromCard(cardEl));
+      }
     } catch (error) {
       const current = _r2lRecorderState.perItem.get(itemKey);
       if (!current || current.blob !== scoringBlob) return;
@@ -792,12 +900,19 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
     }
   }
 
-  function _r2lMergeSpeakActivityScores() {
+  function _r2lSpeakItemKeysForActivity(activity) {
+    return (activity?.items || []).map((item, index) => item.id || `ls_${index}`);
+  }
+
+  function _r2lMergeSpeakActivityScores(activity) {
+    if (!activity) return;
+    const itemKeys = _r2lSpeakItemKeysForActivity(activity);
     let exactTotal = 0;
     let closeTotal = 0;
     let wordTotal = 0;
     let scoredItems = 0;
-    _r2lRecorderState.perItem.forEach((entry) => {
+    itemKeys.forEach((itemKey) => {
+      const entry = _r2lRecorderState.perItem.get(itemKey);
       if (entry?.checkResult?.ok) {
         scoredItems += 1;
         exactTotal += Number(entry.checkResult.exact_count ?? entry.checkResult.correct_count ?? 0);
@@ -809,8 +924,8 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
     const weighted = wordTotal > 0
       ? Math.round(((exactTotal + closeTotal * 0.5) / wordTotal) * 100)
       : 0;
-    state.activityResults.speaking = {
-      type: 'speaking',
+    state.activityResults.listen_and_speak = {
+      type: 'listen_and_speak',
       attempted: true,
       correct_count: exactTotal,
       total_count: wordTotal,
@@ -818,6 +933,21 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
       score_percent: weighted,
       whisper_scored_items: scoredItems,
     };
+    if (scoredItems >= itemKeys.length && !state.completedTypes.has('listen_and_speak')) {
+      completeActivity('listen_and_speak', {
+        correct_count: exactTotal,
+        total_count: wordTotal,
+        wrong_count: Math.max(0, wordTotal - exactTotal),
+        score_percent: weighted,
+        whisper_scored_items: scoredItems,
+      });
+    }
+  }
+
+  function activityItemsFromCard(cardEl) {
+    const shell = cardEl?.closest('[data-activity-shell="listen_and_speak"]');
+    const index = (state.lesson?.activities || []).findIndex((a) => a.type === 'listen_and_speak');
+    return index >= 0 ? state.lesson.activities[index] : null;
   }
 
   function _r2lInitSpeakRecorder(itemKey, cardEl, expectedText) {
@@ -970,7 +1100,30 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
     _r2lRecorderState.perItem.clear();
   }
 
+  function _r2lSyncMinnyRecordButton(itemKey, cardEl) {
+    const itemIndex = cardEl?.dataset?.speakCard;
+    if (itemIndex == null) return;
+    const button = cardEl.closest('[data-activity-body]')?.querySelector(`[data-speak-record="${itemIndex}"]`);
+    if (!button) return;
+    const entry = _r2lRecorderState.perItem.get(itemKey);
+    const status = entry?.status || 'idle';
+    if (status === 'recording') {
+      button.textContent = '⏹ Dừng thu';
+      button.disabled = false;
+    } else if (entry?.checkStatus === 'uploading') {
+      button.textContent = '🎤 Con nói';
+      button.disabled = true;
+    } else {
+      button.textContent = '🎤 Con nói';
+      button.disabled = button.dataset.heard !== 'true' || !_r2lMicIsReady();
+    }
+  }
+
   function _r2lRenderRecorderUi(itemKey, cardEl) {
+    if (cardEl?.querySelector('[data-speak-record]')) {
+      _r2lSyncMinnyRecordButton(itemKey, cardEl);
+      return;
+    }
     const slot = cardEl.querySelector('[data-recorder-slot]');
     if (!slot) return;
     if (!_r2lHasMicInput()) {
@@ -1085,50 +1238,110 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
     _r2lShowCompletionAfterTrivia({});
   });
 
-  /* ----- W10 optional speaking check (Whisper via Groq) ----- */
-  const SPEAKING_CHECK_MAX_SECONDS = 30;
-  const _r2lSpeakingCheckState = {
+  /* ----- Minny hero moods (video → PNG fallback) ----- */
+  const _r2lMinnyVideoAvailable = new Map();
+
+  function _r2lMinnyAssetBase(mood) {
+    const file = ['idle', 'listen', 'celebrate', 'encourage'].includes(mood) ? mood : 'idle';
+    return `/assets/minny/minny_${file}`;
+  }
+
+  function _r2lShowMinnyPng(mood, heroEl) {
+    const img = heroEl?.querySelector('[data-minny-fallback]');
+    const video = heroEl?.querySelector('[data-minny-video]');
+    if (!img) return;
+    img.src = `${_r2lMinnyAssetBase(mood)}.png`;
+    img.classList.remove('hidden');
+    if (video) video.classList.add('hidden');
+  }
+
+  function _r2lSetMinnyMood(mood, heroEl) {
+    if (!heroEl) return;
+    const video = heroEl.querySelector('[data-minny-video]');
+    const img = heroEl.querySelector('[data-minny-fallback]');
+    const base = _r2lMinnyAssetBase(mood);
+    const cacheKey = `${heroEl.dataset.minnyHero || 'default'}:${mood}`;
+
+    if (!video) {
+      _r2lShowMinnyPng(mood, heroEl);
+      return;
+    }
+
+    if (_r2lMinnyVideoAvailable.get(cacheKey) === false) {
+      _r2lShowMinnyPng(mood, heroEl);
+      return;
+    }
+
+    const tryPlay = (ext) => {
+      video.onerror = () => {
+        if (ext === 'mp4') {
+          video.src = `${base}.webm`;
+          video.onerror = () => {
+            _r2lMinnyVideoAvailable.set(cacheKey, false);
+            _r2lShowMinnyPng(mood, heroEl);
+          };
+        } else {
+          _r2lMinnyVideoAvailable.set(cacheKey, false);
+          _r2lShowMinnyPng(mood, heroEl);
+        }
+      };
+      video.onloadeddata = () => {
+        _r2lMinnyVideoAvailable.set(cacheKey, true);
+        video.classList.remove('hidden');
+        if (img) img.classList.add('hidden');
+        video.play().catch(() => _r2lShowMinnyPng(mood, heroEl));
+      };
+      video.poster = `${base}.png`;
+      video.src = `${base}.${ext}`;
+      video.load();
+    };
+
+    tryPlay('mp4');
+  }
+
+  function _r2lInitMinnyHero(heroEl) {
+    if (!heroEl || heroEl.dataset.minnyReady) return;
+    heroEl.dataset.minnyReady = 'true';
+    _r2lSetMinnyMood('idle', heroEl);
+  }
+
+  function _r2lSpeakEnglishLine(text, onEnd) {
+    const line = String(text || '').trim();
+    if (!line || !window.speechSynthesis) {
+      if (typeof onEnd === 'function') onEnd();
+      return;
+    }
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(line);
+    utterance.lang = 'en-US';
+    utterance.rate = 0.92;
+    utterance.onend = () => {
+      if (typeof onEnd === 'function') onEnd();
+    };
+    window.speechSynthesis.speak(utterance);
+  }
+
+  function _r2lMinnyMoodForScore(scorePercent) {
+    return Number(scorePercent || 0) >= 70 ? 'celebrate' : 'encourage';
+  }
+
+  /* ----- Activity 6: retell summary (open mode, up to 60s) ----- */
+  const RETELL_MAX_SECONDS = 60;
+  const _r2lRetellState = {
     mediaRecorder: null,
     stream: null,
     chunks: [],
     blob: null,
-    blobUrl: '',
     status: 'idle',
     timerId: null,
-    secondsLeft: SPEAKING_CHECK_MAX_SECONDS,
+    secondsLeft: RETELL_MAX_SECONDS,
     storyContext: '',
-    openQuestion: null,
-    checkMode: 'open',
+    heardInstruction: false,
     result: null,
-    skipped: false,
-    revealed: false,
+    heroEl: null,
+    root: null,
+    activity: null,
   };
-
-  function _r2lResolveBonusOpenQuestion(lesson) {
-    const comprehension = (lesson?.activities || []).find((activity) => activity.type === 'reading_comprehension');
-    const openMcq = (comprehension?.questions || []).find((question) => question.section === 'Open Question');
-    if (openMcq?.question_vi) {
-      return {
-        vi: String(openMcq.question_vi),
-        en: String(openMcq.question_en || openMcq.question_vi),
-      };
-    }
-
-    const written = (lesson?.activities || []).find((activity) => activity.type === 'written_response');
-    const writtenQuestion = written?.questions?.[0];
-    if (writtenQuestion?.question_vi) {
-      return {
-        vi: String(writtenQuestion.question_vi),
-        en: String(writtenQuestion.question_en || writtenQuestion.question_vi),
-      };
-    }
-
-    const title = lesson?.story?.title || 'câu chuyện hôm nay';
-    return {
-      vi: `Con thích nhất điều gì trong câu chuyện “${title}”? Vì sao?`,
-      en: `What did you like most about "${title}"? Why?`,
-    };
-  }
 
   function _r2lBuildStoryContext(lesson) {
     const chunks = [];
@@ -1140,199 +1353,132 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
     return chunks.join(' ').trim();
   }
 
-  function _r2lPickRecordingMimeType() {
-    if (typeof MediaRecorder === 'undefined') return '';
-    if (MediaRecorder.isTypeSupported('audio/webm')) return 'audio/webm';
-    if (MediaRecorder.isTypeSupported('audio/mp4')) return 'audio/mp4';
-    return '';
-  }
-
-  function _r2lResolveSpeakingExpectedText(lesson) {
-    return _r2lBuildStoryContext(lesson);
-  }
-
-  function _r2lMaybeRevealBonusSection() {
-    const section = qs('#speaking-check-section');
-    if (!section || _r2lSpeakingCheckState.skipped || _r2lSpeakingCheckState.revealed) return;
-
-    const totalActivities = state.lesson?.activities?.length || 5;
-    if (state.completedTypes.size < totalActivities) return;
-    if (!_r2lSpeakingCheckState.openQuestion?.vi) return;
-
-    _r2lSpeakingCheckState.revealed = true;
-    section.classList.remove('hidden');
-    _r2lRenderSpeakingCheckControls();
-    window.setTimeout(() => {
-      section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 120);
-  }
-
-  function _r2lCleanupSpeakingCheckRecording() {
-    if (_r2lSpeakingCheckState.timerId) {
-      window.clearInterval(_r2lSpeakingCheckState.timerId);
-      _r2lSpeakingCheckState.timerId = null;
-    }
-    if (_r2lSpeakingCheckState.mediaRecorder && _r2lSpeakingCheckState.status === 'recording') {
-      try {
-        _r2lSpeakingCheckState.mediaRecorder.stop();
-      } catch {}
-    }
-    if (_r2lSpeakingCheckState.stream) {
-      _r2lSpeakingCheckState.stream.getTracks().forEach((track) => track.stop());
-      _r2lSpeakingCheckState.stream = null;
-    }
-    if (_r2lSpeakingCheckState.blobUrl) {
-      URL.revokeObjectURL(_r2lSpeakingCheckState.blobUrl);
-      _r2lSpeakingCheckState.blobUrl = '';
-    }
-    _r2lSpeakingCheckState.mediaRecorder = null;
-    _r2lSpeakingCheckState.chunks = [];
-    _r2lSpeakingCheckState.blob = null;
-    _r2lSpeakingCheckState.status = 'idle';
-    _r2lSpeakingCheckState.secondsLeft = SPEAKING_CHECK_MAX_SECONDS;
-  }
-
-  function _r2lRenderSpeakingCheckControls() {
-    const recordButton = qs('#speaking-check-record');
-    const timerEl = qs('#speaking-check-timer');
-    const statusEl = qs('#speaking-check-status');
-    if (!recordButton || !timerEl || !statusEl) return;
-
-    const micReady = _r2lMicIsReady();
-
-    if (_r2lSpeakingCheckState.status === 'recording') {
-      recordButton.textContent = '⏹ Dừng thu';
-      timerEl.classList.remove('hidden');
-      timerEl.textContent = `${_r2lSpeakingCheckState.secondsLeft}s`;
-      statusEl.textContent = 'Minny đang nghe con trả lời...';
-      recordButton.disabled = false;
-      return;
-    }
-
-    timerEl.classList.add('hidden');
-    if (_r2lSpeakingCheckState.status === 'uploading') {
-      recordButton.disabled = true;
-      recordButton.textContent = '🎤 Trả lời';
-      statusEl.textContent = 'Minny đang nhận xét câu trả lời...';
-      return;
-    }
-
-    recordButton.disabled = !micReady;
-    recordButton.textContent = '🎤 Trả lời';
-    if (_r2lSpeakingCheckState.skipped) {
-      statusEl.textContent = 'Con đã bỏ qua câu hỏi mở bonus.';
-    } else if (!micReady) {
-      statusEl.textContent = 'Micro chưa sẵn sàng trên trình duyệt này. Con vẫn có thể bỏ qua và lưu bài.';
-    } else {
-      statusEl.textContent = 'Con bấm nút rồi trả lời bằng tiếng Anh (tối đa 30 giây).';
-    }
-  }
-
-  function _r2lRenderSpeakingCheckResult(result) {
-    const resultEl = qs('#speaking-check-result');
-    if (!resultEl) return;
-    if (!result?.ok) {
-      resultEl.classList.remove('hidden');
-      resultEl.innerHTML = `
-        <p class="font-semibold text-gold">${escapeHtml(result?.message || 'Chưa chấm được. Con thử lại nhé!')}</p>
-        <button id="speaking-check-retry" class="r2l-secondary mt-4" type="button">Thử lại</button>
-      `;
-      qs('#speaking-check-retry')?.addEventListener('click', () => {
-        _r2lSpeakingCheckState.result = null;
-        resultEl.classList.add('hidden');
-        resultEl.innerHTML = '';
-        _r2lRenderSpeakingCheckControls();
-      });
-      return;
-    }
-
-    const isOpen = result?.check_mode === 'open' || _r2lSpeakingCheckState.checkMode === 'open';
-    const missed = Array.isArray(result.words_missed) ? result.words_missed : [];
-    const close = Array.isArray(result.words_close) ? result.words_close : [];
-    const matched = Array.isArray(result.words_matched) ? result.words_matched : [];
-    const missedHtml = !isOpen && missed.length
-      ? `<p class="mt-3 text-sm text-cream/75"><span class="font-semibold text-cream">Luyện thêm:</span> ${_r2lSpeakingWordChips(missed, 'miss')}</p>`
-      : '';
-    const closeHtml = !isOpen && close.length
-      ? `<p class="mt-3 text-sm text-cream/75"><span class="font-semibold text-cream">Gần đúng:</span> ${_r2lSpeakingWordChips(close, 'close')}</p>`
-      : '';
-    const matchedHtml = isOpen && matched.length
-      ? `<p class="mt-3 text-sm text-cream/75"><span class="font-semibold text-cream">Con nhắc tới:</span> ${_r2lSpeakingWordChips(matched, 'good')}</p>`
-      : '';
-    const transcriptHtml = result.transcript
-      ? `<p class="mt-2 text-sm text-cream/75">Minny nghe con nói: “${escapeHtml(result.transcript)}”</p>`
-      : '';
-    const scoreHtml = isOpen
-      ? ''
-      : `<p class="mt-2 text-sm text-cream/75">${_r2lFormatReadScoreLine(result)}</p>`;
-
-    resultEl.classList.remove('hidden');
-    resultEl.innerHTML = `
-      <p class="font-display text-xl font-bold text-gold">${escapeHtml(result.feedback_vi || '')}</p>
-      ${scoreHtml}
-      ${transcriptHtml}
-      ${matchedHtml}
-      ${closeHtml}
-      ${missedHtml}
-      <button id="speaking-check-retry" class="r2l-secondary mt-4" type="button">Thử lại</button>
-    `;
-    qs('#speaking-check-retry')?.addEventListener('click', () => {
-      _r2lSpeakingCheckState.result = null;
-      resultEl.classList.add('hidden');
-      resultEl.innerHTML = '';
-      _r2lRenderSpeakingCheckControls();
-    });
-  }
-
-  function _r2lStoreSpeakingActivityResult(result) {
-    if (!result?.ok) return;
-    state.activityResults.speaking = {
-      type: 'speaking',
-      attempted: true,
-      correct_count: Number(result.correct_count || 0),
-      total_count: Number(result.total_count || 0),
-      wrong_count: Math.max(0, Number(result.total_count || 0) - Number(result.correct_count || 0)),
-      score_percent: Number(result.score_percent || 0),
+  function _r2lResolveRetellPrompt(activity, lesson) {
+    const title = lesson?.story?.title || 'the story';
+    return {
+      vi: activity?.prompt_vi
+        || activity?.instructions_vi
+        || `Con kể lại câu chuyện “${title}” bằng tiếng Anh trong khoảng 1 phút nhé.`,
+      en: activity?.prompt_en
+        || `Tell the story of "${title}" in English. Say what happened and what you liked.`,
     };
   }
 
-  async function _r2lSubmitSpeakingCheck(blob) {
-    _r2lSpeakingCheckState.status = 'uploading';
-    _r2lRenderSpeakingCheckControls();
-    const resultEl = qs('#speaking-check-result');
-    resultEl?.classList.add('hidden');
+  function _r2lCleanupRetellRecording() {
+    if (_r2lRetellState.timerId) {
+      window.clearInterval(_r2lRetellState.timerId);
+      _r2lRetellState.timerId = null;
+    }
+    if (_r2lRetellState.mediaRecorder && _r2lRetellState.status === 'recording') {
+      try {
+        _r2lRetellState.mediaRecorder.stop();
+      } catch {}
+    }
+    if (_r2lRetellState.stream) {
+      _r2lRetellState.stream.getTracks().forEach((track) => track.stop());
+      _r2lRetellState.stream = null;
+    }
+    _r2lRetellState.mediaRecorder = null;
+    _r2lRetellState.chunks = [];
+    _r2lRetellState.blob = null;
+    if (_r2lRetellState.status === 'recording') {
+      _r2lRetellState.status = 'idle';
+    }
+    _r2lRetellState.secondsLeft = RETELL_MAX_SECONDS;
+  }
+
+  function _r2lRenderRetellControls() {
+    const listenBtn = _r2lRetellState.root?.querySelector('[data-retell-listen]');
+    const recordBtn = _r2lRetellState.root?.querySelector('[data-retell-record]');
+    const timerEl = _r2lRetellState.root?.querySelector('[data-retell-timer]');
+    const statusEl = _r2lRetellState.root?.querySelector('[data-retell-status]');
+    if (!recordBtn || !statusEl) return;
+
+    const micReady = _r2lMicIsReady();
+    if (_r2lRetellState.status === 'recording') {
+      recordBtn.textContent = '⏹ Dừng thu';
+      recordBtn.disabled = false;
+      timerEl?.classList.remove('hidden');
+      if (timerEl) timerEl.textContent = `${_r2lRetellState.secondsLeft}s`;
+      statusEl.textContent = 'Minny đang nghe con kể truyện...';
+      return;
+    }
+
+    timerEl?.classList.add('hidden');
+    if (_r2lRetellState.status === 'uploading') {
+      recordBtn.disabled = true;
+      recordBtn.textContent = '🎤 Con kể';
+      statusEl.textContent = 'Minny đang nhận xét bài kể của con...';
+      if (listenBtn) listenBtn.disabled = true;
+      return;
+    }
+
+    recordBtn.textContent = '🎤 Con kể';
+    recordBtn.disabled = !micReady || !_r2lRetellState.heardInstruction;
+    if (listenBtn) listenBtn.disabled = false;
+    if (!micReady) {
+      statusEl.textContent = 'Micro chưa sẵn sàng. Con thử Chrome hoặc Safari mới nhất nhé.';
+    } else if (!_r2lRetellState.heardInstruction) {
+      statusEl.textContent = 'Bước 1: Bấm Nghe hướng dẫn. Bước 2: Bấm Con kể và kể truyện.';
+    } else {
+      statusEl.textContent = `Con kể bằng tiếng Anh (tối đa ${RETELL_MAX_SECONDS} giây).`;
+    }
+  }
+
+  function _r2lRenderRetellFeedback(result) {
+    const slot = _r2lRetellState.root?.querySelector('[data-retell-feedback]');
+    if (!slot) return;
+    if (!result) {
+      slot.classList.add('hidden');
+      slot.innerHTML = '';
+      return;
+    }
+    slot.classList.remove('hidden');
+    slot.innerHTML = _r2lBuildOpenSpeakingFeedbackHtml(result);
+  }
+
+  async function _r2lSubmitRetellRecording(blob) {
+    _r2lRetellState.status = 'uploading';
+    _r2lRenderRetellControls();
+    _r2lRenderRetellFeedback({ loading: true });
 
     try {
       const payload = await _r2lPostSpeakingCheck(
         blob,
-        _r2lSpeakingCheckState.storyContext,
-        _r2lSpeakingCheckState.checkMode,
+        _r2lRetellState.storyContext,
+        'open',
+        RETELL_MAX_SECONDS,
       );
-      _r2lSpeakingCheckState.result = payload;
-      _r2lSpeakingCheckState.status = 'done';
-      if (payload?.ok) _r2lStoreSpeakingActivityResult(payload);
-      _r2lRenderSpeakingCheckResult(payload);
+      _r2lRetellState.result = payload;
+      _r2lRetellState.status = 'done';
+      _r2lRenderRetellFeedback(payload);
+      if (payload?.ok) {
+        _r2lSetMinnyMood(_r2lMinnyMoodForScore(payload.score_percent), _r2lRetellState.heroEl);
+        completeActivity('retell_summary', {
+          correct_count: Number(payload.correct_count || 0),
+          total_count: Number(payload.total_count || 1),
+          wrong_count: 0,
+          score_percent: Number(payload.score_percent || 0),
+          check_mode: 'open',
+        });
+      } else {
+        _r2lSetMinnyMood('encourage', _r2lRetellState.heroEl);
+      }
     } catch (error) {
-      _r2lSpeakingCheckState.status = 'idle';
-      _r2lRenderSpeakingCheckResult({
+      _r2lRetellState.status = 'idle';
+      _r2lSetMinnyMood('encourage', _r2lRetellState.heroEl);
+      _r2lRenderRetellFeedback({
         ok: false,
-        message: error.message || 'Chưa gửi được bài đọc. Con thử lại nhé!',
+        message: error.message || 'Chưa gửi được bài kể. Con thử lại nhé!',
       });
     } finally {
-      _r2lRenderSpeakingCheckControls();
+      _r2lRenderRetellControls();
     }
   }
 
-  async function _r2lStartSpeakingCheckRecording() {
-    if (!_r2lSpeakingCheckState.openQuestion?.vi) return;
-    if (!_r2lMicIsReady()) {
-      _r2lRenderSpeakingCheckResult({
-        ok: false,
-        message: _r2lRecorderHelpMessage(),
-      });
-      return;
-    }
-    _r2lCleanupSpeakingCheckRecording();
+  async function _r2lStartRetellRecording() {
+    if (!_r2lRetellState.heardInstruction || !_r2lMicIsReady()) return;
+    _r2lCleanupRetellRecording();
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       const { mediaRecorder, mimeType } = _r2lCreateMediaRecorder(stream);
@@ -1343,110 +1489,112 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
       mediaRecorder.addEventListener('stop', () => {
         const blobType = mediaRecorder.mimeType || mimeType || 'audio/mp4';
         const blob = new Blob(chunks, { type: blobType });
-        _r2lSpeakingCheckState.blob = blob;
-        _r2lSpeakingCheckState.blobUrl = URL.createObjectURL(blob);
-        _r2lSpeakingCheckState.status = 'uploading';
+        _r2lRetellState.blob = blob;
+        _r2lRetellState.status = 'uploading';
         stream.getTracks().forEach((track) => track.stop());
-        _r2lSpeakingCheckState.stream = null;
+        _r2lRetellState.stream = null;
         if (blob.size > 0) {
-          _r2lSubmitSpeakingCheck(blob);
+          _r2lSubmitRetellRecording(blob);
         } else {
-          _r2lSpeakingCheckState.status = 'idle';
-          _r2lRenderSpeakingCheckResult({
+          _r2lRetellState.status = 'idle';
+          _r2lSetMinnyMood('encourage', _r2lRetellState.heroEl);
+          _r2lRenderRetellFeedback({
             ok: false,
             message: 'Không thu được tiếng. Con thử nói to hơn và bấm Dừng thu nhé.',
           });
-          _r2lRenderSpeakingCheckControls();
+          _r2lRenderRetellControls();
         }
       });
 
-      _r2lSpeakingCheckState.stream = stream;
-      _r2lSpeakingCheckState.mediaRecorder = mediaRecorder;
-      _r2lSpeakingCheckState.chunks = chunks;
-      _r2lSpeakingCheckState.status = 'recording';
-      _r2lSpeakingCheckState.secondsLeft = SPEAKING_CHECK_MAX_SECONDS;
+      _r2lRetellState.stream = stream;
+      _r2lRetellState.mediaRecorder = mediaRecorder;
+      _r2lRetellState.chunks = chunks;
+      _r2lRetellState.status = 'recording';
+      _r2lRetellState.secondsLeft = RETELL_MAX_SECONDS;
+      _r2lSetMinnyMood('listen', _r2lRetellState.heroEl);
       try {
         mediaRecorder.start(250);
       } catch (startError) {
         stream.getTracks().forEach((track) => track.stop());
         throw startError;
       }
-      _r2lRenderSpeakingCheckControls();
+      _r2lRenderRetellControls();
 
-      _r2lSpeakingCheckState.timerId = window.setInterval(() => {
-        _r2lSpeakingCheckState.secondsLeft -= 1;
-        _r2lRenderSpeakingCheckControls();
-        if (_r2lSpeakingCheckState.secondsLeft <= 0) {
-          _r2lStopSpeakingCheckRecording();
+      _r2lRetellState.timerId = window.setInterval(() => {
+        _r2lRetellState.secondsLeft -= 1;
+        _r2lRenderRetellControls();
+        if (_r2lRetellState.secondsLeft <= 0) {
+          _r2lStopRetellRecording();
         }
       }, 1000);
     } catch (error) {
-      console.warn('[r2l-speaking-check] mic error', error);
-      _r2lSpeakingCheckState.status = 'idle';
-      _r2lRenderSpeakingCheckResult({
+      _r2lRetellState.status = 'idle';
+      _r2lSetMinnyMood('encourage', _r2lRetellState.heroEl);
+      _r2lRenderRetellFeedback({
         ok: false,
         message: _r2lRecorderHelpMessage(error),
       });
-      _r2lRenderSpeakingCheckControls();
+      _r2lRenderRetellControls();
     }
   }
 
-  function _r2lStopSpeakingCheckRecording() {
-    if (_r2lSpeakingCheckState.timerId) {
-      window.clearInterval(_r2lSpeakingCheckState.timerId);
-      _r2lSpeakingCheckState.timerId = null;
+  function _r2lStopRetellRecording() {
+    if (_r2lRetellState.timerId) {
+      window.clearInterval(_r2lRetellState.timerId);
+      _r2lRetellState.timerId = null;
     }
-    if (_r2lSpeakingCheckState.mediaRecorder && _r2lSpeakingCheckState.status === 'recording') {
-      _r2lSpeakingCheckState.mediaRecorder.stop();
+    if (_r2lRetellState.mediaRecorder && _r2lRetellState.status === 'recording') {
+      _r2lRetellState.mediaRecorder.stop();
     }
   }
 
-  function _r2lInitSpeakingCheck(lesson) {
-    const section = qs('#speaking-check-section');
-    if (!section) return;
+  function renderRetellSummaryActivity(root, activity) {
+    const heroScope = root.closest('[data-activity-shell="retell_summary"]');
+    _r2lInitMinnyHero(heroScope);
+    const prompt = _r2lResolveRetellPrompt(activity, state.lesson);
+    _r2lRetellState.root = root;
+    _r2lRetellState.heroEl = heroScope;
+    _r2lRetellState.activity = activity;
+    _r2lRetellState.storyContext = _r2lBuildStoryContext(state.lesson);
+    _r2lRetellState.heardInstruction = false;
+    _r2lRetellState.result = null;
+    _r2lRetellState.status = 'idle';
 
-    _r2lSpeakingCheckState.openQuestion = _r2lResolveBonusOpenQuestion(lesson);
-    _r2lSpeakingCheckState.storyContext = _r2lBuildStoryContext(lesson);
-    _r2lSpeakingCheckState.checkMode = 'open';
+    root.innerHTML = `
+      <div class="r2l-minny-retell-prompt">
+        <p class="text-base font-bold leading-7 text-cream">${escapeHtml(prompt.vi)}</p>
+        <p class="r2l-minny-retell-prompt-en">${escapeHtml(prompt.en)}</p>
+      </div>
+      <div class="r2l-minny-speak-actions mt-4">
+        <button type="button" class="minny-btn minny-btn--listen" data-retell-listen>🔊 Nghe</button>
+        <button type="button" class="minny-btn minny-btn--record" data-retell-record disabled>🎤 Con kể</button>
+      </div>
+      <p class="mt-2 text-sm text-cream/65" data-retell-status></p>
+      <span class="mt-1 hidden text-sm font-semibold text-gold" data-retell-timer></span>
+      <div class="mt-4 hidden rounded-md border border-cream/10 bg-navy-950/35 p-3 text-sm text-cream/80" data-retell-feedback></div>
+    `;
 
-    if (!_r2lSpeakingCheckState.openQuestion?.vi) {
-      section.classList.add('hidden');
-      return;
-    }
-
-    section.classList.add('hidden');
-    const questionViEl = qs('#speaking-check-question-vi');
-    const questionEnEl = qs('#speaking-check-question-en');
-    if (questionViEl) questionViEl.textContent = _r2lSpeakingCheckState.openQuestion.vi;
-    if (questionEnEl) questionEnEl.textContent = _r2lSpeakingCheckState.openQuestion.en;
-
-    const recordButton = qs('#speaking-check-record');
-    if (recordButton && !recordButton.dataset.bound) {
-      recordButton.dataset.bound = 'true';
-      recordButton.addEventListener('click', () => {
-        if (_r2lSpeakingCheckState.status === 'recording') {
-          _r2lStopSpeakingCheckRecording();
-        } else if (_r2lSpeakingCheckState.status !== 'uploading') {
-          _r2lStartSpeakingCheckRecording();
-        }
+    root.querySelector('[data-retell-listen]')?.addEventListener('click', () => {
+      _r2lSetMinnyMood('listen', heroScope);
+      _r2lSpeakEnglishLine(prompt.en, () => {
+        _r2lRetellState.heardInstruction = true;
+        _r2lSetMinnyMood('idle', heroScope);
+        _r2lRenderRetellControls();
       });
-    }
+    });
 
-    const skipButton = qs('#speaking-check-skip');
-    if (skipButton && !skipButton.dataset.bound) {
-      skipButton.dataset.bound = 'true';
-      skipButton.addEventListener('click', () => {
-        _r2lCleanupSpeakingCheckRecording();
-        _r2lSpeakingCheckState.skipped = true;
-        section.classList.add('hidden');
-      });
-    }
+    root.querySelector('[data-retell-record]')?.addEventListener('click', () => {
+      if (_r2lRetellState.status === 'recording') {
+        _r2lStopRetellRecording();
+      } else if (_r2lRetellState.status !== 'uploading') {
+        _r2lStartRetellRecording();
+      }
+    });
 
-    _r2lRenderSpeakingCheckControls();
-    _r2lMaybeRevealBonusSection();
+    _r2lRenderRetellControls();
   }
 
-  window.addEventListener('beforeunload', _r2lCleanupSpeakingCheckRecording);
+  window.addEventListener('beforeunload', _r2lCleanupRetellRecording);
 
   init();
 
@@ -1536,7 +1684,6 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
     }
 
     renderSentences(lesson.story?.sentences || []);
-    _r2lInitSpeakingCheck(lesson);
     renderAllActivitiesOnce(lesson.activities || []);
     showActivity(0);
     updateProgress();
@@ -1560,6 +1707,8 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
         renderWrittenActivity(body, activity);
       } else if (activity.type === 'listen_and_speak') {
         renderSpeakActivity(body, activity);
+      } else if (activity.type === 'retell_summary') {
+        renderRetellSummaryActivity(body, activity);
       }
       renderActivityNav(shell, index, activities.length);
     });
@@ -2139,26 +2288,23 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
   }
 
   function renderSpeakActivity(root, activity) {
+    const heroScope = root.closest('[data-activity-shell="listen_and_speak"]');
+    _r2lInitMinnyHero(heroScope);
+
     root.innerHTML = `
-      <div class="mt-5 space-y-4">
+      <p class="mt-2 text-sm font-semibold text-gold">Bước 1: Bấm Nghe. Bước 2: Bấm Con nói và đọc lại câu.</p>
+      <div class="mt-5 space-y-5">
         ${(activity.items || [])
           .map(
             (item, itemIndex) => `
-              <article class="rounded-md border border-cream/10 bg-navy-950/45 p-4" data-speak-card="${itemIndex}">
-                <div class="flex flex-wrap items-center justify-between gap-3">
-                  <div>
-                    <p class="font-bold text-cream">${escapeHtml(item.text_en)}</p>
-                    <p class="mt-1 text-sm text-cream/65">${escapeHtml(item.text_vi || '')}</p>
-                  </div>
-                  <button class="r2l-primary" type="button" data-play-speak="${itemIndex}">Nghe</button>
+              <article class="r2l-minny-sentence-card" data-speak-card="${itemIndex}">
+                <p class="r2l-minny-sentence-en">${escapeHtml(item.text_en)}</p>
+                ${item.text_vi ? `<p class="r2l-minny-sentence-vi">${escapeHtml(item.text_vi)}</p>` : ''}
+                <div class="r2l-minny-speak-actions">
+                  <button type="button" class="minny-btn minny-btn--listen" data-speak-listen="${itemIndex}">🔊 Nghe</button>
+                  <button type="button" class="minny-btn minny-btn--record" data-speak-record="${itemIndex}" disabled>🎤 Con nói</button>
                 </div>
-                <p class="mt-3 text-sm text-gold">${escapeHtml(item.tip_vi || '')}</p>
-                <div class="r2l-rec-row" data-recorder-slot></div>
                 <div class="mt-3 hidden rounded-md border border-cream/10 bg-navy-950/35 p-3 text-sm text-cream/80" data-speak-feedback></div>
-                <div class="mt-3 flex flex-wrap gap-2">
-                  <button class="r2l-option" type="button" data-rate-speak="${itemIndex}" data-rate-value="ready">Con nói được</button>
-                  <button class="r2l-option" type="button" data-rate-speak="${itemIndex}" data-rate-value="practice">Con luyện thêm</button>
-                </div>
               </article>
             `,
           )
@@ -2166,44 +2312,51 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
       </div>
     `;
 
-    const rated = new Set();
-    const currentRating = new Map();
-    let readyCount = 0;
-    root.querySelectorAll('[data-play-speak]').forEach((button) => {
-      const item = activity.items[Number(button.dataset.playSpeak)];
+    root.querySelectorAll('[data-speak-listen]').forEach((button) => {
+      const itemIndex = Number(button.dataset.speakListen);
+      const item = activity.items[itemIndex];
       const url = item?.audio_url || '';
-      setLessonPlayButtonState(button, url);
-      button.addEventListener('click', () => playAudio(url, button));
-    });
-    root.querySelectorAll('[data-speak-card]').forEach((cardEl) => {
-      const itemIndex = Number(cardEl.dataset.speakCard);
-      const item = activity.items?.[itemIndex] || {};
-      _r2lInitSpeakRecorder(item.id || `ls_${itemIndex}`, cardEl, item.text_en || '');
-    });
-    root.querySelectorAll('[data-rate-speak]').forEach((button) => {
+      const recordBtn = root.querySelector(`[data-speak-record="${itemIndex}"]`);
+      const cardEl = root.querySelector(`[data-speak-card="${itemIndex}"]`);
+      const itemKey = item?.id || `ls_${itemIndex}`;
+
       button.addEventListener('click', () => {
-        const itemIndex = Number(button.dataset.rateSpeak);
-        const newValue = button.dataset.rateValue;
-        const prevValue = currentRating.get(itemIndex);
-        if (prevValue === newValue) return;
-        if (prevValue) {
-          root.querySelectorAll(`[data-rate-speak="${itemIndex}"]`).forEach((btn) => {
-            delete btn.dataset.state;
-          });
-          if (prevValue === 'ready') readyCount -= 1;
+        _r2lSetMinnyMood('listen', heroScope);
+        const onEnd = () => _r2lSetMinnyMood('idle', heroScope);
+        if (url && !isRewardSfxUrl(url)) {
+          playAudio(url, button);
+          const audio = lessonAudioState.audio;
+          if (audio) {
+            audio.addEventListener('ended', onEnd, { once: true });
+          } else {
+            onEnd();
+          }
+        } else {
+          _r2lSpeakEnglishLine(item.text_en, onEnd);
         }
-        currentRating.set(itemIndex, newValue);
-        const isReady = newValue === 'ready';
-        if (isReady) readyCount += 1;
-        button.dataset.state = isReady ? 'correct' : 'retry';
-        const isFirstRating = !rated.has(itemIndex);
-        rated.add(itemIndex);
-        if (isFirstRating && rated.size < (activity.items || []).length) showReward({ withVoice: true });
-        if (rated.size === (activity.items || []).length) completeActivity(activity.type, {
-          correct_count: readyCount,
-          total_count: activity.items.length,
-          self_rate: true,
-        });
+        if (recordBtn) {
+          recordBtn.dataset.heard = 'true';
+          recordBtn.disabled = !_r2lMicIsReady();
+        }
+      });
+
+      _r2lInitSpeakRecorder(itemKey, cardEl, item?.text_en || '');
+    });
+
+    root.querySelectorAll('[data-speak-record]').forEach((button) => {
+      const itemIndex = Number(button.dataset.speakRecord);
+      const cardEl = root.querySelector(`[data-speak-card="${itemIndex}"]`);
+      const item = activity.items?.[itemIndex] || {};
+      const itemKey = item.id || `ls_${itemIndex}`;
+
+      button.addEventListener('click', () => {
+        const entry = _r2lRecorderState.perItem.get(itemKey);
+        if (entry?.status === 'recording') {
+          _r2lStopRecording(itemKey, cardEl);
+        } else if (entry?.checkStatus !== 'uploading') {
+          _r2lSetMinnyMood('listen', heroScope);
+          _r2lStartRecording(itemKey, cardEl);
+        }
       });
     });
   }
@@ -2222,7 +2375,7 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
   }
 
   function updateProgress() {
-    const totalActivities = state.lesson?.activities?.length || 5;
+    const totalActivities = state.lesson?.activities?.length || 6;
     const percent = totalActivities
       ? Math.round((state.completedTypes.size / totalActivities) * 100)
       : 0;
@@ -2230,7 +2383,6 @@ import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro
     qs('#progress-label').textContent = `${percent}%`;
     qs('#submit-lesson').disabled = state.completedTypes.size < totalActivities;
     renderStepStates();
-    _r2lMaybeRevealBonusSection();
   }
 
   function renderStepStates() {

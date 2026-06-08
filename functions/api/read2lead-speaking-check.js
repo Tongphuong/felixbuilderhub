@@ -9,6 +9,7 @@ export const CLOSE_SCORE_WEIGHT = 0.5;
 export const SIMILARITY_THRESHOLD = 0.75;
 export const CLOSE_THRESHOLD = 0.5;
 export const MAX_AUDIO_BYTES = 5 * 1024 * 1024;
+export const MAX_AUDIO_BYTES_LONG = 10 * 1024 * 1024;
 
 export function normalizeWord(word) {
   return String(word || '').toLowerCase().replace(/[^a-z]/g, '');
@@ -265,8 +266,13 @@ export async function onRequestPost(context) {
     );
   }
 
+  const maxSeconds = Number(formData.get('max_seconds') || 0);
+  const maxAudioBytes = Number.isFinite(maxSeconds) && maxSeconds >= 60
+    ? MAX_AUDIO_BYTES_LONG
+    : MAX_AUDIO_BYTES;
+
   const audioSize = typeof audio.size === 'number' ? audio.size : 0;
-  if (audioSize > MAX_AUDIO_BYTES) {
+  if (audioSize > maxAudioBytes) {
     return json(
       {
         ok: false,

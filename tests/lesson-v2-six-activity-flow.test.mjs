@@ -4,37 +4,66 @@ import { readFileSync } from 'node:fs';
 
 const lessonPage = readFileSync('src/pages/read2lead/lesson.astro', 'utf-8');
 const activityProgress = readFileSync('src/components/read2lead/v2/ActivityProgress.astro', 'utf-8');
+const listenAndSpeak = readFileSync('src/components/read2lead/v2/ListenAndSpeak.astro', 'utf-8');
+const retellSummary = readFileSync('src/components/read2lead/v2/RetellSummary.astro', 'utf-8');
 const stateModule = readFileSync('functions/api/_read2lead-v2-state.js', 'utf-8');
 const submitModule = readFileSync('functions/api/submit-read2lead-lesson.js', 'utf-8');
+const speakingEndpoint = readFileSync('functions/api/read2lead-speaking-check.js', 'utf-8');
 
-test('lesson page supports the 5-activity V2 flow', () => {
+test('lesson page supports the 6-activity V2 flow', () => {
   for (const type of [
     'listening_fill_blank',
     'listen_and_order',
     'reading_comprehension',
     'written_response',
     'listen_and_speak',
+    'retell_summary',
   ]) {
     assert.match(lessonPage, new RegExp(type));
   }
   assert.match(lessonPage, /function renderFillBlankActivity/);
   assert.match(lessonPage, /function renderWrittenActivity/);
+  assert.match(lessonPage, /function renderRetellSummaryActivity/);
   assert.doesNotMatch(lessonPage, /completedTypes\.size < 4/);
-  assert.doesNotMatch(lessonPage, /Math\.min\(state\.activityIndex \+ 1, 3\)/);
+  assert.doesNotMatch(lessonPage, /speaking-check-section/);
+  assert.doesNotMatch(lessonPage, /Câu hỏi mở bonus/);
 });
 
-test('activity progress shows exactly 5 steps in the new order', () => {
+test('activity progress shows exactly 6 steps in the new order', () => {
   const labels = [
     '1. Nghe điền',
     '2. Xếp câu',
     '3. Đọc hiểu',
     '4. Viết đáp án',
     '5. Nói lại',
+    '6. Kể truyện',
   ];
   for (const label of labels) {
     assert.match(activityProgress, new RegExp(label));
   }
-  assert.equal((activityProgress.match(/data-step-button=/g) || []).length, 5);
+  assert.equal((activityProgress.match(/data-step-button=/g) || []).length, 6);
+});
+
+test('listen_and_speak uses Minny hero and nghe-before-speak gating', () => {
+  assert.match(listenAndSpeak, /data-minny-hero="listen_and_speak"/);
+  assert.match(listenAndSpeak, /data-minny-video/);
+  assert.match(listenAndSpeak, /data-minny-fallback/);
+  assert.match(lessonPage, /Bước 1: Bấm Nghe\. Bước 2: Bấm Con nói/);
+  assert.match(lessonPage, /🔊 Nghe/);
+  assert.match(lessonPage, /🎤 Con nói/);
+  assert.match(lessonPage, /data-speak-record/);
+  assert.match(lessonPage, /recordBtn\.dataset\.heard = 'true'/);
+  assert.match(lessonPage, /_r2lSetMinnyMood/);
+  assert.match(lessonPage, /tryPlay\('mp4'\)/);
+});
+
+test('retell_summary activity uses open mode with 60s limit', () => {
+  assert.match(retellSummary, /data-activity-shell="retell_summary"/);
+  assert.match(lessonPage, /RETELL_MAX_SECONDS = 60/);
+  assert.match(lessonPage, /check_mode: 'open'/);
+  assert.match(lessonPage, /_r2lBuildOpenSpeakingFeedbackHtml/);
+  assert.match(speakingEndpoint, /MAX_AUDIO_BYTES_LONG/);
+  assert.match(speakingEndpoint, /max_seconds/);
 });
 
 test('listen_and_order uses editable drag-drop slots instead of one-way token picking', () => {
@@ -85,6 +114,7 @@ test('activity navigation preserves existing answers by hiding and showing shell
   assert.doesNotMatch(showBody, /renderOrderActivity/);
   assert.doesNotMatch(showBody, /renderWrittenActivity/);
   assert.doesNotMatch(showBody, /renderSpeakActivity/);
+  assert.doesNotMatch(showBody, /renderRetellSummaryActivity/);
 });
 
 test('attempt-based completion uses attempted set and per-item wrong counts', () => {
@@ -94,19 +124,22 @@ test('attempt-based completion uses attempted set and per-item wrong counts', ()
   assert.match(lessonPage, /data-state='revealed'/);
 });
 
-test('speak re-rating allows changing self-rate selection', () => {
-  assert.match(lessonPage, /const currentRating = new Map/);
-  assert.doesNotMatch(lessonPage, /if \(rated\.has\(itemIndex\)\) return;/);
+test('listen_and_speak completes via Whisper scoring, not self-rate', () => {
+  assert.match(lessonPage, /_r2lMergeSpeakActivityScores/);
+  assert.doesNotMatch(lessonPage, /data-rate-speak/);
+  assert.doesNotMatch(lessonPage, /self_rate: true/);
 });
 
 test('scoring formula uses soft penalty (wrong * 0.5)', () => {
   assert.match(lessonPage, /Math\.floor\(wrong \* 0\.5\)/);
   assert.match(submitModule, /Math\.floor\(wrong \* 0\.5\)/);
+  assert.match(submitModule, /completedTypes\.size >= 6/);
 });
 
 test('pass threshold is 50% and XP penalty is 0', () => {
   assert.match(stateModule, /PASS_THRESHOLD_PERCENT = 50/);
   assert.match(stateModule, /XP_PENALTY_BELOW_THRESHOLD = 0/);
+  assert.match(stateModule, /retell_summary/);
 });
 
 test('student name is wired to IdentityBanner via id', () => {
