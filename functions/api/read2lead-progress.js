@@ -52,7 +52,7 @@ export async function onRequestGet(context) {
     progress: publicProgress(progress),
     read2lead_state: publicProgressState(v2State),
     next_pack_locked: nextPackLocked,
-    review_link: `/read2lead/review?code=${encodeURIComponent(code)}`,
+    review_link: `/hoc-sinh?code=${encodeURIComponent(code)}`,
     last_review_summary: lastReviewSummary(progress.current_pack, progress.review_history),
     weekly_completed_count: progress.weekly_completed_count,
     streak_days: progress.streak_days,
@@ -117,7 +117,7 @@ function primaryAction(state, code, nextPackLocked) {
     return { type: 'wait', label: 'Đang tạo bài', href: null };
   }
   if (state === 'awaiting_review' && nextPackLocked) {
-    return { type: 'submit_review', label: 'Nộp bài hiện tại', href: `/read2lead/review?code=${encodeURIComponent(code)}#submit` };
+    return { type: 'submit_review', label: 'Nộp bài hiện tại', href: `/hoc-sinh?code=${encodeURIComponent(code)}#submit` };
   }
   if (state === 'awaiting_review') {
     return { type: 'create_pack', label: 'Tạo thêm bài mới', href: '/read2lead#form' };

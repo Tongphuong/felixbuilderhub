@@ -7,3 +7,7 @@ dist
 
 # Obsidian editor config
 Note/.obsidian/
+
+# Agent / debug artifacts
+debug-*.log
+_claude/

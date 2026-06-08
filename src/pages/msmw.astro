@@ -9,7 +9,7 @@ const features = [
   ['📖', '20 trang đầy đủ', 'Bìa, lời đề tặng, 16 trang câu chuyện, bìa sau'],
   ['🌏', 'Song ngữ Việt–Anh', 'Mỗi trang có cả 2 ngôn ngữ, bé học tự nhiên'],
   ['👶', 'Bé là nhân vật chính', 'Ảnh thật của con xuất hiện trong từng cảnh'],
-  ['🎨', 'Minh hoạ riêng', 'Tạo bằng AI cho từng cuốn, không trùng nhau'],
+  ['🎨', 'Minh hoạ riêng', 'Felix dùng AI tạo minh hoạ cho từng cuốn — không trùng nhau'],
   ['⏰', 'Nhận nhanh', '24h cho bản số, 5 ngày cho bản in'],
   ['💝', 'Quà ý nghĩa', 'Hợp cho sinh nhật, Tết thiếu nhi, dịp đặc biệt'],
 ];
@@ -17,7 +17,7 @@ const features = [
 const steps = [
   ['Điền thông tin', 'Tên + tuổi + giới tính của bé'],
   ['Felix nhắn Zalo', 'Xin ảnh con + xác nhận đơn'],
-  ['Tạo sách cá nhân', 'Felix làm sách trong 24h (bản số) / 5 ngày (bản in)'],
+  ['Tạo sách cá nhân', 'Felix dùng AI tạo minh hoạ và làm sách trong 24h (bản số) / 5 ngày (bản in)'],
   ['Nhận sách', 'File PDF hoặc bản in tận tay'],
 ];
 
@@ -71,18 +71,22 @@ const faqItems = [
 ---
 
 <BaseLayout
-  title="MSMW — Sách truyện cá nhân hoá cho con của bạn | Felix Builder Hub"
-  description="Sách truyện song ngữ Việt-Anh với chính con bạn là nhân vật chính. Bản số 69k, bản in 129k. Giao toàn quốc."
+  title="MSMW — Sách truyện cá nhân hoá tăng cường bởi AI | Felix Coaching"
+  description="Sách truyện song ngữ Việt–Anh với chính con là nhân vật chính — Felix dùng AI tạo minh hoạ riêng. Bản số 69k, bản in 129k. Giao toàn quốc."
+  ogImage="/msmw/thumb-toy-brick.jpg"
 >
   <Header />
 
   <main id="main" class="flex-1">
     <section class="mx-auto max-w-6xl px-6 py-20 text-center md:py-32">
-      <h1 class="mx-auto max-w-4xl font-display text-4xl font-extrabold text-cream md:text-5xl lg:text-6xl">
+      <span class="inline-block rounded-full border border-cream-dim/40 bg-cream-dim/10 px-4 py-1 text-sm font-semibold text-cream-dim">
+        Sách quà tặng · Con là nhân vật chính
+      </span>
+      <h1 class="mx-auto mt-6 max-w-4xl font-display text-4xl font-extrabold text-cream md:text-5xl lg:text-6xl">
         <span class="block">Con là nhân vật chính</span>
         <span class="block">trong câu chuyện của riêng mình.</span>
       </h1>
-      <p class="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-cream-muted md:text-xl">Sách truyện cá nhân hoá song ngữ Việt–Anh, dành riêng cho con của bạn.</p>
+      <p class="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-cream-muted md:text-xl">Sách truyện song ngữ Việt–Anh — Felix dùng AI tạo minh hoạ riêng, dành riêng cho con của bạn.</p>
       <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
         <a href="#form" class="w-full rounded-lg bg-accent px-6 py-3 text-center font-semibold text-navy-950 transition hover:bg-accent-hover sm:w-auto">Đặt sách cho con</a>
         <a href={ZALO_URL} class="w-full rounded-lg border border-cream-dim/30 px-6 py-3 text-center font-semibold text-cream transition hover:border-accent hover:text-accent sm:w-auto">Liên hệ Zalo</a>

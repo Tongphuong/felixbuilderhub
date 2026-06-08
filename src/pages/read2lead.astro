@@ -29,15 +29,16 @@ const activityCards = [
 
 const faqItems = [
   ['Chưa có mã thì làm gì?', `Nhắn Zalo ${ZALO_DISPLAY} để Felix tạo hồ sơ cho bé. Sau đó anh/chị sẽ nhận mã qua Zalo.`],
-  ['Có cần chọn level không?', 'Không. Mọi bạn nhỏ bắt đầu từ L1 và hệ thống tự mở level tiếp theo khi bé tích đủ XP.'],
+  ['Có cần chọn cấp độ không?', 'Không. Mọi bạn nhỏ bắt đầu từ L1 và tự lên cấp khi hoàn thành đủ bài.'],
   ['Con làm bài ở đâu?', 'Ngay trên web. Sau khi bấm "Tạo bài học", bé bấm "Mở bài học" để làm trực tiếp trên điện thoại hoặc máy tính.'],
-  ['Xem tiến trình ở đâu?', 'Bấm "Hồ sơ học sinh" ở đầu trang, nhập mã là thấy level, XP, xu, streak, các truyện con đã học và bài đang mở.'],
+  ['Xem tiến trình ở đâu?', 'Bấm "Xem tiến độ con" ở đầu trang, nhập mã Felix cấp là thấy cấp độ, điểm, các truyện con đã học và bài đang mở.'],
 ];
 ---
 
 <BaseLayout
-  title="Read2Lead - Tự học nghe và đọc tiếng Anh qua câu chuyện | Felix Builder Hub"
-  description="Read2Lead giúp bé tự học nghe và đọc tiếng Anh thông qua câu chuyện bé tự chọn, với hồ sơ riêng, XP, xu và level."
+  title="Read2Lead — Luyện đọc và nghe tăng cường bởi AI | Felix Coaching"
+  description="Công cụ luyện đọc và nghe tăng cường bởi AI — con chọn chủ đề, làm bài, tích điểm. Bổ trợ coaching, không thay lớp với Felix. Bố mẹ xem tiến độ bằng mã học sinh."
+  ogImage="/images/felix.jpg"
 >
   <Header />
 
@@ -45,10 +46,10 @@ const faqItems = [
     <!-- ===== HERO ===== -->
     <section class="mx-auto max-w-5xl px-5 pb-6 pt-12 text-center sm:pt-16">
       <h1 class="mx-auto max-w-3xl font-display text-3xl font-extrabold leading-tight text-cream sm:text-4xl md:text-5xl">
-        Tự học nghe và đọc tiếng Anh thông qua câu chuyện con tự chọn
+        Luyện đọc và nghe qua truyện — tăng cường bởi AI
       </h1>
       <p class="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-cream-muted sm:text-lg">
-        Nhập mã học sinh, chọn chủ đề con thích, rồi bấm tạo bài. Bé làm bài trực tiếp trên web và nhận XP/xu để leo rank.
+        Felix dùng AI tạo bài cá nhân hoá theo chủ đề con thích. Nhập mã học sinh, bấm tạo bài — bé làm trực tiếp trên web và tích điểm leo cấp.
       </p>
     </section>
 
@@ -69,15 +70,15 @@ const faqItems = [
         >
           <span class="flex h-14 w-14 items-center justify-center rounded-full bg-gold text-2xl font-bold text-navy-950">&#9733;</span>
           <span class="text-xl font-extrabold text-cream sm:text-2xl">Bảng xếp hạng</span>
-          <span class="text-sm text-cream-muted">Xem rank của các bạn nhỏ</span>
+          <span class="text-sm text-cream-muted">Xem thành tích các bạn nhỏ</span>
         </a>
         <a
-          href="/read2lead/review"
+          href="/hoc-sinh"
           class="flex flex-col items-center gap-3 rounded-xl border-2 border-cream/30 bg-cream/5 p-6 text-center transition hover:border-cream/50 hover:bg-cream/10 sm:p-8"
         >
           <span class="flex h-14 w-14 items-center justify-center rounded-full bg-cream/20 text-2xl text-cream">&#128100;</span>
-          <span class="text-xl font-extrabold text-cream sm:text-2xl">Hồ sơ học sinh</span>
-          <span class="text-sm text-cream-muted">Level, XP, xu, bài đang mở</span>
+          <span class="text-xl font-extrabold text-cream sm:text-2xl">Xem tiến độ con</span>
+          <span class="text-sm text-cream-muted">Cấp độ, điểm, bài đang mở</span>
         </a>
       </div>
     </section>
@@ -217,7 +218,7 @@ const faqItems = [
             <a id="lesson-link" href="/read2lead/lesson" class="inline-block w-full rounded-xl bg-accent px-6 py-4 text-xl font-extrabold text-navy-950 transition hover:bg-accent-hover sm:w-auto sm:px-10">Mở bài học</a>
           </div>
           <p class="mt-6 text-sm leading-relaxed text-cream-muted">
-            Con nghe truyện, làm 5 nhiệm vụ và lưu chiến công trực tiếp trên web. Bố mẹ có thể mở <a id="review-link" href="/read2lead/review" class="font-semibold text-gold-light underline">hồ sơ học sinh</a> để xem tiến trình.
+            Con nghe truyện, làm 5 nhiệm vụ và lưu chiến công trực tiếp trên web. Bố mẹ có thể <a id="review-link" href="/hoc-sinh" class="font-semibold text-gold-light underline">xem tiến độ con</a> bằng mã học sinh.
           </p>
           <div class="mt-6">
             <p class="text-cream-dim">Muốn tạo bài khác?</p>
@@ -256,16 +257,16 @@ const faqItems = [
       <div class="mx-auto max-w-5xl">
         <h2 class="text-center font-display text-2xl font-bold text-cream sm:text-3xl">Mỗi bé có một hồ sơ học riêng</h2>
         <p class="mx-auto mt-3 max-w-xl text-center text-sm leading-relaxed text-cream-muted sm:text-base">
-          Mã học sinh giữ tên bé, level, XP, xu, streak và lịch sử bài học. Bé bắt đầu từ L1 và mở dần tới L5.
+          Mã học sinh giữ tên bé, cấp độ, điểm, chuỗi ngày học và lịch sử bài. Bé bắt đầu từ cấp đầu và lên dần khi hoàn thành đủ bài.
         </p>
         <div class="mx-auto mt-8 grid max-w-3xl gap-4 sm:grid-cols-2">
           <a href="/read2lead/leaderboard" class="rounded-xl border border-gold/35 bg-gold/10 p-5 transition hover:border-gold hover:bg-gold/15">
             <p class="text-sm font-semibold uppercase tracking-wide text-gold-light">Bảng xếp hạng</p>
-            <p class="mt-2 text-sm leading-relaxed text-cream-muted">Xem rank Đồng, Bạc, Vàng, Kim cương, Huyền thoại của các bạn nhỏ.</p>
+            <p class="mt-2 text-sm leading-relaxed text-cream-muted">Xem huy hiệu Đồng, Bạc, Vàng, Kim cương, Huyền thoại của các bạn nhỏ.</p>
           </a>
-          <a href="/read2lead/review" class="rounded-xl border border-accent/35 bg-accent/10 p-5 transition hover:border-accent hover:bg-accent/15">
-            <p class="text-sm font-semibold uppercase tracking-wide text-accent">Hồ sơ học sinh</p>
-            <p class="mt-2 text-sm leading-relaxed text-cream-muted">Nhập mã để xem level, XP, xu, streak, các truyện con đã học và bài đang mở.</p>
+          <a href="/hoc-sinh" class="rounded-xl border border-accent/35 bg-accent/10 p-5 transition hover:border-accent hover:bg-accent/15">
+            <p class="text-sm font-semibold uppercase tracking-wide text-accent">Xem tiến độ con</p>
+            <p class="mt-2 text-sm leading-relaxed text-cream-muted">Nhập mã Felix cấp để xem cấp độ, điểm, các truyện con đã học và bài đang mở.</p>
           </a>
         </div>
       </div>
@@ -284,13 +285,12 @@ const faqItems = [
       </div>
     </section>
 
-    <!-- ===== CROSS-SELL ===== -->
     <section class="mx-auto max-w-5xl px-5 pb-14 sm:pb-16">
       <div class="rounded-xl border border-accent/30 bg-navy-900/70 p-6 text-center sm:p-8">
-        <p class="text-xs font-semibold uppercase tracking-wide text-cream-dim">Bạn cũng có thể quan tâm</p>
-        <h3 class="mt-3 font-display text-xl font-bold text-cream sm:text-2xl">MSMW - Sách truyện cá nhân hóa làm quà tặng</h3>
-        <p class="mx-auto mt-3 max-w-lg text-sm leading-relaxed text-cream-muted">Một cuốn sách 20 trang với con là nhân vật chính, phù hợp làm quà sinh nhật hoặc dịp đặc biệt.</p>
-        <a href="/msmw" class="mt-4 inline-flex font-semibold text-accent transition hover:text-accent-hover">Xem MSMW</a>
+        <p class="text-xs font-semibold uppercase tracking-wide text-cream-dim">Muốn con nói tự tin hơn?</p>
+        <h3 class="mt-3 font-display text-xl font-bold text-cream sm:text-2xl">Huấn luyện kĩ năng nói với Felix</h3>
+        <p class="mx-auto mt-3 max-w-lg text-sm leading-relaxed text-cream-muted">Read2Lead bổ trợ luyện đọc tại nhà. Buổi coaching trực tiếp giúp con dám nói, kể chuyện, thuyết trình và tranh luận — rèn tự tin thật sự.</p>
+        <a href="/coaching#book" class="mt-4 inline-flex font-semibold text-accent transition hover:text-accent-hover">Đặt lịch tư vấn miễn phí</a>
       </div>
     </section>
   </main>
@@ -362,7 +362,7 @@ const faqItems = [
       document.getElementById('result-topic').textContent = data.topic || '';
       document.getElementById('result-story-title').textContent = data.story_title || '';
       document.getElementById('lesson-link').href = data.lesson_link || '/read2lead/lesson';
-      document.getElementById('review-link').href = data.review_link || '/read2lead/review';
+      document.getElementById('review-link').href = data.review_link || '/hoc-sinh';
 
       resultSection.classList.remove('hidden');
       resultSection.scrollIntoView({ behavior: 'smooth' });

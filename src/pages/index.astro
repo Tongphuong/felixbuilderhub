@@ -21,30 +21,39 @@ const socialLinks = [
     svg: '<path fill="currentColor" d="M12 2a10 10 0 1 0 5.4 18.4l3.6 1.1-1.1-3.5A10 10 0 0 0 12 2Zm-4.1 8.5h2v.8c.5-.6 1.2-1 2.1-1 1.6 0 2.5 1 2.5 2.7v3.5h-2v-3.2c0-.9-.4-1.4-1.2-1.4-.8 0-1.4.6-1.4 1.5v3.1h-2v-6Zm-2.4 0h2v6h-2v-6Zm9.9 0h4.8v1.3l-3 3h3v1.7h-5v-1.3l3-3h-2.8v-1.7Z"/>',
   },
 ];
+
 ---
 
-<BaseLayout title="Felix Builder Hub — Sản phẩm giáo dục dành riêng cho mỗi bạn nhỏ">
-  <Header homeLinks={true} />
+<BaseLayout
+  title="Felix Coaching — Coach huấn luyện kĩ năng nói cho trẻ em"
+  description="Lớp online nhóm nhỏ tối đa 4 bé — rèn tự tin nói, kể chuyện, thuyết trình và tranh luận. Tiếng Anh là phương tiện luyện tập. Đặt lịch tư vấn miễn phí với thầy Phương."
+  ogImage="/images/felix.jpg"
+>
+  <Header />
 
   <main id="main" class="flex-1">
     <section class="mx-auto max-w-6xl px-6 py-20 md:py-28">
       <div class="text-center">
-        <h1 class="mx-auto max-w-5xl font-display text-4xl font-extrabold leading-[1.35] text-cream md:text-5xl lg:text-6xl">
-          <span class="block">Sản phẩm giáo dục</span>
-          <span class="block">dành riêng cho con bạn.</span>
+        <span class="inline-block rounded-full border border-accent/40 bg-accent/15 px-4 py-1 text-sm font-semibold text-accent">
+          Dịch vụ chính · Nhóm nhỏ tối đa 4 bé · Online
+        </span>
+        <h1 class="mx-auto mt-6 max-w-5xl font-display text-4xl font-extrabold leading-[1.3] text-cream md:text-5xl lg:text-6xl">
+          <span class="block">Huấn luyện kĩ năng nói</span>
+          <span class="block text-accent">rèn tự tin cho con</span>
         </h1>
         <p class="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-cream-muted md:text-xl">
-          Sách truyện cá nhân hoá, bài đọc tiếng Anh, coaching nhóm — mỗi bạn nhỏ một câu chuyện riêng.
+          Felix dùng tiếng Anh làm phương tiện — kể chuyện, thuyết trình, tranh luận trong lớp nhóm tối đa 4 bé, online.
         </p>
         <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-          <a href="/msmw" class="inline-flex rounded-lg bg-accent px-6 py-3 font-semibold text-navy-950 transition hover:bg-accent-hover">
-            Đặt sách MSMW →
+          <a href="/coaching#book" class="inline-flex rounded-lg bg-accent px-6 py-3 font-semibold text-navy-950 transition hover:bg-accent-hover">
+            Đặt lịch tư vấn miễn phí →
           </a>
-          <a href="/read2lead" class="inline-flex rounded-lg border border-cream-dim/40 px-6 py-3 font-semibold text-cream transition hover:border-accent hover:text-accent">
-            Thử Read2Lead miễn phí
+          <a href="/hoc-sinh" class="inline-flex flex-col items-center rounded-lg border border-cream-dim/40 px-6 py-3 font-semibold text-cream transition hover:border-accent hover:text-accent sm:items-start">
+            <span>Xem tiến độ con</span>
+            <span class="mt-0.5 text-xs font-normal text-cream-dim">Nhập mã học sinh Felix cấp</span>
           </a>
         </div>
-        <p class="mt-6 text-sm text-cream-dim">10 năm kinh nghiệm dạy tiếng Anh cho trẻ em Việt</p>
+        <p class="mt-6 text-sm text-cream-dim">Hơn 10 năm coach huấn luyện kĩ năng nói cho trẻ em Việt</p>
       </div>
     </section>
 
@@ -52,75 +61,80 @@ const socialLinks = [
       <div class="mx-auto grid max-w-5xl items-center gap-10 md:grid-cols-[auto_1fr]">
         <img
           src="/images/felix.jpg"
-          alt="Phương — người sáng lập Felix Builder Hub"
+          alt="Phương — huấn luyện viên Felix Coaching"
           width="180"
           height="180"
           loading="lazy"
-          class="h-36 w-36 rounded-full object-cover ring-4 ring-cream-dim/25 md:h-44 md:w-44"
+          class="h-36 w-36 rounded-full object-cover ring-4 ring-accent/30 md:h-44 md:w-44"
         />
         <div>
-          <h2 class="font-display text-2xl font-bold leading-snug text-cream md:text-3xl">Vì sao Felix Builder Hub?</h2>
+          <h2 class="font-display text-2xl font-bold leading-snug text-cream md:text-3xl">Felix Coaching là gì?</h2>
           <p class="mt-4 leading-relaxed text-cream-muted">
-            Tôi là Phương — 10 năm dạy tiếng Anh cho trẻ em Việt Nam.
-            Tôi xây Felix Builder Hub để giải một câu hỏi: <strong class="text-cream">làm sao
-            để mỗi bé có một câu chuyện, một worksheet, một bài học riêng — thay vì
-            cùng một giáo trình cho tất cả?</strong>
+            Tôi là Phương — coach huấn luyện kĩ năng nói, sử dụng tiếng Anh làm phương tiện. Tôi rèn <strong class="text-cream">tự tin nói thật</strong>:
+            con dám mở miệng, kể chuyện có cấu trúc, thuyết trình trước lớp và tranh luận có lý lẽ.
           </p>
           <p class="mt-3 leading-relaxed text-cream-muted">
-            Mỗi sản phẩm ở đây đều được cá nhân hoá: sách MSMW có ảnh con bạn làm
-            nhân vật chính; Read2Lead worksheet được viết theo sở thích
-            và level từng bé; coaching nhóm nhỏ tối đa 4 bé.
+            Ngoài lớp coaching, tôi xây dựng <strong class="text-cream">Read2Lead</strong> và <strong class="text-cream">MSMW</strong> — sản phẩm giáo dục tăng cường bởi AI, bổ trợ con luyện đọc và đọc truyện tại nhà.
           </p>
+          <p class="mt-3 leading-relaxed text-cream-muted">
+            Mỗi học sinh có <a href="/hoc-sinh" class="font-semibold text-accent underline">trang xem tiến độ riêng</a> — bố mẹ nhập mã là thấy bài con đang học, truyện đã hoàn thành và (sắp tới) luyện nói chuyên sâu.
+          </p>
+          <a href="/coaching" class="mt-5 inline-flex font-semibold text-accent transition hover:text-accent-hover">
+            Xem chương trình coaching →
+          </a>
         </div>
       </div>
     </section>
 
-    <section id="products" class="bg-navy-900 px-6 py-20">
-      <div class="mx-auto max-w-6xl">
-        <h2 class="font-display text-3xl font-bold text-cream">Sản phẩm</h2>
-        <div class="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
-          <article class="rounded-lg border border-accent bg-navy-950/75 p-6">
-            <div class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-              <h3 class="font-display text-2xl font-bold text-cream">MSMW — My Story, My World</h3>
-              <span class="w-fit rounded-md border border-accent/40 bg-accent/15 px-2.5 py-1 text-xs font-semibold text-accent">Sẵn sàng đặt</span>
-            </div>
-            <p class="mt-5 leading-relaxed text-cream-muted">Sách truyện cá nhân hoá cho con của bạn — món quà ý nghĩa hơn đồ chơi thường ngày.</p>
-            <a href="/msmw" class="mt-6 inline-flex font-semibold text-accent transition hover:text-accent-hover">Đặt sách cho con →</a>
-          </article>
-
-          <article class="rounded-lg border border-cream-dim/30 bg-navy-950/75 p-6">
-            <div class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+    <section id="ai-products" class="mx-auto max-w-6xl px-6 py-20">
+      <div class="max-w-3xl">
+        <p class="text-xs font-extrabold uppercase tracking-widest text-cream-dim">Bổ trợ ngoài lớp</p>
+        <h2 class="mt-2 font-display text-3xl font-bold text-cream">Sản phẩm giáo dục tăng cường bởi AI</h2>
+        <p class="mt-3 leading-relaxed text-cream-muted">
+          Felix dùng AI để tạo bài luyện đọc và nghe cá nhân hoá — bổ trợ buổi coaching, không thay thế lớp trực tiếp với Felix.
+        </p>
+      </div>
+      <article class="mt-8 rounded-2xl border border-gold/30 bg-navy-950/70 p-6 md:p-8">
+        <div class="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+          <div class="max-w-2xl">
+            <div class="flex flex-wrap items-center gap-3">
               <h3 class="font-display text-2xl font-bold text-cream">Read2Lead</h3>
-              <span class="w-fit rounded-md border border-gold/40 bg-gold/15 px-2.5 py-1 text-xs font-semibold text-gold-light">Thử nghiệm — miễn phí</span>
+              <span class="rounded-md border border-gold/40 bg-gold/15 px-2.5 py-1 text-xs font-semibold text-gold-light">Thử nghiệm — miễn phí</span>
             </div>
-            <p class="mt-5 leading-relaxed text-cream-muted">Tạo gói đọc tiếng Anh cá nhân hoá cho trẻ em Việt — in được, có audio.</p>
-            <a href="/read2lead" class="mt-6 inline-flex font-semibold text-accent transition hover:text-accent-hover">Tạo file miễn phí cho con →</a>
-          </article>
+            <p class="mt-4 leading-relaxed text-cream-muted">
+              Công cụ luyện đọc và nghe tăng cường bởi AI — con chọn chủ đề, làm nhiệm vụ, tích điểm và leo cấp. Bố mẹ xem tiến độ qua <a href="/hoc-sinh" class="font-semibold text-accent underline">trang xem tiến độ con</a>.
+            </p>
+          </div>
+          <a href="/read2lead" class="inline-flex shrink-0 rounded-lg bg-accent px-6 py-3 font-semibold text-navy-950 transition hover:bg-accent-hover">
+            Tạo bài miễn phí →
+          </a>
+        </div>
+      </article>
+    </section>
 
-          <article class="rounded-lg border border-cream-dim/30 bg-navy-950/75 p-6">
-            <div class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-              <h3 class="font-display text-2xl font-bold text-cream">Felix Sharing Space</h3>
-              <span class="w-fit rounded-md border border-cream-dim/40 bg-cream-dim/10 px-2.5 py-1 text-xs font-semibold text-cream-dim">Sắp ra mắt</span>
-            </div>
-            <p class="mt-5 leading-relaxed text-cream-muted">Nơi tôi chia sẻ kiến thức, kinh nghiệm và các tài liệu miễn phí cho phụ huynh.</p>
-            <a href="/space" class="mt-6 inline-flex font-semibold text-accent transition hover:text-accent-hover">Nhận tài liệu miễn phí →</a>
-          </article>
-
-          <article class="rounded-lg border border-accent bg-navy-950/75 p-6">
-            <div class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-              <h3 class="font-display text-2xl font-bold text-cream">Coaching giao tiếp tiếng Anh</h3>
-              <span class="w-fit rounded-md border border-accent/40 bg-accent/15 px-2.5 py-1 text-xs font-semibold text-accent">Đang nhận học sinh</span>
-            </div>
-            <p class="mt-5 leading-relaxed text-cream-muted">Lớp 1-1 hoặc nhóm nhỏ. Hội thoại, kể chuyện, thuyết trình, tranh luận — rèn tự tin và tư duy phản biện.</p>
-            <a href="/coaching" class="mt-6 inline-flex font-semibold text-accent transition hover:text-accent-hover">Đặt lịch tư vấn miễn phí →</a>
-          </article>
+    <section id="msmw" class="bg-navy-900 px-6 py-20">
+      <div class="mx-auto grid max-w-6xl items-center gap-10 md:grid-cols-2">
+        <div>
+          <p class="text-xs font-extrabold uppercase tracking-widest text-cream-dim">Sản phẩm riêng</p>
+          <h2 class="mt-2 font-display text-3xl font-bold text-cream">MSMW — My Story, My World</h2>
+          <p class="mt-4 leading-relaxed text-cream-muted">
+            Sách truyện song ngữ Việt–Anh với <strong class="text-cream">chính con là nhân vật chính</strong> — Felix dùng AI tạo minh hoạ riêng từ ảnh thật của bé. Món quà ý nghĩa cho sinh nhật, Tết thiếu nhi hoặc dịp đặc biệt.
+          </p>
+          <p class="mt-3 text-sm text-cream-dim">Bản số từ 69k · Bản in từ 129k · Giao toàn quốc</p>
+          <a href="/msmw" class="mt-6 inline-flex rounded-lg border border-cream-dim/40 px-6 py-3 font-semibold text-cream transition hover:border-accent hover:text-accent">
+            Xem trang MSMW →
+          </a>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <img src="/msmw/thumb-toy-brick.jpg" alt="Bìa sách MSMW Thành Phố Gạch Màu" width="240" height="360" loading="lazy" class="rounded-xl border border-cream-dim/20 object-cover shadow-lg" />
+          <img src="/msmw/thumb-heart-garden.jpg" alt="Bìa sách MSMW Khu Vườn Trái Tim" width="240" height="360" loading="lazy" class="mt-8 rounded-xl border border-cream-dim/20 object-cover shadow-lg" />
         </div>
       </div>
     </section>
 
     <section id="contact" class="mx-auto max-w-6xl px-6 py-20">
       <h2 class="font-display text-3xl font-bold text-cream">Liên hệ</h2>
-      <p class="mt-6 text-lg text-cream-muted">Nhắn cho tôi qua Zalo để liên hệ về sản phẩm hoặc cộng tác.</p>
+      <p class="mt-6 text-lg text-cream-muted">Nhắn Zalo để đặt lịch tư vấn coaching hoặc hỏi về tiến độ học của con.</p>
       <div class="mt-8 flex max-w-md flex-col gap-3 text-cream-muted">
         <div class="flex items-center gap-3">
           <svg class="h-5 w-5 shrink-0 text-cream-dim" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">

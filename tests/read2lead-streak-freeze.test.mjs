@@ -12,7 +12,7 @@ import {
   publicProgressState,
 } from '../functions/api/_read2lead-v2-state.js';
 
-const reviewPage = readFileSync('src/pages/read2lead/review.astro', 'utf-8');
+const reviewPage = readFileSync('src/pages/hoc-sinh/index.astro', 'utf-8');
 
 test('W7 constants match roadmap milestone and cap', () => {
   assert.equal(STREAK_FREEZE_MILESTONE_DAYS, 7);

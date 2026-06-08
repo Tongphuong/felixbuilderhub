@@ -103,10 +103,10 @@ test('Read2Lead landing surfaces action cards before the form', () => {
   assert.ok(formIndex > 0, 'form section should exist');
   assert.ok(source.indexOf('Tạo bài cho con') > 0);
   assert.ok(source.indexOf('Bảng xếp hạng') > 0);
-  assert.ok(source.indexOf('Hồ sơ học sinh') > 0);
+  assert.ok(source.indexOf('Xem tiến độ con') > 0);
   assert.ok(source.indexOf('Tạo bài cho con') < formIndex);
   assert.ok(source.indexOf('Bảng xếp hạng') < formIndex);
-  assert.ok(source.indexOf('Hồ sơ học sinh') < formIndex);
+  assert.ok(source.indexOf('Xem tiến độ con') < formIndex);
   assert.equal(/bảng vinh danh/i.test(source), false);
 });
 

@@ -1,6 +1,6 @@
 # SEO + A11y audit — felixbuilderhub.com
 
-Generated: 2026-06-05 (Phase α.3)
+Generated: 2026-06-05 (Phase α.3). Brand copy updated 2026-06-08: coaching-first positioning (coach huấn luyện kĩ năng nói, rèn tự tin; tiếng Anh là phương tiện); Read2Lead/MSMW framed as sản phẩm giáo dục tăng cường bởi AI.
 
 ## Per-page SEO + A11y matrix
 

@@ -8,16 +8,16 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex" />
-    <title>Đang chuyển tới hồ sơ học sinh...</title>
+    <title>Đang chuyển tới trang xem tiến độ con...</title>
   </head>
   <body>
-    <p>Đang chuyển tới <a id="profile-link" href="/read2lead/review">hồ sơ học sinh</a>...</p>
+    <p>Đang chuyển tới <a id="profile-link" href="/hoc-sinh">trang xem tiến độ con</a>...</p>
     <script is:inline>
       const params = new URLSearchParams(window.location.search);
       const code = (params.get('code') || '').trim().toUpperCase();
       const target = code
-        ? `/read2lead/review?code=${encodeURIComponent(code)}`
-        : '/read2lead/review';
+        ? `/hoc-sinh?code=${encodeURIComponent(code)}`
+        : '/hoc-sinh';
       const link = document.getElementById('profile-link');
       if (link) link.href = target;
       window.location.replace(target);

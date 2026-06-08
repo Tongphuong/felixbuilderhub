@@ -1,20 +1,18 @@
 ---
 export interface Props {
-  homeLinks?: boolean;
   read2LeadState?: boolean;
 }
 
 import { ZALO_URL } from '../config/contact';
 
-const { homeLinks = false, read2LeadState = false } = Astro.props;
-const productsHref = homeLinks ? '#products' : '/#products';
+const { read2LeadState = false } = Astro.props;
 const contactHref = ZALO_URL;
 ---
 
 <header class="sticky top-0 z-50 border-b border-cream-dim/20 bg-navy-950/85 backdrop-blur">
   <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-4">
-    <a href="/" class="flex items-center" aria-label="Felix Builder Hub">
-      <img src="/logo/felixbuilderhub_website_header_logo.webp" alt="Felix Builder Hub" class="h-9 w-auto md:h-10" width="525" height="190" />
+    <a href="/" class="flex items-center" aria-label="Felix Coaching — Trang chủ">
+      <img src="/logo/felixbuilderhub_website_header_logo.webp" alt="Felix Coaching" class="h-9 w-auto md:h-10" width="525" height="190" />
     </a>
 
     {read2LeadState && (
@@ -59,8 +57,11 @@ const contactHref = ZALO_URL;
       </div>
     )}
 
-    <nav class="hidden items-center gap-6 text-sm font-medium text-cream-muted sm:flex">
-      <a href={productsHref} class="transition hover:text-accent">Sản phẩm</a>
+    <nav class="hidden items-center gap-5 text-sm font-medium text-cream-muted lg:flex">
+      <a href="/coaching" class="transition hover:text-accent">Coaching</a>
+      <a href="/hoc-sinh" class="transition hover:text-accent">Xem tiến độ con</a>
+      <a href="/read2lead" class="transition hover:text-accent">Read2Lead <span class="font-normal text-cream-dim">· Luyện đọc</span></a>
+      <a href="/msmw" class="transition hover:text-accent">MSMW <span class="font-normal text-cream-dim">· Sách cho con</span></a>
       <a href={contactHref} target="_blank" rel="noopener noreferrer" class="transition hover:text-accent">Liên hệ</a>
     </nav>
     <button
@@ -69,16 +70,19 @@ const contactHref = ZALO_URL;
       aria-label="Mở menu"
       aria-expanded="false"
       aria-controls="mobile-nav"
-      class="inline-flex h-10 w-10 items-center justify-center rounded-md border border-cream-dim/30 text-cream transition hover:border-accent hover:text-accent sm:hidden"
+      class="inline-flex h-10 w-10 items-center justify-center rounded-md border border-cream-dim/30 text-cream transition hover:border-accent hover:text-accent lg:hidden"
     >
       <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
         <path d="M4 6h16M4 12h16M4 18h16" />
       </svg>
     </button>
   </div>
-  <div id="mobile-nav" hidden class="border-t border-cream-dim/20 bg-navy-950/95 sm:hidden">
+  <div id="mobile-nav" hidden class="border-t border-cream-dim/20 bg-navy-950/95 lg:hidden">
     <nav class="mx-auto flex max-w-6xl flex-col px-6 py-4 text-base font-medium text-cream-muted">
-      <a href={productsHref} class="py-3 transition hover:text-accent">Sản phẩm</a>
+      <a href="/coaching" class="py-3 transition hover:text-accent">Coaching</a>
+      <a href="/hoc-sinh" class="py-3 transition hover:text-accent">Xem tiến độ con</a>
+      <a href="/read2lead" class="py-3 transition hover:text-accent">Read2Lead · Luyện đọc</a>
+      <a href="/msmw" class="py-3 transition hover:text-accent">MSMW · Sách cho con</a>
       <a href={contactHref} target="_blank" rel="noopener noreferrer" class="py-3 transition hover:text-accent">Liên hệ</a>
     </nav>
   </div>

@@ -61,7 +61,7 @@ test('buildStoryProgressForProfile handles empty state for parents', () => {
 });
 
 test('student profile page renders story progress section', () => {
-  const reviewPage = readFileSync('src/pages/read2lead/review.astro', 'utf-8');
+  const reviewPage = readFileSync('src/pages/hoc-sinh/index.astro', 'utf-8');
   assert.match(reviewPage, /Các truyện con đã học/);
   assert.match(reviewPage, /renderStoryPortfolio/);
   assert.match(reviewPage, /Cho con làm lại/);
@@ -70,7 +70,7 @@ test('student profile page renders story progress section', () => {
 
 test('legacy library route redirects to student profile', () => {
   const libraryPage = readFileSync('src/pages/read2lead/library.astro', 'utf-8');
-  assert.match(libraryPage, /read2lead\/review/);
+  assert.match(libraryPage, /\/hoc-sinh/);
   assert.match(libraryPage, /window\.location\.replace\(target\)/);
   assert.match(libraryPage, /encodeURIComponent\(code\)/);
 });

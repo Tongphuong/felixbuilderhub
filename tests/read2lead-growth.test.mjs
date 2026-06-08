@@ -9,7 +9,7 @@ import {
 } from '../functions/api/_read2lead-growth.js';
 
 const progressApi = readFileSync('functions/api/read2lead-progress.js', 'utf-8');
-const reviewPage = readFileSync('src/pages/read2lead/review.astro', 'utf-8');
+const reviewPage = readFileSync('src/pages/hoc-sinh/index.astro', 'utf-8');
 
 test('vietnamWeekKey buckets by Monday week in Vietnam calendar', () => {
   assert.equal(vietnamWeekKey('2026-06-07T10:00:00.000Z'), '2026-06-01');

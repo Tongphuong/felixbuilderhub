@@ -9,7 +9,8 @@ Generated: 2026-06-05 (Phase α.1.6)
 | `/` | src/pages/index.astro | 157 | ✓ | ✓ | ✓ |
 | `/read2lead` | src/pages/read2lead.astro | 575 | ✓ | ✓ | ✓ |
 | `/read2lead/lesson` | src/pages/read2lead/lesson.astro | 1589 | ✓ | ✓ | ✓ |
-| `/read2lead/review` | src/pages/read2lead/review.astro | 457 | ✓ | ✓ | ✓ |
+| `/read2lead/review` | src/pages/read2lead/review.astro | 5 | ✓ | — | — |
+| `/hoc-sinh` | src/pages/hoc-sinh/index.astro | — | ✓ | ✓ | ✓ |
 | `/read2lead/leaderboard` | src/pages/read2lead/leaderboard.astro | 194 | ✓ | ✓ | ✓ |
 | `/msmw` | src/pages/msmw.astro | 388 | ✓ | ✓ | ✓ |
 | `/coaching` | src/pages/coaching.astro | 297 | ✓ | ✓ | ✓ |

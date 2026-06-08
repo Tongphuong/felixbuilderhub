@@ -62,7 +62,7 @@ export async function onRequestPost(context) {
           progress.current_pack.status === 'generation_in_progress'
             ? 'Felixar đang tạo bài cho con. Vui lòng đợi thêm một chút, đừng bấm tạo lại.'
             : 'Bài trước cần nộp ảnh bài làm và ghi âm con kể lại câu chuyện trước khi mở bài mới.',
-        review_link: `/read2lead/review?code=${encodeURIComponent(accessCode)}`,
+        review_link: `/hoc-sinh?code=${encodeURIComponent(accessCode)}`,
         current_pack: publicPack(progress.current_pack),
         progress: publicProgress(progress),
       },
@@ -113,7 +113,7 @@ export async function onRequestPost(context) {
   );
 
   try {
-    const reviewUrl = `${new URL(request.url).origin}/read2lead/review?code=${encodeURIComponent(accessCode)}`;
+    const reviewUrl = `${new URL(request.url).origin}/hoc-sinh?code=${encodeURIComponent(accessCode)}`;
     const upstream = await fetch(`${backendUrl}/generate-async-v2`, {
       method: 'POST',
       headers: {
@@ -170,7 +170,7 @@ export async function onRequestPost(context) {
         topic: finalPack.topic,
         story_title: finalPack.story_title,
         child_name: progress.student_name,
-        review_link: `/read2lead/review?code=${encodeURIComponent(accessCode)}`,
+        review_link: `/hoc-sinh?code=${encodeURIComponent(accessCode)}`,
         lesson_link: `/read2lead/lesson?code=${encodeURIComponent(accessCode)}&pack_id=${encodeURIComponent(finalPack.pack_id)}`,
         current_pack: publicPack(finalPack),
         progress: publicProgress(nextProgress),
