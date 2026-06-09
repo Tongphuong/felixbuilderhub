@@ -248,6 +248,27 @@
     return new Promise((resolve) => global.setTimeout(resolve, ms));
   }
 
+  // Clipboard fallback for Safari / non-secure contexts where navigator.clipboard fails.
+  function legacyCopy(text) {
+    try {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.setAttribute('readonly', '');
+      ta.style.position = 'fixed';
+      ta.style.top = '0';
+      ta.style.left = '0';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      const ok = document.execCommand('copy');
+      document.body.removeChild(ta);
+      return ok;
+    } catch {
+      return false;
+    }
+  }
+
   /**
    * iOS/Safari often drops the first syllable unless the audio pipeline warms up first.
    * Call after getUserMedia, before MediaRecorder.start().
@@ -374,6 +395,8 @@
         </details>
       `;
       helpEl.hidden = false;
+      // The copy-help button is only useful when something is wrong.
+      if (copyHelpBtn) copyHelpBtn.hidden = false;
       scrollToPanel(root);
     }
 
@@ -397,16 +420,26 @@
       root.dataset.state = 'passed';
       if (kind === 'test') markSessionPassed();
       if (passBadge) passBadge.hidden = false;
-      if (testBtn) testBtn.hidden = kind === 'test';
+      // Never a dead end: keep a working "test again" button so the panel always
+      // does something when tapped (the old build left only a broken copy button).
+      if (testBtn) {
+        testBtn.hidden = false;
+        testBtn.disabled = false;
+        testBtn.textContent = '🎤 Nói thử lại';
+      }
       if (retryBtn) retryBtn.hidden = true;
       if (parentSkipBtn) parentSkipBtn.hidden = true;
+      if (copyHelpBtn) copyHelpBtn.hidden = true;
       if (meterWrap) meterWrap.hidden = true;
       hideHelp();
       if (envWarnEl) envWarnEl.hidden = true;
+      const hasPlayback = playBtn && !playBtn.hidden;
       setStatus(
         kind === 'parent'
-          ? 'Ba mẹ xác nhận micro OK. Con thử bấm Con nói — nếu vẫn lỗi, làm lại Kiểm tra micro.'
-          : 'Micro hoạt động tốt! Con có thể bấm Con nói nhé.',
+          ? 'Ba mẹ xác nhận micro OK. Nếu vẫn lỗi, bấm "Nói thử lại".'
+          : hasPlayback
+            ? 'Micro tốt! Bấm "▶ Nghe lại giọng con" để nghe, hoặc "Con nói" để làm bài.'
+            : 'Micro đã sẵn sàng. Bấm "🎤 Nói thử lại" để kiểm tra, hoặc "Con nói" để làm bài.',
         'ok',
       );
       onPass();
@@ -479,6 +512,7 @@
       }
       if (playBtn) playBtn.hidden = true;
       if (passBadge) passBadge.hidden = true;
+      if (copyHelpBtn) copyHelpBtn.hidden = true;
       if (testBtn) testBtn.disabled = true;
       if (retryBtn) retryBtn.hidden = true;
       root.dataset.state = 'testing';
@@ -487,6 +521,7 @@
       setMeterLevel(0);
 
       let peak = 0;
+      let heard = false;
       let audioContext = null;
       let meterTimer = null;
 
@@ -496,9 +531,6 @@
         activeStream = stream;
         await populateDevices();
 
-        if (audioContext && audioContext.state !== 'closed') {
-          await audioContext.close().catch(() => {});
-        }
         audioContext = new AudioContext();
         if (audioContext.state === 'suspended') {
           await audioContext.resume().catch(() => {});
@@ -509,16 +541,19 @@
         source.connect(analyser);
         const buffer = new Uint8Array(analyser.fftSize);
 
+        // Zoom-style LIVE meter: the bar reacts in real time as the child speaks,
+        // and we flip to a happy "heard you" state the instant sound crosses the
+        // threshold — immediate feedback, no 3s wait (the warmup is for the lesson).
+        setStatus('Nói "Hello Minny" to lên — nhìn thanh xanh nhảy nhé! 🎤', 'active');
         meterTimer = global.setInterval(() => {
           const level = readPeakLevel(analyser, buffer);
           if (level > peak) peak = level;
           setMeterLevel(level);
+          if (!heard && level >= SILENT_LEVEL) {
+            heard = true;
+            setStatus('Nghe rõ rồi! ✓ Con nói thêm một chút nữa nhé...', 'ok');
+          }
         }, LEVEL_SAMPLE_MS);
-
-        await runMicWarmupCountdown({
-          onMessage: (msg) => setStatus(msg, 'active'),
-        });
-        setStatus('Giờ nói "Hello Minny" to và rõ nhé...', 'active');
 
         const { mediaRecorder, mimeType } = createMediaRecorder(stream);
         const chunks = [];
@@ -567,7 +602,10 @@
         }
 
         testBlobUrl = URL.createObjectURL(blob);
-        if (playBtn) playBtn.hidden = false;
+        if (playBtn) {
+          playBtn.hidden = false;
+          playBtn.textContent = '▶ Nghe lại giọng con';
+        }
         failCount = 0;
         setPassed('test');
       } catch (error) {
@@ -605,15 +643,23 @@
 
     copyHelpBtn?.addEventListener('click', async () => {
       const text = fullHelpText(platform, browser);
+      let ok = false;
       try {
-        await navigator.clipboard.writeText(text);
-        if (copyHelpBtn) copyHelpBtn.textContent = 'Đã copy!';
+        if (navigator.clipboard?.writeText) {
+          await navigator.clipboard.writeText(text);
+          ok = true;
+        }
+      } catch {
+        ok = false;
+      }
+      if (!ok) ok = legacyCopy(text);
+      if (copyHelpBtn) {
+        copyHelpBtn.textContent = ok ? '✓ Đã copy — gửi cho ba mẹ nhé!' : 'Xem hướng dẫn bên dưới ⤵';
         global.setTimeout(() => {
           if (copyHelpBtn) copyHelpBtn.textContent = 'Copy hướng dẫn cho ba mẹ';
-        }, 2000);
-      } catch {
-        global.prompt('Copy hướng dẫn này gửi cho ba mẹ:', text);
+        }, 2500);
       }
+      if (!ok) showHelp({ name: 'NotAllowedError' });
     });
 
     if (sessionPassed()) {

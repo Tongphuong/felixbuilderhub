@@ -20,6 +20,19 @@ test('mic check script exposes mount API and OS help', () => {
   assert.match(micScript, /data-mic-meter-bar/);
 });
 
+test('mic check is a live Zoom-style test (real-time meter + playback + re-test)', () => {
+  // Live "heard you" detection while the bar moves in real time.
+  assert.match(micScript, /Nghe rõ rồi/);
+  assert.match(micScript, /level >= SILENT_LEVEL/);
+  // Plays the child's own recording back.
+  assert.match(micScript, /Nghe lại giọng con/);
+  // Passed state is never a dead end — offers a working re-test button.
+  assert.match(micScript, /Nói thử lại/);
+  // Robust clipboard fallback so the copy button actually does something.
+  assert.match(micScript, /function legacyCopy/);
+  assert.match(micScript, /execCommand\('copy'\)/);
+});
+
 test('lesson page has mic prep banner and shared stream helper', () => {
   assert.match(lessonPage, /mic-prep-banner/);
   assert.match(lessonPage, /_r2lOpenMicStream/);
