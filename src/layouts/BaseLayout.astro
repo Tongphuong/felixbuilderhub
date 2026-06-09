@@ -37,6 +37,40 @@ const ogImageUrl = new URL(ogImage, Astro.site ?? 'https://felixbuilderhub.com')
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap&subset=vietnamese" rel="stylesheet" />
+    <script is:inline define:vars={{ clarityId: import.meta.env.PUBLIC_CLARITY_ID }}>
+      if (clarityId) {
+        (function(c,l,a,r,i,t,y){
+          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", clarityId);
+      }
+    </script>
+    <script is:inline define:vars={{ sentrySrc: import.meta.env.PUBLIC_SENTRY_LOADER_SRC, env: import.meta.env.PUBLIC_ENV || 'production' }}>
+      if (sentrySrc) {
+        var s=document.createElement('script'); s.src=sentrySrc; s.async=1; s.crossOrigin='anonymous';
+        s.onload=function(){
+          if (!window.Sentry) return;
+          window.Sentry.onLoad(function(){
+            window.Sentry.init({
+              environment: env,
+              sendDefaultPii: false,
+              tracesSampleRate: 0.1,
+              beforeSend: function(event){
+                var scrub=function(u){return typeof u==='string'?u.replace(/([?&](code|access_code)=)[^&]+/gi,'$1***'):u;};
+                if(event.request){ event.request.url=scrub(event.request.url); event.request.query_string=scrub(event.request.query_string); }
+                return event;
+              },
+              beforeBreadcrumb: function(crumb){
+                if(crumb&&crumb.data&&crumb.data.url){ crumb.data.url=String(crumb.data.url).replace(/([?&](code|access_code)=)[^&]+/gi,'$1***'); }
+                return crumb;
+              }
+            });
+          });
+        };
+        document.head.appendChild(s);
+      }
+    </script>
   </head>
   <body class="star-field font-sans bg-navy-950 text-cream min-h-screen flex flex-col antialiased">
     <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-accent focus:px-4 focus:py-2 focus:font-semibold focus:text-navy-950">Bỏ qua tới nội dung chính</a>
