@@ -1,0 +1,112 @@
+.r2l-rank-badge {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  border: 2px solid;
+  border-radius: 0.65rem;
+  padding: 0.35rem 0.55rem;
+  color: #f5e6d3;
+  line-height: 1.1;
+}
+
+.r2l-rank-badge--compact {
+  min-width: 4.5rem;
+}
+
+.r2l-rank-badge--large {
+  min-width: 7rem;
+  padding: 0.65rem 0.85rem;
+  gap: 0.35rem;
+}
+
+.r2l-rank-badge__label {
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.02em;
+}
+
+.r2l-rank-badge--large .r2l-rank-badge__label {
+  font-size: 1.05rem;
+}
+
+.r2l-rank-badge__stars {
+  display: flex;
+  gap: 0.1rem;
+  font-size: 0.62rem;
+}
+
+.r2l-rank-badge--large .r2l-rank-badge__stars {
+  font-size: 0.95rem;
+}
+
+.r2l-rank-star--filled {
+  filter: drop-shadow(0 0 2px rgb(255 215 0 / 0.45));
+}
+
+.r2l-rank-section {
+  border-radius: 1.25rem;
+  border: 3px solid rgb(212 166 78 / 0.28);
+  background: rgb(10 14 26 / 0.55);
+  padding: 1.1rem 1.25rem;
+}
+
+.r2l-rank-section__title {
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgb(212 166 78);
+}
+
+.r2l-rank-progress {
+  margin-top: 0.65rem;
+  font-size: 0.9rem;
+  color: rgb(245 230 211 / 0.85);
+}
+
+.r2l-rank-progress--apex {
+  color: rgb(255 215 0 / 0.9);
+}
+
+.r2l-ladder-tier {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.4rem 0.55rem;
+  border-radius: 0.65rem;
+  font-size: 0.82rem;
+  color: rgb(245 230 211 / 0.55);
+}
+
+.r2l-ladder-tier--current {
+  color: #f5e6d3;
+  font-weight: 800;
+  background: color-mix(in srgb, var(--tier-color) 22%, transparent);
+  border: 1px solid color-mix(in srgb, var(--tier-color) 55%, transparent);
+}
+
+.r2l-ladder-tier__dot {
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 9999px;
+  background: var(--tier-color);
+  opacity: 0.65;
+}
+
+.r2l-ladder-tier--current .r2l-ladder-tier__dot {
+  opacity: 1;
+  box-shadow: 0 0 8px var(--tier-color);
+}
+
+.r2l-ladder-grid {
+  display: grid;
+  gap: 0.35rem;
+  margin-top: 0.75rem;
+}
+
+.r2l-reading-level {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: rgb(245 230 211 / 0.62);
+  white-space: nowrap;
+}
