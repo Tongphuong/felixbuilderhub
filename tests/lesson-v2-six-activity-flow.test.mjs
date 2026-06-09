@@ -78,9 +78,10 @@ test('retell listen unlocks record immediately like activity 5', () => {
   assert.doesNotMatch(lessonPage, /_r2lSpeakEnglishLine\(prompt\.en, \(\) => \{\s*_r2lRetellState\.heardInstruction = true/s);
 });
 
-test('activity nav resolves next/prev from live activity list', () => {
-  assert.match(lessonPage, /function updateActivityNavButtons/);
-  assert.match(lessonPage, /data-activity-nav="\$\{escapeHtml\(activityType\)\}"/);
+test('global CTA advances through live activity list', () => {
+  assert.match(lessonPage, /function updateGlobalCta/);
+  assert.match(lessonPage, /id="lesson-continue"/);
+  assert.match(lessonPage, /showActivity\(state\.activityIndex \+ 1\)/);
   assert.match(lessonPage, /function activityIndexByType/);
 });
 
@@ -111,13 +112,11 @@ test('listen_and_order accepts duplicate tokens by sentence text, not strict ind
   assert.doesNotMatch(lessonPage, /correct_order_indices\.every\(\(idx, i\) => idx === st\[i\]\)/);
 });
 
-test('written_response hides answer hints, saves drafts, and uses manual navigation', () => {
+test('written_response hides answer hints, saves drafts, and uses global CTA navigation', () => {
   assert.match(lessonPage, /writtenDrafts/);
   assert.match(lessonPage, /function collectWrittenAnswers/);
-  assert.match(lessonPage, /data-activity-prev/);
-  assert.match(lessonPage, /data-activity-next/);
-  assert.match(lessonPage, /Quay lại/);
-  assert.match(lessonPage, /Tiếp theo/);
+  assert.match(lessonPage, /id="lesson-continue"/);
+  assert.match(lessonPage, /function updateGlobalCta/);
   assert.doesNotMatch(lessonPage, /data-written-model/);
   assert.doesNotMatch(lessonPage, /Gợi ý đáp án/);
   assert.doesNotMatch(lessonPage, /question\.hint_vi/);
@@ -132,10 +131,10 @@ test('render-once architecture: renderAllActivitiesOnce + showActivity', () => {
 
 test('activity navigation preserves existing answers by hiding and showing shells only', () => {
   const showStart = lessonPage.indexOf('function showActivity');
-  const navStart = lessonPage.indexOf('function renderActivityNav');
+  const ctaStart = lessonPage.indexOf('function updateGlobalCta');
   assert.ok(showStart > -1, 'showActivity should exist');
-  assert.ok(navStart > showStart, 'renderActivityNav should appear after showActivity');
-  const showBody = lessonPage.slice(showStart, navStart);
+  assert.ok(ctaStart > showStart, 'updateGlobalCta should appear after showActivity');
+  const showBody = lessonPage.slice(showStart, ctaStart);
   assert.match(showBody, /shell\.hidden = true/);
   assert.match(showBody, /shell\.hidden = false/);
   assert.doesNotMatch(showBody, /renderFillBlankActivity/);

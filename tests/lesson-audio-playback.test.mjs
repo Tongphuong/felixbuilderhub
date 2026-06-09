@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 
 const lessonPage = readFileSync('src/pages/read2lead/lesson.astro', 'utf-8');
+const storyDock = readFileSync('src/components/read2lead/v2/StoryDock.astro', 'utf-8');
 
 test('lesson content audio uses one shared playback state', () => {
   assert.match(lessonPage, /const lessonAudioState = \{/);
@@ -29,9 +30,10 @@ test('new lesson audio stops the previous lesson audio before playing', () => {
 });
 
 test('story and sentence play buttons pass their button to playAudio', () => {
+  assert.match(storyDock, /id="dock-play-story"/);
   assert.match(
     lessonPage,
-    /playAudio\(state\.lesson\?\.story\?\.full_audio_url \|\| '', playStoryButton\)/,
+    /playAudio\(state\.lesson\?\.story\?\.full_audio_url \|\| story\.full_audio_url \|\| '', playButton\)/,
   );
   assert.match(lessonPage, /playAudio\(url, button\)/);
   assert.match(lessonPage, /setLessonPlayButtonState\(button, url\)/);

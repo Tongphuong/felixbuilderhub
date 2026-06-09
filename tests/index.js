@@ -1,6 +1,7 @@
 import './read2lead-v2-state.test.mjs';
 import './lesson-audio-playback.test.mjs';
 import './lesson-v2-six-activity-flow.test.mjs';
+import './lesson-ux-regression.test.mjs';
 import './lesson-recorder.test.mjs';
 import './lesson-sfx.test.mjs';
 import './read2lead-rank-system.test.mjs';
