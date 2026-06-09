@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
+import '../../styles/rank-ladder.css';
 ---
 
 <BaseLayout
@@ -491,6 +492,13 @@ import Footer from '../../components/Footer.astro';
   </style>
 
   <script>
+    import { isV3Enabled } from '../../config/flags';
+    import {
+      rankBadgeHtml,
+      rankLadderPanelHtml,
+      rankProgressLineHtml,
+    } from '../../lib/rank-ladder-ui';
+
     const params = new URLSearchParams(window.location.search);
     const codeInput = document.getElementById('access-code');
     const loadBtn = document.getElementById('load-progress');
@@ -616,11 +624,32 @@ import Footer from '../../components/Footer.astro';
       window.history.replaceState({}, '', url);
     }
 
+    /** @param {Record<string, unknown>} read2LeadState */
+    function renderRankLadderSection(read2LeadState) {
+      if (!isV3Enabled()) return '';
+      const ladder = read2LeadState.rank_ladder;
+      if (!ladder) return '';
+      return `
+        <section class="r2l-rank-section" aria-label="Bậc hạng Read2Lead">
+          <p class="r2l-rank-section__title">Hạng chiến công</p>
+          <div class="mt-3 flex flex-wrap items-center gap-4">
+            ${rankBadgeHtml(ladder, 'large')}
+            <div class="min-w-0 flex-1">
+              ${rankProgressLineHtml(ladder)}
+            </div>
+          </div>
+          <div class="r2l-ladder-grid" role="list">${rankLadderPanelHtml(ladder.tier_index ?? 0)}</div>
+        </section>
+      `;
+    }
+
     function renderHero(progress, read2LeadState, storyProgress) {
       const name = progress.student_name || 'Bé yêu';
       const level = formatLevel(read2LeadState.current_level || progress.current_level || 'L1');
       const rankTitle = read2LeadState.rank_title || 'Đồng';
       const rankAsset = read2LeadState.rank_asset_url || '/assets/r2l/ranks/rank-l1-bronze.svg';
+      const v3 = isV3Enabled();
+      const ladder = read2LeadState.rank_ladder;
       const xpPercent = read2LeadState.xp_percent ?? 0;
       const xpLabel = `${read2LeadState.xp_in_level ?? 0}/${read2LeadState.xp_to_next_level ?? 60} XP`;
       const levelHint = storyProgress?.level_hint
@@ -631,13 +660,17 @@ import Footer from '../../components/Footer.astro';
       return `
         <div class="profile-hero">
           <div class="profile-avatar" aria-hidden="true">
-            <img src="${escapeHtml(rankAsset)}" alt="" />
+            ${v3 && ladder ? rankBadgeHtml(ladder, 'large') : `<img src="${escapeHtml(rankAsset)}" alt="" />`}
           </div>
           <div class="min-w-0 flex-1">
             <p class="text-sm font-semibold text-cream-muted">Hồ sơ của</p>
             <h2 class="font-display text-2xl font-extrabold text-cream sm:text-3xl">${escapeHtml(name)}</h2>
             <div class="mt-2 flex flex-wrap items-center gap-2">
-              <span class="profile-level-pill">${escapeHtml(level)} · ${escapeHtml(rankTitle)}</span>
+              ${
+                v3 && ladder
+                  ? `<span class="profile-level-pill">Cấp độ đọc: ${escapeHtml(read2LeadState.current_level || progress.current_level || 'L1')}</span>`
+                  : `<span class="profile-level-pill">${escapeHtml(level)} · ${escapeHtml(rankTitle)}</span>`
+              }
             </div>
             <div class="profile-xp-track" role="progressbar" aria-valuenow="${xpPercent}" aria-valuemin="0" aria-valuemax="100" aria-label="Tiến trình XP">
               <span class="profile-xp-fill" style="width: ${xpPercent}%"></span>
@@ -887,6 +920,7 @@ import Footer from '../../components/Footer.astro';
 
       dashboardCard.innerHTML = `
         ${renderHero(progress, read2LeadState, storyProgress)}
+        ${renderRankLadderSection(read2LeadState)}
         ${renderNextStep(primary, status)}
         ${renderStats(read2LeadState, progress, storyProgress)}
         ${renderActionMenu(code, pack, primary)}
