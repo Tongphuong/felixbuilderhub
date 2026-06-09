@@ -7,6 +7,7 @@
     <p class="r2l-mic-check__label">Kiểm tra micro</p>
     <span class="r2l-mic-check__pass" data-mic-pass hidden>✓ Micro OK</span>
   </div>
+  <p class="r2l-mic-check__env-warn" data-mic-env-warn hidden></p>
   <p class="r2l-mic-check__status" data-mic-status data-tone="neutral">
     Bước đầu: kiểm tra micro trước khi nói với Minny.
   </p>
@@ -27,6 +28,12 @@
     <button type="button" class="r2l-mic-check__btn r2l-mic-check__btn--secondary" data-mic-retry hidden>
       Thử lại
     </button>
+    <button type="button" class="r2l-mic-check__btn r2l-mic-check__btn--secondary" data-mic-copy-help>
+      Copy hướng dẫn cho ba mẹ
+    </button>
+    <button type="button" class="r2l-mic-check__btn r2l-mic-check__btn--parent" data-mic-parent-skip hidden>
+      Ba mẹ đã bật micro — cho con thử ghi âm
+    </button>
   </div>
   <div class="r2l-mic-check__help" data-mic-help hidden></div>
 </div>
@@ -43,6 +50,33 @@
   .r2l-mic-check[data-state='passed'] {
     border-color: rgb(74 222 128 / 0.45);
     background: rgb(74 222 128 / 0.08);
+  }
+
+  .r2l-mic-check--attention {
+    animation: r2l-mic-pulse 0.8s ease-in-out 3;
+    box-shadow: 0 0 0 3px rgb(212 166 78 / 0.45);
+  }
+
+  @keyframes r2l-mic-pulse {
+    0%,
+    100% {
+      box-shadow: 0 0 0 2px rgb(212 166 78 / 0.25);
+    }
+    50% {
+      box-shadow: 0 0 0 6px rgb(212 166 78 / 0.45);
+    }
+  }
+
+  .r2l-mic-check__env-warn {
+    margin-top: 0.5rem;
+    border-radius: 0.65rem;
+    border: 1px solid rgb(248 113 113 / 0.45);
+    background: rgb(248 113 113 / 0.12);
+    padding: 0.55rem 0.65rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    line-height: 1.45;
+    color: rgb(254 202 202);
   }
 
   .r2l-mic-check__head {
@@ -151,6 +185,13 @@
     background: rgb(245 230 211 / 0.08);
     color: rgb(245 230 211);
     border-color: rgb(245 230 211 / 0.2);
+  }
+
+  .r2l-mic-check__btn--parent {
+    background: rgb(74 222 128 / 0.15);
+    color: rgb(187 247 208);
+    border-color: rgb(74 222 128 / 0.4);
+    width: 100%;
   }
 
   .r2l-mic-check__help {

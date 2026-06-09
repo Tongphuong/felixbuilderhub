@@ -46,6 +46,18 @@ const retellGuideInline = retellGuideSrc
 
       <article id="lesson-shell" class="hidden space-y-6">
         <ParentStrip />
+        <div
+          id="mic-prep-banner"
+          class="hidden rounded-md border border-gold/35 bg-gold/10 px-4 py-3 text-sm leading-relaxed text-cream"
+          role="status"
+        >
+          <p class="font-bold text-gold">Bài này có phần nói — cần micro</p>
+          <p class="mt-1 text-cream/85">
+            Ba mẹ: cho Chrome hoặc Safari được dùng micro (Windows/Mac → Cài đặt → Quyền riêng tư → Microphone).
+            Không mở trong Zalo/Facebook.
+          </p>
+          <button id="mic-prep-dismiss" type="button" class="r2l-secondary mt-3 text-xs">Đã hiểu</button>
+        </div>
         <StoryDock />
         <MinnyCoachStrip />
 
@@ -807,12 +819,12 @@ function _r2lBuildRetellTemplate(lesson) {
     listen_and_speak: {
       doing: (n, total) => `Phần ${n}/${total}: Nói lại — nghe rồi đọc theo`,
       needs: 'Bấm Kiểm tra micro, rồi Nghe, rồi Con nói',
-      stuck: 'Micro: bấm Kiểm tra micro → làm theo hướng dẫn Windows/Mac trong khung vàng',
+      stuck: 'Micro: Windows/Mac → Cài đặt → Microphone → bật cho Chrome/Safari; copy hướng dẫn trong khung vàng',
     },
     retell_summary: {
       doing: (n, total) => `Phần ${n}/${total}: Kể truyện — điền chỗ trống và kể lại`,
-      needs: 'Đọc truyện trong khung → điền gợi ý → Nghe → Con kể',
-      stuck: 'Bấm Mở truyện nếu khung truyện bị thu gọn; micro: Kiểm tra micro ở trên',
+      needs: 'Kiểm tra micro → đọc truyện → Nghe truyện → Con kể',
+      stuck: 'Micro kẹt: bấm Copy hướng dẫn cho ba mẹ; mở bằng Chrome/Safari (không Zalo)',
     },
   };
 
@@ -1037,6 +1049,37 @@ function _r2lBuildRetellTemplate(lesson) {
   document.addEventListener('r2l-mic-gate', (event) => {
     _r2lApplyMicGate(Boolean(event.detail?.ready));
   });
+
+  async function _r2lOpenMicStream() {
+    if (window.R2LMicCheck?.getMicStream) {
+      return window.R2LMicCheck.getMicStream();
+    }
+    return navigator.mediaDevices.getUserMedia({
+      audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true },
+    });
+  }
+
+  function _r2lFocusMicHelp(shell) {
+    if (window.R2LMicCheck?.focusMicHelpInShell) {
+      window.R2LMicCheck.focusMicHelpInShell(shell);
+      return;
+    }
+    const panel = shell?.querySelector?.('[data-r2l-mic-check]');
+    if (panel) panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  function _r2lLessonNeedsMic(activities) {
+    return (activities || []).some((a) => a?.type === 'listen_and_speak' || a?.type === 'retell_summary');
+  }
+
+  function _r2lUpdateMicPrepBanner(activities) {
+    const banner = qs('#mic-prep-banner');
+    if (!banner) return;
+    const dismissed = sessionStorage.getItem('r2l_mic_prep_dismissed') === '1';
+    const passed = window.R2LMicCheck?.sessionPassed?.();
+    const show = _r2lLessonNeedsMic(activities) && !dismissed && !passed;
+    banner.classList.toggle('hidden', !show);
+  }
 
   function _r2lMicIsReady() {
     return _r2lHasMicInput() && _r2lHasMediaRecorder();
@@ -1313,9 +1356,7 @@ function _r2lBuildRetellTemplate(lesson) {
     const prev = _r2lRecorderState.perItem.get(itemKey);
     if (prev?.blobUrl) URL.revokeObjectURL(prev.blobUrl);
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({
-        audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true },
-      });
+      const stream = await _r2lOpenMicStream();
       const { mediaRecorder: mr, mimeType } = _r2lCreateMediaRecorder(stream);
       const chunks = [];
       mr.addEventListener('dataavailable', (e) => {
@@ -1380,6 +1421,7 @@ function _r2lBuildRetellTemplate(lesson) {
       });
       _r2lRenderRecorderUi(itemKey, cardEl);
       _r2lRenderSpeakFeedback(cardEl, { ok: false, message: _r2lRecorderHelpMessage(err) });
+      _r2lFocusMicHelp(cardEl?.closest('[data-activity-shell="listen_and_speak"]'));
     }
   }
 
@@ -1934,9 +1976,7 @@ function _r2lBuildRetellTemplate(lesson) {
     }
     _r2lCleanupRetellRecording();
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({
-        audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true },
-      });
+      const stream = await _r2lOpenMicStream();
       const { mediaRecorder, mimeType } = _r2lCreateMediaRecorder(stream);
       const chunks = [];
       mediaRecorder.addEventListener('dataavailable', (event) => {
@@ -1990,6 +2030,7 @@ function _r2lBuildRetellTemplate(lesson) {
         ok: false,
         message: _r2lRecorderHelpMessage(error),
       });
+      _r2lFocusMicHelp(_r2lRetellState.heroEl);
       _r2lRenderRetellControls();
     }
   }
@@ -2274,6 +2315,16 @@ function _r2lBuildRetellTemplate(lesson) {
     }
 
     initStoryDock(lesson.story || {});
+    _r2lUpdateMicPrepBanner(lesson.activities || []);
+    qs('#mic-prep-dismiss')?.addEventListener('click', () => {
+      try {
+        sessionStorage.setItem('r2l_mic_prep_dismissed', '1');
+      } catch {}
+      qs('#mic-prep-banner')?.classList.add('hidden');
+    });
+    document.addEventListener('r2l-mic-gate', (event) => {
+      if (event.detail?.ready) _r2lUpdateMicPrepBanner(state.lesson?.activities || []);
+    });
     renderAllActivitiesOnce(lesson.activities || []);
     showActivity(0);
     updateProgress();
@@ -2440,6 +2491,10 @@ function _r2lBuildRetellTemplate(lesson) {
         _r2lApplyMicGate(true);
       } else {
         _r2lApplyMicGate(false);
+        const panel = shell.querySelector('[data-r2l-mic-check]');
+        if (panel && window.R2LMicCheck?.scrollToPanel) {
+          window.setTimeout(() => window.R2LMicCheck.scrollToPanel(panel), 300);
+        }
       }
     }
   }

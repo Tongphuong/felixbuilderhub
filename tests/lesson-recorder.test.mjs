@@ -31,6 +31,7 @@ test('lesson page gates speak recording behind mic check', () => {
   assert.match(lessonPage, /_r2lMicGateReady/);
   assert.match(lessonPage, /Kiểm tra micro/);
   assert.match(lessonPage, /r2l-mic-gate/);
+  assert.match(lessonPage, /_r2lOpenMicStream/);
 });
 
 test('lesson page mounts Minny speak controls per sentence', () => {

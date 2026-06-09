@@ -786,9 +786,11 @@ import MicCheckPanel from '../../components/read2lead/v2/MicCheckPanel.astro';
 
       cleanupRecording();
       try {
-        const stream = await navigator.mediaDevices.getUserMedia({
-          audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true },
-        });
+        const stream = window.R2LMicCheck?.getMicStream
+          ? await window.R2LMicCheck.getMicStream()
+          : await navigator.mediaDevices.getUserMedia({
+              audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true },
+            });
         const { mediaRecorder, mimeType } = createRecorder(stream);
         const chunks = [];
 
@@ -828,6 +830,7 @@ import MicCheckPanel from '../../components/read2lead/v2/MicCheckPanel.astro';
         const message = window.R2LMicCheck?.helpMessage?.(error)
           || 'Không mở được micro. Con nhờ bố mẹ cho phép micro nhé.';
         renderResult({ ok: false, message });
+        window.R2LMicCheck?.focusMicHelpInShell?.(shell);
         cleanupRecording();
         updateRecordUi();
       }
