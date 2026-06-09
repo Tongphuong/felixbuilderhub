@@ -120,6 +120,15 @@ function isV2PackReviewed(pack) {
   return Boolean(pack && pack.status === 'reviewed_pass_web_v2');
 }
 
+const DUPLICATE_SUBMIT_WINDOW_MS = 12000;
+
+function isRecentDuplicateSubmit(currentPack) {
+  const last = currentPack?.web_lesson_summary;
+  if (!last?.submitted_at) return false;
+  const ageMs = Date.now() - Date.parse(last.submitted_at);
+  return ageMs >= 0 && ageMs < DUPLICATE_SUBMIT_WINDOW_MS;
+}
+
 async function submitV2Lesson({
   accessCode,
   codeData,
@@ -129,6 +138,16 @@ async function submitV2Lesson({
   progress,
   submittedAnswers,
 }) {
+  if (isRecentDuplicateSubmit(currentPack)) {
+    return respondFromCachedAttempt({
+      accessCode,
+      codeData,
+      currentPack,
+      env,
+      progress,
+    });
+  }
+
   const submittedAt = new Date().toISOString();
   const activityResults = Array.isArray(submittedAnswers.activity_results)
     ? submittedAnswers.activity_results
@@ -286,6 +305,37 @@ async function submitV2Lesson({
     progress: publicProgress(nextProgress),
     current_pack: publicPack(reviewedPack),
     next_pack_unlocked: true,
+  });
+}
+
+async function respondFromCachedAttempt({
+  accessCode,
+  codeData,
+  currentPack,
+  env,
+  progress,
+}) {
+  const attempt = currentPack.web_lesson_summary;
+  const passed = Boolean(attempt?.passed);
+  const progressState = await loadProgressState(env, accessCode, codeData);
+
+  return json({
+    ok: true,
+    schema_version: 2,
+    duplicate: true,
+    passed,
+    score_percent: attempt.score_percent,
+    correct_count: attempt.correct_count,
+    total_count: attempt.total_count,
+    rewards_earned: attempt.rewards_earned || { coins: 0, xp: 0 },
+    message: passed
+      ? 'Con da hoan thanh nhiem vu V2 hom nay.'
+      : `Chua dat ${PASS_THRESHOLD_PERCENT}%. Khong sao, minh thu lai nhe!`,
+    read2lead_state: publicProgressState(progressState),
+    progress: publicProgress(progress),
+    current_pack: publicPack(currentPack),
+    next_pack_unlocked: passed,
+    review: passed ? (currentPack.review_summary || attempt) : null,
   });
 }
 

@@ -35,12 +35,13 @@ const retellGuideInline = retellGuideSrc
 
     <section class="mx-auto max-w-6xl px-4 py-6 sm:px-6 lg:px-8">
       <div id="loading-card" class="rounded-md border border-cream/10 bg-cream/5 p-6 text-cream">
-        Minny đang mở nhiệm vụ cho con...
+        <p id="loading-message">Minny đang mở nhiệm vụ cho con...</p>
       </div>
 
       <div id="error-card" class="hidden rounded-md border border-gold/30 bg-gold/10 p-6 text-cream">
         <p class="font-semibold text-gold">Chưa mở được bài học</p>
         <p id="error-message" class="mt-2 text-sm text-cream/80"></p>
+        <button id="error-retry" class="r2l-primary mt-4" type="button">Thử lại</button>
       </div>
 
       <article id="lesson-shell" class="hidden space-y-6">
@@ -91,7 +92,10 @@ const retellGuideInline = retellGuideSrc
               Con hoàn thành đủ 6 phần rồi bấm nút này để lưu kết quả.
             </p>
           </div>
-          <button id="submit-lesson" class="r2l-primary" type="button" disabled>Lưu chiến công</button>
+          <div class="flex flex-col gap-2 sm:flex-row sm:items-center">
+            <button id="submit-lesson" class="r2l-primary" type="button" disabled>Lưu chiến công</button>
+            <button id="submit-retry" class="r2l-secondary hidden" type="button">Gửi lại</button>
+          </div>
         </section>
 
         <section id="completion-card" class="hidden rounded-md border border-gold/40 bg-gold/10 p-6 text-center">
@@ -973,7 +977,7 @@ function _r2lBuildRetellGuideQuestions(lesson) {
       method: 'POST',
       body: formData,
     });
-    return response.json();
+    return safeJson(response);
   }
 
   function _r2lSpeakingWordChips(words, tone) {
@@ -1853,6 +1857,65 @@ function _r2lBuildRetellGuideQuestions(lesson) {
 
   window.addEventListener('beforeunload', _r2lCleanupRetellRecording);
 
+  // ── Safe JSON helper: prevents crash on 502/503 HTML responses ──
+  async function safeJson(res) {
+    const ct = res.headers.get('content-type') || '';
+    if (!ct.includes('application/json')) {
+      throw new Error('Mạng không ổn định. Con đợi một chút rồi thử lại nhé!');
+    }
+    try {
+      return await res.json();
+    } catch {
+      throw new Error('Mạng không ổn định. Con đợi một chút rồi thử lại nhé!');
+    }
+  }
+
+  let submitInFlight = false;
+
+  function pendingSubmitKey(code, packId) {
+    return `r2l_pending_submit:${code}:${packId}`;
+  }
+
+  function savePendingSubmit(payload) {
+    try {
+      localStorage.setItem(pendingSubmitKey(state.accessCode, state.packId), JSON.stringify(payload));
+    } catch {
+      // localStorage unavailable — submit still works without backup
+    }
+  }
+
+  function clearPendingSubmit() {
+    try {
+      localStorage.removeItem(pendingSubmitKey(state.accessCode, state.packId));
+    } catch {
+      // ignore
+    }
+  }
+
+  function loadPendingSubmit() {
+    try {
+      const raw = localStorage.getItem(pendingSubmitKey(state.accessCode, state.packId));
+      return raw ? JSON.parse(raw) : null;
+    } catch {
+      return null;
+    }
+  }
+
+  // ── Toast: non-destructive error (does NOT hide lesson) ──
+  function showToast(message, durationMs = 4000) {
+    let toast = qs('#r2l-toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'r2l-toast';
+      toast.style.cssText = 'position:fixed;bottom:80px;left:50%;transform:translateX(-50%);z-index:9999;max-width:90vw;padding:12px 20px;border-radius:8px;background:#b45309;color:#fff;font-size:14px;font-weight:600;text-align:center;opacity:0;transition:opacity 0.3s;pointer-events:none;';
+      document.body.appendChild(toast);
+    }
+    toast.textContent = message;
+    toast.style.opacity = '1';
+    clearTimeout(toast._hideTimer);
+    toast._hideTimer = setTimeout(() => { toast.style.opacity = '0'; }, durationMs);
+  }
+
   init();
 
   async function init() {
@@ -1864,20 +1927,46 @@ function _r2lBuildRetellGuideQuestions(lesson) {
       return;
     }
 
-    try {
-      const res = await fetch(
-        `/api/read2lead-lesson?code=${encodeURIComponent(state.accessCode)}&pack_id=${encodeURIComponent(state.packId)}`,
-      );
-      const data = await res.json();
-      if (!res.ok || !data.ok) throw new Error(data.message || data.error || 'Không tải được bài.');
-      if (data.lesson?.schema_version !== 2) {
-        throw new Error('Bài này vẫn là format cũ. V2 lesson chỉ nhận pack schema_version = 2.');
+    const FETCH_TIMEOUT_MS = 15000;
+    const MAX_RETRIES = 2;
+    let lastError = '';
+
+    for (let attempt = 0; attempt <= MAX_RETRIES; attempt += 1) {
+      try {
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
+        const res = await fetch(
+          `/api/read2lead-lesson?code=${encodeURIComponent(state.accessCode)}&pack_id=${encodeURIComponent(state.packId)}`,
+          { signal: controller.signal },
+        );
+        clearTimeout(timer);
+        const data = await safeJson(res);
+        if (!res.ok || !data.ok) throw new Error(data.message || data.error || 'Không tải được bài.');
+        if (data.lesson?.schema_version !== 2) {
+          throw new Error('Bài này vẫn là format cũ. V2 lesson chỉ nhận pack schema_version = 2.');
+        }
+        renderLesson(data.lesson);
+        return;
+      } catch (error) {
+        lastError = error.name === 'AbortError'
+          ? 'Mạng hơi chậm. Đang thử lại...'
+          : (error.message || 'Có lỗi khi mở bài học.');
+        if (attempt < MAX_RETRIES) {
+          qs('#loading-message').textContent = `Mạng hơi chậm, đang thử lại... (${attempt + 1}/${MAX_RETRIES})`;
+          await new Promise((r) => setTimeout(r, 2000));
+        }
       }
-      renderLesson(data.lesson);
-    } catch (error) {
-      showError(error.message || 'Có lỗi khi mở bài học.');
     }
+    showError(lastError || 'Có lỗi khi mở bài học.');
   }
+
+  qs('#error-retry')?.addEventListener('click', () => {
+    qs('#error-card')?.classList.add('hidden');
+    qs('#loading-card')?.classList.remove('hidden');
+    const loadingMsg = qs('#loading-message');
+    if (loadingMsg) loadingMsg.textContent = 'Minny đang mở nhiệm vụ cho con...';
+    init();
+  });
 
   function setStoryAudioButtonState(button, audioUrl) {
     if (audioUrl) {
@@ -1900,7 +1989,7 @@ function _r2lBuildRetellGuideQuestions(lesson) {
         const res = await fetch(
           `/api/read2lead-lesson?code=${encodeURIComponent(state.accessCode)}&pack_id=${encodeURIComponent(state.packId)}`,
         );
-        const data = await res.json();
+        const data = await safeJson(res);
         const mergedUrl = data.lesson?.story?.full_audio_url || '';
         if (res.ok && data.ok && mergedUrl) {
           state.lesson.story.full_audio_url = mergedUrl;
@@ -1983,6 +2072,10 @@ function _r2lBuildRetellGuideQuestions(lesson) {
     renderAllActivitiesOnce(lesson.activities || []);
     showActivity(0);
     updateProgress();
+    if (loadPendingSubmit()) {
+      qs('#submit-hint').textContent = 'Lần trước chưa gửi được kết quả. Con bấm Gửi lại nhé!';
+      qs('#submit-retry')?.classList.remove('hidden');
+    }
   }
 
   function renderAllActivitiesOnce(activities) {
@@ -2785,7 +2878,7 @@ function _r2lBuildRetellGuideQuestions(lesson) {
       }
     });
 
-    qs('#submit-lesson').disabled = state.completedTypes.size < total;
+    qs('#submit-lesson').disabled = submitInFlight || state.completedTypes.size < total;
     renderStepStates();
     updateGlobalCta();
   }
@@ -2906,7 +2999,7 @@ function _r2lBuildRetellGuideQuestions(lesson) {
     });
     audio.play().catch(() => {
       if (lessonAudioState.audio === audio) stopLessonAudio();
-      showError('Trình duyệt chưa cho phát audio. Con bấm lại một lần nữa nhé.');
+      showToast('Chưa phát được audio. Con bấm lại một lần nữa nhé!');
     });
   }
 
@@ -2930,28 +3023,45 @@ function _r2lBuildRetellGuideQuestions(lesson) {
     };
   }
 
-  qs('#submit-lesson').addEventListener('click', async () => {
-    qs('#submit-lesson').disabled = true;
+  async function submitLesson() {
+    if (submitInFlight) return;
+    submitInFlight = true;
+
+    const submitBtn = qs('#submit-lesson');
+    const retryBtn = qs('#submit-retry');
+    submitBtn.disabled = true;
+    retryBtn?.classList.add('hidden');
+
+    const payload = {
+      access_code: state.accessCode,
+      pack_id: state.packId,
+      answers: {
+        schema_version: 2,
+        activity_results: Object.values(state.activityResults),
+        score_percent: calculateLessonScore().score_percent,
+      },
+    };
+    savePendingSubmit(payload);
     qs('#submit-hint').textContent = 'Minny đang lưu kết quả...';
+
+    const SUBMIT_TIMEOUT_MS = 20000;
     try {
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), SUBMIT_TIMEOUT_MS);
       const res = await fetch('/api/submit-read2lead-lesson', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          access_code: state.accessCode,
-          pack_id: state.packId,
-          answers: {
-            schema_version: 2,
-            activity_results: Object.values(state.activityResults),
-            score_percent: calculateLessonScore().score_percent,
-          },
-        }),
+        body: JSON.stringify(payload),
+        signal: controller.signal,
       });
-      const data = await res.json();
+      clearTimeout(timer);
+      const data = await safeJson(res);
       if (!res.ok || !data.ok) throw new Error(data.message || data.error || 'Chưa lưu được.');
+      clearPendingSubmit();
       if (!data.passed) {
         qs('#submit-hint').textContent = data.message || 'Chưa đạt điểm tối thiểu. Không sao, mình thử lại nhé!';
-        qs('#submit-lesson').disabled = false;
+        submitInFlight = false;
+        submitBtn.disabled = false;
         return;
       }
       const rewards = data.rewards_earned || {};
@@ -2966,9 +3076,22 @@ function _r2lBuildRetellGuideQuestions(lesson) {
         _r2lShowCompletionAfterTrivia(data);
       }
     } catch (error) {
-      qs('#submit-lesson').disabled = false;
-      qs('#submit-hint').textContent = error.message || 'Chưa lưu được kết quả. Anh Phương thử lại giúp con nhé.';
+      const message = error.name === 'AbortError'
+        ? 'Mạng hơi chậm, chưa gửi được. Con bấm Gửi lại nhé!'
+        : (error.message || 'Chưa lưu được kết quả. Con bấm Gửi lại nhé!');
+      qs('#submit-hint').textContent = message;
+      retryBtn?.classList.remove('hidden');
+      submitInFlight = false;
+      submitBtn.disabled = false;
     }
+  }
+
+  qs('#submit-lesson').addEventListener('click', () => {
+    submitLesson();
+  });
+
+  qs('#submit-retry')?.addEventListener('click', () => {
+    submitLesson();
   });
 
   function showError(message) {
