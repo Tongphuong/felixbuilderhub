@@ -65,6 +65,9 @@ test('leaderboard ranks by XP and never exposes stars', async () => {
     async get(key) {
       return records.get(key) || null;
     },
+    async put(key, value) {
+      records.set(key, JSON.parse(value));
+    },
   };
 
   const response = await leaderboardGet({
