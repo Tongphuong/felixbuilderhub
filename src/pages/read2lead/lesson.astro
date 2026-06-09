@@ -1342,7 +1342,7 @@ function _r2lBuildRetellGuideQuestions(lesson) {
     _r2lSetMinnyMood('idle', heroEl);
   }
 
-  function _r2lSpeakEnglishLine(text, onEnd) {
+  function _r2lSpeakLine(text, lang, onEnd) {
     const line = String(text || '').trim();
     if (!line || !window.speechSynthesis) {
       if (typeof onEnd === 'function') onEnd();
@@ -1350,12 +1350,23 @@ function _r2lBuildRetellGuideQuestions(lesson) {
     }
     window.speechSynthesis.cancel();
     const utterance = new SpeechSynthesisUtterance(line);
-    utterance.lang = 'en-US';
-    utterance.rate = 0.92;
+    utterance.lang = lang;
+    utterance.rate = lang.startsWith('vi') ? 0.95 : 0.92;
     utterance.onend = () => {
       if (typeof onEnd === 'function') onEnd();
     };
+    utterance.onerror = () => {
+      if (typeof onEnd === 'function') onEnd();
+    };
     window.speechSynthesis.speak(utterance);
+  }
+
+  function _r2lSpeakEnglishLine(text, onEnd) {
+    _r2lSpeakLine(text, 'en-US', onEnd);
+  }
+
+  function _r2lSpeakVietnameseLine(text, onEnd) {
+    _r2lSpeakLine(text, 'vi-VN', onEnd);
   }
 
   function _r2lMinnyMoodForScore(scorePercent) {
@@ -1635,11 +1646,11 @@ function _r2lBuildRetellGuideQuestions(lesson) {
     `;
 
     root.querySelector('[data-retell-listen]')?.addEventListener('click', () => {
+      _r2lRetellState.heardInstruction = true;
+      _r2lRenderRetellControls();
       _r2lSetMinnyMood('listen', heroScope);
-      _r2lSpeakEnglishLine(prompt.en, () => {
-        _r2lRetellState.heardInstruction = true;
+      _r2lSpeakVietnameseLine(prompt.vi, () => {
         _r2lSetMinnyMood('idle', heroScope);
-        _r2lRenderRetellControls();
       });
     });
 
@@ -1743,6 +1754,18 @@ function _r2lBuildRetellGuideQuestions(lesson) {
       activities.push(retell);
     }
     lesson.activities = activities;
+    if (lesson.activities.length < 6) {
+      lesson.activities.push({
+        type: 'retell_summary',
+        title_vi: 'Kể truyện',
+        identity_vi: 'Minny muốn nghe con kể lại',
+        instructions_vi: 'Con xem các câu gợi ý, rồi kể lại câu chuyện bằng tiếng Anh trong khoảng 1 phút.',
+      });
+      lesson.activities[lesson.activities.length - 1] = _r2lEnrichRetellActivity(
+        lesson.activities[lesson.activities.length - 1],
+        lessonContext,
+      );
+    }
     return lesson;
   }
 
@@ -1813,8 +1836,9 @@ function _r2lBuildRetellGuideQuestions(lesson) {
       } else if (activity.type === 'retell_summary') {
         renderRetellSummaryActivity(body, activity);
       }
-      renderActivityNav(shell, index, activities.length);
+      renderActivityNav(shell, activity);
     });
+    updateActivityNavButtons();
   }
 
   function renderSentences(sentences) {
@@ -1862,25 +1886,52 @@ function _r2lBuildRetellGuideQuestions(lesson) {
         showActivity(buttonIndex);
       };
     });
+    updateActivityNavButtons();
   }
 
-  function renderActivityNav(shell, activityIndex, totalActivities) {
+  function activityIndexByType(type) {
+    return (state.lesson?.activities || []).findIndex((activity) => activity?.type === type);
+  }
+
+  function updateActivityNavButtons() {
+    const activities = state.lesson?.activities || [];
+    const total = activities.length;
+    qsa('[data-activity-nav]').forEach((nav) => {
+      const activityType = nav.dataset.activityNav;
+      const index = activityIndexByType(activityType);
+      if (index < 0) return;
+      const prev = nav.querySelector('[data-activity-prev]');
+      const next = nav.querySelector('[data-activity-next]');
+      if (prev) prev.disabled = index <= 0;
+      if (next) next.disabled = total <= 1 || index >= total - 1;
+    });
+  }
+
+  function renderActivityNav(shell, activity) {
     const body = shell.querySelector('[data-activity-body]');
+    const activityType = activity?.type || '';
+    const activityIndex = activityIndexByType(activityType);
+    const totalActivities = (state.lesson?.activities || []).length;
     const isFirst = activityIndex <= 0;
-    const isLast = activityIndex >= totalActivities - 1;
+    const isLast = totalActivities <= 1 || activityIndex >= totalActivities - 1;
     body.insertAdjacentHTML('beforeend', `
-      <div class="mt-6 flex flex-col gap-3 border-t border-cream/10 pt-4 sm:flex-row sm:items-center sm:justify-between" data-activity-nav>
+      <div class="mt-6 flex flex-col gap-3 border-t border-cream/10 pt-4 sm:flex-row sm:items-center sm:justify-between" data-activity-nav="${escapeHtml(activityType)}">
         <button class="r2l-secondary" type="button" data-activity-prev ${isFirst ? 'disabled' : ''}>Quay lại</button>
         <button class="r2l-primary" type="button" data-activity-next ${isLast ? 'disabled' : ''}>Tiếp theo</button>
       </div>
     `);
     body.querySelector('[data-activity-prev]')?.addEventListener('click', () => {
+      const index = activityIndexByType(activityType);
+      if (index <= 0) return;
       finalizeCurrentActivityIfReady();
-      showActivity(activityIndex - 1);
+      showActivity(index - 1);
     });
     body.querySelector('[data-activity-next]')?.addEventListener('click', () => {
+      const activities = state.lesson?.activities || [];
+      const index = activityIndexByType(activityType);
+      if (index < 0 || index >= activities.length - 1) return;
       finalizeCurrentActivityIfReady();
-      showActivity(activityIndex + 1);
+      showActivity(index + 1);
     });
   }
 
@@ -2473,6 +2524,7 @@ function _r2lBuildRetellGuideQuestions(lesson) {
       ...details,
     };
     updateProgress();
+    updateActivityNavButtons();
     showReward({ mode: 'celebrate', withVoice: true });
     playSfx(SFX.activityComplete);
   }

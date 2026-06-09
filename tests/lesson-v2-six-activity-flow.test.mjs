@@ -72,6 +72,18 @@ test('retell_summary activity uses open mode with 60s limit', () => {
   assert.match(speakingEndpoint, /max_seconds/);
 });
 
+test('retell listen unlocks record immediately like activity 5', () => {
+  assert.match(lessonPage, /_r2lRetellState\.heardInstruction = true/);
+  assert.match(lessonPage, /_r2lSpeakVietnameseLine\(prompt\.vi/);
+  assert.doesNotMatch(lessonPage, /_r2lSpeakEnglishLine\(prompt\.en, \(\) => \{\s*_r2lRetellState\.heardInstruction = true/s);
+});
+
+test('activity nav resolves next/prev from live activity list', () => {
+  assert.match(lessonPage, /function updateActivityNavButtons/);
+  assert.match(lessonPage, /data-activity-nav="\$\{escapeHtml\(activityType\)\}"/);
+  assert.match(lessonPage, /function activityIndexByType/);
+});
+
 test('retell_summary shows guided Vietnamese questions before recording', () => {
   assert.match(lessonPage, /function _r2lBuildRetellGuideQuestions/);
   assert.match(lessonPage, /function _r2lResolveRetellGuideQuestions/);
