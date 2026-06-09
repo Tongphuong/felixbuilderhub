@@ -5,10 +5,12 @@ import {
   applyPackCompletion,
   applyPackPenalty,
   buildAdminTestLevelState,
+  computeRankLadder,
   LEVELS,
   nextStreakDays,
   normalizeProgressState,
   publicProgressState,
+  rankPointsFromHistory,
   RANK_ASSETS,
   RANK_TITLES,
   vietnamDateKey,
@@ -221,6 +223,81 @@ test('below-threshold attempt records penalty but does not subtract XP (penalty 
   assert.equal(first.already_penalized, false);
   assert.equal(duplicate.state.xp_in_level, 40);
   assert.equal(duplicate.already_penalized, true);
+});
+
+test('rank ladder math matches Liên Quân tier table', () => {
+  const cases = [
+    [0, 'Đồng III', 0, false],
+    [2, 'Đồng III', 2, false],
+    [3, 'Đồng II', 0, false],
+    [8, 'Đồng I', 2, false],
+    [9, 'Bạc III', 0, false],
+    [63, 'Thách Đấu', 0, true],
+    [70, 'Thách Đấu', 0, true],
+  ];
+  for (const [points, label, stars, isApex] of cases) {
+    const ladder = computeRankLadder(points);
+    assert.equal(ladder.label_vi, label, `P=${points} label`);
+    assert.equal(ladder.stars, stars, `P=${points} stars`);
+    assert.equal(ladder.is_apex, isApex, `P=${points} apex`);
+  }
+  assert.equal(computeRankLadder(70).apex_points, 7);
+  assert.equal(computeRankLadder(63).apex_points, 0);
+});
+
+test('rankPointsFromHistory awards bonus RP for scores at or above 80%', () => {
+  const state = {
+    pack_history: [
+      { pack_id: 'a', score_percent: 90 },
+      { pack_id: 'b', score_percent: 50 },
+      { pack_id: 'c', score_percent: 85 },
+    ],
+  };
+  assert.equal(rankPointsFromHistory(state), 5);
+});
+
+test('rank ladder is monotonic — more points never lowers label', () => {
+  let previous = computeRankLadder(0).label_vi;
+  for (let points = 1; points <= 80; points += 1) {
+    const ladder = computeRankLadder(points);
+    assert.ok(
+      ladder.rank_points >= points - 1,
+      `rank_points should track cumulative RP at P=${points}`,
+    );
+    const order = [
+      'Đồng III', 'Đồng II', 'Đồng I',
+      'Bạc III', 'Bạc II', 'Bạc I',
+      'Vàng III', 'Vàng II', 'Vàng I',
+      'Bạch Kim III', 'Bạch Kim II', 'Bạch Kim I',
+      'Kim Cương III', 'Kim Cương II', 'Kim Cương I',
+      'Tinh Anh III', 'Tinh Anh II', 'Tinh Anh I',
+      'Cao Thủ III', 'Cao Thủ II', 'Cao Thủ I',
+      'Thách Đấu',
+    ];
+    const prevIdx = order.indexOf(previous);
+    const nextIdx = order.indexOf(ladder.label_vi);
+    assert.ok(nextIdx >= prevIdx, `P=${points}: ${previous} → ${ladder.label_vi} regressed`);
+    previous = ladder.label_vi;
+  }
+});
+
+test('old student record without scores ranks from pack count without crashing', () => {
+  const legacy = normalizeProgressState(
+    {
+      schema_version: 2,
+      level_reset_version: 20260606,
+      completed_packs: 4,
+      completed_pack_ids: ['p1', 'p2', 'p3', 'p4'],
+    },
+    {
+      accessCode: 'R2L-LEGACY',
+      codeData: { student_profile: { student_name: 'Legacy' } },
+    },
+  );
+  const ladder = computeRankLadder(legacy);
+  assert.equal(ladder.rank_points, 4);
+  assert.equal(ladder.label_vi, 'Đồng II');
+  assert.equal(publicProgressState(legacy).rank_ladder.rank_points, 4);
 });
 
 test('buildAdminTestLevelState snaps test accounts to any ladder level', () => {

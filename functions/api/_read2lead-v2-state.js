@@ -42,6 +42,104 @@ export const RANK_ASSETS = {
   L5: '/assets/r2l/ranks/rank-l5-legend.svg',
 };
 
+const RANK_LADDER_TIERS = [
+  { tier_index: 0, tier_name_vi: 'Đồng', tier_name_en: 'Bronze', tier_color: '#cd7f32' },
+  { tier_index: 1, tier_name_vi: 'Bạc', tier_name_en: 'Silver', tier_color: '#c0c0c0' },
+  { tier_index: 2, tier_name_vi: 'Vàng', tier_name_en: 'Gold', tier_color: '#ffd700' },
+  { tier_index: 3, tier_name_vi: 'Bạch Kim', tier_name_en: 'Platinum', tier_color: '#4fd1c5' },
+  { tier_index: 4, tier_name_vi: 'Kim Cương', tier_name_en: 'Diamond', tier_color: '#5b8def' },
+  { tier_index: 5, tier_name_vi: 'Tinh Anh', tier_name_en: 'Elite', tier_color: '#a855f7' },
+  { tier_index: 6, tier_name_vi: 'Cao Thủ', tier_name_en: 'Master', tier_color: '#ef4444' },
+  { tier_index: 7, tier_name_vi: 'Thách Đấu', tier_name_en: 'Challenger', tier_color: '#ffd700' },
+];
+const RANK_LADDER_DIVISIONS = ['III', 'II', 'I'];
+const RANK_LADDER_STARS_PER_DIVISION = 3;
+const RANK_LADDER_RP_PER_TIER = 9;
+const RANK_LADDER_APEX_THRESHOLD = 63;
+
+export function rankPointsFromHistory(state) {
+  const history = Array.isArray(state?.pack_history) ? state.pack_history : [];
+  if (history.length > 0) {
+    let total = 0;
+    for (const entry of history) {
+      if (entry?.passed === false) continue;
+      const score = entry?.score_percent;
+      if (score === undefined || score === null || !Number.isFinite(Number(score))) {
+        total += 1;
+        continue;
+      }
+      total += 1 + (Number(score) >= 80 ? 1 : 0);
+    }
+    return total;
+  }
+  const completedIds = Array.isArray(state?.completed_pack_ids) ? state.completed_pack_ids.length : 0;
+  const completedPacks = numberOrZero(state?.completed_packs);
+  return Math.max(completedIds, completedPacks);
+}
+
+export function computeRankLadder(stateOrPoints) {
+  const rankPoints = typeof stateOrPoints === 'number'
+    ? Math.max(0, Math.floor(stateOrPoints))
+    : rankPointsFromHistory(stateOrPoints);
+  return buildRankLadderFromPoints(rankPoints);
+}
+
+export function computeRankUp(beforeLadder, afterLadder) {
+  return {
+    changed: beforeLadder.label_vi !== afterLadder.label_vi,
+    from_label: beforeLadder.label_vi,
+    to_label: afterLadder.label_vi,
+    tier_changed: beforeLadder.tier_index !== afterLadder.tier_index,
+  };
+}
+
+function buildRankLadderFromPoints(rankPoints) {
+  const P = Math.max(0, Math.floor(rankPoints));
+  if (P >= RANK_LADDER_APEX_THRESHOLD) {
+    const apexTier = RANK_LADDER_TIERS[7];
+    return {
+      rank_points: P,
+      tier_index: 7,
+      tier_name_vi: apexTier.tier_name_vi,
+      tier_name_en: apexTier.tier_name_en,
+      tier_color: apexTier.tier_color,
+      division: null,
+      stars: 0,
+      stars_per_division: RANK_LADDER_STARS_PER_DIVISION,
+      stars_to_next: 0,
+      is_apex: true,
+      apex_points: P - RANK_LADDER_APEX_THRESHOLD,
+      label_vi: apexTier.tier_name_vi,
+      next_label_vi: null,
+    };
+  }
+
+  const tierIndex = Math.floor(P / RANK_LADDER_RP_PER_TIER);
+  const within = P % RANK_LADDER_RP_PER_TIER;
+  const divisionIndex = Math.floor(within / RANK_LADDER_STARS_PER_DIVISION);
+  const stars = within % RANK_LADDER_STARS_PER_DIVISION;
+  const starsToNext = RANK_LADDER_STARS_PER_DIVISION - stars;
+  const tier = RANK_LADDER_TIERS[tierIndex];
+  const division = RANK_LADDER_DIVISIONS[divisionIndex];
+  const nextLadder = buildRankLadderFromPoints(P + starsToNext);
+
+  return {
+    rank_points: P,
+    tier_index: tierIndex,
+    tier_name_vi: tier.tier_name_vi,
+    tier_name_en: tier.tier_name_en,
+    tier_color: tier.tier_color,
+    division,
+    stars,
+    stars_per_division: RANK_LADDER_STARS_PER_DIVISION,
+    stars_to_next: starsToNext,
+    is_apex: false,
+    apex_points: 0,
+    label_vi: `${tier.tier_name_vi} ${division}`,
+    next_label_vi: nextLadder.label_vi,
+  };
+}
+
 export function progressNamespace(env) {
   return env.READ2LEAD_PROGRESS || env.READ2LEAD_CODES || null;
 }
@@ -223,6 +321,7 @@ export function applyPackCompletion(
     completedAt = new Date().toISOString(),
     rewardsEarned = {},
     activityResults = [],
+    scorePercent = null,
   } = {},
 ) {
   const id = String(packId || '').trim();
@@ -287,6 +386,9 @@ export function applyPackCompletion(
         level: currentLevel,
         coins: numberOrZero(rewardsEarned.coins),
         xp: earnedXp,
+        ...(scorePercent !== null && scorePercent !== undefined
+          ? { score_percent: Number(scorePercent) }
+          : {}),
       },
       ...state.pack_history,
     ].slice(0, 50),
@@ -379,6 +481,7 @@ export function publicProgressState(state) {
     avatar: state.avatar,
     last_activity_at: state.last_activity_at,
     last_activity_date_vn: state.last_activity_date_vn,
+    rank_ladder: computeRankLadder(state),
   };
 }
 

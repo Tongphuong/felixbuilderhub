@@ -3,6 +3,8 @@ import { ensureSixActivities } from './_read2lead-lesson-activities.js';
 import {
   applyPackCompletion,
   applyPackPenalty,
+  computeRankLadder,
+  computeRankUp,
   loadProgressState,
   PASS_THRESHOLD_PERCENT,
   XP_PENALTY_BELOW_THRESHOLD,
@@ -234,13 +236,17 @@ async function submitV2Lesson({
   }
 
   const progressState = await loadProgressState(env, accessCode, codeData);
+  const rankLadderBefore = computeRankLadder(progressState);
   const stateResult = applyPackCompletion(progressState, {
     packId: currentPack.pack_id,
     completedAt: submittedAt,
     rewardsEarned,
     activityResults,
+    scorePercent,
   });
   const savedProgressState = await saveProgressState(env, accessCode, stateResult.state);
+  const rankLadderAfter = computeRankLadder(savedProgressState);
+  const rankUp = computeRankUp(rankLadderBefore, rankLadderAfter);
 
   const reviewedPack = {
     ...currentPack,
@@ -299,6 +305,7 @@ async function submitV2Lesson({
     total_count: totalCount,
     rewards_earned: rewardsEarned,
     level_up: stateResult.level_up,
+    rank_up: rankUp,
     read2lead_state: publicProgressState(savedProgressState),
     message: 'Con da hoan thanh nhiem vu V2 hom nay.',
     review: reviewedPack.review_summary,
