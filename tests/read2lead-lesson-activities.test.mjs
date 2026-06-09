@@ -16,8 +16,11 @@ test('ensureSixActivities appends retell_summary after listen_and_speak', () => 
   assert.equal(activities[4].type, 'listen_and_speak');
   assert.equal(activities[5].type, 'retell_summary');
   assert.equal(activities[5].title_vi, 'Kể truyện');
-  assert.ok(Array.isArray(activities[5].guide_questions_vi));
-  assert.ok(activities[5].guide_questions_vi.length >= 3);
+  // Retell was redesigned to a fill-in-the-blank template (retell_template.lines)
+  // instead of the deprecated guide_questions_vi array.
+  assert.ok(activities[5].retell_template, 'retell_template should be present');
+  assert.ok(Array.isArray(activities[5].retell_template.lines));
+  assert.ok(activities[5].retell_template.lines.length >= 3);
 });
 
 test('ensureSixActivities is idempotent when retell already exists', () => {
