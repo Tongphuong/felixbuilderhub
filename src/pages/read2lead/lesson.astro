@@ -2713,7 +2713,10 @@ function _r2lBuildRetellTemplate(lesson) {
       activities.push(retell);
     }
     lesson.activities = activities;
-    if (lesson.activities.length < 6) {
+    if (
+      lesson.activities.length < 6
+      && !lesson.activities.some((activity) => activity?.type === 'retell_summary')
+    ) {
       lesson.activities.push({
         type: 'retell_summary',
         title_vi: 'Kể truyện',
@@ -3630,6 +3633,7 @@ function _r2lBuildRetellTemplate(lesson) {
         finalizeCurrentActivityIfReady();
       });
     });
+    finalizeCurrentActivityIfReady();
   }
 
   function renderSpeakActivity(root, activity) {
