@@ -509,6 +509,7 @@ import '../../styles/rank-ladder.css';
     const dashboardCard = document.getElementById('dashboard-card');
     const resultCard = document.getElementById('result-card');
     const errorCard = document.getElementById('error-card');
+    let currentAccessCode = '';
 
     const initialCode = params.get('code');
     if (initialCode) {
@@ -625,6 +626,16 @@ import '../../styles/rank-ladder.css';
     }
 
     /** @param {Record<string, unknown>} read2LeadState */
+    function renderEquippedBadges(read2LeadState) {
+      if (!isV3Enabled()) return '';
+      const equipped = Array.isArray(read2LeadState.equipped_display) ? read2LeadState.equipped_display : [];
+      if (!equipped.length) return '';
+      return equipped
+        .map((item) => `<span class="profile-level-pill" title="${escapeHtml(item.name_vi)}">${escapeHtml(item.emoji)}</span>`)
+        .join('');
+    }
+
+    /** @param {Record<string, unknown>} read2LeadState */
     function renderRankLadderSection(read2LeadState) {
       if (!isV3Enabled()) return '';
       const ladder = read2LeadState.rank_ladder;
@@ -671,6 +682,8 @@ import '../../styles/rank-ladder.css';
                   ? `<span class="profile-level-pill">Cấp độ đọc: ${escapeHtml(read2LeadState.current_level || progress.current_level || 'L1')}</span>`
                   : `<span class="profile-level-pill">${escapeHtml(level)} · ${escapeHtml(rankTitle)}</span>`
               }
+              ${renderEquippedBadges(read2LeadState)}
+              ${v3 ? `<a href="/read2lead/shop?code=${encodeURIComponent(currentAccessCode)}&v3=1" class="profile-level-pill border border-gold/40 text-gold">🛒 Cửa hàng</a>` : ''}
             </div>
             <div class="profile-xp-track" role="progressbar" aria-valuenow="${xpPercent}" aria-valuemin="0" aria-valuemax="100" aria-label="Tiến trình XP">
               <span class="profile-xp-fill" style="width: ${xpPercent}%"></span>
@@ -909,6 +922,7 @@ import '../../styles/rank-ladder.css';
       const weeklyGrowth = data.weekly_growth || {};
       const pack = progress.current_pack;
       const code = codeInput.value.trim().toUpperCase();
+      currentAccessCode = code;
       const status = statusMeta(data.state, pack);
       const primary = buildPrimaryAction(pack, data, code);
 

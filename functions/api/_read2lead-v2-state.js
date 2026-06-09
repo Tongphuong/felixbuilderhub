@@ -12,6 +12,18 @@ export const PASS_THRESHOLD_PERCENT = 50;
 export const LEVEL_RESET_VERSION = 20260606;
 export const START_LEVEL = 'L1';
 export const COINS_TOOLTIP = 'Tiết kiệm xu cho cửa hàng sắp mở! 🛒';
+export const SHOP_SLOTS = ['hat', 'pet', 'frame', 'name_color'];
+
+export const SHOP_CATALOG = [
+  { id: 'hat_star', slot: 'hat', name_vi: 'Mũ sao', emoji: '⭐', price_coins: 30, css_class: 'r2l-shop-hat-star' },
+  { id: 'hat_crown', slot: 'hat', name_vi: 'Vương miện', emoji: '👑', price_coins: 80, css_class: 'r2l-shop-hat-crown' },
+  { id: 'pet_bunny', slot: 'pet', name_vi: 'Thỏ con', emoji: '🐰', price_coins: 50, css_class: 'r2l-shop-pet-bunny' },
+  { id: 'pet_cat', slot: 'pet', name_vi: 'Mèo con', emoji: '🐱', price_coins: 50, css_class: 'r2l-shop-pet-cat' },
+  { id: 'frame_gold', slot: 'frame', name_vi: 'Khung vàng', emoji: '🖼️', price_coins: 40, css_class: 'r2l-shop-frame-gold' },
+  { id: 'frame_rainbow', slot: 'frame', name_vi: 'Khung cầu vồng', emoji: '🌈', price_coins: 70, css_class: 'r2l-shop-frame-rainbow' },
+  { id: 'name_gold', slot: 'name_color', name_vi: 'Tên vàng', emoji: '✨', price_coins: 35, css_class: 'r2l-shop-name-gold' },
+  { id: 'name_ocean', slot: 'name_color', name_vi: 'Tên xanh biển', emoji: '💎', price_coins: 35, css_class: 'r2l-shop-name-ocean' },
+];
 export const STREAK_FREEZE_MILESTONE_DAYS = 7;
 export const STREAK_FREEZE_TOKEN_CAP = 5;
 export const STREAK_FREEZE_HINT_VI =
@@ -313,6 +325,8 @@ export function normalizeProgressState(raw, { accessCode, codeData = null, nowIs
       ? { rank_points: Number(raw.rank_points) }
       : {}),
     badges: Array.isArray(raw?.badges) ? raw.badges : [],
+    inventory: normalizeInventory(raw?.inventory),
+    equipped: normalizeEquipped(raw?.equipped),
     avatar: {
       enabled: false,
       preset_id: raw?.avatar?.preset_id || null,
@@ -468,6 +482,105 @@ export function applyPackPenalty(
   return { state: refreshBadges(nextState), already_penalized: false };
 }
 
+export function getShopItem(itemId) {
+  const id = String(itemId || '').trim();
+  return SHOP_CATALOG.find((item) => item.id === id) || null;
+}
+
+export function normalizeInventory(raw) {
+  if (!Array.isArray(raw)) return [];
+  return [...new Set(
+    raw
+      .filter((entry) => typeof entry === 'string' && entry.trim())
+      .map((entry) => entry.trim())
+      .filter((entry) => getShopItem(entry)),
+  )];
+}
+
+export function normalizeEquipped(raw) {
+  const source = raw && typeof raw === 'object' ? raw : {};
+  const equipped = {};
+  for (const slot of SHOP_SLOTS) {
+    const itemId = source[slot];
+    if (typeof itemId === 'string' && itemId.trim() && getShopItem(itemId.trim())) {
+      equipped[slot] = itemId.trim();
+    }
+  }
+  return equipped;
+}
+
+export function publicShopCatalog() {
+  return SHOP_CATALOG.map(({ id, slot, name_vi, emoji, price_coins, css_class }) => ({
+    id,
+    slot,
+    name_vi,
+    emoji,
+    price_coins,
+    css_class,
+  }));
+}
+
+export function equippedDisplay(state) {
+  return SHOP_SLOTS
+    .map((slot) => {
+      const itemId = normalizeEquipped(state.equipped)[slot];
+      const item = itemId ? getShopItem(itemId) : null;
+      return item ? { slot, id: item.id, name_vi: item.name_vi, emoji: item.emoji, css_class: item.css_class } : null;
+    })
+    .filter(Boolean);
+}
+
+export function purchaseItem(state, itemId) {
+  const item = getShopItem(itemId);
+  if (!item) return { ok: false, error: 'item_not_found', state };
+  const inventory = normalizeInventory(state.inventory);
+  if (inventory.includes(item.id)) {
+    return { ok: true, already_owned: true, state, item };
+  }
+  const price = numberOrZero(item.price_coins);
+  if (numberOrZero(state.coins) < price) {
+    return { ok: false, error: 'insufficient_coins', state, item };
+  }
+  const nextState = refreshBadges({
+    ...state,
+    coins: numberOrZero(state.coins) - price,
+    inventory: [...inventory, item.id],
+    updated_at: new Date().toISOString(),
+  });
+  return { ok: true, purchased: true, state: nextState, item };
+}
+
+export function equipItem(state, itemId) {
+  const item = getShopItem(itemId);
+  if (!item) return { ok: false, error: 'item_not_found', state };
+  const inventory = normalizeInventory(state.inventory);
+  if (!inventory.includes(item.id)) {
+    return { ok: false, error: 'not_owned', state, item };
+  }
+  return {
+    ok: true,
+    state: {
+      ...state,
+      equipped: { ...normalizeEquipped(state.equipped), [item.slot]: item.id },
+      updated_at: new Date().toISOString(),
+    },
+    item,
+  };
+}
+
+export function unequipSlot(state, slot) {
+  const slotId = String(slot || '').trim();
+  if (!SHOP_SLOTS.includes(slotId)) {
+    return { ok: false, error: 'invalid_slot', state };
+  }
+  const equipped = { ...normalizeEquipped(state.equipped) };
+  delete equipped[slotId];
+  return {
+    ok: true,
+    state: { ...state, equipped, updated_at: new Date().toISOString() },
+  };
+}
+
 export function publicProgressState(state) {
   const currentLevel = safeLevel(state.current_level);
   const completedInLevel = numberOrZero(state.level_progress?.[currentLevel]);
@@ -499,6 +612,10 @@ export function publicProgressState(state) {
     packs_until_level_up: packsUntilLevelUp(currentLevel, state.xp_in_level),
     badges: state.badges,
     avatar: state.avatar,
+    inventory: normalizeInventory(state.inventory),
+    equipped: normalizeEquipped(state.equipped),
+    equipped_display: equippedDisplay(state),
+    shop_catalog: publicShopCatalog(),
     last_activity_at: state.last_activity_at,
     last_activity_date_vn: state.last_activity_date_vn,
     rank_ladder: computeRankLadder(state),

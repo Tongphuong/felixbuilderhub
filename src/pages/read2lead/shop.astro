@@ -1,0 +1,207 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+---
+
+<BaseLayout
+  title="Cửa hàng Read2Lead | Felix Coaching"
+  description="Dùng xu để mua đồ trang trí cho hồ sơ Read2Lead."
+  robots="noindex, follow"
+>
+  <Header read2LeadState={false} />
+
+  <main id="main" class="flex-1 bg-navy-950 px-4 py-8 sm:px-6">
+    <section class="mx-auto max-w-4xl">
+      <p class="text-xs font-extrabold uppercase tracking-widest text-accent">Read2Lead V3</p>
+      <h1 class="mt-2 font-display text-3xl font-extrabold text-cream">Cửa hàng Minny</h1>
+      <p class="mt-2 text-sm text-cream-muted">Dùng xu kiếm được sau mỗi bài để mua đồ trang trí. Giá có thể chỉnh sau khi Phương review.</p>
+
+      <div id="shop-gate" class="mt-6 hidden rounded-2xl border border-cream/15 bg-navy-900/80 p-6 text-sm text-cream-muted">
+        Cửa hàng chỉ mở khi bật chế độ V3 preview (<code>?v3=1</code>).
+      </div>
+
+      <div id="shop-entry" class="mt-6 hidden rounded-2xl border border-cream/15 bg-navy-900/80 p-5">
+        <label for="shop-code" class="text-sm font-semibold text-cream">Mã học sinh</label>
+        <div class="mt-3 flex flex-col gap-3 sm:flex-row">
+          <input id="shop-code" maxlength="40" autocomplete="off" placeholder="R2L-..." class="min-h-[48px] w-full rounded-xl border border-cream/15 bg-navy-950 px-4 uppercase text-cream" />
+          <button id="shop-load" type="button" class="min-h-[48px] rounded-xl bg-accent px-6 font-extrabold text-navy-950">Vào cửa hàng</button>
+        </div>
+      </div>
+
+      <div id="shop-error" class="mt-4 hidden rounded-xl border border-red-400/40 bg-red-500/10 px-4 py-3 text-sm text-red-200"></div>
+
+      <div id="shop-shell" class="mt-6 hidden space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-gold/30 bg-gold/10 px-5 py-4">
+          <div>
+            <p class="text-sm text-cream-muted">Số dư của con</p>
+            <p class="font-display text-3xl font-extrabold text-gold"><span id="shop-coins">0</span> 🪙</p>
+          </div>
+          <a id="shop-profile-link" href="/hoc-sinh" class="rounded-xl border border-cream/20 px-4 py-2 text-sm font-bold text-cream">← Về hồ sơ</a>
+        </div>
+
+        <p id="shop-minny" class="hidden rounded-xl border border-accent/30 bg-accent/10 px-4 py-3 text-sm font-semibold text-accent"></p>
+
+        <div id="shop-equipped" class="rounded-2xl border border-cream/10 bg-navy-900/70 p-4">
+          <p class="text-sm font-bold text-cream">Đang trang bị</p>
+          <div id="shop-equipped-list" class="mt-2 flex flex-wrap gap-2 text-sm text-cream-muted"></div>
+        </div>
+
+        <div id="shop-grid" class="grid gap-4 sm:grid-cols-2"></div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<script>
+  import { isV3Enabled } from '../../config/flags';
+
+  const qs = (sel) => document.querySelector(sel);
+  let accessCode = '';
+  let shopState = null;
+
+  function escapeHtml(value) {
+    return String(value ?? '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  async function shopRequest(action, extra = {}) {
+    const response = await fetch('/api/read2lead-shop', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ access_code: accessCode, action, ...extra }),
+    });
+    const payload = await response.json();
+    if (!payload.ok) throw new Error(payload.message || 'Không thể thực hiện.');
+    shopState = payload.read2lead_state;
+    if (payload.minny_message_vi) {
+      const minny = qs('#shop-minny');
+      if (minny) {
+        minny.textContent = payload.minny_message_vi;
+        minny.classList.remove('hidden');
+      }
+    }
+    renderShop();
+    return payload;
+  }
+
+  function renderEquipped() {
+    const list = qs('#shop-equipped-list');
+    if (!list || !shopState) return;
+    const equipped = shopState.equipped_display || [];
+    list.innerHTML = equipped.length
+      ? equipped.map((item) => `<span class="rounded-lg border border-cream/15 bg-navy-950 px-3 py-1">${escapeHtml(item.emoji)} ${escapeHtml(item.name_vi)}</span>`).join('')
+      : 'Chưa trang bị gì — mua và bấm Trang bị nhé!';
+  }
+
+  function renderShop() {
+    if (!shopState) return;
+    qs('#shop-coins').textContent = String(shopState.coins || 0);
+    renderEquipped();
+    const grid = qs('#shop-grid');
+    const inventory = new Set(shopState.inventory || []);
+    const equipped = shopState.equipped || {};
+    const catalog = shopState.shop_catalog || [];
+    grid.innerHTML = catalog.map((item) => {
+      const owned = inventory.has(item.id);
+      const isEquipped = equipped[item.slot] === item.id;
+      return `
+        <article class="rounded-2xl border border-cream/10 bg-navy-900/80 p-4">
+          <div class="flex items-start justify-between gap-3">
+            <div>
+              <p class="text-3xl">${escapeHtml(item.emoji)}</p>
+              <h2 class="mt-2 font-display text-lg font-extrabold text-cream">${escapeHtml(item.name_vi)}</h2>
+              <p class="mt-1 text-xs uppercase tracking-wide text-cream-muted">${escapeHtml(item.slot)}</p>
+            </div>
+            <p class="rounded-lg bg-gold/15 px-2 py-1 text-sm font-bold text-gold">${item.price_coins} 🪙</p>
+          </div>
+          <div class="mt-4 flex flex-wrap gap-2">
+            ${
+              owned
+                ? `<button type="button" data-equip="${escapeHtml(item.id)}" class="rounded-lg border border-accent px-3 py-2 text-sm font-bold text-accent">${isEquipped ? 'Đang dùng' : 'Trang bị'}</button>
+                   ${isEquipped ? `<button type="button" data-unequip="${escapeHtml(item.slot)}" class="rounded-lg border border-cream/20 px-3 py-2 text-sm font-bold text-cream">Gỡ</button>` : ''}`
+                : `<button type="button" data-buy="${escapeHtml(item.id)}" class="rounded-lg bg-accent px-3 py-2 text-sm font-extrabold text-navy-950">Mua</button>`
+            }
+          </div>
+        </article>
+      `;
+    }).join('');
+
+    grid.querySelectorAll('[data-buy]').forEach((button) => {
+      button.addEventListener('click', async () => {
+        if (!window.confirm('Con muốn mua món này bằng xu?')) return;
+        try {
+          await shopRequest('buy', { item_id: button.dataset.buy });
+        } catch (error) {
+          qs('#shop-error').textContent = error.message;
+          qs('#shop-error').classList.remove('hidden');
+        }
+      });
+    });
+    grid.querySelectorAll('[data-equip]').forEach((button) => {
+      button.addEventListener('click', async () => {
+        try {
+          await shopRequest('equip', { item_id: button.dataset.equip });
+        } catch (error) {
+          qs('#shop-error').textContent = error.message;
+          qs('#shop-error').classList.remove('hidden');
+        }
+      });
+    });
+    grid.querySelectorAll('[data-unequip]').forEach((button) => {
+      button.addEventListener('click', async () => {
+        try {
+          await shopRequest('unequip', { slot: button.dataset.unequip });
+        } catch (error) {
+          qs('#shop-error').textContent = error.message;
+          qs('#shop-error').classList.remove('hidden');
+        }
+      });
+    });
+  }
+
+  async function loadShop() {
+    accessCode = (qs('#shop-code').value || '').trim().toUpperCase();
+    if (!accessCode) return;
+    qs('#shop-error').classList.add('hidden');
+    const payload = await shopRequest('list');
+    shopState = payload.read2lead_state;
+    qs('#shop-shell').classList.remove('hidden');
+    qs('#shop-profile-link').href = `/hoc-sinh?code=${encodeURIComponent(accessCode)}&v3=1`;
+    renderShop();
+  }
+
+  if (!isV3Enabled()) {
+    qs('#shop-gate').classList.remove('hidden');
+  } else {
+    qs('#shop-entry').classList.remove('hidden');
+    const params = new URLSearchParams(window.location.search);
+    const code = (params.get('code') || '').trim().toUpperCase();
+    if (code) {
+      qs('#shop-code').value = code;
+      loadShop().catch((error) => {
+        qs('#shop-error').textContent = error.message;
+        qs('#shop-error').classList.remove('hidden');
+      });
+    }
+  }
+
+  qs('#shop-load')?.addEventListener('click', () => {
+    loadShop().catch((error) => {
+      qs('#shop-error').textContent = error.message;
+      qs('#shop-error').classList.remove('hidden');
+    });
+  });
+</script>
+
+<style>
+  .r2l-shop-name-gold { color: #ffd700; }
+  .r2l-shop-name-ocean { color: #4fd1c5; }
+  .r2l-shop-frame-gold { box-shadow: 0 0 0 3px #ffd700; border-radius: 9999px; }
+  .r2l-shop-frame-rainbow { box-shadow: 0 0 0 3px #a855f7; border-radius: 9999px; }
+</style>
