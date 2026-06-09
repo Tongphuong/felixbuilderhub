@@ -4,6 +4,7 @@
 (function initR2LMicCheck(global) {
   const STORAGE_KEY = 'r2l_mic_ok_v1';
   const STORAGE_PARENT_SKIP = 'r2l_mic_parent_skip_v1';
+  const MIC_WARMUP_SECONDS = 3;
   const LEVEL_SAMPLE_MS = 100;
   const TEST_SECONDS = 3;
   const SILENT_LEVEL = 4;
@@ -243,6 +244,50 @@
     }
   }
 
+  function sleep(ms) {
+    return new Promise((resolve) => global.setTimeout(resolve, ms));
+  }
+
+  /**
+   * iOS/Safari often drops the first syllable unless the audio pipeline warms up first.
+   * Call after getUserMedia, before MediaRecorder.start().
+   */
+  async function runMicWarmupCountdown(options = {}) {
+    const total = Number(options.seconds) > 0 ? Number(options.seconds) : MIC_WARMUP_SECONDS;
+    const onMessage = typeof options.onMessage === 'function' ? options.onMessage : () => {};
+
+    for (let left = total; left >= 1; left -= 1) {
+      if (left === total) {
+        onMessage(`Micro đã bật — chờ ${left} giây rồi mới nói nhé…`, left);
+      } else if (left === 1) {
+        onMessage(`Còn ${left} giây… sắp bắt đầu!`, left);
+      } else {
+        onMessage(`Còn ${left} giây… chưa nói vội nhé`, left);
+      }
+      await sleep(1000);
+    }
+    onMessage('Bắt đầu nói!', 0);
+  }
+
+  async function primeAudioPipeline(stream) {
+    if (!stream) return null;
+    try {
+      const audioContext = new AudioContext();
+      if (audioContext.state === 'suspended') {
+        await audioContext.resume();
+      }
+      const source = audioContext.createMediaStreamSource(stream);
+      const analyser = audioContext.createAnalyser();
+      analyser.fftSize = 256;
+      source.connect(analyser);
+      const buffer = new Uint8Array(analyser.fftSize);
+      analyser.getByteTimeDomainData(buffer);
+      return audioContext;
+    } catch {
+      return null;
+    }
+  }
+
   async function openMicStream(deviceId) {
     const base = {
       echoCancellation: true,
@@ -437,7 +482,7 @@
       if (testBtn) testBtn.disabled = true;
       if (retryBtn) retryBtn.hidden = true;
       root.dataset.state = 'testing';
-      setStatus('Cho phép micro nếu trình duyệt hỏi, rồi nói "Hello Minny" to và rõ...', 'active');
+      setStatus('Cho phép micro nếu trình duyệt hỏi...', 'active');
       if (meterWrap) meterWrap.hidden = false;
       setMeterLevel(0);
 
@@ -469,6 +514,11 @@
           if (level > peak) peak = level;
           setMeterLevel(level);
         }, LEVEL_SAMPLE_MS);
+
+        await runMicWarmupCountdown({
+          onMessage: (msg) => setStatus(msg, 'active'),
+        });
+        setStatus('Giờ nói "Hello Minny" to và rõ nhé...', 'active');
 
         const { mediaRecorder, mimeType } = createMediaRecorder(stream);
         const chunks = [];
@@ -611,8 +661,11 @@
     sessionPassed,
     markSessionPassed,
     markParentSkip,
+    MIC_WARMUP_SECONDS,
     openMicStream,
     getMicStream: openMicStream,
+    runMicWarmupCountdown,
+    primeAudioPipeline,
     mount,
     mountAll,
     scrollToPanel,

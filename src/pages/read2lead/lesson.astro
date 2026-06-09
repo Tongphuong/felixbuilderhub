@@ -1059,6 +1059,17 @@ function _r2lBuildRetellTemplate(lesson) {
     });
   }
 
+  async function _r2lRunMicWarmup(stream, onMessage) {
+    if (window.R2LMicCheck?.primeAudioPipeline) {
+      await window.R2LMicCheck.primeAudioPipeline(stream);
+    }
+    if (window.R2LMicCheck?.runMicWarmupCountdown) {
+      await window.R2LMicCheck.runMicWarmupCountdown({ onMessage });
+      return;
+    }
+    await new Promise((resolve) => window.setTimeout(resolve, 3000));
+  }
+
   function _r2lFocusMicHelp(shell) {
     if (window.R2LMicCheck?.focusMicHelpInShell) {
       window.R2LMicCheck.focusMicHelpInShell(shell);
@@ -1175,6 +1186,9 @@ function _r2lBuildRetellTemplate(lesson) {
   }
 
   function _r2lBuildSpeakingFeedbackHtml(result, { compact = false } = {}) {
+    if (result?.warming) {
+      return `<p class="text-sm text-gold">${escapeHtml(result.message || 'Micro đã bật — chờ 3 giây rồi mới nói nhé…')}</p>`;
+    }
     if (result?.loading) {
       return '<p class="text-sm text-gold">Minny đang nghe và nhận xét bài đọc của con...</p>';
     }
@@ -1357,6 +1371,34 @@ function _r2lBuildRetellTemplate(lesson) {
     if (prev?.blobUrl) URL.revokeObjectURL(prev.blobUrl);
     try {
       const stream = await _r2lOpenMicStream();
+      _r2lRecorderState.perItem.set(itemKey, {
+        mediaRecorder: null,
+        chunks: [],
+        blob: null,
+        blobUrl: null,
+        status: 'warming',
+        warmupStream: stream,
+        warmupCancelled: false,
+        expectedText: prev?.expectedText || '',
+        checkStatus: 'idle',
+        checkResult: null,
+      });
+      _r2lRenderRecorderUi(itemKey, cardEl);
+      _r2lRenderSpeakFeedback(cardEl, {
+        warming: true,
+        message: 'Micro đã bật — chờ 3 giây rồi mới nói nhé…',
+      });
+      await _r2lRunMicWarmup(stream, (msg) => {
+        const warming = _r2lRecorderState.perItem.get(itemKey);
+        if (warming?.warmupCancelled) return;
+        _r2lRenderSpeakFeedback(cardEl, { warming: true, message: msg });
+      });
+      const afterWarmup = _r2lRecorderState.perItem.get(itemKey);
+      if (afterWarmup?.warmupCancelled || afterWarmup?.status !== 'warming') {
+        stream.getTracks().forEach((t) => t.stop());
+        return;
+      }
+
       const { mediaRecorder: mr, mimeType } = _r2lCreateMediaRecorder(stream);
       const chunks = [];
       mr.addEventListener('dataavailable', (e) => {
@@ -1437,6 +1479,25 @@ function _r2lBuildRetellTemplate(lesson) {
 
   function _r2lStopRecording(itemKey, cardEl) {
     const entry = _r2lRecorderState.perItem.get(itemKey);
+    if (entry?.status === 'warming') {
+      entry.warmupCancelled = true;
+      if (entry.warmupStream) {
+        entry.warmupStream.getTracks().forEach((t) => t.stop());
+      }
+      _r2lRecorderState.perItem.set(itemKey, {
+        mediaRecorder: null,
+        chunks: [],
+        blob: null,
+        blobUrl: null,
+        status: 'idle',
+        expectedText: entry.expectedText || '',
+        checkStatus: 'idle',
+        checkResult: null,
+      });
+      _r2lRenderRecorderUi(itemKey, cardEl);
+      _r2lRenderSpeakFeedback(cardEl, null);
+      return;
+    }
     if (entry?.mediaRecorder && entry.status === 'recording') {
       _r2lStopMediaRecorder(entry.mediaRecorder);
       // UI re-renders on 'stop' event handler above.
@@ -1485,7 +1546,10 @@ function _r2lBuildRetellTemplate(lesson) {
     if (!button) return;
     const entry = _r2lRecorderState.perItem.get(itemKey);
     const status = entry?.status || 'idle';
-    if (status === 'recording') {
+    if (status === 'warming') {
+      button.textContent = '⏳ Chờ micro...';
+      button.disabled = true;
+    } else if (status === 'recording') {
       button.textContent = '⏹ Dừng thu';
       button.disabled = false;
     } else if (entry?.checkStatus === 'uploading') {
@@ -1519,6 +1583,11 @@ function _r2lBuildRetellTemplate(lesson) {
       slot.innerHTML = `
         <button type="button" class="r2l-rec-btn r2l-rec-start" data-action="start">Thử thu lại</button>
         <p class="text-sm text-cream/60">${escapeHtml(_r2lRecorderHelpMessage({ name: 'NotAllowedError' }))}</p>
+      `;
+    } else if (status === 'warming') {
+      slot.innerHTML = `
+        <button type="button" class="r2l-rec-btn r2l-rec-stop" data-action="stop">Hủy</button>
+        <span class="r2l-rec-indicator">chờ micro 3 giây...</span>
       `;
     } else if (status === 'recording') {
       slot.innerHTML = `
@@ -1870,7 +1939,8 @@ function _r2lBuildRetellTemplate(lesson) {
     _r2lRetellState.mediaRecorder = null;
     _r2lRetellState.chunks = [];
     _r2lRetellState.blob = null;
-    if (_r2lRetellState.status === 'recording') {
+    _r2lRetellState.warmupCancelled = false;
+    if (_r2lRetellState.status === 'recording' || _r2lRetellState.status === 'warming') {
       _r2lRetellState.status = 'idle';
     }
     _r2lRetellState.secondsLeft = RETELL_MAX_SECONDS;
@@ -1884,6 +1954,14 @@ function _r2lBuildRetellTemplate(lesson) {
     if (!recordBtn || !statusEl) return;
 
     const micReady = _r2lMicIsReady();
+    if (_r2lRetellState.status === 'warming') {
+      recordBtn.textContent = 'Hủy';
+      recordBtn.disabled = false;
+      timerEl?.classList.add('hidden');
+      statusEl.textContent = _r2lRetellState.warmupMessage || 'Micro đã bật — chờ 3 giây rồi mới nói nhé…';
+      if (listenBtn) listenBtn.disabled = true;
+      return;
+    }
     if (_r2lRetellState.status === 'recording') {
       recordBtn.textContent = '⏹ Dừng thu';
       recordBtn.disabled = false;
@@ -1977,6 +2055,24 @@ function _r2lBuildRetellTemplate(lesson) {
     _r2lCleanupRetellRecording();
     try {
       const stream = await _r2lOpenMicStream();
+      _r2lRetellState.stream = stream;
+      _r2lRetellState.status = 'warming';
+      _r2lRetellState.warmupCancelled = false;
+      _r2lRetellState.warmupMessage = 'Micro đã bật — chờ 3 giây rồi mới nói nhé…';
+      _r2lSetMinnyMood('listen', _r2lRetellState.heroEl);
+      _r2lRenderRetellControls();
+
+      await _r2lRunMicWarmup(stream, (msg) => {
+        if (_r2lRetellState.warmupCancelled || _r2lRetellState.status !== 'warming') return;
+        _r2lRetellState.warmupMessage = msg;
+        _r2lRenderRetellControls();
+      });
+      if (_r2lRetellState.warmupCancelled || _r2lRetellState.status !== 'warming') {
+        stream.getTracks().forEach((track) => track.stop());
+        _r2lRetellState.stream = null;
+        return;
+      }
+
       const { mediaRecorder, mimeType } = _r2lCreateMediaRecorder(stream);
       const chunks = [];
       mediaRecorder.addEventListener('dataavailable', (event) => {
@@ -2002,7 +2098,6 @@ function _r2lBuildRetellTemplate(lesson) {
         }
       });
 
-      _r2lRetellState.stream = stream;
       _r2lRetellState.mediaRecorder = mediaRecorder;
       _r2lRetellState.chunks = chunks;
       _r2lRetellState.status = 'recording';
@@ -2092,6 +2187,11 @@ function _r2lBuildRetellTemplate(lesson) {
     root.querySelector('[data-retell-record]')?.addEventListener('click', () => {
       if (_r2lRetellState.status === 'recording') {
         _r2lStopRetellRecording();
+      } else if (_r2lRetellState.status === 'warming') {
+        _r2lRetellState.warmupCancelled = true;
+        _r2lCleanupRetellRecording();
+        _r2lSetMinnyMood('idle', heroScope);
+        _r2lRenderRetellControls();
       } else if (_r2lRetellState.status !== 'uploading') {
         _r2lStartRetellRecording();
       }

@@ -12,6 +12,8 @@ test('mic check script exposes mount API and OS help', () => {
   assert.match(micScript, /mount\(root/);
   assert.match(micScript, /isInAppBrowser/);
   assert.match(micScript, /getMicStream/);
+  assert.match(micScript, /MIC_WARMUP_SECONDS/);
+  assert.match(micScript, /runMicWarmupCountdown/);
   assert.match(micScript, /data-mic-parent-skip/);
   assert.match(micScript, /Windows → Cài đặt → Quyền riêng tư và bảo mật → Microphone/);
   assert.match(micScript, /Mac → Cài đặt hệ thống → Quyền riêng tư và bảo mật → Microphone/);
@@ -21,6 +23,7 @@ test('mic check script exposes mount API and OS help', () => {
 test('lesson page has mic prep banner and shared stream helper', () => {
   assert.match(lessonPage, /mic-prep-banner/);
   assert.match(lessonPage, /_r2lOpenMicStream/);
+  assert.match(lessonPage, /_r2lRunMicWarmup/);
   assert.match(lessonPage, /_r2lFocusMicHelp/);
 });
 

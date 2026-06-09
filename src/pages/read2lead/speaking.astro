@@ -687,6 +687,15 @@ import MicCheckPanel from '../../components/read2lead/v2/MicCheckPanel.astro';
       const isQuestion = step?.kind === 'question';
       const idleLabel = isQuestion ? '🎤 Trả lời Minny' : '🎤 Con nói';
 
+      if (state.status === 'warming') {
+        btn.textContent = '⏳ Chờ micro...';
+        btn.disabled = true;
+        timerEl.classList.add('hidden');
+        statusEl.textContent = state.warmupMessage || 'Micro đã bật — chờ 3 giây rồi mới nói nhé…';
+        setMinnyMood('listen');
+        return;
+      }
+
       if (state.status === 'recording') {
         btn.textContent = '⏹ Dừng';
         btn.disabled = false;
@@ -791,6 +800,30 @@ import MicCheckPanel from '../../components/read2lead/v2/MicCheckPanel.astro';
           : await navigator.mediaDevices.getUserMedia({
               audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true },
             });
+        state.recording = { stream, mediaRecorder: null };
+        state.status = 'warming';
+        state.warmupMessage = 'Micro đã bật — chờ 3 giây rồi mới nói nhé…';
+        updateRecordUi();
+
+        if (window.R2LMicCheck?.primeAudioPipeline) {
+          await window.R2LMicCheck.primeAudioPipeline(stream);
+        }
+        if (window.R2LMicCheck?.runMicWarmupCountdown) {
+          await window.R2LMicCheck.runMicWarmupCountdown({
+            onMessage: (msg) => {
+              if (state.status !== 'warming') return;
+              state.warmupMessage = msg;
+              updateRecordUi();
+            },
+          });
+        } else {
+          await new Promise((resolve) => window.setTimeout(resolve, 3000));
+        }
+        if (state.status !== 'warming') {
+          stream.getTracks().forEach((t) => t.stop());
+          return;
+        }
+
         const { mediaRecorder, mimeType } = createRecorder(stream);
         const chunks = [];
 
