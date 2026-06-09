@@ -89,6 +89,29 @@ test('empty transcript → transcription_failed error', async () => {
   );
 });
 
+test('Groq timeout → transcription_timeout error (not a "speak louder" message)', async () => {
+  await assert.rejects(
+    () =>
+      runSpeakingCheck({
+        audioBlob: new Blob(['audio'], { type: 'audio/webm' }),
+        expectedText: 'The boy runs fast',
+        groqApiKey: 'test-key',
+        fetchFn: async () => {
+          const err = new Error('aborted');
+          err.name = 'TimeoutError';
+          throw err;
+        },
+      }),
+    (error) => error.code === 'transcription_timeout',
+  );
+});
+
+test('speaking endpoint caps the Groq call with a timeout', () => {
+  assert.match(speakingEndpoint, /AbortSignal\.timeout/);
+  assert.match(speakingEndpoint, /transcription_timeout/);
+  assert.match(speakingEndpoint, /GROQ_TIMEOUT_MS/);
+});
+
 test('audio too large → 413 rejected before calling Groq', async () => {
   let groqCalled = false;
   const formData = new FormData();

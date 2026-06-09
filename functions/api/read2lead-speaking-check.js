@@ -187,6 +187,8 @@ export function inferAudioFilename(blob) {
   return 'audio.webm';
 }
 
+export const GROQ_TIMEOUT_MS = 20000;
+
 export async function transcribeWithGroq(audioBlob, apiKey, fetchFn = fetch) {
   const filename = inferAudioFilename(audioBlob);
   const formData = new FormData();
@@ -195,11 +197,23 @@ export async function transcribeWithGroq(audioBlob, apiKey, fetchFn = fetch) {
   formData.append('language', 'en');
   formData.append('response_format', 'json');
 
-  const response = await fetchFn('https://api.groq.com/openai/v1/audio/transcriptions', {
-    method: 'POST',
-    headers: { Authorization: `Bearer ${apiKey}` },
-    body: formData,
-  });
+  // Cap the Groq call so a slow upstream cannot hang the whole Worker (Vietnam 3G).
+  let response;
+  try {
+    response = await fetchFn('https://api.groq.com/openai/v1/audio/transcriptions', {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${apiKey}` },
+      body: formData,
+      signal: AbortSignal.timeout(GROQ_TIMEOUT_MS),
+    });
+  } catch (err) {
+    if (err?.name === 'TimeoutError' || err?.name === 'AbortError') {
+      const error = new Error('groq_timeout');
+      error.code = 'transcription_timeout';
+      throw error;
+    }
+    throw err;
+  }
 
   if (!response.ok) {
     let detail = '';
@@ -338,6 +352,16 @@ export async function onRequestPost(context) {
     return json(result);
   } catch (error) {
     console.error(`[read2lead-speaking-check] ${error?.message} | file=${audioName} type=${audioType} size=${audioSize}`, error?.detail || '');
+    if (error?.code === 'transcription_timeout') {
+      return json(
+        {
+          ok: false,
+          error: 'transcription_timeout',
+          message: 'Mang hoi cham, Minny cham chua kip. Con bam Thu lai nhe!',
+        },
+        504,
+      );
+    }
     if (error?.code === 'transcription_failed' || error?.message === 'groq_transcription_failed') {
       return json(
         {
