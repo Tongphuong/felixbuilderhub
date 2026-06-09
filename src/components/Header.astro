@@ -4,6 +4,7 @@ export interface Props {
 }
 
 import { ZALO_URL } from '../config/contact';
+import '../styles/rank-ladder.css';
 
 const { read2LeadState = false } = Astro.props;
 const contactHref = ZALO_URL;
@@ -21,6 +22,7 @@ const contactHref = ZALO_URL;
         class="hidden flex-1 items-center justify-end gap-2 text-xs sm:flex"
         data-r2l-state-header
       >
+        <span class="hidden shrink-0" data-r2l-v3-rank-badge></span>
         <img
           src="/assets/r2l/ranks/rank-l1-bronze.svg"
           alt="Rank Read2Lead"
@@ -28,7 +30,8 @@ const contactHref = ZALO_URL;
           data-r2l-rank-image
         />
         <span class="rounded-md border border-gold/40 px-2 py-1 font-bold text-gold" data-r2l-level>LV --</span>
-        <span class="hidden min-w-28 sm:block">
+        <span class="hidden r2l-reading-level" data-r2l-reading-level>Cấp độ đọc: --</span>
+        <span class="hidden min-w-28 sm:block" data-r2l-legacy-rank-block>
           <span class="mb-1 flex justify-between text-[11px] text-cream-muted">
             <span data-r2l-rank>Read2Lead</span>
             <span data-r2l-xp-label>0/60 XP</span>
@@ -89,6 +92,8 @@ const contactHref = ZALO_URL;
 </header>
 
 <script>
+  import { applyV3HeaderRank } from '../lib/rank-header';
+
   const toggle = document.getElementById('mobile-nav-toggle');
   const nav = document.getElementById('mobile-nav');
   if (toggle && nav) {
@@ -117,12 +122,7 @@ const contactHref = ZALO_URL;
           stateHeader.classList.remove('hidden');
           stateHeader.classList.add('flex');
           stateHeader.querySelector('[data-r2l-level]').textContent = state.current_level || 'LV';
-          stateHeader.querySelector('[data-r2l-rank]').textContent = state.rank_title || 'Read2Lead';
-          const rankImage = stateHeader.querySelector('[data-r2l-rank-image]');
-          if (rankImage && state.rank_asset_url) {
-            rankImage.src = state.rank_asset_url;
-            rankImage.alt = `Rank ${state.rank_title || state.current_level || 'Read2Lead'}`;
-          }
+          applyV3HeaderRank(state, stateHeader);
           stateHeader.querySelector('[data-r2l-xp-label]').textContent = `${state.xp_in_level ?? 0}/${state.xp_to_next_level ?? 60} XP`;
           stateHeader.querySelector('[data-r2l-xp-fill]').style.width = `${state.xp_percent ?? 0}%`;
           stateHeader.querySelector('[data-r2l-coins]').textContent = `${state.coins || 0} xu`;

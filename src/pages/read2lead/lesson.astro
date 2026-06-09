@@ -9,6 +9,7 @@ import ListenAndOrder from '../../components/read2lead/v2/ListenAndOrder.astro';
 import ListenAndSpeak from '../../components/read2lead/v2/ListenAndSpeak.astro';
 import RetellSummary from '../../components/read2lead/v2/RetellSummary.astro';
 import LevelUpModal from '../../components/read2lead/v2/LevelUpModal.astro';
+import RankUpModal from '../../components/read2lead/v3/rank/RankUpModal.astro';
 import ProgressBar from '../../components/read2lead/v2/ProgressBar.astro';
 import StoryDock from '../../components/read2lead/v2/StoryDock.astro';
 import MinnyCoachStrip from '../../components/read2lead/v2/MinnyCoachStrip.astro';
@@ -124,6 +125,7 @@ const retellGuideInline = retellGuideSrc
 
     <RewardBurst />
     <LevelUpModal />
+    <RankUpModal />
 
     <div id="submit-confirm-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/60">
       <div class="mx-4 max-w-sm rounded-xl bg-navy-900 border border-gold/30 p-6 text-center">
@@ -1804,6 +1806,8 @@ function _r2lBuildRetellTemplate(lesson) {
     revealed: false,
     pendingRewards: null,
     pendingLevelUp: null,
+    pendingRankUp: null,
+    pendingRankLadder: null,
   };
 
   function _r2lMaybeRevealTriviaSecret(scorePercent) {
@@ -1850,9 +1854,14 @@ function _r2lBuildRetellTemplate(lesson) {
       playSfxSequence([SFX.packComplete, pickVoiceClip()], 600);
     }
     showLevelUp(_r2lTriviaState.pendingLevelUp);
+    if (window.__r2lV3?.showRankUp) {
+      window.__r2lV3.showRankUp(_r2lTriviaState.pendingRankUp, _r2lTriviaState.pendingRankLadder);
+    }
     showReward({ mode: 'celebrate', withVoice: true });
     _r2lTriviaState.pendingRewards = null;
     _r2lTriviaState.pendingLevelUp = null;
+    _r2lTriviaState.pendingRankUp = null;
+    _r2lTriviaState.pendingRankLadder = null;
   }
 
   qs('#trivia-reveal-continue')?.addEventListener('click', () => {
@@ -3941,6 +3950,8 @@ function _r2lBuildRetellTemplate(lesson) {
       updateStateHeader(data.read2lead_state);
       _r2lTriviaState.pendingRewards = rewards;
       _r2lTriviaState.pendingLevelUp = data.level_up || null;
+      _r2lTriviaState.pendingRankUp = data.rank_up || null;
+      _r2lTriviaState.pendingRankLadder = data.read2lead_state?.rank_ladder || null;
 
       if (_r2lMaybeRevealTriviaSecret(scorePercent)) {
         qs('#submit-hint').textContent = 'Con đã mở khóa bí mật sau truyện!';
@@ -3980,11 +3991,15 @@ function _r2lBuildRetellTemplate(lesson) {
     header.classList.remove('hidden');
     header.classList.add('flex');
     header.querySelector('[data-r2l-level]').textContent = read2LeadState.current_level || 'LV';
-    header.querySelector('[data-r2l-rank]').textContent = read2LeadState.rank_title || 'Read2Lead';
-    const rankImage = header.querySelector('[data-r2l-rank-image]');
-    if (rankImage && read2LeadState.rank_asset_url) {
-      rankImage.src = read2LeadState.rank_asset_url;
-      rankImage.alt = `Rank ${read2LeadState.rank_title || read2LeadState.current_level || 'Read2Lead'}`;
+    if (window.__r2lV3?.applyHeaderRank) {
+      window.__r2lV3.applyHeaderRank(read2LeadState, header);
+    } else {
+      header.querySelector('[data-r2l-rank]').textContent = read2LeadState.rank_title || 'Read2Lead';
+      const rankImage = header.querySelector('[data-r2l-rank-image]');
+      if (rankImage && read2LeadState.rank_asset_url) {
+        rankImage.src = read2LeadState.rank_asset_url;
+        rankImage.alt = `Rank ${read2LeadState.rank_title || read2LeadState.current_level || 'Read2Lead'}`;
+      }
     }
     header.querySelector('[data-r2l-xp-label]').textContent = `${read2LeadState.xp_in_level ?? 0}/${read2LeadState.xp_to_next_level ?? 60} XP`;
     header.querySelector('[data-r2l-xp-fill]').style.width = `${read2LeadState.xp_percent ?? 0}%`;
@@ -4005,4 +4020,25 @@ function _r2lBuildRetellTemplate(lesson) {
     modal.classList.add('hidden');
     modal.classList.remove('flex');
   });
+</script>
+
+<script>
+  import { isV3Enabled } from '../../config/flags';
+  import { applyV3HeaderRank } from '../../lib/rank-header';
+  import { bindRankUpModalClose, showRankUpModal } from '../../lib/rank-up-celebration';
+  import type { RankLadderView } from '../../lib/rank-ladder-ui';
+
+  bindRankUpModalClose();
+
+  window.__r2lV3 = {
+    isEnabled: isV3Enabled,
+    applyHeaderRank: applyV3HeaderRank,
+    showRankUp(
+      rankUp: { changed: boolean; from_label: string; to_label: string; tier_changed: boolean } | null | undefined,
+      ladder?: RankLadderView,
+    ) {
+      if (!isV3Enabled() || !rankUp?.changed) return;
+      showRankUpModal(rankUp, ladder);
+    },
+  };
 </script>

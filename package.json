@@ -13,10 +13,12 @@
   "dependencies": {
     "@astrojs/tailwind": "^6.0.2",
     "astro": "5.18.2",
+    "canvas-confetti": "^1.9.4",
     "tailwindcss": "^3.4.19"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.9",
+    "@types/canvas-confetti": "^1.9.0",
     "json-schema-to-typescript": "^15.0.0",
     "typescript": "^5.9.3"
   }
