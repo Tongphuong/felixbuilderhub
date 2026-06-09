@@ -846,16 +846,28 @@ function _r2lBuildRetellTemplate(lesson) {
     _itemStreak += 1;
     if (_itemStreak >= 3) {
       setMinnyStrip('celebrate', `${_itemStreak} câu liên tiếp đúng! Giỏi quá!`);
+      window.__r2lJuice?.fireStreakConfetti?.();
     } else {
       setMinnyStrip('celebrate', MINNY_CELEBRATE[Math.floor(Math.random() * MINNY_CELEBRATE.length)]);
     }
+    _r2lUpdateActiveHeroMood('celebrate');
+    window.__r2lJuice?.playSynthTone?.('correct', _r2lSfxState.muted);
     showReward({ mode: 'mini' });
   }
 
   function onItemWrong(questionId) {
     _itemStreak = 0;
     setMinnyStrip('encourage', MINNY_ENCOURAGE[Math.floor(Math.random() * MINNY_ENCOURAGE.length)]);
+    _r2lUpdateActiveHeroMood('encourage');
+    window.__r2lJuice?.playSynthTone?.('wrong', _r2lSfxState.muted);
     playWrongSfx(questionId);
+  }
+
+  function _r2lUpdateActiveHeroMood(mood) {
+    const activity = state.lesson?.activities?.[state.activityIndex];
+    if (!activity?.type) return;
+    const hero = qs(`[data-activity-shell="${activity.type}"] [data-minny-hero]`);
+    if (hero) _r2lSetMinnyMood(mood, hero);
   }
 
   function updateParentStrip() {
@@ -1848,7 +1860,10 @@ function _r2lBuildRetellTemplate(lesson) {
     if (state.accessCode) {
       qs('#completion-new-pack').href = `/read2lead?code=${encodeURIComponent(state.accessCode)}#form`;
     }
+    window.__r2lJuice?.playSynthTone?.('coin', _r2lSfxState.muted);
+    window.__r2lJuice?.fireLessonPassConfetti?.();
     if (_r2lTriviaState.pendingLevelUp) {
+      window.__r2lJuice?.playSynthTone?.('level-up', _r2lSfxState.muted);
       playSfxSequence([SFX.packComplete, SFX.levelUp], 700);
     } else {
       playSfxSequence([SFX.packComplete, pickVoiceClip()], 600);
@@ -3286,6 +3301,9 @@ function _r2lBuildRetellTemplate(lesson) {
 
   function renderOrderActivity(root, activity) {
     const MAX_WRONG_PER_ITEM = 5;
+    const touchOrderHint = ('ontouchstart' in window || navigator.maxTouchPoints > 0)
+      ? 'Bấm từng từ theo thứ tự vào ô trống. Bấm chữ trong ô để lấy ra.'
+      : 'Kéo từng chữ vào ô. Bấm chữ trong ô để lấy ra.';
     root.innerHTML = `
       <div class="mt-5 space-y-5">
         ${(activity.items || [])
@@ -3298,7 +3316,7 @@ function _r2lBuildRetellTemplate(lesson) {
                 </div>
                 <p class="mt-2 text-sm text-cream/65">${escapeHtml(item.translation_vi || '')}</p>
                 <div class="mt-3">
-                  <p class="mb-2 text-xs font-semibold uppercase tracking-wide text-cream/55">Kéo từng chữ vào ô. Bấm chữ trong ô để lấy ra.</p>
+                  <p class="mb-2 text-xs font-semibold uppercase tracking-wide text-cream/55">${escapeHtml(touchOrderHint)}</p>
                   <div class="r2l-order-slots" data-order-slots="${itemIndex}">
                     ${(item.scrambled_tokens || [])
                       .map(
@@ -4025,10 +4043,17 @@ function _r2lBuildRetellTemplate(lesson) {
 <script>
   import { isV3Enabled } from '../../config/flags';
   import { applyV3HeaderRank } from '../../lib/rank-header';
+  import { fireLessonPassConfetti, fireStreakConfetti, playSynthTone } from '../../lib/lesson-juice';
   import { bindRankUpModalClose, showRankUpModal } from '../../lib/rank-up-celebration';
   import type { RankLadderView } from '../../lib/rank-ladder-ui';
 
   bindRankUpModalClose();
+
+  window.__r2lJuice = {
+    playSynthTone,
+    fireStreakConfetti,
+    fireLessonPassConfetti,
+  };
 
   window.__r2lV3 = {
     isEnabled: isV3Enabled,
