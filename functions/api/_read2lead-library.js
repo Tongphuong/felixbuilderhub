@@ -19,7 +19,7 @@ export function topicEmoji(topic = '') {
   }
   let hash = 0;
   for (let index = 0; index < normalized.length; index += 1) {
-    hash = (hash + normalized.charCodeAt(index) * (index + 1)) % TOPIC_EMOJI.length;
+    hash = (hash + normalized.charCodeAt(index) * (index + 1)) % Object.keys(TOPIC_EMOJI).length;
   }
   return Object.values(TOPIC_EMOJI)[hash] || '📖';
 }
