@@ -173,9 +173,23 @@ export function scoreOpenTranscript(transcript, storyContext) {
   };
 }
 
+export function inferAudioFilename(blob) {
+  // Use the blob's name if available (Cloudflare Workers File object)
+  const name = blob?.name || '';
+  if (name && /\.(webm|mp4|m4a|ogg|wav|mp3|flac)$/i.test(name)) return name;
+
+  // Fall back to MIME type detection
+  const type = String(blob?.type || '').toLowerCase();
+  if (type.includes('mp4') || type.includes('m4a') || type.includes('aac')) return 'audio.mp4';
+  if (type.includes('ogg')) return 'audio.ogg';
+  if (type.includes('wav')) return 'audio.wav';
+  return 'audio.webm';
+}
+
 export async function transcribeWithGroq(audioBlob, apiKey, fetchFn = fetch) {
+  const filename = inferAudioFilename(audioBlob);
   const formData = new FormData();
-  formData.append('file', audioBlob, 'audio.webm');
+  formData.append('file', audioBlob, filename);
   formData.append('model', 'whisper-large-v3');
   formData.append('language', 'en');
   formData.append('response_format', 'json');
@@ -187,8 +201,12 @@ export async function transcribeWithGroq(audioBlob, apiKey, fetchFn = fetch) {
   });
 
   if (!response.ok) {
+    let detail = '';
+    try { detail = await response.text(); } catch {}
+    console.error(`[groq-whisper] ${response.status} ${filename}:`, detail);
     const error = new Error('groq_transcription_failed');
     error.status = response.status;
+    error.detail = detail;
     throw error;
   }
 
@@ -306,6 +324,9 @@ export async function onRequestPost(context) {
     );
   }
 
+  const audioName = audio?.name || 'unknown';
+  const audioType = audio?.type || 'unknown';
+
   try {
     const result = await runSpeakingCheck({
       audioBlob: audio,
@@ -315,24 +336,30 @@ export async function onRequestPost(context) {
     });
     return json(result);
   } catch (error) {
+    console.error(`[read2lead-speaking-check] ${error?.message} | file=${audioName} type=${audioType} size=${audioSize}`, error?.detail || '');
     if (error?.code === 'transcription_failed' || error?.message === 'groq_transcription_failed') {
       return json(
         {
           ok: false,
           error: 'transcription_failed',
           message: 'Khong nghe duoc ro. Con thu doc to hon nhe!',
+          _debug_file: audioName,
+          _debug_type: audioType,
+          _debug_size: audioSize,
         },
         422,
       );
     }
-    console.error('[read2lead-speaking-check]', error);
     return json(
       {
         ok: false,
-        error: 'transcription_failed',
+        error: 'internal_error',
         message: 'Khong nghe duoc ro. Con thu doc to hon nhe!',
+        _debug_file: audioName,
+        _debug_type: audioType,
+        _debug_size: audioSize,
       },
-      422,
+      500,
     );
   }
 }
