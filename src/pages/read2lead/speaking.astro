@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
+import MicCheckPanel from '../../components/read2lead/v2/MicCheckPanel.astro';
 ---
 
 <BaseLayout
@@ -62,6 +63,8 @@ import Footer from '../../components/Footer.astro';
           </div>
           <p id="minny-greeting" class="mt-4 text-lg font-bold leading-snug text-cream"></p>
         </div>
+
+        <MicCheckPanel />
 
         <!-- Mode picker: large tap cards -->
         <div id="mode-picker" class="space-y-3">
@@ -319,6 +322,7 @@ import Footer from '../../components/Footer.astro';
       lastResult: null,
       activeAudio: null,
       videoAvailable: {},
+      micGateReady: false,
     };
 
     if (params.get('code')) {
@@ -620,19 +624,45 @@ import Footer from '../../components/Footer.astro';
       return !!(navigator.mediaDevices?.getUserMedia && window.MediaRecorder);
     }
 
-    function pickMimeType() {
-      if (typeof MediaRecorder === 'undefined') return '';
-      if (MediaRecorder.isTypeSupported('audio/webm')) return 'audio/webm';
-      if (MediaRecorder.isTypeSupported('audio/mp4')) return 'audio/mp4';
-      return '';
+    function createRecorder(stream) {
+      const candidates = [
+        'audio/mp4',
+        'audio/aac',
+        'audio/webm;codecs=opus',
+        'audio/webm',
+        'audio/ogg;codecs=opus',
+      ];
+      for (const mimeType of candidates) {
+        try {
+          if (typeof MediaRecorder.isTypeSupported === 'function' && !MediaRecorder.isTypeSupported(mimeType)) {
+            continue;
+          }
+          const mediaRecorder = new MediaRecorder(stream, { mimeType });
+          return { mediaRecorder, mimeType: mediaRecorder.mimeType || mimeType };
+        } catch {
+          // try next Safari-friendly codec
+        }
+      }
+      const mediaRecorder = new MediaRecorder(stream);
+      return { mediaRecorder, mimeType: mediaRecorder.mimeType || 'audio/mp4' };
     }
 
-    function createRecorder(stream) {
-      const mimeType = pickMimeType();
-      if (mimeType && MediaRecorder.isTypeSupported(mimeType)) {
-        return { mediaRecorder: new MediaRecorder(stream, { mimeType }), mimeType };
+    function audioUploadFilename(blob) {
+      const type = String(blob?.type || '').toLowerCase();
+      if (type.includes('mp4') || type.includes('m4a') || type.includes('aac')) return 'audio.mp4';
+      if (type.includes('ogg')) return 'audio.ogg';
+      if (type.includes('wav')) return 'audio.wav';
+      return 'audio.webm';
+    }
+
+    function stopMediaRecorder(mediaRecorder) {
+      if (!mediaRecorder || mediaRecorder.state !== 'recording') return;
+      try {
+        mediaRecorder.requestData();
+      } catch {
+        /* optional on some browsers */
       }
-      return { mediaRecorder: new MediaRecorder(stream), mimeType: '' };
+      mediaRecorder.stop();
     }
 
     function cleanupRecording() {
@@ -676,12 +706,42 @@ import Footer from '../../components/Footer.astro';
         return;
       }
 
-      btn.disabled = !micReady();
+      const micBlocked = state.modePicked && !state.micGateReady;
+      btn.disabled = !micReady() || micBlocked;
       btn.textContent = idleLabel;
       timerEl.classList.add('hidden');
-      statusEl.textContent = micReady() ? 'Bấm nút rồi nói to, rõ nhé.' : 'Micro chưa sẵn sàng.';
+      if (micBlocked) {
+        statusEl.textContent = 'Con kiểm tra micro ở khung phía trên trước nhé.';
+      } else {
+        statusEl.textContent = micReady() ? 'Bấm nút rồi nói to, rõ nhé.' : 'Micro chưa sẵn sàng.';
+      }
       if (state.modePicked) setMinnyMood('idle');
     }
+
+    function mountSpeakingMicCheck() {
+      const panel = shell?.querySelector('[data-r2l-mic-check]');
+      if (!panel || panel.dataset.r2lMicMounted === 'true') return;
+      if (!window.R2LMicCheck?.mount) {
+        window.setTimeout(mountSpeakingMicCheck, 50);
+        return;
+      }
+      window.R2LMicCheck.mount(panel, {
+        blockUntilPass: true,
+        onPass: () => {
+          state.micGateReady = true;
+          updateRecordUi();
+        },
+        onFail: () => {
+          state.micGateReady = false;
+          updateRecordUi();
+        },
+      });
+    }
+
+    document.addEventListener('r2l-mic-gate', (event) => {
+      state.micGateReady = Boolean(event.detail?.ready);
+      updateRecordUi();
+    });
 
     async function submitAudio(blob, prompt) {
       state.status = 'uploading';
@@ -695,7 +755,7 @@ import Footer from '../../components/Footer.astro';
       );
       formData.append('check_mode', prompt.check_mode || 'open');
       formData.append('practice_mode', '1');
-      formData.append('audio', blob, 'audio.webm');
+      formData.append('audio', blob, audioUploadFilename(blob));
 
       try {
         const res = await fetch('/api/read2lead-speaking-check', { method: 'POST', body: formData });
@@ -719,10 +779,16 @@ import Footer from '../../components/Footer.astro';
         renderResult({ ok: false, message: 'Micro chưa sẵn sàng. Con thử trình duyệt khác hoặc cho phép micro nhé.' });
         return;
       }
+      if (!state.micGateReady && !window.R2LMicCheck?.sessionPassed?.()) {
+        renderResult({ ok: false, message: 'Con bấm Kiểm tra micro ở khung phía trên trước nhé.' });
+        return;
+      }
 
       cleanupRecording();
       try {
-        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        const stream = await navigator.mediaDevices.getUserMedia({
+          audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true },
+        });
         const { mediaRecorder, mimeType } = createRecorder(stream);
         const chunks = [];
 
@@ -751,20 +817,25 @@ import Footer from '../../components/Footer.astro';
           state.secondsLeft -= 1;
           updateRecordUi();
           if (state.secondsLeft <= 0) {
-            mediaRecorder.stop();
-            cleanupRecording();
+            if (state.timerId) {
+              clearInterval(state.timerId);
+              state.timerId = null;
+            }
+            stopMediaRecorder(mediaRecorder);
           }
         }, 1000);
-      } catch {
-        renderResult({ ok: false, message: 'Không mở được micro. Con nhờ bố mẹ cho phép micro nhé.' });
+      } catch (error) {
+        const message = window.R2LMicCheck?.helpMessage?.(error)
+          || 'Không mở được micro. Con nhờ bố mẹ cho phép micro nhé.';
+        renderResult({ ok: false, message });
         cleanupRecording();
         updateRecordUi();
       }
     }
 
     function stopRecording() {
-      if (state.recording?.mediaRecorder?.state === 'recording') {
-        state.recording.mediaRecorder.stop();
+      if (state.recording?.mediaRecorder) {
+        stopMediaRecorder(state.recording.mediaRecorder);
       }
       if (state.timerId) {
         clearInterval(state.timerId);
@@ -812,6 +883,7 @@ import Footer from '../../components/Footer.astro';
 
         codeCard.classList.add('hidden');
         shell.classList.remove('hidden');
+        mountSpeakingMicCheck();
         showModePicker();
         renderModeCards();
         setMinnyMood('idle');
@@ -862,4 +934,5 @@ import Footer from '../../components/Footer.astro';
 
     loadBtn?.addEventListener('click', loadSession);
   </script>
+  <script src="/scripts/r2l-mic-check.js" defer></script>
 </BaseLayout>

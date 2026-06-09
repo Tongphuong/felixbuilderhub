@@ -126,6 +126,7 @@ const retellGuideInline = retellGuideSrc
     </div>
   </main>
   <Footer />
+  <script src="/scripts/r2l-mic-check.js" defer></script>
 </BaseLayout>
 
 <style is:global>
@@ -741,13 +742,13 @@ function _r2lBuildRetellGuideQuestions(lesson) {
     },
     listen_and_speak: {
       doing: (n, total) => `Phần ${n}/${total}: Nói lại — nghe rồi đọc theo`,
-      needs: 'Bấm Nghe, rồi bấm Thu âm và đọc to',
-      stuck: 'Micro: Cài đặt → Safari/Chrome → Cho phép micro → felixbuilderhub.com',
+      needs: 'Bấm Kiểm tra micro, rồi Nghe, rồi Con nói',
+      stuck: 'Micro: bấm Kiểm tra micro → làm theo hướng dẫn Windows/Mac trong khung vàng',
     },
     retell_summary: {
       doing: (n, total) => `Phần ${n}/${total}: Kể truyện — kể lại bằng tiếng Anh`,
-      needs: 'Dùng 4 gợi ý, kể bằng tiếng Anh 30–60 giây',
-      stuck: 'Micro: Cài đặt → Safari/Chrome → Cho phép micro → felixbuilderhub.com',
+      needs: 'Kiểm tra micro → Nghe → Con kể 30–60 giây',
+      stuck: 'Micro: bấm Kiểm tra micro → Windows/Mac: Cài đặt → Quyền riêng tư → Microphone',
     },
   };
 
@@ -914,6 +915,9 @@ function _r2lBuildRetellGuideQuestions(lesson) {
   }
 
   function _r2lRecorderHelpMessage(error) {
+    if (window.R2LMicCheck?.helpMessage) {
+      return window.R2LMicCheck.helpMessage(error);
+    }
     if (error && _r2lIsPermissionError(error)) {
       return 'Vui lòng cấp quyền micro cho trình duyệt (Safari/Chrome), rồi tải lại trang nhé.';
     }
@@ -928,6 +932,47 @@ function _r2lBuildRetellGuideQuestions(lesson) {
     }
     return 'Không mở được micro. Con nhờ ba mẹ kiểm tra quyền micro trong Cài đặt hệ thống > Quyền riêng tư > Micro.';
   }
+
+  let _r2lMicGateReady = false;
+
+  function _r2lApplyMicGate(ready) {
+    _r2lMicGateReady = ready;
+    const speakShell = qs('[data-activity-shell="listen_and_speak"]');
+    const retellShell = qs('[data-activity-shell="retell_summary"]');
+    [speakShell, retellShell].forEach((shell) => {
+      if (!shell || shell.hidden) return;
+      shell.querySelectorAll('[data-speak-record], [data-retell-record]').forEach((btn) => {
+        if (ready) {
+          if (btn.hasAttribute('data-retell-record')) {
+            btn.disabled = !_r2lMicIsReady() || !_r2lRetellState.heardInstruction;
+          } else {
+            btn.disabled = btn.dataset.heard !== 'true' || !_r2lMicIsReady();
+          }
+        } else {
+          btn.disabled = true;
+        }
+      });
+    });
+  }
+
+  function _r2lMountMicCheck(shell, attempt = 0) {
+    if (!shell) return;
+    const panel = shell.querySelector('[data-r2l-mic-check]');
+    if (!panel || panel.dataset.r2lMicMounted === 'true') return;
+    if (!window.R2LMicCheck?.mount) {
+      if (attempt < 40) window.setTimeout(() => _r2lMountMicCheck(shell, attempt + 1), 50);
+      return;
+    }
+    window.R2LMicCheck.mount(panel, {
+      blockUntilPass: true,
+      onPass: () => _r2lApplyMicGate(true),
+      onFail: () => _r2lApplyMicGate(false),
+    });
+  }
+
+  document.addEventListener('r2l-mic-gate', (event) => {
+    _r2lApplyMicGate(Boolean(event.detail?.ready));
+  });
 
   function _r2lMicIsReady() {
     return _r2lHasMicInput() && _r2lHasMediaRecorder();
@@ -964,7 +1009,13 @@ function _r2lBuildRetellGuideQuestions(lesson) {
 
   async function _r2lPostSpeakingCheck(blob, expectedText, checkMode = 'read', maxSeconds = 0) {
     const formData = new FormData();
-    formData.append('audio', blob, blob.type.includes('mp4') ? 'audio.mp4' : 'audio.webm');
+    const blobType = String(blob?.type || '').toLowerCase();
+    const audioName = blobType.includes('mp4') || blobType.includes('m4a') || blobType.includes('aac')
+      ? 'audio.mp4'
+      : blobType.includes('ogg')
+        ? 'audio.ogg'
+        : 'audio.webm';
+    formData.append('audio', blob, audioName);
     formData.append('access_code', state.accessCode);
     formData.append('pack_id', state.packId);
     formData.append('expected_text', expectedText);
@@ -1176,6 +1227,13 @@ function _r2lBuildRetellGuideQuestions(lesson) {
   }
 
   async function _r2lStartRecording(itemKey, cardEl) {
+    if (!_r2lMicGateReady && !window.R2LMicCheck?.sessionPassed?.()) {
+      _r2lRenderSpeakFeedback(cardEl, {
+        ok: false,
+        message: 'Con bấm Kiểm tra micro ở khung phía trên trước nhé.',
+      });
+      return;
+    }
     if (!_r2lHasMicInput()) {
       _r2lRenderSpeakFeedback(cardEl, { ok: false, message: _r2lRecorderHelpMessage() });
       return;
@@ -1191,7 +1249,9 @@ function _r2lBuildRetellGuideQuestions(lesson) {
     const prev = _r2lRecorderState.perItem.get(itemKey);
     if (prev?.blobUrl) URL.revokeObjectURL(prev.blobUrl);
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const stream = await navigator.mediaDevices.getUserMedia({
+        audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true },
+      });
       const { mediaRecorder: mr, mimeType } = _r2lCreateMediaRecorder(stream);
       const chunks = [];
       mr.addEventListener('dataavailable', (e) => {
@@ -1259,10 +1319,20 @@ function _r2lBuildRetellGuideQuestions(lesson) {
     }
   }
 
+  function _r2lStopMediaRecorder(mediaRecorder) {
+    if (!mediaRecorder || mediaRecorder.state !== 'recording') return;
+    try {
+      mediaRecorder.requestData();
+    } catch {
+      /* optional on some browsers */
+    }
+    mediaRecorder.stop();
+  }
+
   function _r2lStopRecording(itemKey, cardEl) {
     const entry = _r2lRecorderState.perItem.get(itemKey);
     if (entry?.mediaRecorder && entry.status === 'recording') {
-      entry.mediaRecorder.stop();
+      _r2lStopMediaRecorder(entry.mediaRecorder);
       // UI re-renders on 'stop' event handler above.
     }
   }
@@ -1737,9 +1807,18 @@ function _r2lBuildRetellGuideQuestions(lesson) {
 
   async function _r2lStartRetellRecording() {
     if (!_r2lRetellState.heardInstruction || !_r2lMicIsReady()) return;
+    if (!_r2lMicGateReady && !window.R2LMicCheck?.sessionPassed?.()) {
+      _r2lRenderRetellFeedback({
+        ok: false,
+        message: 'Con bấm Kiểm tra micro ở khung phía trên trước nhé.',
+      });
+      return;
+    }
     _r2lCleanupRetellRecording();
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const stream = await navigator.mediaDevices.getUserMedia({
+        audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true },
+      });
       const { mediaRecorder, mimeType } = _r2lCreateMediaRecorder(stream);
       const chunks = [];
       mediaRecorder.addEventListener('dataavailable', (event) => {
@@ -1803,7 +1882,7 @@ function _r2lBuildRetellGuideQuestions(lesson) {
       _r2lRetellState.timerId = null;
     }
     if (_r2lRetellState.mediaRecorder && _r2lRetellState.status === 'recording') {
-      _r2lRetellState.mediaRecorder.stop();
+      _r2lStopMediaRecorder(_r2lRetellState.mediaRecorder);
     }
   }
 
@@ -2228,6 +2307,15 @@ function _r2lBuildRetellGuideQuestions(lesson) {
     updateParentStrip();
     updateProgress();
     updateGlobalCta();
+
+    if (['listen_and_speak', 'retell_summary'].includes(activity.type)) {
+      _r2lMountMicCheck(shell);
+      if (window.R2LMicCheck?.sessionPassed?.()) {
+        _r2lApplyMicGate(true);
+      } else {
+        _r2lApplyMicGate(false);
+      }
+    }
   }
 
   function activityIndexByType(type) {

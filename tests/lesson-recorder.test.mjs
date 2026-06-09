@@ -27,6 +27,12 @@ test('lesson page cleans up blob URLs on activity exit', () => {
   assert.match(lessonPage, /_r2lRecorderState\.perItem\.clear\(\)/);
 });
 
+test('lesson page gates speak recording behind mic check', () => {
+  assert.match(lessonPage, /_r2lMicGateReady/);
+  assert.match(lessonPage, /Kiểm tra micro/);
+  assert.match(lessonPage, /r2l-mic-gate/);
+});
+
 test('lesson page mounts Minny speak controls per sentence', () => {
   assert.match(lessonPage, /data-speak-record/);
   assert.match(lessonPage, /data-speak-card="\$\{itemIndex\}"/);

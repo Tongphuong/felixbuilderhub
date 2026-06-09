@@ -1,0 +1,194 @@
+---
+/** Microphone test panel — mount via /scripts/r2l-mic-check.js */
+---
+
+<div class="r2l-mic-check" data-r2l-mic-check data-state="idle">
+  <div class="r2l-mic-check__head">
+    <p class="r2l-mic-check__label">Kiểm tra micro</p>
+    <span class="r2l-mic-check__pass" data-mic-pass hidden>✓ Micro OK</span>
+  </div>
+  <p class="r2l-mic-check__status" data-mic-status data-tone="neutral">
+    Bước đầu: kiểm tra micro trước khi nói với Minny.
+  </p>
+  <select class="r2l-mic-check__device" data-mic-device hidden aria-label="Chọn micro"></select>
+  <div class="r2l-mic-check__meter" data-mic-meter hidden>
+    <div class="r2l-mic-check__meter-track">
+      <div class="r2l-mic-check__meter-bar" data-mic-meter-bar style="width: 0%"></div>
+    </div>
+    <p class="r2l-mic-check__meter-hint">Thanh nhảy khi con nói = micro đang hoạt động</p>
+  </div>
+  <div class="r2l-mic-check__actions">
+    <button type="button" class="r2l-mic-check__btn r2l-mic-check__btn--primary" data-mic-test>
+      🎤 Kiểm tra micro
+    </button>
+    <button type="button" class="r2l-mic-check__btn r2l-mic-check__btn--secondary" data-mic-play hidden>
+      ▶ Nghe thử
+    </button>
+    <button type="button" class="r2l-mic-check__btn r2l-mic-check__btn--secondary" data-mic-retry hidden>
+      Thử lại
+    </button>
+  </div>
+  <div class="r2l-mic-check__help" data-mic-help hidden></div>
+</div>
+
+<style is:global>
+  .r2l-mic-check {
+    margin-top: 1rem;
+    border-radius: 1rem;
+    border: 2px solid rgb(200 143 56 / 0.35);
+    background: rgb(10 14 26 / 0.55);
+    padding: 1rem 1.1rem;
+  }
+
+  .r2l-mic-check[data-state='passed'] {
+    border-color: rgb(74 222 128 / 0.45);
+    background: rgb(74 222 128 / 0.08);
+  }
+
+  .r2l-mic-check__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+
+  .r2l-mic-check__label {
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgb(242 204 126);
+  }
+
+  .r2l-mic-check__pass {
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: rgb(134 239 172);
+  }
+
+  .r2l-mic-check__status {
+    margin-top: 0.5rem;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: rgb(245 230 211 / 0.85);
+  }
+
+  .r2l-mic-check__status[data-tone='error'] {
+    color: rgb(254 202 202);
+  }
+
+  .r2l-mic-check__status[data-tone='ok'] {
+    color: rgb(187 247 208);
+  }
+
+  .r2l-mic-check__status[data-tone='active'] {
+    color: rgb(242 204 126);
+  }
+
+  .r2l-mic-check__device {
+    margin-top: 0.65rem;
+    width: 100%;
+    border-radius: 0.65rem;
+    border: 1px solid rgb(245 230 211 / 0.15);
+    background: rgb(10 14 26);
+    padding: 0.55rem 0.65rem;
+    font-size: 0.85rem;
+    color: rgb(245 230 211);
+  }
+
+  .r2l-mic-check__meter {
+    margin-top: 0.75rem;
+  }
+
+  .r2l-mic-check__meter-track {
+    height: 0.65rem;
+    overflow: hidden;
+    border-radius: 9999px;
+    background: rgb(245 230 211 / 0.12);
+  }
+
+  .r2l-mic-check__meter-bar {
+    height: 100%;
+    width: 0%;
+    border-radius: 9999px;
+    background: rgb(200 143 56);
+    transition: width 0.08s linear;
+  }
+
+  .r2l-mic-check__meter-bar[data-hot='true'] {
+    background: rgb(74 222 128);
+  }
+
+  .r2l-mic-check__meter-hint {
+    margin-top: 0.35rem;
+    font-size: 0.75rem;
+    color: rgb(245 230 211 / 0.55);
+  }
+
+  .r2l-mic-check__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.85rem;
+  }
+
+  .r2l-mic-check__btn {
+    min-height: 2.75rem;
+    border-radius: 0.85rem;
+    border: 2px solid transparent;
+    padding: 0.5rem 1rem;
+    font-size: 0.95rem;
+    font-weight: 800;
+  }
+
+  .r2l-mic-check__btn--primary {
+    background: rgb(212 166 78);
+    color: rgb(10 14 26);
+    border-color: rgb(250 220 160);
+  }
+
+  .r2l-mic-check__btn--secondary {
+    background: rgb(245 230 211 / 0.08);
+    color: rgb(245 230 211);
+    border-color: rgb(245 230 211 / 0.2);
+  }
+
+  .r2l-mic-check__help {
+    margin-top: 0.85rem;
+    border-top: 1px solid rgb(245 230 211 / 0.12);
+    padding-top: 0.75rem;
+    font-size: 0.85rem;
+    color: rgb(245 230 211 / 0.8);
+  }
+
+  .r2l-mic-check__help-title {
+    font-weight: 700;
+    color: rgb(254 202 202);
+  }
+
+  .r2l-mic-check__help-sub {
+    margin-top: 0.25rem;
+    font-size: 0.75rem;
+    color: rgb(245 230 211 / 0.5);
+  }
+
+  .r2l-mic-check__details {
+    margin-top: 0.65rem;
+  }
+
+  .r2l-mic-check__details summary {
+    cursor: pointer;
+    font-weight: 700;
+    color: rgb(242 204 126);
+  }
+
+  .r2l-mic-check__steps {
+    margin: 0.45rem 0 0 1.1rem;
+    padding: 0;
+    line-height: 1.45;
+  }
+
+  .r2l-mic-check__steps li + li {
+    margin-top: 0.35rem;
+  }
+</style>

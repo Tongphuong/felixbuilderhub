@@ -174,15 +174,16 @@ export function scoreOpenTranscript(transcript, storyContext) {
 }
 
 export function inferAudioFilename(blob) {
-  // Use the blob's name if available (Cloudflare Workers File object)
-  const name = blob?.name || '';
-  if (name && /\.(webm|mp4|m4a|ogg|wav|mp3|flac)$/i.test(name)) return name;
-
-  // Fall back to MIME type detection
+  // MIME type wins over client filename — Safari records MP4 but some pages still name the file audio.webm.
   const type = String(blob?.type || '').toLowerCase();
   if (type.includes('mp4') || type.includes('m4a') || type.includes('aac')) return 'audio.mp4';
   if (type.includes('ogg')) return 'audio.ogg';
   if (type.includes('wav')) return 'audio.wav';
+  if (type.includes('webm')) return 'audio.webm';
+
+  const name = blob?.name || '';
+  if (name && /\.(webm|mp4|m4a|ogg|wav|mp3|flac)$/i.test(name)) return name;
+
   return 'audio.webm';
 }
 

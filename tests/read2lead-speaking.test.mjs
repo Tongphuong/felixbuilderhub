@@ -6,6 +6,7 @@ import {
   MAX_AUDIO_BYTES,
   feedbackOpenVi,
   feedbackVi,
+  inferAudioFilename,
   onRequestPost,
   runSpeakingCheck,
   scoreOpenTranscript,
@@ -15,6 +16,17 @@ import {
 
 const lessonPage = readFileSync('src/pages/read2lead/lesson.astro', 'utf-8');
 const speakingEndpoint = readFileSync('functions/api/read2lead-speaking-check.js', 'utf-8');
+
+test('inferAudioFilename prefers MIME type over mismatched client filename', () => {
+  const safariBlob = { name: 'audio.webm', type: 'audio/mp4' };
+  assert.equal(inferAudioFilename(safariBlob), 'audio.mp4');
+
+  const chromeBlob = { name: 'audio.webm', type: 'audio/webm' };
+  assert.equal(inferAudioFilename(chromeBlob), 'audio.webm');
+
+  const nameOnly = { name: 'audio.ogg', type: '' };
+  assert.equal(inferAudioFilename(nameOnly), 'audio.ogg');
+});
 
 test('exact match → 100%', () => {
   const result = scoreTranscript(
