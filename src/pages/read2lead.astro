@@ -125,6 +125,7 @@ const faqItems = [
                 maxlength="32"
                 autocomplete="off"
                 placeholder="VD: R2L-JUN-A4F2"
+                data-clarity-mask="true"
                 class="w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-4 py-3.5 text-lg uppercase text-cream placeholder:normal-case placeholder:text-cream-dim/80 focus:border-accent focus:outline-none"
               />
             </div>
@@ -209,7 +210,7 @@ const faqItems = [
 
         <!-- Result state -->
         <div id="result-section" class="hidden rounded-lg border border-gold/40 bg-gold/10 p-6 text-center">
-          <h2 class="font-display text-2xl font-bold leading-snug text-cream sm:text-3xl">Bài học của <span id="result-child-name"></span> đã sẵn sàng</h2>
+          <h2 class="font-display text-2xl font-bold leading-snug text-cream sm:text-3xl">Bài học của <span id="result-child-name" data-clarity-mask="true"></span> đã sẵn sàng</h2>
           <div class="mt-5 space-y-2 text-cream-muted">
             <p>Chủ đề: <span id="result-topic" class="font-semibold text-cream"></span></p>
             <p>Tên truyện: <span id="result-story-title" class="font-semibold text-cream"></span></p>
