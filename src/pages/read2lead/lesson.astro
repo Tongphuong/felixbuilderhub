@@ -2667,6 +2667,7 @@ function _r2lBuildRetellGuideQuestions(lesson) {
         const questionIndex = Number(input.dataset.writtenAnswer);
         const question = activity.questions?.[questionIndex] || {};
         state.writtenDrafts[writtenDraftKey(activity, question, questionIndex)] = input.value;
+        finalizeCurrentActivityIfReady();
       });
     });
   }
