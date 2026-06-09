@@ -281,6 +281,53 @@ test('rank ladder is monotonic — more points never lowers label', () => {
   }
 });
 
+test('pack #51 low score after 50 high-score packs does not lower rank_points', () => {
+  let state = normalizeProgressState(null, {
+    accessCode: 'R2L-RANK-51',
+    codeData: { student_profile: { student_name: 'Rank Kid' } },
+    nowIso: '2026-06-05T01:00:00.000Z',
+  });
+
+  for (let i = 1; i <= 50; i += 1) {
+    state = applyPackCompletion(state, {
+      packId: `high-pack-${i}`,
+      completedAt: '2026-06-05T02:00:00.000Z',
+      rewardsEarned: { coins: 20, xp: 20 },
+      scorePercent: 90,
+    }).state;
+  }
+
+  assert.equal(state.rank_points, 100);
+  assert.equal(rankPointsFromHistory(state), 100);
+  const ladderBefore = computeRankLadder(state);
+  assert.equal(ladderBefore.rank_points, 100);
+
+  const pack51 = applyPackCompletion(state, {
+    packId: 'low-pack-51',
+    completedAt: '2026-06-06T02:00:00.000Z',
+    rewardsEarned: { coins: 20, xp: 20 },
+    scorePercent: 50,
+  });
+
+  assert.equal(pack51.already_counted, false);
+  assert.equal(pack51.state.rank_points, 101);
+  assert.equal(rankPointsFromHistory(pack51.state), 99);
+  assert.equal(computeRankLadder(pack51.state).rank_points, 101);
+  assert.ok(
+    computeRankLadder(pack51.state).rank_points >= ladderBefore.rank_points,
+    'stored rank_points must not demote after pack #51',
+  );
+
+  const duplicate = applyPackCompletion(pack51.state, {
+    packId: 'low-pack-51',
+    completedAt: '2026-06-06T03:00:00.000Z',
+    rewardsEarned: { coins: 20, xp: 20 },
+    scorePercent: 50,
+  });
+  assert.equal(duplicate.already_counted, true);
+  assert.equal(duplicate.state.rank_points, 101);
+});
+
 test('old student record without scores ranks from pack count without crashing', () => {
   const legacy = normalizeProgressState(
     {

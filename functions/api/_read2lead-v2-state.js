@@ -78,9 +78,17 @@ export function rankPointsFromHistory(state) {
 }
 
 export function computeRankLadder(stateOrPoints) {
-  const rankPoints = typeof stateOrPoints === 'number'
-    ? Math.max(0, Math.floor(stateOrPoints))
-    : rankPointsFromHistory(stateOrPoints);
+  let rankPoints;
+  if (typeof stateOrPoints === 'number') {
+    rankPoints = Math.max(0, Math.floor(stateOrPoints));
+  } else if (
+    stateOrPoints?.rank_points != null
+    && Number.isFinite(Number(stateOrPoints.rank_points))
+  ) {
+    rankPoints = Number(stateOrPoints.rank_points);
+  } else {
+    rankPoints = rankPointsFromHistory(stateOrPoints);
+  }
   return buildRankLadderFromPoints(rankPoints);
 }
 
@@ -301,6 +309,9 @@ export function normalizeProgressState(raw, { accessCode, codeData = null, nowIs
     last_activity_at: raw?.last_activity_at || legacyProgress.last_activity_at || null,
     voice_attempts: numberOrZero(raw?.voice_attempts),
     pack_history: Array.isArray(raw?.pack_history) ? raw.pack_history.slice(0, 50) : [],
+    ...(raw?.rank_points != null && Number.isFinite(Number(raw.rank_points))
+      ? { rank_points: Number(raw.rank_points) }
+      : {}),
     badges: Array.isArray(raw?.badges) ? raw.badges : [],
     avatar: {
       enabled: false,
@@ -362,8 +373,17 @@ export function applyPackCompletion(
     }
   }
 
+  const earnedRp = 1 + (scorePercent != null && Number(scorePercent) >= 80 ? 1 : 0);
+  const rankPointsBase = (
+    state.rank_points != null && Number.isFinite(Number(state.rank_points))
+  )
+    ? Number(state.rank_points)
+    : rankPointsFromHistory(state);
+  const nextRankPoints = rankPointsBase + earnedRp;
+
   const nextState = {
     ...state,
+    rank_points: nextRankPoints,
     current_level: nextCurrentLevel,
     unlocked_levels: Array.from(new Set([...state.unlocked_levels, nextCurrentLevel])),
     rank_title: RANK_TITLES[nextCurrentLevel] || state.rank_title,
