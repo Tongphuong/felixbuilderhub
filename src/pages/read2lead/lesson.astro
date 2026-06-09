@@ -966,6 +966,11 @@ function _r2lBuildRetellTemplate(lesson) {
     micPermissionBlocked: false,
   };
 
+  // Below this, the blob is almost certainly a codec header with no speech
+  // (kid tapped stop instantly / Safari header-only chunk). Real speech ≥0.5s
+  // is several KB; header-only is ~200–600 bytes. 1200 cleanly separates them.
+  const _R2L_MIN_SPEECH_BYTES = 1200;
+
   function _r2lIsPermissionError(err) {
     const name = err?.name || '';
     return name === 'NotAllowedError' || name === 'PermissionDeniedError' || name === 'SecurityError';
@@ -1060,15 +1065,49 @@ function _r2lBuildRetellTemplate(lesson) {
     });
   }
 
+  // Short rising "go" beep so a non-reading kid knows the exact moment to speak.
+  // Self-contained AudioContext that closes itself — never leaks.
+  function _r2lPlayGoBeep() {
+    try {
+      const Ctx = window.AudioContext || window.webkitAudioContext;
+      if (!Ctx) return;
+      const ctx = new Ctx();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(660, ctx.currentTime);
+      osc.frequency.setValueAtTime(880, ctx.currentTime + 0.12);
+      gain.gain.setValueAtTime(0.0001, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.25, ctx.currentTime + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.24);
+      osc.connect(gain).connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + 0.25);
+      osc.onended = () => { ctx.close().catch(() => {}); };
+    } catch {
+      /* beep is a nice-to-have; never block recording */
+    }
+  }
+
   async function _r2lRunMicWarmup(stream, onMessage) {
+    // primeAudioPipeline returns an AudioContext that wakes the mic so the
+    // first syllable isn't dropped (iOS/Safari). It MUST be closed afterwards
+    // or browsers hit the ~6 AudioContext limit and warmup silently dies.
+    let primedContext = null;
     if (window.R2LMicCheck?.primeAudioPipeline) {
-      await window.R2LMicCheck.primeAudioPipeline(stream);
+      primedContext = await window.R2LMicCheck.primeAudioPipeline(stream);
     }
-    if (window.R2LMicCheck?.runMicWarmupCountdown) {
-      await window.R2LMicCheck.runMicWarmupCountdown({ onMessage });
-      return;
+    try {
+      if (window.R2LMicCheck?.runMicWarmupCountdown) {
+        await window.R2LMicCheck.runMicWarmupCountdown({ onMessage });
+      } else {
+        await new Promise((resolve) => window.setTimeout(resolve, 3000));
+      }
+    } finally {
+      if (primedContext && typeof primedContext.close === 'function' && primedContext.state !== 'closed') {
+        primedContext.close().catch(() => {});
+      }
     }
-    await new Promise((resolve) => window.setTimeout(resolve, 3000));
   }
 
   function _r2lFocusMicHelp(shell) {
@@ -1143,10 +1182,23 @@ function _r2lBuildRetellTemplate(lesson) {
       formData.append('max_seconds', String(maxSeconds));
     }
 
-    const response = await fetch('/api/read2lead-speaking-check', {
-      method: 'POST',
-      body: formData,
-    });
+    const controller = new AbortController();
+    const timer = window.setTimeout(() => controller.abort(), 30000);
+    let response;
+    try {
+      response = await fetch('/api/read2lead-speaking-check', {
+        method: 'POST',
+        body: formData,
+        signal: controller.signal,
+      });
+    } catch (err) {
+      if (err?.name === 'AbortError') {
+        throw new Error('Mạng hơi chậm, Minny chấm chưa kịp. Con bấm Thu lại nhé!');
+      }
+      throw new Error('Mạng chập chờn. Con thử Thu lại một lần nữa nhé!');
+    } finally {
+      window.clearTimeout(timer);
+    }
     return safeJson(response);
   }
 
@@ -1189,6 +1241,9 @@ function _r2lBuildRetellTemplate(lesson) {
   function _r2lBuildSpeakingFeedbackHtml(result, { compact = false } = {}) {
     if (result?.warming) {
       return `<p class="text-sm text-gold">${escapeHtml(result.message || 'Micro đã bật — chờ 3 giây rồi mới nói nhé…')}</p>`;
+    }
+    if (result?.recording) {
+      return `<p class="r2l-rec-go text-base font-extrabold text-green-300">🟢 ${escapeHtml(result.message || 'Nói đi con! Đọc to cả câu nhé!')}</p>`;
     }
     if (result?.loading) {
       return '<p class="text-sm text-gold">Minny đang nghe và nhận xét bài đọc của con...</p>';
@@ -1409,24 +1464,28 @@ function _r2lBuildRetellTemplate(lesson) {
       mr.addEventListener('stop', () => {
         const blob = new Blob(chunks, { type: mr.mimeType || mimeType || 'audio/mp4' });
         const url = URL.createObjectURL(blob);
+        // A header-only blob (Safari, stopped too fast) is a few hundred bytes and
+        // transcribes to nothing. Catch it locally with a clear "nói dài hơn" instead
+        // of sending silence to Groq and getting the scary "không nghe được".
+        const tooShort = blob.size < _R2L_MIN_SPEECH_BYTES;
         _r2lRecorderState.perItem.set(itemKey, {
           mediaRecorder: null,
           chunks: [],
           blob,
           blobUrl: url,
-          status: 'recorded',
+          status: tooShort ? 'idle' : 'recorded',
           expectedText: prev?.expectedText || '',
-          checkStatus: blob.size > 0 ? 'uploading' : 'error',
+          checkStatus: tooShort ? 'error' : 'uploading',
           checkResult: null,
         });
         stream.getTracks().forEach((t) => t.stop());
         _r2lRenderRecorderUi(itemKey, cardEl);
-        if (blob.size > 0) {
+        if (!tooShort) {
           _r2lScoreSpeakRecording(itemKey, cardEl, blob);
         } else {
           _r2lRenderSpeakFeedback(cardEl, {
             ok: false,
-            message: 'Minny chưa nghe được giọng con. Con thử bấm Thu âm lại và nói to hơn nhé.',
+            message: 'Minny chưa nghe rõ. Con bấm 🎤 Con nói, chờ đèn xanh rồi đọc to cả câu nhé!',
           });
         }
       });
@@ -1447,7 +1506,12 @@ function _r2lBuildRetellTemplate(lesson) {
         throw startError;
       }
       _r2lRenderRecorderUi(itemKey, cardEl);
-      _r2lRenderSpeakFeedback(cardEl, null);
+      // Unmistakable GO signal for kids who can't read the countdown yet:
+      // a short beep + a bright green "Nói đi con!" so they speak NOW, not
+      // during the warmup (speaking during warmup = lost audio = the #1
+      // real-world cause of "nói to mà Minny không nghe").
+      _r2lPlayGoBeep();
+      _r2lRenderSpeakFeedback(cardEl, { recording: true, message: 'Nói đi con! Đọc to cả câu nhé!' });
     } catch (err) {
       console.warn('[r2l-recorder] Permission denied or error:', err);
       if (_r2lIsPermissionError(err)) {

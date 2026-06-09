@@ -50,6 +50,29 @@ test('listen_and_speak recorder submits Whisper scoring after stop', () => {
   assert.match(lessonPage, /Minny đang nghe và nhận xét bài đọc của con/);
 });
 
+test('recorder rejects header-only blobs instead of sending silence to Groq', () => {
+  // A too-short / header-only recording must be caught locally with a clear
+  // "speak longer" message, never uploaded (which returns the scary "không nghe được").
+  assert.match(lessonPage, /_R2L_MIN_SPEECH_BYTES/);
+  assert.match(lessonPage, /blob\.size < _R2L_MIN_SPEECH_BYTES/);
+});
+
+test('mic warmup closes its primed AudioContext (no leak)', () => {
+  assert.match(lessonPage, /primedContext/);
+  assert.match(lessonPage, /primedContext\.close/);
+});
+
+test('recording start gives a clear GO signal for non-reading kids', () => {
+  assert.match(lessonPage, /_r2lPlayGoBeep/);
+  assert.match(lessonPage, /recording: true/);
+  assert.match(lessonPage, /Nói đi con/);
+});
+
+test('speaking-check upload is bounded by a timeout', () => {
+  assert.match(lessonPage, /AbortController/);
+  assert.match(lessonPage, /controller\.abort\(\)/);
+});
+
 test('MCQ renderer does not reference speak activity itemIndex', () => {
   const mcqStart = lessonPage.indexOf('function renderMcqActivity');
   const orderStart = lessonPage.indexOf('function renderOrderActivity');
