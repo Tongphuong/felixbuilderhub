@@ -131,6 +131,11 @@ function isRecentDuplicateSubmit(currentPack) {
   return ageMs >= 0 && ageMs < DUPLICATE_SUBMIT_WINDOW_MS;
 }
 
+function hasPassingWebAttempt(currentPack) {
+  return (Array.isArray(currentPack?.web_attempts) ? currentPack.web_attempts : [])
+    .some((attempt) => attempt?.passed === true);
+}
+
 async function submitV2Lesson({
   accessCode,
   codeData,
@@ -140,6 +145,17 @@ async function submitV2Lesson({
   progress,
   submittedAnswers,
 }) {
+  if (hasPassingWebAttempt(currentPack)) {
+    return respondFromCachedAttempt({
+      accessCode,
+      codeData,
+      currentPack,
+      env,
+      progress,
+      alreadyCompleted: true,
+    });
+  }
+
   if (isRecentDuplicateSubmit(currentPack)) {
     return respondFromCachedAttempt({
       accessCode,
@@ -321,15 +337,19 @@ async function respondFromCachedAttempt({
   currentPack,
   env,
   progress,
+  alreadyCompleted = false,
 }) {
-  const attempt = currentPack.web_lesson_summary;
+  const attempt = currentPack.web_lesson_summary
+    || (Array.isArray(currentPack.web_attempts)
+      ? [...currentPack.web_attempts].reverse().find((entry) => entry?.passed === true)
+      : null);
   const passed = Boolean(attempt?.passed);
   const progressState = await loadProgressState(env, accessCode, codeData);
 
   return json({
     ok: true,
     schema_version: 2,
-    duplicate: true,
+    ...(alreadyCompleted ? { already_completed: true } : { duplicate: true }),
     passed,
     score_percent: attempt.score_percent,
     correct_count: attempt.correct_count,
