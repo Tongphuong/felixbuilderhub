@@ -1089,7 +1089,114 @@ function _r2lBuildRetellTemplate(lesson) {
     }
   }
 
-  async function _r2lRunMicWarmup(stream, onMessage) {
+  // Soft "tick" each second of the countdown so kids feel the rhythm.
+  function _r2lTickBeep() {
+    try {
+      const Ctx = window.AudioContext || window.webkitAudioContext;
+      if (!Ctx) return;
+      const ctx = new Ctx();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(520, ctx.currentTime);
+      gain.gain.setValueAtTime(0.0001, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.12, ctx.currentTime + 0.01);
+      gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.12);
+      osc.connect(gain).connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + 0.13);
+      osc.onended = () => { ctx.close().catch(() => {}); };
+    } catch { /* tick is optional */ }
+  }
+
+  // ── Big full-screen countdown popup so kids can't miss the "wait → speak" moment ──
+  function _r2lEnsureCountdownStyles() {
+    if (document.getElementById('r2l-cd-styles')) return;
+    const style = document.createElement('style');
+    style.id = 'r2l-cd-styles';
+    style.textContent =
+      '#r2l-mic-countdown{position:fixed;inset:0;z-index:9999;display:none;align-items:center;justify-content:center;background:rgba(6,10,20,.85);backdrop-filter:blur(4px)}' +
+      '#r2l-mic-countdown .r2l-cd-card{text-align:center;padding:2rem 1.5rem}' +
+      '#r2l-mic-countdown .r2l-cd-title{font-size:1.6rem;font-weight:800;color:#f2cc7e;margin:0 0 .75rem}' +
+      '#r2l-mic-countdown .r2l-cd-num{font-size:8.5rem;font-weight:900;line-height:1;color:#fff;text-shadow:0 4px 24px rgba(0,0,0,.4)}' +
+      '#r2l-mic-countdown.r2l-cd-go .r2l-cd-num{color:#4ade80}' +
+      '#r2l-mic-countdown.r2l-cd-go .r2l-cd-title{color:#4ade80;font-size:2.6rem}' +
+      '#r2l-mic-countdown .r2l-cd-sub{margin:.9rem 0 0;font-size:1.15rem;color:rgba(245,230,211,.85)}' +
+      '.r2l-cd-pop{animation:r2lCdPop .45s ease-out}' +
+      '@keyframes r2lCdPop{0%{transform:scale(.4);opacity:0}45%{transform:scale(1.18);opacity:1}100%{transform:scale(1)}}';
+    document.head.appendChild(style);
+  }
+
+  function _r2lGetCountdownOverlay() {
+    let overlay = document.getElementById('r2l-mic-countdown');
+    if (!overlay) {
+      overlay = document.createElement('div');
+      overlay.id = 'r2l-mic-countdown';
+      overlay.setAttribute('aria-hidden', 'true');
+      overlay.innerHTML =
+        '<div class="r2l-cd-card">' +
+        '<p class="r2l-cd-title">Chuẩn bị nói nhé!</p>' +
+        '<div class="r2l-cd-num">3</div>' +
+        '<p class="r2l-cd-sub">Chờ micro bật xong…</p>' +
+        '</div>';
+      document.body.appendChild(overlay);
+    }
+    return overlay;
+  }
+
+  function _r2lHideCountdownOverlay() {
+    const overlay = document.getElementById('r2l-mic-countdown');
+    if (overlay) {
+      overlay.style.display = 'none';
+      overlay.classList.remove('r2l-cd-go');
+    }
+  }
+
+  // Counts 3→2→1 in a big popup, then LEAVES it visible. The caller flips it to
+  // "NÓI ĐI" via _r2lCountdownGo() at the exact instant recording starts, so the
+  // child never speaks before capture begins (the old empty-recording bug).
+  async function _r2lRunCountdownOverlay(seconds, isCancelled = () => false) {
+    _r2lEnsureCountdownStyles();
+    const overlay = _r2lGetCountdownOverlay();
+    const numEl = overlay.querySelector('.r2l-cd-num');
+    const subEl = overlay.querySelector('.r2l-cd-sub');
+    const titleEl = overlay.querySelector('.r2l-cd-title');
+    overlay.classList.remove('r2l-cd-go');
+    if (titleEl) titleEl.textContent = 'Chuẩn bị nói nhé!';
+    overlay.style.display = 'flex';
+    for (let n = seconds; n >= 1; n -= 1) {
+      if (isCancelled()) { _r2lHideCountdownOverlay(); return; }
+      if (numEl) {
+        numEl.textContent = String(n);
+        numEl.classList.remove('r2l-cd-pop');
+        void numEl.offsetWidth;
+        numEl.classList.add('r2l-cd-pop');
+      }
+      if (subEl) subEl.textContent = n === 1 ? 'Sắp tới rồi…' : 'Chưa nói vội nhé';
+      _r2lTickBeep();
+      await new Promise((r) => window.setTimeout(r, 1000));
+    }
+  }
+
+  function _r2lCountdownGo() {
+    const overlay = document.getElementById('r2l-mic-countdown');
+    if (!overlay || overlay.style.display === 'none') return;
+    const numEl = overlay.querySelector('.r2l-cd-num');
+    const subEl = overlay.querySelector('.r2l-cd-sub');
+    const titleEl = overlay.querySelector('.r2l-cd-title');
+    overlay.classList.add('r2l-cd-go');
+    if (titleEl) titleEl.textContent = 'NÓI ĐI CON! 🔴';
+    if (numEl) {
+      numEl.textContent = '🎤';
+      numEl.classList.remove('r2l-cd-pop');
+      void numEl.offsetWidth;
+      numEl.classList.add('r2l-cd-pop');
+    }
+    if (subEl) subEl.textContent = 'Đọc to cả câu nhé!';
+    window.setTimeout(_r2lHideCountdownOverlay, 900);
+  }
+
+  async function _r2lRunMicWarmup(stream, onMessage, isCancelled = () => false) {
     // primeAudioPipeline returns an AudioContext that wakes the mic so the
     // first syllable isn't dropped (iOS/Safari). It MUST be closed afterwards
     // or browsers hit the ~6 AudioContext limit and warmup silently dies.
@@ -1098,11 +1205,7 @@ function _r2lBuildRetellTemplate(lesson) {
       primedContext = await window.R2LMicCheck.primeAudioPipeline(stream);
     }
     try {
-      if (window.R2LMicCheck?.runMicWarmupCountdown) {
-        await window.R2LMicCheck.runMicWarmupCountdown({ onMessage });
-      } else {
-        await new Promise((resolve) => window.setTimeout(resolve, 3000));
-      }
+      await _r2lRunCountdownOverlay(3, isCancelled);
     } finally {
       if (primedContext && typeof primedContext.close === 'function' && primedContext.state !== 'closed') {
         primedContext.close().catch(() => {});
@@ -1443,15 +1546,16 @@ function _r2lBuildRetellTemplate(lesson) {
       _r2lRenderRecorderUi(itemKey, cardEl);
       _r2lRenderSpeakFeedback(cardEl, {
         warming: true,
-        message: 'Micro đã bật — chờ 3 giây rồi mới nói nhé…',
+        message: 'Nhìn màn hình đếm ngược — chờ chữ “NÓI ĐI” hiện ra rồi mới đọc nhé!',
       });
-      await _r2lRunMicWarmup(stream, (msg) => {
-        const warming = _r2lRecorderState.perItem.get(itemKey);
-        if (warming?.warmupCancelled) return;
-        _r2lRenderSpeakFeedback(cardEl, { warming: true, message: msg });
-      });
+      await _r2lRunMicWarmup(
+        stream,
+        () => {},
+        () => Boolean(_r2lRecorderState.perItem.get(itemKey)?.warmupCancelled),
+      );
       const afterWarmup = _r2lRecorderState.perItem.get(itemKey);
       if (afterWarmup?.warmupCancelled || afterWarmup?.status !== 'warming') {
+        _r2lHideCountdownOverlay();
         stream.getTracks().forEach((t) => t.stop());
         return;
       }
@@ -1502,18 +1606,22 @@ function _r2lBuildRetellTemplate(lesson) {
       try {
         mr.start(250);
       } catch (startError) {
+        _r2lHideCountdownOverlay();
         stream.getTracks().forEach((t) => t.stop());
         throw startError;
       }
       _r2lRenderRecorderUi(itemKey, cardEl);
-      // Unmistakable GO signal for kids who can't read the countdown yet:
-      // a short beep + a bright green "Nói đi con!" so they speak NOW, not
-      // during the warmup (speaking during warmup = lost audio = the #1
-      // real-world cause of "nói to mà Minny không nghe").
+      // GO fires the INSTANT capture begins — the big popup flips to "NÓI ĐI",
+      // a beep sounds, and the inline banner turns green. Recording is already
+      // live, so even a kid who speaks immediately is captured from word one
+      // (speaking during warmup = lost audio = the #1 cause of "nói to mà Minny
+      // không nghe").
+      _r2lCountdownGo();
       _r2lPlayGoBeep();
       _r2lRenderSpeakFeedback(cardEl, { recording: true, message: 'Nói đi con! Đọc to cả câu nhé!' });
     } catch (err) {
       console.warn('[r2l-recorder] Permission denied or error:', err);
+      _r2lHideCountdownOverlay();
       if (_r2lIsPermissionError(err)) {
         _r2lRecorderState.micPermissionBlocked = true;
       }
@@ -1547,6 +1655,7 @@ function _r2lBuildRetellTemplate(lesson) {
     const entry = _r2lRecorderState.perItem.get(itemKey);
     if (entry?.status === 'warming') {
       entry.warmupCancelled = true;
+      _r2lHideCountdownOverlay();
       if (entry.warmupStream) {
         entry.warmupStream.getTracks().forEach((t) => t.stop());
       }
@@ -2132,12 +2241,13 @@ function _r2lBuildRetellTemplate(lesson) {
       _r2lSetMinnyMood('listen', _r2lRetellState.heroEl);
       _r2lRenderRetellControls();
 
-      await _r2lRunMicWarmup(stream, (msg) => {
-        if (_r2lRetellState.warmupCancelled || _r2lRetellState.status !== 'warming') return;
-        _r2lRetellState.warmupMessage = msg;
-        _r2lRenderRetellControls();
-      });
+      await _r2lRunMicWarmup(
+        stream,
+        () => {},
+        () => Boolean(_r2lRetellState.warmupCancelled) || _r2lRetellState.status !== 'warming',
+      );
       if (_r2lRetellState.warmupCancelled || _r2lRetellState.status !== 'warming') {
+        _r2lHideCountdownOverlay();
         stream.getTracks().forEach((track) => track.stop());
         _r2lRetellState.stream = null;
         return;
@@ -2176,9 +2286,12 @@ function _r2lBuildRetellTemplate(lesson) {
       try {
         mediaRecorder.start(250);
       } catch (startError) {
+        _r2lHideCountdownOverlay();
         stream.getTracks().forEach((track) => track.stop());
         throw startError;
       }
+      _r2lCountdownGo();
+      _r2lPlayGoBeep();
       _r2lRenderRetellControls();
 
       _r2lRetellState.timerId = window.setInterval(() => {
@@ -2189,6 +2302,7 @@ function _r2lBuildRetellTemplate(lesson) {
         }
       }, 1000);
     } catch (error) {
+      _r2lHideCountdownOverlay();
       _r2lRetellState.status = 'idle';
       _r2lSetMinnyMood('encourage', _r2lRetellState.heroEl);
       _r2lRenderRetellFeedback({
@@ -2260,6 +2374,7 @@ function _r2lBuildRetellTemplate(lesson) {
         _r2lStopRetellRecording();
       } else if (_r2lRetellState.status === 'warming') {
         _r2lRetellState.warmupCancelled = true;
+        _r2lHideCountdownOverlay();
         _r2lCleanupRetellRecording();
         _r2lSetMinnyMood('idle', heroScope);
         _r2lRenderRetellControls();

@@ -73,6 +73,17 @@ test('speaking-check upload is bounded by a timeout', () => {
   assert.match(lessonPage, /controller\.abort\(\)/);
 });
 
+test('recording shows a big countdown popup that flips to GO at capture start', () => {
+  assert.match(lessonPage, /r2l-mic-countdown/);
+  assert.match(lessonPage, /function _r2lRunCountdownOverlay/);
+  assert.match(lessonPage, /function _r2lCountdownGo/);
+  assert.match(lessonPage, /NÓI ĐI CON/);
+  // GO must fire AFTER recording starts so a kid who speaks instantly is captured.
+  const startIdx = lessonPage.indexOf('mr.start(250)');
+  const goIdx = lessonPage.indexOf('_r2lCountdownGo();', startIdx);
+  assert.ok(startIdx > -1 && goIdx > startIdx, 'countdown GO should run after mr.start(250)');
+});
+
 test('MCQ renderer does not reference speak activity itemIndex', () => {
   const mcqStart = lessonPage.indexOf('function renderMcqActivity');
   const orderStart = lessonPage.indexOf('function renderOrderActivity');
