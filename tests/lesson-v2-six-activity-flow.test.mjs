@@ -113,6 +113,15 @@ test('listen_and_order accepts duplicate tokens by sentence text, not strict ind
   assert.doesNotMatch(lessonPage, /correct_order_indices\.every\(\(idx, i\) => idx === st\[i\]\)/);
 });
 
+test('lesson progress survives accidental page refresh via session storage', () => {
+  assert.match(lessonPage, /function saveLessonSession/);
+  assert.match(lessonPage, /function restoreLessonSession/);
+  assert.match(lessonPage, /function clearLessonSession/);
+  assert.match(lessonPage, /r2l_lesson_session:/);
+  assert.match(lessonPage, /activityProgress/);
+  assert.match(lessonPage, /scheduleSaveLessonSession/);
+});
+
 test('written_response hides answer hints, saves drafts, and uses global CTA navigation', () => {
   assert.match(lessonPage, /writtenDrafts/);
   assert.match(lessonPage, /function collectWrittenAnswers/);

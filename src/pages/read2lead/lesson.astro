@@ -758,6 +758,7 @@ function _r2lBuildRetellTemplate(lesson) {
     completedTypes: new Set(),
     activityResults: {},
     writtenDrafts: {},
+    activityProgress: {},
   };
 
   const lessonAudioState = {
@@ -1256,6 +1257,7 @@ function _r2lBuildRetellTemplate(lesson) {
       if (payload?.ok) {
         const heroEl = cardEl.closest('[data-activity-shell="listen_and_speak"]')?.querySelector('[data-minny-hero]');
         _r2lSetMinnyMood(_r2lMinnyMoodForScore(payload.score_percent), heroEl);
+        persistSpeakItemResult(itemKey, _r2lRecorderState.perItem.get(itemKey));
         _r2lMergeSpeakActivityScores(activityItemsFromCard(cardEl));
       }
     } catch (error) {
@@ -2019,6 +2021,10 @@ function _r2lBuildRetellTemplate(lesson) {
       _r2lRetellState.result = payload;
       _r2lRetellState.status = 'done';
       _r2lRenderRetellFeedback(payload);
+      patchActivityProgress('retell_summary', {
+        heard_instruction: _r2lRetellState.heardInstruction,
+        result: payload,
+      });
       if (payload?.ok) {
         _r2lSetMinnyMood(_r2lMinnyMoodForScore(payload.score_percent), _r2lRetellState.heroEl);
         completeActivity('retell_summary', {
@@ -2176,6 +2182,7 @@ function _r2lBuildRetellTemplate(lesson) {
 
     root.querySelector('[data-retell-listen]')?.addEventListener('click', () => {
       _r2lRetellState.heardInstruction = true;
+      patchActivityProgress('retell_summary', { heard_instruction: true });
       _r2lRenderRetellControls();
       _r2lSetMinnyMood('listen', heroScope);
       const listenBtn = root.querySelector('[data-retell-listen]');
@@ -2197,6 +2204,7 @@ function _r2lBuildRetellTemplate(lesson) {
       }
     });
 
+    restoreRetellActivityProgress();
     _r2lRenderRetellControls();
   }
 
@@ -2245,6 +2253,158 @@ function _r2lBuildRetellTemplate(lesson) {
       return null;
     }
   }
+
+  const LESSON_SESSION_VERSION = 1;
+  let _r2lSaveSessionTimer = null;
+
+  function lessonSessionKey(code, packId) {
+    return `r2l_lesson_session:${code}:${packId}`;
+  }
+
+  function saveLessonSession() {
+    if (!state.accessCode || !state.packId || !state.lesson) return;
+    try {
+      const snapshot = {
+        schema_version: LESSON_SESSION_VERSION,
+        saved_at: new Date().toISOString(),
+        activity_index: state.activityIndex,
+        completed_types: Array.from(state.completedTypes),
+        activity_results: state.activityResults,
+        written_drafts: state.writtenDrafts,
+        activity_progress: state.activityProgress,
+      };
+      sessionStorage.setItem(lessonSessionKey(state.accessCode, state.packId), JSON.stringify(snapshot));
+    } catch {
+      // sessionStorage full or unavailable
+    }
+  }
+
+  function scheduleSaveLessonSession() {
+    if (_r2lSaveSessionTimer) window.clearTimeout(_r2lSaveSessionTimer);
+    _r2lSaveSessionTimer = window.setTimeout(() => {
+      _r2lSaveSessionTimer = null;
+      saveLessonSession();
+    }, 250);
+  }
+
+  function loadLessonSession() {
+    try {
+      const raw = sessionStorage.getItem(lessonSessionKey(state.accessCode, state.packId));
+      if (!raw) return null;
+      const parsed = JSON.parse(raw);
+      return parsed?.schema_version === LESSON_SESSION_VERSION ? parsed : null;
+    } catch {
+      return null;
+    }
+  }
+
+  function clearLessonSession() {
+    try {
+      sessionStorage.removeItem(lessonSessionKey(state.accessCode, state.packId));
+    } catch {
+      // ignore
+    }
+  }
+
+  function restoreLessonSession() {
+    const saved = loadLessonSession();
+    if (!saved) return false;
+    state.completedTypes = new Set(saved.completed_types || []);
+    state.activityResults = saved.activity_results || {};
+    state.writtenDrafts = saved.written_drafts || {};
+    state.activityProgress = saved.activity_progress || {};
+    const activities = state.lesson?.activities || [];
+    let index = Number(saved.activity_index);
+    if (!Number.isFinite(index)) index = 0;
+    const currentType = activities[index]?.type;
+    if (currentType && state.completedTypes.has(currentType)) {
+      const nextIncomplete = activities.findIndex((activity) => !state.completedTypes.has(activity?.type));
+      index = nextIncomplete >= 0 ? nextIncomplete : index;
+    }
+    state.activityIndex = Math.max(0, Math.min(index, Math.max(0, activities.length - 1)));
+    return true;
+  }
+
+  function patchActivityProgress(type, patch) {
+    state.activityProgress[type] = {
+      ...(state.activityProgress[type] || {}),
+      ...patch,
+    };
+    scheduleSaveLessonSession();
+  }
+
+  function markSpeakHeard(activity, itemIndex) {
+    const progress = state.activityProgress.listen_and_speak || { heard: [], items: {} };
+    const heard = Array.isArray(progress.heard) ? progress.heard.slice() : [];
+    if (!heard.includes(itemIndex)) heard.push(itemIndex);
+    patchActivityProgress('listen_and_speak', { heard, items: progress.items || {} });
+  }
+
+  function persistSpeakItemResult(itemKey, entry) {
+    const progress = state.activityProgress.listen_and_speak || { heard: [], items: {} };
+    const items = { ...(progress.items || {}) };
+    if (entry?.checkResult?.ok) {
+      items[itemKey] = {
+        checkStatus: entry.checkStatus,
+        checkResult: entry.checkResult,
+        expectedText: entry.expectedText || '',
+      };
+    } else {
+      delete items[itemKey];
+    }
+    patchActivityProgress('listen_and_speak', {
+      heard: progress.heard || [],
+      items,
+    });
+  }
+
+  function restoreSpeakActivityProgress(root, activity) {
+    const saved = state.activityProgress.listen_and_speak;
+    if (!saved) return;
+    (saved.heard || []).forEach((itemIndex) => {
+      const recordBtn = root.querySelector(`[data-speak-record="${itemIndex}"]`);
+      if (recordBtn) {
+        recordBtn.dataset.heard = 'true';
+        recordBtn.disabled = !_r2lMicIsReady();
+      }
+    });
+    Object.entries(saved.items || {}).forEach(([itemKey, itemData]) => {
+      const itemIndex = (activity.items || []).findIndex((item, index) => (item.id || `ls_${index}`) === itemKey);
+      if (itemIndex < 0) return;
+      const cardEl = root.querySelector(`[data-speak-card="${itemIndex}"]`);
+      if (!cardEl) return;
+      _r2lRecorderState.perItem.set(itemKey, {
+        mediaRecorder: null,
+        chunks: [],
+        blob: null,
+        blobUrl: null,
+        status: 'recorded',
+        expectedText: itemData.expectedText || activity.items[itemIndex]?.text_en || '',
+        checkStatus: itemData.checkStatus || 'idle',
+        checkResult: itemData.checkResult || null,
+      });
+      _r2lSyncMinnyRecordButton(itemKey, cardEl);
+      if (itemData.checkResult) {
+        _r2lRenderSpeakFeedback(cardEl, itemData.checkResult);
+      }
+    });
+    _r2lMergeSpeakActivityScores(activity);
+  }
+
+  function restoreRetellActivityProgress() {
+    const saved = state.activityProgress.retell_summary;
+    if (!saved) return;
+    if (saved.heard_instruction) {
+      _r2lRetellState.heardInstruction = true;
+    }
+    if (saved.result) {
+      _r2lRetellState.result = saved.result;
+      _r2lRetellState.status = 'done';
+      _r2lRenderRetellFeedback(saved.result);
+    }
+  }
+
+  window.addEventListener('pagehide', saveLessonSession);
 
   // ── Toast: non-destructive error (does NOT hide lesson) ──
   function showToast(message, durationMs = 4000) {
@@ -2425,9 +2585,14 @@ function _r2lBuildRetellTemplate(lesson) {
     document.addEventListener('r2l-mic-gate', (event) => {
       if (event.detail?.ready) _r2lUpdateMicPrepBanner(state.lesson?.activities || []);
     });
+    const resumed = restoreLessonSession();
     renderAllActivitiesOnce(lesson.activities || []);
-    showActivity(0);
+    showActivity(resumed ? state.activityIndex : 0);
     updateProgress();
+    saveLessonSession();
+    if (resumed) {
+      showToast('Con tiếp tục bài đang làm — không cần làm lại từ đầu nhé!', 5000);
+    }
     if (loadPendingSubmit()) {
       qs('#submit-hint').textContent = 'Lần trước chưa gửi được kết quả. Con bấm Gửi lại nhé!';
       qs('#submit-retry')?.classList.remove('hidden');
@@ -2584,6 +2749,7 @@ function _r2lBuildRetellTemplate(lesson) {
     updateParentStrip();
     updateProgress();
     updateGlobalCta();
+    scheduleSaveLessonSession();
 
     if (['listen_and_speak', 'retell_summary'].includes(activity.type)) {
       _r2lMountMicCheck(shell);
@@ -2689,7 +2855,41 @@ function _r2lBuildRetellTemplate(lesson) {
     const answered = new Set();
     const attempted = new Set();
     const itemWrongCounts = new Map();
+    const buttonStates = {};
     let wrongCount = 0;
+
+    function saveFillBlankProgress() {
+      patchActivityProgress(activity.type, {
+        attempted: Array.from(attempted),
+        answered: Array.from(answered),
+        wrong_count: wrongCount,
+        button_states: buttonStates,
+      });
+    }
+
+    const savedFill = state.activityProgress[activity.type];
+    if (savedFill) {
+      (savedFill.attempted || []).forEach((itemIndex) => attempted.add(itemIndex));
+      (savedFill.answered || []).forEach((itemIndex) => answered.add(itemIndex));
+      wrongCount = Number(savedFill.wrong_count || 0);
+      Object.entries(savedFill.button_states || {}).forEach(([itemIndex, info]) => {
+        buttonStates[itemIndex] = info;
+        const btn = root.querySelector(
+          `[data-fill-item="${itemIndex}"][data-option-index="${info.optionIndex}"]`,
+        );
+        if (btn && info.state) btn.dataset.state = info.state;
+        if (info.explanationShown) {
+          root.querySelector(`[data-fill-explanation="${itemIndex}"]`)?.classList.remove('hidden');
+        }
+        if (info.revealedIndex != null) {
+          const revealedBtn = root.querySelector(
+            `[data-fill-item="${itemIndex}"][data-option-index="${info.revealedIndex}"]`,
+          );
+          if (revealedBtn) revealedBtn.dataset.state = 'revealed';
+        }
+      });
+    }
+
     root.querySelectorAll('[data-play-fill]').forEach((button) => {
       const item = activity.items[Number(button.dataset.playFill)];
       const url = item?.audio_url || '';
@@ -2711,6 +2911,12 @@ function _r2lBuildRetellTemplate(lesson) {
           clearWrongStreak(questionId);
           root.querySelector(`[data-fill-explanation="${itemIndex}"]`)?.classList.remove('hidden');
           if (attempted.size < (activity.items || []).length) onItemCorrect();
+          buttonStates[itemIndex] = {
+            optionIndex,
+            state: 'correct',
+            explanationShown: true,
+            revealedIndex: null,
+          };
         } else {
           wrongCount += 1;
           const itemWrongs = (itemWrongCounts.get(itemIndex) || 0) + 1;
@@ -2721,8 +2927,22 @@ function _r2lBuildRetellTemplate(lesson) {
             const correctBtn = root.querySelector(`[data-fill-item="${itemIndex}"][data-option-index="${item.correct_index}"]`);
             if (correctBtn) correctBtn.dataset.state = 'revealed';
             root.querySelector(`[data-fill-explanation="${itemIndex}"]`)?.classList.remove('hidden');
+            buttonStates[itemIndex] = {
+              optionIndex,
+              state: 'retry',
+              explanationShown: true,
+              revealedIndex: item.correct_index,
+            };
+          } else {
+            buttonStates[itemIndex] = {
+              optionIndex,
+              state: 'retry',
+              explanationShown: false,
+              revealedIndex: null,
+            };
           }
         }
+        saveFillBlankProgress();
         checkFillBlankComplete();
       });
     });
@@ -2735,6 +2955,10 @@ function _r2lBuildRetellTemplate(lesson) {
           wrong_count: wrongCount,
         });
       }
+    }
+
+    if (savedFill && attempted.size === (activity.items || []).length && !state.completedTypes.has(activity.type)) {
+      checkFillBlankComplete();
     }
   }
 
@@ -2771,7 +2995,41 @@ function _r2lBuildRetellTemplate(lesson) {
     const answered = new Set();
     const attempted = new Set();
     const itemWrongCounts = new Map();
+    const buttonStates = {};
     let wrongCount = 0;
+
+    function saveMcqProgress() {
+      patchActivityProgress(activity.type, {
+        attempted: Array.from(attempted),
+        answered: Array.from(answered),
+        wrong_count: wrongCount,
+        button_states: buttonStates,
+      });
+    }
+
+    const savedMcq = state.activityProgress[activity.type];
+    if (savedMcq) {
+      (savedMcq.attempted || []).forEach((questionIndex) => attempted.add(questionIndex));
+      (savedMcq.answered || []).forEach((questionIndex) => answered.add(questionIndex));
+      wrongCount = Number(savedMcq.wrong_count || 0);
+      Object.entries(savedMcq.button_states || {}).forEach(([questionIndex, info]) => {
+        buttonStates[questionIndex] = info;
+        const btn = root.querySelector(
+          `[data-question-index="${questionIndex}"][data-option-index="${info.optionIndex}"]`,
+        );
+        if (btn && info.state) btn.dataset.state = info.state;
+        if (info.explanationShown) {
+          root.querySelector(`[data-explanation="${questionIndex}"]`)?.classList.remove('hidden');
+        }
+        if (info.revealedIndex != null) {
+          const revealedBtn = root.querySelector(
+            `[data-question-index="${questionIndex}"][data-option-index="${info.revealedIndex}"]`,
+          );
+          if (revealedBtn) revealedBtn.dataset.state = 'revealed';
+        }
+      });
+    }
+
     root.querySelectorAll('[data-question-index]').forEach((button) => {
       button.addEventListener('click', () => {
         const questionIndex = Number(button.dataset.questionIndex);
@@ -2787,6 +3045,12 @@ function _r2lBuildRetellTemplate(lesson) {
           clearWrongStreak(questionId);
           root.querySelector(`[data-explanation="${questionIndex}"]`)?.classList.remove('hidden');
           if (attempted.size < (activity.questions || []).length) onItemCorrect();
+          buttonStates[questionIndex] = {
+            optionIndex,
+            state: 'correct',
+            explanationShown: true,
+            revealedIndex: null,
+          };
         } else {
           wrongCount += 1;
           const itemWrongs = (itemWrongCounts.get(questionIndex) || 0) + 1;
@@ -2797,8 +3061,22 @@ function _r2lBuildRetellTemplate(lesson) {
             const correctBtn = root.querySelector(`[data-question-index="${questionIndex}"][data-option-index="${question.correct_index}"]`);
             if (correctBtn) correctBtn.dataset.state = 'revealed';
             root.querySelector(`[data-explanation="${questionIndex}"]`)?.classList.remove('hidden');
+            buttonStates[questionIndex] = {
+              optionIndex,
+              state: 'retry',
+              explanationShown: true,
+              revealedIndex: question.correct_index,
+            };
+          } else {
+            buttonStates[questionIndex] = {
+              optionIndex,
+              state: 'retry',
+              explanationShown: false,
+              revealedIndex: null,
+            };
           }
         }
+        saveMcqProgress();
         checkMcqComplete();
       });
     });
@@ -2811,6 +3089,10 @@ function _r2lBuildRetellTemplate(lesson) {
           wrong_count: wrongCount,
         });
       }
+    }
+
+    if (savedMcq && attempted.size === (activity.questions || []).length && !state.completedTypes.has(activity.type)) {
+      checkMcqComplete();
     }
   }
 
@@ -2873,6 +3155,30 @@ function _r2lBuildRetellTemplate(lesson) {
     const itemWrongCounts = new Map();
     let draggedToken = null;
 
+    function saveOrderProgress() {
+      patchActivityProgress(activity.type, {
+        solved: Array.from(solved),
+        attempted: Array.from(attempted),
+        wrong_count: wrongCount,
+        picked: JSON.parse(JSON.stringify(picked)),
+      });
+    }
+
+    const savedOrder = state.activityProgress[activity.type];
+    if (savedOrder) {
+      (savedOrder.solved || []).forEach((itemIndex) => solved.add(itemIndex));
+      (savedOrder.attempted || []).forEach((itemIndex) => attempted.add(itemIndex));
+      wrongCount = Number(savedOrder.wrong_count || 0);
+      Object.entries(savedOrder.picked || {}).forEach(([itemIndex, slots]) => {
+        picked[itemIndex] = Array.isArray(slots) ? slots.slice() : slots;
+        const isSolved = solved.has(Number(itemIndex));
+        renderOrderSlots(root, activity, picked, Number(itemIndex), isSolved);
+        if (isSolved) {
+          root.querySelector(`[data-order-hint="${itemIndex}"]`)?.classList.add('hidden');
+        }
+      });
+    }
+
     function afterCheck(itemIndex) {
       if (attempted.size === (activity.items || []).length) {
         completeActivity(activity.type, {
@@ -2900,6 +3206,7 @@ function _r2lBuildRetellTemplate(lesson) {
       picked[itemIndex] = item.correct_order_indices.slice();
       renderOrderSlots(root, activity, picked, itemIndex, true);
       root.querySelector(`[data-order-hint="${itemIndex}"]`)?.classList.add('hidden');
+      saveOrderProgress();
     }
 
     root.querySelectorAll('[data-play-order]').forEach((button) => {
@@ -2914,6 +3221,7 @@ function _r2lBuildRetellTemplate(lesson) {
       slot.addEventListener('click', () => {
         if (attempted.has(itemIndex)) return;
         removeOrderToken(root, activity, picked, itemIndex, slotIndex, solved);
+        saveOrderProgress();
       });
       slot.addEventListener('dragstart', (event) => {
         if (attempted.has(itemIndex)) return;
@@ -2944,6 +3252,7 @@ function _r2lBuildRetellTemplate(lesson) {
           if (itemWrongs >= MAX_WRONG_PER_ITEM) revealCorrectOrder(itemIndex);
         });
         if (!attempted.has(itemIndex) && solved.has(itemIndex)) attempted.add(itemIndex);
+        saveOrderProgress();
         afterCheck(itemIndex);
       });
     });
@@ -2976,9 +3285,18 @@ function _r2lBuildRetellTemplate(lesson) {
           if (itemWrongs >= MAX_WRONG_PER_ITEM) revealCorrectOrder(itemIndex);
         });
         if (!attempted.has(itemIndex) && solved.has(itemIndex)) attempted.add(itemIndex);
+        saveOrderProgress();
         afterCheck(itemIndex);
       });
     });
+
+    if (savedOrder && attempted.size === (activity.items || []).length && !state.completedTypes.has(activity.type)) {
+      completeActivity(activity.type, {
+        correct_count: solved.size,
+        total_count: activity.items.length,
+        wrong_count: wrongCount,
+      });
+    }
   }
 
   function ensureOrderState(picked, itemIndex, length) {
@@ -3129,6 +3447,7 @@ function _r2lBuildRetellTemplate(lesson) {
         const questionIndex = Number(input.dataset.writtenAnswer);
         const question = activity.questions?.[questionIndex] || {};
         state.writtenDrafts[writtenDraftKey(activity, question, questionIndex)] = input.value;
+        scheduleSaveLessonSession();
         finalizeCurrentActivityIfReady();
       });
     });
@@ -3185,10 +3504,13 @@ function _r2lBuildRetellTemplate(lesson) {
           recordBtn.dataset.heard = 'true';
           recordBtn.disabled = !_r2lMicIsReady();
         }
+        markSpeakHeard(activity, itemIndex);
       });
 
       _r2lInitSpeakRecorder(itemKey, cardEl, item?.text_en || '');
     });
+
+    restoreSpeakActivityProgress(root, activity);
 
     root.querySelectorAll('[data-speak-record]').forEach((button) => {
       const itemIndex = Number(button.dataset.speakRecord);
@@ -3227,6 +3549,7 @@ function _r2lBuildRetellTemplate(lesson) {
     if (nextIndex < activities.length) {
       showMesoInterstitial(completedIndex, nextIndex);
     }
+    saveLessonSession();
   }
 
   function updateProgress() {
@@ -3427,6 +3750,7 @@ function _r2lBuildRetellTemplate(lesson) {
       const data = await safeJson(res);
       if (!res.ok || !data.ok) throw new Error(data.message || data.error || 'Chưa lưu được.');
       clearPendingSubmit();
+      clearLessonSession();
       if (!data.passed) {
         qs('#submit-hint').textContent = data.message || 'Chưa đạt điểm tối thiểu. Không sao, mình thử lại nhé!';
         submitInFlight = false;
