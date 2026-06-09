@@ -518,24 +518,88 @@ const retellGuideInline = retellGuideSrc
     color: rgb(245 230 211 / 0.65);
   }
 
-  .r2l-retell-guide {
+  .r2l-retell-story {
     margin-top: 1rem;
     border-radius: 12px;
-    border: 1px solid rgb(212 166 78 / 0.22);
-    background: rgb(212 166 78 / 0.08);
-    padding: 1rem 1.1rem 1rem 2rem;
-    list-style: decimal;
+    border: 1px solid rgb(245 230 211 / 0.14);
+    background: rgb(10 14 26 / 0.45);
+    overflow: hidden;
   }
 
-  .r2l-retell-guide li {
-    margin-top: 0.55rem;
-    font-size: 0.95rem;
-    line-height: 1.55;
-    color: rgb(245 230 211 / 0.92);
+  .r2l-retell-story-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.85rem 1rem;
+    border-bottom: 1px solid rgb(245 230 211 / 0.08);
   }
 
-  .r2l-retell-guide li:first-child {
+  .r2l-retell-story-title {
+    font-size: 1rem;
+    font-weight: 800;
+    color: rgb(245 230 211);
+  }
+
+  .r2l-retell-story-toggle {
+    border-radius: 8px;
+    border: 1px solid rgb(245 230 211 / 0.18);
+    background: rgb(245 230 211 / 0.06);
+    padding: 0.35rem 0.65rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: rgb(242 204 126);
+  }
+
+  .r2l-retell-story-body {
+    padding: 1rem 1.1rem;
+  }
+
+  .r2l-retell-story-body p {
+    margin-top: 0.75rem;
+    font-size: 1rem;
+    line-height: 1.75;
+    color: rgb(245 230 211 / 0.9);
+  }
+
+  .r2l-retell-story-body p:first-child {
     margin-top: 0;
+  }
+
+  .r2l-retell-story[data-state='collapsed'] .r2l-retell-story-body {
+    display: none;
+  }
+
+  .r2l-retell-template {
+    margin-top: 1rem;
+    border-radius: 12px;
+    border: 1px solid rgb(212 166 78 / 0.28);
+    background: rgb(212 166 78 / 0.1);
+    padding: 1rem 1.1rem;
+  }
+
+  .r2l-retell-template-label {
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: rgb(242 204 126);
+  }
+
+  .r2l-retell-template-line {
+    margin-top: 0.7rem;
+    font-size: 1.05rem;
+    line-height: 1.65;
+    font-weight: 600;
+    color: rgb(245 230 211);
+  }
+
+  .r2l-retell-template-hint {
+    display: block;
+    margin-top: 0.2rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: rgb(245 230 211 / 0.55);
   }
 
   .r2l-retell-guide-hint {
@@ -575,8 +639,8 @@ const retellGuideInline = retellGuideSrc
 </style>
 
 <script is:inline set:html={retellGuideInline + `
-function _r2lBuildRetellGuideQuestions(lesson) {
-  return buildRetellGuideQuestions(lesson);
+function _r2lBuildRetellTemplate(lesson) {
+  return buildRetellTemplate(lesson);
 }
 `} />
 
@@ -705,7 +769,7 @@ function _r2lBuildRetellGuideQuestions(lesson) {
     reading_comprehension: 'Con đọc truyện rồi chọn đáp án đúng!',
     written_response: 'Con viết 1–2 câu tiếng Anh nhé!',
     listen_and_speak: 'Nghe rồi nói lại cho Minny nghe nhé!',
-    retell_summary: 'Con dùng gợi ý, kể lại truyện bằng tiếng Anh!',
+    retell_summary: 'Con đọc truyện, điền chỗ trống và kể lại bằng tiếng Anh!',
   };
 
   const MINNY_CELEBRATE = [
@@ -746,9 +810,9 @@ function _r2lBuildRetellGuideQuestions(lesson) {
       stuck: 'Micro: bấm Kiểm tra micro → làm theo hướng dẫn Windows/Mac trong khung vàng',
     },
     retell_summary: {
-      doing: (n, total) => `Phần ${n}/${total}: Kể truyện — kể lại bằng tiếng Anh`,
-      needs: 'Kiểm tra micro → Nghe → Con kể 30–60 giây',
-      stuck: 'Micro: bấm Kiểm tra micro → Windows/Mac: Cài đặt → Quyền riêng tư → Microphone',
+      doing: (n, total) => `Phần ${n}/${total}: Kể truyện — điền chỗ trống và kể lại`,
+      needs: 'Đọc truyện trong khung → điền gợi ý → Nghe → Con kể',
+      stuck: 'Bấm Mở truyện nếu khung truyện bị thu gọn; micro: Kiểm tra micro ở trên',
     },
   };
 
@@ -1663,34 +1727,88 @@ function _r2lBuildRetellGuideQuestions(lesson) {
 
   function _r2lResolveRetellPrompt(activity, lesson) {
     const title = lesson?.story?.title || 'the story';
-    const guideCount = _r2lBuildRetellGuideQuestions(lesson).length;
     return {
       vi: activity?.prompt_vi
         || activity?.instructions_vi
-        || `Con dùng ${guideCount} câu gợi ý bên dưới để kể lại câu chuyện “${title}” bằng tiếng Anh trong khoảng 1 phút nhé.`,
+        || `Con nhìn truyện bên dưới, điền các chỗ trống và kể lại “${title}” bằng tiếng Anh trong khoảng 1 phút nhé.`,
       en: activity?.prompt_en
-        || `Use the guide questions to tell the story of "${title}" in English. Say what happened and how it ended.`,
+        || `Read the story below, fill in the blanks, and retell "${title}" in English.`,
     };
   }
 
-  function _r2lResolveRetellGuideQuestions(activity, lesson) {
-    if (Array.isArray(activity?.guide_questions_vi) && activity.guide_questions_vi.length) {
-      return activity.guide_questions_vi.map((q) => String(q).trim()).filter(Boolean);
+  function _r2lResolveRetellTemplate(activity, lesson) {
+    if (activity?.retell_template?.lines?.length) {
+      return activity.retell_template;
     }
-    return _r2lBuildRetellGuideQuestions(lesson);
+    return _r2lBuildRetellTemplate(lesson);
   }
 
-  function _r2lBuildRetellGuideHtml(questions) {
-    if (!questions.length) return '';
-    const items = questions
-      .map((question) => `<li>${escapeHtml(question)}</li>`)
+  function _r2lBuildRetellStoryHtml(lesson) {
+    const story = lesson?.story || {};
+    const title = story.title || 'Câu chuyện';
+    const paragraphs = Array.isArray(story.paragraphs_en) ? story.paragraphs_en : [];
+    if (!paragraphs.length) return '';
+    return `
+      <section class="r2l-retell-story" data-retell-story data-state="expanded" aria-label="Truyện tham khảo">
+        <div class="r2l-retell-story-head">
+          <h3 class="r2l-retell-story-title">📖 ${escapeHtml(title)}</h3>
+          <button type="button" class="r2l-retell-story-toggle" data-retell-story-toggle>Thu gọn truyện ▲</button>
+        </div>
+        <div class="r2l-retell-story-body" data-retell-story-body>
+          ${paragraphs.map((p) => `<p>${escapeHtml(p)}</p>`).join('')}
+        </div>
+      </section>
+    `;
+  }
+
+  function _r2lBindRetellStoryToggle(root) {
+    const storySection = root?.querySelector('[data-retell-story]');
+    const toggle = root?.querySelector('[data-retell-story-toggle]');
+    if (!storySection || !toggle) return;
+    toggle.addEventListener('click', () => {
+      const collapsed = storySection.dataset.state === 'collapsed';
+      storySection.dataset.state = collapsed ? 'expanded' : 'collapsed';
+      toggle.textContent = collapsed ? 'Thu gọn truyện ▲' : 'Mở truyện ▼';
+    });
+  }
+
+  function _r2lBuildRetellTemplateHtml(template) {
+    const lines = Array.isArray(template?.lines) ? template.lines : [];
+    if (!lines.length) return '';
+    const items = lines
+      .map(
+        (line) => `
+          <p class="r2l-retell-template-line">
+            ${escapeHtml(line.template || '')}
+            ${line.hint_vi ? `<span class="r2l-retell-template-hint">${escapeHtml(line.hint_vi)}</span>` : ''}
+          </p>
+        `,
+      )
       .join('');
     return `
-      <ol class="r2l-retell-guide" data-retell-guide aria-label="Câu gợi ý kể truyện">
+      <div class="r2l-retell-template" data-retell-template aria-label="Khung điền chỗ trống khi kể">
+        <p class="r2l-retell-template-label">Con điền chỗ trống khi kể bằng tiếng Anh</p>
         ${items}
-      </ol>
-      <p class="r2l-retell-guide-hint">Con trả lời từng câu bằng tiếng Anh khi kể nhé — không cần đúng y chang từng chữ.</p>
+        <p class="r2l-retell-guide-hint">Con nhìn truyện phía trên để điền — không cần đúng từng chữ.</p>
+      </div>
     `;
+  }
+
+  function _r2lPlayRetellStoryAudio(listenBtn, template, onEnd) {
+    stopLessonAudio();
+    const fullUrl = state.lesson?.story?.full_audio_url || '';
+    if (fullUrl) {
+      playAudio(fullUrl, listenBtn);
+      const audio = lessonAudioState.audio;
+      if (audio) {
+        audio.addEventListener('ended', onEnd, { once: true });
+        audio.addEventListener('error', onEnd, { once: true });
+      } else {
+        onEnd();
+      }
+      return;
+    }
+    _r2lSpeakEnglishLine(template?.speak_prompt_en || _r2lBuildStoryContext(state.lesson), onEnd);
   }
 
   function _r2lCleanupRetellRecording() {
@@ -1748,9 +1866,9 @@ function _r2lBuildRetellGuideQuestions(lesson) {
     if (!micReady) {
       statusEl.textContent = 'Micro chưa sẵn sàng. Con thử Chrome hoặc Safari mới nhất nhé.';
     } else if (!_r2lRetellState.heardInstruction) {
-      statusEl.textContent = 'Bước 1: Bấm Nghe hướng dẫn. Bước 2: Dùng câu gợi ý và bấm Con kể.';
+      statusEl.textContent = 'Bước 1: Đọc truyện và khung chỗ trống. Bước 2: Bấm Nghe truyện. Bước 3: Con kể.';
     } else {
-      statusEl.textContent = `Con kể bằng tiếng Anh theo các câu gợi ý (tối đa ${RETELL_MAX_SECONDS} giây).`;
+      statusEl.textContent = `Con kể bằng tiếng Anh theo khung chỗ trống (tối đa ${RETELL_MAX_SECONDS} giây).`;
     }
   }
 
@@ -1890,11 +2008,14 @@ function _r2lBuildRetellGuideQuestions(lesson) {
     const heroScope = root.closest('[data-activity-shell="retell_summary"]');
     _r2lInitMinnyHero(heroScope);
     const prompt = _r2lResolveRetellPrompt(activity, state.lesson);
-    const guideQuestions = _r2lResolveRetellGuideQuestions(activity, state.lesson);
+    const template = _r2lResolveRetellTemplate(activity, state.lesson);
     _r2lRetellState.root = root;
     _r2lRetellState.heroEl = heroScope;
     _r2lRetellState.activity = activity;
-    _r2lRetellState.storyContext = _r2lBuildStoryContext(state.lesson);
+    _r2lRetellState.storyContext = [
+      template?.speak_prompt_en || '',
+      _r2lBuildStoryContext(state.lesson),
+    ].filter(Boolean).join(' ');
     _r2lRetellState.heardInstruction = false;
     _r2lRetellState.result = null;
     _r2lRetellState.status = 'idle';
@@ -1904,9 +2025,10 @@ function _r2lBuildRetellGuideQuestions(lesson) {
         <p class="text-base font-bold leading-7 text-cream">${escapeHtml(prompt.vi)}</p>
         <p class="r2l-minny-retell-prompt-en">${escapeHtml(prompt.en)}</p>
       </div>
-      ${_r2lBuildRetellGuideHtml(guideQuestions)}
+      ${_r2lBuildRetellStoryHtml(state.lesson)}
+      ${_r2lBuildRetellTemplateHtml(template)}
       <div class="r2l-minny-speak-actions mt-4">
-        <button type="button" class="minny-btn minny-btn--listen" data-retell-listen>🔊 Nghe</button>
+        <button type="button" class="minny-btn minny-btn--listen" data-retell-listen>🔊 Nghe truyện</button>
         <button type="button" class="minny-btn minny-btn--record" data-retell-record disabled>🎤 Con kể</button>
       </div>
       <p class="mt-2 text-sm text-cream/65" data-retell-status></p>
@@ -1914,11 +2036,14 @@ function _r2lBuildRetellGuideQuestions(lesson) {
       <div class="mt-4 hidden rounded-md border border-cream/10 bg-navy-950/35 p-3 text-sm text-cream/80" data-retell-feedback></div>
     `;
 
+    _r2lBindRetellStoryToggle(root);
+
     root.querySelector('[data-retell-listen]')?.addEventListener('click', () => {
       _r2lRetellState.heardInstruction = true;
       _r2lRenderRetellControls();
       _r2lSetMinnyMood('listen', heroScope);
-      _r2lSpeakVietnameseLine(prompt.vi, () => {
+      const listenBtn = root.querySelector('[data-retell-listen]');
+      _r2lPlayRetellStoryAudio(listenBtn, template, () => {
         _r2lSetMinnyMood('idle', heroScope);
       });
     });
@@ -2098,8 +2223,8 @@ function _r2lBuildRetellGuideQuestions(lesson) {
     const retell = _r2lEnrichRetellActivity({
       type: 'retell_summary',
       title_vi: 'Kể truyện',
-      identity_vi: 'Minny muốn nghe con kể lại — dùng câu gợi ý bên dưới nhé',
-      instructions_vi: 'Con xem các câu gợi ý, rồi kể lại câu chuyện bằng tiếng Anh trong khoảng 1 phút.',
+      identity_vi: 'Minny muốn nghe con kể lại — con điền chỗ trống và nhìn truyện bên dưới nhé',
+      instructions_vi: 'Con đọc truyện, điền các chỗ trống trong khung vàng, rồi kể bằng tiếng Anh.',
     }, lessonContext);
     const speakIndex = activities.findIndex((activity) => activity?.type === 'listen_and_speak');
     if (speakIndex >= 0) {
@@ -2113,7 +2238,7 @@ function _r2lBuildRetellGuideQuestions(lesson) {
         type: 'retell_summary',
         title_vi: 'Kể truyện',
         identity_vi: 'Minny muốn nghe con kể lại',
-        instructions_vi: 'Con xem các câu gợi ý, rồi kể lại câu chuyện bằng tiếng Anh trong khoảng 1 phút.',
+        instructions_vi: 'Con đọc truyện, điền các chỗ trống trong khung vàng, rồi kể bằng tiếng Anh.',
       });
       lesson.activities[lesson.activities.length - 1] = _r2lEnrichRetellActivity(
         lesson.activities[lesson.activities.length - 1],
@@ -2124,15 +2249,16 @@ function _r2lBuildRetellGuideQuestions(lesson) {
   }
 
   function _r2lEnrichRetellActivity(activity, lessonContext) {
-    const guide = _r2lBuildRetellGuideQuestions(lessonContext);
+    const template = activity?.retell_template?.lines?.length
+      ? activity.retell_template
+      : _r2lBuildRetellTemplate(lessonContext);
     const title = lessonContext?.story?.title || 'câu chuyện';
     return {
       ...activity,
-      guide_questions_vi: Array.isArray(activity?.guide_questions_vi) && activity.guide_questions_vi.length
-        ? activity.guide_questions_vi
-        : guide,
-      prompt_vi: activity?.prompt_vi || `Con dùng ${guide.length} câu gợi ý bên dưới để kể lại “${title}” bằng tiếng Anh trong khoảng 1 phút nhé.`,
-      prompt_en: activity?.prompt_en || `Use the guide questions below to tell the story of "${title}" in English. Say what happened and how it ended.`,
+      retell_template: template,
+      speak_prompt_en: activity?.speak_prompt_en || template.speak_prompt_en,
+      prompt_vi: activity?.prompt_vi || `Con nhìn truyện bên dưới, điền các chỗ trống và kể lại “${title}” bằng tiếng Anh trong khoảng 1 phút nhé.`,
+      prompt_en: activity?.prompt_en || `Read the story below, fill in the blanks, and retell "${title}" in English.`,
     };
   }
 

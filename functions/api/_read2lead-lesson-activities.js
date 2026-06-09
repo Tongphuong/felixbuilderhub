@@ -1,16 +1,16 @@
 /** Client-facing V2 lesson has 6 activities; backend packs may still ship 5. */
 
 import {
-  buildRetellGuideQuestions,
   buildRetellPromptEn,
   buildRetellPromptVi,
+  buildRetellTemplate,
 } from './_read2lead-retell-guide.js';
 
 export const RETELL_SUMMARY_ACTIVITY = {
   type: 'retell_summary',
   title_vi: 'Kể truyện',
-  identity_vi: 'Minny muốn nghe con kể lại — dùng câu gợi ý bên dưới nhé',
-  instructions_vi: 'Con xem các câu gợi ý, rồi kể lại câu chuyện bằng tiếng Anh trong khoảng 1 phút.',
+  identity_vi: 'Minny muốn nghe con kể lại — con điền chỗ trống và nhìn truyện bên dưới nhé',
+  instructions_vi: 'Con đọc truyện, điền các chỗ trống trong khung vàng, rồi kể bằng tiếng Anh.',
 };
 
 /**
@@ -39,12 +39,11 @@ export function ensureSixActivities(activities, lessonContext = null) {
 }
 
 function enrichRetellActivity(activity, lessonContext) {
-  const guide = buildRetellGuideQuestions(lessonContext);
+  const template = buildRetellTemplate(lessonContext);
   return {
     ...activity,
-    guide_questions_vi: Array.isArray(activity.guide_questions_vi) && activity.guide_questions_vi.length
-      ? activity.guide_questions_vi
-      : guide,
+    retell_template: activity.retell_template || template,
+    speak_prompt_en: activity.speak_prompt_en || template.speak_prompt_en,
     prompt_vi: activity.prompt_vi || buildRetellPromptVi(lessonContext),
     prompt_en: activity.prompt_en || buildRetellPromptEn(lessonContext),
   };

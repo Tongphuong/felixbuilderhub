@@ -4,6 +4,7 @@ import {
   buildRetellGuideQuestions,
   buildRetellPromptEn,
   buildRetellPromptVi,
+  buildRetellTemplate,
 } from '../functions/api/_read2lead-retell-guide.js';
 import { ensureSixActivities } from '../functions/api/_read2lead-lesson-activities.js';
 
@@ -38,52 +39,59 @@ const SAMPLE_LESSON = {
   ],
 };
 
-test('buildRetellGuideQuestions returns 3–4 Vietnamese guide questions', () => {
-  const guide = buildRetellGuideQuestions(SAMPLE_LESSON);
-  assert.ok(guide.length >= 3 && guide.length <= 4);
-  assert.match(guide[0], /Felix and the Kite/);
-  assert.ok(guide.some((q) => /Felix đi đâu/.test(q)));
-  assert.ok(guide.some((q) => /Felix vui/.test(q)));
+test('buildRetellTemplate returns fill-in-the-blank English lines', () => {
+  const template = buildRetellTemplate(SAMPLE_LESSON);
+  assert.ok(template.lines.length >= 3);
+  assert.match(template.lines[0].template, /Felix goes to ______ \(where\)/);
+  assert.match(template.lines[0].template, /with his dad/);
+  assert.match(template.lines[2].template, /feels ______ \(how\)/);
+  assert.match(template.speak_prompt_en, /Felix goes to the park with his dad/);
+  assert.match(template.speak_prompt_en, /feels happy/i);
 });
 
-test('buildRetellGuideQuestions falls back to roadmap when pack has no comprehension', () => {
-  const guide = buildRetellGuideQuestions({
-    story: { title: 'A Rainy Day', paragraphs_en: ['It rained all day.'] },
+test('buildRetellTemplate works for title-name stories like Ong and the Red Kite', () => {
+  const template = buildRetellTemplate({
+    story: {
+      title: 'Ong and the Red Kite',
+      paragraphs_en: [
+        'Ong goes to the park to fly his red kite.',
+        'The kite soars high above the trees.',
+        'Ong felt proud when the kite landed softly.',
+      ],
+    },
     activities: [],
   });
-  assert.ok(guide.length >= 3);
-  assert.ok(guide.some((q) => /A Rainy Day/.test(q)));
-  assert.ok(guide.some((q) => /Chuyện gì đã xảy ra/.test(q)));
+  assert.match(template.lines[0].template, /^Ong goes to/);
+  assert.match(template.speak_prompt_en, /Ong goes to the park/);
 });
 
-test('buildRetellGuideQuestions dedupes repeated questions', () => {
-  const guide = buildRetellGuideQuestions({
-    story: { title: 'Test Story' },
-    activities: [
-      {
-        type: 'reading_comprehension',
-        questions: [
-          { section: 'Find It', question_vi: 'Ai là nhân vật chính?' },
-          { section: 'Find It', question_vi: 'Ai là nhân vật chính?' },
-        ],
-      },
-    ],
+test('buildRetellGuideQuestions legacy helper mirrors template lines', () => {
+  const guide = buildRetellGuideQuestions(SAMPLE_LESSON);
+  assert.equal(guide.length, buildRetellTemplate(SAMPLE_LESSON).lines.length);
+  assert.match(guide[0], /______/);
+});
+
+test('buildRetellTemplate falls back when pack has minimal story data', () => {
+  const template = buildRetellTemplate({
+    story: { title: 'A Rainy Day', paragraphs_en: ['It rained all day.', 'The child stayed inside.'] },
+    activities: [],
   });
-  const normalized = guide.map((q) => q.toLowerCase());
-  assert.equal(new Set(normalized).size, normalized.length);
+  assert.ok(template.lines.length >= 3);
+  assert.match(template.speak_prompt_en, /A Rainy Day|They|child/i);
 });
 
-test('buildRetellPrompt helpers reference guide scaffolding', () => {
-  assert.match(buildRetellPromptVi(SAMPLE_LESSON), /câu gợi ý/);
-  assert.match(buildRetellPromptEn(SAMPLE_LESSON), /guide questions/i);
+test('buildRetellPrompt helpers reference template scaffolding', () => {
+  assert.match(buildRetellPromptVi(SAMPLE_LESSON), /chỗ trống|truyện/);
+  assert.match(buildRetellPromptEn(SAMPLE_LESSON), /fill in the blanks/i);
 });
 
-test('ensureSixActivities injects guide_questions_vi on retell_summary', () => {
+test('ensureSixActivities injects retell_template on retell_summary', () => {
   const activities = ensureSixActivities(SAMPLE_LESSON.activities, SAMPLE_LESSON);
   const retell = activities.find((activity) => activity.type === 'retell_summary');
   assert.ok(retell);
-  assert.ok(Array.isArray(retell.guide_questions_vi));
-  assert.ok(retell.guide_questions_vi.length >= 3);
-  assert.match(retell.prompt_vi, /câu gợi ý/);
-  assert.match(retell.identity_vi, /câu gợi ý/);
+  assert.ok(Array.isArray(retell.retell_template?.lines));
+  assert.ok(retell.retell_template.lines.length >= 3);
+  assert.ok(retell.speak_prompt_en);
+  assert.match(retell.prompt_vi, /chỗ trống|truyện/);
+  assert.match(retell.identity_vi, /chỗ trống|truyện/);
 });

@@ -72,10 +72,10 @@ test('retell_summary activity uses open mode with 60s limit', () => {
   assert.match(speakingEndpoint, /max_seconds/);
 });
 
-test('retell listen unlocks record immediately like activity 5', () => {
+test('retell listen plays story audio and unlocks record', () => {
   assert.match(lessonPage, /_r2lRetellState\.heardInstruction = true/);
-  assert.match(lessonPage, /_r2lSpeakVietnameseLine\(prompt\.vi/);
-  assert.doesNotMatch(lessonPage, /_r2lSpeakEnglishLine\(prompt\.en, \(\) => \{\s*_r2lRetellState\.heardInstruction = true/s);
+  assert.match(lessonPage, /_r2lPlayRetellStoryAudio/);
+  assert.doesNotMatch(lessonPage, /_r2lSpeakVietnameseLine\(prompt\.vi/);
 });
 
 test('global CTA advances through live activity list', () => {
@@ -85,15 +85,16 @@ test('global CTA advances through live activity list', () => {
   assert.match(lessonPage, /function activityIndexByType/);
 });
 
-test('retell_summary shows guided Vietnamese questions before recording', () => {
-  assert.match(lessonPage, /function _r2lBuildRetellGuideQuestions/);
-  assert.match(lessonPage, /function _r2lResolveRetellGuideQuestions/);
-  assert.match(lessonPage, /function _r2lBuildRetellGuideHtml/);
-  assert.match(lessonPage, /data-retell-guide/);
-  assert.match(lessonPage, /r2l-retell-guide/);
-  assert.match(lessonPage, /Con trả lời từng câu bằng tiếng Anh khi kể nhé/);
-  assert.match(lessonPage, /Dùng câu gợi ý/);
-  assert.match(readFileSync('functions/api/_read2lead-retell-guide.js', 'utf-8'), /buildRetellGuideQuestions/);
+test('retell_summary shows story panel and fill-in template before recording', () => {
+  assert.match(lessonPage, /function _r2lBuildRetellTemplate/);
+  assert.match(lessonPage, /function _r2lResolveRetellTemplate/);
+  assert.match(lessonPage, /function _r2lBuildRetellTemplateHtml/);
+  assert.match(lessonPage, /function _r2lBuildRetellStoryHtml/);
+  assert.match(lessonPage, /function _r2lPlayRetellStoryAudio/);
+  assert.match(lessonPage, /data-retell-template/);
+  assert.match(lessonPage, /data-retell-story/);
+  assert.match(lessonPage, /Nghe truyện/);
+  assert.match(readFileSync('functions/api/_read2lead-retell-guide.js', 'utf-8'), /buildRetellTemplate/);
 });
 
 test('listen_and_order uses editable drag-drop slots instead of one-way token picking', () => {
