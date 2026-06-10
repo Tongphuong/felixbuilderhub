@@ -135,9 +135,15 @@ import Footer from '../../components/Footer.astro';
     grid.querySelectorAll('[data-buy]').forEach((button) => {
       button.addEventListener('click', async () => {
         if (!window.confirm('Con muốn mua món này bằng xu?')) return;
+        const buyBtn = button;
+        const originalText = buyBtn.textContent;
+        buyBtn.disabled = true;
+        buyBtn.textContent = 'Đang mua…';
         try {
           await shopRequest('buy', { item_id: button.dataset.buy });
         } catch (error) {
+          buyBtn.disabled = false;
+          buyBtn.textContent = originalText;
           qs('#shop-error').textContent = error.message;
           qs('#shop-error').classList.remove('hidden');
         }
