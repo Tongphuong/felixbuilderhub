@@ -7,6 +7,7 @@ import {
   normalizeProgressState,
   purchaseItem,
   publicProgressState,
+  saveAvatarMonster,
   unequipSlot,
 } from '../functions/api/_read2lead-v2-state.js';
 
@@ -47,6 +48,20 @@ test('equipItem only works when owned and unequipSlot clears slot', () => {
   const cleared = unequipSlot(equipped.state, 'pet');
   assert.equal(cleared.ok, true);
   assert.equal(cleared.state.equipped.pet, undefined);
+});
+
+test('saveAvatarMonster persists monster config for avatar shop action', () => {
+  const base = baseState();
+  const saved = saveAvatarMonster(base, {
+    body: base.avatar.monster.body,
+    eyes: base.avatar.monster.eyes,
+    mouth: base.avatar.monster.mouth,
+    arms: base.avatar.monster.arms,
+    detail: base.avatar.monster.detail,
+    color: 'lemon',
+  }, 'R2L-SHOP-TEST');
+  assert.equal(saved.ok, true);
+  assert.equal(saved.state.avatar.monster.color, 'lemon');
 });
 
 test('old student record without shop fields does not crash', () => {

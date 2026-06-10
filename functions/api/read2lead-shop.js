@@ -5,6 +5,7 @@ import {
   publicProgressState,
   publicShopCatalog,
   purchaseItem,
+  saveAvatarMonster,
   saveProgressState,
   unequipSlot,
 } from './_read2lead-v2-state.js';
@@ -27,7 +28,7 @@ export async function onRequestPost(context) {
   if (!accessCode) {
     return json({ ok: false, error: 'missing_fields', message: 'Thieu ma hoc sinh.' }, 400);
   }
-  if (!['list', 'buy', 'equip', 'unequip'].includes(action)) {
+  if (!['list', 'buy', 'equip', 'unequip', 'avatar'].includes(action)) {
     return json({ ok: false, error: 'invalid_action', message: 'Hanh dong cua hang khong hop le.' }, 400);
   }
 
@@ -58,6 +59,11 @@ export async function onRequestPost(context) {
     result = purchaseItem(state, body.item_id);
   } else if (action === 'equip') {
     result = equipItem(state, body.item_id);
+  } else if (action === 'avatar') {
+    if (!body.monster || typeof body.monster !== 'object') {
+      return json({ ok: false, error: 'invalid_monster', message: 'Du lieu quai khong hop le.' }, 400);
+    }
+    result = saveAvatarMonster(state, body.monster, accessCode);
   } else {
     result = unequipSlot(state, body.slot);
   }
@@ -68,6 +74,7 @@ export async function onRequestPost(context) {
       insufficient_coins: 'Chua du xu. Con hoc them de tich luy nhe!',
       not_owned: 'Con chua so huu vat pham nay.',
       invalid_slot: 'O trang bi khong hop le.',
+      invalid_monster: 'Du lieu quai khong hop le.',
     };
     return json(
       {
