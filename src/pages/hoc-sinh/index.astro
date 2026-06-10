@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
+import MonsterBuilder from '../../components/read2lead/v3/avatar/MonsterBuilder.astro';
 import '../../styles/rank-ladder.css';
 ---
 
@@ -60,6 +61,7 @@ import '../../styles/rank-ladder.css';
       <section id="error-card" class="mt-4 hidden rounded-2xl border border-red-400/40 bg-red-500/10 px-5 py-4 text-sm text-red-200"></section>
 
       <section id="dashboard-card" class="mt-6 hidden space-y-5"></section>
+      <MonsterBuilder />
 
       <section id="result-card" class="hidden"></section>
     </section>
@@ -92,8 +94,8 @@ import '../../styles/rank-ladder.css';
 
     .profile-avatar {
       display: flex;
-      height: 4.5rem;
-      width: 4.5rem;
+      height: 11rem;
+      width: 11rem;
       shrink: 0;
       align-items: center;
       justify-content: center;
@@ -106,6 +108,11 @@ import '../../styles/rank-ladder.css';
     .profile-avatar img {
       height: 3rem;
       width: 3rem;
+    }
+
+    .profile-avatar .r2l-monster--large {
+      width: 180px;
+      height: 180px;
     }
 
     .profile-level-pill {
@@ -489,10 +496,17 @@ import '../../styles/rank-ladder.css';
       color: rgb(191 219 254);
     }
 
+    .r2l-shop-name-gold { color: #ffd700; }
+    .r2l-shop-name-ocean { color: #4fd1c5; }
+    .r2l-shop-frame-gold { box-shadow: 0 0 0 3px #ffd700; border-radius: 9999px; }
+    .r2l-shop-frame-rainbow { box-shadow: 0 0 0 3px #a855f7; border-radius: 9999px; }
+
   </style>
 
   <script>
     import { isV3Enabled } from '../../config/flags';
+    import { renderMonster, nameColorClassFromEquipped } from '../../lib/monster-avatar';
+    import { monsterBuilderHtml, mountMonsterBuilder } from '../../lib/monster-builder';
     import {
       rankBadgeHtml,
       rankLadderPanelHtml,
@@ -668,14 +682,19 @@ import '../../styles/rank-ladder.css';
           ? `Còn ${read2LeadState.packs_until_level_up} truyện nữa để lên level tiếp theo.`
           : '');
 
+      const nameColorClass = v3 ? nameColorClassFromEquipped(read2LeadState.equipped, read2LeadState.equipped_display) : '';
       return `
         <div class="profile-hero">
           <div class="profile-avatar" aria-hidden="true">
-            ${v3 && ladder ? rankBadgeHtml(ladder, 'large') : `<img src="${escapeHtml(rankAsset)}" alt="" />`}
+            ${v3 && read2LeadState.avatar?.monster
+              ? '<div data-profile-monster></div>'
+              : v3 && ladder
+                ? rankBadgeHtml(ladder, 'large')
+                : `<img src="${escapeHtml(rankAsset)}" alt="" />`}
           </div>
           <div class="min-w-0 flex-1">
             <p class="text-sm font-semibold text-cream-muted">Hồ sơ của</p>
-            <h2 class="font-display text-2xl font-extrabold text-cream sm:text-3xl">${escapeHtml(name)}</h2>
+            <h2 class="font-display text-2xl font-extrabold text-cream sm:text-3xl ${escapeHtml(nameColorClass)}">${escapeHtml(name)}</h2>
             <div class="mt-2 flex flex-wrap items-center gap-2">
               ${
                 v3 && ladder
@@ -932,8 +951,11 @@ import '../../styles/rank-ladder.css';
         ? '<p class="rounded-xl border-[3px] border-blue-400/30 bg-blue-500/10 px-4 py-3 text-sm text-blue-100">Mã test/dùng chung — có thể tạo bài mới bất cứ lúc nào.</p>'
         : '';
 
+      const v3 = isV3Enabled();
+      const shopHref = `/read2lead/shop?code=${encodeURIComponent(code)}&v3=1`;
       dashboardCard.innerHTML = `
         ${renderHero(progress, read2LeadState, storyProgress)}
+        ${v3 ? monsterBuilderHtml(progress.student_name || 'Bé yêu', shopHref) : ''}
         ${renderRankLadderSection(read2LeadState)}
         ${renderNextStep(primary, status)}
         ${renderStats(read2LeadState, progress, storyProgress)}
@@ -947,6 +969,37 @@ import '../../styles/rank-ladder.css';
         ${renderQuickLinks(code)}
       `;
       dashboardCard.classList.remove('hidden');
+
+      if (v3 && read2LeadState.avatar?.monster) {
+        const profileMonster = dashboardCard.querySelector('[data-profile-monster]');
+        if (profileMonster instanceof HTMLElement) {
+          renderMonster(profileMonster, read2LeadState.avatar.monster, {
+            size: 'large',
+            withCosmetics: true,
+            equipped: read2LeadState.equipped,
+            equippedDisplay: read2LeadState.equipped_display,
+          });
+        }
+        const builderRoot = dashboardCard.querySelector('[data-r2l-monster-builder-root]');
+        if (builderRoot instanceof HTMLElement) {
+          mountMonsterBuilder(builderRoot, code, read2LeadState, (nextState) => {
+            const slot = dashboardCard.querySelector('[data-profile-monster]');
+            if (slot instanceof HTMLElement && nextState.avatar?.monster) {
+              renderMonster(slot, nextState.avatar.monster, {
+                size: 'large',
+                withCosmetics: true,
+                equipped: nextState.equipped,
+                equippedDisplay: nextState.equipped_display,
+              });
+            }
+            const nameHeading = dashboardCard.querySelector('.profile-hero h2');
+            if (nameHeading) {
+              const colorClass = nameColorClassFromEquipped(nextState.equipped, nextState.equipped_display);
+              nameHeading.className = `font-display text-2xl font-extrabold text-cream sm:text-3xl ${colorClass}`.trim();
+            }
+          });
+        }
+      }
     }
 
     async function loadProgress() {

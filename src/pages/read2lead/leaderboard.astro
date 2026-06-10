@@ -92,6 +92,9 @@ const rankLadder = [
   <Footer />
 
   <script>
+    import { isV3Enabled } from '../../config/flags';
+    import { renderMonster } from '../../lib/monster-avatar';
+
     const loadingState = document.getElementById('loading-state');
     const errorState = document.getElementById('error-state');
     const emptyState = document.getElementById('empty-state');
@@ -130,17 +133,47 @@ const rankLadder = [
     }
 
     function render(leaders, timestamp) {
+      leadersCache = leaders;
       updatedAt.textContent = timestamp ? `Cập nhật lúc ${formatDate(timestamp)}` : '';
       leaderCount.textContent = `${leaders.length} bạn đọc`;
       podium.innerHTML = leaders.slice(0, 3).map(podiumCard).join('');
       leaderList.innerHTML = leaders.map(listRow).join('');
+      mountLeaderMonsters(podium);
+      mountLeaderMonsters(leaderList);
       content.classList.remove('hidden');
     }
+
+    function leaderAvatarHtml(leader, sizeClass) {
+      if (isV3Enabled() && leader.avatar?.monster) {
+        return `<div class="mx-auto ${sizeClass}" data-leader-monster="${escapeAttr(leader.masked_code)}"></div>`;
+      }
+      const imgClass = sizeClass.includes('h-16') ? 'h-16 w-16' : 'h-28 w-28';
+      return `<img src="${escapeAttr(leader.rank_asset_url)}" alt="Rank ${escapeAttr(leader.rank_vi)}" class="mx-auto ${imgClass} drop-shadow-xl" />`;
+    }
+
+    function mountLeaderMonsters(root) {
+      if (!isV3Enabled()) return;
+      root.querySelectorAll('[data-leader-monster]').forEach((slot) => {
+        const code = slot.getAttribute('data-leader-monster');
+        const leader = leadersCache.find((item) => item.masked_code === code);
+        if (!leader?.avatar?.monster || !(slot instanceof HTMLElement)) return;
+        renderMonster(slot, leader.avatar.monster, {
+          size: 'small',
+          withCosmetics: true,
+          equipped: leader.equipped,
+          equippedDisplay: leader.equipped_display,
+          compactCosmetics: true,
+        });
+      });
+    }
+
+    /** @type {Array<Record<string, unknown>>} */
+    let leadersCache = [];
 
     function podiumCard(leader, index) {
       return `
         <article class="rounded-2xl border ${podiumStyles[index]} p-6 text-center shadow-2xl">
-          <img src="${escapeAttr(leader.rank_asset_url)}" alt="Rank ${escapeAttr(leader.rank_vi)}" class="mx-auto h-28 w-28 drop-shadow-xl" />
+          ${leaderAvatarHtml(leader, 'h-28 w-28')}
           <p class="mt-3 text-sm font-semibold uppercase tracking-wide text-gold-light">Hạng ${leader.position}</p>
           <h3 class="mt-2 font-display text-3xl font-extrabold leading-snug text-cream">${escapeHtml(leader.display_name)}</h3>
           <p class="mt-1 text-sm text-cream-dim">${escapeHtml(leader.masked_code)}</p>
@@ -169,7 +202,7 @@ const rankLadder = [
         <article class="grid gap-4 rounded-lg border border-cream-dim/15 bg-navy-900/70 p-4 md:grid-cols-[64px_1fr_auto] md:items-center">
           <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-gold/15 font-display text-xl font-bold text-gold-light">#${leader.position}</div>
           <div class="flex items-center gap-4">
-            <img src="${escapeAttr(leader.rank_asset_url)}" alt="Rank ${escapeAttr(leader.rank_vi)}" class="h-16 w-16 shrink-0" loading="lazy" />
+            <div class="shrink-0">${leaderAvatarHtml(leader, 'h-16 w-16')}</div>
             <div>
               <div class="flex flex-wrap items-center gap-2">
                 <h3 class="font-display text-xl font-bold leading-snug text-cream">${escapeHtml(leader.display_name)}</h3>

@@ -23,6 +23,7 @@ const contactHref = ZALO_URL;
         data-r2l-state-header
       >
         <span class="hidden shrink-0" data-r2l-v3-rank-badge></span>
+        <span class="hidden shrink-0" data-r2l-v3-monster-avatar aria-hidden="true"></span>
         <img
           src="/assets/r2l/ranks/rank-l1-bronze.svg"
           alt="Rank Read2Lead"
@@ -93,6 +94,8 @@ const contactHref = ZALO_URL;
 
 <script>
   import { applyV3HeaderRank } from '../lib/rank-header';
+  import { applyHeaderMonsterAvatar } from '../lib/monster-avatar';
+  import { isV3Enabled } from '../config/flags';
 
   const toggle = document.getElementById('mobile-nav-toggle');
   const nav = document.getElementById('mobile-nav');
@@ -123,6 +126,9 @@ const contactHref = ZALO_URL;
           stateHeader.classList.add('flex');
           stateHeader.querySelector('[data-r2l-level]').textContent = state.current_level || 'LV';
           applyV3HeaderRank(state, stateHeader);
+          if (isV3Enabled() && state.avatar?.monster) {
+            applyHeaderMonsterAvatar(state, stateHeader);
+          }
           stateHeader.querySelector('[data-r2l-xp-label]').textContent = `${state.xp_in_level ?? 0}/${state.xp_to_next_level ?? 60} XP`;
           stateHeader.querySelector('[data-r2l-xp-fill]').style.width = `${state.xp_percent ?? 0}%`;
           stateHeader.querySelector('[data-r2l-coins]').textContent = `${state.coins || 0} xu`;
