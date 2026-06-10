@@ -41,6 +41,15 @@ const COLOR_HEX: Record<string, string> = {
   grape: '#a78bfa',
 };
 
+/** Hue/sat shifts for Kenney body PNGs (baked blue/green base). */
+const COLOR_BODY_FILTER: Record<string, string> = {
+  mint: 'hue-rotate(95deg) saturate(1.35)',
+  coral: 'hue-rotate(-35deg) saturate(1.5)',
+  sky: 'hue-rotate(5deg) saturate(1.25)',
+  lemon: 'hue-rotate(48deg) saturate(1.55)',
+  grape: 'hue-rotate(-70deg) saturate(1.4)',
+};
+
 const SLOT_LABELS_VI: Record<MonsterSlot, string> = {
   body: 'Thân',
   eyes: 'Mắt',
@@ -233,15 +242,19 @@ function renderFallbackMonster(stack: HTMLElement, config: MonsterConfig) {
   renderFallbackLayer(stack, 'mouth', colorHex, 'r2l-monster__fallback-mouth', '');
 }
 
-function renderPartLayer(stack: HTMLElement, slot: MonsterSlot, partId: string, tint?: string) {
+function bodyColorFilter(color: string): string {
+  return COLOR_BODY_FILTER[color] || COLOR_BODY_FILTER.mint;
+}
+
+function renderPartLayer(stack: HTMLElement, slot: MonsterSlot, partId: string, bodyColor?: string) {
   const file = partFile(slot, partId);
   if (!file) return false;
   const layer = document.createElement('div');
   layer.className = 'r2l-monster__layer';
   layer.dataset.slot = slot;
   const img = loadPartImage(`/assets/monsters/raw/${file.split('/').map(encodeURIComponent).join('/')}`);
-  if (slot === 'body' && tint) {
-    img.style.filter = `brightness(1.05) saturate(1.2) drop-shadow(0 0 0 ${tint})`;
+  if (slot === 'body' && bodyColor) {
+    img.style.filter = bodyColorFilter(bodyColor);
   }
   layer.appendChild(img);
   stack.appendChild(layer);
@@ -289,7 +302,7 @@ export function renderMonster(
   } else {
     const order: MonsterSlot[] = ['body', 'arms', 'detail', 'eyes', 'mouth'];
     for (const slot of order) {
-      renderPartLayer(stack, slot, config[slot as MonsterSlot], slot === 'body' ? colorHex : undefined);
+      renderPartLayer(stack, slot, config[slot as MonsterSlot], slot === 'body' ? config.color : undefined);
     }
   }
 
