@@ -61,7 +61,7 @@ async function computeLeaders(context) {
     const records = await Promise.all(
       list.keys.map(async (key) => {
         if (key.name.startsWith('task:') || key.name.startsWith('progress:')) return null;
-        if (key.name.startsWith('rl:') || key.name === LEADERBOARD_CACHE_KEY) return null;
+        if (key.name.startsWith('rl:') || key.name.startsWith('debug:') || key.name === LEADERBOARD_CACHE_KEY) return null;
         const value = await context.env.READ2LEAD_CODES.get(key.name, { type: 'json' });
         return value ? publicLeader(context, key.name, value) : null;
       }),

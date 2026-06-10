@@ -352,6 +352,18 @@ export async function onRequestPost(context) {
     return json(result);
   } catch (error) {
     console.error(`[read2lead-speaking-check] ${error?.message} | file=${audioName} type=${audioType} size=${audioSize}`, error?.detail || '');
+    await recordSpeakingError(env, {
+      ts: new Date().toISOString(),
+      code: error?.code || null,
+      message: error?.message || null,
+      groq_status: error?.status || null,
+      type: audioType,
+      size: audioSize,
+      file: audioName,
+      detail: String(error?.detail || '').slice(0, 300),
+      ua: (request.headers.get('user-agent') || '').slice(0, 200),
+      access_code: accessCode,
+    });
     if (error?.code === 'transcription_timeout') {
       return json(
         {
@@ -386,6 +398,22 @@ export async function onRequestPost(context) {
       },
       500,
     );
+  }
+}
+
+// Best-effort diagnostic ring buffer (read with: wrangler kv key get debug:speaking-errors).
+// Captures every speaking-check failure with audio type/size + Groq status, so errors that
+// happen anytime can be diagnosed later without a live tail. Never throws into the response.
+async function recordSpeakingError(env, record) {
+  try {
+    if (!env.READ2LEAD_CODES) return;
+    const KEY = 'debug:speaking-errors';
+    const existing = await env.READ2LEAD_CODES.get(KEY, { type: 'json' });
+    const ring = Array.isArray(existing) ? existing : [];
+    ring.unshift(record);
+    await env.READ2LEAD_CODES.put(KEY, JSON.stringify(ring.slice(0, 40)), { expirationTtl: 172800 });
+  } catch {
+    /* diagnostics are best-effort; never break the response */
   }
 }
 
