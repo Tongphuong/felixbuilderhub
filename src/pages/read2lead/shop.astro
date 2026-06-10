@@ -2,6 +2,18 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
+import KidButton from '../../components/read2lead/v4/KidButton.astro';
+import KidCard from '../../components/read2lead/v4/KidCard.astro';
+import CoinPill from '../../components/read2lead/v4/CoinPill.astro';
+import KidModal from '../../components/read2lead/v4/KidModal.astro';
+import KidToast from '../../components/read2lead/v4/KidToast.astro';
+import '../../styles/r2l-kid.css';
+import '@fontsource-variable/baloo-2/index.css';
+
+const w1Ssr = import.meta.env.PUBLIC_R2L_W1 === '1';
+const mainClass = w1Ssr
+  ? 'r2l-kid flex-1 px-4 py-8 sm:px-6'
+  : 'flex-1 bg-navy-950 px-4 py-8 sm:px-6';
 ---
 
 <BaseLayout
@@ -9,43 +21,86 @@ import Footer from '../../components/Footer.astro';
   description="Dùng xu để mua đồ trang trí cho hồ sơ Read2Lead."
   robots="noindex, follow"
 >
-  <Header read2LeadState={false} />
+  <Header read2LeadState={false} kidMode={true} />
 
-  <main id="main" class="flex-1 bg-navy-950 px-4 py-8 sm:px-6">
+  <main id="main" class={mainClass}>
     <section class="mx-auto max-w-4xl">
-      <p class="text-xs font-extrabold uppercase tracking-widest text-accent">Read2Lead V3</p>
-      <h1 class="mt-2 font-display text-3xl font-extrabold text-cream">Cửa hàng Minny</h1>
-      <p class="mt-2 text-sm text-cream-muted">Dùng xu kiếm được sau mỗi bài để mua đồ trang trí. Giá có thể chỉnh sau khi Phương review.</p>
+      {w1Ssr ? (
+        <>
+          <p class="r2l-kid-eyebrow">Read2Lead</p>
+          <h1 class="r2l-kid-title">Cửa hàng Minny</h1>
+          <p class="r2l-kid-lead">Dùng xu kiếm được sau mỗi bài để mua đồ trang trí.</p>
+        </>
+      ) : (
+        <>
+          <p class="text-xs font-extrabold uppercase tracking-widest text-accent">Read2Lead V3</p>
+          <h1 class="mt-2 font-display text-3xl font-extrabold text-cream">Cửa hàng Minny</h1>
+          <p class="mt-2 text-sm text-cream-muted">Dùng xu kiếm được sau mỗi bài để mua đồ trang trí. Giá có thể chỉnh sau khi Phương review.</p>
+        </>
+      )}
 
-      <div id="shop-gate" class="mt-6 hidden rounded-2xl border border-cream/15 bg-navy-900/80 p-6 text-sm text-cream-muted">
+      <div id="shop-gate" class:list={['mt-6 hidden', w1Ssr ? 'r2l-kid-card r2l-kid-muted' : 'rounded-2xl border border-cream/15 bg-navy-900/80 p-6 text-sm text-cream-muted']}>
         Cửa hàng chỉ mở khi bật chế độ V3 preview (<code>?v3=1</code>).
       </div>
 
-      <div id="shop-entry" class="mt-6 hidden rounded-2xl border border-cream/15 bg-navy-900/80 p-5">
-        <label for="shop-code" class="text-sm font-semibold text-cream">Mã học sinh</label>
-        <div class="mt-3 flex flex-col gap-3 sm:flex-row">
-          <input id="shop-code" maxlength="40" autocomplete="off" placeholder="R2L-..." class="min-h-[48px] w-full rounded-xl border border-cream/15 bg-navy-950 px-4 uppercase text-cream" />
-          <button id="shop-load" type="button" class="min-h-[48px] rounded-xl bg-accent px-6 font-extrabold text-navy-950">Vào cửa hàng</button>
+      {w1Ssr ? (
+        <div id="shop-entry" class="mt-6 hidden">
+          <KidCard>
+            <label for="shop-code" class="text-sm font-bold text-[var(--r2l-ink)]">Mã học sinh</label>
+            <div class="mt-3 flex flex-col gap-3 sm:flex-row">
+              <input id="shop-code" maxlength="40" autocomplete="off" placeholder="R2L-..." class="r2l-kid-input" />
+              <KidButton id="shop-load" class="shrink-0">Vào cửa hàng</KidButton>
+            </div>
+          </KidCard>
         </div>
-      </div>
+      ) : (
+        <div id="shop-entry" class="mt-6 hidden rounded-2xl border border-cream/15 bg-navy-900/80 p-5">
+          <label for="shop-code" class="text-sm font-semibold text-cream">Mã học sinh</label>
+          <div class="mt-3 flex flex-col gap-3 sm:flex-row">
+            <input id="shop-code" maxlength="40" autocomplete="off" placeholder="R2L-..." class="min-h-[48px] w-full rounded-xl border border-cream/15 bg-navy-950 px-4 uppercase text-cream" />
+            <button id="shop-load" type="button" data-r2l-kid-upgrade="primary" class="min-h-[48px] rounded-xl bg-accent px-6 font-extrabold text-navy-950">Vào cửa hàng</button>
+          </div>
+        </div>
+      )}
 
-      <div id="shop-error" class="mt-4 hidden rounded-xl border border-red-400/40 bg-red-500/10 px-4 py-3 text-sm text-red-200"></div>
+      <div id="shop-error" class:list={['mt-4 hidden', w1Ssr ? 'r2l-kid-error' : 'rounded-xl border border-red-400/40 bg-red-500/10 px-4 py-3 text-sm text-red-200']}></div>
 
       <div id="shop-shell" class="mt-6 hidden space-y-6">
-        <div class="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-gold/30 bg-gold/10 px-5 py-4">
-          <div>
-            <p class="text-sm text-cream-muted">Số dư của con</p>
-            <p class="font-display text-3xl font-extrabold text-gold"><span id="shop-coins">0</span> 🪙</p>
+        {w1Ssr ? (
+          <KidCard>
+            <div class="r2l-kid-balance-row">
+              <div>
+                <p class="text-sm r2l-kid-muted">Số dư của con</p>
+                <CoinPill id="shop-coins-pill" value={0} />
+              </div>
+              <a id="shop-profile-link" href="/hoc-sinh" class="r2l-kid-btn r2l-kid-btn--ghost r2l-kid-btn--md no-underline">← Về hồ sơ</a>
+            </div>
+          </KidCard>
+        ) : (
+          <div class="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-gold/30 bg-gold/10 px-5 py-4">
+            <div>
+              <p class="text-sm text-cream-muted">Số dư của con</p>
+              <p class="font-display text-3xl font-extrabold text-gold"><span id="shop-coins">0</span> 🪙</p>
+            </div>
+            <a id="shop-profile-link" href="/hoc-sinh" class="rounded-xl border border-cream/20 px-4 py-2 text-sm font-bold text-cream">← Về hồ sơ</a>
           </div>
-          <a id="shop-profile-link" href="/hoc-sinh" class="rounded-xl border border-cream/20 px-4 py-2 text-sm font-bold text-cream">← Về hồ sơ</a>
-        </div>
+        )}
 
-        <p id="shop-minny" class="hidden rounded-xl border border-accent/30 bg-accent/10 px-4 py-3 text-sm font-semibold text-accent"></p>
+        <p id="shop-minny" class:list={['hidden px-4 py-3 text-sm font-semibold', w1Ssr ? 'r2l-kid-card border-2 border-[var(--r2l-accent)] text-[var(--r2l-ink)]' : 'rounded-xl border border-accent/30 bg-accent/10 text-accent']}></p>
 
-        <div id="shop-equipped" class="rounded-2xl border border-cream/10 bg-navy-900/70 p-4">
-          <p class="text-sm font-bold text-cream">Đang trang bị</p>
-          <div id="shop-equipped-list" class="mt-2 flex flex-wrap gap-2 text-sm text-cream-muted"></div>
-        </div>
+        {w1Ssr ? (
+          <div id="shop-equipped">
+            <KidCard>
+              <p class="text-sm font-bold">Đang trang bị</p>
+              <div id="shop-equipped-list" class="mt-2 flex flex-wrap gap-2 text-sm r2l-kid-muted"></div>
+            </KidCard>
+          </div>
+        ) : (
+          <div id="shop-equipped" class="rounded-2xl border border-cream/10 bg-navy-900/70 p-4">
+            <p class="text-sm font-bold text-cream">Đang trang bị</p>
+            <div id="shop-equipped-list" class="mt-2 flex flex-wrap gap-2 text-sm text-cream-muted"></div>
+          </div>
+        )}
 
         <div id="shop-grid" class="grid gap-4 sm:grid-cols-2"></div>
       </div>
@@ -53,14 +108,41 @@ import Footer from '../../components/Footer.astro';
   </main>
 
   <Footer />
+  {w1Ssr && <KidModal />}
+  {w1Ssr && <KidToast />}
 </BaseLayout>
 
 <script>
-  import { isV3Enabled } from '../../config/flags';
+  import { isV3Enabled, isW1Enabled } from '../../config/flags';
+  import { applyW1PageShell, upgradeKidControls } from '../../scripts/r2l-w1-page';
+  import { kidConfirm } from '../../scripts/r2l-kid-modal';
+  import { kidToast } from '../../scripts/r2l-kid-toast';
+
+  const w1 = isW1Enabled();
+  if (w1) {
+    applyW1PageShell();
+    upgradeKidControls(document.getElementById('main'));
+    if (!document.getElementById('r2l-kid-modal-root')) {
+      import('../../scripts/r2l-kid-modal').then((m) => m.initKidModal());
+    }
+    if (!document.getElementById('r2l-kid-toast')) {
+      import('../../scripts/r2l-kid-toast').then((m) => m.initKidToast());
+    }
+  }
 
   const qs = (sel) => document.querySelector(sel);
   let accessCode = '';
   let shopState = null;
+
+  function kidBtnClass(variant = 'primary') {
+    if (!w1) return variant === 'primary' ? 'rounded-lg bg-accent px-3 py-2 text-sm font-extrabold text-navy-950' : 'rounded-lg border border-accent px-3 py-2 text-sm font-bold text-accent';
+    if (variant === 'ghost') return 'r2l-kid-btn r2l-kid-btn--ghost r2l-kid-btn--md';
+    return 'r2l-kid-btn r2l-kid-btn--primary r2l-kid-btn--md';
+  }
+
+  function kidCardClass() {
+    return w1 ? 'r2l-kid-card' : 'rounded-2xl border border-cream/10 bg-navy-900/80 p-4';
+  }
 
   function escapeHtml(value) {
     return String(value ?? '')
@@ -68,6 +150,32 @@ import Footer from '../../components/Footer.astro';
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;')
       .replace(/"/g, '&quot;');
+  }
+
+  function setShopCoins(value) {
+    const legacy = qs('#shop-coins');
+    if (legacy) legacy.textContent = String(value);
+    const pill = qs('[data-r2l-coin-value]');
+    if (pill) {
+      pill.textContent = String(value);
+      const wrap = pill.closest('.r2l-kid-coin-pill');
+      if (wrap) {
+        wrap.classList.add('is-bump');
+        setTimeout(() => wrap.classList.remove('is-bump'), 400);
+      }
+    }
+  }
+
+  async function confirmBuy() {
+    if (w1) {
+      return kidConfirm({
+        title: 'Mua đồ này?',
+        body: 'Con muốn mua món này bằng xu?',
+        okText: 'Mua nhé',
+        cancelText: 'Để sau',
+      });
+    }
+    return window.confirm('Con muốn mua món này bằng xu?');
   }
 
   async function shopRequest(action, extra = {}) {
@@ -85,6 +193,7 @@ import Footer from '../../components/Footer.astro';
         minny.textContent = payload.minny_message_vi;
         minny.classList.remove('hidden');
       }
+      if (w1) kidToast(payload.minny_message_vi);
     }
     renderShop();
     return payload;
@@ -94,14 +203,17 @@ import Footer from '../../components/Footer.astro';
     const list = qs('#shop-equipped-list');
     if (!list || !shopState) return;
     const equipped = shopState.equipped_display || [];
+    const chipClass = w1
+      ? 'rounded-lg border-2 border-[rgb(30_42_74/0.12)] bg-[var(--r2l-bg)] px-3 py-1'
+      : 'rounded-lg border border-cream/15 bg-navy-950 px-3 py-1';
     list.innerHTML = equipped.length
-      ? equipped.map((item) => `<span class="rounded-lg border border-cream/15 bg-navy-950 px-3 py-1">${escapeHtml(item.emoji)} ${escapeHtml(item.name_vi)}</span>`).join('')
+      ? equipped.map((item) => `<span class="${chipClass}">${escapeHtml(item.emoji)} ${escapeHtml(item.name_vi)}</span>`).join('')
       : 'Chưa trang bị gì — mua và bấm Trang bị nhé!';
   }
 
   function renderShop() {
     if (!shopState) return;
-    qs('#shop-coins').textContent = String(shopState.coins || 0);
+    setShopCoins(shopState.coins || 0);
     renderEquipped();
     const grid = qs('#shop-grid');
     const inventory = new Set(shopState.inventory || []);
@@ -110,22 +222,23 @@ import Footer from '../../components/Footer.astro';
     grid.innerHTML = catalog.map((item) => {
       const owned = inventory.has(item.id);
       const isEquipped = equipped[item.slot] === item.id;
+      const priceClass = w1 ? 'r2l-kid-shop-price' : 'rounded-lg bg-gold/15 px-2 py-1 text-sm font-bold text-gold';
       return `
-        <article class="rounded-2xl border border-cream/10 bg-navy-900/80 p-4">
+        <article class="${kidCardClass()}">
           <div class="flex items-start justify-between gap-3">
             <div>
               <p class="text-3xl">${escapeHtml(item.emoji)}</p>
-              <h2 class="mt-2 font-display text-lg font-extrabold text-cream">${escapeHtml(item.name_vi)}</h2>
-              <p class="mt-1 text-xs uppercase tracking-wide text-cream-muted">${escapeHtml(item.slot)}</p>
+              <h2 class="mt-2 text-lg font-extrabold ${w1 ? '' : 'font-display text-cream'}">${escapeHtml(item.name_vi)}</h2>
+              <p class="mt-1 text-xs uppercase tracking-wide ${w1 ? 'r2l-kid-muted' : 'text-cream-muted'}">${escapeHtml(item.slot)}</p>
             </div>
-            <p class="rounded-lg bg-gold/15 px-2 py-1 text-sm font-bold text-gold">${item.price_coins} 🪙</p>
+            <p class="${priceClass}">${item.price_coins} 🪙</p>
           </div>
           <div class="mt-4 flex flex-wrap gap-2">
             ${
               owned
-                ? `<button type="button" data-equip="${escapeHtml(item.id)}" class="rounded-lg border border-accent px-3 py-2 text-sm font-bold text-accent">${isEquipped ? 'Đang dùng' : 'Trang bị'}</button>
-                   ${isEquipped ? `<button type="button" data-unequip="${escapeHtml(item.slot)}" class="rounded-lg border border-cream/20 px-3 py-2 text-sm font-bold text-cream">Gỡ</button>` : ''}`
-                : `<button type="button" data-buy="${escapeHtml(item.id)}" class="rounded-lg bg-accent px-3 py-2 text-sm font-extrabold text-navy-950">Mua</button>`
+                ? `<button type="button" data-equip="${escapeHtml(item.id)}" class="${kidBtnClass('ghost')}">${isEquipped ? 'Đang dùng' : 'Trang bị'}</button>
+                   ${isEquipped ? `<button type="button" data-unequip="${escapeHtml(item.slot)}" class="${kidBtnClass('ghost')}">Gỡ</button>` : ''}`
+                : `<button type="button" data-buy="${escapeHtml(item.id)}" class="${kidBtnClass('primary')}">Mua</button>`
             }
           </div>
         </article>
@@ -134,7 +247,7 @@ import Footer from '../../components/Footer.astro';
 
     grid.querySelectorAll('[data-buy]').forEach((button) => {
       button.addEventListener('click', async () => {
-        if (!window.confirm('Con muốn mua món này bằng xu?')) return;
+        if (!(await confirmBuy())) return;
         const buyBtn = button;
         const originalText = buyBtn.textContent;
         buyBtn.disabled = true;

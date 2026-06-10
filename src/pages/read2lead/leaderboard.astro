@@ -2,6 +2,9 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
+import KidCard from '../../components/read2lead/v4/KidCard.astro';
+import '../../styles/r2l-kid.css';
+import '@fontsource-variable/baloo-2/index.css';
 
 const rankLadder = [
   ['L1', 'Đồng', '/assets/r2l/ranks/rank-l1-bronze.svg'],
@@ -10,79 +13,124 @@ const rankLadder = [
   ['L4', 'Kim cương', '/assets/r2l/ranks/rank-l4-diamond.svg'],
   ['L5', 'Huyền thoại', '/assets/r2l/ranks/rank-l5-legend.svg'],
 ];
+
+const w1Ssr = import.meta.env.PUBLIC_R2L_W1 === '1';
+const mainClass = w1Ssr ? 'r2l-kid flex-1' : 'flex-1';
+const heroSectionClass = w1Ssr ? 'px-4 py-8 sm:px-6 md:py-10' : 'bg-navy-900 px-6 py-10 md:py-14';
+const ladderSectionClass = w1Ssr ? 'px-4 py-10 sm:px-6' : 'px-6 py-14';
 ---
 
 <BaseLayout
   title="Bảng xếp hạng - Ranking Arena | Read2Lead"
   description="Bảng xếp hạng Read2Lead xếp hạng bằng XP, xu, số bài hoàn thành và rank L1-L5."
 >
-  <Header />
+  <Header kidMode={true} />
 
-  <main id="main" class="flex-1">
-    <section class="bg-navy-900 px-6 py-10 md:py-14">
+  <main id="main" class={mainClass}>
+    <section class={heroSectionClass}>
       <div class="mx-auto max-w-6xl">
         <div class="mb-8 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
           <div>
-            <span class="inline-block rounded-md bg-gold/20 px-3 py-1 text-sm font-semibold text-gold-light">Felixar Ranking Arena</span>
-            <h1 class="mt-4 font-display text-4xl font-extrabold leading-snug text-cream md:text-5xl">Bảng xếp hạng - Ranking Arena</h1>
-            <p class="mt-3 max-w-2xl leading-relaxed text-cream-muted">
-              Xếp hạng bằng XP, xu và số bài hoàn thành. Bé bắt đầu từ Đồng rồi leo dần lên Bạc, Vàng, Kim cương và Huyền thoại.
-            </p>
+            {w1Ssr ? (
+              <>
+                <span class="r2l-kid-eyebrow inline-block rounded-full bg-[rgb(255_200_61/0.35)] px-3 py-1">Felixar Ranking Arena</span>
+                <h1 class="r2l-kid-title md:text-5xl">Bảng xếp hạng</h1>
+                <p class="r2l-kid-lead max-w-2xl">
+                  Xếp hạng bằng XP, xu và số bài hoàn thành. Bé bắt đầu từ Đồng rồi leo dần lên Huyền thoại.
+                </p>
+              </>
+            ) : (
+              <>
+                <span class="inline-block rounded-md bg-gold/20 px-3 py-1 text-sm font-semibold text-gold-light">Felixar Ranking Arena</span>
+                <h1 class="mt-4 font-display text-4xl font-extrabold leading-snug text-cream md:text-5xl">Bảng xếp hạng - Ranking Arena</h1>
+                <p class="mt-3 max-w-2xl leading-relaxed text-cream-muted">
+                  Xếp hạng bằng XP, xu và số bài hoàn thành. Bé bắt đầu từ Đồng rồi leo dần lên Bạc, Vàng, Kim cương và Huyền thoại.
+                </p>
+              </>
+            )}
           </div>
           <div class="flex flex-col gap-3 sm:flex-row">
-            <a href="/read2lead" class="rounded-lg bg-accent px-5 py-3 text-center font-semibold text-navy-950 transition hover:bg-accent-hover">Tạo bài mới</a>
-            <a href="/hoc-sinh" class="rounded-lg border border-gold px-5 py-3 text-center font-semibold text-gold-light transition hover:bg-gold hover:text-navy-950">Xem tiến độ con</a>
+            {w1Ssr ? (
+              <>
+                <a href="/read2lead" class="r2l-kid-btn r2l-kid-btn--primary r2l-kid-btn--lg text-center no-underline">Tạo bài mới</a>
+                <a href="/hoc-sinh" class="r2l-kid-btn r2l-kid-btn--ghost r2l-kid-btn--lg text-center no-underline">Xem tiến độ con</a>
+              </>
+            ) : (
+              <>
+                <a href="/read2lead" data-r2l-kid-upgrade="primary" class="rounded-lg bg-accent px-5 py-3 text-center font-semibold text-navy-950 transition hover:bg-accent-hover">Tạo bài mới</a>
+                <a href="/hoc-sinh" data-r2l-kid-upgrade="ghost" class="rounded-lg border border-gold px-5 py-3 text-center font-semibold text-gold-light transition hover:bg-gold hover:text-navy-950">Xem tiến độ con</a>
+              </>
+            )}
           </div>
         </div>
 
-        <div id="loading-state" class="rounded-xl border border-cream-dim/20 bg-navy-950/70 p-8 text-center">
-          <div class="mx-auto h-14 w-14 animate-pulse rounded-full bg-gold/30"></div>
-          <p class="mt-5 text-cream-muted">Đang tải bảng xếp hạng...</p>
+        <div id="loading-state" class:list={[w1Ssr ? 'r2l-kid-card text-center' : 'rounded-xl border border-cream-dim/20 bg-navy-950/70 p-8 text-center']}>
+          <div class:list={['mx-auto animate-pulse rounded-full', w1Ssr ? 'h-14 w-14 bg-[var(--r2l-sun)]/40' : 'h-14 w-14 bg-gold/30']}></div>
+          <p class:list={['mt-5', w1Ssr ? 'r2l-kid-muted' : 'text-cream-muted']}>Đang tải bảng xếp hạng...</p>
         </div>
 
-        <div id="error-state" class="hidden rounded-xl border border-red-500/30 bg-red-500/10 p-8 text-center text-red-300">
+        <div id="error-state" class:list={['hidden text-center', w1Ssr ? 'r2l-kid-error' : 'rounded-xl border border-red-500/30 bg-red-500/10 p-8 text-red-300']}>
           Không tải được bảng xếp hạng. Vui lòng thử lại sau ít phút.
         </div>
 
-        <div id="empty-state" class="hidden rounded-xl border border-gold/30 bg-gold/10 p-8 text-center">
+        <div id="empty-state" class:list={['hidden text-center', w1Ssr ? 'r2l-kid-card' : 'rounded-xl border border-gold/30 bg-gold/10 p-8']}>
           <img src="/assets/r2l/ranks/rank-l1-bronze.svg" alt="Rank Đồng" class="mx-auto h-24 w-24" />
-          <h2 class="mt-4 font-display text-3xl font-bold leading-snug text-cream">Chưa có bạn nào trên bảng.</h2>
-          <p class="mx-auto mt-3 max-w-xl leading-relaxed text-cream-muted">Bé hoàn thành bài học đầu tiên trên web để nhận XP, xu và xuất hiện trong bảng xếp hạng.</p>
-          <a href="/read2lead" class="mt-6 inline-flex rounded-lg bg-accent px-6 py-3 font-semibold text-navy-950 transition hover:bg-accent-hover">Tạo bài đầu tiên</a>
+          <h2 class:list={['mt-4 text-3xl font-bold leading-snug', w1Ssr ? '' : 'font-display text-cream']}>Chưa có bạn nào trên bảng.</h2>
+          <p class:list={['mx-auto mt-3 max-w-xl leading-relaxed', w1Ssr ? 'r2l-kid-muted' : 'text-cream-muted']}>Bé hoàn thành bài học đầu tiên trên web để nhận XP, xu và xuất hiện trong bảng xếp hạng.</p>
+          {w1Ssr ? (
+            <a href="/read2lead" class="r2l-kid-btn r2l-kid-btn--primary r2l-kid-btn--lg mt-6 inline-flex no-underline">Tạo bài đầu tiên</a>
+          ) : (
+            <a href="/read2lead" data-r2l-kid-upgrade="primary" class="mt-6 inline-flex rounded-lg bg-accent px-6 py-3 font-semibold text-navy-950 transition hover:bg-accent-hover">Tạo bài đầu tiên</a>
+          )}
         </div>
 
         <div id="leaderboard-content" class="hidden">
           <div class="mb-6 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
             <div>
-              <h2 class="font-display text-2xl font-bold leading-snug text-cream md:text-3xl">Top bạn đọc hiện tại</h2>
-              <p id="updated-at" class="mt-2 text-sm text-cream-dim"></p>
+              <h2 class:list={['text-2xl font-bold leading-snug md:text-3xl', w1Ssr ? '' : 'font-display text-cream']}>Top bạn đọc hiện tại</h2>
+              <p id="updated-at" class:list={['mt-2 text-sm', w1Ssr ? 'r2l-kid-muted' : 'text-cream-dim']}></p>
             </div>
-            <span id="leader-count" class="w-fit rounded-md bg-gold/15 px-3 py-1 text-sm font-semibold text-gold-light"></span>
+            <span id="leader-count" class:list={['w-fit rounded-full px-3 py-1 text-sm font-semibold', w1Ssr ? 'bg-[rgb(255_200_61/0.35)]' : 'bg-gold/15 text-gold-light']}></span>
           </div>
 
           <div id="podium" class="grid gap-5 md:grid-cols-3 md:items-end"></div>
 
-          <div class="mt-10 rounded-xl border border-cream-dim/20 bg-navy-950/70 p-4 shadow-2xl md:p-6">
-            <h2 class="mb-4 font-display text-2xl font-bold leading-snug text-cream">Danh sách xếp hạng</h2>
-            <div id="leader-list" class="space-y-3"></div>
-          </div>
+          {w1Ssr ? (
+            <KidCard class="mt-10">
+              <h2 class="mb-4 text-2xl font-bold leading-snug">Danh sách xếp hạng</h2>
+              <div id="leader-list" class="space-y-3"></div>
+            </KidCard>
+          ) : (
+            <div class="mt-10 rounded-xl border border-cream-dim/20 bg-navy-950/70 p-4 shadow-2xl md:p-6">
+              <h2 class="mb-4 font-display text-2xl font-bold leading-snug text-cream">Danh sách xếp hạng</h2>
+              <div id="leader-list" class="space-y-3"></div>
+            </div>
+          )}
         </div>
       </div>
     </section>
 
-    <section class="px-6 py-14">
+    <section class={ladderSectionClass}>
       <div class="mx-auto max-w-6xl">
         <div class="mb-8 text-center">
-          <h2 class="font-display text-3xl font-bold leading-snug text-cream md:text-4xl">Thang rank Read2Lead</h2>
-          <p class="mx-auto mt-3 max-w-2xl leading-relaxed text-cream-muted">Mỗi lần hoàn thành bài đạt yêu cầu, bé nhận XP/xu. Đủ XP thì rank mới tự mở.</p>
+          <h2 class:list={['text-3xl font-bold leading-snug md:text-4xl', w1Ssr ? '' : 'font-display text-cream']}>Thang rank Read2Lead</h2>
+          <p class:list={['mx-auto mt-3 max-w-2xl leading-relaxed', w1Ssr ? 'r2l-kid-muted' : 'text-cream-muted']}>Mỗi lần hoàn thành bài đạt yêu cầu, bé nhận XP/xu. Đủ XP thì rank mới tự mở.</p>
         </div>
         <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
           {rankLadder.map(([level, label, asset]) => (
-            <article class="rounded-xl border border-cream-dim/20 bg-navy-900/70 p-5 text-center">
-              <img src={asset} alt={`Rank ${label}`} class="mx-auto h-24 w-24" loading="lazy" />
-              <p class="mt-4 text-sm font-semibold uppercase tracking-wide text-gold">{level}</p>
-              <h3 class="font-display text-2xl font-bold text-cream">{label}</h3>
-            </article>
+            w1Ssr ? (
+              <KidCard class="text-center">
+                <img src={asset} alt={`Rank ${label}`} class="mx-auto h-24 w-24" loading="lazy" />
+                <p class="mt-4 text-sm font-semibold uppercase tracking-wide text-[var(--r2l-sun)]">{level}</p>
+                <h3 class="text-2xl font-bold">{label}</h3>
+              </KidCard>
+            ) : (
+              <article class="rounded-xl border border-cream-dim/20 bg-navy-900/70 p-5 text-center">
+                <img src={asset} alt={`Rank ${label}`} class="mx-auto h-24 w-24" loading="lazy" />
+                <p class="mt-4 text-sm font-semibold uppercase tracking-wide text-gold">{level}</p>
+                <h3 class="font-display text-2xl font-bold text-cream">{label}</h3>
+              </article>
+            )
           ))}
         </div>
       </div>
@@ -92,8 +140,15 @@ const rankLadder = [
   <Footer />
 
   <script>
-    import { isV3Enabled } from '../../config/flags';
+    import { isV3Enabled, isW1Enabled } from '../../config/flags';
     import { renderMonster } from '../../lib/monster-avatar';
+    import { applyW1PageShell, upgradeKidControls } from '../../scripts/r2l-w1-page';
+
+    const w1 = isW1Enabled();
+    if (w1) {
+      applyW1PageShell();
+      upgradeKidControls(document.getElementById('main'));
+    }
 
     const loadingState = document.getElementById('loading-state');
     const errorState = document.getElementById('error-state');
@@ -104,11 +159,26 @@ const rankLadder = [
     const leaderCount = document.getElementById('leader-count');
     const updatedAt = document.getElementById('updated-at');
 
-    const podiumStyles = [
-      'border-gold/70 bg-gold/20 md:pb-12',
-      'border-cream-dim/40 bg-cream-dim/10 md:pb-7',
-      'border-blue-300/40 bg-blue-300/10 md:pb-4',
-    ];
+    const podiumStyles = w1
+      ? ['r2l-kid-podium--gold md:pb-12', 'r2l-kid-podium--silver md:pb-7', 'r2l-kid-podium--bronze md:pb-4']
+      : [
+          'border-gold/70 bg-gold/20 md:pb-12',
+          'border-cream-dim/40 bg-cream-dim/10 md:pb-7',
+          'border-blue-300/40 bg-blue-300/10 md:pb-4',
+        ];
+
+    const cardShell = w1 ? 'r2l-kid-card text-center shadow-2xl' : 'rounded-2xl border p-6 text-center shadow-2xl';
+    const listRowShell = w1
+      ? 'r2l-kid-card grid gap-4 p-4 md:grid-cols-[64px_1fr_auto] md:items-center'
+      : 'grid gap-4 rounded-lg border border-cream-dim/15 bg-navy-900/70 p-4 md:grid-cols-[64px_1fr_auto] md:items-center';
+    const statBoxGold = w1 ? 'rounded-lg bg-[rgb(255_200_61/0.25)] p-3' : 'rounded-lg bg-gold/15 px-3 py-2';
+    const statBoxDark = w1 ? 'rounded-lg bg-[var(--r2l-bg-deep)] p-3' : 'rounded-lg bg-navy-950 px-3 py-2';
+    const ink = w1 ? '' : 'text-cream';
+    const inkMuted = w1 ? 'r2l-kid-muted' : 'text-cream-muted';
+    const inkDim = w1 ? 'r2l-kid-muted' : 'text-cream-dim';
+    const titleFont = w1 ? 'font-extrabold' : 'font-display font-bold text-cream';
+    const xpTrack = w1 ? 'h-2 overflow-hidden rounded-full bg-[var(--r2l-bg-deep)]' : 'h-2 overflow-hidden rounded-full bg-navy-950';
+    const xpFill = w1 ? 'h-full rounded-full bg-[var(--r2l-mint)]' : 'h-full rounded-full bg-accent';
 
     loadLeaderboard();
 
@@ -171,25 +241,26 @@ const rankLadder = [
     let leadersCache = [];
 
     function podiumCard(leader, index) {
+      const borderPart = w1 ? podiumStyles[index] : `border ${podiumStyles[index]}`;
       return `
-        <article class="rounded-2xl border ${podiumStyles[index]} p-6 text-center shadow-2xl">
+        <article class="${cardShell} ${borderPart}">
           ${leaderAvatarHtml(leader, 'h-28 w-28')}
-          <p class="mt-3 text-sm font-semibold uppercase tracking-wide text-gold-light">Hạng ${leader.position}</p>
-          <h3 class="mt-2 font-display text-3xl font-extrabold leading-snug text-cream">${escapeHtml(leader.display_name)}</h3>
-          <p class="mt-1 text-sm text-cream-dim">${escapeHtml(leader.masked_code)}</p>
-          <p class="mt-4 rounded-md bg-navy-950/70 px-3 py-2 font-semibold text-accent">${escapeHtml(leader.current_level)} · ${escapeHtml(leader.rank_vi)}</p>
+          <p class="mt-3 text-sm font-semibold uppercase tracking-wide ${w1 ? 'text-[var(--r2l-sun)]' : 'text-gold-light'}">Hạng ${leader.position}</p>
+          <h3 class="mt-2 text-3xl ${titleFont} leading-snug">${escapeHtml(leader.display_name)}</h3>
+          <p class="mt-1 text-sm ${inkDim}">${escapeHtml(leader.masked_code)}</p>
+          <p class="mt-4 rounded-md ${w1 ? 'bg-[var(--r2l-bg-deep)]' : 'bg-navy-950/70'} px-3 py-2 font-semibold ${w1 ? 'text-[var(--r2l-accent)]' : 'text-accent'}">${escapeHtml(leader.current_level)} · ${escapeHtml(leader.rank_vi)}</p>
           <div class="mt-5 grid grid-cols-3 gap-3">
-            <div class="rounded-lg bg-navy-950/70 p-3">
-              <p class="text-xs text-cream-dim">XP</p>
-              <p class="font-display text-2xl font-bold text-gold-light">${leader.total_xp}</p>
+            <div class="${statBoxGold}">
+              <p class="text-xs ${inkDim}">XP</p>
+              <p class="text-2xl font-bold ${w1 ? '' : 'font-display text-gold-light'}">${leader.total_xp}</p>
             </div>
-            <div class="rounded-lg bg-navy-950/70 p-3">
-              <p class="text-xs text-cream-dim">Xu</p>
-              <p class="font-display text-2xl font-bold text-cream">${leader.coins}</p>
+            <div class="${statBoxDark}">
+              <p class="text-xs ${inkDim}">Xu</p>
+              <p class="text-2xl font-bold ${titleFont.split(' ')[0]} ${ink}">${leader.coins}</p>
             </div>
-            <div class="rounded-lg bg-navy-950/70 p-3">
-              <p class="text-xs text-cream-dim">Bài</p>
-              <p class="font-display text-2xl font-bold text-cream">${leader.completed_packs}</p>
+            <div class="${statBoxDark}">
+              <p class="text-xs ${inkDim}">Bài</p>
+              <p class="text-2xl font-bold ${titleFont.split(' ')[0]} ${ink}">${leader.completed_packs}</p>
             </div>
           </div>
           ${xpBar(leader)}
@@ -199,31 +270,31 @@ const rankLadder = [
 
     function listRow(leader) {
       return `
-        <article class="grid gap-4 rounded-lg border border-cream-dim/15 bg-navy-900/70 p-4 md:grid-cols-[64px_1fr_auto] md:items-center">
-          <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-gold/15 font-display text-xl font-bold text-gold-light">#${leader.position}</div>
+        <article class="${listRowShell}">
+          <div class="flex h-12 w-12 items-center justify-center rounded-xl ${w1 ? 'bg-[rgb(255_200_61/0.25)]' : 'bg-gold/15'} text-xl font-bold ${w1 ? '' : 'font-display text-gold-light'}">#${leader.position}</div>
           <div class="flex items-center gap-4">
             <div class="shrink-0">${leaderAvatarHtml(leader, 'h-16 w-16')}</div>
             <div>
               <div class="flex flex-wrap items-center gap-2">
-                <h3 class="font-display text-xl font-bold leading-snug text-cream">${escapeHtml(leader.display_name)}</h3>
-                <span class="rounded-md bg-navy-950 px-2.5 py-1 text-xs text-cream-dim">${escapeHtml(leader.masked_code)}</span>
+                <h3 class="text-xl ${titleFont} leading-snug">${escapeHtml(leader.display_name)}</h3>
+                <span class="rounded-md ${w1 ? 'bg-[var(--r2l-bg-deep)]' : 'bg-navy-950'} px-2.5 py-1 text-xs ${inkDim}">${escapeHtml(leader.masked_code)}</span>
               </div>
-              <p class="mt-1 text-sm text-cream-muted">${escapeHtml(leader.current_level)} · ${escapeHtml(leader.rank_vi)} · còn ${leader.packs_until_level_up || 0} bài để lên rank</p>
+              <p class="mt-1 text-sm ${inkMuted}">${escapeHtml(leader.current_level)} · ${escapeHtml(leader.rank_vi)} · còn ${leader.packs_until_level_up || 0} bài để lên rank</p>
               ${xpBar(leader)}
             </div>
           </div>
           <div class="grid grid-cols-3 gap-2 text-center md:w-60">
-            <div class="rounded-lg bg-gold/15 px-3 py-2">
-              <p class="text-xs text-cream-dim">XP</p>
-              <p class="font-display text-xl font-bold text-gold-light">${leader.total_xp}</p>
+            <div class="${statBoxGold}">
+              <p class="text-xs ${inkDim}">XP</p>
+              <p class="text-xl font-bold ${w1 ? '' : 'font-display text-gold-light'}">${leader.total_xp}</p>
             </div>
-            <div class="rounded-lg bg-navy-950 px-3 py-2">
-              <p class="text-xs text-cream-dim">Xu</p>
-              <p class="font-display text-xl font-bold text-cream">${leader.coins}</p>
+            <div class="${statBoxDark}">
+              <p class="text-xs ${inkDim}">Xu</p>
+              <p class="text-xl font-bold ${titleFont.split(' ')[0]} ${ink}">${leader.coins}</p>
             </div>
-            <div class="rounded-lg bg-navy-950 px-3 py-2">
-              <p class="text-xs text-cream-dim">Bài</p>
-              <p class="font-display text-xl font-bold text-cream">${leader.completed_packs}</p>
+            <div class="${statBoxDark}">
+              <p class="text-xs ${inkDim}">Bài</p>
+              <p class="text-xl font-bold ${titleFont.split(' ')[0]} ${ink}">${leader.completed_packs}</p>
             </div>
           </div>
         </article>
@@ -236,10 +307,10 @@ const rankLadder = [
       const label = target > 0 ? `${leader.xp_in_level}/${target} XP trong rank` : 'Rank cao nhất';
       return `
         <div class="mt-4">
-          <div class="h-2 overflow-hidden rounded-full bg-navy-950">
-            <div class="h-full rounded-full bg-accent" style="width:${percent}%"></div>
+          <div class="${xpTrack}">
+            <div class="${xpFill}" style="width:${percent}%"></div>
           </div>
-          <p class="mt-1 text-xs text-cream-dim">${escapeHtml(label)}</p>
+          <p class="mt-1 text-xs ${inkDim}">${escapeHtml(label)}</p>
         </div>
       `;
     }

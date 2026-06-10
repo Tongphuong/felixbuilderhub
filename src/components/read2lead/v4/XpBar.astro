@@ -1,0 +1,17 @@
+---
+export interface Props {
+  value: number;
+  max: number;
+  label?: string;
+}
+
+const { value, max, label } = Astro.props;
+const percent = max > 0 ? Math.min(100, Math.max(0, (value / max) * 100)) : 0;
+---
+
+<div class="r2l-kid-xp-bar">
+  {label && <p class="r2l-kid-xp-bar__label">{label}</p>}
+  <div class="r2l-kid-xp-bar__track">
+    <div class="r2l-kid-xp-bar__fill" data-r2l-xp-fill style={`width: ${percent}%`}></div>
+  </div>
+</div>
