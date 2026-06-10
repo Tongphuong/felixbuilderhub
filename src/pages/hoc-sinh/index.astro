@@ -1,11 +1,17 @@
 ﻿---
+import KidHubW1 from './_KidHubW1.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import MonsterBuilder from '../../components/read2lead/v3/avatar/MonsterBuilder.astro';
 import '../../styles/rank-ladder.css';
+
+const w1Ssr = import.meta.env.PUBLIC_R2L_W1 === '1';
 ---
 
+{w1Ssr ? (
+  <KidHubW1 />
+) : (
 <BaseLayout
   title="Xem tiến độ con — Nhập mã học sinh | Felix Coaching"
   description="Bố mẹ nhập mã Felix cấp qua Zalo để xem cấp độ, bài đang học, truyện đã hoàn thành và lộ trình coaching của con."
@@ -1040,3 +1046,4 @@ import '../../styles/rank-ladder.css';
     });
   </script>
 </BaseLayout>
+)}
