@@ -1,3 +1,11 @@
+import {
+  MONSTER_COLORS,
+  MONSTER_MANIFEST,
+  MONSTER_SLOTS,
+} from './_monster-manifest.js';
+
+export { MONSTER_COLORS, MONSTER_MANIFEST, MONSTER_SLOTS };
+
 export const LEVELS = ['L1', 'L2', 'L3', 'L4', 'L5'];
 export const PACKS_TO_NEXT_LEVEL = {
   L1: 5,
@@ -328,10 +336,11 @@ export function normalizeProgressState(raw, { accessCode, codeData = null, nowIs
     inventory: normalizeInventory(raw?.inventory),
     equipped: normalizeEquipped(raw?.equipped),
     avatar: {
-      enabled: false,
+      enabled: true,
       preset_id: raw?.avatar?.preset_id || null,
       gender: raw?.avatar?.gender || null,
       equipped: raw?.avatar?.equipped || {},
+      monster: normalizeAvatarMonster(raw?.avatar?.monster, accessCode, MONSTER_MANIFEST),
     },
     created_at: raw?.created_at || nowIso,
     updated_at: raw?.updated_at || nowIso,
@@ -482,6 +491,82 @@ export function applyPackPenalty(
   return { state: refreshBadges(nextState), already_penalized: false };
 }
 
+function hashAccessCode(accessCode) {
+  const clean = String(accessCode || '').trim().toUpperCase();
+  let hash = 0;
+  for (let i = 0; i < clean.length; i += 1) {
+    hash = ((hash << 5) - hash) + clean.charCodeAt(i);
+    hash |= 0;
+  }
+  return Math.abs(hash);
+}
+
+export function defaultMonsterForCode(accessCode, manifest = MONSTER_MANIFEST) {
+  const hash = hashAccessCode(accessCode);
+  const pickPart = (slot, salt) => {
+    const parts = Array.isArray(manifest?.[slot]) ? manifest[slot] : [];
+    if (!parts.length) return 'default';
+    const index = (hash + salt) % parts.length;
+    return parts[index]?.id || parts[0]?.id || 'default';
+  };
+  return {
+    body: pickPart('body', 0),
+    eyes: pickPart('eyes', 11),
+    mouth: pickPart('mouth', 23),
+    arms: pickPart('arms', 37),
+    detail: pickPart('detail', 53),
+    color: MONSTER_COLORS[(hash >> 3) % MONSTER_COLORS.length] || MONSTER_COLORS[0],
+  };
+}
+
+export function normalizeAvatarMonster(raw, accessCode, manifest = MONSTER_MANIFEST) {
+  const defaults = defaultMonsterForCode(accessCode, manifest);
+  if (!raw || typeof raw !== 'object') return defaults;
+
+  const validPart = (slot, value) => {
+    const id = String(value || '').trim();
+    const parts = Array.isArray(manifest?.[slot]) ? manifest[slot] : [];
+    if (!parts.length) return 'default';
+    return parts.some((part) => part.id === id) ? id : defaults[slot];
+  };
+
+  const color = String(raw.color || '').trim();
+  return {
+    body: validPart('body', raw.body),
+    eyes: validPart('eyes', raw.eyes),
+    mouth: validPart('mouth', raw.mouth),
+    arms: validPart('arms', raw.arms),
+    detail: validPart('detail', raw.detail),
+    color: MONSTER_COLORS.includes(color) ? color : defaults.color,
+  };
+}
+
+export function saveAvatarMonster(state, monster, accessCode, manifest = MONSTER_MANIFEST) {
+  const normalized = normalizeAvatarMonster(monster, accessCode, manifest);
+  return {
+    ok: true,
+    state: {
+      ...state,
+      avatar: {
+        ...state.avatar,
+        enabled: true,
+        monster: normalized,
+      },
+      updated_at: new Date().toISOString(),
+    },
+    monster: normalized,
+  };
+}
+
+export function publicMonsterManifest(manifest = MONSTER_MANIFEST) {
+  return MONSTER_SLOTS.reduce((acc, slot) => {
+    acc[slot] = Array.isArray(manifest[slot])
+      ? manifest[slot].map(({ id, file }) => ({ id, file }))
+      : [];
+    return acc;
+  }, {});
+}
+
 export function getShopItem(itemId) {
   const id = String(itemId || '').trim();
   return SHOP_CATALOG.find((item) => item.id === id) || null;
@@ -612,6 +697,7 @@ export function publicProgressState(state) {
     packs_until_level_up: packsUntilLevelUp(currentLevel, state.xp_in_level),
     badges: state.badges,
     avatar: state.avatar,
+    monster_parts: publicMonsterManifest(),
     inventory: normalizeInventory(state.inventory),
     equipped: normalizeEquipped(state.equipped),
     equipped_display: equippedDisplay(state),
