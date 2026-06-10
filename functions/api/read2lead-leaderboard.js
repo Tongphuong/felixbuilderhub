@@ -1,4 +1,8 @@
+import { getClientIp, checkCodeRateLimit, rateLimitedResponse } from './_rate-limit.js';
 import { loadProgressState, publicProgressState, RANK_ASSETS, RANK_TITLES } from './_read2lead-v2-state.js';
+
+const LEADERBOARD_CACHE_KEY = 'leaderboard-cache';
+const LEADERBOARD_CACHE_TTL_SECONDS = 5 * 60;
 
 export async function onRequestGet(context) {
   const { request, env } = context;
@@ -7,21 +11,58 @@ export async function onRequestGet(context) {
     return json({ ok: false, error: 'config_error', message: 'Felixar chua cau hinh bang xep hang.' }, 500);
   }
 
+  const clientIp = getClientIp(request);
+  const rateLimit = await checkCodeRateLimit(env.READ2LEAD_CODES, clientIp);
+  if (rateLimit.blocked) {
+    return rateLimitedResponse(rateLimit.retryAfter);
+  }
+
   const url = new URL(request.url);
   const requestedLimit = parseInt(url.searchParams.get('limit') || '50', 10);
   const limit = Number.isFinite(requestedLimit) ? Math.min(Math.max(requestedLimit, 1), 100) : 50;
 
+  const cached = await env.READ2LEAD_CODES.get(LEADERBOARD_CACHE_KEY, { type: 'json' });
+  if (cached?.leaders && cached?.updated_at) {
+    return json({
+      ok: true,
+      updated_at: cached.updated_at,
+      leaders: sliceLeaders(cached.leaders, limit),
+    });
+  }
+
+  const leaders = await computeLeaders(context);
+  const updatedAt = new Date().toISOString();
+
+  try {
+    await env.READ2LEAD_CODES.put(
+      LEADERBOARD_CACHE_KEY,
+      JSON.stringify({ updated_at: updatedAt, leaders }),
+      { expirationTtl: LEADERBOARD_CACHE_TTL_SECONDS },
+    );
+  } catch {
+    // Cache write is best-effort; still return fresh data.
+  }
+
+  return json({
+    ok: true,
+    updated_at: updatedAt,
+    leaders: sliceLeaders(leaders, limit),
+  });
+}
+
+async function computeLeaders(context) {
   const leaders = [];
   let cursor;
 
   do {
-    const list = await env.READ2LEAD_CODES.list({ limit: 100, cursor });
+    const list = await context.env.READ2LEAD_CODES.list({ limit: 100, cursor });
     cursor = list.cursor;
 
     const records = await Promise.all(
       list.keys.map(async (key) => {
         if (key.name.startsWith('task:') || key.name.startsWith('progress:')) return null;
-        const value = await env.READ2LEAD_CODES.get(key.name, { type: 'json' });
+        if (key.name.startsWith('rl:') || key.name === LEADERBOARD_CACHE_KEY) return null;
+        const value = await context.env.READ2LEAD_CODES.get(key.name, { type: 'json' });
         return value ? publicLeader(context, key.name, value) : null;
       }),
     );
@@ -38,14 +79,14 @@ export async function onRequestGet(context) {
     return Date.parse(b.last_reviewed_at || 0) - Date.parse(a.last_reviewed_at || 0);
   });
 
-  return json({
-    ok: true,
-    updated_at: new Date().toISOString(),
-    leaders: leaders.slice(0, limit).map((leader, index) => ({
-      position: index + 1,
-      ...leader,
-    })),
-  });
+  return leaders;
+}
+
+function sliceLeaders(leaders, limit) {
+  return leaders.slice(0, limit).map((leader, index) => ({
+    position: index + 1,
+    ...leader,
+  }));
 }
 
 async function publicLeader(context, code, codeData) {

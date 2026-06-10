@@ -32,6 +32,7 @@ import '../../styles/rank-ladder.css';
             maxlength="40"
             autocomplete="off"
             placeholder="VD: R2L-LINH-8F3KQ2"
+            data-clarity-mask="true"
             class="min-h-[52px] w-full rounded-xl border-[3px] border-cream/15 bg-navy-950 px-4 text-base uppercase text-cream placeholder:normal-case placeholder:text-cream-dim/70 focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/30"
           />
           <button
@@ -47,7 +48,7 @@ import '../../styles/rank-ladder.css';
       <div id="profile-session-bar" class="profile-session-bar mt-6 hidden items-center justify-between gap-3 rounded-2xl border-[3px] border-cream/15 bg-navy-900/80 px-4 py-3 shadow-lg">
         <p class="min-w-0 truncate text-sm font-bold text-cream">
           <span class="text-cream-muted">Đang xem:</span>
-          <span id="session-student-name" class="ml-1"></span>
+          <span id="session-student-name" class="ml-1" data-clarity-mask="true"></span>
         </p>
         <button
           id="change-code"

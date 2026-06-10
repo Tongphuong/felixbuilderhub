@@ -92,6 +92,56 @@ Ask Phương to pick the next phase; Claude writes the spec (5-lens audited) bef
 
 ---
 
+## 4b. External libraries & tooling — DECISIONS (locked)
+
+Each is mapped to the phase that needs it, with adopt/defer + why. **Discipline:** lazy-load where possible (never bloat the lesson bundle), gate behind `R2L_V3`, justify in the commit body (AGENTS.md). Audience runs cheap Android / iPad Safari / 3G — bundle size and reliability beat features.
+
+| Tool | Decision | Phase | Why / note |
+|---|---|---|---|
+| **canvas-confetti** (~3KB, no deps) | **ADOPT — starts at Phase B** | B rank-up, then E | Celebration bursts (rank-up, level-up, correct streaks). Tiny, reliable, drop-in. First use: the rank-up moment in Z3. |
+| **kaplay / kaboom.js** (~200KB) | **ADOPT** | D games | Lightweight HTML5 game engine for the mini-games. **Lazy-load only on the games page** — never in the lesson. (Phaser considered but heavier ~1MB → rejected.) |
+| **Howler.js** (~7KB) | **DEFER (optional)** | E | Game sound. Start with native `Audio()` + a few small sound files + the existing Web-Audio beeps (`_r2lPlayGoBeep`). Adopt Howler only if sound design grows (sprites/layering). |
+| **Rive** (preferred over Lottie) | **DEFER — needs an animator** | E+ | Interactive Minny animations (mood states, rank-up cheer). High "Roblox feel" value but **asset-dependent (Phương/designer must produce the rig)** and ~heavier. Until then, Minny uses CSS/sprite swaps on the existing PNGs. Decision gate for Phương. |
+| **DiceBear** (avatar gen) | **SKIP for now** | C | Cosmetics will likely be layered sprite art (hats/pets/colors), not procedural avatars. Re-evaluate when C is spec'd. |
+| **tsParticles** | **SKIP** | — | Overkill; canvas-confetti covers our particle needs at a fraction of the size. |
+| **MCP servers / connectors** | **N/A to the product runtime** | — | MCP is AI-dev tooling, not something the kids' web app ships. Not part of V3 runtime. (We use AI only server-side for generation, already done.) |
+| **Open-source game repos** | **Ideas only, don't clone** | D | Source game *ideas*, but build our own small with kaplay — avoids license/quality/bloat risk from cloning unknown repos. |
+
+> Net: only **canvas-confetti** (now, Phase B) and **kaplay** (Phase D, lazy) are committed dependencies. Everything else is native-first or deferred behind a Phương asset decision. This keeps the lesson bundle lean.
+
+---
+
+## 4c. Third-party integrations — research & decisions (2026-06-09)
+
+Research for: (1) smoother UX / fewer bugs / easier for non-tech parents + kids, (2) better English lesson design (Phương will pay 3rd-party), (3) better profile/storage/backend. Full notes + sources in chat 2026-06-09.
+
+> **Note on "Antigravity":** Google Antigravity is an **agentic IDE** (a Cursor competitor, Gemini 3), NOT a backend/storage service. It does not solve the profile/storage need. At most it's an alternative dev tool to Cursor.
+
+| Tool | Area | Cost | Effort | Value for R2L | Verdict |
+|---|---|---|---|---|---|
+| **Microsoft Clarity** | UX / bugs | **FREE** | low (script in `<head>`) | Session replay + heatmaps → literally watch where a parent/kid gets stuck or rage-taps. | ⭐ **DO NOW (free)** |
+| **Sentry** | bugs | **free tier** | low (init snippet) | Production error monitoring → see crashes/mic fails on real devices instantly. | ⭐ **DO NOW (free)** |
+| **MS Immersive Reader** (Azure) | lesson / kid UX | **free tier (F0)** then PAYG | medium (Azure resource + token endpoint + SDK) | Tap a word in StoryDock → picture + read-aloud + VN translation + line focus. Biggest reading-experience upgrade for 6-12. | ⭐ **PILOT (free tier)** — top paid-area pick |
+| **Pronunciation API** (SpeechAce / Azure Pronunciation Assessment / ELSA) | lesson (speaking) | PAID per assessment | medium (swap/augment speaking-check backend) | Phoneme-level pronunciation scoring → replaces crude Whisper word-match in `listen_and_speak`/retell/`/speaking`. Real coaching = parents pay. | 🟡 PILOT (paid) |
+| **CEFR / NGSL / Oxford wordlists** | lesson calibration | free data | medium (validator/prompt) | Enforce vocab scope per level for real (difficulty currently prompt-soft only). | ✅ Adopt (free data) |
+| **ElevenLabs** TTS | engagement | PAID | low-medium | Warmer/character voices for narration + Minny. | 🟡 Optional |
+| **OmniVoice** (k2-fsa, Apache-2.0) | lesson narration TTS | FREE model + **GPU hosting** | medium-high (self-host) | Open TTS 600+ langs, zero-shot voice cloning + voice design. Could replace OpenAI nova → free TTS, a signature **Minny voice**, Vietnamese explanation audio, phoneme pronunciation control. NOT drop-in: self-host GPU (Modal/Replicate/RunPod) via `maemreyo/omnivoice-server` (OpenAI-compatible). Must test latency/uptime vs nova before trusting for waiting kids. TTS-only (not STT/pronunciation). | 🟡 **Pilot later** — when TTS cost matters at scale OR want a custom Minny/Felix-cloned voice + have GPU hosting |
+| **PostHog** | UX/analytics | free tier | medium | Analytics + replay + could host the `R2L_V3` flag. | 🟡 If Clarity not enough |
+| **Motion One** (~5KB) | UX motion | free | low | Smooth vanilla animations in Astro islands. | 🟡 Optional |
+| **Cloudflare D1** (SQLite edge) | backend/profile | cheap | high (migrate from KV) | SQL queries → fixes leaderboard O(N) scan, enables real profile analytics. Least-friction (same Cloudflare platform). | ✅ Plan (Phase F/G) |
+| **Supabase** (Postgres+auth+dashboard) | backend/profile | free tier | high | More batteries (auth, admin dashboard, realtime) if scaling to parent accounts. | 🟡 Alt to D1 |
+| Google Antigravity | (dev tool) | — | — | Agentic IDE, not a backend. | ❌ N/A to product |
+
+**Privacy guard (children's product):** Clarity/Sentry/PostHog capture sessions/errors → MUST mask PII (access codes, child names). Configure input masking + scrub fields before enabling.
+
+### FREE-FIRST order (do these before spending)
+1. **Microsoft Clarity** — free, ~1 session to add, instant visibility into parent/kid confusion.
+2. **Sentry** — free tier, catch real-device errors before Phương hears about them.
+3. **Immersive Reader (F0 free tier)** — pilot the reading upgrade at no cost before committing to PAYG.
+4. **CEFR/NGSL wordlist** — free data to harden level calibration.
+
+---
+
 ## 5. STANDING BACKLOG — READY, safe, pull anytime (rate-limit filler)
 
 Pre-approved bug fixes from the QA audit. Each is self-contained, low-risk, and a clear improvement for **current** users — these may go to `main` as hotfixes after tests pass. One agent, one task, one commit.

@@ -120,6 +120,7 @@ export async function onRequestPost(context) {
         'Content-Type': 'application/json',
         'X-Read2Lead-Secret': backendSecret,
       },
+      signal: AbortSignal.timeout(25000),
       body: JSON.stringify({
         child_name: progress.student_name,
         age: progress.age,
