@@ -1,0 +1,19 @@
+.r2l-kid {
+  --r2l-bg: #eaf6ff;          /* sky day */
+  --r2l-bg-deep: #d6ecff;
+  --r2l-surface: #ffffff;
+  --r2l-ink: #1e2a4a;          /* readable navy text */
+  --r2l-ink-soft: #5a6a8c;
+  --r2l-accent: #ff6b57;       /* coral CTA */
+  --r2l-accent-ink: #ffffff;
+  --r2l-sun: #ffc83d;          /* coins, stars, XP */
+  --r2l-mint: #34d399;         /* correct, success */
+  --r2l-sky: #38bdf8;          /* info, listen */
+  --r2l-grape: #a78bfa;        /* rank, epic */
+  --r2l-danger: #f87171;       /* wrong (soft, never harsh) */
+  --r2l-radius: 20px;
+  --r2l-radius-sm: 12px;
+  --r2l-shadow: 0 4px 0 rgb(30 42 74 / 0.15);        /* chunky cartoon drop */
+  --r2l-shadow-press: 0 1px 0 rgb(30 42 74 / 0.15);  /* pressed state */
+  --r2l-font-display: 'Baloo 2 Variable', system-ui, sans-serif;
+}
