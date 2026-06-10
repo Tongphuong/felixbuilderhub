@@ -32,4 +32,11 @@
 ## 2026-06-10 session adds
 - Backend hotfix `86d0a1d` LIVE (Render): backfill missing question ids — gpt-5-mini dropped `id` on written_response, packs failed. Verified via health-v2.
 - `docs/V4_REBUILD_ROADMAP.md` written + 5-lens audited. Phương approved all waves; W1 EXPANDED (lesson gates + anti-guess + rank difficulty + game shell + kid/parent split; voice buttons dropped).
-- **3 W1 specs ready for 3 parallel Cursor agents:** `W1_SPEC_A_LESSON_FLOW.md` (lesson.astro + backend dial, branch v4/a-lesson-flow) · `W1_SPEC_B_GAME_SHELL.md` (design system + contract §2, v4/b-game-shell, contract commit lands FIRST) · `W1_SPEC_C_KID_HUB_PARENT.md` (hoc-sinh hook + /phu-huynh, v4/c-kid-hub). New flag `PUBLIC_R2L_W1`. All docs uncommitted — commit pending Phương review.
+- **3 W1 specs ready for 3 parallel Cursor agents:** `W1_SPEC_A_LESSON_FLOW.md` (lesson.astro + backend dial, branch v4/a-lesson-flow) · `W1_SPEC_B_GAME_SHELL.md` (design system + contract §2, v4/b-game-shell, contract commit lands FIRST) · `W1_SPEC_C_KID_HUB_PARENT.md` (hoc-sinh hook + /phu-huynh, v4/c-kid-hub). New flag `PUBLIC_R2L_W1`.
+
+## W1 EXECUTED + VERIFIED (2026-06-10 late session)
+- All 3 Cursor agents delivered; Claude verified each independently (isolated worktrees, reran tests, ownership + contract + PII checks) and merged ALL into **`v3` = `e34491e`**: B `cbe0012` (192/192) → docs `a8a5c8b` → C `809656d` (199/199, PII clean) → A `e34491e` (196/196 hub). Integrated suite **203/203**, `npm run build` clean (17 pages).
+- **Backend `v4/a-difficulty-dial` (`db7940c`) HELD unmerged** — dial C1–C4 guidance-only (section-mix constraint verified), 95/95 pytest. Needs Phương 4-pack manual QA before promoting to main (V3 rails §2).
+- Stray local-v3 commits (0e96b06/c85aa7f) were duplicates, reset — never reached origin.
+- Known polish (non-blocking): Agent A's lesson uses own CSS classes (`r2l-primary`, `r2l-w1-chip`) instead of B's v4 components; header swap via `?w1=1` query flashes legacy briefly (env-flag SSR path doesn't).
+- **NEXT = Phương manual QA on v3 preview:** set Cloudflare Pages → Preview env `PUBLIC_R2L_W1=1`, then on `v3.felixbuilderhub.pages.dev` with a real test code: hub hook (<2s, 3G throttle) · create flow end-to-end (12 topic cards → wait scene → Đọc ngay; reload mid-gen no double-burn) · lesson gate + karaoke + anti-guess + recap · `/phu-huynh` in Zalo webview · flag off = legacy identical. Then decide `v3` → `main` promote. Cursor agents share ONE working tree (D:\felixbuilderhub) — future agents should use git worktrees.
