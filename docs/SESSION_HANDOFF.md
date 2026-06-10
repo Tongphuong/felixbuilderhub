@@ -27,4 +27,9 @@
 - Cloudflare: `wrangler` is logged in (account phuongtong474), but the OAuth token can't read KV (use `/api/debug-speaking` instead). Pages project = `felixbuilderhub`, prod deploy id via `wrangler pages deployment list`.
 
 ## KEY DOCS
-`docs/V3_MASTER_EXECUTION.md` (runbook) · `V3_ROADMAP.md` (phases + libs §4b + integrations §4c incl. OmniVoice/Immersive Reader/pronunciation APIs) · `V3_LAUNCH_RUNBOOK.md` · `V3_PHASE_B_RANK_SPEC.md` / `V3_PHASE_C2_MONSTER_AVATAR_SPEC.md` / `V3_PRELAUNCH_HARDENING_SPEC.md` · backend `_claude/PROMPT_*_SPEC.md`.
+**`docs/V4_REBUILD_ROADMAP.md`** (2026-06-10 — NEW master rebuild plan: 8 waves W1-W8 + WR lesson refactor, full inspection findings, lib picks, decision gates G1-G6 for Phương) · `docs/V3_MASTER_EXECUTION.md` (runbook) · `V3_ROADMAP.md` (phases + libs §4b + integrations §4c incl. OmniVoice/Immersive Reader/pronunciation APIs) · `V3_LAUNCH_RUNBOOK.md` · `V3_PHASE_B_RANK_SPEC.md` / `V3_PHASE_C2_MONSTER_AVATAR_SPEC.md` / `V3_PRELAUNCH_HARDENING_SPEC.md` · backend `_claude/PROMPT_*_SPEC.md`.
+
+## 2026-06-10 session adds
+- Backend hotfix `86d0a1d` LIVE (Render): backfill missing question ids — gpt-5-mini dropped `id` on written_response, packs failed. Verified via health-v2.
+- `docs/V4_REBUILD_ROADMAP.md` written + 5-lens audited. Phương approved all waves; W1 EXPANDED (lesson gates + anti-guess + rank difficulty + game shell + kid/parent split; voice buttons dropped).
+- **3 W1 specs ready for 3 parallel Cursor agents:** `W1_SPEC_A_LESSON_FLOW.md` (lesson.astro + backend dial, branch v4/a-lesson-flow) · `W1_SPEC_B_GAME_SHELL.md` (design system + contract §2, v4/b-game-shell, contract commit lands FIRST) · `W1_SPEC_C_KID_HUB_PARENT.md` (hoc-sinh hook + /phu-huynh, v4/c-kid-hub). New flag `PUBLIC_R2L_W1`. All docs uncommitted — commit pending Phương review.
