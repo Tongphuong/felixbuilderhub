@@ -1,5 +1,5 @@
 import { getClientIp, checkCodeRateLimit, recordCodeFailure, rateLimitedResponse } from './_rate-limit.js';
-import { loadProgressState } from './_read2lead-v2-state.js';
+import { computeRankLadder, loadProgressState } from './_read2lead-v2-state.js';
 
 const GENERATION_LOCK_STALE_MS = 15 * 60 * 1000;
 const BACKEND_CHILD_NAME_RE = /^[^\W\d_]+(?:[\s\-'][^\W\d_]+)*$/u;
@@ -114,6 +114,22 @@ export async function onRequestPost(context) {
 
   try {
     const reviewUrl = `${new URL(request.url).origin}/hoc-sinh?code=${encodeURIComponent(accessCode)}`;
+    const rankLadder = computeRankLadder(progressState);
+    const rankPoints = Number.isFinite(Number(rankLadder?.rank_points))
+      ? Math.max(0, Math.floor(Number(rankLadder.rank_points)))
+      : null;
+    const upstreamBody = {
+      child_name: progress.student_name,
+      age: progress.age,
+      level: levelForPack,
+      child_gender: progress.child_gender,
+      interests: interests || undefined,
+      topic: topic || undefined,
+      review_url: reviewUrl,
+    };
+    if (rankPoints != null) {
+      upstreamBody.rank_points = rankPoints;
+    }
     const upstream = await fetch(`${backendUrl}/generate-async-v2`, {
       method: 'POST',
       headers: {
@@ -121,15 +137,7 @@ export async function onRequestPost(context) {
         'X-Read2Lead-Secret': backendSecret,
       },
       signal: AbortSignal.timeout(25000),
-      body: JSON.stringify({
-        child_name: progress.student_name,
-        age: progress.age,
-        level: levelForPack,
-        child_gender: progress.child_gender,
-        interests: interests || undefined,
-        topic: topic || undefined,
-        review_url: reviewUrl,
-      }),
+      body: JSON.stringify(upstreamBody),
     });
     if (!upstream.ok) {
       await clearGenerationLock(env.READ2LEAD_CODES, accessCode, pendingPackId);
