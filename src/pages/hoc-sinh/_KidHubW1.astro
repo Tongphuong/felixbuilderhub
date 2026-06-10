@@ -1,0 +1,98 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import KidButton from '../../components/read2lead/v4/KidButton.astro';
+import KidCard from '../../components/read2lead/v4/KidCard.astro';
+import MonsterBuilder from '../../components/read2lead/v3/avatar/MonsterBuilder.astro';
+import '../../styles/r2l-kid.css';
+import '../../styles/rank-ladder.css';
+import './hoc-sinh-w1.css';
+import '@fontsource-variable/baloo-2/vietnamese.css';
+import '@fontsource-variable/baloo-2/latin.css';
+
+const mainClass = 'r2l-kid flex-1 px-4 py-8 sm:px-6';
+---
+
+<BaseLayout
+  title="Nhà của con — Read2Lead | Felix Coaching"
+  description="Con nhập mã để đọc truyện, làm bài và leo hạng cùng Minny."
+  robots="noindex, follow"
+>
+  <Header read2LeadState={false} kidMode={true} />
+
+  <main id="main" class={mainClass}>
+    <section class="mx-auto max-w-lg">
+      <p class="r2l-kid-eyebrow">Read2Lead</p>
+      <h1 class="r2l-kid-title">Nhà của con</h1>
+      <p class="r2l-kid-lead">Nhập mã Felix gửi qua Zalo để vào nhé.</p>
+
+      <KidCard id="profile-entry" class="mt-6">
+        <label for="access-code" class="text-sm font-bold">Mã của con</label>
+        <p class="mt-1 text-xs r2l-kid-muted">Giống mã vào lớp trên ClassDojo.</p>
+        <div class="mt-4 flex flex-col gap-3 sm:flex-row">
+          <input
+            id="access-code"
+            name="access_code"
+            required
+            maxlength="40"
+            autocomplete="off"
+            autocapitalize="characters"
+            autocorrect="off"
+            spellcheck="false"
+            inputmode="text"
+            placeholder="VD: R2L-LINH-8F3KQ2"
+            data-clarity-mask="true"
+            class="r2l-kid-input"
+          />
+          <KidButton id="load-progress" type="button" class="shrink-0">Đăng nhập</KidButton>
+        </div>
+      </KidCard>
+
+      <div
+        id="profile-session-bar"
+        class="mt-6 hidden items-center justify-between gap-3 rounded-[var(--r2l-radius)] border-2 border-[rgb(30_42_74/0.1)] bg-[var(--r2l-surface)] px-4 py-3 shadow-[var(--r2l-shadow)]"
+      >
+        <p class="min-w-0 truncate text-sm font-bold">
+          <span class="r2l-kid-muted">Xin chào</span>
+          <span id="session-student-name" class="ml-1" data-clarity-mask="true"></span>
+        </p>
+        <button
+          id="change-code"
+          type="button"
+          class="r2l-kid-btn r2l-kid-btn--ghost r2l-kid-btn--md shrink-0"
+        >
+          Đổi mã
+        </button>
+      </div>
+
+      <section id="error-card" class="r2l-kid-error mt-4 hidden"></section>
+
+      <section id="dashboard-card" class="mt-6 hidden"></section>
+
+      <div id="hub-create-sheet" class="hidden" aria-hidden="true"></div>
+      <div id="hub-wait-scene" class="mt-6 hidden" aria-live="polite"></div>
+
+      <MonsterBuilder />
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<script>
+  import { isW1Enabled } from '../../config/flags';
+  import { applyW1PageShell } from '../../scripts/r2l-w1-page';
+  import { initHocSinhW1 } from './hoc-sinh-w1';
+
+  if (isW1Enabled()) {
+    applyW1PageShell();
+    initHocSinhW1();
+  }
+</script>
+
+<style is:global>
+  #profile-session-bar {
+    display: flex;
+  }
+</style>
