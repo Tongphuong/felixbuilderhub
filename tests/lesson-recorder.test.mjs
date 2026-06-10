@@ -10,6 +10,23 @@ test('lesson page registers MediaRecorder support detection', () => {
   assert.match(lessonPage, /MediaRecorder/);
 });
 
+test('speaking activity completes on effort, not on Whisper success (no deadlock)', () => {
+  // listen_and_speak completes when every sentence was RECORDED, regardless of ASR.
+  assert.match(lessonPage, /attemptedItems/);
+  assert.match(lessonPage, /attemptedItems >= itemKeys\.length/);
+  assert.doesNotMatch(lessonPage, /scoredItems >= itemKeys\.length/);
+  // retell has an effort-complete path too.
+  assert.match(lessonPage, /_r2lCompleteRetellOnEffort/);
+});
+
+test('mic warmup no longer creates/closes an AudioContext (Realtek silence root cause)', () => {
+  // Fix C: the warmup must not prime+close an AudioContext on the recording stream.
+  const warmupStart = lessonPage.indexOf('async function _r2lRunMicWarmup');
+  const warmupEnd = lessonPage.indexOf('function _r2lFocusMicHelp');
+  const warmupBody = lessonPage.slice(warmupStart, warmupEnd);
+  assert.doesNotMatch(warmupBody, /primeAudioPipeline/);
+});
+
 test('lesson page handles permission denial gracefully', () => {
   assert.match(lessonPage, /micPermissionBlocked/);
   assert.match(lessonPage, /Vui lòng cấp quyền micro/);
@@ -57,10 +74,8 @@ test('recorder rejects header-only blobs instead of sending silence to Groq', ()
   assert.match(lessonPage, /blob\.size < _R2L_MIN_SPEECH_BYTES/);
 });
 
-test('mic warmup closes its primed AudioContext (no leak)', () => {
-  assert.match(lessonPage, /primedContext/);
-  assert.match(lessonPage, /primedContext\.close/);
-});
+// (Removed: "mic warmup closes its primed AudioContext" — the priming itself was
+//  removed in the Realtek-silence root-cause fix; see the no-AudioContext test above.)
 
 test('recording start gives a clear GO signal for non-reading kids', () => {
   assert.match(lessonPage, /_r2lPlayGoBeep/);

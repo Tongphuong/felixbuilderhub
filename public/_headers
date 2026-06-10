@@ -1,0 +1,16 @@
+# Cache policy — fixes "device stuck on yesterday's code".
+# Hashed build assets are immutable (safe to cache forever; a new deploy = new hash).
+# HTML pages and non-hashed scripts must revalidate so every deploy reaches devices
+# without a manual hard-refresh. Static images stay cached to protect 3G/cheap phones.
+
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/*
+  Cache-Control: public, max-age=86400
+
+/scripts/*
+  Cache-Control: public, max-age=0, must-revalidate
+
+/*
+  Cache-Control: public, max-age=0, must-revalidate

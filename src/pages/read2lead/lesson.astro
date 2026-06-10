@@ -1211,20 +1211,14 @@ function _r2lBuildRetellTemplate(lesson) {
   }
 
   async function _r2lRunMicWarmup(stream, onMessage, isCancelled = () => false) {
-    // primeAudioPipeline returns an AudioContext that wakes the mic so the
-    // first syllable isn't dropped (iOS/Safari). It MUST be closed afterwards
-    // or browsers hit the ~6 AudioContext limit and warmup silently dies.
-    let primedContext = null;
-    if (window.R2LMicCheck?.primeAudioPipeline) {
-      primedContext = await window.R2LMicCheck.primeAudioPipeline(stream);
-    }
-    try {
-      await _r2lRunCountdownOverlay(3, isCancelled);
-    } finally {
-      if (primedContext && typeof primedContext.close === 'function' && primedContext.state !== 'closed') {
-        primedContext.close().catch(() => {});
-      }
-    }
+    // ROOT-CAUSE FIX: do NOT create/close an AudioContext here. The mic stream is
+    // already open and stays live through the 3s countdown, which warms the audio
+    // pipeline naturally (no dropped first syllable). On Windows/Realtek, closing an
+    // AudioContext that holds a MediaStreamSource right before MediaRecorder.start()
+    // leaves the track feeding SILENCE — the recording uploads (>1.2KB) but Whisper
+    // transcribes nothing ("Khong nghe duoc ro"), even though the mic test passed.
+    // The mic test never does this prime-then-close, which is why it works.
+    await _r2lRunCountdownOverlay(3, isCancelled);
   }
 
   function _r2lFocusMicHelp(shell) {
@@ -1430,8 +1424,10 @@ function _r2lBuildRetellTemplate(lesson) {
         const heroEl = cardEl.closest('[data-activity-shell="listen_and_speak"]')?.querySelector('[data-minny-hero]');
         _r2lSetMinnyMood(_r2lMinnyMoodForScore(payload.score_percent), heroEl);
         persistSpeakItemResult(itemKey, _r2lRecorderState.perItem.get(itemKey));
-        _r2lMergeSpeakActivityScores(activityItemsFromCard(cardEl));
       }
+      // Count this recording toward completion whether or not Whisper heard it —
+      // a child must never be trapped by speech recognition (effort-based, M0).
+      _r2lMergeSpeakActivityScores(activityItemsFromCard(cardEl));
     } catch (error) {
       const current = _r2lRecorderState.perItem.get(itemKey);
       if (!current || current.blob !== scoringBlob) return;
@@ -1445,6 +1441,8 @@ function _r2lBuildRetellTemplate(lesson) {
         ok: false,
         message: error.message || 'Chưa gửi được bài đọc. Con thử lại nhé!',
       });
+      // The recording attempt still counts — don't strand the child on a failed upload.
+      _r2lMergeSpeakActivityScores(activityItemsFromCard(cardEl));
     }
   }
 
@@ -1459,8 +1457,14 @@ function _r2lBuildRetellTemplate(lesson) {
     let closeTotal = 0;
     let wordTotal = 0;
     let scoredItems = 0;
+    let attemptedItems = 0;
     itemKeys.forEach((itemKey) => {
       const entry = _r2lRecorderState.perItem.get(itemKey);
+      // "Attempted" = the child finished a recording and we tried to score it
+      // (Whisper success OR failure). This is what gates completion now.
+      if (entry && (entry.checkStatus === 'done' || entry.checkStatus === 'error')) {
+        attemptedItems += 1;
+      }
       if (entry?.checkResult?.ok) {
         scoredItems += 1;
         exactTotal += Number(entry.checkResult.exact_count ?? entry.checkResult.correct_count ?? 0);
@@ -1468,10 +1472,12 @@ function _r2lBuildRetellTemplate(lesson) {
         wordTotal += Number(entry.checkResult.total_count || 0);
       }
     });
-    if (!scoredItems) return;
-    const weighted = wordTotal > 0
+    if (!attemptedItems) return;
+    // Score from Whisper when it worked; otherwise an effort-pass, so a mic/ASR
+    // failure never tanks the child's pack — they DID read every sentence.
+    const weighted = scoredItems > 0 && wordTotal > 0
       ? Math.round(((exactTotal + closeTotal * 0.5) / wordTotal) * 100)
-      : 0;
+      : 70;
     state.activityResults.listen_and_speak = {
       type: 'listen_and_speak',
       attempted: true,
@@ -1480,14 +1486,18 @@ function _r2lBuildRetellTemplate(lesson) {
       wrong_count: Math.max(0, wordTotal - exactTotal),
       score_percent: weighted,
       whisper_scored_items: scoredItems,
+      recorded_items: attemptedItems,
     };
-    if (scoredItems >= itemKeys.length && !state.completedTypes.has('listen_and_speak')) {
+    // Complete once the child has recorded every sentence — NOT gated on Whisper.
+    // This is the deadlock fix: a broken mic/ASR can no longer block progression.
+    if (attemptedItems >= itemKeys.length && !state.completedTypes.has('listen_and_speak')) {
       completeActivity('listen_and_speak', {
         correct_count: exactTotal,
         total_count: wordTotal,
         wrong_count: Math.max(0, wordTotal - exactTotal),
         score_percent: weighted,
         whisper_scored_items: scoredItems,
+        recorded_items: attemptedItems,
       });
     }
   }
@@ -2233,6 +2243,7 @@ function _r2lBuildRetellTemplate(lesson) {
         });
       } else {
         _r2lSetMinnyMood('encourage', _r2lRetellState.heroEl);
+        _r2lCompleteRetellOnEffort();
       }
     } catch (error) {
       _r2lRetellState.status = 'idle';
@@ -2241,9 +2252,23 @@ function _r2lBuildRetellTemplate(lesson) {
         ok: false,
         message: error.message || 'Chưa gửi được bài kể. Con thử lại nhé!',
       });
+      _r2lCompleteRetellOnEffort();
     } finally {
       _r2lRenderRetellControls();
     }
+  }
+
+  // Effort-complete the retell: the child recorded; a failed/empty ASR result or a
+  // flaky upload must never block the pack. Whisper score is a bonus when it works.
+  function _r2lCompleteRetellOnEffort() {
+    if (state.completedTypes.has('retell_summary')) return;
+    completeActivity('retell_summary', {
+      correct_count: 0,
+      total_count: 1,
+      wrong_count: 0,
+      score_percent: 70,
+      check_mode: 'open',
+    });
   }
 
   async function _r2lStartRetellRecording() {
