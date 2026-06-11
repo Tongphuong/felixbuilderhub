@@ -1166,6 +1166,33 @@ function _r2lBuildRetellTemplate(lesson) {
   // (kid tapped stop instantly / Safari header-only chunk). Real speech ≥0.5s
   // is several KB; header-only is ~200–600 bytes. 1200 cleanly separates them.
   const _R2L_MIN_SPEECH_BYTES = 1200;
+  const _R2L_SPEAK_CHECK_TIMEOUT_MS = 25000;
+  let _r2lSpeakUploadCounter = 0;
+
+  function _r2lNextSpeakUploadSeq() {
+    _r2lSpeakUploadCounter += 1;
+    return _r2lSpeakUploadCounter;
+  }
+
+  function _r2lSpeakUploadActive(itemKey, uploadSeq) {
+    const entry = _r2lRecorderState.perItem.get(itemKey);
+    return entry?.uploadSeq === uploadSeq;
+  }
+
+  function _r2lResolveSpeakUploadStuck(itemKey, cardEl, telemetry, message) {
+    const entry = _r2lRecorderState.perItem.get(itemKey);
+    if (!entry || entry.checkStatus !== 'uploading') return;
+    const activity = activityItemsFromCard(cardEl);
+    _r2lRecorderState.perItem.set(itemKey, {
+      ...entry,
+      checkStatus: 'error',
+      checkResult: { ok: false, message, upload_stuck: true },
+    });
+    _r2lRenderRecorderUi(itemKey, cardEl);
+    _r2lRenderSpeakFeedback(cardEl, { ok: false, message });
+    _r2lMergeSpeakActivityScores(activity);
+    _r2lUpdateMicSkipUi();
+  }
 
   function _r2lIsPermissionError(err) {
     const name = err?.name || '';
@@ -1548,7 +1575,7 @@ function _r2lBuildRetellTemplate(lesson) {
     }
 
     const controller = new AbortController();
-    const timer = window.setTimeout(() => controller.abort(), 30000);
+    const timer = window.setTimeout(() => controller.abort(), _R2L_SPEAK_CHECK_TIMEOUT_MS);
     let response;
     try {
       response = await fetch('/api/read2lead-speaking-check', {
@@ -1665,7 +1692,14 @@ function _r2lBuildRetellTemplate(lesson) {
     if (!expectedText || !blob) return;
 
     const scoringBlob = blob;
+    const uploadSeq = entry?.uploadSeq || 0;
+    const stuckMessage = 'Mạng hơi chậm, Minny chấm chưa kịp. Con thử Thu lại, hoặc bấm Micro lỗi — sang phần tiếp nhé!';
     _r2lRenderSpeakFeedback(cardEl, { loading: true });
+
+    const watchdog = window.setTimeout(() => {
+      if (!_r2lSpeakUploadActive(itemKey, uploadSeq)) return;
+      _r2lResolveSpeakUploadStuck(itemKey, cardEl, telemetry, stuckMessage);
+    }, _R2L_SPEAK_CHECK_TIMEOUT_MS + 1500);
 
     try {
       const payload = await _r2lPostSpeakingCheck(blob, expectedText, 'read', 0, telemetry);
@@ -1677,8 +1711,7 @@ function _r2lBuildRetellTemplate(lesson) {
         && _r2lAsrFailureLooksLikeOutage(payload)
         && _r2lRecordingHadVoice(telemetry)
       ) {
-        const msg = payload?.message || _R2L_ASR_OUTAGE_MSG;
-        _r2lCompleteSpeakActivityOnEffort(activity, msg, { asr_outage: true });
+        _r2lCompleteSpeakActivityOnEffort(activity, _R2L_ASR_OUTAGE_MSG, { asr_outage: true });
         showToast('Con bấm Tiếp tục xuống dưới để sang phần sau nhé!');
         return;
       }
@@ -1691,6 +1724,7 @@ function _r2lBuildRetellTemplate(lesson) {
       ) {
         window.R2LRecorder?.useWavEngine?.();
       }
+      if (!_r2lSpeakUploadActive(itemKey, uploadSeq)) return;
       const current = _r2lRecorderState.perItem.get(itemKey);
       if (!current || current.blob !== scoringBlob) return;
       _r2lRecorderState.perItem.set(itemKey, {
@@ -1718,6 +1752,7 @@ function _r2lBuildRetellTemplate(lesson) {
       // a child must never be trapped by speech recognition (effort-based, M0).
       _r2lMergeSpeakActivityScores(activityItemsFromCard(cardEl));
     } catch (error) {
+      if (!_r2lSpeakUploadActive(itemKey, uploadSeq)) return;
       const current = _r2lRecorderState.perItem.get(itemKey);
       if (!current || current.blob !== scoringBlob) return;
       _r2lRecorderState.perItem.set(itemKey, {
@@ -1732,6 +1767,15 @@ function _r2lBuildRetellTemplate(lesson) {
       });
       // The recording attempt still counts — don't strand the child on a failed upload.
       _r2lMergeSpeakActivityScores(activityItemsFromCard(cardEl));
+      _r2lUpdateMicSkipUi();
+    } finally {
+      window.clearTimeout(watchdog);
+      if (_r2lSpeakUploadActive(itemKey, uploadSeq)) {
+        const still = _r2lRecorderState.perItem.get(itemKey);
+        if (still?.checkStatus === 'uploading') {
+          _r2lResolveSpeakUploadStuck(itemKey, cardEl, telemetry, stuckMessage);
+        }
+      }
     }
   }
 
@@ -1769,6 +1813,7 @@ function _r2lBuildRetellTemplate(lesson) {
         status: 'idle',
         silentAttempts: existing.silentAttempts || 0,
         expectedText: existing.expectedText || activity.items?.[itemIndex]?.text_en || '',
+        uploadSeq: _r2lNextSpeakUploadSeq(),
         checkStatus: 'error',
         checkResult: { ok: false, ...meta },
       });
@@ -2152,6 +2197,7 @@ function _r2lBuildRetellTemplate(lesson) {
     }
 
     const url = blob ? URL.createObjectURL(blob) : null;
+    const uploadSeq = _r2lNextSpeakUploadSeq();
     _r2lRecorderState.perItem.set(itemKey, {
       mediaRecorder: null,
       chunks: [],
@@ -2160,6 +2206,7 @@ function _r2lBuildRetellTemplate(lesson) {
       status: tooShort ? 'idle' : 'recorded',
       silentAttempts: 0,
       expectedText,
+      uploadSeq,
       checkStatus: tooShort ? 'error' : 'uploading',
       checkResult: null,
     });
@@ -2714,9 +2761,21 @@ function _r2lBuildRetellTemplate(lesson) {
   }
 
   async function _r2lSubmitRetellRecording(blob, telemetry = null) {
+    const uploadSeq = _r2lNextSpeakUploadSeq();
+    const stuckMessage = 'Mạng hơi chậm, Minny chấm chưa kịp. Con thử Thu lại, hoặc bấm Micro lỗi — sang phần tiếp nhé!';
+    _r2lRetellState.uploadSeq = uploadSeq;
     _r2lRetellState.status = 'uploading';
     _r2lRenderRetellControls();
     _r2lRenderRetellFeedback({ loading: true });
+
+    const watchdog = window.setTimeout(() => {
+      if (_r2lRetellState.uploadSeq !== uploadSeq || _r2lRetellState.status !== 'uploading') return;
+      _r2lRetellState.status = 'idle';
+      _r2lSetMinnyMood('encourage', _r2lRetellState.heroEl);
+      _r2lRenderRetellFeedback({ ok: false, message: stuckMessage });
+      _r2lCompleteRetellOnEffort();
+      _r2lRenderRetellControls();
+    }, _R2L_SPEAK_CHECK_TIMEOUT_MS + 1500);
 
     try {
       const payload = await _r2lPostSpeakingCheck(
@@ -2726,11 +2785,12 @@ function _r2lBuildRetellTemplate(lesson) {
         RETELL_MAX_SECONDS,
         telemetry,
       );
+      if (_r2lRetellState.uploadSeq !== uploadSeq) return;
       if (_r2lAsrFailureLooksLikeOutage(payload) && _r2lRecordingHadVoice(telemetry)) {
         _r2lRetellState.status = 'done';
         _r2lRenderRetellFeedback({
           ok: false,
-          message: payload?.message || _R2L_ASR_OUTAGE_MSG,
+          message: _R2L_ASR_OUTAGE_MSG,
         });
         _r2lCompleteRetellOnEffort();
         showToast('Con bấm Tiếp tục xuống dưới để sang phần sau nhé!');
@@ -2765,6 +2825,7 @@ function _r2lBuildRetellTemplate(lesson) {
         _r2lCompleteRetellOnEffort();
       }
     } catch (error) {
+      if (_r2lRetellState.uploadSeq !== uploadSeq) return;
       _r2lRetellState.status = 'idle';
       _r2lSetMinnyMood('encourage', _r2lRetellState.heroEl);
       _r2lRenderRetellFeedback({
@@ -2773,6 +2834,13 @@ function _r2lBuildRetellTemplate(lesson) {
       });
       _r2lCompleteRetellOnEffort();
     } finally {
+      window.clearTimeout(watchdog);
+      if (_r2lRetellState.uploadSeq === uploadSeq && _r2lRetellState.status === 'uploading') {
+        _r2lRetellState.status = 'idle';
+        _r2lSetMinnyMood('encourage', _r2lRetellState.heroEl);
+        _r2lRenderRetellFeedback({ ok: false, message: stuckMessage });
+        _r2lCompleteRetellOnEffort();
+      }
       _r2lRenderRetellControls();
     }
   }

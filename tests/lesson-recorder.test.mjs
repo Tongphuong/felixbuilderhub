@@ -86,6 +86,19 @@ test('recording start gives a clear GO signal for non-reading kids', () => {
 test('speaking-check upload is bounded by a timeout', () => {
   assert.match(lessonPage, /AbortController/);
   assert.match(lessonPage, /controller\.abort\(\)/);
+  assert.match(lessonPage, /_R2L_SPEAK_CHECK_TIMEOUT_MS/);
+  assert.match(lessonPage, /25000/);
+});
+
+test('speaking upload never stays stuck on loading forever', () => {
+  assert.match(lessonPage, /_r2lResolveSpeakUploadStuck/);
+  assert.match(lessonPage, /uploadSeq/);
+  assert.match(lessonPage, /checkStatus === 'uploading'/);
+  const scoreFn = lessonPage.slice(
+    lessonPage.indexOf('async function _r2lScoreSpeakRecording'),
+    lessonPage.indexOf('function _r2lSpeakItemKeysForActivity'),
+  );
+  assert.match(scoreFn, /finally/);
 });
 
 test('recording shows a big countdown popup that flips to GO at capture start', () => {
