@@ -31,6 +31,16 @@ export function shouldSkipMonsterPng(filename) {
   return false;
 }
 
+/** Kenney Default = 165×165 single monster; Double = 330×330 two-up — never mix sets. */
+export function shouldIncludeMonsterAsset(relativePath, filename) {
+  const norm = String(relativePath || '').replace(/\\/g, '/');
+  if (!norm.startsWith('PNG/Default/')) return false;
+  if (shouldSkipMonsterPng(filename)) return false;
+  const base = path.basename(filename).toLowerCase();
+  if (base.startsWith('leg_')) return false;
+  return true;
+}
+
 export function makeMonsterPartId(relativePath) {
   return relativePath
     .replace(/\.png$/i, '')
@@ -57,9 +67,9 @@ export function buildMonsterManifestFromRaw(rawDir = RAW_DIR) {
         continue;
       }
       if (!entry.isFile() || !entry.name.toLowerCase().endsWith('.png')) continue;
-      if (shouldSkipMonsterPng(entry.name)) continue;
 
       const relative = path.relative(rawDir, full).split(path.sep).join('/');
+      if (!shouldIncludeMonsterAsset(relative, entry.name)) continue;
       const slot = classifyMonsterSlot(entry.name);
       let id = makeMonsterPartId(relative);
       if (seenIds.has(id)) {

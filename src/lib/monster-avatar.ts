@@ -119,8 +119,8 @@ function injectMonsterStyles() {
     }
     .r2l-monster__stack {
       position: relative;
-      width: 72%;
-      height: 72%;
+      width: 100%;
+      height: 100%;
       transform-origin: center bottom;
       transition: transform 0.2s ease;
     }
@@ -138,10 +138,13 @@ function injectMonsterStyles() {
     }
     .r2l-monster__layer img {
       position: absolute;
-      inset: 0;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
-      object-fit: contain;
+      object-fit: fill;
+      object-position: center center;
+      pointer-events: none;
     }
     .r2l-monster__fallback-body {
       inset: 8% 10% 6%;

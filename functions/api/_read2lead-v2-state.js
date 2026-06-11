@@ -519,16 +519,21 @@ export function defaultMonsterForCode(accessCode, manifest = MONSTER_MANIFEST) {
   };
 }
 
+function resolveMonsterPartId(slot, partId, manifest, defaults) {
+  const id = String(partId || '').trim();
+  const parts = Array.isArray(manifest?.[slot]) ? manifest[slot] : [];
+  if (!parts.length) return 'default';
+  if (parts.some((part) => part.id === id)) return id;
+  const migrated = id.replace(/^png-double-/, 'png-default-');
+  if (migrated !== id && parts.some((part) => part.id === migrated)) return migrated;
+  return defaults[slot];
+}
+
 export function normalizeAvatarMonster(raw, accessCode, manifest = MONSTER_MANIFEST) {
   const defaults = defaultMonsterForCode(accessCode, manifest);
   if (!raw || typeof raw !== 'object') return defaults;
 
-  const validPart = (slot, value) => {
-    const id = String(value || '').trim();
-    const parts = Array.isArray(manifest?.[slot]) ? manifest[slot] : [];
-    if (!parts.length) return 'default';
-    return parts.some((part) => part.id === id) ? id : defaults[slot];
-  };
+  const validPart = (slot, value) => resolveMonsterPartId(slot, value, manifest, defaults);
 
   const color = String(raw.color || '').trim();
   return {

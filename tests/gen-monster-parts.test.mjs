@@ -8,6 +8,7 @@ import {
   buildMonsterManifestFromRaw,
   classifyMonsterSlot,
   makeMonsterPartId,
+  shouldIncludeMonsterAsset,
   shouldSkipMonsterPng,
 } from '../scripts/gen-monster-parts.mjs';
 
@@ -22,7 +23,13 @@ test('classifyMonsterSlot maps Kenney filename prefixes', () => {
   assert.equal(classifyMonsterSlot('arm_redC.png'), 'arms');
   assert.equal(classifyMonsterSlot('detail_blue_ear.png'), 'detail');
   assert.equal(classifyMonsterSlot('eyebrowA.png'), 'detail');
-  assert.equal(classifyMonsterSlot('leg_blueA.png'), 'detail');
+});
+
+test('shouldIncludeMonsterAsset only keeps PNG/Default compositing set', () => {
+  assert.equal(shouldIncludeMonsterAsset('PNG/Default/body_blueA.png', 'body_blueA.png'), true);
+  assert.equal(shouldIncludeMonsterAsset('PNG/Double/body_blueA.png', 'body_blueA.png'), false);
+  assert.equal(shouldIncludeMonsterAsset('PNG/Default/leg_blueA.png', 'leg_blueA.png'), false);
+  assert.equal(shouldIncludeMonsterAsset('Spritesheet/spritesheet_default.png', 'spritesheet_default.png'), false);
 });
 
 test('shouldSkipMonsterPng ignores spritesheets and preview assets', () => {
@@ -48,6 +55,8 @@ test('buildMonsterManifestFromRaw scans raw PNG tree when present', () => {
     for (const entry of manifest[slot]) {
       assert.ok(entry.id);
       assert.ok(entry.file.endsWith('.png'));
+      assert.ok(entry.file.startsWith('PNG/Default/'), entry.file);
+      assert.ok(!entry.file.includes('/Double/'), entry.file);
       assert.ok(fs.existsSync(path.join(RAW_DIR, entry.file)));
     }
   }

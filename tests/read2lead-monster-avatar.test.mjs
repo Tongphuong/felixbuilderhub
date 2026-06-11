@@ -19,6 +19,23 @@ test('defaultMonsterForCode is deterministic per access code', () => {
   assert.ok(['mint', 'coral', 'sky', 'lemon', 'grape'].includes(a.color));
 });
 
+test('normalizeAvatarMonster migrates legacy Double-set part ids to Default', () => {
+  const normalized = normalizeAvatarMonster(
+    {
+      body: 'png-double-body-bluea',
+      eyes: 'png-double-eye-blue',
+      mouth: 'png-double-moutha',
+      arms: 'png-double-arm-bluea',
+      detail: 'png-double-detail-blue-ear',
+      color: 'mint',
+    },
+    'R2L-MIGRATE-DBL',
+  );
+  assert.equal(normalized.body, 'png-default-body-bluea');
+  assert.equal(normalized.eyes, 'png-default-eye-blue');
+  assert.equal(normalized.mouth, 'png-default-moutha');
+});
+
 test('normalizeAvatarMonster clamps invalid part ids to defaults', () => {
   const defaults = defaultMonsterForCode('R2L-CLAMP-TEST');
   const normalized = normalizeAvatarMonster(
