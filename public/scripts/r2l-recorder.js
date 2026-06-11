@@ -191,8 +191,24 @@
       const Ctx = global.AudioContext || global.webkitAudioContext;
       ctx = new Ctx();
       // Must await on iOS — fire-and-forget resume leaves peak at 0 forever.
+      // BUT: outside a user gesture, iOS can leave the resume() promise pending
+      // forever, which would hang the whole recording flow behind this await.
+      // Race it against a short timeout; if the context stays suspended we
+      // return an unavailable monitor (fail-open: blob is trusted instead).
       if (ctx.state === 'suspended') {
-        await ctx.resume().catch(() => {});
+        await Promise.race([
+          ctx.resume().catch(() => {}),
+          new Promise((resolve) => global.setTimeout(resolve, 700)),
+        ]);
+      }
+      if (ctx.state !== 'running') {
+        ctx.close().catch(() => {});
+        return {
+          available: false,
+          peak: () => -1,
+          voiced: () => true,
+          stop: () => {},
+        };
       }
       const source = ctx.createMediaStreamSource(stream);
       const analyser = ctx.createAnalyser();

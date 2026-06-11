@@ -37,7 +37,10 @@ test('engine monitor keeps an AudioContext OPEN during recording (no prime-then-
   const monitorBody = engine.slice(monitorStart, monitorEnd);
   assert.match(monitorBody, /stop: \(\) => \{/);
   assert.match(monitorBody, /ctx\.close\(\)/);
-  assert.match(monitorBody, /await ctx\.resume\(\)/);
+  // Resume is awaited (iOS peak=0 fix) but raced against a timeout so a
+  // forever-pending resume() can never hang the recording flow.
+  assert.match(monitorBody, /ctx\.resume\(\)/);
+  assert.match(monitorBody, /Promise\.race/);
   // Silence is detected on-device, Meet style.
   assert.match(monitorBody, /onSilenceHint/);
   assert.match(engine, /SILENT_LEVEL/);
@@ -122,6 +125,19 @@ test('speaking page uses the unified engine with the silent-capture gate', () =>
   assert.match(speakingPage, /recordingLooksVoiced/);
   assert.match(speakingPage, /bumpProfile/);
   assert.match(speakingPage, /useWavEngine/);
+});
+
+test('monitor resume cannot hang the recording flow on iOS (timeout race + fail-open)', () => {
+  // iOS can leave AudioContext.resume() pending forever outside a user gesture.
+  // The await must be raced against a timeout, and a still-suspended context
+  // must yield an UNAVAILABLE monitor (blob is trusted) — never a hang.
+  assert.match(engine, /Promise\.race/);
+  assert.match(engine, /ctx\.state !== 'running'/);
+});
+
+test('quota and provider 5xx errors count as ASR outage, never "đọc to hơn"', () => {
+  assert.match(checkApi, /apiStatus === 429/);
+  assert.match(checkApi, /apiStatus >= 500/);
 });
 
 test('speaking-check API records capture telemetry and silent reports behind auth', () => {
