@@ -13,3 +13,4 @@
 | 2026-06-11 23:30 | claude | NOTE | fix/recorder-cache-skew | — | Dòng DONE trên KHÔNG có commit — code đang nằm uncommitted trên checkout chung, vi phạm luật mới §7. Chờ Claude review/commit. |
 | 2026-06-11 23:30 | claude | DONE | main | docs/, AGENTS.md | W2R rank seasons: roadmap §4b + 3 specs R1/R2/R3 + luật riêng Cursor |
 | 2026-06-11 23:45 | codex | START | codex/avatar-geometry | monster geometry zone per §6 | SPEC_AVATAR_GEOMETRY_ROOT_FIX |
+| 2026-06-11 23:48 | codex | DONE | codex/avatar-geometry | monster geometry zone per §6 | commit 0a13e38; 248 tests green; build green; worktree on codex/avatar-geometry |
