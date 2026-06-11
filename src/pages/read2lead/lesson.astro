@@ -4091,18 +4091,9 @@ function _r2lBuildRetellTemplate(lesson) {
     return (text || '').trim().split(/\s+/).filter(Boolean).length;
   }
 
-  function w1WrittenModelAnswer(question, questionIndex) {
-    const direct = String(question?.expected_answer_en || '').trim();
-    if (direct) return direct;
+  function w1WrittenModelAnswer(question) {
     const rcActivity = (state.lesson?.activities || []).find((a) => a.type === 'reading_comprehension');
-    const rcQuestion = rcActivity?.questions?.[questionIndex];
-    if (rcQuestion?.options_en?.length) {
-      const correctIndex = Number(rcQuestion.correct_index);
-      if (Number.isInteger(correctIndex) && rcQuestion.options_en[correctIndex]) {
-        return String(rcQuestion.options_en[correctIndex]).trim();
-      }
-    }
-    return '';
+    return window.__r2lWritten?.writtenModelAnswer?.(question, rcActivity?.questions || []) || '';
   }
 
   function finalizeCurrentActivityIfReady() {
@@ -4820,7 +4811,7 @@ function _r2lBuildRetellTemplate(lesson) {
         ${(activity.questions || [])
           .map(
             (question, questionIndex) => {
-              const modelAnswer = isW1() ? w1WrittenModelAnswer(question, questionIndex) : '';
+              const modelAnswer = isW1() ? w1WrittenModelAnswer(question) : '';
               const modelLine = modelAnswer
                 ? `Câu mẫu của Minny: "${escapeHtml(modelAnswer)}"`
                 : 'Minny gợi ý con đọc lại truyện để tìm ý nhé!';
@@ -4839,10 +4830,11 @@ function _r2lBuildRetellTemplate(lesson) {
                   <p class="mt-2 hidden text-sm text-cream/65" data-written-nudge="${questionIndex}">Con viết thêm một chút nhé (ít nhất 3 từ)!</p>
                   <div class="mt-3 hidden space-y-2" data-written-review="${questionIndex}">
                     <p class="text-sm text-gold">${modelLine}</p>
-                    <div class="flex flex-wrap gap-2">
+                    <div class="flex flex-wrap gap-2" data-written-actions="${questionIndex}">
                       <button type="button" class="r2l-secondary" data-written-ok="${questionIndex}">Giống ý 👍</button>
                       <button type="button" class="r2l-secondary" data-written-retry="${questionIndex}">Khác ý, con sửa lại ✏️</button>
                     </div>
+                    <p class="hidden text-sm font-semibold text-green-400" data-written-confirmed="${questionIndex}">Minny ghi nhận câu này rồi nhé!</p>
                   </div>
                 ` : ''}
               </article>
@@ -4871,6 +4863,7 @@ function _r2lBuildRetellTemplate(lesson) {
         submitBtn.type = 'button';
         submitBtn.className = 'r2l-primary mt-3';
         submitBtn.textContent = 'Gửi câu trả lời';
+        submitBtn.dataset.writtenSubmit = String(input.dataset.writtenAnswer);
         input.parentElement?.appendChild(submitBtn);
         submitBtn.addEventListener('click', () => {
           const questionIndex = Number(input.dataset.writtenAnswer);
@@ -4885,30 +4878,55 @@ function _r2lBuildRetellTemplate(lesson) {
           root.querySelector(`[data-written-review="${questionIndex}"]`)?.classList.remove('hidden');
         });
       });
-      root.querySelectorAll('[data-written-ok]').forEach((btn) => {
-        btn.addEventListener('click', () => {
-          const questionIndex = Number(btn.dataset.writtenOk);
-          w1Submitted.add(questionIndex);
-          const question = activity.questions?.[questionIndex] || {};
-          w1RecordQuestionOutcome(activity.type, `${activity.type}:${question.id || questionIndex}`, 'first_try', 1);
-          if (w1Submitted.size === (activity.questions || []).length) {
-            completeActivity(activity.type, {
-              correct_count: w1Submitted.size,
-              total_count: activity.questions.length,
-              written_answers: collectWrittenAnswers(activity),
-            });
-          }
-        });
+      function w1WrittenQuestionId(question, questionIndex) {
+        return `${activity.type}:${question.id || questionIndex}`;
+      }
+
+      function w1MarkWrittenQuestionOk(questionIndex) {
+        const question = activity.questions?.[questionIndex] || {};
+        w1Submitted.add(questionIndex);
+        w1RecordQuestionOutcome(activity.type, w1WrittenQuestionId(question, questionIndex), 'first_try', 1);
+        root.querySelector(`[data-written-actions="${questionIndex}"]`)?.classList.add('hidden');
+        root.querySelector(`[data-written-confirmed="${questionIndex}"]`)?.classList.remove('hidden');
+        root.querySelector(`[data-written-submit="${questionIndex}"]`)?.classList.add('hidden');
+        scheduleSaveLessonSession();
+        const total = (activity.questions || []).length;
+        if (w1Submitted.size >= total) {
+          completeActivity(activity.type, {
+            correct_count: w1Submitted.size,
+            total_count: total,
+            written_answers: collectWrittenAnswers(activity),
+          });
+        }
+      }
+
+      root.addEventListener('click', (event) => {
+        const okBtn = event.target.closest('[data-written-ok]');
+        if (!okBtn || !root.contains(okBtn)) return;
+        const questionIndex = Number(okBtn.getAttribute('data-written-ok'));
+        if (!Number.isInteger(questionIndex) || w1Submitted.has(questionIndex)) return;
+        w1MarkWrittenQuestionOk(questionIndex);
       });
+
       root.querySelectorAll('[data-written-retry]').forEach((btn) => {
         btn.addEventListener('click', () => {
-          const questionIndex = Number(btn.dataset.writtenRetry);
+          const questionIndex = Number(btn.getAttribute('data-written-retry'));
+          if (!Number.isInteger(questionIndex)) return;
+          const question = activity.questions?.[questionIndex] || {};
+          w1Submitted.delete(questionIndex);
+          const questionId = w1WrittenQuestionId(question, questionIndex);
+          if (state.questionOutcomes[activity.type]) {
+            delete state.questionOutcomes[activity.type][questionId];
+          }
           const input = root.querySelector(`[data-written-answer="${questionIndex}"]`);
           if (input) {
             input.disabled = false;
             input.focus();
           }
-          root.querySelector(`[data-written-review="${questionIndex}"]`)?.classList.add('hidden');
+          root.querySelector(`[data-written-submit="${questionIndex}"]`)?.classList.remove('hidden');
+          root.querySelector(`[data-written-actions="${questionIndex}"]`)?.classList.remove('hidden');
+          root.querySelector(`[data-written-confirmed="${questionIndex}"]`)?.classList.add('hidden');
+          scheduleSaveLessonSession();
         });
       });
     } else {
@@ -5324,6 +5342,7 @@ function _r2lBuildRetellTemplate(lesson) {
   import { applyV3HeaderRank } from '../../lib/rank-header';
   import { applyHeaderMonsterAvatar } from '../../lib/monster-avatar';
   import { calculateLessonScore as calcLessonScore, questionPoints } from '../../scripts/r2l-lesson-scoring.mjs';
+  import { writtenModelAnswer } from '../../scripts/r2l-written-model-answer.mjs';
   import { fireLessonPassConfetti, fireStreakConfetti, playSynthTone } from '../../lib/lesson-juice';
   import { bindRankUpModalClose, showRankUpModal } from '../../lib/rank-up-celebration';
   import type { RankLadderView } from '../../lib/rank-ladder-ui';
@@ -5331,6 +5350,7 @@ function _r2lBuildRetellTemplate(lesson) {
   bindRankUpModalClose();
 
   window.__r2lLessonScoring = { calculateLessonScore: calcLessonScore, questionPoints };
+  window.__r2lWritten = { writtenModelAnswer };
 
   window.__r2lJuice = {
     playSynthTone,
