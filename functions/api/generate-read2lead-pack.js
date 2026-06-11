@@ -118,7 +118,7 @@ export async function onRequestPost(context) {
     const rankPoints = Number.isFinite(Number(rankLadder?.rank_points))
       ? Math.max(0, Math.floor(Number(rankLadder.rank_points)))
       : null;
-    const upstreamBody = {
+    const upstreamRequestBody = {
       child_name: progress.student_name,
       age: progress.age,
       level: levelForPack,
@@ -128,7 +128,7 @@ export async function onRequestPost(context) {
       review_url: reviewUrl,
     };
     if (rankPoints != null) {
-      upstreamBody.rank_points = rankPoints;
+      upstreamRequestBody.rank_points = rankPoints;
     }
     const upstream = await fetch(`${backendUrl}/generate-async-v2`, {
       method: 'POST',
@@ -137,7 +137,7 @@ export async function onRequestPost(context) {
         'X-Read2Lead-Secret': backendSecret,
       },
       signal: AbortSignal.timeout(25000),
-      body: JSON.stringify(upstreamBody),
+      body: JSON.stringify(upstreamRequestBody),
     });
     if (!upstream.ok) {
       await clearGenerationLock(env.READ2LEAD_CODES, accessCode, pendingPackId);
