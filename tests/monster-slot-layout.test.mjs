@@ -2,9 +2,12 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 
 import {
+  armRegionFromFile,
   computePartPlacement,
+  detailRegionFromFile,
   KENNEY_CANVAS,
   MONSTER_SLOT_REGIONS,
+  resolvePartRegion,
 } from '../src/lib/monster-slot-layout.ts';
 
 test('computePartPlacement fills body to canvas', () => {
@@ -41,4 +44,34 @@ test('computePartPlacement keeps eyes in upper face band', () => {
 test('KENNEY_CANVAS matches Default body reference', () => {
   assert.equal(KENNEY_CANVAS.w, 165);
   assert.equal(KENNEY_CANVAS.h, 165);
+});
+
+test('armRegionFromFile uses topcenter for wide C/D sprites', () => {
+  const wide = armRegionFromFile('PNG/Default/arm_redC.png');
+  const single = armRegionFromFile('PNG/Default/arm_redA.png');
+  assert.equal(wide.anchor, 'topcenter');
+  assert.equal(single.anchor, 'topleft');
+});
+
+test('detailRegionFromFile picks anchors per accessory family', () => {
+  assert.equal(detailRegionFromFile('PNG/Default/detail_blue_horn_large.png').anchor, 'topcenter');
+  assert.equal(detailRegionFromFile('PNG/Default/detail_blue_ear.png').anchor, 'topleft');
+  assert.equal(detailRegionFromFile('PNG/Default/eyebrowA.png').anchor, 'topcenter');
+  assert.equal(detailRegionFromFile('PNG/Default/nose_brown.png').anchor, 'center');
+});
+
+test('single-side arm uses full Kenney canvas at native scale', () => {
+  const region = resolvePartRegion('arms', 'PNG/Default/arm_blueA.png');
+  const p = computePartPlacement(82, 176, region);
+  assert.equal(region.anchor, 'topleft');
+  assert.equal(p.leftPct, 0);
+  assert.equal(p.topPct, 0);
+  assert.ok(p.heightPct > 99);
+});
+
+test('horn detail stays above eye band', () => {
+  const horn = resolvePartRegion('detail', 'PNG/Default/detail_blue_horn_large.png');
+  const hp = computePartPlacement(40, 42, horn);
+  const eye = computePartPlacement(64, 58, MONSTER_SLOT_REGIONS.eyes);
+  assert.ok(hp.topPct + hp.heightPct <= eye.topPct + 1);
 });

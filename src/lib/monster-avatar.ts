@@ -7,7 +7,7 @@ import {
 } from './monster-manifest';
 import {
   computePartPlacement,
-  MONSTER_SLOT_REGIONS,
+  resolvePartRegion,
 } from './monster-slot-layout';
 
 export type MonsterConfig = {
@@ -253,8 +253,8 @@ function bodyColorFilter(color: string): string {
   return COLOR_BODY_FILTER[color] || COLOR_BODY_FILTER.mint;
 }
 
-function applyPartPlacement(img: HTMLImageElement, slot: MonsterSlot) {
-  const region = MONSTER_SLOT_REGIONS[slot];
+function applyPartPlacement(img: HTMLImageElement, slot: MonsterSlot, partFile: string) {
+  const region = resolvePartRegion(slot, partFile);
   const place = () => {
     const naturalW = img.naturalWidth || 1;
     const naturalH = img.naturalHeight || 1;
@@ -283,7 +283,7 @@ function renderPartLayer(stack: HTMLElement, slot: MonsterSlot, partId: string, 
   if (slot === 'body' && bodyColor) {
     img.style.filter = bodyColorFilter(bodyColor);
   }
-  applyPartPlacement(img, slot);
+  applyPartPlacement(img, slot, file);
   layer.appendChild(img);
   stack.appendChild(layer);
   return true;
@@ -328,7 +328,8 @@ export function renderMonster(
   if (useFallback) {
     renderFallbackMonster(stack, config);
   } else {
-    const order: MonsterSlot[] = ['body', 'arms', 'detail', 'eyes', 'mouth'];
+    // Arms render behind body so limbs tuck under the torso (Kenney intent).
+    const order: MonsterSlot[] = ['arms', 'body', 'detail', 'eyes', 'mouth'];
     for (const slot of order) {
       renderPartLayer(stack, slot, config[slot as MonsterSlot], slot === 'body' ? config.color : undefined);
     }
