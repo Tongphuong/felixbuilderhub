@@ -6,8 +6,13 @@ import {
   type MonsterSlot,
 } from './monster-manifest';
 import {
+  ARM_SINGLE_ANCHORS,
+  computeAnchoredPlacement,
   computePartPlacement,
-  resolvePartRegion,
+  isDualArmSprite,
+  MONSTER_SLOT_REGIONS,
+  resolvePartAnchor,
+  type PartAnchor,
 } from './monster-slot-layout';
 
 export type MonsterConfig = {
@@ -253,17 +258,37 @@ function bodyColorFilter(color: string): string {
   return COLOR_BODY_FILTER[color] || COLOR_BODY_FILTER.mint;
 }
 
-function applyPartPlacement(img: HTMLImageElement, slot: MonsterSlot, partFile: string) {
-  const region = resolvePartRegion(slot, partFile);
+function applyPlacementStyles(
+  img: HTMLImageElement,
+  p: { leftPct: number; topPct: number; widthPct: number; heightPct: number },
+  flip = false,
+) {
+  img.style.left = `${p.leftPct}%`;
+  img.style.top = `${p.topPct}%`;
+  img.style.width = `${p.widthPct}%`;
+  img.style.height = `${p.heightPct}%`;
+  img.style.transform = flip ? 'scaleX(-1)' : '';
+  img.style.transformOrigin = 'center center';
+  img.style.visibility = 'visible';
+}
+
+function applyPartPlacement(
+  img: HTMLImageElement,
+  slot: MonsterSlot,
+  partFile: string,
+  opts: { anchor?: PartAnchor; flip?: boolean } = {},
+) {
   const place = () => {
     const naturalW = img.naturalWidth || 1;
     const naturalH = img.naturalHeight || 1;
-    const p = computePartPlacement(naturalW, naturalH, region);
-    img.style.left = `${p.leftPct}%`;
-    img.style.top = `${p.topPct}%`;
-    img.style.width = `${p.widthPct}%`;
-    img.style.height = `${p.heightPct}%`;
-    img.style.visibility = 'visible';
+    if (slot === 'body') {
+      const p = computePartPlacement(naturalW, naturalH, MONSTER_SLOT_REGIONS.body);
+      applyPlacementStyles(img, p);
+      return;
+    }
+    const anchor = opts.anchor ?? resolvePartAnchor(slot, partFile);
+    const p = computeAnchoredPlacement(naturalW, naturalH, anchor);
+    applyPlacementStyles(img, p, opts.flip);
   };
   if (img.complete && img.naturalWidth > 0) {
     place();
@@ -273,7 +298,13 @@ function applyPartPlacement(img: HTMLImageElement, slot: MonsterSlot, partFile: 
   }
 }
 
-function renderPartLayer(stack: HTMLElement, slot: MonsterSlot, partId: string, bodyColor?: string) {
+function renderPartLayer(
+  stack: HTMLElement,
+  slot: MonsterSlot,
+  partId: string,
+  bodyColor?: string,
+  opts: { anchor?: PartAnchor; flip?: boolean } = {},
+) {
   const file = partFile(slot, partId);
   if (!file) return false;
   const layer = document.createElement('div');
@@ -283,10 +314,26 @@ function renderPartLayer(stack: HTMLElement, slot: MonsterSlot, partId: string, 
   if (slot === 'body' && bodyColor) {
     img.style.filter = bodyColorFilter(bodyColor);
   }
-  applyPartPlacement(img, slot, file);
+  applyPartPlacement(img, slot, file, opts);
   layer.appendChild(img);
   stack.appendChild(layer);
   return true;
+}
+
+function renderArmsLayers(stack: HTMLElement, partId: string) {
+  const file = partFile('arms', partId);
+  if (!file) return false;
+  if (isDualArmSprite(file)) {
+    return renderPartLayer(stack, 'arms', partId);
+  }
+  const renderedLeft = renderPartLayer(stack, 'arms', partId, undefined, {
+    anchor: ARM_SINGLE_ANCHORS.left,
+  });
+  const renderedRight = renderPartLayer(stack, 'arms', partId, undefined, {
+    anchor: ARM_SINGLE_ANCHORS.right,
+    flip: true,
+  });
+  return renderedLeft || renderedRight;
 }
 
 export function renderMonster(
@@ -328,11 +375,12 @@ export function renderMonster(
   if (useFallback) {
     renderFallbackMonster(stack, config);
   } else {
-    // Arms render behind body so limbs tuck under the torso (Kenney intent).
-    const order: MonsterSlot[] = ['arms', 'body', 'detail', 'eyes', 'mouth'];
-    for (const slot of order) {
-      renderPartLayer(stack, slot, config[slot as MonsterSlot], slot === 'body' ? config.color : undefined);
-    }
+    // Arms behind body; A/B/E sprites mirror to both sides.
+    renderArmsLayers(stack, config.arms);
+    renderPartLayer(stack, 'body', config.body, config.color);
+    renderPartLayer(stack, 'detail', config.detail);
+    renderPartLayer(stack, 'eyes', config.eyes);
+    renderPartLayer(stack, 'mouth', config.mouth);
   }
 
   container.appendChild(stack);
