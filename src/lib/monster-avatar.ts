@@ -5,6 +5,10 @@ import {
   type MonsterColor,
   type MonsterSlot,
 } from './monster-manifest';
+import {
+  computePartPlacement,
+  MONSTER_SLOT_REGIONS,
+} from './monster-slot-layout';
 
 export type MonsterConfig = {
   body: string;
@@ -130,20 +134,20 @@ function injectMonsterStyles() {
     @media (prefers-reduced-motion: reduce) {
       .r2l-monster:hover .r2l-monster__stack { transform: none; }
     }
-    .r2l-monster__layer,
-    .r2l-monster__fallback-layer {
+    .r2l-monster__layer {
       position: absolute;
       inset: 0;
       pointer-events: none;
     }
     .r2l-monster__layer img {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: fill;
-      object-position: center center;
+      width: auto;
+      height: auto;
+      pointer-events: none;
+      image-rendering: pixelated;
+    }
+    .r2l-monster__fallback-layer {
+      position: absolute;
       pointer-events: none;
     }
     .r2l-monster__fallback-body {
@@ -249,6 +253,26 @@ function bodyColorFilter(color: string): string {
   return COLOR_BODY_FILTER[color] || COLOR_BODY_FILTER.mint;
 }
 
+function applyPartPlacement(img: HTMLImageElement, slot: MonsterSlot) {
+  const region = MONSTER_SLOT_REGIONS[slot];
+  const place = () => {
+    const naturalW = img.naturalWidth || 1;
+    const naturalH = img.naturalHeight || 1;
+    const p = computePartPlacement(naturalW, naturalH, region);
+    img.style.left = `${p.leftPct}%`;
+    img.style.top = `${p.topPct}%`;
+    img.style.width = `${p.widthPct}%`;
+    img.style.height = `${p.heightPct}%`;
+    img.style.visibility = 'visible';
+  };
+  if (img.complete && img.naturalWidth > 0) {
+    place();
+  } else {
+    img.style.visibility = 'hidden';
+    img.addEventListener('load', place, { once: true });
+  }
+}
+
 function renderPartLayer(stack: HTMLElement, slot: MonsterSlot, partId: string, bodyColor?: string) {
   const file = partFile(slot, partId);
   if (!file) return false;
@@ -259,6 +283,7 @@ function renderPartLayer(stack: HTMLElement, slot: MonsterSlot, partId: string, 
   if (slot === 'body' && bodyColor) {
     img.style.filter = bodyColorFilter(bodyColor);
   }
+  applyPartPlacement(img, slot);
   layer.appendChild(img);
   stack.appendChild(layer);
   return true;
