@@ -1,7 +1,24 @@
 import { getClientIp, checkCodeRateLimit, recordCodeFailure, rateLimitedResponse } from './_rate-limit.js';
-import { computeRankLadder, loadProgressState } from './_read2lead-v2-state.js';
+import {
+  computeRankLadder,
+  loadProgressState,
+  PACKS_TO_NEXT_LEVEL,
+  XP_PER_PASSED_PACK,
+} from './_read2lead-v2-state.js';
 
 const GENERATION_LOCK_STALE_MS = 15 * 60 * 1000;
+
+// 0-100: how far the child is through the CURRENT level (passed packs / packs
+// required for the next level). null when not computable (L5 has no next level,
+// or state is missing) — the backend then defaults to mid-level behavior.
+export function levelProgressPercent(progressState, level) {
+  const required = Number(PACKS_TO_NEXT_LEVEL[level] || 0);
+  if (!required) return null;
+  const xp = Number(progressState?.xp_in_level ?? progressState?.xp);
+  if (!Number.isFinite(xp) || xp < 0) return null;
+  const packsDone = Math.floor(xp / XP_PER_PASSED_PACK);
+  return Math.max(0, Math.min(100, Math.round((packsDone / required) * 100)));
+}
 const BACKEND_CHILD_NAME_RE = /^[^\W\d_]+(?:[\s\-'][^\W\d_]+)*$/u;
 
 export async function onRequestPost(context) {
@@ -129,6 +146,13 @@ export async function onRequestPost(context) {
     };
     if (rankPoints != null) {
       upstreamRequestBody.rank_points = rankPoints;
+    }
+    // In-level difficulty ramp (W2R backend leg): tell the generator how far the
+    // child is through the CURRENT level so pack language ramps early→mid→late
+    // instead of staying flat for 5-35 packs. Old backends ignore the field.
+    const levelProgress = levelProgressPercent(progressState, levelForPack);
+    if (levelProgress != null) {
+      upstreamRequestBody.level_progress_percent = levelProgress;
     }
     const upstream = await fetch(`${backendUrl}/generate-async-v2`, {
       method: 'POST',
