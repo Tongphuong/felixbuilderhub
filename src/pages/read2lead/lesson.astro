@@ -165,6 +165,7 @@ const retellGuideInline = retellGuideSrc
     </div>
   </main>
   <Footer />
+  <script src="/scripts/r2l-recorder.js" defer></script>
   <script src="/scripts/r2l-mic-check.js" defer></script>
 </BaseLayout>
 
@@ -1249,12 +1250,77 @@ function _r2lBuildRetellTemplate(lesson) {
   });
 
   async function _r2lOpenMicStream() {
+    // R2LRecorder remembers the mic that passed the mic test (Zoom pattern) and
+    // applies the current constraint profile (noiseSuppression auto-disabled on
+    // machines where it gated the child's voice).
+    if (window.R2LRecorder?.getStream) {
+      return window.R2LRecorder.getStream();
+    }
     if (window.R2LMicCheck?.getMicStream) {
       return window.R2LMicCheck.getMicStream();
     }
     return navigator.mediaDevices.getUserMedia({
       audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true },
     });
+  }
+
+  // Unified recorder: MediaRecorder by default, raw-PCM WAV on machines where the
+  // platform encoder proved broken. Falls back to the local MediaRecorder path if
+  // the engine script failed to load.
+  function _r2lCreateUnifiedRecorder(stream) {
+    if (window.R2LRecorder?.createRecorder) {
+      return window.R2LRecorder.createRecorder(stream);
+    }
+    const { mediaRecorder, mimeType } = _r2lCreateMediaRecorder(stream);
+    const chunks = [];
+    let resolveStop = null;
+    const stopped = new Promise((resolve) => { resolveStop = resolve; });
+    mediaRecorder.addEventListener('dataavailable', (e) => {
+      if (e.data && e.data.size > 0) chunks.push(e.data);
+    });
+    mediaRecorder.addEventListener('stop', () => {
+      resolveStop(new Blob(chunks, { type: mediaRecorder.mimeType || mimeType || 'audio/mp4' }));
+    });
+    return {
+      engine: 'mr',
+      mimeType,
+      start() { mediaRecorder.start(250); },
+      stop() { _r2lStopMediaRecorder(mediaRecorder); return stopped; },
+    };
+  }
+
+  // Meet-style live monitor on the recording stream — detects "no sound reached
+  // the mic" on the child's machine instead of waiting for the server to fail.
+  function _r2lStartLevelMonitor(stream, cardEl) {
+    if (!window.R2LRecorder?.startMonitor) {
+      return { available: false, peak: () => -1, voiced: () => true, stop: () => {} };
+    }
+    return window.R2LRecorder.startMonitor(stream, {
+      onLevel: (level) => {
+        const bar = cardEl?.querySelector?.('[data-rec-meter]');
+        if (bar) bar.style.width = `${Math.min(100, Math.round((level / 64) * 100))}%`;
+      },
+      onSilenceHint: () => {
+        const hint = cardEl?.querySelector?.('[data-rec-hint]');
+        if (hint) hint.textContent = 'Minny chưa thấy tiếng — con nói TO hơn nhé!';
+      },
+    });
+  }
+
+  // Fire-and-forget: log a client-detected silent capture into the server-side
+  // diagnostic ring so silent-mic machines can be diagnosed remotely.
+  function _r2lReportSilentCapture(expectedText, monitorInfo) {
+    try {
+      const formData = new FormData();
+      formData.append('access_code', state.accessCode);
+      formData.append('pack_id', state.packId);
+      formData.append('expected_text', expectedText || '-');
+      formData.append('report_silent', '1');
+      if (window.R2LRecorder?.appendTelemetry) {
+        window.R2LRecorder.appendTelemetry(formData, monitorInfo || {});
+      }
+      fetch('/api/read2lead-speaking-check', { method: 'POST', body: formData }).catch(() => {});
+    } catch { /* diagnostics only */ }
   }
 
   // Short rising "go" beep so a non-reading kid knows the exact moment to speak.
@@ -1315,7 +1381,9 @@ function _r2lBuildRetellTemplate(lesson) {
       '#r2l-mic-countdown.r2l-cd-go .r2l-cd-title{color:#4ade80;font-size:2.6rem}' +
       '#r2l-mic-countdown .r2l-cd-sub{margin:.9rem 0 0;font-size:1.15rem;color:rgba(245,230,211,.85)}' +
       '.r2l-cd-pop{animation:r2lCdPop .45s ease-out}' +
-      '@keyframes r2lCdPop{0%{transform:scale(.4);opacity:0}45%{transform:scale(1.18);opacity:1}100%{transform:scale(1)}}';
+      '@keyframes r2lCdPop{0%{transform:scale(.4);opacity:0}45%{transform:scale(1.18);opacity:1}100%{transform:scale(1)}}' +
+      '.r2l-rec-meter{display:block;height:10px;margin-top:6px;border-radius:5px;background:rgba(245,230,211,.18);overflow:hidden}' +
+      '.r2l-rec-meter-bar{display:block;height:100%;width:0;border-radius:5px;background:#4ade80;transition:width .1s linear}';
     document.head.appendChild(style);
   }
 
@@ -1454,14 +1522,16 @@ function _r2lBuildRetellTemplate(lesson) {
   // Backward-compatible alias used in tests and legacy checks.
   const _r2lSupportsRecording = _r2lHasRecordingCapability();
 
-  async function _r2lPostSpeakingCheck(blob, expectedText, checkMode = 'read', maxSeconds = 0) {
+  async function _r2lPostSpeakingCheck(blob, expectedText, checkMode = 'read', maxSeconds = 0, telemetry = null) {
     const formData = new FormData();
     const blobType = String(blob?.type || '').toLowerCase();
     const audioName = blobType.includes('mp4') || blobType.includes('m4a') || blobType.includes('aac')
       ? 'audio.mp4'
-      : blobType.includes('ogg')
-        ? 'audio.ogg'
-        : 'audio.webm';
+      : blobType.includes('wav')
+        ? 'audio.wav'
+        : blobType.includes('ogg')
+          ? 'audio.ogg'
+          : 'audio.webm';
     formData.append('audio', blob, audioName);
     formData.append('access_code', state.accessCode);
     formData.append('pack_id', state.packId);
@@ -1469,6 +1539,9 @@ function _r2lBuildRetellTemplate(lesson) {
     formData.append('check_mode', checkMode);
     if (maxSeconds > 0) {
       formData.append('max_seconds', String(maxSeconds));
+    }
+    if (telemetry && window.R2LRecorder?.appendTelemetry) {
+      window.R2LRecorder.appendTelemetry(formData, telemetry);
     }
 
     const controller = new AbortController();
@@ -1532,7 +1605,11 @@ function _r2lBuildRetellTemplate(lesson) {
       return `<p class="text-sm text-gold">${escapeHtml(result.message || 'Micro đã bật — chờ 3 giây rồi mới nói nhé…')}</p>`;
     }
     if (result?.recording) {
-      return `<p class="r2l-rec-go text-base font-extrabold text-green-300">🟢 ${escapeHtml(result.message || 'Nói đi con! Đọc to cả câu nhé!')}</p>`;
+      // Meet-style live meter: the child SEES sound entering the mic while
+      // recording, so a dead mic is visible instantly instead of after upload.
+      return `<p class="r2l-rec-go text-base font-extrabold text-green-300">🟢 ${escapeHtml(result.message || 'Nói đi con! Đọc to cả câu nhé!')}</p>
+        <span class="r2l-rec-meter"><span class="r2l-rec-meter-bar" data-rec-meter></span></span>
+        <p class="mt-1 text-sm text-gold" data-rec-hint></p>`;
     }
     if (result?.loading) {
       return '<p class="text-sm text-gold">Minny đang nghe và nhận xét bài đọc của con...</p>';
@@ -1579,7 +1656,7 @@ function _r2lBuildRetellTemplate(lesson) {
     slot.innerHTML = _r2lBuildSpeakingFeedbackHtml(result);
   }
 
-  async function _r2lScoreSpeakRecording(itemKey, cardEl, blob) {
+  async function _r2lScoreSpeakRecording(itemKey, cardEl, blob, telemetry = null) {
     const entry = _r2lRecorderState.perItem.get(itemKey);
     const expectedText = entry?.expectedText || '';
     if (!expectedText || !blob) return;
@@ -1588,7 +1665,16 @@ function _r2lBuildRetellTemplate(lesson) {
     _r2lRenderSpeakFeedback(cardEl, { loading: true });
 
     try {
-      const payload = await _r2lPostSpeakingCheck(blob, expectedText);
+      const payload = await _r2lPostSpeakingCheck(blob, expectedText, 'read', 0, telemetry);
+      // The analyser HEARD the child but the server transcribed nothing → the
+      // platform audio encoder is producing garbage on this machine. Switch it
+      // to the raw-PCM WAV engine permanently (no OS codec in the path).
+      if (
+        payload && !payload.ok && payload.error === 'transcription_failed'
+        && telemetry && telemetry.voiced === true && telemetry.engine === 'mr'
+      ) {
+        window.R2LRecorder?.useWavEngine?.();
+      }
       const current = _r2lRecorderState.perItem.get(itemKey);
       if (!current || current.blob !== scoringBlob) return;
       _r2lRecorderState.perItem.set(itemKey, {
@@ -1762,42 +1848,35 @@ function _r2lBuildRetellTemplate(lesson) {
         return;
       }
 
-      const { mediaRecorder: mr, mimeType } = _r2lCreateMediaRecorder(stream);
-      const chunks = [];
-      mr.addEventListener('dataavailable', (e) => {
-        if (e.data && e.data.size > 0) chunks.push(e.data);
-      });
-      mr.addEventListener('stop', () => {
-        const blob = new Blob(chunks, { type: mr.mimeType || mimeType || 'audio/mp4' });
-        const url = URL.createObjectURL(blob);
-        // A header-only blob (Safari, stopped too fast) is a few hundred bytes and
-        // transcribes to nothing. Catch it locally with a clear "nói dài hơn" instead
-        // of sending silence to Groq and getting the scary "không nghe được".
-        const tooShort = blob.size < _R2L_MIN_SPEECH_BYTES;
-        _r2lRecorderState.perItem.set(itemKey, {
-          mediaRecorder: null,
-          chunks: [],
-          blob,
-          blobUrl: url,
-          status: tooShort ? 'idle' : 'recorded',
-          expectedText: prev?.expectedText || '',
-          checkStatus: tooShort ? 'error' : 'uploading',
-          checkResult: null,
-        });
+      // Verify the track is actually alive before we trust it — Windows hands out
+      // muted tracks when another app (Zoom/Zalo) is holding the microphone.
+      const trackState = window.R2LRecorder?.trackInfo?.(stream) || { live: true, muted: false, label: '' };
+      if (!trackState.live) {
+        _r2lHideCountdownOverlay();
         stream.getTracks().forEach((t) => t.stop());
-        _r2lRenderRecorderUi(itemKey, cardEl);
-        if (!tooShort) {
-          _r2lScoreSpeakRecording(itemKey, cardEl, blob);
-        } else {
-          _r2lRenderSpeakFeedback(cardEl, {
-            ok: false,
-            message: 'Minny chưa nghe rõ. Con bấm 🎤 Con nói, chờ đèn xanh rồi đọc to cả câu nhé!',
-          });
-        }
-      });
+        throw new Error('track_not_live');
+      }
+      const recorder = _r2lCreateUnifiedRecorder(stream);
+      const monitor = _r2lStartLevelMonitor(stream, cardEl);
+      const unwatch = window.R2LRecorder?.watchTrack
+        ? window.R2LRecorder.watchTrack(stream, (kind) => {
+            const hint = cardEl?.querySelector?.('[data-rec-hint]');
+            if (hint) {
+              hint.textContent = kind === 'muted'
+                ? 'Micro đang bị app khác giữ (Zoom/Zalo?). Ba mẹ tắt app đó rồi con thu lại nhé.'
+                : 'Micro vừa bị ngắt. Con kiểm tra tai nghe rồi thu lại nhé.';
+            }
+          })
+        : () => {};
       _r2lRecorderState.perItem.set(itemKey, {
-        mediaRecorder: mr,
-        chunks,
+        mediaRecorder: null,
+        recorderCtl: recorder,
+        monitor,
+        unwatch,
+        stream,
+        deviceLabel: trackState.label || '',
+        silentAttempts: prev?.silentAttempts || 0,
+        chunks: [],
         blob: null,
         blobUrl: null,
         status: 'recording',
@@ -1806,9 +1885,11 @@ function _r2lBuildRetellTemplate(lesson) {
         checkResult: null,
       });
       try {
-        mr.start(250);
+        recorder.start();
       } catch (startError) {
         _r2lHideCountdownOverlay();
+        monitor.stop();
+        try { unwatch(); } catch { /* listener already gone */ }
         stream.getTracks().forEach((t) => t.stop());
         throw startError;
       }
@@ -1875,9 +1956,97 @@ function _r2lBuildRetellTemplate(lesson) {
       _r2lRenderSpeakFeedback(cardEl, null);
       return;
     }
-    if (entry?.mediaRecorder && entry.status === 'recording') {
+    if (entry?.recorderCtl && entry.status === 'recording') {
+      _r2lFinishSpeakRecording(itemKey, cardEl);
+    } else if (entry?.mediaRecorder && entry.status === 'recording') {
       _r2lStopMediaRecorder(entry.mediaRecorder);
-      // UI re-renders on 'stop' event handler above.
+    }
+  }
+
+  async function _r2lFinishSpeakRecording(itemKey, cardEl) {
+    const entry = _r2lRecorderState.perItem.get(itemKey);
+    if (!entry?.recorderCtl || entry.status !== 'recording') return;
+    entry.status = 'stopping';
+    const { recorderCtl, monitor, unwatch, stream, deviceLabel } = entry;
+    let blob = null;
+    try {
+      blob = await recorderCtl.stop();
+    } catch {
+      blob = null;
+    }
+    if (monitor) monitor.stop();
+    try { if (unwatch) unwatch(); } catch { /* already removed */ }
+    if (stream) stream.getTracks().forEach((t) => t.stop());
+
+    const peak = monitor?.available ? monitor.peak() : -1;
+    // No monitor (old browser) → trust the blob like before.
+    const voiced = monitor?.available ? monitor.voiced() : true;
+    const telemetry = {
+      peak,
+      voiced,
+      engine: recorderCtl.engine || 'mr',
+      mimeType: (blob && blob.type) || recorderCtl.mimeType || '',
+      deviceLabel: deviceLabel || '',
+    };
+    const expectedText = entry.expectedText || '';
+    const tooShort = !blob || blob.size < _R2L_MIN_SPEECH_BYTES;
+
+    // Silent capture detected ON THIS MACHINE (Meet pattern): no sound ever
+    // reached the recording pipeline. Don't upload silence — tell the truth,
+    // relax the audio constraints for the next try, and log it for remote
+    // diagnosis. Second silent take in a row still counts as attempted, so a
+    // hopeless mic can never trap the child (deadlock rule).
+    if (!voiced && !tooShort) {
+      const silentAttempts = (entry.silentAttempts || 0) + 1;
+      window.R2LRecorder?.bumpProfile?.();
+      _r2lReportSilentCapture(expectedText, telemetry);
+      const giveEffortPass = silentAttempts >= 2;
+      _r2lRecorderState.perItem.set(itemKey, {
+        mediaRecorder: null,
+        chunks: [],
+        blob: null,
+        blobUrl: null,
+        status: 'idle',
+        silentAttempts,
+        expectedText,
+        checkStatus: giveEffortPass ? 'error' : 'idle',
+        checkResult: null,
+      });
+      _r2lRenderRecorderUi(itemKey, cardEl);
+      _r2lRenderSpeakFeedback(cardEl, {
+        ok: false,
+        message: giveEffortPass
+          ? 'Micro hôm nay không thu được tiếng, nhưng Minny biết con đã đọc rồi — mình qua câu tiếp nhé! Ba mẹ kiểm tra micro giúp con sau.'
+          : 'Minny không thấy tiếng vào micro. Con thử lại — nói TO hơn, hoặc ba mẹ kiểm tra micro ở khung phía trên nhé.',
+      });
+      if (giveEffortPass) {
+        _r2lMergeSpeakActivityScores(activityItemsFromCard(cardEl));
+      }
+      return;
+    }
+
+    const url = blob ? URL.createObjectURL(blob) : null;
+    _r2lRecorderState.perItem.set(itemKey, {
+      mediaRecorder: null,
+      chunks: [],
+      blob,
+      blobUrl: url,
+      status: tooShort ? 'idle' : 'recorded',
+      silentAttempts: 0,
+      expectedText,
+      checkStatus: tooShort ? 'error' : 'uploading',
+      checkResult: null,
+    });
+    _r2lRenderRecorderUi(itemKey, cardEl);
+    if (!tooShort) {
+      _r2lScoreSpeakRecording(itemKey, cardEl, blob, telemetry);
+    } else {
+      // A header-only blob (stopped too fast) transcribes to nothing — catch it
+      // locally instead of sending silence to Groq.
+      _r2lRenderSpeakFeedback(cardEl, {
+        ok: false,
+        message: 'Minny chưa nghe rõ. Con bấm 🎤 Con nói, chờ đèn xanh rồi đọc to cả câu nhé!',
+      });
     }
   }
 
@@ -1912,6 +2081,10 @@ function _r2lBuildRetellTemplate(lesson) {
   function _r2lCleanupRecorderState() {
     _r2lRecorderState.perItem.forEach((entry) => {
       if (entry.blobUrl) URL.revokeObjectURL(entry.blobUrl);
+      if (entry.monitor) entry.monitor.stop();
+      try { if (entry.unwatch) entry.unwatch(); } catch { /* already removed */ }
+      if (entry.stream) entry.stream.getTracks().forEach((t) => t.stop());
+      if (entry.warmupStream) entry.warmupStream.getTracks().forEach((t) => t.stop());
     });
     _r2lRecorderState.perItem.clear();
   }
@@ -2320,11 +2493,21 @@ function _r2lBuildRetellTemplate(lesson) {
         _r2lRetellState.mediaRecorder.stop();
       } catch {}
     }
+    if (_r2lRetellState.recorderCtl && _r2lRetellState.status === 'recording') {
+      try {
+        _r2lRetellState.recorderCtl.stop();
+      } catch {}
+    }
+    if (_r2lRetellState.monitor) {
+      _r2lRetellState.monitor.stop();
+      _r2lRetellState.monitor = null;
+    }
     if (_r2lRetellState.stream) {
       _r2lRetellState.stream.getTracks().forEach((track) => track.stop());
       _r2lRetellState.stream = null;
     }
     _r2lRetellState.mediaRecorder = null;
+    _r2lRetellState.recorderCtl = null;
     _r2lRetellState.chunks = [];
     _r2lRetellState.blob = null;
     _r2lRetellState.warmupCancelled = false;
@@ -2339,6 +2522,8 @@ function _r2lBuildRetellTemplate(lesson) {
     const recordBtn = _r2lRetellState.root?.querySelector('[data-retell-record]');
     const timerEl = _r2lRetellState.root?.querySelector('[data-retell-timer]');
     const statusEl = _r2lRetellState.root?.querySelector('[data-retell-status]');
+    const meterEl = _r2lRetellState.root?.querySelector('[data-retell-meter]');
+    if (meterEl) meterEl.hidden = _r2lRetellState.status !== 'recording';
     if (!recordBtn || !statusEl) return;
 
     const micReady = _r2lMicIsReady();
@@ -2392,7 +2577,7 @@ function _r2lBuildRetellTemplate(lesson) {
     slot.innerHTML = _r2lBuildOpenSpeakingFeedbackHtml(result);
   }
 
-  async function _r2lSubmitRetellRecording(blob) {
+  async function _r2lSubmitRetellRecording(blob, telemetry = null) {
     _r2lRetellState.status = 'uploading';
     _r2lRenderRetellControls();
     _r2lRenderRetellFeedback({ loading: true });
@@ -2403,7 +2588,16 @@ function _r2lBuildRetellTemplate(lesson) {
         _r2lRetellState.storyContext,
         'open',
         RETELL_MAX_SECONDS,
+        telemetry,
       );
+      // Analyser heard the child but ASR heard nothing → broken platform
+      // encoder on this machine; switch future recordings to the WAV engine.
+      if (
+        payload && !payload.ok && payload.error === 'transcription_failed'
+        && telemetry && telemetry.voiced === true && telemetry.engine === 'mr'
+      ) {
+        window.R2LRecorder?.useWavEngine?.();
+      }
       _r2lRetellState.result = payload;
       _r2lRetellState.status = 'done';
       _r2lRenderRetellFeedback(payload);
@@ -2481,40 +2675,39 @@ function _r2lBuildRetellTemplate(lesson) {
         return;
       }
 
-      const { mediaRecorder, mimeType } = _r2lCreateMediaRecorder(stream);
-      const chunks = [];
-      mediaRecorder.addEventListener('dataavailable', (event) => {
-        if (event.data && event.data.size > 0) chunks.push(event.data);
-      });
-      mediaRecorder.addEventListener('stop', () => {
-        const blobType = mediaRecorder.mimeType || mimeType || 'audio/mp4';
-        const blob = new Blob(chunks, { type: blobType });
-        _r2lRetellState.blob = blob;
-        _r2lRetellState.status = 'uploading';
+      const trackState = window.R2LRecorder?.trackInfo?.(stream) || { live: true, muted: false, label: '' };
+      if (!trackState.live) {
+        _r2lHideCountdownOverlay();
         stream.getTracks().forEach((track) => track.stop());
-        _r2lRetellState.stream = null;
-        if (blob.size > 0) {
-          _r2lSubmitRetellRecording(blob);
-        } else {
-          _r2lRetellState.status = 'idle';
-          _r2lSetMinnyMood('encourage', _r2lRetellState.heroEl);
-          _r2lRenderRetellFeedback({
-            ok: false,
-            message: 'Không thu được tiếng. Con thử nói to hơn và bấm Dừng thu nhé.',
-          });
-          _r2lRenderRetellControls();
-        }
-      });
+        throw new Error('track_not_live');
+      }
+      const recorder = _r2lCreateUnifiedRecorder(stream);
+      const monitor = window.R2LRecorder?.startMonitor
+        ? window.R2LRecorder.startMonitor(stream, {
+            onLevel: (level) => {
+              const bar = _r2lRetellState.root?.querySelector?.('[data-retell-meter-bar]');
+              if (bar) bar.style.width = `${Math.min(100, Math.round((level / 64) * 100))}%`;
+            },
+            onSilenceHint: () => {
+              const statusEl = _r2lRetellState.root?.querySelector?.('[data-retell-status]');
+              if (statusEl) statusEl.textContent = 'Minny chưa thấy tiếng — con nói TO hơn nhé!';
+            },
+          })
+        : { available: false, peak: () => -1, voiced: () => true, stop: () => {} };
 
-      _r2lRetellState.mediaRecorder = mediaRecorder;
-      _r2lRetellState.chunks = chunks;
+      _r2lRetellState.mediaRecorder = null;
+      _r2lRetellState.recorderCtl = recorder;
+      _r2lRetellState.monitor = monitor;
+      _r2lRetellState.deviceLabel = trackState.label || '';
+      _r2lRetellState.chunks = [];
       _r2lRetellState.status = 'recording';
       _r2lRetellState.secondsLeft = RETELL_MAX_SECONDS;
       _r2lSetMinnyMood('listen', _r2lRetellState.heroEl);
       try {
-        mediaRecorder.start(250);
+        recorder.start();
       } catch (startError) {
         _r2lHideCountdownOverlay();
+        monitor.stop();
         stream.getTracks().forEach((track) => track.stop());
         throw startError;
       }
@@ -2542,10 +2735,78 @@ function _r2lBuildRetellTemplate(lesson) {
     }
   }
 
-  function _r2lStopRetellRecording() {
+  async function _r2lStopRetellRecording() {
     if (_r2lRetellState.timerId) {
       window.clearInterval(_r2lRetellState.timerId);
       _r2lRetellState.timerId = null;
+    }
+    if (_r2lRetellState.recorderCtl && _r2lRetellState.status === 'recording') {
+      const recorder = _r2lRetellState.recorderCtl;
+      const monitor = _r2lRetellState.monitor;
+      _r2lRetellState.status = 'stopping';
+      let blob = null;
+      try {
+        blob = await recorder.stop();
+      } catch {
+        blob = null;
+      }
+      if (monitor) monitor.stop();
+      if (_r2lRetellState.stream) {
+        _r2lRetellState.stream.getTracks().forEach((track) => track.stop());
+        _r2lRetellState.stream = null;
+      }
+      _r2lRetellState.recorderCtl = null;
+      _r2lRetellState.monitor = null;
+
+      const voiced = monitor?.available ? monitor.voiced() : true;
+      const telemetry = {
+        peak: monitor?.available ? monitor.peak() : -1,
+        voiced,
+        engine: recorder.engine || 'mr',
+        mimeType: (blob && blob.type) || recorder.mimeType || '',
+        deviceLabel: _r2lRetellState.deviceLabel || '',
+      };
+
+      if (!voiced && blob && blob.size > 0) {
+        // Client-detected silent capture: relax constraints, log it, and never
+        // trap the child — the second silent take passes on effort.
+        const silentAttempts = (_r2lRetellState.silentAttempts || 0) + 1;
+        _r2lRetellState.silentAttempts = silentAttempts;
+        window.R2LRecorder?.bumpProfile?.();
+        _r2lReportSilentCapture(_r2lRetellState.storyContext, telemetry);
+        _r2lRetellState.status = 'idle';
+        _r2lSetMinnyMood('encourage', _r2lRetellState.heroEl);
+        if (silentAttempts >= 2) {
+          _r2lRenderRetellFeedback({
+            ok: false,
+            message: 'Micro hôm nay không thu được tiếng, nhưng Minny biết con đã kể rồi — giỏi lắm! Ba mẹ kiểm tra micro giúp con sau nhé.',
+          });
+          _r2lCompleteRetellOnEffort();
+        } else {
+          _r2lRenderRetellFeedback({
+            ok: false,
+            message: 'Minny không thấy tiếng vào micro. Con thử kể lại — nói TO hơn, hoặc ba mẹ kiểm tra micro ở khung phía trên nhé.',
+          });
+        }
+        _r2lRenderRetellControls();
+        return;
+      }
+
+      _r2lRetellState.blob = blob;
+      if (blob && blob.size > 0) {
+        _r2lRetellState.silentAttempts = 0;
+        _r2lRetellState.status = 'uploading';
+        _r2lSubmitRetellRecording(blob, telemetry);
+      } else {
+        _r2lRetellState.status = 'idle';
+        _r2lSetMinnyMood('encourage', _r2lRetellState.heroEl);
+        _r2lRenderRetellFeedback({
+          ok: false,
+          message: 'Không thu được tiếng. Con thử nói to hơn và bấm Dừng thu nhé.',
+        });
+        _r2lRenderRetellControls();
+      }
+      return;
     }
     if (_r2lRetellState.mediaRecorder && _r2lRetellState.status === 'recording') {
       _r2lStopMediaRecorder(_r2lRetellState.mediaRecorder);
@@ -2580,6 +2841,7 @@ function _r2lBuildRetellTemplate(lesson) {
         <button type="button" class="minny-btn minny-btn--record" data-retell-record disabled>🎤 Con kể</button>
       </div>
       <p class="mt-2 text-sm text-cream/65" data-retell-status></p>
+      <span class="r2l-rec-meter" data-retell-meter hidden><span class="r2l-rec-meter-bar" data-retell-meter-bar></span></span>
       <span class="mt-1 hidden text-sm font-semibold text-gold" data-retell-timer></span>
       <div class="mt-4 hidden rounded-md border border-cream/10 bg-navy-950/35 p-3 text-sm text-cream/80" data-retell-feedback></div>
     `;

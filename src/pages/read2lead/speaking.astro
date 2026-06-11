@@ -670,6 +670,9 @@ import MicCheckPanel from '../../components/read2lead/v2/MicCheckPanel.astro';
         clearInterval(state.timerId);
         state.timerId = null;
       }
+      if (state.recording?.monitor) {
+        state.recording.monitor.stop();
+      }
       if (state.recording?.stream) {
         state.recording.stream.getTracks().forEach((t) => t.stop());
       }
@@ -752,7 +755,7 @@ import MicCheckPanel from '../../components/read2lead/v2/MicCheckPanel.astro';
       updateRecordUi();
     });
 
-    async function submitAudio(blob, prompt) {
+    async function submitAudio(blob, prompt, telemetry = null) {
       state.status = 'uploading';
       updateRecordUi();
       const formData = new FormData();
@@ -765,10 +768,21 @@ import MicCheckPanel from '../../components/read2lead/v2/MicCheckPanel.astro';
       formData.append('check_mode', prompt.check_mode || 'open');
       formData.append('practice_mode', '1');
       formData.append('audio', blob, audioUploadFilename(blob));
+      if (telemetry && window.R2LRecorder?.appendTelemetry) {
+        window.R2LRecorder.appendTelemetry(formData, telemetry);
+      }
 
       try {
         const res = await fetch('/api/read2lead-speaking-check', { method: 'POST', body: formData });
         const data = await res.json();
+        // Analyser heard speech but ASR heard nothing → broken platform encoder;
+        // record raw WAV on this machine from now on.
+        if (
+          data && !data.ok && data.error === 'transcription_failed'
+          && telemetry && telemetry.voiced === true && telemetry.engine === 'mr'
+        ) {
+          window.R2LRecorder?.useWavEngine?.();
+        }
         state.lastResult = data;
         state.status = 'done';
         renderResult(data);
@@ -795,19 +809,22 @@ import MicCheckPanel from '../../components/read2lead/v2/MicCheckPanel.astro';
 
       cleanupRecording();
       try {
-        const stream = window.R2LMicCheck?.getMicStream
-          ? await window.R2LMicCheck.getMicStream()
-          : await navigator.mediaDevices.getUserMedia({
-              audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true },
-            });
+        const stream = window.R2LRecorder?.getStream
+          ? await window.R2LRecorder.getStream()
+          : window.R2LMicCheck?.getMicStream
+            ? await window.R2LMicCheck.getMicStream()
+            : await navigator.mediaDevices.getUserMedia({
+                audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true },
+              });
         state.recording = { stream, mediaRecorder: null };
         state.status = 'warming';
         state.warmupMessage = 'Micro đã bật — chờ 3 giây rồi mới nói nhé…';
         updateRecordUi();
 
-        if (window.R2LMicCheck?.primeAudioPipeline) {
-          await window.R2LMicCheck.primeAudioPipeline(stream);
-        }
+        // NOTE: no primeAudioPipeline here. Creating/closing an AudioContext on
+        // the live stream right before recording leaves the track feeding
+        // silence on Windows/Realtek (the root cause fixed in lesson.astro —
+        // the 3s countdown already warms the pipeline naturally).
         if (window.R2LMicCheck?.runMicWarmupCountdown) {
           await window.R2LMicCheck.runMicWarmupCountdown({
             onMessage: (msg) => {
@@ -824,39 +841,91 @@ import MicCheckPanel from '../../components/read2lead/v2/MicCheckPanel.astro';
           return;
         }
 
-        const { mediaRecorder, mimeType } = createRecorder(stream);
-        const chunks = [];
+        // Unified engine: MediaRecorder or raw-PCM WAV per this machine's
+        // history, plus a Meet-style live monitor that detects silent capture
+        // locally instead of uploading silence to the ASR.
+        const recorder = window.R2LRecorder?.createRecorder
+          ? window.R2LRecorder.createRecorder(stream)
+          : (() => {
+              const { mediaRecorder, mimeType } = createRecorder(stream);
+              const chunks = [];
+              let resolveStop = null;
+              const stopped = new Promise((resolve) => { resolveStop = resolve; });
+              mediaRecorder.addEventListener('dataavailable', (event) => {
+                if (event.data?.size > 0) chunks.push(event.data);
+              });
+              mediaRecorder.addEventListener('stop', () => {
+                resolveStop(new Blob(chunks, { type: mediaRecorder.mimeType || mimeType || 'audio/mp4' }));
+              });
+              return {
+                engine: 'mr',
+                mimeType,
+                start() { mediaRecorder.start(250); },
+                stop() { stopMediaRecorder(mediaRecorder); return stopped; },
+              };
+            })();
+        const monitor = window.R2LRecorder?.startMonitor
+          ? window.R2LRecorder.startMonitor(stream, {
+              onSilenceHint: () => {
+                const statusEl = document.getElementById('speaking-status');
+                if (statusEl && state.status === 'recording') {
+                  statusEl.textContent = 'Minny chưa thấy tiếng — con nói TO hơn nhé!';
+                }
+              },
+            })
+          : { available: false, peak: () => -1, voiced: () => true, stop: () => {} };
 
-        mediaRecorder.addEventListener('dataavailable', (event) => {
-          if (event.data?.size > 0) chunks.push(event.data);
-        });
-
-        mediaRecorder.addEventListener('stop', () => {
-          const blob = new Blob(chunks, { type: mediaRecorder.mimeType || mimeType || 'audio/mp4' });
+        let finished = false;
+        const finishRecording = async () => {
+          if (finished) return;
+          finished = true;
+          if (state.timerId) {
+            clearInterval(state.timerId);
+            state.timerId = null;
+          }
+          let blob = null;
+          try {
+            blob = await recorder.stop();
+          } catch {
+            blob = null;
+          }
+          monitor.stop();
           stream.getTracks().forEach((t) => t.stop());
-          if (blob.size > 0) {
-            submitAudio(blob, prompt);
+          const voiced = monitor.available ? monitor.voiced() : true;
+          if (blob && blob.size > 0 && !voiced) {
+            // Silent capture caught on-device: relax constraints for the next
+            // try instead of sending silence to the server.
+            window.R2LRecorder?.bumpProfile?.();
+            state.status = 'idle';
+            renderResult({ ok: false, message: 'Minny không thấy tiếng vào micro. Con thử lại — nói TO hơn, hoặc kiểm tra micro ở khung phía trên nhé.' });
+            updateRecordUi();
+            return;
+          }
+          if (blob && blob.size > 0) {
+            submitAudio(blob, prompt, {
+              peak: monitor.available ? monitor.peak() : -1,
+              voiced,
+              engine: recorder.engine || 'mr',
+              mimeType: blob.type || recorder.mimeType || '',
+            });
           } else {
+            state.status = 'idle';
             renderResult({ ok: false, message: 'Không thu được tiếng. Con thử nói to hơn nhé.' });
             updateRecordUi();
           }
-        });
+        };
 
-        state.recording = { stream, mediaRecorder };
+        state.recording = { stream, mediaRecorder: null, recorderCtl: recorder, monitor, finishRecording };
         state.status = 'recording';
         state.secondsLeft = stepMaxSeconds(prompt);
-        mediaRecorder.start(250);
+        recorder.start();
         updateRecordUi();
 
         state.timerId = window.setInterval(() => {
           state.secondsLeft -= 1;
           updateRecordUi();
           if (state.secondsLeft <= 0) {
-            if (state.timerId) {
-              clearInterval(state.timerId);
-              state.timerId = null;
-            }
-            stopMediaRecorder(mediaRecorder);
+            finishRecording();
           }
         }, 1000);
       } catch (error) {
@@ -870,6 +939,10 @@ import MicCheckPanel from '../../components/read2lead/v2/MicCheckPanel.astro';
     }
 
     function stopRecording() {
+      if (state.recording?.finishRecording) {
+        state.recording.finishRecording();
+        return;
+      }
       if (state.recording?.mediaRecorder) {
         stopMediaRecorder(state.recording.mediaRecorder);
       }
@@ -970,5 +1043,6 @@ import MicCheckPanel from '../../components/read2lead/v2/MicCheckPanel.astro';
 
     loadBtn?.addEventListener('click', loadSession);
   </script>
+  <script src="/scripts/r2l-recorder.js" defer></script>
   <script src="/scripts/r2l-mic-check.js" defer></script>
 </BaseLayout>

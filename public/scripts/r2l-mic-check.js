@@ -290,26 +290,18 @@
     onMessage('Bắt đầu nói!', 0);
   }
 
-  async function primeAudioPipeline(stream) {
-    if (!stream) return null;
-    try {
-      const audioContext = new AudioContext();
-      if (audioContext.state === 'suspended') {
-        await audioContext.resume();
-      }
-      const source = audioContext.createMediaStreamSource(stream);
-      const analyser = audioContext.createAnalyser();
-      analyser.fftSize = 256;
-      source.connect(analyser);
-      const buffer = new Uint8Array(analyser.fftSize);
-      analyser.getByteTimeDomainData(buffer);
-      return audioContext;
-    } catch {
-      return null;
-    }
-  }
+  // (primeAudioPipeline was removed: creating/closing an AudioContext on the
+  //  recording stream right before MediaRecorder.start() left the track feeding
+  //  silence on Windows/Realtek. R2LRecorder.startMonitor keeps an analyser OPEN
+  //  for the whole recording instead — the proven mic-test pipeline.)
 
   async function openMicStream(deviceId) {
+    // Shared engine: remembered device (Zoom pattern) + current constraint
+    // profile, so the mic test exercises the SAME pipeline the lesson records
+    // with — they can never silently use two different configurations.
+    if (global.R2LRecorder?.getStream) {
+      return global.R2LRecorder.getStream(deviceId ? { deviceId } : {});
+    }
     const base = {
       echoCancellation: true,
       noiseSuppression: true,
@@ -462,10 +454,14 @@
         return;
       }
       deviceSelect.hidden = false;
+      // Preselect the remembered mic (the one that last passed the test) so the
+      // dropdown reflects what the lesson will actually record with.
+      const savedId = global.R2LRecorder?.getDevicePref?.()?.deviceId || '';
+      const selectedIndex = Math.max(0, withLabels.findIndex((d) => d.deviceId === savedId));
       deviceSelect.innerHTML = withLabels
         .map(
           (d, i) =>
-            `<option value="${d.deviceId}"${i === 0 ? ' selected' : ''}>${d.label}</option>`,
+            `<option value="${d.deviceId}"${i === selectedIndex ? ' selected' : ''}>${d.label}</option>`,
         )
         .join('');
     }
@@ -530,6 +526,15 @@
         const stream = await openMicStream(deviceId || undefined);
         activeStream = stream;
         await populateDevices();
+
+        // Remember which physical mic this stream actually uses, so a PASSED
+        // test pins the lesson recordings to the same device (Zoom pattern).
+        let testedDevice = null;
+        try {
+          const track = stream.getAudioTracks()[0];
+          const settings = track?.getSettings ? track.getSettings() : {};
+          if (settings.deviceId) testedDevice = { deviceId: settings.deviceId, label: track.label || '' };
+        } catch { /* device memory is best-effort */ }
 
         audioContext = new AudioContext();
         if (audioContext.state === 'suspended') {
@@ -607,6 +612,9 @@
           playBtn.textContent = '▶ Nghe lại giọng con';
         }
         failCount = 0;
+        if (testedDevice && global.R2LRecorder?.saveDevicePref) {
+          global.R2LRecorder.saveDevicePref(testedDevice.deviceId, testedDevice.label);
+        }
         setPassed('test');
       } catch (error) {
         failCount += 1;
@@ -711,7 +719,6 @@
     openMicStream,
     getMicStream: openMicStream,
     runMicWarmupCountdown,
-    primeAudioPipeline,
     mount,
     mountAll,
     scrollToPanel,

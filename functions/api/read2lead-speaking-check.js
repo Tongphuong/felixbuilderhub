@@ -292,7 +292,22 @@ export async function onRequestPost(context) {
   const practiceMode = String(formData.get('practice_mode') || '').trim() === '1';
   const audio = formData.get('audio');
 
-  if (!accessCode || !packId || !expectedText || !audio) {
+  // Client capture telemetry (peak mic level, device, engine) — lets the error
+  // ring distinguish "mic was silent" / "codec garbage" / "kid didn't speak"
+  // without touching the child's machine.
+  const clientTelemetry = {
+    peak_level: String(formData.get('peak_level') || ''),
+    device_label: String(formData.get('device_label') || '').slice(0, 80),
+    rec_engine: String(formData.get('rec_engine') || ''),
+    rec_mime: String(formData.get('rec_mime') || ''),
+    mic_profile: String(formData.get('mic_profile') || ''),
+  };
+
+  // Fire-and-forget client report: the browser detected a silent capture
+  // locally (level monitor saw no signal) and did NOT upload audio.
+  const reportSilent = String(formData.get('report_silent') || '').trim() === '1';
+
+  if (!accessCode || !packId || !expectedText || (!audio && !reportSilent)) {
     return json(
       { ok: false, error: 'missing_fields', message: 'Thieu ma hoc sinh, ma bai, noi dung hoac file thu am.' },
       400,
@@ -304,7 +319,7 @@ export async function onRequestPost(context) {
     ? MAX_AUDIO_BYTES_LONG
     : MAX_AUDIO_BYTES;
 
-  const audioSize = typeof audio.size === 'number' ? audio.size : 0;
+  const audioSize = audio && typeof audio.size === 'number' ? audio.size : 0;
   if (audioSize > maxAudioBytes) {
     return json(
       {
@@ -326,6 +341,28 @@ export async function onRequestPost(context) {
   if (!codeData) {
     await recordCodeFailure(env.READ2LEAD_CODES, clientIp);
     return json({ ok: false, error: 'code_not_found', message: 'Ma hoc sinh khong ton tai.' }, 404);
+  }
+
+  // Diagnostic-only request: log the client-detected silent capture and stop —
+  // no audio to transcribe. Sits behind the rate limit + access-code check so
+  // it cannot be used to spam the ring buffer anonymously.
+  if (reportSilent) {
+    await recordSpeakingError(env, {
+      ts: new Date().toISOString(),
+      code: 'silent_capture',
+      message: 'client_detected_silence',
+      ...clientTelemetry,
+      ua: (request.headers.get('user-agent') || '').slice(0, 200),
+      access_code: accessCode,
+    });
+    return json({ ok: true, recorded: true });
+  }
+
+  if (!audio) {
+    return json(
+      { ok: false, error: 'missing_fields', message: 'Thieu file thu am.' },
+      400,
+    );
   }
 
   const currentPack = codeData.progress?.current_pack;
@@ -360,6 +397,7 @@ export async function onRequestPost(context) {
       type: audioType,
       size: audioSize,
       file: audioName,
+      ...clientTelemetry,
       detail: String(error?.detail || '').slice(0, 300),
       ua: (request.headers.get('user-agent') || '').slice(0, 200),
       access_code: accessCode,

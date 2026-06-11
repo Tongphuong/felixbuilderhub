@@ -94,9 +94,9 @@ test('recording shows a big countdown popup that flips to GO at capture start', 
   assert.match(lessonPage, /function _r2lCountdownGo/);
   assert.match(lessonPage, /NÓI ĐI CON/);
   // GO must fire AFTER recording starts so a kid who speaks instantly is captured.
-  const startIdx = lessonPage.indexOf('mr.start(250)');
+  const startIdx = lessonPage.indexOf('recorder.start()');
   const goIdx = lessonPage.indexOf('_r2lCountdownGo();', startIdx);
-  assert.ok(startIdx > -1 && goIdx > startIdx, 'countdown GO should run after mr.start(250)');
+  assert.ok(startIdx > -1 && goIdx > startIdx, 'countdown GO should run after recorder.start()');
 });
 
 test('MCQ renderer does not reference speak activity itemIndex', () => {
