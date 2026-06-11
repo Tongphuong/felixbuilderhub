@@ -101,6 +101,40 @@ Lesson/result hooks (via existing `window.__r2lJuice` — do NOT inline new code
 
 **Decision gate:** quest list (Claude drafts 8, Phương picks 3 rotating), chest odds + amounts, combo cap.
 
+## 4b. W2R — Rank Seasons + Anti-inflation (**READY** — specs R1/R2/R3, Phương locked 2026-06-11)
+
+**Problem (measured):** current ladder = 1-2 RP/pack, 9 RP/tier, apex at 63 RP → a good kid
+hits Kim Cương in 9-18 days and apex in ~1 month. RP never decreases, no seasons → guaranteed
+inflation. Rank also measures GRIND, not skill (a 55% kid climbs as fast as an 85% kid, and an
+L1 kid can reach Kim Cương without ever reading harder texts).
+
+**Locked decisions (Phương 2026-06-11):**
+1. Seasons of **2 months**, each with a named theme (Liên Quân-style soft reset — NEVER reset to zero).
+2. **Tier cap by learning level**: L1→Vàng, L2→Bạch Kim, L3→Kim Cương, L4→Cao Thủ, L5→Thách Đấu.
+   RP keeps accruing under a cap; leveling up lifts the clamp = visible rank-jump celebration.
+3. Quality stars: <65% = +0 RP (still passes), 65-84% = +1, ≥85% = +2. Max 3 RP counted/day (VN time).
+   Progressive tier cost: Đồng/Bạc 9 RP, Vàng/Bạch Kim 12, Kim Cương/Tinh Anh/Cao Thủ 15 → apex 87 RP.
+   Level-up gate: pack count (unchanged) AND avg score ≥70% over last 5 passed packs.
+
+**Season mechanics:** lazy rollover on first state-touch after season end; soft reset = drop to the
+start of the previous tier (never below Đồng); peak rank of the season freezes into a permanent
+medal (`medals[]`) shown in profile + parent page ("tủ huy chương"); season-end coin reward by peak
+tier. Existing `rank_points` becomes `lifetime_rp` (kept forever); ladder runs on `season_rp`
+initialized = current RP at deploy (NOBODY is demoted by the migration).
+
+**Execution: 3 parallel Cursor agents, disjoint zones, contract-first:**
+| Spec | Zone (only these files) | Content |
+|---|---|---|
+| `SPEC_W2R_R1_RANK_CORE.md` | `functions/api/_read2lead-v2-state.js`, `functions/api/_read2lead-seasons.js` (new), `functions/api/submit-read2lead-lesson.js`, `tests/read2lead-rank-system.test.mjs`, `tests/read2lead-seasons.test.mjs` (new) | RP curve, quality stars, daily cap, tier-cap-by-level, season rollover, medals, level-up quality gate. OWNS the JSON contract. |
+| `SPEC_W2R_R2_RANK_UI.md` | `src/components/read2lead/**`, `src/pages/hoc-sinh/**`, `src/scripts/r2l-w1-page.ts`, `tests/read2lead-rank-ui.test.mjs` (new) | Season banner + countdown, medal cabinet, capped-rank lock hint ("Lên L2 để mở khoá Bạch Kim!"), rank-jump celebration. Builds against the contract fixture in the spec — NO functions/ edits. |
+| `SPEC_W2R_R3_LEADERBOARD.md` | `functions/api/read2lead-leaderboard.js`, `src/pages/read2lead/leaderboard.astro`, `tests/read2lead-leaderboard*.test.mjs` | Season-scoped leaderboard (rank by season_rp), theme header, previous-season podium. |
+
+Merge order: R1 → R2 → R3 (Claude verifies each; zones are disjoint so parallel coding is safe).
+
+**SCOPED (needs spec later, backend repo):** in-level micro-difficulty ramp (pack #1 vs #15 of the
+same level should differ) — lives in `read2lead_v0_codex` prompt pipeline, dispatch to Codex after
+Parent Portfolio P1.
+
 ## 5. W3 — Avatar 2.0 (zone: monster-* + avatar component + manifest)
 
 **Goal:** ONE coherent art system; the 367 Kenney parts become the unlock economy.
@@ -204,3 +238,4 @@ Each gate = Claude writes the wave spec (5-lens audited) → zone opens for Curs
 
 ## 15. Change log
 - 2026-06-10: Created from full-codebase inspection (6 areas). 5-lens audited.
+- 2026-06-11: Added §4b W2R Rank Seasons + anti-inflation (3 locked decisions, specs R1/R2/R3, 3 parallel Cursor agents). Flagged in-level difficulty ramp as SCOPED for backend repo.

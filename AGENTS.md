@@ -115,10 +115,31 @@ main chen nhau, báo cáo sai trạng thái. Từ giờ:
    (commit hoặc stash) + ghi vào log đang để branch nào. Không để file rác
    untracked (_qa-*.png, _worker.bundle…) — dọn hoặc gitignore trong task của mình.
 
+### Luật riêng cho Cursor (siết 2026-06-11 tối — sau các vi phạm cùng ngày)
+
+Vi phạm đã xảy ra hôm nay: ghi DONE vào AGENT_LOG khi chưa hề commit; để code dở chưa commit nằm
+trên checkout chung; sửa file trong vùng Claude (lesson.astro, speaking-check API) không xin phép;
+báo cáo trạng thái sai ("chưa push" khi đã push). Từ giờ:
+
+1. **DONE = đã commit.** Dòng DONE trong AGENT_LOG bắt buộc kèm **commit hash**. DONE không hash
+   = coi như chưa làm, Claude không review.
+2. **Không bao giờ kết thúc phiên với working tree bẩn.** Mọi thay đổi commit lên branch của mình
+   trước khi dừng — kể cả dở dang (prefix `WIP:`). Code chưa commit trên checkout chung = sẽ bị
+   mất hoặc trộn nhầm vào commit của agent khác.
+3. **Branch luôn tạo từ origin/main mới nhất:** `git fetch origin && git checkout -b <branch> origin/main`.
+   Không branch từ branch khác, không làm việc trực tiếp trên main/v3/v4.
+4. **Nhiều agent song song trên cùng máy → mỗi agent một worktree riêng**
+   (`git worktree add ../hub-<task> <branch>`). Cấm 2 agent dùng chung checkout `D:\felixbuilderhub`.
+5. **Một agent = một spec = một zone.** Cần sửa file ngoài zone → DỪNG, ghi vào report, không
+   "tiện tay". Spec là nguồn chân lý duy nhất; không tự thêm scope, không drive-by refactor.
+6. Report kết thúc bằng output THẬT của `git log --oneline -3` + `git status --short` + đã-push-hay-chưa.
+
 ### Phân vùng hiện tại (cập nhật khi giao việc mới)
 
 | Agent | Vùng được sửa | Cấm đụng |
 |---|---|---|
 | **Codex** | Parent Portfolio (spec `docs/SPEC_PARENT_PORTFOLIO.md`): `src/pages/phu-huynh/*`, `src/pages/admin/portfolio.astro`, `functions/api/admin/portfolio*`, `functions/api/parent/*`, `tests/parent-portfolio.test.mjs` | lesson.astro, mic/recorder scripts, speaking-check API, mọi file V3/V4 |
-| **Cursor** | V4/W1 + monster zone (việc đang dở) | phu-huynh/*, functions/api/parent/*, admin/portfolio |
-| **Claude** | main merges, specs, incident response, mic/speaking pipeline | — |
+| **Cursor #R1** | `docs/SPEC_W2R_R1_RANK_CORE.md`: `functions/api/_read2lead-v2-state.js`, `functions/api/_read2lead-seasons.js` (new), `functions/api/submit-read2lead-lesson.js`, tests rank/seasons | mọi file src/, lesson.astro, leaderboard |
+| **Cursor #R2** | `docs/SPEC_W2R_R2_RANK_UI.md`: `src/components/read2lead/**`, `src/pages/hoc-sinh/**`, `src/scripts/r2l-w1-page.ts`, tests rank-ui | mọi file functions/, lesson.astro, leaderboard.astro |
+| **Cursor #R3** | `docs/SPEC_W2R_R3_LEADERBOARD.md`: `functions/api/read2lead-leaderboard.js`, `src/pages/read2lead/leaderboard.astro`, tests leaderboard | `_read2lead-v2-state.js`, mọi file hoc-sinh/, lesson.astro |
+| **Claude** | main merges, specs, incident response, mic/speaking pipeline (lesson.astro, r2l-recorder.js, r2l-mic-check.js, read2lead-speaking-check.js) | — |
