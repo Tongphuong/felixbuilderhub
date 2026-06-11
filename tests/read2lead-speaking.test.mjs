@@ -183,7 +183,12 @@ test('wordSimilarity treats near matches as close', () => {
   assert.ok(wordSimilarity('park', 'park') === 1);
 });
 
-test('speaking endpoint uses OpenAI Whisper only', () => {
+test('speaking endpoint runs Whisper inside Cloudflare first, OpenAI as fallback', () => {
+  // Workers AI primary — direct OpenAI/Groq calls from VN-serving colos get
+  // geo-blocked (403 unsupported_country_region_territory).
+  assert.match(speakingEndpoint, /@cf\/openai\/whisper-large-v3-turbo/);
+  assert.match(speakingEndpoint, /env\.AI/);
+  // OpenAI kept as fallback when the AI binding is absent or errors.
   assert.match(speakingEndpoint, /whisper-1/);
   assert.match(speakingEndpoint, /api\.openai\.com\/v1\/audio\/transcriptions/);
   assert.match(speakingEndpoint, /OPENAI_API_KEY/);
@@ -197,21 +202,45 @@ test('resolveOpenAIApiKey accepts either env var name', () => {
   assert.equal(resolveOpenAIApiKey({}), '');
 });
 
-test('transcribeAudio calls OpenAI', async () => {
+test('transcribeAudio uses Workers AI when bound (no geo-blockable egress)', async () => {
+  let model = '';
+  let gotBase64 = false;
+  const text = await transcribeAudio(new Blob(['audio'], { type: 'audio/webm' }), {
+    ai: {
+      run: async (m, input) => {
+        model = m;
+        gotBase64 = typeof input.audio === 'string' && input.audio.length > 0;
+        return { text: 'hello world' };
+      },
+    },
+  });
+  assert.equal(model, '@cf/openai/whisper-large-v3-turbo');
+  assert.equal(gotBase64, true);
+  assert.equal(text, 'hello world');
+});
+
+test('transcribeAudio falls back to OpenAI when Workers AI fails', async () => {
   let url = '';
-  const text = await transcribeAudio(
-    new Blob(['audio'], { type: 'audio/webm' }),
-    'openai-key',
-    async (target) => {
+  const text = await transcribeAudio(new Blob(['audio'], { type: 'audio/webm' }), {
+    ai: { run: async () => { throw new Error('capacity'); } },
+    openaiApiKey: 'openai-key',
+    fetchFn: async (target) => {
       url = String(target);
       return {
         ok: true,
         json: async () => ({ text: 'hello world' }),
       };
     },
-  );
+  });
   assert.match(url, /api\.openai\.com\/v1\/audio\/transcriptions/);
   assert.equal(text, 'hello world');
+});
+
+test('transcribeAudio without any provider → config_error', async () => {
+  await assert.rejects(
+    () => transcribeAudio(new Blob(['audio'], { type: 'audio/webm' }), {}),
+    (error) => error.code === 'config_error',
+  );
 });
 
 test('open response scores story relevance instead of read-aloud match', () => {

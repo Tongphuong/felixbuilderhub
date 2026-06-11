@@ -232,12 +232,58 @@ export async function transcribeWithOpenAI(audioBlob, apiKey, fetchFn = fetch) {
   return String(payload?.text || '').trim();
 }
 
-// Single provider: OpenAI Whisper (same key as pack TTS backend).
-export async function transcribeAudio(audioBlob, openaiApiKey, fetchFn = fetch) {
-  if (!openaiApiKey) {
+export const WORKERS_AI_ASR_MODEL = '@cf/openai/whisper-large-v3-turbo';
+
+function arrayBufferToBase64(buffer) {
+  const bytes = new Uint8Array(buffer);
+  let binary = '';
+  const CHUNK = 0x8000;
+  for (let i = 0; i < bytes.length; i += CHUNK) {
+    binary += String.fromCharCode.apply(null, bytes.subarray(i, i + CHUNK));
+  }
+  return btoa(binary);
+}
+
+// PRIMARY provider: Whisper running INSIDE Cloudflare (Workers AI binding).
+// Reason: direct calls to external ASR providers from a Worker serving
+// Vietnamese users egress from nearby colos (often Hong Kong) and get
+// geo-blocked with 403 "unsupported_country_region_territory" — the root
+// cause of the 2026-06-11 speaking outage. Workers AI never leaves
+// Cloudflare, so there is no border to be blocked at.
+export async function transcribeWithWorkersAI(audioBlob, ai) {
+  const buffer = await audioBlob.arrayBuffer();
+  let result;
+  try {
+    result = await ai.run(WORKERS_AI_ASR_MODEL, {
+      audio: arrayBufferToBase64(buffer),
+      task: 'transcribe',
+      language: 'en',
+    });
+  } catch (err) {
+    const error = new Error('workers_ai_transcription_failed');
+    error.detail = String(err?.message || err).slice(0, 300);
+    // No HTTP status available — classify as a provider outage so the child
+    // gets the honest outage message (and the OpenAI fallback can run).
+    error.status = 503;
+    throw error;
+  }
+  return String(result?.text || '').trim();
+}
+
+// Workers AI first; OpenAI (US egress permitting) as automatic fallback.
+export async function transcribeAudio(audioBlob, { ai = null, openaiApiKey = '', fetchFn = fetch } = {}) {
+  if (!ai && !openaiApiKey) {
     const error = new Error('no_transcription_provider');
     error.code = 'config_error';
     throw error;
+  }
+  if (ai) {
+    try {
+      return await transcribeWithWorkersAI(audioBlob, ai);
+    } catch (err) {
+      if (!openaiApiKey) throw err;
+      /* fall through to OpenAI */
+    }
   }
   return transcribeWithOpenAI(audioBlob, openaiApiKey, fetchFn);
 }
@@ -246,10 +292,11 @@ export async function runSpeakingCheck({
   audioBlob,
   expectedText,
   checkMode = 'read',
+  ai = null,
   openaiApiKey,
   fetchFn = fetch,
 }) {
-  const transcript = await transcribeAudio(audioBlob, openaiApiKey, fetchFn);
+  const transcript = await transcribeAudio(audioBlob, { ai, openaiApiKey, fetchFn });
   if (!transcript) {
     const error = new Error('empty_transcript');
     error.code = 'transcription_failed';
@@ -281,8 +328,9 @@ export async function onRequestPost(context) {
   }
 
   const openaiApiKey = resolveOpenAIApiKey(env);
+  const workersAi = env.AI || null;
 
-  if (!openaiApiKey) {
+  if (!workersAi && !openaiApiKey) {
     return json(
       { ok: false, error: 'config_error', message: 'Speaking check chua duoc cau hinh.' },
       500,
@@ -391,6 +439,7 @@ export async function onRequestPost(context) {
       audioBlob: audio,
       expectedText,
       checkMode: checkMode === 'open' ? 'open' : 'read',
+      ai: workersAi,
       openaiApiKey,
     });
     return json(result);
