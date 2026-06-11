@@ -52,6 +52,9 @@ const retellGuideInline = retellGuideSrc
             <span id="w1-chip-read" class="r2l-w1-chip" data-done="false">📖 Đọc</span>
             <span id="w1-chip-listen" class="r2l-w1-chip" data-done="false">🎧 Nghe</span>
           </div>
+          <p id="w1-gate-hint" class="text-sm leading-relaxed text-cream/70">
+            Con đọc hết truyện và nghe Minny đọc xong, rồi mới mở nhiệm vụ nhé!
+          </p>
           <div id="w1-story-cards" class="space-y-3"></div>
           <div class="flex flex-wrap gap-2">
             <button id="w1-read-along" class="r2l-primary" type="button">▶ Đọc cùng Minny</button>
@@ -4088,6 +4091,20 @@ function _r2lBuildRetellTemplate(lesson) {
     return (text || '').trim().split(/\s+/).filter(Boolean).length;
   }
 
+  function w1WrittenModelAnswer(question, questionIndex) {
+    const direct = String(question?.expected_answer_en || '').trim();
+    if (direct) return direct;
+    const rcActivity = (state.lesson?.activities || []).find((a) => a.type === 'reading_comprehension');
+    const rcQuestion = rcActivity?.questions?.[questionIndex];
+    if (rcQuestion?.options_en?.length) {
+      const correctIndex = Number(rcQuestion.correct_index);
+      if (Number.isInteger(correctIndex) && rcQuestion.options_en[correctIndex]) {
+        return String(rcQuestion.options_en[correctIndex]).trim();
+      }
+    }
+    return '';
+  }
+
   function finalizeCurrentActivityIfReady() {
     const activity = state.lesson?.activities?.[state.activityIndex];
     if (!activity || activity.type !== 'written_response' || state.completedTypes.has(activity.type)) return;
@@ -4802,7 +4819,12 @@ function _r2lBuildRetellTemplate(lesson) {
       <div class="mt-5 space-y-5">
         ${(activity.questions || [])
           .map(
-            (question, questionIndex) => `
+            (question, questionIndex) => {
+              const modelAnswer = isW1() ? w1WrittenModelAnswer(question, questionIndex) : '';
+              const modelLine = modelAnswer
+                ? `Câu mẫu của Minny: "${escapeHtml(modelAnswer)}"`
+                : 'Minny gợi ý con đọc lại truyện để tìm ý nhé!';
+              return `
               <article class="rounded-md border border-cream/10 bg-navy-950/45 p-4" data-written-card="${questionIndex}">
                 <label class="block">
                   <span class="block font-bold text-cream">${escapeHtml(question.question_en)}</span>
@@ -4816,15 +4838,16 @@ function _r2lBuildRetellTemplate(lesson) {
                 ${isW1() ? `
                   <p class="mt-2 hidden text-sm text-cream/65" data-written-nudge="${questionIndex}">Con viết thêm một chút nhé (ít nhất 3 từ)!</p>
                   <div class="mt-3 hidden space-y-2" data-written-review="${questionIndex}">
-                    <p class="text-sm text-gold">Câu mẫu của Minny: "${escapeHtml(question.expected_answer_en || '')}"</p>
+                    <p class="text-sm text-gold">${modelLine}</p>
                     <div class="flex flex-wrap gap-2">
-                      <button type="button" class="r2l-primary" data-written-ok="${questionIndex}">Giống ý 👍</button>
+                      <button type="button" class="r2l-secondary" data-written-ok="${questionIndex}">Giống ý 👍</button>
                       <button type="button" class="r2l-secondary" data-written-retry="${questionIndex}">Khác ý, con sửa lại ✏️</button>
                     </div>
                   </div>
                 ` : ''}
               </article>
-            `,
+            `;
+            },
           )
           .join('')}
       </div>
