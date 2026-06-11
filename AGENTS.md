@@ -91,3 +91,34 @@ Claude reviews by `git show <hash>` + 5-lens audit. Clear commits = fast review.
 ## 6. Customer reality (every build decision bends to this)
 
 Users are **young VN kids (6-12)** + **non-tech parents with zero patience**. If a change makes the app slower, more confusing, or breakable on weak 3G / cheap Android / iPad Safari, it is wrong — even if it's "correct" code. Big tap targets, instant feedback, no dead ends, no English error strings shown to kids.
+
+---
+
+## 7. Multi-agent ground rules (2026-06-11 — after the speaking-incident collision day)
+
+Nhiều agent (Claude, Cursor, Codex) làm việc song song trên repo này. Ngày
+2026-06-11 đã có va chạm thật: 3 agent sửa cùng lesson.astro trong 24h, push
+main chen nhau, báo cáo sai trạng thái. Từ giờ:
+
+1. **Chỉ Claude được đụng `main`.** Cursor/Codex push branch riêng
+   (`cursor/<task>`, `codex/<task>`, `v3/...`, `v4/...`) — push branch tự có
+   Cloudflare preview URL, QA ở đó. Claude verify → Phương duyệt → Claude merge.
+2. **Xí chỗ trước khi làm:** thêm 1 dòng vào `docs/AGENT_LOG.md` khi BẮT ĐẦU
+   và khi XONG (format trong file). Trước khi sửa file nóng (`lesson.astro`,
+   `r2l-recorder.js`, `r2l-mic-check.js`, `read2lead-speaking-check.js`):
+   đọc 5 dòng cuối log — nếu agent khác đang giữ, DỪNG và báo Phương.
+3. **Một file = một agent tại một thời điểm.** Tranh chấp → Claude phân xử.
+4. **Báo cáo phải kèm bằng chứng máy:** cuối report dán output thật của
+   `git log --oneline -3` và `git status --short`, ghi rõ ĐÃ PUSH hay CHƯA
+   (kiểm bằng `git log origin/<branch> -1`). Cấm báo trạng thái từ trí nhớ.
+5. **Không bỏ checkout chung ở branch lạ.** Xong việc: working tree sạch
+   (commit hoặc stash) + ghi vào log đang để branch nào. Không để file rác
+   untracked (_qa-*.png, _worker.bundle…) — dọn hoặc gitignore trong task của mình.
+
+### Phân vùng hiện tại (cập nhật khi giao việc mới)
+
+| Agent | Vùng được sửa | Cấm đụng |
+|---|---|---|
+| **Codex** | Parent Portfolio (spec `docs/SPEC_PARENT_PORTFOLIO.md`): `src/pages/phu-huynh/*`, `src/pages/admin/portfolio.astro`, `functions/api/admin/portfolio*`, `functions/api/parent/*`, `tests/parent-portfolio.test.mjs` | lesson.astro, mic/recorder scripts, speaking-check API, mọi file V3/V4 |
+| **Cursor** | V4/W1 + monster zone (việc đang dở) | phu-huynh/*, functions/api/parent/*, admin/portfolio |
+| **Claude** | main merges, specs, incident response, mic/speaking pipeline | — |
