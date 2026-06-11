@@ -6,12 +6,15 @@ import {
   type MonsterSlot,
 } from './monster-manifest';
 import {
-  ARM_SINGLE_ANCHORS,
+  armDualAnchor,
+  armSingleAnchors,
+  bodyBoxFromFile,
   computeAnchoredPlacement,
   computePartPlacement,
   isDualArmSprite,
   MONSTER_SLOT_REGIONS,
   resolvePartAnchor,
+  type BodyBox,
   type PartAnchor,
 } from './monster-slot-layout';
 
@@ -276,7 +279,7 @@ function applyPartPlacement(
   img: HTMLImageElement,
   slot: MonsterSlot,
   partFile: string,
-  opts: { anchor?: PartAnchor; flip?: boolean } = {},
+  opts: { anchor?: PartAnchor; flip?: boolean; bodyBox?: BodyBox } = {},
 ) {
   const place = () => {
     const naturalW = img.naturalWidth || 1;
@@ -286,7 +289,7 @@ function applyPartPlacement(
       applyPlacementStyles(img, p);
       return;
     }
-    const anchor = opts.anchor ?? resolvePartAnchor(slot, partFile);
+    const anchor = opts.anchor ?? resolvePartAnchor(slot, partFile, opts.bodyBox);
     const p = computeAnchoredPlacement(naturalW, naturalH, anchor);
     applyPlacementStyles(img, p, opts.flip);
   };
@@ -303,7 +306,7 @@ function renderPartLayer(
   slot: MonsterSlot,
   partId: string,
   bodyColor?: string,
-  opts: { anchor?: PartAnchor; flip?: boolean } = {},
+  opts: { anchor?: PartAnchor; flip?: boolean; bodyBox?: BodyBox } = {},
 ) {
   const file = partFile(slot, partId);
   if (!file) return false;
@@ -320,17 +323,20 @@ function renderPartLayer(
   return true;
 }
 
-function renderArmsLayers(stack: HTMLElement, partId: string) {
+function renderArmsLayers(stack: HTMLElement, partId: string, bodyBox?: BodyBox) {
   const file = partFile('arms', partId);
   if (!file) return false;
   if (isDualArmSprite(file)) {
-    return renderPartLayer(stack, 'arms', partId);
+    return renderPartLayer(stack, 'arms', partId, undefined, {
+      anchor: armDualAnchor(bodyBox),
+    });
   }
+  const anchors = armSingleAnchors(bodyBox);
   const renderedLeft = renderPartLayer(stack, 'arms', partId, undefined, {
-    anchor: ARM_SINGLE_ANCHORS.left,
+    anchor: anchors.left,
   });
   const renderedRight = renderPartLayer(stack, 'arms', partId, undefined, {
-    anchor: ARM_SINGLE_ANCHORS.right,
+    anchor: anchors.right,
     flip: true,
   });
   return renderedLeft || renderedRight;
@@ -376,11 +382,14 @@ export function renderMonster(
     renderFallbackMonster(stack, config);
   } else {
     // Arms behind body; A/B/E sprites mirror to both sides.
-    renderArmsLayers(stack, config.arms);
+    // All non-body parts anchor to the BODY's rendered box so the layout
+    // holds across the 6 body shapes (165x165 .. 132x250), not just blueA.
+    const bodyBox = bodyBoxFromFile(partFile('body', config.body) || '');
+    renderArmsLayers(stack, config.arms, bodyBox);
     renderPartLayer(stack, 'body', config.body, config.color);
-    renderPartLayer(stack, 'detail', config.detail);
-    renderPartLayer(stack, 'eyes', config.eyes);
-    renderPartLayer(stack, 'mouth', config.mouth);
+    renderPartLayer(stack, 'detail', config.detail, undefined, { bodyBox });
+    renderPartLayer(stack, 'eyes', config.eyes, undefined, { bodyBox });
+    renderPartLayer(stack, 'mouth', config.mouth, undefined, { bodyBox });
   }
 
   container.appendChild(stack);

@@ -4,7 +4,10 @@ import assert from 'node:assert/strict';
 import {
   ARM_DUAL_ANCHOR,
   ARM_SINGLE_ANCHORS,
+  armDualAnchor,
   armRegionFromFile,
+  armSingleAnchors,
+  bodyBoxFromFile,
   computeAnchoredPlacement,
   computePartPlacement,
   detailRegionFromFile,
@@ -77,6 +80,45 @@ test('dual arm sprite centers on canvas', () => {
   const p = computeAnchoredPlacement(98, 181, ARM_DUAL_ANCHOR);
   assert.ok(p.leftPct > 10 && p.leftPct < 40);
   assert.ok(p.heightPct > 95);
+});
+
+test('shape-A body box equals full canvas so legacy tuning is unchanged', () => {
+  const box = bodyBoxFromFile('PNG/Default/body_blueA.png');
+  assert.deepEqual(box, { x: 0, y: 0, w: 165, h: 165 });
+  const ear = resolvePartAnchor('detail', 'PNG/Default/detail_blue_ear.png', box);
+  assert.equal(Math.round(ear.anchorX), 20);
+  assert.equal(Math.round(ear.anchorY), 56);
+  const arms = armSingleAnchors(box);
+  assert.equal(Math.round(arms.left.anchorX), 28);
+  assert.equal(Math.round(arms.right.anchorX), 137);
+});
+
+test('narrow body E keeps ear and arms attached to its box', () => {
+  const box = bodyBoxFromFile('PNG/Default/body_greenE.png'); // 132x250 -> ~87px wide, centered
+  assert.ok(box.x > 30 && box.x < 45, `box.x=${box.x}`);
+  const ear = resolvePartAnchor('detail', 'PNG/Default/detail_green_ear.png', box);
+  assert.ok(ear.anchorX > box.x && ear.anchorX < box.x + box.w / 2, 'ear anchored on body left half');
+  const arms = armSingleAnchors(box);
+  assert.ok(arms.left.anchorX > box.x - 5, 'left arm near body edge, not canvas edge');
+  assert.ok(arms.right.anchorX < box.x + box.w + 5, 'right arm near body edge');
+  const eyes = resolvePartAnchor('eyes', 'PNG/Default/eye_red.png', box);
+  const eyesPlaced = computeAnchoredPlacement(64, 58, eyes);
+  const eyesWidthPx = (eyesPlaced.widthPct / 100) * KENNEY_CANVAS.w;
+  assert.ok(eyesWidthPx <= 0.8 * box.w + 0.5, 'eyes capped to body width');
+});
+
+test('dual arm sprite tracks narrow body width', () => {
+  const boxC = bodyBoxFromFile('PNG/Default/body_redC.png'); // 141x194
+  const dual = armDualAnchor(boxC);
+  const placed = computeAnchoredPlacement(180, 90, dual);
+  const widthPx = (placed.widthPct / 100) * KENNEY_CANVAS.w;
+  assert.ok(widthPx <= 1.15 * boxC.w + 0.5, `dual arms ${widthPx}px vs body ${boxC.w}px`);
+  assert.ok(Math.abs((placed.leftPct + placed.widthPct / 2) / 100 * KENNEY_CANVAS.w - (boxC.x + boxC.w / 2)) < 1, 'centered on body');
+});
+
+test('unknown body filename falls back to shape A box', () => {
+  const box = bodyBoxFromFile('');
+  assert.deepEqual(box, { x: 0, y: 0, w: 165, h: 165 });
 });
 
 test('horn detail sits above eye anchor', () => {
