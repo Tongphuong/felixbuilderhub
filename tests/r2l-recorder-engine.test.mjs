@@ -1,8 +1,11 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import { safeStopMonitor } from '../src/lib/r2l-recorder-guards.ts';
+import { r2lRecorderScriptSrc } from '../src/scripts/r2l-recorder-script.mjs';
 
 const engine = readFileSync('public/scripts/r2l-recorder.js', 'utf-8');
+const versionedRecorderSrc = r2lRecorderScriptSrc();
 const micScript = readFileSync('public/scripts/r2l-mic-check.js', 'utf-8');
 const lessonPage = readFileSync('src/pages/read2lead/lesson.astro', 'utf-8');
 const speakingPage = readFileSync('src/pages/read2lead/speaking.astro', 'utf-8');
@@ -65,13 +68,44 @@ test('engine ships a raw-PCM WAV fallback that bypasses platform encoders', () =
   assert.match(engine, /WAV_TARGET_RATE = 16000/);
 });
 
-test('lesson and speaking pages load the engine before the mic check script', () => {
+test('lesson and speaking pages load a versioned engine before the mic check script', () => {
+  assert.match(versionedRecorderSrc, /^\/scripts\/r2l-recorder\.js\?v=[a-f0-9]{12}$/);
   for (const page of [lessonPage, speakingPage]) {
-    const engineIdx = page.indexOf('/scripts/r2l-recorder.js');
+    assert.doesNotMatch(page, /src="\/scripts\/r2l-recorder\.js"/, 'bare engine URL must not appear');
+    assert.match(page, /r2lRecorderScriptSrc/, 'build-time recorder URL helper is used');
+    assert.match(page, /src=\{r2lRecorderSrc\}/, 'engine script tag uses hashed src');
+    const engineIdx = page.indexOf('r2lRecorderSrc');
     const micIdx = page.indexOf('/scripts/r2l-mic-check.js');
     assert.ok(engineIdx > -1, 'engine script tag present');
     assert.ok(micIdx > engineIdx, 'engine loads before mic-check');
   }
+});
+
+test('startMonitor exposes a callable stop on every return path', () => {
+  const fnStart = engine.indexOf('async function startMonitor');
+  const fnEnd = engine.indexOf('/* ---------- mime selection');
+  const body = engine.slice(fnStart, fnEnd);
+  const returnBlocks = body.match(/return\s*\{[\s\S]*?\};/g) || [];
+  assert.ok(returnBlocks.length >= 3, 'startMonitor has multiple return paths');
+  for (const block of returnBlocks) {
+    assert.match(block, /stop:\s*\(\)\s*=>/, 'each monitor return exposes stop()');
+  }
+});
+
+test('safeStopMonitor tolerates monitors without stop (deploy skew guard)', () => {
+  assert.doesNotThrow(() => safeStopMonitor({}));
+  assert.doesNotThrow(() => safeStopMonitor({ stop: 'not-a-function' }));
+  let stopped = false;
+  safeStopMonitor({ stop: () => { stopped = true; } });
+  assert.equal(stopped, true);
+});
+
+test('lesson and speaking inline cleanup uses safeStop guards', () => {
+  assert.match(lessonPage, /function _r2lSafeStopMonitor/);
+  assert.match(lessonPage, /_r2lSafeStopMonitor\(entry\.monitor\)/);
+  assert.doesNotMatch(lessonPage, /entry\.monitor\.stop\(\)/);
+  assert.match(speakingPage, /function safeStopMonitor/);
+  assert.doesNotMatch(speakingPage, /state\.recording\.monitor\.stop\(\)/);
 });
 
 test('lesson detects silent captures on-device and never uploads silence', () => {

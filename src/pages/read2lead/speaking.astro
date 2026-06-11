@@ -3,6 +3,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import MicCheckPanel from '../../components/read2lead/v2/MicCheckPanel.astro';
+import { r2lRecorderScriptSrc } from '../../scripts/r2l-recorder-script.mjs';
+
+const r2lRecorderSrc = r2lRecorderScriptSrc();
 ---
 
 <BaseLayout
@@ -305,6 +308,10 @@ import MicCheckPanel from '../../components/read2lead/v2/MicCheckPanel.astro';
     const modePicker = document.getElementById('mode-picker');
     const practiceScreen = document.getElementById('practice-screen');
     const DEFAULT_MAX_SECONDS = 30;
+
+    function safeStopMonitor(m) {
+      try { if (m && typeof m.stop === 'function') m.stop(); } catch {}
+    }
 
     const MODE_EMOJI = { retell: '📖', questions: '💬' };
 
@@ -670,9 +677,7 @@ import MicCheckPanel from '../../components/read2lead/v2/MicCheckPanel.astro';
         clearInterval(state.timerId);
         state.timerId = null;
       }
-      if (state.recording?.monitor) {
-        state.recording.monitor.stop();
-      }
+      safeStopMonitor(state.recording?.monitor);
       if (state.recording?.stream) {
         state.recording.stream.getTracks().forEach((t) => t.stop());
       }
@@ -889,7 +894,7 @@ import MicCheckPanel from '../../components/read2lead/v2/MicCheckPanel.astro';
           } catch {
             blob = null;
           }
-          monitor.stop();
+          safeStopMonitor(monitor);
           stream.getTracks().forEach((t) => t.stop());
           const voiced = window.R2LRecorder?.recordingLooksVoiced
             ? window.R2LRecorder.recordingLooksVoiced(monitor, blob?.size || 0)
@@ -1045,6 +1050,6 @@ import MicCheckPanel from '../../components/read2lead/v2/MicCheckPanel.astro';
 
     loadBtn?.addEventListener('click', loadSession);
   </script>
-  <script src="/scripts/r2l-recorder.js" defer></script>
+  <script src={r2lRecorderSrc} defer></script>
   <script src="/scripts/r2l-mic-check.js" defer></script>
 </BaseLayout>
