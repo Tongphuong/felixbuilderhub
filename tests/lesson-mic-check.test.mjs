@@ -6,6 +6,7 @@ const micScript = readFileSync('public/scripts/r2l-mic-check.js', 'utf-8');
 const lessonPage = readFileSync('src/pages/read2lead/lesson.astro', 'utf-8');
 const speakingPage = readFileSync('src/pages/read2lead/speaking.astro', 'utf-8');
 const listenSpeak = readFileSync('src/components/read2lead/v2/ListenAndSpeak.astro', 'utf-8');
+const micPanel = readFileSync('src/components/read2lead/v2/MicCheckPanel.astro', 'utf-8');
 
 test('mic check script exposes mount API and OS help', () => {
   assert.match(micScript, /global\.R2LMicCheck/);
@@ -15,6 +16,7 @@ test('mic check script exposes mount API and OS help', () => {
   assert.match(micScript, /MIC_WARMUP_SECONDS/);
   assert.match(micScript, /runMicWarmupCountdown/);
   assert.match(micScript, /data-mic-parent-skip/);
+  assert.match(micPanel, /data-mic-skip-lesson/);
   assert.match(micScript, /Windows → Cài đặt → Quyền riêng tư và bảo mật → Microphone/);
   assert.match(micScript, /Mac → Cài đặt hệ thống → Quyền riêng tư và bảo mật → Microphone/);
   assert.match(micScript, /data-mic-meter-bar/);

@@ -93,7 +93,10 @@ const retellGuideInline = retellGuideSrc
           <RetellSummary />
         </section>
 
-        <section id="global-cta" class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <section id="global-cta" class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 flex flex-col gap-2">
+          <button id="lesson-mic-skip" class="r2l-secondary w-full hidden" type="button">
+            Micro lỗi — sang phần tiếp
+          </button>
           <button id="lesson-continue" class="r2l-primary w-full text-lg" type="button" disabled>
             Tiếp tục →
           </button>
@@ -1291,7 +1294,7 @@ function _r2lBuildRetellTemplate(lesson) {
 
   // Meet-style live monitor on the recording stream — detects "no sound reached
   // the mic" on the child's machine instead of waiting for the server to fail.
-  function _r2lStartLevelMonitor(stream, cardEl) {
+  async function _r2lStartLevelMonitor(stream, cardEl) {
     if (!window.R2LRecorder?.startMonitor) {
       return { available: false, peak: () => -1, voiced: () => true, stop: () => {} };
     }
@@ -1666,6 +1669,19 @@ function _r2lBuildRetellTemplate(lesson) {
 
     try {
       const payload = await _r2lPostSpeakingCheck(blob, expectedText, 'read', 0, telemetry);
+      const activity = activityItemsFromCard(cardEl);
+      // Mic clearly worked but the scoring server failed (API timeout/outage…):
+      // don't make the child record every sentence — finish the whole part now.
+      if (
+        activity
+        && _r2lAsrFailureLooksLikeOutage(payload)
+        && _r2lRecordingHadVoice(telemetry)
+      ) {
+        const msg = payload?.message || _R2L_ASR_OUTAGE_MSG;
+        _r2lCompleteSpeakActivityOnEffort(activity, msg, { asr_outage: true });
+        showToast('Con bấm Tiếp tục xuống dưới để sang phần sau nhé!');
+        return;
+      }
       // The analyser HEARD the child but the server transcribed nothing → the
       // platform audio encoder is producing garbage on this machine. Switch it
       // to the raw-PCM WAV engine permanently (no OS codec in the path).
@@ -1683,7 +1699,16 @@ function _r2lBuildRetellTemplate(lesson) {
         checkResult: payload,
       });
       _r2lRenderRecorderUi(itemKey, cardEl);
-      _r2lRenderSpeakFeedback(cardEl, payload);
+      const friendlyPayload = payload?.ok
+        ? payload
+        : {
+            ...payload,
+            message: payload?.message
+              || (payload?.error === 'transcription_failed'
+                ? 'Chưa chấm được. Con thử thu lại nhé!'
+                : 'Chưa chấm được. Con thử thu lại nhé!'),
+          };
+      _r2lRenderSpeakFeedback(cardEl, friendlyPayload);
       if (payload?.ok) {
         const heroEl = cardEl.closest('[data-activity-shell="listen_and_speak"]')?.querySelector('[data-minny-hero]');
         _r2lSetMinnyMood(_r2lMinnyMoodForScore(payload.score_percent), heroEl);
@@ -1712,6 +1737,111 @@ function _r2lBuildRetellTemplate(lesson) {
 
   function _r2lSpeakItemKeysForActivity(activity) {
     return (activity?.items || []).map((item, index) => item.id || `ls_${index}`);
+  }
+
+  const _R2L_ASR_OUTAGE_MSG = 'Minny nghe con nói rồi, nhưng hôm nay máy chưa chấm điểm được — con bấm Tiếp tục xuống dưới nhé!';
+  const _R2L_MIC_SKIP_MSG = 'Micro hôm nay khó — Minny biết con đã cố rồi, ba mẹ kiểm tra micro giúp con sau nhé.';
+
+  function _r2lRecordingHadVoice(telemetry) {
+    if (!telemetry) return true;
+    if (telemetry.voiced === true) return true;
+    return typeof telemetry.peak === 'number' && telemetry.peak >= 4;
+  }
+
+  function _r2lAsrFailureLooksLikeOutage(payload) {
+    if (!payload || payload.ok) return false;
+    if (payload.asr_outage === true) return true;
+    return ['transcription_failed', 'transcription_timeout', 'internal_error', 'config_error']
+      .includes(String(payload.error || ''));
+  }
+
+  function _r2lCompleteSpeakActivityOnEffort(activity, message, meta = {}) {
+    if (!activity || state.completedTypes.has('listen_and_speak')) return;
+    const itemKeys = _r2lSpeakItemKeysForActivity(activity);
+    itemKeys.forEach((itemKey, itemIndex) => {
+      const existing = _r2lRecorderState.perItem.get(itemKey) || {};
+      if (existing.blobUrl) URL.revokeObjectURL(existing.blobUrl);
+      _r2lRecorderState.perItem.set(itemKey, {
+        mediaRecorder: null,
+        chunks: [],
+        blob: null,
+        blobUrl: null,
+        status: 'idle',
+        silentAttempts: existing.silentAttempts || 0,
+        expectedText: existing.expectedText || activity.items?.[itemIndex]?.text_en || '',
+        checkStatus: 'error',
+        checkResult: { ok: false, ...meta },
+      });
+      const cardEl = qs(`[data-activity-shell="listen_and_speak"]`)?.querySelector(`[data-speak-card="${itemIndex}"]`);
+      if (cardEl) {
+        _r2lRenderRecorderUi(itemKey, cardEl);
+        _r2lRenderSpeakFeedback(cardEl, { ok: false, message });
+      }
+    });
+    _r2lMergeSpeakActivityScores(activity);
+    if (!state.completedTypes.has('listen_and_speak')) {
+      completeActivity('listen_and_speak', {
+        correct_count: 0,
+        total_count: Math.max(itemKeys.length, 1),
+        wrong_count: 0,
+        score_percent: 70,
+        ...meta,
+      });
+    }
+    _r2lUpdateMicSkipUi();
+  }
+
+  function _r2lCompleteSpeakActivityOnMicSkip(activity) {
+    _r2lCompleteSpeakActivityOnEffort(activity, _R2L_MIC_SKIP_MSG, { mic_skipped: true });
+  }
+
+  function _r2lSkipMicSpeakingProgress() {
+    const activities = state.lesson?.activities || [];
+    const current = activities[state.activityIndex];
+    if (current?.type === 'listen_and_speak') {
+      _r2lCompleteSpeakActivityOnMicSkip(current);
+      showToast('Minny biết micro hôm nay khó — mình sang phần tiếp nhé!');
+      return;
+    }
+    if (current?.type === 'retell_summary') {
+      if (!state.completedTypes.has('retell_summary')) {
+        _r2lCompleteRetellOnEffort();
+        _r2lRenderRetellFeedback({
+          ok: false,
+          message: 'Micro hôm nay khó — Minny biết con đã cố rồi, ba mẹ kiểm tra micro giúp con sau nhé.',
+        });
+        _r2lRenderRetellControls();
+      }
+      showToast('Minny biết micro hôm nay khó — mình sang phần tiếp nhé!');
+      return;
+    }
+    const speakActivity = activities.find((a) => a?.type === 'listen_and_speak');
+    const retellActivity = activities.find((a) => a?.type === 'retell_summary');
+    if (speakActivity && !state.completedTypes.has('listen_and_speak')) {
+      _r2lCompleteSpeakActivityOnMicSkip(speakActivity);
+    }
+    if (retellActivity && !state.completedTypes.has('retell_summary')) {
+      _r2lCompleteRetellOnEffort();
+    }
+    if (
+      (speakActivity && !state.completedTypes.has('listen_and_speak'))
+      || (retellActivity && !state.completedTypes.has('retell_summary'))
+    ) {
+      showToast('Minny biết micro hôm nay khó — mình sang phần tiếp nhé!');
+    }
+  }
+
+  function _r2lUpdateMicSkipUi() {
+    const activities = state.lesson?.activities || [];
+    const current = activities[state.activityIndex];
+    const currentType = current?.type;
+    const onMicActivity = currentType === 'listen_and_speak' || currentType === 'retell_summary';
+    const currentIncomplete = onMicActivity && !state.completedTypes.has(currentType);
+    const skipBtn = qs('#lesson-mic-skip');
+    if (skipBtn) skipBtn.classList.toggle('hidden', !currentIncomplete);
+    document.querySelectorAll('[data-speak-mic-skip], [data-retell-mic-skip]').forEach((btn) => {
+      btn.hidden = !currentIncomplete;
+    });
   }
 
   function _r2lMergeSpeakActivityScores(activity) {
@@ -1857,7 +1987,7 @@ function _r2lBuildRetellTemplate(lesson) {
         throw new Error('track_not_live');
       }
       const recorder = _r2lCreateUnifiedRecorder(stream);
-      const monitor = _r2lStartLevelMonitor(stream, cardEl);
+      const monitor = await _r2lStartLevelMonitor(stream, cardEl);
       const unwatch = window.R2LRecorder?.watchTrack
         ? window.R2LRecorder.watchTrack(stream, (kind) => {
             const hint = cardEl?.querySelector?.('[data-rec-hint]');
@@ -1979,8 +2109,9 @@ function _r2lBuildRetellTemplate(lesson) {
     if (stream) stream.getTracks().forEach((t) => t.stop());
 
     const peak = monitor?.available ? monitor.peak() : -1;
-    // No monitor (old browser) → trust the blob like before.
-    const voiced = monitor?.available ? monitor.voiced() : true;
+    const voiced = window.R2LRecorder?.recordingLooksVoiced
+      ? window.R2LRecorder.recordingLooksVoiced(monitor, blob?.size || 0)
+      : (monitor?.available ? monitor.voiced() : true);
     const telemetry = {
       peak,
       voiced,
@@ -2000,7 +2131,6 @@ function _r2lBuildRetellTemplate(lesson) {
       const silentAttempts = (entry.silentAttempts || 0) + 1;
       window.R2LRecorder?.bumpProfile?.();
       _r2lReportSilentCapture(expectedText, telemetry);
-      const giveEffortPass = silentAttempts >= 2;
       _r2lRecorderState.perItem.set(itemKey, {
         mediaRecorder: null,
         chunks: [],
@@ -2009,19 +2139,15 @@ function _r2lBuildRetellTemplate(lesson) {
         status: 'idle',
         silentAttempts,
         expectedText,
-        checkStatus: giveEffortPass ? 'error' : 'idle',
+        checkStatus: 'error',
         checkResult: null,
       });
       _r2lRenderRecorderUi(itemKey, cardEl);
       _r2lRenderSpeakFeedback(cardEl, {
         ok: false,
-        message: giveEffortPass
-          ? 'Micro hôm nay không thu được tiếng, nhưng Minny biết con đã đọc rồi — mình qua câu tiếp nhé! Ba mẹ kiểm tra micro giúp con sau.'
-          : 'Minny không thấy tiếng vào micro. Con thử lại — nói TO hơn, hoặc ba mẹ kiểm tra micro ở khung phía trên nhé.',
+        message: 'Micro hôm nay không thu được tiếng, nhưng Minny biết con đã đọc rồi — mình qua câu tiếp nhé! Ba mẹ kiểm tra micro giúp con sau.',
       });
-      if (giveEffortPass) {
-        _r2lMergeSpeakActivityScores(activityItemsFromCard(cardEl));
-      }
+      _r2lMergeSpeakActivityScores(activityItemsFromCard(cardEl));
       return;
     }
 
@@ -2042,7 +2168,7 @@ function _r2lBuildRetellTemplate(lesson) {
       _r2lScoreSpeakRecording(itemKey, cardEl, blob, telemetry);
     } else {
       // A header-only blob (stopped too fast) transcribes to nothing — catch it
-      // locally instead of sending silence to Groq.
+      // locally instead of sending silence to the server.
       _r2lRenderSpeakFeedback(cardEl, {
         ok: false,
         message: 'Minny chưa nghe rõ. Con bấm 🎤 Con nói, chờ đèn xanh rồi đọc to cả câu nhé!',
@@ -2244,6 +2370,16 @@ function _r2lBuildRetellTemplate(lesson) {
   qs('#trivia-reveal-continue')?.addEventListener('click', () => {
     qs('#trivia-reveal-section')?.classList.add('hidden');
     _r2lShowCompletionAfterTrivia({});
+  });
+
+  qs('#lesson-mic-skip')?.addEventListener('click', () => {
+    _r2lSkipMicSpeakingProgress();
+  });
+
+  document.addEventListener('click', (event) => {
+    if (event.target.closest('[data-mic-skip-lesson], [data-speak-mic-skip], [data-retell-mic-skip]')) {
+      _r2lSkipMicSpeakingProgress();
+    }
   });
 
   qs('#lesson-continue')?.addEventListener('click', () => {
@@ -2590,6 +2726,16 @@ function _r2lBuildRetellTemplate(lesson) {
         RETELL_MAX_SECONDS,
         telemetry,
       );
+      if (_r2lAsrFailureLooksLikeOutage(payload) && _r2lRecordingHadVoice(telemetry)) {
+        _r2lRetellState.status = 'done';
+        _r2lRenderRetellFeedback({
+          ok: false,
+          message: payload?.message || _R2L_ASR_OUTAGE_MSG,
+        });
+        _r2lCompleteRetellOnEffort();
+        showToast('Con bấm Tiếp tục xuống dưới để sang phần sau nhé!');
+        return;
+      }
       // Analyser heard the child but ASR heard nothing → broken platform
       // encoder on this machine; switch future recordings to the WAV engine.
       if (
@@ -2683,7 +2829,7 @@ function _r2lBuildRetellTemplate(lesson) {
       }
       const recorder = _r2lCreateUnifiedRecorder(stream);
       const monitor = window.R2LRecorder?.startMonitor
-        ? window.R2LRecorder.startMonitor(stream, {
+        ? await window.R2LRecorder.startMonitor(stream, {
             onLevel: (level) => {
               const bar = _r2lRetellState.root?.querySelector?.('[data-retell-meter-bar]');
               if (bar) bar.style.width = `${Math.min(100, Math.round((level / 64) * 100))}%`;
@@ -2758,7 +2904,9 @@ function _r2lBuildRetellTemplate(lesson) {
       _r2lRetellState.recorderCtl = null;
       _r2lRetellState.monitor = null;
 
-      const voiced = monitor?.available ? monitor.voiced() : true;
+      const voiced = window.R2LRecorder?.recordingLooksVoiced
+        ? window.R2LRecorder.recordingLooksVoiced(monitor, blob?.size || 0)
+        : (monitor?.available ? monitor.voiced() : true);
       const telemetry = {
         peak: monitor?.available ? monitor.peak() : -1,
         voiced,
@@ -2776,18 +2924,11 @@ function _r2lBuildRetellTemplate(lesson) {
         _r2lReportSilentCapture(_r2lRetellState.storyContext, telemetry);
         _r2lRetellState.status = 'idle';
         _r2lSetMinnyMood('encourage', _r2lRetellState.heroEl);
-        if (silentAttempts >= 2) {
-          _r2lRenderRetellFeedback({
-            ok: false,
-            message: 'Micro hôm nay không thu được tiếng, nhưng Minny biết con đã kể rồi — giỏi lắm! Ba mẹ kiểm tra micro giúp con sau nhé.',
-          });
-          _r2lCompleteRetellOnEffort();
-        } else {
-          _r2lRenderRetellFeedback({
-            ok: false,
-            message: 'Minny không thấy tiếng vào micro. Con thử kể lại — nói TO hơn, hoặc ba mẹ kiểm tra micro ở khung phía trên nhé.',
-          });
-        }
+        _r2lRenderRetellFeedback({
+          ok: false,
+          message: 'Micro hôm nay không thu được tiếng, nhưng Minny biết con đã kể rồi — giỏi lắm! Ba mẹ kiểm tra micro giúp con sau nhé.',
+        });
+        _r2lCompleteRetellOnEffort();
         _r2lRenderRetellControls();
         return;
       }
@@ -2844,6 +2985,9 @@ function _r2lBuildRetellTemplate(lesson) {
       <span class="r2l-rec-meter" data-retell-meter hidden><span class="r2l-rec-meter-bar" data-retell-meter-bar></span></span>
       <span class="mt-1 hidden text-sm font-semibold text-gold" data-retell-timer></span>
       <div class="mt-4 hidden rounded-md border border-cream/10 bg-navy-950/35 p-3 text-sm text-cream/80" data-retell-feedback></div>
+      <button type="button" class="r2l-secondary mt-4 w-full" data-retell-mic-skip hidden>
+        Micro lỗi — sang phần tiếp
+      </button>
     `;
 
     _r2lBindRetellStoryToggle(root);
@@ -3649,6 +3793,7 @@ function _r2lBuildRetellTemplate(lesson) {
       showActivity(resumed ? state.activityIndex : 0);
     }
     updateProgress();
+    _r2lUpdateMicSkipUi();
     saveLessonSession();
     if (resumed) {
       showToast('Con tiếp tục bài đang làm — không cần làm lại từ đầu nhé!', 5000);
@@ -3814,6 +3959,7 @@ function _r2lBuildRetellTemplate(lesson) {
     if (isW1()) w1RenderQuestPath();
 
     setMinnyStrip('idle', MINNY_COMMANDS[activity.type] || '');
+    _r2lUpdateMicSkipUi();
     _itemStreak = 0;
 
     const useLargeMinny = ['listen_and_speak', 'retell_summary'].includes(activity.type);
@@ -3867,6 +4013,7 @@ function _r2lBuildRetellTemplate(lesson) {
       btn.textContent = 'Tiếp tục →';
       btn.disabled = !isCurrentDone;
     }
+    _r2lUpdateMicSkipUi();
   }
 
   function w1WordCount(text) {
@@ -4701,6 +4848,9 @@ function _r2lBuildRetellTemplate(lesson) {
           )
           .join('')}
       </div>
+      <button type="button" class="r2l-secondary mt-5 w-full" data-speak-mic-skip hidden>
+        Micro lỗi — sang phần tiếp
+      </button>
     `;
 
     root.querySelectorAll('[data-speak-listen]').forEach((button) => {

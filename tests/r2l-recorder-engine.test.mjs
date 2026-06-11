@@ -32,14 +32,17 @@ test('engine remembers the tested mic and degrades constraints (Zoom pattern + s
 test('engine monitor keeps an AudioContext OPEN during recording (no prime-then-close)', () => {
   // The Realtek root cause was closing an AudioContext right before recording.
   // The monitor must close it only in stop(), after the recording ends.
-  const monitorStart = engine.indexOf('function startMonitor');
+  const monitorStart = engine.indexOf('async function startMonitor');
   const monitorEnd = engine.indexOf('/* ---------- mime selection');
   const monitorBody = engine.slice(monitorStart, monitorEnd);
   assert.match(monitorBody, /stop: \(\) => \{/);
   assert.match(monitorBody, /ctx\.close\(\)/);
+  assert.match(monitorBody, /await ctx\.resume\(\)/);
   // Silence is detected on-device, Meet style.
   assert.match(monitorBody, /onSilenceHint/);
   assert.match(engine, /SILENT_LEVEL/);
+  assert.match(engine, /recordingLooksVoiced/);
+  assert.match(engine, /TRUST_BLOB_BYTES/);
 });
 
 test('engine prefers software opus on Chromium and mp4 only on Safari', () => {
@@ -70,15 +73,20 @@ test('lesson and speaking pages load the engine before the mic check script', ()
 
 test('lesson detects silent captures on-device and never uploads silence', () => {
   assert.match(lessonPage, /_r2lStartLevelMonitor/);
-  assert.match(lessonPage, /monitor\.voiced\(\)/);
-  assert.match(lessonPage, /Minny không thấy tiếng vào micro/);
+  assert.match(lessonPage, /recordingLooksVoiced/);
+  assert.match(lessonPage, /Micro lỗi — sang phần tiếp/);
   assert.match(lessonPage, /_r2lReportSilentCapture/);
   assert.match(lessonPage, /report_silent/);
 });
 
-test('a hopeless mic still cannot trap the child (effort pass after repeated silence)', () => {
-  assert.match(lessonPage, /silentAttempts >= 2/);
+test('a hopeless mic still cannot trap the child (skip path + effort pass)', () => {
+  assert.match(lessonPage, /_r2lSkipMicSpeakingProgress/);
+  assert.match(lessonPage, /data-mic-skip-lesson/);
+  assert.match(lessonPage, /lesson-mic-skip/);
   assert.match(lessonPage, /Micro hôm nay không thu được tiếng/);
+  assert.match(lessonPage, /_r2lCompleteSpeakActivityOnMicSkip/);
+  assert.match(lessonPage, /_r2lCompleteSpeakActivityOnEffort/);
+  assert.match(lessonPage, /_r2lAsrFailureLooksLikeOutage/);
 });
 
 test('lesson auto-switches to the WAV engine when ASR hears nothing despite voice', () => {
@@ -111,7 +119,7 @@ test('the prime-then-close AudioContext pattern is fully gone', () => {
 
 test('speaking page uses the unified engine with the silent-capture gate', () => {
   assert.match(speakingPage, /R2LRecorder\?\.createRecorder/);
-  assert.match(speakingPage, /monitor\.voiced\(\)/);
+  assert.match(speakingPage, /recordingLooksVoiced/);
   assert.match(speakingPage, /bumpProfile/);
   assert.match(speakingPage, /useWavEngine/);
 });

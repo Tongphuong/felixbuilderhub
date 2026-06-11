@@ -26,6 +26,9 @@
   const LEVEL_SAMPLE_MS = 100;
   // Same threshold the mic-check meter uses: byte-domain amplitude (0..128).
   const SILENT_LEVEL = 4;
+  // If the blob is this large, trust MediaRecorder even when the level meter read 0
+  // (iOS can leave AudioContext suspended so the analyser never moves).
+  const TRUST_BLOB_BYTES = 20000;
   // Warn the child if this much recording time passed with no signal at all.
   const SILENCE_HINT_MS = 3000;
   const WAV_TARGET_RATE = 16000; // Whisper's native rate; keeps uploads small.
@@ -166,7 +169,15 @@
   // whole recording (this mirrors the mic-test pipeline — the one path proven
   // to work on every machine, including Realtek/Windows). Closed only after
   // the recording stops.
-  function startMonitor(stream, options = {}) {
+  // True when we should upload/score — meter heard voice OR blob is big enough to
+  // trust the encoder (safety valve when the analyser mis-reads on iOS).
+  function recordingLooksVoiced(monitor, blobSize) {
+    if (!monitor?.available) return true;
+    if (monitor.voiced()) return true;
+    return Number(blobSize) >= TRUST_BLOB_BYTES;
+  }
+
+  async function startMonitor(stream, options = {}) {
     const onLevel = typeof options.onLevel === 'function' ? options.onLevel : null;
     const onSilenceHint = typeof options.onSilenceHint === 'function' ? options.onSilenceHint : null;
     let ctx = null;
@@ -179,7 +190,10 @@
     try {
       const Ctx = global.AudioContext || global.webkitAudioContext;
       ctx = new Ctx();
-      if (ctx.state === 'suspended') ctx.resume().catch(() => {});
+      // Must await on iOS — fire-and-forget resume leaves peak at 0 forever.
+      if (ctx.state === 'suspended') {
+        await ctx.resume().catch(() => {});
+      }
       const source = ctx.createMediaStreamSource(stream);
       const analyser = ctx.createAnalyser();
       analyser.fftSize = 2048;
@@ -418,6 +432,8 @@
 
   global.R2LRecorder = {
     SILENT_LEVEL,
+    TRUST_BLOB_BYTES,
+    recordingLooksVoiced,
     PROFILES,
     saveDevicePref,
     getDevicePref,

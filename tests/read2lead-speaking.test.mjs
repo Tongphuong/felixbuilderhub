@@ -8,9 +8,11 @@ import {
   feedbackVi,
   inferAudioFilename,
   onRequestPost,
+  resolveOpenAIApiKey,
   runSpeakingCheck,
   scoreOpenTranscript,
   scoreTranscript,
+  transcribeAudio,
   wordSimilarity,
 } from '../functions/api/read2lead-speaking-check.js';
 
@@ -79,7 +81,7 @@ test('empty transcript → transcription_failed error', async () => {
       runSpeakingCheck({
         audioBlob: new Blob(['audio'], { type: 'audio/webm' }),
         expectedText: 'The boy runs fast',
-        groqApiKey: 'test-key',
+        openaiApiKey: 'test-key',
         fetchFn: async () => ({
           ok: true,
           json: async () => ({ text: '   ' }),
@@ -89,13 +91,13 @@ test('empty transcript → transcription_failed error', async () => {
   );
 });
 
-test('Groq timeout → transcription_timeout error (not a "speak louder" message)', async () => {
+test('OpenAI timeout → transcription_timeout error', async () => {
   await assert.rejects(
     () =>
       runSpeakingCheck({
         audioBlob: new Blob(['audio'], { type: 'audio/webm' }),
         expectedText: 'The boy runs fast',
-        groqApiKey: 'test-key',
+        openaiApiKey: 'test-key',
         fetchFn: async () => {
           const err = new Error('aborted');
           err.name = 'TimeoutError';
@@ -106,14 +108,15 @@ test('Groq timeout → transcription_timeout error (not a "speak louder" message
   );
 });
 
-test('speaking endpoint caps the Groq call with a timeout', () => {
+test('speaking endpoint caps the OpenAI call with a timeout', () => {
   assert.match(speakingEndpoint, /AbortSignal\.timeout/);
   assert.match(speakingEndpoint, /transcription_timeout/);
-  assert.match(speakingEndpoint, /GROQ_TIMEOUT_MS/);
+  assert.match(speakingEndpoint, /TRANSCRIBE_TIMEOUT_MS/);
+  assert.doesNotMatch(speakingEndpoint, /groq/i);
 });
 
-test('audio too large → 413 rejected before calling Groq', async () => {
-  let groqCalled = false;
+test('audio too large → 413 rejected before calling OpenAI', async () => {
+  let openaiCalled = false;
   const formData = new FormData();
   formData.append('access_code', 'R2L-TEST-1234');
   formData.append('pack_id', 'pack-1');
@@ -131,16 +134,16 @@ test('audio too large → 413 rejected before calling Groq', async () => {
           progress: { current_pack: { pack_id: 'pack-1' } },
         }),
       },
-      GROQ_API_KEY: 'test-key',
+      OPENAI_API_KEY: 'test-key',
     },
     fetchFn: async () => {
-      groqCalled = true;
+      openaiCalled = true;
       return { ok: true, json: async () => ({ text: 'the boy runs fast' }) };
     },
   });
 
   assert.equal(response.status, 413);
-  assert.equal(groqCalled, false);
+  assert.equal(openaiCalled, false);
 });
 
 test('invalid access_code → 404', async () => {
@@ -159,7 +162,7 @@ test('invalid access_code → 404', async () => {
       READ2LEAD_CODES: {
         get: async () => null,
       },
-      GROQ_API_KEY: 'test-key',
+      OPENAI_API_KEY: 'test-key',
     },
   });
 
@@ -180,10 +183,35 @@ test('wordSimilarity treats near matches as close', () => {
   assert.ok(wordSimilarity('park', 'park') === 1);
 });
 
-test('speaking endpoint uses Groq whisper-large-v3', () => {
-  assert.match(speakingEndpoint, /whisper-large-v3/);
-  assert.match(speakingEndpoint, /api\.groq\.com\/openai\/v1\/audio\/transcriptions/);
-  assert.match(speakingEndpoint, /GROQ_API_KEY/);
+test('speaking endpoint uses OpenAI Whisper only', () => {
+  assert.match(speakingEndpoint, /whisper-1/);
+  assert.match(speakingEndpoint, /api\.openai\.com\/v1\/audio\/transcriptions/);
+  assert.match(speakingEndpoint, /OPENAI_API_KEY/);
+  assert.match(speakingEndpoint, /READ2LEAD_OPENAI_API_KEY/);
+  assert.doesNotMatch(speakingEndpoint, /groq/i);
+});
+
+test('resolveOpenAIApiKey accepts either env var name', () => {
+  assert.equal(resolveOpenAIApiKey({ OPENAI_API_KEY: 'a' }), 'a');
+  assert.equal(resolveOpenAIApiKey({ READ2LEAD_OPENAI_API_KEY: 'b' }), 'b');
+  assert.equal(resolveOpenAIApiKey({}), '');
+});
+
+test('transcribeAudio calls OpenAI', async () => {
+  let url = '';
+  const text = await transcribeAudio(
+    new Blob(['audio'], { type: 'audio/webm' }),
+    'openai-key',
+    async (target) => {
+      url = String(target);
+      return {
+        ok: true,
+        json: async () => ({ text: 'hello world' }),
+      };
+    },
+  );
+  assert.match(url, /api\.openai\.com\/v1\/audio\/transcriptions/);
+  assert.equal(text, 'hello world');
 });
 
 test('open response scores story relevance instead of read-aloud match', () => {
@@ -208,7 +236,7 @@ test('runSpeakingCheck supports open check_mode', async () => {
     audioBlob: new Blob(['audio'], { type: 'audio/webm' }),
     expectedText: 'Pilot walks the dog in the park every morning.',
     checkMode: 'open',
-    groqApiKey: 'test-key',
+    openaiApiKey: 'test-key',
     fetchFn: async () => ({
       ok: true,
       json: async () => ({ text: 'Pilot walks the dog every morning because he likes animals.' }),

@@ -865,7 +865,7 @@ import MicCheckPanel from '../../components/read2lead/v2/MicCheckPanel.astro';
               };
             })();
         const monitor = window.R2LRecorder?.startMonitor
-          ? window.R2LRecorder.startMonitor(stream, {
+          ? await window.R2LRecorder.startMonitor(stream, {
               onSilenceHint: () => {
                 const statusEl = document.getElementById('speaking-status');
                 if (statusEl && state.status === 'recording') {
@@ -891,7 +891,9 @@ import MicCheckPanel from '../../components/read2lead/v2/MicCheckPanel.astro';
           }
           monitor.stop();
           stream.getTracks().forEach((t) => t.stop());
-          const voiced = monitor.available ? monitor.voiced() : true;
+          const voiced = window.R2LRecorder?.recordingLooksVoiced
+            ? window.R2LRecorder.recordingLooksVoiced(monitor, blob?.size || 0)
+            : (monitor.available ? monitor.voiced() : true);
           if (blob && blob.size > 0 && !voiced) {
             // Silent capture caught on-device: relax constraints for the next
             // try instead of sending silence to the server.

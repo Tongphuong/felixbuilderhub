@@ -1,6 +1,6 @@
 // Read the captured speaking-check error ring for diagnosis.
 // Secret-gated: GET /api/debug-speaking?key=<DEBUG_SPEAKING_KEY env>
-// Returns the recent speaking failures (audio type/size, Groq status, UA) so the
+// Returns the recent speaking failures (audio type/size, API status, UA) so the
 // root cause can be confirmed after a fix without DevTools or live log tailing.
 export async function onRequestGet(context) {
   const { request, env } = context;

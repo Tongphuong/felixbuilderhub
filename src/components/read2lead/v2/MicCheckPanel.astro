@@ -34,6 +34,9 @@
     <button type="button" class="r2l-mic-check__btn r2l-mic-check__btn--parent" data-mic-parent-skip hidden>
       Ba mẹ đã bật micro — cho con thử ghi âm
     </button>
+    <button type="button" class="r2l-mic-check__btn r2l-mic-check__btn--skip" data-mic-skip-lesson>
+      Micro lỗi — cho con sang phần tiếp
+    </button>
   </div>
   <div class="r2l-mic-check__help" data-mic-help hidden></div>
 </div>
@@ -192,6 +195,14 @@
     color: rgb(187 247 208);
     border-color: rgb(74 222 128 / 0.4);
     width: 100%;
+  }
+
+  .r2l-mic-check__btn--skip {
+    background: rgb(245 230 211 / 0.06);
+    color: rgb(245 230 211 / 0.85);
+    border-color: rgb(245 230 211 / 0.25);
+    width: 100%;
+    font-size: 0.9rem;
   }
 
   .r2l-mic-check__help {

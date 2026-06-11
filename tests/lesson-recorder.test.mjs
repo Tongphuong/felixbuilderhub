@@ -67,7 +67,7 @@ test('listen_and_speak recorder submits Whisper scoring after stop', () => {
   assert.match(lessonPage, /Minny đang nghe và nhận xét bài đọc của con/);
 });
 
-test('recorder rejects header-only blobs instead of sending silence to Groq', () => {
+test('recorder rejects header-only blobs instead of sending silence to the ASR server', () => {
   // A too-short / header-only recording must be caught locally with a clear
   // "speak longer" message, never uploaded (which returns the scary "không nghe được").
   assert.match(lessonPage, /_R2L_MIN_SPEECH_BYTES/);
