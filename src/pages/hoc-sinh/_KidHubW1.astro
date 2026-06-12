@@ -5,6 +5,9 @@ import Footer from '../../components/Footer.astro';
 import KidButton from '../../components/read2lead/v4/KidButton.astro';
 import KidCard from '../../components/read2lead/v4/KidCard.astro';
 import MonsterBuilder from '../../components/read2lead/v3/avatar/MonsterBuilder.astro';
+import MedalCabinet from '../../components/read2lead/v3/rank/MedalCabinet.astro';
+import RankUpModal from '../../components/read2lead/v3/rank/RankUpModal.astro';
+import SeasonBanner from '../../components/read2lead/v3/rank/SeasonBanner.astro';
 import '../../styles/r2l-kid.css';
 import '../../styles/rank-ladder.css';
 import './hoc-sinh-w1.css';
@@ -67,12 +70,15 @@ const mainClass = 'r2l-kid flex-1 px-4 py-8 sm:px-6';
 
       <section id="error-card" class="r2l-kid-error mt-4 hidden"></section>
 
+      <SeasonBanner />
       <section id="dashboard-card" class="mt-6 hidden"></section>
+      <MedalCabinet />
 
       <div id="hub-create-sheet" class="hidden" aria-hidden="true"></div>
       <div id="hub-wait-scene" class="mt-6 hidden" aria-live="polite"></div>
 
       <MonsterBuilder />
+      <RankUpModal />
     </section>
   </main>
 

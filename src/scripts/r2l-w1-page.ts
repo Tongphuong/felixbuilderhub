@@ -1,4 +1,5 @@
 import { isW1Enabled } from '../config/flags';
+import { bindRankUpModalClose } from '../lib/rank-up-celebration';
 
 const KID_BTN: Record<string, string> = {
   primary: 'r2l-kid-btn r2l-kid-btn--primary r2l-kid-btn--md',
@@ -9,6 +10,8 @@ const KID_BTN: Record<string, string> = {
 /** Client bootstrap: apply r2l-kid shell when ?w1=1 or env flag (after SSR). */
 export function applyW1PageShell(mainId = 'main'): void {
   if (!isW1Enabled()) return;
+
+  bindRankUpModalClose();
 
   const main = document.getElementById(mainId);
   if (main) {
