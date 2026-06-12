@@ -246,3 +246,14 @@ test('old records without season fields normalize without losing rank', () => {
   assert.equal(legacy.season.rp, 14);
   assert.equal(buildRankLadderFromPoints(legacy.season.rp).rank_points, 14);
 });
+
+test('W2R season peak respects the level cap (no medal above the shown rank)', () => {
+  let state = normalizeProgressState(null, {
+    accessCode: 'R2L-PEAK-CAP',
+    codeData: { student_profile: { student_name: 'Cap Kid' } },
+  });
+  state = { ...state, current_level: 'L1', season: { ...state.season, rp: 49 } };
+  state = awardRankPoints(state, { scorePercent: 90, dateKey: '2026-06-05' }).state;
+  assert.ok(state.season.peak_tier_index <= 2, 'peak tier must respect L1 cap (Vàng)');
+  assert.match(state.season.peak_label_vi, /Vàng/);
+});

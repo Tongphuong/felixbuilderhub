@@ -282,9 +282,11 @@ export function awardRankPoints(state, { scorePercent, dateKey, nowIso = new Dat
   ) ? Number(state.season.rp) : lifetimeBase;
   const nextLifetime = lifetimeBase + awarded;
   const nextSeasonRp = seasonRpBase + awarded;
+  // Peak must respect the level cap — a child must never receive a season
+  // medal for a rank they were never shown (capped display = capped peak).
   const nextSeason = updateSeasonPeak(
     { ...(state.season || {}), rp: nextSeasonRp },
-    buildRankLadderFromPoints(nextSeasonRp),
+    buildRankLadderFromPoints(nextSeasonRp, { currentLevel: state.current_level }),
   );
   return {
     state: {
