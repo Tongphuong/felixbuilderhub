@@ -4587,7 +4587,11 @@ function _r2lBuildRetellTemplate(lesson) {
       if (attempted.has(itemIndex)) return;
       attempted.add(itemIndex);
       const item = activity.items[itemIndex];
-      picked[itemIndex] = item.correct_order_indices.slice();
+      if (Array.isArray(item.correct_order_indices)) {
+        picked[itemIndex] = item.correct_order_indices.slice();
+      }
+      // Clear any stale orange left by earlier wrong attempts.
+      root.querySelectorAll(`[data-order-slot="${itemIndex}"]`).forEach((s) => { s.dataset.misplaced = 'false'; });
       renderOrderSlots(root, activity, picked, itemIndex, true);
       root.querySelector(`[data-order-hint="${itemIndex}"]`)?.classList.add('hidden');
       root.querySelector(`[data-order-ghost="${itemIndex}"]`)?.classList.add('hidden');
@@ -4637,7 +4641,7 @@ function _r2lBuildRetellTemplate(lesson) {
           const itemWrongs = (itemWrongCounts.get(itemIndex) || 0) + 1;
           itemWrongCounts.set(itemIndex, itemWrongs);
           if (itemWrongs >= MAX_WRONG_PER_ITEM) revealCorrectOrder(itemIndex);
-        });
+        }, () => w1CompleteCopyMode(itemIndex));
         if (!attempted.has(itemIndex) && solved.has(itemIndex)) attempted.add(itemIndex);
         saveOrderProgress();
         afterCheck(itemIndex);
@@ -4670,7 +4674,7 @@ function _r2lBuildRetellTemplate(lesson) {
           const itemWrongs = (itemWrongCounts.get(itemIndex) || 0) + 1;
           itemWrongCounts.set(itemIndex, itemWrongs);
           if (itemWrongs >= MAX_WRONG_PER_ITEM) revealCorrectOrder(itemIndex);
-        });
+        }, () => w1CompleteCopyMode(itemIndex));
         if (!attempted.has(itemIndex) && solved.has(itemIndex)) attempted.add(itemIndex);
         saveOrderProgress();
         afterCheck(itemIndex);
@@ -4775,7 +4779,7 @@ function _r2lBuildRetellTemplate(lesson) {
     });
   }
 
-  function checkOrderItem(root, activity, picked, wrongSignatures, solved, itemIndex, onWrong) {
+  function checkOrderItem(root, activity, picked, wrongSignatures, solved, itemIndex, onWrong, onCopyComplete) {
     const item = activity.items[itemIndex];
     const st = ensureOrderState(picked, itemIndex, item.scrambled_tokens.length);
     if (st.some((value) => value == null)) return;
@@ -4783,7 +4787,11 @@ function _r2lBuildRetellTemplate(lesson) {
     const questionId = `${activity.type}:${item.id || itemIndex}`;
     if (correct) {
       if (isW1() && root.querySelector(`[data-order-ghost="${itemIndex}"]:not(.hidden)`)) {
-        w1CompleteCopyMode(itemIndex);
+        // w1CompleteCopyMode lives in renderOrderActivity's closure — it MUST
+        // arrive as a callback. Calling it by name here threw ReferenceError
+        // (swallowed by Sentry) and trapped kids who fixed their sentence
+        // after the reveal: stale orange, no completion ("không cho làm tiếp").
+        if (typeof onCopyComplete === 'function') onCopyComplete();
         return;
       }
       solved.add(itemIndex);
