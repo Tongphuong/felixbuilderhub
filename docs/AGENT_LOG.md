@@ -13,3 +13,4 @@
 | 2026-06-11 23:30 | claude | NOTE | fix/recorder-cache-skew | — | Dòng DONE trên KHÔNG có commit — code đang nằm uncommitted trên checkout chung, vi phạm luật mới §7. Chờ Claude review/commit. |
 | 2026-06-11 23:30 | claude | DONE | main | docs/, AGENTS.md | W2R rank seasons: roadmap §4b + 3 specs R1/R2/R3 + luật riêng Cursor |
 | 2026-06-12 17:01 | codex | START | fix/audio-r2dev-host-rewrite | functions/api/read2lead-lesson.js, functions/api/_read2lead-lesson-activities.js, shared audio URL util, tests | SPEC_FIX_AUDIO_R2DEV_503; env passed from context.env |
+| 2026-06-12 17:06 | codex | DONE | fix/audio-r2dev-host-rewrite | lesson API audio host rewrite + tests | fbf793f; 250 tests pass; astro check has 0 task diagnostics (410 pre-existing repo errors) |
