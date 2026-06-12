@@ -18,7 +18,9 @@ import ReadingComprehension from '../../components/read2lead/v2/ReadingComprehen
 import RewardBurst from '../../components/read2lead/v2/RewardBurst.astro';
 import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro';
 import retellGuideSrc from '../../../functions/api/_read2lead-retell-guide.js?raw';
+import { r2lRecorderScriptSrc } from '../../scripts/r2l-recorder-script.mjs';
 
+const r2lRecorderSrc = r2lRecorderScriptSrc();
 const retellGuideInline = retellGuideSrc
   .replace(/^export function /gm, 'function ')
   .replace(/^export const /gm, 'const ');
@@ -171,7 +173,7 @@ const retellGuideInline = retellGuideSrc
     </div>
   </main>
   <Footer />
-  <script src="/scripts/r2l-recorder.js" defer></script>
+  <script src={r2lRecorderSrc} defer></script>
   <script src="/scripts/r2l-mic-check.js" defer></script>
 </BaseLayout>
 
@@ -1159,6 +1161,10 @@ function _r2lBuildRetellTemplate(lesson) {
   }
 
   /* ----- Activity C audio recorder (W4.3) + W10 Whisper scoring ----- */
+  function _r2lSafeStopMonitor(m) {
+    try { if (m && typeof m.stop === 'function') m.stop(); } catch {}
+  }
+
   const _r2lRecorderState = {
     // Map of itemKey -> { mediaRecorder, chunks, blob, blobUrl, status, expectedText, checkStatus, checkResult }
     perItem: new Map(),
@@ -2066,7 +2072,7 @@ function _r2lBuildRetellTemplate(lesson) {
         recorder.start();
       } catch (startError) {
         _r2lHideCountdownOverlay();
-        monitor.stop();
+        _r2lSafeStopMonitor(monitor);
         try { unwatch(); } catch { /* listener already gone */ }
         stream.getTracks().forEach((t) => t.stop());
         throw startError;
@@ -2152,7 +2158,7 @@ function _r2lBuildRetellTemplate(lesson) {
     } catch {
       blob = null;
     }
-    if (monitor) monitor.stop();
+    _r2lSafeStopMonitor(monitor);
     try { if (unwatch) unwatch(); } catch { /* already removed */ }
     if (stream) stream.getTracks().forEach((t) => t.stop());
 
@@ -2257,7 +2263,7 @@ function _r2lBuildRetellTemplate(lesson) {
   function _r2lCleanupRecorderState() {
     _r2lRecorderState.perItem.forEach((entry) => {
       if (entry.blobUrl) URL.revokeObjectURL(entry.blobUrl);
-      if (entry.monitor) entry.monitor.stop();
+      _r2lSafeStopMonitor(entry.monitor);
       try { if (entry.unwatch) entry.unwatch(); } catch { /* already removed */ }
       if (entry.stream) entry.stream.getTracks().forEach((t) => t.stop());
       if (entry.warmupStream) entry.warmupStream.getTracks().forEach((t) => t.stop());
@@ -2685,7 +2691,7 @@ function _r2lBuildRetellTemplate(lesson) {
       } catch {}
     }
     if (_r2lRetellState.monitor) {
-      _r2lRetellState.monitor.stop();
+      _r2lSafeStopMonitor(_r2lRetellState.monitor);
       _r2lRetellState.monitor = null;
     }
     if (_r2lRetellState.stream) {
@@ -2924,7 +2930,7 @@ function _r2lBuildRetellTemplate(lesson) {
         recorder.start();
       } catch (startError) {
         _r2lHideCountdownOverlay();
-        monitor.stop();
+        _r2lSafeStopMonitor(monitor);
         stream.getTracks().forEach((track) => track.stop());
         throw startError;
       }
@@ -2967,7 +2973,7 @@ function _r2lBuildRetellTemplate(lesson) {
       } catch {
         blob = null;
       }
-      if (monitor) monitor.stop();
+      _r2lSafeStopMonitor(monitor);
       if (_r2lRetellState.stream) {
         _r2lRetellState.stream.getTracks().forEach((track) => track.stop());
         _r2lRetellState.stream = null;
