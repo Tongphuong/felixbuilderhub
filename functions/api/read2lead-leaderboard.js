@@ -1,13 +1,18 @@
 import { getClientIp, checkCodeRateLimit, rateLimitedResponse } from './_rate-limit.js';
 import { loadProgressState, publicProgressState, RANK_ASSETS, RANK_TITLES } from './_read2lead-v2-state.js';
+import { PRE_SEASON, SEASONS as SEASON_CONFIG } from './_read2lead-seasons.js';
 
 const LEADERBOARD_CACHE_KEY = 'leaderboard-cache';
 const LEADERBOARD_CACHE_TTL_SECONDS = 5 * 60;
-const SEASONS = [
-  { id: '2026-S0', name_vi: 'Mùa Khởi Đầu', emoji: '🌱', starts: null, ends_at: '2026-06-30' },
-  { id: '2026-S1', name_vi: 'Mùa Khám Phá', emoji: '🧭', starts: '2026-07-01', ends_at: '2026-08-31' },
-  { id: '2026-S2', name_vi: 'Mùa Phiêu Lưu', emoji: '🗺️', starts: '2026-09-01', ends_at: '2026-10-31' },
-];
+// Single source of truth for seasons lives in _read2lead-seasons.js — this is
+// just the board's view of it (ends_at naming kept for the cached payload).
+const SEASONS = [PRE_SEASON, ...SEASON_CONFIG].map((season) => ({
+  id: season.id,
+  name_vi: season.name_vi,
+  emoji: season.emoji,
+  starts: season.starts || null,
+  ends_at: season.ends || null,
+}));
 const PODIUM_MEDALS = ['🥇', '🥈', '🥉'];
 
 export async function onRequestGet(context) {
