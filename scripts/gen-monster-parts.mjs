@@ -281,6 +281,19 @@ function contactMetrics(bodyPixels, armPixels) {
   };
 }
 
+export function isArmOrientationOutward(arm, placement, side) {
+  if (arm.handX == null) return true;
+  const sourceLean = Math.abs(arm.handX - arm.pivotX);
+  if (sourceLean <= arm.w * 0.1) return true;
+  const placedX = (sourceX) => {
+    const transformedX = placement.flip ? arm.w - 1 - sourceX : sourceX;
+    return placement.x + transformedX * placement.scale;
+  };
+  const shoulderX = placedX(arm.pivotX);
+  const handX = placedX(arm.handX);
+  return side === 'left' ? handX <= shoulderX + 1 : handX >= shoulderX - 1;
+}
+
 export function buildGeometryQa(manifest, rawDir = RAW_DIR) {
   const rows = [];
   const byVariant = (parts, pattern) => {
@@ -311,26 +324,19 @@ export function buildGeometryQa(manifest, rawDir = RAW_DIR) {
         symmetricBodyPixels,
         renderedOpaquePixels(armPng, placements.right, placements.right.flip),
       );
-      // Orientation guard: the HAND must sit farther from the body's centre
-      // than the SHOULDER on each side — a backwards arm still touches the
-      // body, so contact alone can't catch "tay ngược".
-      const sourceLean = Math.abs((arm.geom.handX ?? 0) - arm.geom.pivotX);
-      const directional = sourceLean > arm.geom.w * 0.1;
-      const placedHandX = (placement) => {
-        const sx = placement.flip ? arm.geom.w - 1 - (arm.geom.handX ?? 0) : (arm.geom.handX ?? 0);
-        return placement.x + sx * placement.scale;
-      };
-      const orientationOk = (placement) => {
-        if (!directional || arm.geom.handX == null) return true;
-        const handX = placedHandX(placement);
-        const shoulderX = placement.target.x;
-        return placement === placements.left ? handX <= shoulderX + 1 : handX >= shoulderX - 1;
-      };
       rows.push({
         bodyId: body.id,
         armId: arm.id,
-        left: { ...placements.left, ...left, orientation_ok: orientationOk(placements.left) },
-        right: { ...placements.right, ...right, orientation_ok: orientationOk(placements.right) },
+        left: {
+          ...placements.left,
+          ...left,
+          orientation_ok: isArmOrientationOutward(arm.geom, placements.left, 'left'),
+        },
+        right: {
+          ...placements.right,
+          ...right,
+          orientation_ok: isArmOrientationOutward(arm.geom, placements.right, 'right'),
+        },
         leftGap: symmetricLeft.overlapW,
         rightGap: symmetricRight.overlapW,
         symmetric: Math.abs(symmetricLeft.overlapW - symmetricRight.overlapW) <= 3,

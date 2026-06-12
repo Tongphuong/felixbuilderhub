@@ -7,6 +7,7 @@ import { fileURLToPath } from 'node:url';
 import {
   buildMonsterManifestFromRaw,
   classifyMonsterSlot,
+  isArmOrientationOutward,
   makeMonsterPartId,
   measureArmGeometry,
   measureBodyGeometry,
@@ -102,4 +103,22 @@ test('alpha measurements find body sockets plus shoulder and hand centroids', ()
     handY: 5,
     attach: 'left',
   });
+});
+
+test('arm orientation QA rejects a hand flipped inward', () => {
+  const arm = {
+    w: 6,
+    h: 8,
+    pivotX: 1,
+    pivotY: 2,
+    handX: 5,
+    handY: 6,
+    attach: 'left',
+  };
+  const placement = { x: 10, y: 0, scale: 1 };
+
+  assert.equal(isArmOrientationOutward(arm, { ...placement, flip: true }, 'left'), true);
+  assert.equal(isArmOrientationOutward(arm, { ...placement, flip: false }, 'left'), false);
+  assert.equal(isArmOrientationOutward(arm, { ...placement, flip: false }, 'right'), true);
+  assert.equal(isArmOrientationOutward(arm, { ...placement, flip: true }, 'right'), false);
 });
