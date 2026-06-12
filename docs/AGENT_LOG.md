@@ -23,3 +23,4 @@
 | 2026-06-12 17:06 | codex | DONE | fix/audio-r2dev-host-rewrite | lesson API audio host rewrite + tests | fbf793f; 250 tests pass; astro check has 0 task diagnostics (410 pre-existing repo errors) |
 | 2026-06-12 17:35 | codex | START | codex/avatar-arm-direction | monster geometry zone | Continue Claude rate-limit handoff: add arm orientation QA and correct reversed arm placement |
 | 2026-06-12 19:15 | codex | DONE | codex/avatar-arm-direction | monster geometry zone | 87354b3; shoulder/hand alpha centroids + orientation QA; 286 tests green |
+| 2026-06-12 19:20 | codex | AUDIT | codex/avatar-arm-direction | monster geometry zone | ce95b59 review-fix: compare transformed shoulder/hand; reversed-flip detection 864/864 each side; 287 tests + build green |
