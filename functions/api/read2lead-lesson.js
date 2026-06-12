@@ -2,6 +2,7 @@ import { getClientIp, checkCodeRateLimit, recordCodeFailure, rateLimitedResponse
 import { resolveAccessiblePack } from './_read2lead-pack-access.js';
 import { extractV2Pack } from './_read2lead-lesson-extract.js';
 import { ensureSixActivities } from './_read2lead-lesson-activities.js';
+import { rewriteAudioHost } from './_read2lead-audio-url.js';
 
 export async function onRequestGet(context) {
   const { request, env } = context;
@@ -50,7 +51,7 @@ export async function onRequestGet(context) {
 
   return json({
     ok: true,
-    lesson: buildV2LessonPayload({ accessCode, codeData, pack, v2Pack }),
+    lesson: buildV2LessonPayload({ accessCode, codeData, pack, v2Pack, env }),
   });
 }
 
@@ -74,12 +75,21 @@ async function mergeDeferredFullStoryAudio(env, pack, v2Pack) {
   return v2Pack;
 }
 
-function buildV2LessonPayload({ accessCode, codeData, pack, v2Pack }) {
+export function buildV2LessonPayload({ accessCode, codeData, pack, v2Pack, env }) {
   const progress = codeData.progress || {};
   const profile = codeData.student_profile || {};
   const story = {
     ...v2Pack.story,
-    full_audio_url: v2Pack.story?.full_audio_url || '',
+    full_audio_url: rewriteAudioHost(v2Pack.story?.full_audio_url || '', env),
+    ...(Array.isArray(v2Pack.story?.sentences)
+      ? {
+          sentences: v2Pack.story.sentences.map((sentence) =>
+            sentence && typeof sentence === 'object' && Object.hasOwn(sentence, 'audio_url')
+              ? { ...sentence, audio_url: rewriteAudioHost(sentence.audio_url, env) }
+              : sentence,
+          ),
+        }
+      : {}),
   };
 
   return {
@@ -91,11 +101,15 @@ function buildV2LessonPayload({ accessCode, codeData, pack, v2Pack }) {
     level_label: v2Pack.level_label || pack.level_label || '',
     topic: v2Pack.topic || pack.topic || '',
     story,
-    activities: ensureSixActivities(v2Pack.activities, {
-      story: v2Pack.story,
-      topic: v2Pack.topic || pack.topic || '',
-      activities: v2Pack.activities,
-    }),
+    activities: ensureSixActivities(
+      v2Pack.activities,
+      {
+        story: v2Pack.story,
+        topic: v2Pack.topic || pack.topic || '',
+        activities: v2Pack.activities,
+      },
+      env,
+    ),
     rewards: v2Pack.rewards || {
       coins_on_complete: 15,
       xp_on_complete: 20,
