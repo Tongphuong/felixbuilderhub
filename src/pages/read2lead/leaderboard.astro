@@ -22,7 +22,7 @@ const ladderSectionClass = w1Ssr ? 'px-4 py-10 sm:px-6' : 'px-6 py-14';
 
 <BaseLayout
   title="Bảng xếp hạng - Ranking Arena | Read2Lead"
-  description="Bảng xếp hạng Read2Lead xếp hạng bằng XP, xu, số bài hoàn thành và rank L1-L5."
+  description="Bảng xếp hạng Read2Lead theo RP mùa, số bài hoàn thành và rank hiện tại."
 >
   <Header kidMode={true} />
 
@@ -36,7 +36,7 @@ const ladderSectionClass = w1Ssr ? 'px-4 py-10 sm:px-6' : 'px-6 py-14';
                 <span class="r2l-kid-eyebrow inline-block rounded-full bg-[rgb(255_200_61/0.35)] px-3 py-1">Felixar Ranking Arena</span>
                 <h1 class="r2l-kid-title md:text-5xl">Bảng xếp hạng</h1>
                 <p class="r2l-kid-lead max-w-2xl">
-                  Xếp hạng bằng XP, xu và số bài hoàn thành. Bé bắt đầu từ Đồng rồi leo dần lên Huyền thoại.
+                  Xếp hạng bằng RP mùa. Mỗi bài hoàn thành tốt giúp con tiến thêm trên thang rank.
                 </p>
               </>
             ) : (
@@ -44,7 +44,7 @@ const ladderSectionClass = w1Ssr ? 'px-4 py-10 sm:px-6' : 'px-6 py-14';
                 <span class="inline-block rounded-md bg-gold/20 px-3 py-1 text-sm font-semibold text-gold-light">Felixar Ranking Arena</span>
                 <h1 class="mt-4 font-display text-4xl font-extrabold leading-snug text-cream md:text-5xl">Bảng xếp hạng - Ranking Arena</h1>
                 <p class="mt-3 max-w-2xl leading-relaxed text-cream-muted">
-                  Xếp hạng bằng XP, xu và số bài hoàn thành. Bé bắt đầu từ Đồng rồi leo dần lên Bạc, Vàng, Kim cương và Huyền thoại.
+                  Xếp hạng bằng RP mùa. Mỗi bài hoàn thành tốt giúp con tiến thêm trên thang rank.
                 </p>
               </>
             )}
@@ -69,7 +69,7 @@ const ladderSectionClass = w1Ssr ? 'px-4 py-10 sm:px-6' : 'px-6 py-14';
           <p class:list={['mt-5', w1Ssr ? 'r2l-kid-muted' : 'text-cream-muted']}>Đang tải bảng xếp hạng...</p>
         </div>
 
-        <div id="error-state" class:list={['hidden text-center', w1Ssr ? 'r2l-kid-error' : 'rounded-xl border border-red-500/30 bg-red-500/10 p-8 text-red-300']}>
+        <div id="error-state" class:list={['hidden text-center', w1Ssr ? 'r2l-kid-card' : 'rounded-xl border border-gold/30 bg-gold/10 p-8 text-cream-muted']}>
           Không tải được bảng xếp hạng. Vui lòng thử lại sau ít phút.
         </div>
 
@@ -85,6 +85,13 @@ const ladderSectionClass = w1Ssr ? 'px-4 py-10 sm:px-6' : 'px-6 py-14';
         </div>
 
         <div id="leaderboard-content" class="hidden">
+          <div id="season-header" class:list={['mb-6 hidden rounded-2xl p-4 sm:p-5', w1Ssr ? 'r2l-kid-card' : 'border border-gold/30 bg-gold/10']}></div>
+
+          <section id="previous-podium" class="mb-8 hidden" aria-labelledby="previous-podium-title">
+            <h2 id="previous-podium-title" class:list={['text-2xl font-bold leading-snug', w1Ssr ? '' : 'font-display text-cream']}>Bục vinh danh mùa trước</h2>
+            <div id="previous-podium-list" class="mt-4 grid gap-3 sm:grid-cols-3"></div>
+          </section>
+
           <div class="mb-6 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
             <div>
               <h2 class:list={['text-2xl font-bold leading-snug md:text-3xl', w1Ssr ? '' : 'font-display text-cream']}>Top bạn đọc hiện tại</h2>
@@ -154,6 +161,9 @@ const ladderSectionClass = w1Ssr ? 'px-4 py-10 sm:px-6' : 'px-6 py-14';
     const errorState = document.getElementById('error-state');
     const emptyState = document.getElementById('empty-state');
     const content = document.getElementById('leaderboard-content');
+    const seasonHeader = document.getElementById('season-header');
+    const previousPodium = document.getElementById('previous-podium');
+    const previousPodiumList = document.getElementById('previous-podium-list');
     const podium = document.getElementById('podium');
     const leaderList = document.getElementById('leader-list');
     const leaderCount = document.getElementById('leader-count');
@@ -195,15 +205,17 @@ const ladderSectionClass = w1Ssr ? 'px-4 py-10 sm:px-6' : 'px-6 py-14';
           return;
         }
 
-        render(data.leaders, data.updated_at);
+        render(data.leaders, data.updated_at, data.season, data.previous_season_podium);
       } catch {
         loadingState.classList.add('hidden');
         errorState.classList.remove('hidden');
       }
     }
 
-    function render(leaders, timestamp) {
+    function render(leaders, timestamp, season, previousSeasonPodium) {
       leadersCache = leaders;
+      renderSeasonHeader(season);
+      renderPreviousPodium(previousSeasonPodium);
       updatedAt.textContent = timestamp ? `Cập nhật lúc ${formatDate(timestamp)}` : '';
       leaderCount.textContent = `${leaders.length} bạn đọc`;
       podium.innerHTML = leaders.slice(0, 3).map(podiumCard).join('');
@@ -211,6 +223,34 @@ const ladderSectionClass = w1Ssr ? 'px-4 py-10 sm:px-6' : 'px-6 py-14';
       mountLeaderMonsters(podium);
       mountLeaderMonsters(leaderList);
       content.classList.remove('hidden');
+    }
+
+    function renderSeasonHeader(season) {
+      if (!season?.id) return;
+      const daysLeft = daysUntil(season.ends_at);
+      const countdown = daysLeft === null ? '' : ` · còn ${daysLeft} ngày`;
+      seasonHeader.innerHTML = `
+        <div class="flex items-center gap-3">
+          <span class="text-3xl" aria-hidden="true">${escapeHtml(season.emoji || '✨')}</span>
+          <div>
+            <p class="text-xl font-bold ${titleFont}">${escapeHtml(season.name_vi || 'Mùa hiện tại')}</p>
+            <p class="text-sm ${inkMuted}">Cùng giữ nhịp học đều${escapeHtml(countdown)}</p>
+          </div>
+        </div>
+      `;
+      seasonHeader.classList.remove('hidden');
+    }
+
+    function renderPreviousPodium(rows) {
+      if (!Array.isArray(rows) || rows.length === 0) return;
+      previousPodiumList.innerHTML = rows.map((row) => `
+        <article class="${w1 ? 'r2l-kid-card' : 'rounded-xl border border-gold/25 bg-navy-950/70'} p-4 text-center">
+          <p class="text-3xl" aria-hidden="true">${escapeHtml(row.medal_emoji)}</p>
+          <h3 class="mt-2 text-xl ${titleFont}">${escapeHtml(row.display_name)}</h3>
+          <p class="mt-1 text-sm ${inkMuted}">${escapeHtml(row.peak_label_vi || '')}</p>
+        </article>
+      `).join('');
+      previousPodium.classList.remove('hidden');
     }
 
     function leaderAvatarHtml(leader, sizeClass) {
@@ -248,11 +288,11 @@ const ladderSectionClass = w1Ssr ? 'px-4 py-10 sm:px-6' : 'px-6 py-14';
           <p class="mt-3 text-sm font-semibold uppercase tracking-wide ${w1 ? 'text-[var(--r2l-sun)]' : 'text-gold-light'}">Hạng ${leader.position}</p>
           <h3 class="mt-2 text-3xl ${titleFont} leading-snug">${escapeHtml(leader.display_name)}</h3>
           <p class="mt-1 text-sm ${inkDim}">${escapeHtml(leader.masked_code)}</p>
-          <p class="mt-4 rounded-md ${w1 ? 'bg-[var(--r2l-bg-deep)]' : 'bg-navy-950/70'} px-3 py-2 font-semibold ${w1 ? 'text-[var(--r2l-accent)]' : 'text-accent'}">${escapeHtml(leader.current_level)} · ${escapeHtml(leader.rank_vi)}</p>
+          <p class="mt-4 rounded-md ${w1 ? 'bg-[var(--r2l-bg-deep)]' : 'bg-navy-950/70'} px-3 py-2 font-semibold ${w1 ? 'text-[var(--r2l-accent)]' : 'text-accent'}">${escapeHtml(leader.season_rank_label || leader.rank_vi)}</p>
           <div class="mt-5 grid grid-cols-3 gap-3">
             <div class="${statBoxGold}">
-              <p class="text-xs ${inkDim}">XP</p>
-              <p class="text-2xl font-bold ${w1 ? '' : 'font-display text-gold-light'}">${leader.total_xp}</p>
+              <p class="text-xs ${inkDim}">RP mùa</p>
+              <p class="text-2xl font-bold ${w1 ? '' : 'font-display text-gold-light'}">${leader.season_rp}</p>
             </div>
             <div class="${statBoxDark}">
               <p class="text-xs ${inkDim}">Xu</p>
@@ -279,14 +319,14 @@ const ladderSectionClass = w1Ssr ? 'px-4 py-10 sm:px-6' : 'px-6 py-14';
                 <h3 class="text-xl ${titleFont} leading-snug">${escapeHtml(leader.display_name)}</h3>
                 <span class="rounded-md ${w1 ? 'bg-[var(--r2l-bg-deep)]' : 'bg-navy-950'} px-2.5 py-1 text-xs ${inkDim}">${escapeHtml(leader.masked_code)}</span>
               </div>
-              <p class="mt-1 text-sm ${inkMuted}">${escapeHtml(leader.current_level)} · ${escapeHtml(leader.rank_vi)} · còn ${leader.packs_until_level_up || 0} bài để lên rank</p>
+              <p class="mt-1 text-sm ${inkMuted}">${escapeHtml(leader.season_rank_label || leader.rank_vi)} · ${escapeHtml(leader.current_level)} · còn ${leader.packs_until_level_up || 0} bài để lên level</p>
               ${xpBar(leader)}
             </div>
           </div>
           <div class="grid grid-cols-3 gap-2 text-center md:w-60">
             <div class="${statBoxGold}">
-              <p class="text-xs ${inkDim}">XP</p>
-              <p class="text-xl font-bold ${w1 ? '' : 'font-display text-gold-light'}">${leader.total_xp}</p>
+              <p class="text-xs ${inkDim}">RP mùa</p>
+              <p class="text-xl font-bold ${w1 ? '' : 'font-display text-gold-light'}">${leader.season_rp}</p>
             </div>
             <div class="${statBoxDark}">
               <p class="text-xs ${inkDim}">Xu</p>
@@ -323,6 +363,13 @@ const ladderSectionClass = w1Ssr ? 'px-4 py-10 sm:px-6' : 'px-6 py-14';
         month: '2-digit',
         year: 'numeric',
       }).format(new Date(value));
+    }
+
+    function daysUntil(value) {
+      if (!value) return null;
+      const end = Date.parse(`${value}T23:59:59+07:00`);
+      if (!Number.isFinite(end)) return null;
+      return Math.max(0, Math.ceil((end - Date.now()) / (24 * 60 * 60 * 1000)));
     }
 
     function escapeHtml(value) {
