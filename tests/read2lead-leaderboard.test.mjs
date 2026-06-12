@@ -10,8 +10,14 @@ import {
   compareLeadersBySeasonRp,
   seasonRpForLeader,
 } from '../functions/api/read2lead-leaderboard.js';
+import { currentSeason } from '../functions/api/_read2lead-seasons.js';
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
+
+// Records in fixtures must carry the season that is ACTIVE at test time —
+// any other id triggers the state core's season rollover (soft reset) and the
+// expected RP ordering would change with the wall clock.
+const ACTIVE_SEASON_ID = currentSeason().id;
 
 /** Canonical contract fixture — R2 §2; R3 tests sort/podium against it. */
 const SEASON_FIXTURE = {
@@ -155,7 +161,7 @@ test('leaderboard API sorts mixed season + legacy records and includes season ca
         student_profile: { student_name: 'Season' },
         progress: {
           completed_packs: 2,
-          season: { id: '2026-S1', rp: 25 },
+          season: { id: ACTIVE_SEASON_ID, rp: 25 },
           medals: MEDALS_FIXTURE,
           last_activity_at: '2026-06-02T00:00:00.000Z',
         },
@@ -168,7 +174,7 @@ test('leaderboard API sorts mixed season + legacy records and includes season ca
         access_code: 'R2L-SEASON',
         student_name: 'Season',
         current_level: 'L2',
-        season: { id: '2026-S1', rp: 25 },
+        season: { id: ACTIVE_SEASON_ID, rp: 25 },
         medals: MEDALS_FIXTURE,
         completed_packs: 2,
         coins: 20,
