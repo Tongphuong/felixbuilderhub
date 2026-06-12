@@ -13,1170 +13,1230 @@
       "bodyId": "png-default-body-bluea",
       "armId": "png-default-arm-bluea",
       "left": {
-        "x": -37.18125,
-        "y": 24.37812500000001,
-        "w": 47.662499999999994,
-        "h": 102.29999999999998,
-        "scale": 0.5812499999999999,
-        "flip": false,
-        "target": {
-          "x": 9.9,
-          "y": 95
-        },
-        "contact": true,
-        "overlapW": 11,
-        "overlapH": 69,
-        "overlapPixels": 522
-      },
-      "right": {
-        "x": 153.51874999999998,
-        "y": 24.37812500000001,
+        "x": -20.979597018150386,
+        "y": 78.93926372082973,
         "w": 47.662499999999994,
         "h": 102.29999999999998,
         "scale": 0.5812499999999999,
         "flip": true,
         "target": {
+          "x": 9.9,
+          "y": 95
+        },
+        "contact": true,
+        "overlapW": 27,
+        "overlapH": 83,
+        "overlapPixels": 833,
+        "orientation_ok": true
+      },
+      "right": {
+        "x": 137.31709701815038,
+        "y": 78.93926372082973,
+        "w": 47.662499999999994,
+        "h": 102.29999999999998,
+        "scale": 0.5812499999999999,
+        "flip": false,
+        "target": {
           "x": 154.1,
           "y": 95
         },
         "contact": true,
-        "overlapW": 11,
-        "overlapH": 70,
-        "overlapPixels": 565
+        "overlapW": 28,
+        "overlapH": 84,
+        "overlapPixels": 860,
+        "orientation_ok": true
       },
-      "leftGap": 11,
-      "rightGap": 11,
+      "leftGap": 27,
+      "rightGap": 28,
       "symmetric": true
     },
     {
       "bodyId": "png-default-body-bluea",
       "armId": "png-default-arm-blueb",
       "left": {
-        "x": -21.87018633540373,
-        "y": 10.173602484472042,
+        "x": -9.030996746524698,
+        "y": 80.80883649526064,
         "w": 32.4055900621118,
         "h": 102.3,
         "scale": 0.6354037267080745,
-        "flip": false,
+        "flip": true,
         "target": {
           "x": 9.9,
           "y": 95
         },
         "contact": true,
-        "overlapW": 11,
-        "overlapH": 85,
-        "overlapPixels": 712
-      },
-      "right": {
-        "x": 153.46459627329193,
-        "y": 10.173602484472042,
-        "w": 32.4055900621118,
-        "h": 102.3,
-        "scale": 0.6354037267080745,
-        "flip": true,
-        "target": {
-          "x": 154.1,
-          "y": 95
-        },
-        "contact": true,
-        "overlapW": 12,
-        "overlapH": 87,
-        "overlapPixels": 773
-      },
-      "leftGap": 11,
-      "rightGap": 12,
-      "symmetric": true
-    },
-    {
-      "bodyId": "png-default-body-bluea",
-      "armId": "png-default-arm-bluec",
-      "left": {
-        "x": -44.92375690607735,
-        "y": 41.87182320441988,
-        "w": 55.388950276243094,
-        "h": 102.30000000000001,
-        "scale": 0.5651933701657459,
-        "flip": false,
-        "target": {
-          "x": 9.9,
-          "y": 95
-        },
-        "contact": true,
-        "overlapW": 11,
-        "overlapH": 59,
-        "overlapPixels": 459
-      },
-      "right": {
-        "x": 153.53480662983424,
-        "y": 41.87182320441988,
-        "w": 55.388950276243094,
-        "h": 102.30000000000001,
-        "scale": 0.5651933701657459,
-        "flip": true,
-        "target": {
-          "x": 154.1,
-          "y": 95
-        },
-        "contact": true,
-        "overlapW": 11,
-        "overlapH": 61,
-        "overlapPixels": 491
-      },
-      "leftGap": 11,
-      "rightGap": 11,
-      "symmetric": true
-    },
-    {
-      "bodyId": "png-default-body-bluea",
-      "armId": "png-default-arm-blued",
-      "left": {
-        "x": -37.35532994923858,
-        "y": 38.91675126903554,
-        "w": 47.7746192893401,
-        "h": 102.3,
-        "scale": 0.5192893401015228,
-        "flip": false,
-        "target": {
-          "x": 9.9,
-          "y": 95
-        },
-        "contact": true,
-        "overlapW": 11,
-        "overlapH": 66,
-        "overlapPixels": 490
-      },
-      "right": {
-        "x": 153.58071065989847,
-        "y": 38.91675126903554,
-        "w": 47.7746192893401,
-        "h": 102.3,
-        "scale": 0.5192893401015228,
-        "flip": true,
-        "target": {
-          "x": 154.1,
-          "y": 95
-        },
-        "contact": true,
-        "overlapW": 11,
-        "overlapH": 67,
-        "overlapPixels": 524
-      },
-      "leftGap": 11,
-      "rightGap": 11,
-      "symmetric": true
-    },
-    {
-      "bodyId": "png-default-body-bluea",
-      "armId": "png-default-arm-bluee",
-      "left": {
-        "x": -38.160402684563756,
-        "y": 33.20805369127517,
-        "w": 48.74697986577181,
-        "h": 102.3,
-        "scale": 0.6865771812080537,
-        "flip": false,
-        "target": {
-          "x": 9.9,
-          "y": 95
-        },
-        "contact": true,
-        "overlapW": 11,
-        "overlapH": 82,
-        "overlapPixels": 583
-      },
-      "right": {
-        "x": 153.41342281879193,
-        "y": 33.20805369127517,
-        "w": 48.74697986577181,
-        "h": 102.3,
-        "scale": 0.6865771812080537,
-        "flip": true,
-        "target": {
-          "x": 154.1,
-          "y": 95
-        },
-        "contact": true,
-        "overlapW": 12,
-        "overlapH": 85,
-        "overlapPixels": 652
-      },
-      "leftGap": 11,
-      "rightGap": 12,
-      "symmetric": true
-    },
-    {
-      "bodyId": "png-default-body-blueb",
-      "armId": "png-default-arm-bluea",
-      "left": {
-        "x": -36.321875,
-        "y": 24.76875000000001,
-        "w": 47.662499999999994,
-        "h": 102.29999999999998,
-        "scale": 0.5812499999999999,
-        "flip": false,
-        "target": {
-          "x": 10.759375,
-          "y": 95.390625
-        },
-        "contact": true,
-        "overlapW": 12,
-        "overlapH": 57,
-        "overlapPixels": 448
-      },
-      "right": {
-        "x": 152.79999999999998,
-        "y": 24.76875000000001,
-        "w": 47.662499999999994,
-        "h": 102.29999999999998,
-        "scale": 0.5812499999999999,
-        "flip": true,
-        "target": {
-          "x": 153.38125,
-          "y": 95.390625
-        },
-        "contact": true,
-        "overlapW": 12,
-        "overlapH": 58,
-        "overlapPixels": 473
-      },
-      "leftGap": 12,
-      "rightGap": 12,
-      "symmetric": true
-    },
-    {
-      "bodyId": "png-default-body-blueb",
-      "armId": "png-default-arm-blueb",
-      "left": {
-        "x": -21.01081133540373,
-        "y": 10.564227484472042,
-        "w": 32.4055900621118,
-        "h": 102.3,
-        "scale": 0.6354037267080745,
-        "flip": false,
-        "target": {
-          "x": 10.759375,
-          "y": 95.390625
-        },
-        "contact": true,
-        "overlapW": 12,
-        "overlapH": 65,
-        "overlapPixels": 522
-      },
-      "right": {
-        "x": 152.74584627329193,
-        "y": 10.564227484472042,
-        "w": 32.4055900621118,
-        "h": 102.3,
-        "scale": 0.6354037267080745,
-        "flip": true,
-        "target": {
-          "x": 153.38125,
-          "y": 95.390625
-        },
-        "contact": true,
-        "overlapW": 12,
-        "overlapH": 67,
-        "overlapPixels": 562
-      },
-      "leftGap": 12,
-      "rightGap": 12,
-      "symmetric": true
-    },
-    {
-      "bodyId": "png-default-body-blueb",
-      "armId": "png-default-arm-bluec",
-      "left": {
-        "x": -44.06438190607735,
-        "y": 42.26244820441988,
-        "w": 55.388950276243094,
-        "h": 102.30000000000001,
-        "scale": 0.5651933701657459,
-        "flip": false,
-        "target": {
-          "x": 10.759375,
-          "y": 95.390625
-        },
-        "contact": true,
-        "overlapW": 12,
-        "overlapH": 49,
-        "overlapPixels": 386
-      },
-      "right": {
-        "x": 152.81605662983424,
-        "y": 42.26244820441988,
-        "w": 55.388950276243094,
-        "h": 102.30000000000001,
-        "scale": 0.5651933701657459,
-        "flip": true,
-        "target": {
-          "x": 153.38125,
-          "y": 95.390625
-        },
-        "contact": true,
-        "overlapW": 12,
-        "overlapH": 50,
-        "overlapPixels": 404
-      },
-      "leftGap": 12,
-      "rightGap": 12,
-      "symmetric": true
-    },
-    {
-      "bodyId": "png-default-body-blueb",
-      "armId": "png-default-arm-blued",
-      "left": {
-        "x": -36.49595494923858,
-        "y": 39.30737626903554,
-        "w": 47.7746192893401,
-        "h": 102.3,
-        "scale": 0.5192893401015228,
-        "flip": false,
-        "target": {
-          "x": 10.759375,
-          "y": 95.390625
-        },
-        "contact": true,
-        "overlapW": 12,
-        "overlapH": 52,
-        "overlapPixels": 401
-      },
-      "right": {
-        "x": 152.86196065989847,
-        "y": 39.30737626903554,
-        "w": 47.7746192893401,
-        "h": 102.3,
-        "scale": 0.5192893401015228,
-        "flip": true,
-        "target": {
-          "x": 153.38125,
-          "y": 95.390625
-        },
-        "contact": true,
-        "overlapW": 12,
-        "overlapH": 53,
-        "overlapPixels": 423
-      },
-      "leftGap": 12,
-      "rightGap": 12,
-      "symmetric": true
-    },
-    {
-      "bodyId": "png-default-body-blueb",
-      "armId": "png-default-arm-bluee",
-      "left": {
-        "x": -37.301027684563756,
-        "y": 33.59867869127517,
-        "w": 48.74697986577181,
-        "h": 102.3,
-        "scale": 0.6865771812080537,
-        "flip": false,
-        "target": {
-          "x": 10.759375,
-          "y": 95.390625
-        },
-        "contact": true,
-        "overlapW": 12,
-        "overlapH": 61,
-        "overlapPixels": 459
-      },
-      "right": {
-        "x": 152.69467281879193,
-        "y": 33.59867869127517,
-        "w": 48.74697986577181,
-        "h": 102.3,
-        "scale": 0.6865771812080537,
-        "flip": true,
-        "target": {
-          "x": 153.38125,
-          "y": 95.390625
-        },
-        "contact": true,
-        "overlapW": 12,
-        "overlapH": 61,
-        "overlapPixels": 496
-      },
-      "leftGap": 12,
-      "rightGap": 12,
-      "symmetric": true
-    },
-    {
-      "bodyId": "png-default-body-bluec",
-      "armId": "png-default-arm-bluea",
-      "left": {
-        "x": -16.496713917525774,
-        "y": 24.6358569587629,
-        "w": 47.662499999999994,
-        "h": 102.29999999999998,
-        "scale": 0.5812499999999999,
-        "flip": false,
-        "target": {
-          "x": 30.584536082474223,
-          "y": 95.25773195876289
-        },
-        "contact": true,
-        "overlapW": 9,
-        "overlapH": 54,
-        "overlapPixels": 315
-      },
-      "right": {
-        "x": 132.98369845360824,
-        "y": 24.6358569587629,
-        "w": 47.662499999999994,
-        "h": 102.29999999999998,
-        "scale": 0.5812499999999999,
-        "flip": true,
-        "target": {
-          "x": 133.56494845360825,
-          "y": 95.25773195876289
-        },
-        "contact": true,
-        "overlapW": 10,
-        "overlapH": 55,
-        "overlapPixels": 363
-      },
-      "leftGap": 9,
-      "rightGap": 10,
-      "symmetric": true
-    },
-    {
-      "bodyId": "png-default-body-bluec",
-      "armId": "png-default-arm-blueb",
-      "left": {
-        "x": -1.1856502529295057,
-        "y": 10.431334443234931,
-        "w": 32.4055900621118,
-        "h": 102.3,
-        "scale": 0.6354037267080745,
-        "flip": false,
-        "target": {
-          "x": 30.584536082474223,
-          "y": 95.25773195876289
-        },
-        "contact": true,
-        "overlapW": 9,
-        "overlapH": 67,
-        "overlapPixels": 418
-      },
-      "right": {
-        "x": 132.9295447269002,
-        "y": 10.431334443234931,
-        "w": 32.4055900621118,
-        "h": 102.3,
-        "scale": 0.6354037267080745,
-        "flip": true,
-        "target": {
-          "x": 133.56494845360825,
-          "y": 95.25773195876289
-        },
-        "contact": true,
-        "overlapW": 10,
-        "overlapH": 70,
-        "overlapPixels": 475
-      },
-      "leftGap": 9,
-      "rightGap": 10,
-      "symmetric": true
-    },
-    {
-      "bodyId": "png-default-body-bluec",
-      "armId": "png-default-arm-bluec",
-      "left": {
-        "x": -24.239220823603127,
-        "y": 42.12955516318277,
-        "w": 55.388950276243094,
-        "h": 102.30000000000001,
-        "scale": 0.5651933701657459,
-        "flip": false,
-        "target": {
-          "x": 30.584536082474223,
-          "y": 95.25773195876289
-        },
-        "contact": true,
-        "overlapW": 9,
-        "overlapH": 44,
-        "overlapPixels": 252
-      },
-      "right": {
-        "x": 132.9997550834425,
-        "y": 42.12955516318277,
-        "w": 55.388950276243094,
-        "h": 102.30000000000001,
-        "scale": 0.5651933701657459,
-        "flip": true,
-        "target": {
-          "x": 133.56494845360825,
-          "y": 95.25773195876289
-        },
-        "contact": true,
-        "overlapW": 10,
-        "overlapH": 46,
-        "overlapPixels": 296
-      },
-      "leftGap": 9,
-      "rightGap": 10,
-      "symmetric": true
-    },
-    {
-      "bodyId": "png-default-body-bluec",
-      "armId": "png-default-arm-blued",
-      "left": {
-        "x": -16.670793866764356,
-        "y": 39.174483227798426,
-        "w": 47.7746192893401,
-        "h": 102.3,
-        "scale": 0.5192893401015228,
-        "flip": false,
-        "target": {
-          "x": 30.584536082474223,
-          "y": 95.25773195876289
-        },
-        "contact": true,
-        "overlapW": 9,
-        "overlapH": 45,
-        "overlapPixels": 264
-      },
-      "right": {
-        "x": 133.04565911350673,
-        "y": 39.174483227798426,
-        "w": 47.7746192893401,
-        "h": 102.3,
-        "scale": 0.5192893401015228,
-        "flip": true,
-        "target": {
-          "x": 133.56494845360825,
-          "y": 95.25773195876289
-        },
-        "contact": true,
-        "overlapW": 10,
-        "overlapH": 50,
-        "overlapPixels": 306
-      },
-      "leftGap": 9,
-      "rightGap": 10,
-      "symmetric": true
-    },
-    {
-      "bodyId": "png-default-body-bluec",
-      "armId": "png-default-arm-bluee",
-      "left": {
-        "x": -17.475866602089532,
-        "y": 33.46578565003806,
-        "w": 48.74697986577181,
-        "h": 102.3,
-        "scale": 0.6865771812080537,
-        "flip": false,
-        "target": {
-          "x": 30.584536082474223,
-          "y": 95.25773195876289
-        },
-        "contact": true,
-        "overlapW": 9,
-        "overlapH": 58,
-        "overlapPixels": 321
-      },
-      "right": {
-        "x": 132.8783712724002,
-        "y": 33.46578565003806,
-        "w": 48.74697986577181,
-        "h": 102.3,
-        "scale": 0.6865771812080537,
-        "flip": true,
-        "target": {
-          "x": 133.56494845360825,
-          "y": 95.25773195876289
-        },
-        "contact": true,
-        "overlapW": 10,
-        "overlapH": 60,
-        "overlapPixels": 373
-      },
-      "leftGap": 9,
-      "rightGap": 10,
-      "symmetric": true
-    },
-    {
-      "bodyId": "png-default-body-blued",
-      "armId": "png-default-arm-bluea",
-      "left": {
-        "x": -33.99004120879121,
-        "y": 24.570432692307705,
-        "w": 47.662499999999994,
-        "h": 102.29999999999998,
-        "scale": 0.5812499999999999,
-        "flip": false,
-        "target": {
-          "x": 13.091208791208786,
-          "y": 95.1923076923077
-        },
-        "contact": true,
-        "overlapW": 10,
-        "overlapH": 56,
-        "overlapPixels": 366
-      },
-      "right": {
-        "x": 150.42094780219776,
-        "y": 24.570432692307705,
-        "w": 47.662499999999994,
-        "h": 102.29999999999998,
-        "scale": 0.5812499999999999,
-        "flip": true,
-        "target": {
-          "x": 151.00219780219777,
-          "y": 95.1923076923077
-        },
-        "contact": true,
-        "overlapW": 11,
-        "overlapH": 58,
-        "overlapPixels": 411
-      },
-      "leftGap": 10,
-      "rightGap": 11,
-      "symmetric": true
-    },
-    {
-      "bodyId": "png-default-body-blued",
-      "armId": "png-default-arm-blueb",
-      "left": {
-        "x": -18.678977544194943,
-        "y": 10.365910176779735,
-        "w": 32.4055900621118,
-        "h": 102.3,
-        "scale": 0.6354037267080745,
-        "flip": false,
-        "target": {
-          "x": 13.091208791208786,
-          "y": 95.1923076923077
-        },
-        "contact": true,
-        "overlapW": 10,
-        "overlapH": 54,
-        "overlapPixels": 367
-      },
-      "right": {
-        "x": 150.3667940754897,
-        "y": 10.365910176779735,
-        "w": 32.4055900621118,
-        "h": 102.3,
-        "scale": 0.6354037267080745,
-        "flip": true,
-        "target": {
-          "x": 151.00219780219777,
-          "y": 95.1923076923077
-        },
-        "contact": true,
-        "overlapW": 11,
-        "overlapH": 56,
-        "overlapPixels": 411
-      },
-      "leftGap": 10,
-      "rightGap": 11,
-      "symmetric": true
-    },
-    {
-      "bodyId": "png-default-body-blued",
-      "armId": "png-default-arm-bluec",
-      "left": {
-        "x": -41.732548114868564,
-        "y": 42.064130896727576,
-        "w": 55.388950276243094,
-        "h": 102.30000000000001,
-        "scale": 0.5651933701657459,
-        "flip": false,
-        "target": {
-          "x": 13.091208791208786,
-          "y": 95.1923076923077
-        },
-        "contact": true,
-        "overlapW": 10,
-        "overlapH": 50,
-        "overlapPixels": 365
-      },
-      "right": {
-        "x": 150.437004432032,
-        "y": 42.064130896727576,
-        "w": 55.388950276243094,
-        "h": 102.30000000000001,
-        "scale": 0.5651933701657459,
-        "flip": true,
-        "target": {
-          "x": 151.00219780219777,
-          "y": 95.1923076923077
-        },
-        "contact": true,
-        "overlapW": 11,
-        "overlapH": 52,
-        "overlapPixels": 407
-      },
-      "leftGap": 10,
-      "rightGap": 11,
-      "symmetric": true
-    },
-    {
-      "bodyId": "png-default-body-blued",
-      "armId": "png-default-arm-blued",
-      "left": {
-        "x": -34.16412115802979,
-        "y": 39.10905896134323,
-        "w": 47.7746192893401,
-        "h": 102.3,
-        "scale": 0.5192893401015228,
-        "flip": false,
-        "target": {
-          "x": 13.091208791208786,
-          "y": 95.1923076923077
-        },
-        "contact": true,
-        "overlapW": 10,
-        "overlapH": 54,
-        "overlapPixels": 380
-      },
-      "right": {
-        "x": 150.48290846209625,
-        "y": 39.10905896134323,
-        "w": 47.7746192893401,
-        "h": 102.3,
-        "scale": 0.5192893401015228,
-        "flip": true,
-        "target": {
-          "x": 151.00219780219777,
-          "y": 95.1923076923077
-        },
-        "contact": true,
-        "overlapW": 11,
-        "overlapH": 55,
-        "overlapPixels": 417
-      },
-      "leftGap": 10,
-      "rightGap": 11,
-      "symmetric": true
-    },
-    {
-      "bodyId": "png-default-body-blued",
-      "armId": "png-default-arm-bluee",
-      "left": {
-        "x": -34.96919389335497,
-        "y": 33.40036138358286,
-        "w": 48.74697986577181,
-        "h": 102.3,
-        "scale": 0.6865771812080537,
-        "flip": false,
-        "target": {
-          "x": 13.091208791208786,
-          "y": 95.1923076923077
-        },
-        "contact": true,
-        "overlapW": 10,
-        "overlapH": 59,
-        "overlapPixels": 416
-      },
-      "right": {
-        "x": 150.3156206209897,
-        "y": 33.40036138358286,
-        "w": 48.74697986577181,
-        "h": 102.3,
-        "scale": 0.6865771812080537,
-        "flip": true,
-        "target": {
-          "x": 151.00219780219777,
-          "y": 95.1923076923077
-        },
-        "contact": true,
-        "overlapW": 11,
-        "overlapH": 59,
-        "overlapPixels": 476
-      },
-      "leftGap": 10,
-      "rightGap": 11,
-      "symmetric": true
-    },
-    {
-      "bodyId": "png-default-body-bluee",
-      "armId": "png-default-arm-bluea",
-      "left": {
-        "x": -1.5940499999999957,
-        "y": 24.418125000000018,
-        "w": 47.662499999999994,
-        "h": 102.29999999999998,
-        "scale": 0.5812499999999999,
-        "flip": false,
-        "target": {
-          "x": 45.4872,
-          "y": 95.04
-        },
-        "contact": true,
-        "overlapW": 7,
-        "overlapH": 52,
-        "overlapPixels": 207
-      },
-      "right": {
-        "x": 118.27155,
-        "y": 24.418125000000018,
-        "w": 47.662499999999994,
-        "h": 102.29999999999998,
-        "scale": 0.5812499999999999,
-        "flip": true,
-        "target": {
-          "x": 118.8528,
-          "y": 95.04
-        },
-        "contact": true,
-        "overlapW": 8,
-        "overlapH": 55,
-        "overlapPixels": 244
-      },
-      "leftGap": 7,
-      "rightGap": 8,
-      "symmetric": true
-    },
-    {
-      "bodyId": "png-default-body-bluee",
-      "armId": "png-default-arm-blueb",
-      "left": {
-        "x": 13.717013664596273,
-        "y": 10.213602484472048,
-        "w": 32.4055900621118,
-        "h": 102.3,
-        "scale": 0.6354037267080745,
-        "flip": false,
-        "target": {
-          "x": 45.4872,
-          "y": 95.04
-        },
-        "contact": true,
-        "overlapW": 6,
-        "overlapH": 69,
-        "overlapPixels": 266
-      },
-      "right": {
-        "x": 118.21739627329193,
-        "y": 10.213602484472048,
-        "w": 32.4055900621118,
-        "h": 102.3,
-        "scale": 0.6354037267080745,
-        "flip": true,
-        "target": {
-          "x": 118.8528,
-          "y": 95.04
-        },
-        "contact": true,
-        "overlapW": 8,
-        "overlapH": 70,
-        "overlapPixels": 320
-      },
-      "leftGap": 6,
-      "rightGap": 8,
-      "symmetric": true
-    },
-    {
-      "bodyId": "png-default-body-bluee",
-      "armId": "png-default-arm-bluec",
-      "left": {
-        "x": -9.336556906077348,
-        "y": 41.91182320441989,
-        "w": 55.388950276243094,
-        "h": 102.30000000000001,
-        "scale": 0.5651933701657459,
-        "flip": false,
-        "target": {
-          "x": 45.4872,
-          "y": 95.04
-        },
-        "contact": true,
-        "overlapW": 7,
-        "overlapH": 46,
-        "overlapPixels": 208
-      },
-      "right": {
-        "x": 118.28760662983426,
-        "y": 41.91182320441989,
-        "w": 55.388950276243094,
-        "h": 102.30000000000001,
-        "scale": 0.5651933701657459,
-        "flip": true,
-        "target": {
-          "x": 118.8528,
-          "y": 95.04
-        },
-        "contact": true,
-        "overlapW": 8,
-        "overlapH": 47,
-        "overlapPixels": 243
-      },
-      "leftGap": 7,
-      "rightGap": 8,
-      "symmetric": true
-    },
-    {
-      "bodyId": "png-default-body-bluee",
-      "armId": "png-default-arm-blued",
-      "left": {
-        "x": -1.7681299492385776,
-        "y": 38.95675126903554,
-        "w": 47.7746192893401,
-        "h": 102.3,
-        "scale": 0.5192893401015228,
-        "flip": false,
-        "target": {
-          "x": 45.4872,
-          "y": 95.04
-        },
-        "contact": true,
-        "overlapW": 7,
-        "overlapH": 50,
-        "overlapPixels": 213
-      },
-      "right": {
-        "x": 118.33351065989848,
-        "y": 38.95675126903554,
-        "w": 47.7746192893401,
-        "h": 102.3,
-        "scale": 0.5192893401015228,
-        "flip": true,
-        "target": {
-          "x": 118.8528,
-          "y": 95.04
-        },
-        "contact": true,
-        "overlapW": 8,
-        "overlapH": 50,
-        "overlapPixels": 252
-      },
-      "leftGap": 7,
-      "rightGap": 8,
-      "symmetric": true
-    },
-    {
-      "bodyId": "png-default-body-bluee",
-      "armId": "png-default-arm-bluee",
-      "left": {
-        "x": -2.5732026845637535,
-        "y": 33.248053691275175,
-        "w": 48.74697986577181,
-        "h": 102.3,
-        "scale": 0.6865771812080537,
-        "flip": false,
-        "target": {
-          "x": 45.4872,
-          "y": 95.04
-        },
-        "contact": true,
-        "overlapW": 7,
-        "overlapH": 55,
-        "overlapPixels": 249
-      },
-      "right": {
-        "x": 118.16622281879195,
-        "y": 33.248053691275175,
-        "w": 48.74697986577181,
-        "h": 102.3,
-        "scale": 0.6865771812080537,
-        "flip": true,
-        "target": {
-          "x": 118.8528,
-          "y": 95.04
-        },
-        "contact": true,
-        "overlapW": 8,
-        "overlapH": 59,
-        "overlapPixels": 292
-      },
-      "leftGap": 7,
-      "rightGap": 8,
-      "symmetric": true
-    },
-    {
-      "bodyId": "png-default-body-bluef",
-      "armId": "png-default-arm-bluea",
-      "left": {
-        "x": -5.691419491525423,
-        "y": 24.462870762711873,
-        "w": 47.662499999999994,
-        "h": 102.29999999999998,
-        "scale": 0.5812499999999999,
-        "flip": false,
-        "target": {
-          "x": 41.389830508474574,
-          "y": 95.08474576271186
-        },
-        "contact": true,
-        "overlapW": 19,
-        "overlapH": 69,
-        "overlapPixels": 436
-      },
-      "right": {
-        "x": 121.63061440677964,
-        "y": 24.462870762711873,
-        "w": 47.662499999999994,
-        "h": 102.29999999999998,
-        "scale": 0.5812499999999999,
-        "flip": true,
-        "target": {
-          "x": 122.21186440677964,
-          "y": 95.08474576271186
-        },
-        "contact": true,
-        "overlapW": 17,
-        "overlapH": 61,
-        "overlapPixels": 463
-      },
-      "leftGap": 19,
-      "rightGap": 17,
-      "symmetric": true
-    },
-    {
-      "bodyId": "png-default-body-bluef",
-      "armId": "png-default-arm-blueb",
-      "left": {
-        "x": 9.619644173070846,
-        "y": 10.258348247183903,
-        "w": 32.4055900621118,
-        "h": 102.3,
-        "scale": 0.6354037267080745,
-        "flip": false,
-        "target": {
-          "x": 41.389830508474574,
-          "y": 95.08474576271186
-        },
-        "contact": true,
-        "overlapW": 14,
-        "overlapH": 76,
-        "overlapPixels": 486
-      },
-      "right": {
-        "x": 121.57646068007156,
-        "y": 10.258348247183903,
-        "w": 32.4055900621118,
-        "h": 102.3,
-        "scale": 0.6354037267080745,
-        "flip": true,
-        "target": {
-          "x": 122.21186440677964,
-          "y": 95.08474576271186
-        },
-        "contact": true,
-        "overlapW": 11,
-        "overlapH": 76,
-        "overlapPixels": 537
-      },
-      "leftGap": 14,
-      "rightGap": 11,
-      "symmetric": true
-    },
-    {
-      "bodyId": "png-default-body-bluef",
-      "armId": "png-default-arm-bluec",
-      "left": {
-        "x": -13.433926397602775,
-        "y": 41.956568967131744,
-        "w": 55.388950276243094,
-        "h": 102.30000000000001,
-        "scale": 0.5651933701657459,
-        "flip": false,
-        "target": {
-          "x": 41.389830508474574,
-          "y": 95.08474576271186
-        },
-        "contact": true,
-        "overlapW": 19,
-        "overlapH": 58,
-        "overlapPixels": 416
-      },
-      "right": {
-        "x": 121.6466710366139,
-        "y": 41.956568967131744,
-        "w": 55.388950276243094,
-        "h": 102.30000000000001,
-        "scale": 0.5651933701657459,
-        "flip": true,
-        "target": {
-          "x": 122.21186440677964,
-          "y": 95.08474576271186
-        },
-        "contact": true,
-        "overlapW": 20,
-        "overlapH": 62,
-        "overlapPixels": 395
-      },
-      "leftGap": 19,
-      "rightGap": 20,
-      "symmetric": true
-    },
-    {
-      "bodyId": "png-default-body-bluef",
-      "armId": "png-default-arm-blued",
-      "left": {
-        "x": -5.865499440764005,
-        "y": 39.0014970317474,
-        "w": 47.7746192893401,
-        "h": 102.3,
-        "scale": 0.5192893401015228,
-        "flip": false,
-        "target": {
-          "x": 41.389830508474574,
-          "y": 95.08474576271186
-        },
-        "contact": true,
-        "overlapW": 19,
-        "overlapH": 64,
-        "overlapPixels": 452
-      },
-      "right": {
-        "x": 121.69257506667812,
-        "y": 39.0014970317474,
-        "w": 47.7746192893401,
-        "h": 102.3,
-        "scale": 0.5192893401015228,
-        "flip": true,
-        "target": {
-          "x": 122.21186440677964,
-          "y": 95.08474576271186
-        },
-        "contact": true,
-        "overlapW": 20,
-        "overlapH": 69,
-        "overlapPixels": 437
-      },
-      "leftGap": 19,
-      "rightGap": 20,
-      "symmetric": true
-    },
-    {
-      "bodyId": "png-default-body-bluef",
-      "armId": "png-default-arm-bluee",
-      "left": {
-        "x": -6.6705721760891805,
-        "y": 33.29279945398703,
-        "w": 48.74697986577181,
-        "h": 102.3,
-        "scale": 0.6865771812080537,
-        "flip": false,
-        "target": {
-          "x": 41.389830508474574,
-          "y": 95.08474576271186
-        },
-        "contact": true,
-        "overlapW": 19,
-        "overlapH": 74,
-        "overlapPixels": 525
-      },
-      "right": {
-        "x": 121.52528722557159,
-        "y": 33.29279945398703,
-        "w": 48.74697986577181,
-        "h": 102.3,
-        "scale": 0.6865771812080537,
-        "flip": true,
-        "target": {
-          "x": 122.21186440677964,
-          "y": 95.08474576271186
-        },
-        "contact": true,
-        "overlapW": 20,
+        "overlapW": 24,
         "overlapH": 80,
-        "overlapPixels": 545
+        "overlapPixels": 650,
+        "orientation_ok": true
       },
-      "leftGap": 19,
-      "rightGap": 20,
+      "right": {
+        "x": 140.6254066844129,
+        "y": 80.80883649526064,
+        "w": 32.4055900621118,
+        "h": 102.3,
+        "scale": 0.6354037267080745,
+        "flip": false,
+        "target": {
+          "x": 154.1,
+          "y": 95
+        },
+        "contact": true,
+        "overlapW": 24,
+        "overlapH": 81,
+        "overlapPixels": 682,
+        "orientation_ok": true
+      },
+      "leftGap": 24,
+      "rightGap": 24,
+      "symmetric": true
+    },
+    {
+      "bodyId": "png-default-body-bluea",
+      "armId": "png-default-arm-bluec",
+      "left": {
+        "x": -25.251982696346637,
+        "y": 77.39552660093909,
+        "w": 55.388950276243094,
+        "h": 102.30000000000001,
+        "scale": 0.5651933701657459,
+        "flip": true,
+        "target": {
+          "x": 9.9,
+          "y": 95
+        },
+        "contact": true,
+        "overlapW": 31,
+        "overlapH": 78,
+        "overlapPixels": 1047,
+        "orientation_ok": true
+      },
+      "right": {
+        "x": 133.86303242010354,
+        "y": 77.39552660093909,
+        "w": 55.388950276243094,
+        "h": 102.30000000000001,
+        "scale": 0.5651933701657459,
+        "flip": false,
+        "target": {
+          "x": 154.1,
+          "y": 95
+        },
+        "contact": true,
+        "overlapW": 31,
+        "overlapH": 79,
+        "overlapPixels": 1070,
+        "orientation_ok": true
+      },
+      "leftGap": 31,
+      "rightGap": 31,
+      "symmetric": true
+    },
+    {
+      "bodyId": "png-default-body-bluea",
+      "armId": "png-default-arm-blued",
+      "left": {
+        "x": -20.127331656259827,
+        "y": 77.9817088181124,
+        "w": 47.7746192893401,
+        "h": 102.3,
+        "scale": 0.5192893401015228,
+        "flip": true,
+        "target": {
+          "x": 9.9,
+          "y": 95
+        },
+        "contact": true,
+        "overlapW": 28,
+        "overlapH": 85,
+        "overlapPixels": 1025,
+        "orientation_ok": true
+      },
+      "right": {
+        "x": 136.35271236691972,
+        "y": 77.9817088181124,
+        "w": 47.7746192893401,
+        "h": 102.3,
+        "scale": 0.5192893401015228,
+        "flip": false,
+        "target": {
+          "x": 154.1,
+          "y": 95
+        },
+        "contact": true,
+        "overlapW": 29,
+        "overlapH": 85,
+        "overlapPixels": 1065,
+        "orientation_ok": true
+      },
+      "leftGap": 28,
+      "rightGap": 29,
+      "symmetric": true
+    },
+    {
+      "bodyId": "png-default-body-bluea",
+      "armId": "png-default-arm-bluee",
+      "left": {
+        "x": -17.632531776366605,
+        "y": 77.75654738616186,
+        "w": 48.74697986577181,
+        "h": 102.3,
+        "scale": 0.6865771812080537,
+        "flip": true,
+        "target": {
+          "x": 9.9,
+          "y": 95
+        },
+        "contact": true,
+        "overlapW": 31,
+        "overlapH": 87,
+        "overlapPixels": 1888,
+        "orientation_ok": true
+      },
+      "right": {
+        "x": 132.88555191059478,
+        "y": 77.75654738616186,
+        "w": 48.74697986577181,
+        "h": 102.3,
+        "scale": 0.6865771812080537,
+        "flip": false,
+        "target": {
+          "x": 154.1,
+          "y": 95
+        },
+        "contact": true,
+        "overlapW": 32,
+        "overlapH": 87,
+        "overlapPixels": 1942,
+        "orientation_ok": true
+      },
+      "leftGap": 31,
+      "rightGap": 32,
+      "symmetric": true
+    },
+    {
+      "bodyId": "png-default-body-blueb",
+      "armId": "png-default-arm-bluea",
+      "left": {
+        "x": -20.120222018150386,
+        "y": 79.32988872082973,
+        "w": 47.662499999999994,
+        "h": 102.29999999999998,
+        "scale": 0.5812499999999999,
+        "flip": true,
+        "target": {
+          "x": 10.759375,
+          "y": 95.390625
+        },
+        "contact": true,
+        "overlapW": 28,
+        "overlapH": 29,
+        "overlapPixels": 656,
+        "orientation_ok": true
+      },
+      "right": {
+        "x": 136.59834701815038,
+        "y": 79.32988872082973,
+        "w": 47.662499999999994,
+        "h": 102.29999999999998,
+        "scale": 0.5812499999999999,
+        "flip": false,
+        "target": {
+          "x": 153.38125,
+          "y": 95.390625
+        },
+        "contact": true,
+        "overlapW": 28,
+        "overlapH": 29,
+        "overlapPixels": 665,
+        "orientation_ok": true
+      },
+      "leftGap": 28,
+      "rightGap": 28,
+      "symmetric": true
+    },
+    {
+      "bodyId": "png-default-body-blueb",
+      "armId": "png-default-arm-blueb",
+      "left": {
+        "x": -8.171621746524698,
+        "y": 81.19946149526064,
+        "w": 32.4055900621118,
+        "h": 102.3,
+        "scale": 0.6354037267080745,
+        "flip": true,
+        "target": {
+          "x": 10.759375,
+          "y": 95.390625
+        },
+        "contact": true,
+        "overlapW": 24,
+        "overlapH": 33,
+        "overlapPixels": 491,
+        "orientation_ok": true
+      },
+      "right": {
+        "x": 139.9066566844129,
+        "y": 81.19946149526064,
+        "w": 32.4055900621118,
+        "h": 102.3,
+        "scale": 0.6354037267080745,
+        "flip": false,
+        "target": {
+          "x": 153.38125,
+          "y": 95.390625
+        },
+        "contact": true,
+        "overlapW": 23,
+        "overlapH": 34,
+        "overlapPixels": 503,
+        "orientation_ok": true
+      },
+      "leftGap": 24,
+      "rightGap": 23,
+      "symmetric": true
+    },
+    {
+      "bodyId": "png-default-body-blueb",
+      "armId": "png-default-arm-bluec",
+      "left": {
+        "x": -24.392607696346637,
+        "y": 77.78615160093909,
+        "w": 55.388950276243094,
+        "h": 102.30000000000001,
+        "scale": 0.5651933701657459,
+        "flip": true,
+        "target": {
+          "x": 10.759375,
+          "y": 95.390625
+        },
+        "contact": true,
+        "overlapW": 31,
+        "overlapH": 34,
+        "overlapPixels": 863,
+        "orientation_ok": true
+      },
+      "right": {
+        "x": 133.14428242010354,
+        "y": 77.78615160093909,
+        "w": 55.388950276243094,
+        "h": 102.30000000000001,
+        "scale": 0.5651933701657459,
+        "flip": false,
+        "target": {
+          "x": 153.38125,
+          "y": 95.390625
+        },
+        "contact": true,
+        "overlapW": 32,
+        "overlapH": 34,
+        "overlapPixels": 882,
+        "orientation_ok": true
+      },
+      "leftGap": 31,
+      "rightGap": 32,
+      "symmetric": true
+    },
+    {
+      "bodyId": "png-default-body-blueb",
+      "armId": "png-default-arm-blued",
+      "left": {
+        "x": -19.267956656259827,
+        "y": 78.3723338181124,
+        "w": 47.7746192893401,
+        "h": 102.3,
+        "scale": 0.5192893401015228,
+        "flip": true,
+        "target": {
+          "x": 10.759375,
+          "y": 95.390625
+        },
+        "contact": true,
+        "overlapW": 29,
+        "overlapH": 38,
+        "overlapPixels": 788,
+        "orientation_ok": true
+      },
+      "right": {
+        "x": 135.63396236691972,
+        "y": 78.3723338181124,
+        "w": 47.7746192893401,
+        "h": 102.3,
+        "scale": 0.5192893401015228,
+        "flip": false,
+        "target": {
+          "x": 153.38125,
+          "y": 95.390625
+        },
+        "contact": true,
+        "overlapW": 29,
+        "overlapH": 39,
+        "overlapPixels": 808,
+        "orientation_ok": true
+      },
+      "leftGap": 29,
+      "rightGap": 29,
+      "symmetric": true
+    },
+    {
+      "bodyId": "png-default-body-blueb",
+      "armId": "png-default-arm-bluee",
+      "left": {
+        "x": -16.773156776366605,
+        "y": 78.14717238616186,
+        "w": 48.74697986577181,
+        "h": 102.3,
+        "scale": 0.6865771812080537,
+        "flip": true,
+        "target": {
+          "x": 10.759375,
+          "y": 95.390625
+        },
+        "contact": true,
+        "overlapW": 28,
+        "overlapH": 63,
+        "overlapPixels": 1105,
+        "orientation_ok": true
+      },
+      "right": {
+        "x": 132.16680191059478,
+        "y": 78.14717238616186,
+        "w": 48.74697986577181,
+        "h": 102.3,
+        "scale": 0.6865771812080537,
+        "flip": false,
+        "target": {
+          "x": 153.38125,
+          "y": 95.390625
+        },
+        "contact": true,
+        "overlapW": 29,
+        "overlapH": 63,
+        "overlapPixels": 1140,
+        "orientation_ok": true
+      },
+      "leftGap": 28,
+      "rightGap": 29,
+      "symmetric": true
+    },
+    {
+      "bodyId": "png-default-body-bluec",
+      "armId": "png-default-arm-bluea",
+      "left": {
+        "x": -0.2950609356761653,
+        "y": 79.19699567959262,
+        "w": 47.662499999999994,
+        "h": 102.29999999999998,
+        "scale": 0.5812499999999999,
+        "flip": true,
+        "target": {
+          "x": 30.584536082474223,
+          "y": 95.25773195876289
+        },
+        "contact": true,
+        "overlapW": 25,
+        "overlapH": 29,
+        "overlapPixels": 601,
+        "orientation_ok": true
+      },
+      "right": {
+        "x": 116.78204547175865,
+        "y": 79.19699567959262,
+        "w": 47.662499999999994,
+        "h": 102.29999999999998,
+        "scale": 0.5812499999999999,
+        "flip": false,
+        "target": {
+          "x": 133.56494845360825,
+          "y": 95.25773195876289
+        },
+        "contact": true,
+        "overlapW": 26,
+        "overlapH": 29,
+        "overlapPixels": 614,
+        "orientation_ok": true
+      },
+      "leftGap": 26,
+      "rightGap": 26,
+      "symmetric": true
+    },
+    {
+      "bodyId": "png-default-body-bluec",
+      "armId": "png-default-arm-blueb",
+      "left": {
+        "x": 11.653539335949525,
+        "y": 81.06656845402352,
+        "w": 32.4055900621118,
+        "h": 102.3,
+        "scale": 0.6354037267080745,
+        "flip": true,
+        "target": {
+          "x": 30.584536082474223,
+          "y": 95.25773195876289
+        },
+        "contact": true,
+        "overlapW": 21,
+        "overlapH": 29,
+        "overlapPixels": 427,
+        "orientation_ok": true
+      },
+      "right": {
+        "x": 120.09035513802115,
+        "y": 81.06656845402352,
+        "w": 32.4055900621118,
+        "h": 102.3,
+        "scale": 0.6354037267080745,
+        "flip": false,
+        "target": {
+          "x": 133.56494845360825,
+          "y": 95.25773195876289
+        },
+        "contact": true,
+        "overlapW": 23,
+        "overlapH": 31,
+        "overlapPixels": 447,
+        "orientation_ok": true
+      },
+      "leftGap": 22,
+      "rightGap": 23,
+      "symmetric": true
+    },
+    {
+      "bodyId": "png-default-body-bluec",
+      "armId": "png-default-arm-bluec",
+      "left": {
+        "x": -4.567446613872413,
+        "y": 77.65325855970198,
+        "w": 55.388950276243094,
+        "h": 102.30000000000001,
+        "scale": 0.5651933701657459,
+        "flip": true,
+        "target": {
+          "x": 30.584536082474223,
+          "y": 95.25773195876289
+        },
+        "contact": true,
+        "overlapW": 28,
+        "overlapH": 33,
+        "overlapPixels": 787,
+        "orientation_ok": true
+      },
+      "right": {
+        "x": 113.3279808737118,
+        "y": 77.65325855970198,
+        "w": 55.388950276243094,
+        "h": 102.30000000000001,
+        "scale": 0.5651933701657459,
+        "flip": false,
+        "target": {
+          "x": 133.56494845360825,
+          "y": 95.25773195876289
+        },
+        "contact": true,
+        "overlapW": 30,
+        "overlapH": 33,
+        "overlapPixels": 812,
+        "orientation_ok": true
+      },
+      "leftGap": 29,
+      "rightGap": 30,
+      "symmetric": true
+    },
+    {
+      "bodyId": "png-default-body-bluec",
+      "armId": "png-default-arm-blued",
+      "left": {
+        "x": 0.557204426214394,
+        "y": 78.23944077687528,
+        "w": 47.7746192893401,
+        "h": 102.3,
+        "scale": 0.5192893401015228,
+        "flip": true,
+        "target": {
+          "x": 30.584536082474223,
+          "y": 95.25773195876289
+        },
+        "contact": true,
+        "overlapW": 26,
+        "overlapH": 36,
+        "overlapPixels": 695,
+        "orientation_ok": true
+      },
+      "right": {
+        "x": 115.81766082052798,
+        "y": 78.23944077687528,
+        "w": 47.7746192893401,
+        "h": 102.3,
+        "scale": 0.5192893401015228,
+        "flip": false,
+        "target": {
+          "x": 133.56494845360825,
+          "y": 95.25773195876289
+        },
+        "contact": true,
+        "overlapW": 27,
+        "overlapH": 36,
+        "overlapPixels": 721,
+        "orientation_ok": true
+      },
+      "leftGap": 27,
+      "rightGap": 27,
+      "symmetric": true
+    },
+    {
+      "bodyId": "png-default-body-bluec",
+      "armId": "png-default-arm-bluee",
+      "left": {
+        "x": 3.052004306107616,
+        "y": 78.01427934492474,
+        "w": 48.74697986577181,
+        "h": 102.3,
+        "scale": 0.6865771812080537,
+        "flip": true,
+        "target": {
+          "x": 30.584536082474223,
+          "y": 95.25773195876289
+        },
+        "contact": true,
+        "overlapW": 25,
+        "overlapH": 64,
+        "overlapPixels": 993,
+        "orientation_ok": true
+      },
+      "right": {
+        "x": 112.35050036420304,
+        "y": 78.01427934492474,
+        "w": 48.74697986577181,
+        "h": 102.3,
+        "scale": 0.6865771812080537,
+        "flip": false,
+        "target": {
+          "x": 133.56494845360825,
+          "y": 95.25773195876289
+        },
+        "contact": true,
+        "overlapW": 27,
+        "overlapH": 64,
+        "overlapPixels": 1046,
+        "orientation_ok": true
+      },
+      "leftGap": 26,
+      "rightGap": 27,
+      "symmetric": true
+    },
+    {
+      "bodyId": "png-default-body-blued",
+      "armId": "png-default-arm-bluea",
+      "left": {
+        "x": -17.788388226941603,
+        "y": 79.13157141313742,
+        "w": 47.662499999999994,
+        "h": 102.29999999999998,
+        "scale": 0.5812499999999999,
+        "flip": true,
+        "target": {
+          "x": 13.091208791208786,
+          "y": 95.1923076923077
+        },
+        "contact": true,
+        "overlapW": 26,
+        "overlapH": 31,
+        "overlapPixels": 647,
+        "orientation_ok": true
+      },
+      "right": {
+        "x": 134.21929482034815,
+        "y": 79.13157141313742,
+        "w": 47.662499999999994,
+        "h": 102.29999999999998,
+        "scale": 0.5812499999999999,
+        "flip": false,
+        "target": {
+          "x": 151.00219780219777,
+          "y": 95.1923076923077
+        },
+        "contact": true,
+        "overlapW": 27,
+        "overlapH": 32,
+        "overlapPixels": 667,
+        "orientation_ok": true
+      },
+      "leftGap": 26,
+      "rightGap": 27,
+      "symmetric": true
+    },
+    {
+      "bodyId": "png-default-body-blued",
+      "armId": "png-default-arm-blueb",
+      "left": {
+        "x": -5.839787955315913,
+        "y": 81.00114418756831,
+        "w": 32.4055900621118,
+        "h": 102.3,
+        "scale": 0.6354037267080745,
+        "flip": true,
+        "target": {
+          "x": 13.091208791208786,
+          "y": 95.1923076923077
+        },
+        "contact": true,
+        "overlapW": 23,
+        "overlapH": 44,
+        "overlapPixels": 540,
+        "orientation_ok": true
+      },
+      "right": {
+        "x": 137.52760448661067,
+        "y": 81.00114418756831,
+        "w": 32.4055900621118,
+        "h": 102.3,
+        "scale": 0.6354037267080745,
+        "flip": false,
+        "target": {
+          "x": 151.00219780219777,
+          "y": 95.1923076923077
+        },
+        "contact": true,
+        "overlapW": 23,
+        "overlapH": 44,
+        "overlapPixels": 561,
+        "orientation_ok": true
+      },
+      "leftGap": 23,
+      "rightGap": 23,
+      "symmetric": true
+    },
+    {
+      "bodyId": "png-default-body-blued",
+      "armId": "png-default-arm-bluec",
+      "left": {
+        "x": -22.06077390513785,
+        "y": 77.58783429324679,
+        "w": 55.388950276243094,
+        "h": 102.30000000000001,
+        "scale": 0.5651933701657459,
+        "flip": true,
+        "target": {
+          "x": 13.091208791208786,
+          "y": 95.1923076923077
+        },
+        "contact": true,
+        "overlapW": 30,
+        "overlapH": 36,
+        "overlapPixels": 865,
+        "orientation_ok": true
+      },
+      "right": {
+        "x": 130.7652302223013,
+        "y": 77.58783429324679,
+        "w": 55.388950276243094,
+        "h": 102.30000000000001,
+        "scale": 0.5651933701657459,
+        "flip": false,
+        "target": {
+          "x": 151.00219780219777,
+          "y": 95.1923076923077
+        },
+        "contact": true,
+        "overlapW": 30,
+        "overlapH": 70,
+        "overlapPixels": 884,
+        "orientation_ok": true
+      },
+      "leftGap": 30,
+      "rightGap": 30,
+      "symmetric": true
+    },
+    {
+      "bodyId": "png-default-body-blued",
+      "armId": "png-default-arm-blued",
+      "left": {
+        "x": -16.936122865051043,
+        "y": 78.17401651042009,
+        "w": 47.7746192893401,
+        "h": 102.3,
+        "scale": 0.5192893401015228,
+        "flip": true,
+        "target": {
+          "x": 13.091208791208786,
+          "y": 95.1923076923077
+        },
+        "contact": true,
+        "overlapW": 27,
+        "overlapH": 44,
+        "overlapPixels": 813,
+        "orientation_ok": true
+      },
+      "right": {
+        "x": 133.2549101691175,
+        "y": 78.17401651042009,
+        "w": 47.7746192893401,
+        "h": 102.3,
+        "scale": 0.5192893401015228,
+        "flip": false,
+        "target": {
+          "x": 151.00219780219777,
+          "y": 95.1923076923077
+        },
+        "contact": true,
+        "overlapW": 28,
+        "overlapH": 45,
+        "overlapPixels": 846,
+        "orientation_ok": true
+      },
+      "leftGap": 27,
+      "rightGap": 28,
+      "symmetric": true
+    },
+    {
+      "bodyId": "png-default-body-blued",
+      "armId": "png-default-arm-bluee",
+      "left": {
+        "x": -14.441322985157822,
+        "y": 77.94885507846955,
+        "w": 48.74697986577181,
+        "h": 102.3,
+        "scale": 0.6865771812080537,
+        "flip": true,
+        "target": {
+          "x": 13.091208791208786,
+          "y": 95.1923076923077
+        },
+        "contact": true,
+        "overlapW": 26,
+        "overlapH": 71,
+        "overlapPixels": 1331,
+        "orientation_ok": true
+      },
+      "right": {
+        "x": 129.78774971279256,
+        "y": 77.94885507846955,
+        "w": 48.74697986577181,
+        "h": 102.3,
+        "scale": 0.6865771812080537,
+        "flip": false,
+        "target": {
+          "x": 151.00219780219777,
+          "y": 95.1923076923077
+        },
+        "contact": true,
+        "overlapW": 27,
+        "overlapH": 73,
+        "overlapPixels": 1398,
+        "orientation_ok": true
+      },
+      "leftGap": 26,
+      "rightGap": 27,
+      "symmetric": true
+    },
+    {
+      "bodyId": "png-default-body-bluee",
+      "armId": "png-default-arm-bluea",
+      "left": {
+        "x": 14.607602981849613,
+        "y": 78.97926372082974,
+        "w": 47.662499999999994,
+        "h": 102.29999999999998,
+        "scale": 0.5812499999999999,
+        "flip": true,
+        "target": {
+          "x": 45.4872,
+          "y": 95.04
+        },
+        "contact": true,
+        "overlapW": 23,
+        "overlapH": 78,
+        "overlapPixels": 585,
+        "orientation_ok": true
+      },
+      "right": {
+        "x": 102.0698970181504,
+        "y": 78.97926372082974,
+        "w": 47.662499999999994,
+        "h": 102.29999999999998,
+        "scale": 0.5812499999999999,
+        "flip": false,
+        "target": {
+          "x": 118.8528,
+          "y": 95.04
+        },
+        "contact": true,
+        "overlapW": 24,
+        "overlapH": 79,
+        "overlapPixels": 606,
+        "orientation_ok": true
+      },
+      "leftGap": 24,
+      "rightGap": 24,
+      "symmetric": true
+    },
+    {
+      "bodyId": "png-default-body-bluee",
+      "armId": "png-default-arm-blueb",
+      "left": {
+        "x": 26.556203253475303,
+        "y": 80.84883649526063,
+        "w": 32.4055900621118,
+        "h": 102.3,
+        "scale": 0.6354037267080745,
+        "flip": true,
+        "target": {
+          "x": 45.4872,
+          "y": 95.04
+        },
+        "contact": true,
+        "overlapW": 20,
+        "overlapH": 42,
+        "overlapPixels": 418,
+        "orientation_ok": true
+      },
+      "right": {
+        "x": 105.3782066844129,
+        "y": 80.84883649526063,
+        "w": 32.4055900621118,
+        "h": 102.3,
+        "scale": 0.6354037267080745,
+        "flip": false,
+        "target": {
+          "x": 118.8528,
+          "y": 95.04
+        },
+        "contact": true,
+        "overlapW": 21,
+        "overlapH": 42,
+        "overlapPixels": 448,
+        "orientation_ok": true
+      },
+      "leftGap": 20,
+      "rightGap": 21,
+      "symmetric": true
+    },
+    {
+      "bodyId": "png-default-body-bluee",
+      "armId": "png-default-arm-bluec",
+      "left": {
+        "x": 10.335217303653366,
+        "y": 77.4355266009391,
+        "w": 55.388950276243094,
+        "h": 102.30000000000001,
+        "scale": 0.5651933701657459,
+        "flip": true,
+        "target": {
+          "x": 45.4872,
+          "y": 95.04
+        },
+        "contact": true,
+        "overlapW": 26,
+        "overlapH": 78,
+        "overlapPixels": 846,
+        "orientation_ok": true
+      },
+      "right": {
+        "x": 98.61583242010354,
+        "y": 77.4355266009391,
+        "w": 55.388950276243094,
+        "h": 102.30000000000001,
+        "scale": 0.5651933701657459,
+        "flip": false,
+        "target": {
+          "x": 118.8528,
+          "y": 95.04
+        },
+        "contact": true,
+        "overlapW": 27,
+        "overlapH": 78,
+        "overlapPixels": 869,
+        "orientation_ok": true
+      },
+      "leftGap": 27,
+      "rightGap": 27,
+      "symmetric": true
+    },
+    {
+      "bodyId": "png-default-body-bluee",
+      "armId": "png-default-arm-blued",
+      "left": {
+        "x": 15.459868343740172,
+        "y": 78.0217088181124,
+        "w": 47.7746192893401,
+        "h": 102.3,
+        "scale": 0.5192893401015228,
+        "flip": true,
+        "target": {
+          "x": 45.4872,
+          "y": 95.04
+        },
+        "contact": true,
+        "overlapW": 25,
+        "overlapH": 76,
+        "overlapPixels": 738,
+        "orientation_ok": true
+      },
+      "right": {
+        "x": 101.10551236691973,
+        "y": 78.0217088181124,
+        "w": 47.7746192893401,
+        "h": 102.3,
+        "scale": 0.5192893401015228,
+        "flip": false,
+        "target": {
+          "x": 118.8528,
+          "y": 95.04
+        },
+        "contact": true,
+        "overlapW": 25,
+        "overlapH": 76,
+        "overlapPixels": 764,
+        "orientation_ok": true
+      },
+      "leftGap": 25,
+      "rightGap": 25,
+      "symmetric": true
+    },
+    {
+      "bodyId": "png-default-body-bluee",
+      "armId": "png-default-arm-bluee",
+      "left": {
+        "x": 17.954668223633394,
+        "y": 77.79654738616186,
+        "w": 48.74697986577181,
+        "h": 102.3,
+        "scale": 0.6865771812080537,
+        "flip": true,
+        "target": {
+          "x": 45.4872,
+          "y": 95.04
+        },
+        "contact": true,
+        "overlapW": 28,
+        "overlapH": 85,
+        "overlapPixels": 1454,
+        "orientation_ok": true
+      },
+      "right": {
+        "x": 97.63835191059479,
+        "y": 77.79654738616186,
+        "w": 48.74697986577181,
+        "h": 102.3,
+        "scale": 0.6865771812080537,
+        "flip": false,
+        "target": {
+          "x": 118.8528,
+          "y": 95.04
+        },
+        "contact": true,
+        "overlapW": 28,
+        "overlapH": 85,
+        "overlapPixels": 1519,
+        "orientation_ok": true
+      },
+      "leftGap": 28,
+      "rightGap": 28,
+      "symmetric": true
+    },
+    {
+      "bodyId": "png-default-body-bluef",
+      "armId": "png-default-arm-bluea",
+      "left": {
+        "x": 10.510233490324186,
+        "y": 79.02400948354159,
+        "w": 47.662499999999994,
+        "h": 102.29999999999998,
+        "scale": 0.5812499999999999,
+        "flip": true,
+        "target": {
+          "x": 41.389830508474574,
+          "y": 95.08474576271186
+        },
+        "contact": true,
+        "overlapW": 36,
+        "overlapH": 72,
+        "overlapPixels": 646,
+        "orientation_ok": true
+      },
+      "right": {
+        "x": 105.42896142493004,
+        "y": 79.02400948354159,
+        "w": 47.662499999999994,
+        "h": 102.29999999999998,
+        "scale": 0.5812499999999999,
+        "flip": false,
+        "target": {
+          "x": 122.21186440677964,
+          "y": 95.08474576271186
+        },
+        "contact": true,
+        "overlapW": 30,
+        "overlapH": 79,
+        "overlapPixels": 712,
+        "orientation_ok": true
+      },
+      "leftGap": 36,
+      "rightGap": 37,
+      "symmetric": true
+    },
+    {
+      "bodyId": "png-default-body-bluef",
+      "armId": "png-default-arm-blueb",
+      "left": {
+        "x": 22.458833761949876,
+        "y": 80.8935822579725,
+        "w": 32.4055900621118,
+        "h": 102.3,
+        "scale": 0.6354037267080745,
+        "flip": true,
+        "target": {
+          "x": 41.389830508474574,
+          "y": 95.08474576271186
+        },
+        "contact": true,
+        "overlapW": 31,
+        "overlapH": 51,
+        "overlapPixels": 614,
+        "orientation_ok": true
+      },
+      "right": {
+        "x": 108.73727109119254,
+        "y": 80.8935822579725,
+        "w": 32.4055900621118,
+        "h": 102.3,
+        "scale": 0.6354037267080745,
+        "flip": false,
+        "target": {
+          "x": 122.21186440677964,
+          "y": 95.08474576271186
+        },
+        "contact": true,
+        "overlapW": 26,
+        "overlapH": 77,
+        "overlapPixels": 553,
+        "orientation_ok": true
+      },
+      "leftGap": 31,
+      "rightGap": 31,
+      "symmetric": true
+    },
+    {
+      "bodyId": "png-default-body-bluef",
+      "armId": "png-default-arm-bluec",
+      "left": {
+        "x": 6.237847812127939,
+        "y": 77.48027236365095,
+        "w": 55.388950276243094,
+        "h": 102.30000000000001,
+        "scale": 0.5651933701657459,
+        "flip": true,
+        "target": {
+          "x": 41.389830508474574,
+          "y": 95.08474576271186
+        },
+        "contact": true,
+        "overlapW": 39,
+        "overlapH": 77,
+        "overlapPixels": 941,
+        "orientation_ok": true
+      },
+      "right": {
+        "x": 101.97489682688318,
+        "y": 77.48027236365095,
+        "w": 55.388950276243094,
+        "h": 102.30000000000001,
+        "scale": 0.5651933701657459,
+        "flip": false,
+        "target": {
+          "x": 122.21186440677964,
+          "y": 95.08474576271186
+        },
+        "contact": true,
+        "overlapW": 31,
+        "overlapH": 78,
+        "overlapPixels": 921,
+        "orientation_ok": true
+      },
+      "leftGap": 39,
+      "rightGap": 40,
+      "symmetric": true
+    },
+    {
+      "bodyId": "png-default-body-bluef",
+      "armId": "png-default-arm-blued",
+      "left": {
+        "x": 11.362498852214745,
+        "y": 78.06645458082426,
+        "w": 47.7746192893401,
+        "h": 102.3,
+        "scale": 0.5192893401015228,
+        "flip": true,
+        "target": {
+          "x": 41.389830508474574,
+          "y": 95.08474576271186
+        },
+        "contact": true,
+        "overlapW": 37,
+        "overlapH": 74,
+        "overlapPixels": 924,
+        "orientation_ok": true
+      },
+      "right": {
+        "x": 104.46457677369936,
+        "y": 78.06645458082426,
+        "w": 47.7746192893401,
+        "h": 102.3,
+        "scale": 0.5192893401015228,
+        "flip": false,
+        "target": {
+          "x": 122.21186440677964,
+          "y": 95.08474576271186
+        },
+        "contact": true,
+        "overlapW": 31,
+        "overlapH": 77,
+        "overlapPixels": 861,
+        "orientation_ok": true
+      },
+      "leftGap": 37,
+      "rightGap": 38,
+      "symmetric": true
+    },
+    {
+      "bodyId": "png-default-body-bluef",
+      "armId": "png-default-arm-bluee",
+      "left": {
+        "x": 13.857298732107967,
+        "y": 77.84129314887372,
+        "w": 48.74697986577181,
+        "h": 102.3,
+        "scale": 0.6865771812080537,
+        "flip": true,
+        "target": {
+          "x": 41.389830508474574,
+          "y": 95.08474576271186
+        },
+        "contact": true,
+        "overlapW": 39,
+        "overlapH": 83,
+        "overlapPixels": 1612,
+        "orientation_ok": true
+      },
+      "right": {
+        "x": 100.99741631737444,
+        "y": 77.84129314887372,
+        "w": 48.74697986577181,
+        "h": 102.3,
+        "scale": 0.6865771812080537,
+        "flip": false,
+        "target": {
+          "x": 122.21186440677964,
+          "y": 95.08474576271186
+        },
+        "contact": true,
+        "overlapW": 33,
+        "overlapH": 83,
+        "overlapPixels": 1639,
+        "orientation_ok": true
+      },
+      "leftGap": 39,
+      "rightGap": 40,
       "symmetric": true
     }
   ]

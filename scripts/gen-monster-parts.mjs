@@ -102,32 +102,45 @@ export function measureBodyGeometry(png) {
   };
 }
 
-function edgeRun(png, x) {
-  let minY = png.height;
-  let maxY = -1;
-  let count = 0;
-  for (let y = 0; y < png.height; y += 1) {
-    if (!isOpaque(png, x, y)) continue;
-    minY = Math.min(minY, y);
-    maxY = Math.max(maxY, y);
-    count += 1;
+// Centroid of opaque pixels inside a horizontal band of the opaque box.
+function bandCentroid(png, bounds, fromFrac, toFrac) {
+  const y0 = bounds.minY + Math.floor((bounds.maxY - bounds.minY) * fromFrac);
+  const y1 = bounds.minY + Math.ceil((bounds.maxY - bounds.minY) * toFrac);
+  let sx = 0;
+  let sy = 0;
+  let n = 0;
+  for (let y = y0; y <= y1; y += 1) {
+    for (let x = bounds.minX; x <= bounds.maxX; x += 1) {
+      if (!isOpaque(png, x, y)) continue;
+      sx += x;
+      sy += y;
+      n += 1;
+    }
   }
-  return { minY, maxY, count, span: maxY >= minY ? maxY - minY + 1 : 0 };
+  return n ? { x: sx / n, y: sy / n, n } : null;
 }
 
 export function measureArmGeometry(png) {
   const bounds = opaqueBounds(png);
-  const leftRun = edgeRun(png, bounds.minX);
-  const rightRun = edgeRun(png, bounds.maxX);
-  const attach = leftRun.span > rightRun.span ? 'left' : 'right';
-  const x = attach === 'left' ? bounds.minX : bounds.maxX;
-  const run = attach === 'left' ? leftRun : rightRun;
+  // Every Kenney Default arm is drawn with the SHOULDER BALL at the top of the
+  // sprite and the hand/claw swinging low. The old edge-run heuristic latched
+  // onto the flat-cut HAND edge instead (all five styles mis-detected) — the
+  // hand got glued to the body and the shoulder floated outward ("tay ngược").
+  // Ground truth: pivot = centroid of the TOP 30% opaque band (the ball);
+  // attach side = which half of the sprite that ball sits in.
+  const shoulder = bandCentroid(png, bounds, 0, 0.3) || { x: (bounds.minX + bounds.maxX) / 2, y: bounds.minY };
+  // Hand = centroid of the BOTTOM 30% band; exported so QA can assert the hand
+  // ends up FARTHER from the body than the shoulder (orientation guard).
+  const hand = bandCentroid(png, bounds, 0.7, 1) || { x: (bounds.minX + bounds.maxX) / 2, y: bounds.maxY };
+  const midX = (bounds.minX + bounds.maxX) / 2;
   return {
     w: png.width,
     h: png.height,
-    pivotX: x,
-    pivotY: (run.minY + run.maxY) / 2,
-    attach,
+    pivotX: shoulder.x,
+    pivotY: shoulder.y,
+    handX: hand.x,
+    handY: hand.y,
+    attach: shoulder.x <= midX ? 'left' : 'right',
   };
 }
 
@@ -240,6 +253,15 @@ function bodyOpaquePixels(png, bodyBox) {
   });
 }
 
+function symmetrizePixels(pixels, canvasWidth = CANVAS.w) {
+  const symmetric = new Set(pixels);
+  for (const pixel of pixels) {
+    const [x, y] = pixel.split(',').map(Number);
+    symmetric.add(`${canvasWidth - 1 - x},${y}`);
+  }
+  return symmetric;
+}
+
 function contactMetrics(bodyPixels, armPixels) {
   const overlap = [];
   for (const pixel of armPixels) {
@@ -278,21 +300,49 @@ export function buildGeometryQa(manifest, rawDir = RAW_DIR) {
       const armPng = readPng(path.join(rawDir, arm.file));
       const placements = computeArmPairPlacements(body, arm.geom);
       const bodyPixels = bodyOpaquePixels(bodyPng, placements.bodyBox);
+      const symmetricBodyPixels = symmetrizePixels(bodyPixels);
       const left = contactMetrics(bodyPixels, renderedOpaquePixels(armPng, placements.left, placements.left.flip));
       const right = contactMetrics(bodyPixels, renderedOpaquePixels(armPng, placements.right, placements.right.flip));
+      const symmetricLeft = contactMetrics(
+        symmetricBodyPixels,
+        renderedOpaquePixels(armPng, placements.left, placements.left.flip),
+      );
+      const symmetricRight = contactMetrics(
+        symmetricBodyPixels,
+        renderedOpaquePixels(armPng, placements.right, placements.right.flip),
+      );
+      // Orientation guard: the HAND must sit farther from the body's centre
+      // than the SHOULDER on each side — a backwards arm still touches the
+      // body, so contact alone can't catch "tay ngược".
+      const sourceLean = Math.abs((arm.geom.handX ?? 0) - arm.geom.pivotX);
+      const directional = sourceLean > arm.geom.w * 0.1;
+      const placedHandX = (placement) => {
+        const sx = placement.flip ? arm.geom.w - 1 - (arm.geom.handX ?? 0) : (arm.geom.handX ?? 0);
+        return placement.x + sx * placement.scale;
+      };
+      const orientationOk = (placement) => {
+        if (!directional || arm.geom.handX == null) return true;
+        const handX = placedHandX(placement);
+        const shoulderX = placement.target.x;
+        return placement === placements.left ? handX <= shoulderX + 1 : handX >= shoulderX - 1;
+      };
       rows.push({
         bodyId: body.id,
         armId: arm.id,
-        left: { ...placements.left, ...left },
-        right: { ...placements.right, ...right },
-        leftGap: left.overlapW,
-        rightGap: right.overlapW,
-        symmetric: Math.abs(left.overlapW - right.overlapW) <= 3,
+        left: { ...placements.left, ...left, orientation_ok: orientationOk(placements.left) },
+        right: { ...placements.right, ...right, orientation_ok: orientationOk(placements.right) },
+        leftGap: symmetricLeft.overlapW,
+        rightGap: symmetricRight.overlapW,
+        symmetric: Math.abs(symmetricLeft.overlapW - symmetricRight.overlapW) <= 3,
       });
     }
   }
   return {
-    constants: { canvas: CANVAS, armHeightFraction: ARM_HEIGHT_FRACTION, insetFraction: ARM_INSET_FRACTION },
+    constants: {
+      canvas: CANVAS,
+      armHeightFraction: ARM_HEIGHT_FRACTION,
+      insetFraction: ARM_INSET_FRACTION,
+    },
     comboCount: rows.length,
     rows,
   };

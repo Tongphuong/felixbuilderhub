@@ -23,5 +23,10 @@ test('every body shape and arm style has symmetric alpha contact', () => {
       Math.abs(row.leftGap - row.rightGap) <= 3,
       `${row.bodyId} + ${row.armId}: asymmetric gaps ${row.leftGap}/${row.rightGap}`,
     );
+    // "Tay ngược" guard: the hand must end up OUTWARD of the shoulder on each
+    // side — a backwards arm still touches the body, so contact alone is blind
+    // to orientation.
+    assert.equal(row.left.orientation_ok, true, `${row.bodyId} + ${row.armId}: LEFT arm points the wrong way`);
+    assert.equal(row.right.orientation_ok, true, `${row.bodyId} + ${row.armId}: RIGHT arm points the wrong way`);
   }
 });

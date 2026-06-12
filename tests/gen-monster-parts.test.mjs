@@ -78,7 +78,7 @@ test('buildMonsterManifestFromRaw scans raw PNG tree when present', () => {
   }
 });
 
-test('alpha measurements find body sockets and the wider arm attachment edge', () => {
+test('alpha measurements find body sockets plus shoulder and hand centroids', () => {
   const body = new PNG({ width: 10, height: 10 });
   for (let y = 1; y <= 8; y += 1) {
     for (let x = 2; x <= 7; x += 1) body.data[(y * body.width + x) * 4 + 3] = 255;
@@ -90,11 +90,16 @@ test('alpha measurements find body sockets and the wider arm attachment edge', (
   const arm = new PNG({ width: 6, height: 8 });
   for (let y = 1; y <= 2; y += 1) arm.data[(y * arm.width) * 4 + 3] = 255;
   for (let y = 2; y <= 6; y += 1) arm.data[(y * arm.width + 5) * 4 + 3] = 255;
+  // Shoulder = centroid of the TOP opaque band (the ball, top-left here);
+  // hand = bottom band. The old edge-run heuristic picked the tall right edge
+  // (the hand) and produced backwards arms on every real Kenney sprite.
   assert.deepEqual(measureArmGeometry(arm), {
     w: 6,
     h: 8,
-    pivotX: 5,
-    pivotY: 4,
-    attach: 'right',
+    pivotX: 2.5,
+    pivotY: 2,
+    handX: 5,
+    handY: 5,
+    attach: 'left',
   });
 });

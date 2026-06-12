@@ -21,3 +21,4 @@
 | 2026-06-12 | claude | NOTE | w2r/r2-rank-ui, w2r/r3-leaderboard | — | R2/R3 chuyển giao Cursor → Codex (lệnh Phương). Branch đã push origin. Codex: R2 làm nốt tích hợp hub cho test rank-ui xanh; R3 implement lại theo spec cho test leaderboard xanh. |
 | 2026-06-12 17:01 | codex | START | fix/audio-r2dev-host-rewrite | functions/api/read2lead-lesson.js, functions/api/_read2lead-lesson-activities.js, shared audio URL util, tests | SPEC_FIX_AUDIO_R2DEV_503; env passed from context.env |
 | 2026-06-12 17:06 | codex | DONE | fix/audio-r2dev-host-rewrite | lesson API audio host rewrite + tests | fbf793f; 250 tests pass; astro check has 0 task diagnostics (410 pre-existing repo errors) |
+| 2026-06-12 17:35 | codex | START | codex/avatar-arm-direction | monster geometry zone | Continue Claude rate-limit handoff: add arm orientation QA and correct reversed arm placement |
