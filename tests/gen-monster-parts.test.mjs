@@ -8,9 +8,12 @@ import {
   buildMonsterManifestFromRaw,
   classifyMonsterSlot,
   makeMonsterPartId,
+  measureArmGeometry,
+  measureBodyGeometry,
   shouldIncludeMonsterAsset,
   shouldSkipMonsterPng,
 } from '../scripts/gen-monster-parts.mjs';
+import { PNG } from 'pngjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const RAW_DIR = path.join(ROOT, 'public', 'assets', 'monsters', 'raw');
@@ -58,6 +61,40 @@ test('buildMonsterManifestFromRaw scans raw PNG tree when present', () => {
       assert.ok(entry.file.startsWith('PNG/Default/'), entry.file);
       assert.ok(!entry.file.includes('/Double/'), entry.file);
       assert.ok(fs.existsSync(path.join(RAW_DIR, entry.file)));
+      if (slot === 'body') {
+        assert.ok(entry.geom?.w > 0);
+        assert.ok(entry.geom?.h > 0);
+        assert.ok(entry.sockets?.armLeft);
+        assert.ok(entry.sockets?.armRight);
+      }
+      if (slot === 'arms') {
+        assert.ok(entry.geom?.w > 0);
+        assert.ok(entry.geom?.h > 0);
+        assert.ok(Number.isFinite(entry.geom?.pivotX));
+        assert.ok(Number.isFinite(entry.geom?.pivotY));
+        assert.match(entry.geom?.attach, /^(left|right)$/);
+      }
     }
   }
+});
+
+test('alpha measurements find body sockets and the wider arm attachment edge', () => {
+  const body = new PNG({ width: 10, height: 10 });
+  for (let y = 1; y <= 8; y += 1) {
+    for (let x = 2; x <= 7; x += 1) body.data[(y * body.width + x) * 4 + 3] = 255;
+  }
+  const bodyGeometry = measureBodyGeometry(body);
+  assert.deepEqual(bodyGeometry.sockets.armLeft, { x: 2, y: 5 });
+  assert.deepEqual(bodyGeometry.sockets.armRight, { x: 7, y: 5 });
+
+  const arm = new PNG({ width: 6, height: 8 });
+  for (let y = 1; y <= 2; y += 1) arm.data[(y * arm.width) * 4 + 3] = 255;
+  for (let y = 2; y <= 6; y += 1) arm.data[(y * arm.width + 5) * 4 + 3] = 255;
+  assert.deepEqual(measureArmGeometry(arm), {
+    w: 6,
+    h: 8,
+    pivotX: 5,
+    pivotY: 4,
+    attach: 'right',
+  });
 });

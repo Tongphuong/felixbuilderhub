@@ -9,14 +9,18 @@ import {
   armDualAnchor,
   armSingleAnchors,
   bodyBoxFromFile,
+  computeArmPairPlacement,
   computeAnchoredPlacement,
   computePartPlacement,
   isDualArmSprite,
   MONSTER_SLOT_REGIONS,
   resolvePartAnchor,
   type BodyBox,
+  type BodySocketGeometry,
+  type ArmGeometry,
   type PartAnchor,
 } from './monster-slot-layout';
+import geometryManifest from '../../public/assets/monsters/monster-parts.json';
 
 export type MonsterConfig = {
   body: string;
@@ -76,6 +80,18 @@ function partFile(slot: MonsterSlot, partId: string): string | null {
   const parts = MONSTER_MANIFEST[slot] || [];
   const match = parts.find((part) => part.id === partId);
   return match?.file || null;
+}
+
+function geometryPart(
+  slot: 'body' | 'arms',
+  partId: string,
+): ({ geom?: ArmGeometry; sockets?: BodySocketGeometry['sockets'] } & { id: string }) | null {
+  const parts = geometryManifest[slot] as Array<{
+    id: string;
+    geom?: ArmGeometry;
+    sockets?: BodySocketGeometry['sockets'];
+  }>;
+  return parts.find((part) => part.id === partId) || null;
 }
 
 function hasManifestParts(): boolean {
@@ -326,6 +342,30 @@ function renderPartLayer(
 function renderArmsLayers(stack: HTMLElement, partId: string, bodyBox?: BodyBox) {
   const file = partFile('arms', partId);
   if (!file) return false;
+  const bodyId = stack.dataset.bodyId || '';
+  const body = geometryPart('body', bodyId);
+  const arm = geometryPart('arms', partId);
+  if (body?.geom && body.sockets && arm?.geom && bodyBox) {
+    const placements = computeArmPairPlacement(
+      { geom: body.geom, sockets: body.sockets },
+      arm.geom,
+      bodyBox,
+    );
+    const renderMeasuredArm = (placement: typeof placements.left) => {
+      const layer = document.createElement('div');
+      layer.className = 'r2l-monster__layer';
+      layer.dataset.slot = 'arms';
+      const img = loadPartImage(`/assets/monsters/raw/${file.split('/').map(encodeURIComponent).join('/')}`);
+      applyPlacementStyles(img, placement, placement.flip);
+      layer.appendChild(img);
+      stack.appendChild(layer);
+    };
+    renderMeasuredArm(placements.left);
+    renderMeasuredArm(placements.right);
+    return true;
+  }
+
+  // Compatibility fallback for stale manifests: preserve the previous layout.
   if (isDualArmSprite(file)) {
     return renderPartLayer(stack, 'arms', partId, undefined, {
       anchor: armDualAnchor(bodyBox),
@@ -385,6 +425,7 @@ export function renderMonster(
     // All non-body parts anchor to the BODY's rendered box so the layout
     // holds across the 6 body shapes (165x165 .. 132x250), not just blueA.
     const bodyBox = bodyBoxFromFile(partFile('body', config.body) || '');
+    stack.dataset.bodyId = config.body;
     renderArmsLayers(stack, config.arms, bodyBox);
     renderPartLayer(stack, 'body', config.body, config.color);
     renderPartLayer(stack, 'detail', config.detail, undefined, { bodyBox });

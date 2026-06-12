@@ -65,6 +65,67 @@ export type PartPlacement = {
   heightPct: number;
 };
 
+export type BodySocketGeometry = {
+  geom: { w: number; h: number };
+  sockets: {
+    armLeft: { x: number; y: number };
+    armRight: { x: number; y: number };
+  };
+};
+
+export type ArmGeometry = {
+  w: number;
+  h: number;
+  pivotX: number;
+  pivotY: number;
+  attach: 'left' | 'right';
+};
+
+export type ArmPlacement = PartPlacement & { flip: boolean };
+
+export const ARM_HEIGHT_FRACTION = 0.62;
+export const ARM_INSET_FRACTION = 0.06;
+
+/**
+ * Pins an arm sprite's measured attachment pivot to alpha-derived body
+ * sockets. Both sides use the same scale and mirrored pivot math.
+ */
+export function computeArmPairPlacement(
+  body: BodySocketGeometry,
+  arm: ArmGeometry,
+  bodyBox: BodyBox,
+  canvas = KENNEY_CANVAS,
+): { left: ArmPlacement; right: ArmPlacement } {
+  const bodyScale = bodyBox.w / Math.max(1, body.geom.w);
+  const armScale = ARM_HEIGHT_FRACTION * bodyBox.h / Math.max(1, arm.h);
+  const inset = ARM_INSET_FRACTION * bodyBox.w;
+  const leftFlip = arm.attach === 'left';
+  const leftPivotX = leftFlip ? arm.w - arm.pivotX : arm.pivotX;
+  const rightPivotX = arm.w - leftPivotX;
+
+  const place = (
+    socket: { x: number; y: number },
+    side: 'left' | 'right',
+    pivotX: number,
+    flip: boolean,
+  ): ArmPlacement => {
+    const targetX = bodyBox.x + socket.x * bodyScale + (side === 'left' ? inset : -inset);
+    const targetY = bodyBox.y + socket.y * bodyScale;
+    return {
+      leftPct: ((targetX - pivotX * armScale) / canvas.w) * 100,
+      topPct: ((targetY - arm.pivotY * armScale) / canvas.h) * 100,
+      widthPct: ((arm.w * armScale) / canvas.w) * 100,
+      heightPct: ((arm.h * armScale) / canvas.h) * 100,
+      flip,
+    };
+  };
+
+  return {
+    left: place(body.sockets.armLeft, 'left', leftPivotX, leftFlip),
+    right: place(body.sockets.armRight, 'right', rightPivotX, !leftFlip),
+  };
+}
+
 /** Body uses fill; face/detail use centroid anchors (PIL-tuned on body_blueA). */
 export const MONSTER_SLOT_REGIONS: Record<MonsterSlot, SlotRegion> = {
   body: { x: 0, y: 0, w: 165, h: 165, mode: 'fill' },
