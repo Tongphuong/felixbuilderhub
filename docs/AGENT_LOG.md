@@ -22,3 +22,4 @@
 | 2026-06-12 17:01 | codex | START | fix/audio-r2dev-host-rewrite | functions/api/read2lead-lesson.js, functions/api/_read2lead-lesson-activities.js, shared audio URL util, tests | SPEC_FIX_AUDIO_R2DEV_503; env passed from context.env |
 | 2026-06-12 17:06 | codex | DONE | fix/audio-r2dev-host-rewrite | lesson API audio host rewrite + tests | fbf793f; 250 tests pass; astro check has 0 task diagnostics (410 pre-existing repo errors) |
 | 2026-06-12 17:35 | codex | START | codex/avatar-arm-direction | monster geometry zone | Continue Claude rate-limit handoff: add arm orientation QA and correct reversed arm placement |
+| 2026-06-12 19:15 | codex | DONE | codex/avatar-arm-direction | monster geometry zone | 87354b3; shoulder/hand alpha centroids + orientation QA; 286 tests green |
