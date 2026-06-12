@@ -131,10 +131,17 @@ export async function onRequestPost(context) {
 
   try {
     const reviewUrl = `${new URL(request.url).origin}/hoc-sinh?code=${encodeURIComponent(accessCode)}`;
-    const rankLadder = computeRankLadder(progressState);
-    const rankPoints = Number.isFinite(Number(rankLadder?.rank_points))
-      ? Math.max(0, Math.floor(Number(rankLadder.rank_points)))
-      : null;
+    // Challenge dial uses LIFETIME points, never season RP: the W2R ladder
+    // soft-resets each season, and pack difficulty must not drop with it.
+    const lifetimeRp = progressState?.lifetime_rp ?? progressState?.rank_points;
+    const rankPoints = Number.isFinite(Number(lifetimeRp))
+      ? Math.max(0, Math.floor(Number(lifetimeRp)))
+      : (() => {
+        const rankLadder = computeRankLadder(progressState);
+        return Number.isFinite(Number(rankLadder?.rank_points))
+          ? Math.max(0, Math.floor(Number(rankLadder.rank_points)))
+          : null;
+      })();
     const upstreamRequestBody = {
       child_name: progress.student_name,
       age: progress.age,

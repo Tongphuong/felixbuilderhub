@@ -27,3 +27,11 @@ test('generate endpoint sends level_progress_percent to the backend (in-level ra
   assert.match(generateEndpoint, /level_progress_percent/);
   assert.match(generateEndpoint, /levelProgressPercent\(progressState, levelForPack\)/);
 });
+
+test('challenge dial reads lifetime RP, never season RP (no difficulty drop at season reset)', () => {
+  assert.match(generateEndpoint, /lifetime_rp/);
+  const lifetimeIdx = generateEndpoint.indexOf("progressState?.lifetime_rp");
+  const ladderIdx = generateEndpoint.indexOf("computeRankLadder(progressState)");
+  assert.ok(lifetimeIdx > -1 && (ladderIdx === -1 || lifetimeIdx < ladderIdx),
+    "lifetime_rp must be preferred over the (season-based) ladder points");
+});
