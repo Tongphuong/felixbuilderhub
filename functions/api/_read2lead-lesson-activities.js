@@ -5,6 +5,7 @@ import {
   buildRetellPromptVi,
   buildRetellTemplate,
 } from './_read2lead-retell-guide.js';
+import { rewriteAudioHost } from './_read2lead-audio-url.js';
 
 export const RETELL_SUMMARY_ACTIVITY = {
   type: 'retell_summary',
@@ -16,9 +17,23 @@ export const RETELL_SUMMARY_ACTIVITY = {
 /**
  * @param {object[]} activities
  * @param {{ story?: object, topic?: string, activities?: object[] } | null} [lessonContext]
+ * @param {object} [env]
  */
-export function ensureSixActivities(activities, lessonContext = null) {
-  const list = Array.isArray(activities) ? activities.filter(Boolean).map((activity) => ({ ...activity })) : [];
+export function ensureSixActivities(activities, lessonContext = null, env = undefined) {
+  const list = Array.isArray(activities)
+    ? activities.filter(Boolean).map((activity) => ({
+        ...activity,
+        ...(Array.isArray(activity.items)
+          ? {
+              items: activity.items.map((item) =>
+                item && typeof item === 'object' && Object.hasOwn(item, 'audio_url')
+                  ? { ...item, audio_url: rewriteAudioHost(item.audio_url, env) }
+                  : item,
+              ),
+            }
+          : {}),
+      }))
+    : [];
   const context = lessonContext || { activities: list };
 
   const existingIndex = list.findIndex((activity) => activity.type === 'retell_summary');
