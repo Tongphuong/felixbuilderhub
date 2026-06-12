@@ -138,8 +138,9 @@ báo cáo trạng thái sai ("chưa push" khi đã push). Từ giờ:
 
 | Agent | Vùng được sửa | Cấm đụng |
 |---|---|---|
-| **Codex** | Parent Portfolio (spec `docs/SPEC_PARENT_PORTFOLIO.md`): `src/pages/phu-huynh/*`, `src/pages/admin/portfolio.astro`, `functions/api/admin/portfolio*`, `functions/api/parent/*`, `tests/parent-portfolio.test.mjs` | lesson.astro, mic/recorder scripts, speaking-check API, mọi file V3/V4 |
-| **Cursor #R1** | `docs/SPEC_W2R_R1_RANK_CORE.md`: `functions/api/_read2lead-v2-state.js`, `functions/api/_read2lead-seasons.js` (new), `functions/api/submit-read2lead-lesson.js`, tests rank/seasons | mọi file src/, lesson.astro, leaderboard |
-| **Cursor #R2** | `docs/SPEC_W2R_R2_RANK_UI.md`: `src/components/read2lead/**`, `src/pages/hoc-sinh/**`, `src/scripts/r2l-w1-page.ts`, tests rank-ui | mọi file functions/, lesson.astro, leaderboard.astro |
-| **Cursor #R3** | `docs/SPEC_W2R_R3_LEADERBOARD.md`: `functions/api/read2lead-leaderboard.js`, `src/pages/read2lead/leaderboard.astro`, tests leaderboard | `_read2lead-v2-state.js`, mọi file hoc-sinh/, lesson.astro |
+| **Codex #R2** | HOÀN THIỆN `docs/SPEC_W2R_R2_RANK_UI.md` trên branch `w2r/r2-rank-ui` (Cursor bỏ dở — components có ở 0629727, THIẾU tích hợp hub): `src/components/read2lead/**`, `src/pages/hoc-sinh/**`, `src/scripts/r2l-w1-page.ts`, tests rank-ui | mọi file functions/, lesson.astro, leaderboard.astro |
+| **Codex #R3** | LÀM LẠI `docs/SPEC_W2R_R3_LEADERBOARD.md` trên branch `w2r/r3-leaderboard` (code Cursor mất vì không commit; test còn ở 983490f): `functions/api/read2lead-leaderboard.js`, `src/pages/read2lead/leaderboard.astro`, tests leaderboard | `_read2lead-v2-state.js`, mọi file hoc-sinh/, lesson.astro |
+| **Cursor** | (tạm không có zone — W2R R1 đã xong và merge; R2/R3 chuyển giao Codex sau vi phạm §7) | mọi vùng đang giao Codex/Claude |
 | **Claude** | main merges, specs, incident response, mic/speaking pipeline (lesson.astro, r2l-recorder.js, r2l-mic-check.js, read2lead-speaking-check.js) | — |
+
+> Parent Portfolio (`docs/SPEC_PARENT_PORTFOLIO.md`): PAUSED theo lệnh Phương 2026-06-11 — ưu tiên pilot. Spec vẫn READY.
