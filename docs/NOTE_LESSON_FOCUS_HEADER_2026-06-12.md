@@ -1,8 +1,8 @@
 # Lesson Focus Header - Phuong UX Exception
 
-**Date:** 2026-06-12  
-**Decision owner:** Phuong  
-**Executor:** Codex  
+**Date:** 2026-06-12
+**Decision owner:** Phuong
+**Executor:** Codex
 **Status:** Approved for direct production release after tests
 
 ## Why
