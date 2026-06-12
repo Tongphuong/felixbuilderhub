@@ -26,3 +26,4 @@
 | 2026-06-12 19:20 | codex | AUDIT | codex/avatar-arm-direction | monster geometry zone | ce95b59 review-fix: compare transformed shoulder/hand; reversed-flip detection 864/864 each side; 287 tests + build green |
 | 2026-06-12 23:35 | codex | START | codex/lesson-focus-header | Header.astro, header tests, decision note | Phuong approved direct UX exception: simplify lesson toolbar; avoid lesson.astro and mic/completion logic |
 | 2026-06-12 23:55 | codex | DONE | codex/lesson-focus-header | Header.astro, header tests, decision note | 87e180e; 290 tests green; build green; Header.astro diagnostics 0; desktop/mobile browser QA pass |
+| 2026-06-12 23:40 | codex | START | codex/repo-hygiene | .gitignore, .gitattributes, completed worktrees | Phuong requested cross-project SaaS cleanup; no product-code changes |
