@@ -40,6 +40,16 @@ test('header navigation prioritizes coaching, parent portal, and separate produc
   assert.doesNotMatch(header, /Công cụ khác/);
 });
 
+test('lesson header keeps achievement context compact and moves site links into overflow', () => {
+  assert.match(header, /r2l-lesson-focus/);
+  assert.match(header, /data-r2l-lesson-menu/);
+  assert.match(header, /Mở thành tích và liên kết khác/);
+  assert.match(header, /data-r2l-coins/);
+  assert.match(header, /data-r2l-streak/);
+  assert.match(header, /read2LeadState \? \(/);
+  assert.match(header, /\) : \(\s*<header/);
+});
+
 test('parent portal supports code login and coaching hub', () => {
   assert.match(parentPortal, /Xem tiến độ của con/);
   assert.match(parentPortal, /Đăng nhập/);

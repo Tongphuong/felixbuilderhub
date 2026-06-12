@@ -23,21 +23,26 @@ const w1KidSsr = kidMode && import.meta.env.PUBLIC_R2L_W1 === '1';
   </header>
 )}
 
-<header
-  class="sticky top-0 z-50 border-b border-cream-dim/20 bg-navy-950/85 backdrop-blur"
-  data-r2l-legacy-header
-  data-r2l-header-kid-slot={kidMode ? '1' : '0'}
-  hidden={w1KidSsr || undefined}
->
-  <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-4">
-    <a href="/" class="flex items-center" aria-label="Felix Coaching — Trang chủ">
-      <img src="/logo/felixbuilderhub_website_header_logo.webp" alt="Felix Coaching" class="h-9 w-auto md:h-10" width="525" height="190" />
-    </a>
+{read2LeadState ? (
+  <header
+    class="r2l-lesson-focus sticky top-0 z-50 border-b border-cream-dim/20 bg-navy-950/95 backdrop-blur"
+    data-r2l-legacy-header
+    data-r2l-header-kid-slot="0"
+  >
+    <div class="mx-auto flex min-h-16 max-w-6xl items-center gap-3 px-4 py-2 sm:px-6 lg:px-8">
+      <a href="/" class="flex shrink-0 items-center" aria-label="Felix Coaching — Trang chủ">
+        <img
+          src="/logo/felixbuilderhub_website_header_logo.webp"
+          alt="Felix Coaching"
+          class="h-7 w-auto sm:h-8"
+          width="525"
+          height="190"
+        />
+      </a>
 
-    {read2LeadState && (
       <div
         id="r2l-state-header"
-        class="hidden flex-1 items-center justify-end gap-2 text-xs sm:flex"
+        class="hidden min-w-0 flex-1 items-center justify-end gap-2 text-xs"
         data-r2l-state-header
       >
         <span class="hidden shrink-0" data-r2l-v3-rank-badge></span>
@@ -45,70 +50,96 @@ const w1KidSsr = kidMode && import.meta.env.PUBLIC_R2L_W1 === '1';
         <img
           src="/assets/r2l/ranks/rank-l1-bronze.svg"
           alt="Rank Read2Lead"
-          class="h-9 w-9 shrink-0"
+          class="h-8 w-8 shrink-0"
           data-r2l-rank-image
         />
-        <span class="rounded-md border border-gold/40 px-2 py-1 font-bold text-gold" data-r2l-level>LV --</span>
+        <span class="hidden rounded-md border border-gold/40 px-2 py-1 font-bold text-gold sm:inline-flex" data-r2l-level>LV --</span>
         <span class="hidden r2l-reading-level" data-r2l-reading-level>Cấp độ đọc: --</span>
-        <span class="hidden min-w-28 sm:block" data-r2l-legacy-rank-block>
-          <span class="mb-1 flex justify-between text-[11px] text-cream-muted">
-            <span data-r2l-rank>Read2Lead</span>
-            <span data-r2l-xp-label>0/60 XP</span>
+        <span class="min-w-24 max-w-40 flex-1 sm:min-w-32 sm:max-w-48" data-r2l-legacy-rank-block>
+          <span class="mb-1 flex justify-between gap-2 text-[11px] text-cream-muted">
+            <span class="truncate" data-r2l-rank>Read2Lead</span>
+            <span class="shrink-0" data-r2l-xp-label>0/60 XP</span>
           </span>
           <span class="block h-2 overflow-hidden rounded-full bg-cream/10">
             <span class="block h-full rounded-full bg-accent transition-all" style="width: 0%" data-r2l-xp-fill></span>
           </span>
         </span>
-        <span class="group relative">
-          <button
-            type="button"
-            class="rounded-md border border-cream-dim/25 px-2 py-1 font-bold text-cream"
-            title="Tiết kiệm xu cho cửa hàng sắp mở! 🛒"
-            aria-label="Xu Read2Lead. Tiết kiệm xu cho cửa hàng sắp mở!"
-            aria-describedby="r2l-coins-tooltip"
-            data-r2l-coins
-          >0 xu</button>
-          <span
-            id="r2l-coins-tooltip"
-            class="pointer-events-none absolute right-0 top-8 w-52 rounded-md border border-gold/30 bg-navy-950 px-3 py-2 text-left text-xs font-semibold text-gold opacity-0 shadow-xl transition group-focus-within:opacity-100 group-hover:opacity-100"
-          >
-            Tiết kiệm xu cho cửa hàng sắp mở! 🛒
-          </span>
-        </span>
-        <span class="rounded-md border border-cream-dim/25 px-2 py-1 font-bold text-cream" data-r2l-streak>0 ngày</span>
-      </div>
-    )}
 
-    <nav class="hidden items-center gap-5 text-sm font-medium text-cream-muted lg:flex">
-      <a href="/coaching" class="transition hover:text-accent">Coaching</a>
-      <a href="/hoc-sinh" class="transition hover:text-accent">Xem tiến độ con</a>
-      <a href="/read2lead" class="transition hover:text-accent">Read2Lead <span class="font-normal text-cream-dim">· Luyện đọc</span></a>
-      <a href="/msmw" class="transition hover:text-accent">MSMW <span class="font-normal text-cream-dim">· Sách cho con</span></a>
-      <a href={contactHref} target="_blank" rel="noopener noreferrer" class="transition hover:text-accent">Liên hệ</a>
-    </nav>
-    <button
-      type="button"
-      id="mobile-nav-toggle"
-      aria-label="Mở menu"
-      aria-expanded="false"
-      aria-controls="mobile-nav"
-      class="inline-flex h-10 w-10 items-center justify-center rounded-md border border-cream-dim/30 text-cream transition hover:border-accent hover:text-accent lg:hidden"
-    >
-      <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
-        <path d="M4 6h16M4 12h16M4 18h16" />
-      </svg>
-    </button>
-  </div>
-  <div id="mobile-nav" hidden class="border-t border-cream-dim/20 bg-navy-950/95 lg:hidden">
-    <nav class="mx-auto flex max-w-6xl flex-col px-6 py-4 text-base font-medium text-cream-muted">
-      <a href="/coaching" class="py-3 transition hover:text-accent">Coaching</a>
-      <a href="/hoc-sinh" class="py-3 transition hover:text-accent">Xem tiến độ con</a>
-      <a href="/read2lead" class="py-3 transition hover:text-accent">Read2Lead · Luyện đọc</a>
-      <a href="/msmw" class="py-3 transition hover:text-accent">MSMW · Sách cho con</a>
-      <a href={contactHref} target="_blank" rel="noopener noreferrer" class="py-3 transition hover:text-accent">Liên hệ</a>
-    </nav>
-  </div>
-</header>
+        <details class="group relative shrink-0" data-r2l-lesson-menu>
+          <summary
+            class="flex min-h-10 cursor-pointer list-none items-center gap-1.5 rounded-md border border-cream-dim/25 px-2.5 font-bold text-cream transition hover:border-accent hover:text-accent"
+            aria-label="Mở thành tích và liên kết khác"
+          >
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <circle cx="12" cy="5" r="1.8"></circle>
+              <circle cx="12" cy="12" r="1.8"></circle>
+              <circle cx="12" cy="19" r="1.8"></circle>
+            </svg>
+            <span class="hidden sm:inline">Thêm</span>
+          </summary>
+          <div class="absolute right-0 top-12 z-50 w-64 overflow-hidden rounded-lg border border-cream-dim/20 bg-navy-950 shadow-2xl">
+            <div class="border-b border-cream-dim/15 p-3">
+              <p class="mb-2 text-[11px] font-semibold uppercase tracking-wide text-cream-dim">Thành tích</p>
+              <div class="grid grid-cols-2 gap-2">
+                <span class="rounded-md bg-cream/5 px-3 py-2 font-bold text-gold" data-r2l-coins>0 xu</span>
+                <span class="rounded-md bg-cream/5 px-3 py-2 font-bold text-cream" data-r2l-streak>0 ngày</span>
+              </div>
+            </div>
+            <nav class="flex flex-col p-2 text-sm font-semibold text-cream-muted" aria-label="Liên kết khác">
+              <a href="/hoc-sinh" class="rounded-md px-3 py-2.5 transition hover:bg-cream/5 hover:text-accent">Xem tiến độ con</a>
+              <a href="/read2lead" class="rounded-md px-3 py-2.5 transition hover:bg-cream/5 hover:text-accent">Read2Lead · Luyện đọc</a>
+              <a href="/coaching" class="rounded-md px-3 py-2.5 transition hover:bg-cream/5 hover:text-accent">Coaching</a>
+              <a href="/msmw" class="rounded-md px-3 py-2.5 transition hover:bg-cream/5 hover:text-accent">MSMW · Sách cho con</a>
+              <a href={contactHref} target="_blank" rel="noopener noreferrer" class="rounded-md px-3 py-2.5 transition hover:bg-cream/5 hover:text-accent">Liên hệ</a>
+            </nav>
+          </div>
+        </details>
+      </div>
+    </div>
+  </header>
+) : (
+  <header
+    class="sticky top-0 z-50 border-b border-cream-dim/20 bg-navy-950/85 backdrop-blur"
+    data-r2l-legacy-header
+    data-r2l-header-kid-slot={kidMode ? '1' : '0'}
+    hidden={w1KidSsr || undefined}
+  >
+    <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-4">
+      <a href="/" class="flex items-center" aria-label="Felix Coaching — Trang chủ">
+        <img src="/logo/felixbuilderhub_website_header_logo.webp" alt="Felix Coaching" class="h-9 w-auto md:h-10" width="525" height="190" />
+      </a>
+
+      <nav class="hidden items-center gap-5 text-sm font-medium text-cream-muted lg:flex">
+        <a href="/coaching" class="transition hover:text-accent">Coaching</a>
+        <a href="/hoc-sinh" class="transition hover:text-accent">Xem tiến độ con</a>
+        <a href="/read2lead" class="transition hover:text-accent">Read2Lead <span class="font-normal text-cream-dim">· Luyện đọc</span></a>
+        <a href="/msmw" class="transition hover:text-accent">MSMW <span class="font-normal text-cream-dim">· Sách cho con</span></a>
+        <a href={contactHref} target="_blank" rel="noopener noreferrer" class="transition hover:text-accent">Liên hệ</a>
+      </nav>
+      <button
+        type="button"
+        id="mobile-nav-toggle"
+        aria-label="Mở menu"
+        aria-expanded="false"
+        aria-controls="mobile-nav"
+        class="inline-flex h-10 w-10 items-center justify-center rounded-md border border-cream-dim/30 text-cream transition hover:border-accent hover:text-accent lg:hidden"
+      >
+        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <path d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+    <div id="mobile-nav" hidden class="border-t border-cream-dim/20 bg-navy-950/95 lg:hidden">
+      <nav class="mx-auto flex max-w-6xl flex-col px-6 py-4 text-base font-medium text-cream-muted">
+        <a href="/coaching" class="py-3 transition hover:text-accent">Coaching</a>
+        <a href="/hoc-sinh" class="py-3 transition hover:text-accent">Xem tiến độ con</a>
+        <a href="/read2lead" class="py-3 transition hover:text-accent">Read2Lead · Luyện đọc</a>
+        <a href="/msmw" class="py-3 transition hover:text-accent">MSMW · Sách cho con</a>
+        <a href={contactHref} target="_blank" rel="noopener noreferrer" class="py-3 transition hover:text-accent">Liên hệ</a>
+      </nav>
+    </div>
+  </header>
+)}
 
 <script>
   import { applyV3HeaderRank } from '../lib/rank-header';
@@ -149,17 +180,34 @@ const w1KidSsr = kidMode && import.meta.env.PUBLIC_R2L_W1 === '1';
           if (!data.ok || !state) return;
           stateHeader.classList.remove('hidden');
           stateHeader.classList.add('flex');
-          stateHeader.querySelector('[data-r2l-level]').textContent = state.current_level || 'LV';
+          const setText = (selector: string, value: string) => {
+            const element = stateHeader.querySelector(selector);
+            if (element) element.textContent = value;
+          };
+          setText('[data-r2l-level]', state.current_level || 'LV');
           applyV3HeaderRank(state, stateHeader);
           if (isV3Enabled() && state.avatar?.monster) {
             applyHeaderMonsterAvatar(state, stateHeader);
           }
-          stateHeader.querySelector('[data-r2l-xp-label]').textContent = `${state.xp_in_level ?? 0}/${state.xp_to_next_level ?? 60} XP`;
-          stateHeader.querySelector('[data-r2l-xp-fill]').style.width = `${state.xp_percent ?? 0}%`;
-          stateHeader.querySelector('[data-r2l-coins]').textContent = `${state.coins || 0} xu`;
-          stateHeader.querySelector('[data-r2l-streak]').textContent = `${state.streak_days || 0} ngày`;
+          setText('[data-r2l-xp-label]', `${state.xp_in_level ?? 0}/${state.xp_to_next_level ?? 60} XP`);
+          setText('[data-r2l-coins]', `${state.coins || 0} xu`);
+          setText('[data-r2l-streak]', `${state.streak_days || 0} ngày`);
+          const xpFill = stateHeader.querySelector('[data-r2l-xp-fill]');
+          if (xpFill instanceof HTMLElement) {
+            xpFill.style.width = `${state.xp_percent ?? 0}%`;
+          }
         })
         .catch(() => {});
     }
   }
 </script>
+
+<style>
+  .r2l-lesson-focus [data-r2l-legacy-rank-block].hidden {
+    display: block;
+  }
+
+  .r2l-lesson-focus summary::-webkit-details-marker {
+    display: none;
+  }
+</style>
