@@ -3,6 +3,20 @@ import { renderMonster } from '../../lib/monster-avatar';
 import { monsterBuilderHtml, mountMonsterBuilder } from '../../lib/monster-builder';
 import { rankBadgeHtml } from '../../lib/rank-ladder-ui';
 import { renderQuestPath, type QuestNode } from '../../scripts/r2l-quest-path';
+import {
+  detectSeasonRankJump,
+  isSeasonPayload,
+  newestMedalForCongrats,
+  parseMedals,
+  renderCapLockHintHtml,
+  renderMedalCabinetHtml,
+  renderMedalCongratsHtml,
+  renderSeasonBannerHtml,
+  setLastSeenMedalTs,
+  showSeasonRankJumpModal,
+  type MedalPayload,
+  type SeasonPayload,
+} from '../../components/read2lead/v3/rank/season-rank-ui';
 import { HUB_TOPICS } from './hoc-sinh-topics';
 
 const GEN_STORAGE_PREFIX = 'r2l_hub_gen_v1:';
@@ -196,6 +210,7 @@ function clearError() {
 }
 
 function showLoginForm() {
+  clearSeasonChrome();
   qs('#profile-entry')?.classList.remove('hidden');
   qs('#profile-session-bar')?.classList.add('hidden');
   qs('#dashboard-card')?.classList.add('hidden');
@@ -236,6 +251,59 @@ function hideViews() {
   qs('#hub-create-sheet')?.classList.add('hidden');
 }
 
+function clearSeasonChrome() {
+  ['#hub-season-banner', '#hub-medal-cabinet', '#hub-medal-congrats'].forEach((selector) => {
+    const host = qs<HTMLElement>(selector);
+    if (!host) return;
+    host.innerHTML = '';
+    host.classList.add('hidden');
+  });
+}
+
+function renderSeasonChrome(read2LeadState: Record<string, unknown>) {
+  const seasonRaw = read2LeadState.season;
+  if (!isSeasonPayload(seasonRaw)) {
+    clearSeasonChrome();
+    return;
+  }
+
+  const season = seasonRaw as SeasonPayload;
+  const medals = parseMedals(read2LeadState.medals) as MedalPayload[];
+  const bannerHost = qs<HTMLElement>('#hub-season-banner');
+  const cabinetHost = qs<HTMLElement>('#hub-medal-cabinet');
+  const congratsHost = qs<HTMLElement>('#hub-medal-congrats');
+
+  if (bannerHost) {
+    bannerHost.innerHTML =
+      renderSeasonBannerHtml(season) + renderCapLockHintHtml(season);
+    bannerHost.classList.remove('hidden');
+  }
+
+  if (cabinetHost) {
+    cabinetHost.innerHTML = renderMedalCabinetHtml(medals);
+    cabinetHost.classList.remove('hidden');
+  }
+
+  const newestMedal = newestMedalForCongrats(medals);
+  if (congratsHost && newestMedal) {
+    congratsHost.innerHTML = renderMedalCongratsHtml(newestMedal);
+    congratsHost.classList.remove('hidden');
+    setLastSeenMedalTs(newestMedal.ts);
+    congratsHost
+      .querySelector('[data-r2l-medal-congrats-dismiss]')
+      ?.addEventListener('click', () => {
+        congratsHost.innerHTML = '';
+        congratsHost.classList.add('hidden');
+      });
+  } else if (congratsHost) {
+    congratsHost.innerHTML = '';
+    congratsHost.classList.add('hidden');
+  }
+
+  const rankJump = detectSeasonRankJump(currentAccessCode, season);
+  if (rankJump.jumped) showSeasonRankJumpModal(rankJump.label);
+}
+
 function renderHook(data: ProgressPayload) {
   const progress = (data.progress || {}) as Record<string, unknown>;
   const read2LeadState = (data.read2lead_state || {}) as Record<string, unknown>;
@@ -258,6 +326,8 @@ function renderHook(data: ProgressPayload) {
 
   const dash = qs('#dashboard-card');
   if (!dash) return;
+
+  renderSeasonChrome(read2LeadState);
 
   dash.innerHTML = `
     <section class="r2l-hub-hook">

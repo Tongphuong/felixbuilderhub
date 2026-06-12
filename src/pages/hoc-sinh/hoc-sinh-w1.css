@@ -260,6 +260,161 @@
   margin-top: 1rem;
 }
 
+.r2l-season-banner {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 3rem;
+  margin-top: 1rem;
+  padding: 0.55rem 0.7rem;
+  border: 2px solid rgb(255 200 61 / 0.55);
+  border-radius: var(--r2l-radius-sm);
+  background: linear-gradient(135deg, rgb(255 224 138 / 0.72), rgb(255 248 221 / 0.95));
+  box-shadow: var(--r2l-shadow);
+  color: var(--r2l-ink);
+}
+
+.r2l-season-banner__theme {
+  flex-shrink: 0;
+  font-size: 1.25rem;
+}
+
+.r2l-season-banner__text {
+  min-width: 0;
+  flex: 1;
+  overflow: hidden;
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.r2l-season-banner__pill {
+  flex-shrink: 0;
+  padding: 0.25rem 0.55rem;
+  border-radius: 999px;
+  background: var(--r2l-surface);
+  font-size: 0.72rem;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.r2l-season-cap-hint {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-top: 0.5rem;
+  padding: 0.55rem 0.7rem;
+  border: 2px solid rgb(255 200 61 / 0.48);
+  border-radius: var(--r2l-radius-sm);
+  background: rgb(255 224 138 / 0.3);
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--r2l-ink);
+}
+
+.r2l-medal-congrats {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  padding: 0.85rem;
+  border: 2px solid rgb(255 200 61 / 0.55);
+  border-radius: var(--r2l-radius-sm);
+  background: rgb(255 248 221 / 0.96);
+  box-shadow: var(--r2l-shadow);
+  font-size: 0.85rem;
+  font-weight: 800;
+  line-height: 1.4;
+}
+
+.r2l-medal-congrats p {
+  flex: 1;
+  min-width: 0;
+}
+
+.r2l-medal-cabinet {
+  margin-top: 1.25rem;
+}
+
+.r2l-medal-cabinet__title {
+  font-family: var(--r2l-font-display);
+  font-size: 1.05rem;
+  font-weight: 900;
+  color: var(--r2l-ink);
+}
+
+.r2l-medal-cabinet__empty {
+  margin-top: 0.55rem;
+  padding: 0.85rem;
+  border-radius: var(--r2l-radius-sm);
+  background: var(--r2l-surface);
+  box-shadow: var(--r2l-shadow);
+  font-size: 0.82rem;
+  font-weight: 700;
+  line-height: 1.45;
+  color: var(--r2l-ink-soft);
+}
+
+.r2l-medal-cabinet__scroll {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 0.55rem;
+  padding: 0.1rem 0 0.5rem;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
+}
+
+.r2l-medal-card {
+  flex: 0 0 9rem;
+  min-height: 8.5rem;
+  padding: 0.85rem;
+  border: 2px solid rgb(255 200 61 / 0.42);
+  border-radius: var(--r2l-radius-sm);
+  background: var(--r2l-surface);
+  box-shadow: var(--r2l-shadow);
+  scroll-snap-align: start;
+  text-align: center;
+}
+
+.r2l-medal-card__emoji {
+  font-size: 2rem;
+}
+
+.r2l-medal-card__name,
+.r2l-medal-card__rank,
+.r2l-medal-card__coins {
+  margin-top: 0.3rem;
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: var(--r2l-ink);
+}
+
+.r2l-medal-card__rank {
+  color: var(--r2l-grape);
+}
+
+@media (max-width: 420px) {
+  .r2l-season-banner {
+    gap: 0.35rem;
+    padding-inline: 0.55rem;
+  }
+
+  .r2l-season-banner__text {
+    font-size: 0.72rem;
+  }
+
+  .r2l-season-banner__pill {
+    font-size: 0.65rem;
+  }
+
+  .r2l-medal-congrats {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .r2l-hub-monster-slot--pop,
   .r2l-hub-minny,
