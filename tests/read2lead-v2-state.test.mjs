@@ -4,6 +4,7 @@ import assert from 'node:assert/strict';
 import {
   applyPackCompletion,
   applyPackPenalty,
+  awardRankPoints,
   buildAdminTestLevelState,
   computeRankLadder,
   LEVELS,
@@ -225,15 +226,15 @@ test('below-threshold attempt records penalty but does not subtract XP (penalty 
   assert.equal(duplicate.already_penalized, true);
 });
 
-test('rank ladder math matches Liên Quân tier table', () => {
+test('rank ladder math matches progressive tier costs', () => {
   const cases = [
     [0, 'Đồng III', 0, false],
     [2, 'Đồng III', 2, false],
     [3, 'Đồng II', 0, false],
     [8, 'Đồng I', 2, false],
     [9, 'Bạc III', 0, false],
-    [63, 'Thách Đấu', 0, true],
-    [70, 'Thách Đấu', 0, true],
+    [87, 'Thách Đấu', 0, true],
+    [94, 'Thách Đấu', 0, true],
   ];
   for (const [points, label, stars, isApex] of cases) {
     const ladder = computeRankLadder(points);
@@ -241,11 +242,12 @@ test('rank ladder math matches Liên Quân tier table', () => {
     assert.equal(ladder.stars, stars, `P=${points} stars`);
     assert.equal(ladder.is_apex, isApex, `P=${points} apex`);
   }
-  assert.equal(computeRankLadder(70).apex_points, 7);
-  assert.equal(computeRankLadder(63).apex_points, 0);
+  assert.equal(computeRankLadder(94).apex_points, 7);
+  assert.equal(computeRankLadder(87).apex_points, 0);
+  assert.match(computeRankLadder(29).label_vi, /Vàng I/);
 });
 
-test('rankPointsFromHistory awards bonus RP for scores at or above 80%', () => {
+test('rankPointsFromHistory awards quality RP for scores at or above 65%', () => {
   const state = {
     pack_history: [
       { pack_id: 'a', score_percent: 90 },
@@ -253,7 +255,7 @@ test('rankPointsFromHistory awards bonus RP for scores at or above 80%', () => {
       { pack_id: 'c', score_percent: 85 },
     ],
   };
-  assert.equal(rankPointsFromHistory(state), 5);
+  assert.equal(rankPointsFromHistory(state), 4);
 });
 
 test('rank ladder is monotonic — more points never lowers label', () => {
@@ -295,6 +297,10 @@ test('pack #51 low score after 50 high-score packs does not lower rank_points', 
       rewardsEarned: { coins: 20, xp: 20 },
       scorePercent: 90,
     }).state;
+    state = awardRankPoints(state, {
+      scorePercent: 90,
+      dateKey: `2026-${String(Math.floor((i - 1) / 28) + 1).padStart(2, '0')}-${String(((i - 1) % 28) + 1).padStart(2, '0')}`,
+    }).state;
   }
 
   assert.equal(state.rank_points, 100);
@@ -310,9 +316,9 @@ test('pack #51 low score after 50 high-score packs does not lower rank_points', 
   });
 
   assert.equal(pack51.already_counted, false);
-  assert.equal(pack51.state.rank_points, 101);
-  assert.equal(rankPointsFromHistory(pack51.state), 99);
-  assert.equal(computeRankLadder(pack51.state).rank_points, 101);
+  assert.equal(pack51.state.rank_points, 100);
+  assert.equal(rankPointsFromHistory(pack51.state), 98);
+  assert.equal(computeRankLadder(pack51.state).rank_points, 100);
   assert.ok(
     computeRankLadder(pack51.state).rank_points >= ladderBefore.rank_points,
     'stored rank_points must not demote after pack #51',
@@ -325,7 +331,7 @@ test('pack #51 low score after 50 high-score packs does not lower rank_points', 
     scorePercent: 50,
   });
   assert.equal(duplicate.already_counted, true);
-  assert.equal(duplicate.state.rank_points, 101);
+  assert.equal(duplicate.state.rank_points, 100);
 });
 
 test('old student record without scores ranks from pack count without crashing', () => {

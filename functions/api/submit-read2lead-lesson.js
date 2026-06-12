@@ -3,10 +3,12 @@ import { ensureSixActivities } from './_read2lead-lesson-activities.js';
 import {
   applyPackCompletion,
   applyPackPenalty,
-  computeRankLadder,
+  awardRankPoints,
   computeRankUp,
+  computeSeasonLadder,
   loadProgressState,
   PASS_THRESHOLD_PERCENT,
+  vietnamDateKey,
   XP_PENALTY_BELOW_THRESHOLD,
   XP_PER_PASSED_PACK,
   publicProgressState,
@@ -252,7 +254,7 @@ async function submitV2Lesson({
   }
 
   const progressState = await loadProgressState(env, accessCode, codeData);
-  const rankLadderBefore = computeRankLadder(progressState);
+  const rankLadderBefore = computeSeasonLadder(progressState);
   const stateResult = applyPackCompletion(progressState, {
     packId: currentPack.pack_id,
     completedAt: submittedAt,
@@ -260,8 +262,15 @@ async function submitV2Lesson({
     activityResults,
     scorePercent,
   });
-  const savedProgressState = await saveProgressState(env, accessCode, stateResult.state);
-  const rankLadderAfter = computeRankLadder(savedProgressState);
+  const rankAward = stateResult.already_counted
+    ? { state: stateResult.state, awarded: 0 }
+    : awardRankPoints(stateResult.state, {
+      scorePercent,
+      dateKey: vietnamDateKey(submittedAt),
+      nowIso: submittedAt,
+    });
+  const savedProgressState = await saveProgressState(env, accessCode, rankAward.state);
+  const rankLadderAfter = computeSeasonLadder(savedProgressState);
   const rankUp = computeRankUp(rankLadderBefore, rankLadderAfter);
 
   const reviewedPack = {
@@ -321,6 +330,9 @@ async function submitV2Lesson({
     total_count: totalCount,
     rewards_earned: rewardsEarned,
     level_up: stateResult.level_up,
+    ...(stateResult.level_gate_hint_vi
+      ? { level_gate_hint_vi: stateResult.level_gate_hint_vi }
+      : {}),
     rank_up: rankUp,
     read2lead_state: publicProgressState(savedProgressState),
     message: 'Con da hoan thanh nhiem vu V2 hom nay.',

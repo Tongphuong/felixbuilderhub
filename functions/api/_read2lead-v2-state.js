@@ -3,6 +3,14 @@ import {
   MONSTER_MANIFEST,
   MONSTER_SLOTS,
 } from './_monster-manifest.js';
+import {
+  cumulativeStartRP,
+  currentSeason,
+  rankApexThreshold,
+  seasonById,
+  seasonRewardCoins,
+  tierStartRp,
+} from './_read2lead-seasons.js';
 
 export { MONSTER_COLORS, MONSTER_MANIFEST, MONSTER_SLOTS };
 
@@ -73,9 +81,22 @@ const RANK_LADDER_TIERS = [
   { tier_index: 7, tier_name_vi: 'Thách Đấu', tier_name_en: 'Challenger', tier_color: '#ffd700' },
 ];
 const RANK_LADDER_DIVISIONS = ['III', 'II', 'I'];
-const RANK_LADDER_STARS_PER_DIVISION = 3;
-const RANK_LADDER_RP_PER_TIER = 9;
-const RANK_LADDER_APEX_THRESHOLD = 63;
+
+export const RANK_RP_PER_PACK = { below65: 0, from65: 1, from85: 2 };
+export const RANK_DAILY_RP_CAP = 3;
+export const RANK_TIER_COSTS = [9, 9, 12, 12, 15, 15, 15];
+export const RANK_TIER_CAP_BY_LEVEL = { L1: 2, L2: 3, L3: 4, L4: 6, L5: 7 };
+export const LEVEL_GATE_HINT_VI =
+  'Sắp lên Level rồi! Con luyện thêm cho điểm trung bình đạt 70% nhé.';
+
+const RANK_APEX_THRESHOLD = rankApexThreshold();
+
+export function rankRpFromScore(scorePercent) {
+  const score = Number(scorePercent);
+  if (!Number.isFinite(score) || score < 65) return RANK_RP_PER_PACK.below65;
+  if (score >= 85) return RANK_RP_PER_PACK.from85;
+  return RANK_RP_PER_PACK.from65;
+}
 
 export function rankPointsFromHistory(state) {
   const history = Array.isArray(state?.pack_history) ? state.pack_history : [];
@@ -88,7 +109,7 @@ export function rankPointsFromHistory(state) {
         total += 1;
         continue;
       }
-      total += 1 + (Number(score) >= 80 ? 1 : 0);
+      total += rankRpFromScore(score);
     }
     return total;
   }
@@ -97,19 +118,28 @@ export function rankPointsFromHistory(state) {
   return Math.max(completedIds, completedPacks);
 }
 
-export function computeRankLadder(stateOrPoints) {
+export function computeRankLadder(stateOrPoints, options = {}) {
   let rankPoints;
+  let currentLevel = options.currentLevel || null;
   if (typeof stateOrPoints === 'number') {
     rankPoints = Math.max(0, Math.floor(stateOrPoints));
-  } else if (
-    stateOrPoints?.rank_points != null
-    && Number.isFinite(Number(stateOrPoints.rank_points))
-  ) {
-    rankPoints = Number(stateOrPoints.rank_points);
+  } else if (stateOrPoints && typeof stateOrPoints === 'object') {
+    if (stateOrPoints?.season?.rp != null && Number.isFinite(Number(stateOrPoints.season.rp))) {
+      rankPoints = Number(stateOrPoints.season.rp);
+    } else if (stateOrPoints?.rank_points != null && Number.isFinite(Number(stateOrPoints.rank_points))) {
+      rankPoints = Number(stateOrPoints.rank_points);
+    } else {
+      rankPoints = rankPointsFromHistory(stateOrPoints);
+    }
+    currentLevel = options.currentLevel || stateOrPoints.current_level || null;
   } else {
-    rankPoints = rankPointsFromHistory(stateOrPoints);
+    rankPoints = 0;
   }
-  return buildRankLadderFromPoints(rankPoints);
+  return buildRankLadderFromPoints(rankPoints, { currentLevel });
+}
+
+export function computeSeasonLadder(state) {
+  return computeRankLadder(state);
 }
 
 export function computeRankUp(beforeLadder, afterLadder) {
@@ -121,10 +151,35 @@ export function computeRankUp(beforeLadder, afterLadder) {
   };
 }
 
-function buildRankLadderFromPoints(rankPoints) {
+export function buildRankLadderFromPoints(rankPoints, { currentLevel = null } = {}) {
   const P = Math.max(0, Math.floor(rankPoints));
-  if (P >= RANK_LADDER_APEX_THRESHOLD) {
-    const apexTier = RANK_LADDER_TIERS[7];
+  const uncapped = buildUncappedRankLadder(P);
+  return applyTierCap(uncapped, P, currentLevel);
+}
+
+function starsPerDivisionForTier(tierIndex) {
+  const cost = RANK_TIER_COSTS[tierIndex] || RANK_TIER_COSTS[RANK_TIER_COSTS.length - 1];
+  return Math.max(1, Math.floor(cost / 3));
+}
+
+function findTierPosition(P) {
+  if (P >= RANK_APEX_THRESHOLD) {
+    return { tierIndex: 7, within: P - RANK_APEX_THRESHOLD, isApex: true };
+  }
+  for (let tierIndex = 0; tierIndex < RANK_TIER_COSTS.length; tierIndex += 1) {
+    const start = tierStartRp(tierIndex);
+    const cost = RANK_TIER_COSTS[tierIndex];
+    if (P < start + cost) {
+      return { tierIndex, within: P - start, isApex: false };
+    }
+  }
+  return { tierIndex: 7, within: 0, isApex: true };
+}
+
+function buildUncappedRankLadder(P) {
+  const { tierIndex, within, isApex } = findTierPosition(P);
+  const apexTier = RANK_LADDER_TIERS[7];
+  if (isApex) {
     return {
       rank_points: P,
       tier_index: 7,
@@ -133,23 +188,24 @@ function buildRankLadderFromPoints(rankPoints) {
       tier_color: apexTier.tier_color,
       division: null,
       stars: 0,
-      stars_per_division: RANK_LADDER_STARS_PER_DIVISION,
+      stars_per_division: starsPerDivisionForTier(6),
       stars_to_next: 0,
       is_apex: true,
-      apex_points: P - RANK_LADDER_APEX_THRESHOLD,
+      apex_points: P - RANK_APEX_THRESHOLD,
       label_vi: apexTier.tier_name_vi,
       next_label_vi: null,
+      capped: false,
+      cap_unlock_hint_vi: null,
     };
   }
 
-  const tierIndex = Math.floor(P / RANK_LADDER_RP_PER_TIER);
-  const within = P % RANK_LADDER_RP_PER_TIER;
-  const divisionIndex = Math.floor(within / RANK_LADDER_STARS_PER_DIVISION);
-  const stars = within % RANK_LADDER_STARS_PER_DIVISION;
-  const starsToNext = RANK_LADDER_STARS_PER_DIVISION - stars;
+  const starsPerDivision = starsPerDivisionForTier(tierIndex);
+  const divisionIndex = Math.min(RANK_LADDER_DIVISIONS.length - 1, Math.floor(within / starsPerDivision));
+  const stars = within % starsPerDivision;
+  const starsToNext = starsPerDivision - stars;
   const tier = RANK_LADDER_TIERS[tierIndex];
   const division = RANK_LADDER_DIVISIONS[divisionIndex];
-  const nextLadder = buildRankLadderFromPoints(P + starsToNext);
+  const nextLadder = buildUncappedRankLadder(starsToNext > 0 ? P + starsToNext : P + 1);
 
   return {
     rank_points: P,
@@ -159,13 +215,205 @@ function buildRankLadderFromPoints(rankPoints) {
     tier_color: tier.tier_color,
     division,
     stars,
-    stars_per_division: RANK_LADDER_STARS_PER_DIVISION,
+    stars_per_division: starsPerDivision,
     stars_to_next: starsToNext,
     is_apex: false,
     apex_points: 0,
     label_vi: `${tier.tier_name_vi} ${division}`,
     next_label_vi: nextLadder.label_vi,
+    capped: false,
+    cap_unlock_hint_vi: null,
   };
+}
+
+function capUnlockHintVi(currentLevel, maxTierIndex) {
+  const nextLevel = levelAfter(safeLevel(currentLevel));
+  const nextTier = RANK_LADDER_TIERS[maxTierIndex + 1];
+  if (!nextLevel || !nextTier) return null;
+  return `Lên Level ${nextLevel.replace('L', '')} để mở khoá rank ${nextTier.tier_name_vi}!`;
+}
+
+function applyTierCap(ladder, actualRp, currentLevel) {
+  if (!currentLevel) {
+    return { ...ladder, rank_points: actualRp, capped: false, cap_unlock_hint_vi: null };
+  }
+  const level = safeLevel(currentLevel);
+  const maxTierIndex = RANK_TIER_CAP_BY_LEVEL[level];
+  if (maxTierIndex == null || ladder.tier_index <= maxTierIndex) {
+    return { ...ladder, rank_points: actualRp, capped: false, cap_unlock_hint_vi: null };
+  }
+  const capMaxRp = tierStartRp(maxTierIndex + 1) - 1;
+  const cappedLadder = buildUncappedRankLadder(Math.max(0, capMaxRp));
+  return {
+    ...cappedLadder,
+    rank_points: actualRp,
+    capped: true,
+    cap_unlock_hint_vi: capUnlockHintVi(level, maxTierIndex),
+  };
+}
+
+function updateSeasonPeak(season, ladder) {
+  const peakTier = Number.isFinite(Number(season?.peak_tier_index)) ? Number(season.peak_tier_index) : -1;
+  if (ladder.tier_index > peakTier) {
+    return { ...season, peak_tier_index: ladder.tier_index, peak_label_vi: ladder.label_vi };
+  }
+  return season;
+}
+
+export function awardRankPoints(state, { scorePercent, dateKey, nowIso = new Date().toISOString() } = {}) {
+  const rpEarned = rankRpFromScore(scorePercent);
+  const activityDateKey = dateKey || vietnamDateKey(nowIso);
+  const rankDaily = state.rank_daily && typeof state.rank_daily === 'object'
+    ? { ...state.rank_daily }
+    : { date_key: '', rp: 0 };
+  let dailyRp = rankDaily.date_key === activityDateKey ? numberOrZero(rankDaily.rp) : 0;
+  let awarded = 0;
+  if (rpEarned > 0 && dailyRp < RANK_DAILY_RP_CAP) {
+    awarded = Math.min(rpEarned, RANK_DAILY_RP_CAP - dailyRp);
+    dailyRp += awarded;
+  }
+  const lifetimeBase = (
+    state.lifetime_rp != null && Number.isFinite(Number(state.lifetime_rp))
+  ) ? Number(state.lifetime_rp) : (
+    state.rank_points != null && Number.isFinite(Number(state.rank_points))
+  ) ? Number(state.rank_points) : rankPointsFromHistory(state);
+  const seasonRpBase = (
+    state.season?.rp != null && Number.isFinite(Number(state.season.rp))
+  ) ? Number(state.season.rp) : lifetimeBase;
+  const nextLifetime = lifetimeBase + awarded;
+  const nextSeasonRp = seasonRpBase + awarded;
+  const nextSeason = updateSeasonPeak(
+    { ...(state.season || {}), rp: nextSeasonRp },
+    buildRankLadderFromPoints(nextSeasonRp),
+  );
+  return {
+    state: {
+      ...state,
+      rank_daily: { date_key: activityDateKey, rp: dailyRp },
+      lifetime_rp: nextLifetime,
+      rank_points: nextLifetime,
+      season: nextSeason,
+    },
+    awarded,
+  };
+}
+
+function normalizeMedals(raw) {
+  if (!Array.isArray(raw)) return [];
+  return raw
+    .filter((entry) => entry && typeof entry === 'object' && entry.season_id)
+    .map((entry) => ({
+      season_id: String(entry.season_id),
+      name_vi: entry.name_vi || '',
+      emoji: entry.emoji || '',
+      peak_label_vi: entry.peak_label_vi || '',
+      peak_tier_index: Number.isFinite(Number(entry.peak_tier_index)) ? Number(entry.peak_tier_index) : 0,
+      reward_coins: numberOrZero(entry.reward_coins),
+      ts: entry.ts || null,
+    }));
+}
+
+function rolloverSeasonState(state, nowIso = new Date().toISOString()) {
+  const activeSeason = currentSeason(nowIso);
+  const season = state.season && typeof state.season === 'object' ? { ...state.season } : null;
+  if (!season || !season.id || season.id === activeSeason.id) return state;
+
+  const medals = normalizeMedals(state.medals);
+  const previousSeason = seasonById(season.id);
+  const peakTierIndex = Number.isFinite(Number(season.peak_tier_index)) ? Number(season.peak_tier_index) : 0;
+  const peakRp = Number.isFinite(Number(season.rp)) ? Number(season.rp) : 0;
+  let coins = numberOrZero(state.coins);
+  if (!(peakTierIndex === 0 && peakRp === 0)) {
+    medals.push({
+      season_id: previousSeason.id,
+      name_vi: previousSeason.name_vi,
+      emoji: previousSeason.emoji,
+      peak_label_vi: season.peak_label_vi || buildRankLadderFromPoints(peakRp).label_vi,
+      peak_tier_index: peakTierIndex,
+      reward_coins: seasonRewardCoins(peakTierIndex),
+      ts: nowIso,
+    });
+    coins += seasonRewardCoins(peakTierIndex);
+  }
+
+  const resetRp = cumulativeStartRP(Math.max(0, peakTierIndex - 1));
+  const resetLadder = buildRankLadderFromPoints(resetRp);
+  return {
+    ...state,
+    coins,
+    medals,
+    season: {
+      id: activeSeason.id,
+      rp: resetRp,
+      peak_tier_index: resetLadder.tier_index,
+      peak_label_vi: resetLadder.label_vi,
+    },
+  };
+}
+
+function migrateSeasonFields(state, nowIso = new Date().toISOString()) {
+  const activeSeason = currentSeason(nowIso);
+  const lifetimeRp = (
+    state.lifetime_rp != null && Number.isFinite(Number(state.lifetime_rp))
+  ) ? Number(state.lifetime_rp) : (
+    state.rank_points != null && Number.isFinite(Number(state.rank_points))
+  ) ? Number(state.rank_points) : rankPointsFromHistory(state);
+  const seasonRp = (
+    state.season?.rp != null && Number.isFinite(Number(state.season.rp))
+  ) ? Number(state.season.rp) : lifetimeRp;
+  const ladder = buildRankLadderFromPoints(seasonRp);
+  const season = state.season && typeof state.season === 'object'
+    ? {
+      ...state.season,
+      id: state.season.id || activeSeason.id,
+      rp: seasonRp,
+      peak_tier_index: Number.isFinite(Number(state.season.peak_tier_index))
+        ? Number(state.season.peak_tier_index)
+        : ladder.tier_index,
+      peak_label_vi: state.season.peak_label_vi || ladder.label_vi,
+    }
+    : {
+      id: activeSeason.id,
+      rp: seasonRp,
+      peak_tier_index: ladder.tier_index,
+      peak_label_vi: ladder.label_vi,
+    };
+  return {
+    ...state,
+    lifetime_rp: lifetimeRp,
+    rank_points: lifetimeRp,
+    season,
+    medals: normalizeMedals(state.medals),
+  };
+}
+
+export function publicSeasonPayload(state, nowIso = new Date().toISOString()) {
+  const activeSeason = currentSeason(nowIso);
+  const seasonId = state.season?.id || activeSeason.id;
+  const seasonMeta = seasonById(seasonId);
+  const rp = Number.isFinite(Number(state.season?.rp)) ? Number(state.season.rp) : 0;
+  const ladder = computeRankLadder({ ...state, season: { ...state.season, rp } });
+  return {
+    id: seasonId,
+    name_vi: seasonMeta.name_vi,
+    emoji: seasonMeta.emoji,
+    ends_at: seasonMeta.ends,
+    rp,
+    ladder,
+    peak_label_vi: state.season?.peak_label_vi || ladder.label_vi,
+  };
+}
+
+function passesLevelQualityGate(state) {
+  const history = Array.isArray(state?.pack_history) ? state.pack_history : [];
+  const passedScores = history
+    .filter((entry) => entry?.passed !== false)
+    .map((entry) => entry?.score_percent)
+    .filter((score) => score != null && Number.isFinite(Number(score)))
+    .slice(0, 5);
+  if (passedScores.length < 3) return true;
+  const average = passedScores.reduce((sum, score) => sum + Number(score), 0) / passedScores.length;
+  return average >= 70;
 }
 
 export function progressNamespace(env) {
@@ -332,6 +580,12 @@ export function normalizeProgressState(raw, { accessCode, codeData = null, nowIs
     ...(raw?.rank_points != null && Number.isFinite(Number(raw.rank_points))
       ? { rank_points: Number(raw.rank_points) }
       : {}),
+    ...(raw?.lifetime_rp != null && Number.isFinite(Number(raw.lifetime_rp))
+      ? { lifetime_rp: Number(raw.lifetime_rp) }
+      : {}),
+    ...(raw?.season && typeof raw.season === 'object' ? { season: raw.season } : {}),
+    medals: normalizeMedals(raw?.medals),
+    ...(raw?.rank_daily && typeof raw.rank_daily === 'object' ? { rank_daily: raw.rank_daily } : {}),
     badges: Array.isArray(raw?.badges) ? raw.badges : [],
     inventory: normalizeInventory(raw?.inventory),
     equipped: normalizeEquipped(raw?.equipped),
@@ -345,7 +599,8 @@ export function normalizeProgressState(raw, { accessCode, codeData = null, nowIs
     created_at: raw?.created_at || nowIso,
     updated_at: raw?.updated_at || nowIso,
   };
-  return refreshBadges(base);
+  const withSeason = migrateSeasonFields(refreshBadges(base), nowIso);
+  return rolloverSeasonState(withSeason, nowIso);
 }
 
 export function applyPackCompletion(
@@ -361,7 +616,12 @@ export function applyPackCompletion(
   const id = String(packId || '').trim();
   if (!id) throw new Error('pack_id required');
   if (state.completed_pack_ids.includes(id)) {
-    return { state: refreshBadges(state), level_up: null, already_counted: true };
+    return {
+      state: refreshBadges(state),
+      level_up: null,
+      level_gate_hint_vi: null,
+      already_counted: true,
+    };
   }
 
   const currentLevel = safeLevel(state.current_level);
@@ -378,35 +638,45 @@ export function applyPackCompletion(
   const nextXpTotal = state.xp_in_level + earnedXp;
   let xpInLevel = xpTarget ? Math.min(xpTarget, nextXpTotal) : nextXpTotal;
   let levelUp = null;
+  let levelGateHintVi = null;
 
   levelProgress[currentLevel] = nextLevelCount;
+  const nextPackHistory = [
+    {
+      pack_id: id,
+      completed_at: completedAt,
+      level: currentLevel,
+      coins: numberOrZero(rewardsEarned.coins),
+      xp: earnedXp,
+      ...(scorePercent !== null && scorePercent !== undefined
+        ? { score_percent: Number(scorePercent) }
+        : {}),
+    },
+    ...state.pack_history,
+  ].slice(0, 50);
   if (xpTarget && nextXpTotal >= xpTarget) {
     const nextLevel = levelAfter(currentLevel);
     if (nextLevel) {
-      levelUp = {
-        from_level: currentLevel,
-        to_level: nextLevel,
-        message_vi: `Con đã mở khóa ${nextLevel}.`,
-      };
-      nextCurrentLevel = nextLevel;
-      levelProgress[nextLevel] = 0;
-      xpInLevel = 0;
+      if (passesLevelQualityGate({ ...state, pack_history: nextPackHistory })) {
+        levelUp = {
+          from_level: currentLevel,
+          to_level: nextLevel,
+          message_vi: `Con đã mở khóa ${nextLevel}.`,
+        };
+        nextCurrentLevel = nextLevel;
+        levelProgress[nextLevel] = 0;
+        xpInLevel = 0;
+      } else {
+        levelGateHintVi = LEVEL_GATE_HINT_VI;
+        xpInLevel = xpTarget;
+      }
     } else {
       xpInLevel = xpTarget;
     }
   }
 
-  const earnedRp = 1 + (scorePercent != null && Number(scorePercent) >= 80 ? 1 : 0);
-  const rankPointsBase = (
-    state.rank_points != null && Number.isFinite(Number(state.rank_points))
-  )
-    ? Number(state.rank_points)
-    : rankPointsFromHistory(state);
-  const nextRankPoints = rankPointsBase + earnedRp;
-
   const nextState = {
     ...state,
-    rank_points: nextRankPoints,
     current_level: nextCurrentLevel,
     unlocked_levels: Array.from(new Set([...state.unlocked_levels, nextCurrentLevel])),
     rank_title: RANK_TITLES[nextCurrentLevel] || state.rank_title,
@@ -422,24 +692,14 @@ export function applyPackCompletion(
     last_activity_date_vn: currentDateKey,
     last_activity_at: completedAt,
     voice_attempts: voiceAttempts,
-    pack_history: [
-      {
-        pack_id: id,
-        completed_at: completedAt,
-        level: currentLevel,
-        coins: numberOrZero(rewardsEarned.coins),
-        xp: earnedXp,
-        ...(scorePercent !== null && scorePercent !== undefined
-          ? { score_percent: Number(scorePercent) }
-          : {}),
-      },
-      ...state.pack_history,
-    ].slice(0, 50),
+    pack_history: nextPackHistory,
+    ...(levelGateHintVi ? { level_gate_hint_vi: levelGateHintVi } : {}),
   };
 
   return {
     state: refreshBadges(nextState),
     level_up: levelUp,
+    level_gate_hint_vi: levelGateHintVi,
     already_counted: false,
   };
 }
@@ -710,6 +970,9 @@ export function publicProgressState(state) {
     last_activity_at: state.last_activity_at,
     last_activity_date_vn: state.last_activity_date_vn,
     rank_ladder: computeRankLadder(state),
+    season: publicSeasonPayload(state),
+    medals: normalizeMedals(state.medals),
+    ...(state.level_gate_hint_vi ? { level_gate_hint_vi: state.level_gate_hint_vi } : {}),
   };
 }
 
