@@ -22,7 +22,7 @@ const ACTIVE_SEASON_ID = currentSeason().id;
 /** Canonical contract fixture — R2 §2; R3 tests sort/podium against it. */
 const SEASON_FIXTURE = {
   id: '2026-S1',
-  name_vi: 'Mùa Khám Phá',
+  name_vi: 'Amazing Summer',
   emoji: '🧭',
   ends_at: '2026-08-31',
   rp: 14,
@@ -108,7 +108,7 @@ test('buildPreviousSeasonPodium picks latest medal per student for previous seas
       peak_label_vi: 'Đồng III',
       peak_tier_index: 0,
       reward_coins: 10,
-      season_name_vi: 'Mùa Khám Phá',
+      season_name_vi: 'Amazing Summer',
       emoji: '🧭',
       ts: '2026-06-15T00:00:00.000Z',
     },

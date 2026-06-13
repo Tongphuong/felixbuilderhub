@@ -3,8 +3,8 @@
 /** @type {import('./season-rank-types').SeasonPayload} */
 export const SEASON_FIXTURE = {
   id: '2026-S1',
-  name_vi: 'Mùa Khám Phá',
-  emoji: '🧭',
+  name_vi: 'Amazing Summer',
+  emoji: '🌞',
   ends_at: '2026-08-31',
   rp: 14,
   ladder: {

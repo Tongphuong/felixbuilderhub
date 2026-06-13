@@ -43,8 +43,8 @@ test('W1 script guards season UI on payload shape', () => {
 test('season banner renders compact line with rank pill from fixture', () => {
   const html = renderSeasonBannerHtml(SEASON_FIXTURE);
   assert.match(html, /data-r2l-season-banner/);
-  assert.match(html, /Mùa Khám Phá/);
-  assert.match(html, /🧭/);
+  assert.match(html, /Amazing Summer/);
+  assert.match(html, /🌞/);
   assert.match(html, /còn \d+ ngày/);
   assert.match(html, /Bạc II/);
 });

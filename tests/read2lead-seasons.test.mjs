@@ -21,7 +21,7 @@ test('currentSeason returns pre-season before July 2026', () => {
 test('currentSeason returns active season inside its window', () => {
   const season = currentSeason(new Date('2026-07-15T10:00:00.000Z'));
   assert.equal(season.id, '2026-S1');
-  assert.equal(season.name_vi, 'Mùa Khám Phá');
+  assert.equal(season.name_vi, 'Amazing Summer');
 });
 
 test('cumulativeStartRP matches progressive tier thresholds', () => {
