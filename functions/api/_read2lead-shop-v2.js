@@ -32,6 +32,9 @@ const SLOT_VI = {
   arm: 'Tay',
   eye: 'Mắt',
   mouth: 'Miệng',
+  nose: 'Mũi',
+  snot: 'Mũi',
+  eyebrow: 'Lông mày',
 };
 
 const SIZE_VI = {
@@ -138,7 +141,15 @@ export function humanizePartId(id) {
     return label ? label.charAt(0).toUpperCase() + label.slice(1) : raw;
   }
 
-  // eye/mouth: <slot>-<variant> (e.g. mouth-h, eye-large)
+  // mouth/eye/nose/snot/eyebrow: glued <slot><letter> e.g. mouthh, eyec
+  if (segments.length === 1) {
+    const m = slot.match(/^(mouth|eye|nose|snot|eyebrow)([a-z])$/);
+    if (m) {
+      return `${SLOT_VI[m[1]]} (${m[2].toUpperCase()})`;
+    }
+  }
+
+  // Fallback for hyphenated multi-segment slot names
   if (SLOT_VI[slot] && segments.length >= 2) {
     const variant = segments.slice(1).join(' ');
     return `${SLOT_VI[slot]} ${variant}`;

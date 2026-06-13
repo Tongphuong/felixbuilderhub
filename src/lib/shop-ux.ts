@@ -33,6 +33,13 @@ export function partThumbnailUrl(partId: string): string | undefined {
       return `/assets/monsters/raw/PNG/Default/${slot}_${upper}.png`;
     }
   }
+  // mouth/eye: glued <slot><letter> e.g. mouthh, eyec — file mouthH.png
+  if (segments.length === 1) {
+    const m = slot.match(/^(mouth|eye|nose|snot|eyebrow)([a-z])$/);
+    if (m) {
+      return `/assets/monsters/raw/PNG/Default/${m[1]}${m[2].toUpperCase()}.png`;
+    }
+  }
   const fileName = `${segments.join('_')}.png`;
   return `/assets/monsters/raw/PNG/Default/${fileName}`;
 }
