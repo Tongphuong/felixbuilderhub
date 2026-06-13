@@ -1,146 +1,85 @@
-# AGENTS.md — Hard rules for Codex & Cursor (felixbuilderhub / hub)
+# AGENTS.md — felixbuilderhub (hub) repo rules
 
-> **This file is the source of truth for how AI coders behave in this repo.**
-> Claude owns this file. If a rule is wrong, Phương/Claude edits HERE — do not argue with it in chat.
-> Codex reads `AGENTS.md` automatically. Cursor: read this file first, every task.
-
----
-
-## 0. Who does what (do not cross these lines)
-
-| Role | Owns |
-|---|---|
-| **Claude** | Architecture, specs, roadmap, 5-lens audits, reviewing your commits. |
-| **Codex / Cursor (you)** | Implement an existing Claude spec, exactly. Run tests. Commit. Report. |
-| **Phương** | Final decisions, money/economy values, asset/voice/UX picks, manual test. |
-
-**Golden rule:** You implement specs. You do **not** invent systems. If there is no written spec for the task, **STOP** and tell Phương "cần Claude viết spec trước" — do not improvise rank tiers, coin prices, shop economy, new activity types, or new data schemas.
+> **Canonical multi-agent rules live in `D:\_ops\AGENTS.md`** (GitHub: Tongphuong/read2lead-ops).
+> Read that FIRST every session. This file only contains hub-specific zones + invariants.
+> Claude maintains. Codex reads `AGENTS.md` automatically. Cursor: read both files first, every task.
 
 ---
 
-## 1. Only execute work that is marked READY
+## 0. Read order before any task
 
-- Read `docs/ROADMAP_GAMIFICATION_2026-06-09.md`.
-- Execute only phases/tasks marked **READY** (a full spec exists).
-- Tasks marked **SCOPED — NEEDS SPEC** are NOT cleared for coding. You may read/plan but must not finalize.
-- When idle / Phương is away (rate limit), pull from the **STANDING BACKLOG** in the roadmap — those are pre-approved, low-risk, fully specified.
-
----
-
-## 2. Protected invariants — DO NOT touch without a Claude spec
-
-- **Minny voice (M0):** xưng "Minny"/"con"; no red/"sai"/FOMO; 1-2 câu; tiếng Việt chính; khen effort không khen rank. Any Minny copy you add must follow this.
-- **R2L positioning:** lesson/hero copy stays **functional** (bài tập, từ vựng, tự học). No USP/personalization hype/anti-competitor copy.
-- **Lesson completion logic** in `src/pages/read2lead/lesson.astro` (the repair of activity-complete → CTA enable → submit). Don't refactor it casually.
-- **The mic flow** (`public/scripts/r2l-mic-check.js`, the warmup countdown, `_r2lStartRecording`). It was hard-won. Change only to a spec.
-- **Backend contract:** the pack JSON shape the hub reads. Don't rename fields the lesson renderer depends on.
-
-If a task seems to require touching these, flag it — Claude will spec it.
+1. `D:\_ops\AGENTS.md` — role + behavior rules (canonical)
+2. `D:\_ops\PERMISSIONS.md` — what you can / cannot do
+3. `D:\_ops\BRANCH_CONVENTIONS.md` — branch naming + worktree
+4. `D:\_ops\AGENT_LOG.md` — last 10 lines (xí chỗ trước)
+5. This file — hub-specific zones + invariants
+6. Your spec (`docs/SPEC_*.md` or `docs/V{N}_*.md`)
 
 ---
 
-## 3. Scope discipline
+## 1. Hub-specific protected invariants — DO NOT touch without a Claude spec
 
-- One logical change per branch and per commit. No drive-by refactors.
-- Touch only the files the spec names. If you discover you need another file, note it in the report — don't silently expand.
-- No new npm dependency unless the spec says so. If you add one, state why in the commit body.
-- Never delete a file you did not create in this task.
-- No mass find-replace across the repo.
+1. **Minny voice (M0):** xưng "Minny"/"con"; no red/"sai"/FOMO; 1-2 câu; tiếng Việt chính; khen effort không khen rank. Any Minny copy you add must follow this.
+2. **R2L positioning:** lesson/hero copy stays **functional** (bài tập, từ vựng, tự học). No USP/personalization hype/anti-competitor copy.
+3. **Lesson completion logic** in `src/pages/read2lead/lesson.astro` (activity-complete → CTA enable → submit). Don't refactor it casually.
+4. **The mic flow** (`public/scripts/r2l-mic-check.js`, `public/scripts/r2l-recorder.js`, the warmup countdown, `_r2lStartRecording`). Hard-won. Change only to a spec.
+5. **Backend contract:** the pack JSON shape the hub reads from backend. Don't rename fields the lesson renderer depends on.
 
----
-
-## 3b. Branch & deploy discipline (Cloudflare auto-deploys — students are LIVE)
-
-**Pushing to `main` deploys to production instantly. Real kids are using the site right now.**
-
-- **Never push V3 features to `main`.** Work on `v3/<phase>` (e.g. `v3/b-rank`). PR into the **`v3`** integration branch, not `main`. Phương promotes `v3 → main`.
-- Pushing your branch creates a Cloudflare **preview URL** — QA there, never on prod.
-- **Feature-flag all new V3 UI** behind `import.meta.env.PUBLIC_R2L_V3` (production `=0` until launch). New code merges dark, invisible to kids.
-- **Live data is sacred:** `progress:<code>` KV records are real students' coins/rank/streak. All schema changes are **additive + defaulted**; new code must read OLD records without crashing. Never rename/remove a field. No destructive migration.
-- One file = one agent at a time (see `docs/V3_ROADMAP.md` §3 zone matrix). `lesson.astro` has a single owner per task.
-- **Hotfix exception:** a real bug fix that helps current users (crash, mic, data loss) may go to `main` after tests pass — that's not a "feature."
-- Full plan: `docs/V3_ROADMAP.md`.
+Touching any of these requires a Claude-written spec — không exception.
 
 ---
 
-## 4. Commit & test discipline
+## 2. Hub-specific deploy rails (Cloudflare Pages auto-deploys `main` — students LIVE)
 
-- **Run tests before every commit.** Hub: `node --test`. Must be all green.
-- For `.astro` page logic changes, also run `npx astro check` and confirm **no new** errors (pre-existing Header.astro / admin/codes.astro errors are known, ignore those).
-- Granular commits, present tense, one logical change each. Example: `Add n/6 dots mission chrome`.
-- End every commit message with:
-  `Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>`
-- **Never** `--no-verify`, never skip hooks, never force-push `main`.
-- If you branched, open a PR; do not merge to `main` without Phương.
+- **`main` deploys to production instantly. Real kids are using the site right now.**
+- **V3 features**: branch `v3/<phase>` → PR into `v3` (NOT `main`) → Phương promotes `v3 → main`.
+- **Feature-flag all new V3 UI** behind `import.meta.env.PUBLIC_R2L_V3` (production `=0` until launch). New code merges dark.
+- **Live data sacred**: `progress:<code>` KV records are real students' coins/rank/streak. All schema changes **additive + defaulted**. Never rename/remove a field.
+- Preview URL: `<branch>.felixbuilderhub.pages.dev`. QA there, never on prod.
+- Hotfix exception per `_ops/PERMISSIONS.md` — crash/mic/data-loss → Codex được đi thẳng `main` sau test pass + ping Phương.
 
----
-
-## 5. Report back (so Claude can audit fast)
-
-After finishing, output:
-1. Commit hash(es) + one-line each.
-2. Files changed.
-3. Test result (`node --test` summary line: tests/pass/fail).
-4. Anything you deviated from the spec on, and why.
-5. Open questions for Claude/Phương.
-
-Claude reviews by `git show <hash>` + 5-lens audit. Clear commits = fast review.
+Full plan: `docs/V3_ROADMAP.md`.
 
 ---
 
-## 6. Customer reality (every build decision bends to this)
+## 3. Test + commit (hub-specific)
 
-Users are **young VN kids (6-12)** + **non-tech parents with zero patience**. If a change makes the app slower, more confusing, or breakable on weak 3G / cheap Android / iPad Safari, it is wrong — even if it's "correct" code. Big tap targets, instant feedback, no dead ends, no English error strings shown to kids.
+- **`node --test`** must pass before every commit.
+- For `.astro` page logic changes: `npx astro check` — no NEW errors (pre-existing Header.astro / admin/codes.astro errors are known, ignore).
+- Granular commits, present tense, one logical change.
+- Commit footer: `Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>`.
+- Never `--no-verify`, never force-push `main`, never skip hooks.
 
 ---
 
-## 7. Multi-agent ground rules (2026-06-11 — after the speaking-incident collision day)
-
-Nhiều agent (Claude, Cursor, Codex) làm việc song song trên repo này. Ngày
-2026-06-11 đã có va chạm thật: 3 agent sửa cùng lesson.astro trong 24h, push
-main chen nhau, báo cáo sai trạng thái. Từ giờ:
-
-1. **Chỉ Claude được đụng `main`.** Cursor/Codex push branch riêng
-   (`cursor/<task>`, `codex/<task>`, `v3/...`, `v4/...`) — push branch tự có
-   Cloudflare preview URL, QA ở đó. Claude verify → Phương duyệt → Claude merge.
-2. **Xí chỗ trước khi làm:** thêm 1 dòng vào `docs/AGENT_LOG.md` khi BẮT ĐẦU
-   và khi XONG (format trong file). Trước khi sửa file nóng (`lesson.astro`,
-   `r2l-recorder.js`, `r2l-mic-check.js`, `read2lead-speaking-check.js`):
-   đọc 5 dòng cuối log — nếu agent khác đang giữ, DỪNG và báo Phương.
-3. **Một file = một agent tại một thời điểm.** Tranh chấp → Claude phân xử.
-4. **Báo cáo phải kèm bằng chứng máy:** cuối report dán output thật của
-   `git log --oneline -3` và `git status --short`, ghi rõ ĐÃ PUSH hay CHƯA
-   (kiểm bằng `git log origin/<branch> -1`). Cấm báo trạng thái từ trí nhớ.
-5. **Không bỏ checkout chung ở branch lạ.** Xong việc: working tree sạch
-   (commit hoặc stash) + ghi vào log đang để branch nào. Không để file rác
-   untracked (_qa-*.png, _worker.bundle…) — dọn hoặc gitignore trong task của mình.
-
-### Luật riêng cho Cursor (siết 2026-06-11 tối — sau các vi phạm cùng ngày)
-
-Vi phạm đã xảy ra hôm nay: ghi DONE vào AGENT_LOG khi chưa hề commit; để code dở chưa commit nằm
-trên checkout chung; sửa file trong vùng Claude (lesson.astro, speaking-check API) không xin phép;
-báo cáo trạng thái sai ("chưa push" khi đã push). Từ giờ:
-
-1. **DONE = đã commit.** Dòng DONE trong AGENT_LOG bắt buộc kèm **commit hash**. DONE không hash
-   = coi như chưa làm, Claude không review.
-2. **Không bao giờ kết thúc phiên với working tree bẩn.** Mọi thay đổi commit lên branch của mình
-   trước khi dừng — kể cả dở dang (prefix `WIP:`). Code chưa commit trên checkout chung = sẽ bị
-   mất hoặc trộn nhầm vào commit của agent khác.
-3. **Branch luôn tạo từ origin/main mới nhất:** `git fetch origin && git checkout -b <branch> origin/main`.
-   Không branch từ branch khác, không làm việc trực tiếp trên main/v3/v4.
-4. **Nhiều agent song song trên cùng máy → mỗi agent một worktree riêng**
-   (`git worktree add ../hub-<task> <branch>`). Cấm 2 agent dùng chung checkout `D:\felixbuilderhub`.
-5. **Một agent = một spec = một zone.** Cần sửa file ngoài zone → DỪNG, ghi vào report, không
-   "tiện tay". Spec là nguồn chân lý duy nhất; không tự thêm scope, không drive-by refactor.
-6. Report kết thúc bằng output THẬT của `git log --oneline -3` + `git status --short` + đã-push-hay-chưa.
-
-### Phân vùng hiện tại (cập nhật khi giao việc mới)
+## 4. Zone matrix (cập nhật khi giao task mới)
 
 | Agent | Vùng được sửa | Cấm đụng |
 |---|---|---|
-| **Codex #R2** | HOÀN THIỆN `docs/SPEC_W2R_R2_RANK_UI.md` trên branch `w2r/r2-rank-ui` (Cursor bỏ dở — components có ở 0629727, THIẾU tích hợp hub): `src/components/read2lead/**`, `src/pages/hoc-sinh/**`, `src/scripts/r2l-w1-page.ts`, tests rank-ui | mọi file functions/, lesson.astro, leaderboard.astro |
-| **Codex #R3** | LÀM LẠI `docs/SPEC_W2R_R3_LEADERBOARD.md` trên branch `w2r/r3-leaderboard` (code Cursor mất vì không commit; test còn ở 983490f): `functions/api/read2lead-leaderboard.js`, `src/pages/read2lead/leaderboard.astro`, tests leaderboard | `_read2lead-v2-state.js`, mọi file hoc-sinh/, lesson.astro |
-| **Cursor** | (tạm không có zone — W2R R1 đã xong và merge; R2/R3 chuyển giao Codex sau vi phạm §7) | mọi vùng đang giao Codex/Claude |
-| **Claude** | main merges, specs, incident response, mic/speaking pipeline (lesson.astro, r2l-recorder.js, r2l-mic-check.js, read2lead-speaking-check.js) | — |
+| **Claude** | main merges, specs, incident response, mic/speaking pipeline (`lesson.astro`, `r2l-recorder.js`, `r2l-mic-check.js`, `read2lead-speaking-check.js`) | — |
+| **Codex** | Parent Portfolio (`docs/SPEC_PARENT_PORTFOLIO.md`): `src/pages/phu-huynh/*`, `src/pages/admin/portfolio.astro`, `functions/api/admin/portfolio*`, `functions/api/parent/*`, `tests/parent-portfolio.test.mjs` | lesson.astro, mic/recorder scripts, speaking-check API, mọi file V3/V4 |
+| **Cursor #1** | `docs/SPEC_W2R_R1_RANK_CORE.md`: `functions/api/_read2lead-v2-state.js`, `functions/api/_read2lead-seasons.js` (new), `functions/api/submit-read2lead-lesson.js`, tests rank/seasons | mọi file src/, lesson.astro, leaderboard |
+| **Cursor #2** | `docs/SPEC_W2R_R2_RANK_UI.md`: `src/components/read2lead/**`, `src/pages/hoc-sinh/**`, `src/scripts/r2l-w1-page.ts`, tests rank-ui | mọi file functions/, lesson.astro, leaderboard.astro |
+| **Cursor #3** | `docs/SPEC_W2R_R3_LEADERBOARD.md`: `functions/api/read2lead-leaderboard.js`, `src/pages/read2lead/leaderboard.astro`, tests leaderboard | `_read2lead-v2-state.js`, mọi file hoc-sinh/, lesson.astro |
 
-> Parent Portfolio (`docs/SPEC_PARENT_PORTFOLIO.md`): PAUSED theo lệnh Phương 2026-06-11 — ưu tiên pilot. Spec vẫn READY.
+**Cập nhật zone**: chỉ Claude. Trước khi nhận task mới, agent check zone của mình ở đây + xem `D:\_ops\AGENT_REGISTRY.md` để chắc không trùng worktree.
+
+---
+
+## 5. Hub-specific customer reality
+
+Users = **young VN kids (6-12)** + **non-tech parents zero patience**. Slow / confusing / breakable on weak 3G / cheap Android / iPad Safari = wrong, dù code đúng. Big tap targets, instant feedback, no dead ends, no English error strings shown to kids.
+
+---
+
+## 6. Files migrated to `_ops/`
+
+These were in this file pre-2026-06-13, now canonical in `D:\_ops\`:
+
+- Role definitions → `D:\_ops\AGENTS.md` §0
+- Permission matrix → `D:\_ops\PERMISSIONS.md`
+- Branch naming + worktree → `D:\_ops\BRANCH_CONVENTIONS.md`
+- AGENT_LOG protocol → `D:\_ops\AGENT_LOG.md` (replaces deprecated `docs/AGENT_LOG.md`)
+- Multi-agent ground rules + Cursor strict rules → `D:\_ops\AGENTS.md` §1, §3
+
+`docs/AGENT_LOG.md` này **deprecated** — agents append vào `D:\_ops\AGENT_LOG.md` từ giờ.
