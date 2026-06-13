@@ -14,8 +14,10 @@
   "dependencies": {
     "@astrojs/tailwind": "^6.0.2",
     "@fontsource-variable/baloo-2": "^5.2.7",
+    "@types/howler": "^2.2.13",
     "astro": "5.18.2",
     "canvas-confetti": "^1.9.4",
+    "howler": "^2.2.4",
     "tailwindcss": "^3.4.19"
   },
   "devDependencies": {

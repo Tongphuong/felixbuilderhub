@@ -1,0 +1,118 @@
+---
+export interface Props {
+  rarity: 'common' | 'rare' | 'epic';
+  preview_text: string;
+  pending: boolean;
+  data_test_id?: string;
+}
+
+const { rarity, preview_text, pending, data_test_id } = Astro.props;
+---
+
+<button
+  class="w2-chest-box"
+  data-rarity={rarity}
+  data-pending={pending}
+  data-testid={data_test_id}
+  type="button"
+  aria-label={`Mở hộp ${rarity}`}
+>
+  <div class="w2-chest-art" data-rarity={rarity}>
+    <svg viewBox="0 0 64 56" aria-hidden="true" class="w2-chest-svg">
+      <rect x="8" y="24" width="48" height="28" rx="4" class="w2-chest-body" />
+      <rect x="6" y="18" width="52" height="10" rx="3" class="w2-chest-lid" />
+      <rect x="28" y="30" width="8" height="10" rx="2" class="w2-chest-lock" />
+      <circle cx="32" cy="34" r="2" class="w2-chest-keyhole" />
+    </svg>
+  </div>
+  <p class="w2-chest-preview">{preview_text}</p>
+</button>
+
+<script is:inline>
+  document.querySelectorAll('.w2-chest-box').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      window.__r2lJuice?.openChest?.();
+    });
+  });
+</script>
+
+<style>
+  .w2-chest-box {
+    --w2-chest-common: #94a3b8;
+    --w2-chest-rare: #3b82f6;
+    --w2-chest-epic: #a855f7;
+    background: #0f172a;
+    border: 2px solid rgb(255 255 255 / 0.14);
+    border-radius: var(--r2l-radius-sm, 12px);
+    color: #f8fafc;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: var(--r2l-font-display, 'Baloo 2 Variable', system-ui, sans-serif);
+    gap: 0.5rem;
+    min-height: 44px;
+    min-width: 44px;
+    padding: 0.85rem 1rem;
+    width: 100%;
+  }
+
+  .w2-chest-box[data-pending='true'] {
+    animation: w2-chest-bounce 2s ease-in-out infinite;
+    box-shadow: 0 0 0 0 rgb(251 191 36 / 0.45);
+  }
+
+  .w2-chest-box[data-pending='true']:hover {
+    box-shadow: 0 0 18px 4px rgb(251 191 36 / 0.35);
+  }
+
+  .w2-chest-art {
+    width: 72px;
+    height: 64px;
+  }
+
+  .w2-chest-svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .w2-chest-art[data-rarity='common'] .w2-chest-body,
+  .w2-chest-art[data-rarity='common'] .w2-chest-lid {
+    fill: var(--w2-chest-common);
+  }
+
+  .w2-chest-art[data-rarity='rare'] .w2-chest-body,
+  .w2-chest-art[data-rarity='rare'] .w2-chest-lid {
+    fill: var(--w2-chest-rare);
+  }
+
+  .w2-chest-art[data-rarity='epic'] .w2-chest-body,
+  .w2-chest-art[data-rarity='epic'] .w2-chest-lid {
+    fill: var(--w2-chest-epic);
+  }
+
+  .w2-chest-lock {
+    fill: #1e293b;
+  }
+
+  .w2-chest-keyhole {
+    fill: #f8fafc;
+  }
+
+  .w2-chest-preview {
+    font-size: 0.9rem;
+    line-height: 1.35;
+    margin: 0;
+    text-align: center;
+  }
+
+  @keyframes w2-chest-bounce {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-6px);
+    }
+  }
+</style>

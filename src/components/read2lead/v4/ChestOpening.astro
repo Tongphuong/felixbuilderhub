@@ -1,0 +1,202 @@
+---
+export interface Props {
+  rarity: 'common' | 'rare' | 'epic';
+  reward: { coins: number; part_id: string | null; part_name?: string };
+  duplicate: boolean;
+}
+
+const { rarity, reward, duplicate } = Astro.props;
+---
+
+<dialog class="w2-chest-modal" data-rarity={rarity}>
+  <div class="w2-chest-stage" data-stage="closed">
+    <div class="w2-chest-stage-art w2-chest-stage-art--closed" aria-hidden="true">
+      <svg viewBox="0 0 64 56" class="w2-chest-svg">
+        <rect x="8" y="24" width="48" height="28" rx="4" class="w2-chest-body" />
+        <rect x="6" y="18" width="52" height="10" rx="3" class="w2-chest-lid" />
+        <rect x="28" y="30" width="8" height="10" rx="2" class="w2-chest-lock" />
+      </svg>
+    </div>
+  </div>
+  <div class="w2-chest-stage" data-stage="cracking" hidden>
+    <div class="w2-chest-stage-art w2-chest-stage-art--cracking" aria-hidden="true">
+      <svg viewBox="0 0 64 56" class="w2-chest-svg">
+        <rect x="8" y="24" width="48" height="28" rx="4" class="w2-chest-body" />
+        <rect x="6" y="18" width="52" height="10" rx="3" class="w2-chest-lid w2-chest-lid--crack" />
+        <line x1="20" y1="22" x2="44" y2="26" class="w2-chest-crack-line" />
+      </svg>
+    </div>
+  </div>
+  <div class="w2-chest-stage" data-stage="burst" hidden>
+    <div class="w2-chest-stage-art w2-chest-stage-art--burst" aria-hidden="true">
+      <div class="w2-chest-confetti" />
+    </div>
+    <div class="w2-chest-reward">
+      <span class="w2-reward-coins">🪙 +{reward.coins}</span>
+      {reward.part_id && !duplicate && (
+        <span class="w2-reward-part">Mới: {reward.part_name || reward.part_id}</span>
+      )}
+      {duplicate && <span class="w2-reward-dup">Trùng → +xu bonus 🎉</span>}
+    </div>
+    <button class="w2-chest-close" type="button">Tiếp tục</button>
+  </div>
+</dialog>
+
+<style>
+  .w2-chest-modal {
+    --w2-chest-common: #94a3b8;
+    --w2-chest-rare: #3b82f6;
+    --w2-chest-epic: #a855f7;
+    background: rgb(15 23 42 / 0.92);
+    border: none;
+    border-radius: var(--r2l-radius, 20px);
+    color: #f8fafc;
+    font-family: var(--r2l-font-display, 'Baloo 2 Variable', system-ui, sans-serif);
+    margin: auto;
+    max-width: 22rem;
+    padding: 1.25rem;
+    width: calc(100% - 2rem);
+  }
+
+  .w2-chest-modal::backdrop {
+    background: rgb(15 23 42 / 0.65);
+  }
+
+  .w2-chest-modal[data-rarity='common'] .w2-chest-body,
+  .w2-chest-modal[data-rarity='common'] .w2-chest-lid {
+    fill: var(--w2-chest-common);
+  }
+
+  .w2-chest-modal[data-rarity='rare'] .w2-chest-body,
+  .w2-chest-modal[data-rarity='rare'] .w2-chest-lid {
+    fill: var(--w2-chest-rare);
+  }
+
+  .w2-chest-modal[data-rarity='epic'] .w2-chest-body,
+  .w2-chest-modal[data-rarity='epic'] .w2-chest-lid {
+    fill: var(--w2-chest-epic);
+  }
+
+  .w2-chest-stage {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .w2-chest-stage-art {
+    width: 96px;
+    height: 84px;
+  }
+
+  .w2-chest-svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .w2-chest-stage[data-stage='closed'] .w2-chest-stage-art--closed {
+    animation: w2-chest-shake 1.5s ease-in-out 3;
+  }
+
+  .w2-chest-stage[data-stage='cracking'] .w2-chest-stage-art--cracking {
+    animation: w2-crack-glow 0.6s ease-out forwards;
+  }
+
+  .w2-chest-stage[data-stage='burst'] .w2-chest-stage-art--burst {
+    animation: w2-chest-burst 1s ease-out forwards;
+  }
+
+  .w2-chest-lid--crack {
+    transform-origin: center;
+  }
+
+  .w2-chest-crack-line {
+    stroke: #fef08a;
+    stroke-width: 2;
+  }
+
+  .w2-chest-confetti {
+    background:
+      radial-gradient(circle at 20% 30%, #fbbf24 0 6px, transparent 7px),
+      radial-gradient(circle at 70% 20%, #60a5fa 0 5px, transparent 6px),
+      radial-gradient(circle at 50% 70%, #34d399 0 7px, transparent 8px),
+      radial-gradient(circle at 80% 60%, #f472b6 0 5px, transparent 6px);
+    border-radius: 50%;
+    height: 72px;
+    width: 72px;
+  }
+
+  .w2-chest-reward {
+    display: flex;
+    flex-direction: column;
+    font-size: 1.05rem;
+    font-weight: 700;
+    gap: 0.5rem;
+  }
+
+  .w2-reward-coins {
+    color: var(--r2l-sun, #ffc83d);
+    font-size: 1.25rem;
+  }
+
+  .w2-reward-part {
+    color: var(--r2l-mint, #34d399);
+  }
+
+  .w2-reward-dup {
+    color: var(--r2l-sky, #38bdf8);
+  }
+
+  .w2-chest-close {
+    background: var(--r2l-sun, #ffc83d);
+    border: none;
+    border-radius: var(--r2l-radius-sm, 12px);
+    color: var(--r2l-ink, #1e2a4a);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 700;
+    min-height: 44px;
+    min-width: 44px;
+    padding: 0.6rem 1.25rem;
+    width: 100%;
+  }
+
+  @keyframes w2-chest-shake {
+    0%,
+    100% {
+      transform: translateX(0);
+    }
+    25% {
+      transform: translateX(-4px);
+    }
+    75% {
+      transform: translateX(4px);
+    }
+  }
+
+  @keyframes w2-crack-glow {
+    0% {
+      opacity: 0.6;
+      transform: scale(1);
+      filter: brightness(1);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1.2);
+      filter: brightness(1.6);
+    }
+  }
+
+  @keyframes w2-chest-burst {
+    0% {
+      opacity: 0.4;
+      transform: scale(1.2);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+</style>

@@ -1,0 +1,58 @@
+---
+export interface Props {
+  available: boolean;
+  reward_preview: number;
+}
+
+const { available, reward_preview } = Astro.props;
+---
+
+<button class="w2-daily-chest" data-available={available} type="button" disabled={!available}>
+  <span class="w2-daily-chest-icon">🎁</span>
+  {available ? (
+    <span>Quà hôm nay: +{reward_preview} 🪙</span>
+  ) : (
+    <span>Đã nhận hôm nay — quay lại mai!</span>
+  )}
+</button>
+
+<script is:inline>
+  document.querySelectorAll('.w2-daily-chest').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      window.__r2lJuice?.claimDailyChest?.();
+    });
+  });
+</script>
+
+<style>
+  .w2-daily-chest {
+    align-items: center;
+    background: #0f172a;
+    border: 2px solid rgb(255 255 255 / 0.14);
+    border-radius: var(--r2l-radius-sm, 12px);
+    color: #f8fafc;
+    cursor: pointer;
+    display: inline-flex;
+    font-family: var(--r2l-font-display, 'Baloo 2 Variable', system-ui, sans-serif);
+    font-size: 0.95rem;
+    font-weight: 600;
+    gap: 0.5rem;
+    min-height: 44px;
+    min-width: 44px;
+    padding: 0.6rem 1rem;
+  }
+
+  .w2-daily-chest[data-available='true'] {
+    border-color: var(--r2l-sun, #ffc83d);
+    box-shadow: 0 0 0 2px rgb(255 200 61 / 0.2);
+  }
+
+  .w2-daily-chest:disabled {
+    cursor: not-allowed;
+    opacity: 0.65;
+  }
+
+  .w2-daily-chest-icon {
+    font-size: 1.2rem;
+  }
+</style>

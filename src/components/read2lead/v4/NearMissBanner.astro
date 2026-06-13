@@ -1,0 +1,65 @@
+---
+export interface Props {
+  text: string;
+  visible: boolean;
+}
+
+const { text, visible } = Astro.props;
+---
+
+<div class="w2-nearmiss-banner" data-visible={visible} role="status" aria-live="polite">
+  <span class="w2-nearmiss-icon">✨</span>
+  <span class="w2-nearmiss-text">{text}</span>
+</div>
+
+<style>
+  .w2-nearmiss-banner {
+    align-items: center;
+    background: linear-gradient(90deg, #1e293b, #0f172a);
+    border-bottom: 2px solid var(--r2l-sun, #ffc83d);
+    color: #f8fafc;
+    display: flex;
+    font-family: var(--r2l-font-display, 'Baloo 2 Variable', system-ui, sans-serif);
+    font-size: 0.95rem;
+    font-weight: 600;
+    gap: 0.5rem;
+    left: 0;
+    min-height: 44px;
+    opacity: 0;
+    padding: 0.65rem 1rem;
+    pointer-events: none;
+    position: fixed;
+    right: 0;
+    top: 0;
+    transform: translateY(-100%);
+    z-index: 50;
+  }
+
+  .w2-nearmiss-banner[data-visible='true'] {
+    animation: w2-nearmiss-slide 3s ease-in-out forwards;
+    pointer-events: auto;
+  }
+
+  .w2-nearmiss-icon {
+    font-size: 1.1rem;
+  }
+
+  @keyframes w2-nearmiss-slide {
+    0% {
+      opacity: 0;
+      transform: translateY(-100%);
+    }
+    12% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    78% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-100%);
+    }
+  }
+</style>

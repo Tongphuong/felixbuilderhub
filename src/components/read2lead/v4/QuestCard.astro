@@ -1,0 +1,121 @@
+---
+export interface Props {
+  quest: {
+    id: string;
+    label_vi: string;
+    target: number;
+    progress: number;
+    reward_coins: number;
+    reward_rp: number;
+    claimed: boolean;
+  };
+}
+
+const { quest } = Astro.props;
+const complete = quest.progress >= quest.target;
+const pct = Math.min(100, Math.round((quest.progress / quest.target) * 100));
+---
+
+<article
+  class="w2-quest-card"
+  data-quest-id={quest.id}
+  data-complete={complete}
+  data-claimed={quest.claimed}
+>
+  <header class="w2-quest-label">{quest.label_vi}</header>
+  <div class="w2-quest-progress" aria-hidden="true">
+    <div class="w2-quest-progress-fill" style={`width: ${pct}%`} />
+  </div>
+  <footer class="w2-quest-reward">
+    <span class="w2-coin">🪙 +{quest.reward_coins}</span>
+    {quest.reward_rp > 0 && <span class="w2-rp">⭐ +{quest.reward_rp} RP</span>}
+  </footer>
+  {complete && !quest.claimed && (
+    <button class="w2-quest-claim" data-quest-id={quest.id} type="button">Nhận thưởng</button>
+  )}
+  {quest.claimed && <span class="w2-quest-done">✓ Đã nhận</span>}
+</article>
+
+<style>
+  .w2-quest-card {
+    --w2-navy: #0f172a;
+    background: var(--w2-navy, #0f172a);
+    border: 2px solid rgb(255 255 255 / 0.12);
+    border-radius: var(--r2l-radius-sm, 12px);
+    color: #f8fafc;
+    display: flex;
+    flex-direction: column;
+    font-family: var(--r2l-font-display, 'Baloo 2 Variable', system-ui, sans-serif);
+    gap: 0.65rem;
+    min-height: 44px;
+    padding: 0.85rem 1rem;
+  }
+
+  .w2-quest-label {
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1.3;
+    opacity: 0.9;
+  }
+
+  .w2-quest-progress {
+    background: rgb(255 255 255 / 0.12);
+    border-radius: 999px;
+    height: 14px;
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .w2-quest-progress-fill {
+    background: linear-gradient(90deg, var(--r2l-mint, #34d399), var(--r2l-sun, #ffc83d));
+    border-radius: inherit;
+    height: 100%;
+    min-width: 4px;
+    transition: width 0.35s ease;
+  }
+
+  .w2-quest-reward {
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 0.9rem;
+    gap: 0.5rem;
+  }
+
+  .w2-coin {
+    color: var(--r2l-sun, #ffc83d);
+    font-weight: 700;
+  }
+
+  .w2-rp {
+    color: var(--r2l-sky, #38bdf8);
+    font-weight: 600;
+  }
+
+  .w2-quest-claim {
+    background: var(--r2l-sun, #ffc83d);
+    border: none;
+    border-radius: var(--r2l-radius-sm, 12px);
+    color: var(--r2l-ink, #1e2a4a);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 700;
+    min-height: 44px;
+    min-width: 44px;
+    padding: 0.55rem 1rem;
+    width: 100%;
+  }
+
+  .w2-quest-claim:active {
+    transform: scale(0.98);
+  }
+
+  .w2-quest-done {
+    color: var(--r2l-mint, #34d399);
+    font-size: 0.95rem;
+    font-weight: 700;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+</style>

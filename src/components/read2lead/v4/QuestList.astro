@@ -1,0 +1,55 @@
+---
+import QuestCard from './QuestCard.astro';
+
+export interface Props {
+  quests: {
+    id: string;
+    label_vi: string;
+    target: number;
+    progress: number;
+    reward_coins: number;
+    reward_rp: number;
+    claimed: boolean;
+  }[];
+}
+
+const { quests } = Astro.props;
+---
+
+<section class="w2-quest-list" aria-label="Nhiệm vụ hôm nay">
+  <h2 class="w2-quest-list-title">Nhiệm vụ hôm nay</h2>
+  {quests.length === 0 ? (
+    <p class="w2-quest-empty">Đang tải nhiệm vụ…</p>
+  ) : (
+    <div class="w2-quest-grid">
+      {quests.map((q) => <QuestCard quest={q} />)}
+    </div>
+  )}
+</section>
+
+<style>
+  .w2-quest-list {
+    color: #f8fafc;
+    font-family: var(--r2l-font-display, 'Baloo 2 Variable', system-ui, sans-serif);
+  }
+
+  .w2-quest-list-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin: 0 0 0.75rem;
+  }
+
+  .w2-quest-grid {
+    display: grid;
+    gap: 0.75rem;
+    grid-template-columns: 1fr;
+  }
+
+  .w2-quest-empty {
+    color: rgb(248 250 252 / 0.75);
+    font-size: 0.95rem;
+    margin: 0;
+    min-height: 44px;
+    padding: 0.5rem 0;
+  }
+</style>

@@ -1,0 +1,88 @@
+---
+import RarityBadge from './RarityBadge.astro';
+import ShopItem from './ShopItem.astro';
+
+export interface Props {
+  items: {
+    id: string;
+    rarity: 'common' | 'rare' | 'epic';
+    price: number;
+    name: string;
+    thumbnail_url?: string;
+    owned: boolean;
+    can_afford: boolean;
+  }[];
+}
+
+const { items } = Astro.props;
+const epicItems = items.filter((item) => item.rarity === 'epic');
+const rareItems = items.filter((item) => item.rarity === 'rare');
+---
+
+<section class="shop-grid" aria-label="Cửa hàng phụ kiện">
+  {epicItems.length > 0 && (
+    <section class="shop-section" data-tier="epic">
+      <header class="shop-section-header">
+        <RarityBadge rarity="epic" size="large" />
+        <h2>Sử Thi — {epicItems.length} món</h2>
+      </header>
+      <div class="shop-section-items">
+        {epicItems.map((item) => <ShopItem {...item} />)}
+      </div>
+    </section>
+  )}
+  {rareItems.length > 0 && (
+    <section class="shop-section" data-tier="rare">
+      <header class="shop-section-header">
+        <RarityBadge rarity="rare" size="large" />
+        <h2>Hiếm — {rareItems.length} món</h2>
+      </header>
+      <div class="shop-section-items">
+        {rareItems.map((item) => <ShopItem {...item} />)}
+      </div>
+    </section>
+  )}
+  {items.length === 0 && <p class="shop-grid-empty">Đang tải cửa hàng…</p>}
+</section>
+
+<style>
+  .shop-grid {
+    display: flex;
+    flex-direction: column;
+    font-family: var(--r2l-font-display, 'Baloo 2 Variable', system-ui, sans-serif);
+    gap: 1.25rem;
+  }
+
+  .shop-section-header {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+    margin-bottom: 0.65rem;
+  }
+
+  .shop-section-header h2 {
+    color: #f8fafc;
+    font-size: 1.05rem;
+    font-weight: 800;
+    margin: 0;
+  }
+
+  .shop-section-items {
+    display: grid;
+    gap: 0.75rem;
+    grid-template-columns: 1fr;
+  }
+
+  .shop-grid-empty {
+    color: rgb(248 250 252 / 0.75);
+    margin: 0;
+    min-height: 64px;
+  }
+
+  @media (min-width: 640px) {
+    .shop-section-items {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+</style>
