@@ -18,6 +18,29 @@ export const DUPLICATE_CONVERSION = {
   epic: 60,
 };
 
+/**
+ * Vietnamese labels for kid-facing UI. Mobile-game convention.
+ * Phương 2026-06-13: kid không hiểu English "rare/epic" → việt hóa.
+ */
+export const RARITY_LABELS_VI = {
+  common: 'Thường',
+  rare: 'Hiếm',
+  epic: 'Sử Thi',
+};
+
+/**
+ * Mobile-game color tokens (matches W4 components --w2-chest-* CSS vars).
+ */
+export const RARITY_COLORS = {
+  common: '#94a3b8', // gray
+  rare: '#3b82f6',   // blue
+  epic: '#a855f7',   // purple
+};
+
+export function rarityLabelVi(rarity) {
+  return RARITY_LABELS_VI[rarity] || RARITY_LABELS_VI.common;
+}
+
 function randInt(min, max, rngFn) {
   return min + Math.floor(rngFn() * (max - min + 1));
 }
@@ -83,9 +106,10 @@ export function autoConvertDuplicate(chest, ownedPartIds) {
 export function chestPreviewText(rarity) {
   const def = CHEST_REWARDS[rarity];
   if (!def) return '';
+  const label = rarityLabelVi(rarity);
   const range = def.coins_min === def.coins_max
     ? `${def.coins_min}`
     : `${def.coins_min}–${def.coins_max}`;
   const part = def.part_pool ? ' + 1 phần thưởng' : '';
-  return `Hộp này chứa ${range} xu${part}.`;
+  return `Hộp ${label}: ${range} xu${part}.`;
 }

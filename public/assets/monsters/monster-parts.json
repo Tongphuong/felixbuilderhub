@@ -93,7 +93,7 @@
           "y": 144
         }
       },
-      "rarity": "common"
+      "rarity": "rare"
     },
     {
       "id": "png-default-body-bluef",
@@ -112,7 +112,7 @@
           "y": 136
         }
       },
-      "rarity": "common"
+      "rarity": "epic"
     },
     {
       "id": "png-default-body-darka",
@@ -207,7 +207,7 @@
           "y": 144
         }
       },
-      "rarity": "common"
+      "rarity": "rare"
     },
     {
       "id": "png-default-body-darkf",
@@ -226,7 +226,7 @@
           "y": 136
         }
       },
-      "rarity": "common"
+      "rarity": "epic"
     },
     {
       "id": "png-default-body-greena",
@@ -321,7 +321,7 @@
           "y": 144
         }
       },
-      "rarity": "common"
+      "rarity": "rare"
     },
     {
       "id": "png-default-body-greenf",
@@ -340,7 +340,7 @@
           "y": 136
         }
       },
-      "rarity": "common"
+      "rarity": "epic"
     },
     {
       "id": "png-default-body-reda",
@@ -435,7 +435,7 @@
           "y": 144
         }
       },
-      "rarity": "common"
+      "rarity": "rare"
     },
     {
       "id": "png-default-body-redf",
@@ -454,7 +454,7 @@
           "y": 136
         }
       },
-      "rarity": "common"
+      "rarity": "epic"
     },
     {
       "id": "png-default-body-whitea",
@@ -549,7 +549,7 @@
           "y": 144
         }
       },
-      "rarity": "common"
+      "rarity": "rare"
     },
     {
       "id": "png-default-body-whitef",
@@ -568,7 +568,7 @@
           "y": 136
         }
       },
-      "rarity": "common"
+      "rarity": "epic"
     },
     {
       "id": "png-default-body-yellowa",
@@ -663,7 +663,7 @@
           "y": 144
         }
       },
-      "rarity": "common"
+      "rarity": "rare"
     },
     {
       "id": "png-default-body-yellowf",
@@ -682,7 +682,7 @@
           "y": 136
         }
       },
-      "rarity": "common"
+      "rarity": "epic"
     }
   ],
   "eyes": [
@@ -831,7 +831,7 @@
     {
       "id": "png-default-mouthh",
       "file": "PNG/Default/mouthH.png",
-      "rarity": "common"
+      "rarity": "epic"
     },
     {
       "id": "png-default-mouthi",
@@ -841,7 +841,7 @@
     {
       "id": "png-default-mouthj",
       "file": "PNG/Default/mouthJ.png",
-      "rarity": "common"
+      "rarity": "epic"
     }
   ],
   "arms": [
@@ -927,7 +927,7 @@
         "handY": 144.86038744154976,
         "attach": "left"
       },
-      "rarity": "common"
+      "rarity": "rare"
     },
     {
       "id": "png-default-arm-darkb",
@@ -941,7 +941,7 @@
         "handY": 133.37515842839036,
         "attach": "left"
       },
-      "rarity": "common"
+      "rarity": "rare"
     },
     {
       "id": "png-default-arm-darkc",
@@ -955,7 +955,7 @@
         "handY": 148.78319686721252,
         "attach": "left"
       },
-      "rarity": "common"
+      "rarity": "rare"
     },
     {
       "id": "png-default-arm-darkd",
@@ -969,7 +969,7 @@
         "handY": 162.1877001921845,
         "attach": "left"
       },
-      "rarity": "common"
+      "rarity": "rare"
     },
     {
       "id": "png-default-arm-darke",
@@ -983,7 +983,7 @@
         "handY": 121.80578334052655,
         "attach": "left"
       },
-      "rarity": "common"
+      "rarity": "rare"
     },
     {
       "id": "png-default-arm-greena",
@@ -1270,12 +1270,12 @@
     {
       "id": "png-default-detail-blue-antenna-large",
       "file": "PNG/Default/detail_blue_antenna_large.png",
-      "rarity": "common"
+      "rarity": "epic"
     },
     {
       "id": "png-default-detail-blue-antenna-small",
       "file": "PNG/Default/detail_blue_antenna_small.png",
-      "rarity": "common"
+      "rarity": "rare"
     },
     {
       "id": "png-default-detail-blue-ear",
@@ -1295,22 +1295,22 @@
     {
       "id": "png-default-detail-blue-horn-large",
       "file": "PNG/Default/detail_blue_horn_large.png",
-      "rarity": "common"
+      "rarity": "epic"
     },
     {
       "id": "png-default-detail-blue-horn-small",
       "file": "PNG/Default/detail_blue_horn_small.png",
-      "rarity": "common"
+      "rarity": "rare"
     },
     {
       "id": "png-default-detail-dark-antenna-large",
       "file": "PNG/Default/detail_dark_antenna_large.png",
-      "rarity": "common"
+      "rarity": "epic"
     },
     {
       "id": "png-default-detail-dark-antenna-small",
       "file": "PNG/Default/detail_dark_antenna_small.png",
-      "rarity": "common"
+      "rarity": "rare"
     },
     {
       "id": "png-default-detail-dark-ear",
@@ -1330,22 +1330,22 @@
     {
       "id": "png-default-detail-dark-horn-large",
       "file": "PNG/Default/detail_dark_horn_large.png",
-      "rarity": "common"
+      "rarity": "epic"
     },
     {
       "id": "png-default-detail-dark-horn-small",
       "file": "PNG/Default/detail_dark_horn_small.png",
-      "rarity": "common"
+      "rarity": "rare"
     },
     {
       "id": "png-default-detail-green-antenna-large",
       "file": "PNG/Default/detail_green_antenna_large.png",
-      "rarity": "common"
+      "rarity": "epic"
     },
     {
       "id": "png-default-detail-green-antenna-small",
       "file": "PNG/Default/detail_green_antenna_small.png",
-      "rarity": "common"
+      "rarity": "rare"
     },
     {
       "id": "png-default-detail-green-ear",
@@ -1365,22 +1365,22 @@
     {
       "id": "png-default-detail-green-horn-large",
       "file": "PNG/Default/detail_green_horn_large.png",
-      "rarity": "common"
+      "rarity": "epic"
     },
     {
       "id": "png-default-detail-green-horn-small",
       "file": "PNG/Default/detail_green_horn_small.png",
-      "rarity": "common"
+      "rarity": "rare"
     },
     {
       "id": "png-default-detail-red-antenna-large",
       "file": "PNG/Default/detail_red_antenna_large.png",
-      "rarity": "common"
+      "rarity": "epic"
     },
     {
       "id": "png-default-detail-red-antenna-small",
       "file": "PNG/Default/detail_red_antenna_small.png",
-      "rarity": "common"
+      "rarity": "rare"
     },
     {
       "id": "png-default-detail-red-ear",
@@ -1400,22 +1400,22 @@
     {
       "id": "png-default-detail-red-horn-large",
       "file": "PNG/Default/detail_red_horn_large.png",
-      "rarity": "common"
+      "rarity": "epic"
     },
     {
       "id": "png-default-detail-red-horn-small",
       "file": "PNG/Default/detail_red_horn_small.png",
-      "rarity": "common"
+      "rarity": "rare"
     },
     {
       "id": "png-default-detail-white-antenna-large",
       "file": "PNG/Default/detail_white_antenna_large.png",
-      "rarity": "common"
+      "rarity": "epic"
     },
     {
       "id": "png-default-detail-white-antenna-small",
       "file": "PNG/Default/detail_white_antenna_small.png",
-      "rarity": "common"
+      "rarity": "rare"
     },
     {
       "id": "png-default-detail-white-ear",
@@ -1435,22 +1435,22 @@
     {
       "id": "png-default-detail-white-horn-large",
       "file": "PNG/Default/detail_white_horn_large.png",
-      "rarity": "common"
+      "rarity": "epic"
     },
     {
       "id": "png-default-detail-white-horn-small",
       "file": "PNG/Default/detail_white_horn_small.png",
-      "rarity": "common"
+      "rarity": "rare"
     },
     {
       "id": "png-default-detail-yellow-antenna-large",
       "file": "PNG/Default/detail_yellow_antenna_large.png",
-      "rarity": "common"
+      "rarity": "epic"
     },
     {
       "id": "png-default-detail-yellow-antenna-small",
       "file": "PNG/Default/detail_yellow_antenna_small.png",
-      "rarity": "common"
+      "rarity": "rare"
     },
     {
       "id": "png-default-detail-yellow-ear",
@@ -1470,12 +1470,12 @@
     {
       "id": "png-default-detail-yellow-horn-large",
       "file": "PNG/Default/detail_yellow_horn_large.png",
-      "rarity": "common"
+      "rarity": "epic"
     },
     {
       "id": "png-default-detail-yellow-horn-small",
       "file": "PNG/Default/detail_yellow_horn_small.png",
-      "rarity": "common"
+      "rarity": "rare"
     },
     {
       "id": "png-default-eyebrowa",

@@ -31,7 +31,9 @@ test('isPartUnlocked true for common regardless of state', () => {
 });
 
 test('isPartUnlocked false for rare not in unlocked_parts', () => {
-  assert.deepEqual(listPartsByRarity('rare'), []);
+  // After 2026-06-13 heuristic tagging, manifest has rare parts.
+  // Verify gate logic: rare requires part in unlocked_parts.
+  assert.ok(listPartsByRarity('rare').length > 0, 'manifest should have rare parts');
   const gate = (state, partId, rarity) => {
     if (rarity === 'common') return true;
     return Array.isArray(state.unlocked_parts) && state.unlocked_parts.includes(partId);

@@ -67,7 +67,8 @@ test('buildReward rare returns coins in 25..40', () => {
 test('buildReward epic returns 50 coins', () => {
   const reward = buildReward('epic', () => 0.99);
   assert.equal(reward.coins, 50);
-  assert.equal(reward.part_id, null);
+  // After 2026-06-13 manifest tagging, epic pool has parts → part_id non-null.
+  assert.ok(reward.part_id !== null, 'epic reward should include a part_id from non-common pool');
 });
 
 test('buildReward unknown rarity returns zero reward', () => {
