@@ -1,13 +1,16 @@
 import { getClientIp, checkCodeRateLimit, recordCodeFailure, rateLimitedResponse } from './_rate-limit.js';
 import { ensureSixActivities } from './_read2lead-lesson-activities.js';
 import {
+  applyQuestProgress,
   applyPackCompletion,
   applyPackPenalty,
+  awardPendingChest,
   awardRankPoints,
   computeRankUp,
   computeSeasonLadder,
   loadProgressState,
   PASS_THRESHOLD_PERCENT,
+  recordComboBonus,
   vietnamDateKey,
   XP_PENALTY_BELOW_THRESHOLD,
   XP_PER_PASSED_PACK,
@@ -88,6 +91,7 @@ export async function onRequestPost(context) {
     lessonContext,
     progress,
     submittedAnswers: answers,
+    comboXuRequested: data.combo_xu ?? answers.combo_xu,
   });
 }
 
@@ -146,6 +150,7 @@ async function submitV2Lesson({
   lessonContext,
   progress,
   submittedAnswers,
+  comboXuRequested,
 }) {
   if (hasPassingWebAttempt(currentPack)) {
     return respondFromCachedAttempt({
@@ -269,7 +274,75 @@ async function submitV2Lesson({
       dateKey: vietnamDateKey(submittedAt),
       nowIso: submittedAt,
     });
-  const savedProgressState = await saveProgressState(env, accessCode, rankAward.state);
+  let nextProgressState = rankAward.state;
+  if (!stateResult.already_counted) {
+    // === V4 W2 hooks ===
+    const w2DateKey = vietnamDateKey(submittedAt);
+    const hasSpeakActivity = activityResults.some(
+      (result) => result?.type === 'listen_and_speak' || result?.type === 'retell_summary',
+    );
+    nextProgressState = applyQuestProgress(
+      nextProgressState,
+      'pack_passed',
+      { score: scorePercent, has_speak: hasSpeakActivity },
+      w2DateKey,
+      accessCode,
+    );
+    if (scorePercent >= 80) {
+      nextProgressState = applyQuestProgress(
+        nextProgressState,
+        'pack_passed_high_score',
+        { score: scorePercent },
+        w2DateKey,
+        accessCode,
+      );
+    }
+    if (hasSpeakActivity) {
+      nextProgressState = applyQuestProgress(
+        nextProgressState,
+        'speak_completed',
+        {},
+        w2DateKey,
+        accessCode,
+      );
+    }
+    const perfectActivity = activityResults.find((result) => {
+      const correct = Number(result?.correct_count);
+      const total = Number(result?.total_count);
+      return result?.percent === 100
+        || result?.score === 1
+        || (total > 0 && correct === total && numberOrZero(result?.wrong_count) === 0);
+    });
+    if (perfectActivity) {
+      nextProgressState = applyQuestProgress(
+        nextProgressState,
+        'activity_perfect',
+        { activity_key: perfectActivity.key || perfectActivity.type },
+        w2DateKey,
+        accessCode,
+      );
+    }
+    if (numberOrZero(nextProgressState.streak_days) >= 3) {
+      nextProgressState = applyQuestProgress(
+        nextProgressState,
+        'streak_day_3',
+        { streak: nextProgressState.streak_days },
+        w2DateKey,
+        accessCode,
+      );
+    }
+    if (numberOrZero(comboXuRequested) > 0) {
+      nextProgressState = recordComboBonus(nextProgressState, comboXuRequested);
+    }
+    const rng = typeof env.RNG === 'function' ? env.RNG : Math.random;
+    nextProgressState = awardPendingChest(
+      nextProgressState,
+      { passed: true, score: scorePercent },
+      rng,
+    );
+    // === end V4 W2 hooks ===
+  }
+  const savedProgressState = await saveProgressState(env, accessCode, nextProgressState);
   const rankLadderAfter = computeSeasonLadder(savedProgressState);
   const rankUp = computeRankUp(rankLadderBefore, rankLadderAfter);
 
