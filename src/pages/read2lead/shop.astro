@@ -88,21 +88,7 @@ const mainClass = w1Ssr
 
         <p id="shop-minny" class:list={['hidden px-4 py-3 text-sm font-semibold', w1Ssr ? 'r2l-kid-card border-2 border-[var(--r2l-accent)] text-[var(--r2l-ink)]' : 'rounded-xl border border-accent/30 bg-accent/10 text-accent']}></p>
 
-        {w1Ssr ? (
-          <div id="shop-equipped">
-            <KidCard>
-              <p class="text-sm font-bold">Đang trang bị</p>
-              <div id="shop-equipped-list" class="mt-2 flex flex-wrap gap-2 text-sm r2l-kid-muted"></div>
-            </KidCard>
-          </div>
-        ) : (
-          <div id="shop-equipped" class="rounded-2xl border border-cream/10 bg-navy-900/70 p-4">
-            <p class="text-sm font-bold text-cream">Đang trang bị</p>
-            <div id="shop-equipped-list" class="mt-2 flex flex-wrap gap-2 text-sm text-cream-muted"></div>
-          </div>
-        )}
-
-        <div id="shop-grid" class="grid gap-4 sm:grid-cols-2"></div>
+        <div id="shop-grid" class="w2-shop-host"></div>
       </div>
     </section>
   </main>
@@ -132,17 +118,8 @@ const mainClass = w1Ssr
 
   const qs = (sel) => document.querySelector(sel);
   let accessCode = '';
-  let shopState = null;
-
-  function kidBtnClass(variant = 'primary') {
-    if (!w1) return variant === 'primary' ? 'rounded-lg bg-accent px-3 py-2 text-sm font-extrabold text-navy-950' : 'rounded-lg border border-accent px-3 py-2 text-sm font-bold text-accent';
-    if (variant === 'ghost') return 'r2l-kid-btn r2l-kid-btn--ghost r2l-kid-btn--md';
-    return 'r2l-kid-btn r2l-kid-btn--primary r2l-kid-btn--md';
-  }
-
-  function kidCardClass() {
-    return w1 ? 'r2l-kid-card' : 'rounded-2xl border border-cream/10 bg-navy-900/80 p-4';
-  }
+  let shopItems = [];
+  let shopCoins = 0;
 
   function escapeHtml(value) {
     return String(value ?? '')
@@ -153,11 +130,12 @@ const mainClass = w1Ssr
   }
 
   function setShopCoins(value) {
+    shopCoins = Number(value) || 0;
     const legacy = qs('#shop-coins');
-    if (legacy) legacy.textContent = String(value);
+    if (legacy) legacy.textContent = String(shopCoins);
     const pill = qs('[data-r2l-coin-value]');
     if (pill) {
-      pill.textContent = String(value);
+      pill.textContent = String(shopCoins);
       const wrap = pill.closest('.r2l-kid-coin-pill');
       if (wrap) {
         wrap.classList.add('is-bump');
@@ -169,83 +147,68 @@ const mainClass = w1Ssr
   async function confirmBuy() {
     if (w1) {
       return kidConfirm({
-        title: 'Mua đồ này?',
-        body: 'Con muốn mua món này bằng xu?',
+        title: 'Mua phụ kiện này?',
+        body: 'Con muốn mua phần này bằng xu?',
         okText: 'Mua nhé',
         cancelText: 'Để sau',
       });
     }
-    return window.confirm('Con muốn mua món này bằng xu?');
+    return window.confirm('Con muốn mua phần này bằng xu?');
   }
 
-  async function shopRequest(action, extra = {}) {
-    const response = await fetch('/api/read2lead-shop', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ access_code: accessCode, action, ...extra }),
-    });
-    const payload = await response.json();
-    if (!payload.ok) throw new Error(payload.message || 'Không thể thực hiện.');
-    shopState = payload.read2lead_state;
-    if (payload.minny_message_vi) {
-      const minny = qs('#shop-minny');
-      if (minny) {
-        minny.textContent = payload.minny_message_vi;
-        minny.classList.remove('hidden');
-      }
-      if (w1) kidToast(payload.minny_message_vi);
-    }
-    renderShop();
-    return payload;
+  function showShopError(message) {
+    const errorEl = qs('#shop-error');
+    if (!errorEl) return;
+    errorEl.textContent = message;
+    errorEl.classList.remove('hidden');
+    if (w1) kidToast(message);
   }
 
-  function renderEquipped() {
-    const list = qs('#shop-equipped-list');
-    if (!list || !shopState) return;
-    const equipped = shopState.equipped_display || [];
-    const chipClass = w1
-      ? 'rounded-lg border-2 border-[rgb(30_42_74/0.12)] bg-[var(--r2l-bg)] px-3 py-1'
-      : 'rounded-lg border border-cream/15 bg-navy-950 px-3 py-1';
-    list.innerHTML = equipped.length
-      ? equipped.map((item) => `<span class="${chipClass}">${escapeHtml(item.emoji)} ${escapeHtml(item.name_vi)}</span>`).join('')
-      : 'Chưa trang bị gì — mua và bấm Trang bị nhé!';
+  function renderShopItem(item) {
+    const owned = item.owned;
+    const afford = item.can_afford;
+    return `
+      <article class="w2-shop-item" data-part-id="${escapeHtml(item.id)}" data-rarity="${escapeHtml(item.rarity)}" data-owned="${owned}">
+        <div class="w2-shop-thumb" aria-hidden="true"></div>
+        <div class="w2-shop-body">
+          <h3 class="w2-shop-name">${escapeHtml(item.name)}</h3>
+          <p class="w2-shop-price">🪙 ${item.price}</p>
+        </div>
+        ${
+          owned
+            ? '<span class="w2-shop-owned">✓ Có rồi</span>'
+            : `<button class="w2-shop-buy" type="button" data-buy-part="${escapeHtml(item.id)}" ${afford ? '' : 'disabled'}>Mua</button>`
+        }
+      </article>
+    `;
+  }
+
+  function renderShopRow(title, items) {
+    if (!items.length) return '';
+    return `
+      <div class="w2-shop-row" data-rarity-group="${escapeHtml(items[0].rarity)}">
+        <h2 class="w2-shop-row-title">${escapeHtml(title)}</h2>
+        <div class="w2-shop-row-items">
+          ${items.map(renderShopItem).join('')}
+        </div>
+      </div>
+    `;
   }
 
   function renderShop() {
-    if (!shopState) return;
-    setShopCoins(shopState.coins || 0);
-    renderEquipped();
     const grid = qs('#shop-grid');
-    const inventory = new Set(shopState.inventory || []);
-    const equipped = shopState.equipped || {};
-    const catalog = shopState.shop_catalog || [];
-    grid.innerHTML = catalog.map((item) => {
-      const owned = inventory.has(item.id);
-      const isEquipped = equipped[item.slot] === item.id;
-      const priceClass = w1 ? 'r2l-kid-shop-price' : 'rounded-lg bg-gold/15 px-2 py-1 text-sm font-bold text-gold';
-      return `
-        <article class="${kidCardClass()}">
-          <div class="flex items-start justify-between gap-3">
-            <div>
-              <p class="text-3xl">${escapeHtml(item.emoji)}</p>
-              <h2 class="mt-2 text-lg font-extrabold ${w1 ? '' : 'font-display text-cream'}">${escapeHtml(item.name_vi)}</h2>
-              <p class="mt-1 text-xs uppercase tracking-wide ${w1 ? 'r2l-kid-muted' : 'text-cream-muted'}">${escapeHtml(item.slot)}</p>
-            </div>
-            <p class="${priceClass}">${item.price_coins} 🪙</p>
-          </div>
-          <div class="mt-4 flex flex-wrap gap-2">
-            ${
-              owned
-                ? `<button type="button" data-equip="${escapeHtml(item.id)}" class="${kidBtnClass('ghost')}">${isEquipped ? 'Đang dùng' : 'Trang bị'}</button>
-                   ${isEquipped ? `<button type="button" data-unequip="${escapeHtml(item.slot)}" class="${kidBtnClass('ghost')}">Gỡ</button>` : ''}`
-                : `<button type="button" data-buy="${escapeHtml(item.id)}" class="${kidBtnClass('primary')}">Mua</button>`
-            }
-          </div>
-        </article>
-      `;
-    }).join('');
+    if (!grid) return;
+    const rare = shopItems.filter((item) => item.rarity === 'rare');
+    const epic = shopItems.filter((item) => item.rarity === 'epic');
+    grid.innerHTML = `
+      <section class="w2-shop-grid" aria-label="Cửa hàng phụ kiện">
+        ${renderShopRow('Hiếm ⭐', rare)}
+        ${renderShopRow('Cực hiếm ✨', epic)}
+        ${shopItems.length === 0 ? '<p class="w2-shop-empty">Đang tải cửa hàng…</p>' : ''}
+      </section>
+    `;
 
-    grid.querySelectorAll('[data-buy]').forEach((button) => {
+    grid.querySelectorAll('[data-buy-part]').forEach((button) => {
       button.addEventListener('click', async () => {
         if (!(await confirmBuy())) return;
         const buyBtn = button;
@@ -253,32 +216,31 @@ const mainClass = w1Ssr
         buyBtn.disabled = true;
         buyBtn.textContent = 'Đang mua…';
         try {
-          await shopRequest('buy', { item_id: button.dataset.buy });
+          const response = await fetch('/api/read2lead-shop-buy', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ code: accessCode, part_id: buyBtn.dataset.buyPart }),
+          });
+          const payload = await response.json();
+          if (!payload.ok) throw new Error(payload.message || 'Không thể mua.');
+          setShopCoins(payload.coins);
+          shopItems = shopItems.map((item) => {
+            if (item.id !== payload.reward?.part_id) return item;
+            return { ...item, owned: true, can_afford: false };
+          });
+          const minny = qs('#shop-minny');
+          if (minny) {
+            minny.textContent = `Minny thích phụ kiện mới của con! 🎉`;
+            minny.classList.remove('hidden');
+          }
+          if (w1) kidToast('Mua thành công! Phụ kiện đã vào tủ của con.');
+          qs('#shop-error')?.classList.add('hidden');
+          renderShop();
         } catch (error) {
           buyBtn.disabled = false;
           buyBtn.textContent = originalText;
-          qs('#shop-error').textContent = error.message;
-          qs('#shop-error').classList.remove('hidden');
-        }
-      });
-    });
-    grid.querySelectorAll('[data-equip]').forEach((button) => {
-      button.addEventListener('click', async () => {
-        try {
-          await shopRequest('equip', { item_id: button.dataset.equip });
-        } catch (error) {
-          qs('#shop-error').textContent = error.message;
-          qs('#shop-error').classList.remove('hidden');
-        }
-      });
-    });
-    grid.querySelectorAll('[data-unequip]').forEach((button) => {
-      button.addEventListener('click', async () => {
-        try {
-          await shopRequest('unequip', { slot: button.dataset.unequip });
-        } catch (error) {
-          qs('#shop-error').textContent = error.message;
-          qs('#shop-error').classList.remove('hidden');
+          const message = error instanceof Error ? error.message : 'Không thể mua.';
+          showShopError(message);
         }
       });
     });
@@ -287,11 +249,21 @@ const mainClass = w1Ssr
   async function loadShop() {
     accessCode = (qs('#shop-code').value || '').trim().toUpperCase();
     if (!accessCode) return;
-    qs('#shop-error').classList.add('hidden');
-    const payload = await shopRequest('list');
-    shopState = payload.read2lead_state;
-    qs('#shop-shell').classList.remove('hidden');
-    qs('#shop-profile-link').href = `/hoc-sinh?code=${encodeURIComponent(accessCode)}&v3=1`;
+    qs('#shop-error')?.classList.add('hidden');
+
+    const response = await fetch('/api/read2lead-shop-list', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ code: accessCode }),
+    });
+    const payload = await response.json();
+    if (!payload.ok) throw new Error(payload.message || 'Không thể mở cửa hàng.');
+
+    shopItems = payload.items || [];
+    setShopCoins(payload.coins || 0);
+    qs('#shop-shell')?.classList.remove('hidden');
+    const profileLink = qs('#shop-profile-link');
+    if (profileLink) profileLink.href = `/hoc-sinh?code=${encodeURIComponent(accessCode)}&v3=1`;
     renderShop();
   }
 
@@ -304,7 +276,8 @@ const mainClass = w1Ssr
     if (code) {
       qs('#shop-code').value = code;
       loadShop().catch((error) => {
-        qs('#shop-error').textContent = error.message;
+        const message = error instanceof Error ? error.message : 'Không thể mở cửa hàng.';
+        qs('#shop-error').textContent = message;
         qs('#shop-error').classList.remove('hidden');
       });
     }
@@ -312,15 +285,117 @@ const mainClass = w1Ssr
 
   qs('#shop-load')?.addEventListener('click', () => {
     loadShop().catch((error) => {
-      qs('#shop-error').textContent = error.message;
+      const message = error instanceof Error ? error.message : 'Không thể mở cửa hàng.';
+      qs('#shop-error').textContent = message;
       qs('#shop-error').classList.remove('hidden');
     });
   });
 </script>
 
 <style>
-  .r2l-shop-name-gold { color: #ffd700; }
-  .r2l-shop-name-ocean { color: #4fd1c5; }
-  .r2l-shop-frame-gold { box-shadow: 0 0 0 3px #ffd700; border-radius: 9999px; }
-  .r2l-shop-frame-rainbow { box-shadow: 0 0 0 3px #a855f7; border-radius: 9999px; }
+  .w2-shop-host :global(.w2-shop-grid) {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    font-family: var(--r2l-font-display, 'Baloo 2 Variable', system-ui, sans-serif);
+  }
+
+  .w2-shop-host :global(.w2-shop-row-title) {
+    color: #f8fafc;
+    font-size: 1.1rem;
+    font-weight: 800;
+    margin: 0 0 0.65rem;
+  }
+
+  .w2-shop-host :global(.w2-shop-row-items) {
+    display: grid;
+    gap: 0.75rem;
+    grid-template-columns: 1fr;
+  }
+
+  .w2-shop-host :global(.w2-shop-item) {
+    align-items: center;
+    background: #0f172a;
+    border: 2px solid rgb(255 255 255 / 0.12);
+    border-radius: var(--r2l-radius-sm, 12px);
+    color: #f8fafc;
+    display: flex;
+    gap: 0.75rem;
+    min-height: 44px;
+    padding: 0.75rem;
+  }
+
+  .w2-shop-host :global(.w2-shop-item[data-rarity='rare']) {
+    border-color: #60a5fa;
+  }
+
+  .w2-shop-host :global(.w2-shop-item[data-rarity='epic']) {
+    border-color: #fbbf24;
+  }
+
+  .w2-shop-host :global(.w2-shop-thumb) {
+    background: linear-gradient(135deg, rgb(255 255 255 / 0.08), rgb(255 255 255 / 0.18));
+    border-radius: 10px;
+    flex-shrink: 0;
+    height: 52px;
+    width: 52px;
+  }
+
+  .w2-shop-host :global(.w2-shop-body) {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .w2-shop-host :global(.w2-shop-name) {
+    font-size: 1rem;
+    font-weight: 700;
+    margin: 0;
+  }
+
+  .w2-shop-host :global(.w2-shop-price) {
+    color: var(--r2l-sun, #ffc83d);
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin: 0.2rem 0 0;
+  }
+
+  .w2-shop-host :global(.w2-shop-buy) {
+    background: var(--r2l-sun, #ffc83d);
+    border: none;
+    border-radius: var(--r2l-radius-sm, 12px);
+    color: var(--r2l-ink, #1e2a4a);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 800;
+    min-height: 44px;
+    min-width: 44px;
+    padding: 0.5rem 0.9rem;
+  }
+
+  .w2-shop-host :global(.w2-shop-buy:disabled) {
+    cursor: not-allowed;
+    opacity: 0.45;
+  }
+
+  .w2-shop-host :global(.w2-shop-owned) {
+    align-items: center;
+    color: var(--r2l-mint, #34d399);
+    display: inline-flex;
+    font-size: 0.9rem;
+    font-weight: 700;
+    min-height: 44px;
+  }
+
+  .w2-shop-host :global(.w2-shop-empty) {
+    color: rgb(248 250 252 / 0.75);
+    margin: 0;
+    min-height: 44px;
+  }
+
+  @media (min-width: 640px) {
+    .w2-shop-host :global(.w2-shop-row-items) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
 </style>
