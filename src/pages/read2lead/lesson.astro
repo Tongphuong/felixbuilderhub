@@ -1022,6 +1022,7 @@ function _r2lBuildRetellTemplate(lesson) {
     }
     _r2lUpdateActiveHeroMood('celebrate');
     window.__r2lJuice?.playSynthTone?.('correct', _r2lSfxState.muted);
+    window.__r2lJuice?.showComboBadge?.(_itemStreak >= 6 ? 3 : _itemStreak >= 3 ? 2 : 1);
     showReward({ mode: 'mini' });
   }
 
@@ -2406,6 +2407,7 @@ function _r2lBuildRetellTemplate(lesson) {
     }
     window.__r2lJuice?.playSynthTone?.('coin', _r2lSfxState.muted);
     window.__r2lJuice?.fireLessonPassConfetti?.();
+    window.__r2lJuice?.showXpTicker?.(Number(rewards.xp || 0), '#completion-card');
     if (_r2lTriviaState.pendingLevelUp) {
       window.__r2lJuice?.playSynthTone?.('level-up', _r2lSfxState.muted);
       playSfxSequence([SFX.packComplete, SFX.levelUp], 700);
@@ -5278,6 +5280,8 @@ function _r2lBuildRetellTemplate(lesson) {
       _r2lTriviaState.pendingLevelUp = data.level_up || null;
       _r2lTriviaState.pendingRankUp = data.rank_up || null;
       _r2lTriviaState.pendingRankLadder = data.read2lead_state?.rank_ladder || null;
+      void window.__r2lJuice?.openChest?.(data.pending_chest);
+      if (data.read2lead_state?.rank_ladder?.stars_to_next === 1) window.__r2lJuice?.showNearMissBanner?.(`Còn 1 sao nữa là lên ${data.read2lead_state.rank_ladder.next_label_vi}!`);
 
       if (_r2lMaybeRevealTriviaSecret(scorePercent)) {
         qs('#submit-hint').textContent = 'Con đã mở khóa bí mật sau truyện!';
@@ -5357,7 +5361,7 @@ function _r2lBuildRetellTemplate(lesson) {
   import { applyHeaderMonsterAvatar } from '../../lib/monster-avatar';
   import { calculateLessonScore as calcLessonScore, questionPoints } from '../../scripts/r2l-lesson-scoring.mjs';
   import { writtenModelAnswer } from '../../scripts/r2l-written-model-answer.mjs';
-  import { fireLessonPassConfetti, fireStreakConfetti, playSynthTone } from '../../lib/lesson-juice';
+  import { claimDailyChest, fireLessonPassConfetti, fireStreakConfetti, isMuted, openChest, playKenney, playSynthTone, setMuted, showComboBadge, showNearMissBanner, showXpTicker } from '../../lib/lesson-juice';
   import { bindRankUpModalClose, showRankUpModal } from '../../lib/rank-up-celebration';
   import type { RankLadderView } from '../../lib/rank-ladder-ui';
 
@@ -5370,6 +5374,7 @@ function _r2lBuildRetellTemplate(lesson) {
     playSynthTone,
     fireStreakConfetti,
     fireLessonPassConfetti,
+    playKenney, showXpTicker, showComboBadge, openChest, showNearMissBanner, setMuted, isMuted, claimDailyChest,
   };
 
   window.__r2lV3 = {

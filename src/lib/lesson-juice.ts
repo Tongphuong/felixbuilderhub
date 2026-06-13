@@ -1,4 +1,8 @@
+import type { PendingChest } from './lesson-result-chest';
+
 type SynthTone = 'correct' | 'wrong' | 'coin' | 'level-up';
+
+let nearMissTimer: number | undefined;
 
 function prefersReducedMotion() {
   return typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -58,4 +62,107 @@ export async function fireLessonPassConfetti() {
     origin: { y: 0.6 },
     colors: ['#ffd700', '#4ade80', '#5b8def', '#ffffff'],
   });
+}
+
+export async function playKenney(name: string): Promise<void> {
+  try {
+    const { play } = await import('./r2l-audio');
+    await play(name);
+  } catch {
+    /* optional audio */
+  }
+}
+
+export function showXpTicker(xpDelta: number, anchorSelector: string): void {
+  if (typeof document === 'undefined' || !Number.isFinite(xpDelta) || xpDelta <= 0) return;
+  const anchor = document.querySelector(anchorSelector);
+  if (!anchor) return;
+
+  const ticker = document.createElement('span');
+  ticker.className = 'w2-xp-ticker';
+  ticker.textContent = `+${Math.round(xpDelta)} XP`;
+  ticker.setAttribute('role', 'status');
+  ticker.dataset.visible = 'false';
+  anchor.appendChild(ticker);
+  requestAnimationFrame(() => {
+    ticker.dataset.visible = 'true';
+  });
+  window.setTimeout(() => ticker.remove(), 1800);
+}
+
+export function showComboBadge(level: 1 | 2 | 3): void {
+  if (typeof document === 'undefined') return;
+  const counter = document.querySelector<HTMLElement>('.w2-combo-counter');
+  if (!counter) return;
+  const normalizedLevel = level >= 3 ? 3 : level >= 2 ? 2 : 1;
+  counter.dataset.level = String(normalizedLevel);
+  counter.dataset.visible = String(normalizedLevel > 1);
+  counter.setAttribute('aria-hidden', String(normalizedLevel === 1));
+
+  let badge = counter.querySelector<HTMLElement>('.w2-combo-badge');
+  if (normalizedLevel > 1 && !badge) {
+    badge = document.createElement('div');
+    badge.className = 'w2-combo-badge';
+    counter.appendChild(badge);
+  }
+  if (badge) badge.textContent = `x${normalizedLevel} COMBO`;
+}
+
+export async function openChest(pendingChest: PendingChest): Promise<void> {
+  const { openChest: driveChest } = await import('./lesson-result-chest');
+  await driveChest(pendingChest);
+}
+
+export function showNearMissBanner(text: string): void {
+  if (typeof document === 'undefined' || !text) return;
+  let banner = document.querySelector<HTMLElement>('.w2-nearmiss-banner');
+  if (!banner) {
+    banner = document.createElement('div');
+    banner.className = 'w2-nearmiss-banner';
+    banner.setAttribute('role', 'status');
+    banner.setAttribute('aria-live', 'polite');
+    const message = document.createElement('span');
+    message.className = 'w2-nearmiss-text';
+    banner.appendChild(message);
+    document.body.appendChild(banner);
+  }
+  const message = banner.querySelector<HTMLElement>('.w2-nearmiss-text');
+  if (message) message.textContent = text;
+  banner.dataset.visible = 'true';
+  if (nearMissTimer) window.clearTimeout(nearMissTimer);
+  nearMissTimer = window.setTimeout(() => {
+    if (banner) banner.dataset.visible = 'false';
+    nearMissTimer = undefined;
+  }, 3000);
+}
+
+export function setMuted(muted: boolean): void {
+  try {
+    localStorage.setItem('r2l-w2-muted', muted ? '1' : '0');
+  } catch {
+    /* storage can be blocked */
+  }
+  void import('./r2l-audio')
+    .then(({ setMuted: setAudioMuted }) => setAudioMuted(muted))
+    .catch(() => {});
+}
+
+export function isMuted(): boolean {
+  try {
+    return localStorage.getItem('r2l-w2-muted') === '1';
+  } catch {
+    return false;
+  }
+}
+
+export async function claimDailyChest(): Promise<{ ok: boolean; reward?: { coins: number } }> {
+  try {
+    const response = await fetch('/api/read2lead-daily-chest-claim', { method: 'POST' });
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok || !data?.ok) return { ok: false };
+    await playKenney('daily-chest-claim');
+    return { ok: true, ...(data.reward ? { reward: data.reward } : {}) };
+  } catch {
+    return { ok: false };
+  }
 }
