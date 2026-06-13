@@ -24,7 +24,7 @@ export function partThumbnailUrl(partId: string): string | undefined {
   const segments = match[1].split('-');
   if (segments.length < 2) return undefined;
   const fileName = `${segments.join('_')}.png`;
-  return `/assets/monsters/PNG/Default/${fileName}`;
+  return `/assets/monsters/raw/PNG/Default/${fileName}`;
 }
 
 export async function buyPart(

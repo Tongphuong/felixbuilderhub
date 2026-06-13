@@ -14,6 +14,9 @@ const COLOR_VI = {
   yellow: 'vàng',
   pink: 'hồng',
   purple: 'tím',
+  white: 'trắng',
+  black: 'đen',
+  orange: 'cam',
 };
 
 const KIND_VI = {
