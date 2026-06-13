@@ -1,0 +1,83 @@
+---
+import { rarityLabelVi, RARITY_COLORS } from '../../../../functions/api/_read2lead-chests.js';
+
+export interface Props {
+  rarity: 'common' | 'rare' | 'epic';
+  size?: 'small' | 'large';
+}
+
+const { rarity, size = 'small' } = Astro.props;
+const label = rarityLabelVi(rarity);
+const color = RARITY_COLORS[rarity];
+---
+
+<span
+  class:list={['r-badge', `r-badge-${size}`]}
+  data-rarity={rarity}
+  style={`--badge-color: ${color}`}
+>
+  {rarity === 'epic' && <span class="r-sparkle" aria-hidden="true">✨</span>}
+  <span class="r-label">{label}</span>
+</span>
+
+<style>
+  .r-badge {
+    align-items: center;
+    background: color-mix(in srgb, var(--badge-color) 18%, #0f172a);
+    border: 2px solid var(--badge-color);
+    border-radius: 999px;
+    color: #f8fafc;
+    display: inline-flex;
+    font-family: var(--r2l-font-display, 'Baloo 2 Variable', system-ui, sans-serif);
+    font-weight: 800;
+    gap: 0.25rem;
+    min-height: 44px;
+    padding: 0.35rem 0.7rem;
+  }
+
+  .r-badge-large {
+    font-size: 1rem;
+    min-height: 64px;
+    padding: 0.5rem 1rem;
+  }
+
+  .r-badge-small {
+    font-size: 0.8rem;
+    min-height: 44px;
+  }
+
+  .r-badge[data-rarity='rare'] {
+    animation: r-badge-fade-in 0.45s ease-out;
+    box-shadow: 0 0 10px color-mix(in srgb, var(--badge-color) 45%, transparent);
+  }
+
+  .r-badge[data-rarity='epic'] {
+    animation: r-badge-glow 1.6s ease-in-out infinite;
+    box-shadow: 0 0 14px color-mix(in srgb, var(--badge-color) 55%, transparent);
+  }
+
+  .r-sparkle {
+    font-size: 1rem;
+  }
+
+  @keyframes r-badge-fade-in {
+    from {
+      opacity: 0.4;
+      transform: translateY(4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes r-badge-glow {
+    0%,
+    100% {
+      box-shadow: 0 0 10px color-mix(in srgb, var(--badge-color) 40%, transparent);
+    }
+    50% {
+      box-shadow: 0 0 18px color-mix(in srgb, var(--badge-color) 70%, transparent);
+    }
+  }
+</style>

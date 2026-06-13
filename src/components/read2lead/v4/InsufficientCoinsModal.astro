@@ -1,0 +1,74 @@
+---
+export interface Props {
+  coins_needed: number;
+  current_coins: number;
+}
+
+const { coins_needed, current_coins } = Astro.props;
+const deficit = Math.max(0, coins_needed - current_coins);
+---
+
+<dialog class="insufficient-modal" data-deficit={deficit}>
+  <div class="insufficient-emoji" aria-hidden="true">😊</div>
+  <h2 class="insufficient-title">Còn thiếu {deficit} xu</h2>
+  <p>Học 1 bài là có ngay xu nha!</p>
+  <button class="insufficient-go-learn" type="button">Đi học</button>
+  <button class="insufficient-close" type="button">Để sau</button>
+</dialog>
+
+<style>
+  .insufficient-modal {
+    background: #0f172a;
+    border: 3px solid var(--r2l-sun, #ffc83d);
+    border-radius: var(--r2l-radius, 20px);
+    color: #f8fafc;
+    font-family: var(--r2l-font-display, 'Baloo 2 Variable', system-ui, sans-serif);
+    margin: auto;
+    max-width: 20rem;
+    padding: 1.25rem;
+    text-align: center;
+    width: calc(100% - 2rem);
+  }
+
+  .insufficient-modal::backdrop {
+    background: rgb(15 23 42 / 0.7);
+  }
+
+  .insufficient-emoji {
+    font-size: 2.5rem;
+  }
+
+  .insufficient-title {
+    font-size: 1.2rem;
+    margin: 0.5rem 0 0.35rem;
+  }
+
+  .insufficient-modal p {
+    margin: 0 0 1rem;
+  }
+
+  .insufficient-go-learn,
+  .insufficient-close {
+    border: none;
+    border-radius: var(--r2l-radius-sm, 12px);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 800;
+    min-height: 64px;
+    min-width: 64px;
+    padding: 0.65rem 1rem;
+    width: 100%;
+  }
+
+  .insufficient-go-learn {
+    background: var(--r2l-sun, #ffc83d);
+    color: var(--r2l-ink, #1e2a4a);
+    margin-bottom: 0.5rem;
+  }
+
+  .insufficient-close {
+    background: rgb(255 255 255 / 0.12);
+    color: #f8fafc;
+  }
+</style>
