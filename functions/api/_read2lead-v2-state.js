@@ -11,6 +11,19 @@ import {
   seasonRewardCoins,
   tierStartRp,
 } from './_read2lead-seasons.js';
+import {
+  QUEST_DEFS,
+  QUEST_IDS,
+  pickDailyQuestIds,
+  questCompleted,
+  questDeltasForEvent,
+  questReward,
+} from './_read2lead-quests.js';
+import {
+  autoConvertDuplicate,
+  chestPreviewText,
+  rollChest,
+} from './_read2lead-chests.js';
 
 export { MONSTER_COLORS, MONSTER_MANIFEST, MONSTER_SLOTS };
 
@@ -90,6 +103,11 @@ export const LEVEL_GATE_HINT_VI =
   'Sắp lên Level rồi! Con luyện thêm cho điểm trung bình đạt 70% nhé.';
 
 const RANK_APEX_THRESHOLD = rankApexThreshold();
+const CHEST_HISTORY_LIMIT = 50;
+const COMBO_XU_CAP_PER_PACK = 5;
+const DAILY_LOGIN_CHEST_BASE = 5;
+const DAILY_LOGIN_CHEST_PER_STREAK = 2;
+const DAILY_LOGIN_CHEST_MAX_STREAK = 10;
 
 export function rankRpFromScore(scorePercent) {
   const score = Number(scorePercent);
@@ -529,6 +547,75 @@ export async function saveProgressState(env, accessCode, state) {
   return next;
 }
 
+function clampInt(value, low, high) {
+  const parsed = Math.floor(Number(value) || 0);
+  return Math.min(high, Math.max(low, parsed));
+}
+
+function normalizeDailyQuests(raw, accessCode, todayKey) {
+  if (!raw || raw.date !== todayKey) {
+    const ids = pickDailyQuestIds(todayKey, accessCode);
+    const progress = {};
+    const claimed = {};
+    for (const id of ids) {
+      progress[id] = 0;
+      claimed[id] = false;
+    }
+    return { date: todayKey, ids, progress, claimed };
+  }
+
+  const validIds = Array.isArray(raw.ids)
+    ? raw.ids.filter((id) => QUEST_IDS.includes(id)).slice(0, 3)
+    : [];
+  if (validIds.length !== 3 || new Set(validIds).size !== 3) {
+    return normalizeDailyQuests(null, accessCode, todayKey);
+  }
+
+  const progress = {};
+  const claimed = {};
+  for (const id of validIds) {
+    progress[id] = clampInt(raw.progress?.[id] ?? 0, 0, 999);
+    claimed[id] = Boolean(raw.claimed?.[id]);
+  }
+  return { date: raw.date, ids: validIds, progress, claimed };
+}
+
+function normalizePendingChest(raw) {
+  if (!raw || typeof raw !== 'object') return null;
+  if (!['common', 'rare', 'epic'].includes(raw.rarity)) return null;
+  return {
+    rarity: raw.rarity,
+    reward: {
+      coins: numberOrZero(raw.reward?.coins),
+      part_id: raw.reward?.part_id ? String(raw.reward.part_id) : null,
+      ...(raw.reward?.part_name ? { part_name: String(raw.reward.part_name) } : {}),
+    },
+    duplicate: Boolean(raw.duplicate),
+    awarded_at: raw.awarded_at || null,
+  };
+}
+
+function normalizeChestHistory(raw) {
+  if (!Array.isArray(raw)) return [];
+  return raw
+    .filter((entry) => entry && ['common', 'rare', 'epic'].includes(entry.rarity))
+    .slice(-CHEST_HISTORY_LIMIT)
+    .map((entry) => ({
+      opened_at: entry.opened_at || null,
+      rarity: entry.rarity,
+      reward: {
+        coins: numberOrZero(entry.reward?.coins),
+        part_id: entry.reward?.part_id || null,
+      },
+      duplicate: Boolean(entry.duplicate),
+    }));
+}
+
+function normalizeDailyLoginChest(raw) {
+  if (!raw || typeof raw !== 'object') return { last_claim_date: null };
+  return { last_claim_date: raw.last_claim_date || null };
+}
+
 export function normalizeProgressState(raw, { accessCode, codeData = null, nowIso = new Date().toISOString() } = {}) {
   const profile = codeData?.student_profile || {};
   const legacyProgress = codeData?.progress || {};
@@ -591,6 +678,14 @@ export function normalizeProgressState(raw, { accessCode, codeData = null, nowIs
     badges: Array.isArray(raw?.badges) ? raw.badges : [],
     inventory: normalizeInventory(raw?.inventory),
     equipped: normalizeEquipped(raw?.equipped),
+    daily_quests: normalizeDailyQuests(raw?.daily_quests, accessCode, vietnamDateKey(nowIso)),
+    pending_chest: normalizePendingChest(raw?.pending_chest),
+    chest_history: normalizeChestHistory(raw?.chest_history),
+    daily_login_chest: normalizeDailyLoginChest(raw?.daily_login_chest),
+    combo_lifetime_xu: numberOrZero(raw?.combo_lifetime_xu),
+    unlocked_parts: Array.isArray(raw?.unlocked_parts)
+      ? Array.from(new Set(raw.unlocked_parts.filter(Boolean).map(String)))
+      : [],
     avatar: {
       enabled: true,
       preset_id: raw?.avatar?.preset_id || null,
@@ -603,6 +698,203 @@ export function normalizeProgressState(raw, { accessCode, codeData = null, nowIs
   };
   const withSeason = migrateSeasonFields(refreshBadges(base), nowIso);
   return rolloverSeasonState(withSeason, nowIso);
+}
+
+export function getDailyQuestsView(state, dateKey, accessCode) {
+  const dailyQuests = normalizeDailyQuests(state?.daily_quests, accessCode, dateKey);
+  const pendingChest = normalizePendingChest(state?.pending_chest);
+  return {
+    date: dailyQuests.date,
+    quests: dailyQuests.ids.map((id) => ({
+      id,
+      label_vi: QUEST_DEFS[id].label_vi,
+      target: QUEST_DEFS[id].target,
+      progress: dailyQuests.progress[id] || 0,
+      reward_coins: QUEST_DEFS[id].reward.coins,
+      reward_rp: QUEST_DEFS[id].reward.rp || 0,
+      claimed: Boolean(dailyQuests.claimed[id]),
+      complete: questCompleted(id, dailyQuests.progress[id] || 0),
+    })),
+    pending_chest: pendingChest
+      ? { ...pendingChest, preview_text: chestPreviewText(pendingChest.rarity) }
+      : null,
+  };
+}
+
+export function applyQuestProgress(state, eventName, params, dateKey, accessCode) {
+  const dailyQuests = normalizeDailyQuests(state?.daily_quests, accessCode, dateKey);
+  const deltas = questDeltasForEvent(eventName, params || {}, dailyQuests.ids);
+  const progress = { ...dailyQuests.progress };
+  for (const { questId, delta } of deltas) {
+    const target = QUEST_DEFS[questId]?.target ?? 0;
+    progress[questId] = Math.min(target, (progress[questId] || 0) + delta);
+  }
+  return {
+    ...state,
+    daily_quests: {
+      ...dailyQuests,
+      progress,
+    },
+  };
+}
+
+export function claimQuestReward(state, questId, dateKey, accessCode) {
+  const dailyQuests = normalizeDailyQuests(state?.daily_quests, accessCode, dateKey);
+  if (!dailyQuests.ids.includes(questId)) {
+    return { state, error: 'quest_not_active_today' };
+  }
+  if (dailyQuests.claimed[questId]) {
+    return { state, error: 'already_claimed' };
+  }
+  if (!questCompleted(questId, dailyQuests.progress[questId] || 0)) {
+    return { state, error: 'not_complete' };
+  }
+
+  const reward = questReward(questId);
+  let nextState = {
+    ...state,
+    coins: numberOrZero(state?.coins) + reward.coins,
+    daily_quests: {
+      ...dailyQuests,
+      claimed: {
+        ...dailyQuests.claimed,
+        [questId]: true,
+      },
+    },
+  };
+  if (reward.rp > 0) {
+    nextState = applyQuestRpBonus(nextState, reward.rp);
+  }
+  return { state: nextState, reward };
+}
+
+function applyQuestRpBonus(state, rpBonus) {
+  const lifetimeRp = numberOrZero(state?.lifetime_rp ?? state?.rank_points) + rpBonus;
+  const seasonRp = numberOrZero(state?.season?.rp) + rpBonus;
+  return {
+    ...state,
+    lifetime_rp: lifetimeRp,
+    rank_points: lifetimeRp,
+    season: {
+      ...(state.season || {}),
+      rp: seasonRp,
+    },
+  };
+}
+
+export function awardPendingChest(state, { passed } = {}, rngFn = Math.random) {
+  if (!passed || state?.pending_chest) return state;
+  const rawChest = rollChest(rngFn);
+  const ownedParts = new Set(state?.unlocked_parts || []);
+  const finalChest = autoConvertDuplicate(rawChest, ownedParts);
+  return {
+    ...state,
+    pending_chest: {
+      rarity: finalChest.rarity,
+      reward: finalChest.reward,
+      duplicate: finalChest.duplicate,
+      awarded_at: new Date().toISOString(),
+    },
+  };
+}
+
+export function consumePendingChest(state, dateKey, accessCode) {
+  if (!state?.pending_chest) {
+    return { state, error: 'no_pending_chest' };
+  }
+
+  const chest = normalizePendingChest(state.pending_chest);
+  if (!chest) {
+    return { state: { ...state, pending_chest: null }, error: 'no_pending_chest' };
+  }
+  let unlockedParts = Array.isArray(state.unlocked_parts) ? state.unlocked_parts : [];
+  if (chest.reward.part_id && !chest.duplicate && !unlockedParts.includes(chest.reward.part_id)) {
+    unlockedParts = [...unlockedParts, chest.reward.part_id];
+  }
+  const historyEntry = {
+    opened_at: new Date().toISOString(),
+    rarity: chest.rarity,
+    reward: {
+      coins: chest.reward.coins,
+      part_id: chest.duplicate ? null : chest.reward.part_id,
+    },
+    duplicate: chest.duplicate,
+  };
+  const chestHistory = [
+    ...(Array.isArray(state.chest_history) ? state.chest_history : []),
+    historyEntry,
+  ].slice(-CHEST_HISTORY_LIMIT);
+  let nextState = {
+    ...state,
+    coins: numberOrZero(state.coins) + chest.reward.coins,
+    unlocked_parts: unlockedParts,
+    chest_history: chestHistory,
+    pending_chest: null,
+  };
+  nextState = applyQuestProgress(nextState, 'chest_opened', { rarity: chest.rarity }, dateKey, accessCode);
+  return {
+    state: nextState,
+    reward: {
+      coins: chest.reward.coins,
+      part_id: chest.duplicate ? null : chest.reward.part_id,
+      duplicate: chest.duplicate,
+      rarity: chest.rarity,
+    },
+  };
+}
+
+export function claimDailyLoginChest(state, dateKey) {
+  const dailyLoginChest = normalizeDailyLoginChest(state?.daily_login_chest);
+  if (dailyLoginChest.last_claim_date === dateKey) {
+    return { state, error: 'already_claimed_today' };
+  }
+  const streak = clampInt(state?.streak_days, 0, 999);
+  const cappedStreak = Math.min(streak, DAILY_LOGIN_CHEST_MAX_STREAK);
+  const coins = DAILY_LOGIN_CHEST_BASE + DAILY_LOGIN_CHEST_PER_STREAK * cappedStreak;
+  return {
+    state: {
+      ...state,
+      coins: numberOrZero(state?.coins) + coins,
+      daily_login_chest: { last_claim_date: dateKey },
+    },
+    reward: {
+      coins,
+      formula: {
+        base: DAILY_LOGIN_CHEST_BASE,
+        per_streak: DAILY_LOGIN_CHEST_PER_STREAK,
+        streak_used: cappedStreak,
+      },
+    },
+  };
+}
+
+export function recordComboBonus(state, comboXuRequested) {
+  const capped = clampInt(comboXuRequested, 0, COMBO_XU_CAP_PER_PACK);
+  if (capped === 0) return state;
+  return {
+    ...state,
+    coins: numberOrZero(state?.coins) + capped,
+    combo_lifetime_xu: numberOrZero(state?.combo_lifetime_xu) + capped,
+  };
+}
+
+export function previewDailyLoginChest(state, dateKey) {
+  const dailyLoginChest = normalizeDailyLoginChest(state?.daily_login_chest);
+  const available = dailyLoginChest.last_claim_date !== dateKey;
+  const streak = clampInt(state?.streak_days, 0, 999);
+  const cappedStreak = Math.min(streak, DAILY_LOGIN_CHEST_MAX_STREAK);
+  return {
+    available,
+    coins: DAILY_LOGIN_CHEST_BASE + DAILY_LOGIN_CHEST_PER_STREAK * cappedStreak,
+    next_claim_date: available ? null : addDaysToDateKey(dailyLoginChest.last_claim_date, 1),
+  };
+}
+
+function addDaysToDateKey(dateKey, days) {
+  if (!dateKey) return null;
+  const date = new Date(`${dateKey}T00:00:00.000Z`);
+  date.setUTCDate(date.getUTCDate() + days);
+  return date.toISOString().slice(0, 10);
 }
 
 export function applyPackCompletion(
