@@ -1,4 +1,5 @@
 import type { MonsterSlot } from './monster-manifest';
+import hornPivotData from '../../public/assets/monsters/horn-pivots.json' with { type: 'json' };
 
 /** Kenney Default single-monster coordinate space (body_blueA = 165×165). */
 export const KENNEY_CANVAS = { w: 165, h: 165 } as const;
@@ -20,6 +21,9 @@ export type SlotRegion = {
 export type PartAnchor = {
   anchorX: number;
   anchorY: number;
+  /** Measured source-image pivot to pin to the anchor. Defaults to image center. */
+  sourcePivotX?: number;
+  sourcePivotY?: number;
   maxScale?: number;
   /** Shrink to fit canvas (arms C/D, tall bodies). */
   canvasFit?: boolean;
@@ -57,6 +61,16 @@ export function bodyBoxFromFile(bodyFile: string, canvas = KENNEY_CANVAS): BodyB
 }
 
 const FULL_CANVAS_BOX: BodyBox = { x: 0, y: 0, w: KENNEY_CANVAS.w, h: KENNEY_CANVAS.h };
+
+export type HornPivot = {
+  file: string;
+  pivot_x_frac: number;
+  pivot_y_frac: number;
+  width_frac: number;
+};
+
+export const HORN_PIVOTS = hornPivotData as Record<string, HornPivot>;
+export const HORN_CONTACT_INSET_PX = 4;
 
 export type PartPlacement = {
   leftPct: number;
@@ -217,7 +231,18 @@ export function resolvePartAnchor(
 
   const base = partBasename(partFile);
   if (base.includes('ear')) return at(20 / 165, 56 / 165, 1, 0.42);
-  if (base.includes('horn')) return at(0.5, 10 / 165, 0.85, 0.9);
+  if (base.includes('horn')) {
+    const pivot = HORN_PIVOTS[base];
+    if (!pivot) return at(0.5, 10 / 165, 0.85, 0.9);
+    return {
+      anchorX: cx,
+      anchorY: box.y + HORN_CONTACT_INSET_PX,
+      sourcePivotX: pivot.pivot_x_frac * KENNEY_CANVAS.w,
+      sourcePivotY: pivot.pivot_y_frac * KENNEY_CANVAS.h,
+      maxScale: 0.85,
+      maxWidthPx: pivot.width_frac * 1.05 * box.w,
+    };
+  }
   if (base.includes('antenna')) return at(0.5, 10 / 165, 1, 0.9);
   if (base.startsWith('eyebrow')) return at(0.5, 38 / 165, 0.9, 0.86);
   if (base.startsWith('nose') || base.startsWith('snot')) return at(0.5, 72 / 165, 0.9, 0.6);
@@ -260,12 +285,12 @@ export function computeAnchoredPlacement(
   if (anchor.maxWidthPx != null) {
     scale = Math.min(scale, anchor.maxWidthPx / nw);
   }
-  const cx = nw / 2;
-  const cy = nh / 2;
+  const pivotX = anchor.sourcePivotX ?? nw / 2;
+  const pivotY = anchor.sourcePivotY ?? nh / 2;
   const pw = nw * scale;
   const ph = nh * scale;
-  const px = anchor.anchorX - cx * scale;
-  const py = anchor.anchorY - cy * scale;
+  const px = anchor.anchorX - pivotX * scale;
+  const py = anchor.anchorY - pivotY * scale;
 
   return {
     leftPct: (px / canvas.w) * 100,
