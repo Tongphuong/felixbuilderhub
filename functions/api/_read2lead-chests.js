@@ -1,4 +1,4 @@
-import geometryManifest from '../../public/assets/monsters/monster-parts.json' with { type: 'json' };
+import geometryManifest from './_monster-parts-data.mjs';
 
 export const CHEST_ODDS = {
   common: 0.70,
