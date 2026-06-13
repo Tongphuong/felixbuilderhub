@@ -10,5 +10,8 @@ Note/.obsidian/
 
 # Agent / debug artifacts
 debug-*.log
+.codex-dev-*.log
+.wrangler/
+_worker.bundle
 _claude/
 public/assets/monsters/_qa-*.png
