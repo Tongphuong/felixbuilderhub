@@ -1,0 +1,104 @@
+---
+export interface Props {
+  id: string;
+  rarity: 'rare' | 'epic';
+  price: number;
+  name: string;
+  owned: boolean;
+  can_afford: boolean;
+}
+
+const { id, rarity, price, name, owned, can_afford } = Astro.props;
+---
+
+<article class="w2-shop-item" data-part-id={id} data-rarity={rarity} data-owned={owned}>
+  <div class="w2-shop-thumb" aria-hidden="true" />
+  <div class="w2-shop-body">
+    <h3 class="w2-shop-name">{name}</h3>
+    <p class="w2-shop-price">🪙 {price}</p>
+  </div>
+  {owned ? (
+    <span class="w2-shop-owned">✓ Có rồi</span>
+  ) : (
+    <button class="w2-shop-buy" type="button" data-buy-part={id} disabled={!can_afford}>
+      Mua
+    </button>
+  )}
+</article>
+
+<style>
+  .w2-shop-item {
+    align-items: center;
+    background: #0f172a;
+    border: 2px solid rgb(255 255 255 / 0.12);
+    border-radius: var(--r2l-radius-sm, 12px);
+    color: #f8fafc;
+    display: flex;
+    font-family: var(--r2l-font-display, 'Baloo 2 Variable', system-ui, sans-serif);
+    gap: 0.75rem;
+    min-height: 44px;
+    padding: 0.75rem;
+  }
+
+  .w2-shop-item[data-rarity='rare'] {
+    border-color: #60a5fa;
+  }
+
+  .w2-shop-item[data-rarity='epic'] {
+    border-color: #fbbf24;
+  }
+
+  .w2-shop-thumb {
+    background: linear-gradient(135deg, rgb(255 255 255 / 0.08), rgb(255 255 255 / 0.18));
+    border-radius: 10px;
+    flex-shrink: 0;
+    height: 52px;
+    width: 52px;
+  }
+
+  .w2-shop-body {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .w2-shop-name {
+    font-size: 1rem;
+    font-weight: 700;
+    margin: 0;
+  }
+
+  .w2-shop-price {
+    color: var(--r2l-sun, #ffc83d);
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin: 0.2rem 0 0;
+  }
+
+  .w2-shop-buy {
+    background: var(--r2l-sun, #ffc83d);
+    border: none;
+    border-radius: var(--r2l-radius-sm, 12px);
+    color: var(--r2l-ink, #1e2a4a);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 800;
+    min-height: 44px;
+    min-width: 44px;
+    padding: 0.5rem 0.9rem;
+  }
+
+  .w2-shop-buy:disabled {
+    cursor: not-allowed;
+    opacity: 0.45;
+  }
+
+  .w2-shop-owned {
+    color: var(--r2l-mint, #34d399);
+    font-size: 0.9rem;
+    font-weight: 700;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+</style>
