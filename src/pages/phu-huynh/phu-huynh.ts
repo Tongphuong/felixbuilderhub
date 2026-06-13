@@ -20,6 +20,28 @@ type LessonPayload = {
   };
 };
 
+type PortfolioEntry = {
+  id: string;
+  ts?: string;
+  size?: number;
+  content_type?: string;
+  title?: string;
+  note_vi?: string;
+  parent_seen_at?: string | null;
+  reactions?: {
+    heart?: number;
+    clap?: number;
+    strong?: number;
+  };
+  video_url?: string;
+};
+
+type PortfolioPayload = {
+  ok?: boolean;
+  message?: string;
+  items?: PortfolioEntry[];
+};
+
 function qs<T extends Element = Element>(sel: string) {
   return document.querySelector<T>(sel);
 }
@@ -127,7 +149,150 @@ function renderStoryList(storyProgress: Record<string, unknown>) {
     .join('');
 }
 
-function renderDashboard(data: ProgressPayload, lesson: LessonPayload['lesson'] | null, code: string) {
+function formatPortfolioDate(value: unknown) {
+  const date = new Date(String(value || ''));
+  if (Number.isNaN(date.getTime())) return '';
+  return new Intl.DateTimeFormat('vi-VN', {
+    day: '2-digit',
+    month: '2-digit',
+  }).format(date);
+}
+
+function reactionCount(item: PortfolioEntry, kind: 'heart' | 'clap' | 'strong') {
+  return Math.min(99, Math.max(0, Number(item.reactions?.[kind]) || 0));
+}
+
+function renderPortfolioSection(items: PortfolioEntry[], loadFailed: boolean) {
+  let content = '';
+  if (loadFailed) {
+    content = '<p class="parent-muted">Chưa tải được video. Vui lòng thử lại sau ít phút.</p>';
+  } else if (!items.length) {
+    content = '<p class="parent-muted">Chưa có video nào. Thầy sẽ gửi video và nhận xét sau buổi học nhé.</p>';
+  } else {
+    content = items
+      .map((item) => {
+        const id = escapeHtml(item.id);
+        return `
+          <article id="video-${id}" class="parent-video-card" data-portfolio-card="${id}">
+            <div class="flex items-start justify-between gap-3">
+              <h3 class="font-semibold text-[#1e2a4a]">${escapeHtml(item.title || 'Video buổi học')}</h3>
+              <time class="parent-muted shrink-0 text-xs" datetime="${escapeHtml(item.ts || '')}">${escapeHtml(formatPortfolioDate(item.ts))}</time>
+            </div>
+            <video
+              class="parent-video mt-3"
+              controls
+              playsinline
+              preload="metadata"
+              src="${escapeHtml(item.video_url || '')}"
+              data-portfolio-id="${id}"
+            ></video>
+            ${
+              item.note_vi
+                ? `<p class="mt-3 text-sm leading-relaxed text-[#1e2a4a]">${escapeHtml(item.note_vi)}</p>`
+                : ''
+            }
+            <div class="parent-reactions mt-3" aria-label="Gửi cảm xúc">
+              <button type="button" class="parent-reaction" data-reaction-kind="heart" data-portfolio-id="${id}" aria-label="Thả tim">
+                <span aria-hidden="true">❤️</span>
+                <span data-reaction-count="heart">${reactionCount(item, 'heart')}</span>
+              </button>
+              <button type="button" class="parent-reaction" data-reaction-kind="clap" data-portfolio-id="${id}" aria-label="Vỗ tay">
+                <span aria-hidden="true">👏</span>
+                <span data-reaction-count="clap">${reactionCount(item, 'clap')}</span>
+              </button>
+              <button type="button" class="parent-reaction" data-reaction-kind="strong" data-portfolio-id="${id}" aria-label="Cố lên">
+                <span aria-hidden="true">💪</span>
+                <span data-reaction-count="strong">${reactionCount(item, 'strong')}</span>
+              </button>
+            </div>
+          </article>
+        `;
+      })
+      .join('');
+  }
+
+  return `
+    <section class="parent-section" data-portfolio-section>
+      <h2 class="parent-section__title">🎬 Video & nhận xét của thầy</h2>
+      <div class="space-y-4">${content}</div>
+      <p class="parent-portfolio-status parent-muted mt-3 hidden text-xs" aria-live="polite"></p>
+    </section>
+  `;
+}
+
+function attachPortfolioInteractions(root: Element, code: string) {
+  const seenIds = new Set<string>();
+  root.querySelectorAll<HTMLVideoElement>('video[data-portfolio-id]').forEach((video) => {
+    video.addEventListener(
+      'play',
+      () => {
+        const id = video.dataset.portfolioId || '';
+        if (!id || seenIds.has(id)) return;
+        seenIds.add(id);
+        void fetch('/api/parent/portfolio-seen', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ code, id }),
+          keepalive: true,
+        }).catch(() => {
+          seenIds.delete(id);
+        });
+      },
+      { once: true },
+    );
+  });
+
+  root.querySelectorAll<HTMLButtonElement>('button[data-reaction-kind]').forEach((button) => {
+    button.addEventListener('click', async () => {
+      const id = button.dataset.portfolioId || '';
+      const kind = button.dataset.reactionKind as 'heart' | 'clap' | 'strong' | undefined;
+      const count = button.querySelector<HTMLElement>(`[data-reaction-count="${kind || ''}"]`);
+      if (!id || !kind || !count || button.disabled) return;
+
+      const previous = Math.min(99, Math.max(0, Number(count.textContent) || 0));
+      count.textContent = String(Math.min(99, previous + 1));
+      button.disabled = true;
+
+      try {
+        const response = await fetch('/api/parent/portfolio-react', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ code, id, kind }),
+        });
+        const payload = (await response.json()) as {
+          ok?: boolean;
+          reactions?: Record<string, number>;
+        };
+        if (!response.ok || !payload.ok) throw new Error('reaction_failed');
+        count.textContent = String(Math.min(99, Math.max(0, Number(payload.reactions?.[kind]) || 0)));
+      } catch {
+        count.textContent = String(previous);
+        const status = root.querySelector<HTMLElement>('.parent-portfolio-status');
+        if (status) {
+          status.textContent = 'Chưa gửi được cảm xúc. Vui lòng thử lại.';
+          status.classList.remove('hidden');
+        }
+      } finally {
+        button.disabled = false;
+      }
+    });
+  });
+
+  const hash = window.location.hash;
+  if (hash.startsWith('#video-')) {
+    window.requestAnimationFrame(() => {
+      document.getElementById(hash.slice(1))?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }
+}
+
+function renderDashboard(
+  data: ProgressPayload,
+  lesson: LessonPayload['lesson'] | null,
+  code: string,
+  portfolioItems: PortfolioEntry[],
+  portfolioLoadFailed: boolean,
+) {
   const progress = (data.progress || {}) as Record<string, unknown>;
   const read2LeadState = (data.read2lead_state || {}) as Record<string, unknown>;
   const storyProgress = (data.story_progress || {}) as Record<string, unknown>;
@@ -186,6 +351,8 @@ function renderDashboard(data: ProgressPayload, lesson: LessonPayload['lesson'] 
       ${renderStoryList(storyProgress)}
     </section>
 
+    ${renderPortfolioSection(portfolioItems, portfolioLoadFailed)}
+
     <section class="parent-section">
       <h2 class="parent-section__title">Liên hệ</h2>
       <p class="parent-muted text-sm leading-relaxed">Cần đổi lịch hoặc hỏi Felix — nhắn Zalo hoặc đặt lịch coaching.</p>
@@ -196,6 +363,7 @@ function renderDashboard(data: ProgressPayload, lesson: LessonPayload['lesson'] 
     </section>
   `;
   root.classList.remove('hidden');
+  attachPortfolioInteractions(root, code);
 }
 
 async function loadParentDashboard() {
@@ -230,6 +398,12 @@ async function loadParentDashboard() {
       return;
     }
 
+    const portfolioPromise = fetch(`/api/parent/portfolio?code=${encodeURIComponent(code)}`)
+      .then(async (response) => ({
+        response,
+        payload: (await response.json()) as PortfolioPayload,
+      }))
+      .catch(() => null);
     let lesson: LessonPayload['lesson'] | null = null;
     const pack = (data.progress as Record<string, unknown>)?.current_pack as Record<string, unknown> | undefined;
     const packId = pack?.pack_id;
@@ -241,11 +415,20 @@ async function loadParentDashboard() {
       if (lessonRes.ok && lessonData.ok) lesson = lessonData.lesson || null;
     }
 
+    let portfolioItems: PortfolioEntry[] = [];
+    let portfolioLoadFailed = false;
+    const portfolioResult = await portfolioPromise;
+    if (!portfolioResult || !portfolioResult.response.ok || !portfolioResult.payload.ok) {
+      portfolioLoadFailed = true;
+    } else {
+      portfolioItems = Array.isArray(portfolioResult.payload.items) ? portfolioResult.payload.items : [];
+    }
+
     qs('#parent-session')?.classList.remove('hidden');
     const masked = qs('#parent-code-display');
     if (masked) masked.textContent = code;
 
-    renderDashboard(data, lesson, code);
+    renderDashboard(data, lesson, code, portfolioItems, portfolioLoadFailed);
 
     const url = new URL(window.location.href);
     url.searchParams.set('code', code);
