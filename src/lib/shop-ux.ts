@@ -23,6 +23,16 @@ export function partThumbnailUrl(partId: string): string | undefined {
   if (!match) return undefined;
   const segments = match[1].split('-');
   if (segments.length < 2) return undefined;
+  const slot = segments[0];
+  // body/arm: <slot>-<color><shapeLetter> e.g. body-darkf, arm-bluea
+  // Real file uppercases the shape letter: body_darkF.png, arm_blueA.png
+  if ((slot === 'body' || slot === 'arm') && segments.length === 2) {
+    const cs = segments[1];
+    if (/^[a-z]+[a-f]$/.test(cs)) {
+      const upper = cs.slice(0, -1) + cs.slice(-1).toUpperCase();
+      return `/assets/monsters/raw/PNG/Default/${slot}_${upper}.png`;
+    }
+  }
   const fileName = `${segments.join('_')}.png`;
   return `/assets/monsters/raw/PNG/Default/${fileName}`;
 }

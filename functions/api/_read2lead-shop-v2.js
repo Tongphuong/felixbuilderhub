@@ -27,6 +27,13 @@ const KIND_VI = {
   'ear-round': 'Tai tròn',
 };
 
+const SLOT_VI = {
+  body: 'Thân',
+  arm: 'Tay',
+  eye: 'Mắt',
+  mouth: 'Miệng',
+};
+
 const SIZE_VI = {
   large: 'lớn',
   small: 'nhỏ',
@@ -94,22 +101,50 @@ export function humanizePartId(id) {
   const raw = String(id || '').trim();
   if (!raw) return '';
   const segments = raw.split('-');
+
+  // Strip png-default- prefix
+  if (segments[0] === 'png' && segments[1] === 'default') {
+    segments.splice(0, 2);
+  }
+  if (segments.length === 0) return raw;
+
+  const slot = segments[0];
+
+  // body/arm: <slot>-<color><shapeLetter> (e.g. body-darkf, arm-bluea)
+  if ((slot === 'body' || slot === 'arm') && segments.length === 2) {
+    const cs = segments[1];
+    const m = cs.match(/^([a-z]+)([a-f])$/);
+    if (m) {
+      const colorKey = m[1];
+      const shape = m[2].toUpperCase();
+      const color = COLOR_VI[colorKey] || colorKey;
+      return `${SLOT_VI[slot]} ${color} (${shape})`;
+    }
+  }
+
+  // detail: detail-<color>-<kind>[-size] (e.g. detail-blue-horn-large)
   const detailIdx = segments.indexOf('detail');
-  if (detailIdx === -1) return raw;
+  if (detailIdx !== -1) {
+    const tail = segments.slice(detailIdx + 1);
+    if (tail.length === 0) return raw;
+    const colorKey = tail[0];
+    const color = COLOR_VI[colorKey] || colorKey;
+    const rest = tail.slice(1).join('-');
+    const sizeKey = rest.endsWith('-large') ? 'large' : rest.endsWith('-small') ? 'small' : '';
+    const kindKey = sizeKey ? rest.replace(/-(large|small)$/, '') : rest;
+    const kind = KIND_VI[kindKey] || kindKey.replace(/-/g, ' ');
+    const size = sizeKey ? SIZE_VI[sizeKey] : '';
+    const label = [kind, color, size].filter(Boolean).join(' ');
+    return label ? label.charAt(0).toUpperCase() + label.slice(1) : raw;
+  }
 
-  const tail = segments.slice(detailIdx + 1);
-  if (tail.length === 0) return raw;
+  // eye/mouth: <slot>-<variant> (e.g. mouth-h, eye-large)
+  if (SLOT_VI[slot] && segments.length >= 2) {
+    const variant = segments.slice(1).join(' ');
+    return `${SLOT_VI[slot]} ${variant}`;
+  }
 
-  const colorKey = tail[0];
-  const color = COLOR_VI[colorKey] || colorKey;
-  const rest = tail.slice(1).join('-');
-  const sizeKey = rest.endsWith('-large') ? 'large' : rest.endsWith('-small') ? 'small' : '';
-  const kindKey = sizeKey ? rest.replace(/-(large|small)$/, '') : rest;
-  const kind = KIND_VI[kindKey] || KIND_VI[kindKey.replace(/-/g, '-')] || kindKey.replace(/-/g, ' ');
-  const size = sizeKey ? SIZE_VI[sizeKey] : '';
-
-  const label = [kind, color, size].filter(Boolean).join(' ');
-  return label ? label.charAt(0).toUpperCase() + label.slice(1) : raw;
+  return raw;
 }
 
 export function hydrateShopState(state, rawProgress = null) {
