@@ -1,0 +1,62 @@
+---
+export interface Props {
+  level: 1 | 2 | 3;
+  visible: boolean;
+}
+
+const { level, visible } = Astro.props;
+---
+
+<aside
+  class="w2-combo-counter"
+  data-level={level}
+  data-visible={visible}
+  aria-hidden={!visible}
+>
+  {level >= 2 && <div class="w2-combo-badge">x{level} COMBO</div>}
+</aside>
+
+<style>
+  .w2-combo-counter {
+    pointer-events: none;
+    position: absolute;
+    right: 0.75rem;
+    top: 0.75rem;
+    z-index: 20;
+  }
+
+  .w2-combo-counter[data-visible='false'],
+  .w2-combo-counter[data-level='1'] {
+    display: none;
+  }
+
+  .w2-combo-badge {
+    background: linear-gradient(135deg, var(--r2l-sun, #ffc83d), #f59e0b);
+    border-radius: 999px;
+    color: var(--r2l-ink, #1e2a4a);
+    font-family: var(--r2l-font-display, 'Baloo 2 Variable', system-ui, sans-serif);
+    font-size: 0.95rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    min-height: 44px;
+    min-width: 44px;
+    padding: 0.45rem 0.85rem;
+    text-transform: uppercase;
+  }
+
+  .w2-combo-counter[data-level='3'] .w2-combo-badge {
+    animation: w2-combo-bounce 1.2s ease-in-out infinite;
+    background: linear-gradient(135deg, #fde68a, #fbbf24, #f59e0b);
+    box-shadow: 0 0 12px rgb(251 191 36 / 0.55);
+  }
+
+  @keyframes w2-combo-bounce {
+    0%,
+    100% {
+      transform: translateY(0) scale(1);
+    }
+    50% {
+      transform: translateY(-4px) scale(1.04);
+    }
+  }
+</style>
