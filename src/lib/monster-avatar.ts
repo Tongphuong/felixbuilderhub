@@ -121,6 +121,8 @@ function getEquippedItem(
   return equippedDisplay?.find((item) => item.slot === slot && item.id === itemId) || null;
 }
 
+const COSMETIC_OVERLAYS_ENABLED = false;
+
 function injectMonsterStyles() {
   if (document.getElementById('r2l-monster-styles')) return;
   const style = document.createElement('style');
@@ -403,7 +405,7 @@ export function renderMonster(
     animate ? 'r2l-monster--animate' : '',
   ].filter(Boolean).join(' ');
 
-  const frameItem = withCosmetics
+  const frameItem = withCosmetics && COSMETIC_OVERLAYS_ENABLED
     ? getEquippedItem('frame', opts.equipped, opts.equippedDisplay)
     : null;
   if (frameItem?.css_class) {
@@ -435,7 +437,7 @@ export function renderMonster(
 
   container.appendChild(stack);
 
-  if (withCosmetics) {
+  if (withCosmetics && COSMETIC_OVERLAYS_ENABLED) {
     const hatItem = getEquippedItem('hat', opts.equipped, opts.equippedDisplay);
     if (hatItem?.emoji) {
       const hat = document.createElement('span');
