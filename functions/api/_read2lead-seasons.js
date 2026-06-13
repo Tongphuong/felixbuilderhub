@@ -7,8 +7,10 @@ export const PRE_SEASON = {
 };
 
 export const SEASONS = [
-  { id: '2026-S1', name_vi: 'Mùa Khám Phá', emoji: '🧭', starts: '2026-07-01', ends: '2026-08-31' },
+  { id: '2026-S1', name_vi: 'Amazing Summer', emoji: '🌞', starts: '2026-07-01', ends: '2026-08-31' },
   { id: '2026-S2', name_vi: 'Mùa Phiêu Lưu', emoji: '🗺️', starts: '2026-09-01', ends: '2026-10-31' },
+  { id: '2026-S3', name_vi: 'Mùa Đông Ấm', emoji: '⛄', starts: '2026-11-01', ends: '2026-12-31' },
+  { id: '2027-S1', name_vi: 'Mùa Xuân Mới', emoji: '🌸', starts: '2027-01-01', ends: '2027-02-28' },
 ];
 
 export const SEASON_REWARD_COINS = [10, 20, 35, 50, 70, 90, 120, 150];
