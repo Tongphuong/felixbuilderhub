@@ -2,7 +2,7 @@ import manifest from '../data/monster-parts.json';
 
 export const MONSTER_MANIFEST = manifest as Record<
   'body' | 'eyes' | 'mouth' | 'arms' | 'detail',
-  Array<{ id: string; file: string }>
+  Array<{ id: string; file: string; rarity?: 'common' | 'rare' | 'epic' }>
 >;
 
 export const MONSTER_SLOTS = ['body', 'eyes', 'mouth', 'arms', 'detail'] as const;
