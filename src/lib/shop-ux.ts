@@ -4,6 +4,7 @@ export type ShopRarity = 'common' | 'rare' | 'epic';
 
 export type ShopRow = {
   id: string;
+  slot: string;
   rarity: ShopRarity;
   price: number;
   name: string;
@@ -18,7 +19,14 @@ export type ShopPageHooks = {
   onToast?: (message: string) => void;
 };
 
-export function partThumbnailUrl(partId: string): string | undefined {
+export function partThumbnailUrl(partId: string, itemSlot = ''): string | undefined {
+  if (itemSlot === 'effects' || partId.startsWith('effect-')) {
+    return `/assets/effects/${partId}.webp`;
+  }
+  if (itemSlot === 'frame' || partId.startsWith('frame-')) {
+    const extension = partId === 'frame-rainbow' ? 'svg' : 'png';
+    return `/assets/frames/${partId}.${extension}`;
+  }
   const match = String(partId || '').match(/^png-default-(.+)$/);
   if (!match) return undefined;
   const segments = match[1].split('-');
@@ -130,7 +138,7 @@ function tierBadgeHtml(rarity: ShopRarity, large = false): string {
 }
 
 function renderShopItem(item: ShopRow): string {
-  const thumb = partThumbnailUrl(item.id);
+  const thumb = partThumbnailUrl(item.id, item.slot);
   const art = thumb
     ? `<img src="${escapeHtml(thumb)}" alt="${escapeHtml(item.name)}" loading="lazy" width="72" height="72" />`
     : '<div class="shop-item-placeholder" aria-hidden="true">🎨</div>';
@@ -138,11 +146,33 @@ function renderShopItem(item: ShopRow): string {
     ? '<span class="shop-item-owned"><span aria-hidden="true">✓</span> Có rồi</span>'
     : `<button class="shop-item-buy" type="button" data-part-id="${escapeHtml(item.id)}" data-price="${item.price}" ${item.can_afford ? '' : 'disabled'}><span class="shop-item-coin" aria-hidden="true">🪙</span><span class="shop-item-price">${item.price}</span></button>`;
   return `
-    <article class="shop-item" data-rarity="${escapeHtml(item.rarity)}" data-owned="${item.owned}" data-can-afford="${item.can_afford}">
+    <article class="shop-item" data-slot="${escapeHtml(item.slot)}" data-rarity="${escapeHtml(item.rarity)}" data-owned="${item.owned}" data-can-afford="${item.can_afford}">
       <div class="shop-item-art">${art}${tierBadgeHtml(item.rarity)}</div>
       <h3 class="shop-item-name">${escapeHtml(item.name)}</h3>
       <div class="shop-item-action">${action}</div>
     </article>
+  `;
+}
+
+const SHOP_FILTERS = [
+  { slot: 'all', label: 'Tất cả' },
+  { slot: 'body', label: 'Thân' },
+  { slot: 'arms', label: 'Tay' },
+  { slot: 'eyes', label: 'Mắt' },
+  { slot: 'mouth', label: 'Miệng' },
+  { slot: 'detail', label: 'Chi tiết' },
+  { slot: 'effects', label: 'Hiệu ứng' },
+  { slot: 'frame', label: 'Khung' },
+] as const;
+
+function renderFilterChips(activeSlot: string): string {
+  return `
+    <nav class="shop-filters" aria-label="Lọc phụ kiện" style="display:flex;gap:.5rem;overflow-x:auto;padding:.15rem 0 .35rem">
+      ${SHOP_FILTERS.map(({ slot, label }) => {
+        const active = slot === activeSlot;
+        return `<button type="button" data-shop-filter="${slot}" aria-pressed="${active}" style="min-height:44px;white-space:nowrap;border-radius:999px;border:2px solid ${active ? 'var(--r2l-sun, #ffc83d)' : 'rgb(248 250 252 / .2)'};background:${active ? 'rgb(255 200 61 / .18)' : 'rgb(15 23 42 / .82)'};color:#f8fafc;padding:.45rem .8rem;font:inherit;font-weight:800;cursor:pointer">${label}</button>`;
+      }).join('')}
+    </nav>
   `;
 }
 
@@ -161,6 +191,7 @@ export function initShopPage(hooks: ShopPageHooks): void {
   let shopItems: ShopRow[] = [];
   let shopCoins = 0;
   let profileHref = '/hoc-sinh';
+  let activeSlot = 'all';
 
   const qs = (sel: string) => document.querySelector(sel);
 
@@ -224,18 +255,34 @@ export function initShopPage(hooks: ShopPageHooks): void {
     });
   };
 
+  const bindShopFilters = () => {
+    qs('#shop-grid')?.querySelectorAll<HTMLButtonElement>('[data-shop-filter]').forEach((button) => {
+      button.addEventListener('click', () => {
+        activeSlot = button.dataset.shopFilter || 'all';
+        renderShop();
+      });
+    });
+  };
+
   const renderShop = () => {
     const grid = qs('#shop-grid');
     if (!grid) return;
-    const epic = shopItems.filter((item) => item.rarity === 'epic');
-    const rare = shopItems.filter((item) => item.rarity === 'rare');
+    const visibleItems = activeSlot === 'all'
+      ? shopItems
+      : shopItems.filter((item) => item.slot === activeSlot);
+    const epic = visibleItems.filter((item) => item.rarity === 'epic');
+    const rare = visibleItems.filter((item) => item.rarity === 'rare');
+    const common = visibleItems.filter((item) => item.rarity === 'common');
     grid.innerHTML = `
       <section class="shop-grid" aria-label="Cửa hàng phụ kiện">
+        ${renderFilterChips(activeSlot)}
         ${renderSection('epic', 'Sử Thi', epic)}
         ${renderSection('rare', 'Hiếm', rare)}
-        ${shopItems.length === 0 ? '<p class="shop-grid-empty">Đang tải cửa hàng…</p>' : ''}
+        ${renderSection('common', 'Thường', common)}
+        ${visibleItems.length === 0 ? '<p class="shop-grid-empty">Chưa có món trong mục này.</p>' : ''}
       </section>
     `;
+    bindShopFilters();
     bindShopActions();
   };
 

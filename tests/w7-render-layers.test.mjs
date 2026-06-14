@@ -4,6 +4,7 @@ import test from 'node:test';
 
 const avatarSource = readFileSync('src/lib/monster-avatar.ts', 'utf8');
 const builderSource = readFileSync('src/lib/monster-builder.ts', 'utf8');
+const shopSource = readFileSync('src/lib/shop-ux.ts', 'utf8');
 const renderBlock = avatarSource.slice(
   avatarSource.indexOf('export function renderMonster'),
   avatarSource.indexOf('export function nameColorClassFromEquipped'),
@@ -99,4 +100,36 @@ test('builder requires common decorations to be earned', () => {
     builderSource,
     /\(isDecoration \|\| getPartRarity\(part\.id\) !== 'common'\)[\s\S]*?unlocked\.has\(part\.id\)/,
   );
+});
+
+test('shop uses direct decoration thumbnail paths', () => {
+  assert.match(shopSource, /`\/assets\/effects\/\$\{partId\}\.webp`/);
+  assert.match(shopSource, /`\/assets\/frames\/\$\{partId\}\.\$\{extension\}`/);
+  assert.match(shopSource, /partId === 'frame-rainbow' \? 'svg' : 'png'/);
+});
+
+test('shop filter chips include all monster slots in Vietnamese', () => {
+  for (const label of ['Tất cả', 'Thân', 'Tay', 'Mắt', 'Miệng', 'Chi tiết', 'Hiệu ứng', 'Khung']) {
+    assert.match(shopSource, new RegExp(`label: '${label}'`));
+  }
+});
+
+test('shop renders epic, rare, then common sections', () => {
+  const block = shopSource.slice(
+    shopSource.indexOf('const renderShop ='),
+    shopSource.indexOf('const loadShop ='),
+  );
+  const epic = block.indexOf("renderSection('epic'");
+  const rare = block.indexOf("renderSection('rare'");
+  const common = block.indexOf("renderSection('common'");
+  assert.ok(epic >= 0);
+  assert.ok(rare > epic);
+  assert.ok(common > rare);
+  assert.match(block, /renderSection\('common', 'Thường', common\)/);
+});
+
+test('shop item DOM carries slot metadata for filtering', () => {
+  assert.match(shopSource, /data-slot="\$\{escapeHtml\(item\.slot\)\}"/);
+  assert.match(shopSource, /item\.slot === activeSlot/);
+  assert.match(shopSource, /data-shop-filter="\$\{slot\}"/);
 });
