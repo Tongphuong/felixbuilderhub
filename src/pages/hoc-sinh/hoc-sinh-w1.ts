@@ -1,7 +1,9 @@
 import { isV3Enabled } from '../../config/flags';
-import { renderMonster } from '../../lib/monster-avatar';
+import { renderEggHtml } from '../../lib/egg-renderer';
+import { renderMonster, type EquippedDisplayItem } from '../../lib/monster-avatar';
 import { monsterBuilderHtml, mountMonsterBuilder } from '../../lib/monster-builder';
 import { rankBadgeHtml } from '../../lib/rank-ladder-ui';
+import { kidToast } from '../../scripts/r2l-kid-toast';
 import { renderQuestPath, type QuestNode } from '../../scripts/r2l-quest-path';
 import {
   detectSeasonRankJump,
@@ -214,7 +216,7 @@ function showLoginForm() {
   qs('#profile-entry')?.classList.remove('hidden');
   qs('#profile-session-bar')?.classList.add('hidden');
   qs('#dashboard-card')?.classList.add('hidden');
-  const dash = qs('#dashboard-card');
+  const dash = qs<HTMLElement>('#dashboard-card');
   if (dash) dash.innerHTML = '';
   const input = qs<HTMLInputElement>('#access-code');
   if (input) {
@@ -315,6 +317,7 @@ function renderHook(data: ProgressPayload) {
   const cta = buildHeroCta(pack, data, code);
   const nearMiss = nearMissLine(read2LeadState);
   const v3 = isV3Enabled();
+  const avatarStage = String(read2LeadState.avatar_stage || 'basic');
   const ladder = read2LeadState.rank_ladder as Record<string, unknown> | undefined;
   const rankLabel = ladder
     ? String(ladder.label_vi || read2LeadState.rank_title || 'Đồng')
@@ -324,7 +327,7 @@ function renderHook(data: ProgressPayload) {
       ? `<a href="${escapeHtml(cta.href)}" class="r2l-kid-btn r2l-kid-btn--primary r2l-kid-btn--lg r2l-hub-hero-cta">${escapeHtml(cta.label)}</a>`
       : `<button type="button" id="hub-hero-cta" class="r2l-kid-btn r2l-kid-btn--primary r2l-kid-btn--lg r2l-hub-hero-cta" ${cta.action === 'wait' ? 'disabled' : ''}>${escapeHtml(cta.label)}</button>`;
 
-  const dash = qs('#dashboard-card');
+  const dash = qs<HTMLElement>('#dashboard-card');
   if (!dash) return;
 
   renderSeasonChrome(read2LeadState);
@@ -356,7 +359,7 @@ function renderHook(data: ProgressPayload) {
             </div>`
           : ''
       }
-      ${v3 ? monsterBuilderHtml(name, `/read2lead/shop?code=${encodeURIComponent(code)}&v3=1`) : ''}
+      ${v3 && avatarStage !== 'egg' ? monsterBuilderHtml(name, `/read2lead/shop?code=${encodeURIComponent(code)}&v3=1`) : ''}
       <div class="r2l-hub-kid-links">
         <a href="/read2lead/shop?code=${encodeURIComponent(code)}&v3=1" class="r2l-kid-btn r2l-kid-btn--ghost r2l-kid-btn--md">🛒 Cửa hàng</a>
         <a href="/read2lead/games?code=${encodeURIComponent(code)}&v3=1" class="r2l-kid-btn r2l-kid-btn--ghost r2l-kid-btn--md">🎮 Mini game</a>
@@ -377,15 +380,21 @@ function renderHook(data: ProgressPayload) {
   }
 
   const monsterSlot = qs('[data-hub-monster]', dash);
-  if (v3 && read2LeadState.avatar && monsterSlot instanceof HTMLElement) {
+  if (v3 && avatarStage === 'egg' && monsterSlot instanceof HTMLElement) {
+    monsterSlot.removeAttribute('aria-hidden');
+    monsterSlot.innerHTML = renderEggHtml(
+      name,
+      String(read2LeadState.current_level || 'L1'),
+      Number(read2LeadState.packs_until_level_up || 0),
+    );
+    monsterSlot.querySelector('[data-r2l-egg]')?.addEventListener('click', () => {
+      const packs = Number(read2LeadState.packs_until_level_up || 0);
+      kidToast(packs > 0 ? `Còn ${packs} bài nữa trứng nở nhé!` : 'Trứng sắp nở rồi nhé!');
+    });
+  } else if (v3 && read2LeadState.avatar && monsterSlot instanceof HTMLElement) {
     const avatar = read2LeadState.avatar as { monster?: unknown };
     if (avatar.monster) {
-      renderMonster(monsterSlot, avatar.monster as Parameters<typeof renderMonster>[1], {
-        size: 'large',
-        withCosmetics: true,
-        equipped: read2LeadState.equipped as Record<string, string>,
-        equippedDisplay: read2LeadState.equipped_display as Parameters<typeof renderMonster>[2]['equippedDisplay'],
-      });
+      renderHubMonster(monsterSlot, read2LeadState);
     } else if (ladder) {
       monsterSlot.innerHTML = rankBadgeHtml(ladder as Parameters<typeof rankBadgeHtml>[0], 'large');
     }
@@ -394,16 +403,11 @@ function renderHook(data: ProgressPayload) {
   }
 
   const builderRoot = dash.querySelector('[data-r2l-monster-builder-root]');
-  if (v3 && builderRoot instanceof HTMLElement) {
+  if (v3 && avatarStage !== 'egg' && builderRoot instanceof HTMLElement) {
     mountMonsterBuilder(builderRoot, code, read2LeadState, (nextState) => {
       const slot = dash.querySelector('[data-hub-monster]');
       if (slot instanceof HTMLElement && nextState.avatar?.monster) {
-        renderMonster(slot, nextState.avatar.monster, {
-          size: 'large',
-          withCosmetics: true,
-          equipped: nextState.equipped,
-          equippedDisplay: nextState.equipped_display,
-        });
+        renderHubMonster(slot, nextState as Record<string, unknown>);
       }
     });
   }
@@ -416,6 +420,28 @@ function renderHook(data: ProgressPayload) {
   wireW2Handlers(dash, code);
 
   void storyProgress;
+}
+
+function renderHubMonster(slot: HTMLElement, state: Record<string, unknown>) {
+  const avatar = state.avatar as { monster?: Parameters<typeof renderMonster>[1] } | undefined;
+  if (!avatar?.monster) return;
+  const monster = avatar.monster;
+  const parts = state.monster_parts as Record<string, Array<{ id: string }>> | undefined;
+  const renderConfig = monster.detail
+    ? monster
+    : {
+        ...monster,
+        detail: parts?.detail?.find((part) => part.id)?.id || 'default',
+      };
+  renderMonster(slot, renderConfig, {
+    size: 'large',
+    withCosmetics: true,
+    equipped: state.equipped as Record<string, string>,
+    equippedDisplay: state.equipped_display as EquippedDisplayItem[],
+  });
+  if (!monster.detail) {
+    slot.querySelectorAll('[data-slot="detail"]').forEach((layer) => layer.remove());
+  }
 }
 
 // === V4 W2 — daily quests + daily login chest ===

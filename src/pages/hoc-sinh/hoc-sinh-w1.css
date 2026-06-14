@@ -25,6 +25,39 @@
   animation: r2l-hub-pop-in 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
 
+.r2l-egg-shell {
+  display: grid;
+  width: min(13rem, 100%);
+  min-height: 44px;
+  padding: 0;
+  place-items: center;
+  border: 0;
+  background: transparent;
+  color: var(--r2l-ink);
+  cursor: pointer;
+  font: inherit;
+}
+
+.r2l-egg-svg {
+  width: 7.5rem;
+  filter: drop-shadow(0 0.65rem 0.8rem rgb(120 53 15 / 0.18));
+  transform-origin: 50% 90%;
+  animation: r2l-egg-wobble 4s ease-in-out infinite;
+}
+
+.r2l-egg-greeting {
+  display: block;
+  margin-top: -0.75rem;
+  font-size: 0.75rem;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+@keyframes r2l-egg-wobble {
+  0%, 100% { transform: rotate(-2deg); }
+  50% { transform: rotate(2deg); }
+}
+
 @keyframes r2l-hub-pop-in {
   from {
     opacity: 0;
@@ -417,6 +450,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .r2l-hub-monster-slot--pop,
+  .r2l-egg-svg,
   .r2l-hub-minny,
   .r2l-hub-skeleton__bar {
     animation: none;
