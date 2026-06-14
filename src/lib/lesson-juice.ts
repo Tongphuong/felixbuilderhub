@@ -1,5 +1,4 @@
 import type { PendingChest } from './lesson-result-chest';
-import '../styles/r2l-w2-dynamic.css';
 
 type SynthTone = 'correct' | 'wrong' | 'coin' | 'level-up';
 
