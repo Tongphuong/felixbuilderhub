@@ -233,7 +233,7 @@ export function mountMonsterBuilder(
       else dialog.removeAttribute('open');
       preview?.classList.remove('r2l-equip-preview-flash');
       ceremonyTimer = null;
-    }, 1200);
+    }, 3000);
   };
 
   const choosePart = (slot: MonsterSlot, direction: -1 | 1) => {
