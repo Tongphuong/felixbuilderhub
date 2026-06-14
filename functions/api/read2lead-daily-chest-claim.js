@@ -19,6 +19,10 @@ export async function onRequestPost(context) {
   if (!accessCode) return jsonError('missing_code', 400);
 
   try {
+    const kv = env.READ2LEAD_PROGRESS || env.READ2LEAD_CODES;
+    if (!kv) return jsonError('config_error', 500);
+    const raw = await kv.get(`progress:${accessCode}`, { type: 'json' });
+    if (!raw) return jsonError('code_not_found', 404);
     const state = await loadProgressState(env, accessCode);
     const dateKey = vietnamDateKey();
     const result = claimDailyLoginChest(state, dateKey);

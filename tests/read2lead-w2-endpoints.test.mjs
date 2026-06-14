@@ -66,7 +66,7 @@ test('POST /read2lead-quest-claim claims complete quest and adds coins', async (
   const kv = createKv({ [`progress:${CODE}`]: state });
   const response = await claimQuest({
     request: request({ code: CODE.toLowerCase(), quest_id: 'q1' }),
-    env: { R2L_STATE: kv },
+    env: { READ2LEAD_PROGRESS: kv },
   });
   const body = await payload(response);
   const saved = JSON.parse(kv.store.get(`progress:${CODE}`));
@@ -82,7 +82,7 @@ test('POST /read2lead-quest-claim invalid quest_id returns 400', async () => {
   const kv = createKv({ [`progress:${CODE}`]: stateWithQuests(['q1', 'q3', 'q5']) });
   const response = await claimQuest({
     request: request({ code: CODE, quest_id: 'q99' }),
-    env: { R2L_STATE: kv },
+    env: { READ2LEAD_PROGRESS: kv },
   });
   const body = await payload(response);
 
@@ -94,7 +94,7 @@ test('POST /read2lead-quest-claim incomplete quest returns not_complete', async 
   const kv = createKv({ [`progress:${CODE}`]: stateWithQuests(['q1', 'q3', 'q5']) });
   const response = await claimQuest({
     request: request({ code: CODE, quest_id: 'q1' }),
-    env: { R2L_STATE: kv },
+    env: { READ2LEAD_PROGRESS: kv },
   });
   const body = await payload(response);
 
@@ -107,7 +107,7 @@ test('POST /read2lead-quest-claim already claimed quest returns already_claimed'
   const kv = createKv({ [`progress:${CODE}`]: state });
   const response = await claimQuest({
     request: request({ code: CODE, quest_id: 'q1' }),
-    env: { R2L_STATE: kv },
+    env: { READ2LEAD_PROGRESS: kv },
   });
   const body = await payload(response);
 
@@ -129,7 +129,7 @@ test('POST /read2lead-chest-open opens pending chest and adds coins plus part', 
   const kv = createKv({ [`progress:${CODE}`]: state });
   const response = await openChest({
     request: request({ code: CODE }),
-    env: { R2L_STATE: kv },
+    env: { READ2LEAD_PROGRESS: kv },
   });
   const body = await payload(response);
   const saved = JSON.parse(kv.store.get(`progress:${CODE}`));
@@ -145,7 +145,7 @@ test('POST /read2lead-chest-open with no pending chest returns 400', async () =>
   const kv = createKv({ [`progress:${CODE}`]: stateWithQuests(['q1', 'q3', 'q5']) });
   const response = await openChest({
     request: request({ code: CODE }),
-    env: { R2L_STATE: kv },
+    env: { READ2LEAD_PROGRESS: kv },
   });
   const body = await payload(response);
 
@@ -162,7 +162,7 @@ test('POST /read2lead-daily-chest-claim adds streak-scaled coins', async () => {
   const kv = createKv({ [`progress:${CODE}`]: state });
   const response = await claimDailyChest({
     request: request({ code: CODE }),
-    env: { R2L_STATE: kv },
+    env: { READ2LEAD_PROGRESS: kv },
   });
   const body = await payload(response);
   const saved = JSON.parse(kv.store.get(`progress:${CODE}`));
@@ -182,7 +182,7 @@ test('POST /read2lead-daily-chest-claim same day returns already_claimed_today',
   const kv = createKv({ [`progress:${CODE}`]: state });
   const response = await claimDailyChest({
     request: request({ code: CODE }),
-    env: { R2L_STATE: kv },
+    env: { READ2LEAD_PROGRESS: kv },
   });
   const body = await payload(response);
 
@@ -193,14 +193,14 @@ test('POST /read2lead-daily-chest-claim same day returns already_claimed_today',
 test('quest claim endpoint rejects missing code with 400', async () => {
   const response = await claimQuest({
     request: request({ quest_id: 'q1' }),
-    env: { R2L_STATE: createKv() },
+    env: { READ2LEAD_PROGRESS: createKv() },
   });
   assert.equal(response.status, 400);
   assert.equal((await payload(response)).error, 'missing_params');
 });
 
 test('chest endpoints reject missing code with 400', async () => {
-  const env = { R2L_STATE: createKv() };
+  const env = { READ2LEAD_PROGRESS: createKv() };
   const [openResponse, dailyResponse] = await Promise.all([
     openChest({ request: request({}), env }),
     claimDailyChest({ request: request({}), env }),
@@ -213,7 +213,7 @@ test('chest endpoints reject missing code with 400', async () => {
 });
 
 test('all endpoints return 404 when progress KV key is missing', async () => {
-  const env = { R2L_STATE: createKv() };
+  const env = { READ2LEAD_PROGRESS: createKv() };
   const responses = await Promise.all([
     claimQuest({ request: request({ code: CODE, quest_id: 'q1' }), env }),
     openChest({ request: request({ code: CODE }), env }),
@@ -227,7 +227,7 @@ test('all endpoints return 404 when progress KV key is missing', async () => {
 });
 
 test('all endpoints reject invalid JSON with 400', async () => {
-  const env = { R2L_STATE: createKv() };
+  const env = { READ2LEAD_PROGRESS: createKv() };
   const responses = await Promise.all([
     claimQuest({ request: invalidJsonRequest(), env }),
     openChest({ request: invalidJsonRequest(), env }),
