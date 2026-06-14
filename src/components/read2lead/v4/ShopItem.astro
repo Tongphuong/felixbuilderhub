@@ -1,9 +1,10 @@
 ---
 import RarityBadge from './RarityBadge.astro';
+import TierAura, { type TierRarity } from './TierAura.astro';
 
 export interface Props {
   id: string;
-  rarity: 'common' | 'rare' | 'epic';
+  rarity: TierRarity;
   price: number;
   name: string;
   thumbnail_url?: string;
@@ -21,11 +22,13 @@ const { id, rarity, price, name, thumbnail_url, owned, can_afford } = Astro.prop
   data-can-afford={can_afford}
 >
   <div class="shop-item-art">
-    {thumbnail_url ? (
-      <img src={thumbnail_url} alt={name} loading="lazy" width="72" height="72" />
-    ) : (
-      <div class="shop-item-placeholder" aria-hidden="true">🎨</div>
-    )}
+    <TierAura rarity={rarity}>
+      {thumbnail_url ? (
+        <img src={thumbnail_url} alt={name} loading="lazy" width="72" height="72" />
+      ) : (
+        <div class="shop-item-placeholder" aria-hidden="true">🎨</div>
+      )}
+    </TierAura>
     <RarityBadge rarity={rarity} />
   </div>
   <h3 class="shop-item-name">{name}</h3>

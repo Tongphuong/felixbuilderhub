@@ -1,0 +1,27 @@
+---
+import '../../../styles/r2l-w6-tiers.css';
+
+export type TierRarity = 'common' | 'rare' | 'epic' | 'legendary';
+
+export interface Props {
+  rarity: TierRarity;
+}
+
+const { rarity } = Astro.props;
+const sparkleCount = rarity === 'rare' ? 2 : rarity === 'epic' ? 6 : rarity === 'legendary' ? 8 : 0;
+const hasRing = rarity === 'epic' || rarity === 'legendary';
+---
+
+{rarity === 'common' ? (
+  <slot />
+) : (
+  <div class="w6-tier-aura" data-rarity={rarity}>
+    <div class="w6-tier-aura__content">
+      <slot />
+    </div>
+    {hasRing && <span class="w6-tier-aura__ring" aria-hidden="true"></span>}
+    <span class="w6-tier-aura__particles" aria-hidden="true">
+      {Array.from({ length: sparkleCount }, () => <span class="w6-tier-aura__spark"></span>)}
+    </span>
+  </div>
+)}
