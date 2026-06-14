@@ -1,4 +1,5 @@
 import type { PendingChest } from './lesson-result-chest';
+import '../styles/r2l-w2-dynamic.css';
 
 type SynthTone = 'correct' | 'wrong' | 'coin' | 'level-up';
 
@@ -92,8 +93,13 @@ export function showXpTicker(xpDelta: number, anchorSelector: string): void {
 
 export function showComboBadge(level: 1 | 2 | 3): void {
   if (typeof document === 'undefined') return;
-  const counter = document.querySelector<HTMLElement>('.w2-combo-counter');
-  if (!counter) return;
+  let counter = document.querySelector<HTMLElement>('.w2-combo-counter');
+  if (!counter) {
+    // Auto-create if Z4 component not mounted (lesson.astro doesn't include it yet)
+    counter = document.createElement('aside');
+    counter.className = 'w2-combo-counter';
+    document.body.appendChild(counter);
+  }
   const normalizedLevel = level >= 3 ? 3 : level >= 2 ? 2 : 1;
   counter.dataset.level = String(normalizedLevel);
   counter.dataset.visible = String(normalizedLevel > 1);

@@ -1,0 +1,142 @@
+/* Global styles for W2 elements created dynamically by lesson-juice.ts/lesson-result-chest.ts.
+ * Z4 Astro components have scoped <style> blocks — those don't apply when JS creates elements
+ * outside the component. This file ensures the same look for dynamic creates.
+ */
+
+/* === XP Ticker === */
+.w2-xp-ticker {
+  position: fixed;
+  pointer-events: none;
+  z-index: 1000;
+  font-weight: 800;
+  font-size: 1.5rem;
+  color: #22c55e;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  animation: w2-xp-rise 1.8s ease-out forwards;
+}
+@keyframes w2-xp-rise {
+  0% { opacity: 0; transform: translateY(0) scale(0.8); }
+  20% { opacity: 1; transform: translateY(-20px) scale(1.1); }
+  80% { opacity: 1; transform: translateY(-60px) scale(1); }
+  100% { opacity: 0; transform: translateY(-100px) scale(1); }
+}
+
+/* === Combo Counter === */
+.w2-combo-counter {
+  position: fixed;
+  top: 20%;
+  right: 1rem;
+  z-index: 999;
+  pointer-events: none;
+  transition: opacity 0.3s, transform 0.3s;
+}
+.w2-combo-counter[data-visible="false"] { opacity: 0; transform: scale(0.8); }
+.w2-combo-counter[data-visible="true"] { opacity: 1; transform: scale(1); }
+.w2-combo-badge {
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  color: #1e293b;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  font-weight: 900;
+  font-size: 1.1rem;
+  box-shadow: 0 4px 12px rgba(251, 191, 36, 0.5);
+  animation: w2-combo-pop 0.4s ease-out;
+}
+.w2-combo-counter[data-level="3"] .w2-combo-badge {
+  background: linear-gradient(135deg, #a855f7, #ec4899);
+  color: white;
+}
+@keyframes w2-combo-pop {
+  0% { transform: scale(0.5) rotate(-10deg); }
+  60% { transform: scale(1.2) rotate(5deg); }
+  100% { transform: scale(1) rotate(0); }
+}
+
+/* === Near-Miss Banner === */
+.w2-nearmiss-banner {
+  position: fixed;
+  top: 5rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(-150%);
+  z-index: 1001;
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  color: #1e293b;
+  padding: 0.75rem 1.5rem;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 1rem;
+  box-shadow: 0 8px 24px rgba(251, 191, 36, 0.4);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  max-width: 90vw;
+}
+.w2-nearmiss-banner[data-visible="true"] {
+  transform: translateX(-50%) translateY(0);
+}
+.w2-nearmiss-icon { font-size: 1.5rem; }
+
+/* === Chest Modal === */
+.w2-chest-modal {
+  border: none;
+  background: transparent;
+  padding: 0;
+  max-width: 90vw;
+  max-height: 90vh;
+}
+.w2-chest-modal::backdrop {
+  background: rgba(0, 0, 0, 0.7);
+}
+.w2-chest-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 24px;
+  min-width: 320px;
+  min-height: 320px;
+}
+.w2-chest-stage[hidden] { display: none; }
+.w2-chest-modal[data-rarity="rare"] .w2-chest-stage {
+  background: linear-gradient(135deg, #dbeafe, #ffffff);
+}
+.w2-chest-modal[data-rarity="epic"] .w2-chest-stage {
+  background: linear-gradient(135deg, #f3e8ff, #ffffff);
+}
+.w2-chest-reward {
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 800;
+}
+.w2-reward-coins {
+  display: block;
+  font-size: 2rem;
+  color: #f59e0b;
+  margin: 1rem 0;
+}
+.w2-reward-part {
+  display: block;
+  color: #6366f1;
+  font-weight: 700;
+  margin-top: 0.5rem;
+}
+.w2-reward-dup {
+  display: block;
+  color: #22c55e;
+  margin-top: 0.5rem;
+}
+.w2-chest-close {
+  margin-top: 1.5rem;
+  min-height: 48px;
+  padding: 0.5rem 2rem;
+  background: #fbbf24;
+  color: #1e293b;
+  border: none;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 1rem;
+  cursor: pointer;
+}
