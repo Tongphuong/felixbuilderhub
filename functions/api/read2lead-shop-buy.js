@@ -1,6 +1,14 @@
 import { getClientIp, checkCodeRateLimit, recordCodeFailure, rateLimitedResponse } from './_rate-limit.js';
-import { loadProgressState, progressKey, progressNamespace, saveProgressState } from './_read2lead-v2-state.js';
-import { executeBuy, hydrateShopState } from './_read2lead-shop-v2.js';
+import {
+  BASIC_MONSTER_CONFIG,
+  MONSTER_MANIFEST,
+  MONSTER_SLOTS,
+  loadProgressState,
+  progressKey,
+  progressNamespace,
+  saveProgressState,
+} from './_read2lead-v2-state.js';
+import { executeBuy, getPartRarity, hydrateShopState } from './_read2lead-shop-v2.js';
 
 const ERROR_MESSAGES = {
   already_owned: 'Con da so huu phan nay roi.',
@@ -60,12 +68,47 @@ export async function onRequestPost(context) {
     );
   }
 
-  const saved = await saveProgressState(env, accessCode, result.state);
+  const rarity = getPartRarity(partId);
+  const slot = MONSTER_SLOTS.find((candidate) =>
+    (MONSTER_MANIFEST[candidate] || []).some((part) => part.id === partId));
+  const unlocked = new Set(result.state.unlocked_parts || []);
+  const currentMonster = result.state.avatar?.monster || {};
+  const monster = { ...BASIC_MONSTER_CONFIG };
+  for (const candidate of MONSTER_SLOTS) {
+    const equippedPart = String(currentMonster[candidate] || '').trim();
+    if (
+      equippedPart
+      && getPartRarity(equippedPart) !== 'common'
+      && unlocked.has(equippedPart)
+    ) {
+      monster[candidate] = equippedPart;
+    }
+  }
+  if (slot) monster[slot] = partId;
+
+  const nextState = {
+    ...result.state,
+    avatar_stage: 'custom',
+    avatar: {
+      ...result.state.avatar,
+      enabled: true,
+      monster,
+    },
+    pending_ceremony: {
+      part_id: partId,
+      rarity,
+      ts: new Date().toISOString(),
+    },
+  };
+  const saved = await saveProgressState(env, accessCode, nextState);
   return json({
     ok: true,
     reward: result.reward,
     coins: saved.coins || 0,
     unlocked_parts: saved.unlocked_parts || result.state.unlocked_parts || [],
+    avatar_stage: saved.avatar_stage,
+    avatar: saved.avatar,
+    pending_ceremony: saved.pending_ceremony,
   });
 }
 

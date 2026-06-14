@@ -318,6 +318,7 @@ function renderHook(data: ProgressPayload) {
   const nearMiss = nearMissLine(read2LeadState);
   const v3 = isV3Enabled();
   const avatarStage = String(read2LeadState.avatar_stage || 'basic');
+  const shopHref = `/read2lead/shop?code=${encodeURIComponent(code)}&v3=1`;
   const ladder = read2LeadState.rank_ladder as Record<string, unknown> | undefined;
   const rankLabel = ladder
     ? String(ladder.label_vi || read2LeadState.rank_title || 'Đồng')
@@ -359,9 +360,17 @@ function renderHook(data: ProgressPayload) {
             </div>`
           : ''
       }
-      ${v3 && avatarStage !== 'egg' ? monsterBuilderHtml(name, `/read2lead/shop?code=${encodeURIComponent(code)}&v3=1`) : ''}
+      ${v3 && avatarStage === 'custom' ? monsterBuilderHtml(name, shopHref) : ''}
+      ${
+        v3 && avatarStage === 'basic'
+          ? `<section class="r2l-kid-card text-center" data-r2l-basic-avatar-cta>
+              <p class="text-sm font-bold">Quái của con đã nở!</p>
+              <a href="${shopHref}" class="r2l-kid-btn r2l-kid-btn--primary r2l-kid-btn--lg mt-3">🛒 Trang trí ở Cửa hàng</a>
+            </section>`
+          : ''
+      }
       <div class="r2l-hub-kid-links">
-        <a href="/read2lead/shop?code=${encodeURIComponent(code)}&v3=1" class="r2l-kid-btn r2l-kid-btn--ghost r2l-kid-btn--md">🛒 Cửa hàng</a>
+        <a href="${shopHref}" class="r2l-kid-btn r2l-kid-btn--ghost r2l-kid-btn--md">🛒 Cửa hàng</a>
         <a href="/read2lead/games?code=${encodeURIComponent(code)}&v3=1" class="r2l-kid-btn r2l-kid-btn--ghost r2l-kid-btn--md">🎮 Mini game</a>
         <a href="/read2lead/leaderboard" class="r2l-kid-btn r2l-kid-btn--ghost r2l-kid-btn--md">🏆 Bảng hạng</a>
       </div>
@@ -388,8 +397,7 @@ function renderHook(data: ProgressPayload) {
       Number(read2LeadState.packs_until_level_up || 0),
     );
     monsterSlot.querySelector('[data-r2l-egg]')?.addEventListener('click', () => {
-      const packs = Number(read2LeadState.packs_until_level_up || 0);
-      kidToast(packs > 0 ? `Còn ${packs} bài nữa trứng nở nhé!` : 'Trứng sắp nở rồi nhé!');
+      kidToast('Con lên hạng Bạc thì trứng sẽ nở nhé!');
     });
   } else if (v3 && read2LeadState.avatar && monsterSlot instanceof HTMLElement) {
     const avatar = read2LeadState.avatar as { monster?: unknown };
@@ -403,13 +411,16 @@ function renderHook(data: ProgressPayload) {
   }
 
   const builderRoot = dash.querySelector('[data-r2l-monster-builder-root]');
-  if (v3 && avatarStage !== 'egg' && builderRoot instanceof HTMLElement) {
+  if (v3 && avatarStage === 'custom' && builderRoot instanceof HTMLElement) {
     mountMonsterBuilder(builderRoot, code, read2LeadState, (nextState) => {
       const slot = dash.querySelector('[data-hub-monster]');
       if (slot instanceof HTMLElement && nextState.avatar?.monster) {
         renderHubMonster(slot, nextState as Record<string, unknown>);
       }
     });
+  }
+  if (v3 && avatarStage === 'basic') {
+    showFirstHatchCeremony(code);
   }
 
   qs('#hub-hero-cta')?.addEventListener('click', () => {
@@ -420,6 +431,37 @@ function renderHook(data: ProgressPayload) {
   wireW2Handlers(dash, code);
 
   void storyProgress;
+}
+
+function showFirstHatchCeremony(accessCode: string) {
+  const storageKey = `r2l-hatch-seen:${accessCode}`;
+  try {
+    if (window.localStorage.getItem(storageKey)) return;
+    window.localStorage.setItem(storageKey, '1');
+  } catch {
+    // Storage is optional; the ceremony can still play.
+  }
+
+  const dialog = document.querySelector('.r2l-equip-ceremony') as HTMLDialogElement | null;
+  if (!dialog) return;
+  dialog.dataset.rarity = 'rare';
+  const label = dialog.querySelector('.ceremony-label');
+  if (label) label.textContent = '✨ Quái của con đã nở! ✨';
+  if (dialog.open) dialog.close();
+  if (typeof dialog.showModal === 'function') dialog.showModal();
+  else dialog.setAttribute('open', '');
+  try {
+    const juiceWindow = window as Window & {
+      __r2lJuice?: { playKenney?: (name: string) => unknown };
+    };
+    Promise.resolve(juiceWindow.__r2lJuice?.playKenney?.('quest-complete')).catch(() => {});
+  } catch {
+    // Audio is optional; the visual ceremony still completes.
+  }
+  window.setTimeout(() => {
+    if (dialog.open && typeof dialog.close === 'function') dialog.close();
+    else dialog.removeAttribute('open');
+  }, 5000);
 }
 
 function renderHubMonster(slot: HTMLElement, state: Record<string, unknown>) {

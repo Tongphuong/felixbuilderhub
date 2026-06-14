@@ -148,6 +148,7 @@ const ladderSectionClass = w1Ssr ? 'px-4 py-10 sm:px-6' : 'px-6 py-14';
 
   <script>
     import { isV3Enabled, isW1Enabled } from '../../config/flags';
+    import { eggSvgMarkup } from '../../lib/egg-renderer';
     import { renderMonster } from '../../lib/monster-avatar';
     import { applyW1PageShell, upgradeKidControls } from '../../scripts/r2l-w1-page';
 
@@ -254,6 +255,13 @@ const ladderSectionClass = w1Ssr ? 'px-4 py-10 sm:px-6' : 'px-6 py-14';
     }
 
     function leaderAvatarHtml(leader, sizeClass) {
+      if (isV3Enabled() && leader.avatar_stage === 'egg') {
+        const eggMarkup = eggSvgMarkup().replace(
+          'class="r2l-egg-svg"',
+          'class="r2l-egg-svg h-full w-full"',
+        );
+        return `<div class="mx-auto ${sizeClass}" role="img" aria-label="Trứng của ${escapeAttr(leader.display_name)}" data-leader-egg>${eggMarkup}</div>`;
+      }
       if (isV3Enabled() && leader.avatar?.monster) {
         return `<div class="mx-auto ${sizeClass}" data-leader-monster="${escapeAttr(leader.masked_code)}"></div>`;
       }

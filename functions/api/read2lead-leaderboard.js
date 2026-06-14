@@ -202,6 +202,7 @@ async function publicLeader(context, code, codeData) {
     current_level: currentLevel,
     streak_days: numberOrZero(publicState.streak_days),
     packs_until_level_up: numberOrZero(publicState.packs_until_level_up),
+    avatar_stage: publicState.avatar_stage,
     avatar: publicState.avatar,
     equipped: publicState.equipped,
     equipped_display: publicState.equipped_display,

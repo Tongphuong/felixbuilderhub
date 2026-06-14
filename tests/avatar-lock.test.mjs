@@ -10,7 +10,6 @@ import {
   saveAvatarMonster,
 } from '../functions/api/_read2lead-v2-state.js';
 import {
-  filterUnlockedParts,
   getPartRarity,
   isPartUnlocked,
   listPartsByRarity,
@@ -32,6 +31,7 @@ function stateAtL2(extra = {}) {
       level_reset_version: RESET_VERSION,
       current_level: 'L2',
       initial_level: 'L1',
+      rank_points: 9,
       ...extra,
     },
     { accessCode: 'LOCK-L2' },
@@ -46,34 +46,60 @@ function getAvailablePartsForSlot(slot, state) {
   const parts = slot === 'detail'
     ? [{ id: '', file: '' }, ...manifest[slot]]
     : manifest[slot];
-  return filterUnlockedParts(state, parts);
+  const defaultId = state.monster_basic_defaults[slot];
+  const basicPart = parts.find((part) => part.id === defaultId) || { id: defaultId, file: '' };
+  if (state.avatar_stage !== 'custom') return [basicPart];
+  const unlocked = new Set(state.unlocked_parts || []);
+  return [
+    basicPart,
+    ...parts.filter((part) =>
+      part.id !== defaultId
+      && getPartRarity(part.id) !== 'common'
+      && unlocked.has(part.id)),
+  ];
 }
 
-test('available slot parts contain only common parts when nothing is unlocked', () => {
+test('basic stage exposes one frozen default per slot', () => {
   const parts = getAvailablePartsForSlot('body', {
+    avatar_stage: 'basic',
     monster_parts: manifest,
+    monster_basic_defaults: BASIC_MONSTER_CONFIG,
     unlocked_parts: [],
   });
-  assert.ok(parts.length > 0);
-  assert.ok(parts.every((part) => getPartRarity(part.id) === 'common'));
+  assert.deepEqual(parts.map((part) => part.id), [BASIC_MONSTER_CONFIG.body]);
 });
 
-test('available slot parts include an unlocked rare part', () => {
+test('custom stage includes basic default plus an unlocked rare part', () => {
   const slot = slotForPart(rarePart);
   const parts = getAvailablePartsForSlot(slot, {
+    avatar_stage: 'custom',
     monster_parts: manifest,
+    monster_basic_defaults: BASIC_MONSTER_CONFIG,
     unlocked_parts: [rarePart],
   });
   assert.ok(parts.some((part) => part.id === rarePart));
+  assert.ok(parts.some((part) => part.id === BASIC_MONSTER_CONFIG[slot]));
 });
 
 test('available slot parts include an unlocked epic part', () => {
   const slot = slotForPart(epicPart);
   const parts = getAvailablePartsForSlot(slot, {
+    avatar_stage: 'custom',
     monster_parts: manifest,
+    monster_basic_defaults: BASIC_MONSTER_CONFIG,
     unlocked_parts: [epicPart],
   });
   assert.ok(parts.some((part) => part.id === epicPart));
+});
+
+test('custom stage excludes free common alternatives', () => {
+  const parts = getAvailablePartsForSlot('body', {
+    avatar_stage: 'custom',
+    monster_parts: manifest,
+    monster_basic_defaults: BASIC_MONSTER_CONFIG,
+    unlocked_parts: [],
+  });
+  assert.deepEqual(parts.map((part) => part.id), [BASIC_MONSTER_CONFIG.body]);
 });
 
 test('common parts are unlocked without unlocked_parts state', () => {
@@ -131,8 +157,15 @@ test('server save accepts a rare part after it is unlocked', () => {
   assert.equal(saved.state.avatar.monster[slot], rarePart);
 });
 
-test('builder uses the shared unlocked-parts filter for every slot', () => {
-  assert.match(builderSource, /return filterUnlockedParts\(state, partsForSlot\(state, slot\)\)/);
+test('builder filters custom choices to non-common unlocked parts', () => {
+  assert.match(builderSource, /state\.avatar_stage !== 'custom'\) return \[basicPart\]/);
+  assert.match(builderSource, /getPartRarity\(part\.id\) !== 'common'/);
+  assert.match(builderSource, /unlocked\.has\(part\.id\)/);
+});
+
+test('builder removes free color customization', () => {
+  assert.doesNotMatch(builderSource, /data-monster-color/);
+  assert.doesNotMatch(builderSource, /colorSwatches/);
 });
 
 test('equip ceremony only fires for unseen rare or epic parts', () => {
@@ -140,7 +173,7 @@ test('equip ceremony only fires for unseen rare or epic parts', () => {
   assert.match(builderSource, /playKenney\?\.\('quest-complete'\)/);
 });
 
-test('equip ceremony auto-closes after 1.2 seconds', () => {
-  assert.match(builderSource, /}, 1200\)/);
-  assert.match(ceremonySource, /1\.2s/);
+test('equip ceremony auto-closes after 3 seconds', () => {
+  assert.match(builderSource, /}, 3000\)/);
+  assert.match(ceremonySource, /3s/);
 });

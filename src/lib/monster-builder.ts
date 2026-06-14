@@ -1,7 +1,5 @@
 import { isV3Enabled } from '../config/flags';
 import {
-  COLOR_HEX,
-  MONSTER_COLORS,
   MONSTER_MANIFEST,
   MONSTER_SLOTS,
   type MonsterConfig,
@@ -11,7 +9,6 @@ import {
 } from './monster-avatar';
 import type { MonsterSlot } from './monster-manifest';
 import {
-  filterUnlockedParts,
   getPartRarity,
   isPartUnlocked,
   type PartRarity,
@@ -42,6 +39,11 @@ type Read2LeadState = {
     css_class?: string;
   }>;
   monster_parts?: Record<MonsterSlot, Array<{ id: string; file: string }>>;
+  pending_ceremony?: {
+    part_id: string;
+    rarity: PartRarity;
+    ts: string | null;
+  } | null;
 };
 
 export type MonsterPartEntry = { id: string; file: string };
@@ -58,7 +60,27 @@ export function getAvailablePartsForSlot(
   slot: MonsterSlot,
   state: Read2LeadState,
 ): MonsterPartEntry[] {
-  return filterUnlockedParts(state, partsForSlot(state, slot));
+  const basicIds: Record<MonsterSlot, string> = {
+    body: 'png-default-body-whitea',
+    eyes: 'png-default-eye-blue',
+    mouth: 'png-default-moutha',
+    arms: 'png-default-arm-whitea',
+    detail: '',
+  };
+  const defaultId = state.monster_basic_defaults?.[slot] ?? basicIds[slot];
+  const allParts = partsForSlot(state, slot);
+  const basicPart = allParts.find((part) => part.id === defaultId)
+    || { id: defaultId, file: '' };
+  if (state.avatar_stage !== 'custom') return [basicPart];
+
+  const unlocked = new Set(state.unlocked_parts || []);
+  return [
+    basicPart,
+    ...allParts.filter((part) =>
+      part.id !== defaultId
+      && getPartRarity(part.id) !== 'common'
+      && unlocked.has(part.id)),
+  ];
 }
 
 function hasLockedPartsForSlot(slot: MonsterSlot, state: Read2LeadState): boolean {
@@ -96,16 +118,22 @@ function partNameVi(slot: MonsterSlot, partId: string): string {
 
 function defaultDraft(state: Read2LeadState): MonsterConfig {
   const monster = state.avatar?.monster;
-  if (monster) return { ...monster };
-  if (state.monster_basic_defaults) return { ...state.monster_basic_defaults };
-  return {
+  const draft = {
     body: getAvailablePartsForSlot('body', state)[0]?.id || 'default',
     eyes: getAvailablePartsForSlot('eyes', state)[0]?.id || 'default',
     mouth: getAvailablePartsForSlot('mouth', state)[0]?.id || 'default',
     arms: getAvailablePartsForSlot('arms', state)[0]?.id || 'default',
     detail: getAvailablePartsForSlot('detail', state)[0]?.id || '',
-    color: MONSTER_COLORS[0],
+    color: state.monster_basic_defaults?.color || 'mint',
   };
+  if (!monster) return draft;
+  for (const slot of MONSTER_SLOTS) {
+    const available = getAvailablePartsForSlot(slot, state);
+    if (available.some((part) => part.id === monster[slot])) {
+      draft[slot] = monster[slot];
+    }
+  }
+  return draft;
 }
 
 function cyclePart(
@@ -186,19 +214,8 @@ export function mountMonsterBuilder(
     );
   };
 
-  const renderColorRow = () => {
-    const value = root.querySelector('[data-monster-color-value]');
-    if (value) value.textContent = draft.color;
-    root.querySelectorAll('[data-monster-color]').forEach((button) => {
-      const color = button.getAttribute('data-monster-color');
-      button.classList.toggle('ring-2', color === draft.color);
-      button.classList.toggle('ring-accent', color === draft.color);
-    });
-  };
-
   const renderAll = () => {
     for (const slot of MONSTER_SLOTS) renderSlotRow(slot);
-    renderColorRow();
     renderPreview();
     renderCosmetics();
     root.querySelector('[data-monster-basic-hint]')?.classList.toggle(
@@ -321,16 +338,6 @@ export function mountMonsterBuilder(
     });
   });
 
-  root.querySelectorAll('[data-monster-color]').forEach((button) => {
-    button.addEventListener('click', () => {
-      const color = button.getAttribute('data-monster-color');
-      if (color && (MONSTER_COLORS as readonly string[]).includes(color)) {
-        draft.color = color;
-        renderAll();
-      }
-    });
-  });
-
   saveBtn?.addEventListener('click', async () => {
     if (saveBtn.disabled) return;
     saveBtn.disabled = true;
@@ -356,6 +363,25 @@ export function mountMonsterBuilder(
 
   root.classList.remove('hidden');
   renderAll();
+
+  const pending = shopState.pending_ceremony;
+  if (pending) {
+    const slot = MONSTER_SLOTS.find((candidate) =>
+      partsForSlot(shopState, candidate).some((part) => part.id === pending.part_id));
+    if (slot) {
+      showEquipCeremony(slot, pending.part_id, pending.rarity);
+      shopState = { ...shopState, pending_ceremony: null };
+      void fetch('/api/read2lead-ceremony-ack', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          access_code: accessCode,
+          part_id: pending.part_id,
+          ts: pending.ts,
+        }),
+      }).catch(() => {});
+    }
+  }
 }
 
 function escapeHtml(value: string) {
@@ -367,16 +393,6 @@ function escapeHtml(value: string) {
 }
 
 export function monsterBuilderHtml(studentName: string, shopHref: string): string {
-  const colorSwatches = MONSTER_COLORS.map((color) => `
-    <button
-      type="button"
-      data-monster-color="${color}"
-      class="h-10 w-10 rounded-full border-2 border-cream/20"
-      style="background:${COLOR_HEX[color]}"
-      aria-label="Màu ${color}"
-    ></button>
-  `).join('');
-
   const slotRows = MONSTER_SLOTS.map((slot) => `
     <div class="flex flex-wrap items-center gap-2 rounded-xl border border-cream/10 bg-navy-950/60 px-3 py-2" data-monster-slot="${slot}">
       <button type="button" data-monster-prev="${slot}" class="min-h-[44px] min-w-[44px] rounded-lg border border-cream/20 text-lg font-bold text-cream" aria-label="Trước">‹</button>
@@ -411,11 +427,6 @@ export function monsterBuilderHtml(studentName: string, shopHref: string): strin
       </div>
       <p data-monster-basic-hint class="mt-3 rounded-xl bg-gold/10 px-3 py-2 text-sm font-bold text-gold">Chạm mũi tên để tạo quái riêng của con.</p>
       <div class="mt-4 grid gap-2 sm:grid-cols-2">${slotRows}</div>
-      <div class="mt-4">
-        <p class="text-xs font-bold uppercase tracking-wide text-cream-muted">Màu</p>
-        <div class="mt-2 flex flex-wrap gap-2">${colorSwatches}</div>
-        <p class="mt-1 text-xs text-cream-dim">Đang chọn: <span data-monster-color-value></span></p>
-      </div>
       <div class="mt-4 flex flex-wrap items-center gap-3">
         <button type="button" data-monster-save class="min-h-[48px] rounded-xl bg-accent px-6 font-extrabold text-navy-950">Lưu</button>
         <p data-monster-status class="text-sm font-semibold text-cream-muted"></p>
