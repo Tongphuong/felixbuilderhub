@@ -8,7 +8,7 @@ export const SHOP_PRICES = {
 
 const COLOR_VI = {
   blue: 'xanh',
-  dark: 'tối',
+  dark: 'đen',
   green: 'xanh lá',
   red: 'đỏ',
   yellow: 'vàng',
@@ -119,9 +119,8 @@ export function humanizePartId(id) {
     const m = cs.match(/^([a-z]+)([a-f])$/);
     if (m) {
       const colorKey = m[1];
-      const shape = m[2].toUpperCase();
       const color = COLOR_VI[colorKey] || colorKey;
-      return `${SLOT_VI[slot]} ${color} (${shape})`;
+      return `${SLOT_VI[slot]} ${color}`;
     }
   }
 
@@ -145,7 +144,7 @@ export function humanizePartId(id) {
   if (segments.length === 1) {
     const m = slot.match(/^(mouth|eye|nose|snot|eyebrow)([a-z])$/);
     if (m) {
-      return `${SLOT_VI[m[1]]} (${m[2].toUpperCase()})`;
+      return SLOT_VI[m[1]];
     }
   }
 
