@@ -6,6 +6,11 @@ export const SHOP_PRICES = {
   epic: 200,
 };
 
+export const DECORATION_PRICES = {
+  effects: { common: 50, rare: 150, epic: 300 },
+  frame: { common: 100, rare: 250, epic: 500 },
+};
+
 const COLOR_VI = {
   blue: 'xanh',
   dark: 'đen',
@@ -42,7 +47,7 @@ const SIZE_VI = {
   small: 'nhỏ',
 };
 
-/** @type {Map<string, 'common' | 'rare' | 'epic'> | null} */
+/** @type {Map<string, { rarity: 'common' | 'rare' | 'epic', slot: string }> | null} */
 let partIndex = null;
 
 function flattenManifest(manifest) {
@@ -78,20 +83,24 @@ function buildIndex() {
   partIndex = new Map();
   for (const part of flattenManifest(geometryManifest)) {
     const rarity = part.rarity || inferRarityFromPartId(part.id) || 'common';
-    partIndex.set(part.id, rarity);
+    partIndex.set(part.id, { rarity, slot: part.slot });
   }
   return partIndex;
 }
 
 export function getPartRarity(partId) {
-  return buildIndex().get(partId) || 'common';
+  return buildIndex().get(partId)?.rarity || 'common';
+}
+
+export function getPartSlot(partId) {
+  return buildIndex().get(partId)?.slot || null;
 }
 
 export function listPartsByRarity(rarity) {
   if (!['common', 'rare', 'epic'].includes(rarity)) return [];
   const out = [];
   for (const [id, value] of buildIndex().entries()) {
-    if (value === rarity) out.push(id);
+    if (value.rarity === rarity) out.push(id);
   }
   return out.sort();
 }
@@ -104,6 +113,30 @@ export function humanizePartId(id) {
   const raw = String(id || '').trim();
   if (!raw) return '';
   const segments = raw.split('-');
+
+  if (segments[0] === 'effect') {
+    const theme = {
+      electric: 'điện',
+      fire: 'lửa',
+      heart: 'trái tim',
+      magic: 'phép màu',
+      spark: 'lấp lánh',
+      star: 'ngôi sao',
+    }[segments[1]] || segments[1];
+    const color = COLOR_VI[segments[2]] || segments[2] || '';
+    return ['Hiệu ứng', theme, color].filter(Boolean).join(' ');
+  }
+
+  if (segments[0] === 'frame') {
+    if (segments[1] === 'rainbow') return 'Khung cầu vồng';
+    const style = {
+      badge: 'huy hiệu',
+      panel: 'bảng',
+      ribbon: 'ruy băng',
+    }[segments[1]] || segments[1];
+    const color = COLOR_VI[segments.at(-1)] || segments.at(-1) || '';
+    return ['Khung', style, color].filter(Boolean).join(' ');
+  }
 
   // Strip png-default- prefix
   if (segments[0] === 'png' && segments[1] === 'default') {
@@ -166,23 +199,37 @@ export function hydrateShopState(state, rawProgress = null) {
   return { ...state, unlocked_parts: unlocked };
 }
 
-export function buildShopCatalog() {
+function buildCatalogItem(partId) {
+  const rarity = getPartRarity(partId);
+  const slot = getPartSlot(partId);
+  const price = DECORATION_PRICES[slot]?.[rarity] ?? SHOP_PRICES[rarity] ?? 0;
+  return {
+    id: partId,
+    slot,
+    rarity,
+    price,
+    name: humanizePartId(partId),
+  };
+}
+
+export function buildShopCatalog({ includeDecorations = false } = {}) {
   const items = [];
   for (const partId of listPartsByRarity('rare')) {
-    items.push({
-      id: partId,
-      rarity: 'rare',
-      price: SHOP_PRICES.rare,
-      name: humanizePartId(partId),
-    });
+    if (includeDecorations || !DECORATION_PRICES[getPartSlot(partId)]) {
+      items.push(buildCatalogItem(partId));
+    }
   }
   for (const partId of listPartsByRarity('epic')) {
-    items.push({
-      id: partId,
-      rarity: 'epic',
-      price: SHOP_PRICES.epic,
-      name: humanizePartId(partId),
-    });
+    if (includeDecorations || !DECORATION_PRICES[getPartSlot(partId)]) {
+      items.push(buildCatalogItem(partId));
+    }
+  }
+  if (includeDecorations) {
+    for (const partId of listPartsByRarity('common')) {
+      if (DECORATION_PRICES[getPartSlot(partId)]) {
+        items.push(buildCatalogItem(partId));
+      }
+    }
   }
   return items;
 }
@@ -190,7 +237,7 @@ export function buildShopCatalog() {
 export function buildShopView(state) {
   const owned = new Set(state?.unlocked_parts || []);
   const coins = numberOrZero(state?.coins);
-  return buildShopCatalog().map((item) => ({
+  return buildShopCatalog({ includeDecorations: true }).map((item) => ({
     ...item,
     owned: owned.has(item.id),
     can_afford: !owned.has(item.id) && coins >= item.price,
@@ -203,9 +250,13 @@ export function executeBuy(state, partId) {
   if (owned.has(id)) return { state, error: 'already_owned' };
 
   const rarity = getPartRarity(id);
-  if (rarity === 'common') return { state, error: 'common_parts_are_free' };
+  const slot = getPartSlot(id);
+  if (!slot) return { state, error: 'part_not_found' };
+  if (rarity === 'common' && !DECORATION_PRICES[slot]) {
+    return { state, error: 'common_parts_are_free' };
+  }
 
-  const price = SHOP_PRICES[rarity] || 0;
+  const price = DECORATION_PRICES[slot]?.[rarity] ?? SHOP_PRICES[rarity] ?? 0;
   if (numberOrZero(state?.coins) < price) return { state, error: 'insufficient_coins' };
 
   return {
