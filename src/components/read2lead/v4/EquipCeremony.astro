@@ -1,10 +1,10 @@
 ---
 export interface Props {
   partName?: string;
-  rarity?: 'common' | 'rare' | 'epic';
+  rarity?: 'common' | 'rare' | 'epic' | 'legendary';
 }
 
-const { partName = '', rarity = 'rare' } = Astro.props;
+const { partName = '', rarity = 'common' } = Astro.props;
 ---
 
 <dialog class="r2l-equip-ceremony" data-rarity={rarity}>
@@ -18,8 +18,33 @@ const { partName = '', rarity = 'rare' } = Astro.props;
   </div>
 </dialog>
 
+<script>
+  import {
+    playTierStinger,
+    type TierRarity,
+  } from '../../../lib/r2l-w6-audio';
+
+  const rarities = new Set<TierRarity>(['common', 'rare', 'epic', 'legendary']);
+
+  document.querySelectorAll<HTMLDialogElement>('.r2l-equip-ceremony').forEach((dialog) => {
+    if (dialog.dataset.stingerMounted === 'true') return;
+    dialog.dataset.stingerMounted = 'true';
+
+    const playWhenOpen = () => {
+      if (!dialog.open) return;
+      const rarity = dialog.dataset.rarity as TierRarity;
+      void playTierStinger(rarities.has(rarity) ? rarity : 'common');
+    };
+
+    const observer = new MutationObserver(playWhenOpen);
+    observer.observe(dialog, { attributes: true, attributeFilter: ['open'] });
+    playWhenOpen();
+  });
+</script>
+
 <style is:global>
   .r2l-equip-ceremony {
+    --r2l-ceremony-duration: 3s;
     width: min(20rem, calc(100% - 2rem));
     min-height: 13rem;
     margin: auto;
@@ -31,7 +56,12 @@ const { partName = '', rarity = 'rare' } = Astro.props;
     text-align: center;
   }
 
+  .r2l-equip-ceremony[data-rarity='rare'] {
+    --r2l-ceremony-duration: 2s;
+  }
+
   .r2l-equip-ceremony[data-rarity='epic'] {
+    --r2l-ceremony-duration: 4s;
     border-color: #a855f7;
     box-shadow: 0 0 36px rgb(168 85 247 / 0.55);
   }
@@ -41,7 +71,7 @@ const { partName = '', rarity = 'rare' } = Astro.props;
   }
 
   .r2l-equip-ceremony[open] .ceremony-stage {
-    animation: r2l-ceremony-flash 3s ease-out both;
+    animation: r2l-ceremony-flash var(--r2l-ceremony-duration) ease-out both;
   }
 
   .ceremony-stage {
