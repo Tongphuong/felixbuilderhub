@@ -7,19 +7,33 @@ function escapeHtml(value: unknown): string {
 }
 
 export function eggSvgMarkup(): string {
+  // Egg shape: Sbed "Big Egg" from game-icons.net (CC BY 3.0)
+  // Credit at public/assets/eggs/CREDITS.md + site /credits page.
+  // Sparkles + warm glow decoratively added by Read2Lead team (CC0).
   return `
-    <svg viewBox="0 0 200 240" class="r2l-egg-svg" aria-hidden="true">
+    <svg viewBox="0 0 512 600" class="r2l-egg-svg" aria-hidden="true">
       <defs>
-        <linearGradient id="r2l-egg-shell-gradient" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stop-color="#fffdf4"></stop>
-          <stop offset="1" stop-color="#fde68a"></stop>
-        </linearGradient>
+        <radialGradient id="r2l-egg-shell-glow" cx="0.5" cy="0.55" r="0.5">
+          <stop offset="0" stop-color="#fef3c7"></stop>
+          <stop offset="0.7" stop-color="#fbbf24"></stop>
+          <stop offset="1" stop-color="#d97706"></stop>
+        </radialGradient>
       </defs>
-      <ellipse cx="100" cy="140" rx="76" ry="96" fill="url(#r2l-egg-shell-gradient)" stroke="#d97706" stroke-width="4"></ellipse>
-      <ellipse cx="74" cy="103" rx="17" ry="26" fill="#ffffff" opacity="0.62" transform="rotate(24 74 103)"></ellipse>
-      <circle cx="66" cy="150" r="10" fill="#f59e0b" opacity="0.35"></circle>
-      <circle cx="132" cy="178" r="14" fill="#fb7185" opacity="0.28"></circle>
-      <circle cx="122" cy="116" r="8" fill="#38bdf8" opacity="0.3"></circle>
+      <ellipse cx="256" cy="540" rx="160" ry="22" fill="#000" opacity="0.12"></ellipse>
+      <path
+        fill="url(#r2l-egg-shell-glow)"
+        stroke="#92400e"
+        stroke-width="8"
+        stroke-linejoin="round"
+        d="M256 16C166 16 76 196 76 316c0 90 60 180 180 180s180-90 180-180c0-120-90-300-180-300z"
+      ></path>
+      <ellipse cx="200" cy="190" rx="32" ry="48" fill="#ffffff" opacity="0.55" transform="rotate(-18 200 190)"></ellipse>
+      <circle cx="170" cy="340" r="14" fill="#ffffff" opacity="0.35"></circle>
+      <g class="r2l-egg-sparkles" aria-hidden="true">
+        <circle cx="100" cy="120" r="6" fill="#fde68a"></circle>
+        <circle cx="420" cy="200" r="8" fill="#fef3c7"></circle>
+        <circle cx="80" cy="380" r="5" fill="#fcd34d"></circle>
+      </g>
     </svg>
   `;
 }
