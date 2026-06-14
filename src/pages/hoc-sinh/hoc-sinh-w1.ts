@@ -346,6 +346,8 @@ function renderHook(data: ProgressPayload) {
         <p class="text-xs font-extrabold uppercase tracking-wide text-[var(--r2l-ink-soft)]">Nhiệm vụ hôm nay</p>
         <ol class="r2l-kid-quest-path mt-2" data-hub-mission-path></ol>
       </div>
+      ${renderW2DailyQuestsHtml(read2LeadState)}
+      ${renderW2DailyChestHtml(read2LeadState)}
       ${
         pack && !status.completed
           ? `<div class="r2l-kid-card mt-1">
@@ -411,7 +413,117 @@ function renderHook(data: ProgressPayload) {
     else if (cta.action === 'wait') showWaitScene();
   });
 
+  wireW2Handlers(dash, code);
+
   void storyProgress;
+}
+
+// === V4 W2 — daily quests + daily login chest ===
+
+type W2QuestRow = {
+  id: string;
+  label_vi: string;
+  target: number;
+  progress: number;
+  reward_coins: number;
+  reward_rp: number;
+  claimed: boolean;
+  complete: boolean;
+};
+
+function renderW2DailyQuestsHtml(state: Record<string, unknown>): string {
+  const view = state?.daily_quests_view as { quests?: W2QuestRow[] } | undefined;
+  const quests = Array.isArray(view?.quests) ? view!.quests! : [];
+  if (quests.length === 0) return '';
+  const cards = quests.map((q) => {
+    const pct = q.target > 0 ? Math.min(100, Math.round((q.progress / q.target) * 100)) : 0;
+    const action = q.claimed
+      ? '<span class="r2l-w2-quest-done">✓ Đã nhận</span>'
+      : q.complete
+        ? `<button type="button" class="r2l-w2-quest-claim" data-w2-quest-claim="${escapeHtml(q.id)}">Nhận thưởng</button>`
+        : '<span class="r2l-w2-quest-progress-label">' + escapeHtml(`${q.progress}/${q.target}`) + '</span>';
+    return `
+      <article class="r2l-w2-quest-card" data-complete="${q.complete}" data-claimed="${q.claimed}">
+        <p class="r2l-w2-quest-label">${escapeHtml(q.label_vi)}</p>
+        <div class="r2l-w2-quest-bar"><div class="r2l-w2-quest-bar-fill" style="width:${pct}%"></div></div>
+        <div class="r2l-w2-quest-foot">
+          <span class="r2l-w2-quest-reward">🪙 +${q.reward_coins}${q.reward_rp > 0 ? ` · ⭐ +${q.reward_rp}` : ''}</span>
+          ${action}
+        </div>
+      </article>
+    `;
+  }).join('');
+  return `
+    <section class="r2l-w2-quests">
+      <p class="text-xs font-extrabold uppercase tracking-wide text-[var(--r2l-ink-soft)]">Thử thách hôm nay</p>
+      <div class="r2l-w2-quests-grid">${cards}</div>
+    </section>
+  `;
+}
+
+function renderW2DailyChestHtml(state: Record<string, unknown>): string {
+  const chest = state?.daily_login_chest as { available?: boolean; coins?: number } | undefined;
+  if (!chest) return '';
+  if (chest.available) {
+    return `
+      <button type="button" class="r2l-w2-daily-chest" data-w2-daily-chest>
+        <span class="r2l-w2-daily-chest-icon" aria-hidden="true">🎁</span>
+        <span>Quà hôm nay: +${Number(chest.coins) || 0} 🪙</span>
+      </button>
+    `;
+  }
+  return `
+    <div class="r2l-w2-daily-chest r2l-w2-daily-chest--claimed" aria-disabled="true">
+      <span aria-hidden="true">🎁</span>
+      <span>Đã nhận hôm nay — quay lại mai nhé!</span>
+    </div>
+  `;
+}
+
+function wireW2Handlers(dash: HTMLElement, code: string) {
+  dash.querySelectorAll<HTMLButtonElement>('[data-w2-quest-claim]').forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      const questId = btn.dataset.w2QuestClaim;
+      if (!questId) return;
+      btn.disabled = true;
+      try {
+        const res = await fetch('/api/read2lead-quest-claim', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ code, quest_id: questId }),
+        });
+        const data = await res.json();
+        if (data.ok) {
+          btn.outerHTML = '<span class="r2l-w2-quest-done">✓ Đã nhận</span>';
+        } else {
+          btn.disabled = false;
+        }
+      } catch {
+        btn.disabled = false;
+      }
+    });
+  });
+  const dailyBtn = dash.querySelector<HTMLButtonElement>('[data-w2-daily-chest]');
+  if (dailyBtn) {
+    dailyBtn.addEventListener('click', async () => {
+      dailyBtn.disabled = true;
+      try {
+        const res = await fetch('/api/read2lead-daily-chest-claim', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ code }),
+        });
+        const data = await res.json();
+        if (data.ok) {
+          dailyBtn.outerHTML = '<div class="r2l-w2-daily-chest r2l-w2-daily-chest--claimed" aria-disabled="true"><span aria-hidden="true">🎁</span><span>Đã nhận hôm nay — quay lại mai nhé!</span></div>';
+        } else {
+          dailyBtn.disabled = false;
+        }
+      } catch {
+        dailyBtn.disabled = false;
+      }
+    });
+  }
 }
 
 function openCreateSheet() {

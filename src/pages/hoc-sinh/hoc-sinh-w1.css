@@ -422,3 +422,50 @@
     animation: none;
   }
 }
+
+/* === V4 W2 — daily quests + daily login chest === */
+.r2l-w2-quests { margin-top: 1rem; display: grid; gap: .5rem; }
+.r2l-w2-quests-grid { display: grid; grid-template-columns: 1fr; gap: .5rem; }
+@media (min-width: 480px) { .r2l-w2-quests-grid { grid-template-columns: 1fr 1fr 1fr; } }
+.r2l-w2-quest-card {
+  background: var(--r2l-surface, #fffaf2);
+  border: 2px solid rgb(30 42 74 / 0.1);
+  border-radius: var(--r2l-radius, 16px);
+  padding: .75rem;
+  display: grid; gap: .5rem;
+  min-height: 72px;
+}
+.r2l-w2-quest-card[data-claimed="true"] { opacity: .65; }
+.r2l-w2-quest-card[data-complete="true"]:not([data-claimed="true"]) { border-color: #fbbf24; box-shadow: 0 0 0 2px rgb(251 191 36 / .25); }
+.r2l-w2-quest-label { font-size: .85rem; font-weight: 800; line-height: 1.2; }
+.r2l-w2-quest-bar { background: rgb(30 42 74 / 0.08); height: 8px; border-radius: 999px; overflow: hidden; }
+.r2l-w2-quest-bar-fill { background: #22c55e; height: 100%; border-radius: 999px; transition: width .3s; }
+.r2l-w2-quest-foot { display: flex; align-items: center; justify-content: space-between; gap: .5rem; flex-wrap: wrap; }
+.r2l-w2-quest-reward { font-size: .8rem; font-weight: 700; color: var(--r2l-ink-soft); }
+.r2l-w2-quest-claim {
+  min-height: 44px; padding: .25rem .75rem;
+  background: #fbbf24; color: var(--r2l-ink, #1e293b);
+  border: none; border-radius: 999px;
+  font-weight: 800; font-size: .85rem;
+  cursor: pointer;
+}
+.r2l-w2-quest-claim:disabled { opacity: .5; cursor: wait; }
+.r2l-w2-quest-progress-label { font-size: .8rem; font-weight: 700; color: var(--r2l-ink-soft); }
+.r2l-w2-quest-done { font-size: .8rem; font-weight: 800; color: #22c55e; }
+.r2l-w2-daily-chest {
+  margin-top: .75rem; min-height: 64px; padding: .75rem 1rem;
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  color: var(--r2l-ink, #1e293b);
+  border: none; border-radius: var(--r2l-radius, 16px);
+  font-weight: 800; font-size: 1rem;
+  display: flex; align-items: center; justify-content: center; gap: .75rem;
+  cursor: pointer;
+  box-shadow: 0 4px 0 rgb(180 130 0 / .35);
+  width: 100%;
+}
+.r2l-w2-daily-chest:disabled { opacity: .6; cursor: wait; }
+.r2l-w2-daily-chest--claimed {
+  background: rgb(30 42 74 / 0.06); color: var(--r2l-ink-soft);
+  box-shadow: none; cursor: default;
+}
+.r2l-w2-daily-chest-icon { font-size: 1.5rem; }

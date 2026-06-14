@@ -1266,6 +1266,9 @@ export function publicProgressState(state) {
     rank_ladder: computeRankLadder(state),
     season: publicSeasonPayload(state),
     medals: normalizeMedals(state.medals),
+    daily_quests_view: getDailyQuestsView(state, vietnamDateKey(), state.access_code || ''),
+    daily_login_chest: previewDailyLoginChest(state, vietnamDateKey()),
+    pending_chest: state.pending_chest || null,
     ...(state.level_gate_hint_vi ? { level_gate_hint_vi: state.level_gate_hint_vi } : {}),
   };
 }
