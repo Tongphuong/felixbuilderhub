@@ -1,7 +1,8 @@
 import {
   claimDailyLoginChest,
-  normalizeProgressState,
+  loadProgressState,
   previewDailyLoginChest,
+  saveProgressState,
   vietnamDateKey,
 } from './_read2lead-v2-state.js';
 
@@ -17,20 +18,22 @@ export async function onRequestPost(context) {
   const accessCode = String(body.code || body.access_code || '').trim().toUpperCase();
   if (!accessCode) return jsonError('missing_code', 400);
 
-  const raw = await env.R2L_STATE.get(`progress:${accessCode}`, 'json');
-  if (!raw) return jsonError('code_not_found', 404);
-  const state = normalizeProgressState(raw, { accessCode });
-  const dateKey = vietnamDateKey();
-  const result = claimDailyLoginChest(state, dateKey);
-  if (result.error) return jsonError(result.error, 400);
+  try {
+    const state = await loadProgressState(env, accessCode);
+    const dateKey = vietnamDateKey();
+    const result = claimDailyLoginChest(state, dateKey);
+    if (result.error) return jsonError(result.error, 400);
 
-  await env.R2L_STATE.put(`progress:${accessCode}`, JSON.stringify(result.state));
-  return json({
-    ok: true,
-    reward: result.reward,
-    coins: result.state.coins,
-    preview: previewDailyLoginChest(result.state, dateKey),
-  });
+    await saveProgressState(env, accessCode, result.state);
+    return json({
+      ok: true,
+      reward: result.reward,
+      coins: result.state.coins,
+      preview: previewDailyLoginChest(result.state, dateKey),
+    });
+  } catch (err) {
+    return jsonError(`server_error: ${err?.message || 'unknown'}`, 500);
+  }
 }
 
 function jsonError(error, status) {
