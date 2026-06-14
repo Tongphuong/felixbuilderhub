@@ -10,6 +10,7 @@ import KidToast from '../../components/read2lead/v4/KidToast.astro';
 import InsufficientCoinsModal from '../../components/read2lead/v4/InsufficientCoinsModal.astro';
 import UnlockCelebration from '../../components/read2lead/v4/UnlockCelebration.astro';
 import '../../styles/r2l-kid.css';
+import '../../styles/r2l-w6-tiers.css';
 import '@fontsource-variable/baloo-2/index.css';
 
 const w1Ssr = import.meta.env.PUBLIC_R2L_W1 === '1';
@@ -199,13 +200,29 @@ const mainClass = w1Ssr
   }
 
   .shop-host :global(.shop-item[data-rarity='rare']) {
-    border: 2px solid #3b82f6;
-    box-shadow: 0 0 12px rgb(59 130 246 / 0.25);
+    border: 2px solid var(--w6-rare);
+    box-shadow: 0 0 0.75rem color-mix(in srgb, var(--w6-rare) 48%, transparent);
+    animation: w6-rare-glow 2s ease-in-out infinite;
   }
 
   .shop-host :global(.shop-item[data-rarity='epic']) {
-    border: 3px solid #a855f7;
-    box-shadow: 0 0 16px rgb(168 85 247 / 0.4);
+    border: 3px solid var(--w6-epic);
+    box-shadow: 0 0 1rem color-mix(in srgb, var(--w6-epic) 58%, transparent);
+    animation: w6-epic-ripple 2.4s ease-in-out infinite;
+  }
+
+  .shop-host :global(.shop-item[data-rarity='epic'] .shop-item-art img),
+  .shop-host :global(.shop-item[data-rarity='epic'] .shop-item-placeholder) {
+    animation: w6-epic-shimmer 6s linear infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .shop-host :global(.shop-item[data-rarity='rare']),
+    .shop-host :global(.shop-item[data-rarity='epic']),
+    .shop-host :global(.shop-item[data-rarity='epic'] .shop-item-art img),
+    .shop-host :global(.shop-item[data-rarity='epic'] .shop-item-placeholder) {
+      animation: none;
+    }
   }
 
   .shop-host :global(.shop-item[data-owned='true']) {
