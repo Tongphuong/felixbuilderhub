@@ -24,6 +24,7 @@ import {
   chestPreviewText,
   rollChest,
 } from './_read2lead-chests.js';
+import { getPartRarity } from './_read2lead-shop-v2.js';
 
 export { MONSTER_COLORS, MONSTER_MANIFEST, MONSTER_SLOTS };
 
@@ -42,6 +43,14 @@ export const LEVEL_RESET_VERSION = 20260606;
 export const START_LEVEL = 'L1';
 export const COINS_TOOLTIP = 'Tiết kiệm xu cho cửa hàng sắp mở! 🛒';
 export const SHOP_SLOTS = ['hat', 'pet', 'frame', 'name_color'];
+export const BASIC_MONSTER_CONFIG = Object.freeze({
+  body: 'png-default-body-whitea',
+  arms: 'png-default-arm-whitea',
+  eyes: 'png-default-eye-blue',
+  mouth: 'png-default-moutha',
+  detail: '',
+  color: 'mint',
+});
 
 export const SHOP_CATALOG = [
   { id: 'hat_star', slot: 'hat', name_vi: 'Mũ sao', emoji: '⭐', price_coins: 30, css_class: 'r2l-shop-hat-star' },
@@ -616,6 +625,23 @@ function normalizeDailyLoginChest(raw) {
   return { last_claim_date: raw.last_claim_date || null };
 }
 
+export function normalizeAvatarStage(raw, currentLevel) {
+  if (raw === 'egg' && currentLevel !== 'L1') return 'basic';
+  if (raw === 'egg' || raw === 'basic' || raw === 'custom') return raw;
+  return currentLevel === 'L1' ? 'egg' : 'basic';
+}
+
+function grandfatherUnlockedAvatarParts(raw, unlockedParts) {
+  const unlocked = new Set(unlockedParts);
+  const monster = raw?.avatar?.monster;
+  if (!monster || typeof monster !== 'object') return [...unlocked];
+  for (const slot of MONSTER_SLOTS) {
+    const partId = String(monster[slot] || '').trim();
+    if (partId && getPartRarity(partId) !== 'common') unlocked.add(partId);
+  }
+  return [...unlocked];
+}
+
 export function normalizeProgressState(raw, { accessCode, codeData = null, nowIso = new Date().toISOString() } = {}) {
   const profile = codeData?.student_profile || {};
   const legacyProgress = codeData?.progress || {};
@@ -641,6 +667,19 @@ export function normalizeProgressState(raw, { accessCode, codeData = null, nowIs
   const unlockedLevels = Array.isArray(raw?.unlocked_levels) && raw.unlocked_levels.length
     ? raw.unlocked_levels.filter((level) => LEVELS.includes(level))
     : defaultUnlockedLevels;
+  const avatarStage = normalizeAvatarStage(raw?.avatar_stage, currentLevel);
+  const storedUnlockedParts = Array.isArray(raw?.unlocked_parts)
+    ? Array.from(new Set(raw.unlocked_parts.filter(Boolean).map(String)))
+    : [];
+  const unlockedParts = raw?.avatar_stage
+    ? storedUnlockedParts
+    : grandfatherUnlockedAvatarParts(raw, storedUnlockedParts);
+  const hasStoredMonster = raw?.avatar?.monster && typeof raw.avatar.monster === 'object';
+  const avatarMonster = hasStoredMonster
+    ? normalizeAvatarMonster(raw.avatar.monster, accessCode, MONSTER_MANIFEST)
+    : avatarStage === 'basic'
+      ? { ...BASIC_MONSTER_CONFIG }
+      : normalizeAvatarMonster(null, accessCode, MONSTER_MANIFEST);
   const base = {
     schema_version: 2,
     level_reset_version: LEVEL_RESET_VERSION,
@@ -683,15 +722,14 @@ export function normalizeProgressState(raw, { accessCode, codeData = null, nowIs
     chest_history: normalizeChestHistory(raw?.chest_history),
     daily_login_chest: normalizeDailyLoginChest(raw?.daily_login_chest),
     combo_lifetime_xu: numberOrZero(raw?.combo_lifetime_xu),
-    unlocked_parts: Array.isArray(raw?.unlocked_parts)
-      ? Array.from(new Set(raw.unlocked_parts.filter(Boolean).map(String)))
-      : [],
+    unlocked_parts: unlockedParts,
+    avatar_stage: avatarStage,
     avatar: {
       enabled: true,
       preset_id: raw?.avatar?.preset_id || null,
       gender: raw?.avatar?.gender || null,
       equipped: raw?.avatar?.equipped || {},
-      monster: normalizeAvatarMonster(raw?.avatar?.monster, accessCode, MONSTER_MANIFEST),
+      monster: avatarMonster,
     },
     created_at: raw?.created_at || nowIso,
     updated_at: raw?.updated_at || nowIso,
@@ -1077,6 +1115,7 @@ function resolveMonsterPartId(slot, partId, manifest, defaults) {
   const id = String(partId || '').trim();
   const parts = Array.isArray(manifest?.[slot]) ? manifest[slot] : [];
   if (!parts.length) return 'default';
+  if (slot === 'detail' && !id) return '';
   if (parts.some((part) => part.id === id)) return id;
   const migrated = id.replace(/^png-double-/, 'png-default-');
   if (migrated !== id && parts.some((part) => part.id === migrated)) return migrated;
@@ -1101,11 +1140,20 @@ export function normalizeAvatarMonster(raw, accessCode, manifest = MONSTER_MANIF
 }
 
 export function saveAvatarMonster(state, monster, accessCode, manifest = MONSTER_MANIFEST) {
-  const normalized = normalizeAvatarMonster(monster, accessCode, manifest);
+  const unlockedParts = new Set(state?.unlocked_parts || []);
+  const currentMonster = state?.avatar?.monster || BASIC_MONSTER_CONFIG;
+  const allowedMonster = { ...monster };
+  for (const slot of MONSTER_SLOTS) {
+    const partId = String(allowedMonster?.[slot] || '').trim();
+    if (!partId || getPartRarity(partId) === 'common' || unlockedParts.has(partId)) continue;
+    allowedMonster[slot] = currentMonster[slot] ?? BASIC_MONSTER_CONFIG[slot];
+  }
+  const normalized = normalizeAvatarMonster(allowedMonster, accessCode, manifest);
   return {
     ok: true,
     state: {
       ...state,
+      avatar_stage: state?.current_level === 'L1' ? 'egg' : 'custom',
       avatar: {
         ...state.avatar,
         enabled: true,
@@ -1255,8 +1303,11 @@ export function publicProgressState(state) {
     packs_completed_in_level: completedInLevel,
     packs_until_level_up: packsUntilLevelUp(currentLevel, state.xp_in_level),
     badges: state.badges,
+    avatar_stage: normalizeAvatarStage(state.avatar_stage, currentLevel),
+    monster_basic_defaults: { ...BASIC_MONSTER_CONFIG },
     avatar: state.avatar,
     monster_parts: publicMonsterManifest(),
+    unlocked_parts: Array.isArray(state.unlocked_parts) ? state.unlocked_parts : [],
     inventory: normalizeInventory(state.inventory),
     equipped: normalizeEquipped(state.equipped),
     equipped_display: equippedDisplay(state),
@@ -1270,6 +1321,23 @@ export function publicProgressState(state) {
     daily_login_chest: previewDailyLoginChest(state, vietnamDateKey()),
     pending_chest: state.pending_chest || null,
     ...(state.level_gate_hint_vi ? { level_gate_hint_vi: state.level_gate_hint_vi } : {}),
+  };
+}
+
+export function getEggOrMonsterView(state) {
+  const currentLevel = safeLevel(state?.current_level);
+  const stage = normalizeAvatarStage(state?.avatar_stage, currentLevel);
+  if (stage === 'egg') {
+    return {
+      stage,
+      name: state?.student_name || '',
+      level: currentLevel,
+      packs_until_level_up: packsUntilLevelUp(currentLevel, state?.xp_in_level),
+    };
+  }
+  return {
+    stage,
+    monster: stage === 'basic' ? { ...BASIC_MONSTER_CONFIG } : state?.avatar?.monster,
   };
 }
 

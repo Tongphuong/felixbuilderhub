@@ -1,0 +1,148 @@
+---
+export interface Props {
+  partName?: string;
+  rarity?: 'common' | 'rare' | 'epic';
+}
+
+const { partName = '', rarity = 'rare' } = Astro.props;
+---
+
+<dialog class="r2l-equip-ceremony" data-rarity={rarity}>
+  <div class="ceremony-stage" data-stage="burst">
+    <div class="ceremony-ring" aria-hidden="true"></div>
+    <div class="ceremony-sparkles" aria-hidden="true">
+      <span></span><span></span><span></span><span></span><span></span><span></span>
+      <span></span><span></span>
+    </div>
+    <p class="ceremony-label">✨ Mới: <span data-ceremony-part-name>{partName}</span> ✨</p>
+  </div>
+</dialog>
+
+<style is:global>
+  .r2l-equip-ceremony {
+    width: min(20rem, calc(100% - 2rem));
+    min-height: 13rem;
+    margin: auto;
+    overflow: hidden;
+    border: 3px solid #3b82f6;
+    border-radius: 1.5rem;
+    background: #0f172a;
+    color: #fffdf4;
+    text-align: center;
+  }
+
+  .r2l-equip-ceremony[data-rarity='epic'] {
+    border-color: #a855f7;
+    box-shadow: 0 0 36px rgb(168 85 247 / 0.55);
+  }
+
+  .r2l-equip-ceremony::backdrop {
+    background: rgb(15 23 42 / 0.72);
+  }
+
+  .r2l-equip-ceremony[open] .ceremony-stage {
+    animation: r2l-ceremony-flash 1.2s ease-out both;
+  }
+
+  .ceremony-stage {
+    position: relative;
+    display: grid;
+    min-height: 11rem;
+    place-items: center;
+  }
+
+  .ceremony-ring {
+    position: absolute;
+    width: 7rem;
+    height: 7rem;
+    border: 8px solid #fbbf24;
+    border-radius: 999px;
+  }
+
+  .r2l-equip-ceremony[open] .ceremony-ring {
+    animation: r2l-ceremony-ring 0.55s ease-out both;
+  }
+
+  .ceremony-sparkles {
+    position: absolute;
+    inset: 50%;
+  }
+
+  .ceremony-sparkles span {
+    --angle: 0deg;
+    position: absolute;
+    width: 0.7rem;
+    height: 0.7rem;
+    border-radius: 0.15rem;
+    background: #fde047;
+    transform: rotate(var(--angle)) translateX(0);
+  }
+
+  .r2l-equip-ceremony[open] .ceremony-sparkles span {
+    animation: r2l-ceremony-spark 0.8s ease-out both;
+  }
+
+  .ceremony-sparkles span:nth-child(2) { --angle: 45deg; }
+  .ceremony-sparkles span:nth-child(3) { --angle: 90deg; }
+  .ceremony-sparkles span:nth-child(4) { --angle: 135deg; }
+  .ceremony-sparkles span:nth-child(5) { --angle: 180deg; }
+  .ceremony-sparkles span:nth-child(6) { --angle: 225deg; }
+  .ceremony-sparkles span:nth-child(7) { --angle: 270deg; }
+  .ceremony-sparkles span:nth-child(8) { --angle: 315deg; }
+
+  .ceremony-label {
+    position: absolute;
+    bottom: 1rem;
+    margin: 0;
+    font-size: 1.15rem;
+    font-weight: 800;
+    opacity: 0;
+  }
+
+  .r2l-equip-ceremony[open] .ceremony-label {
+    animation: r2l-ceremony-label 0.4s 0.8s ease-out both;
+  }
+
+  .r2l-equip-preview-flash {
+    animation: r2l-ceremony-monster 0.5s 0.3s ease-in-out both;
+  }
+
+  @keyframes r2l-ceremony-ring {
+    from { opacity: 1; transform: scale(0); }
+    to { opacity: 0; transform: scale(1.5); }
+  }
+
+  @keyframes r2l-ceremony-spark {
+    from { opacity: 1; transform: rotate(var(--angle)) translateX(0) scale(1); }
+    to { opacity: 0; transform: rotate(var(--angle)) translateX(6rem) scale(0.35); }
+  }
+
+  @keyframes r2l-ceremony-flash {
+    0%, 24%, 68%, 100% { background: transparent; }
+    25%, 40% { background: rgb(255 255 255 / 0.2); }
+  }
+
+  @keyframes r2l-ceremony-label {
+    from { opacity: 0; transform: translateY(1rem); }
+    to { opacity: 1; transform: translateY(-0.35rem); }
+  }
+
+  @keyframes r2l-ceremony-monster {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); filter: brightness(1.25); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .r2l-equip-ceremony[open] .ceremony-stage,
+    .r2l-equip-ceremony[open] .ceremony-ring,
+    .r2l-equip-ceremony[open] .ceremony-sparkles span,
+    .r2l-equip-ceremony[open] .ceremony-label,
+    .r2l-equip-preview-flash {
+      animation: none;
+    }
+
+    .r2l-equip-ceremony[open] .ceremony-label {
+      opacity: 1;
+    }
+  }
+</style>

@@ -36,6 +36,13 @@ export function isPartUnlocked(state: { unlocked_parts?: string[] }, partId: str
   return Array.isArray(state.unlocked_parts) && state.unlocked_parts.includes(partId);
 }
 
+export function filterUnlockedParts<T extends { id: string }>(
+  state: { unlocked_parts?: string[] },
+  parts: T[],
+): T[] {
+  return parts.filter((part) => isPartUnlocked(state, part.id));
+}
+
 export function listPartsByRarity(rarity: PartRarity): string[] {
   const out: string[] = [];
   for (const [id, r] of buildIndex().entries()) {
