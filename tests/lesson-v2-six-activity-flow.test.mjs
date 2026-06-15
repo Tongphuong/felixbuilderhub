@@ -107,6 +107,19 @@ test('listen_and_order uses editable drag-drop slots instead of one-way token pi
   assert.doesNotMatch(lessonPage, /setTimeout\(\(\) => resetOrderCard/);
 });
 
+test('listen_and_order is audio-first with replay, persistence, and missing-audio fallback', () => {
+  const listenAndOrder = readFileSync('src/components/read2lead/v2/ListenAndOrder.astro', 'utf-8');
+  assert.match(listenAndOrder, /Bước 1: Nghe câu\. Bước 2: Xếp từ/);
+  assert.match(listenAndOrder, /data-dictation-live/);
+  assert.match(lessonPage, /data-dictation-locked="true"/);
+  assert.match(lessonPage, /const heard = new Set/);
+  assert.match(lessonPage, /heard: Array\.from\(heard\)/);
+  assert.match(lessonPage, /normalizeDictationHeard\(savedOrder\.heard/);
+  assert.match(lessonPage, /button\.dataset\.audioDefaultLabel = 'Nghe lại'/);
+  assert.match(lessonPage, /Câu này chưa có audio\. Con vẫn có thể xếp từ nhé\./);
+  assert.match(lessonPage, /canUseDictationItem/);
+});
+
 test('listen_and_order accepts duplicate tokens by sentence text, not strict index match', () => {
   assert.match(lessonPage, /function isOrderAnswerCorrect/);
   assert.match(lessonPage, /normalizeOrderSentence\(reconstructed\) === normalizeOrderSentence\(item\.original_sentence/);
