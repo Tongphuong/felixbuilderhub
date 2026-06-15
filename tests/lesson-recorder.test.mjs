@@ -10,13 +10,13 @@ test('lesson page registers MediaRecorder support detection', () => {
   assert.match(lessonPage, /MediaRecorder/);
 });
 
-test('speaking activity completes on effort, not on Whisper success (no deadlock)', () => {
-  // listen_and_speak completes when every sentence was RECORDED, regardless of ASR.
-  assert.match(lessonPage, /attemptedItems/);
-  assert.match(lessonPage, /attemptedItems >= itemKeys\.length/);
-  assert.doesNotMatch(lessonPage, /scoredItems >= itemKeys\.length/);
-  // retell has an effort-complete path too.
-  assert.match(lessonPage, /_r2lCompleteRetellOnEffort/);
+test('speaking activity requires 50% scoring or an explicit no-reward skip', () => {
+  assert.match(lessonPage, /_R2L_SPEAKING_PASS_PERCENT = 50/);
+  assert.match(lessonPage, /passedItems >= itemKeys\.length/);
+  assert.match(lessonPage, /_r2lCompleteSpeakActivityOnMicSkip/);
+  assert.match(lessonPage, /_r2lCompleteRetellOnMicSkip/);
+  assert.match(lessonPage, /skipped_due_to_mic: true/);
+  assert.doesNotMatch(lessonPage, /score_percent: 70/);
 });
 
 test('mic warmup no longer creates/closes an AudioContext (Realtek silence root cause)', () => {

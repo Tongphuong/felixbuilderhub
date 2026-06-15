@@ -111,18 +111,19 @@ test('lesson and speaking inline cleanup uses safeStop guards', () => {
 test('lesson detects silent captures on-device and never uploads silence', () => {
   assert.match(lessonPage, /_r2lStartLevelMonitor/);
   assert.match(lessonPage, /recordingLooksVoiced/);
-  assert.match(lessonPage, /Micro lỗi — sang phần tiếp/);
+  assert.match(lessonPage, /Micro chưa thu được tiếng/);
   assert.match(lessonPage, /_r2lReportSilentCapture/);
   assert.match(lessonPage, /report_silent/);
 });
 
-test('a hopeless mic still cannot trap the child (skip path + effort pass)', () => {
+test('a hopeless mic offers an explicit no-reward completion path after retries', () => {
   assert.match(lessonPage, /_r2lSkipMicSpeakingProgress/);
   assert.match(lessonPage, /data-mic-skip-lesson/);
-  assert.match(lessonPage, /lesson-mic-skip/);
-  assert.match(lessonPage, /Micro hôm nay không thu được tiếng/);
+  assert.match(lessonPage, /Micro chưa thu được tiếng/);
   assert.match(lessonPage, /_r2lCompleteSpeakActivityOnMicSkip/);
-  assert.match(lessonPage, /_r2lCompleteSpeakActivityOnEffort/);
+  assert.match(lessonPage, /skipped_due_to_mic: true/);
+  assert.match(lessonPage, /score_percent: 0/);
+  assert.doesNotMatch(lessonPage, /_r2lCompleteSpeakActivityOnEffort/);
   assert.match(lessonPage, /_r2lAsrFailureLooksLikeOutage/);
 });
 
