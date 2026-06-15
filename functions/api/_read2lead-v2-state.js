@@ -631,16 +631,9 @@ export function normalizeAvatarStage(raw, state = {}) {
   const unlockedParts = Array.isArray(state?.unlocked_parts) ? state.unlocked_parts : [];
   const computedLadder = state?.rank_ladder || computeRankLadder(state);
   const tierIndex = numberOrZero(computedLadder?.tier_index);
-  if (raw === 'custom' && unlockedParts.length > 0) return 'custom';
-  if (
-    tierIndex < 1
-    && (raw === 'basic' || raw === 'custom')
-    && unlockedParts.length === 0
-  ) {
-    return 'egg';
-  }
+  if (tierIndex < 1 && unlockedParts.length === 0) return 'egg';
   if (unlockedParts.length > 0) return 'custom';
-  return tierIndex >= 1 ? 'basic' : 'egg';
+  return 'basic';
 }
 
 function grandfatherUnlockedAvatarParts(raw, unlockedParts) {
