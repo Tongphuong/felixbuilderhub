@@ -54,12 +54,29 @@ test('frame stays behind the monster and effects stay in front', () => {
 });
 
 test('decoration layers are non-interactive and scale beyond the portrait', () => {
+  const sharedCssStart = avatarSource.indexOf('.r2l-monster__frame-layer,');
+  const frameCssStart = avatarSource.indexOf('.r2l-monster__frame-layer {', sharedCssStart + 1);
+  const effectsCssStart = avatarSource.indexOf('.r2l-monster__effects-layer {', frameCssStart + 1);
+  const frameCss = avatarSource.slice(
+    frameCssStart,
+    effectsCssStart,
+  );
+  const effectsCss = avatarSource.slice(
+    effectsCssStart,
+    avatarSource.indexOf('.r2l-monster__effects-layer[data-rarity="rare"]'),
+  );
   assert.match(
     avatarSource,
     /\.r2l-monster__frame-layer,[\s\S]*?pointer-events: none;/,
   );
-  assert.match(avatarSource, /width: 124%;/);
-  assert.match(avatarSource, /width: 130%;/);
+  assert.match(frameCss, /left: 50%;[\s\S]*?top: 50%;/);
+  assert.match(frameCss, /width: 124%;[\s\S]*?height: 124%;/);
+  assert.match(frameCss, /translate: -50% -50%;/);
+  assert.doesNotMatch(frameCss, /inset:/);
+  assert.match(effectsCss, /left: 50%;[\s\S]*?top: 50%;/);
+  assert.match(effectsCss, /width: 130%;[\s\S]*?height: 130%;/);
+  assert.match(effectsCss, /translate: -50% -50%;/);
+  assert.doesNotMatch(effectsCss, /inset:/);
 });
 
 test('common effects are static while rare and epic effects animate', () => {
