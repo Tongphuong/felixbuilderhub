@@ -15,8 +15,10 @@ test('mic check script exposes mount API and OS help', () => {
   assert.match(micScript, /getMicStream/);
   assert.match(micScript, /MIC_WARMUP_SECONDS/);
   assert.match(micScript, /runMicWarmupCountdown/);
-  assert.match(micScript, /data-mic-parent-skip/);
   assert.match(micPanel, /data-mic-skip-lesson/);
+  assert.match(micPanel, /data-mic-skip-lesson hidden/);
+  assert.match(micScript, /SKIP_AFTER_FAILURES = 2/);
+  assert.doesNotMatch(micScript, /markParentSkip|data-mic-parent-skip/);
   assert.match(micScript, /Windows → Cài đặt → Quyền riêng tư và bảo mật → Microphone/);
   assert.match(micScript, /Mac → Cài đặt hệ thống → Quyền riêng tư và bảo mật → Microphone/);
   assert.match(micScript, /data-mic-meter-bar/);

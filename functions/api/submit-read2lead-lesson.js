@@ -61,16 +61,13 @@ export async function onRequestPost(context) {
   }
 
   if (isV2PackReviewed(currentPack)) {
-    return json({
-      ok: true,
-      schema_version: 2,
-      already_completed: true,
-      passed: true,
-      message: 'Bai nay da hoan thanh roi. Read2Lead giu ket qua cu de con khong phai lam lai.',
-      review: currentPack.review_summary || currentPack.web_lesson_summary || null,
-      progress: publicProgress(progress),
-      current_pack: publicPack(currentPack),
-      next_pack_unlocked: true,
+    return respondFromCachedAttempt({
+      accessCode,
+      codeData,
+      currentPack,
+      env,
+      progress,
+      alreadyCompleted: true,
     });
   }
 
@@ -129,6 +126,8 @@ function isV2PackReviewed(pack) {
 }
 
 const DUPLICATE_SUBMIT_WINDOW_MS = 12000;
+export const SPEAKING_PASS_PERCENT = 50;
+const SPEAKING_ACTIVITY_TYPES = new Set(['listen_and_speak', 'retell_summary']);
 
 function isRecentDuplicateSubmit(currentPack) {
   const last = currentPack?.web_lesson_summary;
@@ -193,7 +192,11 @@ async function submitV2Lesson({
     ? expectedTypes.every((type) => completedTypes.has(type))
     : completedTypes.size >= 6;
   const scorePercent = score.score_percent;
-  const passed = allActivitiesAttempted && scorePercent >= PASS_THRESHOLD_PERCENT;
+  const speakingGate = evaluateSpeakingGate(activityResults, expectedTypes);
+  const completedWithoutReward = allActivitiesAttempted && speakingGate.skipped;
+  const passed = allActivitiesAttempted
+    && speakingGate.passed
+    && scorePercent >= PASS_THRESHOLD_PERCENT;
   const rewards = lessonContext.rewards || {
     coins_on_complete: 15,
     xp_on_complete: XP_PER_PASSED_PACK,
@@ -211,6 +214,8 @@ async function submitV2Lesson({
     schema_version: 2,
     submitted_at: submittedAt,
     passed,
+    completed: passed || completedWithoutReward,
+    completed_without_reward: completedWithoutReward,
     score_percent: scorePercent,
     correct_count: correctCount,
     total_count: totalCount,
@@ -221,6 +226,22 @@ async function submitV2Lesson({
     ...(Array.isArray(currentPack.web_attempts) ? currentPack.web_attempts : []),
     attempt,
   ].slice(-5);
+
+  if (completedWithoutReward) {
+    return finalizeWithoutReward({
+      accessCode,
+      codeData,
+      currentPack,
+      env,
+      progress,
+      attempt,
+      webAttempts,
+      submittedAt,
+      scorePercent,
+      correctCount,
+      totalCount,
+    });
+  }
 
   if (!passed) {
     const progressState = await loadProgressState(env, accessCode, codeData);
@@ -416,6 +437,85 @@ async function submitV2Lesson({
   });
 }
 
+export function evaluateSpeakingGate(activityResults, expectedTypes) {
+  const expectedSpeakingTypes = expectedTypes.filter((type) => SPEAKING_ACTIVITY_TYPES.has(type));
+  if (!expectedSpeakingTypes.length) return { passed: true, skipped: false };
+  const resultsByType = new Map(
+    activityResults
+      .filter((result) => result?.type)
+      .map((result) => [result.type, result]),
+  );
+  const speakingResults = expectedSpeakingTypes.map((type) => resultsByType.get(type));
+  const skipped = speakingResults.some((result) => result?.skipped_due_to_mic === true);
+  const passed = !skipped && speakingResults.every(
+    (result) => result && Number(result.score_percent) >= SPEAKING_PASS_PERCENT,
+  );
+  return { passed, skipped };
+}
+
+async function finalizeWithoutReward({
+  accessCode,
+  codeData,
+  currentPack,
+  env,
+  progress,
+  attempt,
+  webAttempts,
+  submittedAt,
+  scorePercent,
+  correctCount,
+  totalCount,
+}) {
+  const progressState = await loadProgressState(env, accessCode, codeData);
+  const rewardsEarned = { coins: 0, xp: 0 };
+  const reviewedPack = {
+    ...currentPack,
+    status: 'reviewed_pass_web_v2',
+    reviewed_at: submittedAt,
+    web_attempts: webAttempts,
+    web_lesson_summary: attempt,
+    review_summary: {
+      schema_version: 2,
+      completed_at: submittedAt,
+      passed: false,
+      completed_without_reward: true,
+      score_percent: scorePercent,
+      rewards_earned: rewardsEarned,
+      activity_results: attempt.activity_results,
+    },
+  };
+  const nextProgress = {
+    ...progress,
+    current_pack: reviewedPack,
+  };
+
+  await env.READ2LEAD_CODES.put(
+    accessCode,
+    JSON.stringify({
+      ...codeData,
+      progress: nextProgress,
+    }),
+  );
+
+  return json({
+    ok: true,
+    schema_version: 2,
+    completed: true,
+    completed_without_reward: true,
+    passed: false,
+    score_percent: scorePercent,
+    correct_count: correctCount,
+    total_count: totalCount,
+    rewards_earned: rewardsEarned,
+    read2lead_state: publicProgressState(progressState),
+    message: 'Bai da ket thuc khong thuong. Con co the tao bai moi.',
+    review: reviewedPack.review_summary,
+    progress: publicProgress(nextProgress),
+    current_pack: publicPack(reviewedPack),
+    next_pack_unlocked: true,
+  });
+}
+
 async function respondFromCachedAttempt({
   accessCode,
   codeData,
@@ -427,27 +527,35 @@ async function respondFromCachedAttempt({
   const attempt = currentPack.web_lesson_summary
     || (Array.isArray(currentPack.web_attempts)
       ? [...currentPack.web_attempts].reverse().find((entry) => entry?.passed === true)
-      : null);
-  const passed = Boolean(attempt?.passed);
+      : null)
+    || currentPack.review_summary
+    || null;
+  const passed = attempt ? Boolean(attempt.passed) : alreadyCompleted;
+  const completedWithoutReward = attempt?.completed_without_reward === true;
+  const completed = passed || completedWithoutReward;
   const progressState = await loadProgressState(env, accessCode, codeData);
 
   return json({
     ok: true,
     schema_version: 2,
     ...(alreadyCompleted ? { already_completed: true } : { duplicate: true }),
+    completed,
+    completed_without_reward: completedWithoutReward,
     passed,
-    score_percent: attempt.score_percent,
-    correct_count: attempt.correct_count,
-    total_count: attempt.total_count,
-    rewards_earned: attempt.rewards_earned || { coins: 0, xp: 0 },
+    score_percent: attempt?.score_percent ?? null,
+    correct_count: attempt?.correct_count ?? null,
+    total_count: attempt?.total_count ?? null,
+    rewards_earned: attempt?.rewards_earned || { coins: 0, xp: 0 },
     message: passed
       ? 'Con da hoan thanh nhiem vu V2 hom nay.'
-      : `Chua dat ${PASS_THRESHOLD_PERCENT}%. Khong sao, minh thu lai nhe!`,
+      : completedWithoutReward
+        ? 'Bai da ket thuc khong thuong. Con co the tao bai moi.'
+        : `Chua dat ${PASS_THRESHOLD_PERCENT}%. Khong sao, minh thu lai nhe!`,
     read2lead_state: publicProgressState(progressState),
     progress: publicProgress(progress),
     current_pack: publicPack(currentPack),
-    next_pack_unlocked: passed,
-    review: passed ? (currentPack.review_summary || attempt) : null,
+    next_pack_unlocked: completed,
+    review: completed ? (currentPack.review_summary || attempt || null) : null,
   });
 }
 

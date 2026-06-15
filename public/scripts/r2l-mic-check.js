@@ -3,8 +3,8 @@
  */
 (function initR2LMicCheck(global) {
   const STORAGE_KEY = 'r2l_mic_ok_v1';
-  const STORAGE_PARENT_SKIP = 'r2l_mic_parent_skip_v1';
   const MIC_WARMUP_SECONDS = 3;
+  const SKIP_AFTER_FAILURES = 2;
   const LEVEL_SAMPLE_MS = 100;
   const TEST_SECONDS = 3;
   const SILENT_LEVEL = 4;
@@ -161,7 +161,7 @@
 
   function sessionPassed() {
     try {
-      return sessionStorage.getItem(STORAGE_KEY) === '1' || sessionStorage.getItem(STORAGE_PARENT_SKIP) === '1';
+      return sessionStorage.getItem(STORAGE_KEY) === '1';
     } catch {
       return false;
     }
@@ -170,14 +170,6 @@
   function markSessionPassed() {
     try {
       sessionStorage.setItem(STORAGE_KEY, '1');
-    } catch {
-      /* ignore */
-    }
-  }
-
-  function markParentSkip() {
-    try {
-      sessionStorage.setItem(STORAGE_PARENT_SKIP, '1');
     } catch {
       /* ignore */
     }
@@ -339,6 +331,7 @@
     const onPass = typeof options.onPass === 'function' ? options.onPass : () => {};
     const onFail = typeof options.onFail === 'function' ? options.onFail : () => {};
     const blockUntilPass = options.blockUntilPass !== false;
+    const allowLessonSkip = options.allowLessonSkip === true;
 
     const statusEl = root.querySelector('[data-mic-status]');
     const meterBar = root.querySelector('[data-mic-meter-bar]');
@@ -350,7 +343,7 @@
     const deviceSelect = root.querySelector('[data-mic-device]');
     const passBadge = root.querySelector('[data-mic-pass]');
     const envWarnEl = root.querySelector('[data-mic-env-warn]');
-    const parentSkipBtn = root.querySelector('[data-mic-parent-skip]');
+    const lessonSkipBtn = root.querySelector('[data-mic-skip-lesson]');
     const copyHelpBtn = root.querySelector('[data-mic-copy-help]');
 
     let activeStream = null;
@@ -403,14 +396,14 @@
       }
     }
 
-    function showParentSkip() {
-      if (!parentSkipBtn || failCount < 1) return;
-      parentSkipBtn.hidden = false;
+    function showLessonSkip() {
+      if (!allowLessonSkip || !lessonSkipBtn || failCount < SKIP_AFTER_FAILURES) return;
+      lessonSkipBtn.hidden = false;
     }
 
-    function setPassed(kind = 'test') {
+    function setPassed() {
       root.dataset.state = 'passed';
-      if (kind === 'test') markSessionPassed();
+      markSessionPassed();
       if (passBadge) passBadge.hidden = false;
       // Never a dead end: keep a working "test again" button so the panel always
       // does something when tapped (the old build left only a broken copy button).
@@ -420,16 +413,14 @@
         testBtn.textContent = '🎤 Nói thử lại';
       }
       if (retryBtn) retryBtn.hidden = true;
-      if (parentSkipBtn) parentSkipBtn.hidden = true;
+      if (lessonSkipBtn) lessonSkipBtn.hidden = true;
       if (copyHelpBtn) copyHelpBtn.hidden = true;
       if (meterWrap) meterWrap.hidden = true;
       hideHelp();
       if (envWarnEl) envWarnEl.hidden = true;
       const hasPlayback = playBtn && !playBtn.hidden;
       setStatus(
-        kind === 'parent'
-          ? 'Ba mẹ xác nhận micro OK. Nếu vẫn lỗi, bấm "Nói thử lại".'
-          : hasPlayback
+        hasPlayback
             ? 'Micro tốt! Bấm "▶ Nghe lại giọng con" để nghe, hoặc "Con nói" để làm bài.'
             : 'Micro đã sẵn sàng. Bấm "🎤 Nói thử lại" để kiểm tra, hoặc "Con nói" để làm bài.',
         'ok',
@@ -496,6 +487,8 @@
     async function runTest() {
       if (running) return;
       if (showEnvironmentBlockers()) {
+        failCount += 1;
+        showLessonSkip();
         onFail({ reason: 'environment' });
         return;
       }
@@ -589,7 +582,7 @@
           setStatus('Chưa thu được tiếng. Ba mẹ kiểm tra micro trong Windows/Mac (xem hướng dẫn).', 'error');
           showHelp(new Error('empty_blob'));
           if (retryBtn) retryBtn.hidden = false;
-          showParentSkip();
+          showLessonSkip();
           applyBlockedUi(blockUntilPass);
           onFail({ reason: 'empty_blob', peak });
           return;
@@ -600,7 +593,7 @@
           setStatus('Thanh âm lượng không nhảy — micro có thể bị tắt ở Windows/Mac hoặc chọn nhầm thiết bị.', 'error');
           showHelp({ name: 'silent' });
           if (retryBtn) retryBtn.hidden = false;
-          showParentSkip();
+          showLessonSkip();
           applyBlockedUi(blockUntilPass);
           onFail({ reason: 'silent', peak });
           return;
@@ -615,7 +608,7 @@
         if (testedDevice && global.R2LRecorder?.saveDevicePref) {
           global.R2LRecorder.saveDevicePref(testedDevice.deviceId, testedDevice.label);
         }
-        setPassed('test');
+        setPassed();
       } catch (error) {
         failCount += 1;
         if (meterTimer) global.clearInterval(meterTimer);
@@ -623,7 +616,7 @@
         setStatus(helpMessage(error), 'error');
         showHelp(error);
         if (retryBtn) retryBtn.hidden = false;
-        showParentSkip();
+        showLessonSkip();
         applyBlockedUi(blockUntilPass);
         onFail({ reason: 'error', error });
       } finally {
@@ -642,11 +635,6 @@
       }
       testAudio = new Audio(testBlobUrl);
       testAudio.play().catch(() => {});
-    });
-
-    parentSkipBtn?.addEventListener('click', () => {
-      markParentSkip();
-      setPassed('parent');
     });
 
     copyHelpBtn?.addEventListener('click', async () => {
@@ -671,7 +659,7 @@
     });
 
     if (sessionPassed()) {
-      setPassed(sessionStorage.getItem(STORAGE_KEY) === '1' ? 'test' : 'parent');
+      setPassed();
     } else {
       root.dataset.state = 'idle';
       setStatus('Bước đầu: bấm Kiểm tra micro. Nếu Windows/Mac chặn, ba mẹ xem hướng dẫn bên dưới.');
@@ -702,7 +690,6 @@
 
   global.R2LMicCheck = {
     STORAGE_KEY,
-    STORAGE_PARENT_SKIP,
     detectPlatform,
     detectBrowser,
     isInAppBrowser,
@@ -714,7 +701,6 @@
     hasRecordingCapability,
     sessionPassed,
     markSessionPassed,
-    markParentSkip,
     MIC_WARMUP_SECONDS,
     openMicStream,
     getMicStream: openMicStream,
