@@ -34,6 +34,8 @@ function makeProgress(overrides = {}) {
     coins: 2000,
     avatar_stage: 'custom',
     unlocked_parts: [],
+    rank_points: 9,
+    rank_ladder: { tier_index: 1 },
     avatar: {
       enabled: true,
       monster: { ...BASIC_MONSTER_CONFIG },
@@ -42,10 +44,11 @@ function makeProgress(overrides = {}) {
   };
 }
 
-function makeEnv(progress) {
+function makeEnv(progress, { w7Enabled = true } = {}) {
   const store = new Map([[progressKey(ACCESS_CODE), JSON.stringify(progress)]]);
   const codeData = { student_profile: { student_name: 'Linh' } };
   return {
+    ...(w7Enabled ? { PUBLIC_R2L_W7: '1' } : {}),
     READ2LEAD_CODES: {
       async get(key, opts) {
         if (key !== ACCESS_CODE) return null;
@@ -160,6 +163,22 @@ test('buying a common effect auto-equips it and records a ceremony', async () =>
   assert.equal(payload.avatar.monster.effects, COMMON_EFFECT);
   assert.equal(payload.pending_ceremony.part_id, COMMON_EFFECT);
   assert.equal(payload.pending_ceremony.rarity, 'common');
+});
+
+test('shop-buy rejects decorations while W7 is disabled and preserves state', async () => {
+  const initial = makeProgress();
+  const env = makeEnv(initial, { w7Enabled: false });
+  const { response, payload } = await buy(env, COMMON_EFFECT);
+  assert.equal(response.status, 400);
+  assert.deepEqual(payload, {
+    ok: false,
+    error: 'w7_disabled',
+    message: 'Tạm thời chưa mở',
+  });
+  assert.deepEqual(
+    JSON.parse(env.__store.get(progressKey(ACCESS_CODE))),
+    initial,
+  );
 });
 
 test('buying a common frame preserves an equipped common effect', async () => {

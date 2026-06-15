@@ -12,7 +12,10 @@ const RARE_PART = 'png-default-detail-blue-horn-small';
 function makeEnv({ codeExists = true, progress = null } = {}) {
   const store = new Map();
   if (progress) {
-    store.set(progressKey(ACCESS_CODE), JSON.stringify(progress));
+    store.set(progressKey(ACCESS_CODE), JSON.stringify({
+      ...progress,
+      rank_points: progress.rank_points ?? 9,
+    }));
   }
 
   return {
@@ -148,6 +151,35 @@ test('POST /shop-buy 404 code not found', async () => {
   const payload = await response.json();
   assert.equal(response.status, 404);
   assert.equal(payload.error, 'code_not_found');
+});
+
+test('POST /shop-buy blocks Bronze and leaves state unchanged', async () => {
+  const initial = {
+    schema_version: 2,
+    level_reset_version: 20260606,
+    coins: 200,
+    rank_points: 0,
+    unlocked_parts: [],
+  };
+  const env = makeEnv({ progress: initial });
+  const response = await shopBuy({
+    request: new Request('https://example.com/api/read2lead-shop-buy', {
+      method: 'POST',
+      body: JSON.stringify({ code: ACCESS_CODE, part_id: RARE_PART }),
+    }),
+    env,
+  });
+  const payload = await response.json();
+  assert.equal(response.status, 403);
+  assert.deepEqual(payload, {
+    ok: false,
+    error: 'rank_too_low',
+    message: 'Con đạt hạng Bạc rồi mới mua được nhé.',
+  });
+  assert.deepEqual(
+    JSON.parse(env.__store.get(progressKey(ACCESS_CODE))),
+    initial,
+  );
 });
 
 test('POST /shop-buy persists to KV (mock)', async () => {

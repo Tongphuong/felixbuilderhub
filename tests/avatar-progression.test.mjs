@@ -56,6 +56,24 @@ test('persisted basic without purchases reverts to egg below Silver', () => {
   assert.equal(state.avatar_stage, 'egg');
 });
 
+test('tier 0 with a legacy monster body still renders as egg', () => {
+  const state = normalizeProgressState(
+    rawAtLevel('L1', {
+      avatar: {
+        enabled: true,
+        monster: {
+          ...BASIC_MONSTER_CONFIG,
+          body: 'png-default-body-bluea',
+        },
+      },
+    }),
+    { accessCode: 'BRONZE-LEGACY-MONSTER' },
+  );
+  assert.deepEqual(state.unlocked_parts, []);
+  assert.equal(state.avatar_stage, 'egg');
+  assert.equal(getEggOrMonsterView(state).stage, 'egg');
+});
+
 test('persisted egg advances to basic after reaching Silver', () => {
   const state = normalizeProgressState(
     rawAtLevel('L1', { avatar_stage: 'egg', rank_points: 9 }),

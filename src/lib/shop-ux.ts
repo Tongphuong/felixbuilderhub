@@ -1,5 +1,7 @@
 import { play as playAudio } from './r2l-audio';
 
+const W7_BUILD_ENABLED = import.meta.env.PUBLIC_R2L_W7 === '1';
+
 export type ShopRarity = 'common' | 'rare' | 'epic';
 
 export type ShopRow = {
@@ -18,6 +20,21 @@ export type ShopPageHooks = {
   onError: (message: string) => void;
   onToast?: (message: string) => void;
 };
+
+function w7DecorationsEnabled(): boolean {
+  if (W7_BUILD_ENABLED) return true;
+  if (typeof window === 'undefined') return false;
+  try {
+    return window.localStorage.getItem('PUBLIC_R2L_W7') === '1';
+  } catch {
+    return false;
+  }
+}
+
+function visibleShopItems(items: ShopRow[]): ShopRow[] {
+  if (w7DecorationsEnabled()) return items;
+  return items.filter((item) => item.slot !== 'effects' && item.slot !== 'frame');
+}
 
 export function partThumbnailUrl(partId: string, itemSlot = ''): string | undefined {
   if (itemSlot === 'effects' || partId.startsWith('effect-')) {
@@ -166,9 +183,12 @@ const SHOP_FILTERS = [
 ] as const;
 
 function renderFilterChips(activeSlot: string): string {
+  const filters = w7DecorationsEnabled()
+    ? SHOP_FILTERS
+    : SHOP_FILTERS.filter(({ slot }) => slot !== 'effects' && slot !== 'frame');
   return `
     <nav class="shop-filters" aria-label="Lọc phụ kiện" style="display:flex;gap:.5rem;overflow-x:auto;padding:.15rem 0 .35rem">
-      ${SHOP_FILTERS.map(({ slot, label }) => {
+      ${filters.map(({ slot, label }) => {
         const active = slot === activeSlot;
         return `<button type="button" data-shop-filter="${slot}" aria-pressed="${active}" style="min-height:44px;white-space:nowrap;border-radius:999px;border:2px solid ${active ? 'var(--r2l-sun, #ffc83d)' : 'rgb(248 250 252 / .2)'};background:${active ? 'rgb(255 200 61 / .18)' : 'rgb(15 23 42 / .82)'};color:#f8fafc;padding:.45rem .8rem;font:inherit;font-weight:800;cursor:pointer">${label}</button>`;
       }).join('')}
@@ -267,9 +287,10 @@ export function initShopPage(hooks: ShopPageHooks): void {
   const renderShop = () => {
     const grid = qs('#shop-grid');
     if (!grid) return;
+    const availableItems = visibleShopItems(shopItems);
     const visibleItems = activeSlot === 'all'
-      ? shopItems
-      : shopItems.filter((item) => item.slot === activeSlot);
+      ? availableItems
+      : availableItems.filter((item) => item.slot === activeSlot);
     const epic = visibleItems.filter((item) => item.rarity === 'epic');
     const rare = visibleItems.filter((item) => item.rarity === 'rare');
     const common = visibleItems.filter((item) => item.rarity === 'common');
@@ -300,7 +321,7 @@ export function initShopPage(hooks: ShopPageHooks): void {
     const payload = await response.json();
     if (!payload.ok) throw new Error(payload.message || 'Không thể mở cửa hàng.');
 
-    shopItems = payload.items || [];
+    shopItems = visibleShopItems(payload.items || []);
     setShopCoins(payload.coins || 0);
     qs('#shop-shell')?.classList.remove('hidden');
     profileHref = `/hoc-sinh?code=${encodeURIComponent(accessCode)}&v3=1`;
