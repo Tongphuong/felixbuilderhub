@@ -3,6 +3,7 @@ import {
   BASIC_MONSTER_CONFIG,
   MONSTER_MANIFEST,
   MONSTER_SLOTS,
+  computeRankLadder,
   loadProgressState,
   progressKey,
   progressNamespace,
@@ -16,6 +17,7 @@ const ERROR_MESSAGES = {
   common_parts_are_free: 'Phan nay mien phi, khong can mua.',
   missing_code: 'Thieu ma hoc sinh.',
   missing_part_id: 'Thieu ma phan trang bi.',
+  rank_too_low: 'Con đạt hạng Bạc rồi mới mua được nhé.',
 };
 
 export async function onRequestPost(context) {
@@ -52,6 +54,14 @@ export async function onRequestPost(context) {
     return json({ ok: false, error: 'code_not_found', message: 'Ma hoc sinh khong ton tai.' }, 404);
   }
 
+  const state = await loadProgressState(env, accessCode, codeData);
+  if (computeRankLadder(state).tier_index < 1) {
+    return json(
+      { ok: false, error: 'rank_too_low', message: ERROR_MESSAGES.rank_too_low },
+      403,
+    );
+  }
+
   const slot = MONSTER_SLOTS.find((candidate) =>
     (MONSTER_MANIFEST[candidate] || []).some((part) => part.id === partId));
   if (['effects', 'frame'].includes(slot) && env.PUBLIC_R2L_W7 !== '1') {
@@ -61,7 +71,6 @@ export async function onRequestPost(context) {
     );
   }
 
-  const state = await loadProgressState(env, accessCode, codeData);
   const kv = progressNamespace(env);
   const raw = kv ? await kv.get(progressKey(accessCode), { type: 'json' }) : null;
   const shopState = hydrateShopState(state, raw);

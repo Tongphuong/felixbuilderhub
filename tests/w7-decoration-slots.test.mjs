@@ -34,6 +34,8 @@ function makeProgress(overrides = {}) {
     coins: 2000,
     avatar_stage: 'custom',
     unlocked_parts: [],
+    rank_points: 9,
+    rank_ladder: { tier_index: 1 },
     avatar: {
       enabled: true,
       monster: { ...BASIC_MONSTER_CONFIG },
