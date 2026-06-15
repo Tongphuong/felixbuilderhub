@@ -30,6 +30,7 @@ const MONSTER_MANIFEST = BASE_MONSTER_MANIFEST as Record<
   MonsterSlot,
   Array<{ id: string; file: string; rarity?: 'common' | 'rare' | 'epic' }>
 >;
+const W7_BUILD_ENABLED = import.meta.env.PUBLIC_R2L_W7 === '1';
 
 export type MonsterConfig = {
   body: string;
@@ -88,6 +89,16 @@ const SLOT_LABELS_VI: Record<MonsterSlot, string> = {
 };
 
 const loadedImages = new Set<string>();
+
+function w7DecorationsEnabled(): boolean {
+  if (W7_BUILD_ENABLED) return true;
+  if (typeof window === 'undefined') return false;
+  try {
+    return window.localStorage.getItem('PUBLIC_R2L_W7') === '1';
+  } catch {
+    return false;
+  }
+}
 
 function partFile(slot: MonsterSlot, partId: string): string | null {
   const parts = MONSTER_MANIFEST[slot] || [];
@@ -443,6 +454,7 @@ function renderDecorationLayer(
   slot: 'effects' | 'frame',
   partId: string | undefined,
 ) {
+  if (!w7DecorationsEnabled()) return;
   const src = decorationFile(slot, partId);
   if (!src || !partId) return;
   const img = loadPartImage(src);

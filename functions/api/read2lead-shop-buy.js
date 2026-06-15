@@ -52,6 +52,15 @@ export async function onRequestPost(context) {
     return json({ ok: false, error: 'code_not_found', message: 'Ma hoc sinh khong ton tai.' }, 404);
   }
 
+  const slot = MONSTER_SLOTS.find((candidate) =>
+    (MONSTER_MANIFEST[candidate] || []).some((part) => part.id === partId));
+  if (['effects', 'frame'].includes(slot) && env.PUBLIC_R2L_W7 !== '1') {
+    return json(
+      { ok: false, error: 'w7_disabled', message: 'Tạm thời chưa mở' },
+      400,
+    );
+  }
+
   const state = await loadProgressState(env, accessCode, codeData);
   const kv = progressNamespace(env);
   const raw = kv ? await kv.get(progressKey(accessCode), { type: 'json' }) : null;
@@ -69,8 +78,6 @@ export async function onRequestPost(context) {
   }
 
   const rarity = getPartRarity(partId);
-  const slot = MONSTER_SLOTS.find((candidate) =>
-    (MONSTER_MANIFEST[candidate] || []).some((part) => part.id === partId));
   const unlocked = new Set(result.state.unlocked_parts || []);
   const currentMonster = result.state.avatar?.monster || {};
   const monster = { ...BASIC_MONSTER_CONFIG };
