@@ -6,6 +6,8 @@ import {
   applyPackPenalty,
   awardPendingChest,
   awardRankPoints,
+  buildLearningMetricEntry,
+  calculateAttentionScore,
   computeRankUp,
   computeSeasonLadder,
   loadProgressState,
@@ -222,6 +224,15 @@ async function submitV2Lesson({
     activity_results: activityResults,
     rewards_earned: rewardsEarned,
   };
+  const learningMetric = passed
+    ? buildSubmitLearningMetric({
+        currentPack,
+        submittedAnswers,
+        submittedAt,
+        scorePercent,
+      })
+    : null;
+  if (learningMetric) attempt.learning_metric = learningMetric;
   const webAttempts = [
     ...(Array.isArray(currentPack.web_attempts) ? currentPack.web_attempts : []),
     attempt,
@@ -287,6 +298,7 @@ async function submitV2Lesson({
     rewardsEarned,
     activityResults,
     scorePercent,
+    learningMetric,
   });
   const rankAward = stateResult.already_counted
     ? { state: stateResult.state, awarded: 0 }
@@ -451,6 +463,40 @@ export function evaluateSpeakingGate(activityResults, expectedTypes) {
     (result) => result && Number(result.score_percent) >= SPEAKING_PASS_PERCENT,
   );
   return { passed, skipped };
+}
+
+function buildSubmitLearningMetric({
+  currentPack,
+  submittedAnswers,
+  submittedAt,
+  scorePercent,
+}) {
+  const raw = submittedAnswers?.learning_metrics && typeof submittedAnswers.learning_metrics === 'object'
+    ? submittedAnswers.learning_metrics
+    : {};
+  const startedAt = raw.started_at || currentPack?.created_at || submittedAt;
+  const events = Array.isArray(raw.events) ? raw.events.slice(-80) : [];
+  const retryFromAttempts = (Array.isArray(currentPack?.web_attempts) ? currentPack.web_attempts : [])
+    .filter((attempt) => attempt?.passed !== true)
+    .length;
+  const retryFromClient = Math.max(0, Math.floor(Number(raw.retry_count) || 0));
+  const retryCount = Math.max(retryFromAttempts, retryFromClient);
+  const attentionScore = raw.attention_score != null
+    ? raw.attention_score
+    : calculateAttentionScore({
+        startedAt,
+        endedAt: submittedAt,
+        events,
+      });
+
+  return buildLearningMetricEntry({
+    packId: currentPack?.pack_id,
+    startedAt,
+    passedAt: submittedAt,
+    scorePercent,
+    retryCount,
+    attentionScore,
+  });
 }
 
 async function finalizeWithoutReward({

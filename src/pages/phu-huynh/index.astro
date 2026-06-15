@@ -235,6 +235,47 @@ import Footer from '../../components/Footer.astro';
       color: #3d6fd4;
     }
 
+    .parent-quality-alert {
+      margin-bottom: 0.75rem;
+      border-radius: 8px;
+      border: 1px solid #f0b45e;
+      background: #fff8eb;
+      padding: 0.65rem 0.75rem;
+      color: #8a4f00;
+      font-size: 0.875rem;
+      font-weight: 650;
+    }
+
+    .parent-quality-bars {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 0.45rem;
+      min-height: 4.8rem;
+      margin-top: 0.85rem;
+      align-items: end;
+    }
+
+    .parent-quality-bar {
+      display: flex;
+      min-height: 4.8rem;
+      align-items: flex-end;
+      border-radius: 6px;
+      background: #eef2f7;
+      padding: 0.25rem;
+    }
+
+    .parent-quality-fill {
+      display: block;
+      width: 100%;
+      min-height: 4px;
+      border-radius: 4px;
+      background: #28a47b;
+    }
+
+    .parent-quality-fill--warn {
+      background: #d66b35;
+    }
+
     .parent-story-row {
       display: flex;
       gap: 0.65rem;

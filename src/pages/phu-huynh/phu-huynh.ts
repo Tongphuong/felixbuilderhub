@@ -1,3 +1,5 @@
+import { normalizeLearningMetrics } from '../../lib/learning-metrics';
+
 type ProgressPayload = {
   ok?: boolean;
   message?: string;
@@ -125,6 +127,55 @@ function renderGrowthSection(weeklyGrowth: Record<string, unknown>) {
   return `
     <p class="parent-muted">${escapeHtml(weeklyGrowth.headline || '')}</p>
     <div class="parent-growth-bars" role="img" aria-label="Số truyện mỗi tuần">${bars}</div>
+  `;
+}
+
+function renderLearningQualitySection(rawMetrics: unknown) {
+  const metrics = normalizeLearningMetrics(rawMetrics);
+  const summary = metrics['7day_summary'];
+  const firstTryPercent = Math.round(summary.first_try_pass_rate * 100);
+  const attention = Math.round(summary.avg_attention_score || 0);
+  const retry = Number(summary.avg_retry_count || 0).toFixed(1);
+  const recent = metrics.packs_history.slice(0, 7);
+  const bars = recent.length
+    ? recent.map((entry) => {
+        const value = Math.max(4, Math.min(100, Math.round(entry.attention_score || 0)));
+        return `
+          <div class="parent-quality-bar">
+            <span class="parent-quality-fill ${entry.suspect ? 'parent-quality-fill--warn' : ''}" style="height: ${value}%"></span>
+          </div>
+        `;
+      }).join('')
+    : '<p class="parent-muted text-sm">Chưa đủ dữ liệu nói trong 7 ngày.</p>';
+  const alert = attention > 0 && attention < 50
+    ? '<p class="parent-quality-alert">Chú ý: 7 ngày gần đây con dễ mất tập trung khi làm phần nghe/nói.</p>'
+    : '';
+
+  return `
+    <section class="parent-section" data-learning-quality>
+      <h2 class="parent-section__title">Chất lượng luyện nói 7 ngày</h2>
+      ${alert}
+      <div class="parent-stat-grid">
+        <div class="parent-stat">
+          <p class="parent-stat__value">${firstTryPercent}%</p>
+          <p class="parent-stat__label">Qua lần đầu</p>
+        </div>
+        <div class="parent-stat">
+          <p class="parent-stat__value">${retry}</p>
+          <p class="parent-stat__label">Lần thử lại</p>
+        </div>
+        <div class="parent-stat">
+          <p class="parent-stat__value">${attention}</p>
+          <p class="parent-stat__label">Tập trung</p>
+        </div>
+      </div>
+      <div class="parent-quality-bars" role="img" aria-label="Điểm tập trung từng bài">${bars}</div>
+      ${
+        summary.suspect_count
+          ? `<p class="parent-muted mt-2 text-sm">${summary.suspect_count} bài làm quá nhanh, phụ huynh nên xem lại cùng con.</p>`
+          : '<p class="parent-muted mt-2 text-sm">Không thấy dấu hiệu bấm quá nhanh trong 7 ngày.</p>'
+      }
+    </section>
   `;
 }
 
@@ -297,6 +348,7 @@ function renderDashboard(
   const read2LeadState = (data.read2lead_state || {}) as Record<string, unknown>;
   const storyProgress = (data.story_progress || {}) as Record<string, unknown>;
   const weeklyGrowth = (data.weekly_growth || {}) as Record<string, unknown>;
+  const learningMetrics = read2LeadState.learning_metrics;
   const pack = progress.current_pack as Record<string, unknown> | undefined;
   const tasks = buildWeeklyTasks(data, lesson);
 
@@ -338,6 +390,8 @@ function renderDashboard(
       <h2 class="parent-section__title">Tiến bộ theo tuần</h2>
       ${renderGrowthSection(weeklyGrowth)}
     </section>
+
+    ${renderLearningQualitySection(learningMetrics)}
 
     <section class="parent-section parent-section--highlight">
       <h2 class="parent-section__title">Việc cho tuần này</h2>

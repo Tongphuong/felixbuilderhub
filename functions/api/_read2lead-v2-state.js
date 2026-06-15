@@ -115,6 +115,11 @@ export const LEVEL_GATE_HINT_VI =
 
 const RANK_APEX_THRESHOLD = rankApexThreshold();
 const CHEST_HISTORY_LIMIT = 50;
+const LEARNING_HISTORY_LIMIT = 50;
+const LEARNING_WINDOW_MS = 7 * 24 * 60 * 60 * 1000;
+const ATTENTION_EVENT_WINDOW_MS = 10000;
+export const SUSPECT_PACK_TIME_MS = 30000;
+export const SUSPECT_PACK_SCORE_PERCENT = 50;
 const COMBO_XU_CAP_PER_PACK = 5;
 const DAILY_LOGIN_CHEST_BASE = 5;
 const DAILY_LOGIN_CHEST_PER_STREAK = 2;
@@ -680,6 +685,139 @@ function normalizePendingCeremony(raw) {
   };
 }
 
+function clampPercent(value) {
+  const parsed = Number(value);
+  if (!Number.isFinite(parsed)) return 0;
+  return Math.max(0, Math.min(100, Math.round(parsed)));
+}
+
+export function isSuspectLearningPack({ timeToPassMs, scorePercent }) {
+  const time = Number(timeToPassMs);
+  const score = Number(scorePercent);
+  return Number.isFinite(time)
+    && Number.isFinite(score)
+    && time < SUSPECT_PACK_TIME_MS
+    && score >= SUSPECT_PACK_SCORE_PERCENT;
+}
+
+export function calculateAttentionScore({
+  startedAt,
+  endedAt,
+  events = [],
+  eventWindowMs = ATTENTION_EVENT_WINDOW_MS,
+} = {}) {
+  const start = Date.parse(String(startedAt || ''));
+  const end = Date.parse(String(endedAt || ''));
+  if (!Number.isFinite(start) || !Number.isFinite(end) || end <= start) return 0;
+  const windows = (Array.isArray(events) ? events : [])
+    .map((event) => {
+      const ts = Date.parse(String(event?.ts || ''));
+      if (!Number.isFinite(ts)) return null;
+      return [Math.max(start, ts), Math.min(end, ts + eventWindowMs)];
+    })
+    .filter((window) => Array.isArray(window) && window[1] > window[0])
+    .sort((a, b) => a[0] - b[0]);
+  if (!windows.length) return 0;
+
+  let activeMs = 0;
+  let [currentStart, currentEnd] = windows[0];
+  for (const [from, to] of windows.slice(1)) {
+    if (from <= currentEnd) {
+      currentEnd = Math.max(currentEnd, to);
+    } else {
+      activeMs += currentEnd - currentStart;
+      currentStart = from;
+      currentEnd = to;
+    }
+  }
+  activeMs += currentEnd - currentStart;
+  return clampPercent((activeMs / (end - start)) * 100);
+}
+
+function normalizeLearningEntry(raw) {
+  if (!raw || typeof raw !== 'object') return null;
+  const packId = String(raw.pack_id || '').trim();
+  if (!packId) return null;
+  return {
+    pack_id: packId,
+    started_at: typeof raw.started_at === 'string' ? raw.started_at : null,
+    passed_at: typeof raw.passed_at === 'string' ? raw.passed_at : null,
+    score: Math.max(0, Math.min(1, Number(raw.score) || 0)),
+    retry_count: Math.max(0, Math.floor(Number(raw.retry_count) || 0)),
+    attention_score: clampPercent(raw.attention_score),
+    time_to_pass_ms: Math.max(0, Math.floor(Number(raw.time_to_pass_ms) || 0)),
+    suspect: raw.suspect === true,
+  };
+}
+
+export function summarizeLearningMetrics(history = [], nowIso = new Date().toISOString()) {
+  const now = Date.parse(String(nowIso || ''));
+  const cutoff = Number.isFinite(now) ? now - LEARNING_WINDOW_MS : 0;
+  const recent = (Array.isArray(history) ? history : []).filter((entry) => {
+    const ts = Date.parse(String(entry?.passed_at || entry?.started_at || ''));
+    return Number.isFinite(ts) && (!cutoff || ts >= cutoff);
+  });
+  const count = recent.length;
+  const retryTotal = recent.reduce((sum, entry) => sum + Math.max(0, Number(entry.retry_count) || 0), 0);
+  const attentionTotal = recent.reduce((sum, entry) => sum + clampPercent(entry.attention_score), 0);
+  return {
+    first_try_pass_rate: count
+      ? Math.round((recent.filter((entry) => Number(entry.retry_count || 0) === 0).length / count) * 100) / 100
+      : 0,
+    avg_retry_count: count ? Math.round((retryTotal / count) * 100) / 100 : 0,
+    avg_attention_score: count ? Math.round(attentionTotal / count) : 0,
+    suspect_count: recent.filter((entry) => entry.suspect === true).length,
+    calculated_at: Number.isFinite(now) ? new Date(now).toISOString() : new Date().toISOString(),
+  };
+}
+
+export function normalizeLearningMetrics(raw, nowIso = new Date().toISOString()) {
+  const history = Array.isArray(raw?.packs_history)
+    ? raw.packs_history.map(normalizeLearningEntry).filter(Boolean).slice(0, LEARNING_HISTORY_LIMIT)
+    : [];
+  return {
+    packs_history: history,
+    '7day_summary': summarizeLearningMetrics(history, nowIso),
+  };
+}
+
+export function buildLearningMetricEntry({
+  packId,
+  startedAt,
+  passedAt,
+  scorePercent,
+  retryCount,
+  attentionScore,
+}) {
+  const start = Date.parse(String(startedAt || ''));
+  const pass = Date.parse(String(passedAt || ''));
+  const timeToPassMs = Number.isFinite(start) && Number.isFinite(pass) && pass >= start ? pass - start : 0;
+  return {
+    pack_id: String(packId || '').trim(),
+    started_at: Number.isFinite(start) ? new Date(start).toISOString() : null,
+    passed_at: Number.isFinite(pass) ? new Date(pass).toISOString() : null,
+    score: clampPercent(scorePercent) / 100,
+    retry_count: Math.max(0, Math.floor(Number(retryCount) || 0)),
+    attention_score: clampPercent(attentionScore),
+    time_to_pass_ms: timeToPassMs,
+    suspect: isSuspectLearningPack({ timeToPassMs, scorePercent }),
+  };
+}
+
+export function appendLearningMetric(rawMetrics, rawEntry, nowIso = new Date().toISOString()) {
+  const metrics = normalizeLearningMetrics(rawMetrics, nowIso);
+  const entry = normalizeLearningEntry(rawEntry);
+  if (!entry) return metrics;
+  const history = [
+    entry,
+    ...metrics.packs_history.filter((item) => item.pack_id !== entry.pack_id),
+  ].slice(0, LEARNING_HISTORY_LIMIT);
+  return {
+    packs_history: history,
+    '7day_summary': summarizeLearningMetrics(history, nowIso),
+  };
+}
+
 export function normalizeProgressState(raw, { accessCode, codeData = null, nowIso = new Date().toISOString() } = {}) {
   const profile = codeData?.student_profile || {};
   const legacyProgress = codeData?.progress || {};
@@ -763,6 +901,7 @@ export function normalizeProgressState(raw, { accessCode, codeData = null, nowIs
     pending_chest: normalizePendingChest(raw?.pending_chest),
     chest_history: normalizeChestHistory(raw?.chest_history),
     daily_login_chest: normalizeDailyLoginChest(raw?.daily_login_chest),
+    learning_metrics: normalizeLearningMetrics(raw?.learning_metrics, nowIso),
     combo_lifetime_xu: numberOrZero(raw?.combo_lifetime_xu),
     unlocked_parts: unlockedParts,
     avatar_stage: avatarStage,
@@ -986,6 +1125,7 @@ export function applyPackCompletion(
     rewardsEarned = {},
     activityResults = [],
     scorePercent = null,
+    learningMetric = null,
   } = {},
 ) {
   const id = String(packId || '').trim();
@@ -1068,6 +1208,9 @@ export function applyPackCompletion(
     last_activity_at: completedAt,
     voice_attempts: voiceAttempts,
     pack_history: nextPackHistory,
+    learning_metrics: learningMetric
+      ? appendLearningMetric(state.learning_metrics, learningMetric, completedAt)
+      : normalizeLearningMetrics(state.learning_metrics, completedAt),
     ...(levelGateHintVi ? { level_gate_hint_vi: levelGateHintVi } : {}),
   };
 
@@ -1372,6 +1515,7 @@ export function publicProgressState(state) {
     daily_login_chest: previewDailyLoginChest(state, vietnamDateKey()),
     pending_chest: state.pending_chest || null,
     pending_ceremony: normalizePendingCeremony(state.pending_ceremony),
+    learning_metrics: normalizeLearningMetrics(state.learning_metrics),
     ...(state.level_gate_hint_vi ? { level_gate_hint_vi: state.level_gate_hint_vi } : {}),
   };
 }
