@@ -18,6 +18,7 @@ import ReadingComprehension from '../../components/read2lead/v2/ReadingComprehen
 import RewardBurst from '../../components/read2lead/v2/RewardBurst.astro';
 import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro';
 import retellGuideSrc from '../../../functions/api/_read2lead-retell-guide.js?raw';
+import dictationHelperSrc from '../../lib/read2lead-dictation.ts?raw';
 import { r2lRecorderScriptSrc } from '../../scripts/r2l-recorder-script.mjs';
 import '../../styles/r2l-w2-dynamic.css';
 
@@ -25,6 +26,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
 const retellGuideInline = retellGuideSrc
   .replace(/^export function /gm, 'function ')
   .replace(/^export const /gm, 'const ');
+const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 'function ');
 ---
 
 <BaseLayout
@@ -365,6 +367,16 @@ const retellGuideInline = retellGuideSrc
     border-color: rgb(239 68 68 / 0.7);
     background: rgb(239 68 68 / 0.12);
     animation: pulse-hint 0.6s ease-in-out;
+  }
+
+  [data-order-card][data-dictation-locked='true'] .r2l-order-slots,
+  [data-order-card][data-dictation-locked='true'] [data-order-tokens] {
+    opacity: 0.45;
+  }
+
+  [data-order-card][data-dictation-locked='true'] .r2l-order-slot,
+  [data-order-card][data-dictation-locked='true'] .r2l-token {
+    cursor: not-allowed;
   }
 
   @keyframes pulse-hint {
@@ -821,6 +833,8 @@ function _r2lBuildRetellTemplate(lesson) {
 }
 `} />
 
+<script is:inline set:html={dictationHelperInline} />
+
 <script is:inline>
   /* ----- W4.4 SFX library ----- */
   const SFX = {
@@ -948,7 +962,7 @@ function _r2lBuildRetellTemplate(lesson) {
 
   const MINNY_COMMANDS = {
     listening_fill_blank: 'Con nghe rồi chọn cụm từ còn thiếu nhé!',
-    listen_and_order: 'Con bấm từ theo đúng thứ tự câu nhé!',
+    listen_and_order: 'Con nghe câu rồi bấm từ theo đúng thứ tự nhé!',
     reading_comprehension: 'Con đọc truyện rồi chọn đáp án đúng!',
     written_response: 'Con viết 1–2 câu tiếng Anh nhé!',
     listen_and_speak: 'Nghe rồi nói lại cho Minny nghe nhé!',
@@ -973,8 +987,8 @@ function _r2lBuildRetellTemplate(lesson) {
       stuck: 'Bấm Nghe lại nếu chưa rõ',
     },
     listen_and_order: {
-      doing: (n, total) => `Phần ${n}/${total}: Xếp câu — sắp xếp từ thành câu đúng`,
-      needs: 'Bấm từng từ theo đúng thứ tự',
+      doing: (n, total) => `Phần ${n}/${total}: Nghe và xếp câu — sắp xếp từ thành câu đúng`,
+      needs: 'Bấm Nghe câu, rồi bấm từng từ theo đúng thứ tự',
       stuck: 'Bấm Nghe câu gốc để nhớ lại',
     },
     reading_comprehension: {
@@ -4456,11 +4470,14 @@ function _r2lBuildRetellTemplate(lesson) {
         ${(activity.items || [])
           .map(
             (item, itemIndex) => `
-              <article class="rounded-md border border-cream/10 bg-navy-950/45 p-4" data-order-card="${itemIndex}">
+              <article class="rounded-md border border-cream/10 bg-navy-950/45 p-4" data-order-card="${itemIndex}" data-dictation-locked="true">
                 <div class="flex flex-wrap items-center justify-between gap-2">
                   <p class="font-bold text-cream">Câu ${itemIndex + 1}</p>
                   <button class="r2l-primary" type="button" data-play-order="${itemIndex}">Nghe câu</button>
                 </div>
+                <p class="mt-2 text-sm font-semibold text-gold" data-dictation-status="${itemIndex}">
+                  Bước 1: Con nghe câu trước nhé.
+                </p>
                 <p class="mt-2 text-sm text-cream/65">${escapeHtml(item.translation_vi || '')}</p>
                 <div class="mt-3">
                   <p class="mb-2 text-xs font-semibold uppercase tracking-wide text-cream/55">${escapeHtml(touchOrderHint)}</p>
@@ -4481,7 +4498,7 @@ function _r2lBuildRetellTemplate(lesson) {
                       .join('')}
                   </div>
                 </div>
-                <div class="mt-3 flex flex-wrap gap-2">
+                <div class="mt-3 flex flex-wrap gap-2" data-order-tokens="${itemIndex}">
                   ${(item.scrambled_tokens || [])
                     .map(
                       (token, tokenIndex) => `
@@ -4507,12 +4524,14 @@ function _r2lBuildRetellTemplate(lesson) {
     const picked = {};
     const wrongSignatures = {};
     const itemWrongCounts = new Map();
+    const heard = new Set();
     let draggedToken = null;
 
     function saveOrderProgress() {
       patchActivityProgress(activity.type, {
         solved: Array.from(solved),
         attempted: Array.from(attempted),
+        heard: Array.from(heard),
         wrong_count: wrongCount,
         picked: JSON.parse(JSON.stringify(picked)),
       });
@@ -4522,6 +4541,8 @@ function _r2lBuildRetellTemplate(lesson) {
     if (savedOrder) {
       (savedOrder.solved || []).forEach((itemIndex) => solved.add(itemIndex));
       (savedOrder.attempted || []).forEach((itemIndex) => attempted.add(itemIndex));
+      normalizeDictationHeard(savedOrder.heard, (activity.items || []).length)
+        .forEach((itemIndex) => heard.add(itemIndex));
       wrongCount = Number(savedOrder.wrong_count || 0);
       Object.entries(savedOrder.picked || {}).forEach(([itemIndex, slots]) => {
         picked[itemIndex] = Array.isArray(slots) ? slots.slice() : slots;
@@ -4532,6 +4553,41 @@ function _r2lBuildRetellTemplate(lesson) {
         }
       });
     }
+
+    function updateDictationGate(itemIndex) {
+      const item = activity.items[itemIndex];
+      const url = item?.audio_url || '';
+      const hasAudio = Boolean(url) && !isRewardSfxUrl(url);
+      const hasProgress = solved.has(itemIndex)
+        || attempted.has(itemIndex)
+        || hasDictationProgress(picked[itemIndex]);
+      const unlocked = canUseDictationItem({
+        hasAudio,
+        heard: heard.has(itemIndex),
+        hasProgress,
+      });
+      const card = root.querySelector(`[data-order-card="${itemIndex}"]`);
+      const status = root.querySelector(`[data-dictation-status="${itemIndex}"]`);
+      if (card) card.dataset.dictationLocked = unlocked ? 'false' : 'true';
+      if (status) {
+        status.textContent = !hasAudio
+          ? 'Câu này chưa có audio. Con vẫn có thể xếp từ nhé.'
+          : unlocked
+            ? 'Đã nghe. Con xếp từ theo đúng thứ tự nhé.'
+            : 'Bước 1: Con nghe câu trước nhé.';
+      }
+      root.querySelectorAll(`[data-order-slot="${itemIndex}"]`).forEach((slot) => {
+        slot.disabled = !unlocked || attempted.has(itemIndex);
+        if (!unlocked) slot.draggable = false;
+      });
+      root.querySelectorAll(`[data-order-item="${itemIndex}"]`).forEach((button) => {
+        button.disabled = !unlocked || attempted.has(itemIndex);
+        button.draggable = unlocked && !attempted.has(itemIndex);
+      });
+      return unlocked;
+    }
+
+    (activity.items || []).forEach((_, itemIndex) => updateDictationGate(itemIndex));
 
     function afterCheck(itemIndex) {
       if (attempted.size === (activity.items || []).length) {
@@ -4582,21 +4638,30 @@ function _r2lBuildRetellTemplate(lesson) {
     }
 
     root.querySelectorAll('[data-play-order]').forEach((button) => {
-      const item = activity.items[Number(button.dataset.playOrder)];
+      const itemIndex = Number(button.dataset.playOrder);
+      const item = activity.items[itemIndex];
       const url = item?.audio_url || '';
       setLessonPlayButtonState(button, url);
-      button.addEventListener('click', () => playAudio(url, button));
+      button.addEventListener('click', () => {
+        heard.add(itemIndex);
+        button.dataset.audioDefaultLabel = 'Nghe lại';
+        updateDictationGate(itemIndex);
+        saveOrderProgress();
+        const liveRegion = document.querySelector('[data-dictation-live]');
+        if (liveRegion) liveRegion.textContent = `Đã mở câu ${itemIndex + 1}. Con bắt đầu xếp từ nhé.`;
+        playAudio(url, button);
+      });
     });
     root.querySelectorAll('[data-order-slot]').forEach((slot) => {
       const itemIndex = Number(slot.dataset.orderSlot);
       const slotIndex = Number(slot.dataset.slotIndex);
       slot.addEventListener('click', () => {
-        if (attempted.has(itemIndex)) return;
+        if (attempted.has(itemIndex) || !updateDictationGate(itemIndex)) return;
         removeOrderToken(root, activity, picked, itemIndex, slotIndex, solved);
         saveOrderProgress();
       });
       slot.addEventListener('dragstart', (event) => {
-        if (attempted.has(itemIndex)) return;
+        if (attempted.has(itemIndex) || !updateDictationGate(itemIndex)) return;
         const st = picked[itemIndex] || [];
         const tokenIndex = st[slotIndex];
         if (tokenIndex == null) return;
@@ -4604,6 +4669,7 @@ function _r2lBuildRetellTemplate(lesson) {
         event.dataTransfer?.setData('text/plain', JSON.stringify(draggedToken));
       });
       slot.addEventListener('dragover', (event) => {
+        if (!updateDictationGate(itemIndex)) return;
         event.preventDefault();
         slot.dataset.dropActive = 'true';
       });
@@ -4613,7 +4679,7 @@ function _r2lBuildRetellTemplate(lesson) {
       slot.addEventListener('drop', (event) => {
         event.preventDefault();
         slot.dataset.dropActive = 'false';
-        if (attempted.has(itemIndex)) return;
+        if (attempted.has(itemIndex) || !updateDictationGate(itemIndex)) return;
         const payload = readOrderDragPayload(event, draggedToken);
         if (!payload || payload.itemIndex !== itemIndex) return;
         placeOrderToken(root, activity, picked, itemIndex, payload.tokenIndex, slotIndex, solved);
@@ -4630,8 +4696,13 @@ function _r2lBuildRetellTemplate(lesson) {
     });
     root.querySelectorAll('[data-order-item]').forEach((button) => {
       button.addEventListener('dragstart', (event) => {
+        const itemIndex = Number(button.dataset.orderItem);
+        if (!updateDictationGate(itemIndex)) {
+          event.preventDefault();
+          return;
+        }
         draggedToken = {
-          itemIndex: Number(button.dataset.orderItem),
+          itemIndex,
           tokenIndex: Number(button.dataset.tokenIndex),
           fromSlot: null,
         };
@@ -4642,12 +4713,12 @@ function _r2lBuildRetellTemplate(lesson) {
       });
       button.addEventListener('click', () => {
         const itemIndex = Number(button.dataset.orderItem);
-        if (attempted.has(itemIndex)) return;
+        if (attempted.has(itemIndex) || !updateDictationGate(itemIndex)) return;
         const tokenIndex = Number(button.dataset.tokenIndex);
         const item = activity.items[itemIndex];
         const st = ensureOrderState(picked, itemIndex, item.scrambled_tokens.length);
         if (st.includes(tokenIndex)) return;
-        const firstEmptySlot = st.findIndex((value) => value == null);
+        const firstEmptySlot = firstEmptyDictationSlot(st);
         if (firstEmptySlot === -1) return;
         placeOrderToken(root, activity, picked, itemIndex, tokenIndex, firstEmptySlot, solved);
         checkOrderItem(root, activity, picked, wrongSignatures, solved, itemIndex, () => {
@@ -4750,13 +4821,18 @@ function _r2lBuildRetellTemplate(lesson) {
       slot.textContent = tokenIndex == null ? `Ô ${slotIndex + 1}` : item.scrambled_tokens[tokenIndex];
       slot.dataset.filled = tokenIndex == null ? 'false' : 'true';
       slot.dataset.correct = isCorrect ? 'true' : 'false';
-      slot.draggable = tokenIndex != null && !isCorrect;
+      const locked = root.querySelector(`[data-order-card="${itemIndex}"]`)?.dataset.dictationLocked === 'true';
+      slot.disabled = locked || isCorrect;
+      slot.draggable = !locked && tokenIndex != null && !isCorrect;
     });
     root.querySelectorAll(`[data-order-item="${itemIndex}"]`).forEach((button) => {
       const tokenIndex = Number(button.dataset.tokenIndex);
       const pickedAlready = state.includes(tokenIndex);
       button.hidden = pickedAlready;
       button.dataset.picked = pickedAlready ? 'true' : 'false';
+      const locked = root.querySelector(`[data-order-card="${itemIndex}"]`)?.dataset.dictationLocked === 'true';
+      button.disabled = locked || isCorrect;
+      button.draggable = !locked && !isCorrect;
     });
   }
 
