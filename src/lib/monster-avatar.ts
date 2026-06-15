@@ -194,6 +194,7 @@ function injectMonsterStyles() {
       top: 50%;
       width: 124%;
       height: 124%;
+      max-width: none;
       translate: -50% -50%;
       z-index: 0;
     }
@@ -202,6 +203,7 @@ function injectMonsterStyles() {
       top: 50%;
       width: 130%;
       height: 130%;
+      max-width: none;
       translate: -50% -50%;
       z-index: 2;
     }

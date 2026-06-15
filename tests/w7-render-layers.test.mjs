@@ -71,10 +71,12 @@ test('decoration layers are non-interactive and scale beyond the portrait', () =
   );
   assert.match(frameCss, /left: 50%;[\s\S]*?top: 50%;/);
   assert.match(frameCss, /width: 124%;[\s\S]*?height: 124%;/);
+  assert.match(frameCss, /max-width: none;/);
   assert.match(frameCss, /translate: -50% -50%;/);
   assert.doesNotMatch(frameCss, /inset:/);
   assert.match(effectsCss, /left: 50%;[\s\S]*?top: 50%;/);
   assert.match(effectsCss, /width: 130%;[\s\S]*?height: 130%;/);
+  assert.match(effectsCss, /max-width: none;/);
   assert.match(effectsCss, /translate: -50% -50%;/);
   assert.doesNotMatch(effectsCss, /inset:/);
 });
