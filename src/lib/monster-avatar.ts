@@ -190,15 +190,19 @@ function injectMonsterStyles() {
       object-fit: contain;
     }
     .r2l-monster__frame-layer {
-      inset: -12%;
+      left: 50%;
+      top: 50%;
       width: 124%;
       height: 124%;
+      translate: -50% -50%;
       z-index: 0;
     }
     .r2l-monster__effects-layer {
-      inset: -15%;
+      left: 50%;
+      top: 50%;
       width: 130%;
       height: 130%;
+      translate: -50% -50%;
       z-index: 2;
     }
     .r2l-monster__effects-layer[data-rarity="rare"] {
