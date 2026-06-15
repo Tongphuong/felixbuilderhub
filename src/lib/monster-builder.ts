@@ -113,6 +113,11 @@ function partNameVi(slot: MonsterSlot, partId: string): string {
     red: 'đỏ',
     white: 'trắng',
     yellow: 'vàng',
+    pink: 'hồng',
+    purple: 'tím',
+    orange: 'cam',
+    gold: 'vàng kim',
+    grey: 'xám',
   };
   const color = Object.keys(colorLabels).find((key) => partId.includes(`-${key}`));
   const detailLabels: Record<string, string> = {
