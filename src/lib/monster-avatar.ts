@@ -1,10 +1,10 @@
 import {
   MONSTER_COLORS,
-  MONSTER_MANIFEST,
-  MONSTER_SLOTS,
+  MONSTER_MANIFEST as BASE_MONSTER_MANIFEST,
+  MONSTER_SLOTS as BASE_MONSTER_SLOTS,
   type MonsterColor,
-  type MonsterSlot,
 } from './monster-manifest';
+import { getPartRarity } from './avatar-rarity';
 import {
   armDualAnchor,
   armSingleAnchors,
@@ -22,6 +22,15 @@ import {
 } from './monster-slot-layout';
 import geometryManifest from '../../public/assets/monsters/monster-parts.json';
 
+const MONSTER_SLOTS = [...BASE_MONSTER_SLOTS, 'effects', 'frame'] as const;
+export type MonsterSlot = (typeof MONSTER_SLOTS)[number];
+const CORE_MONSTER_SLOTS = ['body', 'eyes', 'mouth', 'arms', 'detail'] as const;
+type CoreMonsterSlot = (typeof CORE_MONSTER_SLOTS)[number];
+const MONSTER_MANIFEST = BASE_MONSTER_MANIFEST as Record<
+  MonsterSlot,
+  Array<{ id: string; file: string; rarity?: 'common' | 'rare' | 'epic' }>
+>;
+
 export type MonsterConfig = {
   body: string;
   color: MonsterColor | string;
@@ -29,6 +38,8 @@ export type MonsterConfig = {
   mouth: string;
   arms: string;
   detail: string;
+  effects?: string;
+  frame?: string;
 };
 
 export type EquippedDisplayItem = {
@@ -72,6 +83,8 @@ const SLOT_LABELS_VI: Record<MonsterSlot, string> = {
   mouth: 'Miệng',
   arms: 'Tay',
   detail: 'Chi tiết',
+  effects: 'Hiệu ứng',
+  frame: 'Khung',
 };
 
 const loadedImages = new Set<string>();
@@ -80,6 +93,13 @@ function partFile(slot: MonsterSlot, partId: string): string | null {
   const parts = MONSTER_MANIFEST[slot] || [];
   const match = parts.find((part) => part.id === partId);
   return match?.file || null;
+}
+
+function decorationFile(slot: 'effects' | 'frame', partId: string | undefined): string | null {
+  if (!partId) return null;
+  const file = partFile(slot, partId);
+  if (!file) return null;
+  return file.startsWith('/') ? file : `/assets/${slot}/${file}`;
 }
 
 function geometryPart(
@@ -132,6 +152,14 @@ function injectMonsterStyles() {
       0%, 100% { transform: translateY(0) rotate(0deg); }
       50% { transform: translateY(-4px) rotate(-1deg); }
     }
+    @keyframes r2l-decoration-float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-3%); }
+    }
+    @keyframes r2l-decoration-twinkle {
+      0%, 100% { transform: translateY(0) scale(1); opacity: 0.82; }
+      50% { transform: translateY(-3%) scale(1.05); opacity: 1; }
+    }
     .r2l-monster {
       position: relative;
       display: inline-flex;
@@ -151,14 +179,40 @@ function injectMonsterStyles() {
       position: relative;
       width: 100%;
       height: 100%;
+      z-index: 1;
       transform-origin: center bottom;
       transition: transform 0.2s ease;
+    }
+    .r2l-monster__frame-layer,
+    .r2l-monster__effects-layer {
+      position: absolute;
+      pointer-events: none;
+      object-fit: contain;
+    }
+    .r2l-monster__frame-layer {
+      inset: -12%;
+      width: 124%;
+      height: 124%;
+      z-index: 0;
+    }
+    .r2l-monster__effects-layer {
+      inset: -15%;
+      width: 130%;
+      height: 130%;
+      z-index: 2;
+    }
+    .r2l-monster__effects-layer[data-rarity="rare"] {
+      animation: r2l-decoration-float 3.6s ease-in-out infinite;
+    }
+    .r2l-monster__effects-layer[data-rarity="epic"] {
+      animation: r2l-decoration-twinkle 2.4s ease-in-out infinite;
     }
     .r2l-monster:hover .r2l-monster__stack {
       transform: rotate(-2deg) scale(1.02);
     }
     @media (prefers-reduced-motion: reduce) {
       .r2l-monster:hover .r2l-monster__stack { transform: none; }
+      .r2l-monster__effects-layer { animation: none !important; }
     }
     .r2l-monster__layer {
       position: absolute;
@@ -242,7 +296,7 @@ function injectMonsterStyles() {
 
 function renderFallbackLayer(
   stack: HTMLElement,
-  slot: MonsterSlot,
+  slot: CoreMonsterSlot,
   colorHex: string,
   className: string,
   innerHtml: string,
@@ -295,7 +349,7 @@ function applyPlacementStyles(
 
 function applyPartPlacement(
   img: HTMLImageElement,
-  slot: MonsterSlot,
+  slot: CoreMonsterSlot,
   partFile: string,
   opts: { anchor?: PartAnchor; flip?: boolean; bodyBox?: BodyBox } = {},
 ) {
@@ -321,7 +375,7 @@ function applyPartPlacement(
 
 function renderPartLayer(
   stack: HTMLElement,
-  slot: MonsterSlot,
+  slot: CoreMonsterSlot,
   partId: string,
   bodyColor?: string,
   opts: { anchor?: PartAnchor; flip?: boolean; bodyBox?: BodyBox } = {},
@@ -384,6 +438,23 @@ function renderArmsLayers(stack: HTMLElement, partId: string, bodyBox?: BodyBox)
   return renderedLeft || renderedRight;
 }
 
+function renderDecorationLayer(
+  container: HTMLElement,
+  slot: 'effects' | 'frame',
+  partId: string | undefined,
+) {
+  const src = decorationFile(slot, partId);
+  if (!src || !partId) return;
+  const img = loadPartImage(src);
+  img.className = slot === 'frame'
+    ? 'r2l-monster__frame-layer'
+    : 'r2l-monster__effects-layer';
+  img.dataset.slot = slot;
+  img.dataset.rarity = getPartRarity(partId);
+  img.setAttribute('aria-hidden', 'true');
+  container.appendChild(img);
+}
+
 export function renderMonster(
   container: HTMLElement,
   config: MonsterConfig,
@@ -396,8 +467,6 @@ export function renderMonster(
   const withCosmetics = opts.withCosmetics !== false;
   const compact = opts.compactCosmetics ?? size === 'small';
   const animate = opts.animate !== false;
-  const colorHex = COLOR_HEX[config.color] || COLOR_HEX.mint;
-
   container.innerHTML = '';
   container.className = [
     'r2l-monster',
@@ -415,9 +484,11 @@ export function renderMonster(
   const stack = document.createElement('div');
   stack.className = 'r2l-monster__stack';
 
+  renderDecorationLayer(container, 'frame', config.frame);
+
   const useFallback = !hasManifestParts()
-    || ['body', 'eyes', 'mouth', 'arms', 'detail'].some(
-      (slot) => config[slot as MonsterSlot] === 'default' || !partFile(slot as MonsterSlot, config[slot as MonsterSlot]),
+    || CORE_MONSTER_SLOTS.some(
+      (slot) => config[slot] === 'default' || !partFile(slot, config[slot]),
     );
 
   if (useFallback) {
@@ -436,6 +507,7 @@ export function renderMonster(
   }
 
   container.appendChild(stack);
+  renderDecorationLayer(container, 'effects', config.effects);
 
   if (withCosmetics && COSMETIC_OVERLAYS_ENABLED) {
     const hatItem = getEquippedItem('hat', opts.equipped, opts.equippedDisplay);

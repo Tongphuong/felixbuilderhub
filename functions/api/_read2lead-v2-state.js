@@ -49,6 +49,8 @@ export const BASIC_MONSTER_CONFIG = Object.freeze({
   eyes: 'png-default-eye-blue',
   mouth: 'png-default-moutha',
   detail: '',
+  effects: '',
+  frame: '',
   color: 'mint',
 });
 
@@ -647,7 +649,12 @@ function grandfatherUnlockedAvatarParts(raw, unlockedParts) {
   if (!monster || typeof monster !== 'object') return [...unlocked];
   for (const slot of MONSTER_SLOTS) {
     const partId = String(monster[slot] || '').trim();
-    if (partId && getPartRarity(partId) !== 'common') unlocked.add(partId);
+    if (
+      partId
+      && (getPartRarity(partId) !== 'common' || ['effects', 'frame'].includes(slot))
+    ) {
+      unlocked.add(partId);
+    }
   }
   return [...unlocked];
 }
@@ -658,7 +665,11 @@ function normalizePurchasedMonster(raw, unlockedParts, accessCode) {
   const purchasedOnly = { ...BASIC_MONSTER_CONFIG };
   for (const slot of MONSTER_SLOTS) {
     const partId = String(normalized[slot] || '').trim();
-    if (partId && getPartRarity(partId) !== 'common' && unlocked.has(partId)) {
+    if (
+      partId
+      && (getPartRarity(partId) !== 'common' || ['effects', 'frame'].includes(slot))
+      && unlocked.has(partId)
+    ) {
       purchasedOnly[slot] = partId;
     }
   }
@@ -668,7 +679,7 @@ function normalizePurchasedMonster(raw, unlockedParts, accessCode) {
 function normalizePendingCeremony(raw) {
   if (!raw || typeof raw !== 'object') return null;
   const partId = String(raw.part_id || '').trim();
-  if (!partId || !['rare', 'epic'].includes(raw.rarity)) return null;
+  if (!partId || !['common', 'rare', 'epic'].includes(raw.rarity)) return null;
   return {
     part_id: partId,
     rarity: raw.rarity,
@@ -1146,6 +1157,8 @@ export function defaultMonsterForCode(accessCode, manifest = MONSTER_MANIFEST) {
     mouth: pickPart('mouth', 23),
     arms: pickPart('arms', 37),
     detail: pickPart('detail', 53),
+    effects: '',
+    frame: '',
     color: MONSTER_COLORS[(hash >> 3) % MONSTER_COLORS.length] || MONSTER_COLORS[0],
   };
 }
@@ -1154,7 +1167,7 @@ function resolveMonsterPartId(slot, partId, manifest, defaults) {
   const id = String(partId || '').trim();
   const parts = Array.isArray(manifest?.[slot]) ? manifest[slot] : [];
   if (!parts.length) return 'default';
-  if (slot === 'detail' && !id) return '';
+  if (['detail', 'effects', 'frame'].includes(slot) && !id) return '';
   if (parts.some((part) => part.id === id)) return id;
   const migrated = id.replace(/^png-double-/, 'png-default-');
   if (migrated !== id && parts.some((part) => part.id === migrated)) return migrated;
@@ -1174,6 +1187,8 @@ export function normalizeAvatarMonster(raw, accessCode, manifest = MONSTER_MANIF
     mouth: validPart('mouth', raw.mouth),
     arms: validPart('arms', raw.arms),
     detail: validPart('detail', raw.detail),
+    effects: validPart('effects', raw.effects),
+    frame: validPart('frame', raw.frame),
     color: MONSTER_COLORS.includes(color) ? color : defaults.color,
   };
 }
@@ -1183,7 +1198,11 @@ export function saveAvatarMonster(state, monster, accessCode, manifest = MONSTER
   const allowedMonster = { ...BASIC_MONSTER_CONFIG, color: monster?.color || BASIC_MONSTER_CONFIG.color };
   for (const slot of MONSTER_SLOTS) {
     const partId = String(monster?.[slot] || '').trim();
-    if (partId && getPartRarity(partId) !== 'common' && unlockedParts.has(partId)) {
+    if (
+      partId
+      && (getPartRarity(partId) !== 'common' || ['effects', 'frame'].includes(slot))
+      && unlockedParts.has(partId)
+    ) {
       allowedMonster[slot] = partId;
     }
   }

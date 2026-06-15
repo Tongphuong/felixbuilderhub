@@ -7,12 +7,13 @@ import {
   renderMonster,
   type EquippedDisplayItem,
 } from './monster-avatar';
-import type { MonsterSlot } from './monster-manifest';
 import {
   getPartRarity,
   isPartUnlocked,
   type PartRarity,
 } from './avatar-rarity';
+
+type MonsterSlot = (typeof MONSTER_SLOTS)[number];
 
 const SLOT_LABELS_VI: Record<MonsterSlot, string> = {
   body: 'Thân',
@@ -20,6 +21,8 @@ const SLOT_LABELS_VI: Record<MonsterSlot, string> = {
   mouth: 'Miệng',
   arms: 'Tay',
   detail: 'Chi tiết',
+  effects: 'Hiệu ứng',
+  frame: 'Khung',
 };
 
 type Read2LeadState = {
@@ -53,7 +56,9 @@ function partsForSlot(state: Read2LeadState, slot: MonsterSlot): MonsterPartEntr
   const parts = Array.isArray(fromState) && fromState.length
     ? fromState
     : MONSTER_MANIFEST[slot] || [];
-  return slot === 'detail' ? [{ id: '', file: '' }, ...parts] : parts;
+  return ['detail', 'effects', 'frame'].includes(slot)
+    ? [{ id: '', file: '' }, ...parts]
+    : parts;
 }
 
 export function getAvailablePartsForSlot(
@@ -66,6 +71,8 @@ export function getAvailablePartsForSlot(
     mouth: 'png-default-moutha',
     arms: 'png-default-arm-whitea',
     detail: '',
+    effects: '',
+    frame: '',
   };
   const defaultId = state.monster_basic_defaults?.[slot] ?? basicIds[slot];
   const allParts = partsForSlot(state, slot);
@@ -74,18 +81,26 @@ export function getAvailablePartsForSlot(
   if (state.avatar_stage !== 'custom') return [basicPart];
 
   const unlocked = new Set(state.unlocked_parts || []);
+  const isDecoration = ['effects', 'frame'].includes(slot);
   return [
     basicPart,
     ...allParts.filter((part) =>
       part.id !== defaultId
-      && getPartRarity(part.id) !== 'common'
+      && part.id
+      && (isDecoration || getPartRarity(part.id) !== 'common')
       && unlocked.has(part.id)),
   ];
 }
 
 function hasLockedPartsForSlot(slot: MonsterSlot, state: Read2LeadState): boolean {
+  const unlocked = new Set(state.unlocked_parts || []);
+  const isDecoration = ['effects', 'frame'].includes(slot);
   return partsForSlot(state, slot).some(
-    (part) => getPartRarity(part.id) !== 'common' && !isPartUnlocked(state, part.id),
+    (part) => part.id && (
+      isDecoration
+        ? !unlocked.has(part.id)
+        : getPartRarity(part.id) !== 'common' && !isPartUnlocked(state, part.id)
+    ),
   );
 }
 
@@ -113,6 +128,22 @@ function partNameVi(slot: MonsterSlot, partId: string): string {
     const size = partId.includes('-large') ? ' lớn' : partId.includes('-small') ? ' nhỏ' : '';
     return `${detailLabels[kind || ''] || 'Chi tiết'}${color ? ` ${colorLabels[color]}` : ''}${size}`;
   }
+  if (slot === 'effects') {
+    const effectLabels: Record<string, string> = {
+      electric: 'Điện',
+      fire: 'Lửa',
+      heart: 'Trái tim',
+      magic: 'Phép màu',
+      spark: 'Lấp lánh',
+      star: 'Ngôi sao',
+    };
+    const kind = Object.keys(effectLabels).find((key) => partId.includes(`-${key}-`));
+    return `${effectLabels[kind || ''] || 'Hiệu ứng'}${color ? ` ${colorLabels[color]}` : ''}`;
+  }
+  if (slot === 'frame') {
+    if (partId === 'frame-rainbow') return 'Khung cầu vồng';
+    return `Khung${color ? ` ${colorLabels[color]}` : ''}`;
+  }
   return `${SLOT_LABELS_VI[slot]}${color ? ` ${colorLabels[color]}` : ''}`;
 }
 
@@ -124,13 +155,16 @@ function defaultDraft(state: Read2LeadState): MonsterConfig {
     mouth: getAvailablePartsForSlot('mouth', state)[0]?.id || 'default',
     arms: getAvailablePartsForSlot('arms', state)[0]?.id || 'default',
     detail: getAvailablePartsForSlot('detail', state)[0]?.id || '',
+    effects: getAvailablePartsForSlot('effects', state)[0]?.id || '',
+    frame: getAvailablePartsForSlot('frame', state)[0]?.id || '',
     color: state.monster_basic_defaults?.color || 'mint',
   };
   if (!monster) return draft;
   for (const slot of MONSTER_SLOTS) {
     const available = getAvailablePartsForSlot(slot, state);
-    if (available.some((part) => part.id === monster[slot])) {
-      draft[slot] = monster[slot];
+    const selected = monster[slot];
+    if (typeof selected === 'string' && available.some((part) => part.id === selected)) {
+      draft[slot] = selected;
     }
   }
   return draft;
@@ -203,7 +237,7 @@ export function mountMonsterBuilder(
     const available = getAvailablePartsForSlot(slot, shopState);
     const disabled = available.length <= 1;
     if (label) label.textContent = SLOT_LABELS_VI[slot];
-    if (value) value.textContent = partNameVi(slot, draft[slot]);
+    if (value) value.textContent = partNameVi(slot, String(draft[slot] || ''));
     row.querySelectorAll<HTMLButtonElement>('[data-monster-prev], [data-monster-next]').forEach((button) => {
       button.disabled = disabled;
       button.setAttribute('aria-disabled', String(disabled));
@@ -254,7 +288,7 @@ export function mountMonsterBuilder(
   };
 
   const choosePart = (slot: MonsterSlot, direction: -1 | 1) => {
-    const currentId = draft[slot];
+    const currentId = String(draft[slot] || '');
     const nextId = cyclePart(slot, currentId, direction, shopState);
     if (nextId === currentId) return;
     draft[slot] = nextId;

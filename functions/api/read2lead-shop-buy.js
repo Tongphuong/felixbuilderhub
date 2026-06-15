@@ -78,7 +78,10 @@ export async function onRequestPost(context) {
     const equippedPart = String(currentMonster[candidate] || '').trim();
     if (
       equippedPart
-      && getPartRarity(equippedPart) !== 'common'
+      && (
+        getPartRarity(equippedPart) !== 'common'
+        || ['effects', 'frame'].includes(candidate)
+      )
       && unlocked.has(equippedPart)
     ) {
       monster[candidate] = equippedPart;
