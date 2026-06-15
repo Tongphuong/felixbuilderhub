@@ -38,7 +38,7 @@ test('frame and effects use direct asset manifest paths', () => {
   assert.match(avatarSource, /img\.dataset\.slot = slot/);
 });
 
-test('frame stays behind the monster and effects stay in front', () => {
+test('frame stays behind the monster and foreground effects stay in front', () => {
   assert.match(
     avatarSource,
     /\.r2l-monster__frame-layer \{[\s\S]*?z-index: 0;/,
@@ -50,6 +50,10 @@ test('frame stays behind the monster and effects stay in front', () => {
   assert.match(
     avatarSource,
     /\.r2l-monster__effects-layer \{[\s\S]*?z-index: 2;/,
+  );
+  assert.match(
+    avatarSource,
+    /\.r2l-monster__effects-layer\[src\*="\/assets\/effects\/effect-spark-"\] \{[\s\S]*?z-index: 0;/,
   );
 });
 

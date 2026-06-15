@@ -207,6 +207,9 @@ function injectMonsterStyles() {
       translate: -50% -50%;
       z-index: 2;
     }
+    .r2l-monster__effects-layer[src*="/assets/effects/effect-spark-"] {
+      z-index: 0;
+    }
     .r2l-monster__effects-layer[data-rarity="rare"] {
       animation: r2l-decoration-float 3.6s ease-in-out infinite;
     }
