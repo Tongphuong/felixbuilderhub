@@ -23,6 +23,9 @@ const SLOT_LABELS_VI: Record<MonsterSlot, string> = {
   detail: 'Chi tiết',
   effects: 'Hiệu ứng',
   frame: 'Khung',
+  hat: 'Mũ',
+  pet: 'Thú cưng',
+  wings: 'Cánh',
 };
 
 type Read2LeadState = {
@@ -57,6 +60,7 @@ function partsForSlot(state: Read2LeadState, slot: MonsterSlot): MonsterPartEntr
     ? fromState
     : MONSTER_MANIFEST[slot] || [];
   return ['detail', 'effects', 'frame'].includes(slot)
+    || ['hat', 'pet', 'wings'].includes(slot)
     ? [{ id: '', file: '' }, ...parts]
     : parts;
 }
@@ -73,6 +77,9 @@ export function getAvailablePartsForSlot(
     detail: '',
     effects: '',
     frame: '',
+    hat: '',
+    pet: '',
+    wings: '',
   };
   const defaultId = state.monster_basic_defaults?.[slot] ?? basicIds[slot];
   const allParts = partsForSlot(state, slot);
@@ -82,12 +89,13 @@ export function getAvailablePartsForSlot(
 
   const unlocked = new Set(state.unlocked_parts || []);
   const isDecoration = ['effects', 'frame'].includes(slot);
+  const isV5Cosmetic = ['hat', 'pet', 'wings'].includes(slot);
   return [
     basicPart,
     ...allParts.filter((part) =>
       part.id !== defaultId
       && part.id
-      && (isDecoration || getPartRarity(part.id) !== 'common')
+      && (isV5Cosmetic || (isDecoration || getPartRarity(part.id) !== 'common'))
       && unlocked.has(part.id)),
   ];
 }
@@ -95,9 +103,10 @@ export function getAvailablePartsForSlot(
 function hasLockedPartsForSlot(slot: MonsterSlot, state: Read2LeadState): boolean {
   const unlocked = new Set(state.unlocked_parts || []);
   const isDecoration = ['effects', 'frame'].includes(slot);
+  const isV5Cosmetic = ['hat', 'pet', 'wings'].includes(slot);
   return partsForSlot(state, slot).some(
     (part) => part.id && (
-      isDecoration
+      isDecoration || isV5Cosmetic
         ? !unlocked.has(part.id)
         : getPartRarity(part.id) !== 'common' && !isPartUnlocked(state, part.id)
     ),
@@ -149,6 +158,31 @@ function partNameVi(slot: MonsterSlot, partId: string): string {
     if (partId === 'frame-rainbow') return 'Khung cầu vồng';
     return `Khung${color ? ` ${colorLabels[color]}` : ''}`;
   }
+  const cosmeticColor = Object.keys(colorLabels).find((key) => partId.endsWith(`-${key}`));
+  const cosmeticLabels: Record<string, string> = {
+    crown: 'vương miện', beanie: 'mũ len', 'party-hat': 'mũ tiệc', fez: 'mũ fez',
+    'hard-hat': 'mũ bảo hộ', bandana: 'khăn trùm', 'wizard-hat': 'mũ phù thủy',
+    sombrero: 'mũ sombrero', 'pirate-hat': 'mũ cướp biển', 'police-hat': 'mũ cảnh sát',
+    'cowboy-hat': 'mũ cao bồi', 'grad-cap': 'mũ tốt nghiệp', 'castle-crown': 'vương miện lâu đài',
+    'barbarian-helm': 'mũ barbarian', 'viking-helm': 'mũ viking', ushanka: 'mũ ushanka',
+    'jewel-crown': 'vương miện ngọc', 'astronaut-helm': 'mũ phi hành gia',
+    'jester-hat': 'mũ hề', 'crested-helm': 'mũ có mào',
+    rabbit: 'thỏ', dog: 'chó', fish: 'cá', frog: 'ếch', chick: 'gà con', turtle: 'rùa',
+    fox: 'cáo', owl: 'cú', penguin: 'chim cánh cụt', elephant: 'voi', duck: 'vịt',
+    butterfly: 'bướm', bat: 'dơi', snake: 'rắn', horse: 'ngựa',
+    'wings-fairy-blue': 'cánh tiên xanh', 'wings-fairy-pink': 'cánh tiên hồng',
+    'wings-fairy-green': 'cánh tiên xanh lá', 'wings-angel-white': 'cánh thiên thần trắng',
+    'wings-angel-gold': 'cánh thiên thần vàng', 'wings-dragon-red': 'cánh rồng đỏ',
+    'wings-bat-dark': 'cánh dơi', 'wings-rainbow': 'cánh cầu vồng',
+  };
+  if (slot === 'hat' || slot === 'pet') {
+    const kind = partId.replace(/^(hat|pet)-/, '').replace(/-[a-z]+$/, '');
+    const label = cosmeticLabels[kind] || kind.replace(/-/g, ' ');
+    return `${SLOT_LABELS_VI[slot]} ${label}${cosmeticColor ? ` ${colorLabels[cosmeticColor]}` : ''}`;
+  }
+  if (slot === 'wings') {
+    return cosmeticLabels[partId] || `Cánh ${partId.replace(/^wings-/, '').replace(/-/g, ' ')}`;
+  }
   return `${SLOT_LABELS_VI[slot]}${color ? ` ${colorLabels[color]}` : ''}`;
 }
 
@@ -162,6 +196,9 @@ function defaultDraft(state: Read2LeadState): MonsterConfig {
     detail: getAvailablePartsForSlot('detail', state)[0]?.id || '',
     effects: getAvailablePartsForSlot('effects', state)[0]?.id || '',
     frame: getAvailablePartsForSlot('frame', state)[0]?.id || '',
+    hat: getAvailablePartsForSlot('hat', state)[0]?.id || '',
+    pet: getAvailablePartsForSlot('pet', state)[0]?.id || '',
+    wings: getAvailablePartsForSlot('wings', state)[0]?.id || '',
     color: state.monster_basic_defaults?.color || 'mint',
   };
   if (!monster) return draft;
