@@ -653,9 +653,11 @@ export function renderMonster(
   if (!compact && config.pet) {
     renderTintedCosmetic(container, 'pet', config.pet, 'r2l-monster__pet');
   }
-  if (config.hat) {
-    renderTintedCosmetic(container, 'hat', config.hat, 'r2l-monster__hat');
-  }
+  // V5 hat slot disabled — Game-icons.net silhouettes contain person/head shapes that
+  // clash with monster face. Defer until proper hat-only art curated.
+  // if (config.hat) {
+  //   renderTintedCosmetic(container, 'hat', config.hat, 'r2l-monster__hat');
+  // }
 
   if (withCosmetics && COSMETIC_OVERLAYS_ENABLED) {
     const hatItem = getEquippedItem('hat', opts.equipped, opts.equippedDisplay);

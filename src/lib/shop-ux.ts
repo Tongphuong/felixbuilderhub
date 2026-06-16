@@ -189,9 +189,10 @@ const SHOP_FILTERS = [
   { slot: 'eyes', label: 'Mắt' },
   { slot: 'mouth', label: 'Miệng' },
   { slot: 'detail', label: 'Chi tiết' },
-  { slot: 'hat', label: 'Mũ' },
-  { slot: 'pet', label: 'Thú cưng' },
-  { slot: 'wings', label: 'Cánh' },
+  // V5 Track B disabled — art style conflict với Kenney monster cartoon
+  // { slot: 'hat', label: 'Mũ' },
+  // { slot: 'pet', label: 'Thú cưng' },
+  // { slot: 'wings', label: 'Cánh' },
   { slot: 'effects', label: 'Hiệu ứng' },
   { slot: 'frame', label: 'Khung' },
 ] as const;

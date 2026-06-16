@@ -70,6 +70,12 @@ export async function onRequestPost(context) {
       400,
     );
   }
+  if (['hat', 'pet', 'wings'].includes(slot)) {
+    return json(
+      { ok: false, error: 'v5_cosmetic_disabled', message: 'Tạm thời chưa mở' },
+      400,
+    );
+  }
 
   const kv = progressNamespace(env);
   const raw = kv ? await kv.get(progressKey(accessCode), { type: 'json' }) : null;

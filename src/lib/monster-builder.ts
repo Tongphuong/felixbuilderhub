@@ -291,7 +291,10 @@ export function mountMonsterBuilder(
   };
 
   const renderAll = () => {
-    for (const slot of MONSTER_SLOTS) renderSlotRow(slot);
+    for (const slot of MONSTER_SLOTS) {
+    if (['hat', 'pet', 'wings'].includes(slot)) continue;
+    renderSlotRow(slot);
+  }
     renderPreview();
     renderCosmetics();
     root.querySelector('[data-monster-basic-hint]')?.classList.toggle(
@@ -469,7 +472,7 @@ function escapeHtml(value: string) {
 }
 
 export function monsterBuilderHtml(studentName: string, shopHref: string): string {
-  const slotRows = MONSTER_SLOTS.map((slot) => `
+  const slotRows = MONSTER_SLOTS.filter((s) => !['hat', 'pet', 'wings'].includes(s)).map((slot) => `
     <div class="flex flex-wrap items-center gap-2 rounded-xl border border-cream/10 bg-navy-950/60 px-3 py-2" data-monster-slot="${slot}">
       <button type="button" data-monster-prev="${slot}" class="min-h-[44px] min-w-[44px] rounded-lg border border-cream/20 text-lg font-bold text-cream" aria-label="Trước">‹</button>
       <div class="min-w-0 flex-1 text-center">

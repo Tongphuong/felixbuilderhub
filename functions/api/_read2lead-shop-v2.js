@@ -287,20 +287,29 @@ function isPurchasableCosmeticSlot(slot) {
   return Boolean(SLOT_PRICES[slot]);
 }
 
+// V5 Track B disabled — Game-icons.net + RGS_Dev art style conflicts with
+// Kenney monster cartoon style. Defer until style-matched art curated.
+function isV5CosmeticSlot(slot) {
+  return slot === 'hat' || slot === 'pet' || slot === 'wings';
+}
+
 export function buildShopCatalog({ includeDecorations = false } = {}) {
   const items = [];
   for (const partId of listPartsByRarity('rare')) {
+    if (isV5CosmeticSlot(getPartSlot(partId))) continue;
     if (includeDecorations || !isPurchasableCosmeticSlot(getPartSlot(partId))) {
       items.push(buildCatalogItem(partId));
     }
   }
   for (const partId of listPartsByRarity('epic')) {
+    if (isV5CosmeticSlot(getPartSlot(partId))) continue;
     if (includeDecorations || !isPurchasableCosmeticSlot(getPartSlot(partId))) {
       items.push(buildCatalogItem(partId));
     }
   }
   if (includeDecorations) {
     for (const partId of listPartsByRarity('common')) {
+      if (isV5CosmeticSlot(getPartSlot(partId))) continue;
       if (isPurchasableCosmeticSlot(getPartSlot(partId))) {
         items.push(buildCatalogItem(partId));
       }

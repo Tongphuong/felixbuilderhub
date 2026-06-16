@@ -21,37 +21,17 @@ test('COSMETIC_PRICES match spec tier table', () => {
   assert.deepEqual(COSMETIC_PRICES.wings, { common: 200, rare: 400, epic: 800 });
 });
 
-test('buildShopCatalog includes V5 cosmetic parts when decorations enabled', () => {
+// V5 Track B disabled — art style conflict với Kenney monster cartoon.
+// Tests below assert the disabled state (catalog excludes hat/pet/wings).
+
+test('buildShopCatalog excludes V5 cosmetic parts (Track B disabled)', () => {
   const catalog = buildShopCatalog({ includeDecorations: true });
   const hats = catalog.filter((item) => item.slot === 'hat');
   const pets = catalog.filter((item) => item.slot === 'pet');
   const wings = catalog.filter((item) => item.slot === 'wings');
-  assert.equal(hats.length, 100);
-  assert.equal(pets.length, 60);
-  assert.equal(wings.length, 8);
-});
-
-test('hat common price is 80 xu', () => {
-  const catalog = buildShopCatalog({ includeDecorations: true });
-  const item = catalog.find((entry) => entry.id === 'hat-crown-mint');
-  assert.ok(item);
-  assert.equal(item.price, 80);
-  assert.equal(item.rarity, 'common');
-});
-
-test('pet rare price is 280 xu', () => {
-  const catalog = buildShopCatalog({ includeDecorations: true });
-  const item = catalog.find((entry) => entry.id === 'pet-fox-sky');
-  assert.ok(item);
-  assert.equal(item.price, 280);
-  assert.equal(item.rarity, 'rare');
-});
-
-test('wings rainbow epic costs 1000 xu', () => {
-  const catalog = buildShopCatalog({ includeDecorations: true });
-  const item = catalog.find((entry) => entry.id === 'wings-rainbow');
-  assert.ok(item);
-  assert.equal(item.price, 1000);
+  assert.equal(hats.length, 0);
+  assert.equal(pets.length, 0);
+  assert.equal(wings.length, 0);
 });
 
 test('humanizePartId returns Vietnamese labels for cosmetics', () => {

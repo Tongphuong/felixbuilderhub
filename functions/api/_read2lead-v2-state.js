@@ -1333,9 +1333,10 @@ export function normalizeAvatarMonster(raw, accessCode, manifest = MONSTER_MANIF
     detail: validPart('detail', raw.detail),
     effects: validPart('effects', raw.effects),
     frame: validPart('frame', raw.frame),
-    hat: validPart('hat', raw.hat),
-    pet: validPart('pet', raw.pet),
-    wings: validPart('wings', raw.wings),
+    // V5 Track B disabled — art style conflict. Force empty regardless of stored value.
+    hat: '',
+    pet: '',
+    wings: '',
     color: MONSTER_COLORS.includes(color) ? color : defaults.color,
   };
 }
