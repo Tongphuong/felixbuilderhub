@@ -249,6 +249,12 @@ const mainClass = w1Ssr
     width: 72px;
   }
 
+  /* Force cosmetic SVG silhouettes to white on dark shop card (bypasses CDN cache of black SVGs) */
+  .shop-host :global(.shop-item-art img[src*="cosmetics/hat"]),
+  .shop-host :global(.shop-item-art img[src*="cosmetics/pet"]) {
+    filter: brightness(0) invert(1);
+  }
+
   .shop-host :global(.shop-item-placeholder) {
     align-items: center;
     display: flex;
