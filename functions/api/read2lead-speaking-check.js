@@ -56,8 +56,8 @@ export function scoreTranscript(expectedText, transcript) {
     .filter((word) => word.norm && !SKIP_WORDS.has(word.norm));
 
   const transcriptWords = tokenize(transcript)
-    .map((word) => normalizeWord(word))
-    .filter(Boolean);
+    .map((word) => ({ raw: word, norm: normalizeWord(word) }))
+    .filter((word) => word.norm);
 
   const used = new Set();
   let correct = 0;
@@ -65,6 +65,7 @@ export function scoreTranscript(expectedText, transcript) {
   const wordsMissed = [];
   const wordsClose = [];
   const wordsExact = [];
+  const wordFeedback = [];
 
   for (const expectedWord of expectedWords) {
     let bestIndex = -1;
@@ -72,23 +73,32 @@ export function scoreTranscript(expectedText, transcript) {
 
     for (let index = 0; index < transcriptWords.length; index += 1) {
       if (used.has(index)) continue;
-      const similarity = wordSimilarity(expectedWord.norm, transcriptWords[index]);
+      const similarity = wordSimilarity(expectedWord.norm, transcriptWords[index].norm);
       if (similarity > bestSimilarity) {
         bestSimilarity = similarity;
         bestIndex = index;
       }
     }
 
+    const spokenWord = bestIndex >= 0 ? transcriptWords[bestIndex] : null;
     if (bestIndex >= 0 && bestSimilarity >= SIMILARITY_THRESHOLD) {
       used.add(bestIndex);
       correct += 1;
       wordsExact.push(expectedWord.raw);
+      wordFeedback.push(wordFeedbackEntry(
+        expectedWord,
+        spokenWord,
+        spokenWord?.norm === expectedWord.norm ? 'exact' : 'close',
+        bestSimilarity,
+      ));
     } else if (bestIndex >= 0 && bestSimilarity >= CLOSE_THRESHOLD) {
       used.add(bestIndex);
       close += 1;
       wordsClose.push(expectedWord.raw);
+      wordFeedback.push(wordFeedbackEntry(expectedWord, spokenWord, 'close', bestSimilarity));
     } else {
       wordsMissed.push(expectedWord.raw);
+      wordFeedback.push(wordFeedbackEntry(expectedWord, spokenWord, 'missed', bestSimilarity));
     }
   }
 
@@ -109,7 +119,29 @@ export function scoreTranscript(expectedText, transcript) {
     words_missed: wordsMissed,
     words_close: wordsClose,
     words_exact: wordsExact,
+    word_feedback: wordFeedback,
     feedback_vi: feedbackVi(scorePercent),
+  };
+}
+
+function wordFeedbackEntry(expectedWord, spokenWord, status, similarity) {
+  const expected = String(expectedWord?.raw || '');
+  const spoken = String(spokenWord?.raw || '').trim();
+  const expectedNorm = expectedWord?.norm || normalizeWord(expected);
+  const spokenNorm = spokenWord?.norm || normalizeWord(spoken);
+  return {
+    expected,
+    expected_norm: expectedNorm,
+    spoken,
+    spoken_norm: spokenNorm,
+    status,
+    similarity: Math.round((Number(similarity) || 0) * 100) / 100,
+    can_replay: true,
+    feedback_vi: status === 'exact'
+      ? `Con đọc "${expected}" rõ rồi.`
+      : spoken
+        ? `Con đọc "${spoken}", cần "${expected}".`
+        : `Con luyện lại từ "${expected}".`,
   };
 }
 

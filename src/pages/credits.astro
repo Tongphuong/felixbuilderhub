@@ -1,0 +1,25 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<BaseLayout
+  title="Credits - Felix Coaching"
+  description="Nguồn thư viện và tài nguyên dùng trong Felix Coaching."
+  robots="noindex, follow"
+>
+  <Header read2LeadState={false} />
+  <main id="main" class="flex-1 bg-[#f4f6f9] px-4 py-10 text-[#1e2a4a]">
+    <section class="mx-auto max-w-2xl">
+      <h1 class="text-3xl font-bold">Credits</h1>
+      <div class="mt-6 space-y-3 rounded-lg border border-[#d8dee8] bg-white p-5 text-sm leading-6">
+        <p>wavesurfer.js - BSD-3-Clause - waveform visualization for speaking feedback.</p>
+        <p>Howler.js - MIT - lesson audio playback.</p>
+        <p>Kenney.nl audio and visual assets - CC0, with source notes kept in the asset folders.</p>
+        <p>Game-icons.net egg assets - CC BY 3.0, credited in the egg asset folder.</p>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>

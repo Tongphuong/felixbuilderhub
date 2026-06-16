@@ -445,9 +445,15 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
     display: inline-block;
     margin: 0.15rem 0.25rem 0.15rem 0;
     border-radius: 999px;
+    border: 1px solid transparent;
     padding: 0.2rem 0.55rem;
     font-size: 0.85rem;
     font-weight: 700;
+  }
+
+  button.r2l-speaking-word {
+    cursor: pointer;
+    min-height: 44px;
   }
 
   .r2l-speaking-word[data-tone='good'] {
@@ -461,8 +467,9 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
   }
 
   .r2l-speaking-word[data-tone='miss'] {
-    background: rgb(239 68 68 / 0.14);
-    color: rgb(254 202 202);
+    border-color: rgb(239 68 68 / 0.65);
+    background: rgb(239 68 68 / 0.28);
+    color: #fee2e2;
   }
 
   .r2l-speaking-word-list {
@@ -471,6 +478,67 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
     gap: 0.35rem;
     margin-left: 0.25rem;
     vertical-align: middle;
+  }
+
+  .r2l-speaking-feedback-line {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin-top: 0.75rem;
+  }
+
+  .r2l-replay-rate-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin-top: 0.65rem;
+  }
+
+  .r2l-replay-rate {
+    min-height: 44px;
+    border-radius: 999px;
+    border: 1px solid rgb(242 204 126 / 0.45);
+    background: rgb(15 23 42 / 0.72);
+    padding: 0.25rem 0.7rem;
+    color: #f5efe0;
+    font-size: 0.8rem;
+    font-weight: 800;
+  }
+
+  .r2l-wave-panel {
+    margin-top: 0.75rem;
+    border-radius: 8px;
+    border: 1px solid rgb(245 239 224 / 0.12);
+    background: rgb(15 23 42 / 0.42);
+    padding: 0.75rem;
+  }
+
+  .r2l-wave-row {
+    display: grid;
+    grid-template-columns: 3.2rem minmax(0, 1fr);
+    gap: 0.55rem;
+    align-items: center;
+  }
+
+  .r2l-wave-row + .r2l-wave-row {
+    margin-top: 0.5rem;
+  }
+
+  .r2l-wave-label,
+  .r2l-wave-status {
+    color: rgb(245 239 224 / 0.72);
+    font-size: 0.75rem;
+    font-weight: 800;
+  }
+
+  .r2l-wave-mount {
+    min-height: 38px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .r2l-rec-indicator {
+      animation: none;
+    }
   }
 
   .r2l-minny-hero-wrap {
@@ -943,6 +1011,7 @@ function _r2lBuildRetellTemplate(lesson) {
     w1MidpointCelebrated: false,
     storyGate: { read_done: false, listen_done: false, paragraphs_played: [], card_index: 0 },
     questionOutcomes: {},
+    learningMetrics: { startedAt: new Date().toISOString(), events: [] },
   };
 
   const lessonAudioState = {
@@ -1196,6 +1265,30 @@ function _r2lBuildRetellTemplate(lesson) {
   function _r2lNextSpeakUploadSeq() {
     _r2lSpeakUploadCounter += 1;
     return _r2lSpeakUploadCounter;
+  }
+
+  function _r2lTrackLearningEvent(type) {
+    const events = state.learningMetrics?.events;
+    if (!Array.isArray(events)) return;
+    events.push({ type, ts: new Date().toISOString() });
+    if (events.length > 80) events.splice(0, events.length - 80);
+  }
+
+  function _r2lSpeakingRetryCount() {
+    let retryCount = 0;
+    _r2lRecorderState.perItem.forEach((entry) => {
+      retryCount += Number(entry?.failureCount || 0);
+    });
+    retryCount += Number(_r2lRetellState?.failureCount || 0);
+    return retryCount;
+  }
+
+  function _r2lLearningMetricPayload() {
+    return {
+      started_at: state.learningMetrics?.startedAt || new Date().toISOString(),
+      events: Array.isArray(state.learningMetrics?.events) ? state.learningMetrics.events.slice(-80) : [],
+      retry_count: _r2lSpeakingRetryCount(),
+    };
   }
 
   function _r2lSpeakUploadActive(itemKey, uploadSeq) {
@@ -1626,6 +1719,35 @@ function _r2lBuildRetellTemplate(lesson) {
       .join('')}</span>`;
   }
 
+  function _r2lSpeakingWordFeedback(words) {
+    if (!Array.isArray(words) || !words.length) return '';
+    return `<div class="r2l-speaking-feedback-line" aria-label="Nhận xét từng từ">${words
+      .map((item) => {
+        const expected = String(item?.expected || '').trim();
+        if (!expected) return '';
+        const status = item.status === 'exact' ? 'good' : item.status === 'close' ? 'close' : 'miss';
+        const label = item.feedback_vi || (status === 'good'
+          ? `Con đọc ${expected} rõ rồi.`
+          : `Nghe lại từ này: ${expected}.`);
+        if (status === 'good') {
+          return `<span class="r2l-speaking-word" data-tone="good" aria-label="${escapeHtml(label)}">${escapeHtml(expected)}</span>`;
+        }
+        return `<button type="button" class="r2l-speaking-word" data-tone="${status}" data-r2l-word-replay="${escapeHtml(expected)}" title="${escapeHtml(label)}" aria-label="Nghe lại từ này. ${escapeHtml(label)}">${escapeHtml(expected)}</button>`;
+      })
+      .join('')}</div>`;
+  }
+
+  function _r2lReplayControlsHtml(nativeAudioUrl) {
+    if (!nativeAudioUrl || isRewardSfxUrl(nativeAudioUrl)) return '';
+    return `
+      <div class="r2l-replay-rate-row" aria-label="Nghe mẫu chậm">
+        <button type="button" class="r2l-replay-rate" data-r2l-replay-rate="0.5" data-audio-url="${escapeHtml(nativeAudioUrl)}">0.5x</button>
+        <button type="button" class="r2l-replay-rate" data-r2l-replay-rate="0.75" data-audio-url="${escapeHtml(nativeAudioUrl)}">0.75x</button>
+        <button type="button" class="r2l-replay-rate" data-r2l-replay-rate="1" data-audio-url="${escapeHtml(nativeAudioUrl)}">1.0x</button>
+      </div>
+    `;
+  }
+
   function _r2lFormatReadScoreLine(result) {
     const exact = Number(result.exact_count ?? result.correct_count ?? 0);
     const close = Number(result.close_count ?? (Array.isArray(result.words_close) ? result.words_close.length : 0));
@@ -1655,7 +1777,7 @@ function _r2lBuildRetellTemplate(lesson) {
     `;
   }
 
-  function _r2lBuildSpeakingFeedbackHtml(result, { compact = false } = {}) {
+  function _r2lBuildSpeakingFeedbackHtml(result, { compact = false, nativeAudioUrl = '' } = {}) {
     if (result?.warming) {
       return `<p class="text-sm text-gold">${escapeHtml(result.message || 'Micro đã bật — chờ 3 giây rồi mới nói nhé…')}</p>`;
     }
@@ -1676,6 +1798,8 @@ function _r2lBuildRetellTemplate(lesson) {
     const missed = Array.isArray(result.words_missed) ? result.words_missed : [];
     const close = Array.isArray(result.words_close) ? result.words_close : [];
     const exact = Array.isArray(result.words_exact) ? result.words_exact : [];
+    const wordFeedback = Array.isArray(result.word_feedback) ? result.word_feedback : [];
+    const wordFeedbackHtml = wordFeedback.length ? _r2lSpeakingWordFeedback(wordFeedback) : '';
     const exactHtml = exact.length
       ? `<p class="mt-2 text-sm text-cream/75"><span class="font-semibold text-cream">Từ đúng:</span> ${_r2lSpeakingWordChips(exact, 'good')}</p>`
       : '';
@@ -1693,9 +1817,8 @@ function _r2lBuildRetellTemplate(lesson) {
       <p class="font-semibold text-gold">${escapeHtml(result.feedback_vi || '')}</p>
       <p class="mt-1 text-sm text-cream/75">${_r2lFormatReadScoreLine(result)}</p>
       ${transcriptHtml}
-      ${exactHtml}
-      ${closeHtml}
-      ${missedHtml}
+      ${wordFeedbackHtml || `${exactHtml}${closeHtml}${missedHtml}`}
+      ${_r2lReplayControlsHtml(nativeAudioUrl)}
     `;
   }
 
@@ -1705,10 +1828,32 @@ function _r2lBuildRetellTemplate(lesson) {
     if (!result) {
       slot.classList.add('hidden');
       slot.innerHTML = '';
+      _r2lMountSpeakingQuality(cardEl, null);
       return;
     }
     slot.classList.remove('hidden');
-    slot.innerHTML = _r2lBuildSpeakingFeedbackHtml(result);
+    slot.innerHTML = _r2lBuildSpeakingFeedbackHtml(result, {
+      nativeAudioUrl: cardEl?.dataset?.nativeAudioUrl || '',
+    });
+    _r2lMountSpeakingQuality(cardEl, result);
+  }
+
+  function _r2lMountSpeakingQuality(cardEl, result) {
+    const panel = cardEl?.querySelector('[data-speak-waveform]');
+    if (!panel) return;
+    const entry = _r2lRecorderState.perItem.get(cardEl.dataset.itemKey || '');
+    const nativeUrl = cardEl.dataset.nativeAudioUrl || '';
+    if (!result?.ok || !entry?.blobUrl || !nativeUrl || isRewardSfxUrl(nativeUrl)) {
+      panel.classList.add('hidden');
+      panel.innerHTML = '';
+      return;
+    }
+    panel.classList.remove('hidden');
+    void window.R2LFeedbackVisual?.mountDualWaveform?.({
+      container: panel,
+      nativeUrl,
+      kidUrl: entry.blobUrl,
+    });
   }
 
   async function _r2lScoreSpeakRecording(itemKey, cardEl, blob, telemetry = null) {
@@ -1763,6 +1908,10 @@ function _r2lBuildRetellTemplate(lesson) {
         const heroEl = cardEl.closest('[data-activity-shell="listen_and_speak"]')?.querySelector('[data-minny-hero]');
         _r2lSetMinnyMood('encourage', heroEl);
         showToast('Minny cần nghe được ít nhất 50%. Con thu lại nhé!');
+        const nativeUrl = cardEl?.dataset?.nativeAudioUrl || '';
+        if (nativeUrl && !isRewardSfxUrl(nativeUrl)) {
+          void window.R2LReplayControl?.playUrl?.(nativeUrl, 0.75);
+        }
       }
       _r2lMergeSpeakActivityScores(activityItemsFromCard(cardEl));
       _r2lMaybeOfferSpeakSkip();
@@ -2053,6 +2202,7 @@ function _r2lBuildRetellTemplate(lesson) {
       });
       try {
         recorder.start();
+        _r2lTrackLearningEvent('speak');
       } catch (startError) {
         _r2lHideCountdownOverlay();
         _r2lSafeStopMonitor(monitor);
@@ -2523,6 +2673,7 @@ function _r2lBuildRetellTemplate(lesson) {
       if (typeof onEnd === 'function') onEnd();
       return;
     }
+    _r2lTrackLearningEvent('audio');
     window.speechSynthesis.cancel();
     const utterance = new SpeechSynthesisUtterance(line);
     utterance.lang = lang;
@@ -2924,6 +3075,7 @@ function _r2lBuildRetellTemplate(lesson) {
       _r2lSetMinnyMood('listen', _r2lRetellState.heroEl);
       try {
         recorder.start();
+        _r2lTrackLearningEvent('speak');
       } catch (startError) {
         _r2lHideCountdownOverlay();
         _r2lSafeStopMonitor(monitor);
@@ -5015,14 +5167,24 @@ function _r2lBuildRetellTemplate(lesson) {
         ${(activity.items || [])
           .map(
             (item, itemIndex) => `
-              <article class="r2l-minny-sentence-card" data-speak-card="${itemIndex}">
+              <article class="r2l-minny-sentence-card" data-speak-card="${itemIndex}" data-item-key="${escapeHtml(item.id || `ls_${itemIndex}`)}" data-native-audio-url="${escapeHtml(item.audio_url || '')}">
                 <p class="r2l-minny-sentence-en">${escapeHtml(item.text_en)}</p>
                 ${item.text_vi ? `<p class="r2l-minny-sentence-vi">${escapeHtml(item.text_vi)}</p>` : ''}
                 <div class="r2l-minny-speak-actions">
                   <button type="button" class="minny-btn minny-btn--listen" data-speak-listen="${itemIndex}">🔊 Nghe</button>
                   <button type="button" class="minny-btn minny-btn--record" data-speak-record="${itemIndex}" disabled>🎤 Con nói</button>
                 </div>
+                ${
+                  item.audio_url && !isRewardSfxUrl(item.audio_url)
+                    ? `<div class="r2l-replay-rate-row" aria-label="Nghe mẫu chậm">
+                        <button type="button" class="r2l-replay-rate" data-r2l-replay-rate="0.5" data-audio-url="${escapeHtml(item.audio_url)}">0.5x</button>
+                        <button type="button" class="r2l-replay-rate" data-r2l-replay-rate="0.75" data-audio-url="${escapeHtml(item.audio_url)}">0.75x</button>
+                        <button type="button" class="r2l-replay-rate" data-r2l-replay-rate="1" data-audio-url="${escapeHtml(item.audio_url)}">1.0x</button>
+                      </div>`
+                    : ''
+                }
                 <div class="mt-3 hidden rounded-md border border-cream/10 bg-navy-950/35 p-3 text-sm text-cream/80" data-speak-feedback></div>
+                <div class="r2l-wave-panel hidden" data-speak-waveform aria-label="Sóng âm mẫu và bài đọc của con"></div>
               </article>
             `,
           )
@@ -5243,6 +5405,7 @@ function _r2lBuildRetellTemplate(lesson) {
       stopLessonAudio();
       return;
     }
+    _r2lTrackLearningEvent('audio');
     stopLessonAudio();
     const audio = new Audio(url);
     audio.preload = 'auto';
@@ -5304,6 +5467,7 @@ function _r2lBuildRetellTemplate(lesson) {
         schema_version: 2,
         activity_results: Object.values(state.activityResults),
         score_percent: calculateLessonScore().score_percent,
+        learning_metrics: _r2lLearningMetricPayload(),
       },
     };
     savePendingSubmit(payload);
@@ -5424,6 +5588,8 @@ function _r2lBuildRetellTemplate(lesson) {
   import { applyHeaderMonsterAvatar } from '../../lib/monster-avatar';
   import { calculateLessonScore as calcLessonScore, questionPoints } from '../../scripts/r2l-lesson-scoring.mjs';
   import { writtenModelAnswer } from '../../scripts/r2l-written-model-answer.mjs';
+  import { R2LFeedbackVisual } from '../../scripts/r2l-feedback-visual.js';
+  import { R2LReplayControl } from '../../scripts/r2l-replay-control.js';
   import { claimDailyChest, fireLessonPassConfetti, fireStreakConfetti, isMuted, openChest, playKenney, playSynthTone, setMuted, showComboBadge, showNearMissBanner, showXpTicker } from '../../lib/lesson-juice';
   import { bindRankUpModalClose, showRankUpModal } from '../../lib/rank-up-celebration';
   import type { RankLadderView } from '../../lib/rank-ladder-ui';
@@ -5432,6 +5598,9 @@ function _r2lBuildRetellTemplate(lesson) {
 
   window.__r2lLessonScoring = { calculateLessonScore: calcLessonScore, questionPoints };
   window.__r2lWritten = { writtenModelAnswer };
+  window.R2LFeedbackVisual = R2LFeedbackVisual;
+  window.R2LReplayControl = R2LReplayControl;
+  R2LReplayControl.bindReplayControls(document);
 
   window.__r2lJuice = {
     playSynthTone,
