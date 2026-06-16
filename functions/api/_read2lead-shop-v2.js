@@ -54,13 +54,13 @@ const SLOT_VI = {
 };
 
 const HAT_KIND_VI = {
-  crown: 'vương miện', beanie: 'mũ len', 'party-hat': 'mũ tiệc', fez: 'mũ fez',
-  'hard-hat': 'mũ bảo hộ', bandana: 'khăn trùm', 'wizard-hat': 'mũ phù thủy',
-  sombrero: 'mũ sombrero', 'pirate-hat': 'mũ cướp biển', 'police-hat': 'mũ cảnh sát',
-  'cowboy-hat': 'mũ cao bồi', 'grad-cap': 'mũ tốt nghiệp', 'castle-crown': 'vương miện lâu đài',
-  'barbarian-helm': 'mũ barbarian', 'viking-helm': 'mũ viking', ushanka: 'mũ ushanka',
-  'jewel-crown': 'vương miện ngọc', 'astronaut-helm': 'mũ phi hành gia',
-  'jester-hat': 'mũ hề', 'crested-helm': 'mũ có mào',
+  crown: 'vương miện', beanie: 'len', 'party-hat': 'tiệc', fez: 'fez',
+  'hard-hat': 'bảo hộ', bandana: 'khăn trùm', 'wizard-hat': 'phù thủy',
+  sombrero: 'sombrero', 'pirate-hat': 'cướp biển', 'police-hat': 'cảnh sát',
+  'cowboy-hat': 'cao bồi', 'grad-cap': 'tốt nghiệp', 'castle-crown': 'vương miện lâu đài',
+  'barbarian-helm': 'barbarian', 'viking-helm': 'viking', ushanka: 'ushanka',
+  'jewel-crown': 'vương miện ngọc', 'astronaut-helm': 'phi hành gia',
+  'jester-hat': 'hề', 'crested-helm': 'có mào',
 };
 
 const PET_KIND_VI = {
