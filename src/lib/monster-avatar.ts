@@ -22,13 +22,23 @@ import {
 } from './monster-slot-layout';
 import geometryManifest from '../../public/assets/monsters/monster-parts.json';
 
-const MONSTER_SLOTS = [...BASE_MONSTER_SLOTS, 'effects', 'frame'] as const;
+const MONSTER_SLOTS = [...BASE_MONSTER_SLOTS, 'effects', 'frame', 'hat', 'pet', 'wings'] as const;
 export type MonsterSlot = (typeof MONSTER_SLOTS)[number];
 const CORE_MONSTER_SLOTS = ['body', 'eyes', 'mouth', 'arms', 'detail'] as const;
 type CoreMonsterSlot = (typeof CORE_MONSTER_SLOTS)[number];
+const V5_COSMETIC_SLOTS = ['hat', 'pet', 'wings'] as const;
+type V5CosmeticSlot = (typeof V5_COSMETIC_SLOTS)[number];
+type CosmeticManifestEntry = {
+  id: string;
+  file: string;
+  color?: string;
+  rarity?: 'common' | 'rare' | 'epic';
+  anchor_offset_y?: number;
+  price_override?: number;
+};
 const MONSTER_MANIFEST = BASE_MONSTER_MANIFEST as Record<
   MonsterSlot,
-  Array<{ id: string; file: string; rarity?: 'common' | 'rare' | 'epic' }>
+  Array<CosmeticManifestEntry>
 >;
 const W7_BUILD_ENABLED = import.meta.env.PUBLIC_R2L_W7 === '1';
 
@@ -41,6 +51,9 @@ export type MonsterConfig = {
   detail: string;
   effects?: string;
   frame?: string;
+  hat?: string;
+  pet?: string;
+  wings?: string;
 };
 
 export type EquippedDisplayItem = {
@@ -86,6 +99,9 @@ const SLOT_LABELS_VI: Record<MonsterSlot, string> = {
   detail: 'Chi tiết',
   effects: 'Hiệu ứng',
   frame: 'Khung',
+  hat: 'Mũ',
+  pet: 'Thú cưng',
+  wings: 'Cánh',
 };
 
 const loadedImages = new Set<string>();
@@ -150,6 +166,54 @@ function getEquippedItem(
   const itemId = equipped?.[slot];
   if (!itemId) return null;
   return equippedDisplay?.find((item) => item.slot === slot && item.id === itemId) || null;
+}
+
+function cosmeticManifestEntry(slot: V5CosmeticSlot, partId: string): CosmeticManifestEntry | null {
+  const parts = MONSTER_MANIFEST[slot] || [];
+  return parts.find((part) => part.id === partId) || null;
+}
+
+function cosmeticTintColor(entry: CosmeticManifestEntry): string {
+  return COLOR_HEX[entry.color || 'mint'] || COLOR_HEX.mint;
+}
+
+function renderTintedCosmetic(
+  container: HTMLElement,
+  slot: 'hat' | 'pet',
+  partId: string,
+  className: string,
+) {
+  const entry = cosmeticManifestEntry(slot, partId);
+  if (!entry?.file) return;
+  const wrap = document.createElement('div');
+  wrap.className = className;
+  wrap.dataset.slot = slot;
+  wrap.dataset.rarity = entry.rarity || getPartRarity(partId);
+  wrap.setAttribute('aria-hidden', 'true');
+  wrap.style.setProperty('--cosmetic-color', cosmeticTintColor(entry));
+  wrap.style.setProperty('--cosmetic-mask', `url(${entry.file})`);
+  if (slot === 'hat' && typeof entry.anchor_offset_y === 'number') {
+    wrap.style.setProperty('--hat-offset-y', `${entry.anchor_offset_y}px`);
+  }
+  const icon = document.createElement('span');
+  icon.className = 'r2l-monster__cosmetic-tint';
+  wrap.appendChild(icon);
+  container.appendChild(wrap);
+}
+
+function renderWingsLayer(container: HTMLElement, partId: string | undefined) {
+  if (!partId) return;
+  const entry = cosmeticManifestEntry('wings', partId);
+  if (!entry?.file) return;
+  const layer = document.createElement('div');
+  layer.className = 'r2l-monster__wings';
+  layer.dataset.slot = 'wings';
+  layer.dataset.rarity = entry.rarity || getPartRarity(partId);
+  layer.setAttribute('aria-hidden', 'true');
+  const img = loadPartImage(entry.file);
+  img.className = 'r2l-monster__wings-img';
+  layer.appendChild(img);
+  container.appendChild(layer);
 }
 
 const COSMETIC_OVERLAYS_ENABLED = false;
@@ -293,22 +357,74 @@ function injectMonsterStyles() {
       border-radius: 9999px;
       background: rgb(255 255 255 / 0.35);
     }
+    @keyframes r2l-pet-bob {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+    @keyframes r2l-wings-flap {
+      0%, 100% { transform: scaleX(1) rotate(0deg); }
+      50% { transform: scaleX(0.94) rotate(-2deg); }
+    }
+    .r2l-monster__wings {
+      position: absolute;
+      left: 50%;
+      top: 18%;
+      width: 130%;
+      height: 75%;
+      translate: -50% 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .r2l-monster__wings-img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      animation: r2l-wings-flap 2s ease-in-out infinite;
+      transform-origin: center center;
+    }
+    .r2l-monster__cosmetic-tint {
+      display: block;
+      width: 100%;
+      height: 100%;
+      background-color: var(--cosmetic-color, #6ee7b7);
+      mask-image: var(--cosmetic-mask);
+      mask-size: contain;
+      mask-repeat: no-repeat;
+      mask-position: center;
+      -webkit-mask-image: var(--cosmetic-mask);
+      -webkit-mask-size: contain;
+      -webkit-mask-repeat: no-repeat;
+      -webkit-mask-position: center;
+    }
     .r2l-monster__hat {
       position: absolute;
-      top: -8%;
+      top: calc(-6% + var(--hat-offset-y, 0px));
       left: 50%;
-      transform: translateX(-50%);
-      font-size: 1.35em;
-      line-height: 1;
-      z-index: 5;
+      width: 52%;
+      height: 38%;
+      translate: -50% 0;
+      z-index: 3;
+      pointer-events: none;
     }
-    .r2l-monster--small .r2l-monster__hat { font-size: 0.85em; top: -12%; }
+    .r2l-monster--small .r2l-monster__hat {
+      width: 58%;
+      height: 42%;
+      top: calc(-10% + var(--hat-offset-y, 0px));
+    }
     .r2l-monster__pet {
       position: absolute;
-      right: -4%;
-      bottom: 2%;
-      font-size: 0.9em;
-      z-index: 5;
+      right: -6%;
+      bottom: 4%;
+      width: 34%;
+      height: 34%;
+      z-index: 2;
+      pointer-events: none;
+      animation: r2l-pet-bob 3s ease-in-out infinite;
+    }
+    .r2l-monster--small .r2l-monster__pet { display: none; }
+    @media (prefers-reduced-motion: reduce) {
+      .r2l-monster__pet { animation: none !important; }
+      .r2l-monster__wings-img { animation: none !important; }
     }
   `;
   document.head.appendChild(style);
@@ -505,6 +621,10 @@ export function renderMonster(
   const stack = document.createElement('div');
   stack.className = 'r2l-monster__stack';
 
+  if (withCosmetics && config.wings) {
+    renderWingsLayer(container, config.wings);
+  }
+
   renderDecorationLayer(container, 'frame', config.frame);
 
   const useFallback = !hasManifestParts()
@@ -529,6 +649,13 @@ export function renderMonster(
 
   container.appendChild(stack);
   renderDecorationLayer(container, 'effects', config.effects);
+
+  if (!compact && config.pet) {
+    renderTintedCosmetic(container, 'pet', config.pet, 'r2l-monster__pet');
+  }
+  if (config.hat) {
+    renderTintedCosmetic(container, 'hat', config.hat, 'r2l-monster__hat');
+  }
 
   if (withCosmetics && COSMETIC_OVERLAYS_ENABLED) {
     const hatItem = getEquippedItem('hat', opts.equipped, opts.equippedDisplay);
