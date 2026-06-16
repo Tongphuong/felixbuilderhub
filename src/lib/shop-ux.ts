@@ -37,6 +37,17 @@ function visibleShopItems(items: ShopRow[]): ShopRow[] {
 }
 
 export function partThumbnailUrl(partId: string, itemSlot = ''): string | undefined {
+  if (itemSlot === 'hat' || partId.startsWith('hat-')) {
+    const slug = partId.replace(/^hat-/, '').replace(/-(mint|coral|sky|lemon|grape)$/, '');
+    return `/assets/cosmetics/hat/${slug}.svg`;
+  }
+  if (itemSlot === 'pet' || partId.startsWith('pet-')) {
+    const slug = partId.replace(/^pet-/, '').replace(/-(coral|sky|lemon|grape)$/, '');
+    return `/assets/cosmetics/pet/${slug}.svg`;
+  }
+  if (itemSlot === 'wings' || partId.startsWith('wings-')) {
+    return `/assets/cosmetics/wings/${partId}.svg`;
+  }
   if (itemSlot === 'effects' || partId.startsWith('effect-')) {
     return `/assets/effects/${partId}.webp`;
   }
@@ -178,6 +189,9 @@ const SHOP_FILTERS = [
   { slot: 'eyes', label: 'Mắt' },
   { slot: 'mouth', label: 'Miệng' },
   { slot: 'detail', label: 'Chi tiết' },
+  { slot: 'hat', label: 'Mũ' },
+  { slot: 'pet', label: 'Thú cưng' },
+  { slot: 'wings', label: 'Cánh' },
   { slot: 'effects', label: 'Hiệu ứng' },
   { slot: 'frame', label: 'Khung' },
 ] as const;
