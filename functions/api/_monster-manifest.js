@@ -1,5 +1,5 @@
 /** AUTO-GENERATED from src/data/monster-parts.json. DO NOT EDIT DIRECTLY. */
-export const MONSTER_SLOTS = ["body","eyes","mouth","arms","detail","effects","frame"];
+export const MONSTER_SLOTS = ["body","eyes","mouth","arms","detail","hat","pet","wings","effects","frame"];
 
 export const MONSTER_COLORS = ['mint', 'coral', 'sky', 'lemon', 'grape'];
 
@@ -7,603 +7,1525 @@ export const MONSTER_MANIFEST = {
   "body": [
     {
       "id": "png-default-body-bluea",
-      "file": "PNG/Default/body_blueA.png"
+      "file": "PNG/Default/body_blueA.png",
+      "geom": {
+        "w": 165,
+        "h": 165
+      },
+      "sockets": {
+        "armLeft": {
+          "x": 0,
+          "y": 95
+        },
+        "armRight": {
+          "x": 164,
+          "y": 95
+        }
+      },
+      "rarity": "common"
     },
     {
       "id": "png-default-body-blueb",
-      "file": "PNG/Default/body_blueB.png"
+      "file": "PNG/Default/body_blueB.png",
+      "geom": {
+        "w": 192,
+        "h": 192
+      },
+      "sockets": {
+        "armLeft": {
+          "x": 1,
+          "y": 111
+        },
+        "armRight": {
+          "x": 190,
+          "y": 111
+        }
+      },
+      "rarity": "common"
     },
     {
       "id": "png-default-body-bluec",
-      "file": "PNG/Default/body_blueC.png"
+      "file": "PNG/Default/body_blueC.png",
+      "geom": {
+        "w": 141,
+        "h": 194
+      },
+      "sockets": {
+        "armLeft": {
+          "x": 1,
+          "y": 112
+        },
+        "armRight": {
+          "x": 139,
+          "y": 112
+        }
+      },
+      "rarity": "common"
     },
     {
       "id": "png-default-body-blued",
-      "file": "PNG/Default/body_blueD.png"
+      "file": "PNG/Default/body_blueD.png",
+      "geom": {
+        "w": 174,
+        "h": 182
+      },
+      "sockets": {
+        "armLeft": {
+          "x": 0,
+          "y": 105
+        },
+        "armRight": {
+          "x": 173,
+          "y": 105
+        }
+      },
+      "rarity": "common"
     },
     {
       "id": "png-default-body-bluee",
-      "file": "PNG/Default/body_blueE.png"
+      "file": "PNG/Default/body_blueE.png",
+      "geom": {
+        "w": 132,
+        "h": 250
+      },
+      "sockets": {
+        "armLeft": {
+          "x": 2,
+          "y": 144
+        },
+        "armRight": {
+          "x": 129,
+          "y": 144
+        }
+      },
+      "rarity": "rare"
     },
     {
       "id": "png-default-body-bluef",
-      "file": "PNG/Default/body_blueF.png"
+      "file": "PNG/Default/body_blueF.png",
+      "geom": {
+        "w": 170,
+        "h": 236
+      },
+      "sockets": {
+        "armLeft": {
+          "x": 16,
+          "y": 136
+        },
+        "armRight": {
+          "x": 152,
+          "y": 136
+        }
+      },
+      "rarity": "epic"
     },
     {
       "id": "png-default-body-darka",
-      "file": "PNG/Default/body_darkA.png"
+      "file": "PNG/Default/body_darkA.png",
+      "geom": {
+        "w": 165,
+        "h": 165
+      },
+      "sockets": {
+        "armLeft": {
+          "x": 0,
+          "y": 95
+        },
+        "armRight": {
+          "x": 164,
+          "y": 95
+        }
+      },
+      "rarity": "common"
     },
     {
       "id": "png-default-body-darkb",
-      "file": "PNG/Default/body_darkB.png"
+      "file": "PNG/Default/body_darkB.png",
+      "geom": {
+        "w": 192,
+        "h": 192
+      },
+      "sockets": {
+        "armLeft": {
+          "x": 1,
+          "y": 111
+        },
+        "armRight": {
+          "x": 190,
+          "y": 111
+        }
+      },
+      "rarity": "common"
     },
     {
       "id": "png-default-body-darkc",
-      "file": "PNG/Default/body_darkC.png"
+      "file": "PNG/Default/body_darkC.png",
+      "geom": {
+        "w": 141,
+        "h": 194
+      },
+      "sockets": {
+        "armLeft": {
+          "x": 1,
+          "y": 112
+        },
+        "armRight": {
+          "x": 139,
+          "y": 112
+        }
+      },
+      "rarity": "common"
     },
     {
       "id": "png-default-body-darkd",
-      "file": "PNG/Default/body_darkD.png"
+      "file": "PNG/Default/body_darkD.png",
+      "geom": {
+        "w": 174,
+        "h": 182
+      },
+      "sockets": {
+        "armLeft": {
+          "x": 0,
+          "y": 105
+        },
+        "armRight": {
+          "x": 173,
+          "y": 105
+        }
+      },
+      "rarity": "common"
     },
     {
       "id": "png-default-body-darke",
-      "file": "PNG/Default/body_darkE.png"
+      "file": "PNG/Default/body_darkE.png",
+      "geom": {
+        "w": 132,
+        "h": 250
+      },
+      "sockets": {
+        "armLeft": {
+          "x": 2,
+          "y": 144
+        },
+        "armRight": {
+          "x": 129,
+          "y": 144
+        }
+      },
+      "rarity": "rare"
     },
     {
       "id": "png-default-body-darkf",
-      "file": "PNG/Default/body_darkF.png"
+      "file": "PNG/Default/body_darkF.png",
+      "geom": {
+        "w": 170,
+        "h": 236
+      },
+      "sockets": {
+        "armLeft": {
+          "x": 16,
+          "y": 136
+        },
+        "armRight": {
+          "x": 152,
+          "y": 136
+        }
+      },
+      "rarity": "epic"
     },
     {
       "id": "png-default-body-greena",
-      "file": "PNG/Default/body_greenA.png"
+      "file": "PNG/Default/body_greenA.png",
+      "geom": {
+        "w": 165,
+        "h": 165
+      },
+      "sockets": {
+        "armLeft": {
+          "x": 0,
+          "y": 95
+        },
+        "armRight": {
+          "x": 164,
+          "y": 95
+        }
+      },
+      "rarity": "common"
     },
     {
       "id": "png-default-body-greenb",
-      "file": "PNG/Default/body_greenB.png"
+      "file": "PNG/Default/body_greenB.png",
+      "geom": {
+        "w": 192,
+        "h": 192
+      },
+      "sockets": {
+        "armLeft": {
+          "x": 1,
+          "y": 111
+        },
+        "armRight": {
+          "x": 190,
+          "y": 111
+        }
+      },
+      "rarity": "common"
     },
     {
       "id": "png-default-body-greenc",
-      "file": "PNG/Default/body_greenC.png"
+      "file": "PNG/Default/body_greenC.png",
+      "geom": {
+        "w": 141,
+        "h": 194
+      },
+      "sockets": {
+        "armLeft": {
+          "x": 1,
+          "y": 112
+        },
+        "armRight": {
+          "x": 139,
+          "y": 112
+        }
+      },
+      "rarity": "common"
     },
     {
       "id": "png-default-body-greend",
-      "file": "PNG/Default/body_greenD.png"
+      "file": "PNG/Default/body_greenD.png",
+      "geom": {
+        "w": 174,
+        "h": 182
+      },
+      "sockets": {
+        "armLeft": {
+          "x": 0,
+          "y": 105
+        },
+        "armRight": {
+          "x": 173,
+          "y": 105
+        }
+      },
+      "rarity": "common"
     },
     {
       "id": "png-default-body-greene",
-      "file": "PNG/Default/body_greenE.png"
+      "file": "PNG/Default/body_greenE.png",
+      "geom": {
+        "w": 132,
+        "h": 250
+      },
+      "sockets": {
+        "armLeft": {
+          "x": 2,
+          "y": 144
+        },
+        "armRight": {
+          "x": 129,
+          "y": 144
+        }
+      },
+      "rarity": "rare"
     },
     {
       "id": "png-default-body-greenf",
-      "file": "PNG/Default/body_greenF.png"
+      "file": "PNG/Default/body_greenF.png",
+      "geom": {
+        "w": 170,
+        "h": 236
+      },
+      "sockets": {
+        "armLeft": {
+          "x": 16,
+          "y": 136
+        },
+        "armRight": {
+          "x": 152,
+          "y": 136
+        }
+      },
+      "rarity": "epic"
     },
     {
       "id": "png-default-body-reda",
-      "file": "PNG/Default/body_redA.png"
+      "file": "PNG/Default/body_redA.png",
+      "geom": {
+        "w": 165,
+        "h": 165
+      },
+      "sockets": {
+        "armLeft": {
+          "x": 0,
+          "y": 95
+        },
+        "armRight": {
+          "x": 164,
+          "y": 95
+        }
+      },
+      "rarity": "common"
     },
     {
       "id": "png-default-body-redb",
-      "file": "PNG/Default/body_redB.png"
+      "file": "PNG/Default/body_redB.png",
+      "geom": {
+        "w": 192,
+        "h": 192
+      },
+      "sockets": {
+        "armLeft": {
+          "x": 1,
+          "y": 111
+        },
+        "armRight": {
+          "x": 190,
+          "y": 111
+        }
+      },
+      "rarity": "common"
     },
     {
       "id": "png-default-body-redc",
-      "file": "PNG/Default/body_redC.png"
+      "file": "PNG/Default/body_redC.png",
+      "geom": {
+        "w": 141,
+        "h": 194
+      },
+      "sockets": {
+        "armLeft": {
+          "x": 1,
+          "y": 112
+        },
+        "armRight": {
+          "x": 139,
+          "y": 112
+        }
+      },
+      "rarity": "common"
     },
     {
       "id": "png-default-body-redd",
-      "file": "PNG/Default/body_redD.png"
+      "file": "PNG/Default/body_redD.png",
+      "geom": {
+        "w": 174,
+        "h": 182
+      },
+      "sockets": {
+        "armLeft": {
+          "x": 0,
+          "y": 105
+        },
+        "armRight": {
+          "x": 173,
+          "y": 105
+        }
+      },
+      "rarity": "common"
     },
     {
       "id": "png-default-body-rede",
-      "file": "PNG/Default/body_redE.png"
+      "file": "PNG/Default/body_redE.png",
+      "geom": {
+        "w": 132,
+        "h": 250
+      },
+      "sockets": {
+        "armLeft": {
+          "x": 2,
+          "y": 144
+        },
+        "armRight": {
+          "x": 129,
+          "y": 144
+        }
+      },
+      "rarity": "rare"
     },
     {
       "id": "png-default-body-redf",
-      "file": "PNG/Default/body_redF.png"
+      "file": "PNG/Default/body_redF.png",
+      "geom": {
+        "w": 170,
+        "h": 236
+      },
+      "sockets": {
+        "armLeft": {
+          "x": 16,
+          "y": 136
+        },
+        "armRight": {
+          "x": 152,
+          "y": 136
+        }
+      },
+      "rarity": "epic"
     },
     {
       "id": "png-default-body-whitea",
-      "file": "PNG/Default/body_whiteA.png"
+      "file": "PNG/Default/body_whiteA.png",
+      "geom": {
+        "w": 165,
+        "h": 165
+      },
+      "sockets": {
+        "armLeft": {
+          "x": 0,
+          "y": 95
+        },
+        "armRight": {
+          "x": 164,
+          "y": 95
+        }
+      },
+      "rarity": "common"
     },
     {
       "id": "png-default-body-whiteb",
-      "file": "PNG/Default/body_whiteB.png"
+      "file": "PNG/Default/body_whiteB.png",
+      "geom": {
+        "w": 192,
+        "h": 192
+      },
+      "sockets": {
+        "armLeft": {
+          "x": 1,
+          "y": 111
+        },
+        "armRight": {
+          "x": 190,
+          "y": 111
+        }
+      },
+      "rarity": "common"
     },
     {
       "id": "png-default-body-whitec",
-      "file": "PNG/Default/body_whiteC.png"
+      "file": "PNG/Default/body_whiteC.png",
+      "geom": {
+        "w": 141,
+        "h": 194
+      },
+      "sockets": {
+        "armLeft": {
+          "x": 1,
+          "y": 112
+        },
+        "armRight": {
+          "x": 139,
+          "y": 112
+        }
+      },
+      "rarity": "common"
     },
     {
       "id": "png-default-body-whited",
-      "file": "PNG/Default/body_whiteD.png"
+      "file": "PNG/Default/body_whiteD.png",
+      "geom": {
+        "w": 174,
+        "h": 182
+      },
+      "sockets": {
+        "armLeft": {
+          "x": 0,
+          "y": 105
+        },
+        "armRight": {
+          "x": 173,
+          "y": 105
+        }
+      },
+      "rarity": "common"
     },
     {
       "id": "png-default-body-whitee",
-      "file": "PNG/Default/body_whiteE.png"
+      "file": "PNG/Default/body_whiteE.png",
+      "geom": {
+        "w": 132,
+        "h": 250
+      },
+      "sockets": {
+        "armLeft": {
+          "x": 2,
+          "y": 144
+        },
+        "armRight": {
+          "x": 129,
+          "y": 144
+        }
+      },
+      "rarity": "rare"
     },
     {
       "id": "png-default-body-whitef",
-      "file": "PNG/Default/body_whiteF.png"
+      "file": "PNG/Default/body_whiteF.png",
+      "geom": {
+        "w": 170,
+        "h": 236
+      },
+      "sockets": {
+        "armLeft": {
+          "x": 16,
+          "y": 136
+        },
+        "armRight": {
+          "x": 152,
+          "y": 136
+        }
+      },
+      "rarity": "epic"
     },
     {
       "id": "png-default-body-yellowa",
-      "file": "PNG/Default/body_yellowA.png"
+      "file": "PNG/Default/body_yellowA.png",
+      "geom": {
+        "w": 165,
+        "h": 165
+      },
+      "sockets": {
+        "armLeft": {
+          "x": 0,
+          "y": 95
+        },
+        "armRight": {
+          "x": 164,
+          "y": 95
+        }
+      },
+      "rarity": "common"
     },
     {
       "id": "png-default-body-yellowb",
-      "file": "PNG/Default/body_yellowB.png"
+      "file": "PNG/Default/body_yellowB.png",
+      "geom": {
+        "w": 192,
+        "h": 192
+      },
+      "sockets": {
+        "armLeft": {
+          "x": 1,
+          "y": 111
+        },
+        "armRight": {
+          "x": 190,
+          "y": 111
+        }
+      },
+      "rarity": "common"
     },
     {
       "id": "png-default-body-yellowc",
-      "file": "PNG/Default/body_yellowC.png"
+      "file": "PNG/Default/body_yellowC.png",
+      "geom": {
+        "w": 141,
+        "h": 194
+      },
+      "sockets": {
+        "armLeft": {
+          "x": 1,
+          "y": 112
+        },
+        "armRight": {
+          "x": 139,
+          "y": 112
+        }
+      },
+      "rarity": "common"
     },
     {
       "id": "png-default-body-yellowd",
-      "file": "PNG/Default/body_yellowD.png"
+      "file": "PNG/Default/body_yellowD.png",
+      "geom": {
+        "w": 174,
+        "h": 182
+      },
+      "sockets": {
+        "armLeft": {
+          "x": 0,
+          "y": 105
+        },
+        "armRight": {
+          "x": 173,
+          "y": 105
+        }
+      },
+      "rarity": "common"
     },
     {
       "id": "png-default-body-yellowe",
-      "file": "PNG/Default/body_yellowE.png"
+      "file": "PNG/Default/body_yellowE.png",
+      "geom": {
+        "w": 132,
+        "h": 250
+      },
+      "sockets": {
+        "armLeft": {
+          "x": 2,
+          "y": 144
+        },
+        "armRight": {
+          "x": 129,
+          "y": 144
+        }
+      },
+      "rarity": "rare"
     },
     {
       "id": "png-default-body-yellowf",
-      "file": "PNG/Default/body_yellowF.png"
+      "file": "PNG/Default/body_yellowF.png",
+      "geom": {
+        "w": 170,
+        "h": 236
+      },
+      "sockets": {
+        "armLeft": {
+          "x": 16,
+          "y": 136
+        },
+        "armRight": {
+          "x": 152,
+          "y": 136
+        }
+      },
+      "rarity": "epic"
     }
   ],
   "eyes": [
     {
       "id": "png-default-eye-angry-blue",
-      "file": "PNG/Default/eye_angry_blue.png"
+      "file": "PNG/Default/eye_angry_blue.png",
+      "rarity": "common"
     },
     {
       "id": "png-default-eye-angry-green",
-      "file": "PNG/Default/eye_angry_green.png"
+      "file": "PNG/Default/eye_angry_green.png",
+      "rarity": "common"
     },
     {
       "id": "png-default-eye-angry-red",
-      "file": "PNG/Default/eye_angry_red.png"
+      "file": "PNG/Default/eye_angry_red.png",
+      "rarity": "common"
     },
     {
       "id": "png-default-eye-blue",
-      "file": "PNG/Default/eye_blue.png"
+      "file": "PNG/Default/eye_blue.png",
+      "rarity": "common"
     },
     {
       "id": "png-default-eye-closed-feminine",
-      "file": "PNG/Default/eye_closed_feminine.png"
+      "file": "PNG/Default/eye_closed_feminine.png",
+      "rarity": "common"
     },
     {
       "id": "png-default-eye-closed-happy",
-      "file": "PNG/Default/eye_closed_happy.png"
+      "file": "PNG/Default/eye_closed_happy.png",
+      "rarity": "common"
     },
     {
       "id": "png-default-eye-cute-dark",
-      "file": "PNG/Default/eye_cute_dark.png"
+      "file": "PNG/Default/eye_cute_dark.png",
+      "rarity": "common"
     },
     {
       "id": "png-default-eye-cute-light",
-      "file": "PNG/Default/eye_cute_light.png"
+      "file": "PNG/Default/eye_cute_light.png",
+      "rarity": "common"
     },
     {
       "id": "png-default-eye-dead",
-      "file": "PNG/Default/eye_dead.png"
+      "file": "PNG/Default/eye_dead.png",
+      "rarity": "common"
     },
     {
       "id": "png-default-eye-human",
-      "file": "PNG/Default/eye_human.png"
+      "file": "PNG/Default/eye_human.png",
+      "rarity": "common"
     },
     {
       "id": "png-default-eye-human-blue",
-      "file": "PNG/Default/eye_human_blue.png"
+      "file": "PNG/Default/eye_human_blue.png",
+      "rarity": "common"
     },
     {
       "id": "png-default-eye-human-green",
-      "file": "PNG/Default/eye_human_green.png"
+      "file": "PNG/Default/eye_human_green.png",
+      "rarity": "common"
     },
     {
       "id": "png-default-eye-human-red",
-      "file": "PNG/Default/eye_human_red.png"
+      "file": "PNG/Default/eye_human_red.png",
+      "rarity": "common"
     },
     {
       "id": "png-default-eye-psycho-dark",
-      "file": "PNG/Default/eye_psycho_dark.png"
+      "file": "PNG/Default/eye_psycho_dark.png",
+      "rarity": "common"
     },
     {
       "id": "png-default-eye-psycho-light",
-      "file": "PNG/Default/eye_psycho_light.png"
+      "file": "PNG/Default/eye_psycho_light.png",
+      "rarity": "common"
     },
     {
       "id": "png-default-eye-red",
-      "file": "PNG/Default/eye_red.png"
+      "file": "PNG/Default/eye_red.png",
+      "rarity": "common"
     },
     {
       "id": "png-default-eye-yellow",
-      "file": "PNG/Default/eye_yellow.png"
+      "file": "PNG/Default/eye_yellow.png",
+      "rarity": "common"
     }
   ],
   "mouth": [
     {
       "id": "png-default-mouth-closed-fangs",
-      "file": "PNG/Default/mouth_closed_fangs.png"
+      "file": "PNG/Default/mouth_closed_fangs.png",
+      "rarity": "common"
     },
     {
       "id": "png-default-mouth-closed-happy",
-      "file": "PNG/Default/mouth_closed_happy.png"
+      "file": "PNG/Default/mouth_closed_happy.png",
+      "rarity": "common"
     },
     {
       "id": "png-default-mouth-closed-sad",
-      "file": "PNG/Default/mouth_closed_sad.png"
+      "file": "PNG/Default/mouth_closed_sad.png",
+      "rarity": "common"
     },
     {
       "id": "png-default-mouth-closed-teeth",
-      "file": "PNG/Default/mouth_closed_teeth.png"
+      "file": "PNG/Default/mouth_closed_teeth.png",
+      "rarity": "common"
     },
     {
       "id": "png-default-moutha",
-      "file": "PNG/Default/mouthA.png"
+      "file": "PNG/Default/mouthA.png",
+      "rarity": "common"
     },
     {
       "id": "png-default-mouthb",
-      "file": "PNG/Default/mouthB.png"
+      "file": "PNG/Default/mouthB.png",
+      "rarity": "common"
     },
     {
       "id": "png-default-mouthc",
-      "file": "PNG/Default/mouthC.png"
+      "file": "PNG/Default/mouthC.png",
+      "rarity": "common"
     },
     {
       "id": "png-default-mouthd",
-      "file": "PNG/Default/mouthD.png"
+      "file": "PNG/Default/mouthD.png",
+      "rarity": "common"
     },
     {
       "id": "png-default-mouthe",
-      "file": "PNG/Default/mouthE.png"
+      "file": "PNG/Default/mouthE.png",
+      "rarity": "common"
     },
     {
       "id": "png-default-mouthf",
-      "file": "PNG/Default/mouthF.png"
+      "file": "PNG/Default/mouthF.png",
+      "rarity": "common"
     },
     {
       "id": "png-default-mouthg",
-      "file": "PNG/Default/mouthG.png"
+      "file": "PNG/Default/mouthG.png",
+      "rarity": "common"
     },
     {
       "id": "png-default-mouthh",
-      "file": "PNG/Default/mouthH.png"
+      "file": "PNG/Default/mouthH.png",
+      "rarity": "epic"
     },
     {
       "id": "png-default-mouthi",
-      "file": "PNG/Default/mouthI.png"
+      "file": "PNG/Default/mouthI.png",
+      "rarity": "common"
     },
     {
       "id": "png-default-mouthj",
-      "file": "PNG/Default/mouthJ.png"
+      "file": "PNG/Default/mouthJ.png",
+      "rarity": "epic"
     }
   ],
   "arms": [
     {
       "id": "png-default-arm-bluea",
-      "file": "PNG/Default/arm_blueA.png"
+      "file": "PNG/Default/arm_blueA.png",
+      "geom": {
+        "w": 82,
+        "h": 176,
+        "pivotX": 28.87381158167675,
+        "pivotY": 27.631374243733795,
+        "handX": 44.17835671342685,
+        "handY": 144.86038744154976,
+        "attach": "left"
+      },
+      "rarity": "common"
     },
     {
       "id": "png-default-arm-blueb",
-      "file": "PNG/Default/arm_blueB.png"
+      "file": "PNG/Default/arm_blueB.png",
+      "geom": {
+        "w": 51,
+        "h": 161,
+        "pivotX": 21.206349206349206,
+        "pivotY": 22.33408919123205,
+        "handX": 30.933460076045627,
+        "handY": 133.37515842839036,
+        "attach": "left"
+      },
+      "rarity": "common"
     },
     {
       "id": "png-default-arm-bluec",
-      "file": "PNG/Default/arm_blueC.png"
+      "file": "PNG/Default/arm_blueC.png",
+      "geom": {
+        "w": 98,
+        "h": 181,
+        "pivotX": 35.80538740920097,
+        "pivotY": 31.14769975786925,
+        "handX": 47.91954432182271,
+        "handY": 148.78319686721252,
+        "attach": "left"
+      },
+      "rarity": "common"
     },
     {
       "id": "png-default-arm-blued",
-      "file": "PNG/Default/arm_blueD.png"
+      "file": "PNG/Default/arm_blueD.png",
+      "geom": {
+        "w": 92,
+        "h": 197,
+        "pivotX": 34.17610619469026,
+        "pivotY": 32.77227138643068,
+        "handX": 46.833119795003206,
+        "handY": 162.1877001921845,
+        "attach": "left"
+      },
+      "rarity": "common"
     },
     {
       "id": "png-default-arm-bluee",
-      "file": "PNG/Default/arm_blueE.png"
+      "file": "PNG/Default/arm_blueE.png",
+      "geom": {
+        "w": 71,
+        "h": 149,
+        "pivotX": 30.898854010961635,
+        "pivotY": 25.11509715994021,
+        "handX": 36.18213206732844,
+        "handY": 121.80578334052655,
+        "attach": "left"
+      },
+      "rarity": "common"
     },
     {
       "id": "png-default-arm-darka",
-      "file": "PNG/Default/arm_darkA.png"
+      "file": "PNG/Default/arm_darkA.png",
+      "geom": {
+        "w": 82,
+        "h": 176,
+        "pivotX": 28.87381158167675,
+        "pivotY": 27.631374243733795,
+        "handX": 44.17835671342685,
+        "handY": 144.86038744154976,
+        "attach": "left"
+      },
+      "rarity": "rare"
     },
     {
       "id": "png-default-arm-darkb",
-      "file": "PNG/Default/arm_darkB.png"
+      "file": "PNG/Default/arm_darkB.png",
+      "geom": {
+        "w": 51,
+        "h": 161,
+        "pivotX": 21.206349206349206,
+        "pivotY": 22.33408919123205,
+        "handX": 30.933460076045627,
+        "handY": 133.37515842839036,
+        "attach": "left"
+      },
+      "rarity": "rare"
     },
     {
       "id": "png-default-arm-darkc",
-      "file": "PNG/Default/arm_darkC.png"
+      "file": "PNG/Default/arm_darkC.png",
+      "geom": {
+        "w": 98,
+        "h": 181,
+        "pivotX": 35.80538740920097,
+        "pivotY": 31.14769975786925,
+        "handX": 47.91954432182271,
+        "handY": 148.78319686721252,
+        "attach": "left"
+      },
+      "rarity": "rare"
     },
     {
       "id": "png-default-arm-darkd",
-      "file": "PNG/Default/arm_darkD.png"
+      "file": "PNG/Default/arm_darkD.png",
+      "geom": {
+        "w": 92,
+        "h": 197,
+        "pivotX": 34.17610619469026,
+        "pivotY": 32.77227138643068,
+        "handX": 46.833119795003206,
+        "handY": 162.1877001921845,
+        "attach": "left"
+      },
+      "rarity": "rare"
     },
     {
       "id": "png-default-arm-darke",
-      "file": "PNG/Default/arm_darkE.png"
+      "file": "PNG/Default/arm_darkE.png",
+      "geom": {
+        "w": 71,
+        "h": 149,
+        "pivotX": 30.898854010961635,
+        "pivotY": 25.11509715994021,
+        "handX": 36.18213206732844,
+        "handY": 121.80578334052655,
+        "attach": "left"
+      },
+      "rarity": "rare"
     },
     {
       "id": "png-default-arm-greena",
-      "file": "PNG/Default/arm_greenA.png"
+      "file": "PNG/Default/arm_greenA.png",
+      "geom": {
+        "w": 82,
+        "h": 176,
+        "pivotX": 28.87381158167675,
+        "pivotY": 27.631374243733795,
+        "handX": 44.17835671342685,
+        "handY": 144.86038744154976,
+        "attach": "left"
+      },
+      "rarity": "common"
     },
     {
       "id": "png-default-arm-greenb",
-      "file": "PNG/Default/arm_greenB.png"
+      "file": "PNG/Default/arm_greenB.png",
+      "geom": {
+        "w": 51,
+        "h": 161,
+        "pivotX": 21.206349206349206,
+        "pivotY": 22.33408919123205,
+        "handX": 30.933460076045627,
+        "handY": 133.37515842839036,
+        "attach": "left"
+      },
+      "rarity": "common"
     },
     {
       "id": "png-default-arm-greenc",
-      "file": "PNG/Default/arm_greenC.png"
+      "file": "PNG/Default/arm_greenC.png",
+      "geom": {
+        "w": 98,
+        "h": 181,
+        "pivotX": 35.80538740920097,
+        "pivotY": 31.14769975786925,
+        "handX": 47.91954432182271,
+        "handY": 148.78319686721252,
+        "attach": "left"
+      },
+      "rarity": "common"
     },
     {
       "id": "png-default-arm-greend",
-      "file": "PNG/Default/arm_greenD.png"
+      "file": "PNG/Default/arm_greenD.png",
+      "geom": {
+        "w": 92,
+        "h": 197,
+        "pivotX": 34.17610619469026,
+        "pivotY": 32.77227138643068,
+        "handX": 46.833119795003206,
+        "handY": 162.1877001921845,
+        "attach": "left"
+      },
+      "rarity": "common"
     },
     {
       "id": "png-default-arm-greene",
-      "file": "PNG/Default/arm_greenE.png"
+      "file": "PNG/Default/arm_greenE.png",
+      "geom": {
+        "w": 71,
+        "h": 149,
+        "pivotX": 30.898854010961635,
+        "pivotY": 25.11509715994021,
+        "handX": 36.18213206732844,
+        "handY": 121.80578334052655,
+        "attach": "left"
+      },
+      "rarity": "common"
     },
     {
       "id": "png-default-arm-reda",
-      "file": "PNG/Default/arm_redA.png"
+      "file": "PNG/Default/arm_redA.png",
+      "geom": {
+        "w": 82,
+        "h": 176,
+        "pivotX": 28.87381158167675,
+        "pivotY": 27.631374243733795,
+        "handX": 44.17835671342685,
+        "handY": 144.86038744154976,
+        "attach": "left"
+      },
+      "rarity": "common"
     },
     {
       "id": "png-default-arm-redb",
-      "file": "PNG/Default/arm_redB.png"
+      "file": "PNG/Default/arm_redB.png",
+      "geom": {
+        "w": 51,
+        "h": 161,
+        "pivotX": 21.206349206349206,
+        "pivotY": 22.33408919123205,
+        "handX": 30.933460076045627,
+        "handY": 133.37515842839036,
+        "attach": "left"
+      },
+      "rarity": "common"
     },
     {
       "id": "png-default-arm-redc",
-      "file": "PNG/Default/arm_redC.png"
+      "file": "PNG/Default/arm_redC.png",
+      "geom": {
+        "w": 98,
+        "h": 181,
+        "pivotX": 35.80538740920097,
+        "pivotY": 31.14769975786925,
+        "handX": 47.91954432182271,
+        "handY": 148.78319686721252,
+        "attach": "left"
+      },
+      "rarity": "common"
     },
     {
       "id": "png-default-arm-redd",
-      "file": "PNG/Default/arm_redD.png"
+      "file": "PNG/Default/arm_redD.png",
+      "geom": {
+        "w": 92,
+        "h": 197,
+        "pivotX": 34.17610619469026,
+        "pivotY": 32.77227138643068,
+        "handX": 46.833119795003206,
+        "handY": 162.1877001921845,
+        "attach": "left"
+      },
+      "rarity": "common"
     },
     {
       "id": "png-default-arm-rede",
-      "file": "PNG/Default/arm_redE.png"
+      "file": "PNG/Default/arm_redE.png",
+      "geom": {
+        "w": 71,
+        "h": 149,
+        "pivotX": 30.898854010961635,
+        "pivotY": 25.11509715994021,
+        "handX": 36.18213206732844,
+        "handY": 121.80578334052655,
+        "attach": "left"
+      },
+      "rarity": "common"
     },
     {
       "id": "png-default-arm-whitea",
-      "file": "PNG/Default/arm_whiteA.png"
+      "file": "PNG/Default/arm_whiteA.png",
+      "geom": {
+        "w": 82,
+        "h": 176,
+        "pivotX": 28.87381158167675,
+        "pivotY": 27.631374243733795,
+        "handX": 44.17835671342685,
+        "handY": 144.86038744154976,
+        "attach": "left"
+      },
+      "rarity": "common"
     },
     {
       "id": "png-default-arm-whiteb",
-      "file": "PNG/Default/arm_whiteB.png"
+      "file": "PNG/Default/arm_whiteB.png",
+      "geom": {
+        "w": 51,
+        "h": 161,
+        "pivotX": 21.206349206349206,
+        "pivotY": 22.33408919123205,
+        "handX": 30.933460076045627,
+        "handY": 133.37515842839036,
+        "attach": "left"
+      },
+      "rarity": "common"
     },
     {
       "id": "png-default-arm-whitec",
-      "file": "PNG/Default/arm_whiteC.png"
+      "file": "PNG/Default/arm_whiteC.png",
+      "geom": {
+        "w": 98,
+        "h": 181,
+        "pivotX": 35.80538740920097,
+        "pivotY": 31.14769975786925,
+        "handX": 47.91954432182271,
+        "handY": 148.78319686721252,
+        "attach": "left"
+      },
+      "rarity": "common"
     },
     {
       "id": "png-default-arm-whited",
-      "file": "PNG/Default/arm_whiteD.png"
+      "file": "PNG/Default/arm_whiteD.png",
+      "geom": {
+        "w": 92,
+        "h": 197,
+        "pivotX": 34.17610619469026,
+        "pivotY": 32.77227138643068,
+        "handX": 46.833119795003206,
+        "handY": 162.1877001921845,
+        "attach": "left"
+      },
+      "rarity": "common"
     },
     {
       "id": "png-default-arm-whitee",
-      "file": "PNG/Default/arm_whiteE.png"
+      "file": "PNG/Default/arm_whiteE.png",
+      "geom": {
+        "w": 71,
+        "h": 149,
+        "pivotX": 30.898854010961635,
+        "pivotY": 25.11509715994021,
+        "handX": 36.18213206732844,
+        "handY": 121.80578334052655,
+        "attach": "left"
+      },
+      "rarity": "common"
     },
     {
       "id": "png-default-arm-yellowa",
-      "file": "PNG/Default/arm_yellowA.png"
+      "file": "PNG/Default/arm_yellowA.png",
+      "geom": {
+        "w": 82,
+        "h": 176,
+        "pivotX": 28.87381158167675,
+        "pivotY": 27.631374243733795,
+        "handX": 44.17835671342685,
+        "handY": 144.86038744154976,
+        "attach": "left"
+      },
+      "rarity": "common"
     },
     {
       "id": "png-default-arm-yellowb",
-      "file": "PNG/Default/arm_yellowB.png"
+      "file": "PNG/Default/arm_yellowB.png",
+      "geom": {
+        "w": 51,
+        "h": 161,
+        "pivotX": 21.206349206349206,
+        "pivotY": 22.33408919123205,
+        "handX": 30.933460076045627,
+        "handY": 133.37515842839036,
+        "attach": "left"
+      },
+      "rarity": "common"
     },
     {
       "id": "png-default-arm-yellowc",
-      "file": "PNG/Default/arm_yellowC.png"
+      "file": "PNG/Default/arm_yellowC.png",
+      "geom": {
+        "w": 98,
+        "h": 181,
+        "pivotX": 35.80538740920097,
+        "pivotY": 31.14769975786925,
+        "handX": 47.91954432182271,
+        "handY": 148.78319686721252,
+        "attach": "left"
+      },
+      "rarity": "common"
     },
     {
       "id": "png-default-arm-yellowd",
-      "file": "PNG/Default/arm_yellowD.png"
+      "file": "PNG/Default/arm_yellowD.png",
+      "geom": {
+        "w": 92,
+        "h": 197,
+        "pivotX": 34.17610619469026,
+        "pivotY": 32.77227138643068,
+        "handX": 46.833119795003206,
+        "handY": 162.1877001921845,
+        "attach": "left"
+      },
+      "rarity": "common"
     },
     {
       "id": "png-default-arm-yellowe",
-      "file": "PNG/Default/arm_yellowE.png"
+      "file": "PNG/Default/arm_yellowE.png",
+      "geom": {
+        "w": 71,
+        "h": 149,
+        "pivotX": 30.898854010961635,
+        "pivotY": 25.11509715994021,
+        "handX": 36.18213206732844,
+        "handY": 121.80578334052655,
+        "attach": "left"
+      },
+      "rarity": "common"
     }
   ],
   "detail": [
     {
       "id": "png-default-detail-blue-antenna-large",
-      "file": "PNG/Default/detail_blue_antenna_large.png"
+      "file": "PNG/Default/detail_blue_antenna_large.png",
+      "rarity": "epic"
     },
     {
       "id": "png-default-detail-blue-antenna-small",
-      "file": "PNG/Default/detail_blue_antenna_small.png"
+      "file": "PNG/Default/detail_blue_antenna_small.png",
+      "rarity": "rare"
     },
     {
       "id": "png-default-detail-blue-ear",
-      "file": "PNG/Default/detail_blue_ear.png"
+      "file": "PNG/Default/detail_blue_ear.png",
+      "rarity": "common"
     },
     {
       "id": "png-default-detail-blue-ear-round",
-      "file": "PNG/Default/detail_blue_ear_round.png"
+      "file": "PNG/Default/detail_blue_ear_round.png",
+      "rarity": "common"
     },
     {
       "id": "png-default-detail-blue-eye",
-      "file": "PNG/Default/detail_blue_eye.png"
+      "file": "PNG/Default/detail_blue_eye.png",
+      "rarity": "common"
     },
     {
       "id": "png-default-detail-blue-horn-large",
-      "file": "PNG/Default/detail_blue_horn_large.png"
+      "file": "PNG/Default/detail_blue_horn_large.png",
+      "rarity": "epic"
     },
     {
       "id": "png-default-detail-blue-horn-small",
-      "file": "PNG/Default/detail_blue_horn_small.png"
+      "file": "PNG/Default/detail_blue_horn_small.png",
+      "rarity": "rare"
     },
     {
       "id": "png-default-detail-dark-antenna-large",
-      "file": "PNG/Default/detail_dark_antenna_large.png"
+      "file": "PNG/Default/detail_dark_antenna_large.png",
+      "rarity": "epic"
     },
     {
       "id": "png-default-detail-dark-antenna-small",
-      "file": "PNG/Default/detail_dark_antenna_small.png"
+      "file": "PNG/Default/detail_dark_antenna_small.png",
+      "rarity": "rare"
     },
     {
       "id": "png-default-detail-dark-ear",
-      "file": "PNG/Default/detail_dark_ear.png"
+      "file": "PNG/Default/detail_dark_ear.png",
+      "rarity": "common"
     },
     {
       "id": "png-default-detail-dark-ear-round",
-      "file": "PNG/Default/detail_dark_ear_round.png"
+      "file": "PNG/Default/detail_dark_ear_round.png",
+      "rarity": "common"
     },
     {
       "id": "png-default-detail-dark-eye",
-      "file": "PNG/Default/detail_dark_eye.png"
+      "file": "PNG/Default/detail_dark_eye.png",
+      "rarity": "common"
     },
     {
       "id": "png-default-detail-dark-horn-large",
-      "file": "PNG/Default/detail_dark_horn_large.png"
+      "file": "PNG/Default/detail_dark_horn_large.png",
+      "rarity": "epic"
     },
     {
       "id": "png-default-detail-dark-horn-small",
-      "file": "PNG/Default/detail_dark_horn_small.png"
+      "file": "PNG/Default/detail_dark_horn_small.png",
+      "rarity": "rare"
     },
     {
       "id": "png-default-detail-green-antenna-large",
-      "file": "PNG/Default/detail_green_antenna_large.png"
+      "file": "PNG/Default/detail_green_antenna_large.png",
+      "rarity": "epic"
     },
     {
       "id": "png-default-detail-green-antenna-small",
-      "file": "PNG/Default/detail_green_antenna_small.png"
+      "file": "PNG/Default/detail_green_antenna_small.png",
+      "rarity": "rare"
     },
     {
       "id": "png-default-detail-green-ear",
-      "file": "PNG/Default/detail_green_ear.png"
+      "file": "PNG/Default/detail_green_ear.png",
+      "rarity": "common"
     },
     {
       "id": "png-default-detail-green-ear-round",
-      "file": "PNG/Default/detail_green_ear_round.png"
+      "file": "PNG/Default/detail_green_ear_round.png",
+      "rarity": "common"
     },
     {
       "id": "png-default-detail-green-eye",
-      "file": "PNG/Default/detail_green_eye.png"
+      "file": "PNG/Default/detail_green_eye.png",
+      "rarity": "common"
     },
     {
       "id": "png-default-detail-green-horn-large",
-      "file": "PNG/Default/detail_green_horn_large.png"
+      "file": "PNG/Default/detail_green_horn_large.png",
+      "rarity": "epic"
     },
     {
       "id": "png-default-detail-green-horn-small",
-      "file": "PNG/Default/detail_green_horn_small.png"
+      "file": "PNG/Default/detail_green_horn_small.png",
+      "rarity": "rare"
     },
     {
       "id": "png-default-detail-red-antenna-large",
-      "file": "PNG/Default/detail_red_antenna_large.png"
+      "file": "PNG/Default/detail_red_antenna_large.png",
+      "rarity": "epic"
     },
     {
       "id": "png-default-detail-red-antenna-small",
-      "file": "PNG/Default/detail_red_antenna_small.png"
+      "file": "PNG/Default/detail_red_antenna_small.png",
+      "rarity": "rare"
     },
     {
       "id": "png-default-detail-red-ear",
-      "file": "PNG/Default/detail_red_ear.png"
+      "file": "PNG/Default/detail_red_ear.png",
+      "rarity": "common"
     },
     {
       "id": "png-default-detail-red-ear-round",
-      "file": "PNG/Default/detail_red_ear_round.png"
+      "file": "PNG/Default/detail_red_ear_round.png",
+      "rarity": "common"
     },
     {
       "id": "png-default-detail-red-eye",
-      "file": "PNG/Default/detail_red_eye.png"
+      "file": "PNG/Default/detail_red_eye.png",
+      "rarity": "common"
     },
     {
       "id": "png-default-detail-red-horn-large",
-      "file": "PNG/Default/detail_red_horn_large.png"
+      "file": "PNG/Default/detail_red_horn_large.png",
+      "rarity": "epic"
     },
     {
       "id": "png-default-detail-red-horn-small",
-      "file": "PNG/Default/detail_red_horn_small.png"
+      "file": "PNG/Default/detail_red_horn_small.png",
+      "rarity": "rare"
     },
     {
       "id": "png-default-detail-white-antenna-large",
-      "file": "PNG/Default/detail_white_antenna_large.png"
+      "file": "PNG/Default/detail_white_antenna_large.png",
+      "rarity": "epic"
     },
     {
       "id": "png-default-detail-white-antenna-small",
-      "file": "PNG/Default/detail_white_antenna_small.png"
+      "file": "PNG/Default/detail_white_antenna_small.png",
+      "rarity": "rare"
     },
     {
       "id": "png-default-detail-white-ear",
-      "file": "PNG/Default/detail_white_ear.png"
+      "file": "PNG/Default/detail_white_ear.png",
+      "rarity": "common"
     },
     {
       "id": "png-default-detail-white-ear-round",
-      "file": "PNG/Default/detail_white_ear_round.png"
+      "file": "PNG/Default/detail_white_ear_round.png",
+      "rarity": "common"
     },
     {
       "id": "png-default-detail-white-eye",
-      "file": "PNG/Default/detail_white_eye.png"
+      "file": "PNG/Default/detail_white_eye.png",
+      "rarity": "common"
     },
     {
       "id": "png-default-detail-white-horn-large",
-      "file": "PNG/Default/detail_white_horn_large.png"
+      "file": "PNG/Default/detail_white_horn_large.png",
+      "rarity": "epic"
     },
     {
       "id": "png-default-detail-white-horn-small",
-      "file": "PNG/Default/detail_white_horn_small.png"
+      "file": "PNG/Default/detail_white_horn_small.png",
+      "rarity": "rare"
     },
     {
       "id": "png-default-detail-yellow-antenna-large",
-      "file": "PNG/Default/detail_yellow_antenna_large.png"
+      "file": "PNG/Default/detail_yellow_antenna_large.png",
+      "rarity": "epic"
     },
     {
       "id": "png-default-detail-yellow-antenna-small",
-      "file": "PNG/Default/detail_yellow_antenna_small.png"
+      "file": "PNG/Default/detail_yellow_antenna_small.png",
+      "rarity": "rare"
     },
     {
       "id": "png-default-detail-yellow-ear",
-      "file": "PNG/Default/detail_yellow_ear.png"
+      "file": "PNG/Default/detail_yellow_ear.png",
+      "rarity": "common"
     },
     {
       "id": "png-default-detail-yellow-ear-round",
-      "file": "PNG/Default/detail_yellow_ear_round.png"
+      "file": "PNG/Default/detail_yellow_ear_round.png",
+      "rarity": "common"
     },
     {
       "id": "png-default-detail-yellow-eye",
-      "file": "PNG/Default/detail_yellow_eye.png"
+      "file": "PNG/Default/detail_yellow_eye.png",
+      "rarity": "common"
     },
     {
       "id": "png-default-detail-yellow-horn-large",
-      "file": "PNG/Default/detail_yellow_horn_large.png"
+      "file": "PNG/Default/detail_yellow_horn_large.png",
+      "rarity": "epic"
     },
     {
       "id": "png-default-detail-yellow-horn-small",
-      "file": "PNG/Default/detail_yellow_horn_small.png"
+      "file": "PNG/Default/detail_yellow_horn_small.png",
+      "rarity": "rare"
     },
     {
       "id": "png-default-eyebrowa",
-      "file": "PNG/Default/eyebrowA.png"
+      "file": "PNG/Default/eyebrowA.png",
+      "rarity": "common"
     },
     {
       "id": "png-default-eyebrowb",
-      "file": "PNG/Default/eyebrowB.png"
+      "file": "PNG/Default/eyebrowB.png",
+      "rarity": "common"
     },
     {
       "id": "png-default-eyebrowc",
-      "file": "PNG/Default/eyebrowC.png"
+      "file": "PNG/Default/eyebrowC.png",
+      "rarity": "common"
     },
     {
       "id": "png-default-nose-brown",
-      "file": "PNG/Default/nose_brown.png"
+      "file": "PNG/Default/nose_brown.png",
+      "rarity": "common"
     },
     {
       "id": "png-default-nose-green",
-      "file": "PNG/Default/nose_green.png"
+      "file": "PNG/Default/nose_green.png",
+      "rarity": "common"
     },
     {
       "id": "png-default-nose-red",
-      "file": "PNG/Default/nose_red.png"
+      "file": "PNG/Default/nose_red.png",
+      "rarity": "common"
     },
     {
       "id": "png-default-nose-yellow",
-      "file": "PNG/Default/nose_yellow.png"
+      "file": "PNG/Default/nose_yellow.png",
+      "rarity": "common"
     },
     {
       "id": "png-default-snot-large",
-      "file": "PNG/Default/snot_large.png"
+      "file": "PNG/Default/snot_large.png",
+      "rarity": "common"
     },
     {
       "id": "png-default-snot-small",
-      "file": "PNG/Default/snot_small.png"
+      "file": "PNG/Default/snot_small.png",
+      "rarity": "common"
     }
   ],
   "effects": [
@@ -963,6 +1885,1113 @@ export const MONSTER_MANIFEST = {
       "id": "frame-ribbon-line-yellow",
       "file": "/assets/frames/frame-ribbon-line-yellow.png",
       "rarity": "common"
+    }
+  ],
+  "hat": [
+    {
+      "id": "hat-crown-mint",
+      "file": "/assets/cosmetics/hat/crown.svg",
+      "color": "mint",
+      "rarity": "common",
+      "anchor_offset_y": -6
+    },
+    {
+      "id": "hat-crown-coral",
+      "file": "/assets/cosmetics/hat/crown.svg",
+      "color": "coral",
+      "rarity": "common",
+      "anchor_offset_y": -6
+    },
+    {
+      "id": "hat-crown-sky",
+      "file": "/assets/cosmetics/hat/crown.svg",
+      "color": "sky",
+      "rarity": "common",
+      "anchor_offset_y": -6
+    },
+    {
+      "id": "hat-crown-lemon",
+      "file": "/assets/cosmetics/hat/crown.svg",
+      "color": "lemon",
+      "rarity": "common",
+      "anchor_offset_y": -6
+    },
+    {
+      "id": "hat-crown-grape",
+      "file": "/assets/cosmetics/hat/crown.svg",
+      "color": "grape",
+      "rarity": "common",
+      "anchor_offset_y": -6
+    },
+    {
+      "id": "hat-beanie-mint",
+      "file": "/assets/cosmetics/hat/beanie.svg",
+      "color": "mint",
+      "rarity": "common",
+      "anchor_offset_y": -3
+    },
+    {
+      "id": "hat-beanie-coral",
+      "file": "/assets/cosmetics/hat/beanie.svg",
+      "color": "coral",
+      "rarity": "common",
+      "anchor_offset_y": -3
+    },
+    {
+      "id": "hat-beanie-sky",
+      "file": "/assets/cosmetics/hat/beanie.svg",
+      "color": "sky",
+      "rarity": "common",
+      "anchor_offset_y": -3
+    },
+    {
+      "id": "hat-beanie-lemon",
+      "file": "/assets/cosmetics/hat/beanie.svg",
+      "color": "lemon",
+      "rarity": "common",
+      "anchor_offset_y": -3
+    },
+    {
+      "id": "hat-beanie-grape",
+      "file": "/assets/cosmetics/hat/beanie.svg",
+      "color": "grape",
+      "rarity": "common",
+      "anchor_offset_y": -3
+    },
+    {
+      "id": "hat-party-hat-mint",
+      "file": "/assets/cosmetics/hat/party-hat.svg",
+      "color": "mint",
+      "rarity": "common",
+      "anchor_offset_y": -8
+    },
+    {
+      "id": "hat-party-hat-coral",
+      "file": "/assets/cosmetics/hat/party-hat.svg",
+      "color": "coral",
+      "rarity": "common",
+      "anchor_offset_y": -8
+    },
+    {
+      "id": "hat-party-hat-sky",
+      "file": "/assets/cosmetics/hat/party-hat.svg",
+      "color": "sky",
+      "rarity": "common",
+      "anchor_offset_y": -8
+    },
+    {
+      "id": "hat-party-hat-lemon",
+      "file": "/assets/cosmetics/hat/party-hat.svg",
+      "color": "lemon",
+      "rarity": "common",
+      "anchor_offset_y": -8
+    },
+    {
+      "id": "hat-party-hat-grape",
+      "file": "/assets/cosmetics/hat/party-hat.svg",
+      "color": "grape",
+      "rarity": "common",
+      "anchor_offset_y": -8
+    },
+    {
+      "id": "hat-fez-mint",
+      "file": "/assets/cosmetics/hat/fez.svg",
+      "color": "mint",
+      "rarity": "common",
+      "anchor_offset_y": -5
+    },
+    {
+      "id": "hat-fez-coral",
+      "file": "/assets/cosmetics/hat/fez.svg",
+      "color": "coral",
+      "rarity": "common",
+      "anchor_offset_y": -5
+    },
+    {
+      "id": "hat-fez-sky",
+      "file": "/assets/cosmetics/hat/fez.svg",
+      "color": "sky",
+      "rarity": "common",
+      "anchor_offset_y": -5
+    },
+    {
+      "id": "hat-fez-lemon",
+      "file": "/assets/cosmetics/hat/fez.svg",
+      "color": "lemon",
+      "rarity": "common",
+      "anchor_offset_y": -5
+    },
+    {
+      "id": "hat-fez-grape",
+      "file": "/assets/cosmetics/hat/fez.svg",
+      "color": "grape",
+      "rarity": "common",
+      "anchor_offset_y": -5
+    },
+    {
+      "id": "hat-hard-hat-mint",
+      "file": "/assets/cosmetics/hat/hard-hat.svg",
+      "color": "mint",
+      "rarity": "common",
+      "anchor_offset_y": -4
+    },
+    {
+      "id": "hat-hard-hat-coral",
+      "file": "/assets/cosmetics/hat/hard-hat.svg",
+      "color": "coral",
+      "rarity": "common",
+      "anchor_offset_y": -4
+    },
+    {
+      "id": "hat-hard-hat-sky",
+      "file": "/assets/cosmetics/hat/hard-hat.svg",
+      "color": "sky",
+      "rarity": "common",
+      "anchor_offset_y": -4
+    },
+    {
+      "id": "hat-hard-hat-lemon",
+      "file": "/assets/cosmetics/hat/hard-hat.svg",
+      "color": "lemon",
+      "rarity": "common",
+      "anchor_offset_y": -4
+    },
+    {
+      "id": "hat-hard-hat-grape",
+      "file": "/assets/cosmetics/hat/hard-hat.svg",
+      "color": "grape",
+      "rarity": "common",
+      "anchor_offset_y": -4
+    },
+    {
+      "id": "hat-bandana-mint",
+      "file": "/assets/cosmetics/hat/bandana.svg",
+      "color": "mint",
+      "rarity": "common",
+      "anchor_offset_y": -4
+    },
+    {
+      "id": "hat-bandana-coral",
+      "file": "/assets/cosmetics/hat/bandana.svg",
+      "color": "coral",
+      "rarity": "common",
+      "anchor_offset_y": -4
+    },
+    {
+      "id": "hat-bandana-sky",
+      "file": "/assets/cosmetics/hat/bandana.svg",
+      "color": "sky",
+      "rarity": "common",
+      "anchor_offset_y": -4
+    },
+    {
+      "id": "hat-bandana-lemon",
+      "file": "/assets/cosmetics/hat/bandana.svg",
+      "color": "lemon",
+      "rarity": "common",
+      "anchor_offset_y": -4
+    },
+    {
+      "id": "hat-bandana-grape",
+      "file": "/assets/cosmetics/hat/bandana.svg",
+      "color": "grape",
+      "rarity": "common",
+      "anchor_offset_y": -4
+    },
+    {
+      "id": "hat-wizard-hat-mint",
+      "file": "/assets/cosmetics/hat/wizard-hat.svg",
+      "color": "mint",
+      "rarity": "common",
+      "anchor_offset_y": -7
+    },
+    {
+      "id": "hat-wizard-hat-coral",
+      "file": "/assets/cosmetics/hat/wizard-hat.svg",
+      "color": "coral",
+      "rarity": "common",
+      "anchor_offset_y": -7
+    },
+    {
+      "id": "hat-wizard-hat-sky",
+      "file": "/assets/cosmetics/hat/wizard-hat.svg",
+      "color": "sky",
+      "rarity": "common",
+      "anchor_offset_y": -7
+    },
+    {
+      "id": "hat-wizard-hat-lemon",
+      "file": "/assets/cosmetics/hat/wizard-hat.svg",
+      "color": "lemon",
+      "rarity": "common",
+      "anchor_offset_y": -7
+    },
+    {
+      "id": "hat-wizard-hat-grape",
+      "file": "/assets/cosmetics/hat/wizard-hat.svg",
+      "color": "grape",
+      "rarity": "common",
+      "anchor_offset_y": -7
+    },
+    {
+      "id": "hat-sombrero-mint",
+      "file": "/assets/cosmetics/hat/sombrero.svg",
+      "color": "mint",
+      "rarity": "common",
+      "anchor_offset_y": -5
+    },
+    {
+      "id": "hat-sombrero-coral",
+      "file": "/assets/cosmetics/hat/sombrero.svg",
+      "color": "coral",
+      "rarity": "common",
+      "anchor_offset_y": -5
+    },
+    {
+      "id": "hat-sombrero-sky",
+      "file": "/assets/cosmetics/hat/sombrero.svg",
+      "color": "sky",
+      "rarity": "common",
+      "anchor_offset_y": -5
+    },
+    {
+      "id": "hat-sombrero-lemon",
+      "file": "/assets/cosmetics/hat/sombrero.svg",
+      "color": "lemon",
+      "rarity": "common",
+      "anchor_offset_y": -5
+    },
+    {
+      "id": "hat-sombrero-grape",
+      "file": "/assets/cosmetics/hat/sombrero.svg",
+      "color": "grape",
+      "rarity": "common",
+      "anchor_offset_y": -5
+    },
+    {
+      "id": "hat-pirate-hat-mint",
+      "file": "/assets/cosmetics/hat/pirate-hat.svg",
+      "color": "mint",
+      "rarity": "rare",
+      "anchor_offset_y": -5
+    },
+    {
+      "id": "hat-pirate-hat-coral",
+      "file": "/assets/cosmetics/hat/pirate-hat.svg",
+      "color": "coral",
+      "rarity": "rare",
+      "anchor_offset_y": -5
+    },
+    {
+      "id": "hat-pirate-hat-sky",
+      "file": "/assets/cosmetics/hat/pirate-hat.svg",
+      "color": "sky",
+      "rarity": "rare",
+      "anchor_offset_y": -5
+    },
+    {
+      "id": "hat-pirate-hat-lemon",
+      "file": "/assets/cosmetics/hat/pirate-hat.svg",
+      "color": "lemon",
+      "rarity": "rare",
+      "anchor_offset_y": -5
+    },
+    {
+      "id": "hat-pirate-hat-grape",
+      "file": "/assets/cosmetics/hat/pirate-hat.svg",
+      "color": "grape",
+      "rarity": "rare",
+      "anchor_offset_y": -5
+    },
+    {
+      "id": "hat-police-hat-mint",
+      "file": "/assets/cosmetics/hat/police-hat.svg",
+      "color": "mint",
+      "rarity": "rare",
+      "anchor_offset_y": -4
+    },
+    {
+      "id": "hat-police-hat-coral",
+      "file": "/assets/cosmetics/hat/police-hat.svg",
+      "color": "coral",
+      "rarity": "rare",
+      "anchor_offset_y": -4
+    },
+    {
+      "id": "hat-police-hat-sky",
+      "file": "/assets/cosmetics/hat/police-hat.svg",
+      "color": "sky",
+      "rarity": "rare",
+      "anchor_offset_y": -4
+    },
+    {
+      "id": "hat-police-hat-lemon",
+      "file": "/assets/cosmetics/hat/police-hat.svg",
+      "color": "lemon",
+      "rarity": "rare",
+      "anchor_offset_y": -4
+    },
+    {
+      "id": "hat-police-hat-grape",
+      "file": "/assets/cosmetics/hat/police-hat.svg",
+      "color": "grape",
+      "rarity": "rare",
+      "anchor_offset_y": -4
+    },
+    {
+      "id": "hat-cowboy-hat-mint",
+      "file": "/assets/cosmetics/hat/cowboy-hat.svg",
+      "color": "mint",
+      "rarity": "rare",
+      "anchor_offset_y": -4
+    },
+    {
+      "id": "hat-cowboy-hat-coral",
+      "file": "/assets/cosmetics/hat/cowboy-hat.svg",
+      "color": "coral",
+      "rarity": "rare",
+      "anchor_offset_y": -4
+    },
+    {
+      "id": "hat-cowboy-hat-sky",
+      "file": "/assets/cosmetics/hat/cowboy-hat.svg",
+      "color": "sky",
+      "rarity": "rare",
+      "anchor_offset_y": -4
+    },
+    {
+      "id": "hat-cowboy-hat-lemon",
+      "file": "/assets/cosmetics/hat/cowboy-hat.svg",
+      "color": "lemon",
+      "rarity": "rare",
+      "anchor_offset_y": -4
+    },
+    {
+      "id": "hat-cowboy-hat-grape",
+      "file": "/assets/cosmetics/hat/cowboy-hat.svg",
+      "color": "grape",
+      "rarity": "rare",
+      "anchor_offset_y": -4
+    },
+    {
+      "id": "hat-grad-cap-mint",
+      "file": "/assets/cosmetics/hat/grad-cap.svg",
+      "color": "mint",
+      "rarity": "rare",
+      "anchor_offset_y": -6
+    },
+    {
+      "id": "hat-grad-cap-coral",
+      "file": "/assets/cosmetics/hat/grad-cap.svg",
+      "color": "coral",
+      "rarity": "rare",
+      "anchor_offset_y": -6
+    },
+    {
+      "id": "hat-grad-cap-sky",
+      "file": "/assets/cosmetics/hat/grad-cap.svg",
+      "color": "sky",
+      "rarity": "rare",
+      "anchor_offset_y": -6
+    },
+    {
+      "id": "hat-grad-cap-lemon",
+      "file": "/assets/cosmetics/hat/grad-cap.svg",
+      "color": "lemon",
+      "rarity": "rare",
+      "anchor_offset_y": -6
+    },
+    {
+      "id": "hat-grad-cap-grape",
+      "file": "/assets/cosmetics/hat/grad-cap.svg",
+      "color": "grape",
+      "rarity": "rare",
+      "anchor_offset_y": -6
+    },
+    {
+      "id": "hat-castle-crown-mint",
+      "file": "/assets/cosmetics/hat/castle-crown.svg",
+      "color": "mint",
+      "rarity": "rare",
+      "anchor_offset_y": -7
+    },
+    {
+      "id": "hat-castle-crown-coral",
+      "file": "/assets/cosmetics/hat/castle-crown.svg",
+      "color": "coral",
+      "rarity": "rare",
+      "anchor_offset_y": -7
+    },
+    {
+      "id": "hat-castle-crown-sky",
+      "file": "/assets/cosmetics/hat/castle-crown.svg",
+      "color": "sky",
+      "rarity": "rare",
+      "anchor_offset_y": -7
+    },
+    {
+      "id": "hat-castle-crown-lemon",
+      "file": "/assets/cosmetics/hat/castle-crown.svg",
+      "color": "lemon",
+      "rarity": "rare",
+      "anchor_offset_y": -7
+    },
+    {
+      "id": "hat-castle-crown-grape",
+      "file": "/assets/cosmetics/hat/castle-crown.svg",
+      "color": "grape",
+      "rarity": "rare",
+      "anchor_offset_y": -7
+    },
+    {
+      "id": "hat-barbarian-helm-mint",
+      "file": "/assets/cosmetics/hat/barbarian-helm.svg",
+      "color": "mint",
+      "rarity": "rare",
+      "anchor_offset_y": -4
+    },
+    {
+      "id": "hat-barbarian-helm-coral",
+      "file": "/assets/cosmetics/hat/barbarian-helm.svg",
+      "color": "coral",
+      "rarity": "rare",
+      "anchor_offset_y": -4
+    },
+    {
+      "id": "hat-barbarian-helm-sky",
+      "file": "/assets/cosmetics/hat/barbarian-helm.svg",
+      "color": "sky",
+      "rarity": "rare",
+      "anchor_offset_y": -4
+    },
+    {
+      "id": "hat-barbarian-helm-lemon",
+      "file": "/assets/cosmetics/hat/barbarian-helm.svg",
+      "color": "lemon",
+      "rarity": "rare",
+      "anchor_offset_y": -4
+    },
+    {
+      "id": "hat-barbarian-helm-grape",
+      "file": "/assets/cosmetics/hat/barbarian-helm.svg",
+      "color": "grape",
+      "rarity": "rare",
+      "anchor_offset_y": -4
+    },
+    {
+      "id": "hat-viking-helm-mint",
+      "file": "/assets/cosmetics/hat/viking-helm.svg",
+      "color": "mint",
+      "rarity": "rare",
+      "anchor_offset_y": -5
+    },
+    {
+      "id": "hat-viking-helm-coral",
+      "file": "/assets/cosmetics/hat/viking-helm.svg",
+      "color": "coral",
+      "rarity": "rare",
+      "anchor_offset_y": -5
+    },
+    {
+      "id": "hat-viking-helm-sky",
+      "file": "/assets/cosmetics/hat/viking-helm.svg",
+      "color": "sky",
+      "rarity": "rare",
+      "anchor_offset_y": -5
+    },
+    {
+      "id": "hat-viking-helm-lemon",
+      "file": "/assets/cosmetics/hat/viking-helm.svg",
+      "color": "lemon",
+      "rarity": "rare",
+      "anchor_offset_y": -5
+    },
+    {
+      "id": "hat-viking-helm-grape",
+      "file": "/assets/cosmetics/hat/viking-helm.svg",
+      "color": "grape",
+      "rarity": "rare",
+      "anchor_offset_y": -5
+    },
+    {
+      "id": "hat-ushanka-mint",
+      "file": "/assets/cosmetics/hat/ushanka.svg",
+      "color": "mint",
+      "rarity": "epic",
+      "anchor_offset_y": -4
+    },
+    {
+      "id": "hat-ushanka-coral",
+      "file": "/assets/cosmetics/hat/ushanka.svg",
+      "color": "coral",
+      "rarity": "epic",
+      "anchor_offset_y": -4
+    },
+    {
+      "id": "hat-ushanka-sky",
+      "file": "/assets/cosmetics/hat/ushanka.svg",
+      "color": "sky",
+      "rarity": "epic",
+      "anchor_offset_y": -4
+    },
+    {
+      "id": "hat-ushanka-lemon",
+      "file": "/assets/cosmetics/hat/ushanka.svg",
+      "color": "lemon",
+      "rarity": "epic",
+      "anchor_offset_y": -4
+    },
+    {
+      "id": "hat-ushanka-grape",
+      "file": "/assets/cosmetics/hat/ushanka.svg",
+      "color": "grape",
+      "rarity": "epic",
+      "anchor_offset_y": -4
+    },
+    {
+      "id": "hat-jewel-crown-mint",
+      "file": "/assets/cosmetics/hat/jewel-crown.svg",
+      "color": "mint",
+      "rarity": "epic",
+      "anchor_offset_y": -8
+    },
+    {
+      "id": "hat-jewel-crown-coral",
+      "file": "/assets/cosmetics/hat/jewel-crown.svg",
+      "color": "coral",
+      "rarity": "epic",
+      "anchor_offset_y": -8
+    },
+    {
+      "id": "hat-jewel-crown-sky",
+      "file": "/assets/cosmetics/hat/jewel-crown.svg",
+      "color": "sky",
+      "rarity": "epic",
+      "anchor_offset_y": -8
+    },
+    {
+      "id": "hat-jewel-crown-lemon",
+      "file": "/assets/cosmetics/hat/jewel-crown.svg",
+      "color": "lemon",
+      "rarity": "epic",
+      "anchor_offset_y": -8
+    },
+    {
+      "id": "hat-jewel-crown-grape",
+      "file": "/assets/cosmetics/hat/jewel-crown.svg",
+      "color": "grape",
+      "rarity": "epic",
+      "anchor_offset_y": -8
+    },
+    {
+      "id": "hat-astronaut-helm-mint",
+      "file": "/assets/cosmetics/hat/astronaut-helm.svg",
+      "color": "mint",
+      "rarity": "epic",
+      "anchor_offset_y": -4
+    },
+    {
+      "id": "hat-astronaut-helm-coral",
+      "file": "/assets/cosmetics/hat/astronaut-helm.svg",
+      "color": "coral",
+      "rarity": "epic",
+      "anchor_offset_y": -4
+    },
+    {
+      "id": "hat-astronaut-helm-sky",
+      "file": "/assets/cosmetics/hat/astronaut-helm.svg",
+      "color": "sky",
+      "rarity": "epic",
+      "anchor_offset_y": -4
+    },
+    {
+      "id": "hat-astronaut-helm-lemon",
+      "file": "/assets/cosmetics/hat/astronaut-helm.svg",
+      "color": "lemon",
+      "rarity": "epic",
+      "anchor_offset_y": -4
+    },
+    {
+      "id": "hat-astronaut-helm-grape",
+      "file": "/assets/cosmetics/hat/astronaut-helm.svg",
+      "color": "grape",
+      "rarity": "epic",
+      "anchor_offset_y": -4
+    },
+    {
+      "id": "hat-jester-hat-mint",
+      "file": "/assets/cosmetics/hat/jester-hat.svg",
+      "color": "mint",
+      "rarity": "epic",
+      "anchor_offset_y": -8
+    },
+    {
+      "id": "hat-jester-hat-coral",
+      "file": "/assets/cosmetics/hat/jester-hat.svg",
+      "color": "coral",
+      "rarity": "epic",
+      "anchor_offset_y": -8
+    },
+    {
+      "id": "hat-jester-hat-sky",
+      "file": "/assets/cosmetics/hat/jester-hat.svg",
+      "color": "sky",
+      "rarity": "epic",
+      "anchor_offset_y": -8
+    },
+    {
+      "id": "hat-jester-hat-lemon",
+      "file": "/assets/cosmetics/hat/jester-hat.svg",
+      "color": "lemon",
+      "rarity": "epic",
+      "anchor_offset_y": -8
+    },
+    {
+      "id": "hat-jester-hat-grape",
+      "file": "/assets/cosmetics/hat/jester-hat.svg",
+      "color": "grape",
+      "rarity": "epic",
+      "anchor_offset_y": -8
+    },
+    {
+      "id": "hat-crested-helm-mint",
+      "file": "/assets/cosmetics/hat/crested-helm.svg",
+      "color": "mint",
+      "rarity": "epic",
+      "anchor_offset_y": -5
+    },
+    {
+      "id": "hat-crested-helm-coral",
+      "file": "/assets/cosmetics/hat/crested-helm.svg",
+      "color": "coral",
+      "rarity": "epic",
+      "anchor_offset_y": -5
+    },
+    {
+      "id": "hat-crested-helm-sky",
+      "file": "/assets/cosmetics/hat/crested-helm.svg",
+      "color": "sky",
+      "rarity": "epic",
+      "anchor_offset_y": -5
+    },
+    {
+      "id": "hat-crested-helm-lemon",
+      "file": "/assets/cosmetics/hat/crested-helm.svg",
+      "color": "lemon",
+      "rarity": "epic",
+      "anchor_offset_y": -5
+    },
+    {
+      "id": "hat-crested-helm-grape",
+      "file": "/assets/cosmetics/hat/crested-helm.svg",
+      "color": "grape",
+      "rarity": "epic",
+      "anchor_offset_y": -5
+    }
+  ],
+  "pet": [
+    {
+      "id": "pet-rabbit-coral",
+      "file": "/assets/cosmetics/pet/rabbit.svg",
+      "color": "coral",
+      "rarity": "common"
+    },
+    {
+      "id": "pet-rabbit-sky",
+      "file": "/assets/cosmetics/pet/rabbit.svg",
+      "color": "sky",
+      "rarity": "common"
+    },
+    {
+      "id": "pet-rabbit-lemon",
+      "file": "/assets/cosmetics/pet/rabbit.svg",
+      "color": "lemon",
+      "rarity": "common"
+    },
+    {
+      "id": "pet-rabbit-grape",
+      "file": "/assets/cosmetics/pet/rabbit.svg",
+      "color": "grape",
+      "rarity": "common"
+    },
+    {
+      "id": "pet-dog-coral",
+      "file": "/assets/cosmetics/pet/dog.svg",
+      "color": "coral",
+      "rarity": "common"
+    },
+    {
+      "id": "pet-dog-sky",
+      "file": "/assets/cosmetics/pet/dog.svg",
+      "color": "sky",
+      "rarity": "common"
+    },
+    {
+      "id": "pet-dog-lemon",
+      "file": "/assets/cosmetics/pet/dog.svg",
+      "color": "lemon",
+      "rarity": "common"
+    },
+    {
+      "id": "pet-dog-grape",
+      "file": "/assets/cosmetics/pet/dog.svg",
+      "color": "grape",
+      "rarity": "common"
+    },
+    {
+      "id": "pet-fish-coral",
+      "file": "/assets/cosmetics/pet/fish.svg",
+      "color": "coral",
+      "rarity": "common"
+    },
+    {
+      "id": "pet-fish-sky",
+      "file": "/assets/cosmetics/pet/fish.svg",
+      "color": "sky",
+      "rarity": "common"
+    },
+    {
+      "id": "pet-fish-lemon",
+      "file": "/assets/cosmetics/pet/fish.svg",
+      "color": "lemon",
+      "rarity": "common"
+    },
+    {
+      "id": "pet-fish-grape",
+      "file": "/assets/cosmetics/pet/fish.svg",
+      "color": "grape",
+      "rarity": "common"
+    },
+    {
+      "id": "pet-frog-coral",
+      "file": "/assets/cosmetics/pet/frog.svg",
+      "color": "coral",
+      "rarity": "common"
+    },
+    {
+      "id": "pet-frog-sky",
+      "file": "/assets/cosmetics/pet/frog.svg",
+      "color": "sky",
+      "rarity": "common"
+    },
+    {
+      "id": "pet-frog-lemon",
+      "file": "/assets/cosmetics/pet/frog.svg",
+      "color": "lemon",
+      "rarity": "common"
+    },
+    {
+      "id": "pet-frog-grape",
+      "file": "/assets/cosmetics/pet/frog.svg",
+      "color": "grape",
+      "rarity": "common"
+    },
+    {
+      "id": "pet-chick-coral",
+      "file": "/assets/cosmetics/pet/chick.svg",
+      "color": "coral",
+      "rarity": "common"
+    },
+    {
+      "id": "pet-chick-sky",
+      "file": "/assets/cosmetics/pet/chick.svg",
+      "color": "sky",
+      "rarity": "common"
+    },
+    {
+      "id": "pet-chick-lemon",
+      "file": "/assets/cosmetics/pet/chick.svg",
+      "color": "lemon",
+      "rarity": "common"
+    },
+    {
+      "id": "pet-chick-grape",
+      "file": "/assets/cosmetics/pet/chick.svg",
+      "color": "grape",
+      "rarity": "common"
+    },
+    {
+      "id": "pet-turtle-coral",
+      "file": "/assets/cosmetics/pet/turtle.svg",
+      "color": "coral",
+      "rarity": "common"
+    },
+    {
+      "id": "pet-turtle-sky",
+      "file": "/assets/cosmetics/pet/turtle.svg",
+      "color": "sky",
+      "rarity": "common"
+    },
+    {
+      "id": "pet-turtle-lemon",
+      "file": "/assets/cosmetics/pet/turtle.svg",
+      "color": "lemon",
+      "rarity": "common"
+    },
+    {
+      "id": "pet-turtle-grape",
+      "file": "/assets/cosmetics/pet/turtle.svg",
+      "color": "grape",
+      "rarity": "common"
+    },
+    {
+      "id": "pet-fox-coral",
+      "file": "/assets/cosmetics/pet/fox.svg",
+      "color": "coral",
+      "rarity": "rare"
+    },
+    {
+      "id": "pet-fox-sky",
+      "file": "/assets/cosmetics/pet/fox.svg",
+      "color": "sky",
+      "rarity": "rare"
+    },
+    {
+      "id": "pet-fox-lemon",
+      "file": "/assets/cosmetics/pet/fox.svg",
+      "color": "lemon",
+      "rarity": "rare"
+    },
+    {
+      "id": "pet-fox-grape",
+      "file": "/assets/cosmetics/pet/fox.svg",
+      "color": "grape",
+      "rarity": "rare"
+    },
+    {
+      "id": "pet-owl-coral",
+      "file": "/assets/cosmetics/pet/owl.svg",
+      "color": "coral",
+      "rarity": "rare"
+    },
+    {
+      "id": "pet-owl-sky",
+      "file": "/assets/cosmetics/pet/owl.svg",
+      "color": "sky",
+      "rarity": "rare"
+    },
+    {
+      "id": "pet-owl-lemon",
+      "file": "/assets/cosmetics/pet/owl.svg",
+      "color": "lemon",
+      "rarity": "rare"
+    },
+    {
+      "id": "pet-owl-grape",
+      "file": "/assets/cosmetics/pet/owl.svg",
+      "color": "grape",
+      "rarity": "rare"
+    },
+    {
+      "id": "pet-penguin-coral",
+      "file": "/assets/cosmetics/pet/penguin.svg",
+      "color": "coral",
+      "rarity": "rare"
+    },
+    {
+      "id": "pet-penguin-sky",
+      "file": "/assets/cosmetics/pet/penguin.svg",
+      "color": "sky",
+      "rarity": "rare"
+    },
+    {
+      "id": "pet-penguin-lemon",
+      "file": "/assets/cosmetics/pet/penguin.svg",
+      "color": "lemon",
+      "rarity": "rare"
+    },
+    {
+      "id": "pet-penguin-grape",
+      "file": "/assets/cosmetics/pet/penguin.svg",
+      "color": "grape",
+      "rarity": "rare"
+    },
+    {
+      "id": "pet-elephant-coral",
+      "file": "/assets/cosmetics/pet/elephant.svg",
+      "color": "coral",
+      "rarity": "rare"
+    },
+    {
+      "id": "pet-elephant-sky",
+      "file": "/assets/cosmetics/pet/elephant.svg",
+      "color": "sky",
+      "rarity": "rare"
+    },
+    {
+      "id": "pet-elephant-lemon",
+      "file": "/assets/cosmetics/pet/elephant.svg",
+      "color": "lemon",
+      "rarity": "rare"
+    },
+    {
+      "id": "pet-elephant-grape",
+      "file": "/assets/cosmetics/pet/elephant.svg",
+      "color": "grape",
+      "rarity": "rare"
+    },
+    {
+      "id": "pet-duck-coral",
+      "file": "/assets/cosmetics/pet/duck.svg",
+      "color": "coral",
+      "rarity": "rare"
+    },
+    {
+      "id": "pet-duck-sky",
+      "file": "/assets/cosmetics/pet/duck.svg",
+      "color": "sky",
+      "rarity": "rare"
+    },
+    {
+      "id": "pet-duck-lemon",
+      "file": "/assets/cosmetics/pet/duck.svg",
+      "color": "lemon",
+      "rarity": "rare"
+    },
+    {
+      "id": "pet-duck-grape",
+      "file": "/assets/cosmetics/pet/duck.svg",
+      "color": "grape",
+      "rarity": "rare"
+    },
+    {
+      "id": "pet-butterfly-coral",
+      "file": "/assets/cosmetics/pet/butterfly.svg",
+      "color": "coral",
+      "rarity": "epic"
+    },
+    {
+      "id": "pet-butterfly-sky",
+      "file": "/assets/cosmetics/pet/butterfly.svg",
+      "color": "sky",
+      "rarity": "epic"
+    },
+    {
+      "id": "pet-butterfly-lemon",
+      "file": "/assets/cosmetics/pet/butterfly.svg",
+      "color": "lemon",
+      "rarity": "epic"
+    },
+    {
+      "id": "pet-butterfly-grape",
+      "file": "/assets/cosmetics/pet/butterfly.svg",
+      "color": "grape",
+      "rarity": "epic"
+    },
+    {
+      "id": "pet-bat-coral",
+      "file": "/assets/cosmetics/pet/bat.svg",
+      "color": "coral",
+      "rarity": "epic"
+    },
+    {
+      "id": "pet-bat-sky",
+      "file": "/assets/cosmetics/pet/bat.svg",
+      "color": "sky",
+      "rarity": "epic"
+    },
+    {
+      "id": "pet-bat-lemon",
+      "file": "/assets/cosmetics/pet/bat.svg",
+      "color": "lemon",
+      "rarity": "epic"
+    },
+    {
+      "id": "pet-bat-grape",
+      "file": "/assets/cosmetics/pet/bat.svg",
+      "color": "grape",
+      "rarity": "epic"
+    },
+    {
+      "id": "pet-snake-coral",
+      "file": "/assets/cosmetics/pet/snake.svg",
+      "color": "coral",
+      "rarity": "epic"
+    },
+    {
+      "id": "pet-snake-sky",
+      "file": "/assets/cosmetics/pet/snake.svg",
+      "color": "sky",
+      "rarity": "epic"
+    },
+    {
+      "id": "pet-snake-lemon",
+      "file": "/assets/cosmetics/pet/snake.svg",
+      "color": "lemon",
+      "rarity": "epic"
+    },
+    {
+      "id": "pet-snake-grape",
+      "file": "/assets/cosmetics/pet/snake.svg",
+      "color": "grape",
+      "rarity": "epic"
+    },
+    {
+      "id": "pet-horse-coral",
+      "file": "/assets/cosmetics/pet/horse.svg",
+      "color": "coral",
+      "rarity": "epic"
+    },
+    {
+      "id": "pet-horse-sky",
+      "file": "/assets/cosmetics/pet/horse.svg",
+      "color": "sky",
+      "rarity": "epic"
+    },
+    {
+      "id": "pet-horse-lemon",
+      "file": "/assets/cosmetics/pet/horse.svg",
+      "color": "lemon",
+      "rarity": "epic"
+    },
+    {
+      "id": "pet-horse-grape",
+      "file": "/assets/cosmetics/pet/horse.svg",
+      "color": "grape",
+      "rarity": "epic"
+    }
+  ],
+  "wings": [
+    {
+      "id": "wings-fairy-blue",
+      "file": "/assets/cosmetics/wings/wings-fairy-blue.svg",
+      "rarity": "common"
+    },
+    {
+      "id": "wings-fairy-pink",
+      "file": "/assets/cosmetics/wings/wings-fairy-pink.svg",
+      "rarity": "common"
+    },
+    {
+      "id": "wings-fairy-green",
+      "file": "/assets/cosmetics/wings/wings-fairy-green.svg",
+      "rarity": "common"
+    },
+    {
+      "id": "wings-angel-white",
+      "file": "/assets/cosmetics/wings/wings-angel-white.svg",
+      "rarity": "rare"
+    },
+    {
+      "id": "wings-angel-gold",
+      "file": "/assets/cosmetics/wings/wings-angel-gold.svg",
+      "rarity": "rare"
+    },
+    {
+      "id": "wings-dragon-red",
+      "file": "/assets/cosmetics/wings/wings-dragon-red.svg",
+      "rarity": "rare"
+    },
+    {
+      "id": "wings-bat-dark",
+      "file": "/assets/cosmetics/wings/wings-bat-dark.svg",
+      "rarity": "epic"
+    },
+    {
+      "id": "wings-rainbow",
+      "file": "/assets/cosmetics/wings/wings-rainbow.svg",
+      "rarity": "epic",
+      "price_override": 1000
     }
   ]
 };

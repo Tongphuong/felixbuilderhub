@@ -959,5 +959,1112 @@
       "file": "/assets/frames/frame-ribbon-line-yellow.png",
       "rarity": "common"
     }
+  ],
+  "hat": [
+    {
+      "id": "hat-crown-mint",
+      "file": "/assets/cosmetics/hat/crown.svg",
+      "color": "mint",
+      "rarity": "common",
+      "anchor_offset_y": -6
+    },
+    {
+      "id": "hat-crown-coral",
+      "file": "/assets/cosmetics/hat/crown.svg",
+      "color": "coral",
+      "rarity": "common",
+      "anchor_offset_y": -6
+    },
+    {
+      "id": "hat-crown-sky",
+      "file": "/assets/cosmetics/hat/crown.svg",
+      "color": "sky",
+      "rarity": "common",
+      "anchor_offset_y": -6
+    },
+    {
+      "id": "hat-crown-lemon",
+      "file": "/assets/cosmetics/hat/crown.svg",
+      "color": "lemon",
+      "rarity": "common",
+      "anchor_offset_y": -6
+    },
+    {
+      "id": "hat-crown-grape",
+      "file": "/assets/cosmetics/hat/crown.svg",
+      "color": "grape",
+      "rarity": "common",
+      "anchor_offset_y": -6
+    },
+    {
+      "id": "hat-beanie-mint",
+      "file": "/assets/cosmetics/hat/beanie.svg",
+      "color": "mint",
+      "rarity": "common",
+      "anchor_offset_y": -3
+    },
+    {
+      "id": "hat-beanie-coral",
+      "file": "/assets/cosmetics/hat/beanie.svg",
+      "color": "coral",
+      "rarity": "common",
+      "anchor_offset_y": -3
+    },
+    {
+      "id": "hat-beanie-sky",
+      "file": "/assets/cosmetics/hat/beanie.svg",
+      "color": "sky",
+      "rarity": "common",
+      "anchor_offset_y": -3
+    },
+    {
+      "id": "hat-beanie-lemon",
+      "file": "/assets/cosmetics/hat/beanie.svg",
+      "color": "lemon",
+      "rarity": "common",
+      "anchor_offset_y": -3
+    },
+    {
+      "id": "hat-beanie-grape",
+      "file": "/assets/cosmetics/hat/beanie.svg",
+      "color": "grape",
+      "rarity": "common",
+      "anchor_offset_y": -3
+    },
+    {
+      "id": "hat-party-hat-mint",
+      "file": "/assets/cosmetics/hat/party-hat.svg",
+      "color": "mint",
+      "rarity": "common",
+      "anchor_offset_y": -8
+    },
+    {
+      "id": "hat-party-hat-coral",
+      "file": "/assets/cosmetics/hat/party-hat.svg",
+      "color": "coral",
+      "rarity": "common",
+      "anchor_offset_y": -8
+    },
+    {
+      "id": "hat-party-hat-sky",
+      "file": "/assets/cosmetics/hat/party-hat.svg",
+      "color": "sky",
+      "rarity": "common",
+      "anchor_offset_y": -8
+    },
+    {
+      "id": "hat-party-hat-lemon",
+      "file": "/assets/cosmetics/hat/party-hat.svg",
+      "color": "lemon",
+      "rarity": "common",
+      "anchor_offset_y": -8
+    },
+    {
+      "id": "hat-party-hat-grape",
+      "file": "/assets/cosmetics/hat/party-hat.svg",
+      "color": "grape",
+      "rarity": "common",
+      "anchor_offset_y": -8
+    },
+    {
+      "id": "hat-fez-mint",
+      "file": "/assets/cosmetics/hat/fez.svg",
+      "color": "mint",
+      "rarity": "common",
+      "anchor_offset_y": -5
+    },
+    {
+      "id": "hat-fez-coral",
+      "file": "/assets/cosmetics/hat/fez.svg",
+      "color": "coral",
+      "rarity": "common",
+      "anchor_offset_y": -5
+    },
+    {
+      "id": "hat-fez-sky",
+      "file": "/assets/cosmetics/hat/fez.svg",
+      "color": "sky",
+      "rarity": "common",
+      "anchor_offset_y": -5
+    },
+    {
+      "id": "hat-fez-lemon",
+      "file": "/assets/cosmetics/hat/fez.svg",
+      "color": "lemon",
+      "rarity": "common",
+      "anchor_offset_y": -5
+    },
+    {
+      "id": "hat-fez-grape",
+      "file": "/assets/cosmetics/hat/fez.svg",
+      "color": "grape",
+      "rarity": "common",
+      "anchor_offset_y": -5
+    },
+    {
+      "id": "hat-hard-hat-mint",
+      "file": "/assets/cosmetics/hat/hard-hat.svg",
+      "color": "mint",
+      "rarity": "common",
+      "anchor_offset_y": -4
+    },
+    {
+      "id": "hat-hard-hat-coral",
+      "file": "/assets/cosmetics/hat/hard-hat.svg",
+      "color": "coral",
+      "rarity": "common",
+      "anchor_offset_y": -4
+    },
+    {
+      "id": "hat-hard-hat-sky",
+      "file": "/assets/cosmetics/hat/hard-hat.svg",
+      "color": "sky",
+      "rarity": "common",
+      "anchor_offset_y": -4
+    },
+    {
+      "id": "hat-hard-hat-lemon",
+      "file": "/assets/cosmetics/hat/hard-hat.svg",
+      "color": "lemon",
+      "rarity": "common",
+      "anchor_offset_y": -4
+    },
+    {
+      "id": "hat-hard-hat-grape",
+      "file": "/assets/cosmetics/hat/hard-hat.svg",
+      "color": "grape",
+      "rarity": "common",
+      "anchor_offset_y": -4
+    },
+    {
+      "id": "hat-bandana-mint",
+      "file": "/assets/cosmetics/hat/bandana.svg",
+      "color": "mint",
+      "rarity": "common",
+      "anchor_offset_y": -4
+    },
+    {
+      "id": "hat-bandana-coral",
+      "file": "/assets/cosmetics/hat/bandana.svg",
+      "color": "coral",
+      "rarity": "common",
+      "anchor_offset_y": -4
+    },
+    {
+      "id": "hat-bandana-sky",
+      "file": "/assets/cosmetics/hat/bandana.svg",
+      "color": "sky",
+      "rarity": "common",
+      "anchor_offset_y": -4
+    },
+    {
+      "id": "hat-bandana-lemon",
+      "file": "/assets/cosmetics/hat/bandana.svg",
+      "color": "lemon",
+      "rarity": "common",
+      "anchor_offset_y": -4
+    },
+    {
+      "id": "hat-bandana-grape",
+      "file": "/assets/cosmetics/hat/bandana.svg",
+      "color": "grape",
+      "rarity": "common",
+      "anchor_offset_y": -4
+    },
+    {
+      "id": "hat-wizard-hat-mint",
+      "file": "/assets/cosmetics/hat/wizard-hat.svg",
+      "color": "mint",
+      "rarity": "common",
+      "anchor_offset_y": -7
+    },
+    {
+      "id": "hat-wizard-hat-coral",
+      "file": "/assets/cosmetics/hat/wizard-hat.svg",
+      "color": "coral",
+      "rarity": "common",
+      "anchor_offset_y": -7
+    },
+    {
+      "id": "hat-wizard-hat-sky",
+      "file": "/assets/cosmetics/hat/wizard-hat.svg",
+      "color": "sky",
+      "rarity": "common",
+      "anchor_offset_y": -7
+    },
+    {
+      "id": "hat-wizard-hat-lemon",
+      "file": "/assets/cosmetics/hat/wizard-hat.svg",
+      "color": "lemon",
+      "rarity": "common",
+      "anchor_offset_y": -7
+    },
+    {
+      "id": "hat-wizard-hat-grape",
+      "file": "/assets/cosmetics/hat/wizard-hat.svg",
+      "color": "grape",
+      "rarity": "common",
+      "anchor_offset_y": -7
+    },
+    {
+      "id": "hat-sombrero-mint",
+      "file": "/assets/cosmetics/hat/sombrero.svg",
+      "color": "mint",
+      "rarity": "common",
+      "anchor_offset_y": -5
+    },
+    {
+      "id": "hat-sombrero-coral",
+      "file": "/assets/cosmetics/hat/sombrero.svg",
+      "color": "coral",
+      "rarity": "common",
+      "anchor_offset_y": -5
+    },
+    {
+      "id": "hat-sombrero-sky",
+      "file": "/assets/cosmetics/hat/sombrero.svg",
+      "color": "sky",
+      "rarity": "common",
+      "anchor_offset_y": -5
+    },
+    {
+      "id": "hat-sombrero-lemon",
+      "file": "/assets/cosmetics/hat/sombrero.svg",
+      "color": "lemon",
+      "rarity": "common",
+      "anchor_offset_y": -5
+    },
+    {
+      "id": "hat-sombrero-grape",
+      "file": "/assets/cosmetics/hat/sombrero.svg",
+      "color": "grape",
+      "rarity": "common",
+      "anchor_offset_y": -5
+    },
+    {
+      "id": "hat-pirate-hat-mint",
+      "file": "/assets/cosmetics/hat/pirate-hat.svg",
+      "color": "mint",
+      "rarity": "rare",
+      "anchor_offset_y": -5
+    },
+    {
+      "id": "hat-pirate-hat-coral",
+      "file": "/assets/cosmetics/hat/pirate-hat.svg",
+      "color": "coral",
+      "rarity": "rare",
+      "anchor_offset_y": -5
+    },
+    {
+      "id": "hat-pirate-hat-sky",
+      "file": "/assets/cosmetics/hat/pirate-hat.svg",
+      "color": "sky",
+      "rarity": "rare",
+      "anchor_offset_y": -5
+    },
+    {
+      "id": "hat-pirate-hat-lemon",
+      "file": "/assets/cosmetics/hat/pirate-hat.svg",
+      "color": "lemon",
+      "rarity": "rare",
+      "anchor_offset_y": -5
+    },
+    {
+      "id": "hat-pirate-hat-grape",
+      "file": "/assets/cosmetics/hat/pirate-hat.svg",
+      "color": "grape",
+      "rarity": "rare",
+      "anchor_offset_y": -5
+    },
+    {
+      "id": "hat-police-hat-mint",
+      "file": "/assets/cosmetics/hat/police-hat.svg",
+      "color": "mint",
+      "rarity": "rare",
+      "anchor_offset_y": -4
+    },
+    {
+      "id": "hat-police-hat-coral",
+      "file": "/assets/cosmetics/hat/police-hat.svg",
+      "color": "coral",
+      "rarity": "rare",
+      "anchor_offset_y": -4
+    },
+    {
+      "id": "hat-police-hat-sky",
+      "file": "/assets/cosmetics/hat/police-hat.svg",
+      "color": "sky",
+      "rarity": "rare",
+      "anchor_offset_y": -4
+    },
+    {
+      "id": "hat-police-hat-lemon",
+      "file": "/assets/cosmetics/hat/police-hat.svg",
+      "color": "lemon",
+      "rarity": "rare",
+      "anchor_offset_y": -4
+    },
+    {
+      "id": "hat-police-hat-grape",
+      "file": "/assets/cosmetics/hat/police-hat.svg",
+      "color": "grape",
+      "rarity": "rare",
+      "anchor_offset_y": -4
+    },
+    {
+      "id": "hat-cowboy-hat-mint",
+      "file": "/assets/cosmetics/hat/cowboy-hat.svg",
+      "color": "mint",
+      "rarity": "rare",
+      "anchor_offset_y": -4
+    },
+    {
+      "id": "hat-cowboy-hat-coral",
+      "file": "/assets/cosmetics/hat/cowboy-hat.svg",
+      "color": "coral",
+      "rarity": "rare",
+      "anchor_offset_y": -4
+    },
+    {
+      "id": "hat-cowboy-hat-sky",
+      "file": "/assets/cosmetics/hat/cowboy-hat.svg",
+      "color": "sky",
+      "rarity": "rare",
+      "anchor_offset_y": -4
+    },
+    {
+      "id": "hat-cowboy-hat-lemon",
+      "file": "/assets/cosmetics/hat/cowboy-hat.svg",
+      "color": "lemon",
+      "rarity": "rare",
+      "anchor_offset_y": -4
+    },
+    {
+      "id": "hat-cowboy-hat-grape",
+      "file": "/assets/cosmetics/hat/cowboy-hat.svg",
+      "color": "grape",
+      "rarity": "rare",
+      "anchor_offset_y": -4
+    },
+    {
+      "id": "hat-grad-cap-mint",
+      "file": "/assets/cosmetics/hat/grad-cap.svg",
+      "color": "mint",
+      "rarity": "rare",
+      "anchor_offset_y": -6
+    },
+    {
+      "id": "hat-grad-cap-coral",
+      "file": "/assets/cosmetics/hat/grad-cap.svg",
+      "color": "coral",
+      "rarity": "rare",
+      "anchor_offset_y": -6
+    },
+    {
+      "id": "hat-grad-cap-sky",
+      "file": "/assets/cosmetics/hat/grad-cap.svg",
+      "color": "sky",
+      "rarity": "rare",
+      "anchor_offset_y": -6
+    },
+    {
+      "id": "hat-grad-cap-lemon",
+      "file": "/assets/cosmetics/hat/grad-cap.svg",
+      "color": "lemon",
+      "rarity": "rare",
+      "anchor_offset_y": -6
+    },
+    {
+      "id": "hat-grad-cap-grape",
+      "file": "/assets/cosmetics/hat/grad-cap.svg",
+      "color": "grape",
+      "rarity": "rare",
+      "anchor_offset_y": -6
+    },
+    {
+      "id": "hat-castle-crown-mint",
+      "file": "/assets/cosmetics/hat/castle-crown.svg",
+      "color": "mint",
+      "rarity": "rare",
+      "anchor_offset_y": -7
+    },
+    {
+      "id": "hat-castle-crown-coral",
+      "file": "/assets/cosmetics/hat/castle-crown.svg",
+      "color": "coral",
+      "rarity": "rare",
+      "anchor_offset_y": -7
+    },
+    {
+      "id": "hat-castle-crown-sky",
+      "file": "/assets/cosmetics/hat/castle-crown.svg",
+      "color": "sky",
+      "rarity": "rare",
+      "anchor_offset_y": -7
+    },
+    {
+      "id": "hat-castle-crown-lemon",
+      "file": "/assets/cosmetics/hat/castle-crown.svg",
+      "color": "lemon",
+      "rarity": "rare",
+      "anchor_offset_y": -7
+    },
+    {
+      "id": "hat-castle-crown-grape",
+      "file": "/assets/cosmetics/hat/castle-crown.svg",
+      "color": "grape",
+      "rarity": "rare",
+      "anchor_offset_y": -7
+    },
+    {
+      "id": "hat-barbarian-helm-mint",
+      "file": "/assets/cosmetics/hat/barbarian-helm.svg",
+      "color": "mint",
+      "rarity": "rare",
+      "anchor_offset_y": -4
+    },
+    {
+      "id": "hat-barbarian-helm-coral",
+      "file": "/assets/cosmetics/hat/barbarian-helm.svg",
+      "color": "coral",
+      "rarity": "rare",
+      "anchor_offset_y": -4
+    },
+    {
+      "id": "hat-barbarian-helm-sky",
+      "file": "/assets/cosmetics/hat/barbarian-helm.svg",
+      "color": "sky",
+      "rarity": "rare",
+      "anchor_offset_y": -4
+    },
+    {
+      "id": "hat-barbarian-helm-lemon",
+      "file": "/assets/cosmetics/hat/barbarian-helm.svg",
+      "color": "lemon",
+      "rarity": "rare",
+      "anchor_offset_y": -4
+    },
+    {
+      "id": "hat-barbarian-helm-grape",
+      "file": "/assets/cosmetics/hat/barbarian-helm.svg",
+      "color": "grape",
+      "rarity": "rare",
+      "anchor_offset_y": -4
+    },
+    {
+      "id": "hat-viking-helm-mint",
+      "file": "/assets/cosmetics/hat/viking-helm.svg",
+      "color": "mint",
+      "rarity": "rare",
+      "anchor_offset_y": -5
+    },
+    {
+      "id": "hat-viking-helm-coral",
+      "file": "/assets/cosmetics/hat/viking-helm.svg",
+      "color": "coral",
+      "rarity": "rare",
+      "anchor_offset_y": -5
+    },
+    {
+      "id": "hat-viking-helm-sky",
+      "file": "/assets/cosmetics/hat/viking-helm.svg",
+      "color": "sky",
+      "rarity": "rare",
+      "anchor_offset_y": -5
+    },
+    {
+      "id": "hat-viking-helm-lemon",
+      "file": "/assets/cosmetics/hat/viking-helm.svg",
+      "color": "lemon",
+      "rarity": "rare",
+      "anchor_offset_y": -5
+    },
+    {
+      "id": "hat-viking-helm-grape",
+      "file": "/assets/cosmetics/hat/viking-helm.svg",
+      "color": "grape",
+      "rarity": "rare",
+      "anchor_offset_y": -5
+    },
+    {
+      "id": "hat-ushanka-mint",
+      "file": "/assets/cosmetics/hat/ushanka.svg",
+      "color": "mint",
+      "rarity": "epic",
+      "anchor_offset_y": -4
+    },
+    {
+      "id": "hat-ushanka-coral",
+      "file": "/assets/cosmetics/hat/ushanka.svg",
+      "color": "coral",
+      "rarity": "epic",
+      "anchor_offset_y": -4
+    },
+    {
+      "id": "hat-ushanka-sky",
+      "file": "/assets/cosmetics/hat/ushanka.svg",
+      "color": "sky",
+      "rarity": "epic",
+      "anchor_offset_y": -4
+    },
+    {
+      "id": "hat-ushanka-lemon",
+      "file": "/assets/cosmetics/hat/ushanka.svg",
+      "color": "lemon",
+      "rarity": "epic",
+      "anchor_offset_y": -4
+    },
+    {
+      "id": "hat-ushanka-grape",
+      "file": "/assets/cosmetics/hat/ushanka.svg",
+      "color": "grape",
+      "rarity": "epic",
+      "anchor_offset_y": -4
+    },
+    {
+      "id": "hat-jewel-crown-mint",
+      "file": "/assets/cosmetics/hat/jewel-crown.svg",
+      "color": "mint",
+      "rarity": "epic",
+      "anchor_offset_y": -8
+    },
+    {
+      "id": "hat-jewel-crown-coral",
+      "file": "/assets/cosmetics/hat/jewel-crown.svg",
+      "color": "coral",
+      "rarity": "epic",
+      "anchor_offset_y": -8
+    },
+    {
+      "id": "hat-jewel-crown-sky",
+      "file": "/assets/cosmetics/hat/jewel-crown.svg",
+      "color": "sky",
+      "rarity": "epic",
+      "anchor_offset_y": -8
+    },
+    {
+      "id": "hat-jewel-crown-lemon",
+      "file": "/assets/cosmetics/hat/jewel-crown.svg",
+      "color": "lemon",
+      "rarity": "epic",
+      "anchor_offset_y": -8
+    },
+    {
+      "id": "hat-jewel-crown-grape",
+      "file": "/assets/cosmetics/hat/jewel-crown.svg",
+      "color": "grape",
+      "rarity": "epic",
+      "anchor_offset_y": -8
+    },
+    {
+      "id": "hat-astronaut-helm-mint",
+      "file": "/assets/cosmetics/hat/astronaut-helm.svg",
+      "color": "mint",
+      "rarity": "epic",
+      "anchor_offset_y": -4
+    },
+    {
+      "id": "hat-astronaut-helm-coral",
+      "file": "/assets/cosmetics/hat/astronaut-helm.svg",
+      "color": "coral",
+      "rarity": "epic",
+      "anchor_offset_y": -4
+    },
+    {
+      "id": "hat-astronaut-helm-sky",
+      "file": "/assets/cosmetics/hat/astronaut-helm.svg",
+      "color": "sky",
+      "rarity": "epic",
+      "anchor_offset_y": -4
+    },
+    {
+      "id": "hat-astronaut-helm-lemon",
+      "file": "/assets/cosmetics/hat/astronaut-helm.svg",
+      "color": "lemon",
+      "rarity": "epic",
+      "anchor_offset_y": -4
+    },
+    {
+      "id": "hat-astronaut-helm-grape",
+      "file": "/assets/cosmetics/hat/astronaut-helm.svg",
+      "color": "grape",
+      "rarity": "epic",
+      "anchor_offset_y": -4
+    },
+    {
+      "id": "hat-jester-hat-mint",
+      "file": "/assets/cosmetics/hat/jester-hat.svg",
+      "color": "mint",
+      "rarity": "epic",
+      "anchor_offset_y": -8
+    },
+    {
+      "id": "hat-jester-hat-coral",
+      "file": "/assets/cosmetics/hat/jester-hat.svg",
+      "color": "coral",
+      "rarity": "epic",
+      "anchor_offset_y": -8
+    },
+    {
+      "id": "hat-jester-hat-sky",
+      "file": "/assets/cosmetics/hat/jester-hat.svg",
+      "color": "sky",
+      "rarity": "epic",
+      "anchor_offset_y": -8
+    },
+    {
+      "id": "hat-jester-hat-lemon",
+      "file": "/assets/cosmetics/hat/jester-hat.svg",
+      "color": "lemon",
+      "rarity": "epic",
+      "anchor_offset_y": -8
+    },
+    {
+      "id": "hat-jester-hat-grape",
+      "file": "/assets/cosmetics/hat/jester-hat.svg",
+      "color": "grape",
+      "rarity": "epic",
+      "anchor_offset_y": -8
+    },
+    {
+      "id": "hat-crested-helm-mint",
+      "file": "/assets/cosmetics/hat/crested-helm.svg",
+      "color": "mint",
+      "rarity": "epic",
+      "anchor_offset_y": -5
+    },
+    {
+      "id": "hat-crested-helm-coral",
+      "file": "/assets/cosmetics/hat/crested-helm.svg",
+      "color": "coral",
+      "rarity": "epic",
+      "anchor_offset_y": -5
+    },
+    {
+      "id": "hat-crested-helm-sky",
+      "file": "/assets/cosmetics/hat/crested-helm.svg",
+      "color": "sky",
+      "rarity": "epic",
+      "anchor_offset_y": -5
+    },
+    {
+      "id": "hat-crested-helm-lemon",
+      "file": "/assets/cosmetics/hat/crested-helm.svg",
+      "color": "lemon",
+      "rarity": "epic",
+      "anchor_offset_y": -5
+    },
+    {
+      "id": "hat-crested-helm-grape",
+      "file": "/assets/cosmetics/hat/crested-helm.svg",
+      "color": "grape",
+      "rarity": "epic",
+      "anchor_offset_y": -5
+    }
+  ],
+  "pet": [
+    {
+      "id": "pet-rabbit-coral",
+      "file": "/assets/cosmetics/pet/rabbit.svg",
+      "color": "coral",
+      "rarity": "common"
+    },
+    {
+      "id": "pet-rabbit-sky",
+      "file": "/assets/cosmetics/pet/rabbit.svg",
+      "color": "sky",
+      "rarity": "common"
+    },
+    {
+      "id": "pet-rabbit-lemon",
+      "file": "/assets/cosmetics/pet/rabbit.svg",
+      "color": "lemon",
+      "rarity": "common"
+    },
+    {
+      "id": "pet-rabbit-grape",
+      "file": "/assets/cosmetics/pet/rabbit.svg",
+      "color": "grape",
+      "rarity": "common"
+    },
+    {
+      "id": "pet-dog-coral",
+      "file": "/assets/cosmetics/pet/dog.svg",
+      "color": "coral",
+      "rarity": "common"
+    },
+    {
+      "id": "pet-dog-sky",
+      "file": "/assets/cosmetics/pet/dog.svg",
+      "color": "sky",
+      "rarity": "common"
+    },
+    {
+      "id": "pet-dog-lemon",
+      "file": "/assets/cosmetics/pet/dog.svg",
+      "color": "lemon",
+      "rarity": "common"
+    },
+    {
+      "id": "pet-dog-grape",
+      "file": "/assets/cosmetics/pet/dog.svg",
+      "color": "grape",
+      "rarity": "common"
+    },
+    {
+      "id": "pet-fish-coral",
+      "file": "/assets/cosmetics/pet/fish.svg",
+      "color": "coral",
+      "rarity": "common"
+    },
+    {
+      "id": "pet-fish-sky",
+      "file": "/assets/cosmetics/pet/fish.svg",
+      "color": "sky",
+      "rarity": "common"
+    },
+    {
+      "id": "pet-fish-lemon",
+      "file": "/assets/cosmetics/pet/fish.svg",
+      "color": "lemon",
+      "rarity": "common"
+    },
+    {
+      "id": "pet-fish-grape",
+      "file": "/assets/cosmetics/pet/fish.svg",
+      "color": "grape",
+      "rarity": "common"
+    },
+    {
+      "id": "pet-frog-coral",
+      "file": "/assets/cosmetics/pet/frog.svg",
+      "color": "coral",
+      "rarity": "common"
+    },
+    {
+      "id": "pet-frog-sky",
+      "file": "/assets/cosmetics/pet/frog.svg",
+      "color": "sky",
+      "rarity": "common"
+    },
+    {
+      "id": "pet-frog-lemon",
+      "file": "/assets/cosmetics/pet/frog.svg",
+      "color": "lemon",
+      "rarity": "common"
+    },
+    {
+      "id": "pet-frog-grape",
+      "file": "/assets/cosmetics/pet/frog.svg",
+      "color": "grape",
+      "rarity": "common"
+    },
+    {
+      "id": "pet-chick-coral",
+      "file": "/assets/cosmetics/pet/chick.svg",
+      "color": "coral",
+      "rarity": "common"
+    },
+    {
+      "id": "pet-chick-sky",
+      "file": "/assets/cosmetics/pet/chick.svg",
+      "color": "sky",
+      "rarity": "common"
+    },
+    {
+      "id": "pet-chick-lemon",
+      "file": "/assets/cosmetics/pet/chick.svg",
+      "color": "lemon",
+      "rarity": "common"
+    },
+    {
+      "id": "pet-chick-grape",
+      "file": "/assets/cosmetics/pet/chick.svg",
+      "color": "grape",
+      "rarity": "common"
+    },
+    {
+      "id": "pet-turtle-coral",
+      "file": "/assets/cosmetics/pet/turtle.svg",
+      "color": "coral",
+      "rarity": "common"
+    },
+    {
+      "id": "pet-turtle-sky",
+      "file": "/assets/cosmetics/pet/turtle.svg",
+      "color": "sky",
+      "rarity": "common"
+    },
+    {
+      "id": "pet-turtle-lemon",
+      "file": "/assets/cosmetics/pet/turtle.svg",
+      "color": "lemon",
+      "rarity": "common"
+    },
+    {
+      "id": "pet-turtle-grape",
+      "file": "/assets/cosmetics/pet/turtle.svg",
+      "color": "grape",
+      "rarity": "common"
+    },
+    {
+      "id": "pet-fox-coral",
+      "file": "/assets/cosmetics/pet/fox.svg",
+      "color": "coral",
+      "rarity": "rare"
+    },
+    {
+      "id": "pet-fox-sky",
+      "file": "/assets/cosmetics/pet/fox.svg",
+      "color": "sky",
+      "rarity": "rare"
+    },
+    {
+      "id": "pet-fox-lemon",
+      "file": "/assets/cosmetics/pet/fox.svg",
+      "color": "lemon",
+      "rarity": "rare"
+    },
+    {
+      "id": "pet-fox-grape",
+      "file": "/assets/cosmetics/pet/fox.svg",
+      "color": "grape",
+      "rarity": "rare"
+    },
+    {
+      "id": "pet-owl-coral",
+      "file": "/assets/cosmetics/pet/owl.svg",
+      "color": "coral",
+      "rarity": "rare"
+    },
+    {
+      "id": "pet-owl-sky",
+      "file": "/assets/cosmetics/pet/owl.svg",
+      "color": "sky",
+      "rarity": "rare"
+    },
+    {
+      "id": "pet-owl-lemon",
+      "file": "/assets/cosmetics/pet/owl.svg",
+      "color": "lemon",
+      "rarity": "rare"
+    },
+    {
+      "id": "pet-owl-grape",
+      "file": "/assets/cosmetics/pet/owl.svg",
+      "color": "grape",
+      "rarity": "rare"
+    },
+    {
+      "id": "pet-penguin-coral",
+      "file": "/assets/cosmetics/pet/penguin.svg",
+      "color": "coral",
+      "rarity": "rare"
+    },
+    {
+      "id": "pet-penguin-sky",
+      "file": "/assets/cosmetics/pet/penguin.svg",
+      "color": "sky",
+      "rarity": "rare"
+    },
+    {
+      "id": "pet-penguin-lemon",
+      "file": "/assets/cosmetics/pet/penguin.svg",
+      "color": "lemon",
+      "rarity": "rare"
+    },
+    {
+      "id": "pet-penguin-grape",
+      "file": "/assets/cosmetics/pet/penguin.svg",
+      "color": "grape",
+      "rarity": "rare"
+    },
+    {
+      "id": "pet-elephant-coral",
+      "file": "/assets/cosmetics/pet/elephant.svg",
+      "color": "coral",
+      "rarity": "rare"
+    },
+    {
+      "id": "pet-elephant-sky",
+      "file": "/assets/cosmetics/pet/elephant.svg",
+      "color": "sky",
+      "rarity": "rare"
+    },
+    {
+      "id": "pet-elephant-lemon",
+      "file": "/assets/cosmetics/pet/elephant.svg",
+      "color": "lemon",
+      "rarity": "rare"
+    },
+    {
+      "id": "pet-elephant-grape",
+      "file": "/assets/cosmetics/pet/elephant.svg",
+      "color": "grape",
+      "rarity": "rare"
+    },
+    {
+      "id": "pet-duck-coral",
+      "file": "/assets/cosmetics/pet/duck.svg",
+      "color": "coral",
+      "rarity": "rare"
+    },
+    {
+      "id": "pet-duck-sky",
+      "file": "/assets/cosmetics/pet/duck.svg",
+      "color": "sky",
+      "rarity": "rare"
+    },
+    {
+      "id": "pet-duck-lemon",
+      "file": "/assets/cosmetics/pet/duck.svg",
+      "color": "lemon",
+      "rarity": "rare"
+    },
+    {
+      "id": "pet-duck-grape",
+      "file": "/assets/cosmetics/pet/duck.svg",
+      "color": "grape",
+      "rarity": "rare"
+    },
+    {
+      "id": "pet-butterfly-coral",
+      "file": "/assets/cosmetics/pet/butterfly.svg",
+      "color": "coral",
+      "rarity": "epic"
+    },
+    {
+      "id": "pet-butterfly-sky",
+      "file": "/assets/cosmetics/pet/butterfly.svg",
+      "color": "sky",
+      "rarity": "epic"
+    },
+    {
+      "id": "pet-butterfly-lemon",
+      "file": "/assets/cosmetics/pet/butterfly.svg",
+      "color": "lemon",
+      "rarity": "epic"
+    },
+    {
+      "id": "pet-butterfly-grape",
+      "file": "/assets/cosmetics/pet/butterfly.svg",
+      "color": "grape",
+      "rarity": "epic"
+    },
+    {
+      "id": "pet-bat-coral",
+      "file": "/assets/cosmetics/pet/bat.svg",
+      "color": "coral",
+      "rarity": "epic"
+    },
+    {
+      "id": "pet-bat-sky",
+      "file": "/assets/cosmetics/pet/bat.svg",
+      "color": "sky",
+      "rarity": "epic"
+    },
+    {
+      "id": "pet-bat-lemon",
+      "file": "/assets/cosmetics/pet/bat.svg",
+      "color": "lemon",
+      "rarity": "epic"
+    },
+    {
+      "id": "pet-bat-grape",
+      "file": "/assets/cosmetics/pet/bat.svg",
+      "color": "grape",
+      "rarity": "epic"
+    },
+    {
+      "id": "pet-snake-coral",
+      "file": "/assets/cosmetics/pet/snake.svg",
+      "color": "coral",
+      "rarity": "epic"
+    },
+    {
+      "id": "pet-snake-sky",
+      "file": "/assets/cosmetics/pet/snake.svg",
+      "color": "sky",
+      "rarity": "epic"
+    },
+    {
+      "id": "pet-snake-lemon",
+      "file": "/assets/cosmetics/pet/snake.svg",
+      "color": "lemon",
+      "rarity": "epic"
+    },
+    {
+      "id": "pet-snake-grape",
+      "file": "/assets/cosmetics/pet/snake.svg",
+      "color": "grape",
+      "rarity": "epic"
+    },
+    {
+      "id": "pet-horse-coral",
+      "file": "/assets/cosmetics/pet/horse.svg",
+      "color": "coral",
+      "rarity": "epic"
+    },
+    {
+      "id": "pet-horse-sky",
+      "file": "/assets/cosmetics/pet/horse.svg",
+      "color": "sky",
+      "rarity": "epic"
+    },
+    {
+      "id": "pet-horse-lemon",
+      "file": "/assets/cosmetics/pet/horse.svg",
+      "color": "lemon",
+      "rarity": "epic"
+    },
+    {
+      "id": "pet-horse-grape",
+      "file": "/assets/cosmetics/pet/horse.svg",
+      "color": "grape",
+      "rarity": "epic"
+    }
+  ],
+  "wings": [
+    {
+      "id": "wings-fairy-blue",
+      "file": "/assets/cosmetics/wings/wings-fairy-blue.svg",
+      "rarity": "common"
+    },
+    {
+      "id": "wings-fairy-pink",
+      "file": "/assets/cosmetics/wings/wings-fairy-pink.svg",
+      "rarity": "common"
+    },
+    {
+      "id": "wings-fairy-green",
+      "file": "/assets/cosmetics/wings/wings-fairy-green.svg",
+      "rarity": "common"
+    },
+    {
+      "id": "wings-angel-white",
+      "file": "/assets/cosmetics/wings/wings-angel-white.svg",
+      "rarity": "rare"
+    },
+    {
+      "id": "wings-angel-gold",
+      "file": "/assets/cosmetics/wings/wings-angel-gold.svg",
+      "rarity": "rare"
+    },
+    {
+      "id": "wings-dragon-red",
+      "file": "/assets/cosmetics/wings/wings-dragon-red.svg",
+      "rarity": "rare"
+    },
+    {
+      "id": "wings-bat-dark",
+      "file": "/assets/cosmetics/wings/wings-bat-dark.svg",
+      "rarity": "epic"
+    },
+    {
+      "id": "wings-rainbow",
+      "file": "/assets/cosmetics/wings/wings-rainbow.svg",
+      "rarity": "epic",
+      "price_override": 1000
+    }
   ]
 }
