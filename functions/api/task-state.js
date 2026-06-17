@@ -35,6 +35,9 @@ export async function onRequestPost(context) {
     started_at: data.started_at || null,
     updated_at: new Date().toISOString(),
   };
+  if (typeof data.queue_position === 'number') {
+    value.queue_position = data.queue_position;
+  }
   if (status === 'done' && data.result && typeof data.result === 'object') {
     value.result = data.result;
   }

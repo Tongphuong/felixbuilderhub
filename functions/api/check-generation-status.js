@@ -115,7 +115,7 @@ export async function onRequestGet(context) {
     const updatedCode = {
       ...codeData,
       progress: nextProgress,
-      uses_remaining: (codeData.uses_remaining ?? 0) - 1,
+      uses_remaining: Math.max(0, (codeData.uses_remaining ?? 0) - 1),
       last_used_at: now.slice(0, 10),
     };
     await env.READ2LEAD_CODES.put(accessCode, JSON.stringify(updatedCode));

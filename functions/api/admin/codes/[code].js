@@ -63,6 +63,22 @@ export async function onRequestPatch(context) {
     }
   }
 
+  if (body.clear_current_pack === true) {
+    const previousPack = updated.progress?.current_pack || null;
+    updated.progress = {
+      ...(updated.progress || {}),
+      current_pack: null,
+    };
+    if (previousPack?.task_id || previousPack?.generation_task_id) {
+      const taskId = previousPack.task_id || previousPack.generation_task_id;
+      try {
+        await env.READ2LEAD_CODES.delete(`task:${taskId}`);
+      } catch {
+        // Non-fatal.
+      }
+    }
+  }
+
   if (body.student_profile && typeof body.student_profile === 'object') {
     const existingProfile = updated.student_profile || {};
     const profile = { ...existingProfile };
