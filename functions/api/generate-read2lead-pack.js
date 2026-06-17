@@ -5,24 +5,8 @@ import {
   PACKS_TO_NEXT_LEVEL,
   XP_PER_PASSED_PACK,
 } from './_read2lead-v2-state.js';
-import { isV2PackSchemaVersion, packHasV2Schema } from './_read2lead-pack-schema.js';
 
 const GENERATION_LOCK_STALE_MS = 15 * 60 * 1000;
-
-const VALID_TOPIC_KEYS = new Set([
-  'animals_pets',
-  'family_friends',
-  'school',
-  'sports',
-  'games_toys',
-  'vehicles',
-  'food_cooking',
-  'nature',
-  'art_creativity',
-  'heroes_jobs',
-  'imagination',
-  'vietnamese_holidays',
-]);
 
 // 0-100: how far the child is through the CURRENT level (passed packs / packs
 // required for the next level). null when not computable (L5 has no next level,
@@ -114,13 +98,6 @@ export async function onRequestPost(context) {
 
   const interests = (data.interests || '').toString().trim().slice(0, 120);
   const topic = (data.topic || '').toString().trim().slice(0, 60);
-  if (!topic || !VALID_TOPIC_KEYS.has(topic)) {
-    return json({
-      ok: false,
-      error: 'topic_required',
-      message: 'Vui lòng chọn một chủ đề cho con trước khi tạo bài.',
-    }, 400);
-  }
   const levelForPack = progress.current_level || 'L1';
   const lockCreatedAt = new Date().toISOString();
   const pendingPackId = crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random().toString(16).slice(2)}`;
@@ -171,7 +148,7 @@ export async function onRequestPost(context) {
       level: levelForPack,
       child_gender: progress.child_gender,
       interests: interests || undefined,
-      topic,
+      topic: topic || undefined,
       review_url: reviewUrl,
     };
     if (rankPoints != null) {
@@ -200,7 +177,7 @@ export async function onRequestPost(context) {
     }
 
     const upstreamBody = await upstream.json();
-    if (upstreamBody.ok && isV2PackSchemaVersion(upstreamBody.pack?.schema_version)) {
+    if (upstreamBody.ok && upstreamBody.pack?.schema_version === 2) {
       const finalPack = buildFinalV2Pack({
         pendingPack,
         pack: upstreamBody.pack,
@@ -358,13 +335,22 @@ function currentPackBlocksGeneration(pack, requireReviewBeforeNextPack = true) {
   if (!pack) return false;
 
   if (pack.status !== 'generation_in_progress') {
-    if (!packHasV2Schema(pack)) return false;
+    if (!isV2Pack(pack)) return false;
     return requireReviewBeforeNextPack && !isPackReviewed(pack);
   }
 
   const startedAt = Date.parse(pack.created_at || '');
   if (!Number.isFinite(startedAt)) return false;
   return Date.now() - startedAt < GENERATION_LOCK_STALE_MS;
+}
+
+function isV2Pack(pack) {
+  return Boolean(
+    pack?.schema_version === 2 ||
+      pack?.review_context?.schema_version === 2 ||
+      pack?.pack?.schema_version === 2 ||
+      pack?.pack_json?.schema_version === 2,
+  );
 }
 
 function earnedCurrentLevel(progress, reviewHistory = []) {

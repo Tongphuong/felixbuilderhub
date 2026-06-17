@@ -8,15 +8,12 @@ import {
   buildAdminTestLevelState,
   computeRankLadder,
   LEVELS,
-  normalizeActivityProgress,
-  normalizeActivityResult,
   nextStreakDays,
   normalizeProgressState,
   publicProgressState,
   rankPointsFromHistory,
   RANK_ASSETS,
   RANK_TITLES,
-  resolveActivityType,
   vietnamDateKey,
 } from '../functions/api/_read2lead-v2-state.js';
 
@@ -374,51 +371,4 @@ test('buildAdminTestLevelState snaps test accounts to any ladder level', () => {
   assert.equal(l1.current_level, 'L1');
   assert.deepEqual(l1.unlocked_levels, ['L1']);
   assert.equal(l1.level_progress.L1, 0);
-});
-
-test('test_v21_activity_types_tracked', () => {
-  const result = normalizeActivityResult({
-    type: 'story_discovery',
-    items: [{ sentence_index: 0, correct: true, time_ms: 1200 }],
-    combo_max: 4,
-  }, '2.1');
-  assert.equal(result?.type, 'story_discovery');
-  assert.equal(result?.items.length, 1);
-  assert.equal(result?.combo_max, 4);
-
-  const vocab = normalizeActivityResult({
-    type: 'vocab_blitz',
-    items: [{ word_en: 'mat', correct: true, time_ms: 800 }],
-    combo_max: 2,
-  }, '2.1');
-  assert.equal(vocab?.type, 'vocab_blitz');
-  assert.equal(vocab?.items[0].word_en, 'mat');
-
-  const echo = normalizeActivityResult({
-    type: 'echo_challenge',
-    items: [{ sentence_index: 1, scores: { accuracy: 80, fluency: 75, prosody: 70, overall: 78 }, retries: 1 }],
-  }, '2.1');
-  assert.equal(echo?.type, 'echo_challenge');
-  assert.equal(echo?.items[0].scores.overall, 78);
-
-  const progress = normalizeActivityProgress({
-    story_discovery: { combo: { current: 2, max: 5 }, speed_items: 3, completed: true },
-  }, '2.1');
-  assert.equal(progress.story_discovery.combo.max, 5);
-  assert.equal(progress.story_discovery.speed_items, 3);
-});
-
-test('test_v20_backward_compat', () => {
-  assert.equal(resolveActivityType('listen_and_order', '2.0'), 'sentence_builder');
-  assert.equal(resolveActivityType('reading_comprehension', '2.0'), 'story_detective');
-  assert.equal(resolveActivityType('listening_fill_blank', '2.0'), 'listen_and_fill');
-  assert.equal(resolveActivityType('listen_and_speak', '2.0'), 'echo_challenge');
-
-  const legacy = normalizeActivityResult({
-    type: 'listen_and_order',
-    correct_count: 3,
-    total_count: 4,
-    items: [{ sentence_index: 0, correct: true, attempts: 1, time_ms: 4000 }],
-  }, '2.0');
-  assert.equal(legacy?.type, 'listen_and_order');
 });

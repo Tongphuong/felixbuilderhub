@@ -349,124 +349,6 @@ export async function runSpeakingCheck({
   };
 }
 
-function buildAzurePronunciationHeader(referenceText) {
-  const config = {
-    ReferenceText: referenceText,
-    GradingSystem: 'HundredMark',
-    Granularity: 'Phoneme',
-    Dimension: 'Comprehensive',
-    EnableProsodyAssessment: true,
-  };
-  return btoa(JSON.stringify(config));
-}
-
-function parseAzurePronunciationResponse(payload, referenceText) {
-  const nbest = Array.isArray(payload?.NBest) ? payload.NBest[0] : null;
-  const pronunciation = nbest?.PronunciationAssessment || payload?.PronunciationAssessment || {};
-  const words = Array.isArray(nbest?.Words)
-    ? nbest.Words.map((entry) => ({
-        word: String(entry.Word || entry.word || ''),
-        accuracy_score: Math.round(Number(entry.PronunciationAssessment?.AccuracyScore ?? entry.AccuracyScore ?? 0)),
-        error_type: String(entry.PronunciationAssessment?.ErrorType || entry.ErrorType || 'None'),
-      }))
-    : [];
-
-  return {
-    overall_score: Math.round(Number(pronunciation.PronScore ?? pronunciation.OverallScore ?? nbest?.Confidence ?? 0) * (
-      Number(pronunciation.PronScore ?? 0) <= 1 ? 100 : 1
-    )),
-    accuracy_score: Math.round(Number(pronunciation.AccuracyScore ?? 0) * (
-      Number(pronunciation.AccuracyScore ?? 0) <= 1 ? 100 : 1
-    )),
-    fluency_score: Math.round(Number(pronunciation.FluencyScore ?? 0) * (
-      Number(pronunciation.FluencyScore ?? 0) <= 1 ? 100 : 1
-    )),
-    prosody_score: Math.round(Number(pronunciation.ProsodyScore ?? 0) * (
-      Number(pronunciation.ProsodyScore ?? 0) <= 1 ? 100 : 1
-    )),
-    words,
-    reference_text: referenceText,
-  };
-}
-
-export async function assessPronunciationAzure(audioBlob, referenceText, env, fetchFn = fetch) {
-  const speechKey = String(env.AZURE_SPEECH_KEY || '').trim();
-  const region = String(env.AZURE_SPEECH_REGION || 'southeastasia').trim();
-  if (!speechKey || !region) {
-    const error = new Error('azure_not_configured');
-    error.code = 'config_error';
-    throw error;
-  }
-
-  const contentType = String(audioBlob?.type || 'audio/webm') || 'audio/webm';
-  const url = `https://${region}.stt.speech.microsoft.com/speech/recognition/conversation/cognitiveservices/v1?language=en-US&format=detailed`;
-  const response = await fetchFn(url, {
-    method: 'POST',
-    headers: {
-      'Ocp-Apim-Subscription-Key': speechKey,
-      'Content-Type': contentType,
-      Accept: 'application/json',
-      'Pronunciation-Assessment': buildAzurePronunciationHeader(referenceText),
-    },
-    body: audioBlob,
-    signal: AbortSignal.timeout(TRANSCRIBE_TIMEOUT_MS),
-  });
-
-  if (!response.ok) {
-    const error = new Error('azure_pronunciation_failed');
-    error.code = 'azure_failed';
-    error.status = response.status;
-    try { error.detail = await response.text(); } catch {}
-    throw error;
-  }
-
-  const payload = await response.json();
-  return parseAzurePronunciationResponse(payload, referenceText);
-}
-
-export async function runAzureSpeakingCheck({
-  audioBlob,
-  expectedText,
-  env,
-  fetchFn = fetch,
-  ai = null,
-  openaiApiKey = '',
-}) {
-  try {
-    const azure = await assessPronunciationAzure(audioBlob, expectedText, env, fetchFn);
-    return { ok: true, scoring_mode: 'azure', ...azure };
-  } catch (azureError) {
-    try {
-      const whisper = await runSpeakingCheck({
-        audioBlob,
-        expectedText,
-        checkMode: 'read',
-        ai,
-        openaiApiKey,
-        fetchFn,
-      });
-      return {
-        ...whisper,
-        scoring_mode: 'whisper_fallback',
-        azure_error: azureError?.code || azureError?.message || 'azure_failed',
-      };
-    } catch {
-      return {
-        ok: true,
-        scoring_mode: 'effort_only',
-        overall_score: 55,
-        accuracy_score: 55,
-        fluency_score: 55,
-        prosody_score: 55,
-        words: [],
-        score_percent: 55,
-        feedback_vi: feedbackVi(55),
-        effort_pass: true,
-      };
-    }
-  }
-}
-
 export async function onRequestPost(context) {
   const { request, env } = context;
 
@@ -502,7 +384,6 @@ export async function onRequestPost(context) {
   const packId = String(formData.get('pack_id') || '').trim();
   const expectedText = String(formData.get('expected_text') || '').trim();
   const checkMode = String(formData.get('check_mode') || 'read').trim().toLowerCase();
-  const scoringMode = String(formData.get('scoring_mode') || '').trim().toLowerCase();
   const practiceMode = String(formData.get('practice_mode') || '').trim() === '1';
   const audio = formData.get('audio');
 
@@ -586,18 +467,6 @@ export async function onRequestPost(context) {
   const audioType = audio?.type || 'unknown';
 
   try {
-    if (scoringMode === 'azure') {
-      const result = await runAzureSpeakingCheck({
-        audioBlob: audio,
-        expectedText,
-        env,
-        fetchFn: fetch,
-        ai: workersAi,
-        openaiApiKey,
-      });
-      return json(result);
-    }
-
     const result = await runSpeakingCheck({
       audioBlob: audio,
       expectedText,
@@ -692,4 +561,4 @@ function json(body, status = 200) {
     headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' },
   });
 }
-
+

@@ -1,5 +1,3 @@
-import { isV2PackSchemaVersion } from './_read2lead-pack-schema.js';
-
 export function extractV2Pack(pack) {
   const candidates = [
     pack?.review_context,
@@ -12,7 +10,7 @@ export function extractV2Pack(pack) {
   return candidates.find(
     (candidate) =>
       candidate &&
-      isV2PackSchemaVersion(candidate.schema_version) &&
+      candidate.schema_version === 2 &&
       candidate.story &&
       Array.isArray(candidate.activities),
   );

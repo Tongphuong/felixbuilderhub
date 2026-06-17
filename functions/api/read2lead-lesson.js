@@ -1,9 +1,7 @@
 import { getClientIp, checkCodeRateLimit, recordCodeFailure, rateLimitedResponse } from './_rate-limit.js';
 import { resolveAccessiblePack } from './_read2lead-pack-access.js';
 import { extractV2Pack } from './_read2lead-lesson-extract.js';
-import { lessonSchemaVersionFromPack } from './_read2lead-pack-schema.js';
 import { ensureSixActivities } from './_read2lead-lesson-activities.js';
-import { isPackSchemaV21 } from './_read2lead-v2-state.js';
 import { rewriteAudioHost } from './_read2lead-audio-url.js';
 
 export async function onRequestGet(context) {
@@ -94,38 +92,8 @@ export function buildV2LessonPayload({ accessCode, codeData, pack, v2Pack, env }
       : {}),
   };
 
-  const schemaVersion = lessonSchemaVersionFromPack(v2Pack);
-  // V2.0 packs ship 5 activities and rely on hub to add retell_summary as the
-  // 6th step. V2.1 packs ship the canonical 6 activities (story_discovery →
-  // echo_challenge) per spec §1.1 — no retell_summary, no injection needed.
-  // Frontend appends speed_round (phase 7, frontend-only).
-  const lessonActivities = isPackSchemaV21(schemaVersion)
-    ? (Array.isArray(v2Pack.activities) ? v2Pack.activities : [])
-        .filter(Boolean)
-        .map((activity) => ({
-          ...activity,
-          ...(Array.isArray(activity.items)
-            ? {
-                items: activity.items.map((item) =>
-                  item && typeof item === 'object' && Object.hasOwn(item, 'audio_url')
-                    ? { ...item, audio_url: rewriteAudioHost(item.audio_url, env) }
-                    : item,
-                ),
-              }
-            : {}),
-        }))
-    : ensureSixActivities(
-        v2Pack.activities,
-        {
-          story: v2Pack.story,
-          topic: v2Pack.topic || pack.topic || '',
-          activities: v2Pack.activities,
-        },
-        env,
-      );
-
   return {
-    schema_version: schemaVersion,
+    schema_version: 2,
     pack_id: pack.pack_id,
     access_code_masked: maskAccessCode(accessCode),
     student_name: v2Pack.student_name || profile.student_name || progress.student_name || '',
@@ -133,7 +101,15 @@ export function buildV2LessonPayload({ accessCode, codeData, pack, v2Pack, env }
     level_label: v2Pack.level_label || pack.level_label || '',
     topic: v2Pack.topic || pack.topic || '',
     story,
-    activities: lessonActivities,
+    activities: ensureSixActivities(
+      v2Pack.activities,
+      {
+        story: v2Pack.story,
+        topic: v2Pack.topic || pack.topic || '',
+        activities: v2Pack.activities,
+      },
+      env,
+    ),
     rewards: v2Pack.rewards || {
       coins_on_complete: 15,
       xp_on_complete: 20,

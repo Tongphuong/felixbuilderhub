@@ -10,11 +10,7 @@ import {
   calculateAttentionScore,
   computeRankUp,
   computeSeasonLadder,
-  isPackSchemaV21,
-  isSpeakingActivityType,
   loadProgressState,
-  mergeLessonActivityProgress,
-  normalizeActivityResult,
   PASS_THRESHOLD_PERCENT,
   recordComboBonus,
   vietnamDateKey,
@@ -23,12 +19,6 @@ import {
   publicProgressState,
   saveProgressState,
 } from './_read2lead-v2-state.js';
-import {
-  calculateLessonScore,
-  calculateV21LessonScore,
-  isPackSchemaV21 as isSchemaV21,
-  rollChestReward,
-} from '../../src/scripts/r2l-lesson-scoring.mjs';
 
 export async function onRequestPost(context) {
   const { request, env } = context;
@@ -125,11 +115,9 @@ function extractV2LessonContext(pack) {
 }
 
 function isV2LessonContext(context) {
-  const ver = context?.schema_version;
-  const versionOk = ver === 2 || ver === '2' || ver === '2.0' || ver === '2.1';
   return Boolean(
     context &&
-      versionOk &&
+      context.schema_version === 2 &&
       context.story &&
       Array.isArray(context.activities),
   );
@@ -141,7 +129,7 @@ function isV2PackReviewed(pack) {
 
 const DUPLICATE_SUBMIT_WINDOW_MS = 12000;
 export const SPEAKING_PASS_PERCENT = 50;
-const SPEAKING_ACTIVITY_TYPES = new Set(['listen_and_speak', 'echo_challenge', 'retell_summary']);
+const SPEAKING_ACTIVITY_TYPES = new Set(['listen_and_speak', 'retell_summary']);
 
 function isRecentDuplicateSubmit(currentPack) {
   const last = currentPack?.web_lesson_summary;
@@ -187,12 +175,9 @@ async function submitV2Lesson({
   }
 
   const submittedAt = new Date().toISOString();
-  const packSchemaVersion = lessonContext.schema_version ?? '2.0';
-  const activityResults = (Array.isArray(submittedAnswers.activity_results)
+  const activityResults = Array.isArray(submittedAnswers.activity_results)
     ? submittedAnswers.activity_results
-    : [])
-    .map((result) => normalizeActivityResult(result, packSchemaVersion))
-    .filter(Boolean);
+    : [];
   const expectedTypes = (Array.isArray(lessonContext.activities) ? lessonContext.activities : [])
     .map((activity) => activity?.type)
     .filter(Boolean);
@@ -220,13 +205,12 @@ async function submitV2Lesson({
     bonus_coins_per_activity_attempted: 2,
   };
   const rewardsEarned = passed
-    ? buildRewardsEarned({
-        score,
-        activityResults,
-        packSchemaVersion,
-        rewards,
-        rng: typeof env.RNG === 'function' ? env.RNG : Math.random,
-      })
+    ? {
+        coins:
+          numberOrZero(rewards.coins_on_complete) +
+          correctCount * numberOrZero(rewards.bonus_coins_per_activity_attempted),
+        xp: XP_PER_PASSED_PACK,
+      }
     : { coins: 0, xp: -XP_PENALTY_BELOW_THRESHOLD };
   const attempt = {
     schema_version: 2,
@@ -308,12 +292,7 @@ async function submitV2Lesson({
 
   const progressState = await loadProgressState(env, accessCode, codeData);
   const rankLadderBefore = computeSeasonLadder(progressState);
-  const withLessonProgress = mergeLessonActivityProgress(
-    progressState,
-    submittedAnswers.activity_progress,
-    packSchemaVersion,
-  );
-  const stateResult = applyPackCompletion(withLessonProgress, {
+  const stateResult = applyPackCompletion(progressState, {
     packId: currentPack.pack_id,
     completedAt: submittedAt,
     rewardsEarned,
@@ -333,7 +312,7 @@ async function submitV2Lesson({
     // === V4 W2 hooks ===
     const w2DateKey = vietnamDateKey(submittedAt);
     const hasSpeakActivity = activityResults.some(
-      (result) => isSpeakingActivityType(result?.type),
+      (result) => result?.type === 'listen_and_speak' || result?.type === 'retell_summary',
     );
     nextProgressState = applyQuestProgress(
       nextProgressState,
@@ -480,47 +459,10 @@ export function evaluateSpeakingGate(activityResults, expectedTypes) {
   );
   const speakingResults = expectedSpeakingTypes.map((type) => resultsByType.get(type));
   const skipped = speakingResults.some((result) => result?.skipped_due_to_mic === true);
-  const passed = !skipped && speakingResults.every((result) => {
-    if (!result) return false;
-    if (result.type === 'echo_challenge') {
-      const avg = Number(result.score_percent);
-      if (Number.isFinite(avg)) return avg >= SPEAKING_PASS_PERCENT;
-      const items = Array.isArray(result.items) ? result.items : [];
-      if (!items.length) return false;
-      const sum = items.reduce((acc, item) => acc + Number(item?.scores?.overall || 0), 0);
-      return (sum / items.length) >= SPEAKING_PASS_PERCENT;
-    }
-    return Number(result.score_percent) >= SPEAKING_PASS_PERCENT;
-  });
+  const passed = !skipped && speakingResults.every(
+    (result) => result && Number(result.score_percent) >= SPEAKING_PASS_PERCENT,
+  );
   return { passed, skipped };
-}
-
-function buildRewardsEarned({
-  score,
-  activityResults,
-  packSchemaVersion,
-  rewards,
-  rng,
-}) {
-  if (isSchemaV21(packSchemaVersion) || isPackSchemaV21(packSchemaVersion)) {
-    const v21 = score.v21 || calculateV21LessonScore(activityResults);
-    const chest = rollChestReward(rng);
-    return {
-      coins: v21.coins.total + chest.coins,
-      xp: v21.xp,
-      chest_tier: chest.tier,
-      chest_coins: chest.coins,
-      score_label_vi: v21.score_label_vi,
-      total_stars: v21.total_stars,
-      phase_stars: v21.phase_stars,
-    };
-  }
-  return {
-    coins:
-      numberOrZero(rewards.coins_on_complete) +
-      numberOrZero(score.correct_count) * numberOrZero(rewards.bonus_coins_per_activity_attempted),
-    xp: XP_PER_PASSED_PACK,
-  };
 }
 
 function buildSubmitLearningMetric({
@@ -664,12 +606,6 @@ async function respondFromCachedAttempt({
 }
 
 function scoreActivityResults(activityResults, lessonContext) {
-  const packSchemaVersion = lessonContext?.schema_version ?? '2.0';
-  if (isSchemaV21(packSchemaVersion) || isPackSchemaV21(packSchemaVersion)) {
-    const v21 = calculateV21LessonScore(activityResults);
-    return { ...v21, v21 };
-  }
-
   const expectedActivities = Array.isArray(lessonContext.activities) ? lessonContext.activities : [];
   const resultsByType = new Map(
     (Array.isArray(activityResults) ? activityResults : [])
@@ -698,18 +634,14 @@ function scoreActivityResults(activityResults, lessonContext) {
     }
   }
 
-  const legacy = calculateLessonScore(activityResults, { w1: false });
-  if (expectedActivities.length) {
-    const denominator = total + Math.floor(wrong * 0.5);
-    const scorePercent = denominator > 0 ? Math.round((correct / denominator) * 100) : 0;
-    return {
-      correct_count: correct,
-      total_count: total,
-      wrong_count: wrong,
-      score_percent: scorePercent,
-    };
-  }
-  return legacy;
+  const denominator = total + Math.floor(wrong * 0.5);
+  const scorePercent = denominator > 0 ? Math.round((correct / denominator) * 100) : 0;
+  return {
+    correct_count: correct,
+    total_count: total,
+    wrong_count: wrong,
+    score_percent: scorePercent,
+  };
 }
 
 function activityItemCount(activity) {

@@ -8,11 +8,6 @@ import ListeningFillBlank from '../../components/read2lead/v2/ListeningFillBlank
 import ListenAndOrder from '../../components/read2lead/v2/ListenAndOrder.astro';
 import ListenAndSpeak from '../../components/read2lead/v2/ListenAndSpeak.astro';
 import RetellSummary from '../../components/read2lead/v2/RetellSummary.astro';
-import StoryDiscovery from '../../components/read2lead/v2/StoryDiscovery.astro';
-import VocabBlitz from '../../components/read2lead/v2/VocabBlitz.astro';
-import StoryDetective from '../../components/read2lead/v2/StoryDetective.astro';
-import EchoChallenge from '../../components/read2lead/v2/EchoChallenge.astro';
-import SpeedRound from '../../components/read2lead/v2/SpeedRound.astro';
 import LevelUpModal from '../../components/read2lead/v2/LevelUpModal.astro';
 import RankUpModal from '../../components/read2lead/v3/rank/RankUpModal.astro';
 import ProgressBar from '../../components/read2lead/v2/ProgressBar.astro';
@@ -21,6 +16,7 @@ import MinnyCoachStrip from '../../components/read2lead/v2/MinnyCoachStrip.astro
 import ParentStrip from '../../components/read2lead/v2/ParentStrip.astro';
 import ReadingComprehension from '../../components/read2lead/v2/ReadingComprehension.astro';
 import RewardBurst from '../../components/read2lead/v2/RewardBurst.astro';
+import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro';
 import retellGuideSrc from '../../../functions/api/_read2lead-retell-guide.js?raw';
 import dictationHelperSrc from '../../lib/read2lead-dictation.ts?raw';
 import { r2lRecorderScriptSrc } from '../../scripts/r2l-recorder-script.mjs';
@@ -97,52 +93,13 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
         </section>
 
         <section class="space-y-4">
-          <StoryDiscovery />
-          <VocabBlitz />
           <ListeningFillBlank />
           <ListenAndOrder />
-          <StoryDetective />
           <ReadingComprehension />
-          <section class="r2l-activity" data-activity-shell="written_response" hidden>
-            <div class="r2l-activity-head">
-              <p class="r2l-identity" data-activity-identity></p>
-              <h2 data-activity-title></h2>
-              <p data-activity-instructions></p>
-            </div>
-            <div data-activity-body></div>
-          </section>
-          <EchoChallenge />
+          <WrittenResponse />
           <ListenAndSpeak />
-          <SpeedRound />
           <RetellSummary />
         </section>
-
-        <div
-          id="r2l-combo-hud"
-          class="pointer-events-none fixed right-4 top-24 z-40 hidden rounded-full border border-gold/40 bg-navy-900/90 px-4 py-2 text-sm font-bold text-gold shadow-lg"
-          data-show="false"
-          aria-live="polite"
-        >
-          <span data-combo-count>0</span> combo <span data-combo-emoji></span>
-        </div>
-        <div
-          id="r2l-combo-level-overlay"
-          class="pointer-events-none fixed inset-0 z-50 flex items-center justify-center text-6xl opacity-0 transition-opacity duration-300"
-          data-show="false"
-          aria-hidden="true"
-        ></div>
-        <div
-          id="r2l-badge-toast"
-          class="fixed left-1/2 top-4 z-50 flex -translate-x-1/2 translate-y-[-120%] items-center gap-3 rounded-xl border border-gold/40 bg-navy-900 px-4 py-3 shadow-xl transition-transform duration-300"
-          data-show="false"
-          role="status"
-        >
-          <img data-badge-icon src="/img/r2l/badges/explorer.svg" alt="" width="48" height="48" />
-          <div>
-            <p class="text-xs font-semibold uppercase tracking-wide text-gold">Huy hiệu mới!</p>
-            <p class="font-bold text-cream" data-badge-name></p>
-          </div>
-        </div>
 
         <section id="global-cta" class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 flex flex-col gap-2">
           <button id="lesson-continue" class="r2l-primary w-full text-lg" type="button" disabled>
@@ -218,22 +175,6 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
   <Footer />
   <script src={r2lRecorderSrc} defer></script>
   <script src="/scripts/r2l-mic-check.js" defer></script>
-  <script>
-    import { initAudioSprites, playFx, playUrl } from '../../lib/r2l-howler';
-    import { fireConfetti, fireCoinRain, fireComboFx } from '../../lib/r2l-confetti';
-    import { shakeScreen, showComboLevel, showBadgeToast } from '../../lib/r2l-combo-fx';
-
-    window.__r2lV21Audio = { initAudioSprites, playFx, playUrl };
-    window.__r2lV21Fx = {
-      fireConfetti,
-      fireCoinRain,
-      fireComboFx,
-      shakeScreen,
-      showComboLevel,
-      showBadgeToast,
-    };
-    initAudioSprites();
-  </script>
 </BaseLayout>
 
 <style is:global>
@@ -952,94 +893,6 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
     background: rgb(167 139 250);
     font-size: 1.1rem;
   }
-
-  #r2l-combo-hud[data-show='true'] {
-    display: flex;
-  }
-
-  #r2l-combo-level-overlay[data-show='true'] {
-    opacity: 1;
-  }
-
-  #r2l-badge-toast[data-show='true'] {
-    transform: translate(-50%, 0);
-  }
-
-  @keyframes r2l-shake-keyframes {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(var(--r2l-shake-px, 2px)); }
-    75% { transform: translateX(calc(var(--r2l-shake-px, 2px) * -1)); }
-  }
-
-  .r2l-shake-light { --r2l-shake-px: 2px; animation: r2l-shake-keyframes 100ms ease; }
-  .r2l-shake-medium { --r2l-shake-px: 4px; animation: r2l-shake-keyframes 200ms ease; }
-  .r2l-shake-heavy { --r2l-shake-px: 6px; animation: r2l-shake-keyframes 300ms ease; }
-
-  .r2l-vocab-timer-ring {
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    border: 3px solid rgb(212 166 78 / 0.25);
-    position: relative;
-  }
-
-  .r2l-vocab-timer-ring::after {
-    content: '';
-    position: absolute;
-    inset: -3px;
-    border-radius: 50%;
-    border: 3px solid transparent;
-    border-top-color: rgb(212 166 78);
-    animation: r2l-timer-spin 5s linear forwards;
-  }
-
-  @keyframes r2l-timer-spin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-  }
-
-  .r2l-speed-timer-bar {
-    height: 8px;
-    border-radius: 999px;
-    background: rgb(245 230 211 / 0.12);
-    overflow: hidden;
-  }
-
-  .r2l-speed-timer-bar > span {
-    display: block;
-    height: 100%;
-    background: rgb(74 222 128);
-    transform-origin: left center;
-    animation: r2l-speed-countdown var(--r2l-speed-ms, 6000ms) linear forwards;
-  }
-
-  .r2l-speed-timer-bar[data-urgent='true'] > span {
-    background: rgb(239 68 68);
-  }
-
-  @keyframes r2l-speed-countdown {
-    from { transform: scaleX(1); }
-    to { transform: scaleX(0); }
-  }
-
-  .r2l-vocab-card-flip {
-    transition: transform 280ms ease, opacity 280ms ease;
-  }
-
-  .r2l-vocab-card-flip[data-flip='out'] {
-    transform: rotateY(90deg);
-    opacity: 0;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .r2l-shake-light,
-    .r2l-shake-medium,
-    .r2l-shake-heavy,
-    .r2l-vocab-timer-ring::after,
-    .r2l-speed-timer-bar > span {
-      animation: none !important;
-    }
-  }
 </style>
 
 <script is:inline set:html={retellGuideInline + `
@@ -1169,182 +1022,12 @@ function _r2lBuildRetellTemplate(lesson) {
 
   const ACTIVITY_LABELS = {
     listening_fill_blank: 'Nghe điền',
-    listen_and_fill: 'Tai thần',
     listen_and_order: 'Xếp câu',
-    sentence_builder: 'Thợ xây câu',
     reading_comprehension: 'Đọc hiểu',
-    story_detective: 'Thám tử truyện',
     written_response: 'Viết đáp án',
     listen_and_speak: 'Nói lại',
-    echo_challenge: 'Giọng ca vàng',
     retell_summary: 'Kể truyện',
-    speed_round: 'Tổng công kích',
-    story_discovery: 'Nghe & Khám phá',
-    vocab_blitz: 'Sức mạnh từ vựng',
   };
-
-  const ACTIVITY_LABELS_V21 = {
-    story_discovery: { icon: '🗺️', label: 'Nghe & Khám phá' },
-    vocab_blitz: { icon: '⚡', label: 'Sức mạnh từ vựng' },
-    sentence_builder: { icon: '🏗️', label: 'Thợ xây câu' },
-    story_detective: { icon: '🔍', label: 'Thám tử truyện' },
-    listen_and_fill: { icon: '👂', label: 'Tai thần' },
-    echo_challenge: { icon: '🎙️', label: 'Giọng ca vàng' },
-    speed_round: { icon: '🚀', label: 'Tổng công kích' },
-  };
-
-  const ACTIVITY_SHELL_ALIAS = {
-    sentence_builder: 'listen_and_order',
-    listen_and_fill: 'listening_fill_blank',
-    story_detective: 'story_detective',
-    echo_challenge: 'echo_challenge',
-  };
-
-  const V21_BADGES = {
-    story_discovery: { name_vi: 'Nhà thám hiểm', icon: '/img/r2l/badges/explorer.svg' },
-    vocab_blitz: { name_vi: 'Phù thủy chữ', icon: '/img/r2l/badges/wizard.svg' },
-    sentence_builder: { name_vi: 'Kiến trúc sư', icon: '/img/r2l/badges/architect.svg' },
-    story_detective: { name_vi: 'Thám tử Vàng', icon: '/img/r2l/badges/detective.svg' },
-    listen_and_fill: { name_vi: 'Tai Thần', icon: '/img/r2l/badges/ear.svg' },
-    echo_challenge: { name_vi: 'Giọng ca Vàng', icon: '/img/r2l/badges/singer.svg' },
-    speed_round: { name_vi: 'Tia Chớp', icon: '/img/r2l/badges/lightning.svg' },
-  };
-
-  const DETECTIVE_CATEGORY_VI = {
-    detail: 'chi tiết',
-    inference: 'suy luận',
-    prediction: 'dự đoán',
-    opinion: 'ý kiến',
-  };
-
-  function isV21Lesson(lesson = state.lesson) {
-    return String(lesson?.schema_version || '') === '2.1';
-  }
-
-  function activityLabelText(type) {
-    const v21 = ACTIVITY_LABELS_V21[type];
-    if (isV21Lesson() && v21) return v21.label;
-    return ACTIVITY_LABELS[type] || type;
-  }
-
-  function activityShellForType(type) {
-    if (type === 'story_discovery' || type === 'vocab_blitz' || type === 'speed_round') {
-      return qs(`[data-activity-shell="${type}"]`);
-    }
-    if (type === 'story_detective') {
-      return qs('[data-activity-shell="story_detective"]') || qs('[data-activity-shell="reading_comprehension"]');
-    }
-    if (type === 'echo_challenge') {
-      return qs('[data-activity-shell="echo_challenge"]') || qs('[data-activity-shell="listen_and_speak"], [data-activity-shell="echo_challenge"]');
-    }
-    const alias = ACTIVITY_SHELL_ALIAS[type] || type;
-    return qs(`[data-activity-shell="${alias}"]`);
-  }
-
-  const _r2lGameState = {
-    combo: { current: 0, max: 0, phase_max: {} },
-    phaseStars: {},
-    badgesEarned: [],
-    speedRoundPool: [],
-  };
-
-  function _r2lCreateGameState() {
-    _r2lGameState.combo = { current: 0, max: 0, phase_max: {} };
-    _r2lGameState.phaseStars = {};
-    _r2lGameState.badgesEarned = [];
-    _r2lGameState.speedRoundPool = [];
-    return _r2lGameState;
-  }
-
-  function _r2lRecordAnswer(correct, timeMs = 0) {
-    if (correct) {
-      _r2lGameState.combo.current += 1;
-      _r2lGameState.combo.max = Math.max(_r2lGameState.combo.max, _r2lGameState.combo.current);
-      window.__r2lV21Audio?.playFx?.('correct');
-      _r2lUpdateComboHud();
-    } else {
-      _r2lGameState.combo.current = 0;
-      window.__r2lV21Audio?.playFx?.('wrong');
-      _r2lUpdateComboHud();
-    }
-    return { correct, timeMs, combo: _r2lGameState.combo.current };
-  }
-
-  function _r2lEndPhase(phaseType, stats = {}) {
-    const phaseCombo = _r2lGameState.combo.phase_max[phaseType] || _r2lGameState.combo.max;
-    _r2lGameState.combo.phase_max[phaseType] = phaseCombo;
-    _r2lGameState.combo.current = 0;
-    _r2lUpdateComboHud();
-    const badge = _r2lMaybeAwardBadge(phaseType, stats);
-    return { phaseType, badge, comboMax: phaseCombo };
-  }
-
-  function _r2lCalculateReward() {
-    const stars = Object.values(_r2lGameState.phaseStars).reduce((sum, n) => sum + Number(n || 0), 0);
-    const score100 = Math.round((stars / 21) * 100);
-    const base = Object.keys(_r2lGameState.phaseStars).length * 5;
-    const comboBonus = _r2lGameState.combo.max >= 8 ? 15 : _r2lGameState.combo.max >= 5 ? 10 : _r2lGameState.combo.max >= 3 ? 5 : 0;
-    return { score100, stars, coins: base + comboBonus, badges: _r2lGameState.badgesEarned.slice() };
-  }
-
-  function _r2lComboLevel() {
-    const n = _r2lGameState.combo.current;
-    if (n >= 8) return 'rainbow';
-    if (n >= 5) return 'lightning';
-    if (n >= 3) return 'fire';
-    return null;
-  }
-
-  function _r2lUpdateComboHud() {
-    if (!isV21Lesson()) return;
-    const hud = qs('#r2l-combo-hud');
-    const countEl = qs('[data-combo-count]');
-    const emojiEl = qs('[data-combo-emoji]');
-    if (!hud || !countEl) return;
-    const n = _r2lGameState.combo.current;
-    hud.dataset.show = n > 0 ? 'true' : 'false';
-    countEl.textContent = String(n);
-    const level = _r2lComboLevel();
-    if (emojiEl) {
-      emojiEl.textContent = level === 'rainbow' ? '🌈' : level === 'lightning' ? '⚡' : level === 'fire' ? '🔥' : '';
-    }
-    if (level) {
-      window.__r2lV21Fx?.showComboLevel?.(level);
-      if (level === 'rainbow') {
-        window.__r2lV21Fx?.shakeScreen?.('heavy');
-        window.__r2lV21Fx?.fireCoinRain?.();
-      } else if (level === 'lightning') {
-        window.__r2lV21Fx?.shakeScreen?.('medium');
-      } else {
-        window.__r2lV21Fx?.shakeScreen?.('light');
-      }
-    }
-  }
-
-  function _r2lMaybeAwardBadge(phaseType, stats) {
-    const def = V21_BADGES[phaseType];
-    if (!def) return null;
-    let earned = false;
-    if (phaseType === 'story_discovery') earned = (stats.correct || 0) / Math.max(1, stats.total || 1) >= 0.8;
-    else if (phaseType === 'vocab_blitz') earned = (stats.correct || 0) >= 5;
-    else if (phaseType === 'sentence_builder') earned = (stats.wrong_count || 0) === 0 && (stats.correct || 0) === (stats.total || 0);
-    else if (phaseType === 'story_detective') earned = (stats.correct || 0) === (stats.total || 0);
-    else if (phaseType === 'listen_and_fill') earned = (stats.correct || 0) === (stats.total || 0) && (stats.wrong_count || 0) === 0;
-    else if (phaseType === 'echo_challenge') earned = (stats.avg_score || 0) >= 80;
-    else if (phaseType === 'speed_round') earned = (stats.correct || 0) >= 8;
-    if (!earned) return null;
-    const badge = { phase: phaseType, name_vi: def.name_vi, icon: def.icon };
-    _r2lGameState.badgesEarned.push(badge);
-    window.__r2lV21Fx?.showBadgeToast?.(def.name_vi, def.icon);
-    return badge;
-  }
-
-  function _r2lSetPhaseStars(phaseType, correct, total) {
-    const percent = total > 0 ? correct / total : 0;
-    const stars = percent >= 0.9 ? 3 : percent >= 0.7 ? 2 : percent >= 0.5 ? 1 : 0;
-    _r2lGameState.phaseStars[phaseType] = stars;
-    return stars;
-  }
 
   const MINNY_COMMANDS = {
     listening_fill_blank: 'Con nghe rồi chọn cụm từ còn thiếu nhé!',
@@ -1482,14 +1165,8 @@ function _r2lBuildRetellTemplate(lesson) {
     burst.dataset.tier = 'common';
     burst.dataset.mode = 'celebrate';
     burst.dataset.show = 'true';
-  }
 
-  function vocabBlitzOptions(item) {
-    return item.options_emoji || item.options_vi || item.options_en || item.options || [];
-  }
-
-  function isEmojiOptionLabel(value) {
-    return /[\u{1F300}-\u{1FAFF}\u2600-\u27BF]/u.test(String(value || ''));
+    playSfx(SFX.activityComplete);
   }
 
   const qs = (selector) => document.querySelector(selector);
@@ -1507,13 +1184,6 @@ function _r2lBuildRetellTemplate(lesson) {
     written_response: '✍️',
     listen_and_speak: '🎙️',
     retell_summary: '📖',
-    story_discovery: '🗺️',
-    vocab_blitz: '⚡',
-    sentence_builder: '🏗️',
-    story_detective: '🔍',
-    listen_and_fill: '👂',
-    echo_challenge: '🎙️',
-    speed_round: '🚀',
   };
 
   let _w1ReadAlong = { running: false, paused: false, sentenceIdx: 0, cardIdx: 0 };
@@ -1689,7 +1359,7 @@ function _r2lBuildRetellTemplate(lesson) {
 
   function _r2lApplyMicGate(ready) {
     _r2lMicGateReady = ready;
-    const speakShell = qs('[data-activity-shell="listen_and_speak"], [data-activity-shell="echo_challenge"]');
+    const speakShell = qs('[data-activity-shell="listen_and_speak"]');
     const retellShell = qs('[data-activity-shell="retell_summary"]');
     [speakShell, retellShell].forEach((shell) => {
       if (!shell || shell.hidden) return;
@@ -2231,11 +1901,11 @@ function _r2lBuildRetellTemplate(lesson) {
           };
       _r2lRenderSpeakFeedback(cardEl, friendlyPayload);
       if (passed) {
-        const heroEl = cardEl.closest('[data-activity-shell="listen_and_speak"], [data-activity-shell="echo_challenge"]')?.querySelector('[data-minny-hero]');
+        const heroEl = cardEl.closest('[data-activity-shell="listen_and_speak"]')?.querySelector('[data-minny-hero]');
         _r2lSetMinnyMood(_r2lMinnyMoodForScore(payload.score_percent), heroEl);
         persistSpeakItemResult(itemKey, _r2lRecorderState.perItem.get(itemKey));
       } else if (payload?.ok) {
-        const heroEl = cardEl.closest('[data-activity-shell="listen_and_speak"], [data-activity-shell="echo_challenge"]')?.querySelector('[data-minny-hero]');
+        const heroEl = cardEl.closest('[data-activity-shell="listen_and_speak"]')?.querySelector('[data-minny-hero]');
         _r2lSetMinnyMood('encourage', heroEl);
         showToast('Minny cần nghe được ít nhất 50%. Con thu lại nhé!');
         const nativeUrl = cardEl?.dataset?.nativeAudioUrl || '';
@@ -2311,7 +1981,7 @@ function _r2lBuildRetellTemplate(lesson) {
         checkStatus: 'error',
         checkResult: { ok: false, skipped_due_to_mic: true },
       });
-      const cardEl = qs(`[data-activity-shell="listen_and_speak"], [data-activity-shell="echo_challenge"]`)?.querySelector(`[data-speak-card="${itemIndex}"]`);
+      const cardEl = qs(`[data-activity-shell="listen_and_speak"]`)?.querySelector(`[data-speak-card="${itemIndex}"]`);
       if (cardEl) {
         _r2lRenderRecorderUi(itemKey, cardEl);
         _r2lRenderSpeakFeedback(cardEl, { ok: false, message: _R2L_MIC_SKIP_MSG });
@@ -2411,9 +2081,8 @@ function _r2lBuildRetellTemplate(lesson) {
   }
 
   function activityItemsFromCard(cardEl) {
-    const shell = cardEl?.closest('[data-activity-shell="listen_and_speak"], [data-activity-shell="echo_challenge"]');
-    const shellType = shell?.getAttribute('data-activity-shell') || 'listen_and_speak';
-    const index = (state.lesson?.activities || []).findIndex((a) => a.type === shellType);
+    const shell = cardEl?.closest('[data-activity-shell="listen_and_speak"]');
+    const index = (state.lesson?.activities || []).findIndex((a) => a.type === 'listen_and_speak');
     return index >= 0 ? state.lesson.activities[index] : null;
   }
 
@@ -2568,7 +2237,7 @@ function _r2lBuildRetellTemplate(lesson) {
       });
       _r2lRenderRecorderUi(itemKey, cardEl);
       _r2lRenderSpeakFeedback(cardEl, { ok: false, message: _r2lRecorderHelpMessage(err) });
-      _r2lFocusMicHelp(cardEl?.closest('[data-activity-shell="listen_and_speak"], [data-activity-shell="echo_challenge"]'));
+      _r2lFocusMicHelp(cardEl?.closest('[data-activity-shell="listen_and_speak"]'));
     }
   }
 
@@ -2869,12 +2538,7 @@ function _r2lBuildRetellTemplate(lesson) {
     const completedWithoutReward = data.completed_without_reward === true;
     qs('#completion-copy').textContent = completedWithoutReward
       ? 'Bài đã kết thúc. Phần nói được bỏ qua nên con không nhận sao hay điểm, nhưng vẫn có thể tạo bài mới.'
-      : (() => {
-        const rewardLine = `Con nhận ${rewards.coins || 0} xu và ${rewards.xp || 0} XP cho nhiệm vụ này.`;
-        if (!isV21Lesson()) return rewardLine;
-        const score = _r2lCalculateReward().score100;
-        return `Điểm bài học: ${score}/100. ${rewardLine}`;
-      })();
+      : `Con nhận ${rewards.coins || 0} xu và ${rewards.xp || 0} XP cho nhiệm vụ này.`;
     qs('#completion-card').classList.remove('hidden');
     if (state.accessCode) {
       qs('#completion-new-pack').href = `/read2lead?code=${encodeURIComponent(state.accessCode)}#form`;
@@ -3693,23 +3357,8 @@ function _r2lBuildRetellTemplate(lesson) {
   function restoreLessonSession() {
     const saved = loadLessonSession();
     if (!saved) return false;
-    const completedTypes = new Set(saved.completed_types || []);
-    const activityResults = { ...(saved.activity_results || {}) };
-    // Pre-fix sessions saved an auto-completed speed_round on every page load
-    // (renderAllActivitiesOnce eagerly mounted the Speed Round shell while
-    // the pool was effectively idle). When restoring, drop speed_round (and
-    // its result) unless every earlier V2.1 phase is also in completedTypes —
-    // Speed Round can only be legitimately reached after Phase 1-6 are done.
-    if (isV21Lesson() && completedTypes.has('speed_round')) {
-      const v21Prior = ['story_discovery', 'vocab_blitz', 'sentence_builder', 'story_detective', 'listen_and_fill', 'echo_challenge'];
-      const allPriorDone = v21Prior.every((t) => completedTypes.has(t));
-      if (!allPriorDone) {
-        completedTypes.delete('speed_round');
-        delete activityResults.speed_round;
-      }
-    }
-    state.completedTypes = completedTypes;
-    state.activityResults = activityResults;
+    state.completedTypes = new Set(saved.completed_types || []);
+    state.activityResults = saved.activity_results || {};
     state.writtenDrafts = saved.written_drafts || {};
     state.activityProgress = saved.activity_progress || {};
     const activities = state.lesson?.activities || [];
@@ -3867,8 +3516,7 @@ function _r2lBuildRetellTemplate(lesson) {
         clearTimeout(timer);
         const data = await safeJson(res);
         if (!res.ok || !data.ok) throw new Error(data.message || data.error || 'Không tải được bài.');
-        const schemaVersion = String(data.lesson?.schema_version ?? '');
-        if (schemaVersion !== '2' && schemaVersion !== '2.0' && schemaVersion !== '2.1') {
+        if (data.lesson?.schema_version !== 2) {
           throw new Error('Bài này vẫn là format cũ. V2 lesson chỉ nhận pack schema_version = 2.');
         }
         renderLesson(data.lesson);
@@ -3930,9 +3578,6 @@ function _r2lBuildRetellTemplate(lesson) {
   }
 
   function ensureLessonActivities(lesson) {
-    if (isV21Lesson(lesson)) {
-      return ensureLessonActivitiesV21(lesson);
-    }
     const activities = Array.isArray(lesson?.activities) ? [...lesson.activities] : [];
     const lessonContext = {
       story: lesson?.story,
@@ -3973,22 +3618,6 @@ function _r2lBuildRetellTemplate(lesson) {
         lessonContext,
       );
     }
-    return lesson;
-  }
-
-  function ensureLessonActivitiesV21(lesson) {
-    const activities = Array.isArray(lesson?.activities) ? [...lesson.activities] : [];
-    if (!activities.some((a) => a?.type === 'speed_round')) {
-      activities.push({
-        type: 'speed_round',
-        title_vi: 'Tổng công kích',
-        identity_vi: 'Chiến binh tốc độ',
-        instructions_vi: 'Trả lời thật nhanh các câu đã học!',
-        items: [],
-      });
-    }
-    lesson.activities = activities;
-    _r2lCreateGameState();
     return lesson;
   }
 
@@ -4377,7 +4006,6 @@ function _r2lBuildRetellTemplate(lesson) {
       if (event.detail?.ready) _r2lUpdateMicPrepBanner(state.lesson?.activities || []);
     });
     const resumed = restoreLessonSession();
-    populateActivityProgressNav(lesson.activities || []);
     renderAllActivitiesOnce(lesson.activities || []);
     if (isW1()) {
       if (!resumed || state.w1Phase === 'story') {
@@ -4402,33 +4030,14 @@ function _r2lBuildRetellTemplate(lesson) {
     }
   }
 
-  function populateActivityProgressNav(activities) {
-    const nav = qs('[data-activity-progress-nav]');
-    if (!nav) return;
-    nav.innerHTML = activities.map((activity, index) => {
-      const label = activityLabelText(activity?.type) || `Phần ${index + 1}`;
-      return `<button class="r2l-step" data-step-button="${index}" type="button">${index + 1}. ${escapeHtml(label)}</button>`;
-    }).join('');
-  }
-
   function renderAllActivitiesOnce(activities) {
-    activities.forEach((activity) => {
-      const shell = activityShellForType(activity.type);
+    activities.forEach((activity, index) => {
+      const shell = qs(`[data-activity-shell="${activity.type}"]`);
       if (!shell) return;
-      shell.querySelector('[data-activity-title]').textContent = activity.title_vi || activityLabelText(activity.type) || '';
+      shell.querySelector('[data-activity-title]').textContent = activity.title_vi || ACTIVITY_LABELS[activity.type] || '';
       shell.querySelector('[data-activity-identity]').textContent = activity.identity_vi || '';
       shell.querySelector('[data-activity-instructions]').textContent = activity.instructions_vi || '';
       const body = shell.querySelector('[data-activity-body]');
-      if (isV21Lesson()) {
-        if (activity.type === 'story_discovery') renderStoryDiscoveryActivity(body, activity);
-        else if (activity.type === 'vocab_blitz') renderVocabBlitzActivity(body, activity);
-        else if (activity.type === 'sentence_builder') renderOrderActivity(body, activity);
-        else if (activity.type === 'story_detective') renderStoryDetectiveActivity(body, activity);
-        else if (activity.type === 'listen_and_fill') renderFillBlankActivity(body, activity);
-        else if (activity.type === 'echo_challenge') renderEchoChallengeActivity(body, activity);
-        else if (activity.type === 'speed_round') renderSpeedRoundActivity(body, activity);
-        return;
-      }
       if (activity.type === 'listening_fill_blank') {
         renderFillBlankActivity(body, activity);
       } else if (activity.type === 'reading_comprehension') {
@@ -4541,7 +4150,7 @@ function _r2lBuildRetellTemplate(lesson) {
     const activity = activities[state.activityIndex];
     if (!activity) return;
 
-    const shell = activityShellForType(activity.type);
+    const shell = qs(`[data-activity-shell="${activity.type}"]`);
     if (!shell) return;
     shell.hidden = false;
 
@@ -4578,8 +4187,7 @@ function _r2lBuildRetellTemplate(lesson) {
     setMinnyStrip('idle', MINNY_COMMANDS[activity.type] || '');
     _itemStreak = 0;
 
-    const useLargeMinny = ['listen_and_speak', 'retell_summary'].includes(activity.type)
-      || activity.type === 'echo_challenge';
+    const useLargeMinny = ['listen_and_speak', 'retell_summary'].includes(activity.type);
     const minnyStrip = qs('#minny-strip');
     if (minnyStrip) minnyStrip.hidden = useLargeMinny;
     const heroWrap = shell.querySelector('.r2l-minny-hero-wrap');
@@ -4590,7 +4198,7 @@ function _r2lBuildRetellTemplate(lesson) {
     updateGlobalCta();
     scheduleSaveLessonSession();
 
-    if (['listen_and_speak', 'retell_summary'].includes(activity.type) || activity.type === 'echo_challenge') {
+    if (['listen_and_speak', 'retell_summary'].includes(activity.type)) {
       _r2lMountMicCheck(shell);
       if (window.R2LMicCheck?.sessionPassed?.()) {
         _r2lApplyMicGate(true);
@@ -4601,14 +4209,6 @@ function _r2lBuildRetellTemplate(lesson) {
           window.setTimeout(() => window.R2LMicCheck.scrollToPanel(panel), 300);
         }
       }
-    }
-
-    // Speed Round pool depends on results from Phases 1-5. The initial mount
-    // in renderAllActivitiesOnce runs with an empty pool — when the kid
-    // actually navigates here we need to rebuild and start the round.
-    if (activity.type === 'speed_round' && !state.completedTypes.has('speed_round')) {
-      const body = shell.querySelector('[data-activity-body]');
-      if (body) renderSpeedRoundActivity(body, activity);
     }
   }
 
@@ -4631,7 +4231,7 @@ function _r2lBuildRetellTemplate(lesson) {
       btn.disabled = false;
     } else if (isCurrentDone && !isLast) {
       const nextActivity = activities[state.activityIndex + 1];
-      const nextLabel = activityLabelText(nextActivity?.type) || 'bài tiếp';
+      const nextLabel = ACTIVITY_LABELS[nextActivity?.type] || 'bài tiếp';
       btn.textContent = `Phần tiếp: ${nextLabel} →`;
       btn.disabled = false;
     } else {
@@ -4695,404 +4295,6 @@ function _r2lBuildRetellTemplate(lesson) {
     else if (expl) expl.classList.remove('hidden');
   }
 
-  function renderStoryDiscoveryActivity(root, activity) {
-    const items = activity.items || [];
-    let itemIndex = 0;
-    const results = { correct: 0, total: items.length };
-
-    function renderItem() {
-      const item = items[itemIndex];
-      if (!item) return;
-      const progress = root.closest('[data-activity-shell]')?.querySelector('[data-story-discovery-progress]');
-      if (progress) progress.textContent = `Câu ${itemIndex + 1} / ${items.length}`;
-      const mc = item.micro_check || {};
-      const showVi = true;
-      root.innerHTML = `
-        <article class="mt-5 rounded-md border border-cream/10 bg-navy-950/45 p-4" data-sd-card="${itemIndex}">
-          <p class="text-lg font-bold text-cream">${escapeHtml(item.text_en || '')}</p>
-          ${showVi ? `<p class="mt-1 text-sm text-cream/65">${escapeHtml(item.text_vi || '')}</p>` : ''}
-          <button class="r2l-primary mt-3" type="button" data-sd-play="${itemIndex}">▶ Nghe câu</button>
-          <div class="mt-4 hidden" data-sd-check="${itemIndex}">
-            <p class="font-semibold text-gold">${escapeHtml(mc.prompt_vi || 'Chọn đáp án đúng')}</p>
-            <div class="mt-2 grid gap-2" data-sd-options="${itemIndex}"></div>
-          </div>
-        </article>
-      `;
-      const optionsWrap = root.querySelector(`[data-sd-options="${itemIndex}"]`);
-      const options = mc.options || [];
-      options.forEach((opt, optIndex) => {
-        const btn = document.createElement('button');
-        btn.type = 'button';
-        btn.className = 'r2l-option min-h-[44px]';
-        btn.textContent = String(opt);
-        btn.addEventListener('click', () => handleAnswer(optIndex === mc.correct_index, btn, optIndex === mc.correct_index ? null : mc.correct_index));
-        optionsWrap?.appendChild(btn);
-      });
-      const playBtn = root.querySelector(`[data-sd-play="${itemIndex}"]`);
-      playBtn?.addEventListener('click', async () => {
-        const url = item.audio_url || '';
-        try {
-          if (window.__r2lV21Audio?.playUrl) await window.__r2lV21Audio.playUrl(url);
-          else await _r2lAwaitStoryAudio(url);
-        } catch {
-          showToast('Chưa nghe được — con thử lại nhé!');
-        }
-        root.querySelector(`[data-sd-check="${itemIndex}"]`)?.classList.remove('hidden');
-      });
-      if (itemIndex === 0) playBtn?.click();
-    }
-
-    function handleAnswer(isCorrect, btn, revealIndex) {
-      qsa(`[data-sd-options="${itemIndex}"] .r2l-option`).forEach((b) => { b.disabled = true; });
-      if (isCorrect) {
-        btn.dataset.state = 'correct';
-        results.correct += 1;
-        _r2lRecordAnswer(true);
-        onItemCorrect();
-      } else {
-        btn.dataset.state = 'wrong';
-        _r2lRecordAnswer(false);
-        onItemWrong(`${activity.type}:${itemIndex}`);
-        if (revealIndex != null) {
-          const correctBtn = root.querySelectorAll(`[data-sd-options="${itemIndex}"] .r2l-option`)[revealIndex];
-          if (correctBtn) correctBtn.dataset.state = 'revealed';
-        }
-      }
-      window.setTimeout(() => {
-        itemIndex += 1;
-        if (itemIndex >= items.length) {
-          _r2lSetPhaseStars(activity.type, results.correct, results.total);
-          _r2lEndPhase(activity.type, results);
-          completeActivity(activity.type, { correct_count: results.correct, total_count: results.total });
-        } else {
-          renderItem();
-        }
-      }, isCorrect ? 400 : 1500);
-    }
-
-    renderItem();
-  }
-
-  function renderVocabBlitzActivity(root, activity) {
-    const items = activity.items || [];
-    let cardIndex = 0;
-    const results = { correct: 0, total: items.length };
-
-    function renderCard() {
-      while (cardIndex < items.length) {
-        const item = items[cardIndex];
-        const options = vocabBlitzOptions(item);
-        if (!item || options.length < 2) {
-          cardIndex += 1;
-          continue;
-        }
-        const optionClass = options.some(isEmojiOptionLabel) ? 'r2l-option r2l-emoji-option min-h-[52px] text-2xl' : 'r2l-option min-h-[44px]';
-        root.innerHTML = `
-        <article class="r2l-vocab-card-flip mt-5 rounded-md border border-cream/10 bg-navy-950/45 p-4" data-vb-card="${cardIndex}">
-          <div class="flex items-center justify-between gap-3">
-            <p class="font-display text-2xl font-bold text-cream">${escapeHtml(item.word_en || item.word_vi || '')}</p>
-            <div class="r2l-vocab-timer-ring" aria-hidden="true"></div>
-          </div>
-          ${item.word_vi && item.word_en ? `<p class="mt-1 text-sm text-cream/65">${escapeHtml(item.word_vi)}</p>` : ''}
-          <button class="r2l-secondary mt-3" type="button" data-vb-play="${cardIndex}">🔊 Nghe từ</button>
-          <div class="mt-4 grid gap-2">
-            ${options.map((opt, i) => `<button class="${optionClass}" type="button" data-vb-opt="${i}">${escapeHtml(String(opt))}</button>`).join('')}
-          </div>
-          <p class="mt-2 hidden text-sm text-gold" data-vb-speed>⚡ Nhanh quá!</p>
-        </article>
-      `;
-        const startedAt = Date.now();
-        root.querySelector(`[data-vb-play="${cardIndex}"]`)?.addEventListener('click', () => {
-          const url = item.audio_url || '';
-          if (url) {
-            if (window.__r2lV21Audio?.playUrl) window.__r2lV21Audio.playUrl(url);
-            else playAudio(url);
-            return;
-          }
-          // Backend pipeline only TTSes story sentences, not per-vocab words —
-          // fall back to the browser's speech synthesizer so kids always hear
-          // the word when they tap "Nghe từ".
-          const word = (item.word_en || item.word_vi || '').trim();
-          if (word) _r2lSpeakEnglishLine(word);
-        });
-        root.querySelectorAll('[data-vb-opt]').forEach((btn) => {
-          btn.addEventListener('click', () => {
-            const optIndex = Number(btn.dataset.vbOpt);
-            const isCorrect = optIndex === item.correct_index;
-            const fast = Date.now() - startedAt < 3000;
-            root.querySelectorAll('[data-vb-opt]').forEach((b) => { b.disabled = true; });
-            if (isCorrect) {
-              btn.dataset.state = 'correct';
-              results.correct += 1;
-              if (fast) root.querySelector('[data-vb-speed]')?.classList.remove('hidden');
-              _r2lRecordAnswer(true, Date.now() - startedAt);
-              onItemCorrect();
-            } else {
-              btn.dataset.state = 'wrong';
-              const correctBtn = root.querySelector(`[data-vb-opt="${item.correct_index}"]`);
-              if (correctBtn) correctBtn.dataset.state = 'revealed';
-              _r2lRecordAnswer(false);
-              onItemWrong(`${activity.type}:${cardIndex}`);
-            }
-            const card = root.querySelector(`[data-vb-card="${cardIndex}"]`);
-            if (card) card.dataset.flip = 'out';
-            window.setTimeout(() => {
-              cardIndex += 1;
-              if (cardIndex >= items.length) {
-                _r2lSetPhaseStars(activity.type, results.correct, results.total);
-                _r2lEndPhase(activity.type, results);
-                completeActivity(activity.type, { correct_count: results.correct, total_count: results.total });
-              } else {
-                renderCard();
-              }
-            }, isCorrect ? 500 : 1500);
-          });
-        });
-        return;
-      }
-      _r2lSetPhaseStars(activity.type, results.correct, results.total);
-      _r2lEndPhase(activity.type, results);
-      completeActivity(activity.type, { correct_count: results.correct, total_count: results.total });
-    }
-    renderCard();
-  }
-
-  function renderStoryDetectiveActivity(root, activity) {
-    const questions = activity.questions || [];
-    let unlocked = 0;
-    const results = { correct: 0, total: questions.length };
-    root.innerHTML = `
-      <div class="mt-5 space-y-5">
-        ${questions.map((q, qi) => `
-          <article class="rounded-md border border-cream/10 bg-navy-950/45 p-4" data-detective-q="${qi}">
-            <span class="inline-block rounded-full bg-gold/15 px-2 py-0.5 text-xs font-bold text-gold">${escapeHtml(DETECTIVE_CATEGORY_VI[q.category] || q.category || 'manh mối')}</span>
-            <p class="mt-2 font-bold text-cream">🔍 ${escapeHtml(q.question_en || '')}</p>
-            <p class="mt-1 text-sm text-cream/65">${escapeHtml(q.question_vi || '')}</p>
-            <div class="mt-3 grid gap-2">
-              ${(q.options || []).map((opt, oi) => {
-                const en = typeof opt === 'string' ? opt : opt.text_en;
-                const vi = typeof opt === 'string' ? '' : opt.text_vi;
-                return `<button class="r2l-option min-h-[44px]" type="button" data-dq="${qi}" data-do="${oi}">${escapeHtml(en || '')}${vi ? `<span class="block text-xs text-cream/55">${escapeHtml(vi)}</span>` : ''}</button>`;
-              }).join('')}
-            </div>
-            <p class="mt-2 hidden text-sm text-gold" data-detective-unlock="${qi}">Đúng rồi! Manh mối mới mở 🔓</p>
-          </article>
-        `).join('')}
-      </div>
-    `;
-    const answeredQs = new Set();
-    root.querySelectorAll('[data-dq]').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const qi = Number(btn.dataset.dq);
-        const oi = Number(btn.dataset.do);
-        const q = questions[qi];
-        if (!q || answeredQs.has(qi)) return;
-        answeredQs.add(qi);
-        const isCorrect = oi === q.correct_index;
-        root.querySelectorAll(`[data-dq="${qi}"]`).forEach((b) => { b.disabled = true; });
-        if (isCorrect) {
-          btn.dataset.state = 'correct';
-          results.correct += 1;
-          unlocked += 1;
-          root.querySelector(`[data-detective-unlock="${qi}"]`)?.classList.remove('hidden');
-          setMinnyStrip('celebrate', 'Đúng rồi!');
-          _r2lRecordAnswer(true);
-          onItemCorrect();
-        } else {
-          btn.dataset.state = 'wrong';
-          const correctBtn = root.querySelector(`[data-dq="${qi}"][data-do="${q.correct_index}"]`);
-          if (correctBtn) correctBtn.dataset.state = 'revealed';
-          _r2lRecordAnswer(false);
-          onItemWrong(`${activity.type}:${qi}`);
-        }
-        if (answeredQs.size >= questions.length) {
-          window.setTimeout(() => {
-            _r2lSetPhaseStars(activity.type, results.correct, results.total);
-            _r2lEndPhase(activity.type, results);
-            completeActivity(activity.type, { correct_count: results.correct, total_count: results.total });
-          }, 600);
-        }
-      });
-    });
-  }
-
-  function renderEchoChallengeActivity(root, activity) {
-    renderSpeakActivity(root, {
-      ...activity,
-      type: 'echo_challenge',
-      items: (activity.items || []).map((item) => ({
-        ...item,
-        text: item.text_en,
-        translation_vi: item.text_vi,
-      })),
-    });
-  }
-
-  function _r2lBuildSpeedRoundPool(lesson) {
-    const pool = [];
-    (lesson?.activities || []).forEach((act) => {
-      if (act.type === 'story_discovery') {
-        (act.items || []).forEach((item, i) => pool.push({ type: 'micro_check', source: act.type, item, index: i }));
-      } else if (act.type === 'vocab_blitz') {
-        (act.items || []).forEach((item, i) => pool.push({ type: 'vocab', source: act.type, item, index: i }));
-      } else if (act.type === 'listen_and_fill') {
-        (act.items || []).forEach((item, i) => pool.push({ type: 'fill', source: act.type, item, index: i }));
-      } else if (act.type === 'story_detective') {
-        (act.questions || []).forEach((item, i) => pool.push({ type: 'detective', source: act.type, item, index: i }));
-      }
-    });
-    for (let i = pool.length - 1; i > 0; i -= 1) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [pool[i], pool[j]] = [pool[j], pool[i]];
-    }
-    const level = String(lesson?.level || 'L3');
-    const maxItems = level === 'L1' || level === 'L2' ? 8 : 10;
-    return pool.slice(0, maxItems);
-  }
-
-  function _r2lSpeedTimerMs(level) {
-    const map = { L1: 10000, L2: 8000, L3: 6000, L4: 5000, L5: 4000 };
-    return map[level] || 6000;
-  }
-
-  function renderSpeedRoundActivity(root, activity) {
-    const lesson = state.lesson;
-    const level = String(lesson?.level || 'L3');
-    const items = _r2lBuildSpeedRoundPool(lesson);
-    activity.items = items;
-    // renderAllActivitiesOnce eagerly mounts every shell at page load. At that
-    // moment no earlier phase has been completed, so the Speed Round pool is
-    // empty. We must NOT auto-complete the phase from this initial mount —
-    // that pre-checks the final step on the progress bar and skips the kid
-    // past Phase 7. Defer the actual round until the activity becomes active
-    // (state.activityIndex points at speed_round) AND the pool has items.
-    const speedRoundIndex = (state.lesson?.activities || []).findIndex((a) => a?.type === 'speed_round');
-    const isActiveNow = state.activityIndex === speedRoundIndex;
-    if (!items.length || !isActiveNow) {
-      root.innerHTML = `
-        <div class="mt-5 rounded-md border border-cream/10 bg-navy-950/45 p-5 text-center">
-          <p class="font-display text-lg font-bold text-cream">Hoàn thành các phần trước để mở khóa Tổng công kích!</p>
-          <p class="mt-2 text-sm text-cream/70">Con sẽ trả lời thật nhanh các câu đã học.</p>
-        </div>
-      `;
-      return;
-    }
-    let idx = 0;
-    let correct = 0;
-    let comboStreak = 0;
-    let maxCombo = 0;
-    const timerMs = _r2lSpeedTimerMs(level);
-
-    function multiplier() {
-      if (comboStreak >= 8) return 5;
-      if (comboStreak >= 5) return 3;
-      if (comboStreak >= 3) return 2;
-      return 1;
-    }
-
-    function renderSpeedItem() {
-      const entry = items[idx];
-      if (!entry) {
-        const stats = { correct, total: items.length, combo_max: maxCombo };
-        _r2lSetPhaseStars(activity.type, correct, items.length);
-        _r2lEndPhase(activity.type, stats);
-        root.innerHTML = `
-          <div class="mt-5 rounded-md border border-gold/30 bg-gold/10 p-5 text-center">
-            <p class="font-display text-xl font-bold text-gold">Hết giờ tấn công!</p>
-            <p class="mt-2 text-cream">Đúng ${correct}/${items.length} · Combo cao nhất x${maxCombo}</p>
-          </div>
-        `;
-        completeActivity(activity.type, { correct_count: correct, total_count: items.length, combo_max: maxCombo });
-        return;
-      }
-      const meta = root.closest('[data-activity-shell]')?.querySelector('[data-speed-round-meta]');
-      if (meta) meta.textContent = `Câu ${idx + 1}/${items.length} · x${multiplier()}`;
-      let prompt = '';
-      let options = [];
-      let correctIndex = 0;
-      if (entry.type === 'micro_check') {
-        prompt = entry.item.micro_check?.prompt_vi || entry.item.text_en || '';
-        options = entry.item.micro_check?.options || [];
-        correctIndex = entry.item.micro_check?.correct_index ?? 0;
-      } else if (entry.type === 'vocab') {
-        prompt = entry.item.word_en || '';
-        options = entry.item.options_vi || entry.item.options_en || [];
-        correctIndex = entry.item.correct_index ?? 0;
-      } else if (entry.type === 'fill') {
-        prompt = entry.item.display_text || entry.item.sentence_with_blank || '';
-        options = entry.item.options || entry.item.options_en || [];
-        correctIndex = entry.item.correct_index ?? 0;
-      } else if (entry.type === 'detective') {
-        prompt = entry.item.question_en || '';
-        options = (entry.item.options || []).map((o) => (typeof o === 'string' ? o : o.text_en));
-        correctIndex = entry.item.correct_index ?? 0;
-      }
-      root.innerHTML = `
-        <article class="mt-5 rounded-md border border-cream/10 bg-navy-950/45 p-4">
-          <div class="r2l-speed-timer-bar" style="--r2l-speed-ms:${timerMs}ms"><span></span></div>
-          <p class="mt-3 font-bold text-cream">${escapeHtml(prompt)}</p>
-          <div class="mt-3 grid gap-2" data-speed-opts></div>
-        </article>
-      `;
-      const bar = root.querySelector('.r2l-speed-timer-bar');
-      window.setTimeout(() => { if (bar) bar.dataset.urgent = 'true'; }, Math.max(0, timerMs - 2000));
-      const wrap = root.querySelector('[data-speed-opts]');
-      let answered = false;
-      const timeout = window.setTimeout(() => {
-        if (answered) return;
-        answered = true;
-        comboStreak = 0;
-        _r2lRecordAnswer(false);
-        idx += 1;
-        renderSpeedItem();
-      }, timerMs);
-      options.forEach((opt, oi) => {
-        const btn = document.createElement('button');
-        btn.type = 'button';
-        btn.className = 'r2l-option min-h-[44px]';
-        btn.textContent = String(opt);
-        btn.addEventListener('click', () => {
-          if (answered) return;
-          answered = true;
-          clearTimeout(timeout);
-          const isCorrect = oi === correctIndex;
-          if (isCorrect) {
-            correct += 1;
-            comboStreak += 1;
-            maxCombo = Math.max(maxCombo, comboStreak);
-            btn.dataset.state = 'correct';
-            _r2lRecordAnswer(true);
-            window.__r2lV21Audio?.playFx?.('speed_tick');
-            if (multiplier() >= 5) {
-              window.__r2lV21Fx?.fireCoinRain?.();
-              window.__r2lV21Fx?.shakeScreen?.('heavy');
-            }
-          } else {
-            comboStreak = 0;
-            btn.dataset.state = 'wrong';
-            _r2lRecordAnswer(false);
-          }
-          window.setTimeout(() => {
-            idx += 1;
-            renderSpeedItem();
-          }, 350);
-        });
-        wrap?.appendChild(btn);
-      });
-    }
-    renderSpeedItem();
-  }
-
-  async function _r2lAwaitStoryAudio(url) {
-    return new Promise((resolve, reject) => {
-      if (!url) { resolve(); return; }
-      const audio = new Audio(url);
-      audio.onended = () => resolve();
-      audio.onerror = () => reject(new Error('audio'));
-      audio.play().catch(reject);
-    });
-  }
-
   function renderFillBlankActivity(root, activity) {
     const MAX_WRONG_PER_ITEM = isW1() ? 2 : 3;
     root.innerHTML = `
@@ -5105,9 +4307,9 @@ function _r2lBuildRetellTemplate(lesson) {
                   <p class="font-bold text-cream">Câu ${itemIndex + 1}</p>
                   <button class="r2l-primary" type="button" data-play-fill="${itemIndex}">Nghe câu</button>
                 </div>
-                <p class="mt-3 text-lg font-bold text-cream">${escapeHtml(item.sentence_with_blank || item.display_text || '')}</p>
+                <p class="mt-3 text-lg font-bold text-cream">${escapeHtml(item.sentence_with_blank || '')}</p>
                 <div class="mt-3 grid gap-2">
-                  ${(item.options_en || item.options || [])
+                  ${(item.options_en || [])
                     .map(
                       (option, optionIndex) => `
                         <button class="r2l-option" type="button" data-fill-item="${itemIndex}" data-option-index="${optionIndex}">
@@ -5956,7 +5158,7 @@ function _r2lBuildRetellTemplate(lesson) {
   }
 
   function renderSpeakActivity(root, activity) {
-    const heroScope = root.closest('[data-activity-shell="listen_and_speak"], [data-activity-shell="echo_challenge"]');
+    const heroScope = root.closest('[data-activity-shell="listen_and_speak"]');
     _r2lInitMinnyHero(heroScope);
 
     root.innerHTML = `
@@ -6048,12 +5250,6 @@ function _r2lBuildRetellTemplate(lesson) {
   function completeActivity(type, details) {
     if (state.completedTypes.has(type)) return;
     const completedIndex = state.activityIndex;
-    if (isV21Lesson() && type !== 'speed_round') {
-      _r2lGameState.combo.phase_max[type] = Math.max(
-        _r2lGameState.combo.phase_max[type] || 0,
-        _r2lGameState.combo.max,
-      );
-    }
     state.completedTypes.add(type);
     const questionOutcomes = isW1() ? w1BuildQuestionOutcomesForSubmit(type) : undefined;
     state.activityResults[type] = {
@@ -6070,7 +5266,7 @@ function _r2lBuildRetellTemplate(lesson) {
     updateProgress();
     updateGlobalCta();
     if (!details?.skipped_due_to_mic) {
-      showReward({ mode: 'mini', withVoice: false });
+      showReward({ mode: 'celebrate', withVoice: true });
       playSfx(SFX.activityComplete);
     }
 
