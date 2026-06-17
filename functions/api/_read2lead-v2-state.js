@@ -1802,6 +1802,148 @@ export function packsUntilLevelUp(level, xpInLevel = 0) {
   return Math.max(0, Math.ceil((xpTarget - numberOrZero(xpInLevel)) / XP_PER_PASSED_PACK));
 }
 
+const RANK_LABEL_TIER_ORDER = [
+  ['Thách Đấu', 7],
+  ['Kim Cương', 4],
+  ['Kim cương', 4],
+  ['Bạch Kim', 3],
+  ['Vàng', 2],
+  ['Bạc', 1],
+  ['Đồng', 0],
+];
+const RANK_DIVISION_TO_WITHIN_BASE = { III: 0, II: 1, I: 2 };
+
+/** Map a ladder label (e.g. "Vàng II") to season RP points. */
+export function rpForRankLabelVi(labelVi, { stars = 0 } = {}) {
+  const normalized = String(labelVi || '').trim();
+  let tierIndex = 0;
+  for (const [name, index] of RANK_LABEL_TIER_ORDER) {
+    if (normalized.includes(name)) {
+      tierIndex = index;
+      break;
+    }
+  }
+  if (tierIndex === 7) {
+    return RANK_APEX_THRESHOLD + Math.max(0, Math.floor(Number(stars) || 0));
+  }
+  const divisionMatch = normalized.match(/\b(III|II|I)\b/);
+  const divisionBase = divisionMatch ? RANK_DIVISION_TO_WITHIN_BASE[divisionMatch[1]] : 0;
+  const starsPerDivision = starsPerDivisionForTier(tierIndex);
+  const within = divisionBase * starsPerDivision
+    + Math.max(0, Math.min(starsPerDivision - 1, Math.floor(Number(stars) || 0)));
+  return tierStartRp(tierIndex) + within;
+}
+
+function learningLevelForCompletedPacks(completedPacks) {
+  let remaining = Math.max(0, Math.floor(Number(completedPacks) || 0));
+  for (const level of LEVELS) {
+    const need = PACKS_TO_NEXT_LEVEL[level];
+    if (!need) return level;
+    if (remaining < need) return level;
+    remaining -= need;
+  }
+  return LEVELS[LEVELS.length - 1];
+}
+
+function levelProgressForCompletedPacks(completedPacks) {
+  const progress = normalizeLevelProgress({});
+  let remaining = Math.max(0, Math.floor(Number(completedPacks) || 0));
+  for (const level of LEVELS) {
+    const need = PACKS_TO_NEXT_LEVEL[level];
+    if (!need) break;
+    if (remaining >= need) {
+      progress[level] = need;
+      remaining -= need;
+    } else {
+      progress[level] = remaining;
+      remaining = 0;
+      break;
+    }
+  }
+  return progress;
+}
+
+/** Fixed leaderboard bot presets (virtual motivation accounts). */
+export const LEADERBOARD_BOT_PRESETS = {
+  pilot: {
+    code: 'R2L-PILOT-CYJS',
+    student_name: 'Pilot',
+    rank_label_vi: 'Vàng II',
+    completed_packs: 39,
+    coins: 975,
+  },
+  ong: {
+    code: 'R2L-ONG-U5M6',
+    student_name: 'Ong',
+    rank_label_vi: 'Vàng III',
+    completed_packs: 19,
+    coins: 475,
+  },
+};
+
+/** Admin-only: snap a bot/test account to fixed rank + pack/coin stats for leaderboard display. */
+export function buildAdminBotLeaderboardState(existingState, {
+  accessCode,
+  codeData = null,
+  rankLabelVi,
+  completedPacks,
+  coins,
+  studentName,
+  nowIso = new Date().toISOString(),
+} = {}) {
+  const rp = rpForRankLabelVi(rankLabelVi);
+  const ladder = buildRankLadderFromPoints(rp);
+  const packs = Math.max(0, Math.floor(Number(completedPacks) || 0));
+  const coinBalance = Number.isFinite(Number(coins))
+    ? Number(coins)
+    : packs * 25;
+  const level = learningLevelForCompletedPacks(packs);
+  const levelProgress = levelProgressForCompletedPacks(packs);
+  const xpInLevel = numberOrZero(levelProgress[level]) * XP_PER_PASSED_PACK;
+  const base = existingState && existingState.schema_version === 2
+    ? { ...existingState }
+    : normalizeProgressState(null, { accessCode, codeData, nowIso });
+  const activeSeason = currentSeason(nowIso);
+  const resolvedName = String(
+    studentName
+    || base.student_name
+    || codeData?.student_profile?.student_name
+    || codeData?.progress?.student_name
+    || '',
+  ).trim();
+
+  return refreshBadges(migrateSeasonFields({
+    ...base,
+    schema_version: 2,
+    level_reset_version: LEVEL_RESET_VERSION,
+    access_code: String(accessCode || base.access_code || '').trim().toUpperCase(),
+    student_name: resolvedName,
+    current_level: level,
+    initial_level: base.initial_level || START_LEVEL,
+    unlocked_levels: LEVELS.slice(0, LEVELS.indexOf(level) + 1),
+    rank_title: RANK_TITLES[level],
+    rank_asset_url: RANK_ASSETS[level],
+    completed_packs: packs,
+    coins: coinBalance,
+    total_xp: packs * XP_PER_PASSED_PACK,
+    xp_in_level: xpInLevel,
+    xp_to_next_level: xpToNextLevel(level),
+    level_progress: levelProgress,
+    rank_points: rp,
+    lifetime_rp: rp,
+    season: {
+      id: activeSeason.id,
+      rp,
+      peak_tier_index: ladder.tier_index,
+      peak_label_vi: ladder.label_vi,
+    },
+    streak_days: Math.max(numberOrZero(base.streak_days), 3),
+    last_activity_at: nowIso,
+    last_activity_date_vn: vietnamDateKey(nowIso),
+    updated_at: nowIso,
+  }, nowIso));
+}
+
 /** Admin-only: snap a test account to L1–L5 with plausible ladder progress. */
 export function buildAdminTestLevelState(existingState, targetLevel, { accessCode, codeData = null, nowIso = new Date().toISOString() } = {}) {
   const level = safeLevel(targetLevel);
