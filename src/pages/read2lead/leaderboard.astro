@@ -254,8 +254,15 @@ const ladderSectionClass = w1Ssr ? 'px-4 py-10 sm:px-6' : 'px-6 py-14';
       previousPodium.classList.remove('hidden');
     }
 
+    function leaderShowsEgg(leader) {
+      if (!isV3Enabled()) return false;
+      if (leader.avatar_stage === 'egg') return true;
+      const tierIndex = Number(leader.rank_ladder?.tier_index);
+      return Number.isFinite(tierIndex) && tierIndex < 1;
+    }
+
     function leaderAvatarHtml(leader, sizeClass) {
-      if (isV3Enabled() && leader.avatar_stage === 'egg') {
+      if (leaderShowsEgg(leader)) {
         const eggMarkup = eggSvgMarkup().replace(
           'class="r2l-egg-svg"',
           'class="r2l-egg-svg h-full w-full"',

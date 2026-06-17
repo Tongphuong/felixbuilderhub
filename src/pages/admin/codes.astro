@@ -193,11 +193,17 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       const exhausted = (item.uses_remaining ?? 0) <= 0;
       const status = expired ? 'Hết hạn' : exhausted ? 'Hết lượt' : 'Hoạt động';
       const statusColor = expired || exhausted ? 'text-red-400 border-red-500/40' : 'text-green-400 border-green-500/40';
-      const usesTotal = item.uses_total ?? item.uses_remaining ?? '?';
+      const usesRemaining = item.uses_remaining;
+      const usesTotal = item.uses_total ?? item.uses_remaining;
+      const usesLabel = usesRemaining != null && usesTotal != null
+        ? `${usesRemaining} / ${usesTotal}`
+        : usesRemaining != null
+          ? `${usesRemaining} / —`
+          : '—';
       const profile = item.student_profile || {};
       const progress = item.progress || {};
       const studentName = profile.student_name || progress.student_name || '';
-      const studentAge = profile.age || progress.age || '';
+      const studentAge = profile.age ?? progress.age ?? '';
       const studentLevel = progress.current_level || profile.level || '';
       const flags = [
         item.is_test ? '<span class="rounded-md border border-yellow-500/40 px-2 py-0.5 text-[11px] font-semibold text-yellow-300">TEST</span>' : '',
@@ -235,9 +241,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
             <span class="rounded-md border px-2 py-1 text-xs font-semibold ${statusColor}">${status}</span>
           </div>
           <div class="mt-3 grid grid-cols-2 gap-2 text-xs text-cream-muted sm:grid-cols-4">
-            <div><span class="text-cream-dim">Lượt:</span> ${item.uses_remaining ?? '?'} / ${usesTotal}</div>
-            <div><span class="text-cream-dim">Cấp:</span> ${escapeHtml(item.issued_at || '?')}</div>
-            <div><span class="text-cream-dim">Hết hạn:</span> ${escapeHtml(item.expires_at || '?')}</div>
+            <div><span class="text-cream-dim">Lượt:</span> ${usesLabel}</div>
+            <div><span class="text-cream-dim">Level:</span> ${escapeHtml(studentLevel || '—')}</div>
+            <div><span class="text-cream-dim">Hết hạn:</span> ${escapeHtml(item.expires_at || '—')}</div>
             <div><span class="text-cream-dim">Dùng lần cuối:</span> ${escapeHtml(item.last_used_at || '—')}</div>
           </div>
           <div class="mt-3 flex flex-wrap gap-2">

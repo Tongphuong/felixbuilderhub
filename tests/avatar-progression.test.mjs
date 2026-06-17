@@ -82,7 +82,7 @@ test('persisted egg advances to basic after reaching Silver', () => {
   assert.equal(state.avatar_stage, 'basic');
 });
 
-test('unlocked purchases preserve custom below Silver', () => {
+test('unlocked purchases below Silver still render as egg until Bạc', () => {
   const state = normalizeProgressState(
     rawAtLevel('L1', {
       avatar_stage: 'basic',
@@ -90,10 +90,10 @@ test('unlocked purchases preserve custom below Silver', () => {
     }),
     { accessCode: 'PURCHASE-PRESERVE' },
   );
-  assert.equal(state.avatar_stage, 'custom');
+  assert.equal(state.avatar_stage, 'egg');
 });
 
-test('persisted custom with purchases stays custom below Silver', () => {
+test('persisted custom with purchases below Silver still renders as egg', () => {
   const state = normalizeProgressState(
     rawAtLevel('L1', {
       avatar_stage: 'custom',
@@ -101,7 +101,23 @@ test('persisted custom with purchases stays custom below Silver', () => {
     }),
     { accessCode: 'CUSTOM-PURCHASE-PRESERVE' },
   );
-  assert.equal(state.avatar_stage, 'custom');
+  assert.equal(state.avatar_stage, 'egg');
+});
+
+test('legacy equipped rare monster without avatar_stage below Silver stays egg', () => {
+  const state = normalizeProgressState(
+    rawAtLevel('L1', {
+      avatar: {
+        monster: {
+          ...BASIC_MONSTER_CONFIG,
+          body: 'png-default-body-bluee',
+        },
+      },
+    }),
+    { accessCode: 'LEGACY-RARE-BRONZE' },
+  );
+  assert.equal(state.avatar_stage, 'egg');
+  assert.deepEqual(state.unlocked_parts, []);
 });
 
 test('basic stage receives the frozen white monster defaults', () => {

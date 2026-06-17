@@ -1,6 +1,8 @@
 // POST /api/admin/codes/reset-levels
 // Reset all existing Read2Lead codes and V2 progress states back to L1.
 
+import { isAccessCodeKey } from '../../_read2lead-v2-state.js';
+
 const START_LEVEL = 'L1';
 const LEVEL_RESET_VERSION = 20260606;
 
@@ -24,7 +26,7 @@ export async function onRequestPost(context) {
     cursor = page.list_complete ? undefined : page.cursor;
 
     for (const key of page.keys) {
-      if (key.name.startsWith('task:') || key.name.startsWith('progress:')) continue;
+      if (!isAccessCodeKey(key.name)) continue;
       scanned += 1;
       const record = await env.READ2LEAD_CODES.get(key.name, { type: 'json' });
       if (!record || typeof record !== 'object') continue;

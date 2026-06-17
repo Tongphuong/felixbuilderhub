@@ -692,6 +692,16 @@ export function progressKey(accessCode) {
   return `progress:${String(accessCode || '').trim().toUpperCase()}`;
 }
 
+/** True for R2L access-code KV keys — excludes progress:, task:, rl:, cache, etc. */
+export function isAccessCodeKey(name) {
+  const key = String(name || '').trim();
+  if (!key.startsWith('R2L-')) return false;
+  if (key.startsWith('task:') || key.startsWith('progress:')) return false;
+  if (key.startsWith('rl:') || key.startsWith('debug:')) return false;
+  if (key === 'leaderboard-cache') return false;
+  return true;
+}
+
 export function vietnamDateKey(iso = new Date().toISOString()) {
   const timestamp = Date.parse(iso);
   if (!Number.isFinite(timestamp)) return '';
@@ -868,7 +878,8 @@ export function normalizeAvatarStage(raw, state = {}) {
   const unlockedParts = Array.isArray(state?.unlocked_parts) ? state.unlocked_parts : [];
   const computedLadder = state?.rank_ladder || computeRankLadder(state);
   const tierIndex = numberOrZero(computedLadder?.tier_index);
-  if (tierIndex < 1 && unlockedParts.length === 0) return 'egg';
+  // Below Bạc (tier 0): always egg — leaderboard + hub must not show hatched monsters.
+  if (tierIndex < 1) return 'egg';
   if (unlockedParts.length > 0) return 'custom';
   return 'basic';
 }
@@ -1078,9 +1089,14 @@ export function normalizeProgressState(raw, { accessCode, codeData = null, nowIs
   const storedUnlockedParts = Array.isArray(raw?.unlocked_parts)
     ? Array.from(new Set(raw.unlocked_parts.filter(Boolean).map(String)))
     : [];
-  const unlockedParts = raw?.avatar_stage
+  const preAvatarTierIndex = numberOrZero(
+    computeRankLadder({ ...raw, current_level: currentLevel })?.tier_index,
+  );
+  const unlockedParts = storedUnlockedParts.length > 0
     ? storedUnlockedParts
-    : grandfatherUnlockedAvatarParts(raw, storedUnlockedParts);
+    : (!raw?.avatar_stage && preAvatarTierIndex >= 1)
+      ? grandfatherUnlockedAvatarParts(raw, storedUnlockedParts)
+      : storedUnlockedParts;
   const avatarStage = normalizeAvatarStage(raw?.avatar_stage, {
     ...raw,
     current_level: currentLevel,

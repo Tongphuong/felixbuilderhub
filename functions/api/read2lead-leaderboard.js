@@ -165,9 +165,15 @@ async function publicLeader(context, code, codeData) {
   const progress = codeData.progress || {};
   const profile = codeData.student_profile || {};
   const reviewHistory = Array.isArray(progress.review_history) ? progress.review_history : [];
-  const studentName = cleanName(profile.student_name || progress.student_name || '');
   const v2State = await loadProgressState(context.env, code, codeData);
   const publicState = publicProgressState(v2State);
+  const studentName = cleanName(
+    profile.student_name
+    || progress.student_name
+    || v2State.student_name
+    || publicState.student_name
+    || '',
+  );
   const rawState = await progressState(context.env, code);
   const season = firstObject(publicState.season, v2State.season, rawState?.season, progress.season);
   const medals = firstArray(publicState.medals, v2State.medals, rawState?.medals, progress.medals);

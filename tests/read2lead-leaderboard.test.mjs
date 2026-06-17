@@ -230,6 +230,50 @@ test('leaderboard API sorts mixed season + legacy records and includes season ca
   assert.ok(cachedBody.season?.id);
 });
 
+test('leaderboard API falls back to v2 progress student_name when code record has none', async () => {
+  const code = 'R2L-NONAME-CODE';
+  const records = new Map([
+    [code, {
+      progress: { completed_packs: 5 },
+      student_profile: {},
+    }],
+    [
+      `progress:${code}`,
+      {
+        schema_version: 2,
+        level_reset_version: 20260606,
+        access_code: code,
+        student_name: 'Minh',
+        current_level: 'L2',
+        rank_points: 12,
+        completed_packs: 5,
+        coins: 40,
+        total_xp: 80,
+      },
+    ],
+  ]);
+  const kv = {
+    async list() {
+      return { keys: Array.from(records.keys()).map((name) => ({ name })), cursor: undefined };
+    },
+    async get(key, options) {
+      const value = records.get(key);
+      if (!value) return null;
+      return options?.type === 'json' ? value : JSON.stringify(value);
+    },
+    async put(key, value) {
+      records.set(key, JSON.parse(value));
+    },
+  };
+
+  const response = await leaderboardGet({
+    request: new Request('https://felixbuilderhub.com/api/read2lead-leaderboard'),
+    env: { READ2LEAD_CODES: kv },
+  });
+  const body = await response.json();
+  assert.equal(body.leaders[0].display_name, 'Minh');
+});
+
 test('leaderboard page renders season header and previous podium hooks', () => {
   const source = readFileSync(join(ROOT, 'src/pages/read2lead/leaderboard.astro'), 'utf8');
   assert.match(source, /id="season-header"/);

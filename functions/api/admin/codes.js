@@ -2,6 +2,8 @@
 // POST /api/admin/codes  → create a new code with metadata
 // GET  /api/admin/codes  → list all codes (sorted by issued_at desc)
 
+import { isAccessCodeKey, loadProgressState } from '../_read2lead-v2-state.js';
+
 const CODE_CHARS = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789';
 const MONTH_CODES = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
 
@@ -145,11 +147,9 @@ export async function onRequestGet(context) {
   const list = await env.READ2LEAD_CODES.list({ limit: 100, cursor });
   const items = [];
   for (const key of list.keys) {
-    // Skip task state entries — they share namespace with codes but are not codes.
-    // Backend pipeline (server.py) puts pack generation state with prefix `task:` (TTL 30min).
-    if (key.name.startsWith('task:') || key.name.startsWith('progress:')) continue;
+    if (!isAccessCodeKey(key.name)) continue;
     const value = await env.READ2LEAD_CODES.get(key.name, { type: 'json' });
-    items.push({ code: key.name, ...(value || {}) });
+    items.push(await enrichAdminCodeItem(env, key.name, value || {}));
   }
 
   items.sort((a, b) => (b.issued_at || '').localeCompare(a.issued_at || ''));
@@ -160,4 +160,44 @@ export async function onRequestGet(context) {
     cursor: list.list_complete ? null : list.cursor,
     list_complete: list.list_complete,
   });
+}
+
+async function enrichAdminCodeItem(env, code, record) {
+  const profile = record.student_profile || {};
+  const progress = record.progress || {};
+  let v2State = null;
+  try {
+    v2State = await loadProgressState(env, code, record);
+  } catch {
+    v2State = null;
+  }
+  const studentName = (
+    profile.student_name
+    || progress.student_name
+    || v2State?.student_name
+    || ''
+  ).trim();
+  const studentAge = profile.age ?? progress.age ?? null;
+  const currentLevel = (
+    v2State?.current_level
+    || progress.current_level
+    || profile.level
+    || ''
+  );
+  return {
+    code,
+    ...record,
+    student_profile: {
+      ...profile,
+      student_name: studentName || profile.student_name || '',
+      age: studentAge ?? profile.age ?? null,
+      level: currentLevel || profile.level || '',
+    },
+    progress: {
+      ...progress,
+      student_name: studentName || progress.student_name || '',
+      age: studentAge ?? progress.age ?? null,
+      current_level: currentLevel || progress.current_level || 'L1',
+    },
+  };
 }
