@@ -4945,6 +4945,7 @@ function _r2lBuildRetellTemplate(lesson) {
     // (state.activityIndex points at speed_round) AND the pool has items.
     const speedRoundIndex = (state.lesson?.activities || []).findIndex((a) => a?.type === 'speed_round');
     const isActiveNow = state.activityIndex === speedRoundIndex;
+    console.log('[r2l-debug] renderSpeedRoundActivity', { itemsLen: items.length, activityIndex: state.activityIndex, speedRoundIndex, isActiveNow, willPlaceholder: !items.length || !isActiveNow });
     if (!items.length || !isActiveNow) {
       root.innerHTML = `
         <div class="mt-5 rounded-md border border-cream/10 bg-navy-950/45 p-5 text-center">
@@ -6024,6 +6025,9 @@ function _r2lBuildRetellTemplate(lesson) {
 
   function completeActivity(type, details) {
     if (state.completedTypes.has(type)) return;
+    if (type === 'speed_round') {
+      console.warn('[r2l-debug] completeActivity speed_round CALLED from:', new Error().stack);
+    }
     const completedIndex = state.activityIndex;
     if (isV21Lesson() && type !== 'speed_round') {
       _r2lGameState.combo.phase_max[type] = Math.max(
