@@ -141,23 +141,18 @@ const faqItems = [
             <!-- Step 2: Topic (card grid — mirrors /hoc-sinh Hub modal) -->
             <div>
               <label class="mb-2 block text-sm font-semibold text-cream">
-                Bước 2 — Con thích chủ đề gì? <span class="text-cream-dim">(không bắt buộc)</span>
+                Bước 2 — Con thích chủ đề gì? <span class="text-red-400">*</span>
               </label>
               <div class="grid grid-cols-3 gap-2 sm:gap-3">
-                {topics.map(([value, label, emoji]) => (
+                {topics.map(([value, label, emoji], index) => (
                   <label class="flex min-h-[88px] cursor-pointer flex-col items-center justify-center gap-1 rounded-xl border border-cream-dim/20 bg-navy-950 p-2 text-center transition hover:border-accent/40 hover:bg-navy-800 has-[:checked]:border-accent has-[:checked]:bg-accent/10 has-[:checked]:ring-2 has-[:checked]:ring-accent/60">
-                    <input type="radio" name="topic" value={value} class="sr-only" />
+                    <input type="radio" name="topic" value={value} class="sr-only" checked={index === 0} required />
                     <span class="text-2xl leading-none" aria-hidden="true">{emoji}</span>
                     <span class="text-xs font-semibold leading-tight text-cream sm:text-sm">{label}</span>
                   </label>
                 ))}
-                <label class="col-span-3 flex min-h-[64px] cursor-pointer items-center justify-center gap-2 rounded-xl border border-dashed border-accent/40 bg-accent/5 p-3 text-center transition hover:bg-accent/10 has-[:checked]:border-accent has-[:checked]:bg-accent/15 has-[:checked]:ring-2 has-[:checked]:ring-accent/60">
-                  <input type="radio" name="topic" value="" class="sr-only" checked />
-                  <span class="text-xl" aria-hidden="true">🎲</span>
-                  <span class="text-sm font-semibold text-cream">Felix chọn giúp con</span>
-                </label>
               </div>
-              <p class="mt-2 text-xs text-cream-dim">Nếu không chọn, Felix sẽ chọn chủ đề giúp con.</p>
+              <p class="mt-2 text-xs text-cream-dim">Chọn một chủ đề — câu chuyện sẽ xoay quanh chủ đề đó.</p>
             </div>
 
             <!-- Optional: interests (collapsed) -->

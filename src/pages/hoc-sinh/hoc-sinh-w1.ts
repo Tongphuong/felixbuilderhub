@@ -602,7 +602,7 @@ function openCreateSheet() {
     <div class="r2l-hub-sheet-backdrop" data-hub-sheet-close>
       <div class="r2l-hub-sheet" role="dialog" aria-modal="true" aria-label="Chọn chủ đề">
         <h2 class="text-xl font-extrabold">Con thích chủ đề gì?</h2>
-        <p class="mt-1 text-sm r2l-kid-muted">Chọn một thẻ — hoặc để Minny chọn giúp.</p>
+        <p class="mt-1 text-sm r2l-kid-muted">Chọn một thẻ chủ đề để bắt đầu.</p>
         <div class="r2l-hub-topic-grid">
           ${HUB_TOPICS.map(
             ([value, label, emoji]) => `
@@ -612,10 +612,6 @@ function openCreateSheet() {
               </button>
             `,
           ).join('')}
-          <button type="button" class="r2l-hub-topic-card r2l-hub-topic-card--random" data-hub-topic="">
-            <span class="r2l-hub-topic-card__emoji" aria-hidden="true">🎲</span>
-            <span class="r2l-hub-topic-card__label">Minny chọn giúp con</span>
-          </button>
         </div>
         <button type="button" class="r2l-kid-btn r2l-kid-btn--ghost r2l-kid-btn--md mt-4 w-full" data-hub-sheet-close>Đóng</button>
       </div>
@@ -625,6 +621,7 @@ function openCreateSheet() {
   sheet.querySelectorAll('[data-hub-topic]').forEach((btn) => {
     btn.addEventListener('click', () => {
       const topic = btn.getAttribute('data-hub-topic') || '';
+      if (!topic) return;
       sheet.classList.add('hidden');
       void startGeneration(topic);
     });

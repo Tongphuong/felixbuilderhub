@@ -9,6 +9,21 @@ import { isV2PackSchemaVersion, packHasV2Schema } from './_read2lead-pack-schema
 
 const GENERATION_LOCK_STALE_MS = 15 * 60 * 1000;
 
+const VALID_TOPIC_KEYS = new Set([
+  'animals_pets',
+  'family_friends',
+  'school',
+  'sports',
+  'games_toys',
+  'vehicles',
+  'food_cooking',
+  'nature',
+  'art_creativity',
+  'heroes_jobs',
+  'imagination',
+  'vietnamese_holidays',
+]);
+
 // 0-100: how far the child is through the CURRENT level (passed packs / packs
 // required for the next level). null when not computable (L5 has no next level,
 // or state is missing) — the backend then defaults to mid-level behavior.
@@ -99,6 +114,13 @@ export async function onRequestPost(context) {
 
   const interests = (data.interests || '').toString().trim().slice(0, 120);
   const topic = (data.topic || '').toString().trim().slice(0, 60);
+  if (!topic || !VALID_TOPIC_KEYS.has(topic)) {
+    return json({
+      ok: false,
+      error: 'topic_required',
+      message: 'Vui lòng chọn một chủ đề cho con trước khi tạo bài.',
+    }, 400);
+  }
   const levelForPack = progress.current_level || 'L1';
   const lockCreatedAt = new Date().toISOString();
   const pendingPackId = crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random().toString(16).slice(2)}`;
@@ -149,7 +171,7 @@ export async function onRequestPost(context) {
       level: levelForPack,
       child_gender: progress.child_gender,
       interests: interests || undefined,
-      topic: topic || undefined,
+      topic,
       review_url: reviewUrl,
     };
     if (rankPoints != null) {

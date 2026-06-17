@@ -15,3 +15,5 @@ export const HUB_TOPICS = [
 ] as const;
 
 export type HubTopicValue = (typeof HUB_TOPICS)[number][0];
+
+export const VALID_TOPIC_KEYS = new Set(HUB_TOPICS.map(([value]) => value));

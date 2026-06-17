@@ -35,7 +35,7 @@ test('W1 script ports pack generation polling and resume storage', () => {
   assert.match(w1Script, /generate-read2lead-pack/);
   assert.match(w1Script, /check-generation-status/);
   assert.match(w1Script, /r2l_hub_gen_v1/);
-  assert.match(w1Script, /Minny chọn giúp con/);
+  assert.match(w1Script, /Chọn một thẻ chủ đề/);
   assert.match(w1Script, /Đọc ngay 🚀/);
   assert.match(w1Script, /renderQuestPath/);
   assert.match(w1Script, /data-clarity-mask/);

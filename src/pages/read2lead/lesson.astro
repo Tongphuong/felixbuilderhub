@@ -1482,8 +1482,14 @@ function _r2lBuildRetellTemplate(lesson) {
     burst.dataset.tier = 'common';
     burst.dataset.mode = 'celebrate';
     burst.dataset.show = 'true';
+  }
 
-    playSfx(SFX.activityComplete);
+  function vocabBlitzOptions(item) {
+    return item.options_emoji || item.options_vi || item.options_en || item.options || [];
+  }
+
+  function isEmojiOptionLabel(value) {
+    return /[\u{1F300}-\u{1FAFF}\u2600-\u27BF]/u.test(String(value || ''));
   }
 
   const qs = (selector) => document.querySelector(selector);
@@ -4733,10 +4739,15 @@ function _r2lBuildRetellTemplate(lesson) {
     const results = { correct: 0, total: items.length };
 
     function renderCard() {
-      const item = items[cardIndex];
-      if (!item) return;
-      const options = item.options_vi || item.options_en || item.options || [];
-      root.innerHTML = `
+      while (cardIndex < items.length) {
+        const item = items[cardIndex];
+        const options = vocabBlitzOptions(item);
+        if (!item || options.length < 2) {
+          cardIndex += 1;
+          continue;
+        }
+        const optionClass = options.some(isEmojiOptionLabel) ? 'r2l-option r2l-emoji-option min-h-[52px] text-2xl' : 'r2l-option min-h-[44px]';
+        root.innerHTML = `
         <article class="r2l-vocab-card-flip mt-5 rounded-md border border-cream/10 bg-navy-950/45 p-4" data-vb-card="${cardIndex}">
           <div class="flex items-center justify-between gap-3">
             <p class="font-display text-2xl font-bold text-cream">${escapeHtml(item.word_en || item.word_vi || '')}</p>
@@ -4745,50 +4756,55 @@ function _r2lBuildRetellTemplate(lesson) {
           ${item.word_vi && item.word_en ? `<p class="mt-1 text-sm text-cream/65">${escapeHtml(item.word_vi)}</p>` : ''}
           <button class="r2l-secondary mt-3" type="button" data-vb-play="${cardIndex}">🔊 Nghe từ</button>
           <div class="mt-4 grid gap-2">
-            ${options.map((opt, i) => `<button class="r2l-option min-h-[44px]" type="button" data-vb-opt="${i}">${escapeHtml(String(opt))}</button>`).join('')}
+            ${options.map((opt, i) => `<button class="${optionClass}" type="button" data-vb-opt="${i}">${escapeHtml(String(opt))}</button>`).join('')}
           </div>
           <p class="mt-2 hidden text-sm text-gold" data-vb-speed>⚡ Nhanh quá!</p>
         </article>
       `;
-      const startedAt = Date.now();
-      root.querySelector(`[data-vb-play="${cardIndex}"]`)?.addEventListener('click', () => {
-        const url = item.audio_url || '';
-        if (window.__r2lV21Audio?.playUrl) window.__r2lV21Audio.playUrl(url);
-        else playAudio(url);
-      });
-      root.querySelectorAll('[data-vb-opt]').forEach((btn) => {
-        btn.addEventListener('click', () => {
-          const optIndex = Number(btn.dataset.vbOpt);
-          const isCorrect = optIndex === item.correct_index;
-          const fast = Date.now() - startedAt < 3000;
-          root.querySelectorAll('[data-vb-opt]').forEach((b) => { b.disabled = true; });
-          if (isCorrect) {
-            btn.dataset.state = 'correct';
-            results.correct += 1;
-            if (fast) root.querySelector('[data-vb-speed]')?.classList.remove('hidden');
-            _r2lRecordAnswer(true, Date.now() - startedAt);
-            onItemCorrect();
-          } else {
-            btn.dataset.state = 'wrong';
-            const correctBtn = root.querySelector(`[data-vb-opt="${item.correct_index}"]`);
-            if (correctBtn) correctBtn.dataset.state = 'revealed';
-            _r2lRecordAnswer(false);
-            onItemWrong(`${activity.type}:${cardIndex}`);
-          }
-          const card = root.querySelector(`[data-vb-card="${cardIndex}"]`);
-          if (card) card.dataset.flip = 'out';
-          window.setTimeout(() => {
-            cardIndex += 1;
-            if (cardIndex >= items.length) {
-              _r2lSetPhaseStars(activity.type, results.correct, results.total);
-              _r2lEndPhase(activity.type, results);
-              completeActivity(activity.type, { correct_count: results.correct, total_count: results.total });
-            } else {
-              renderCard();
-            }
-          }, isCorrect ? 500 : 1500);
+        const startedAt = Date.now();
+        root.querySelector(`[data-vb-play="${cardIndex}"]`)?.addEventListener('click', () => {
+          const url = item.audio_url || '';
+          if (window.__r2lV21Audio?.playUrl) window.__r2lV21Audio.playUrl(url);
+          else playAudio(url);
         });
-      });
+        root.querySelectorAll('[data-vb-opt]').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            const optIndex = Number(btn.dataset.vbOpt);
+            const isCorrect = optIndex === item.correct_index;
+            const fast = Date.now() - startedAt < 3000;
+            root.querySelectorAll('[data-vb-opt]').forEach((b) => { b.disabled = true; });
+            if (isCorrect) {
+              btn.dataset.state = 'correct';
+              results.correct += 1;
+              if (fast) root.querySelector('[data-vb-speed]')?.classList.remove('hidden');
+              _r2lRecordAnswer(true, Date.now() - startedAt);
+              onItemCorrect();
+            } else {
+              btn.dataset.state = 'wrong';
+              const correctBtn = root.querySelector(`[data-vb-opt="${item.correct_index}"]`);
+              if (correctBtn) correctBtn.dataset.state = 'revealed';
+              _r2lRecordAnswer(false);
+              onItemWrong(`${activity.type}:${cardIndex}`);
+            }
+            const card = root.querySelector(`[data-vb-card="${cardIndex}"]`);
+            if (card) card.dataset.flip = 'out';
+            window.setTimeout(() => {
+              cardIndex += 1;
+              if (cardIndex >= items.length) {
+                _r2lSetPhaseStars(activity.type, results.correct, results.total);
+                _r2lEndPhase(activity.type, results);
+                completeActivity(activity.type, { correct_count: results.correct, total_count: results.total });
+              } else {
+                renderCard();
+              }
+            }, isCorrect ? 500 : 1500);
+          });
+        });
+        return;
+      }
+      _r2lSetPhaseStars(activity.type, results.correct, results.total);
+      _r2lEndPhase(activity.type, results);
+      completeActivity(activity.type, { correct_count: results.correct, total_count: results.total });
     }
     renderCard();
   }
@@ -5989,7 +6005,7 @@ function _r2lBuildRetellTemplate(lesson) {
     updateProgress();
     updateGlobalCta();
     if (!details?.skipped_due_to_mic) {
-      showReward({ mode: 'celebrate', withVoice: true });
+      showReward({ mode: 'mini', withVoice: false });
       playSfx(SFX.activityComplete);
     }
 
