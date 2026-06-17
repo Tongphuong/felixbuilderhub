@@ -5,6 +5,7 @@ import {
   PACKS_TO_NEXT_LEVEL,
   XP_PER_PASSED_PACK,
 } from './_read2lead-v2-state.js';
+import { isV2PackSchemaVersion, packHasV2Schema } from './_read2lead-pack-schema.js';
 
 const GENERATION_LOCK_STALE_MS = 15 * 60 * 1000;
 
@@ -177,7 +178,7 @@ export async function onRequestPost(context) {
     }
 
     const upstreamBody = await upstream.json();
-    if (upstreamBody.ok && upstreamBody.pack?.schema_version === 2) {
+    if (upstreamBody.ok && isV2PackSchemaVersion(upstreamBody.pack?.schema_version)) {
       const finalPack = buildFinalV2Pack({
         pendingPack,
         pack: upstreamBody.pack,
@@ -335,22 +336,13 @@ function currentPackBlocksGeneration(pack, requireReviewBeforeNextPack = true) {
   if (!pack) return false;
 
   if (pack.status !== 'generation_in_progress') {
-    if (!isV2Pack(pack)) return false;
+    if (!packHasV2Schema(pack)) return false;
     return requireReviewBeforeNextPack && !isPackReviewed(pack);
   }
 
   const startedAt = Date.parse(pack.created_at || '');
   if (!Number.isFinite(startedAt)) return false;
   return Date.now() - startedAt < GENERATION_LOCK_STALE_MS;
-}
-
-function isV2Pack(pack) {
-  return Boolean(
-    pack?.schema_version === 2 ||
-      pack?.review_context?.schema_version === 2 ||
-      pack?.pack?.schema_version === 2 ||
-      pack?.pack_json?.schema_version === 2,
-  );
 }
 
 function earnedCurrentLevel(progress, reviewHistory = []) {

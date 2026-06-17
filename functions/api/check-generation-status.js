@@ -1,4 +1,5 @@
 import { getClientIp, checkCodeRateLimit, recordCodeFailure, rateLimitedResponse } from './_rate-limit.js';
+import { packHasV2Schema } from './_read2lead-pack-schema.js';
 
 const STATUS_POLL_TIMEOUT_MS = 5 * 60 * 1000;
 
@@ -29,7 +30,7 @@ export async function onRequestGet(context) {
   }
 
   const currentPack = codeData.progress?.current_pack;
-  if (currentPack?.generation_task_id === taskId && isV2Pack(currentPack)) {
+  if (currentPack?.generation_task_id === taskId && packHasV2Schema(currentPack)) {
     return json({
       ok: true,
       status: 'done',
@@ -132,15 +133,6 @@ export async function onRequestGet(context) {
   }
 
   return json({ ok: false, error: 'unknown_status' }, 500);
-}
-
-function isV2Pack(pack) {
-  return Boolean(
-    pack?.schema_version === 2 ||
-      pack?.review_context?.schema_version === 2 ||
-      pack?.pack?.schema_version === 2 ||
-      pack?.pack_json?.schema_version === 2,
-  );
 }
 
 async function clearGenerationLockSimple(kv, accessCode, taskId) {

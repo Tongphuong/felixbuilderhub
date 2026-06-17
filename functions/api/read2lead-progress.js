@@ -2,6 +2,7 @@ import { getClientIp, checkCodeRateLimit, recordCodeFailure, rateLimitedResponse
 import { buildStoryProgressForProfile } from './_read2lead-library.js';
 import { buildWeeklyGrowthForProfile } from './_read2lead-growth.js';
 import { loadProgressState, PACKS_TO_NEXT_LEVEL, publicProgressState } from './_read2lead-v2-state.js';
+import { isV2PackSchemaVersion, packHasV2Schema } from './_read2lead-pack-schema.js';
 
 export async function onRequestGet(context) {
   const { request, env } = context;
@@ -153,17 +154,8 @@ function currentPackBlocksGeneration(pack, requireReviewBeforeNextPack = true) {
   if (pack.status === 'generation_in_progress') {
     return generationLockAgeMs(pack) < GENERATION_LOCK_STALE_MS;
   }
-  if (!isV2Pack(pack)) return false;
+  if (!packHasV2Schema(pack)) return false;
   return requireReviewBeforeNextPack && !isPackReviewed(pack);
-}
-
-function isV2Pack(pack) {
-  return Boolean(
-    pack?.schema_version === 2 ||
-      pack?.review_context?.schema_version === 2 ||
-      pack?.pack?.schema_version === 2 ||
-      pack?.pack_json?.schema_version === 2,
-  );
 }
 
 function publicProgress(progress) {
@@ -238,7 +230,7 @@ async function reconcileGenerationState(kv, accessCode, codeData) {
   const taskValue = await kv.get(`task:${currentPack.task_id}`, { type: 'json' });
 
   // CASE 1: Render finished, promote pack so dashboard shows "Chờ nộp bài"
-  if (taskValue?.status === 'done' && taskValue.result?.review_context?.schema_version === 2) {
+  if (taskValue?.status === 'done' && isV2PackSchemaVersion(taskValue.result?.review_context?.schema_version)) {
     const now = new Date().toISOString();
     const newPackId = (typeof crypto !== 'undefined' && crypto.randomUUID)
       ? crypto.randomUUID()

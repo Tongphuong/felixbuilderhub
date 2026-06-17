@@ -1,6 +1,7 @@
 import { getClientIp, checkCodeRateLimit, recordCodeFailure, rateLimitedResponse } from './_rate-limit.js';
 import { resolveAccessiblePack } from './_read2lead-pack-access.js';
 import { extractV2Pack } from './_read2lead-lesson-extract.js';
+import { lessonSchemaVersionFromPack } from './_read2lead-pack-schema.js';
 import { ensureSixActivities } from './_read2lead-lesson-activities.js';
 import { rewriteAudioHost } from './_read2lead-audio-url.js';
 
@@ -93,7 +94,7 @@ export function buildV2LessonPayload({ accessCode, codeData, pack, v2Pack, env }
   };
 
   return {
-    schema_version: 2,
+    schema_version: lessonSchemaVersionFromPack(v2Pack),
     pack_id: pack.pack_id,
     access_code_masked: maskAccessCode(accessCode),
     student_name: v2Pack.student_name || profile.student_name || progress.student_name || '',
