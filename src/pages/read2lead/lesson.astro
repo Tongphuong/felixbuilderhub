@@ -4804,8 +4804,16 @@ function _r2lBuildRetellTemplate(lesson) {
         const startedAt = Date.now();
         root.querySelector(`[data-vb-play="${cardIndex}"]`)?.addEventListener('click', () => {
           const url = item.audio_url || '';
-          if (window.__r2lV21Audio?.playUrl) window.__r2lV21Audio.playUrl(url);
-          else playAudio(url);
+          if (url) {
+            if (window.__r2lV21Audio?.playUrl) window.__r2lV21Audio.playUrl(url);
+            else playAudio(url);
+            return;
+          }
+          // Backend pipeline only TTSes story sentences, not per-vocab words —
+          // fall back to the browser's speech synthesizer so kids always hear
+          // the word when they tap "Nghe từ".
+          const word = (item.word_en || item.word_vi || '').trim();
+          if (word) _r2lSpeakEnglishLine(word);
         });
         root.querySelectorAll('[data-vb-opt]').forEach((btn) => {
           btn.addEventListener('click', () => {
