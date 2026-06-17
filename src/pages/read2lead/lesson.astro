@@ -17,6 +17,7 @@ import ParentStrip from '../../components/read2lead/v2/ParentStrip.astro';
 import ReadingComprehension from '../../components/read2lead/v2/ReadingComprehension.astro';
 import RewardBurst from '../../components/read2lead/v2/RewardBurst.astro';
 import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro';
+import V21MaintenanceScreen from '../../components/read2lead/v2/V21MaintenanceScreen.astro';
 import retellGuideSrc from '../../../functions/api/_read2lead-retell-guide.js?raw';
 import dictationHelperSrc from '../../lib/read2lead-dictation.ts?raw';
 import { r2lRecorderScriptSrc } from '../../scripts/r2l-recorder-script.mjs';
@@ -48,6 +49,10 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
         <p class="font-semibold text-gold">Chưa mở được bài học</p>
         <p id="error-message" class="mt-2 text-sm text-cream/80"></p>
         <button id="error-retry" class="r2l-primary mt-4" type="button">Thử lại</button>
+      </div>
+
+      <div id="v21-maintenance" hidden>
+        <V21MaintenanceScreen />
       </div>
 
       <article id="lesson-shell" class="hidden space-y-6">
@@ -3516,6 +3521,20 @@ function _r2lBuildRetellTemplate(lesson) {
         clearTimeout(timer);
         const data = await safeJson(res);
         if (!res.ok || !data.ok) throw new Error(data.message || data.error || 'Không tải được bài.');
+        // V2.1 flag gate: when a pack reports schema_version "2.1" but
+        // PUBLIC_R2L_V21 is off, show the maintenance screen instead of
+        // attempting the (not-yet-shipped) V2.1 UI. Infra-only — no V2.1 render.
+        if (
+          String(data.lesson?.schema_version ?? '') === '2.1'
+          && import.meta.env.PUBLIC_R2L_V21 !== '1'
+        ) {
+          qs('#loading-card')?.classList.add('hidden');
+          qs('#error-card')?.classList.add('hidden');
+          qs('#lesson-shell')?.classList.add('hidden');
+          const maintenance = qs('#v21-maintenance');
+          if (maintenance) maintenance.hidden = false;
+          return;
+        }
         if (data.lesson?.schema_version !== 2) {
           throw new Error('Bài này vẫn là format cũ. V2 lesson chỉ nhận pack schema_version = 2.');
         }

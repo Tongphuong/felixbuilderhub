@@ -198,3 +198,10 @@ test('student name is wired to IdentityBanner via id', () => {
   const banner = readFileSync('src/components/read2lead/v2/IdentityBanner.astro', 'utf-8');
   assert.match(banner, /id="identity-student-name"/);
 });
+
+test('flag-off path renders V2.1 maintenance screen for schema_version "2.1" packs', () => {
+  assert.match(lessonPage, /V21MaintenanceScreen/);
+  assert.match(lessonPage, /PUBLIC_R2L_V21/);
+  assert.match(lessonPage, /'2\.1'/);
+  assert.match(lessonPage, /v21-maintenance/);
+});

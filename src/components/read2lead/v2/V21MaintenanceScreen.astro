@@ -1,0 +1,32 @@
+---
+// V2.1 maintenance screen. Shown when a pack reports schema_version "2.1"
+// but the PUBLIC_R2L_V21 flag is off — keeps kids out of the broken V2.1 UI.
+// Lightweight on purpose: no images, no animation.
+---
+
+<section class="r2l-card mx-auto max-w-xl rounded-md border border-cream/10 bg-cream/5 p-6 text-center text-cream">
+  <h1 class="font-display text-2xl font-bold text-cream">Bài học đang được Felix nâng cấp</h1>
+  <p class="mt-3 text-sm leading-relaxed text-cream/80">
+    Phụ huynh và con quay lại sau nhé. Felix đang viết lại các phần luyện tập mới
+    hay hơn — sẽ mở khoá trong vài ngày tới.
+  </p>
+  <a href="/read2lead" class="r2l-primary mt-6 inline-flex items-center justify-center">
+    Quay lại trang chủ
+  </a>
+</section>
+
+<style>
+  .r2l-primary {
+    min-height: 44px;
+    border-radius: 8px;
+    background: rgb(74 222 128);
+    padding: 0.75rem 1.25rem;
+    font-weight: 800;
+    color: rgb(10 14 26);
+    text-decoration: none;
+  }
+
+  .r2l-primary:hover {
+    transform: translateY(-1px);
+  }
+</style>

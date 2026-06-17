@@ -20,8 +20,10 @@ export function packHasV2Schema(pack) {
   return versions.some(isV2PackSchemaVersion);
 }
 
-/** Lesson API payload: always returns numeric 2 post-rollback. V2.1 string
- * dispatch is reintroduced by the v21/infra PR behind a feature flag. */
+/** Lesson API payload: preserves "2.1" when the pack carries it so the
+ * hub-side maintenance gate (PUBLIC_R2L_V21 off → maintenance screen) can
+ * actually trigger. V2.0 packs and unknown strings collapse to numeric 2. */
 export function lessonSchemaVersionFromPack(v2Pack) {
+  if (String(v2Pack?.schema_version ?? '') === '2.1') return '2.1';
   return 2;
 }

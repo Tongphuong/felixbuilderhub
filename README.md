@@ -65,6 +65,12 @@ Lead bots (Telegram delivery):
 See [docs/ENV.md](docs/ENV.md) for the full reference (KV namespaces,
 secrets, per-endpoint usage matrix).
 
+## Feature flags
+
+| Flag | Default | Description |
+|---|---|---|
+| `PUBLIC_R2L_V21` | `"0"` | When `"1"`, hub renders the V2.1 lesson UI for packs whose `schema_version === "2.1"`. When `"0"`, V2.1 packs show a maintenance screen instead of the broken V2.1 UI. |
+
 ## Local dev
 
 ```sh
