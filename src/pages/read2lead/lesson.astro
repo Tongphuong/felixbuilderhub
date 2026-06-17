@@ -1235,7 +1235,7 @@ function _r2lBuildRetellTemplate(lesson) {
       return qs('[data-activity-shell="story_detective"]') || qs('[data-activity-shell="reading_comprehension"]');
     }
     if (type === 'echo_challenge') {
-      return qs('[data-activity-shell="echo_challenge"]') || qs('[data-activity-shell="listen_and_speak"]');
+      return qs('[data-activity-shell="echo_challenge"]') || qs('[data-activity-shell="listen_and_speak"], [data-activity-shell="echo_challenge"]');
     }
     const alias = ACTIVITY_SHELL_ALIAS[type] || type;
     return qs(`[data-activity-shell="${alias}"]`);
@@ -1676,7 +1676,7 @@ function _r2lBuildRetellTemplate(lesson) {
 
   function _r2lApplyMicGate(ready) {
     _r2lMicGateReady = ready;
-    const speakShell = qs('[data-activity-shell="listen_and_speak"]');
+    const speakShell = qs('[data-activity-shell="listen_and_speak"], [data-activity-shell="echo_challenge"]');
     const retellShell = qs('[data-activity-shell="retell_summary"]');
     [speakShell, retellShell].forEach((shell) => {
       if (!shell || shell.hidden) return;
@@ -2218,11 +2218,11 @@ function _r2lBuildRetellTemplate(lesson) {
           };
       _r2lRenderSpeakFeedback(cardEl, friendlyPayload);
       if (passed) {
-        const heroEl = cardEl.closest('[data-activity-shell="listen_and_speak"]')?.querySelector('[data-minny-hero]');
+        const heroEl = cardEl.closest('[data-activity-shell="listen_and_speak"], [data-activity-shell="echo_challenge"]')?.querySelector('[data-minny-hero]');
         _r2lSetMinnyMood(_r2lMinnyMoodForScore(payload.score_percent), heroEl);
         persistSpeakItemResult(itemKey, _r2lRecorderState.perItem.get(itemKey));
       } else if (payload?.ok) {
-        const heroEl = cardEl.closest('[data-activity-shell="listen_and_speak"]')?.querySelector('[data-minny-hero]');
+        const heroEl = cardEl.closest('[data-activity-shell="listen_and_speak"], [data-activity-shell="echo_challenge"]')?.querySelector('[data-minny-hero]');
         _r2lSetMinnyMood('encourage', heroEl);
         showToast('Minny cần nghe được ít nhất 50%. Con thu lại nhé!');
         const nativeUrl = cardEl?.dataset?.nativeAudioUrl || '';
@@ -2298,7 +2298,7 @@ function _r2lBuildRetellTemplate(lesson) {
         checkStatus: 'error',
         checkResult: { ok: false, skipped_due_to_mic: true },
       });
-      const cardEl = qs(`[data-activity-shell="listen_and_speak"]`)?.querySelector(`[data-speak-card="${itemIndex}"]`);
+      const cardEl = qs(`[data-activity-shell="listen_and_speak"], [data-activity-shell="echo_challenge"]`)?.querySelector(`[data-speak-card="${itemIndex}"]`);
       if (cardEl) {
         _r2lRenderRecorderUi(itemKey, cardEl);
         _r2lRenderSpeakFeedback(cardEl, { ok: false, message: _R2L_MIC_SKIP_MSG });
@@ -2398,8 +2398,9 @@ function _r2lBuildRetellTemplate(lesson) {
   }
 
   function activityItemsFromCard(cardEl) {
-    const shell = cardEl?.closest('[data-activity-shell="listen_and_speak"]');
-    const index = (state.lesson?.activities || []).findIndex((a) => a.type === 'listen_and_speak');
+    const shell = cardEl?.closest('[data-activity-shell="listen_and_speak"], [data-activity-shell="echo_challenge"]');
+    const shellType = shell?.getAttribute('data-activity-shell') || 'listen_and_speak';
+    const index = (state.lesson?.activities || []).findIndex((a) => a.type === shellType);
     return index >= 0 ? state.lesson.activities[index] : null;
   }
 
@@ -2554,7 +2555,7 @@ function _r2lBuildRetellTemplate(lesson) {
       });
       _r2lRenderRecorderUi(itemKey, cardEl);
       _r2lRenderSpeakFeedback(cardEl, { ok: false, message: _r2lRecorderHelpMessage(err) });
-      _r2lFocusMicHelp(cardEl?.closest('[data-activity-shell="listen_and_speak"]'));
+      _r2lFocusMicHelp(cardEl?.closest('[data-activity-shell="listen_and_speak"], [data-activity-shell="echo_challenge"]'));
     }
   }
 
@@ -5874,7 +5875,7 @@ function _r2lBuildRetellTemplate(lesson) {
   }
 
   function renderSpeakActivity(root, activity) {
-    const heroScope = root.closest('[data-activity-shell="listen_and_speak"]');
+    const heroScope = root.closest('[data-activity-shell="listen_and_speak"], [data-activity-shell="echo_challenge"]');
     _r2lInitMinnyHero(heroScope);
 
     root.innerHTML = `
