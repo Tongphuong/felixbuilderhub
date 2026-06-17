@@ -35,19 +35,18 @@ test('lesson page supports the 6-activity V2 flow', () => {
   assert.doesNotMatch(lessonPage, /Câu hỏi mở bonus/);
 });
 
-test('activity progress shows exactly 6 steps in the new order', () => {
-  const labels = [
-    '1. Nghe điền',
-    '2. Xếp câu',
-    '3. Đọc hiểu',
-    '4. Viết đáp án',
-    '5. Nói lại',
-    '6. Kể truyện',
-  ];
-  for (const label of labels) {
-    assert.match(activityProgress, new RegExp(label));
+test('activity progress nav is a dynamic placeholder populated from lesson.activities', () => {
+  // Nav itself is empty markup so lesson.astro can render N buttons matching
+  // the actual lesson (V2.0 has 6 steps, V2.1 has 7 including speed_round).
+  assert.match(activityProgress, /data-activity-progress-nav/);
+  assert.match(lessonPage, /function populateActivityProgressNav/);
+  // Labels are sourced from ACTIVITY_LABELS, which must cover both V2.0 + V2.1.
+  for (const label of ['Nghe điền', 'Xếp câu', 'Đọc hiểu', 'Viết đáp án', 'Nói lại', 'Kể truyện']) {
+    assert.match(lessonPage, new RegExp(label));
   }
-  assert.equal((activityProgress.match(/data-step-button=/g) || []).length, 6);
+  for (const v21 of ['Nghe & Khám phá', 'Sức mạnh từ vựng', 'Thợ xây câu', 'Thám tử truyện', 'Tai thần', 'Giọng ca vàng', 'Tổng công kích']) {
+    assert.match(lessonPage, new RegExp(v21));
+  }
 });
 
 test('listen_and_speak uses Minny hero and nghe-before-speak gating', () => {

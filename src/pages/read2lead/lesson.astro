@@ -1507,6 +1507,13 @@ function _r2lBuildRetellTemplate(lesson) {
     written_response: '✍️',
     listen_and_speak: '🎙️',
     retell_summary: '📖',
+    story_discovery: '🗺️',
+    vocab_blitz: '⚡',
+    sentence_builder: '🏗️',
+    story_detective: '🔍',
+    listen_and_fill: '👂',
+    echo_challenge: '🎙️',
+    speed_round: '🚀',
   };
 
   let _w1ReadAlong = { running: false, paused: false, sentenceIdx: 0, cardIdx: 0 };
@@ -4355,6 +4362,7 @@ function _r2lBuildRetellTemplate(lesson) {
       if (event.detail?.ready) _r2lUpdateMicPrepBanner(state.lesson?.activities || []);
     });
     const resumed = restoreLessonSession();
+    populateActivityProgressNav(lesson.activities || []);
     renderAllActivitiesOnce(lesson.activities || []);
     if (isW1()) {
       if (!resumed || state.w1Phase === 'story') {
@@ -4377,6 +4385,15 @@ function _r2lBuildRetellTemplate(lesson) {
       qs('#submit-hint').textContent = 'Lần trước chưa gửi được kết quả. Con bấm Gửi lại nhé!';
       qs('#submit-retry')?.classList.remove('hidden');
     }
+  }
+
+  function populateActivityProgressNav(activities) {
+    const nav = qs('[data-activity-progress-nav]');
+    if (!nav) return;
+    nav.innerHTML = activities.map((activity, index) => {
+      const label = activityLabelText(activity?.type) || `Phần ${index + 1}`;
+      return `<button class="r2l-step" data-step-button="${index}" type="button">${index + 1}. ${escapeHtml(label)}</button>`;
+    }).join('');
   }
 
   function renderAllActivitiesOnce(activities) {
@@ -4569,6 +4586,14 @@ function _r2lBuildRetellTemplate(lesson) {
           window.setTimeout(() => window.R2LMicCheck.scrollToPanel(panel), 300);
         }
       }
+    }
+
+    // Speed Round pool depends on results from Phases 1-5. The initial mount
+    // in renderAllActivitiesOnce runs with an empty pool — when the kid
+    // actually navigates here we need to rebuild and start the round.
+    if (activity.type === 'speed_round' && !state.completedTypes.has('speed_round')) {
+      const body = shell.querySelector('[data-activity-body]');
+      if (body) renderSpeedRoundActivity(body, activity);
     }
   }
 
@@ -4912,6 +4937,23 @@ function _r2lBuildRetellTemplate(lesson) {
     const level = String(lesson?.level || 'L3');
     const items = _r2lBuildSpeedRoundPool(lesson);
     activity.items = items;
+    // renderAllActivitiesOnce eagerly mounts every shell at page load. At that
+    // moment no earlier phase has been completed, so the Speed Round pool is
+    // empty. We must NOT auto-complete the phase from this initial mount —
+    // that pre-checks the final step on the progress bar and skips the kid
+    // past Phase 7. Defer the actual round until the activity becomes active
+    // (state.activityIndex points at speed_round) AND the pool has items.
+    const speedRoundIndex = (state.lesson?.activities || []).findIndex((a) => a?.type === 'speed_round');
+    const isActiveNow = state.activityIndex === speedRoundIndex;
+    if (!items.length || !isActiveNow) {
+      root.innerHTML = `
+        <div class="mt-5 rounded-md border border-cream/10 bg-navy-950/45 p-5 text-center">
+          <p class="font-display text-lg font-bold text-cream">Hoàn thành các phần trước để mở khóa Tổng công kích!</p>
+          <p class="mt-2 text-sm text-cream/70">Con sẽ trả lời thật nhanh các câu đã học.</p>
+        </div>
+      `;
+      return;
+    }
     let idx = 0;
     let correct = 0;
     let comboStreak = 0;
