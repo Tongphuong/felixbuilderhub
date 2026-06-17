@@ -126,6 +126,233 @@ const ATTENTION_EVENT_WINDOW_MS = 10000;
 export const SUSPECT_PACK_TIME_MS = 30000;
 export const SUSPECT_PACK_SCORE_PERCENT = 50;
 const COMBO_XU_CAP_PER_PACK = 5;
+
+/** V2.1 activity types (pack schema 2.1). V2.0 legacy names remain accepted on submit. */
+export const ACTIVITY_TYPES_V21 = [
+  'story_discovery',
+  'vocab_blitz',
+  'sentence_builder',
+  'story_detective',
+  'listen_and_fill',
+  'echo_challenge',
+];
+
+export const ACTIVITY_TYPES_V20 = [
+  'listening_fill_blank',
+  'listen_and_order',
+  'reading_comprehension',
+  'written_response',
+  'listen_and_speak',
+  'retell_summary',
+];
+
+const V20_TO_V21_ACTIVITY = {
+  listen_and_order: 'sentence_builder',
+  reading_comprehension: 'story_detective',
+  listening_fill_blank: 'listen_and_fill',
+  listen_and_speak: 'echo_challenge',
+};
+
+const V21_TO_V20_ACTIVITY = Object.fromEntries(
+  Object.entries(V20_TO_V21_ACTIVITY).map(([legacy, modern]) => [modern, legacy]),
+);
+
+export function isPackSchemaV21(schemaVersion) {
+  return String(schemaVersion ?? '') === '2.1';
+}
+
+export function resolveActivityType(type, schemaVersion) {
+  const raw = String(type || '').trim();
+  if (!raw) return '';
+  if (isPackSchemaV21(schemaVersion)) return raw;
+  return V20_TO_V21_ACTIVITY[raw] || raw;
+}
+
+export function canonicalActivityType(type, schemaVersion) {
+  const resolved = resolveActivityType(type, schemaVersion);
+  if (isPackSchemaV21(schemaVersion)) return resolved;
+  return V21_TO_V20_ACTIVITY[resolved] || resolved;
+}
+
+export function isSpeakingActivityType(type) {
+  const t = String(type || '');
+  return t === 'listen_and_speak' || t === 'echo_challenge' || t === 'retell_summary';
+}
+
+function clampNonNegativeInt(value) {
+  const parsed = Math.floor(Number(value) || 0);
+  return Number.isFinite(parsed) && parsed > 0 ? parsed : 0;
+}
+
+function normalizeEchoScores(raw) {
+  if (!raw || typeof raw !== 'object') {
+    return { accuracy: 0, fluency: 0, prosody: 0, overall: 0 };
+  }
+  return {
+    accuracy: Math.max(0, Math.min(100, Math.round(Number(raw.accuracy) || 0))),
+    fluency: Math.max(0, Math.min(100, Math.round(Number(raw.fluency) || 0))),
+    prosody: Math.max(0, Math.min(100, Math.round(Number(raw.prosody) || 0))),
+    overall: Math.max(0, Math.min(100, Math.round(Number(raw.overall) || 0))),
+  };
+}
+
+/**
+ * Normalize a single activity result payload (additive fields preserved).
+ * @param {object} raw
+ * @param {string|number} [schemaVersion]
+ */
+export function normalizeActivityResult(raw, schemaVersion = '2.1') {
+  if (!raw || typeof raw !== 'object') return null;
+  const type = canonicalActivityType(raw.type, schemaVersion);
+  if (!type) return null;
+
+  const base = {
+    type,
+    attempted: raw.attempted !== false,
+    ...(raw.key ? { key: String(raw.key) } : {}),
+    ...(raw.skipped_due_to_mic === true ? { skipped_due_to_mic: true } : {}),
+    ...(raw.score_percent != null
+      ? { score_percent: Math.max(0, Math.min(100, Number(raw.score_percent) || 0)) }
+      : {}),
+  };
+
+  if (type === 'story_discovery' || type === 'vocab_blitz') {
+    const items = Array.isArray(raw.items) ? raw.items.map((item) => ({
+      ...(item?.sentence_index != null ? { sentence_index: clampNonNegativeInt(item.sentence_index) } : {}),
+      ...(item?.word_en ? { word_en: String(item.word_en) } : {}),
+      correct: item?.correct === true,
+      time_ms: clampNonNegativeInt(item?.time_ms),
+    })) : [];
+    const comboMax = clampNonNegativeInt(raw.combo_max ?? raw.combo?.max);
+    return { ...base, items, combo_max: comboMax };
+  }
+
+  if (type === 'sentence_builder') {
+    const items = Array.isArray(raw.items) ? raw.items.map((item) => ({
+      sentence_index: clampNonNegativeInt(item?.sentence_index),
+      correct: item?.correct === true,
+      attempts: clampNonNegativeInt(item?.attempts) || 1,
+      time_ms: clampNonNegativeInt(item?.time_ms),
+    })) : [];
+    return { ...base, items };
+  }
+
+  if (type === 'story_detective' || type === 'reading_comprehension') {
+    const questions = Array.isArray(raw.questions) ? raw.questions.map((q) => ({
+      category: String(q?.category || 'detail'),
+      correct: q?.correct === true,
+    })) : [];
+    const correctCount = questions.filter((q) => q.correct).length;
+    return {
+      ...base,
+      questions,
+      correct_count: correctCount,
+      total_count: questions.length,
+      wrong_count: questions.length - correctCount,
+    };
+  }
+
+  if (type === 'listen_and_fill' || type === 'listening_fill_blank') {
+    const items = Array.isArray(raw.items) ? raw.items.map((item) => ({
+      sentence_index: clampNonNegativeInt(item?.sentence_index),
+      correct: item?.correct === true,
+      ...(item?.first_try === true ? { first_try: true } : {}),
+    })) : [];
+    const correctCount = items.filter((item) => item.correct).length;
+    return {
+      ...base,
+      items,
+      correct_count: correctCount,
+      total_count: items.length,
+      wrong_count: items.length - correctCount,
+    };
+  }
+
+  if (type === 'echo_challenge' || type === 'listen_and_speak') {
+    const items = Array.isArray(raw.items) ? raw.items.map((item) => ({
+      sentence_index: clampNonNegativeInt(item?.sentence_index),
+      scores: normalizeEchoScores(item?.scores),
+      retries: clampNonNegativeInt(item?.retries),
+    })) : [];
+    const avgOverall = items.length
+      ? Math.round(items.reduce((sum, item) => sum + item.scores.overall, 0) / items.length)
+      : Math.max(0, Math.min(100, Number(raw.score_percent) || 0));
+    return {
+      ...base,
+      items,
+      score_percent: avgOverall,
+      correct_count: items.filter((item) => item.scores.overall >= 50).length,
+      total_count: items.length || Number(raw.total_count) || 1,
+    };
+  }
+
+  if (type === 'speed_round') {
+    const items = Array.isArray(raw.items) ? raw.items : [];
+    const correctCount = items.filter((item) => item?.correct === true).length;
+    return {
+      ...base,
+      items,
+      combo_max: clampNonNegativeInt(raw.combo_max),
+      correct_count: correctCount,
+      total_count: items.length || Number(raw.total_count) || 10,
+    };
+  }
+
+  return {
+    ...base,
+    correct_count: clampNonNegativeInt(raw.correct_count),
+    total_count: clampNonNegativeInt(raw.total_count),
+    wrong_count: clampNonNegativeInt(raw.wrong_count),
+    ...(Array.isArray(raw.question_outcomes) ? { question_outcomes: raw.question_outcomes } : {}),
+  };
+}
+
+/**
+ * Normalize per-phase lesson progress (session / KV additive).
+ * @param {object} raw
+ * @param {string|number} [schemaVersion]
+ */
+export function normalizeActivityProgress(raw, schemaVersion = '2.1') {
+  if (!raw || typeof raw !== 'object') return {};
+  const progress = {};
+  for (const [key, value] of Object.entries(raw)) {
+    if (!value || typeof value !== 'object') continue;
+    const type = canonicalActivityType(key, schemaVersion);
+    const combo = value.combo && typeof value.combo === 'object' ? value.combo : {};
+    progress[type] = {
+      ...value,
+      combo: {
+        current: clampNonNegativeInt(combo.current),
+        max: clampNonNegativeInt(combo.max),
+        phase_max: clampNonNegativeInt(combo.phase_max ?? combo.max),
+      },
+      speed_items: clampNonNegativeInt(value.speed_items),
+      ...(value.completed === true ? { completed: true } : {}),
+    };
+  }
+  return progress;
+}
+
+/**
+ * Merge lesson activity progress into progress KV (additive only).
+ */
+export function mergeLessonActivityProgress(state, rawProgress, schemaVersion = '2.1') {
+  const next = normalizeActivityProgress(rawProgress, schemaVersion);
+  if (!Object.keys(next).length) return state;
+  const existing = state.lesson_activity_progress && typeof state.lesson_activity_progress === 'object'
+    ? state.lesson_activity_progress
+    : {};
+  return {
+    ...state,
+    lesson_activity_progress: {
+      ...existing,
+      ...next,
+      schema_version: String(schemaVersion || '2.1'),
+      updated_at: new Date().toISOString(),
+    },
+  };
+}
+
 const DAILY_LOGIN_CHEST_BASE = 5;
 const DAILY_LOGIN_CHEST_PER_STREAK = 2;
 const DAILY_LOGIN_CHEST_MAX_STREAK = 10;
@@ -465,6 +692,16 @@ export function progressKey(accessCode) {
   return `progress:${String(accessCode || '').trim().toUpperCase()}`;
 }
 
+/** True for R2L access-code KV keys — excludes progress:, task:, rl:, cache, etc. */
+export function isAccessCodeKey(name) {
+  const key = String(name || '').trim();
+  if (!key.startsWith('R2L-')) return false;
+  if (key.startsWith('task:') || key.startsWith('progress:')) return false;
+  if (key.startsWith('rl:') || key.startsWith('debug:')) return false;
+  if (key === 'leaderboard-cache') return false;
+  return true;
+}
+
 export function vietnamDateKey(iso = new Date().toISOString()) {
   const timestamp = Date.parse(iso);
   if (!Number.isFinite(timestamp)) return '';
@@ -641,7 +878,8 @@ export function normalizeAvatarStage(raw, state = {}) {
   const unlockedParts = Array.isArray(state?.unlocked_parts) ? state.unlocked_parts : [];
   const computedLadder = state?.rank_ladder || computeRankLadder(state);
   const tierIndex = numberOrZero(computedLadder?.tier_index);
-  if (tierIndex < 1 && unlockedParts.length === 0) return 'egg';
+  // Below Bạc (tier 0): always egg — leaderboard + hub must not show hatched monsters.
+  if (tierIndex < 1) return 'egg';
   if (unlockedParts.length > 0) return 'custom';
   return 'basic';
 }
@@ -851,9 +1089,14 @@ export function normalizeProgressState(raw, { accessCode, codeData = null, nowIs
   const storedUnlockedParts = Array.isArray(raw?.unlocked_parts)
     ? Array.from(new Set(raw.unlocked_parts.filter(Boolean).map(String)))
     : [];
-  const unlockedParts = raw?.avatar_stage
+  const preAvatarTierIndex = numberOrZero(
+    computeRankLadder({ ...raw, current_level: currentLevel })?.tier_index,
+  );
+  const unlockedParts = storedUnlockedParts.length > 0
     ? storedUnlockedParts
-    : grandfatherUnlockedAvatarParts(raw, storedUnlockedParts);
+    : (!raw?.avatar_stage && preAvatarTierIndex >= 1)
+      ? grandfatherUnlockedAvatarParts(raw, storedUnlockedParts)
+      : storedUnlockedParts;
   const avatarStage = normalizeAvatarStage(raw?.avatar_stage, {
     ...raw,
     current_level: currentLevel,
@@ -1559,6 +1802,148 @@ export function packsUntilLevelUp(level, xpInLevel = 0) {
   return Math.max(0, Math.ceil((xpTarget - numberOrZero(xpInLevel)) / XP_PER_PASSED_PACK));
 }
 
+const RANK_LABEL_TIER_ORDER = [
+  ['Thách Đấu', 7],
+  ['Kim Cương', 4],
+  ['Kim cương', 4],
+  ['Bạch Kim', 3],
+  ['Vàng', 2],
+  ['Bạc', 1],
+  ['Đồng', 0],
+];
+const RANK_DIVISION_TO_WITHIN_BASE = { III: 0, II: 1, I: 2 };
+
+/** Map a ladder label (e.g. "Vàng II") to season RP points. */
+export function rpForRankLabelVi(labelVi, { stars = 0 } = {}) {
+  const normalized = String(labelVi || '').trim();
+  let tierIndex = 0;
+  for (const [name, index] of RANK_LABEL_TIER_ORDER) {
+    if (normalized.includes(name)) {
+      tierIndex = index;
+      break;
+    }
+  }
+  if (tierIndex === 7) {
+    return RANK_APEX_THRESHOLD + Math.max(0, Math.floor(Number(stars) || 0));
+  }
+  const divisionMatch = normalized.match(/\b(III|II|I)\b/);
+  const divisionBase = divisionMatch ? RANK_DIVISION_TO_WITHIN_BASE[divisionMatch[1]] : 0;
+  const starsPerDivision = starsPerDivisionForTier(tierIndex);
+  const within = divisionBase * starsPerDivision
+    + Math.max(0, Math.min(starsPerDivision - 1, Math.floor(Number(stars) || 0)));
+  return tierStartRp(tierIndex) + within;
+}
+
+function learningLevelForCompletedPacks(completedPacks) {
+  let remaining = Math.max(0, Math.floor(Number(completedPacks) || 0));
+  for (const level of LEVELS) {
+    const need = PACKS_TO_NEXT_LEVEL[level];
+    if (!need) return level;
+    if (remaining < need) return level;
+    remaining -= need;
+  }
+  return LEVELS[LEVELS.length - 1];
+}
+
+function levelProgressForCompletedPacks(completedPacks) {
+  const progress = normalizeLevelProgress({});
+  let remaining = Math.max(0, Math.floor(Number(completedPacks) || 0));
+  for (const level of LEVELS) {
+    const need = PACKS_TO_NEXT_LEVEL[level];
+    if (!need) break;
+    if (remaining >= need) {
+      progress[level] = need;
+      remaining -= need;
+    } else {
+      progress[level] = remaining;
+      remaining = 0;
+      break;
+    }
+  }
+  return progress;
+}
+
+/** Fixed leaderboard bot presets (virtual motivation accounts). */
+export const LEADERBOARD_BOT_PRESETS = {
+  pilot: {
+    code: 'R2L-PILOT-CYJS',
+    student_name: 'Pilot',
+    rank_label_vi: 'Vàng II',
+    completed_packs: 39,
+    coins: 975,
+  },
+  ong: {
+    code: 'R2L-ONG-U5M6',
+    student_name: 'Ong',
+    rank_label_vi: 'Vàng III',
+    completed_packs: 19,
+    coins: 475,
+  },
+};
+
+/** Admin-only: snap a bot/test account to fixed rank + pack/coin stats for leaderboard display. */
+export function buildAdminBotLeaderboardState(existingState, {
+  accessCode,
+  codeData = null,
+  rankLabelVi,
+  completedPacks,
+  coins,
+  studentName,
+  nowIso = new Date().toISOString(),
+} = {}) {
+  const rp = rpForRankLabelVi(rankLabelVi);
+  const ladder = buildRankLadderFromPoints(rp);
+  const packs = Math.max(0, Math.floor(Number(completedPacks) || 0));
+  const coinBalance = Number.isFinite(Number(coins))
+    ? Number(coins)
+    : packs * 25;
+  const level = learningLevelForCompletedPacks(packs);
+  const levelProgress = levelProgressForCompletedPacks(packs);
+  const xpInLevel = numberOrZero(levelProgress[level]) * XP_PER_PASSED_PACK;
+  const base = existingState && existingState.schema_version === 2
+    ? { ...existingState }
+    : normalizeProgressState(null, { accessCode, codeData, nowIso });
+  const activeSeason = currentSeason(nowIso);
+  const resolvedName = String(
+    studentName
+    || base.student_name
+    || codeData?.student_profile?.student_name
+    || codeData?.progress?.student_name
+    || '',
+  ).trim();
+
+  return refreshBadges(migrateSeasonFields({
+    ...base,
+    schema_version: 2,
+    level_reset_version: LEVEL_RESET_VERSION,
+    access_code: String(accessCode || base.access_code || '').trim().toUpperCase(),
+    student_name: resolvedName,
+    current_level: level,
+    initial_level: base.initial_level || START_LEVEL,
+    unlocked_levels: LEVELS.slice(0, LEVELS.indexOf(level) + 1),
+    rank_title: RANK_TITLES[level],
+    rank_asset_url: RANK_ASSETS[level],
+    completed_packs: packs,
+    coins: coinBalance,
+    total_xp: packs * XP_PER_PASSED_PACK,
+    xp_in_level: xpInLevel,
+    xp_to_next_level: xpToNextLevel(level),
+    level_progress: levelProgress,
+    rank_points: rp,
+    lifetime_rp: rp,
+    season: {
+      id: activeSeason.id,
+      rp,
+      peak_tier_index: ladder.tier_index,
+      peak_label_vi: ladder.label_vi,
+    },
+    streak_days: Math.max(numberOrZero(base.streak_days), 3),
+    last_activity_at: nowIso,
+    last_activity_date_vn: vietnamDateKey(nowIso),
+    updated_at: nowIso,
+  }, nowIso));
+}
+
 /** Admin-only: snap a test account to L1–L5 with plausible ladder progress. */
 export function buildAdminTestLevelState(existingState, targetLevel, { accessCode, codeData = null, nowIso = new Date().toISOString() } = {}) {
   const level = safeLevel(targetLevel);
@@ -1627,7 +2012,7 @@ function badgeUnlocked(id, state) {
 
 function hasVoiceAttempt(activityResults) {
   return Array.isArray(activityResults) && activityResults.some(
-    (item) => item?.type === 'listen_and_speak' || item?.type === 'retell_summary',
+    (item) => isSpeakingActivityType(item?.type),
   );
 }
 
