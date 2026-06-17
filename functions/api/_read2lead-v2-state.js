@@ -126,6 +126,233 @@ const ATTENTION_EVENT_WINDOW_MS = 10000;
 export const SUSPECT_PACK_TIME_MS = 30000;
 export const SUSPECT_PACK_SCORE_PERCENT = 50;
 const COMBO_XU_CAP_PER_PACK = 5;
+
+/** V2.1 activity types (pack schema 2.1). V2.0 legacy names remain accepted on submit. */
+export const ACTIVITY_TYPES_V21 = [
+  'story_discovery',
+  'vocab_blitz',
+  'sentence_builder',
+  'story_detective',
+  'listen_and_fill',
+  'echo_challenge',
+];
+
+export const ACTIVITY_TYPES_V20 = [
+  'listening_fill_blank',
+  'listen_and_order',
+  'reading_comprehension',
+  'written_response',
+  'listen_and_speak',
+  'retell_summary',
+];
+
+const V20_TO_V21_ACTIVITY = {
+  listen_and_order: 'sentence_builder',
+  reading_comprehension: 'story_detective',
+  listening_fill_blank: 'listen_and_fill',
+  listen_and_speak: 'echo_challenge',
+};
+
+const V21_TO_V20_ACTIVITY = Object.fromEntries(
+  Object.entries(V20_TO_V21_ACTIVITY).map(([legacy, modern]) => [modern, legacy]),
+);
+
+export function isPackSchemaV21(schemaVersion) {
+  return String(schemaVersion ?? '') === '2.1';
+}
+
+export function resolveActivityType(type, schemaVersion) {
+  const raw = String(type || '').trim();
+  if (!raw) return '';
+  if (isPackSchemaV21(schemaVersion)) return raw;
+  return V20_TO_V21_ACTIVITY[raw] || raw;
+}
+
+export function canonicalActivityType(type, schemaVersion) {
+  const resolved = resolveActivityType(type, schemaVersion);
+  if (isPackSchemaV21(schemaVersion)) return resolved;
+  return V21_TO_V20_ACTIVITY[resolved] || resolved;
+}
+
+export function isSpeakingActivityType(type) {
+  const t = String(type || '');
+  return t === 'listen_and_speak' || t === 'echo_challenge' || t === 'retell_summary';
+}
+
+function clampNonNegativeInt(value) {
+  const parsed = Math.floor(Number(value) || 0);
+  return Number.isFinite(parsed) && parsed > 0 ? parsed : 0;
+}
+
+function normalizeEchoScores(raw) {
+  if (!raw || typeof raw !== 'object') {
+    return { accuracy: 0, fluency: 0, prosody: 0, overall: 0 };
+  }
+  return {
+    accuracy: Math.max(0, Math.min(100, Math.round(Number(raw.accuracy) || 0))),
+    fluency: Math.max(0, Math.min(100, Math.round(Number(raw.fluency) || 0))),
+    prosody: Math.max(0, Math.min(100, Math.round(Number(raw.prosody) || 0))),
+    overall: Math.max(0, Math.min(100, Math.round(Number(raw.overall) || 0))),
+  };
+}
+
+/**
+ * Normalize a single activity result payload (additive fields preserved).
+ * @param {object} raw
+ * @param {string|number} [schemaVersion]
+ */
+export function normalizeActivityResult(raw, schemaVersion = '2.1') {
+  if (!raw || typeof raw !== 'object') return null;
+  const type = canonicalActivityType(raw.type, schemaVersion);
+  if (!type) return null;
+
+  const base = {
+    type,
+    attempted: raw.attempted !== false,
+    ...(raw.key ? { key: String(raw.key) } : {}),
+    ...(raw.skipped_due_to_mic === true ? { skipped_due_to_mic: true } : {}),
+    ...(raw.score_percent != null
+      ? { score_percent: Math.max(0, Math.min(100, Number(raw.score_percent) || 0)) }
+      : {}),
+  };
+
+  if (type === 'story_discovery' || type === 'vocab_blitz') {
+    const items = Array.isArray(raw.items) ? raw.items.map((item) => ({
+      ...(item?.sentence_index != null ? { sentence_index: clampNonNegativeInt(item.sentence_index) } : {}),
+      ...(item?.word_en ? { word_en: String(item.word_en) } : {}),
+      correct: item?.correct === true,
+      time_ms: clampNonNegativeInt(item?.time_ms),
+    })) : [];
+    const comboMax = clampNonNegativeInt(raw.combo_max ?? raw.combo?.max);
+    return { ...base, items, combo_max: comboMax };
+  }
+
+  if (type === 'sentence_builder') {
+    const items = Array.isArray(raw.items) ? raw.items.map((item) => ({
+      sentence_index: clampNonNegativeInt(item?.sentence_index),
+      correct: item?.correct === true,
+      attempts: clampNonNegativeInt(item?.attempts) || 1,
+      time_ms: clampNonNegativeInt(item?.time_ms),
+    })) : [];
+    return { ...base, items };
+  }
+
+  if (type === 'story_detective' || type === 'reading_comprehension') {
+    const questions = Array.isArray(raw.questions) ? raw.questions.map((q) => ({
+      category: String(q?.category || 'detail'),
+      correct: q?.correct === true,
+    })) : [];
+    const correctCount = questions.filter((q) => q.correct).length;
+    return {
+      ...base,
+      questions,
+      correct_count: correctCount,
+      total_count: questions.length,
+      wrong_count: questions.length - correctCount,
+    };
+  }
+
+  if (type === 'listen_and_fill' || type === 'listening_fill_blank') {
+    const items = Array.isArray(raw.items) ? raw.items.map((item) => ({
+      sentence_index: clampNonNegativeInt(item?.sentence_index),
+      correct: item?.correct === true,
+      ...(item?.first_try === true ? { first_try: true } : {}),
+    })) : [];
+    const correctCount = items.filter((item) => item.correct).length;
+    return {
+      ...base,
+      items,
+      correct_count: correctCount,
+      total_count: items.length,
+      wrong_count: items.length - correctCount,
+    };
+  }
+
+  if (type === 'echo_challenge' || type === 'listen_and_speak') {
+    const items = Array.isArray(raw.items) ? raw.items.map((item) => ({
+      sentence_index: clampNonNegativeInt(item?.sentence_index),
+      scores: normalizeEchoScores(item?.scores),
+      retries: clampNonNegativeInt(item?.retries),
+    })) : [];
+    const avgOverall = items.length
+      ? Math.round(items.reduce((sum, item) => sum + item.scores.overall, 0) / items.length)
+      : Math.max(0, Math.min(100, Number(raw.score_percent) || 0));
+    return {
+      ...base,
+      items,
+      score_percent: avgOverall,
+      correct_count: items.filter((item) => item.scores.overall >= 50).length,
+      total_count: items.length || Number(raw.total_count) || 1,
+    };
+  }
+
+  if (type === 'speed_round') {
+    const items = Array.isArray(raw.items) ? raw.items : [];
+    const correctCount = items.filter((item) => item?.correct === true).length;
+    return {
+      ...base,
+      items,
+      combo_max: clampNonNegativeInt(raw.combo_max),
+      correct_count: correctCount,
+      total_count: items.length || Number(raw.total_count) || 10,
+    };
+  }
+
+  return {
+    ...base,
+    correct_count: clampNonNegativeInt(raw.correct_count),
+    total_count: clampNonNegativeInt(raw.total_count),
+    wrong_count: clampNonNegativeInt(raw.wrong_count),
+    ...(Array.isArray(raw.question_outcomes) ? { question_outcomes: raw.question_outcomes } : {}),
+  };
+}
+
+/**
+ * Normalize per-phase lesson progress (session / KV additive).
+ * @param {object} raw
+ * @param {string|number} [schemaVersion]
+ */
+export function normalizeActivityProgress(raw, schemaVersion = '2.1') {
+  if (!raw || typeof raw !== 'object') return {};
+  const progress = {};
+  for (const [key, value] of Object.entries(raw)) {
+    if (!value || typeof value !== 'object') continue;
+    const type = canonicalActivityType(key, schemaVersion);
+    const combo = value.combo && typeof value.combo === 'object' ? value.combo : {};
+    progress[type] = {
+      ...value,
+      combo: {
+        current: clampNonNegativeInt(combo.current),
+        max: clampNonNegativeInt(combo.max),
+        phase_max: clampNonNegativeInt(combo.phase_max ?? combo.max),
+      },
+      speed_items: clampNonNegativeInt(value.speed_items),
+      ...(value.completed === true ? { completed: true } : {}),
+    };
+  }
+  return progress;
+}
+
+/**
+ * Merge lesson activity progress into progress KV (additive only).
+ */
+export function mergeLessonActivityProgress(state, rawProgress, schemaVersion = '2.1') {
+  const next = normalizeActivityProgress(rawProgress, schemaVersion);
+  if (!Object.keys(next).length) return state;
+  const existing = state.lesson_activity_progress && typeof state.lesson_activity_progress === 'object'
+    ? state.lesson_activity_progress
+    : {};
+  return {
+    ...state,
+    lesson_activity_progress: {
+      ...existing,
+      ...next,
+      schema_version: String(schemaVersion || '2.1'),
+      updated_at: new Date().toISOString(),
+    },
+  };
+}
+
 const DAILY_LOGIN_CHEST_BASE = 5;
 const DAILY_LOGIN_CHEST_PER_STREAK = 2;
 const DAILY_LOGIN_CHEST_MAX_STREAK = 10;
@@ -1627,7 +1854,7 @@ function badgeUnlocked(id, state) {
 
 function hasVoiceAttempt(activityResults) {
   return Array.isArray(activityResults) && activityResults.some(
-    (item) => item?.type === 'listen_and_speak' || item?.type === 'retell_summary',
+    (item) => isSpeakingActivityType(item?.type),
   );
 }
 
