@@ -18,6 +18,11 @@ interface BuilderState {
 const MAX_CODE_LENGTH = 16;
 const STAGE_INTERVAL_MS = 1300;
 const RESULT_DELAY_MS = 900;
+const REDUCED_MOTION_DELAY_MS = 200;
+
+function prefersReducedMotion(): boolean {
+  return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+}
 
 const STAGE_LABELS = [
   'Đang viết câu chuyện riêng cho con…',
@@ -99,6 +104,11 @@ function initBuilder(): void {
   function startGenerate(): void {
     if (state.code.length === 0) return;
     state.stage = 0;
+    // Reduced motion: skip the animated generating phase, jump straight to result.
+    if (prefersReducedMotion()) {
+      resultTimer = setTimeout(switchToResult, REDUCED_MOTION_DELAY_MS);
+      return;
+    }
     setPhase('generating');
     renderStage();
     timer = setInterval(advanceStage, STAGE_INTERVAL_MS);

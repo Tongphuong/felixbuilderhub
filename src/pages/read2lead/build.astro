@@ -212,4 +212,14 @@ const INITIAL_PROGRESS = ((0 + 1) / 4) * 100;
   [data-phase='result'] .phase-result {
     display: block;
   }
+
+  /* Reduced motion: the generating phase is skipped in JS; ensure the gradient
+     progress bar never animates if it is ever shown. */
+  @media (prefers-reduced-motion: reduce) {
+    .phase-generating .fx-progress__fill,
+    .phase-generating .fx-progress__fill--gradient {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
 </style>
