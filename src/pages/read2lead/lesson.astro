@@ -36,7 +36,7 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
   robots="noindex, follow"
 >
   <Header read2LeadState={true} />
-  <main id="main" class="min-h-screen bg-navy-950" data-r2l-w1-ssr={import.meta.env.PUBLIC_R2L_W1 === '1' ? '1' : '0'}>
+  <main id="main" class="min-h-screen bg-navy-950" data-r2l-w1-ssr={import.meta.env.PUBLIC_R2L_W1 === '1' ? '1' : '0'} data-r2l-v21-ssr={import.meta.env.PUBLIC_R2L_V21 === '1' ? '1' : '0'}>
     <IdentityBanner />
     <ProgressBar />
 
@@ -3539,7 +3539,7 @@ function _r2lBuildRetellTemplate(lesson) {
           // attempting the (not-yet-shipped) V2.1 UI. Infra-only — no V2.1 render.
           if (
             String(data.lesson?.schema_version ?? '') === '2.1'
-            && import.meta.env.PUBLIC_R2L_V21 !== '1'
+            && document.getElementById('main')?.dataset.r2lV21Ssr !== '1'
           ) {
             qs('#loading-card')?.classList.add('hidden');
             qs('#error-card')?.classList.add('hidden');
