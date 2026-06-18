@@ -63,7 +63,7 @@ const faqItems = [
         Felix dùng tiếng Anh làm phương tiện — hội thoại, kể chuyện, thuyết trình, tranh luận trong lớp nhóm nhỏ, online.
       </p>
       <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-        <Button variant="primary" href="#book">Đặt lịch tư vấn miễn phí →</Button>
+        <Button variant="primary" href="#book">Đặt lịch tư vấn miễn phí</Button>
         <Button variant="secondary" href="/hoc-sinh">Xem tiến độ con</Button>
       </div>
     </section>
@@ -167,33 +167,33 @@ const faqItems = [
         <li class="flex gap-3"><span class="text-gold-light">✓</span><span>Báo giá rõ ràng sau khi tư vấn</span></li>
       </ul>
       <div class="mt-10">
-        <Button variant="primary" href="#book">Đặt lịch tư vấn →</Button>
+        <Button variant="primary" href="#book">Đặt lịch tư vấn</Button>
       </div>
     </section>
 
     <section id="book" class="mx-auto max-w-6xl px-6 py-20">
       <SectionHeading
         align="center"
-        title="Đặt lịch tư vấn miễn phí"
-        lead="Điền form, Felix sẽ nhắn Zalo trong 24h. Buổi tư vấn 30 phút giúp Felix hiểu con và đề xuất lộ trình phù hợp."
+        title="Để Felix liên hệ tư vấn"
+        lead="Điền form, Felix sẽ nhắn Zalo trong 24h."
       />
 
       <form id="coaching-form" class="mx-auto mt-8 grid max-w-xl gap-5">
-        <Input label="Tên phụ huynh" name="parent_name" required maxlength={100} placeholder="Nguyễn Văn A" />
+        <Input label="Tên phụ huynh" name="parent_name" required maxlength={100} />
         <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
-          <Input label="Tên con" name="child_name" required maxlength={50} placeholder="Bé Na" />
-          <Input label="Tuổi con" name="child_age" type="number" required placeholder="8" />
+          <Input label="Tên con" name="child_name" required maxlength={50} />
+          <Input label="Tuổi con" name="child_age" type="number" required />
         </div>
         <Select label="Level tiếng Anh hiện tại" name="english_level" required>
           <option value="" disabled selected>-- Chọn level --</option>
           <option value="beginner">Mới bắt đầu (chưa giao tiếp được)</option>
           <option value="basic">Cơ bản (nói được câu đơn)</option>
-          <option value="intermediate">Trung bình (còn ngại)</option>
+          <option value="intermediate">Trung bình (giao tiếp được nhưng còn ngại)</option>
           <option value="advanced">Khá (cần luyện chuyên sâu)</option>
           <option value="unsure">Không chắc — Felix đánh giá giúp</option>
         </Select>
-        <Textarea label="Mục tiêu của phụ huynh" name="goals" rows={3} maxlength={300} placeholder="VD: Con tự tin nói trước lớp, kể chuyện mạch lạc…" />
-        <Input label="Số Zalo" name="zalo_phone" type="tel" required pattern="^[+0-9\s\-()]{8,20}$" placeholder="09xx xxx xxx" />
+        <Textarea label="Mục tiêu của phụ huynh" name="goals" rows={3} maxlength={300} placeholder="VD: Con tự tin nói trước lớp, kể chuyện mạch lạc, giao tiếp tự nhiên với người nước ngoài..." />
+        <Input label="Số Zalo" name="zalo_phone" type="tel" required pattern="^[+0-9\s\-()]{8,20}$" />
         <div class="absolute -left-[9999px]" aria-hidden="true">
           <label for="website">Website</label>
           <input id="website" name="website" tabindex="-1" />
@@ -234,7 +234,7 @@ const faqItems = [
         lead="Đặt lịch tư vấn miễn phí để Felix gặp con và đề xuất hướng đi phù hợp."
       />
       <div class="mt-8">
-        <Button variant="primary" href="#book">Đặt lịch tư vấn →</Button>
+        <Button variant="primary" href="#book">Đặt lịch tư vấn</Button>
       </div>
     </section>
   </main>
