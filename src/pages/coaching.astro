@@ -2,6 +2,14 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import Badge from '../components/ui/Badge.astro';
+import Button from '../components/ui/Button.astro';
+import Card from '../components/ui/Card.astro';
+import SectionHeading from '../components/ui/SectionHeading.astro';
+import Faq from '../components/ui/Faq.astro';
+import Input from '../components/ui/Input.astro';
+import Select from '../components/ui/Select.astro';
+import Textarea from '../components/ui/Textarea.astro';
 import { ZALO_DISPLAY, ZALO_URL } from '../config/contact';
 import { COACHING_MONTHLY_VND, formatVND } from '../config/pricing';
 
@@ -46,7 +54,7 @@ const faqItems = [
 
   <main id="main" class="flex-1">
     <section class="mx-auto max-w-6xl px-6 py-20 text-center md:py-28">
-      <span class="inline-block rounded-full bg-accent/20 px-4 py-1 text-sm font-semibold text-accent">Nhóm nhỏ · Tối đa 4 bé · Online</span>
+      <Badge variant="accent">Nhóm nhỏ · Tối đa 4 bé · Online</Badge>
       <h1 class="mx-auto mt-6 max-w-4xl font-display text-4xl font-extrabold text-cream md:text-5xl lg:text-6xl">
         <span class="block">Huấn luyện kĩ năng nói</span>
         <span class="block">rèn tự tin cho con</span>
@@ -55,41 +63,39 @@ const faqItems = [
         Felix dùng tiếng Anh làm phương tiện — hội thoại, kể chuyện, thuyết trình, tranh luận trong lớp nhóm nhỏ, online.
       </p>
       <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-        <a href="#book" class="inline-flex rounded-lg bg-accent px-6 py-3 font-semibold text-navy-950 transition hover:bg-accent-hover">
-          Đặt lịch tư vấn miễn phí
-        </a>
-        <a href="/hoc-sinh" class="inline-flex rounded-lg border border-cream-dim/40 px-6 py-3 font-semibold text-cream transition hover:border-accent hover:text-accent">
-          Xem tiến độ con
-        </a>
+        <Button variant="primary" href="#book">Đặt lịch tư vấn miễn phí →</Button>
+        <Button variant="secondary" href="/hoc-sinh">Xem tiến độ con</Button>
       </div>
     </section>
 
     <section class="mx-auto max-w-6xl px-6 py-20">
-      <div class="text-center">
-        <h2 class="font-display text-3xl font-bold leading-snug text-cream md:text-4xl">Bốn kĩ năng nói con sẽ rèn</h2>
-        <p class="mx-auto mt-5 max-w-2xl leading-relaxed text-cream-dim">Mỗi buổi tập trung 1 kĩ năng. Lộ trình tăng dần độ khó theo level con.</p>
-      </div>
+      <SectionHeading
+        eyebrow="Kĩ năng"
+        title="Bốn kĩ năng nói con sẽ rèn"
+        lead="Mỗi buổi tập trung 1 kĩ năng. Lộ trình tăng dần độ khó theo level con."
+        align="center"
+      />
       <div class="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
         {skillAreas.map(([icon, title, description]) => (
-          <article class="rounded-lg border border-cream-dim/20 bg-navy-900/70 p-6">
+          <Card>
             <div class="text-4xl" aria-hidden="true">{icon}</div>
             <h3 class="mt-5 font-display text-xl font-bold leading-snug text-cream">{title}</h3>
             <p class="mt-3 leading-relaxed text-cream-muted">{description}</p>
-          </article>
+          </Card>
         ))}
       </div>
     </section>
 
     <section class="bg-navy-900 px-6 py-20">
       <div class="mx-auto max-w-6xl">
-        <h2 class="text-center font-display text-3xl font-bold leading-snug text-cream md:text-4xl">Con sẽ phát triển gì</h2>
+        <SectionHeading eyebrow="Kết quả" title="Con sẽ phát triển gì" align="center" />
         <div class="mt-10 grid gap-6 md:grid-cols-3">
           {outcomes.map(([icon, title, description]) => (
-            <article class="rounded-lg border border-cream-dim/20 bg-navy-950/75 p-6">
+            <Card>
               <div class="text-4xl" aria-hidden="true">{icon}</div>
               <h3 class="mt-5 font-display text-xl font-bold leading-snug text-cream">{title}</h3>
               <p class="mt-3 leading-relaxed text-cream-muted">{description}</p>
-            </article>
+            </Card>
           ))}
         </div>
       </div>
@@ -106,7 +112,7 @@ const faqItems = [
             <div class="relative flex aspect-video items-center justify-center bg-gradient-to-br from-navy-900 to-navy-800">
               <div class="flex flex-col items-center gap-2 text-center">
                 <span class="text-4xl" aria-hidden="true">{sample.type === 'video' ? '▶️' : '📸'}</span>
-                <span class="rounded-full bg-accent/15 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-accent">Sắp ra mắt</span>
+                <Badge variant="gold">Sắp ra mắt</Badge>
               </div>
             </div>
             <figcaption class="px-5 py-4">
@@ -150,63 +156,51 @@ const faqItems = [
     </section>
 
     <section class="mx-auto max-w-6xl px-6 py-20 text-center">
-      <h2 class="font-display text-3xl font-bold leading-snug text-cream md:text-4xl">Đặt lịch tư vấn miễn phí</h2>
-      <p class="mx-auto mt-5 max-w-2xl leading-relaxed text-cream-dim">Trước khi bắt đầu, Felix tư vấn 30 phút miễn phí cho phụ huynh. Hiểu con và đề xuất lộ trình phù hợp.</p>
+      <SectionHeading
+        align="center"
+        title="Đặt lịch tư vấn miễn phí"
+        lead="Trước khi bắt đầu, Felix tư vấn 30 phút miễn phí cho phụ huynh. Hiểu con và đề xuất lộ trình phù hợp."
+      />
       <ul class="mx-auto mt-8 max-w-2xl space-y-3 text-left text-cream-muted">
         <li class="flex gap-3"><span class="text-gold-light">✓</span><span>Đánh giá level và mục tiêu của con</span></li>
         <li class="flex gap-3"><span class="text-gold-light">✓</span><span>Đề xuất lộ trình (số buổi, kĩ năng cần luyện)</span></li>
         <li class="flex gap-3"><span class="text-gold-light">✓</span><span>Báo giá rõ ràng sau khi tư vấn</span></li>
       </ul>
-      <a href="#book" class="mt-10 inline-flex rounded-lg bg-accent px-6 py-3 font-semibold text-navy-950 transition hover:bg-accent-hover">
-        Đặt lịch tư vấn
-      </a>
+      <div class="mt-10">
+        <Button variant="primary" href="#book">Đặt lịch tư vấn →</Button>
+      </div>
     </section>
 
     <section id="book" class="mx-auto max-w-6xl px-6 py-20">
-      <div class="text-center">
-        <h2 class="font-display text-3xl font-bold leading-snug text-cream md:text-4xl">Để Felix liên hệ tư vấn</h2>
-        <p class="mt-4 text-cream-dim">Điền form, Felix sẽ nhắn Zalo trong 24h.</p>
-      </div>
+      <SectionHeading
+        align="center"
+        title="Đặt lịch tư vấn miễn phí"
+        lead="Điền form, Felix sẽ nhắn Zalo trong 24h. Buổi tư vấn 30 phút giúp Felix hiểu con và đề xuất lộ trình phù hợp."
+      />
 
-      <form id="coaching-form" class="mx-auto mt-10 max-w-xl space-y-5">
-        <div>
-          <label for="parent_name" class="mb-2 block text-sm text-cream-muted">Tên phụ huynh <span class="text-red-400">*</span></label>
-          <input id="parent_name" name="parent_name" required maxlength="100" class="w-full rounded-lg border border-cream-dim/30 bg-navy-900 px-4 py-3 text-base text-cream focus:border-accent focus:outline-none" />
+      <form id="coaching-form" class="mx-auto mt-8 grid max-w-xl gap-5">
+        <Input label="Tên phụ huynh" name="parent_name" required maxlength={100} placeholder="Nguyễn Văn A" />
+        <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
+          <Input label="Tên con" name="child_name" required maxlength={50} placeholder="Bé Na" />
+          <Input label="Tuổi con" name="child_age" type="number" required placeholder="8" />
         </div>
-        <div>
-          <label for="child_name" class="mb-2 block text-sm text-cream-muted">Tên con <span class="text-red-400">*</span></label>
-          <input id="child_name" name="child_name" required maxlength="50" class="w-full rounded-lg border border-cream-dim/30 bg-navy-900 px-4 py-3 text-base text-cream focus:border-accent focus:outline-none" />
-        </div>
-        <div>
-          <label for="child_age" class="mb-2 block text-sm text-cream-muted">Tuổi con <span class="text-red-400">*</span></label>
-          <input id="child_age" type="number" name="child_age" min="5" max="16" required class="w-full rounded-lg border border-cream-dim/30 bg-navy-900 px-4 py-3 text-base text-cream focus:border-accent focus:outline-none" />
-        </div>
-        <div>
-          <label for="english_level" class="mb-2 block text-sm text-cream-muted">Level tiếng Anh hiện tại <span class="text-red-400">*</span></label>
-          <select id="english_level" name="english_level" required class="w-full rounded-lg border border-cream-dim/30 bg-navy-900 px-4 py-3 text-base text-cream focus:border-accent focus:outline-none">
-            <option value="" disabled selected>-- Chọn level --</option>
-            <option value="beginner">Mới bắt đầu (chưa giao tiếp được)</option>
-            <option value="basic">Cơ bản (nói được câu đơn)</option>
-            <option value="intermediate">Trung bình (giao tiếp được nhưng còn ngại)</option>
-            <option value="advanced">Khá (cần luyện chuyên sâu)</option>
-            <option value="unsure">Không chắc — Felix đánh giá giúp</option>
-          </select>
-        </div>
-        <div>
-          <label for="goals" class="mb-2 block text-sm text-cream-muted">Mục tiêu của phụ huynh</label>
-          <textarea id="goals" name="goals" maxlength="300" rows="3" placeholder="VD: Con tự tin nói trước lớp, kể chuyện mạch lạc, giao tiếp tự nhiên với người nước ngoài..." class="w-full rounded-lg border border-cream-dim/30 bg-navy-900 px-4 py-3 text-base text-cream placeholder:text-cream-dim/80 focus:border-accent focus:outline-none"></textarea>
-        </div>
-        <div>
-          <label for="zalo_phone" class="mb-2 block text-sm text-cream-muted">Số Zalo <span class="text-red-400">*</span></label>
-          <input id="zalo_phone" type="tel" name="zalo_phone" required pattern="^[+0-9\s\-()]{8,20}$" class="w-full rounded-lg border border-cream-dim/30 bg-navy-900 px-4 py-3 text-base text-cream focus:border-accent focus:outline-none" />
-        </div>
+        <Select label="Level tiếng Anh hiện tại" name="english_level" required>
+          <option value="" disabled selected>-- Chọn level --</option>
+          <option value="beginner">Mới bắt đầu (chưa giao tiếp được)</option>
+          <option value="basic">Cơ bản (nói được câu đơn)</option>
+          <option value="intermediate">Trung bình (còn ngại)</option>
+          <option value="advanced">Khá (cần luyện chuyên sâu)</option>
+          <option value="unsure">Không chắc — Felix đánh giá giúp</option>
+        </Select>
+        <Textarea label="Mục tiêu của phụ huynh" name="goals" rows={3} maxlength={300} placeholder="VD: Con tự tin nói trước lớp, kể chuyện mạch lạc…" />
+        <Input label="Số Zalo" name="zalo_phone" type="tel" required pattern="^[+0-9\s\-()]{8,20}$" placeholder="09xx xxx xxx" />
         <div class="absolute -left-[9999px]" aria-hidden="true">
           <label for="website">Website</label>
           <input id="website" name="website" tabindex="-1" />
         </div>
-        <button type="submit" class="w-full rounded-lg bg-accent px-6 py-3 text-lg font-semibold text-navy-950 transition hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-70">Đặt lịch tư vấn — miễn phí</button>
-        <p class="text-center text-xs text-cream-dim/80">Felix chỉ dùng thông tin để liên hệ tư vấn. Không spam.</p>
-        <p class="text-center text-xs text-cream-dim/80">Gửi form đồng nghĩa anh chị đồng ý <a href="/privacy" class="underline transition hover:text-accent">chính sách dữ liệu</a> của Felix.</p>
+        <Button size="lg" block type="submit">Đặt lịch tư vấn — miễn phí</Button>
+        <p class="text-center text-xs text-cream-dim">Felix chỉ dùng thông tin để liên hệ tư vấn. Không spam.</p>
+        <p class="text-center text-xs text-cream-dim">Gửi form đồng nghĩa anh chị đồng ý <a href="/privacy" class="underline transition hover:text-accent">chính sách dữ liệu</a> của Felix.</p>
       </form>
 
       <div id="coaching-form-status" class="mx-auto mt-8 hidden max-w-xl rounded-lg border border-cream-dim/20 bg-navy-900 p-5 text-center font-semibold"></div>
@@ -216,9 +210,9 @@ const faqItems = [
       <div class="rounded-2xl border border-cream-dim/20 bg-navy-900/60 p-8 text-center md:p-12">
         <h2 class="font-display text-2xl font-bold leading-snug text-cream md:text-3xl">Phụ huynh đã học cùng Felix?</h2>
         <p class="mx-auto mt-4 max-w-2xl leading-relaxed text-cream-muted">Nếu con đang học hoặc đã học với Felix, anh chị có thể gửi cảm nhận để Felix giới thiệu với phụ huynh khác đang cân nhắc.</p>
-        <a href={ZALO_URL} target="_blank" rel="noopener noreferrer" class="mt-6 inline-flex rounded-lg border border-accent px-5 py-2.5 font-semibold text-accent transition hover:bg-accent hover:text-navy-950">
-          Gửi cảm nhận qua Zalo
-        </a>
+        <div class="mt-6">
+          <Button variant="secondary" href={ZALO_URL} target="_blank" rel="noopener noreferrer">Gửi cảm nhận qua Zalo</Button>
+        </div>
       </div>
     </section>
 
@@ -227,21 +221,21 @@ const faqItems = [
         <h2 class="text-center font-display text-3xl font-bold leading-snug text-cream md:text-4xl">Câu hỏi thường gặp</h2>
         <div class="mt-10 space-y-3">
           {faqItems.map(([question, answer]) => (
-            <details class="rounded-lg border border-cream-dim/20 bg-navy-950/75 p-5">
-              <summary class="cursor-pointer font-display text-lg font-bold text-cream">{question}</summary>
-              <p class="mt-4 leading-relaxed text-cream-muted">{answer}</p>
-            </details>
+            <Faq question={question}>{answer}</Faq>
           ))}
         </div>
       </div>
     </section>
 
     <section class="mx-auto max-w-6xl px-6 py-20 text-center">
-      <h2 class="font-display text-3xl font-bold leading-snug text-cream md:text-4xl">Mỗi bé một lộ trình riêng</h2>
-      <p class="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-cream-muted">Đặt lịch tư vấn miễn phí để Felix gặp con và đề xuất hướng đi phù hợp.</p>
-      <a href="#book" class="mt-8 inline-flex rounded-lg bg-accent px-6 py-3 font-semibold text-navy-950 transition hover:bg-accent-hover">
-        Đặt lịch tư vấn
-      </a>
+      <SectionHeading
+        align="center"
+        title="Mỗi bé một lộ trình riêng"
+        lead="Đặt lịch tư vấn miễn phí để Felix gặp con và đề xuất hướng đi phù hợp."
+      />
+      <div class="mt-8">
+        <Button variant="primary" href="#book">Đặt lịch tư vấn →</Button>
+      </div>
     </section>
   </main>
 
