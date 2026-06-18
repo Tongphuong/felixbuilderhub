@@ -3507,10 +3507,22 @@ function _r2lBuildRetellTemplate(lesson) {
     }
 
     const FETCH_TIMEOUT_MS = 15000;
-    const MAX_RETRIES = 2;
+    // Cloudflare KV eventual consistency: right after the generator mints a
+    // brand-new pack_id and returns lesson_link, this read can briefly hit
+    // stale KV and answer 404 `pack_not_found` or 409 `generation_in_progress`
+    // for a few seconds until the write propagates. Those two are TRANSIENT
+    // "not ready yet" states — poll them with gentle backoff up to a hard cap
+    // instead of failing. A pack that is already ready returns 200 on the first
+    // try and renders with ZERO added latency. Genuine errors (410 legacy,
+    // code_not_found, 5xx, …) surface immediately.
+    const POLL_DEADLINE_MS = Date.now() + 90000; // hard cap ~90s — never loops forever
+    const POLL_MAX_WAIT_MS = 6000;
+    let pollWait = 1800;
+    let transientWaits = 0;
     let lastError = '';
 
-    for (let attempt = 0; attempt <= MAX_RETRIES; attempt += 1) {
+    for (;;) {
+      let retryable = false;
       try {
         const controller = new AbortController();
         const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
@@ -3520,37 +3532,65 @@ function _r2lBuildRetellTemplate(lesson) {
         );
         clearTimeout(timer);
         const data = await safeJson(res);
-        if (!res.ok || !data.ok) throw new Error(data.message || data.error || 'Không tải được bài.');
-        // V2.1 flag gate: when a pack reports schema_version "2.1" but
-        // PUBLIC_R2L_V21 is off, show the maintenance screen instead of
-        // attempting the (not-yet-shipped) V2.1 UI. Infra-only — no V2.1 render.
-        if (
-          String(data.lesson?.schema_version ?? '') === '2.1'
-          && import.meta.env.PUBLIC_R2L_V21 !== '1'
-        ) {
-          qs('#loading-card')?.classList.add('hidden');
-          qs('#error-card')?.classList.add('hidden');
-          qs('#lesson-shell')?.classList.add('hidden');
-          const maintenance = qs('#v21-maintenance');
-          if (maintenance) maintenance.hidden = false;
+
+        if (res.ok && data.ok) {
+          // V2.1 flag gate: when a pack reports schema_version "2.1" but
+          // PUBLIC_R2L_V21 is off, show the maintenance screen instead of
+          // attempting the (not-yet-shipped) V2.1 UI. Infra-only — no V2.1 render.
+          if (
+            String(data.lesson?.schema_version ?? '') === '2.1'
+            && import.meta.env.PUBLIC_R2L_V21 !== '1'
+          ) {
+            qs('#loading-card')?.classList.add('hidden');
+            qs('#error-card')?.classList.add('hidden');
+            qs('#lesson-shell')?.classList.add('hidden');
+            const maintenance = qs('#v21-maintenance');
+            if (maintenance) maintenance.hidden = false;
+            return;
+          }
+          if (data.lesson?.schema_version !== 2) {
+            showError('Bài này vẫn là format cũ. V2 lesson chỉ nhận pack schema_version = 2.');
+            return;
+          }
+          renderLesson(data.lesson);
           return;
         }
-        if (data.lesson?.schema_version !== 2) {
-          throw new Error('Bài này vẫn là format cũ. V2 lesson chỉ nhận pack schema_version = 2.');
+
+        // Transient KV race: this pack's write is not yet visible to the read.
+        const notReady =
+          (res.status === 404 && data.error === 'pack_not_found')
+          || (res.status === 409 && data.error === 'generation_in_progress');
+        if (notReady) {
+          retryable = true;
+          lastError = data.message || 'Bài đang được chuẩn bị. Con đợi một chút nhé.';
+        } else {
+          // Genuine, terminal error — surface immediately.
+          showError(data.message || data.error || 'Không tải được bài.');
+          return;
         }
-        renderLesson(data.lesson);
-        return;
       } catch (error) {
+        // Network / timeout — also transient; keep retrying within the budget.
+        retryable = true;
         lastError = error.name === 'AbortError'
           ? 'Mạng hơi chậm. Đang thử lại...'
           : (error.message || 'Có lỗi khi mở bài học.');
-        if (attempt < MAX_RETRIES) {
-          qs('#loading-message').textContent = `Mạng hơi chậm, đang thử lại... (${attempt + 1}/${MAX_RETRIES})`;
-          await new Promise((r) => setTimeout(r, 2000));
-        }
       }
+
+      if (!retryable || Date.now() + pollWait >= POLL_DEADLINE_MS) {
+        showError(lastError || 'Có lỗi khi mở bài học.');
+        return;
+      }
+
+      transientWaits += 1;
+      const loadingMsg = qs('#loading-message');
+      if (loadingMsg) {
+        loadingMsg.textContent = transientWaits >= 3
+          ? 'Minny đang hoàn tất bài cho con…'
+          : 'Minny đang mở nhiệm vụ cho con...';
+      }
+      await new Promise((r) => setTimeout(r, pollWait));
+      pollWait = Math.min(Math.round(pollWait * 1.4), POLL_MAX_WAIT_MS);
     }
-    showError(lastError || 'Có lỗi khi mở bài học.');
   }
 
   qs('#error-retry')?.addEventListener('click', () => {

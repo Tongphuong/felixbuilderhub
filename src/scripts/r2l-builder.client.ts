@@ -139,9 +139,76 @@ function initBuilder(): void {
     } else if (resultStory) {
       resultStory.hidden = true;
     }
-    if (openLesson) openLesson.href = data.lesson_link || '/read2lead/lesson';
-
     setPhase('result');
+
+    // KV eventual-consistency gate: keep the "Mở bài học →" link inert until the
+    // lesson endpoint can actually serve this freshly minted pack. A new pack_id
+    // can read 404 pack_not_found / 409 generation_in_progress for a few seconds
+    // after generation returns lesson_link.
+    void activateOpenLessonWhenReady(data.lesson_link || '/read2lead/lesson');
+  }
+
+  async function activateOpenLessonWhenReady(lessonLink: string): Promise<void> {
+    if (!openLesson) return;
+
+    let target: URL;
+    try {
+      target = new URL(lessonLink, window.location.origin);
+    } catch {
+      openLesson.href = lessonLink;
+      return;
+    }
+    const gateCode = target.searchParams.get('code');
+    const gatePackId = target.searchParams.get('pack_id');
+    // Nothing to gate on (e.g. fallback link) — activate as-is.
+    if (!gateCode || !gatePackId) {
+      openLesson.href = lessonLink;
+      return;
+    }
+
+    const restoreLabel = openLesson.textContent || 'Mở bài học →';
+    const blockClick = (event: Event): void => event.preventDefault();
+    openLesson.addEventListener('click', blockClick);
+    openLesson.setAttribute('aria-disabled', 'true');
+    openLesson.textContent = 'Đang hoàn tất bài học…';
+
+    const deadline = Date.now() + 60000; // cap ~60s — never permanently block
+    let wait = 1800;
+    let ready = false;
+    while (Date.now() < deadline) {
+      try {
+        const res = await fetch(
+          `/api/read2lead-lesson?code=${encodeURIComponent(gateCode)}&pack_id=${encodeURIComponent(gatePackId)}`,
+        );
+        if (res.ok) {
+          ready = true;
+          break;
+        }
+        // 404 pack_not_found / 409 generation_in_progress = not ready, keep
+        // waiting. Any other status is non-transient — stop and enable anyway.
+        if (res.status !== 404 && res.status !== 409) break;
+      } catch {
+        // Network blip — keep trying within the budget.
+      }
+      if (Date.now() + wait >= deadline) break;
+      await new Promise((resolve) => setTimeout(resolve, wait));
+      wait = Math.min(Math.round(wait * 1.4), 6000);
+    }
+
+    // Ready, capped, or non-transient: always activate — never block a valid pack.
+    openLesson.removeEventListener('click', blockClick);
+    openLesson.removeAttribute('aria-disabled');
+    openLesson.href = lessonLink;
+    openLesson.textContent = restoreLabel;
+    if (!ready) {
+      const actions = openLesson.closest('.r2l-result-actions');
+      if (actions && !actions.parentElement?.querySelector('.r2l-open-hint')) {
+        const hint = document.createElement('p');
+        hint.className = 'r2l-gen-note r2l-open-hint';
+        hint.textContent = 'Nếu bài chưa mở ngay, con đợi vài giây rồi bấm lại nhé.';
+        actions.insertAdjacentElement('afterend', hint);
+      }
+    }
   }
 
   function showError(msg: string): void {
