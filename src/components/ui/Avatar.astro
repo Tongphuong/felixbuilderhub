@@ -1,0 +1,20 @@
+---
+/**
+ * Circular avatar image with a soft gold ring.
+ * Mirrors design_handoff/components-reference/content/Avatar.jsx.
+ */
+export interface Props {
+  src: string;
+  alt?: string;
+  size?: 'sm' | 'md' | 'lg' | 'xl';
+  class?: string;
+  width?: number | string;
+  height?: number | string;
+  loading?: 'lazy' | 'eager';
+}
+
+const { src, alt = '', size = 'md', class: className = '', ...rest } = Astro.props;
+const classes = ['fx-avatar', `fx-avatar--${size}`, className].filter(Boolean).join(' ');
+---
+
+<img src={src} alt={alt} class={classes} {...rest} />

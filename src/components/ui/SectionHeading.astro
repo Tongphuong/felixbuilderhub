@@ -1,0 +1,39 @@
+---
+/**
+ * Eyebrow + title + lead block. The standard way the brand opens a section.
+ * Mirrors design_handoff/components-reference/content/SectionHeading.jsx.
+ *
+ * Slots: default = lead/subtitle (HTML allowed). Plain text can use the `lead` prop instead.
+ */
+export interface Props {
+  eyebrow?: string;
+  title: string;
+  lead?: string;
+  align?: 'left' | 'center';
+  titleSize?: string;
+  level?: 1 | 2 | 3;
+  class?: string;
+}
+
+const {
+  eyebrow,
+  title,
+  lead,
+  align = 'left',
+  titleSize = 'var(--text-display-sm)',
+  level = 2,
+  class: className = '',
+} = Astro.props;
+
+const wrapperStyle = align === 'center'
+  ? 'text-align:center;max-width:42rem;margin-inline:auto;'
+  : 'text-align:left;';
+const Heading = (`h${level}`) as 'h1' | 'h2' | 'h3';
+---
+
+<div class={className} style={wrapperStyle}>
+  {eyebrow && <p class="fx-eyebrow">{eyebrow}</p>}
+  <Heading class="fx-section-heading__title font-display" style={`font-size:${titleSize};`}>{title}</Heading>
+  {lead && <p class="fx-section-heading__lead">{lead}</p>}
+  <slot />
+</div>

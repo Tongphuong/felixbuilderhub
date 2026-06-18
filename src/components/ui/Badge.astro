@@ -1,0 +1,16 @@
+---
+/**
+ * Small pill/tag label. Use for eyebrows, status flags, "free / beta" markers.
+ * Mirrors design_handoff/components-reference/content/Badge.jsx.
+ */
+export interface Props {
+  variant?: 'accent' | 'gold' | 'neutral' | 'solid';
+  class?: string;
+  id?: string;
+}
+
+const { variant = 'accent', class: className = '', ...rest } = Astro.props;
+const classes = ['fx-badge', `fx-badge--${variant}`, className].filter(Boolean).join(' ');
+---
+
+<span class={classes} {...rest}><slot /></span>

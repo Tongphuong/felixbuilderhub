@@ -1,0 +1,52 @@
+---
+/**
+ * Labelled text/number input. Navy field + gold focus ring.
+ * Mirrors design_handoff/components-reference/forms/Input.jsx.
+ *
+ * Any extra HTML attributes (type, name, value, placeholder, autocomplete, inputmode, pattern, maxlength, etc.)
+ * are forwarded to the underlying <input>.
+ */
+type InputType =
+  | 'text' | 'email' | 'tel' | 'url' | 'password' | 'search' | 'number'
+  | 'date' | 'time' | 'datetime-local' | 'month' | 'week' | 'color';
+
+export interface Props {
+  label?: string;
+  id?: string;
+  name?: string;
+  type?: InputType;
+  value?: string | number;
+  placeholder?: string;
+  required?: boolean;
+  hint?: string;
+  class?: string;
+  autocomplete?: HTMLInputElement['autocomplete'];
+  inputmode?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
+  pattern?: string;
+  maxlength?: number;
+  minlength?: number;
+  disabled?: boolean;
+  readonly?: boolean;
+}
+
+const {
+  label,
+  id,
+  required = false,
+  hint,
+  class: className = '',
+  ...rest
+} = Astro.props;
+
+const inputId = id || (label ? `fx-${label.replace(/\s+/g, '-').toLowerCase()}` : undefined);
+---
+
+<div class={className}>
+  {label && (
+    <label class="fx-label" for={inputId}>
+      {label} {required && <span class="fx-label__req">*</span>}
+    </label>
+  )}
+  <input id={inputId} class="fx-field" required={required} {...rest} />
+  {hint && <p class="fx-field-hint">{hint}</p>}
+</div>

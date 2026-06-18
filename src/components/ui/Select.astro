@@ -1,0 +1,40 @@
+---
+/**
+ * Labelled <select> with the brand's custom gold chevron and navy field styling.
+ * Mirrors design_handoff/components-reference/forms/Select.jsx.
+ * Place <option> elements inside the default slot.
+ */
+export interface Props {
+  label?: string;
+  id?: string;
+  name?: string;
+  required?: boolean;
+  hint?: string;
+  class?: string;
+  disabled?: boolean;
+  value?: string;
+}
+
+const {
+  label,
+  id,
+  required = false,
+  hint,
+  class: className = '',
+  ...rest
+} = Astro.props;
+
+const inputId = id || (label ? `fx-${label.replace(/\s+/g, '-').toLowerCase()}` : undefined);
+---
+
+<div class={className}>
+  {label && (
+    <label class="fx-label" for={inputId}>
+      {label} {required && <span class="fx-label__req">*</span>}
+    </label>
+  )}
+  <select id={inputId} class="fx-field" required={required} {...rest}>
+    <slot />
+  </select>
+  {hint && <p class="fx-field-hint">{hint}</p>}
+</div>
