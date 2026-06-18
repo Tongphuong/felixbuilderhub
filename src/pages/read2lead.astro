@@ -364,11 +364,72 @@ const faqItems = [
       document.getElementById('result-child-name').textContent = data.child_name || '';
       document.getElementById('result-topic').textContent = data.topic || '';
       document.getElementById('result-story-title').textContent = data.story_title || '';
-      document.getElementById('lesson-link').href = data.lesson_link || '/read2lead/lesson';
+      activateLessonLinkWhenReady(data.lesson_link || '/read2lead/lesson');
       document.getElementById('review-link').href = data.review_link || '/hoc-sinh';
 
       resultSection.classList.remove('hidden');
       resultSection.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // KV eventual-consistency gate (parity with the /read2lead/build builder):
+    // keep the "Mở bài học" link inert until the lesson endpoint can actually
+    // serve this freshly minted pack. A new pack_id can read 404 pack_not_found
+    // / 409 generation_in_progress for a few seconds after generation returns.
+    function activateLessonLinkWhenReady(lessonLink: string) {
+      const link = document.getElementById('lesson-link') as HTMLAnchorElement | null;
+      if (!link) return;
+
+      let target;
+      try {
+        target = new URL(lessonLink, window.location.origin);
+      } catch (e) {
+        link.href = lessonLink;
+        return;
+      }
+      const gateCode = target.searchParams.get('code');
+      const gatePackId = target.searchParams.get('pack_id');
+      if (!gateCode || !gatePackId) {
+        link.href = lessonLink;
+        return;
+      }
+
+      const restoreLabel = link.textContent || 'Mở bài học';
+      const blockClick = (event: Event) => event.preventDefault();
+      link.addEventListener('click', blockClick);
+      link.setAttribute('aria-disabled', 'true');
+      link.textContent = 'Đang hoàn tất bài học…';
+
+      (async () => {
+        const deadline = Date.now() + 60000; // cap ~60s — never permanently block
+        let wait = 1800;
+        let ready = false;
+        while (Date.now() < deadline) {
+          try {
+            const res = await fetch(`/api/read2lead-lesson?code=${encodeURIComponent(gateCode)}&pack_id=${encodeURIComponent(gatePackId)}`);
+            if (res.ok) { ready = true; break; }
+            // 404 pack_not_found / 409 generation_in_progress = not ready, keep
+            // waiting. Any other status is non-transient — stop and enable anyway.
+            if (res.status !== 404 && res.status !== 409) break;
+          } catch (e) {
+            // Network blip — keep trying within the budget.
+          }
+          if (Date.now() + wait >= deadline) break;
+          await new Promise((resolve) => setTimeout(resolve, wait));
+          wait = Math.min(Math.round(wait * 1.4), 6000);
+        }
+        // Ready, capped, or non-transient: always activate — never block a valid pack.
+        link.removeEventListener('click', blockClick);
+        link.removeAttribute('aria-disabled');
+        link.href = lessonLink;
+        link.textContent = restoreLabel;
+        if (!ready && !document.getElementById('lesson-open-hint') && link.parentElement) {
+          const hint = document.createElement('p');
+          hint.id = 'lesson-open-hint';
+          hint.className = 'mt-3 text-sm leading-relaxed text-cream-muted';
+          hint.textContent = 'Nếu bài chưa mở ngay, con đợi vài giây rồi bấm lại nhé.';
+          link.parentElement.appendChild(hint);
+        }
+      })();
     }
 
     function showError(msg) {
