@@ -1,0 +1,47 @@
+---
+/**
+ * Felix Coaching primary action button.
+ * Renders <button> by default, or <a> when href is supplied.
+ * Mirrors design_handoff/components-reference/buttons/Button.jsx.
+ */
+export interface Props {
+  variant?: 'primary' | 'secondary' | 'ghost';
+  size?: 'sm' | 'md' | 'lg';
+  href?: string;
+  block?: boolean;
+  disabled?: boolean;
+  type?: 'button' | 'submit' | 'reset';
+  class?: string;
+  id?: string;
+  target?: string;
+  rel?: string;
+  'aria-label'?: string;
+}
+
+const {
+  variant = 'primary',
+  size = 'md',
+  href,
+  block = false,
+  disabled = false,
+  type = 'button',
+  class: className = '',
+  ...rest
+} = Astro.props;
+
+const classes = [
+  'fx-btn',
+  `fx-btn--${variant}`,
+  `fx-btn--${size}`,
+  block ? 'fx-btn--block' : '',
+  className,
+]
+  .filter(Boolean)
+  .join(' ');
+---
+
+{href && !disabled ? (
+  <a href={href} class={classes} {...rest}><slot /></a>
+) : (
+  <button type={type} class={classes} disabled={disabled} {...rest}><slot /></button>
+)}

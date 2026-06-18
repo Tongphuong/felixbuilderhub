@@ -1,0 +1,225 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import SectionHeading from '../../components/ui/SectionHeading.astro';
+import Input from '../../components/ui/Input.astro';
+import TopicTile from '../../components/ui/TopicTile.astro';
+import Button from '../../components/ui/Button.astro';
+import Card from '../../components/ui/Card.astro';
+import ProgressBar from '../../components/ui/ProgressBar.astro';
+
+const TOPICS = [
+  { emoji: '🦁', label: 'Động vật' },
+  { emoji: '🚀', label: 'Vũ trụ' },
+  { emoji: '🌊', label: 'Đại dương' },
+  { emoji: '🏰', label: 'Lâu đài' },
+  { emoji: '🎨', label: 'Nghệ thuật' },
+  { emoji: '🍳', label: 'Nấu ăn' },
+  { emoji: '⚽', label: 'Thể thao' },
+  { emoji: '🎮', label: 'Trò chơi' },
+];
+
+// 3-step indicator. Each phase renders the same labels with a different status
+// row so JS only ever needs to flip [data-phase] — no per-step DOM edits.
+const STEPS = ['Mã học sinh', 'Chủ đề', 'Bài học'];
+type StepStatus = 'active' | 'done' | 'muted';
+const STEP_STATUS: Record<'build' | 'generating' | 'result', StepStatus[]> = {
+  build: ['active', 'muted', 'muted'],
+  generating: ['done', 'done', 'active'],
+  result: ['done', 'done', 'done'],
+};
+
+// Stage 0 label for the initial server render; the client script owns rotation.
+const STAGE_LABELS = [
+  'Đang viết câu chuyện riêng cho con…',
+  'Đang chuẩn bị phần nghe…',
+  'Đang ghi âm các cụm câu…',
+  'Đang chuẩn bị nhiệm vụ web…',
+];
+const INITIAL_PROGRESS = ((0 + 1) / 4) * 100;
+---
+
+<BaseLayout title="Tạo bài học mới — Read2Lead | Felix Coaching" robots="noindex, follow">
+  <Header />
+
+  <main id="main" class="mx-auto max-w-3xl px-6 py-12" data-phase="build">
+    {/* ============================ BUILD ============================ */}
+    <section class="phase-build">
+      <ol class="r2l-steps">
+        {STEPS.map((label, i) => (
+          <li class={`r2l-step r2l-step--${STEP_STATUS.build[i]}`}>
+            <span class="r2l-step__num">{STEP_STATUS.build[i] === 'done' ? '✓' : i + 1}</span>
+            <span class="r2l-step__label">{label}</span>
+          </li>
+        ))}
+      </ol>
+
+      <SectionHeading
+        eyebrow="Read2Lead"
+        title="Tạo bài học cho con"
+        lead="Nhập mã học sinh, chọn chủ đề, Minny sẽ chuẩn bị bài trong vài giây."
+        align="center"
+      />
+
+      <div class="mt-8">
+        <Input label="Mã học sinh" name="code" placeholder="VÍ DỤ: NA2024" maxlength={16} required />
+      </div>
+
+      <p class="fx-eyebrow mt-8">Chủ đề bài học</p>
+      <div class="mt-3 grid grid-cols-2 gap-3 md:grid-cols-4">
+        {TOPICS.map((topic, i) => (
+          <TopicTile emoji={topic.emoji} label={topic.label} selected={false} data-topic={String(i)} />
+        ))}
+      </div>
+
+      <div class="mt-8">
+        <Button size="lg" block id="generate-btn" disabled>Tạo bài học →</Button>
+        <p class="text-center text-xs text-cream-dim mt-3">Minny chỉ dùng mã để mở bài. Không lưu thông tin riêng.</p>
+      </div>
+    </section>
+
+    {/* ========================== GENERATING ========================== */}
+    <section class="phase-generating">
+      <ol class="r2l-steps">
+        {STEPS.map((label, i) => (
+          <li class={`r2l-step r2l-step--${STEP_STATUS.generating[i]}`}>
+            <span class="r2l-step__num">{STEP_STATUS.generating[i] === 'done' ? '✓' : i + 1}</span>
+            <span class="r2l-step__label">{label}</span>
+          </li>
+        ))}
+      </ol>
+
+      <SectionHeading align="center" title="Minny đang chuẩn bị bài cho con…" />
+
+      <Card variant="raised" class="mt-8 text-center">
+        <div id="gen-progress">
+          <ProgressBar value={INITIAL_PROGRESS} gradient aria-label="Tiến độ tạo bài học" />
+        </div>
+        <p id="stage-label" class="r2l-stage-label">{STAGE_LABELS[0]}</p>
+      </Card>
+    </section>
+
+    {/* ============================ RESULT ============================ */}
+    <section class="phase-result">
+      <ol class="r2l-steps">
+        {STEPS.map((label, i) => (
+          <li class={`r2l-step r2l-step--${STEP_STATUS.result[i]}`}>
+            <span class="r2l-step__num">{STEP_STATUS.result[i] === 'done' ? '✓' : i + 1}</span>
+            <span class="r2l-step__label">{label}</span>
+          </li>
+        ))}
+      </ol>
+
+      <Card variant="accent" class="mt-8 text-center">
+        <h2 class="font-display r2l-result-title">Bài học đã sẵn sàng! ✨</h2>
+        <p class="r2l-result-text">Minny đã chuẩn bị một bài học riêng cho mã <strong class="text-accent" id="result-code"></strong> về chủ đề <strong class="text-accent" id="result-topic"></strong>.</p>
+        <div class="r2l-result-actions">
+          <Button variant="primary" size="lg" href="#" id="open-lesson">Mở bài học →</Button>
+          <Button variant="secondary" id="reset">Tạo bài khác</Button>
+        </div>
+      </Card>
+    </section>
+  </main>
+
+  <script>
+    import '../../scripts/r2l-builder.client.ts';
+  </script>
+</BaseLayout>
+
+<style>
+  /* Step indicator — gold for active/done, translucent cream for upcoming. */
+  .r2l-steps {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-1);
+    margin: 0 0 var(--space-8);
+    padding: 0;
+    list-style: none;
+  }
+  .r2l-step {
+    flex: 1;
+    text-align: center;
+  }
+  .r2l-step__num {
+    display: flex;
+    width: 34px;
+    height: 34px;
+    margin: 0 auto;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-full);
+    font-weight: var(--weight-bold);
+    background: color-mix(in srgb, var(--cream) 12%, transparent);
+    color: var(--cream);
+  }
+  .r2l-step__label {
+    display: block;
+    margin-top: var(--space-2);
+    font-size: var(--text-xs);
+    color: var(--cream-dim);
+  }
+  .r2l-step--active .r2l-step__num,
+  .r2l-step--done .r2l-step__num {
+    background: var(--accent);
+    color: var(--navy-950);
+  }
+  .r2l-step--active .r2l-step__label,
+  .r2l-step--done .r2l-step__label {
+    color: var(--cream);
+  }
+
+  /* Generating stage caption. */
+  .r2l-stage-label {
+    margin-top: var(--space-6);
+    font-size: var(--text-lg);
+    font-weight: var(--weight-semibold);
+    color: var(--cream);
+  }
+
+  /* Result card. */
+  .r2l-result-title {
+    margin: 0;
+    font-size: var(--text-h3);
+    font-weight: var(--weight-bold);
+    color: var(--cream);
+  }
+  .r2l-result-text {
+    margin-top: var(--space-4);
+    color: var(--text-body);
+    line-height: var(--leading-relaxed);
+  }
+  .r2l-result-actions {
+    margin-top: var(--space-6);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  /* All three phases live in the DOM at once; CSS reveals one per data-phase. */
+  .phase-build,
+  .phase-generating,
+  .phase-result {
+    display: none;
+  }
+  [data-phase='build'] .phase-build {
+    display: block;
+  }
+  [data-phase='generating'] .phase-generating {
+    display: block;
+  }
+  [data-phase='result'] .phase-result {
+    display: block;
+  }
+
+  /* Reduced motion: the generating phase is skipped in JS; ensure the gradient
+     progress bar never animates if it is ever shown. */
+  @media (prefers-reduced-motion: reduce) {
+    .phase-generating .fx-progress__fill,
+    .phase-generating .fx-progress__fill--gradient {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+</style>

@@ -1,0 +1,45 @@
+---
+/**
+ * Selectable topic tile (emoji + label) used in the Read2Lead lesson builder.
+ * Mirrors design_handoff/components-reference/read2lead/TopicTile.jsx.
+ */
+export interface Props {
+  emoji: string;
+  label: string;
+  selected?: boolean;
+  as?: 'button' | 'a' | 'label';
+  href?: string;
+  value?: string;
+  name?: string;
+  class?: string;
+  id?: string;
+  'data-topic'?: string;
+}
+
+const {
+  emoji,
+  label,
+  selected = false,
+  as = 'button',
+  href,
+  class: className = '',
+  ...rest
+} = Astro.props;
+
+const classes = ['fx-topic', selected ? 'fx-topic--selected' : '', className]
+  .filter(Boolean)
+  .join(' ');
+const Tag = as;
+const isButton = as === 'button';
+---
+
+<Tag
+  type={isButton ? 'button' : undefined}
+  href={as === 'a' ? href : undefined}
+  class={classes}
+  aria-pressed={isButton ? String(selected) : undefined}
+  {...rest}
+>
+  <span class="fx-topic__emoji" aria-hidden="true">{emoji}</span>
+  <span class="fx-topic__label">{label}</span>
+</Tag>

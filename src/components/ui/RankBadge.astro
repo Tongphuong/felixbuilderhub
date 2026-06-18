@@ -1,0 +1,29 @@
+---
+/**
+ * Read2Lead rank tier badge — Đồng / Bạc / Vàng / Kim cương / Huyền thoại.
+ * Mirrors design_handoff/components-reference/read2lead/RankBadge.jsx.
+ */
+export interface Props {
+  tier?: 'bronze' | 'silver' | 'gold' | 'diamond' | 'legend';
+  label?: string;
+  level?: number;
+  class?: string;
+}
+
+const TIERS: Record<string, string> = {
+  bronze: 'Đồng',
+  silver: 'Bạc',
+  gold: 'Vàng',
+  diamond: 'Kim cương',
+  legend: 'Huyền thoại',
+};
+
+const { tier = 'bronze', label, level, class: className = '' } = Astro.props;
+const classes = ['fx-rank', `fx-rank--${tier}`, className].filter(Boolean).join(' ');
+const text = (label || TIERS[tier]) + (level != null ? ` · LV ${level}` : '');
+---
+
+<span class={classes}>
+  <span class="fx-rank__dot" aria-hidden="true"></span>
+  <span>{text}</span>
+</span>

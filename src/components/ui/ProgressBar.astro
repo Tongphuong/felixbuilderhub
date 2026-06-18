@@ -1,0 +1,29 @@
+---
+/**
+ * XP / progress bar. Use `gradient` for the lesson-generation "thinking" state.
+ * Mirrors design_handoff/components-reference/read2lead/ProgressBar.jsx.
+ */
+export interface Props {
+  value?: number;
+  gradient?: boolean;
+  class?: string;
+  'aria-label'?: string;
+}
+
+const { value = 0, gradient = false, class: className = '', ...rest } = Astro.props;
+const pct = Math.max(0, Math.min(100, value));
+const fillClasses = ['fx-progress__fill', gradient ? 'fx-progress__fill--gradient' : '']
+  .filter(Boolean)
+  .join(' ');
+---
+
+<span
+  class={['fx-progress', className].filter(Boolean).join(' ')}
+  role="progressbar"
+  aria-valuenow={pct}
+  aria-valuemin="0"
+  aria-valuemax="100"
+  {...rest}
+>
+  <span class={fillClasses} style={`width:${pct}%;`}></span>
+</span>

@@ -1,0 +1,20 @@
+---
+/**
+ * Collapsible FAQ item built on <details>/<summary> with a gold rotating chevron.
+ * Mirrors design_handoff/components-reference/content/Faq.jsx.
+ */
+export interface Props {
+  question: string;
+  open?: boolean;
+  class?: string;
+  id?: string;
+}
+
+const { question, open = false, class: className = '', ...rest } = Astro.props;
+const classes = ['fx-faq', className].filter(Boolean).join(' ');
+---
+
+<details class={classes} open={open} {...rest}>
+  <summary>{question}</summary>
+  <div class="fx-faq__body"><slot /></div>
+</details>

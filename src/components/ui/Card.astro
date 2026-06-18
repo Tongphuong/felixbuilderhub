@@ -1,0 +1,36 @@
+---
+/**
+ * Bordered navy content card. The system's default container for grouped content.
+ * Mirrors design_handoff/components-reference/content/Card.jsx.
+ */
+export interface Props {
+  variant?: 'accent' | 'raised';
+  interactive?: boolean;
+  as?: 'div' | 'section' | 'article' | 'li';
+  href?: string;
+  class?: string;
+  id?: string;
+}
+
+const {
+  variant,
+  interactive = false,
+  as = 'div',
+  href,
+  class: className = '',
+  ...rest
+} = Astro.props;
+
+const classes = [
+  'fx-card',
+  variant ? `fx-card--${variant}` : '',
+  interactive ? 'fx-card--interactive' : '',
+  className,
+]
+  .filter(Boolean)
+  .join(' ');
+
+const Tag = href ? 'a' : as;
+---
+
+<Tag class={classes} href={href} {...rest}><slot /></Tag>

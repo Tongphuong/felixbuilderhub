@@ -1,0 +1,42 @@
+---
+/**
+ * Labelled multi-line text area, shares the navy field styling.
+ * Mirrors design_handoff/components-reference/forms/Textarea.jsx.
+ */
+export interface Props {
+  label?: string;
+  id?: string;
+  name?: string;
+  rows?: number;
+  required?: boolean;
+  hint?: string;
+  class?: string;
+  placeholder?: string;
+  maxlength?: number;
+  disabled?: boolean;
+  readonly?: boolean;
+  value?: string;
+}
+
+const {
+  label,
+  id,
+  required = false,
+  hint,
+  rows = 3,
+  class: className = '',
+  ...rest
+} = Astro.props;
+
+const inputId = id || (label ? `fx-${label.replace(/\s+/g, '-').toLowerCase()}` : undefined);
+---
+
+<div class={className}>
+  {label && (
+    <label class="fx-label" for={inputId}>
+      {label} {required && <span class="fx-label__req">*</span>}
+    </label>
+  )}
+  <textarea id={inputId} class="fx-field" rows={rows} required={required} {...rest}></textarea>
+  {hint && <p class="fx-field-hint">{hint}</p>}
+</div>
