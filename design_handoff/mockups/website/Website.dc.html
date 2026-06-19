@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<!-- @template name="Felix Coaching — Marketing site" description="Homepage hero, products, MSMW + booking flow." -->
+<helmet><script src="./ds-base.js"></script></helmet>
+<div class="star-field" style="display:flex;flex-direction:column;min-height:100vh;font-family:var(--font-sans)">
+  <x-import component-from-global-scope="SiteHeader" from="../../ui_kits/website/Chrome.jsx" active="{{ active }}" onNav="{{ onNav }}" hint-size="100%,72px"></x-import>
+  <main style="flex:1">
+    <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+      <x-import component-from-global-scope="HomeScreen" from="../../ui_kits/website/Screens.jsx" onNav="{{ onNav }}" hint-size="100%,800px"></x-import>
+    </sc-if>
+    <sc-if value="{{ isContact }}" hint-placeholder-val="{{ false }}">
+      <x-import component-from-global-scope="ContactScreen" from="../../ui_kits/website/Contact.jsx" hint-size="100%,800px"></x-import>
+    </sc-if>
+  </main>
+  <x-import component-from-global-scope="SiteFooter" from="../../ui_kits/website/Chrome.jsx" hint-size="100%,80px"></x-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { view: 'coaching' };
+  renderVals() {
+    const v = this.state.view;
+    return {
+      isHome: v !== 'contact',
+      isContact: v === 'contact',
+      active: v === 'contact' ? 'contact' : 'coaching',
+      onNav: (key) => {
+        const next = (key === 'contact' || key === 'read2lead' || key === 'hoc-sinh' || key === 'msmw') ? 'contact' : 'coaching';
+        this.setState({ view: next });
+        try { window.scrollTo({ top: 0 }); } catch (_) {}
+      },
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+/* Felix Coaching website UI kit — shared header & footer.
+   Composes design-system primitives; exported to window for the other
+   screen scripts. */
+
+(() => {
+function SiteHeader({ active = 'coaching', onNav }) {
+  const links = [
+    ['coaching', 'Coaching'],
+    ['hoc-sinh', 'Xem tiến độ con'],
+    ['read2lead', 'Read2Lead'],
+    ['msmw', 'MSMW'],
+    ['contact', 'Liên hệ'],
+  ];
+  const [open, setOpen] = React.useState(false);
+  return (
+    <header style={{ position: 'sticky', top: 0, zIndex: 50, borderBottom: '1px solid var(--border-subtle)', background: 'color-mix(in srgb, var(--navy-950) 85%, transparent)', backdropFilter: 'blur(8px)' }}>
+      <div style={{ maxWidth: 'var(--container)', margin: '0 auto', padding: '16px var(--gutter)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16 }}>
+        <a href="#" onClick={(e) => { e.preventDefault(); onNav && onNav('coaching'); }} style={{ display: 'flex', alignItems: 'center' }}>
+          <img src="../../assets/logo-header.png" alt="Felix Coaching" style={{ height: 38, width: 'auto', borderRadius: 6 }} />
+        </a>
+        <nav style={{ display: 'flex', gap: 22, alignItems: 'center' }} className="site-nav">
+          {links.map(([key, label]) => (
+            <a key={key} href="#" onClick={(e) => { e.preventDefault(); onNav && onNav(key); }}
+              style={{ fontSize: 'var(--text-sm)', fontWeight: 500, color: active === key ? 'var(--accent)' : 'var(--text-body)' }}>
+              {label}
+            </a>
+          ))}
+        </nav>
+        <button className="site-burger" onClick={() => setOpen((o) => !o)} aria-label="Menu"
+          style={{ display: 'none', width: 40, height: 40, borderRadius: 6, border: '1px solid var(--border-default)', background: 'transparent', color: 'var(--cream)', cursor: 'pointer' }}>
+          ☰
+        </button>
+      </div>
+      {open && (
+        <div className="site-mobile" style={{ borderTop: '1px solid var(--border-subtle)', padding: '8px var(--gutter)' }}>
+          {links.map(([key, label]) => (
+            <a key={key} href="#" onClick={(e) => { e.preventDefault(); setOpen(false); onNav && onNav(key); }}
+              style={{ display: 'block', padding: '12px 0', color: 'var(--text-body)', fontWeight: 500 }}>{label}</a>
+          ))}
+        </div>
+      )}
+    </header>
+  );
+}
+
+function SiteFooter() {
+  return (
+    <footer style={{ marginTop: 'auto', borderTop: '1px solid var(--border-subtle)', padding: '32px var(--gutter)', textAlign: 'center', color: 'var(--cream-dim)' }}>
+      <p style={{ fontSize: 'var(--text-sm)' }}>© 2026 Tong Phuong — Felix Coaching · built in Vietnam</p>
+      <p style={{ fontSize: 'var(--text-xs)', opacity: 0.7, marginTop: 4 }}>Coach huấn luyện kĩ năng nói · sản phẩm giáo dục tăng cường bởi AI</p>
+    </footer>
+  );
+}
+
+Object.assign(window, { SiteHeader, SiteFooter });
+})();

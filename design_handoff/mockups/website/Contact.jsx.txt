@@ -1,0 +1,45 @@
+/* Felix Coaching website UI kit — booking / contact screen with a working
+   (fake) form: fill it in, submit, see the success state. */
+
+(() => {
+const { Button, Input, Select, Textarea, SectionHeading, Card } = window.FelixCoachingDesignSystem_05c199;
+
+function ContactScreen() {
+  const [sent, setSent] = React.useState(false);
+  return (
+    <section style={{ maxWidth: 'var(--container-sm)', margin: '0 auto', padding: '64px var(--gutter)' }}>
+      <SectionHeading align="center" title="Đặt lịch tư vấn miễn phí"
+        lead="Điền form, Felix sẽ nhắn Zalo trong 24h. Buổi tư vấn 30 phút giúp Felix hiểu con và đề xuất lộ trình phù hợp." />
+      {sent ? (
+        <Card variant="accent" style={{ marginTop: 32, textAlign: 'center', padding: 28, background: 'color-mix(in srgb, var(--gold) 10%, transparent)' }}>
+          <p style={{ fontWeight: 700, color: 'var(--gold-light)', fontSize: 'var(--text-h5)' }}>✓ Đã ghi nhận lịch tư vấn</p>
+          <p style={{ marginTop: 8, color: 'var(--cream-muted)' }}>Felix sẽ Zalo trong 24h để confirm slot.</p>
+          <div style={{ marginTop: 20 }}><Button variant="secondary" onClick={() => setSent(false)}>Gửi form khác</Button></div>
+        </Card>
+      ) : (
+        <form style={{ marginTop: 32, display: 'grid', gap: 20 }} onSubmit={(e) => { e.preventDefault(); setSent(true); }}>
+          <Input label="Tên phụ huynh" required placeholder="Nguyễn Văn A" />
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
+            <Input label="Tên con" required placeholder="Bé Na" />
+            <Input label="Tuổi con" type="number" min="5" max="16" required placeholder="8" />
+          </div>
+          <Select label="Level tiếng Anh hiện tại" required defaultValue="">
+            <option value="" disabled>-- Chọn level --</option>
+            <option value="beginner">Mới bắt đầu (chưa giao tiếp được)</option>
+            <option value="basic">Cơ bản (nói được câu đơn)</option>
+            <option value="intermediate">Trung bình (còn ngại)</option>
+            <option value="advanced">Khá (cần luyện chuyên sâu)</option>
+            <option value="unsure">Không chắc — Felix đánh giá giúp</option>
+          </Select>
+          <Textarea label="Mục tiêu của phụ huynh" rows={3} placeholder="VD: Con tự tin nói trước lớp, kể chuyện mạch lạc…" />
+          <Input label="Số Zalo" type="tel" required placeholder="09xx xxx xxx" />
+          <Button size="lg" block type="submit">Đặt lịch tư vấn — miễn phí</Button>
+          <p style={{ textAlign: 'center', fontSize: 'var(--text-xs)', color: 'var(--cream-dim)' }}>Felix chỉ dùng thông tin để liên hệ tư vấn. Không spam.</p>
+        </form>
+      )}
+    </section>
+  );
+}
+
+Object.assign(window, { ContactScreen });
+})();

@@ -1,0 +1,11 @@
+import React from 'react';
+
+/** Collapsible FAQ item built on <details>/<summary> with a gold rotating chevron. */
+export function Faq({ question, children, open = false, className = '', ...rest }) {
+  return (
+    <details className={['fx-faq', className].filter(Boolean).join(' ')} open={open} {...rest}>
+      <summary>{question}</summary>
+      <div className="fx-faq__body">{children}</div>
+    </details>
+  );
+}

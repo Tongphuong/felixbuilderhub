@@ -1,0 +1,19 @@
+import React from 'react';
+
+/** Bordered navy content card. The system's default container for grouped content. */
+export function Card({ variant, interactive = false, as = 'div', href, className = '', children, ...rest }) {
+  const classes = [
+    'fx-card',
+    variant ? `fx-card--${variant}` : '',
+    interactive ? 'fx-card--interactive' : '',
+    className,
+  ]
+    .filter(Boolean)
+    .join(' ');
+  const Tag = href ? 'a' : as;
+  return (
+    <Tag className={classes} href={href} {...rest}>
+      {children}
+    </Tag>
+  );
+}

@@ -1,0 +1,10 @@
+import React from 'react';
+
+/** Small pill/tag label. Use for eyebrows, status flags, and "free / beta" markers. */
+export function Badge({ variant = 'accent', className = '', children, ...rest }) {
+  return (
+    <span className={['fx-badge', `fx-badge--${variant}`, className].filter(Boolean).join(' ')} {...rest}>
+      {children}
+    </span>
+  );
+}

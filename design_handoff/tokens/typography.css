@@ -1,0 +1,44 @@
+/* Felix Coaching — Typography tokens
+   Manrope for display/headings (600–800), Inter for body & UI (400–700).
+   Headings use line-height 1.35 and text-wrap:balance so Vietnamese
+   diacritics never collide. */
+
+:root {
+  /* ---- Families ---- */
+  --font-display: 'Manrope', 'Inter', system-ui, sans-serif;
+  --font-sans:    'Inter', system-ui, sans-serif;
+
+  /* ---- Weights ---- */
+  --weight-regular:  400;
+  --weight-medium:   500;
+  --weight-semibold: 600;
+  --weight-bold:     700;
+  --weight-extrabold:800;
+
+  /* ---- Display scale (Manrope) ---- */
+  --text-display-xl: 3.75rem;  /* 60px — hero h1 (lg) */
+  --text-display-lg: 3rem;     /* 48px — hero h1 (md) */
+  --text-display-md: 2.25rem;  /* 36px — h1 / section h2 (lg) */
+  --text-display-sm: 1.875rem; /* 30px — section h2 */
+
+  /* ---- Heading scale ---- */
+  --text-h3: 1.5rem;    /* 24px */
+  --text-h4: 1.25rem;   /* 20px */
+  --text-h5: 1.125rem;  /* 18px */
+
+  /* ---- Body scale (Inter) ---- */
+  --text-lg:   1.25rem;   /* 20px — lead paragraphs */
+  --text-base: 1rem;      /* 16px — body */
+  --text-sm:   0.875rem;  /* 14px — secondary */
+  --text-xs:   0.75rem;   /* 12px — labels, captions */
+
+  /* ---- Line heights ---- */
+  --leading-display: 1.35;   /* headings — diacritic-safe */
+  --leading-snug:    1.4;
+  --leading-relaxed: 1.625;  /* body copy */
+
+  /* ---- Letter spacing ---- */
+  --tracking-tight:  0;
+  --tracking-wide:   0.05em;   /* uppercase eyebrows */
+  --tracking-widest: 0.1em;
+}

@@ -1,0 +1,7 @@
+/* Felix Coaching — Webfonts
+   Inter (body / UI) + Manrope (display / headings).
+   Loaded from Google Fonts with the Vietnamese subset, because all
+   product copy is Vietnamese-first and needs full diacritic coverage.
+   These are the real brand fonts — no substitution. */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap&subset=vietnamese,latin');
