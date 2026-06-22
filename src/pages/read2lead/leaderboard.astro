@@ -304,6 +304,7 @@ const ladderSectionClass = w1Ssr ? 'px-4 py-10 sm:px-6' : 'px-6 py-14';
           <h3 class="mt-2 text-3xl ${titleFont} leading-snug">${escapeHtml(leader.display_name)}</h3>
           <p class="mt-1 text-sm ${inkDim}">${escapeHtml(leader.masked_code)}</p>
           <p class="mt-4 rounded-md ${w1 ? 'bg-[var(--r2l-bg-deep)]' : 'bg-navy-950/70'} px-3 py-2 font-semibold ${w1 ? 'text-[var(--r2l-accent)]' : 'text-accent'}">${escapeHtml(leader.season_rank_label || leader.rank_vi)}</p>
+          ${badgeHtml(leader)}
           <div class="mt-5 grid grid-cols-3 gap-3">
             <div class="${statBoxGold}">
               <p class="text-xs ${inkDim}">RP mùa</p>
@@ -335,6 +336,7 @@ const ladderSectionClass = w1Ssr ? 'px-4 py-10 sm:px-6' : 'px-6 py-14';
                 <span class="rounded-md ${w1 ? 'bg-[var(--r2l-bg-deep)]' : 'bg-navy-950'} px-2.5 py-1 text-xs ${inkDim}">${escapeHtml(leader.masked_code)}</span>
               </div>
               <p class="mt-1 text-sm ${inkMuted}">${escapeHtml(leader.season_rank_label || leader.rank_vi)} · ${escapeHtml(leader.current_level)} · còn ${leader.packs_until_level_up || 0} bài để lên level</p>
+              ${badgeHtml(leader)}
               ${xpBar(leader)}
             </div>
           </div>
@@ -354,6 +356,17 @@ const ladderSectionClass = w1Ssr ? 'px-4 py-10 sm:px-6' : 'px-6 py-14';
           </div>
         </article>
       `;
+    }
+
+    function badgeHtml(leader) {
+      const badges = Array.isArray(leader.badges) ? leader.badges : [];
+      if (!badges.length) return '';
+      const chips = badges.map((b) => `<span
+          class="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium ${w1 ? 'bg-[var(--r2l-bg-deep)]' : 'bg-navy-950/80 text-cream-muted'}"
+          title="${escapeAttr(b.label_vi)}"
+          aria-label="${escapeAttr(b.label_vi)}"
+        >${escapeHtml(b.emoji || '🏅')} ${escapeHtml(b.label_vi)}</span>`).join('');
+      return `<div class="mt-2 flex flex-wrap gap-1">${chips}</div>`;
     }
 
     function xpBar(leader) {

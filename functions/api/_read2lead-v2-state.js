@@ -39,6 +39,18 @@ export const PACKS_TO_NEXT_LEVEL = {
 export const XP_PER_PASSED_PACK = 20;
 export const XP_PENALTY_BELOW_THRESHOLD = 0;
 export const PASS_THRESHOLD_PERCENT = 50;
+
+export const GRADE_TIERS = [
+  { min_percent: 85, grade: 'S', label_vi: 'Xuất sắc', xp: 20, coins: 25 },
+  { min_percent: 70, grade: 'A', label_vi: 'Tốt',      xp: 20, coins: 15 },
+  { min_percent: 50, grade: 'B', label_vi: 'Đạt',      xp: 10, coins: 8  },
+  { min_percent: 0,  grade: 'F', label_vi: 'Chưa đạt', xp: 0,  coins: 0  },
+];
+
+export function gradeRewards(scorePercent) {
+  const pct = Math.max(0, Math.min(100, Math.round(Number(scorePercent) || 0)));
+  return GRADE_TIERS.find((tier) => pct >= tier.min_percent) ?? GRADE_TIERS[GRADE_TIERS.length - 1];
+}
 export const LEVEL_RESET_VERSION = 20260606;
 export const START_LEVEL = 'L1';
 export const COINS_TOOLTIP = 'Tiết kiệm xu cho cửa hàng sắp mở! 🛒';
@@ -74,14 +86,19 @@ export const STREAK_FREEZE_TOKEN_CAP = 5;
 export const STREAK_FREEZE_HINT_VI =
   'Cứ 7 ngày học liên tiếp, con nhận 1 lượt giữ streak (tối đa 5). Tự dùng khi nghỉ đúng 1 ngày.';
 
-const STARTER_BADGE_DEFINITIONS = [
-  { id: 'first_story', label_vi: 'Mở truyện đầu tiên', description_vi: 'Hoàn thành 1 nhiệm vụ Read2Lead.' },
-  { id: 'steady_three', label_vi: 'Ba nhiệm vụ chắc tay', description_vi: 'Hoàn thành 3 nhiệm vụ.' },
-  { id: 'streak_3', label_vi: 'Ba ngày giữ nhịp', description_vi: 'Giữ streak 3 ngày.' },
-  { id: 'coin_saver', label_vi: 'Người giữ xu', description_vi: 'Tích lũy 100 xu.' },
-  { id: 'level_climber', label_vi: 'Lên level mới', description_vi: 'Mở khóa level tiếp theo.' },
-  { id: 'brave_voice', label_vi: 'Dám nói thành tiếng', description_vi: 'Hoàn thành phần nghe và nói lại.' },
+export const BADGE_DEFINITIONS = [
+  { id: 'first_story',   emoji: '📖', label_vi: 'Mở truyện đầu tiên',                   description_vi: 'Hoàn thành bài học đầu tiên.' },
+  { id: 'steady_three',  emoji: '🎯', label_vi: 'Ba nhiệm vụ chắc tay',                  description_vi: 'Hoàn thành 3 bài học.' },
+  { id: 'pack_10',       emoji: '🏆', label_vi: 'Chiến binh đọc',                         description_vi: 'Hoàn thành 10 bài học.' },
+  { id: 'streak_3',      emoji: '🔥', label_vi: 'Ba ngày giữ nhịp',                       description_vi: 'Giữ streak 3 ngày liên tiếp.' },
+  { id: 'streak_5',      emoji: '🐝', label_vi: 'Con ong chăm chỉ: 5 ngày đọc liên tục', description_vi: 'Học liên tục 5 ngày.' },
+  { id: 'streak_7',      emoji: '🌟', label_vi: 'Tuần không bỏ buổi',                     description_vi: 'Học liên tục 7 ngày.' },
+  { id: 'coin_saver',    emoji: '💰', label_vi: 'Người giữ xu',                           description_vi: 'Tích lũy 100 xu.' },
+  { id: 'level_climber', emoji: '📈', label_vi: 'Lên level mới',                          description_vi: 'Mở khóa level tiếp theo.' },
+  { id: 'brave_voice',   emoji: '🎙️', label_vi: 'Dám nói thành tiếng',                   description_vi: 'Hoàn thành phần Nghe và Nói lại.' },
 ];
+
+const STARTER_BADGE_DEFINITIONS = BADGE_DEFINITIONS;
 
 export const RANK_TITLES = {
   L1: 'Đồng',
@@ -2003,7 +2020,10 @@ function refreshBadges(state) {
 function badgeUnlocked(id, state) {
   if (id === 'first_story') return state.completed_packs >= 1;
   if (id === 'steady_three') return state.completed_packs >= 3;
+  if (id === 'pack_10') return state.completed_packs >= 10;
   if (id === 'streak_3') return state.streak_days >= 3;
+  if (id === 'streak_5') return state.streak_days >= 5;
+  if (id === 'streak_7') return state.streak_days >= 7;
   if (id === 'coin_saver') return state.coins >= 100;
   if (id === 'level_climber') return state.unlocked_levels.length > 1 || state.current_level !== state.initial_level;
   if (id === 'brave_voice') return state.voice_attempts >= 1;

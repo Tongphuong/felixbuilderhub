@@ -10,6 +10,7 @@ import {
   calculateAttentionScore,
   computeRankUp,
   computeSeasonLadder,
+  gradeRewards,
   loadProgressState,
   PASS_THRESHOLD_PERCENT,
   recordComboBonus,
@@ -199,19 +200,10 @@ async function submitV2Lesson({
   const passed = allActivitiesAttempted
     && speakingGate.passed
     && scorePercent >= PASS_THRESHOLD_PERCENT;
-  const rewards = lessonContext.rewards || {
-    coins_on_complete: 15,
-    xp_on_complete: XP_PER_PASSED_PACK,
-    bonus_coins_per_activity_attempted: 2,
-  };
+  const graded = gradeRewards(scorePercent);
   const rewardsEarned = passed
-    ? {
-        coins:
-          numberOrZero(rewards.coins_on_complete) +
-          correctCount * numberOrZero(rewards.bonus_coins_per_activity_attempted),
-        xp: XP_PER_PASSED_PACK,
-      }
-    : { coins: 0, xp: -XP_PENALTY_BELOW_THRESHOLD };
+    ? { coins: graded.coins, xp: graded.xp }
+    : { coins: 0, xp: 0 };
   const attempt = {
     schema_version: 2,
     submitted_at: submittedAt,
@@ -219,6 +211,8 @@ async function submitV2Lesson({
     completed: passed || completedWithoutReward,
     completed_without_reward: completedWithoutReward,
     score_percent: scorePercent,
+    grade: graded.grade,
+    grade_label_vi: graded.label_vi,
     correct_count: correctCount,
     total_count: totalCount,
     activity_results: activityResults,
@@ -278,6 +272,8 @@ async function submitV2Lesson({
       schema_version: 2,
       passed: false,
       score_percent: scorePercent,
+      grade: graded.grade,
+      grade_label_vi: graded.label_vi,
       correct_count: correctCount,
       total_count: totalCount,
       rewards_earned: rewardsEarned,
@@ -432,6 +428,8 @@ async function submitV2Lesson({
     schema_version: 2,
     passed: true,
     score_percent: scorePercent,
+    grade: graded.grade,
+    grade_label_vi: graded.label_vi,
     correct_count: correctCount,
     total_count: totalCount,
     rewards_earned: rewardsEarned,
