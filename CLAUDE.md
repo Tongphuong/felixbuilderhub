@@ -73,6 +73,35 @@ felixbuilderhub/
 
 ---
 
+## Key systems (live — no separate doc, read this)
+
+### Graded rewards (shipped 2026-06-22, commit 4502d3f)
+Replaces binary pass/fail. Function `gradeRewards(scorePercent)` in `functions/api/_read2lead-v2-state.js`.
+
+| Grade | Threshold | XP | Coins |
+|---|---|---|---|
+| S | ≥ 85% | 20 | 25 |
+| A | ≥ 70% | 20 | 15 |
+| B | ≥ 50% | 10 | 8 |
+| F | < 50% | 0 | 0 |
+
+### Badge system (shipped 2026-06-22, commit 4502d3f)
+9 badges with emoji, exported as `BADGE_DEFINITIONS` from `_read2lead-v2-state.js`. Logic in `refreshBadges()` / `badgeUnlocked()`. Leaderboard renders unlocked badges as pill chips.
+
+| ID | Emoji | Trigger |
+|---|---|---|
+| first_story | 📖 | completed_packs ≥ 1 |
+| steady_three | 🎯 | completed_packs ≥ 3 |
+| pack_10 | 🏆 | completed_packs ≥ 10 |
+| streak_3 | 🔥 | streak_days ≥ 3 |
+| streak_5 | 🐝 | streak_days ≥ 5 |
+| streak_7 | 🌟 | streak_days ≥ 7 |
+| coin_saver | 💰 | coins ≥ 100 |
+| level_climber | 📈 | unlocked more than 1 level |
+| brave_voice | 🎙️ | voice_attempts ≥ 1 |
+
+---
+
 ## Upcoming redesign (see MASTER_PLAN.md)
 
 The approved master plan at `_ops/specs/MASTER_PLAN.md` describes:
