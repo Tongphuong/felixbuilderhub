@@ -1,1 +1,0 @@
-Title tag✅ "Felix Builder Hub — Một người Việt xây sản phẩm AI"Header + nav anchors✅ Logo + Sản phẩm + Liên hệHero✅ "Một người Việt xây sản phẩm AI."About section✅ Felix Phương builder người ViệtProducts: MSMW (highlight, Sample sẵn sàng)✅Products: Read2Lead (Đang phát triển)✅Contact: Zalo placeholder, email, 3 social✅Footer copyright✅ "© 2026 Felix Phương — Built in Vietnam"
