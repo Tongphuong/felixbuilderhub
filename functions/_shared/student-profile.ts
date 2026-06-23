@@ -77,6 +77,10 @@ export function validateProfilePayload(body, { requireStudentId = false } = {}) 
     }
   }
 
+  if (requireStudentId && body.display_name === undefined) {
+    errors.push('missing_display_name');
+  }
+
   if (body.display_name !== undefined) {
     const displayName = cleanText(body.display_name, MAX_SHORT_TEXT_LENGTH);
     if (!displayName) {

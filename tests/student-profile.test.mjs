@@ -192,6 +192,20 @@ test('student profile endpoint rejects invalid JSON and invalid payloads', async
   );
 });
 
+test('POST /api/student-profile requires display_name', async () => {
+  const response = await onRequestPost({
+    request: request('POST', '/api/student-profile', {
+      student_id: 'R2L-006',
+    }),
+    env: env(),
+  });
+  const body = await payload(response);
+
+  assert.equal(response.status, 400);
+  assert.equal(body.error, 'invalid_payload');
+  assert.deepEqual(body.errors, ['missing_display_name']);
+});
+
 test('POST /api/student-profile returns conflict for duplicate active profile', async () => {
   const db = createD1([
     baseRow({ student_id: 'R2L-005', display_name: 'Exists' }),
@@ -231,7 +245,7 @@ function baseRow(overrides = {}) {
 
 function createD1(seed = []) {
   const rows = new Map(seed.map((row) => [row.student_id, { ...row }]));
-  return {
+  const db = {
     rows,
     deleteCalls: 0,
     prepare(sql) {
@@ -242,13 +256,14 @@ function createD1(seed = []) {
               return executeFirst(rows, sql, values);
             },
             async run() {
-              return executeRun(rows, sql, values, this);
-            },
+                          return executeRun(rows, sql, values, db);
+                        },
           };
         },
       };
     },
   };
+  return db;
 }
 
 function executeFirst(rows, sql, values) {
@@ -261,9 +276,9 @@ function executeFirst(rows, sql, values) {
   return { ...row };
 }
 
-function executeRun(rows, sql, values, statement) {
+function executeRun(rows, sql, values, db) {
   if (/\bDELETE\b/i.test(sql)) {
-    statement.deleteCalls += 1;
+    db.deleteCalls += 1;
   }
 
   if (sql.includes('INSERT INTO student_profiles')) {
