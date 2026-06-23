@@ -8,7 +8,7 @@ const OUTCOME_POINTS = {
   revealed: 0,
 };
 
-const POINT_TRACKED_TYPES = new Set(['listening_fill_blank', 'reading_comprehension']);
+const POINT_TRACKED_TYPES = new Set(['listening_fill_blank', 'reading_comprehension', 'guided_listening']);
 
 /**
  * @param {'first_try'|'second_try'|'revealed'|string} outcome
