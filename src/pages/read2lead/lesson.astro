@@ -4678,6 +4678,48 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
     w1EnterGuidedListeningPhase();
   }
 
+  /**
+   * Normalize raw backend guided_listening data into internal shape.
+   * Inlined here because the is:inline script cannot access ES module imports.
+   */
+  function normalizeGuidedListening(raw) {
+    const paragraphs = [];
+    const questions = [];
+    if (!Array.isArray(raw)) return { paragraphs, questions };
+    for (const para of raw) {
+      const paraIdx = Number(para?.paragraph_index ?? 0);
+      const rawQuestions = Array.isArray(para?.questions) ? para.questions : [];
+      const normalizedQuestions = rawQuestions.map(function (q) {
+        var base = {
+          id: String(q.id ?? ''),
+          question_vi: String(q.question_vi ?? ''),
+          question_en: String(q.question_en ?? ''),
+          paragraph_index: paraIdx,
+        };
+        if (q?.type === 'yes_no') {
+          var answer = Boolean(q.answer);
+          return Object.assign({}, base, {
+            type: 'yes_no',
+            options_en: ['Yes', 'No'],
+            options_vi: ['Có', 'Không'],
+            correct_index: answer ? 0 : 1,
+            answer: answer,
+          });
+        }
+        return Object.assign({}, base, {
+          type: 'choice',
+          options_en: Array.isArray(q?.options_en) ? q.options_en : [],
+          options_vi: Array.isArray(q?.options_vi) ? q.options_vi : [],
+          correct_index: Number(q?.correct_index ?? 0),
+          answer: undefined,
+        });
+      });
+      paragraphs.push({ index: paraIdx, questions: normalizedQuestions });
+      questions.push.apply(questions, normalizedQuestions);
+    }
+    return { paragraphs: paragraphs, questions: questions };
+  }
+
   function initGuidedListeningParagraphs() {
     const section = qs('#w1-guided-listening-phase');
     if (!section) return;
@@ -6744,7 +6786,6 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
   import { applyV3HeaderRank } from '../../lib/rank-header';
   import { applyHeaderMonsterAvatar } from '../../lib/monster-avatar';
   import { calculateLessonScore as calcLessonScore, questionPoints } from '../../scripts/r2l-lesson-scoring.mjs';
-  import { normalizeGuidedListening } from '../../lib/r2l-guided-listening.ts';
   import { writtenModelAnswer } from '../../scripts/r2l-written-model-answer.mjs';
   import { R2LFeedbackVisual } from '../../scripts/r2l-feedback-visual.js';
   import { R2LReplayControl } from '../../scripts/r2l-replay-control.js';
