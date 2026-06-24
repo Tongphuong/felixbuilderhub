@@ -4729,6 +4729,10 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
     const label = section.querySelector('[data-paragraph-label]');
     if (label) label.textContent = `Đoạn ${idx + 1}/${paragraphs.length}`;
 
+    // Unhide the paragraph display container
+    const paraContainer = section.querySelector('[data-guided-paragraph]');
+    if (paraContainer) paraContainer.hidden = false;
+
     const paraText = section.querySelector('[data-paragraph-text]');
     if (paraText) {
       // Show the paragraph text from story
