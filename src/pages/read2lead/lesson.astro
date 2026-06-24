@@ -4179,6 +4179,58 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
 
   async function init() {
     const params = new URLSearchParams(window.location.search);
+
+    // QA mode: ?read_aloud=1 renders ReadAloud with inline fixture data, no backend
+    if (params.get('read_aloud') === '1') {
+      const qHide = [
+        '#w1-story-phase', '#w1-guided-listening-phase', '#mic-prep-banner',
+        '#w1-legacy-progress', '#global-cta', '#trivia-reveal-section',
+        '#completion-card', '#w1-result-recap', '#submit-confirm-modal',
+      ];
+      qHide.forEach((sel) => qs(sel)?.classList.add('hidden'));
+      qs('#loading-card')?.classList.add('hidden');
+      qs('#lesson-shell')?.classList.remove('hidden');
+
+      qsa('[data-activity-shell]').forEach((shell) => {
+        shell.hidden = shell.dataset.activityShell !== 'read_aloud';
+      });
+
+      state.lesson = {
+        level: 'L2',
+        story: {
+          paragraphs_en: [
+            'The quick brown fox jumps over the lazy dog. He runs through the green forest.',
+            'The fox sees a rabbit under a big tree. The rabbit is eating a carrot.',
+            'The fox says hello to the rabbit. The rabbit waves back.',
+            'They become friends and play together every day.',
+          ],
+          paragraphs_vi: [
+            'Con chồn nâu nhanh nhẹn nhảy qua con chó lười. Nó chạy xuyên qua khu rừng xanh.',
+            'Con chồn thấy một con thỏ dưới gốc cây lớn. Con thỏ đang ăn cà rốt.',
+            'Con chồn chào con thỏ. Con thỏ vẫy tay chào lại.',
+            'Chúng trở thành bạn và chơi cùng nhau mỗi ngày.',
+          ],
+          sentences: [
+            { text_en: 'The quick brown fox jumps over the lazy dog.', text_vi: 'Con chồn nâu nhanh nhẹn nhảy qua con chó lười.', paragraph_index: 0 },
+            { text_en: 'He runs through the green forest.', text_vi: 'Nó chạy xuyên qua khu rừng xanh.', paragraph_index: 0 },
+            { text_en: 'The fox sees a rabbit under a big tree.', text_vi: 'Con chồn thấy một con thỏ dưới gốc cây lớn.', paragraph_index: 1 },
+            { text_en: 'The rabbit is eating a carrot.', text_vi: 'Con thỏ đang ăn cà rốt.', paragraph_index: 1 },
+            { text_en: 'The fox says hello to the rabbit.', text_vi: 'Con chồn chào con thỏ.', paragraph_index: 2 },
+            { text_en: 'The rabbit waves back.', text_vi: 'Con thỏ vẫy tay chào lại.', paragraph_index: 2 },
+            { text_en: 'They become friends and play together every day.', text_vi: 'Chúng trở thành bạn và chơi cùng nhau mỗi ngày.', paragraph_index: 3 },
+          ],
+        },
+      };
+
+      initStoryDock(state.lesson.story);
+
+      const body = qs('[data-activity-shell="read_aloud"] [data-activity-body]');
+      if (body) {
+        renderReadAloudActivity(body, { type: 'read_aloud' });
+      }
+      return;
+    }
+
     state.accessCode = (params.get('code') || '').trim().toUpperCase();
     state.packId = (params.get('pack_id') || '').trim();
     if (!state.accessCode || !state.packId) {
