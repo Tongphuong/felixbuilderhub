@@ -68,7 +68,7 @@ test('minny coach strip with mood bubble and streak', () => {
 test('minny strip hidden for speak and retell parts', () => {
   assert.match(lessonPage, /minnyStrip\.hidden = useLargeMinny/);
   assert.match(lessonPage, /heroWrap\.hidden = !useLargeMinny/);
-  assert.match(lessonPage, /listen_and_speak', 'retell_summary'\]\.includes\(activity\.type\)/);
+  assert.match(lessonPage, /listen_and_speak', 'read_aloud'\].includes\(activity\.type\)/);
 });
 
 test('meso interstitial between activity parts', () => {

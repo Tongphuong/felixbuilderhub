@@ -1,6 +1,8 @@
 /**
+ * @deprecated — use Read Aloud (src/components/read2lead/v2/ReadAloud.astro) instead.
  * Deterministic retell scaffolding for activity 6 (retell_summary).
  * Fill-in-the-blank English template + kid-friendly prompts.
+ * Kept for backward compatibility; tests may reference this module.
  */
 
 function normalizeGuideText(text) {

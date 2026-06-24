@@ -7,7 +7,7 @@ import IdentityBanner from '../../components/read2lead/v2/IdentityBanner.astro';
 import ListeningFillBlank from '../../components/read2lead/v2/ListeningFillBlank.astro';
 import ListenAndOrder from '../../components/read2lead/v2/ListenAndOrder.astro';
 import ListenAndSpeak from '../../components/read2lead/v2/ListenAndSpeak.astro';
-import RetellSummary from '../../components/read2lead/v2/RetellSummary.astro';
+import ReadAloud from '../../components/read2lead/v2/ReadAloud.astro';
 import LevelUpModal from '../../components/read2lead/v2/LevelUpModal.astro';
 import RankUpModal from '../../components/read2lead/v3/rank/RankUpModal.astro';
 import ProgressBar from '../../components/read2lead/v2/ProgressBar.astro';
@@ -19,15 +19,11 @@ import RewardBurst from '../../components/read2lead/v2/RewardBurst.astro';
 import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro';
 import V21MaintenanceScreen from '../../components/read2lead/v2/V21MaintenanceScreen.astro';
 import GuidedListener from '../../components/read2lead/guided-listener.astro';
-import retellGuideSrc from '../../../functions/api/_read2lead-retell-guide.js?raw';
 import dictationHelperSrc from '../../lib/read2lead-dictation.ts?raw';
 import { r2lRecorderScriptSrc } from '../../scripts/r2l-recorder-script.mjs';
 import '../../styles/r2l-w2-dynamic.css';
 
 const r2lRecorderSrc = r2lRecorderScriptSrc();
-const retellGuideInline = retellGuideSrc
-  .replace(/^export function /gm, 'function ')
-  .replace(/^export const /gm, 'const ');
 const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 'function ');
 ---
 
@@ -109,7 +105,7 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
           <ReadingComprehension />
           <WrittenResponse />
           <ListenAndSpeak />
-          <RetellSummary />
+          <ReadAloud />
         </section>
 
         <section id="global-cta" class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 flex flex-col gap-2">
@@ -906,12 +902,6 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
   }
 </style>
 
-<script is:inline set:html={retellGuideInline + `
-function _r2lBuildRetellTemplate(lesson) {
-  return buildRetellTemplate(lesson);
-}
-`} />
-
 <script is:inline set:html={dictationHelperInline} />
 
 <script is:inline>
@@ -1038,7 +1028,7 @@ function _r2lBuildRetellTemplate(lesson) {
     reading_comprehension: 'Đọc hiểu',
     written_response: 'Viết đáp án',
     listen_and_speak: 'Nói lại',
-    retell_summary: 'Kể truyện',
+    read_aloud: 'Đọc to',
   };
 
   const MINNY_COMMANDS = {
@@ -1047,7 +1037,7 @@ function _r2lBuildRetellTemplate(lesson) {
     reading_comprehension: 'Con đọc truyện rồi chọn đáp án đúng!',
     written_response: 'Con viết 1–2 câu tiếng Anh nhé!',
     listen_and_speak: 'Nghe rồi nói lại cho Minny nghe nhé!',
-    retell_summary: 'Con đọc truyện, điền chỗ trống và kể lại bằng tiếng Anh!',
+    read_aloud: 'Con đọc to từng câu cho Minny nghe nhé!',
   };
 
   const MINNY_CELEBRATE = [
@@ -1087,10 +1077,10 @@ function _r2lBuildRetellTemplate(lesson) {
       needs: 'Bấm Kiểm tra micro, rồi Nghe, rồi Con nói',
       stuck: 'Micro: Windows/Mac → Cài đặt → Microphone → bật cho Chrome/Safari; copy hướng dẫn trong khung vàng',
     },
-    retell_summary: {
-      doing: (n, total) => `Phần ${n}/${total}: Kể truyện — điền chỗ trống và kể lại`,
-      needs: 'Kiểm tra micro → đọc truyện → Nghe truyện → Con kể',
-      stuck: 'Micro kẹt: bấm Copy hướng dẫn cho ba mẹ; mở bằng Chrome/Safari (không Zalo)',
+    read_aloud: {
+      doing: (n, total) => `Phần ${n}/${total}: Đọc to — con đọc từng câu trong truyện`,
+      needs: 'Kiểm tra micro → đọc to từng câu → Minny chấm điểm',
+      stuck: 'Micro: Cài đặt → Microphone → bật cho Chrome/Safari; bấm Copy hướng dẫn trong khung vàng',
     },
   };
 
@@ -1195,7 +1185,7 @@ function _r2lBuildRetellTemplate(lesson) {
     reading_comprehension: '📚',
     written_response: '✍️',
     listen_and_speak: '🎙️',
-    retell_summary: '📖',
+    read_aloud: '📖',
   };
 
   let _w1ReadAlong = { running: false, paused: false, sentenceIdx: 0, cardIdx: 0 };
@@ -1291,7 +1281,7 @@ function _r2lBuildRetellTemplate(lesson) {
     _r2lRecorderState.perItem.forEach((entry) => {
       retryCount += Number(entry?.failureCount || 0);
     });
-    retryCount += Number(_r2lRetellState?.failureCount || 0);
+    retryCount += Number(_r2lRetellState?.failureCount || 0) + Number(_r2lReadAloudState?.sentences?.reduce((sum, s) => sum + Math.max(0, s.attempts.length - 1), 0) || 0);
     return retryCount;
   }
 
@@ -1372,13 +1362,13 @@ function _r2lBuildRetellTemplate(lesson) {
   function _r2lApplyMicGate(ready) {
     _r2lMicGateReady = ready;
     const speakShell = qs('[data-activity-shell="listen_and_speak"]');
-    const retellShell = qs('[data-activity-shell="retell_summary"]');
-    [speakShell, retellShell].forEach((shell) => {
+    const readShell = qs('[data-activity-shell="read_aloud"]');
+    [speakShell, readShell].forEach((shell) => {
       if (!shell || shell.hidden) return;
-      shell.querySelectorAll('[data-speak-record], [data-retell-record]').forEach((btn) => {
+      shell.querySelectorAll('[data-speak-record], [data-read-aloud-record]').forEach((btn) => {
         if (ready) {
-          if (btn.hasAttribute('data-retell-record')) {
-            btn.disabled = !_r2lMicIsReady() || !_r2lRetellState.heardInstruction;
+          if (btn.hasAttribute('data-read-aloud-record')) {
+            btn.disabled = false;
           } else {
             btn.disabled = btn.dataset.heard !== 'true' || !_r2lMicIsReady();
           }
@@ -1637,7 +1627,7 @@ function _r2lBuildRetellTemplate(lesson) {
   }
 
   function _r2lLessonNeedsMic(activities) {
-    return (activities || []).some((a) => a?.type === 'listen_and_speak' || a?.type === 'retell_summary');
+    return (activities || []).some((a) => a?.type === 'listen_and_speak' || a?.type === 'read_aloud');
   }
 
   function _r2lUpdateMicPrepBanner(activities) {
@@ -2016,14 +2006,15 @@ function _r2lBuildRetellTemplate(lesson) {
       showToast('Mình sang phần tiếp nhé. Phần nói này không nhận thưởng.');
       return;
     }
-    if (current?.type === 'retell_summary') {
-      if (!state.completedTypes.has('retell_summary')) {
-        _r2lCompleteRetellOnMicSkip();
-        _r2lRenderRetellFeedback({
-          ok: false,
-          message: _R2L_MIC_SKIP_MSG,
+    if (current?.type === 'read_aloud') {
+      if (!state.completedTypes.has('read_aloud')) {
+        completeActivity('read_aloud', {
+          correct_count: 0,
+          total_count: 1,
+          wrong_count: 1,
+          score_percent: 0,
+          skipped_due_to_mic: true,
         });
-        _r2lRenderRetellControls();
       }
       showToast('Bài đã ghi nhận không thưởng. Con vẫn có thể tạo bài mới.');
       return;
@@ -2711,7 +2702,449 @@ function _r2lBuildRetellTemplate(lesson) {
     return Number(scorePercent || 0) >= 70 ? 'celebrate' : 'encourage';
   }
 
-  /* ----- Activity 6: retell summary (open mode, up to 60s) ----- */
+  /* ----- Read Aloud (Phase 4: replaces retell_summary) ----- */
+  const READ_ALOUD_GRADE_S = 80;
+  const READ_ALOUD_GRADE_A = 65;
+  const READ_ALOUD_GRADE_B = 45;
+  const READ_ALOUD_MAX_ATTEMPTS = 3;
+
+  let _r2lReadAloudState = null;
+
+  function renderReadAloudActivity(root, activity) {
+    const heroScope = root.closest('[data-activity-shell="read_aloud"]');
+    _r2lInitMinnyHero(heroScope);
+
+    const story = state.lesson?.story || {};
+    const sentences = (story.sentences || []).filter((s) => String(s.text_en || '').trim());
+    const paragraphsEn = story.paragraphs_en || [];
+
+    _r2lReadAloudState = {
+      sentences: sentences.map((s) => ({
+        text_en: s.text_en || '',
+        text_vi: s.text_vi || '',
+        audio_url: s.audio_url || '',
+        attempts: [],
+        bestScore: 0,
+        state: 'pending',
+        feedback: null,
+        skipped: false,
+      })),
+      currentIndex: 0,
+      completed: false,
+      heroScope,
+      root,
+    };
+
+    // Populate story paragraphs
+    const storySlot = root.querySelector('[data-read-aloud-story]');
+    if (storySlot) {
+      storySlot.innerHTML = paragraphsEn
+        .map((p) => `<p>${escapeHtml(p)}</p>`)
+        .join('');
+    }
+
+    renderReadAloudSentenceArea();
+    renderReadAloudControls();
+    renderReadAloudFeedback();
+    renderReadAloudProgress();
+  }
+
+  function renderReadAloudSentenceArea() {
+    const root = _r2lReadAloudState.root;
+    const slot = root.querySelector('[data-read-aloud-sentences]');
+    if (!slot) return;
+    const state = _r2lReadAloudState;
+
+    slot.innerHTML = state.sentences.map((s, i) => {
+      const isActive = i === state.currentIndex;
+      let stateAttr = s.state;
+      if (isActive && s.state !== 'scored' && s.state !== 'skipped') stateAttr = 'active';
+      if (!isActive && s.state === 'pending') stateAttr = 'pending';
+
+      const showVi = true; // Vietnamese always visible for current sentence
+
+      return `
+        <div class="r2l-ra-sentence" data-sentence-state="${stateAttr}" data-ra-sentence="${i}">
+          <p class="r2l-ra-sentence-en">${escapeHtml(s.text_en)}</p>
+          <p class="r2l-ra-sentence-vi" data-read-aloud-vi-mode="${showVi ? 'visible' : 'hidden'}">${escapeHtml(s.text_vi || '')}</p>
+          <div class="r2l-ra-sentence-actions">
+            ${s.audio_url ? `<button type="button" class="r2l-ra-audio-hint" data-ra-audio-hint="${i}" title="Nghe câu này">🔊</button>` : ''}
+            ${isActive && s.state !== 'scored' && s.state !== 'skipped'
+              ? `<button type="button" class="r2l-ra-record-btn" data-ra-record="${i}">🎤 Đọc</button>`
+              : `<button type="button" class="r2l-ra-record-btn" disabled>${s.state === 'scored' ? '✅ Đã đọc' : ''}</button>`}
+            ${isActive && s.state !== 'scored' && s.state !== 'skipped'
+              ? `<button type="button" class="r2l-ra-skip-btn" data-ra-skip="${i}">Bỏ qua</button>`
+              : ''}
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    slot.querySelectorAll('[data-ra-record]').forEach((btn) => {
+      btn.addEventListener('click', () => handleReadAloudRecord());
+    });
+    slot.querySelectorAll('[data-ra-skip]').forEach((btn) => {
+      btn.addEventListener('click', () => handleReadAloudSkip());
+    });
+    slot.querySelectorAll('[data-ra-audio-hint]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const idx = Number(btn.dataset.raAudioHint);
+        const url = _r2lReadAloudState.sentences[idx]?.audio_url;
+        if (url) playAudio(url, btn);
+      });
+    });
+  }
+
+  function renderReadAloudControls() {
+    const root = _r2lReadAloudState.root;
+    const slot = root.querySelector('[data-read-aloud-controls]');
+    if (!slot) return;
+    const state = _r2lReadAloudState;
+    const current = state.sentences[state.currentIndex];
+    if (!current) return;
+
+    // Show progress dots + next/retry after feedback
+    const feedbackSlot = root.querySelector('[data-read-aloud-feedback]');
+    const showActions = current.state === 'scored' || current.state === 'skipped';
+    let actionsHtml = '';
+    if (showActions) {
+      const canRetry = current.state === 'scored' && current.attempts.length < READ_ALOUD_MAX_ATTEMPTS;
+      actionsHtml = `
+        <div class="r2l-ra-sentence-actions" style="margin-top:0.75rem">
+          ${canRetry ? `<button type="button" class="r2l-ra-record-btn" data-ra-retry>⟳ Đọc lại</button>` : ''}
+          <button type="button" class="r2l-ra-record-btn" data-ra-next>→ Câu tiếp</button>
+        </div>
+      `;
+    }
+
+    slot.innerHTML = actionsHtml;
+
+    const retryBtn = slot.querySelector('[data-ra-retry]');
+    if (retryBtn) retryBtn.addEventListener('click', handleReadAloudRetry);
+
+    const nextBtn = slot.querySelector('[data-ra-next]');
+    if (nextBtn) nextBtn.addEventListener('click', advanceToNextSentence);
+  }
+
+  function renderReadAloudProgress() {
+    const root = _r2lReadAloudState.root;
+    const controlsSlot = root.querySelector('[data-read-aloud-controls]');
+    if (!controlsSlot) return;
+    const state = _r2lReadAloudState;
+
+    const dotsHtml = `<div class="r2l-ra-progress">
+      ${state.sentences.map((s, i) => {
+        let dotState = 'pending';
+        if (s.state === 'scored') dotState = 'done';
+        else if (i === state.currentIndex) dotState = 'active';
+        else if (s.state === 'skipped') dotState = 'skipped';
+        return `<span class="r2l-ra-dot" data-state="${dotState}" title="Câu ${i + 1}"></span>`;
+      }).join('')}
+    </div>`;
+
+    const existing = controlsSlot.querySelector('.r2l-ra-progress');
+    if (existing) existing.outerHTML = dotsHtml;
+    else controlsSlot.insertAdjacentHTML('afterbegin', dotsHtml);
+  }
+
+  function renderReadAloudFeedback() {
+    const root = _r2lReadAloudState.root;
+    const slot = root.querySelector('[data-read-aloud-feedback]');
+    if (!slot) return;
+    const state = _r2lReadAloudState;
+
+    // Show feedback for the previously completed sentence
+    const prevIndex = state.currentIndex - 1;
+    const prevSentence = prevIndex >= 0 ? state.sentences[prevIndex] : null;
+
+    if (!prevSentence || (!prevSentence.feedback && !prevSentence.skipped)) {
+      slot.innerHTML = '';
+      slot.classList.add('hidden');
+      return;
+    }
+
+    slot.classList.remove('hidden');
+
+    if (prevSentence.skipped) {
+      slot.innerHTML = '<p class="text-sm text-cream/55" style="margin-top:0.5rem">Đã bỏ qua câu này.</p>';
+      return;
+    }
+
+    if (prevSentence.feedback) {
+      const r = prevSentence.feedback;
+      const grade = scoreToReadAloudGrade(r.score_percent);
+      const gradeEmoji = r.score_percent >= 80 ? '🌟' : r.score_percent >= 65 ? '👏' : r.score_percent >= 45 ? '👍' : '💪';
+
+      slot.innerHTML = `
+        <div style="margin-top:0.5rem">
+          <span class="r2l-ra-score-badge" data-grade="${grade}">${grade} ${gradeEmoji}</span>
+          ${_r2lBuildSpeakingFeedbackHtml(r, { compact: true })}
+        </div>
+      `;
+    }
+  }
+
+  async function handleReadAloudRecord() {
+    const state = _r2lReadAloudState;
+    if (!state || state.completed) return;
+    const idx = state.currentIndex;
+    const sentence = state.sentences[idx];
+    if (!sentence) return;
+
+    const cardEl = state.root.querySelector(`[data-ra-sentence="${idx}"]`);
+    if (!cardEl) return;
+
+    // Update button to show recording state
+    const recordBtn = cardEl.querySelector('[data-ra-record]');
+    if (recordBtn) {
+      recordBtn.textContent = '🔴 Đang thu...';
+      recordBtn.disabled = true;
+    }
+
+    // Capture one utterance via simple MediaRecorder pipeline
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const mimeType = MediaRecorder.isTypeSupported('audio/webm;codecs=opus')
+        ? 'audio/webm;codecs=opus'
+        : MediaRecorder.isTypeSupported('audio/webm')
+          ? 'audio/webm'
+          : MediaRecorder.isTypeSupported('audio/mp4')
+            ? 'audio/mp4'
+            : '';
+
+      const recorder = new MediaRecorder(stream, mimeType ? { mimeType } : {});
+      const chunks = [];
+
+      recorder.ondataavailable = (e) => {
+        if (e.data.size > 0) chunks.push(e.data);
+      };
+
+      recorder.onstop = async () => {
+        stream.getTracks().forEach((t) => t.stop());
+        const blob = new Blob(chunks, { type: mimeType || 'audio/webm' });
+
+        if (blob.size < 1200) {
+          // Too short
+          _r2lSetMinnyMood('encourage', state.heroScope);
+          showReadAloudSentenceFeedback(sentence, { ok: false, message: 'Minny chưa nghe rõ. Con bấm Đọc lại, đợi đèn xanh rồi đọc to cả câu nhé!' });
+          return;
+        }
+
+        // Send for scoring
+        showReadAloudSentenceFeedback(sentence, { loading: true });
+        _r2lSetMinnyMood('idle', state.heroScope);
+
+        try {
+          const result = await _r2lPostSpeakingCheck(blob, sentence.text_en, 'read', 30, null);
+
+          // Track attempt
+          sentence.attempts.push({
+            score_percent: result?.score_percent || 0,
+            transcript: result?.transcript || '',
+            timestamp: new Date().toISOString(),
+          });
+
+          if (result?.ok) {
+            const score = Number(result.score_percent || 0);
+            if (score > sentence.bestScore) sentence.bestScore = score;
+            sentence.state = 'scored';
+            sentence.feedback = result;
+
+            _r2lSetMinnyMood(_r2lMinnyMoodForScore(score), state.heroScope);
+          } else {
+            _r2lSetMinnyMood('encourage', state.heroScope);
+            sentence.feedback = result || { ok: false, message: 'Minny chưa chấm điểm được. Con bấm Thu lại nhé!' };
+          }
+
+          // Re-render
+          renderReadAloudSentenceArea();
+          renderReadAloudFeedback();
+          renderReadAloudControls();
+          renderReadAloudProgress();
+        } catch (err) {
+          showReadAloudSentenceFeedback(sentence, {
+            ok: false,
+            message: err?.message || 'Chưa gửi được bài đọc. Con thử lại nhé!',
+          });
+          _r2lSetMinnyMood('encourage', state.heroScope);
+        }
+      };
+
+      recorder.onerror = () => {
+        stream.getTracks().forEach((t) => t.stop());
+        showReadAloudSentenceFeedback(sentence, { ok: false, message: 'Không ghi âm được. Ba mẹ kiểm tra micro nhé!' });
+      };
+
+      recorder.start();
+
+      // Auto-stop after 30 seconds
+      setTimeout(() => {
+        if (recorder.state === 'recording') recorder.stop();
+      }, 30000);
+
+      // Enable stop on button re-click
+      if (recordBtn) {
+        recordBtn.textContent = '⏹ Dừng';
+        recordBtn.disabled = false;
+        recordBtn.onclick = () => {
+          if (recorder.state === 'recording') recorder.stop();
+        };
+      }
+    } catch (err) {
+      showReadAloudSentenceFeedback(sentence, { ok: false, message: 'Micro chưa được cấp phép. Ba mẹ kiểm tra Cài đặt → Microphone nhé!' });
+      _r2lSetMinnyMood('encourage', state.heroScope);
+      renderReadAloudSentenceArea();
+      renderReadAloudControls();
+    }
+  }
+
+  function showReadAloudSentenceFeedback(sentence, result) {
+    sentence.feedback = result;
+    renderReadAloudFeedback();
+    renderReadAloudControls();
+    renderReadAloudProgress();
+  }
+
+  function handleReadAloudSkip() {
+    const state = _r2lReadAloudState;
+    if (!state || state.completed) return;
+    const idx = state.currentIndex;
+    const sentence = state.sentences[idx];
+    if (!sentence) return;
+
+    sentence.state = 'skipped';
+    sentence.bestScore = 0;
+    sentence.skipped = true;
+
+    advanceToNextSentence();
+  }
+
+  function advanceToNextSentence() {
+    const state = _r2lReadAloudState;
+    if (!state) return;
+
+    state.currentIndex += 1;
+
+    if (state.currentIndex >= state.sentences.length) {
+      completeReadAloud();
+      return;
+    }
+
+    // Reset current sentence to pending
+    const sentence = state.sentences[state.currentIndex];
+    if (sentence && sentence.state === 'pending') {
+      // already pending
+    }
+
+    renderReadAloudSentenceArea();
+    renderReadAloudControls();
+    renderReadAloudFeedback();
+    renderReadAloudProgress();
+  }
+
+  function handleReadAloudRetry() {
+    const state = _r2lReadAloudState;
+    if (!state || state.completed) return;
+
+    // Reset current sentence to allow re-recording
+    // (retry is on the current sentence, which means we're on the last scored sentence)
+    // The user clicked retry from the feedback, so currentIndex - 1 is the scored sentence
+    const idx = state.currentIndex - 1;
+    if (idx < 0) return;
+    const sentence = state.sentences[idx];
+    if (!sentence) return;
+
+    sentence.state = 'pending';
+    sentence.feedback = null;
+
+    // Clear feedback area
+    const feedbackSlot = state.root.querySelector('[data-read-aloud-feedback]');
+    if (feedbackSlot) {
+      feedbackSlot.innerHTML = '';
+      feedbackSlot.classList.add('hidden');
+    }
+
+    // Set current index back to the retried sentence
+    state.currentIndex = idx;
+
+    renderReadAloudSentenceArea();
+    renderReadAloudControls();
+    renderReadAloudFeedback();
+    renderReadAloudProgress();
+  }
+
+  function scoreToReadAloudGrade(scorePercent) {
+    const score = Number(scorePercent || 0);
+    if (score >= READ_ALOUD_GRADE_S) return 'S';
+    if (score >= READ_ALOUD_GRADE_A) return 'A';
+    if (score >= READ_ALOUD_GRADE_B) return 'B';
+    return 'F';
+  }
+
+  function completeReadAloud() {
+    const state = _r2lReadAloudState;
+    if (!state || state.completed) return;
+    state.completed = true;
+
+    const scores = state.sentences.map((s) => s.bestScore);
+    const total = state.sentences.length;
+    const completed = state.sentences.filter((s) => s.state === 'scored').length;
+    const skipped = state.sentences.filter((s) => s.skipped).length;
+    const avgScore = scores.length ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length) : 0;
+
+    const attemptData = {};
+    state.sentences.forEach((s, i) => {
+      attemptData[i] = {
+        attempts: s.attempts,
+        best: s.bestScore,
+        skipped: s.skipped,
+      };
+    });
+
+    const wordFeedback = {};
+    state.sentences.forEach((s, i) => {
+      if (s.feedback?.word_feedback) wordFeedback[i] = s.feedback.word_feedback;
+    });
+
+    const grade = scoreToReadAloudGrade(avgScore);
+    const gradeEmoji = { S: '🌟', A: '👏', B: '👍', F: '💪' }[grade] || '';
+    const gradeMessages = {
+      S: 'Siêu giỏi! Con đọc trôi chảy lắm!',
+      A: 'Giỏi quá! Con đọc rất tốt!',
+      B: 'Tốt! Con cố gắng thêm chút nữa nhé!',
+      F: 'Không sao! Luyện thêm con sẽ giỏi hơn!',
+    };
+
+    // Show summary
+    const summarySlot = state.root.querySelector('[data-read-aloud-summary]');
+    if (summarySlot) {
+      summarySlot.classList.remove('hidden');
+      summarySlot.innerHTML = `
+        <h3>${gradeEmoji} ${gradeMessages[grade]}</h3>
+        <p class="r2l-read-aloud-grade">${grade} — ${avgScore}%</p>
+        <p>${completed}/${total} câu đã đọc · ${skipped} bỏ qua</p>
+      `;
+    }
+
+    // Store result
+    const result = {
+      type: 'read_aloud',
+      mode: 'sentence',
+      total_sentences: total,
+      sentences_completed: completed,
+      sentences_skipped: skipped,
+      scores,
+      score_percent: avgScore,
+      completed: true,
+      attempt_data: attemptData,
+      word_feedback: wordFeedback,
+      feedback_vi: gradeMessages[grade],
+    };
+
+    completeActivity('read_aloud', result);
+  }
+
+  /* ----- Activity 6: retell summary (open mode, up to 60s) [deprecated] ----- */
   const RETELL_MAX_SECONDS = 60;
   const _r2lRetellState = {
     mediaRecorder: null,
@@ -4487,8 +4920,8 @@ function _r2lBuildRetellTemplate(lesson) {
         renderWrittenActivity(body, activity);
       } else if (activity.type === 'listen_and_speak') {
         renderSpeakActivity(body, activity);
-      } else if (activity.type === 'retell_summary') {
-        renderRetellSummaryActivity(body, activity);
+      } else if (activity.type === 'read_aloud') {
+        renderReadAloudActivity(body, activity);
       }
     });
   }
@@ -4593,7 +5026,7 @@ function _r2lBuildRetellTemplate(lesson) {
     if (!shell) return;
     shell.hidden = false;
 
-    const autoExpandTypes = ['written_response', 'retell_summary'];
+    const autoExpandTypes = ['written_response', 'read_aloud'];
     const dock = qs('#story-dock');
     if (autoExpandTypes.includes(activity.type) && dock?.dataset.dockState === 'collapsed') {
       toggleDock();
@@ -4626,7 +5059,7 @@ function _r2lBuildRetellTemplate(lesson) {
     setMinnyStrip('idle', MINNY_COMMANDS[activity.type] || '');
     _itemStreak = 0;
 
-    const useLargeMinny = ['listen_and_speak', 'retell_summary'].includes(activity.type);
+    const useLargeMinny = ['listen_and_speak', 'read_aloud'].includes(activity.type);
     const minnyStrip = qs('#minny-strip');
     if (minnyStrip) minnyStrip.hidden = useLargeMinny;
     const heroWrap = shell.querySelector('.r2l-minny-hero-wrap');
@@ -4637,7 +5070,7 @@ function _r2lBuildRetellTemplate(lesson) {
     updateGlobalCta();
     scheduleSaveLessonSession();
 
-    if (['listen_and_speak', 'retell_summary'].includes(activity.type)) {
+    if (['listen_and_speak', 'read_aloud'].includes(activity.type)) {
       _r2lMountMicCheck(shell);
       if (window.R2LMicCheck?.sessionPassed?.()) {
         _r2lApplyMicGate(true);
