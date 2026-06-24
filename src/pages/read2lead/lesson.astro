@@ -1365,9 +1365,9 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
     const readShell = qs('[data-activity-shell="read_aloud"]');
     [speakShell, readShell].forEach((shell) => {
       if (!shell || shell.hidden) return;
-      shell.querySelectorAll('[data-speak-record], [data-read-aloud-record]').forEach((btn) => {
+      shell.querySelectorAll('[data-speak-record], [data-ra-record]').forEach((btn) => {
         if (ready) {
-          if (btn.hasAttribute('data-read-aloud-record')) {
+          if (btn.hasAttribute('data-ra-record')) {
             btn.disabled = false;
           } else {
             btn.disabled = btn.dataset.heard !== 'true' || !_r2lMicIsReady();
@@ -2718,6 +2718,11 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
     const sentences = (story.sentences || []).filter((s) => String(s.text_en || '').trim());
     const paragraphsEn = story.paragraphs_en || [];
 
+    // Determine scaffold mode from lesson level
+    const lessonLevel = Number(state.lesson?.level) || 1;
+    const isL3 = lessonLevel === 3;
+    const isContinuous = lessonLevel >= 4;
+
     _r2lReadAloudState = {
       sentences: sentences.map((s) => ({
         text_en: s.text_en || '',
@@ -2731,9 +2736,17 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
       })),
       currentIndex: 0,
       completed: false,
+      level: lessonLevel,
+      mode: isContinuous ? 'continuous' : 'sentence',
+      viMode: isL3 ? 'hidden' : 'visible',
       heroScope,
       root,
     };
+    const shell = root.closest('[data-activity-shell="read_aloud"]');
+    if (shell) {
+      shell.dataset.readAloudMode = _r2lReadAloudState.mode;
+      shell.dataset.readAloudState = 'idle';
+    }
 
     // Populate story paragraphs
     const storySlot = root.querySelector('[data-read-aloud-story]');
@@ -2743,10 +2756,14 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
         .join('');
     }
 
-    renderReadAloudSentenceArea();
-    renderReadAloudControls();
-    renderReadAloudFeedback();
-    renderReadAloudProgress();
+    if (_r2lReadAloudState.mode === 'continuous') {
+      renderReadAloudContinuousArea();
+    } else {
+      renderReadAloudSentenceArea();
+      renderReadAloudControls();
+      renderReadAloudFeedback();
+      renderReadAloudProgress();
+    }
   }
 
   function renderReadAloudSentenceArea() {
@@ -2761,14 +2778,20 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
       if (isActive && s.state !== 'scored' && s.state !== 'skipped') stateAttr = 'active';
       if (!isActive && s.state === 'pending') stateAttr = 'pending';
 
-      const showVi = true; // Vietnamese always visible for current sentence
+      // L3: Vietnamese hidden by default, tap to reveal
+      const viMode = state.level === 3
+        ? 'hidden'
+        : (state.viMode === 'revealed' ? 'revealed' : 'visible');
 
       return `
         <div class="r2l-ra-sentence" data-sentence-state="${stateAttr}" data-ra-sentence="${i}">
           <p class="r2l-ra-sentence-en">${escapeHtml(s.text_en)}</p>
-          <p class="r2l-ra-sentence-vi" data-read-aloud-vi-mode="${showVi ? 'visible' : 'hidden'}">${escapeHtml(s.text_vi || '')}</p>
+          <p class="r2l-ra-sentence-vi" data-read-aloud-vi-mode="${viMode}">${escapeHtml(s.text_vi || '')}</p>
           <div class="r2l-ra-sentence-actions">
             ${s.audio_url ? `<button type="button" class="r2l-ra-audio-hint" data-ra-audio-hint="${i}" title="Nghe câu này">🔊</button>` : ''}
+            ${isActive && state.level === 3 && (s.state !== 'scored' && s.state !== 'skipped')
+              ? `<button type="button" class="r2l-ra-audio-hint" data-ra-reveal-vi="${i}" title="Xem tiếng Việt">🔍</button>`
+              : ''}
             ${isActive && s.state !== 'scored' && s.state !== 'skipped'
               ? `<button type="button" class="r2l-ra-record-btn" data-ra-record="${i}">🎤 Đọc</button>`
               : `<button type="button" class="r2l-ra-record-btn" disabled>${s.state === 'scored' ? '✅ Đã đọc' : ''}</button>`}
@@ -2793,6 +2816,211 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
         if (url) playAudio(url, btn);
       });
     });
+    slot.querySelectorAll('[data-ra-reveal-vi]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const idx = Number(btn.dataset.raRevealVi);
+        const sentence = _r2lReadAloudState.sentences[idx];
+        if (sentence) {
+          // Toggle reveal: hidden → revealed → hidden
+          const currentVi = _r2lReadAloudState.viMode;
+          _r2lReadAloudState.viMode = currentVi === 'hidden' ? 'revealed' : 'hidden';
+          renderReadAloudSentenceArea();
+        }
+      });
+    });
+  }
+
+  function renderReadAloudContinuousArea() {
+    const state = _r2lReadAloudState;
+    const slot = state.root.querySelector('[data-read-aloud-sentences]');
+    if (!slot) return;
+
+    const fullText = state.sentences.map((s) => s.text_en).join(' ');
+
+    slot.innerHTML = `
+      <div class="r2l-ra-continuous-area">
+        <p class="r2l-ra-sentence-en" style="line-height:1.8;font-size:1rem">
+          ${escapeHtml(fullText)}
+        </p>
+        <div class="r2l-ra-sentence-actions" style="margin-top:0.75rem">
+          <button type="button" class="r2l-ra-continuous-btn" data-ra-continuous-record>
+            🎤 Đọc toàn bộ
+          </button>
+        </div>
+      </div>
+    `;
+
+    slot.querySelector('[data-ra-continuous-record]')?.addEventListener('click', handleReadAloudContinuousRecord);
+  }
+
+  async function handleReadAloudContinuousRecord() {
+    const state = _r2lReadAloudState;
+    if (!state || state.completed) return;
+
+    const btn = state.root.querySelector('[data-ra-continuous-record]');
+    if (!btn) return;
+
+    const fullText = state.sentences.map((s) => s.text_en).join(' ');
+    const shell = state.root.closest('[data-activity-shell="read_aloud"]');
+
+    // IDLE → RECORDING
+    btn.textContent = '⏹ Đang thu... (bấm để dừng)';
+    btn.dataset.recording = 'true';
+    if (shell) shell.dataset.readAloudState = 'recording';
+
+    try {
+      const stream = await _r2lOpenMicStream();
+      const recorder = window.R2LRecorder.createRecorder(stream, { engine: 'auto' });
+      recorder.start();
+
+      // Enable stop on button re-click
+      btn.onclick = () => {
+        if (recorder.state === 'recording') recorder.stop();
+      };
+
+      // Auto-stop after 120 seconds (spec §8)
+      const maxDuration = Math.min(120, state.sentences.length * 5);
+      setTimeout(() => {
+        if (recorder.state === 'recording') recorder.stop();
+      }, maxDuration * 1000);
+
+      // RECORDING → SCORING (wait for stop)
+      const blob = await recorder.stop();
+      stream.getTracks().forEach((t) => t.stop());
+
+      if (blob.size < 1200) {
+        showReadAloudContinuousFeedback({ ok: false, message: 'Minny chưa nghe rõ. Con bấm Đọc lại, đợi đèn xanh rồi đọc to cả bài nhé!' });
+        btn.textContent = '🎤 Đọc toàn bộ';
+        btn.dataset.recording = 'false';
+        btn.onclick = () => handleReadAloudContinuousRecord();
+        return;
+      }
+
+      // SCORING
+      btn.textContent = '⏳ Đang chấm...';
+      btn.disabled = true;
+      if (shell) shell.dataset.readAloudState = 'scoring';
+
+      const result = await _r2lPostSpeakingCheck(blob, fullText, 'read', 120, null);
+
+      // Compute per-sentence breakdown client-side
+      const transcript = result?.transcript || '';
+      const perSentenceResults = computePerSentenceBreakdown(transcript, state.sentences);
+
+      // Store results per sentence
+      state.sentences.forEach((s, i) => {
+        const sr = perSentenceResults[i] || {};
+        s.state = 'scored';
+        s.bestScore = sr.score_percent || 0;
+        s.feedback = sr;
+        s.attempts = [{
+          score_percent: sr.score_percent || 0,
+          transcript: sr.transcript || '',
+          timestamp: new Date().toISOString(),
+        }];
+      });
+
+      // Show per-sentence feedback + summary
+      showReadAloudContinuousFeedback(result, perSentenceResults);
+      showReadAloudSummary(result, perSentenceResults);
+
+      btn.textContent = '🔄 Đọc lại';
+      btn.dataset.recording = 'false';
+      btn.disabled = false;
+      btn.onclick = () => {
+        // Reset and restart
+        state.sentences.forEach((s) => {
+          s.state = 'pending';
+          s.bestScore = 0;
+          s.feedback = null;
+          s.attempts = [];
+        });
+        const summarySlot = state.root.querySelector('[data-read-aloud-summary]');
+        if (summarySlot) summarySlot.classList.add('hidden');
+        renderReadAloudContinuousArea();
+      };
+      if (shell) shell.dataset.readAloudState = 'done';
+    } catch (err) {
+      btn.textContent = '🎤 Đọc toàn bộ';
+      btn.dataset.recording = 'false';
+      btn.disabled = false;
+      btn.onclick = () => handleReadAloudContinuousRecord();
+      showReadAloudContinuousFeedback({ ok: false, message: err?.message || 'Chưa ghi âm được. Con thử lại nhé!' });
+    }
+  }
+
+  function computePerSentenceBreakdown(transcript, sentences) {
+    // Align full transcript to sentence boundaries using punctuation splitting
+    const transcriptParts = transcript
+      .split(/[.!?]+/)
+      .map((s) => s.trim())
+      .filter(Boolean);
+
+    return sentences.map((s, i) => {
+      const part = transcriptParts[i] || '';
+      // Simple similarity: count overlapping words
+      const expectedWords = s.text_en.toLowerCase().split(/\s+/).filter(Boolean);
+      const spokenWords = part.toLowerCase().split(/\s+/).filter(Boolean);
+      const exactCount = expectedWords.filter((w) => spokenWords.includes(w)).length;
+      const totalCount = expectedWords.length;
+      const score_percent = totalCount > 0 ? Math.round((exactCount / totalCount) * 100) : 0;
+      return { score_percent, transcript: part, exact_count: exactCount, total_count: totalCount };
+    });
+  }
+
+  function showReadAloudContinuousFeedback(result, perSentenceResults) {
+    const state = _r2lReadAloudState;
+    const slot = state.root.querySelector('[data-read-aloud-feedback]');
+    if (!slot) return;
+    slot.classList.remove('hidden');
+
+    let html = '';
+    perSentenceResults.forEach((sr, i) => {
+      const grade = scoreToReadAloudGrade(sr.score_percent);
+      html += `
+        <div class="r2l-ra-continuous-sentence">
+          <span class="r2l-ra-sentence-index">#${i + 1}</span>
+          <span>
+            ${escapeHtml(state.sentences[i]?.text_en || '')}
+            <span class="r2l-ra-score-badge" data-grade="${grade}">${grade} ${sr.score_percent}%</span>
+          </span>
+        </div>`;
+    });
+    slot.innerHTML = html;
+  }
+
+  function showReadAloudSummary(result, perSentenceResults) {
+    const state = _r2lReadAloudState;
+    const summarySlot = state.root.querySelector('[data-read-aloud-summary]');
+    if (!summarySlot) return;
+
+    const scores = perSentenceResults.map((sr) => sr.score_percent);
+    const avgScore = scores.length ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length) : 0;
+    const grade = scoreToReadAloudGrade(avgScore);
+    const gradeEmoji = { S: '🌟', A: '👏', B: '👍', F: '💪' }[grade] || '';
+
+    summarySlot.classList.remove('hidden');
+    summarySlot.innerHTML = `
+      <h3>${gradeEmoji} Kết quả đọc toàn bài</h3>
+      <p class="r2l-read-aloud-grade">${grade} — ${avgScore}%</p>
+      <p>${perSentenceResults.length} câu đã đọc</p>
+    `;
+
+    // Also write to activityResults
+    const finalResult = {
+      type: 'read_aloud',
+      mode: 'continuous',
+      total_sentences: state.sentences.length,
+      sentences_completed: state.sentences.length,
+      sentences_skipped: 0,
+      scores,
+      score_percent: avgScore,
+      completed: true,
+      attempt_data: {},
+      word_feedback: {},
+      feedback_vi: `Kết quả đọc toàn bài: ${grade} — ${avgScore}%`,
+    };
+    completeActivity('read_aloud', finalResult);
   }
 
   function renderReadAloudControls() {
@@ -2901,80 +3129,20 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
       recordBtn.disabled = true;
     }
 
-    // Capture one utterance via simple MediaRecorder pipeline
+    // Update shell state
+    const shell = state.root.closest('[data-activity-shell="read_aloud"]');
+    if (shell) shell.dataset.readAloudState = 'recording';
+
+    // Capture one utterance via R2LRecorder pipeline
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      const mimeType = MediaRecorder.isTypeSupported('audio/webm;codecs=opus')
-        ? 'audio/webm;codecs=opus'
-        : MediaRecorder.isTypeSupported('audio/webm')
-          ? 'audio/webm'
-          : MediaRecorder.isTypeSupported('audio/mp4')
-            ? 'audio/mp4'
-            : '';
+      // Use the self-healing R2LRecorder pipeline instead of raw MediaRecorder
+      const stream = await _r2lOpenMicStream();
 
-      const recorder = new MediaRecorder(stream, mimeType ? { mimeType } : {});
-      const chunks = [];
+      // Create recorder via R2LRecorder.createRecorder for codec fallback,
+      // silent-detection, and level monitoring
+      const recorder = window.R2LRecorder.createRecorder(stream, { engine: 'auto' });
 
-      recorder.ondataavailable = (e) => {
-        if (e.data.size > 0) chunks.push(e.data);
-      };
-
-      recorder.onstop = async () => {
-        stream.getTracks().forEach((t) => t.stop());
-        const blob = new Blob(chunks, { type: mimeType || 'audio/webm' });
-
-        if (blob.size < 1200) {
-          // Too short
-          _r2lSetMinnyMood('encourage', state.heroScope);
-          showReadAloudSentenceFeedback(sentence, { ok: false, message: 'Minny chưa nghe rõ. Con bấm Đọc lại, đợi đèn xanh rồi đọc to cả câu nhé!' });
-          return;
-        }
-
-        // Send for scoring
-        showReadAloudSentenceFeedback(sentence, { loading: true });
-        _r2lSetMinnyMood('idle', state.heroScope);
-
-        try {
-          const result = await _r2lPostSpeakingCheck(blob, sentence.text_en, 'read', 30, null);
-
-          // Track attempt
-          sentence.attempts.push({
-            score_percent: result?.score_percent || 0,
-            transcript: result?.transcript || '',
-            timestamp: new Date().toISOString(),
-          });
-
-          if (result?.ok) {
-            const score = Number(result.score_percent || 0);
-            if (score > sentence.bestScore) sentence.bestScore = score;
-            sentence.state = 'scored';
-            sentence.feedback = result;
-
-            _r2lSetMinnyMood(_r2lMinnyMoodForScore(score), state.heroScope);
-          } else {
-            _r2lSetMinnyMood('encourage', state.heroScope);
-            sentence.feedback = result || { ok: false, message: 'Minny chưa chấm điểm được. Con bấm Thu lại nhé!' };
-          }
-
-          // Re-render
-          renderReadAloudSentenceArea();
-          renderReadAloudFeedback();
-          renderReadAloudControls();
-          renderReadAloudProgress();
-        } catch (err) {
-          showReadAloudSentenceFeedback(sentence, {
-            ok: false,
-            message: err?.message || 'Chưa gửi được bài đọc. Con thử lại nhé!',
-          });
-          _r2lSetMinnyMood('encourage', state.heroScope);
-        }
-      };
-
-      recorder.onerror = () => {
-        stream.getTracks().forEach((t) => t.stop());
-        showReadAloudSentenceFeedback(sentence, { ok: false, message: 'Không ghi âm được. Ba mẹ kiểm tra micro nhé!' });
-      };
-
+      // Start recording (returns a promise that resolves with the blob on stop)
       recorder.start();
 
       // Auto-stop after 30 seconds
@@ -2989,6 +3157,62 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
         recordBtn.onclick = () => {
           if (recorder.state === 'recording') recorder.stop();
         };
+      }
+
+      // Wait for the blob
+      const blob = await recorder.stop();
+      stream.getTracks().forEach((t) => t.stop());
+
+      if (blob.size < 1200) {
+        // Too short — reset the UI so the kid can try again
+        _r2lSetMinnyMood('encourage', state.heroScope);
+        showReadAloudSentenceFeedback(sentence, { ok: false, message: 'Minny chưa nghe rõ. Con bấm Đọc lại, đợi đèn xanh rồi đọc to cả câu nhé!' });
+        renderReadAloudSentenceArea();  // ← THIS WAS MISSING — resets the record button
+        renderReadAloudControls();      // ← also re-render controls
+        return;
+      }
+
+      // Send for scoring
+      if (shell) shell.dataset.readAloudState = 'scoring';
+      showReadAloudSentenceFeedback(sentence, { loading: true });
+      _r2lSetMinnyMood('idle', state.heroScope);
+
+      try {
+        const result = await _r2lPostSpeakingCheck(blob, sentence.text_en, 'read', 30, null);
+
+        // Track attempt
+        sentence.attempts.push({
+          score_percent: result?.score_percent || 0,
+          transcript: result?.transcript || '',
+          timestamp: new Date().toISOString(),
+        });
+
+        if (result?.ok) {
+          const score = Number(result.score_percent || 0);
+          if (score > sentence.bestScore) sentence.bestScore = score;
+          sentence.state = 'scored';
+          sentence.feedback = result;
+
+          _r2lSetMinnyMood(_r2lMinnyMoodForScore(score), state.heroScope);
+        } else {
+          _r2lSetMinnyMood('encourage', state.heroScope);
+          sentence.feedback = result || { ok: false, message: 'Minny chưa chấm điểm được. Con bấm Thu lại nhé!' };
+        }
+
+        // Re-render
+        if (shell) shell.dataset.readAloudState = 'feedback';
+        renderReadAloudSentenceArea();
+        renderReadAloudFeedback();
+        renderReadAloudControls();
+        renderReadAloudProgress();
+      } catch (err) {
+        showReadAloudSentenceFeedback(sentence, {
+          ok: false,
+          message: err?.message || 'Chưa gửi được bài đọc. Con thử lại nhé!',
+        });
+        _r2lSetMinnyMood('encourage', state.heroScope);
+        renderReadAloudSentenceArea();
+        renderReadAloudControls();
       }
     } catch (err) {
       showReadAloudSentenceFeedback(sentence, { ok: false, message: 'Micro chưa được cấp phép. Ba mẹ kiểm tra Cài đặt → Microphone nhé!' });
@@ -3085,6 +3309,10 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
     const state = _r2lReadAloudState;
     if (!state || state.completed) return;
     state.completed = true;
+
+    // Update shell state
+    const shell = state.root.closest('[data-activity-shell="read_aloud"]');
+    if (shell) shell.dataset.readAloudState = 'done';
 
     const scores = state.sentences.map((s) => s.bestScore);
     const total = state.sentences.length;
