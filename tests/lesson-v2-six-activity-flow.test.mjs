@@ -42,7 +42,7 @@ test('activity progress shows exactly 6 steps in the new order', () => {
     '3. Đọc hiểu',
     '4. Viết đáp án',
     '5. Nói lại',
-    '6. Kể truyện',
+    '6. Đọc to',
   ];
   for (const label of labels) {
     assert.match(activityProgress, new RegExp(label));

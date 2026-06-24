@@ -4023,6 +4023,11 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
     const paragraphs = story.paragraphs_en || [];
     // Normalize backend guided_listening shape once
     const rawGuided = state.lesson?.guided_listening;
+    if (!rawGuided || !rawGuided.length) {
+      console.warn('[R2L] guided_listening data is empty — paragraphs will auto-advance without questions');
+    } else {
+      console.log('[R2L] guided_listening loaded:', rawGuided.length, 'paragraphs with questions');
+    }
     const normalized = normalizeGuidedListening(Array.isArray(rawGuided) ? rawGuided : []);
     // Store normalized data on window/scope for reuse
     window.__guidedNorm = normalized;
@@ -4133,11 +4138,18 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
     const norm = window.__guidedNorm;
     const allQuestions = norm?.questions ?? [];
     const paraQuestions = allQuestions.filter((q) => q.paragraph_index === paragraphIndex);
+    console.log('[R2L] showGuidedQuestions paragraph=' + paragraphIndex, 'total=' + allQuestions.length, 'forPara=' + paraQuestions.length);
 
     const qContainer = listener.querySelector('[data-guided-questions]');
     if (!qContainer) return;
 
     const paragraphs = state.lesson?.story?.paragraphs_en || [];
+
+    if (paraQuestions.length === 0) {
+      qContainer.innerHTML = '<p class="text-sm text-cream/60">Đoạn này không có câu hỏi — bấm Tiếp để sang đoạn sau.</p>';
+      checkParagraphCompletion(paragraphIndex, paragraphs);
+      return;
+    }
 
     qContainer.innerHTML = '';
     paraQuestions.forEach((qData) => {
@@ -4469,6 +4481,7 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
   }
 
   function renderLesson(lesson) {
+    console.log('[R2L] renderLesson guided_listening:', JSON.stringify(lesson.guided_listening?.length ?? 'missing'), 'activities:', (lesson.activities || []).map(a => a.type));
     lesson = ensureLessonActivities(lesson);
     state.lesson = lesson;
     qs('#loading-card').classList.add('hidden');
