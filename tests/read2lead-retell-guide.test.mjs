@@ -85,13 +85,9 @@ test('buildRetellPrompt helpers reference template scaffolding', () => {
   assert.match(buildRetellPromptEn(SAMPLE_LESSON), /fill in the blanks/i);
 });
 
-test('ensureSixActivities injects retell_template on retell_summary', () => {
+test('ensureSixActivities injects read_aloud after listen_and_speak', () => {
   const activities = ensureSixActivities(SAMPLE_LESSON.activities, SAMPLE_LESSON);
-  const retell = activities.find((activity) => activity.type === 'retell_summary');
-  assert.ok(retell);
-  assert.ok(Array.isArray(retell.retell_template?.lines));
-  assert.ok(retell.retell_template.lines.length >= 3);
-  assert.ok(retell.speak_prompt_en);
-  assert.match(retell.prompt_vi, /chỗ trống|truyện/);
-  assert.match(retell.identity_vi, /chỗ trống|truyện/);
+  const ra = activities.find((activity) => activity.type === 'read_aloud');
+  assert.ok(ra);
+  assert.equal(ra.title_vi, 'Đọc to');
 });

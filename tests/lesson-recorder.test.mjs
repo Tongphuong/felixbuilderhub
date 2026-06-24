@@ -14,7 +14,6 @@ test('speaking activity requires 50% scoring or an explicit no-reward skip', () 
   assert.match(lessonPage, /_R2L_SPEAKING_PASS_PERCENT = 50/);
   assert.match(lessonPage, /passedItems >= itemKeys\.length/);
   assert.match(lessonPage, /_r2lCompleteSpeakActivityOnMicSkip/);
-  assert.match(lessonPage, /_r2lCompleteRetellOnMicSkip/);
   assert.match(lessonPage, /skipped_due_to_mic: true/);
   assert.doesNotMatch(lessonPage, /score_percent: 70/);
 });

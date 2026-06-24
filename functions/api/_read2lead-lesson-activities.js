@@ -1,17 +1,12 @@
-/** Client-facing V2 lesson has 6 activities; backend packs may still ship 5. */
+/** Client-facing V2 lesson has 6 activities; backend packs ship 5 (A/B/C/E + no 6th). */
 
-import {
-  buildRetellPromptEn,
-  buildRetellPromptVi,
-  buildRetellTemplate,
-} from './_read2lead-retell-guide.js';
 import { rewriteAudioHost } from './_read2lead-audio-url.js';
 
-export const RETELL_SUMMARY_ACTIVITY = {
-  type: 'retell_summary',
-  title_vi: 'Kể truyện',
-  identity_vi: 'Minny muốn nghe con kể lại — con điền chỗ trống và nhìn truyện bên dưới nhé',
-  instructions_vi: 'Con đọc truyện, điền các chỗ trống trong khung vàng, rồi kể bằng tiếng Anh.',
+export const READ_ALOUD_ACTIVITY = {
+  type: 'read_aloud',
+  title_vi: 'Đọc to',
+  identity_vi: 'Con đọc to từng câu cho Minny nghe nhé!',
+  instructions_vi: 'Con đọc từng câu trong truyện, Minny sẽ chấm điểm.',
 };
 
 /**
@@ -34,32 +29,15 @@ export function ensureSixActivities(activities, lessonContext = null, env = unde
           : {}),
       }))
     : [];
-  const context = lessonContext || { activities: list };
 
-  const existingIndex = list.findIndex((activity) => activity.type === 'retell_summary');
-  if (existingIndex >= 0) {
-    const retell = enrichRetellActivity(list[existingIndex], context);
-    list[existingIndex] = retell;
-    return list;
-  }
+  if (list.some((activity) => activity.type === 'read_aloud')) return list;
 
-  const retell = enrichRetellActivity({ ...RETELL_SUMMARY_ACTIVITY }, context);
+  const readAloud = { ...READ_ALOUD_ACTIVITY };
   const speakIndex = list.findIndex((activity) => activity.type === 'listen_and_speak');
   if (speakIndex >= 0) {
-    list.splice(speakIndex + 1, 0, retell);
+    list.splice(speakIndex + 1, 0, readAloud);
   } else {
-    list.push(retell);
+    list.push(readAloud);
   }
   return list;
-}
-
-function enrichRetellActivity(activity, lessonContext) {
-  const template = buildRetellTemplate(lessonContext);
-  return {
-    ...activity,
-    retell_template: activity.retell_template || template,
-    speak_prompt_en: activity.speak_prompt_en || template.speak_prompt_en,
-    prompt_vi: activity.prompt_vi || buildRetellPromptVi(lessonContext),
-    prompt_en: activity.prompt_en || buildRetellPromptEn(lessonContext),
-  };
 }

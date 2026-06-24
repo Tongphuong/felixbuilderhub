@@ -31,9 +31,9 @@ test('global CTA replaces per-activity prev next nav', () => {
   assert.doesNotMatch(lessonPage, /data-activity-prev/);
 });
 
-test('retell_summary is injected and reachable as part 6', () => {
-  assert.match(lessonActivities, /retell_summary/);
-  assert.match(lessonPage, /data-activity-shell="retell_summary"/);
+test('read_aloud is injected and reachable as part 6', () => {
+  assert.match(lessonActivities, /read_aloud/);
+  assert.match(lessonPage, /data-activity-shell="read_aloud"/);
   assert.match(lessonPage, /function ensureLessonActivities/);
   assert.match(lessonPage, /showActivity\(state\.activityIndex \+ 1\)/);
 });

@@ -160,7 +160,7 @@ export const ACTIVITY_TYPES_V20 = [
   'reading_comprehension',
   'written_response',
   'listen_and_speak',
-  'retell_summary',
+  'read_aloud',
 ];
 
 const V20_TO_V21_ACTIVITY = {
@@ -193,7 +193,7 @@ export function canonicalActivityType(type, schemaVersion) {
 
 export function isSpeakingActivityType(type) {
   const t = String(type || '');
-  return t === 'listen_and_speak' || t === 'echo_challenge' || t === 'retell_summary';
+  return t === 'listen_and_speak' || t === 'echo_challenge' || t === 'read_aloud';
 }
 
 function clampNonNegativeInt(value) {

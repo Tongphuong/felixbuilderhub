@@ -130,7 +130,7 @@ function isV2PackReviewed(pack) {
 
 const DUPLICATE_SUBMIT_WINDOW_MS = 12000;
 export const SPEAKING_PASS_PERCENT = 50;
-const SPEAKING_ACTIVITY_TYPES = new Set(['listen_and_speak', 'retell_summary']);
+const SPEAKING_ACTIVITY_TYPES = new Set(['listen_and_speak', 'read_aloud']);
 
 function isRecentDuplicateSubmit(currentPack) {
   const last = currentPack?.web_lesson_summary;
@@ -308,7 +308,7 @@ async function submitV2Lesson({
     // === V4 W2 hooks ===
     const w2DateKey = vietnamDateKey(submittedAt);
     const hasSpeakActivity = activityResults.some(
-      (result) => result?.type === 'listen_and_speak' || result?.type === 'retell_summary',
+      (result) => result?.type === 'listen_and_speak' || result?.type === 'read_aloud',
     );
     nextProgressState = applyQuestProgress(
       nextProgressState,
