@@ -238,3 +238,21 @@ test('normalizeGuidedListening handles the backend fixture file', () => {
     assert.equal(q.options_vi.length, 2);
   });
 });
+
+test('lesson Guided Listening plays every sentence audio in the active paragraph', () => {
+  const lessonSource = readFileSync(join(__dirname, '..', 'src', 'pages', 'read2lead', 'lesson.astro'), 'utf-8');
+  assert.match(lessonSource, /filter\(\(s\) => Number\(s\.paragraph_index\) === pIdx\)/);
+  assert.match(lessonSource, /playGuidedAudioSequence\(paragraphAudio, playBtn\)/);
+});
+
+test('lesson Guided Listening navigation reads the live paragraph index', () => {
+  const lessonSource = readFileSync(join(__dirname, '..', 'src', 'pages', 'read2lead', 'lesson.astro'), 'utf-8');
+  assert.match(lessonSource, /nav\.addEventListener\('click'/);
+  assert.match(lessonSource, /const currentIndex = state\.guidedListening\.paragraphIndex/);
+  assert.match(lessonSource, /Math\.max\(currentIndex - 1, 0\)/);
+});
+
+test('lesson Guided Listening allows progress after an answer is revealed', () => {
+  const lessonSource = readFileSync(join(__dirname, '..', 'src', 'pages', 'read2lead', 'lesson.astro'), 'utf-8');
+  assert.match(lessonSource, /answer\?\.correct \|\| answer\?\.outcome === 'revealed'/);
+});

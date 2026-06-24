@@ -4058,6 +4058,31 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
     updateGuidedControls(paragraphs);
   }
 
+  let guidedAudioSequenceId = 0;
+
+  function playGuidedAudioSequence(urls, button) {
+    const playableUrls = urls.filter((url) => url && !isRewardSfxUrl(url));
+    if (playableUrls.length === 0) return;
+
+    const sequenceId = ++guidedAudioSequenceId;
+    const playAt = (index) => {
+      if (sequenceId !== guidedAudioSequenceId || index >= playableUrls.length) return;
+      playAudio(playableUrls[index], button);
+      const audio = lessonAudioState.audio;
+      if (!audio) {
+        playAt(index + 1);
+        return;
+      }
+      const playNext = () => {
+        if (sequenceId === guidedAudioSequenceId) playAt(index + 1);
+      };
+      audio.addEventListener('ended', playNext, { once: true });
+      audio.addEventListener('error', playNext, { once: true });
+    };
+
+    playAt(0);
+  }
+
   function updateGuidedParagraphView(paragraphs, questions) {
     const section = qs('#w1-guided-listening-phase');
     if (!section) return;
@@ -4078,6 +4103,7 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
       // Show the paragraph text from story
       paraText.innerHTML = `<p class="text-base leading-relaxed text-cream">${escapeHtml(para)}</p>`;
     }
+    const qContainer = section.querySelector('[data-guided-questions]');
 
     // Audio section
     const audioSec = section.querySelector('[data-guided-audio]');
@@ -4085,8 +4111,10 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
     if (audioSec) {
       if (state.guidedListening.paragraphPlayed[idx]) {
         audioSec.hidden = true;
+        showGuidedQuestions(idx);
       } else {
         audioSec.hidden = false;
+        if (qContainer) qContainer.innerHTML = '';
         if (playBtn) {
           playBtn.disabled = false;
           playBtn.textContent = '🔊 Nghe đoạn này';
@@ -4106,10 +4134,10 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
 
         // Try to play audio for this paragraph
         const storySentences = state.lesson?.story?.sentences || [];
-        const sentenceAudio = storySentences.find((s) => Number(s.paragraph_index) === pIdx)?.audio_url;
-        if (sentenceAudio) {
-          playAudio(sentenceAudio, playBtn);
-        }
+        const paragraphAudio = storySentences
+          .filter((s) => Number(s.paragraph_index) === pIdx)
+          .map((s) => s?.audio_url);
+        playGuidedAudioSequence(paragraphAudio, playBtn);
 
         audioSec.hidden = true;
         scheduleSaveLessonSession();
@@ -4276,7 +4304,7 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
     const allCorrect = paraQuestions.every((q) => {
       const key = `${paragraphIndex}:${q.id}`;
       const answer = state.guidedListening.answers[key];
-      return answer?.correct;
+      return answer?.correct || answer?.outcome === 'revealed';
     });
 
     if (allCorrect) {
@@ -4305,30 +4333,54 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
         // All paragraphs done — transition to activities
         nextBtn.textContent = 'Bắt đầu nhiệm vụ 🎯';
         nextBtn.disabled = false;
-        if (!nextBtn.dataset.finishBound) {
-          nextBtn.dataset.finishBound = '1';
-          nextBtn.addEventListener('click', () => {
-            advanceToActivities();
-          });
-        }
       } else if (isDone) {
         nextBtn.textContent = 'Đoạn tiếp →';
         nextBtn.disabled = false;
-        if (!nextBtn.dataset.nextBound) {
-          nextBtn.dataset.nextBound = '1';
-          nextBtn.addEventListener('click', () => {
-            state.guidedListening.paragraphIndex = Math.min(idx + 1, paragraphs.length - 1);
+      } else {
+        nextBtn.textContent = 'Đoạn tiếp →';
+        nextBtn.disabled = true;
+      }
+    }
+
+    // Bind navigation once and read the live paragraph index on every click.
+    const nav = section.querySelector('[data-guided-nav]');
+    if (nav && !nav.dataset.delegated) {
+      nav.dataset.delegated = '1';
+      nav.addEventListener('click', (event) => {
+        const prevEl = event.target.closest('[data-guided-prev]');
+        const nextEl = event.target.closest('[data-guided-next]');
+        const currentIndex = state.guidedListening.paragraphIndex;
+
+        if (nextEl && !nextEl.disabled) {
+          const isLast = currentIndex >= paragraphs.length - 1;
+          const currentDone = state.guidedListening.paragraphsDone[currentIndex];
+          if (isLast && currentDone) {
+            advanceToActivities();
+            return;
+          }
+          if (currentDone) {
+            stopLessonAudio();
+            guidedAudioSequenceId += 1;
+            state.guidedListening.paragraphIndex = Math.min(currentIndex + 1, paragraphs.length - 1);
             state.guidedListening.phase = 'idle';
             const norm = window.__guidedNorm;
             updateGuidedParagraphView(paragraphs, norm?.questions ?? []);
             updateGuidedControls(paragraphs);
             scheduleSaveLessonSession();
-          });
+          }
         }
-      } else {
-        nextBtn.textContent = 'Đoạn tiếp →';
-        nextBtn.disabled = true;
-      }
+
+        if (prevEl && !prevEl.hidden) {
+          stopLessonAudio();
+          guidedAudioSequenceId += 1;
+          state.guidedListening.paragraphIndex = Math.max(currentIndex - 1, 0);
+          state.guidedListening.phase = 'idle';
+          const norm = window.__guidedNorm;
+          updateGuidedParagraphView(paragraphs, norm?.questions ?? []);
+          updateGuidedControls(paragraphs);
+          scheduleSaveLessonSession();
+        }
+      });
     }
 
     // Update progress dots
