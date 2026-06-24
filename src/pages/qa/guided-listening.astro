@@ -1,0 +1,672 @@
+---
+/**
+ * QA — Guided Listening
+ *
+ * Visual QA page for the Guided Listening feature.
+ * Loads fixture data directly — no env vars, no backend.
+ * DEV-ONLY: Not linked from nav or any production page.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import GuidedListener from '../../components/read2lead/guided-listener.astro';
+
+// ── Inline fixture data ──────────────────────────────────────────────────
+// The backend fixture doesn't exist on disk, so we inline it here.
+// 4 paragraphs, 8 questions total (1 yes_no + 1 choice per paragraph).
+const fixture = {
+  story: {
+    paragraphs_en: [
+      "Pilot is in the kitchen with Mom. They are making cookies. Pilot likes to help. Mom gives Pilot a big bowl.",
+      "Pilot puts flour in the bowl. Then he adds sugar and eggs. Mom mixes everything together. The dough looks good!",
+      "Pilot uses a small spoon to put dough on the tray. Mom puts the tray in the oven. They wait for the cookies to bake.",
+      "The cookies are ready. Pilot and Mom sit at the table. They eat warm cookies. Pilot says, \"These are the best cookies!\"",
+    ],
+  },
+  guided_listening: [
+    {
+      paragraph_index: 0,
+      questions: [
+        { id: 'gl_p0_q1', type: 'yes_no' as const, question_en: 'Is Pilot in the kitchen?', question_vi: 'Pilot có ở trong bếp không?', answer: true },
+        { id: 'gl_p0_q2', type: 'choice' as const, question_en: 'What does Mom help Pilot find?', question_vi: 'Mẹ giúp Pilot tìm gì?', options_en: ['a big bowl', 'a football'] as string[], options_vi: ['một cái tô lớn', 'một quả bóng đá'] as string[], correct_index: 0 },
+      ],
+    },
+    {
+      paragraph_index: 1,
+      questions: [
+        { id: 'gl_p1_q1', type: 'yes_no' as const, question_en: 'Does Pilot put flour in a big bowl?', question_vi: 'Pilot có cho bột vào một cái tô lớn không?', answer: true },
+        { id: 'gl_p1_q2', type: 'choice' as const, question_en: 'What does Pilot add to the flour?', question_vi: 'Pilot thêm gì vào bột?', options_en: ['sugar and eggs', 'water and salt'] as string[], options_vi: ['đường và trứng', 'nước và muối'] as string[], correct_index: 0 },
+      ],
+    },
+    {
+      paragraph_index: 2,
+      questions: [
+        { id: 'gl_p2_q1', type: 'yes_no' as const, question_en: 'Does Pilot use a big spoon?', question_vi: 'Pilot có dùng muỗng lớn không?', answer: false },
+        { id: 'gl_p2_q2', type: 'choice' as const, question_en: 'Where does Mom put the tray?', question_vi: 'Mẹ đặt khay ở đâu?', options_en: ['in the oven', 'in the fridge'] as string[], options_vi: ['trong lò', 'trong tủ lạnh'] as string[], correct_index: 0 },
+      ],
+    },
+    {
+      paragraph_index: 3,
+      questions: [
+        { id: 'gl_p3_q1', type: 'yes_no' as const, question_en: 'Do Pilot and Mom eat cold cookies?', question_vi: 'Pilot và Mẹ có ăn bánh quy lạnh không?', answer: false },
+        { id: 'gl_p3_q2', type: 'choice' as const, question_en: 'What does Pilot say about the cookies?', question_vi: 'Pilot nói gì về bánh quy?', options_en: ['the best cookies', 'too sweet'] as string[], options_vi: ['bánh quy ngon nhất', 'quá ngọt'] as string[], correct_index: 0 },
+      ],
+    },
+  ],
+};
+const paragraphs_en = fixture.story.paragraphs_en;
+const rawGuided = fixture.guided_listening;
+const paragraphCount = paragraphs_en.length;
+
+// Build typed paragraphs array for GuidedListener prop
+const guidedParagraphs = paragraphs_en.map((text, i) => {
+  const rawQs = (rawGuided[i]?.questions ?? []);
+  return {
+    text_en: text,
+    questions: rawQs.map((q) => {
+      if (q.type === 'yes_no') {
+        return {
+          id: q.id,
+          type: 'yes_no' as const,
+          question_vi: q.question_vi,
+          options_en: ['Yes', 'No'] as string[],
+          options_vi: ['Có', 'Không'] as string[],
+          correct_index: q.answer ? 0 : 1,
+          paragraph_index: i,
+        };
+      }
+      return {
+        id: q.id,
+        type: 'choice' as const,
+        question_vi: q.question_vi,
+        options_en: q.options_en as string[],
+        options_vi: q.options_vi as string[],
+        correct_index: q.correct_index,
+        paragraph_index: i,
+      };
+    }),
+  };
+});
+---
+
+<BaseLayout title="QA — Guided Listening">
+  <main class="min-h-screen bg-navy-950">
+    <section class="mx-auto max-w-6xl px-4 py-6 sm:px-6 lg:px-8">
+      <!-- QA Header -->
+      <div class="mb-6 rounded-md border border-accent/30 bg-accent/10 px-4 py-3">
+        <p class="text-xs font-bold uppercase tracking-wide text-accent">QA / DEV-ONLY</p>
+        <h1 class="font-display text-2xl font-bold text-cream">Guided Listening</h1>
+        <p class="mt-1 text-sm text-cream/60">
+          Visual verification page. Fixture: 4 paragraphs, 8 questions.
+          Nghe, trả lời, kiểm tra feedback (đúng/sai), nút chuyển đoạn.
+        </p>
+      </div>
+
+      <!-- Empty-state guard: fixture has data, but show a message if not -->
+      {paragraphCount === 0 ? (
+        <div class="rounded-md border border-gold/30 bg-gold/10 p-6 text-cream">
+          <p class="font-semibold text-gold">No guided listening data in fixture</p>
+        </div>
+      ) : (
+        <section id="qa-guided-listening" class="rounded-md border border-cream/10 bg-cream/[0.04] p-4">
+          <h2 class="font-display text-2xl font-bold text-cream">Nghe và trả lời</h2>
+          <GuidedListener paragraphs={guidedParagraphs} />
+        </section>
+      )}
+    </section>
+  </main>
+</BaseLayout>
+
+<script is:inline>
+(function () {
+  'use strict';
+
+  // ── Helpers (matching lesson.astro) ──────────────────────────────────────
+  const qs = (s) => document.querySelector(s);
+  const escapeHtml = (v) =>
+    String(v || '')
+      .replaceAll('&', '&amp;')
+      .replaceAll('<', '&lt;')
+      .replaceAll('>', '&gt;')
+      .replaceAll('"', '&quot;')
+      .replaceAll("'", '&#39;');
+
+  // ── Inline normalizeGuidedListening from r2l-guided-listening.ts ─────────
+  function normalizeGuidedListening(raw) {
+    const paragraphs = [];
+    const questions = [];
+    if (!Array.isArray(raw)) return { paragraphs, questions };
+    for (const para of raw) {
+      const paraIdx = Number(para?.paragraph_index ?? 0);
+      const rawQuestions = Array.isArray(para?.questions) ? para.questions : [];
+      const normalizedQuestions = rawQuestions.map((q) => {
+        const base = {
+          id: String(q.id ?? ''),
+          question_vi: String(q.question_vi ?? ''),
+          question_en: String(q.question_en ?? ''),
+          paragraph_index: paraIdx,
+          answer: undefined,
+        };
+        if (q?.type === 'yes_no') {
+          const answer = Boolean(q.answer);
+          return {
+            ...base,
+            type: 'yes_no',
+            options_en: ['Yes', 'No'],
+            options_vi: ['Có', 'Không'],
+            correct_index: answer ? 0 : 1,
+            answer,
+          };
+        }
+        return {
+          ...base,
+          type: 'choice',
+          options_en: Array.isArray(q?.options_en) ? q.options_en : [],
+          options_vi: Array.isArray(q?.options_vi) ? q.options_vi : [],
+          correct_index: Number(q?.correct_index ?? 0),
+          answer: undefined,
+        };
+      });
+      paragraphs.push({ index: paraIdx, questions: normalizedQuestions });
+      questions.push(...normalizedQuestions);
+    }
+    return { paragraphs, questions };
+  }
+
+  // ── Fixture data from Astro frontmatter ─────────────────────────────────
+  const paragraphs_en = [
+    "Pilot is in the kitchen with Mom. They are making cookies. Pilot likes to help. Mom gives Pilot a big bowl.",
+    "Pilot puts flour in the bowl. Then he adds sugar and eggs. Mom mixes everything together. The dough looks good!",
+    "Pilot uses a small spoon to put dough on the tray. Mom puts the tray in the oven. They wait for the cookies to bake.",
+    "The cookies are ready. Pilot and Mom sit at the table. They eat warm cookies. Pilot says, \"These are the best cookies!\"",
+  ];
+
+  const rawGuided = [
+    {
+      paragraph_index: 0,
+      questions: [
+        { id: 'gl_p0_q1', type: 'yes_no', question_en: 'Is Pilot in the kitchen?', question_vi: 'Pilot có ở trong bếp không?', answer: true },
+        { id: 'gl_p0_q2', type: 'choice', question_en: 'What does Mom help Pilot find?', question_vi: 'Mẹ giúp Pilot tìm gì?', options_en: ['a big bowl', 'a football'], options_vi: ['một cái tô lớn', 'một quả bóng đá'], correct_index: 0 },
+      ],
+    },
+    {
+      paragraph_index: 1,
+      questions: [
+        { id: 'gl_p1_q1', type: 'yes_no', question_en: 'Does Pilot put flour in a big bowl?', question_vi: 'Pilot có cho bột vào một cái tô lớn không?', answer: true },
+        { id: 'gl_p1_q2', type: 'choice', question_en: 'What does Pilot add to the flour?', question_vi: 'Pilot thêm gì vào bột?', options_en: ['sugar and eggs', 'water and salt'], options_vi: ['đường và trứng', 'nước và muối'], correct_index: 0 },
+      ],
+    },
+    {
+      paragraph_index: 2,
+      questions: [
+        { id: 'gl_p2_q1', type: 'yes_no', question_en: 'Does Pilot use a big spoon?', question_vi: 'Pilot có dùng muỗng lớn không?', answer: false },
+        { id: 'gl_p2_q2', type: 'choice', question_en: 'Where does Mom put the tray?', question_vi: 'Mẹ đặt khay ở đâu?', options_en: ['in the oven', 'in the fridge'], options_vi: ['trong lò', 'trong tủ lạnh'], correct_index: 0 },
+      ],
+    },
+    {
+      paragraph_index: 3,
+      questions: [
+        { id: 'gl_p3_q1', type: 'yes_no', question_en: 'Do Pilot and Mom eat cold cookies?', question_vi: 'Pilot và Mẹ có ăn bánh quy lạnh không?', answer: false },
+        { id: 'gl_p3_q2', type: 'choice', question_en: 'What does Pilot say about the cookies?', question_vi: 'Pilot nói gì về bánh quy?', options_en: ['the best cookies', 'too sweet'], options_vi: ['bánh quy ngon nhất', 'quá ngọt'], correct_index: 0 },
+      ],
+    },
+  ];
+
+  // ── Normalize ────────────────────────────────────────────────────────────
+  const normalized = normalizeGuidedListening(rawGuided);
+  window.__guidedNorm = normalized;
+
+  // ── State ────────────────────────────────────────────────────────────────
+  const state = {
+    guidedListening: {
+      phase: 'idle',
+      paragraphIndex: 0,
+      paragraphPlayed: new Array(paragraphs_en.length).fill(false),
+      paragraphsDone: new Array(paragraphs_en.length).fill(false),
+      answers: {},
+    },
+  };
+
+  // ── Guided Listening logic (mirrors lesson.astro) ────────────────────────
+
+  function initGuidedListeningParagraphs() {
+    const section = qs('#qa-guided-listening');
+    if (!section) return;
+    const listener = section.querySelector('[data-guided-listener]');
+    if (!listener) return;
+
+    const count = paragraphs_en.length;
+    listener.dataset.paragraphCount = String(count);
+    listener.removeAttribute('hidden');
+
+    // Render progress dots
+    const progress = listener.querySelector('[data-guided-progress]');
+    if (progress) {
+      progress.innerHTML = Array.from({ length: count }, (_, i) =>
+        `<span class="r2l-dot" data-paragraph-dot="${i}" data-state="${state.guidedListening.paragraphsDone[i] ? 'done' : (i === state.guidedListening.paragraphIndex ? 'active' : (i < state.guidedListening.paragraphIndex ? 'done' : 'locked'))}" aria-label="Đoạn ${i + 1}"></span>`
+      ).join('');
+    }
+
+    updateGuidedParagraphView();
+    updateGuidedControls();
+  }
+
+  function updateGuidedParagraphView() {
+    const section = qs('#qa-guided-listening');
+    if (!section) return;
+    const idx = state.guidedListening.paragraphIndex;
+    const para = paragraphs_en[idx];
+    if (!para) return;
+
+    // Paragraph label
+    const label = section.querySelector('[data-paragraph-label]');
+    if (label) label.textContent = `Đoạn ${idx + 1}/${paragraphs_en.length}`;
+
+    // Paragraph text
+    const paraText = section.querySelector('[data-paragraph-text]');
+    if (paraText) {
+      paraText.innerHTML = `<p class="text-base leading-relaxed text-cream">${escapeHtml(para)}</p>`;
+    }
+
+    // Show the paragraph container
+    const paraContainer = section.querySelector('[data-guided-paragraph]');
+    if (paraContainer) paraContainer.hidden = false;
+
+    // Audio section
+    const audioSec = section.querySelector('[data-guided-audio]');
+    const playBtn = section.querySelector('[data-guided-play]');
+    if (audioSec) {
+      if (state.guidedListening.paragraphPlayed[idx]) {
+        audioSec.hidden = true;
+      } else {
+        audioSec.hidden = false;
+        if (playBtn) {
+          playBtn.disabled = false;
+          playBtn.textContent = '🔊 Nghe đoạn này';
+        }
+      }
+    }
+
+    // Bind play button once
+    if (playBtn && !playBtn.dataset.bound) {
+      playBtn.dataset.bound = '1';
+      playBtn.addEventListener('click', () => {
+        const pIdx = state.guidedListening.paragraphIndex;
+        const played = state.guidedListening.paragraphPlayed.slice();
+        played[pIdx] = true;
+        state.guidedListening.paragraphPlayed = played;
+        state.guidedListening.phase = 'questioning';
+        audioSec.hidden = true;
+        updateGuidedControls();
+        showGuidedQuestions(pIdx);
+      });
+    }
+
+    // Update dots
+    const dots = section.querySelectorAll('[data-paragraph-dot]');
+    dots.forEach((dot, i) => {
+      if (state.guidedListening.paragraphsDone[i]) dot.dataset.state = 'done';
+      else if (i === idx) dot.dataset.state = 'active';
+      else if (i < idx) dot.dataset.state = 'done';
+      else dot.dataset.state = 'locked';
+    });
+  }
+
+  function showGuidedQuestions(paragraphIndex) {
+    const section = qs('#qa-guided-listening');
+    if (!section) return;
+    const listener = section.querySelector('[data-guided-listener]');
+    if (!listener) return;
+
+    const norm = window.__guidedNorm;
+    const allQuestions = norm?.questions ?? [];
+
+    const qContainer = listener.querySelector('[data-guided-questions]');
+    if (!qContainer) return;
+
+    const questionArticles = qContainer.querySelectorAll('[data-guided-question]');
+    questionArticles.forEach((qa) => {
+      const qId = qa.dataset.questionId;
+      const qData = allQuestions.find((q) => q.id === qId);
+      if (!qData) { qa.hidden = true; return; }
+
+      const paraIdx = Number(qData.paragraph_index);
+      if (paraIdx !== paragraphIndex) { qa.hidden = true; return; }
+
+      qa.hidden = false;
+
+      // Check if already answered
+      const answerKey = `${paragraphIndex}:${qId}`;
+      const existingAnswer = state.guidedListening.answers[answerKey];
+      if (existingAnswer) {
+        qa.dataset.state = existingAnswer.correct ? 'correct' : (existingAnswer.outcome === 'revealed' ? 'revealed' : '');
+        qa.querySelectorAll('[data-guided-option]').forEach((opt) => {
+          opt.disabled = true;
+          const optIdx = Number(opt.dataset.optionIndex);
+          if (optIdx === qData.correct_index) {
+            opt.dataset.state = 'revealed';
+          } else if (optIdx === existingAnswer.selectedIndex && !existingAnswer.correct) {
+            opt.dataset.state = 'selected-wrong';
+          } else {
+            opt.dataset.state = '';
+          }
+        });
+        return;
+      }
+
+      // Fresh question — populate
+      qa.dataset.state = '';
+      const textEl = qa.querySelector('[data-question-text]');
+      if (textEl) textEl.textContent = qData.question_vi || '';
+
+      const optContainer = qa.querySelector('[data-question-options]');
+      if (optContainer && !optContainer.dataset.populated) {
+        optContainer.dataset.populated = '1';
+        optContainer.innerHTML = qData.options_en.map((opt, optIdx) =>
+          `<button type="button" class="r2l-guided-question__option" data-guided-option data-option-index="${optIdx}">${escapeHtml(opt)}</button>`
+        ).join('');
+      }
+
+      // Event delegation on optContainer — one listener per question, handles dynamically created buttons
+      if (optContainer && !optContainer.dataset.delegated) {
+        optContainer.dataset.delegated = '1';
+        optContainer.addEventListener('click', (e) => {
+          const optBtn = e.target.closest('[data-guided-option]');
+          if (!optBtn || optBtn.disabled) return;
+
+          const optIdx = Number(optBtn.dataset.optionIndex);
+          const qId = qa.dataset.questionId;
+          const qDataInner = allQuestions.find((q) => q.id === qId);
+          if (!qDataInner) return;
+
+          const isCorrect = optIdx === qDataInner.correct_index;
+
+          const key = `${paragraphIndex}:${qId}`;
+          const existing = state.guidedListening.answers[key];
+          const prevAttempts = existing?.attempts ?? 0;
+
+          const answer = {
+            paragraphIndex,
+            questionId: qId,
+            selectedIndex: optIdx,
+            correct: isCorrect,
+            outcome: isCorrect ? (prevAttempts === 0 ? 'first_try' : 'second_try') : (prevAttempts >= 1 ? 'revealed' : 'second_try'),
+            attempts: prevAttempts + 1,
+          };
+          state.guidedListening.answers[key] = answer;
+
+          // Visual feedback
+          optContainer.querySelectorAll('[data-guided-option]').forEach((ob) => ob.disabled = true);
+          const feedbackEl = qa.querySelector('[data-question-feedback]');
+
+          if (isCorrect) {
+            optBtn.dataset.state = 'selected-correct';
+            qa.dataset.state = 'correct';
+            if (feedbackEl) {
+              feedbackEl.textContent = 'Đúng rồi! 🎉';
+              feedbackEl.classList.remove('hidden');
+            }
+          } else {
+            optBtn.dataset.state = 'selected-wrong';
+            if (answer.outcome === 'revealed') {
+              qa.dataset.state = 'revealed';
+              optContainer.querySelectorAll('[data-guided-option]').forEach((ob, i) => {
+                if (i === qDataInner.correct_index) ob.dataset.state = 'revealed';
+              });
+              const correctText = qDataInner.options_en[qDataInner.correct_index] ?? '';
+              if (feedbackEl) {
+                feedbackEl.textContent = `Đáp án đúng: ${correctText}`;
+                feedbackEl.classList.remove('hidden');
+              }
+            } else {
+              qa.dataset.state = '';
+              if (feedbackEl) {
+                feedbackEl.textContent = 'Chưa đúng — thử lại!';
+                feedbackEl.classList.remove('hidden');
+              }
+              setTimeout(() => {
+                optContainer.querySelectorAll('[data-guided-option]').forEach((ob) => ob.disabled = false);
+              }, 600);
+            }
+          }
+
+          checkParagraphCompletion(paragraphIndex);
+        });
+      }
+    });
+  }
+
+  function checkParagraphCompletion(paragraphIndex) {
+    const section = qs('#qa-guided-listening');
+    if (!section) return;
+    const listener = section.querySelector('[data-guided-listener]');
+    if (!listener) return;
+
+    const norm = window.__guidedNorm;
+    const allQuestions = norm?.questions ?? [];
+    const paraQuestions = allQuestions.filter((q) => q.paragraph_index === paragraphIndex);
+
+    if (paraQuestions.length === 0) {
+      const done = state.guidedListening.paragraphsDone.slice();
+      done[paragraphIndex] = true;
+      state.guidedListening.paragraphsDone = done;
+      updateGuidedControls();
+      return;
+    }
+
+    const allCorrect = paraQuestions.every((q) => {
+      const key = `${paragraphIndex}:${q.id}`;
+      const answer = state.guidedListening.answers[key];
+      return answer?.correct;
+    });
+
+    if (allCorrect) {
+      const done = state.guidedListening.paragraphsDone.slice();
+      done[paragraphIndex] = true;
+      state.guidedListening.paragraphsDone = done;
+      updateGuidedControls();
+    }
+  }
+
+  function updateGuidedControls() {
+    const section = qs('#qa-guided-listening');
+    if (!section) return;
+    const idx = state.guidedListening.paragraphIndex;
+    const prevBtn = section.querySelector('[data-guided-prev]');
+    const nextBtn = section.querySelector('[data-guided-next]');
+    const isDone = state.guidedListening.paragraphsDone[idx];
+
+    if (prevBtn) prevBtn.hidden = idx <= 0;
+
+    if (nextBtn) {
+      if (idx >= paragraphs_en.length - 1 && isDone) {
+        nextBtn.textContent = 'Bắt đầu nhiệm vụ 🎯';
+        nextBtn.disabled = false;
+      } else if (isDone) {
+        nextBtn.textContent = 'Đoạn tiếp →';
+        nextBtn.disabled = false;
+      } else {
+        nextBtn.textContent = 'Đoạn tiếp →';
+        nextBtn.disabled = true;
+      }
+    }
+
+    // Bind nav event delegation once
+    const nav = section.querySelector('[data-guided-nav]');
+    if (nav && !nav.dataset.delegated) {
+      nav.dataset.delegated = '1';
+      nav.addEventListener('click', (e) => {
+        const prevEl = e.target.closest('[data-guided-prev]');
+        const nextEl = e.target.closest('[data-guided-next]');
+        const curIdx = state.guidedListening.paragraphIndex;
+
+        if (nextEl && !nextEl.disabled) {
+          const lastPara = curIdx >= paragraphs_en.length - 1;
+          const done = state.guidedListening.paragraphsDone[curIdx];
+          if (lastPara && done) {
+            advanceToActivities();
+          } else if (done) {
+            state.guidedListening.paragraphIndex = Math.min(curIdx + 1, paragraphs_en.length - 1);
+            state.guidedListening.phase = 'idle';
+            updateGuidedParagraphView();
+            updateGuidedControls();
+          }
+        }
+
+        if (prevEl && !prevEl.hidden) {
+          state.guidedListening.paragraphIndex = Math.max(curIdx - 1, 0);
+          state.guidedListening.phase = 'idle';
+          updateGuidedParagraphView();
+          updateGuidedControls();
+        }
+      });
+    }
+
+    // Update dots
+    const dots = section.querySelectorAll('[data-paragraph-dot]');
+    dots.forEach((dot, i) => {
+      if (state.guidedListening.paragraphsDone[i]) dot.dataset.state = 'done';
+      else if (i === idx) dot.dataset.state = 'active';
+      else if (i < idx) dot.dataset.state = 'done';
+      else dot.dataset.state = 'locked';
+    });
+  }
+
+  function advanceToActivities() {
+    const section = qs('#qa-guided-listening');
+    if (section) {
+      // Count results for display
+      const answers = Object.values(state.guidedListening.answers);
+      const correct = answers.filter((a) => a.correct).length;
+      const total = answers.length;
+      alert(`✅ Guided Listening complete!\nCorrect: ${correct}/${total}`);
+    }
+  }
+
+  // ── Init ─────────────────────────────────────────────────────────────────
+  document.addEventListener('DOMContentLoaded', () => {
+    // Show the section and unhide the guided-listener shell
+    const section = document.getElementById('qa-guided-listening');
+    if (section) {
+      section.classList.remove('hidden');
+      const listener = section.querySelector('[data-guided-listener]');
+      if (listener) listener.hidden = false;
+      initGuidedListeningParagraphs();
+    }
+  });
+})();
+</script>
+
+<style is:global>
+  /* ── R2L typography base ─────────────────────────────────────── */
+  .r2l-primary {
+    min-height: 44px;
+    border-radius: 8px;
+    background: rgb(74 222 128);
+    padding: 0.75rem 1rem;
+    font-weight: 800;
+    color: rgb(10 14 26);
+    transition: transform 180ms ease, opacity 180ms ease;
+  }
+  .r2l-primary:hover:not(:disabled) { transform: translateY(-1px); }
+  .r2l-primary:disabled { cursor: not-allowed; opacity: 0.45; }
+
+  .r2l-secondary {
+    min-height: 44px;
+    border-radius: 8px;
+    border: 1px solid rgb(245 230 211 / 0.24);
+    background: rgb(245 230 211 / 0.05);
+    padding: 0.75rem 1rem;
+    font-weight: 800;
+    color: rgb(245 230 211);
+  }
+  .r2l-secondary:disabled { cursor: not-allowed; opacity: 0.45; }
+
+  .r2l-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgb(245 230 211 / 0.15);
+    transition: background 300ms ease, transform 300ms ease;
+  }
+  .r2l-dot[data-state='done'] { background: rgb(74 222 128); }
+  .r2l-dot[data-state='active'] {
+    background: rgb(212 166 78);
+    transform: scale(1.3);
+  }
+  .r2l-dot[data-state='locked'] { background: rgb(245 230 211 / 0.15); }
+
+  .r2l-activity {
+    border-radius: 8px;
+    border: 1px solid rgb(245 230 211 / 0.12);
+    background: rgb(245 230 211 / 0.04);
+    padding: 1.25rem;
+  }
+
+  .r2l-activity-head h2 {
+    margin-top: 0.25rem;
+    font-family: Manrope, Inter, sans-serif;
+    font-size: clamp(1.35rem, 2vw, 1.75rem);
+    font-weight: 800;
+    color: rgb(245 230 211);
+  }
+  .r2l-activity-head p { color: rgb(245 230 211 / 0.72); }
+  .r2l-identity {
+    font-weight: 800;
+    color: rgb(212 166 78) !important;
+  }
+
+  /* ── Guided listener overrides ──────────────────────────────── */
+  .r2l-guided-listener .r2l-dot[data-state='done'] { background: rgb(74 222 128); }
+  .r2l-guided-listener .r2l-dot[data-state='active'] {
+    background: rgb(212 166 78);
+    transform: scale(1.3);
+  }
+  .r2l-guided-listener .r2l-dot[data-state='locked'] { background: rgb(245 230 211 / 0.15); }
+  .r2l-guided-paragraph-vi:not(.hidden) {
+    border-top: 1px solid rgb(245 230 211 / 0.08);
+    padding-top: 0.5rem;
+  }
+
+  /* ── Guided question styles ─────────────────────────────────── */
+  .r2l-guided-question[data-state='correct'] {
+    border-color: rgb(74 222 128 / 0.55);
+    background: rgb(74 222 128 / 0.08);
+  }
+  .r2l-guided-question[data-state='revealed'] {
+    border-color: rgb(212 166 78 / 0.5);
+    background: rgb(212 166 78 / 0.08);
+  }
+  .r2l-guided-question__option {
+    min-height: 44px;
+    border-radius: 8px;
+    border: 1px solid rgb(245 230 211 / 0.14);
+    background: rgb(10 14 26 / 0.45);
+    padding: 0.75rem 0.9rem;
+    text-align: left;
+    font-weight: 700;
+    color: rgb(245 230 211);
+    cursor: pointer;
+    transition: border-color 180ms ease, background 180ms ease;
+    flex: 1 1 auto;
+  }
+  .r2l-guided-question__option:hover {
+    border-color: rgb(74 222 128 / 0.55);
+    background: rgb(74 222 128 / 0.14);
+  }
+  .r2l-guided-question__option[data-state='selected-correct'] {
+    border-color: rgb(74 222 128 / 0.7);
+    background: rgb(74 222 128 / 0.22);
+  }
+  .r2l-guided-question__option[data-state='selected-wrong'] {
+    border-color: rgb(239 68 68 / 0.7);
+    background: rgb(239 68 68 / 0.16);
+  }
+  .r2l-guided-question__option[data-state='revealed'] {
+    border-color: rgb(212 166 78 / 0.6);
+    background: rgb(212 166 78 / 0.16);
+    opacity: 0.85;
+  }
+  .r2l-guided-question__option:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+  }
+</style>
