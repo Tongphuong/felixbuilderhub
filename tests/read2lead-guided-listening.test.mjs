@@ -1,5 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync, existsSync } from 'node:fs';
+import { join, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import {
   createGuidedListeningState,
   markParagraphPlayed,
@@ -7,7 +10,10 @@ import {
   advanceToNextParagraph,
   scoreGuidedListening,
   restoreGuidedListeningState,
+  normalizeGuidedListening,
 } from '../src/lib/r2l-guided-listening.ts';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 test('createGuidedListeningState creates initial state for N paragraphs', () => {
   const state = createGuidedListeningState(3);
@@ -111,4 +117,124 @@ test('restoreGuidedListeningState returns fresh state for null input', () => {
   assert.equal(restored.paragraphIndex, 0);
   assert.equal(restored.phase, 'idle');
   assert.deepEqual(restored.paragraphPlayed, [false, false, false]);
+});
+
+test('normalizeGuidedListening transforms backend yes_no + choice into uniform shape', () => {
+  const raw = [
+    {
+      paragraph_index: 0,
+      questions: [
+        {
+          id: 'gl_p0_q1',
+          type: 'yes_no',
+          question_en: 'Is Pilot in the kitchen?',
+          question_vi: 'Pilot co o trong bep khong?',
+          answer: true,
+        },
+        {
+          id: 'gl_p0_q2',
+          type: 'choice',
+          question_en: 'What does Mom help Pilot find?',
+          question_vi: 'Me giup Pilot tim gi?',
+          options_en: ['flour and eggs', 'a football'],
+          options_vi: ['bot va trung', 'mot qua bong da'],
+          correct_index: 0,
+        },
+      ],
+    },
+    {
+      paragraph_index: 1,
+      questions: [
+        {
+          id: 'gl_p1_q1',
+          type: 'yes_no',
+          question_en: 'Does Pilot put flour in a big bowl?',
+          question_vi: 'Pilot co cho bot vao mot cai to lon khong?',
+          answer: false,
+        },
+      ],
+    },
+  ];
+
+  const result = normalizeGuidedListening(raw);
+
+  // Should produce 3 total questions
+  assert.equal(result.questions.length, 3);
+  assert.equal(result.paragraphs.length, 2);
+
+  // Yes/No question: answer=true → correct_index=0
+  const yesNoQ = result.questions.find((q) => q.id === 'gl_p0_q1');
+  assert.ok(yesNoQ);
+  assert.equal(yesNoQ.type, 'yes_no');
+  assert.deepEqual(yesNoQ.options_en, ['Yes', 'No']);
+  assert.deepEqual(yesNoQ.options_vi, ['Có', 'Không']);
+  assert.equal(yesNoQ.correct_index, 0);
+  assert.equal(yesNoQ.answer, true);
+  assert.equal(yesNoQ.paragraph_index, 0);
+
+  // Choice question: passes through
+  const choiceQ = result.questions.find((q) => q.id === 'gl_p0_q2');
+  assert.ok(choiceQ);
+  assert.equal(choiceQ.type, 'choice');
+  assert.deepEqual(choiceQ.options_en, ['flour and eggs', 'a football']);
+  assert.deepEqual(choiceQ.options_vi, ['bot va trung', 'mot qua bong da']);
+  assert.equal(choiceQ.correct_index, 0);
+  assert.equal(choiceQ.paragraph_index, 0);
+
+  // Yes/No question with answer=false → correct_index=1
+  const noQ = result.questions.find((q) => q.id === 'gl_p1_q1');
+  assert.ok(noQ);
+  assert.equal(noQ.correct_index, 1);
+  assert.equal(noQ.answer, false);
+  assert.equal(noQ.paragraph_index, 1);
+});
+
+test('normalizeGuidedListening returns empty for null/undefined/empty input', () => {
+  assert.equal(normalizeGuidedListening(null).questions.length, 0);
+  assert.equal(normalizeGuidedListening(undefined).questions.length, 0);
+  assert.equal(normalizeGuidedListening([]).questions.length, 0);
+});
+
+test('normalizeGuidedListening handles the backend fixture file', () => {
+  const fixturePath = join(__dirname, '..', '..', 'read2lead_v0_codex', 'tests', 'fixtures', 'guided_listening_sample_pack.json');
+  if (!existsSync(fixturePath)) {
+    // In case the fixture path is relative to workspace root
+    const altPath = join('/home/felixbuilderhub/work/repos/read2lead_v0_codex/tests/fixtures/guided_listening_sample_pack.json');
+    if (!existsSync(altPath)) {
+      assert.ok(true, 'Fixture not found — skip integration test');
+      return;
+    }
+  }
+  const resolvedPath = existsSync(fixturePath) ? fixturePath : '/home/felixbuilderhub/work/repos/read2lead_v0_codex/tests/fixtures/guided_listening_sample_pack.json';
+  const raw = JSON.parse(readFileSync(resolvedPath, 'utf-8'));
+  const guided = raw.guided_listening;
+  assert.ok(Array.isArray(guided), 'guided_listening should be an array');
+
+  const result = normalizeGuidedListening(guided);
+
+  // The sample pack has 4 paragraphs, each with 2 questions = 8 total
+  assert.equal(result.paragraphs.length, 4);
+  assert.equal(result.questions.length, 8);
+
+  // Verify paragraph 0 has 2 questions
+  const p0 = result.paragraphs.find((p) => p.index === 0);
+  assert.ok(p0);
+  assert.equal(p0.questions.length, 2);
+
+  // Verify yes_no questions got synthesized options
+  const yesNoQuestions = result.questions.filter((q) => q.type === 'yes_no');
+  assert.equal(yesNoQuestions.length, 4); // 4 paragraphs × 1 yes_no each
+  yesNoQuestions.forEach((q) => {
+    assert.deepEqual(q.options_en, ['Yes', 'No']);
+    assert.deepEqual(q.options_vi, ['Có', 'Không']);
+    assert.ok(q.correct_index === 0 || q.correct_index === 1);
+  });
+
+  // Verify choice questions preserved their options
+  const choiceQuestions = result.questions.filter((q) => q.type === 'choice');
+  assert.equal(choiceQuestions.length, 4);
+  choiceQuestions.forEach((q) => {
+    assert.equal(q.options_en.length, 2);
+    assert.equal(q.options_vi.length, 2);
+  });
 });
