@@ -117,6 +117,7 @@ export function buildV2LessonPayload({ accessCode, codeData, pack, v2Pack, env }
     },
     parent_note_vi: v2Pack.parent_note_vi || '',
     next_suggestion_vi: v2Pack.next_suggestion_vi || '',
+    guided_listening: pack.guided_listening || [],
     status: pack.status,
   };
 }

@@ -4771,6 +4771,7 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
         scheduleSaveLessonSession();
         updateGuidedControls(paragraphs);
         showGuidedQuestions(pIdx);
+        checkParagraphCompletion(pIdx, paragraphs);
       });
     }
 
