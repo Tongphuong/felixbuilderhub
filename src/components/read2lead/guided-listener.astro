@@ -16,15 +16,17 @@
 import GuidedQuestion from './guided-question.astro';
 
 export interface GuidedParagraphData {
-  text_en: string;
+  text_en?: string;
   text_vi?: string;
   audio_url?: string;
   questions: Array<{
     id: string;
-    type: 'yesno' | 'choice';
+    type: 'yes_no' | 'choice';
     question_vi: string;
-    options: string[];
-    correctIndex: number;
+    options_en: string[];
+    options_vi: string[];
+    correct_index: number;
+    paragraph_index: number;
   }>;
 }
 

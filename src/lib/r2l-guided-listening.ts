@@ -13,20 +13,27 @@
 
 export interface GuidedQuestion {
   id: string;
-  type: 'yesno' | 'choice';
+  type: 'yes_no' | 'choice';
   /** Vietnamese question shown to the kid */
   question_vi: string;
   /** English question (optional, for reference) */
   question_en?: string;
-  /** 2 options for yesno, 2-4 for choice */
-  options: string[];
-  /** Index into options array of the correct answer */
-  correctIndex: number;
+  /** 2 options in English (synthesized ['Yes','No'] for yes_no) */
+  options_en: string[];
+  /** 2 options in Vietnamese (synthesized ['Có','Không'] for yes_no) */
+  options_vi: string[];
+  /** Index into options arrays of the correct answer (mapped from answer for yes_no) */
+  correct_index: number;
+  /** Backend paragraph index injected during normalization */
+  paragraph_index: number;
+  /** Raw boolean answer from backend (yes_no type only) */
+  answer?: boolean;
 }
 
 export interface GuidedParagraph {
   index: number;
-  text_en: string;
+  /** Paragraph text (populated from story by the caller) */
+  text_en?: string;
   text_vi?: string;
   audio_url?: string;
   questions: GuidedQuestion[];
@@ -53,6 +60,86 @@ export interface GuidedAnswer {
   /** 'first_try' | 'second_try' | 'revealed' — maps to lesson scoring */
   outcome: 'first_try' | 'second_try' | 'revealed';
   attempts: number;
+}
+
+// ── Normalization ────────────────────────────────────────────────────────────
+
+/**
+ * Normalize the raw backend guided_listening array into the internal shape.
+ *
+ * Backend input shape:
+ *   [{
+ *     paragraph_index: number,
+ *     questions: [
+ *       { id, type: 'yes_no', question_en, question_vi, answer: boolean } |
+ *       { id, type: 'choice', question_en, question_vi, options_en, options_vi, correct_index }
+ *     ]
+ *   }]
+ *
+ * Normalized output (each question has options_en, options_vi, correct_index):
+ *   { paragraphs: GuidedParagraph[], questions: GuidedQuestion[] }
+ *
+ * For yes_no questions:
+ *   - options_en is synthesized as ['Yes', 'No']
+ *   - options_vi is synthesized as ['Có', 'Không']
+ *   - answer: true  → correct_index: 0
+ *   - answer: false → correct_index: 1
+ * For choice questions:
+ *   - options_en, options_vi, correct_index pass through as-is
+ */
+export function normalizeGuidedListening(raw: any[]): { paragraphs: GuidedParagraph[]; questions: GuidedQuestion[] } {
+  const paragraphs: GuidedParagraph[] = [];
+  const questions: GuidedQuestion[] = [];
+
+  if (!Array.isArray(raw)) {
+    return { paragraphs, questions };
+  }
+
+  for (const para of raw) {
+    const paraIdx = Number(para?.paragraph_index ?? 0);
+    const rawQuestions = Array.isArray(para?.questions) ? para.questions : [];
+
+    const normalizedQuestions: GuidedQuestion[] = rawQuestions.map((q: any) => {
+      const base = {
+        id: String(q.id ?? ''),
+        question_vi: String(q.question_vi ?? ''),
+        question_en: String(q.question_en ?? ''),
+        paragraph_index: paraIdx,
+        answer: undefined as boolean | undefined,
+      };
+
+      if (q?.type === 'yes_no') {
+        const answer = Boolean(q.answer);
+        return {
+          ...base,
+          type: 'yes_no' as const,
+          options_en: ['Yes', 'No'],
+          options_vi: ['Có', 'Không'],
+          correct_index: answer ? 0 : 1,
+          answer,
+        };
+      }
+
+      // choice type (default fallback)
+      return {
+        ...base,
+        type: 'choice' as const,
+        options_en: Array.isArray(q?.options_en) ? q.options_en : [],
+        options_vi: Array.isArray(q?.options_vi) ? q.options_vi : [],
+        correct_index: Number(q?.correct_index ?? 0),
+        answer: undefined,
+      };
+    });
+
+    paragraphs.push({
+      index: paraIdx,
+      questions: normalizedQuestions,
+    });
+
+    questions.push(...normalizedQuestions);
+  }
+
+  return { paragraphs, questions };
 }
 
 // ── Factory ───────────────────────────────────────────────────────────────────
