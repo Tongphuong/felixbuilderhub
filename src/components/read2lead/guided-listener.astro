@@ -1,0 +1,124 @@
+---
+/**
+ * GuidedListener — Paragraph-by-paragraph listening comprehension.
+ *
+ * This is the main UX surface for the 'guided_listening' w1Phase.
+ * It renders a progression: paragraphs → audio → questions → next paragraph.
+ *
+ * Props are the lesson's guided_listening data:
+ *   paragraphs — array of { text_en, text_vi?, audio_url?, questions }
+ *   questions — affirmations/questions per paragraph
+ *
+ * The client script (in lesson.astro inline JS) drives the state machine
+ * using helpers from src/lib/r2l-guided-listening.ts.
+ */
+
+import GuidedQuestion from './guided-question.astro';
+
+export interface GuidedParagraphData {
+  text_en?: string;
+  text_vi?: string;
+  audio_url?: string;
+  questions: Array<{
+    id: string;
+    type: 'yes_no' | 'choice';
+    question_vi: string;
+    options_en: string[];
+    options_vi: string[];
+    correct_index: number;
+    paragraph_index: number;
+  }>;
+}
+
+export interface Props {
+  paragraphs: GuidedParagraphData[];
+}
+
+const { paragraphs } = Astro.props;
+const paragraphCount = paragraphs?.length ?? 0;
+---
+
+<section
+  class="r2l-activity r2l-guided-listener"
+  data-guided-listener
+  data-paragraph-count={paragraphCount}
+  hidden
+>
+  <div class="r2l-activity-head">
+    <p class="r2l-identity" data-activity-identity></p>
+    <h2 data-activity-title>Guided Listening</h2>
+    <p data-activity-instructions>Con nghe từng đoạn, rồi trả lời câu hỏi nhé!</p>
+  </div>
+
+  <!-- Progress dots for paragraphs -->
+  <nav class="r2l-guided-progress flex flex-wrap gap-2 mt-3" data-guided-progress aria-label="Tiến độ đoạn">
+    {Array.from({ length: paragraphCount }, (_, i) => (
+      <span
+        class="r2l-dot"
+        data-dot
+        data-paragraph-dot={i}
+        data-state="locked"
+        aria-label={`Đoạn ${i + 1}`}
+      ></span>
+    ))}
+  </nav>
+
+  <!-- Paragraph display area -->
+  <div class="r2l-guided-paragraph mt-4" data-guided-paragraph hidden>
+    <p class="text-xs font-bold uppercase tracking-wide text-gold/80" data-paragraph-label></p>
+    <div class="mt-2 rounded-md border border-cream/10 bg-cream/[0.04] p-4" data-paragraph-text>
+      <!-- filled by client -->
+    </div>
+    <div class="r2l-guided-paragraph-vi hidden mt-2 text-sm text-cream/65" data-paragraph-vi>
+      <!-- optional Vietnamese translation -->
+    </div>
+  </div>
+
+  <!-- Audio control -->
+  <div class="r2l-guided-audio mt-3 flex flex-wrap items-center gap-2" data-guided-audio hidden>
+    <button
+      type="button"
+      class="r2l-primary"
+      data-guided-play
+    >
+      🔊 Nghe đoạn này
+    </button>
+    <span class="text-xs text-cream/50" data-audio-status></span>
+  </div>
+
+  <!-- Question area populated by GuidedQuestion shells -->
+  <div class="r2l-guided-questions mt-4 space-y-3" data-guided-questions>
+    {paragraphs?.map((para) =>
+      para.questions?.map((q) => (
+        <GuidedQuestion id={q.id} type={q.type} />
+      ))
+    )}
+  </div>
+
+  <!-- Navigation buttons -->
+  <div class="r2l-guided-nav mt-5 flex flex-wrap gap-2" data-guided-nav>
+    <button type="button" class="r2l-secondary" data-guided-prev hidden aria-label="Đoạn trước">
+      ← Đoạn trước
+    </button>
+    <button type="button" class="r2l-primary" data-guided-next disabled aria-label="Đoạn tiếp">
+      Đoạn tiếp →
+    </button>
+  </div>
+</section>
+
+<style is:global>
+  .r2l-guided-listener .r2l-dot[data-state='done'] {
+    background: rgb(74 222 128);
+  }
+  .r2l-guided-listener .r2l-dot[data-state='active'] {
+    background: rgb(212 166 78);
+    transform: scale(1.3);
+  }
+  .r2l-guided-listener .r2l-dot[data-state='locked'] {
+    background: rgb(245 230 211 / 0.15);
+  }
+  .r2l-guided-paragraph-vi:not(.hidden) {
+    border-top: 1px solid rgb(245 230 211 / 0.08);
+    padding-top: 0.5rem;
+  }
+</style>

@@ -18,6 +18,7 @@ import ReadingComprehension from '../../components/read2lead/v2/ReadingComprehen
 import RewardBurst from '../../components/read2lead/v2/RewardBurst.astro';
 import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro';
 import V21MaintenanceScreen from '../../components/read2lead/v2/V21MaintenanceScreen.astro';
+import GuidedListener from '../../components/read2lead/guided-listener.astro';
 import retellGuideSrc from '../../../functions/api/_read2lead-retell-guide.js?raw';
 import dictationHelperSrc from '../../lib/read2lead-dictation.ts?raw';
 import { r2lRecorderScriptSrc } from '../../scripts/r2l-recorder-script.mjs';
@@ -72,6 +73,11 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
             <button id="w1-story-next" class="r2l-primary" type="button">Tiếp →</button>
           </div>
           <button id="w1-open-quests" class="r2l-primary w-full text-lg" type="button" disabled>Mở nhiệm vụ 🎯</button>
+        </section>
+
+        <section id="w1-guided-listening-phase" class="hidden space-y-4 rounded-md border border-cream/10 bg-cream/[0.04] p-4">
+          <h2 class="font-display text-2xl font-bold text-cream">Nghe và trả lời</h2>
+          <GuidedListener paragraphs={[]} />
         </section>
 
         <ParentStrip />
@@ -1015,6 +1021,7 @@ function _r2lBuildRetellTemplate(lesson) {
     w1MaxUnlocked: 0,
     w1MidpointCelebrated: false,
     storyGate: { read_done: false, listen_done: false, paragraphs_played: [], card_index: 0 },
+    guidedListening: { phase: 'idle', paragraphIndex: 0, paragraphPlayed: [], paragraphsDone: [], answers: {} },
     questionOutcomes: {},
     learningMetrics: { startedAt: new Date().toISOString(), events: [] },
   };
@@ -3322,6 +3329,7 @@ function _r2lBuildRetellTemplate(lesson) {
           w1_max_unlocked: state.w1MaxUnlocked,
           w1_midpoint_celebrated: state.w1MidpointCelebrated,
           story_gate: state.storyGate,
+          guided_listening: state.guidedListening,
           question_outcomes: state.questionOutcomes,
         } : {}),
       };
@@ -3376,7 +3384,7 @@ function _r2lBuildRetellTemplate(lesson) {
     }
     state.activityIndex = Math.max(0, Math.min(index, Math.max(0, activities.length - 1)));
     if (isW1()) {
-      state.w1Phase = saved.w1_phase === 'activities' || saved.w1_phase === 'result' ? saved.w1_phase : 'story';
+      state.w1Phase = saved.w1_phase === 'activities' || saved.w1_phase === 'result' || saved.w1_phase === 'guided_listening' ? saved.w1_phase : 'story';
       state.w1MaxUnlocked = Number.isFinite(Number(saved.w1_max_unlocked))
         ? Math.max(0, Number(saved.w1_max_unlocked))
         : Math.max(0, state.completedTypes.size - 1);
@@ -3393,7 +3401,18 @@ function _r2lBuildRetellTemplate(lesson) {
       }
       state.questionOutcomes = saved.question_outcomes || {};
       if (state.storyGate.read_done && state.storyGate.listen_done) {
-        state.w1Phase = state.w1Phase === 'story' ? 'activities' : state.w1Phase;
+        state.w1Phase = state.w1Phase === 'story' ? 'guided_listening' : state.w1Phase;
+      }
+      // Restore guided listening state
+      if (saved.guided_listening && typeof saved.guided_listening === 'object') {
+        const gl = saved.guided_listening;
+        state.guidedListening = {
+          phase: gl.phase || (gl.paragraphs_done?.every(Boolean) ? 'done' : 'idle'),
+          paragraphIndex: Number(gl.paragraphIndex) || 0,
+          paragraphPlayed: Array.isArray(gl.paragraphPlayed) ? gl.paragraphPlayed.slice() : [],
+          paragraphsDone: Array.isArray(gl.paragraphsDone) ? gl.paragraphsDone.slice() : [],
+          answers: gl.answers || {},
+        };
       }
     }
     return true;
@@ -3806,7 +3825,7 @@ function _r2lBuildRetellTemplate(lesson) {
         showToast('Con đọc và nghe hết truyện đã nhé!');
         return;
       }
-      w1EnterActivitiesPhase(Boolean(state.completedTypes.size));
+      w1EnterGuidedListeningPhase();
     });
     qs('#w1-read-along')?.addEventListener('click', () => w1ToggleReadAlong());
   }
@@ -3930,6 +3949,365 @@ function _r2lBuildRetellTemplate(lesson) {
         if (!Number.isNaN(index)) showActivity(index);
       });
     });
+  }
+
+  function w1EnterGuidedListeningPhase() {
+    state.w1Phase = 'guided_listening';
+    qs('#w1-story-phase')?.classList.add('hidden');
+    qs('#w1-guided-listening-phase')?.classList.remove('hidden');
+    qs('#w1-legacy-progress')?.classList.add('hidden');
+    qsa('[data-activity-shell]').forEach((shell) => { shell.hidden = true; });
+    qs('#global-cta')?.classList.add('hidden');
+    initGuidedListeningParagraphs();
+  }
+
+  function w1InitGuidedListeningPhase() {
+    w1EnterGuidedListeningPhase();
+  }
+
+  function initGuidedListeningParagraphs() {
+    const section = qs('#w1-guided-listening-phase');
+    if (!section) return;
+    const listener = section.querySelector('[data-guided-listener]');
+    if (!listener) return;
+
+    const story = state.lesson?.story || {};
+    const paragraphs = story.paragraphs_en || [];
+    // Normalize backend guided_listening shape once
+    const rawGuided = state.lesson?.guided_listening;
+    const normalized = normalizeGuidedListening(Array.isArray(rawGuided) ? rawGuided : []);
+    // Store normalized data on window/scope for reuse
+    window.__guidedNorm = normalized;
+    const questions = normalized.questions;
+
+    // Set paragraph count on the data attribute
+    const count = paragraphs.length;
+    listener.dataset.paragraphCount = String(count);
+
+    // Initialize guided listening state
+    if (!Array.isArray(state.guidedListening.paragraphPlayed)) {
+      state.guidedListening.paragraphPlayed = new Array(count).fill(false);
+    }
+    if (!Array.isArray(state.guidedListening.paragraphsDone)) {
+      state.guidedListening.paragraphsDone = new Array(count).fill(false);
+    }
+
+    // Render progress dots
+    const progress = listener.querySelector('[data-guided-progress]');
+    if (progress) {
+      progress.innerHTML = Array.from({ length: count }, (_, i) =>
+        `<span class="r2l-dot" data-paragraph-dot="${i}" data-state="${state.guidedListening.paragraphsDone[i] ? 'done' : (i === state.guidedListening.paragraphIndex ? 'active' : (i < state.guidedListening.paragraphIndex ? 'done' : 'locked'))}" aria-label="Đoạn ${i + 1}"></span>`
+      ).join('');
+    }
+
+    // Show/hide the play/next controls
+    updateGuidedParagraphView(paragraphs, questions);
+    updateGuidedControls(paragraphs);
+  }
+
+  function updateGuidedParagraphView(paragraphs, questions) {
+    const section = qs('#w1-guided-listening-phase');
+    if (!section) return;
+    const idx = state.guidedListening.paragraphIndex;
+    const para = paragraphs[idx];
+    if (!para) return;
+
+    // Paragraph text
+    const label = section.querySelector('[data-paragraph-label]');
+    if (label) label.textContent = `Đoạn ${idx + 1}/${paragraphs.length}`;
+
+    const paraText = section.querySelector('[data-paragraph-text]');
+    if (paraText) {
+      // Show the paragraph text from story
+      paraText.innerHTML = `<p class="text-base leading-relaxed text-cream">${escapeHtml(para)}</p>`;
+    }
+
+    // Audio section
+    const audioSec = section.querySelector('[data-guided-audio]');
+    const playBtn = section.querySelector('[data-guided-play]');
+    if (audioSec) {
+      if (state.guidedListening.paragraphPlayed[idx]) {
+        audioSec.hidden = true;
+      } else {
+        audioSec.hidden = false;
+        if (playBtn) {
+          playBtn.disabled = false;
+          playBtn.textContent = '🔊 Nghe đoạn này';
+        }
+      }
+    }
+
+    // Bind play button once
+    if (playBtn && !playBtn.dataset.bound) {
+      playBtn.dataset.bound = '1';
+      playBtn.addEventListener('click', () => {
+        const pIdx = state.guidedListening.paragraphIndex;
+        const played = state.guidedListening.paragraphPlayed.slice();
+        played[pIdx] = true;
+        state.guidedListening.paragraphPlayed = played;
+        state.guidedListening.phase = 'questioning';
+
+        // Try to play audio for this paragraph
+        const storySentences = state.lesson?.story?.sentences || [];
+        const sentenceAudio = storySentences.find((s) => Number(s.paragraph_index) === pIdx)?.audio_url;
+        if (sentenceAudio) {
+          playAudio(sentenceAudio, playBtn);
+        }
+
+        audioSec.hidden = true;
+        scheduleSaveLessonSession();
+        updateGuidedControls(paragraphs);
+        showGuidedQuestions(pIdx);
+      });
+    }
+
+    // Update dots
+    const dots = section.querySelectorAll('[data-paragraph-dot]');
+    dots.forEach((dot, i) => {
+      if (state.guidedListening.paragraphsDone[i]) dot.dataset.state = 'done';
+      else if (i === idx) dot.dataset.state = 'active';
+      else if (i < idx) dot.dataset.state = 'done';
+      else dot.dataset.state = 'locked';
+    });
+  }
+
+  function showGuidedQuestions(paragraphIndex) {
+    const section = qs('#w1-guided-listening-phase');
+    if (!section) return;
+    const listener = section.querySelector('[data-guided-listener]');
+    if (!listener) return;
+
+    // Get current paragraph questions from normalized data
+    const norm = window.__guidedNorm;
+    const allQuestions = norm?.questions ?? [];
+    const paraQuestions = allQuestions.filter((q) => q.paragraph_index === paragraphIndex);
+
+    // Show the question articles
+    const qContainer = listener.querySelector('[data-guided-questions]');
+    if (!qContainer) return;
+
+    const questionArticles = qContainer.querySelectorAll('[data-guided-question]');
+    questionArticles.forEach((qa) => {
+      const qId = qa.dataset.questionId;
+      const qData = allQuestions.find((q) => q.id === qId);
+      if (!qData) {
+        qa.hidden = true;
+        return;
+      }
+
+      const paraIdx = Number(qData.paragraph_index);
+      if (paraIdx !== paragraphIndex) {
+        qa.hidden = true;
+        return;
+      }
+
+      qa.hidden = false;
+
+      // Check if already answered
+      const answerKey = `${paragraphIndex}:${qId}`;
+      const existingAnswer = state.guidedListening.answers[answerKey];
+      if (existingAnswer) {
+        qa.dataset.state = existingAnswer.correct ? 'correct' : (existingAnswer.outcome === 'revealed' ? 'revealed' : '');
+        // Disable options
+        qa.querySelectorAll('[data-guided-option]').forEach((opt) => {
+          opt.disabled = true;
+          const optIdx = Number(opt.dataset.optionIndex);
+          if (optIdx === qData.correct_index) {
+            opt.dataset.state = 'revealed';
+          } else if (optIdx === existingAnswer.selectedIndex && !existingAnswer.correct) {
+            opt.dataset.state = 'selected-wrong';
+          } else {
+            opt.dataset.state = '';
+          }
+        });
+        return;
+      }
+
+      // Set question text and populate options
+      qa.dataset.state = '';
+      const textEl = qa.querySelector('[data-question-text]');
+      if (textEl) textEl.textContent = qData.question_vi || '';
+
+      const optContainer = qa.querySelector('[data-question-options]');
+      if (optContainer && !optContainer.dataset.populated) {
+        optContainer.dataset.populated = '1';
+        optContainer.innerHTML = qData.options_en.map((opt, optIdx) =>
+          `<button type="button" class="r2l-guided-question__option" data-guided-option data-option-index="${optIdx}">${escapeHtml(opt)}</button>`
+        ).join('');
+
+        optContainer.querySelectorAll('[data-guided-option]').forEach((optBtn) => {
+          optBtn.addEventListener('click', () => {
+            const optIdx = Number(optBtn.dataset.optionIndex);
+            const qType = qa.dataset.questionType;
+            const isCorrect = optIdx === qData.correct_index;
+
+            // Build answer entry
+            const key = `${paragraphIndex}:${qId}`;
+            const existing = state.guidedListening.answers[key];
+            const prevAttempts = existing?.attempts ?? 0;
+
+            const answer = {
+              paragraphIndex,
+              questionId: qId,
+              selectedIndex: optIdx,
+              correct: isCorrect,
+              outcome: isCorrect ? (prevAttempts === 0 ? 'first_try' : 'second_try') : (prevAttempts >= 1 ? 'revealed' : 'second_try'),
+              attempts: prevAttempts + 1,
+            };
+            state.guidedListening.answers[key] = answer;
+
+            // Visual feedback
+            optContainer.querySelectorAll('[data-guided-option]').forEach((ob) => ob.disabled = true);
+            if (isCorrect) {
+              optBtn.dataset.state = 'selected-correct';
+              qa.dataset.state = 'correct';
+              qa.querySelector('[data-question-feedback]').textContent = 'Đúng rồi! 🎉';
+              qa.querySelector('[data-question-feedback]').classList.remove('hidden');
+            } else {
+              optBtn.dataset.state = 'selected-wrong';
+              if (answer.outcome === 'revealed') {
+                qa.dataset.state = 'revealed';
+                // Show correct answer
+                optContainer.querySelectorAll('[data-guided-option]').forEach((ob, i) => {
+                  if (i === qData.correct_index) ob.dataset.state = 'revealed';
+                });
+                const correctText = qData.options_en[qData.correct_index] ?? '';
+                qa.querySelector('[data-question-feedback]').textContent = `Đáp án đúng: ${correctText}`;
+              } else {
+                qa.dataset.state = '';
+                qa.querySelector('[data-question-feedback]').textContent = 'Chưa đúng — thử lại!';
+                // Re-enable for retry
+                setTimeout(() => {
+                  optContainer.querySelectorAll('[data-guided-option]').forEach((ob) => ob.disabled = false);
+                }, 600);
+              }
+              qa.querySelector('[data-question-feedback]').classList.remove('hidden');
+            }
+
+            // Check if all questions in paragraph are done
+            checkParagraphCompletion(paragraphIndex, paragraphs);
+            scheduleSaveLessonSession();
+          });
+        });
+      }
+    });
+  }
+
+  function checkParagraphCompletion(paragraphIndex, paragraphs) {
+    const section = qs('#w1-guided-listening-phase');
+    if (!section) return;
+    const listener = section.querySelector('[data-guided-listener]');
+    if (!listener) return;
+
+    const norm = window.__guidedNorm;
+    const allQuestions = norm?.questions ?? [];
+    const paraQuestions = allQuestions.filter((q) => q.paragraph_index === paragraphIndex);
+
+    // A paragraph with no questions is complete once played
+    if (paraQuestions.length === 0) {
+      const done = state.guidedListening.paragraphsDone.slice();
+      done[paragraphIndex] = true;
+      state.guidedListening.paragraphsDone = done;
+      updateGuidedControls(paragraphs);
+      scheduleSaveLessonSession();
+      return;
+    }
+
+    const allCorrect = paraQuestions.every((q) => {
+      const key = `${paragraphIndex}:${q.id}`;
+      const answer = state.guidedListening.answers[key];
+      return answer?.correct;
+    });
+
+    if (allCorrect) {
+      const done = state.guidedListening.paragraphsDone.slice();
+      done[paragraphIndex] = true;
+      state.guidedListening.paragraphsDone = done;
+      updateGuidedControls(paragraphs);
+      scheduleSaveLessonSession();
+    }
+  }
+
+  function updateGuidedControls(paragraphs) {
+    const section = qs('#w1-guided-listening-phase');
+    if (!section) return;
+    const idx = state.guidedListening.paragraphIndex;
+    const prevBtn = section.querySelector('[data-guided-prev]');
+    const nextBtn = section.querySelector('[data-guided-next]');
+    const isDone = state.guidedListening.paragraphsDone[idx];
+
+    // Previous button
+    if (prevBtn) prevBtn.hidden = idx <= 0;
+
+    // Next button / Finish button
+    if (nextBtn) {
+      if (idx >= paragraphs.length - 1 && isDone) {
+        // All paragraphs done — transition to activities
+        nextBtn.textContent = 'Bắt đầu nhiệm vụ 🎯';
+        nextBtn.disabled = false;
+        if (!nextBtn.dataset.finishBound) {
+          nextBtn.dataset.finishBound = '1';
+          nextBtn.addEventListener('click', () => {
+            advanceToActivities();
+          });
+        }
+      } else if (isDone) {
+        nextBtn.textContent = 'Đoạn tiếp →';
+        nextBtn.disabled = false;
+        if (!nextBtn.dataset.nextBound) {
+          nextBtn.dataset.nextBound = '1';
+          nextBtn.addEventListener('click', () => {
+            state.guidedListening.paragraphIndex = Math.min(idx + 1, paragraphs.length - 1);
+            state.guidedListening.phase = 'idle';
+            const norm = window.__guidedNorm;
+            updateGuidedParagraphView(paragraphs, norm?.questions ?? []);
+            updateGuidedControls(paragraphs);
+            scheduleSaveLessonSession();
+          });
+        }
+      } else {
+        nextBtn.textContent = 'Đoạn tiếp →';
+        nextBtn.disabled = true;
+      }
+    }
+
+    // Update progress dots
+    const dots = section.querySelectorAll('[data-paragraph-dot]');
+    dots.forEach((dot, i) => {
+      if (state.guidedListening.paragraphsDone[i]) dot.dataset.state = 'done';
+      else if (i === idx) dot.dataset.state = 'active';
+      else if (i < idx) dot.dataset.state = 'done';
+      else dot.dataset.state = 'locked';
+    });
+  }
+
+  function advanceToActivities() {
+    state.w1Phase = 'activities';
+    qs('#w1-guided-listening-phase')?.classList.add('hidden');
+    qs('#w1-quest-path')?.classList.remove('hidden');
+    qs('#global-cta')?.classList.remove('hidden');
+    // Collect guided listening results
+    const guidedAnswers = Object.values(state.guidedListening.answers);
+    const correct = guidedAnswers.filter((a) => a.correct).length;
+    const total = guidedAnswers.length;
+    if (total > 0) {
+      state.activityResults['guided_listening'] = {
+        type: 'guided_listening',
+        attempted: true,
+        correct_count: correct,
+        total_count: total,
+        wrong_count: total - correct,
+        question_outcomes: guidedAnswers.map((a) => ({
+          id: a.questionId,
+          outcome: a.outcome,
+          attempts: a.attempts,
+        })),
+      };
+    }
+    w1EnsureHudStoryButton();
+    showActivity(0);
+    w1RenderQuestPath();
+    saveLessonSession();
   }
 
   function w1RecordQuestionOutcome(activityType, questionId, outcome, attempts) {
@@ -4068,10 +4446,12 @@ function _r2lBuildRetellTemplate(lesson) {
     renderAllActivitiesOnce(lesson.activities || []);
     if (isW1()) {
       if (!resumed || state.w1Phase === 'story') {
-        state.w1Phase = w1GateComplete() ? 'activities' : 'story';
+        state.w1Phase = w1GateComplete() ? 'guided_listening' : 'story';
       }
       if (state.w1Phase === 'story') {
         w1InitStoryPhase();
+      } else if (state.w1Phase === 'guided_listening') {
+        w1InitGuidedListeningPhase();
       } else {
         w1EnterActivitiesPhase(resumed);
       }
@@ -5646,6 +6026,7 @@ function _r2lBuildRetellTemplate(lesson) {
   import { applyV3HeaderRank } from '../../lib/rank-header';
   import { applyHeaderMonsterAvatar } from '../../lib/monster-avatar';
   import { calculateLessonScore as calcLessonScore, questionPoints } from '../../scripts/r2l-lesson-scoring.mjs';
+  import { normalizeGuidedListening } from '../../lib/r2l-guided-listening.ts';
   import { writtenModelAnswer } from '../../scripts/r2l-written-model-answer.mjs';
   import { R2LFeedbackVisual } from '../../scripts/r2l-feedback-visual.js';
   import { R2LReplayControl } from '../../scripts/r2l-replay-control.js';

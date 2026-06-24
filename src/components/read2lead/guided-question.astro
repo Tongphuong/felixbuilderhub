@@ -1,0 +1,84 @@
+---
+/**
+ * GuidedQuestion — a yes/no or multiple-choice question card.
+ *
+ * Rendered by the client JS in guided-listener. This Astro shell provides
+ * the pristine markup structure; the client script populates content and
+ * attaches event handlers.
+ *
+ * Props:
+ *   @prop {string} id — unique question id
+ *   @prop {'yesno'|'choice'} type — question variant
+ */
+
+export interface Props {
+  id: string;
+  type: 'yes_no' | 'choice';
+}
+
+const { id, type } = Astro.props;
+---
+
+<article
+  class="r2l-activity r2l-guided-question"
+  data-guided-question
+  data-question-id={id}
+  data-question-type={type}
+  hidden
+>
+  <div class="r2l-guided-question__header">
+    <p class="r2l-identity" data-question-identity></p>
+    <p class="text-sm font-semibold text-cream r2l-guided-question__text" data-question-text></p>
+  </div>
+  <div class="r2l-guided-question__options mt-3 flex flex-wrap gap-2" data-question-options>
+    <!-- client fills in option buttons -->
+  </div>
+  <div class="r2l-guided-question__feedback mt-2 hidden text-sm text-cream/80" data-question-feedback>
+    <!-- shown after answer: correct/incorrect -->
+  </div>
+</article>
+
+<style is:global>
+  .r2l-guided-question[data-state='correct'] {
+    border-color: rgb(74 222 128 / 0.55);
+    background: rgb(74 222 128 / 0.08);
+  }
+  .r2l-guided-question[data-state='revealed'] {
+    border-color: rgb(212 166 78 / 0.5);
+    background: rgb(212 166 78 / 0.08);
+  }
+  .r2l-guided-question__option {
+    min-height: 44px;
+    border-radius: 8px;
+    border: 1px solid rgb(245 230 211 / 0.14);
+    background: rgb(10 14 26 / 0.45);
+    padding: 0.75rem 0.9rem;
+    text-align: left;
+    font-weight: 700;
+    color: rgb(245 230 211);
+    cursor: pointer;
+    transition: border-color 180ms ease, background 180ms ease;
+    flex: 1 1 auto;
+  }
+  .r2l-guided-question__option:hover {
+    border-color: rgb(74 222 128 / 0.55);
+    background: rgb(74 222 128 / 0.14);
+  }
+  .r2l-guided-question__option[data-state='selected-correct'] {
+    border-color: rgb(74 222 128 / 0.7);
+    background: rgb(74 222 128 / 0.22);
+  }
+  .r2l-guided-question__option[data-state='selected-wrong'] {
+    border-color: rgb(239 68 68 / 0.7);
+    background: rgb(239 68 68 / 0.16);
+  }
+  .r2l-guided-question__option[data-state='revealed'] {
+    border-color: rgb(212 166 78 / 0.6);
+    background: rgb(212 166 78 / 0.16);
+    opacity: 0.85;
+  }
+  .r2l-guided-question__option:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+  }
+</style>
