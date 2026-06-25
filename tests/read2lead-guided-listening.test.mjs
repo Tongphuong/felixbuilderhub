@@ -211,19 +211,26 @@ test('normalizeGuidedListening handles the backend fixture file', () => {
   assert.ok(Array.isArray(guided), 'guided_listening should be an array');
 
   const result = normalizeGuidedListening(guided);
+  const expectedQuestionCount = guided.reduce(
+    (total, paragraph) => total + (paragraph.questions || []).length,
+    0,
+  );
 
-  // The sample pack has 4 paragraphs, each with 2 questions = 8 total
-  assert.equal(result.paragraphs.length, 4);
-  assert.equal(result.questions.length, 8);
+  assert.equal(result.paragraphs.length, guided.length);
+  assert.equal(result.questions.length, expectedQuestionCount);
 
-  // Verify paragraph 0 has 2 questions
+  // Verify paragraph 0 preserves every fixture question
   const p0 = result.paragraphs.find((p) => p.index === 0);
   assert.ok(p0);
-  assert.equal(p0.questions.length, 2);
+  assert.equal(p0.questions.length, guided[0].questions.length);
 
   // Verify yes_no questions got synthesized options
   const yesNoQuestions = result.questions.filter((q) => q.type === 'yes_no');
-  assert.equal(yesNoQuestions.length, 4); // 4 paragraphs × 1 yes_no each
+  const expectedYesNoCount = guided.reduce(
+    (total, paragraph) => total + (paragraph.questions || []).filter((q) => q.type === 'yes_no').length,
+    0,
+  );
+  assert.equal(yesNoQuestions.length, expectedYesNoCount);
   yesNoQuestions.forEach((q) => {
     assert.deepEqual(q.options_en, ['Yes', 'No']);
     assert.deepEqual(q.options_vi, ['Có', 'Không']);
@@ -232,7 +239,11 @@ test('normalizeGuidedListening handles the backend fixture file', () => {
 
   // Verify choice questions preserved their options
   const choiceQuestions = result.questions.filter((q) => q.type === 'choice');
-  assert.equal(choiceQuestions.length, 4);
+  const expectedChoiceCount = guided.reduce(
+    (total, paragraph) => total + (paragraph.questions || []).filter((q) => q.type === 'choice').length,
+    0,
+  );
+  assert.equal(choiceQuestions.length, expectedChoiceCount);
   choiceQuestions.forEach((q) => {
     assert.equal(q.options_en.length, 2);
     assert.equal(q.options_vi.length, 2);

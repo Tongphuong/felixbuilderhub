@@ -7,7 +7,6 @@ import IdentityBanner from '../../components/read2lead/v2/IdentityBanner.astro';
 import ListeningFillBlank from '../../components/read2lead/v2/ListeningFillBlank.astro';
 import ListenAndOrder from '../../components/read2lead/v2/ListenAndOrder.astro';
 import ListenAndSpeak from '../../components/read2lead/v2/ListenAndSpeak.astro';
-import ReadAloud from '../../components/read2lead/v2/ReadAloud.astro';
 import LevelUpModal from '../../components/read2lead/v2/LevelUpModal.astro';
 import RankUpModal from '../../components/read2lead/v3/rank/RankUpModal.astro';
 import ProgressBar from '../../components/read2lead/v2/ProgressBar.astro';
@@ -16,7 +15,6 @@ import MinnyCoachStrip from '../../components/read2lead/v2/MinnyCoachStrip.astro
 import ParentStrip from '../../components/read2lead/v2/ParentStrip.astro';
 import ReadingComprehension from '../../components/read2lead/v2/ReadingComprehension.astro';
 import RewardBurst from '../../components/read2lead/v2/RewardBurst.astro';
-import WrittenResponse from '../../components/read2lead/v2/WrittenResponse.astro';
 import V21MaintenanceScreen from '../../components/read2lead/v2/V21MaintenanceScreen.astro';
 import GuidedListener from '../../components/read2lead/guided-listener.astro';
 import dictationHelperSrc from '../../lib/read2lead-dictation.ts?raw';
@@ -103,9 +101,7 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
           <ListeningFillBlank />
           <ListenAndOrder />
           <ReadingComprehension />
-          <WrittenResponse />
           <ListenAndSpeak />
-          <ReadAloud />
         </section>
 
         <section id="global-cta" class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 flex flex-col gap-2">
@@ -135,7 +131,7 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
           <div>
             <p class="font-display text-xl font-bold text-cream">Hoàn thành nhiệm vụ</p>
             <p id="submit-hint" class="mt-1 text-sm text-cream/70">
-              Con hoàn thành đủ 6 phần rồi bấm nút này để lưu kết quả.
+              Con hoàn thành đủ 4 phần rồi bấm nút này để lưu kết quả.
             </p>
           </div>
           <div class="flex flex-col gap-2 sm:flex-row sm:items-center">
@@ -901,7 +897,6 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
     activityIndex: 0,
     completedTypes: new Set(),
     activityResults: {},
-    writtenDrafts: {},
     activityProgress: {},
     w1Phase: 'story',
     w1MaxUnlocked: 0,
@@ -922,18 +917,20 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
     listening_fill_blank: 'Nghe điền',
     listen_and_order: 'Xếp câu',
     reading_comprehension: 'Đọc hiểu',
-    written_response: 'Viết đáp án',
     listen_and_speak: 'Nói lại',
-    read_aloud: 'Đọc to',
   };
+  const FRONTEND_ACTIVITY_ORDER = [
+    'listening_fill_blank',
+    'listen_and_order',
+    'reading_comprehension',
+    'listen_and_speak',
+  ];
 
   const MINNY_COMMANDS = {
     listening_fill_blank: 'Con nghe rồi chọn cụm từ còn thiếu nhé!',
     listen_and_order: 'Con nghe câu rồi bấm từ theo đúng thứ tự nhé!',
     reading_comprehension: 'Con đọc truyện rồi chọn đáp án đúng!',
-    written_response: 'Con viết 1–2 câu tiếng Anh nhé!',
     listen_and_speak: 'Nghe rồi nói lại cho Minny nghe nhé!',
-    read_aloud: 'Con đọc to từng câu cho Minny nghe nhé!',
   };
 
   const MINNY_CELEBRATE = [
@@ -963,20 +960,10 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
       needs: 'Đọc truyện ở trên, rồi chọn đáp án',
       stuck: 'Bấm "Mở truyện" để đọc lại',
     },
-    written_response: {
-      doing: (n, total) => `Phần ${n}/${total}: Viết — viết câu trả lời tiếng Anh`,
-      needs: 'Viết 1–2 câu tiếng Anh vào ô trống',
-      stuck: 'Con có thể viết ngắn, không cần hoàn hảo',
-    },
     listen_and_speak: {
       doing: (n, total) => `Phần ${n}/${total}: Nói lại — nghe rồi đọc theo`,
       needs: 'Bấm Kiểm tra micro, rồi Nghe, rồi Con nói',
       stuck: 'Micro: Windows/Mac → Cài đặt → Microphone → bật cho Chrome/Safari; copy hướng dẫn trong khung vàng',
-    },
-    read_aloud: {
-      doing: (n, total) => `Phần ${n}/${total}: Đọc to — con đọc từng câu trong truyện`,
-      needs: 'Kiểm tra micro → đọc to từng câu → Minny chấm điểm',
-      stuck: 'Micro: Cài đặt → Microphone → bật cho Chrome/Safari; bấm Copy hướng dẫn trong khung vàng',
     },
   };
 
@@ -1079,9 +1066,7 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
     listening_fill_blank: '🎧',
     listen_and_order: '🔨',
     reading_comprehension: '📚',
-    written_response: '✍️',
     listen_and_speak: '🎙️',
-    read_aloud: '📖',
   };
 
   let _w1ReadAlong = { running: false, paused: false, sentenceIdx: 0, cardIdx: 0 };
@@ -1177,7 +1162,6 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
     _r2lRecorderState.perItem.forEach((entry) => {
       retryCount += Number(entry?.failureCount || 0);
     });
-    retryCount += Number(_r2lReadAloudState?.sentences?.reduce((sum, s) => sum + Math.max(0, s.attempts.length - 1), 0) || 0);
     return retryCount;
   }
 
@@ -1258,16 +1242,11 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
   function _r2lApplyMicGate(ready) {
     _r2lMicGateReady = ready;
     const speakShell = qs('[data-activity-shell="listen_and_speak"]');
-    const readShell = qs('[data-activity-shell="read_aloud"]');
-    [speakShell, readShell].forEach((shell) => {
+    [speakShell].forEach((shell) => {
       if (!shell || shell.hidden) return;
-      shell.querySelectorAll('[data-speak-record], [data-ra-record]').forEach((btn) => {
+      shell.querySelectorAll('[data-speak-record]').forEach((btn) => {
         if (ready) {
-          if (btn.hasAttribute('data-ra-record')) {
-            btn.disabled = false;
-          } else {
-            btn.disabled = btn.dataset.heard !== 'true' || !_r2lMicIsReady();
-          }
+          btn.disabled = btn.dataset.heard !== 'true' || !_r2lMicIsReady();
         } else {
           btn.disabled = true;
         }
@@ -1523,7 +1502,7 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
   }
 
   function _r2lLessonNeedsMic(activities) {
-    return (activities || []).some((a) => a?.type === 'listen_and_speak' || a?.type === 'read_aloud');
+    return (activities || []).some((a) => a?.type === 'listen_and_speak');
   }
 
   function _r2lUpdateMicPrepBanner(activities) {
@@ -1900,19 +1879,6 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
     if (current?.type === 'listen_and_speak') {
       _r2lCompleteSpeakActivityOnMicSkip(current);
       showToast('Mình sang phần tiếp nhé. Phần nói này không nhận thưởng.');
-      return;
-    }
-    if (current?.type === 'read_aloud') {
-      if (!state.completedTypes.has('read_aloud')) {
-        completeActivity('read_aloud', {
-          correct_count: 0,
-          total_count: 1,
-          wrong_count: 1,
-          score_percent: 0,
-          skipped_due_to_mic: true,
-        });
-      }
-      showToast('Bài đã ghi nhận không thưởng. Con vẫn có thể tạo bài mới.');
       return;
     }
   }
@@ -2477,7 +2443,6 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
     }
 
     dismissRewardBurst();
-    finalizeCurrentActivityIfReady();
     if (state.activityIndex < activities.length - 1) {
       showActivity(state.activityIndex + 1);
     }
@@ -2591,678 +2556,6 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
     return Number(scorePercent || 0) >= 70 ? 'celebrate' : 'encourage';
   }
 
-  /* ----- Read Aloud (Phase 4: replaces retell_summary) ----- */
-  const READ_ALOUD_GRADE_S = 80;
-  const READ_ALOUD_GRADE_A = 65;
-  const READ_ALOUD_GRADE_B = 45;
-  const READ_ALOUD_MAX_ATTEMPTS = 3;
-
-  let _r2lReadAloudState = null;
-
-  function renderReadAloudActivity(root, activity) {
-    const heroScope = root.closest('[data-activity-shell="read_aloud"]');
-    _r2lInitMinnyHero(heroScope);
-
-    const story = state.lesson?.story || {};
-    const sentences = (story.sentences || []).filter((s) => String(s.text_en || '').trim());
-    const paragraphsEn = story.paragraphs_en || [];
-
-    // Determine scaffold mode from lesson level
-    const lessonLevel = Number(state.lesson?.level) || 1;
-    const isL3 = lessonLevel === 3;
-    const isContinuous = lessonLevel >= 4;
-
-    _r2lReadAloudState = {
-      sentences: sentences.map((s) => ({
-        text_en: s.text_en || '',
-        text_vi: s.text_vi || '',
-        audio_url: s.audio_url || '',
-        attempts: [],
-        bestScore: 0,
-        state: 'pending',
-        feedback: null,
-        skipped: false,
-      })),
-      currentIndex: 0,
-      completed: false,
-      level: lessonLevel,
-      mode: isContinuous ? 'continuous' : 'sentence',
-      viMode: isL3 ? 'hidden' : 'visible',
-      heroScope,
-      root,
-    };
-    const shell = root.closest('[data-activity-shell="read_aloud"]');
-    if (shell) {
-      shell.dataset.readAloudMode = _r2lReadAloudState.mode;
-      shell.dataset.readAloudState = 'idle';
-    }
-
-    // Populate story paragraphs
-    const storySlot = root.querySelector('[data-read-aloud-story]');
-    if (storySlot) {
-      storySlot.innerHTML = paragraphsEn
-        .map((p) => `<p>${escapeHtml(p)}</p>`)
-        .join('');
-    }
-
-    if (_r2lReadAloudState.mode === 'continuous') {
-      renderReadAloudContinuousArea();
-    } else {
-      renderReadAloudSentenceArea();
-      renderReadAloudControls();
-      renderReadAloudFeedback();
-      renderReadAloudProgress();
-    }
-  }
-
-  function renderReadAloudSentenceArea() {
-    const root = _r2lReadAloudState.root;
-    const slot = root.querySelector('[data-read-aloud-sentences]');
-    if (!slot) return;
-    const state = _r2lReadAloudState;
-
-    slot.innerHTML = state.sentences.map((s, i) => {
-      const isActive = i === state.currentIndex;
-      let stateAttr = s.state;
-      if (isActive && s.state !== 'scored' && s.state !== 'skipped') stateAttr = 'active';
-      if (!isActive && s.state === 'pending') stateAttr = 'pending';
-
-      // L3: Vietnamese hidden by default, tap to reveal
-      const viMode = state.level === 3
-        ? 'hidden'
-        : (state.viMode === 'revealed' ? 'revealed' : 'visible');
-
-      return `
-        <div class="r2l-ra-sentence" data-sentence-state="${stateAttr}" data-ra-sentence="${i}">
-          <p class="r2l-ra-sentence-en">${escapeHtml(s.text_en)}</p>
-          <p class="r2l-ra-sentence-vi" data-read-aloud-vi-mode="${viMode}">${escapeHtml(s.text_vi || '')}</p>
-          <div class="r2l-ra-sentence-actions">
-            ${s.audio_url ? `<button type="button" class="r2l-ra-audio-hint" data-ra-audio-hint="${i}" title="Nghe câu này">🔊</button>` : ''}
-            ${isActive && state.level === 3 && (s.state !== 'scored' && s.state !== 'skipped')
-              ? `<button type="button" class="r2l-ra-audio-hint" data-ra-reveal-vi="${i}" title="Xem tiếng Việt">🔍</button>`
-              : ''}
-            ${isActive && s.state !== 'scored' && s.state !== 'skipped'
-              ? `<button type="button" class="r2l-ra-record-btn" data-ra-record="${i}">🎤 Đọc</button>`
-              : `<button type="button" class="r2l-ra-record-btn" disabled>${s.state === 'scored' ? '✅ Đã đọc' : ''}</button>`}
-            ${isActive && s.state !== 'scored' && s.state !== 'skipped'
-              ? `<button type="button" class="r2l-ra-skip-btn" data-ra-skip="${i}">Bỏ qua</button>`
-              : ''}
-          </div>
-        </div>
-      `;
-    }).join('');
-
-    slot.querySelectorAll('[data-ra-record]').forEach((btn) => {
-      btn.addEventListener('click', () => handleReadAloudRecord());
-    });
-    slot.querySelectorAll('[data-ra-skip]').forEach((btn) => {
-      btn.addEventListener('click', () => handleReadAloudSkip());
-    });
-    slot.querySelectorAll('[data-ra-audio-hint]').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const idx = Number(btn.dataset.raAudioHint);
-        const url = _r2lReadAloudState.sentences[idx]?.audio_url;
-        if (url) playAudio(url, btn);
-      });
-    });
-    slot.querySelectorAll('[data-ra-reveal-vi]').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const idx = Number(btn.dataset.raRevealVi);
-        const sentence = _r2lReadAloudState.sentences[idx];
-        if (sentence) {
-          // Toggle reveal: hidden → revealed → hidden
-          const currentVi = _r2lReadAloudState.viMode;
-          _r2lReadAloudState.viMode = currentVi === 'hidden' ? 'revealed' : 'hidden';
-          renderReadAloudSentenceArea();
-        }
-      });
-    });
-  }
-
-  function renderReadAloudContinuousArea() {
-    const state = _r2lReadAloudState;
-    const slot = state.root.querySelector('[data-read-aloud-sentences]');
-    if (!slot) return;
-
-    const fullText = state.sentences.map((s) => s.text_en).join(' ');
-
-    slot.innerHTML = `
-      <div class="r2l-ra-continuous-area">
-        <p class="r2l-ra-sentence-en" style="line-height:1.8;font-size:1rem">
-          ${escapeHtml(fullText)}
-        </p>
-        <div class="r2l-ra-sentence-actions" style="margin-top:0.75rem">
-          <button type="button" class="r2l-ra-continuous-btn" data-ra-continuous-record>
-            🎤 Đọc toàn bộ
-          </button>
-        </div>
-      </div>
-    `;
-
-    slot.querySelector('[data-ra-continuous-record]')?.addEventListener('click', handleReadAloudContinuousRecord);
-  }
-
-  async function handleReadAloudContinuousRecord() {
-    const state = _r2lReadAloudState;
-    if (!state || state.completed) return;
-
-    const btn = state.root.querySelector('[data-ra-continuous-record]');
-    if (!btn) return;
-
-    const fullText = state.sentences.map((s) => s.text_en).join(' ');
-    const shell = state.root.closest('[data-activity-shell="read_aloud"]');
-
-    // IDLE → RECORDING
-    btn.textContent = '⏹ Đang thu... (bấm để dừng)';
-    btn.dataset.recording = 'true';
-    if (shell) shell.dataset.readAloudState = 'recording';
-
-    try {
-      const stream = await _r2lOpenMicStream();
-      const recorder = window.R2LRecorder.createRecorder(stream, { engine: 'auto' });
-      recorder.start();
-
-      // Enable stop on button re-click
-      btn.onclick = () => {
-        if (recorder.state === 'recording') recorder.stop();
-      };
-
-      // Auto-stop after 120 seconds (spec §8)
-      const maxDuration = Math.min(120, state.sentences.length * 5);
-      setTimeout(() => {
-        if (recorder.state === 'recording') recorder.stop();
-      }, maxDuration * 1000);
-
-      // RECORDING → SCORING (wait for stop)
-      const blob = await recorder.stop();
-      stream.getTracks().forEach((t) => t.stop());
-
-      if (blob.size < 1200) {
-        showReadAloudContinuousFeedback({ ok: false, message: 'Minny chưa nghe rõ. Con bấm Đọc lại, đợi đèn xanh rồi đọc to cả bài nhé!' });
-        btn.textContent = '🎤 Đọc toàn bộ';
-        btn.dataset.recording = 'false';
-        btn.onclick = () => handleReadAloudContinuousRecord();
-        return;
-      }
-
-      // SCORING
-      btn.textContent = '⏳ Đang chấm...';
-      btn.disabled = true;
-      if (shell) shell.dataset.readAloudState = 'scoring';
-
-      const result = await _r2lPostSpeakingCheck(blob, fullText, 'read', 120, null);
-
-      // Compute per-sentence breakdown client-side
-      const transcript = result?.transcript || '';
-      const perSentenceResults = computePerSentenceBreakdown(transcript, state.sentences);
-
-      // Store results per sentence
-      state.sentences.forEach((s, i) => {
-        const sr = perSentenceResults[i] || {};
-        s.state = 'scored';
-        s.bestScore = sr.score_percent || 0;
-        s.feedback = sr;
-        s.attempts = [{
-          score_percent: sr.score_percent || 0,
-          transcript: sr.transcript || '',
-          timestamp: new Date().toISOString(),
-        }];
-      });
-
-      // Show per-sentence feedback + summary
-      showReadAloudContinuousFeedback(result, perSentenceResults);
-      showReadAloudSummary(result, perSentenceResults);
-
-      btn.textContent = '🔄 Đọc lại';
-      btn.dataset.recording = 'false';
-      btn.disabled = false;
-      btn.onclick = () => {
-        // Reset and restart
-        state.sentences.forEach((s) => {
-          s.state = 'pending';
-          s.bestScore = 0;
-          s.feedback = null;
-          s.attempts = [];
-        });
-        const summarySlot = state.root.querySelector('[data-read-aloud-summary]');
-        if (summarySlot) summarySlot.classList.add('hidden');
-        renderReadAloudContinuousArea();
-      };
-      if (shell) shell.dataset.readAloudState = 'done';
-    } catch (err) {
-      btn.textContent = '🎤 Đọc toàn bộ';
-      btn.dataset.recording = 'false';
-      btn.disabled = false;
-      btn.onclick = () => handleReadAloudContinuousRecord();
-      showReadAloudContinuousFeedback({ ok: false, message: err?.message || 'Chưa ghi âm được. Con thử lại nhé!' });
-    }
-  }
-
-  function computePerSentenceBreakdown(transcript, sentences) {
-    // Align full transcript to sentence boundaries using punctuation splitting
-    const transcriptParts = transcript
-      .split(/[.!?]+/)
-      .map((s) => s.trim())
-      .filter(Boolean);
-
-    return sentences.map((s, i) => {
-      const part = transcriptParts[i] || '';
-      // Simple similarity: count overlapping words
-      const expectedWords = s.text_en.toLowerCase().split(/\s+/).filter(Boolean);
-      const spokenWords = part.toLowerCase().split(/\s+/).filter(Boolean);
-      const exactCount = expectedWords.filter((w) => spokenWords.includes(w)).length;
-      const totalCount = expectedWords.length;
-      const score_percent = totalCount > 0 ? Math.round((exactCount / totalCount) * 100) : 0;
-      return { score_percent, transcript: part, exact_count: exactCount, total_count: totalCount };
-    });
-  }
-
-  function showReadAloudContinuousFeedback(result, perSentenceResults) {
-    const state = _r2lReadAloudState;
-    const slot = state.root.querySelector('[data-read-aloud-feedback]');
-    if (!slot) return;
-    slot.classList.remove('hidden');
-
-    let html = '';
-    perSentenceResults.forEach((sr, i) => {
-      const grade = scoreToReadAloudGrade(sr.score_percent);
-      html += `
-        <div class="r2l-ra-continuous-sentence">
-          <span class="r2l-ra-sentence-index">#${i + 1}</span>
-          <span>
-            ${escapeHtml(state.sentences[i]?.text_en || '')}
-            <span class="r2l-ra-score-badge" data-grade="${grade}">${grade} ${sr.score_percent}%</span>
-          </span>
-        </div>`;
-    });
-    slot.innerHTML = html;
-  }
-
-  function showReadAloudSummary(result, perSentenceResults) {
-    const state = _r2lReadAloudState;
-    const summarySlot = state.root.querySelector('[data-read-aloud-summary]');
-    if (!summarySlot) return;
-
-    const scores = perSentenceResults.map((sr) => sr.score_percent);
-    const avgScore = scores.length ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length) : 0;
-    const grade = scoreToReadAloudGrade(avgScore);
-    const gradeEmoji = { S: '🌟', A: '👏', B: '👍', F: '💪' }[grade] || '';
-
-    summarySlot.classList.remove('hidden');
-    summarySlot.innerHTML = `
-      <h3>${gradeEmoji} Kết quả đọc toàn bài</h3>
-      <p class="r2l-read-aloud-grade">${grade} — ${avgScore}%</p>
-      <p>${perSentenceResults.length} câu đã đọc</p>
-    `;
-
-    // Also write to activityResults
-    const finalResult = {
-      type: 'read_aloud',
-      mode: 'continuous',
-      total_sentences: state.sentences.length,
-      sentences_completed: state.sentences.length,
-      sentences_skipped: 0,
-      scores,
-      score_percent: avgScore,
-      completed: true,
-      attempt_data: {},
-      word_feedback: {},
-      feedback_vi: `Kết quả đọc toàn bài: ${grade} — ${avgScore}%`,
-    };
-    completeActivity('read_aloud', finalResult);
-  }
-
-  function renderReadAloudControls() {
-    const root = _r2lReadAloudState.root;
-    const slot = root.querySelector('[data-read-aloud-controls]');
-    if (!slot) return;
-    const state = _r2lReadAloudState;
-    const current = state.sentences[state.currentIndex];
-    if (!current) return;
-
-    // Show progress dots + next/retry after feedback
-    const feedbackSlot = root.querySelector('[data-read-aloud-feedback]');
-    const showActions = current.state === 'scored' || current.state === 'skipped';
-    let actionsHtml = '';
-    if (showActions) {
-      const canRetry = current.state === 'scored' && current.attempts.length < READ_ALOUD_MAX_ATTEMPTS;
-      actionsHtml = `
-        <div class="r2l-ra-sentence-actions" style="margin-top:0.75rem">
-          ${canRetry ? `<button type="button" class="r2l-ra-record-btn" data-ra-retry>⟳ Đọc lại</button>` : ''}
-          <button type="button" class="r2l-ra-record-btn" data-ra-next>→ Câu tiếp</button>
-        </div>
-      `;
-    }
-
-    slot.innerHTML = actionsHtml;
-
-    const retryBtn = slot.querySelector('[data-ra-retry]');
-    if (retryBtn) retryBtn.addEventListener('click', handleReadAloudRetry);
-
-    const nextBtn = slot.querySelector('[data-ra-next]');
-    if (nextBtn) nextBtn.addEventListener('click', advanceToNextSentence);
-  }
-
-  function renderReadAloudProgress() {
-    const root = _r2lReadAloudState.root;
-    const controlsSlot = root.querySelector('[data-read-aloud-controls]');
-    if (!controlsSlot) return;
-    const state = _r2lReadAloudState;
-
-    const dotsHtml = `<div class="r2l-ra-progress">
-      ${state.sentences.map((s, i) => {
-        let dotState = 'pending';
-        if (s.state === 'scored') dotState = 'done';
-        else if (i === state.currentIndex) dotState = 'active';
-        else if (s.state === 'skipped') dotState = 'skipped';
-        return `<span class="r2l-ra-dot" data-state="${dotState}" title="Câu ${i + 1}"></span>`;
-      }).join('')}
-    </div>`;
-
-    const existing = controlsSlot.querySelector('.r2l-ra-progress');
-    if (existing) existing.outerHTML = dotsHtml;
-    else controlsSlot.insertAdjacentHTML('afterbegin', dotsHtml);
-  }
-
-  function renderReadAloudFeedback() {
-    const root = _r2lReadAloudState.root;
-    const slot = root.querySelector('[data-read-aloud-feedback]');
-    if (!slot) return;
-    const state = _r2lReadAloudState;
-
-    // Show feedback for the previously completed sentence
-    const prevIndex = state.currentIndex - 1;
-    const prevSentence = prevIndex >= 0 ? state.sentences[prevIndex] : null;
-
-    if (!prevSentence || (!prevSentence.feedback && !prevSentence.skipped)) {
-      slot.innerHTML = '';
-      slot.classList.add('hidden');
-      return;
-    }
-
-    slot.classList.remove('hidden');
-
-    if (prevSentence.skipped) {
-      slot.innerHTML = '<p class="text-sm text-cream/55" style="margin-top:0.5rem">Đã bỏ qua câu này.</p>';
-      return;
-    }
-
-    if (prevSentence.feedback) {
-      const r = prevSentence.feedback;
-      const grade = scoreToReadAloudGrade(r.score_percent);
-      const gradeEmoji = r.score_percent >= 80 ? '🌟' : r.score_percent >= 65 ? '👏' : r.score_percent >= 45 ? '👍' : '💪';
-
-      slot.innerHTML = `
-        <div style="margin-top:0.5rem">
-          <span class="r2l-ra-score-badge" data-grade="${grade}">${grade} ${gradeEmoji}</span>
-          ${_r2lBuildSpeakingFeedbackHtml(r, { compact: true })}
-        </div>
-      `;
-    }
-  }
-
-  async function handleReadAloudRecord() {
-    const state = _r2lReadAloudState;
-    if (!state || state.completed) return;
-    const idx = state.currentIndex;
-    const sentence = state.sentences[idx];
-    if (!sentence) return;
-
-    const cardEl = state.root.querySelector(`[data-ra-sentence="${idx}"]`);
-    if (!cardEl) return;
-
-    // Update button to show recording state
-    const recordBtn = cardEl.querySelector('[data-ra-record]');
-    if (recordBtn) {
-      recordBtn.textContent = '🔴 Đang thu...';
-      recordBtn.disabled = true;
-    }
-
-    // Update shell state
-    const shell = state.root.closest('[data-activity-shell="read_aloud"]');
-    if (shell) shell.dataset.readAloudState = 'recording';
-
-    // Capture one utterance via R2LRecorder pipeline
-    try {
-      // Use the self-healing R2LRecorder pipeline instead of raw MediaRecorder
-      const stream = await _r2lOpenMicStream();
-
-      // Create recorder via R2LRecorder.createRecorder for codec fallback,
-      // silent-detection, and level monitoring
-      const recorder = window.R2LRecorder.createRecorder(stream, { engine: 'auto' });
-
-      // Start recording (returns a promise that resolves with the blob on stop)
-      recorder.start();
-
-      // Auto-stop after 30 seconds
-      setTimeout(() => {
-        if (recorder.state === 'recording') recorder.stop();
-      }, 30000);
-
-      // Enable stop on button re-click
-      if (recordBtn) {
-        recordBtn.textContent = '⏹ Dừng';
-        recordBtn.disabled = false;
-        recordBtn.onclick = () => {
-          if (recorder.state === 'recording') recorder.stop();
-        };
-      }
-
-      // Wait for the blob
-      const blob = await recorder.stop();
-      stream.getTracks().forEach((t) => t.stop());
-
-      if (blob.size < 1200) {
-        // Too short — reset the UI so the kid can try again
-        _r2lSetMinnyMood('encourage', state.heroScope);
-        showReadAloudSentenceFeedback(sentence, { ok: false, message: 'Minny chưa nghe rõ. Con bấm Đọc lại, đợi đèn xanh rồi đọc to cả câu nhé!' });
-        renderReadAloudSentenceArea();  // ← THIS WAS MISSING — resets the record button
-        renderReadAloudControls();      // ← also re-render controls
-        return;
-      }
-
-      // Send for scoring
-      if (shell) shell.dataset.readAloudState = 'scoring';
-      showReadAloudSentenceFeedback(sentence, { loading: true });
-      _r2lSetMinnyMood('idle', state.heroScope);
-
-      try {
-        const result = await _r2lPostSpeakingCheck(blob, sentence.text_en, 'read', 30, null);
-
-        // Track attempt
-        sentence.attempts.push({
-          score_percent: result?.score_percent || 0,
-          transcript: result?.transcript || '',
-          timestamp: new Date().toISOString(),
-        });
-
-        if (result?.ok) {
-          const score = Number(result.score_percent || 0);
-          if (score > sentence.bestScore) sentence.bestScore = score;
-          sentence.state = 'scored';
-          sentence.feedback = result;
-
-          _r2lSetMinnyMood(_r2lMinnyMoodForScore(score), state.heroScope);
-        } else {
-          _r2lSetMinnyMood('encourage', state.heroScope);
-          sentence.feedback = result || { ok: false, message: 'Minny chưa chấm điểm được. Con bấm Thu lại nhé!' };
-        }
-
-        // Re-render
-        if (shell) shell.dataset.readAloudState = 'feedback';
-        renderReadAloudSentenceArea();
-        renderReadAloudFeedback();
-        renderReadAloudControls();
-        renderReadAloudProgress();
-      } catch (err) {
-        showReadAloudSentenceFeedback(sentence, {
-          ok: false,
-          message: err?.message || 'Chưa gửi được bài đọc. Con thử lại nhé!',
-        });
-        _r2lSetMinnyMood('encourage', state.heroScope);
-        renderReadAloudSentenceArea();
-        renderReadAloudControls();
-      }
-    } catch (err) {
-      showReadAloudSentenceFeedback(sentence, { ok: false, message: 'Micro chưa được cấp phép. Ba mẹ kiểm tra Cài đặt → Microphone nhé!' });
-      _r2lSetMinnyMood('encourage', state.heroScope);
-      renderReadAloudSentenceArea();
-      renderReadAloudControls();
-    }
-  }
-
-  function showReadAloudSentenceFeedback(sentence, result) {
-    sentence.feedback = result;
-    renderReadAloudFeedback();
-    renderReadAloudControls();
-    renderReadAloudProgress();
-  }
-
-  function handleReadAloudSkip() {
-    const state = _r2lReadAloudState;
-    if (!state || state.completed) return;
-    const idx = state.currentIndex;
-    const sentence = state.sentences[idx];
-    if (!sentence) return;
-
-    sentence.state = 'skipped';
-    sentence.bestScore = 0;
-    sentence.skipped = true;
-
-    advanceToNextSentence();
-  }
-
-  function advanceToNextSentence() {
-    const state = _r2lReadAloudState;
-    if (!state) return;
-
-    state.currentIndex += 1;
-
-    if (state.currentIndex >= state.sentences.length) {
-      completeReadAloud();
-      return;
-    }
-
-    // Reset current sentence to pending
-    const sentence = state.sentences[state.currentIndex];
-    if (sentence && sentence.state === 'pending') {
-      // already pending
-    }
-
-    renderReadAloudSentenceArea();
-    renderReadAloudControls();
-    renderReadAloudFeedback();
-    renderReadAloudProgress();
-  }
-
-  function handleReadAloudRetry() {
-    const state = _r2lReadAloudState;
-    if (!state || state.completed) return;
-
-    // Reset current sentence to allow re-recording
-    // (retry is on the current sentence, which means we're on the last scored sentence)
-    // The user clicked retry from the feedback, so currentIndex - 1 is the scored sentence
-    const idx = state.currentIndex - 1;
-    if (idx < 0) return;
-    const sentence = state.sentences[idx];
-    if (!sentence) return;
-
-    sentence.state = 'pending';
-    sentence.feedback = null;
-
-    // Clear feedback area
-    const feedbackSlot = state.root.querySelector('[data-read-aloud-feedback]');
-    if (feedbackSlot) {
-      feedbackSlot.innerHTML = '';
-      feedbackSlot.classList.add('hidden');
-    }
-
-    // Set current index back to the retried sentence
-    state.currentIndex = idx;
-
-    renderReadAloudSentenceArea();
-    renderReadAloudControls();
-    renderReadAloudFeedback();
-    renderReadAloudProgress();
-  }
-
-  function scoreToReadAloudGrade(scorePercent) {
-    const score = Number(scorePercent || 0);
-    if (score >= READ_ALOUD_GRADE_S) return 'S';
-    if (score >= READ_ALOUD_GRADE_A) return 'A';
-    if (score >= READ_ALOUD_GRADE_B) return 'B';
-    return 'F';
-  }
-
-  function completeReadAloud() {
-    const state = _r2lReadAloudState;
-    if (!state || state.completed) return;
-    state.completed = true;
-
-    // Update shell state
-    const shell = state.root.closest('[data-activity-shell="read_aloud"]');
-    if (shell) shell.dataset.readAloudState = 'done';
-
-    const scores = state.sentences.map((s) => s.bestScore);
-    const total = state.sentences.length;
-    const completed = state.sentences.filter((s) => s.state === 'scored').length;
-    const skipped = state.sentences.filter((s) => s.skipped).length;
-    const avgScore = scores.length ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length) : 0;
-
-    const attemptData = {};
-    state.sentences.forEach((s, i) => {
-      attemptData[i] = {
-        attempts: s.attempts,
-        best: s.bestScore,
-        skipped: s.skipped,
-      };
-    });
-
-    const wordFeedback = {};
-    state.sentences.forEach((s, i) => {
-      if (s.feedback?.word_feedback) wordFeedback[i] = s.feedback.word_feedback;
-    });
-
-    const grade = scoreToReadAloudGrade(avgScore);
-    const gradeEmoji = { S: '🌟', A: '👏', B: '👍', F: '💪' }[grade] || '';
-    const gradeMessages = {
-      S: 'Siêu giỏi! Con đọc trôi chảy lắm!',
-      A: 'Giỏi quá! Con đọc rất tốt!',
-      B: 'Tốt! Con cố gắng thêm chút nữa nhé!',
-      F: 'Không sao! Luyện thêm con sẽ giỏi hơn!',
-    };
-
-    // Show summary
-    const summarySlot = state.root.querySelector('[data-read-aloud-summary]');
-    if (summarySlot) {
-      summarySlot.classList.remove('hidden');
-      summarySlot.innerHTML = `
-        <h3>${gradeEmoji} ${gradeMessages[grade]}</h3>
-        <p class="r2l-read-aloud-grade">${grade} — ${avgScore}%</p>
-        <p>${completed}/${total} câu đã đọc · ${skipped} bỏ qua</p>
-      `;
-    }
-
-    // Store result
-    const result = {
-      type: 'read_aloud',
-      mode: 'sentence',
-      total_sentences: total,
-      sentences_completed: completed,
-      sentences_skipped: skipped,
-      scores,
-      score_percent: avgScore,
-      completed: true,
-      attempt_data: attemptData,
-      word_feedback: wordFeedback,
-      feedback_vi: gradeMessages[grade],
-    };
-
-    completeActivity('read_aloud', result);
-  }
-
-  // retell_summary removed — replaced by read_aloud (Phase 4)
-
   // ── Safe JSON helper: prevents crash on 502/503 HTML responses ──
   async function safeJson(res) {
     const ct = res.headers.get('content-type') || '';
@@ -3323,7 +2616,6 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
         activity_index: state.activityIndex,
         completed_types: Array.from(state.completedTypes),
         activity_results: state.activityResults,
-        written_drafts: state.writtenDrafts,
         activity_progress: state.activityProgress,
         ...(isW1() ? {
           w1_phase: state.w1Phase,
@@ -3371,11 +2663,19 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
   function restoreLessonSession() {
     const saved = loadLessonSession();
     if (!saved) return false;
-    state.completedTypes = new Set(saved.completed_types || []);
-    state.activityResults = saved.activity_results || {};
-    state.writtenDrafts = saved.written_drafts || {};
-    state.activityProgress = saved.activity_progress || {};
     const activities = state.lesson?.activities || [];
+    const activityTypes = new Set(activities.map((activity) => activity?.type).filter(Boolean));
+    state.completedTypes = new Set(
+      (saved.completed_types || []).filter((type) => activityTypes.has(type)),
+    );
+    state.activityResults = Object.fromEntries(
+      Object.entries(saved.activity_results || {}).filter(([type]) => (
+        type === 'guided_listening' || activityTypes.has(type)
+      )),
+    );
+    state.activityProgress = Object.fromEntries(
+      Object.entries(saved.activity_progress || {}).filter(([type]) => activityTypes.has(type)),
+    );
     let index = Number(saved.activity_index);
     if (!Number.isFinite(index)) index = 0;
     const currentType = activities[index]?.type;
@@ -3507,57 +2807,6 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
 
   async function init() {
     const params = new URLSearchParams(window.location.search);
-
-    // QA mode: ?read_aloud=1 renders ReadAloud with inline fixture data, no backend
-    if (params.get('read_aloud') === '1') {
-      const qHide = [
-        '#w1-story-phase', '#w1-guided-listening-phase', '#mic-prep-banner',
-        '#w1-legacy-progress', '#global-cta', '#trivia-reveal-section',
-        '#completion-card', '#w1-result-recap', '#submit-confirm-modal',
-      ];
-      qHide.forEach((sel) => qs(sel)?.classList.add('hidden'));
-      qs('#loading-card')?.classList.add('hidden');
-      qs('#lesson-shell')?.classList.remove('hidden');
-
-      qsa('[data-activity-shell]').forEach((shell) => {
-        shell.hidden = shell.dataset.activityShell !== 'read_aloud';
-      });
-
-      state.lesson = {
-        level: 'L2',
-        story: {
-          paragraphs_en: [
-            'The quick brown fox jumps over the lazy dog. He runs through the green forest.',
-            'The fox sees a rabbit under a big tree. The rabbit is eating a carrot.',
-            'The fox says hello to the rabbit. The rabbit waves back.',
-            'They become friends and play together every day.',
-          ],
-          paragraphs_vi: [
-            'Con chồn nâu nhanh nhẹn nhảy qua con chó lười. Nó chạy xuyên qua khu rừng xanh.',
-            'Con chồn thấy một con thỏ dưới gốc cây lớn. Con thỏ đang ăn cà rốt.',
-            'Con chồn chào con thỏ. Con thỏ vẫy tay chào lại.',
-            'Chúng trở thành bạn và chơi cùng nhau mỗi ngày.',
-          ],
-          sentences: [
-            { text_en: 'The quick brown fox jumps over the lazy dog.', text_vi: 'Con chồn nâu nhanh nhẹn nhảy qua con chó lười.', paragraph_index: 0 },
-            { text_en: 'He runs through the green forest.', text_vi: 'Nó chạy xuyên qua khu rừng xanh.', paragraph_index: 0 },
-            { text_en: 'The fox sees a rabbit under a big tree.', text_vi: 'Con chồn thấy một con thỏ dưới gốc cây lớn.', paragraph_index: 1 },
-            { text_en: 'The rabbit is eating a carrot.', text_vi: 'Con thỏ đang ăn cà rốt.', paragraph_index: 1 },
-            { text_en: 'The fox says hello to the rabbit.', text_vi: 'Con chồn chào con thỏ.', paragraph_index: 2 },
-            { text_en: 'The rabbit waves back.', text_vi: 'Con thỏ vẫy tay chào lại.', paragraph_index: 2 },
-            { text_en: 'They become friends and play together every day.', text_vi: 'Chúng trở thành bạn và chơi cùng nhau mỗi ngày.', paragraph_index: 3 },
-          ],
-        },
-      };
-
-      initStoryDock(state.lesson.story);
-
-      const body = qs('[data-activity-shell="read_aloud"] [data-activity-body]');
-      if (body) {
-        renderReadAloudActivity(body, { type: 'read_aloud' });
-      }
-      return;
-    }
 
     state.accessCode = (params.get('code') || '').trim().toUpperCase();
     state.packId = (params.get('pack_id') || '').trim();
@@ -3697,24 +2946,15 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
   }
 
   function ensureLessonActivities(lesson) {
-    const activities = Array.isArray(lesson?.activities) ? [...lesson.activities] : [];
-    if (activities.some((a) => a?.type === 'read_aloud')) {
-      lesson.activities = activities;
-      return lesson;
-    }
-    const readAloud = {
-      type: 'read_aloud',
-      title_vi: 'Đọc to',
-      identity_vi: 'Con đọc to từng câu cho Minny nghe nhé!',
-      instructions_vi: 'Con đọc từng câu trong truyện, Minny sẽ chấm điểm.',
-    };
-    const speakIndex = activities.findIndex((a) => a?.type === 'listen_and_speak');
-    if (speakIndex >= 0) {
-      activities.splice(speakIndex + 1, 0, readAloud);
-    } else {
-      activities.push(readAloud);
-    }
-    lesson.activities = activities;
+    const activities = Array.isArray(lesson?.activities) ? lesson.activities : [];
+    const activityByType = new Map(
+      activities
+        .filter((activity) => FRONTEND_ACTIVITY_ORDER.includes(activity?.type))
+        .map((activity) => [activity.type, activity]),
+    );
+    lesson.activities = FRONTEND_ACTIVITY_ORDER
+      .map((type) => activityByType.get(type))
+      .filter(Boolean);
     return lesson;
   }
 
@@ -4442,11 +3682,10 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
   function w1MaybeMidpointCelebration(completedIndex) {
     if (!isW1() || state.w1MidpointCelebrated) return;
     const activities = state.lesson?.activities || [];
-    const backendFive = activities.filter((a) => a?.type !== 'read_aloud');
-    if (backendFive.length < 5) return;
-    const thirdType = backendFive[2]?.type;
+    if (activities.length < 2) return;
+    const midpointType = activities[Math.ceil(activities.length / 2) - 1]?.type;
     const completedType = activities[completedIndex]?.type;
-    if (completedType !== thirdType) return;
+    if (completedType !== midpointType) return;
     state.w1MidpointCelebrated = true;
     setMinnyStrip('celebrate', 'Nửa đường rồi! Con giỏi lắm 🎉');
     window.__r2lJuice?.fireStreakConfetti?.();
@@ -4596,12 +3835,8 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
         renderMcqActivity(body, activity);
       } else if (activity.type === 'listen_and_order') {
         renderOrderActivity(body, activity);
-      } else if (activity.type === 'written_response') {
-        renderWrittenActivity(body, activity);
       } else if (activity.type === 'listen_and_speak') {
         renderSpeakActivity(body, activity);
-      } else if (activity.type === 'read_aloud') {
-        renderReadAloudActivity(body, activity);
       }
     });
   }
@@ -4706,12 +3941,6 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
     if (!shell) return;
     shell.hidden = false;
 
-    const autoExpandTypes = ['written_response', 'read_aloud'];
-    const dock = qs('#story-dock');
-    if (autoExpandTypes.includes(activity.type) && dock?.dataset.dockState === 'collapsed') {
-      toggleDock();
-    }
-
     qsa('[data-step-button]').forEach((button, buttonIndex) => {
       button.dataset.active = String(buttonIndex === state.activityIndex);
       const type = activities[buttonIndex]?.type;
@@ -4720,7 +3949,6 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
         if (buttonIndex === state.activityIndex) return;
         if (isW1()) {
           if (buttonIndex <= state.w1MaxUnlocked || (type && state.completedTypes.has(type))) {
-            finalizeCurrentActivityIfReady();
             showActivity(buttonIndex);
           } else {
             showToast('Xong nhiệm vụ này trước đã nha!');
@@ -4728,7 +3956,6 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
           return;
         }
         if (type && state.completedTypes.has(type)) {
-          finalizeCurrentActivityIfReady();
           showActivity(buttonIndex);
         }
       };
@@ -4739,7 +3966,7 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
     setMinnyStrip('idle', MINNY_COMMANDS[activity.type] || '');
     _itemStreak = 0;
 
-    const useLargeMinny = ['listen_and_speak', 'read_aloud'].includes(activity.type);
+    const useLargeMinny = activity.type === 'listen_and_speak';
     const minnyStrip = qs('#minny-strip');
     if (minnyStrip) minnyStrip.hidden = useLargeMinny;
     const heroWrap = shell.querySelector('.r2l-minny-hero-wrap');
@@ -4750,7 +3977,7 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
     updateGlobalCta();
     scheduleSaveLessonSession();
 
-    if (['listen_and_speak', 'read_aloud'].includes(activity.type)) {
+    if (activity.type === 'listen_and_speak') {
       _r2lMountMicCheck(shell);
       if (window.R2LMicCheck?.sessionPassed?.()) {
         _r2lApplyMicGate(true);
@@ -4762,10 +3989,6 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
         }
       }
     }
-  }
-
-  function activityIndexByType(type) {
-    return (state.lesson?.activities || []).findIndex((activity) => activity?.type === type);
   }
 
   function updateGlobalCta() {
@@ -4790,43 +4013,6 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
       btn.textContent = 'Tiếp tục →';
       btn.disabled = !isCurrentDone;
     }
-  }
-
-  function w1WordCount(text) {
-    return (text || '').trim().split(/\s+/).filter(Boolean).length;
-  }
-
-  function w1WrittenModelAnswer(question) {
-    const rcActivity = (state.lesson?.activities || []).find((a) => a.type === 'reading_comprehension');
-    return window.__r2lWritten?.writtenModelAnswer?.(question, rcActivity?.questions || []) || '';
-  }
-
-  function finalizeCurrentActivityIfReady() {
-    const activity = state.lesson?.activities?.[state.activityIndex];
-    if (!activity || activity.type !== 'written_response' || state.completedTypes.has(activity.type)) return;
-    const answers = collectWrittenAnswers(activity);
-    const minWords = isW1() ? 3 : 2;
-    const answeredCount = Object.values(answers).filter((value) => w1WordCount(value) >= minWords).length;
-    if (answeredCount === (activity.questions || []).length) {
-      completeActivity(activity.type, {
-        correct_count: answeredCount,
-        total_count: activity.questions.length,
-        written_answers: answers,
-      });
-    }
-  }
-
-  function writtenDraftKey(activity, question, questionIndex) {
-    return `${activity.type}:${question.id || questionIndex}`;
-  }
-
-  function collectWrittenAnswers(activity) {
-    const answers = {};
-    (activity.questions || []).forEach((question, questionIndex) => {
-      const key = writtenDraftKey(activity, question, questionIndex);
-      answers[questionIndex] = state.writtenDrafts[key] || '';
-    });
-    return answers;
   }
 
   function w1AppendStoryReviewLink(container) {
@@ -5580,135 +4766,6 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
     }
   }
 
-  function renderWrittenActivity(root, activity) {
-    root.innerHTML = `
-      <div class="mt-5 space-y-5">
-        ${(activity.questions || [])
-          .map(
-            (question, questionIndex) => {
-              const modelAnswer = isW1() ? w1WrittenModelAnswer(question) : '';
-              const modelLine = modelAnswer
-                ? `Câu mẫu của Minny: "${escapeHtml(modelAnswer)}"`
-                : 'Minny gợi ý con đọc lại truyện để tìm ý nhé!';
-              return `
-              <article class="rounded-md border border-cream/10 bg-navy-950/45 p-4" data-written-card="${questionIndex}">
-                <label class="block">
-                  <span class="block font-bold text-cream">${escapeHtml(question.question_en)}</span>
-                  <span class="mt-1 block text-sm text-cream/65">${escapeHtml(question.question_vi || '')}</span>
-                  <textarea
-                    class="mt-3 min-h-24 w-full rounded-md border border-cream/15 bg-navy-950/65 p-3 text-cream outline-none focus:border-accent"
-                    data-written-answer="${questionIndex}"
-                    placeholder="Con viết câu trả lời ở đây..."
-                  >${escapeHtml(state.writtenDrafts[writtenDraftKey(activity, question, questionIndex)] || '')}</textarea>
-                </label>
-                ${isW1() ? `
-                  <p class="mt-2 hidden text-sm text-cream/65" data-written-nudge="${questionIndex}">Con viết thêm một chút nhé (ít nhất 3 từ)!</p>
-                  <div class="mt-3 hidden space-y-2" data-written-review="${questionIndex}">
-                    <p class="text-sm text-gold">${modelLine}</p>
-                    <div class="flex flex-wrap gap-2" data-written-actions="${questionIndex}">
-                      <button type="button" class="r2l-secondary" data-written-ok="${questionIndex}">Giống ý 👍</button>
-                      <button type="button" class="r2l-secondary" data-written-retry="${questionIndex}">Khác ý, con sửa lại ✏️</button>
-                    </div>
-                    <p class="hidden text-sm font-semibold text-green-400" data-written-confirmed="${questionIndex}">Minny ghi nhận câu này rồi nhé!</p>
-                  </div>
-                ` : ''}
-              </article>
-            `;
-            },
-          )
-          .join('')}
-      </div>
-    `;
-
-    const w1Submitted = new Set();
-
-    root.querySelectorAll('[data-written-answer]').forEach((input) => {
-      input.addEventListener('input', () => {
-        const questionIndex = Number(input.dataset.writtenAnswer);
-        const question = activity.questions?.[questionIndex] || {};
-        state.writtenDrafts[writtenDraftKey(activity, question, questionIndex)] = input.value;
-        scheduleSaveLessonSession();
-        if (!isW1()) finalizeCurrentActivityIfReady();
-      });
-    });
-
-    if (isW1()) {
-      root.querySelectorAll('[data-written-answer]').forEach((input) => {
-        const submitBtn = document.createElement('button');
-        submitBtn.type = 'button';
-        submitBtn.className = 'r2l-primary mt-3';
-        submitBtn.textContent = 'Gửi câu trả lời';
-        submitBtn.dataset.writtenSubmit = String(input.dataset.writtenAnswer);
-        input.parentElement?.appendChild(submitBtn);
-        submitBtn.addEventListener('click', () => {
-          const questionIndex = Number(input.dataset.writtenAnswer);
-          const question = activity.questions?.[questionIndex] || {};
-          const value = input.value || '';
-          if (w1WordCount(value) < 3) {
-            root.querySelector(`[data-written-nudge="${questionIndex}"]`)?.classList.remove('hidden');
-            return;
-          }
-          root.querySelector(`[data-written-nudge="${questionIndex}"]`)?.classList.add('hidden');
-          input.disabled = true;
-          root.querySelector(`[data-written-review="${questionIndex}"]`)?.classList.remove('hidden');
-        });
-      });
-      function w1WrittenQuestionId(question, questionIndex) {
-        return `${activity.type}:${question.id || questionIndex}`;
-      }
-
-      function w1MarkWrittenQuestionOk(questionIndex) {
-        const question = activity.questions?.[questionIndex] || {};
-        w1Submitted.add(questionIndex);
-        w1RecordQuestionOutcome(activity.type, w1WrittenQuestionId(question, questionIndex), 'first_try', 1);
-        root.querySelector(`[data-written-actions="${questionIndex}"]`)?.classList.add('hidden');
-        root.querySelector(`[data-written-confirmed="${questionIndex}"]`)?.classList.remove('hidden');
-        root.querySelector(`[data-written-submit="${questionIndex}"]`)?.classList.add('hidden');
-        scheduleSaveLessonSession();
-        const total = (activity.questions || []).length;
-        if (w1Submitted.size >= total) {
-          completeActivity(activity.type, {
-            correct_count: w1Submitted.size,
-            total_count: total,
-            written_answers: collectWrittenAnswers(activity),
-          });
-        }
-      }
-
-      root.addEventListener('click', (event) => {
-        const okBtn = event.target.closest('[data-written-ok]');
-        if (!okBtn || !root.contains(okBtn)) return;
-        const questionIndex = Number(okBtn.getAttribute('data-written-ok'));
-        if (!Number.isInteger(questionIndex) || w1Submitted.has(questionIndex)) return;
-        w1MarkWrittenQuestionOk(questionIndex);
-      });
-
-      root.querySelectorAll('[data-written-retry]').forEach((btn) => {
-        btn.addEventListener('click', () => {
-          const questionIndex = Number(btn.getAttribute('data-written-retry'));
-          if (!Number.isInteger(questionIndex)) return;
-          const question = activity.questions?.[questionIndex] || {};
-          w1Submitted.delete(questionIndex);
-          const questionId = w1WrittenQuestionId(question, questionIndex);
-          if (state.questionOutcomes[activity.type]) {
-            delete state.questionOutcomes[activity.type][questionId];
-          }
-          const input = root.querySelector(`[data-written-answer="${questionIndex}"]`);
-          if (input) {
-            input.disabled = false;
-            input.focus();
-          }
-          root.querySelector(`[data-written-submit="${questionIndex}"]`)?.classList.remove('hidden');
-          root.querySelector(`[data-written-actions="${questionIndex}"]`)?.classList.remove('hidden');
-          root.querySelector(`[data-written-confirmed="${questionIndex}"]`)?.classList.add('hidden');
-          scheduleSaveLessonSession();
-        });
-      });
-    } else {
-      finalizeCurrentActivityIfReady();
-    }
-  }
-
   function renderSpeakActivity(root, activity) {
     const heroScope = root.closest('[data-activity-shell="listen_and_speak"]');
     _r2lInitMinnyHero(heroScope);
@@ -5832,7 +4889,7 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
 
   function updateProgress() {
     const activities = state.lesson?.activities || [];
-    const total = activities.length || 6;
+    const total = activities.length || FRONTEND_ACTIVITY_ORDER.length;
     const currentIndex = state.activityIndex;
 
     qs('#progress-part-label').textContent = `Phần ${currentIndex + 1}/${total}`;
@@ -6139,7 +5196,6 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
   import { applyV3HeaderRank } from '../../lib/rank-header';
   import { applyHeaderMonsterAvatar } from '../../lib/monster-avatar';
   import { calculateLessonScore as calcLessonScore, questionPoints } from '../../scripts/r2l-lesson-scoring.mjs';
-  import { writtenModelAnswer } from '../../scripts/r2l-written-model-answer.mjs';
   import { R2LFeedbackVisual } from '../../scripts/r2l-feedback-visual.js';
   import { R2LReplayControl } from '../../scripts/r2l-replay-control.js';
   import { claimDailyChest, fireLessonPassConfetti, fireStreakConfetti, isMuted, openChest, playKenney, playSynthTone, setMuted, showComboBadge, showNearMissBanner, showXpTicker } from '../../lib/lesson-juice';
@@ -6149,7 +5205,6 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
   bindRankUpModalClose();
 
   window.__r2lLessonScoring = { calculateLessonScore: calcLessonScore, questionPoints };
-  window.__r2lWritten = { writtenModelAnswer };
   window.R2LFeedbackVisual = R2LFeedbackVisual;
   window.R2LReplayControl = R2LReplayControl;
   R2LReplayControl.bindReplayControls(document);

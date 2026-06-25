@@ -140,7 +140,6 @@ test('lesson watches the live track for OS-level mute (another app holding the m
 test('lesson shows a live level meter while recording (Meet pattern)', () => {
   assert.match(lessonPage, /data-rec-meter/);
   assert.match(lessonPage, /r2l-rec-meter-bar/);
-  assert.match(lessonPage, /data-retell-meter-bar/);
 });
 
 test('mic check pins the passed device for later recordings', () => {

@@ -5,49 +5,44 @@ import { readFileSync } from 'node:fs';
 const lessonPage = readFileSync('src/pages/read2lead/lesson.astro', 'utf-8');
 const activityProgress = readFileSync('src/components/read2lead/v2/ActivityProgress.astro', 'utf-8');
 const listenAndSpeak = readFileSync('src/components/read2lead/v2/ListenAndSpeak.astro', 'utf-8');
-const readAloud = readFileSync('src/components/read2lead/v2/ReadAloud.astro', 'utf-8');
 const stateModule = readFileSync('functions/api/_read2lead-v2-state.js', 'utf-8');
 const submitModule = readFileSync('functions/api/submit-read2lead-lesson.js', 'utf-8');
-const speakingEndpoint = readFileSync('functions/api/read2lead-speaking-check.js', 'utf-8');
 
-test('lesson page injects read_aloud when pack only has five backend activities', () => {
+test('lesson page filters legacy packs to the four active frontend activities', () => {
   assert.match(lessonPage, /function ensureLessonActivities/);
-  assert.match(lessonPage, /read_aloud/);
-  assert.match(readFileSync('functions/api/read2lead-lesson.js', 'utf-8'), /ensureSixActivities/);
+  assert.match(lessonPage, /const FRONTEND_ACTIVITY_ORDER/);
+  assert.match(lessonPage, /FRONTEND_ACTIVITY_ORDER\.includes/);
+  assert.doesNotMatch(lessonPage, /read_aloud/);
+  assert.doesNotMatch(lessonPage, /written_response/);
 });
 
-test('lesson page supports the 6-activity V2 flow', () => {
+test('lesson page supports the four-activity V2 flow', () => {
   for (const type of [
     'listening_fill_blank',
     'listen_and_order',
     'reading_comprehension',
-    'written_response',
     'listen_and_speak',
-    'read_aloud',
   ]) {
     assert.match(lessonPage, new RegExp(type));
   }
   assert.match(lessonPage, /function renderFillBlankActivity/);
-  assert.match(lessonPage, /function renderWrittenActivity/);
-  assert.match(lessonPage, /function renderReadAloudActivity/);
-  assert.doesNotMatch(lessonPage, /completedTypes\.size < 4/);
+  assert.doesNotMatch(lessonPage, /function renderWrittenActivity/);
+  assert.doesNotMatch(lessonPage, /function renderReadAloudActivity/);
   assert.doesNotMatch(lessonPage, /speaking-check-section/);
   assert.doesNotMatch(lessonPage, /Câu hỏi mở bonus/);
 });
 
-test('activity progress shows exactly 6 steps in the new order', () => {
+test('activity progress shows exactly four steps in the active order', () => {
   const labels = [
     '1. Nghe điền',
     '2. Xếp câu',
     '3. Đọc hiểu',
-    '4. Viết đáp án',
-    '5. Nói lại',
-    '6. Đọc to',
+    '4. Nói lại',
   ];
   for (const label of labels) {
     assert.match(activityProgress, new RegExp(label));
   }
-  assert.equal((activityProgress.match(/data-step-button=/g) || []).length, 6);
+  assert.equal((activityProgress.match(/data-step-button=/g) || []).length, 4);
 });
 
 test('listen_and_speak uses Minny hero and nghe-before-speak gating', () => {
@@ -63,18 +58,17 @@ test('listen_and_speak uses Minny hero and nghe-before-speak gating', () => {
   assert.match(lessonPage, /tryPlay\('mp4'\)/);
 });
 
-test('read_aloud component exists with correct shell attribute', () => {
-  assert.match(readAloud, /data-activity-shell="read_aloud"/);
-  assert.match(lessonPage, /function renderReadAloudActivity/);
-  assert.match(speakingEndpoint, /MAX_AUDIO_BYTES_LONG/);
-  assert.match(speakingEndpoint, /max_seconds/);
+test('retired activity shells and dispatch branches are absent', () => {
+  assert.doesNotMatch(lessonPage, /data-activity-shell="read_aloud"/);
+  assert.doesNotMatch(lessonPage, /data-activity-shell="written_response"/);
+  assert.doesNotMatch(lessonPage, /renderReadAloudActivity/);
+  assert.doesNotMatch(lessonPage, /renderWrittenActivity/);
 });
 
 test('global CTA advances through live activity list', () => {
   assert.match(lessonPage, /function updateGlobalCta/);
   assert.match(lessonPage, /id="lesson-continue"/);
   assert.match(lessonPage, /showActivity\(state\.activityIndex \+ 1\)/);
-  assert.match(lessonPage, /function activityIndexByType/);
 });
 
 test('listen_and_order uses editable drag-drop slots instead of one-way token picking', () => {
@@ -115,9 +109,9 @@ test('lesson progress survives accidental page refresh via session storage', () 
   assert.match(lessonPage, /scheduleSaveLessonSession/);
 });
 
-test('written_response hides answer hints, saves drafts, and uses global CTA navigation', () => {
-  assert.match(lessonPage, /writtenDrafts/);
-  assert.match(lessonPage, /function collectWrittenAnswers/);
+test('retired written response state is removed while global CTA navigation remains', () => {
+  assert.doesNotMatch(lessonPage, /writtenDrafts/);
+  assert.doesNotMatch(lessonPage, /function collectWrittenAnswers/);
   assert.match(lessonPage, /id="lesson-continue"/);
   assert.match(lessonPage, /function updateGlobalCta/);
   assert.doesNotMatch(lessonPage, /data-written-model/);
@@ -164,13 +158,13 @@ test('listen_and_speak completes via Whisper scoring, not self-rate', () => {
 test('scoring formula uses soft penalty (wrong * 0.5)', () => {
   assert.match(lessonPage, /Math\.floor\(wrong \* 0\.5\)/);
   assert.match(submitModule, /Math\.floor\(wrong \* 0\.5\)/);
-  assert.match(submitModule, /completedTypes\.size >= 6/);
+  assert.match(submitModule, /completedTypes\.size >= ACTIVE_LESSON_ACTIVITY_TYPES\.size/);
 });
 
 test('pass threshold is 50% and XP penalty is 0', () => {
   assert.match(stateModule, /PASS_THRESHOLD_PERCENT = 50/);
   assert.match(stateModule, /XP_PENALTY_BELOW_THRESHOLD = 0/);
-  assert.match(stateModule, /read_aloud/);
+  assert.match(submitModule, /const SPEAKING_ACTIVITY_TYPES = new Set\(\['listen_and_speak'\]\)/);
 });
 
 test('student name is wired to IdentityBanner via id', () => {
