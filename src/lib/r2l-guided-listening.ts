@@ -1,10 +1,10 @@
 /**
- * Guided Listening — paragraph-by-paragraph listening comprehension.
+ * Guided Listening — sentence-by-sentence listening comprehension.
  *
  * Phase model:
  *    'story' → 'guided_listening' → 'activities'
  *
- * Each paragraph: play audio → answer yes/no + choice questions → done.
+ * Each sentence: play audio → answer 2-3 questions → auto-advance.
  *
  * Scores feed into the existing question_outcomes / lesson scoring pipeline.
  */
@@ -26,6 +26,8 @@ export interface GuidedQuestion {
   correct_index: number;
   /** Backend paragraph index injected during normalization */
   paragraph_index: number;
+  /** Global story sentence index injected during normalization */
+  sentence_index: number;
   /** Raw boolean answer from backend (yes_no type only) */
   answer?: boolean;
 }
@@ -40,20 +42,22 @@ export interface GuidedParagraph {
 }
 
 export interface GuidedListeningState {
+  /** Saved progress contract version. Version 2 is sentence-based. */
+  progressVersion: 2;
   /** Current phase of the guided listening flow */
   phase: 'idle' | 'playing' | 'questioning' | 'done';
-  /** Index of the paragraph currently being worked on */
-  paragraphIndex: number;
-  /** Which paragraphs have been marked as played (audio consumed) */
-  paragraphPlayed: boolean[];
-  /** Which paragraphs have all questions answered correctly */
-  paragraphsDone: boolean[];
-  /** Per-question answers: key = `${paragraphIndex}:${questionId}` */
+  /** Global index of the story sentence currently being worked on */
+  sentenceIndex: number;
+  /** Which sentence audio clips have been consumed */
+  sentencePlayed: boolean[];
+  /** Which sentences have all questions resolved or were skipped */
+  sentencesDone: boolean[];
+  /** Per-question answers: key = `${sentenceIndex}:${questionId}` */
   answers: Record<string, GuidedAnswer>;
 }
 
 export interface GuidedAnswer {
-  paragraphIndex: number;
+  sentenceIndex: number;
   questionId: string;
   selectedIndex: number;
   correct: boolean;
@@ -99,12 +103,17 @@ export function normalizeGuidedListening(raw: any[]): { paragraphs: GuidedParagr
     const paraIdx = Number(para?.paragraph_index ?? 0);
     const rawQuestions = Array.isArray(para?.questions) ? para.questions : [];
 
+    const entrySentenceIndex = Number(para?.sentence_index);
     const normalizedQuestions: GuidedQuestion[] = rawQuestions.map((q: any) => {
+      const questionSentenceIndex = Number(q?.sentence_index);
       const base = {
         id: String(q.id ?? ''),
         question_vi: String(q.question_vi ?? ''),
         question_en: String(q.question_en ?? ''),
         paragraph_index: paraIdx,
+        sentence_index: Number.isFinite(questionSentenceIndex)
+          ? questionSentenceIndex
+          : (Number.isFinite(entrySentenceIndex) ? entrySentenceIndex : paraIdx),
         answer: undefined as boolean | undefined,
       };
 
@@ -144,13 +153,14 @@ export function normalizeGuidedListening(raw: any[]): { paragraphs: GuidedParagr
 
 // ── Factory ───────────────────────────────────────────────────────────────────
 
-export function createGuidedListeningState(paragraphCount: number): GuidedListeningState {
-  const empty = new Array(paragraphCount).fill(false);
+export function createGuidedListeningState(sentenceCount: number): GuidedListeningState {
+  const empty = new Array(sentenceCount).fill(false);
   return {
+    progressVersion: 2,
     phase: 'idle',
-    paragraphIndex: 0,
-    paragraphPlayed: [...empty],
-    paragraphsDone: [...empty],
+    sentenceIndex: 0,
+    sentencePlayed: [...empty],
+    sentencesDone: [...empty],
     answers: {},
   };
 }
@@ -158,17 +168,17 @@ export function createGuidedListeningState(paragraphCount: number): GuidedListen
 // ── State machine helpers ─────────────────────────────────────────────────────
 
 /**
- * Mark that audio has been played for the current paragraph.
+ * Mark that audio has been played for the current sentence.
  * Transitions from 'idle'/'questioning' → 'questioning'.
  */
-export function markParagraphPlayed(
+export function markSentencePlayed(
   state: GuidedListeningState,
-  paragraphIndex: number,
+  sentenceIndex: number,
 ): GuidedListeningState {
-  if (paragraphIndex < 0 || paragraphIndex >= state.paragraphPlayed.length) return state;
-  const played = state.paragraphPlayed.slice();
-  played[paragraphIndex] = true;
-  return { ...state, paragraphPlayed: played, phase: 'questioning' };
+  if (sentenceIndex < 0 || sentenceIndex >= state.sentencePlayed.length) return state;
+  const played = state.sentencePlayed.slice();
+  played[sentenceIndex] = true;
+  return { ...state, sentencePlayed: played, phase: 'questioning' };
 }
 
 /**
@@ -181,12 +191,13 @@ export function markParagraphPlayed(
  */
 export function recordAnswer(
   state: GuidedListeningState,
-  paragraphIndex: number,
+  sentenceIndex: number,
   questionId: string,
   selectedIndex: number,
   correctIndex: number,
+  expectedQuestionIds: string[] = [questionId],
 ): GuidedListeningState {
-  const key = `${paragraphIndex}:${questionId}`;
+  const key = `${sentenceIndex}:${questionId}`;
   const existing = state.answers[key];
 
   // If already correct on first_try, ignore subsequent submissions.
@@ -203,47 +214,43 @@ export function recordAnswer(
     outcome = attempts >= 2 ? 'revealed' : 'second_try'; // second attempt still hasn't gotten it right yet
   }
 
-  const answers = { ...state.answers, [key]: { paragraphIndex, questionId, selectedIndex, correct, outcome, attempts } };
+  const answers = { ...state.answers, [key]: { sentenceIndex, questionId, selectedIndex, correct, outcome, attempts } };
 
-  // Check if all questions in this paragraph are correct → mark done
-  const allCorrect = isParagraphAllCorrect(paragraphIndex, answers);
+  const allCorrect = isSentenceAllCorrect(sentenceIndex, answers, expectedQuestionIds);
 
   if (allCorrect) {
-    const done = state.paragraphsDone.slice();
-    done[paragraphIndex] = true;
-    const nextPhase = paragraphIndex >= state.paragraphPlayed.length - 1
+    const done = state.sentencesDone.slice();
+    done[sentenceIndex] = true;
+    const nextPhase = sentenceIndex >= state.sentencePlayed.length - 1
       ? 'done'
       : 'idle';
-    return { ...state, answers, paragraphsDone: done, phase: nextPhase };
+    return { ...state, answers, sentencesDone: done, phase: nextPhase };
   }
 
   return { ...state, answers, phase: 'questioning' };
 }
 
 /**
- * Whether every question in the paragraph has a correct answer recorded.
+ * Whether every recorded question for the sentence has a correct answer.
  */
-function isParagraphAllCorrect(
-  paragraphIndex: number,
+function isSentenceAllCorrect(
+  sentenceIndex: number,
   answers: Record<string, GuidedAnswer>,
+  expectedQuestionIds: string[],
 ): boolean {
-  const relevant = Object.entries(answers).filter(
-    ([, a]) => a.paragraphIndex === paragraphIndex,
-  );
-  // A paragraph with no questions is trivially complete.
-  if (relevant.length === 0) return true;
-  return relevant.every(([, a]) => a.correct);
+  if (expectedQuestionIds.length === 0) return true;
+  return expectedQuestionIds.every((questionId) => answers[`${sentenceIndex}:${questionId}`]?.correct);
 }
 
 /**
- * Move to the next paragraph. Phase resets to 'idle'.
+ * Move to the next sentence. Phase resets to 'idle'.
  */
-export function advanceToNextParagraph(state: GuidedListeningState): GuidedListeningState {
-  const next = state.paragraphIndex + 1;
-  if (next >= state.paragraphPlayed.length) {
-    return { ...state, paragraphIndex: Math.min(next, state.paragraphPlayed.length - 1), phase: 'done' };
+export function advanceToNextSentence(state: GuidedListeningState): GuidedListeningState {
+  const next = state.sentenceIndex + 1;
+  if (next >= state.sentencePlayed.length) {
+    return { ...state, sentenceIndex: Math.min(next, state.sentencePlayed.length - 1), phase: 'done' };
   }
-  return { ...state, paragraphIndex: next, phase: 'idle' };
+  return { ...state, sentenceIndex: next, phase: 'idle' };
 }
 
 // ── Scoring ───────────────────────────────────────────────────────────────────
@@ -290,25 +297,41 @@ export function scoreGuidedListening(state: GuidedListeningState): GuidedScore {
 // ── Migration / restore from saved session ────────────────────────────────────
 
 export interface GuidedListeningSaveData {
-  paragraph_index: number;
-  paragraph_played: boolean[];
-  paragraphs_done: boolean[];
+  progressVersion?: number;
+  sentenceIndex?: number;
+  sentencePlayed?: boolean[];
+  sentencesDone?: boolean[];
+  paragraph_index?: number;
+  paragraphIndex?: number;
+  paragraph_played?: boolean[];
+  paragraphPlayed?: boolean[];
+  paragraphs_done?: boolean[];
+  paragraphsDone?: boolean[];
   answers: Record<string, { selected_index: number; correct: boolean; outcome: string; attempts: number }>;
 }
 
 export function restoreGuidedListeningState(
   saved: GuidedListeningSaveData | null | undefined,
-  paragraphCount: number,
+  sentenceCount: number,
+  sentenceIndexesByParagraph: number[] = [],
 ): GuidedListeningState {
-  if (!saved) return createGuidedListeningState(paragraphCount);
+  if (!saved) return createGuidedListeningState(sentenceCount);
 
-  const empty = new Array(paragraphCount).fill(false);
+  const empty = new Array(sentenceCount).fill(false);
   const answers: Record<string, GuidedAnswer> = {};
+  const isV2 = saved.progressVersion === 2 || Number.isFinite(Number(saved.sentenceIndex));
+  const legacyParagraphIndex = Number(saved.paragraphIndex ?? saved.paragraph_index ?? 0);
+  const migratedSentenceIndex = sentenceIndexesByParagraph[legacyParagraphIndex] ?? legacyParagraphIndex;
+  const currentSentenceIndex = isV2 ? Number(saved.sentenceIndex ?? 0) : migratedSentenceIndex;
 
   Object.entries(saved.answers || {}).forEach(([key, a]) => {
-    const [pIdx, qId] = key.split(':');
-    answers[key] = {
-      paragraphIndex: Number(pIdx),
+    const [savedIndex, qId] = key.split(':');
+    const sentenceIndex = isV2
+      ? Number(savedIndex)
+      : (sentenceIndexesByParagraph[Number(savedIndex)] ?? Number(savedIndex));
+    const migratedKey = `${sentenceIndex}:${qId}`;
+    answers[migratedKey] = {
+      sentenceIndex,
       questionId: qId,
       selectedIndex: a.selected_index,
       correct: a.correct,
@@ -317,23 +340,43 @@ export function restoreGuidedListeningState(
     };
   });
 
-  const played = Array.isArray(saved.paragraph_played)
-    ? saved.paragraph_played.map(Boolean)
-    : [...empty];
-  const done = Array.isArray(saved.paragraphs_done)
-    ? saved.paragraphs_done.map(Boolean)
-    : [...empty];
+  const savedPlayed = isV2
+    ? saved.sentencePlayed
+    : (saved.paragraphPlayed ?? saved.paragraph_played);
+  const savedDone = isV2
+    ? saved.sentencesDone
+    : (saved.paragraphsDone ?? saved.paragraphs_done);
+  const expandLegacyFlags = (flags: boolean[] | undefined): boolean[] => {
+    if (!Array.isArray(flags)) return [...empty];
+    if (isV2 || sentenceIndexesByParagraph.length === 0) return flags.map(Boolean);
+    const expanded = [...empty];
+    flags.forEach((flag, paragraphIndex) => {
+      const start = sentenceIndexesByParagraph[paragraphIndex];
+      if (!Number.isFinite(start)) return;
+      const nextStart = sentenceIndexesByParagraph
+        .slice(paragraphIndex + 1)
+        .find((index) => Number.isFinite(index));
+      const end = Number.isFinite(nextStart) ? Number(nextStart) : sentenceCount;
+      for (let sentenceIndex = Number(start); sentenceIndex < end; sentenceIndex += 1) {
+        expanded[sentenceIndex] = Boolean(flag);
+      }
+    });
+    return expanded;
+  };
+  const played = expandLegacyFlags(savedPlayed);
+  const done = expandLegacyFlags(savedDone);
 
   const allDone = done.length > 0 && done.every(Boolean);
   const phase: GuidedListeningState['phase'] = allDone
     ? 'done'
-    : (played[saved.paragraph_index] ? 'questioning' : 'idle');
+    : (played[currentSentenceIndex] ? 'questioning' : 'idle');
 
   return {
+    progressVersion: 2,
     phase,
-    paragraphIndex: Math.min(saved.paragraph_index, paragraphCount - 1),
-    paragraphPlayed: played.length >= paragraphCount ? played : [...played, ...empty.slice(played.length)],
-    paragraphsDone: done.length >= paragraphCount ? done : [...done, ...empty.slice(done.length)],
+    sentenceIndex: Math.max(0, Math.min(currentSentenceIndex, sentenceCount - 1)),
+    sentencePlayed: played.length >= sentenceCount ? played.slice(0, sentenceCount) : [...played, ...empty.slice(played.length)],
+    sentencesDone: done.length >= sentenceCount ? done.slice(0, sentenceCount) : [...done, ...empty.slice(done.length)],
     answers,
   };
 }
