@@ -4,12 +4,13 @@ import { readFileSync } from 'node:fs';
 
 const lessonPage = readFileSync('src/pages/read2lead/lesson.astro', 'utf-8');
 const progressBar = readFileSync('src/components/read2lead/v2/ProgressBar.astro', 'utf-8');
-const lessonActivities = readFileSync('functions/api/_read2lead-lesson-activities.js', 'utf-8');
 
-test('mission chrome shows part n/6 with progress dots', () => {
+test('mission chrome shows part n/4 with progress dots', () => {
   assert.match(progressBar, /progress-part-label/);
+  assert.match(progressBar, /Phần 1\/4/);
   assert.match(progressBar, /progress-dots/);
   assert.match(progressBar, /data-dot="0"/);
+  assert.equal((progressBar.match(/data-dot=/g) || []).length, 4);
   assert.match(progressBar, /id="sfx-toggle"/);
   assert.match(lessonPage, /r2l-dot/);
   assert.match(lessonPage, /dot\.dataset\.state/);
@@ -31,10 +32,11 @@ test('global CTA replaces per-activity prev next nav', () => {
   assert.doesNotMatch(lessonPage, /data-activity-prev/);
 });
 
-test('read_aloud is injected and reachable as part 6', () => {
-  assert.match(lessonActivities, /read_aloud/);
-  assert.match(lessonPage, /data-activity-shell="read_aloud"/);
+test('legacy written and read-aloud activities are filtered out of the frontend', () => {
   assert.match(lessonPage, /function ensureLessonActivities/);
+  assert.match(lessonPage, /FRONTEND_ACTIVITY_ORDER/);
+  assert.doesNotMatch(lessonPage, /data-activity-shell="read_aloud"/);
+  assert.doesNotMatch(lessonPage, /data-activity-shell="written_response"/);
   assert.match(lessonPage, /showActivity\(state\.activityIndex \+ 1\)/);
 });
 
@@ -65,10 +67,10 @@ test('minny coach strip with mood bubble and streak', () => {
   assert.match(lessonPage, /onItemWrong\(questionId\)/);
 });
 
-test('minny strip hidden for speak and retell parts', () => {
+test('minny strip is hidden for the active speaking part', () => {
   assert.match(lessonPage, /minnyStrip\.hidden = useLargeMinny/);
   assert.match(lessonPage, /heroWrap\.hidden = !useLargeMinny/);
-  assert.match(lessonPage, /listen_and_speak', 'read_aloud'\].includes\(activity\.type\)/);
+  assert.match(lessonPage, /useLargeMinny = activity\.type === 'listen_and_speak'/);
 });
 
 test('meso interstitial between activity parts', () => {

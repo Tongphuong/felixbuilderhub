@@ -130,7 +130,13 @@ function isV2PackReviewed(pack) {
 
 const DUPLICATE_SUBMIT_WINDOW_MS = 12000;
 export const SPEAKING_PASS_PERCENT = 50;
-const SPEAKING_ACTIVITY_TYPES = new Set(['listen_and_speak', 'read_aloud']);
+const ACTIVE_LESSON_ACTIVITY_TYPES = new Set([
+  'listening_fill_blank',
+  'listen_and_order',
+  'reading_comprehension',
+  'listen_and_speak',
+]);
+const SPEAKING_ACTIVITY_TYPES = new Set(['listen_and_speak']);
 
 function isRecentDuplicateSubmit(currentPack) {
   const last = currentPack?.web_lesson_summary;
@@ -181,7 +187,7 @@ async function submitV2Lesson({
     : [];
   const expectedTypes = (Array.isArray(lessonContext.activities) ? lessonContext.activities : [])
     .map((activity) => activity?.type)
-    .filter(Boolean);
+    .filter((type) => ACTIVE_LESSON_ACTIVITY_TYPES.has(type));
   const completedTypes = new Set(
     activityResults
       .filter((result) => result && result.attempted !== false)
@@ -189,11 +195,11 @@ async function submitV2Lesson({
       .filter(Boolean),
   );
   const score = scoreActivityResults(activityResults, lessonContext);
-  const totalCount = score.total_count || expectedTypes.length || 6;
+  const totalCount = score.total_count || expectedTypes.length || ACTIVE_LESSON_ACTIVITY_TYPES.size;
   const correctCount = score.correct_count;
   const allActivitiesAttempted = expectedTypes.length > 0
     ? expectedTypes.every((type) => completedTypes.has(type))
-    : completedTypes.size >= 6;
+    : completedTypes.size >= ACTIVE_LESSON_ACTIVITY_TYPES.size;
   const scorePercent = score.score_percent;
   const speakingGate = evaluateSpeakingGate(activityResults, expectedTypes);
   const completedWithoutReward = allActivitiesAttempted && speakingGate.skipped;
@@ -308,7 +314,7 @@ async function submitV2Lesson({
     // === V4 W2 hooks ===
     const w2DateKey = vietnamDateKey(submittedAt);
     const hasSpeakActivity = activityResults.some(
-      (result) => result?.type === 'listen_and_speak' || result?.type === 'read_aloud',
+      (result) => result?.type === 'listen_and_speak',
     );
     nextProgressState = applyQuestProgress(
       nextProgressState,
@@ -604,7 +610,8 @@ async function respondFromCachedAttempt({
 }
 
 function scoreActivityResults(activityResults, lessonContext) {
-  const expectedActivities = Array.isArray(lessonContext.activities) ? lessonContext.activities : [];
+  const expectedActivities = (Array.isArray(lessonContext.activities) ? lessonContext.activities : [])
+    .filter((activity) => ACTIVE_LESSON_ACTIVITY_TYPES.has(activity?.type));
   const resultsByType = new Map(
     (Array.isArray(activityResults) ? activityResults : [])
       .filter((result) => result?.type)
