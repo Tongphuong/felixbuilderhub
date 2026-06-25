@@ -4,7 +4,8 @@
  * Phase model:
  *    'story' → 'guided_listening' → 'activities'
  *
- * Each sentence: play audio → answer 2-3 questions → auto-advance.
+ * Each sentence: play audio → answer 2 WH- comprehension questions → auto-advance.
+ * All questions are choice type with 3 options.
  *
  * Scores feed into the existing question_outcomes / lesson scoring pipeline.
  */
@@ -13,37 +14,27 @@
 
 export interface GuidedQuestion {
   id: string;
-  type: 'yes_no' | 'choice';
-  /** Vietnamese question shown to the kid */
-  question_vi: string;
-  /** English question (optional, for reference) */
-  question_en?: string;
-  /** 2 options in English (synthesized ['Yes','No'] for yes_no) */
+  type: 'choice';
+  /** English WH- comprehension question (Who/What/Where/When/Why/How) */
+  question_en: string;
+  /** 3 options in English */
   options_en: string[];
-  /** 2 options in Vietnamese (synthesized ['Có','Không'] for yes_no) */
-  options_vi: string[];
-  /** Index into options arrays of the correct answer (mapped from answer for yes_no) */
+  /** Index into options arrays of the correct answer */
   correct_index: number;
   /** Backend paragraph index injected during normalization */
   paragraph_index: number;
-  /** Global story sentence index injected during normalization */
+  /** Global story sentence index */
   sentence_index: number;
-  /** Raw boolean answer from backend (yes_no type only) */
-  answer?: boolean;
 }
 
 export interface GuidedParagraph {
   index: number;
-  /** Paragraph text (populated from story by the caller) */
-  text_en?: string;
-  text_vi?: string;
-  audio_url?: string;
   questions: GuidedQuestion[];
 }
 
 export interface GuidedListeningState {
-  /** Saved progress contract version. Version 2 is sentence-based. */
-  progressVersion: 2;
+  /** Saved progress contract version. Version 3 is sentence-based with WH- questions. */
+  progressVersion: 3;
   /** Current phase of the guided listening flow */
   phase: 'idle' | 'playing' | 'questioning' | 'done';
   /** Global index of the story sentence currently being worked on */
@@ -71,25 +62,17 @@ export interface GuidedAnswer {
 /**
  * Normalize the raw backend guided_listening array into the internal shape.
  *
- * Backend input shape:
+ * Backend input shape (v3):
  *   [{
  *     paragraph_index: number,
  *     questions: [
- *       { id, type: 'yes_no', question_en, question_vi, answer: boolean } |
- *       { id, type: 'choice', question_en, question_vi, options_en, options_vi, correct_index }
+ *       { id: 'gl_p0_s0_q1', type: 'choice', question_en: 'Who...?',
+ *         options_en: ['A','B','C'], correct_index: 0, sentence_index: 0 }
  *     ]
  *   }]
  *
- * Normalized output (each question has options_en, options_vi, correct_index):
+ * Normalized output:
  *   { paragraphs: GuidedParagraph[], questions: GuidedQuestion[] }
- *
- * For yes_no questions:
- *   - options_en is synthesized as ['Yes', 'No']
- *   - options_vi is synthesized as ['Có', 'Không']
- *   - answer: true  → correct_index: 0
- *   - answer: false → correct_index: 1
- * For choice questions:
- *   - options_en, options_vi, correct_index pass through as-is
  */
 export function normalizeGuidedListening(raw: any[]): { paragraphs: GuidedParagraph[]; questions: GuidedQuestion[] } {
   const paragraphs: GuidedParagraph[] = [];
@@ -103,40 +86,18 @@ export function normalizeGuidedListening(raw: any[]): { paragraphs: GuidedParagr
     const paraIdx = Number(para?.paragraph_index ?? 0);
     const rawQuestions = Array.isArray(para?.questions) ? para.questions : [];
 
-    const entrySentenceIndex = Number(para?.sentence_index);
     const normalizedQuestions: GuidedQuestion[] = rawQuestions.map((q: any) => {
-      const questionSentenceIndex = Number(q?.sentence_index);
-      const base = {
-        id: String(q.id ?? ''),
-        question_vi: String(q.question_vi ?? ''),
-        question_en: String(q.question_en ?? ''),
-        paragraph_index: paraIdx,
-        sentence_index: Number.isFinite(questionSentenceIndex)
-          ? questionSentenceIndex
-          : (Number.isFinite(entrySentenceIndex) ? entrySentenceIndex : paraIdx),
-        answer: undefined as boolean | undefined,
-      };
-
-      if (q?.type === 'yes_no') {
-        const answer = Boolean(q.answer);
-        return {
-          ...base,
-          type: 'yes_no' as const,
-          options_en: ['Yes', 'No'],
-          options_vi: ['Có', 'Không'],
-          correct_index: answer ? 0 : 1,
-          answer,
-        };
-      }
-
-      // choice type (default fallback)
+      const questionType = q?.type === 'choice' ? 'choice' : 'choice'; // everything is choice in v3
       return {
-        ...base,
+        id: String(q.id ?? ''),
         type: 'choice' as const,
-        options_en: Array.isArray(q?.options_en) ? q.options_en : [],
-        options_vi: Array.isArray(q?.options_vi) ? q.options_vi : [],
+        question_en: String(q.question_en ?? ''),
+        options_en: Array.isArray(q?.options_en) ? q.options_en.slice(0, 3) : [],
         correct_index: Number(q?.correct_index ?? 0),
-        answer: undefined,
+        paragraph_index: paraIdx,
+        sentence_index: Number.isFinite(Number(q?.sentence_index))
+          ? Number(q.sentence_index)
+          : paraIdx,
       };
     });
 
@@ -156,7 +117,7 @@ export function normalizeGuidedListening(raw: any[]): { paragraphs: GuidedParagr
 export function createGuidedListeningState(sentenceCount: number): GuidedListeningState {
   const empty = new Array(sentenceCount).fill(false);
   return {
-    progressVersion: 2,
+    progressVersion: 3,
     phase: 'idle',
     sentenceIndex: 0,
     sentencePlayed: [...empty],
@@ -183,11 +144,7 @@ export function markSentencePlayed(
 
 /**
  * Record a learner's answer to a guided question.
- * `correctIndex` is the index of the correct option (from the paragraph definition).
- * Returns updated state with outcome computed.
- * For yes/no: first answer is always either correct or wrong;
- *   wrong → learner can retry (second_try). Third attempt = revealed.
- * For choice: similar; wrong lets you pick again (up to 2 attempts = revealed).
+ * First wrong answer → can retry (second_try). Second wrong = revealed.
  */
 export function recordAnswer(
   state: GuidedListeningState,
@@ -211,7 +168,7 @@ export function recordAnswer(
   if (correct) {
     outcome = attempts === 1 ? 'first_try' : 'second_try';
   } else {
-    outcome = attempts >= 2 ? 'revealed' : 'second_try'; // second attempt still hasn't gotten it right yet
+    outcome = attempts >= 2 ? 'revealed' : 'second_try';
   }
 
   const answers = { ...state.answers, [key]: { sentenceIndex, questionId, selectedIndex, correct, outcome, attempts } };
@@ -265,7 +222,6 @@ export interface GuidedScore {
 
 /**
  * Build a score snapshot from the guided listening answers.
- * Feeds the existing `activityResults[type]` shape.
  */
 export function scoreGuidedListening(state: GuidedListeningState): GuidedScore {
   const entries = Object.values(state.answers);
@@ -283,7 +239,6 @@ export function scoreGuidedListening(state: GuidedListeningState): GuidedScore {
     });
   });
 
-  // If no entries yet, treat as zero correct out of 1 for 0%
   const effectiveTotal = Math.max(total, 1);
 
   return {
@@ -319,7 +274,7 @@ export function restoreGuidedListeningState(
 
   const empty = new Array(sentenceCount).fill(false);
   const answers: Record<string, GuidedAnswer> = {};
-  const isV2 = saved.progressVersion === 2 || Number.isFinite(Number(saved.sentenceIndex));
+  const isV2 = saved.progressVersion === 2 || saved.progressVersion === 3 || Number.isFinite(Number(saved.sentenceIndex));
   const legacyParagraphIndex = Number(saved.paragraphIndex ?? saved.paragraph_index ?? 0);
   const migratedSentenceIndex = sentenceIndexesByParagraph[legacyParagraphIndex] ?? legacyParagraphIndex;
   const currentSentenceIndex = isV2 ? Number(saved.sentenceIndex ?? 0) : migratedSentenceIndex;
@@ -357,8 +312,8 @@ export function restoreGuidedListeningState(
         .slice(paragraphIndex + 1)
         .find((index) => Number.isFinite(index));
       const end = Number.isFinite(nextStart) ? Number(nextStart) : sentenceCount;
-      for (let sentenceIndex = Number(start); sentenceIndex < end; sentenceIndex += 1) {
-        expanded[sentenceIndex] = Boolean(flag);
+      for (let sIdx = Number(start); sIdx < end; sIdx += 1) {
+        expanded[sIdx] = Boolean(flag);
       }
     });
     return expanded;
@@ -372,7 +327,7 @@ export function restoreGuidedListeningState(
     : (played[currentSentenceIndex] ? 'questioning' : 'idle');
 
   return {
-    progressVersion: 2,
+    progressVersion: 3,
     phase,
     sentenceIndex: Math.max(0, Math.min(currentSentenceIndex, sentenceCount - 1)),
     sentencePlayed: played.length >= sentenceCount ? played.slice(0, sentenceCount) : [...played, ...empty.slice(played.length)],

@@ -15,9 +15,9 @@ import {
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-test('createGuidedListeningState creates version 2 state for N sentences', () => {
+test('createGuidedListeningState creates version 3 state for N sentences', () => {
   const state = createGuidedListeningState(3);
-  assert.equal(state.progressVersion, 2);
+  assert.equal(state.progressVersion, 3);
   assert.equal(state.phase, 'idle');
   assert.equal(state.sentenceIndex, 0);
   assert.deepEqual(state.sentencePlayed, [false, false, false]);
@@ -113,7 +113,7 @@ test('restoreGuidedListeningState recovers sentence-level saved session', () => 
     },
   };
   const restored = restoreGuidedListeningState(saved, 3);
-  assert.equal(restored.progressVersion, 2);
+  assert.equal(restored.progressVersion, 3);
   assert.equal(restored.sentenceIndex, 1);
   assert.equal(restored.phase, 'questioning');
   assert.equal(restored.sentencePlayed[0], true);
@@ -131,7 +131,7 @@ test('restoreGuidedListeningState migrates paragraphIndex to the first sentence 
     answers: {},
   };
   const restored = restoreGuidedListeningState(saved, 5, [0, 3]);
-  assert.equal(restored.progressVersion, 2);
+  assert.equal(restored.progressVersion, 3);
   assert.equal(restored.sentenceIndex, 3);
   assert.equal(restored.phase, 'idle');
   assert.deepEqual(restored.sentencesDone, [true, true, true, false, false]);
@@ -144,27 +144,25 @@ test('restoreGuidedListeningState returns fresh state for null input', () => {
   assert.deepEqual(restored.sentencePlayed, [false, false, false]);
 });
 
-test('normalizeGuidedListening transforms backend yes_no + choice into uniform shape', () => {
+test('normalizeGuidedListening transforms v3 WH- comprehension questions', () => {
   const raw = [
     {
       paragraph_index: 0,
       questions: [
         {
-          id: 'gl_p0_q1',
-          sentence_index: 0,
-          type: 'yes_no',
-          question_en: 'Is Pilot in the kitchen?',
-          question_vi: 'Pilot co o trong bep khong?',
-          answer: true,
-        },
-        {
-          id: 'gl_p0_q2',
+          id: 'gl_p0_s0_q1',
           sentence_index: 0,
           type: 'choice',
-          question_en: 'What does Mom help Pilot find?',
-          question_vi: 'Me giup Pilot tim gi?',
-          options_en: ['flour and eggs', 'a football'],
-          options_vi: ['bot va trung', 'mot qua bong da'],
+          question_en: 'Who goes to the park?',
+          options_en: ['Mai', 'Her mom', 'Her dad'],
+          correct_index: 0,
+        },
+        {
+          id: 'gl_p0_s0_q2',
+          sentence_index: 0,
+          type: 'choice',
+          question_en: 'Where does Mai go?',
+          options_en: ['To the park', 'To school', 'To the market'],
           correct_index: 0,
         },
       ],
@@ -173,12 +171,12 @@ test('normalizeGuidedListening transforms backend yes_no + choice into uniform s
       paragraph_index: 1,
       questions: [
         {
-          id: 'gl_p1_q1',
-          sentence_index: 1,
-          type: 'yes_no',
-          question_en: 'Does Pilot put flour in a big bowl?',
-          question_vi: 'Pilot co cho bot vao mot cai to lon khong?',
-          answer: false,
+          id: 'gl_p1_s2_q1',
+          sentence_index: 2,
+          type: 'choice',
+          question_en: 'What does Mai see?',
+          options_en: ['A red bird', 'A blue kite', 'A big dog'],
+          correct_index: 1,
         },
       ],
     },
@@ -186,38 +184,38 @@ test('normalizeGuidedListening transforms backend yes_no + choice into uniform s
 
   const result = normalizeGuidedListening(raw);
 
-  // Should produce 3 total questions
+  // 3 total questions across 2 paragraphs
   assert.equal(result.questions.length, 3);
   assert.equal(result.paragraphs.length, 2);
 
-  // Yes/No question: answer=true → correct_index=0
-  const yesNoQ = result.questions.find((q) => q.id === 'gl_p0_q1');
-  assert.ok(yesNoQ);
-  assert.equal(yesNoQ.type, 'yes_no');
-  assert.deepEqual(yesNoQ.options_en, ['Yes', 'No']);
-  assert.deepEqual(yesNoQ.options_vi, ['Có', 'Không']);
-  assert.equal(yesNoQ.correct_index, 0);
-  assert.equal(yesNoQ.answer, true);
-  assert.equal(yesNoQ.paragraph_index, 0);
-  assert.equal(yesNoQ.sentence_index, 0);
+  // All questions are choice type in v3
+  result.questions.forEach((q) => {
+    assert.equal(q.type, 'choice');
+    assert.equal(q.options_en.length, 3);
+  });
 
-  // Choice question: passes through
-  const choiceQ = result.questions.find((q) => q.id === 'gl_p0_q2');
-  assert.ok(choiceQ);
-  assert.equal(choiceQ.type, 'choice');
-  assert.deepEqual(choiceQ.options_en, ['flour and eggs', 'a football']);
-  assert.deepEqual(choiceQ.options_vi, ['bot va trung', 'mot qua bong da']);
-  assert.equal(choiceQ.correct_index, 0);
-  assert.equal(choiceQ.paragraph_index, 0);
-  assert.equal(choiceQ.sentence_index, 0);
+  // First question
+  const q1 = result.questions.find((q) => q.id === 'gl_p0_s0_q1');
+  assert.ok(q1);
+  assert.equal(q1.type, 'choice');
+  assert.deepEqual(q1.options_en, ['Mai', 'Her mom', 'Her dad']);
+  assert.equal(q1.correct_index, 0);
+  assert.equal(q1.paragraph_index, 0);
+  assert.equal(q1.sentence_index, 0);
 
-  // Yes/No question with answer=false → correct_index=1
-  const noQ = result.questions.find((q) => q.id === 'gl_p1_q1');
-  assert.ok(noQ);
-  assert.equal(noQ.correct_index, 1);
-  assert.equal(noQ.answer, false);
-  assert.equal(noQ.paragraph_index, 1);
-  assert.equal(noQ.sentence_index, 1);
+  // Second question
+  const q2 = result.questions.find((q) => q.id === 'gl_p0_s0_q2');
+  assert.ok(q2);
+  assert.equal(q2.correct_index, 0);
+  assert.equal(q2.paragraph_index, 0);
+  assert.equal(q2.sentence_index, 0);
+
+  // Third question (paragraph 1)
+  const q3 = result.questions.find((q) => q.id === 'gl_p1_s2_q1');
+  assert.ok(q3);
+  assert.equal(q3.correct_index, 1);
+  assert.equal(q3.paragraph_index, 1);
+  assert.equal(q3.sentence_index, 2);
 });
 
 test('normalizeGuidedListening returns empty for null/undefined/empty input', () => {
@@ -226,59 +224,41 @@ test('normalizeGuidedListening returns empty for null/undefined/empty input', ()
   assert.equal(normalizeGuidedListening([]).questions.length, 0);
 });
 
-test('normalizeGuidedListening handles the backend fixture file', () => {
-  const fixturePath = join(__dirname, '..', '..', 'read2lead_v0_codex', 'tests', 'fixtures', 'guided_listening_sample_pack.json');
-  if (!existsSync(fixturePath)) {
-    // In case the fixture path is relative to workspace root
-    const altPath = join('/home/felixbuilderhub/work/repos/read2lead_v0_codex/tests/fixtures/guided_listening_sample_pack.json');
-    if (!existsSync(altPath)) {
-      assert.ok(true, 'Fixture not found — skip integration test');
-      return;
-    }
-  }
-  const resolvedPath = existsSync(fixturePath) ? fixturePath : '/home/felixbuilderhub/work/repos/read2lead_v0_codex/tests/fixtures/guided_listening_sample_pack.json';
-  const raw = JSON.parse(readFileSync(resolvedPath, 'utf-8'));
-  const guided = raw.guided_listening;
-  assert.ok(Array.isArray(guided), 'guided_listening should be an array');
+test('normalizeGuidedListening handles v3 WH- comprehension format', () => {
+  // v3 mock data inline — no fixture file needed
+  const guided = [
+    {
+      paragraph_index: 0,
+      questions: [
+        { id: 'gl_p0_s0_q1', type: 'choice', sentence_index: 0, question_en: 'Who goes?', options_en: ['Mai', 'Mom', 'Dad'], correct_index: 0 },
+        { id: 'gl_p0_s0_q2', type: 'choice', sentence_index: 0, question_en: 'Where to?', options_en: ['Park', 'School', 'Market'], correct_index: 0 },
+      ],
+    },
+    {
+      paragraph_index: 1,
+      questions: [
+        { id: 'gl_p1_s1_q1', type: 'choice', sentence_index: 1, question_en: 'What did she see?', options_en: ['Bird', 'Kite', 'Dog'], correct_index: 0 },
+        { id: 'gl_p1_s1_q2', type: 'choice', sentence_index: 1, question_en: 'What color?', options_en: ['Red', 'Blue', 'Green'], correct_index: 0 },
+        { id: 'gl_p1_s2_q1', type: 'choice', sentence_index: 2, question_en: 'How did she feel?', options_en: ['Happy', 'Sad', 'Tired'], correct_index: 0 },
+        { id: 'gl_p1_s2_q2', type: 'choice', sentence_index: 2, question_en: 'What did she do?', options_en: ['Smiled', 'Cried', 'Ran'], correct_index: 0 },
+      ],
+    },
+  ];
 
   const result = normalizeGuidedListening(guided);
-  const expectedQuestionCount = guided.reduce(
-    (total, paragraph) => total + (paragraph.questions || []).length,
-    0,
-  );
+  assert.equal(result.paragraphs.length, 2);
+  assert.equal(result.questions.length, 6);
 
-  assert.equal(result.paragraphs.length, guided.length);
-  assert.equal(result.questions.length, expectedQuestionCount);
+  // All questions are choice type in v3
+  result.questions.forEach((q) => {
+    assert.equal(q.type, 'choice');
+    assert.equal(q.options_en.length, 3);
+  });
 
-  // Verify paragraph 0 preserves every fixture question
+  // Paragraph 0 check
   const p0 = result.paragraphs.find((p) => p.index === 0);
   assert.ok(p0);
-  assert.equal(p0.questions.length, guided[0].questions.length);
-
-  // Verify yes_no questions got synthesized options
-  const yesNoQuestions = result.questions.filter((q) => q.type === 'yes_no');
-  const expectedYesNoCount = guided.reduce(
-    (total, paragraph) => total + (paragraph.questions || []).filter((q) => q.type === 'yes_no').length,
-    0,
-  );
-  assert.equal(yesNoQuestions.length, expectedYesNoCount);
-  yesNoQuestions.forEach((q) => {
-    assert.deepEqual(q.options_en, ['Yes', 'No']);
-    assert.deepEqual(q.options_vi, ['Có', 'Không']);
-    assert.ok(q.correct_index === 0 || q.correct_index === 1);
-  });
-
-  // Verify choice questions preserved their options
-  const choiceQuestions = result.questions.filter((q) => q.type === 'choice');
-  const expectedChoiceCount = guided.reduce(
-    (total, paragraph) => total + (paragraph.questions || []).filter((q) => q.type === 'choice').length,
-    0,
-  );
-  assert.equal(choiceQuestions.length, expectedChoiceCount);
-  choiceQuestions.forEach((q) => {
-    assert.equal(q.options_en.length, 2);
-    assert.equal(q.options_vi.length, 2);
-  });
+  assert.equal(p0.questions.length, 2);
 });
 
 test('lesson Guided Listening plays only the active sentence audio before questions', () => {
