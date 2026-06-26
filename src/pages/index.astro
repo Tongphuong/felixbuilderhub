@@ -9,6 +9,8 @@ import Avatar from '../components/ui/Avatar.astro';
 import SectionHeading from '../components/ui/SectionHeading.astro';
 import { EMAIL, FB_URL, MESSENGER_URL, ZALO_DISPLAY, ZALO_URL } from '../config/contact';
 
+const showProfileEntry = import.meta.env.PUBLIC_R2L_PROFILE === '1';
+
 const socialLinks = [
   {
     label: 'Facebook',
@@ -37,6 +39,33 @@ const socialLinks = [
   <Header />
 
   <main id="main" class="flex-1">
+    {showProfileEntry && (
+      <section class="border-b border-cream-dim/10 bg-navy-900/60 px-6 py-8">
+        <div class="mx-auto flex max-w-lg flex-col items-center gap-4 text-center">
+          <p class="text-sm font-bold text-cream-muted">Nhập mã Felix cấp qua Zalo để xem hồ sơ con</p>
+          <form id="home-code-form" class="flex w-full flex-col gap-3 sm:flex-row">
+            <input
+              id="home-code-input"
+              name="code"
+              maxlength="40"
+              autocomplete="off"
+              autocapitalize="characters"
+              autocorrect="off"
+              spellcheck="false"
+              inputmode="text"
+              placeholder="VD: R2L-LINH-8F3KQ2"
+              data-clarity-mask="true"
+              class="min-h-[48px] w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-4 text-cream placeholder:text-cream-dim/50 focus:border-accent focus:outline-none"
+            />
+            <button
+              type="submit"
+              class="fx-btn fx-btn--primary shrink-0 whitespace-nowrap px-6"
+            >Xem hồ sơ</button>
+          </form>
+        </div>
+      </section>
+    )}
+
     <section class="mx-auto max-w-6xl px-6 py-20 md:py-28">
       <div class="text-center">
         <Badge variant="accent">Dịch vụ chính · Nhóm nhỏ tối đa 4 bé · Online</Badge>
@@ -49,7 +78,7 @@ const socialLinks = [
         </p>
         <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
           <Button variant="primary" href="/coaching#book">Đặt lịch tư vấn miễn phí →</Button>
-          <Button variant="secondary" href="/hoc-sinh">
+          <Button variant="secondary" href={showProfileEntry ? '/ho-so' : '/hoc-sinh'}>
             <span class="flex flex-col items-center sm:items-start">
               <span>Xem tiến độ con</span>
               <span class="mt-0.5 text-xs font-normal text-cream-dim">Nhập mã học sinh Felix cấp</span>
@@ -78,7 +107,7 @@ const socialLinks = [
             Ngoài lớp coaching, tôi xây dựng <strong class="text-cream">Read2Lead</strong> và <strong class="text-cream">MSMW</strong> — sản phẩm giáo dục tăng cường bởi AI, bổ trợ con luyện đọc và đọc truyện tại nhà.
           </p>
           <p class="mt-3 leading-relaxed text-cream-muted">
-            Mỗi học sinh có <a href="/hoc-sinh" class="font-semibold text-accent underline">trang xem tiến độ riêng</a> — bố mẹ nhập mã là thấy bài con đang học, truyện đã hoàn thành và (sắp tới) luyện nói chuyên sâu.
+            Mỗi học sinh có <a href={showProfileEntry ? '/ho-so' : '/hoc-sinh'} class="font-semibold text-accent underline">trang xem tiến độ riêng</a> — bố mẹ nhập mã là thấy bài con đang học, truyện đã hoàn thành và (sắp tới) luyện nói chuyên sâu.
           </p>
           <Button variant="ghost" href="/coaching" class="mt-5">Xem chương trình coaching →</Button>
         </div>
@@ -100,7 +129,7 @@ const socialLinks = [
               <Badge variant="gold">Thử nghiệm — miễn phí</Badge>
             </div>
             <p class="mt-4 leading-relaxed text-cream-muted">
-              Công cụ luyện đọc và nghe tăng cường bởi AI — con chọn chủ đề, làm nhiệm vụ, tích điểm và leo cấp. Bố mẹ xem tiến độ qua <a href="/hoc-sinh" class="font-semibold text-accent underline">trang xem tiến độ con</a>.
+              Công cụ luyện đọc và nghe tăng cường bởi AI — con chọn chủ đề, làm nhiệm vụ, tích điểm và leo cấp. Bố mẹ xem tiến độ qua <a href={showProfileEntry ? '/ho-so' : '/hoc-sinh'} class="font-semibold text-accent underline">trang xem tiến độ con</a>.
             </p>
           </div>
           <Button variant="primary" href="/read2lead" class="shrink-0">Tạo bài miễn phí →</Button>
@@ -163,4 +192,16 @@ const socialLinks = [
   </main>
 
   <Footer />
+
+  {showProfileEntry && (
+    <script>
+      const form = document.getElementById('home-code-form');
+      form?.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const input = document.getElementById('home-code-input') as HTMLInputElement | null;
+        const code = (input?.value || '').trim().toUpperCase();
+        if (code) window.location.href = '/ho-so?code=' + encodeURIComponent(code);
+      });
+    </script>
+  )}
 </BaseLayout>

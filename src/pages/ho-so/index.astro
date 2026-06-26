@@ -1,0 +1,143 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import KidButton from '../../components/read2lead/v4/KidButton.astro';
+import KidCard from '../../components/read2lead/v4/KidCard.astro';
+import MonsterBuilder from '../../components/read2lead/v3/avatar/MonsterBuilder.astro';
+import MedalCabinet from '../../components/read2lead/v3/rank/MedalCabinet.astro';
+import RankUpModal from '../../components/read2lead/v3/rank/RankUpModal.astro';
+import SeasonBanner from '../../components/read2lead/v3/rank/SeasonBanner.astro';
+import '../../styles/r2l-kid.css';
+import '../../styles/rank-ladder.css';
+import './ho-so.css';
+import '@fontsource-variable/baloo-2/index.css';
+---
+
+<BaseLayout
+  title="Ho so hoc sinh — Read2Lead | Felix Coaching"
+  description="Xem tien do hoc tap, avatar, xu va cap do cua con."
+  robots="noindex, follow"
+>
+  <Header kidMode={true} />
+
+  <main id="main" class="ho-so-page r2l-kid flex-1 px-4 py-8 sm:px-6">
+    <section class="mx-auto max-w-lg">
+
+      <!-- CODE ENTRY -->
+      <section id="ho-so-entry">
+        <p class="r2l-kid-eyebrow">Read2Lead</p>
+        <h1 class="r2l-kid-title">Ho so hoc sinh</h1>
+        <p class="r2l-kid-lead">Nhap ma Felix gui qua Zalo de xem tien do con.</p>
+
+        <KidCard class="mt-6">
+          <label for="ho-so-code-input" class="text-sm font-bold">Ma cua con</label>
+          <p class="mt-1 text-xs r2l-kid-muted">VD: R2L-LINH-8F3KQ2</p>
+          <div class="mt-4 flex flex-col gap-3 sm:flex-row">
+            <input
+              id="ho-so-code-input"
+              name="access_code"
+              required
+              maxlength="40"
+              autocomplete="off"
+              autocapitalize="characters"
+              autocorrect="off"
+              spellcheck="false"
+              inputmode="text"
+              placeholder="R2L-..."
+              data-clarity-mask="true"
+              class="r2l-kid-input"
+            />
+            <KidButton id="ho-so-load-btn" type="button" class="shrink-0">
+              Xem ho so
+            </KidButton>
+          </div>
+        </KidCard>
+      </section>
+
+      <!-- SESSION BAR -->
+      <div
+        id="ho-so-session-bar"
+        class="mt-6 hidden items-center justify-between gap-3 rounded-[var(--r2l-radius)] border-2 border-[rgb(30_42_74/0.1)] bg-[var(--r2l-surface)] px-4 py-3 shadow-[var(--r2l-shadow)]"
+      >
+        <div class="flex min-w-0 items-center gap-2">
+          <p class="min-w-0 truncate text-sm font-bold">
+            <span class="r2l-kid-muted">Xin chao</span>
+            <span id="ho-so-student-name" class="ml-1" data-clarity-mask="true"></span>
+          </p>
+        </div>
+        <div class="flex shrink-0 items-center gap-2">
+          <button
+            id="ho-so-role-toggle"
+            type="button"
+            class="r2l-kid-btn r2l-kid-btn--ghost r2l-kid-btn--md hidden text-xs"
+          >
+            Doi goc nhin
+          </button>
+          <button
+            id="ho-so-change-code"
+            type="button"
+            class="r2l-kid-btn r2l-kid-btn--ghost r2l-kid-btn--md shrink-0"
+          >
+            Doi ma
+          </button>
+        </div>
+      </div>
+
+      <!-- ERROR -->
+      <section id="ho-so-error" class="r2l-kid-error mt-4 hidden"></section>
+
+      <!-- LOADING -->
+      <div id="ho-so-loading" class="mt-8 hidden text-center">
+        <div class="ho-so-spinner"></div>
+        <p class="mt-3 text-sm r2l-kid-muted">Dang tai ho so...</p>
+      </div>
+
+      <!-- ROLE PICKER -->
+      <section id="ho-so-role-picker" class="mt-6 hidden">
+        <p class="text-center text-sm font-bold r2l-kid-muted mb-4">Ban la ai?</p>
+        <div class="grid grid-cols-2 gap-4">
+          <button
+            id="ho-so-role-kid"
+            type="button"
+            class="ho-so-role-btn"
+          >
+            <span class="text-3xl">🎒</span>
+            <span class="mt-2 text-base font-bold">Con</span>
+            <span class="text-xs r2l-kid-muted">Hoc sinh</span>
+          </button>
+          <button
+            id="ho-so-role-parent"
+            type="button"
+            class="ho-so-role-btn"
+          >
+            <span class="text-3xl">👨‍👩‍👧</span>
+            <span class="mt-2 text-base font-bold">Bo / Me</span>
+            <span class="text-xs r2l-kid-muted">Phu huynh</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- DASHBOARD (kid or parent view rendered here) -->
+      <SeasonBanner />
+      <section id="ho-so-dashboard" class="mt-6 hidden"></section>
+      <MedalCabinet />
+
+      <!-- KID VIEW: generation UX -->
+      <div id="ho-so-create-sheet" class="hidden" aria-hidden="true"></div>
+      <div id="ho-so-wait-scene" class="mt-6 hidden" aria-live="polite"></div>
+
+      <!-- KID VIEW: monster builder + celebrations -->
+      <MonsterBuilder />
+      <RankUpModal />
+
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<script>
+  import { initHoSo } from './ho-so';
+  initHoSo();
+</script>

@@ -10,6 +10,7 @@ import '../styles/rank-ladder.css';
 const { read2LeadState = false, kidMode = false } = Astro.props;
 const contactHref = ZALO_URL;
 const w1KidSsr = kidMode && import.meta.env.PUBLIC_R2L_W1 === '1';
+const progressHref = import.meta.env.PUBLIC_R2L_PROFILE === '1' ? '/ho-so' : '/hoc-sinh';
 ---
 
 {kidMode && (
@@ -86,7 +87,7 @@ const w1KidSsr = kidMode && import.meta.env.PUBLIC_R2L_W1 === '1';
               </div>
             </div>
             <nav class="flex flex-col p-2 text-sm font-semibold text-cream-muted" aria-label="Liên kết khác">
-              <a href="/hoc-sinh" class="rounded-md px-3 py-2.5 transition hover:bg-cream/5 hover:text-accent">Xem tiến độ con</a>
+              <a href={progressHref} class="rounded-md px-3 py-2.5 transition hover:bg-cream/5 hover:text-accent">Xem tiến độ con</a>
               <a href="/read2lead" class="rounded-md px-3 py-2.5 transition hover:bg-cream/5 hover:text-accent">Read2Lead · Luyện đọc</a>
               <a href="/coaching" class="rounded-md px-3 py-2.5 transition hover:bg-cream/5 hover:text-accent">Coaching</a>
               <a href="/msmw" class="rounded-md px-3 py-2.5 transition hover:bg-cream/5 hover:text-accent">MSMW · Sách cho con</a>
@@ -111,7 +112,7 @@ const w1KidSsr = kidMode && import.meta.env.PUBLIC_R2L_W1 === '1';
 
       <nav class="hidden items-center gap-5 text-sm font-medium text-cream-muted lg:flex">
         <a href="/coaching" class="transition hover:text-accent">Coaching</a>
-        <a href="/hoc-sinh" class="transition hover:text-accent">Xem tiến độ con</a>
+        <a href={progressHref} class="transition hover:text-accent">Xem tiến độ con</a>
         <a href="/read2lead" class="transition hover:text-accent">Read2Lead <span class="font-normal text-cream-dim">· Luyện đọc</span></a>
         <a href="/msmw" class="transition hover:text-accent">MSMW <span class="font-normal text-cream-dim">· Sách cho con</span></a>
         <a href={contactHref} target="_blank" rel="noopener noreferrer" class="transition hover:text-accent">Liên hệ</a>
@@ -132,7 +133,7 @@ const w1KidSsr = kidMode && import.meta.env.PUBLIC_R2L_W1 === '1';
     <div id="mobile-nav" hidden class="border-t border-cream-dim/20 bg-navy-950/95 lg:hidden">
       <nav class="mx-auto flex max-w-6xl flex-col px-6 py-4 text-base font-medium text-cream-muted">
         <a href="/coaching" class="py-3 transition hover:text-accent">Coaching</a>
-        <a href="/hoc-sinh" class="py-3 transition hover:text-accent">Xem tiến độ con</a>
+        <a href={progressHref} class="py-3 transition hover:text-accent">Xem tiến độ con</a>
         <a href="/read2lead" class="py-3 transition hover:text-accent">Read2Lead · Luyện đọc</a>
         <a href="/msmw" class="py-3 transition hover:text-accent">MSMW · Sách cho con</a>
         <a href={contactHref} target="_blank" rel="noopener noreferrer" class="py-3 transition hover:text-accent">Liên hệ</a>

@@ -31,7 +31,7 @@ test('homepage features coaching as primary service', () => {
 
 test('header navigation prioritizes coaching, parent portal, and separate products', () => {
   assert.match(header, /href="\/coaching"/);
-  assert.match(header, /href="\/hoc-sinh"/);
+  assert.match(header, /hoc-sinh|ho-so/);
   assert.match(header, /href="\/read2lead"/);
   assert.match(header, /Luyện đọc/);
   assert.match(header, /href="\/msmw"/);

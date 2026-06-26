@@ -1,0 +1,307 @@
+/* ── Role Picker ── */
+.ho-so-role-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  padding: 1.5rem 1rem;
+  border-radius: var(--r2l-radius);
+  border: 2px solid rgb(30 42 74 / 0.1);
+  background: var(--r2l-surface);
+  box-shadow: var(--r2l-shadow);
+  cursor: pointer;
+  transition: border-color 0.15s, box-shadow 0.15s, transform 0.1s;
+  min-height: 120px;
+}
+
+.ho-so-role-btn:hover {
+  border-color: var(--r2l-accent);
+}
+
+.ho-so-role-btn:active {
+  transform: translateY(2px);
+  box-shadow: var(--r2l-shadow-press);
+}
+
+.ho-so-role-btn:focus-visible {
+  outline: 2px solid var(--r2l-accent);
+  outline-offset: 2px;
+}
+
+/* ── Loading Spinner ── */
+.ho-so-spinner {
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  border: 3px solid rgb(30 42 74 / 0.15);
+  border-top-color: var(--r2l-accent);
+  border-radius: 50%;
+  animation: ho-so-spin 0.7s linear infinite;
+}
+
+@keyframes ho-so-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Parent View Overrides ── */
+.ho-so-page.ho-so-parent {
+  --r2l-bg: #f8f9fc;
+  --r2l-surface: #ffffff;
+  --r2l-ink: #1e2a4a;
+  --r2l-ink-soft: #5a6a8c;
+  --r2l-accent: #c88f38;
+  --r2l-accent-ink: #ffffff;
+}
+
+/* ── Parent Stats Grid ── */
+.ho-so-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+}
+
+.ho-so-stat-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem 0.5rem;
+  border-radius: var(--r2l-radius-sm);
+  background: var(--r2l-surface);
+  border: 1px solid rgb(30 42 74 / 0.08);
+  box-shadow: 0 1px 3px rgb(30 42 74 / 0.06);
+}
+
+.ho-so-stat-value {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--r2l-ink);
+  line-height: 1;
+}
+
+.ho-so-stat-label {
+  margin-top: 0.25rem;
+  font-size: 0.6875rem;
+  color: var(--r2l-ink-soft);
+  text-align: center;
+}
+
+/* ── Parent Growth Bars ── */
+.ho-so-growth-bar {
+  height: 2rem;
+  border-radius: 0.5rem;
+  background: rgb(30 42 74 / 0.06);
+  position: relative;
+  overflow: hidden;
+}
+
+.ho-so-growth-fill {
+  height: 100%;
+  border-radius: 0.5rem;
+  background: var(--r2l-sky);
+  transition: width 0.4s ease;
+}
+
+.ho-so-growth-fill--current {
+  background: var(--r2l-accent);
+}
+
+/* ── Parent Quality Bars ── */
+.ho-so-quality-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.ho-so-quality-label {
+  flex-shrink: 0;
+  width: 5rem;
+  font-size: 0.75rem;
+  color: var(--r2l-ink-soft);
+}
+
+.ho-so-quality-bar {
+  flex: 1;
+  height: 0.5rem;
+  border-radius: 0.25rem;
+  background: rgb(30 42 74 / 0.06);
+  overflow: hidden;
+}
+
+.ho-so-quality-fill {
+  height: 100%;
+  border-radius: 0.25rem;
+  transition: width 0.4s ease;
+}
+
+/* ── Parent Weekly Tasks ── */
+.ho-so-task-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 0.5rem 0;
+}
+
+.ho-so-task-check {
+  flex-shrink: 0;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-top: 0.125rem;
+  border-radius: 50%;
+  border: 2px solid var(--r2l-ink-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ho-so-task-check--done {
+  border-color: var(--r2l-mint);
+  background: var(--r2l-mint);
+  color: #fff;
+}
+
+/* ── Parent Portfolio ── */
+.ho-so-video-card {
+  border-radius: var(--r2l-radius-sm);
+  border: 1px solid rgb(30 42 74 / 0.08);
+  background: var(--r2l-surface);
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgb(30 42 74 / 0.06);
+}
+
+.ho-so-video-card video {
+  width: 100%;
+  display: block;
+}
+
+.ho-so-video-meta {
+  padding: 0.75rem 1rem;
+}
+
+.ho-so-reactions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.ho-so-reaction-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.375rem 0.75rem;
+  border-radius: 2rem;
+  border: 1px solid rgb(30 42 74 / 0.1);
+  background: var(--r2l-surface);
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+  min-height: 44px;
+}
+
+.ho-so-reaction-btn:hover {
+  border-color: var(--r2l-accent);
+  background: rgb(200 143 56 / 0.06);
+}
+
+/* ── Kid View: Hub specific ── */
+.ho-so-hub-monster-slot {
+  width: 7.5rem;
+  height: 7.5rem;
+  margin: 0 auto;
+}
+
+.ho-so-hub-bubble {
+  position: relative;
+  margin-top: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-radius: var(--r2l-radius-sm);
+  background: var(--r2l-surface);
+  border: 2px solid rgb(30 42 74 / 0.06);
+  text-align: center;
+  font-size: 0.875rem;
+}
+
+.ho-so-hub-bubble::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 10px;
+  height: 10px;
+  background: var(--r2l-surface);
+  border-top: 2px solid rgb(30 42 74 / 0.06);
+  border-left: 2px solid rgb(30 42 74 / 0.06);
+}
+
+.ho-so-hub-strip {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.ho-so-hub-strip-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.375rem 0.75rem;
+  border-radius: 2rem;
+  background: var(--r2l-surface);
+  border: 1px solid rgb(30 42 74 / 0.06);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+/* ── Shared Section Headers ── */
+.ho-so-section-title {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--r2l-ink);
+  margin-bottom: 0.75rem;
+}
+
+/* ── Parent Section Cards (reused from phu-huynh styles) ── */
+.ho-so-parent .parent-page { font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; }
+.ho-so-parent .parent-section { border-radius: 12px; border: 1px solid #d8dee8; background: #fff; padding: 1.25rem; }
+.ho-so-parent .parent-section--highlight { border-color: #b8ccf5; background: #f0f5ff; }
+.ho-so-parent .parent-section__title { margin: 0 0 0.75rem; font-size: 1rem; font-weight: 700; color: #1e2a4a; }
+.ho-so-parent .parent-muted { color: #5a6a8c; }
+.ho-so-parent .parent-stat-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.65rem; }
+.ho-so-parent .parent-stat { border-radius: 8px; background: #f4f6f9; padding: 0.75rem 0.5rem; text-align: center; }
+.ho-so-parent .parent-stat__value { font-size: 1.35rem; font-weight: 700; color: #1e2a4a; line-height: 1.1; }
+.ho-so-parent .parent-stat__label { margin-top: 0.25rem; font-size: 0.6875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.03em; color: #5a6a8c; }
+.ho-so-parent .parent-task-list { margin: 0; padding-left: 1.15rem; font-size: 0.9375rem; line-height: 1.55; color: #1e2a4a; }
+.ho-so-parent .parent-task-list li + li { margin-top: 0.5rem; }
+.ho-so-parent .parent-growth-bars { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 0.4rem; align-items: end; min-height: 7rem; margin-top: 0.75rem; }
+.ho-so-parent .parent-growth-bar { display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 0.25rem; min-height: 7rem; }
+.ho-so-parent .parent-growth-track { display: flex; width: 100%; height: 4.5rem; align-items: flex-end; justify-content: center; border-radius: 6px; background: #eef2f7; padding: 0.25rem; }
+.ho-so-parent .parent-growth-fill { width: 100%; min-height: 4px; border-radius: 4px; background: #94a3b8; }
+.ho-so-parent .parent-growth-fill--current { background: #3d6fd4; }
+.ho-so-parent .parent-growth-label { font-size: 0.6rem; font-weight: 600; text-align: center; color: #5a6a8c; }
+.ho-so-parent .parent-growth-value { font-size: 0.58rem; font-weight: 700; color: #3d6fd4; }
+.ho-so-parent .parent-quality-alert { margin-bottom: 0.75rem; border-radius: 8px; border: 1px solid #f0b45e; background: #fff8eb; padding: 0.65rem 0.75rem; color: #8a4f00; font-size: 0.875rem; font-weight: 650; }
+.ho-so-parent .parent-quality-bars { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 0.45rem; min-height: 4.8rem; margin-top: 0.85rem; align-items: end; }
+.ho-so-parent .parent-quality-bar { display: flex; min-height: 4.8rem; align-items: flex-end; border-radius: 6px; background: #eef2f7; padding: 0.25rem; }
+.ho-so-parent .parent-quality-fill { display: block; width: 100%; min-height: 4px; border-radius: 4px; background: #28a47b; }
+.ho-so-parent .parent-quality-fill--warn { background: #d66b35; }
+.ho-so-parent .parent-story-row { display: flex; gap: 0.65rem; align-items: flex-start; padding: 0.65rem 0; border-bottom: 1px solid #eef2f7; }
+.ho-so-parent .parent-story-row:last-child { border-bottom: none; }
+.ho-so-parent .parent-video-card { scroll-margin-top: 1rem; border-top: 1px solid #eef2f7; padding-top: 1rem; }
+.ho-so-parent .parent-video-card:first-child { border-top: 0; padding-top: 0; }
+.ho-so-parent .parent-video { display: block; width: 100%; max-height: 28rem; border-radius: 10px; background: #111827; }
+.ho-so-parent .parent-reactions { display: flex; flex-wrap: wrap; gap: 0.65rem; }
+.ho-so-parent .parent-reaction { display: inline-flex; min-width: 72px; min-height: 46px; align-items: center; justify-content: center; gap: 0.4rem; border: 1px solid #d8dee8; border-radius: 999px; background: #fff; padding: 0.5rem 0.85rem; font-size: 0.9375rem; font-weight: 700; color: #1e2a4a; transition: background-color 120ms ease, transform 120ms ease; }
+.ho-so-parent .parent-reaction:hover { background: #f4f6f9; }
+.ho-so-parent .parent-reaction:active { transform: scale(0.97); }
+.ho-so-parent .parent-reaction:disabled { cursor: wait; opacity: 0.65; }
+.ho-so-parent .parent-btn { display: inline-flex; min-height: 48px; align-items: center; justify-content: center; border-radius: 8px; border: 1px solid #c5ced9; background: #fff; padding: 0 1.25rem; font-size: 0.9375rem; font-weight: 600; color: #1e2a4a; text-decoration: none; }
+.ho-so-parent .parent-btn--primary { border-color: #3d6fd4; background: #3d6fd4; color: #fff; }
+.ho-so-parent .parent-portfolio-status { font-size: 0.75rem; }
+
+/* ── Accessibility ── */
+@media (prefers-reduced-motion: reduce) {
+  .ho-so-spinner { animation: none; }
+  .ho-so-parent .parent-reaction { transition: none; }
+}
