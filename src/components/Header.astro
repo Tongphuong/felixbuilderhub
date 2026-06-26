@@ -10,7 +10,7 @@ import '../styles/rank-ladder.css';
 const { read2LeadState = false, kidMode = false } = Astro.props;
 const contactHref = ZALO_URL;
 const w1KidSsr = kidMode && import.meta.env.PUBLIC_R2L_W1 === '1';
-const progressHref = import.meta.env.PUBLIC_R2L_PROFILE === '1' ? '/ho-so' : '/hoc-sinh';
+const progressHref = '/ho-so';
 ---
 
 {kidMode && (
