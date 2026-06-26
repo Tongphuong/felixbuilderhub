@@ -11,13 +11,13 @@
     <title>Đang chuyển tới trang xem tiến độ con...</title>
   </head>
   <body>
-    <p>Đang chuyển tới <a id="profile-link" href="/hoc-sinh">trang xem tiến độ con</a>...</p>
+    <p>Đang chuyển tới <a id="profile-link" href="/ho-so">trang xem tiến độ con</a>...</p>
     <script is:inline>
       const params = new URLSearchParams(window.location.search);
       const code = (params.get('code') || '').trim().toUpperCase();
       const target = code
-        ? `/hoc-sinh?code=${encodeURIComponent(code)}`
-        : '/hoc-sinh';
+        ? `/ho-so?code=${encodeURIComponent(code)}`
+        : '/ho-so';
       const link = document.getElementById('profile-link');
       if (link) link.href = target;
       window.location.replace(target);

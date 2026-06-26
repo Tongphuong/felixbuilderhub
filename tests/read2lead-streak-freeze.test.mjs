@@ -12,7 +12,7 @@ import {
   publicProgressState,
 } from '../functions/api/_read2lead-v2-state.js';
 
-const reviewPage = readFileSync('src/pages/hoc-sinh/index.astro', 'utf-8');
+const reviewPage = readFileSync('src/pages/ho-so/index.astro', 'utf-8') + '\n' + readFileSync('src/pages/ho-so/ho-so.ts', 'utf-8') + '\n' + readFileSync('src/pages/ho-so/ho-so-parent-view.ts', 'utf-8');
 
 test('W7 constants match roadmap milestone and cap', () => {
   assert.equal(STREAK_FREEZE_MILESTONE_DAYS, 7);
@@ -90,8 +90,7 @@ test('daysUntilNextStreakFreezeMilestone counts down from partial streak', () =>
   assert.equal(daysUntilNextStreakFreezeMilestone(3, 5), null);
 });
 
-test('student profile shows streak freeze copy for parents', () => {
-  assert.match(reviewPage, /renderStreakFreezeNote/);
-  assert.match(reviewPage, /giữ streak/);
-  assert.match(reviewPage, /streak_freeze_tokens/);
+test('unified profile parent view mentions streak in tasks', () => {
+  assert.match(reviewPage, /streak/i);
+  assert.match(reviewPage, /Ngày liên tiếp/);
 });

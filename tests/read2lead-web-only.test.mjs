@@ -4,7 +4,7 @@ import { readFileSync } from 'node:fs';
 
 const landingPage = readFileSync('src/pages/read2lead.astro', 'utf-8');
 const lessonPage = readFileSync('src/pages/read2lead/lesson.astro', 'utf-8');
-const reviewPage = readFileSync('src/pages/hoc-sinh/index.astro', 'utf-8');
+const reviewPage = readFileSync('src/pages/ho-so/index.astro', 'utf-8') + '\n' + readFileSync('src/pages/ho-so/ho-so.ts', 'utf-8') + '\n' + readFileSync('src/pages/ho-so/ho-so-parent-view.ts', 'utf-8');
 
 const publicPackEndpoints = [
   'functions/api/generate-read2lead-pack.js',
@@ -49,15 +49,10 @@ test('review dashboard does not offer PDF or MP3 action links', () => {
   assert.doesNotMatch(reviewPage, /review-form|worksheet-photo|record-btn|audio-preview/);
 });
 
-test('student profile shows completed stories in plain parent language', () => {
-  assert.match(reviewPage, /Các truyện con đã học/);
-  assert.match(reviewPage, /Cho con làm lại/);
-  assert.match(reviewPage, /Hôm nay/);
-  assert.match(reviewPage, /profile-hero/);
+test('unified profile renders story list and noindex robots tag', () => {
+  assert.match(reviewPage, /renderStoryList/);
   assert.match(reviewPage, /robots="noindex, follow"/);
-  assert.match(reviewPage, /for="access-code"/);
-  assert.match(reviewPage, /<h1[^>]*>Xem tiến độ của con<\/h1>/);
-  assert.doesNotMatch(reviewPage, /Thư viện truyện|Rừng kỳ diệu|Felixar làm gì\?/i);
+  assert.match(reviewPage, /ho-so-code-input/);
 });
 
 test('web lesson still keeps internal story audio for in-browser playback', () => {

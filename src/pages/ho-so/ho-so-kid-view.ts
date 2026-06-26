@@ -1,6 +1,6 @@
 /**
  * Kid view renderer for the unified profile page.
- * Extracted and adapted from hoc-sinh-w1.ts.
+ * Extracted and adapted from the old hoc-sinh page (now deleted).
  */
 import type { ProgressPayload } from './ho-so';
 import { escapeHtml, firstName, qs } from './ho-so';
@@ -26,7 +26,7 @@ import {
   type MedalPayload,
   type SeasonPayload,
 } from '../../components/read2lead/v3/rank/season-rank-ui';
-import { HUB_TOPICS } from '../hoc-sinh/hoc-sinh-topics';
+import { HUB_TOPICS } from '../ho-so/ho-so-topics';
 
 // ── Constants ──
 

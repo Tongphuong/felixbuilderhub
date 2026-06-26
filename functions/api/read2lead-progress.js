@@ -53,7 +53,7 @@ export async function onRequestGet(context) {
     progress: publicProgress(progress),
     read2lead_state: publicProgressState(v2State),
     next_pack_locked: nextPackLocked,
-    review_link: `/hoc-sinh?code=${encodeURIComponent(code)}`,
+    review_link: `/ho-so?code=${encodeURIComponent(code)}`,
     last_review_summary: lastReviewSummary(progress.current_pack, progress.review_history),
     weekly_completed_count: progress.weekly_completed_count,
     streak_days: progress.streak_days,

@@ -20,7 +20,7 @@ Read this file first. Every session. No exceptions.
 
 **Model routing**: gpt-5-mini for L1-L2, gpt-5.4-mini for L3-L5, Opus 4.6 fallback. Anthropic Sonnet is EOL — do NOT route Anthropic primary.
 
-**Hub** (separate repo `felixbuilderhub`): Astro site on Cloudflare Pages, reads pack from KV, renders interactive lesson at `/read2lead/lesson`.
+**Hub** (same repo, root level): Astro site on Cloudflare Pages, reads pack from KV, renders interactive lesson at `/read2lead/lesson`.
 
 ---
 
@@ -52,9 +52,8 @@ Plus **Speak with Minny** — AI voice companion (separate product, shared stude
 ## Folder map
 
 ```text
-read2lead_v0_codex/
+backend/                    ← inside the felixbuilderhub monorepo
 ├── CLAUDE.md              ← you are here
-├── AGENTS.md              ← backend-specific rules + invariants
 ├── api/
 │   ├── server.py          ← Flask app, all endpoints + repair chain
 │   ├── prompt_v2.py       ← LLM system + user prompt builder
@@ -65,10 +64,7 @@ read2lead_v0_codex/
 │   └── generate_story_audio_openai.py  ← TTS module (nova voice)
 ├── schemas/
 │   └── pack.schema.v2.json             ← JSON Schema (source of truth)
-├── tests/                              ← pytest suite
-├── _claude/
-│   └── POSITIONING_RESEARCH_RAZKIDS.md ← competitive positioning research
-└── README.md
+└── tests/                              ← pytest suite
 ```
 
 ---
@@ -116,7 +112,5 @@ _rotate_v2_mcq_answers         → redistribute correct_index across 0/1/2
 
 | Doc | Purpose |
 |---|---|
-| `_ops/specs/MASTER_PLAN.md` | Approved roadmap for 4-phase redesign + Speak with Minny |
-| `_ops/AGENTS.md` | Team roles, rules, permissions |
 | `schemas/pack.schema.v2.json` | Pack JSON Schema (source of truth) |
-| `_claude/POSITIONING_RESEARCH_RAZKIDS.md` | Competitive positioning research |
+| `../docs/POSITIONING_RESEARCH_RAZKIDS.md` | Competitive positioning research |

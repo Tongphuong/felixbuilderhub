@@ -6,10 +6,10 @@ Read this file first. Every session. No exceptions.
 
 ## What this project is
 
-**felixbuilderhub** is the frontend website for Felix's English coaching products. It hosts:
-- **Read2Lead** interactive lessons at `/read2lead/lesson`
-- **Speak with Minny** AI voice companion (upcoming) at `/speak-with-minny`
-- Portfolio and lead-gen pages for the coaching business
+**felixbuilderhub** is the monorepo for Felix's English coaching products. It contains:
+- **Frontend** (Astro): Read2Lead interactive lessons, Speak with Minny (upcoming), portfolio + lead-gen
+- **Backend** (`backend/`): Python API on Render that generates reading packs (LLM → validate → TTS → R2)
+- **Unified profile** at `/ho-so` (kid + parent views)
 
 **Users:** Vietnamese children (6-12) + their non-tech parents. Premium families with MacBooks + 5G.
 
@@ -36,7 +36,7 @@ felixbuilderhub/
 │   ├── pages/               ← Astro pages (routes)
 │   │   ├── read2lead/
 │   │   │   └── lesson.astro ← PROTECTED: lesson completion logic
-│   │   ├── hoc-sinh/        ← kid dashboard
+│   │   ├── ho-so/           ← unified student profile (kid + parent)
 │   │   └── index.astro      ← homepage
 │   ├── components/          ← reusable Astro/HTML components
 │   ├── layouts/             ← page layouts
@@ -50,11 +50,12 @@ felixbuilderhub/
 │   └── audio/               ← sound effects (Kenney)
 ├── functions/               ← CF Worker API endpoints
 ├── schemas/                 ← KV data schemas
-├── design_handoff/          ← brand spec + component reference
+├── backend/                 ← Python API (Read2Lead pack generator, deployed on Render)
+│   ├── api/                 ← Flask server + LLM pipeline + repair chain
+│   ├── schemas/             ← pack.schema.v2.json (source of truth)
+│   └── tests/               ← pytest suite
 ├── docs/
-│   ├── ENV.md               ← environment setup
-│   └── reference_design_system.md
-├── tests/                   ← test suite
+├── tests/                   ← frontend test suite
 └── README.md
 ```
 

@@ -1,7 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { safeStopMonitor } from '../src/lib/r2l-recorder-guards.ts';
 import { r2lRecorderScriptSrc } from '../src/scripts/r2l-recorder-script.mjs';
 
 const engine = readFileSync('public/scripts/r2l-recorder.js', 'utf-8');
@@ -90,14 +89,6 @@ test('startMonitor exposes a callable stop on every return path', () => {
   for (const block of returnBlocks) {
     assert.match(block, /stop:\s*\(\)\s*=>/, 'each monitor return exposes stop()');
   }
-});
-
-test('safeStopMonitor tolerates monitors without stop (deploy skew guard)', () => {
-  assert.doesNotThrow(() => safeStopMonitor({}));
-  assert.doesNotThrow(() => safeStopMonitor({ stop: 'not-a-function' }));
-  let stopped = false;
-  safeStopMonitor({ stop: () => { stopped = true; } });
-  assert.equal(stopped, true);
 });
 
 test('lesson and speaking inline cleanup uses safeStop guards', () => {

@@ -4,7 +4,7 @@ import { readFileSync } from 'node:fs';
 
 const homePage = readFileSync('src/pages/index.astro', 'utf-8');
 const header = readFileSync('src/components/Header.astro', 'utf-8');
-const parentPortal = readFileSync('src/pages/hoc-sinh/index.astro', 'utf-8');
+const parentPortal = readFileSync('src/pages/ho-so/index.astro', 'utf-8') + '\n' + readFileSync('src/pages/ho-so/ho-so.ts', 'utf-8') + '\n' + readFileSync('src/pages/ho-so/ho-so-parent-view.ts', 'utf-8');
 const reviewRedirect = readFileSync('src/pages/read2lead/review.astro', 'utf-8');
 
 test('homepage features coaching as primary service', () => {
@@ -31,7 +31,7 @@ test('homepage features coaching as primary service', () => {
 
 test('header navigation prioritizes coaching, parent portal, and separate products', () => {
   assert.match(header, /href="\/coaching"/);
-  assert.match(header, /hoc-sinh|ho-so/);
+  assert.match(header, /ho-so|ho-so/);
   assert.match(header, /href="\/read2lead"/);
   assert.match(header, /Luyện đọc/);
   assert.match(header, /href="\/msmw"/);
@@ -50,45 +50,12 @@ test('lesson header keeps achievement context compact and moves site links into 
   assert.match(header, /\) : \(\s*<header/);
 });
 
-test('parent portal supports code login and coaching hub', () => {
-  assert.match(parentPortal, /Xem tiến độ của con/);
-  assert.match(parentPortal, /Đăng nhập/);
+test('unified profile page supports code entry and role switching', () => {
+  assert.match(parentPortal, /ho-so-entry/);
+  assert.match(parentPortal, /ho-so-code-input/);
   assert.match(parentPortal, /read2lead-progress/);
-  assert.match(parentPortal, /Luyện nói với Minny/);
-  assert.match(parentPortal, /profile-action-tile--soon/);
-});
-
-test('parent portal disables header gamification HUD', () => {
-  assert.match(parentPortal, /<Header read2LeadState=\{false\} \/>/);
-  assert.doesNotMatch(parentPortal, /syncHeaderState/);
-});
-
-test('parent portal hides login form after session and offers change-code', () => {
-  assert.match(parentPortal, /id="profile-entry"/);
-  assert.match(parentPortal, /id="profile-session-bar"/);
-  assert.match(parentPortal, /Đổi mã/);
-  assert.match(parentPortal, /showLoggedInSession/);
-  assert.match(parentPortal, /profileEntry\.classList\.add\('hidden'\)/);
-});
-
-test('statusMeta treats reviewed_pass_web_v2 and reviewed state as completed', () => {
-  assert.match(parentPortal, /pack\.status === 'reviewed_pass_web_v2'/);
-  assert.match(parentPortal, /pack\.status === 'reviewed_retry_web_v2'/);
-  assert.match(parentPortal, /state === 'reviewed'/);
-  assert.match(parentPortal, /completed: true/);
-  assert.match(parentPortal, /Bài vừa xong/);
-});
-
-test('buildPrimaryAction offers create-next when data.state is reviewed', () => {
-  assert.match(parentPortal, /data\.state === 'reviewed'/);
-  assert.match(parentPortal, /Tạo bài mới cho con/);
-  assert.doesNotMatch(parentPortal, /coaching-lesson-link/);
-});
-
-test('buildPrimaryAction opens lesson again for reviewed_retry packs', () => {
-  assert.match(parentPortal, /pack\.status === 'reviewed_retry_web_v2'/);
-  assert.match(parentPortal, /Cho con làm lại bài này/);
-  assert.match(parentPortal, /kind: 'lesson'/);
+  assert.match(parentPortal, /ho-so-role-picker/);
+  assert.match(parentPortal, /renderParentView/);
 });
 
 test('parent portal formats story portfolio levels for parents', () => {
@@ -96,12 +63,10 @@ test('parent portal formats story portfolio levels for parents', () => {
   assert.doesNotMatch(parentPortal, /profile-coaching-hub/);
 });
 
-test('parent portal dashboard puts primary CTA above fold before stats', () => {
-  const heroIdx = parentPortal.indexOf('${renderHero(progress, read2LeadState, storyProgress)}');
-  const nextIdx = parentPortal.indexOf('${renderNextStep(primary, status)}');
-  const statsIdx = parentPortal.indexOf('${renderStats(read2LeadState, progress, storyProgress)}');
-  assert.ok(heroIdx >= 0 && nextIdx > heroIdx, 'hero should precede next step');
-  assert.ok(nextIdx < statsIdx, 'primary CTA should precede stats row');
+test('unified profile renders growth before stories in parent view', () => {
+  const growthIdx = parentPortal.indexOf('renderGrowthSection');
+  const storyIdx = parentPortal.indexOf('renderStoryList');
+  assert.ok(growthIdx >= 0 && storyIdx > growthIdx, 'growth section should precede story list');
 });
 
 test('parent portal uses parent-friendly level labels', () => {
@@ -111,5 +76,5 @@ test('parent portal uses parent-friendly level labels', () => {
 
 test('legacy review route redirects to parent portal', () => {
   assert.match(reviewRedirect, /Astro\.redirect/);
-  assert.match(reviewRedirect, /\/hoc-sinh/);
+  assert.match(reviewRedirect, /\/ho-so/);
 });

@@ -15,30 +15,8 @@ import {
   renderSeasonBannerHtml,
 } from '../src/components/read2lead/v3/rank/season-rank-render.mjs';
 
-const kidHub = readFileSync('src/pages/hoc-sinh/_KidHubW1.astro', 'utf-8');
 const seasonBanner = readFileSync('src/components/read2lead/v3/rank/SeasonBanner.astro', 'utf-8');
 const medalCabinet = readFileSync('src/components/read2lead/v3/rank/MedalCabinet.astro', 'utf-8');
-const w1Script = readFileSync('src/pages/hoc-sinh/hoc-sinh-w1.ts', 'utf-8');
-const w1Page = readFileSync('src/scripts/r2l-w1-page.ts', 'utf-8');
-
-test('W1 kid hub mounts season banner and medal cabinet hooks', () => {
-  assert.match(kidHub, /SeasonBanner/);
-  assert.match(kidHub, /MedalCabinet/);
-  assert.match(kidHub, /RankUpModal/);
-  assert.match(seasonBanner, /hub-season-banner/);
-  assert.match(seasonBanner, /data-r2l-season-banner-host/);
-  assert.match(medalCabinet, /hub-medal-congrats/);
-  assert.match(medalCabinet, /data-r2l-medal-congrats-host/);
-});
-
-test('W1 script guards season UI on payload shape', () => {
-  assert.match(w1Script, /isSeasonPayload/);
-  assert.match(w1Script, /renderSeasonChrome/);
-  assert.match(w1Script, /clearSeasonChrome/);
-  assert.match(w1Script, /detectSeasonRankJump/);
-  assert.match(w1Script, /showSeasonRankJumpModal/);
-  assert.doesNotMatch(w1Script, /mất|tụt hạng|bị reset/);
-});
 
 test('season banner renders compact line with rank pill from fixture', () => {
   const html = renderSeasonBannerHtml(SEASON_FIXTURE);
@@ -83,8 +61,6 @@ test('missing season payload guard degrades invisibly', () => {
   assert.equal(isSeasonPayload(null), false);
   assert.equal(isSeasonPayload({}), false);
   assert.equal(isSeasonPayload({ id: 'x' }), false);
-  assert.match(w1Script, /if \(!isSeasonPayload\(seasonRaw\)\)/);
-  assert.match(w1Script, /clearSeasonChrome/);
 });
 
 test('medal congrats uses localStorage last-seen guard', () => {
@@ -93,10 +69,6 @@ test('medal congrats uses localStorage last-seen guard', () => {
   assert.match(html, /data-r2l-medal-congrats/);
   assert.match(html, /khép lại/);
   assert.match(html, /35 xu/);
-
-  assert.match(w1Script, /newestMedalForCongrats/);
-  assert.match(w1Script, /setLastSeenMedalTs/);
-  assert.match(w1Page, /bindRankUpModalClose/);
 
   const original = globalThis.localStorage;
   const store = new Map();

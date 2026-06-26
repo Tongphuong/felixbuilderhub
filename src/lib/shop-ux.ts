@@ -130,7 +130,7 @@ export function showInsufficient(needed: number, current: number): void {
   if (typeof dialog.showModal === 'function') dialog.showModal();
 }
 
-export function wireShopModals(profileHref = '/hoc-sinh'): void {
+export function wireShopModals(profileHref = '/ho-so'): void {
   const insufficient = document.querySelector('.insufficient-modal') as HTMLDialogElement | null;
   insufficient?.querySelector('.insufficient-go-learn')?.addEventListener('click', () => {
     insufficient.close();
@@ -225,7 +225,7 @@ export function initShopPage(hooks: ShopPageHooks): void {
   let accessCode = '';
   let shopItems: ShopRow[] = [];
   let shopCoins = 0;
-  let profileHref = '/hoc-sinh';
+  let profileHref = '/ho-so';
   let activeSlot = 'all';
 
   const qs = (sel: string) => document.querySelector(sel);
@@ -339,7 +339,7 @@ export function initShopPage(hooks: ShopPageHooks): void {
     shopItems = visibleShopItems(payload.items || []);
     setShopCoins(payload.coins || 0);
     qs('#shop-shell')?.classList.remove('hidden');
-    profileHref = `/hoc-sinh?code=${encodeURIComponent(accessCode)}&v3=1`;
+    profileHref = `/ho-so?code=${encodeURIComponent(accessCode)}&v3=1`;
     const profileLink = qs('#shop-profile-link') as HTMLAnchorElement | null;
     if (profileLink) profileLink.href = profileHref;
     wireShopModals(profileHref);

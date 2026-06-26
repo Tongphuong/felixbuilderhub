@@ -13,8 +13,8 @@ import { onRequestGet as getParentVideo } from '../functions/api/parent/video.js
 import { onRequestPost as markPortfolioSeen } from '../functions/api/parent/portfolio-seen.js';
 import { onRequestPost as reactToPortfolio } from '../functions/api/parent/portfolio-react.js';
 
-const parentPage = readFileSync('src/pages/phu-huynh/index.astro', 'utf8');
-const parentScript = readFileSync('src/pages/phu-huynh/phu-huynh.ts', 'utf8');
+const parentPage = readFileSync('src/pages/ho-so/index.astro', 'utf8');
+const parentScript = readFileSync('src/pages/ho-so/ho-so.ts', 'utf8') + '\n' + readFileSync('src/pages/ho-so/ho-so-parent-view.ts', 'utf8');
 
 function memoryKv(initial = {}) {
   const values = new Map(Object.entries(initial));
@@ -38,14 +38,12 @@ function codeRecord() {
   return { student_profile: { student_name: 'Linh' }, uses_remaining: 10 };
 }
 
-test('parent page contains portfolio section and seen/reaction calls', () => {
-  assert.match(parentPage, /#parent-session:not\(\.hidden\)/);
+test('parent view contains portfolio section and seen/reaction calls', () => {
   assert.match(parentScript, /Video & nhận xét của thầy/);
   assert.match(parentScript, /\/api\/parent\/portfolio-seen/);
   assert.match(parentScript, /\/api\/parent\/portfolio-react/);
   assert.match(parentScript, /playsinline/);
-  assert.match(parentScript, /id="video-\$\{id\}"/);
-  assert.match(parentPage, /parent-video/);
+  assert.match(parentScript, /renderPortfolioSection/);
 });
 
 test('admin page has upload form and delete confirmation', () => {

@@ -111,7 +111,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
           <p class="mt-2">
             <a id="coaching-link" href="/coaching#book" class="font-bold text-accent underline">Đặt lịch coaching</a>
             <span class="mx-2 text-cream-dim">·</span>
-            <a id="profile-link" href="/hoc-sinh" class="font-semibold text-cream underline">Hồ sơ con</a>
+            <a id="profile-link" href="/ho-so" class="font-semibold text-cream underline">Hồ sơ con</a>
           </p>
         </div>
       </div>
@@ -991,7 +991,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
           data.practice_count_this_week > 0
             ? `Tuần này con luyện ${data.practice_count_this_week} lần`
             : 'Buổi luyện đầu tuần — cứ thoải mái thử nhé!';
-        document.getElementById('profile-link').href = data.profile_link || `/hoc-sinh?code=${encodeURIComponent(code)}`;
+        document.getElementById('profile-link').href = data.profile_link || `/ho-so?code=${encodeURIComponent(code)}`;
 
         if (!data.has_story && !data.pack_id) {
           document.getElementById('minny-greeting').textContent = data.message_vi || data.greeting_vi;

@@ -73,7 +73,7 @@ const faqItems = [
           <span class="text-sm text-cream-muted">Xem thành tích các bạn nhỏ</span>
         </a>
         <a
-          href="/hoc-sinh"
+          href="/ho-so"
           class="flex flex-col items-center gap-3 rounded-xl border-2 border-cream/30 bg-cream/5 p-6 text-center transition hover:border-cream/50 hover:bg-cream/10 sm:p-8"
         >
           <span class="flex h-14 w-14 items-center justify-center rounded-full bg-cream/20 text-2xl text-cream">&#128100;</span>
@@ -138,7 +138,7 @@ const faqItems = [
               </p>
             </div>
 
-            <!-- Step 2: Topic (card grid — mirrors /hoc-sinh Hub modal) -->
+            <!-- Step 2: Topic (card grid — mirrors /ho-so Hub modal) -->
             <div>
               <label class="mb-2 block text-sm font-semibold text-cream">
                 Bước 2 — Con thích chủ đề gì? <span class="text-red-400">*</span>
@@ -221,7 +221,7 @@ const faqItems = [
             <a id="lesson-link" href="/read2lead/lesson" class="inline-block w-full rounded-xl bg-accent px-6 py-4 text-xl font-extrabold text-navy-950 transition hover:bg-accent-hover sm:w-auto sm:px-10">Mở bài học</a>
           </div>
           <p class="mt-6 text-sm leading-relaxed text-cream-muted">
-            Con nghe truyện, làm 5 nhiệm vụ và lưu chiến công trực tiếp trên web. Bố mẹ có thể <a id="review-link" href="/hoc-sinh" class="font-semibold text-gold-light underline">xem tiến độ con</a> bằng mã học sinh.
+            Con nghe truyện, làm 5 nhiệm vụ và lưu chiến công trực tiếp trên web. Bố mẹ có thể <a id="review-link" href="/ho-so" class="font-semibold text-gold-light underline">xem tiến độ con</a> bằng mã học sinh.
           </p>
           <div class="mt-6">
             <p class="text-cream-dim">Muốn tạo bài khác?</p>
@@ -267,7 +267,7 @@ const faqItems = [
             <p class="text-sm font-semibold uppercase tracking-wide text-gold-light">Bảng xếp hạng</p>
             <p class="mt-2 text-sm leading-relaxed text-cream-muted">Xem huy hiệu Đồng, Bạc, Vàng, Kim cương, Huyền thoại của các bạn nhỏ.</p>
           </a>
-          <a href="/hoc-sinh" class="rounded-xl border border-accent/35 bg-accent/10 p-5 transition hover:border-accent hover:bg-accent/15">
+          <a href="/ho-so" class="rounded-xl border border-accent/35 bg-accent/10 p-5 transition hover:border-accent hover:bg-accent/15">
             <p class="text-sm font-semibold uppercase tracking-wide text-accent">Xem tiến độ con</p>
             <p class="mt-2 text-sm leading-relaxed text-cream-muted">Nhập mã Felix cấp để xem cấp độ, điểm, các truyện con đã học và bài đang mở.</p>
           </a>
@@ -365,7 +365,7 @@ const faqItems = [
       document.getElementById('result-topic').textContent = data.topic || '';
       document.getElementById('result-story-title').textContent = data.story_title || '';
       activateLessonLinkWhenReady(data.lesson_link || '/read2lead/lesson');
-      document.getElementById('review-link').href = data.review_link || '/hoc-sinh';
+      document.getElementById('review-link').href = data.review_link || '/ho-so';
 
       resultSection.classList.remove('hidden');
       resultSection.scrollIntoView({ behavior: 'smooth' });

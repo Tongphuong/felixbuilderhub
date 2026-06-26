@@ -1,5 +1,5 @@
 ---
 const code = Astro.url.searchParams.get('code');
-const target = code ? `/hoc-sinh?code=${encodeURIComponent(code)}` : '/hoc-sinh';
+const target = code ? `/ho-so?code=${encodeURIComponent(code)}` : '/ho-so';
 return Astro.redirect(target);
 ---

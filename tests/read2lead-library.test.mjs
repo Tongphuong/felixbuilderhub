@@ -60,17 +60,16 @@ test('buildStoryProgressForProfile handles empty state for parents', () => {
   assert.equal(progress.stories.length, 0);
 });
 
-test('student profile page renders story progress section', () => {
-  const reviewPage = readFileSync('src/pages/hoc-sinh/index.astro', 'utf-8');
-  assert.match(reviewPage, /Các truyện con đã học/);
-  assert.match(reviewPage, /renderStoryPortfolio/);
-  assert.match(reviewPage, /Cho con làm lại/);
+test('unified profile renders story list for parents', () => {
+  const reviewPage = readFileSync('src/pages/ho-so/index.astro', 'utf-8') + '\n' + readFileSync('src/pages/ho-so/ho-so.ts', 'utf-8') + '\n' + readFileSync('src/pages/ho-so/ho-so-parent-view.ts', 'utf-8');
+  assert.match(reviewPage, /renderStoryList/);
+  assert.match(reviewPage, /Chưa có truyện hoàn thành/);
   assert.doesNotMatch(reviewPage, /Rừng kỳ diệu/);
 });
 
 test('legacy library route redirects to student profile', () => {
   const libraryPage = readFileSync('src/pages/read2lead/library.astro', 'utf-8');
-  assert.match(libraryPage, /\/hoc-sinh/);
+  assert.match(libraryPage, /\/ho-so/);
   assert.match(libraryPage, /window\.location\.replace\(target\)/);
   assert.match(libraryPage, /encodeURIComponent\(code\)/);
 });

@@ -1,5 +1,4 @@
 /* Felix Coaching design system layer.
-   Ported from design_handoff/tokens/ — additive only.
    - Semantic CSS variables (surface, border, accent, status, rank tiers)
    - Spacing / radius / shadow / motion scale
    - .fx-* component primitives consumed by src/components/ui/*.astro

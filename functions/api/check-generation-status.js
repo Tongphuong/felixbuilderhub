@@ -37,7 +37,7 @@ export async function onRequestGet(context) {
       pack_id: currentPack.pack_id,
       topic: currentPack.topic,
       story_title: currentPack.story_title,
-      review_link: `/hoc-sinh?code=${encodeURIComponent(accessCode)}`,
+      review_link: `/ho-so?code=${encodeURIComponent(accessCode)}`,
       lesson_link: `/read2lead/lesson?code=${encodeURIComponent(accessCode)}&pack_id=${encodeURIComponent(currentPack.pack_id)}`,
     });
   }
@@ -127,7 +127,7 @@ export async function onRequestGet(context) {
       pack_id: finalPack.pack_id,
       topic: finalPack.topic,
       story_title: finalPack.story_title,
-      review_link: `/hoc-sinh?code=${encodeURIComponent(accessCode)}`,
+      review_link: `/ho-so?code=${encodeURIComponent(accessCode)}`,
       lesson_link: `/read2lead/lesson?code=${encodeURIComponent(accessCode)}&pack_id=${encodeURIComponent(finalPack.pack_id)}`,
     });
   }

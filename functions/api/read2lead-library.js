@@ -9,12 +9,12 @@ export async function onRequestGet(context) {
   const accessCode = (url.searchParams.get('code') || '').trim().toUpperCase();
 
   if (!accessCode) {
-    return redirect('/hoc-sinh');
+    return redirect('/ho-so');
   }
 
   const accept = (request.headers.get('accept') || '').toLowerCase();
   if (!accept.includes('application/json')) {
-    return redirect(`/hoc-sinh?code=${encodeURIComponent(accessCode)}`);
+    return redirect(`/ho-so?code=${encodeURIComponent(accessCode)}`);
   }
 
   if (!env.READ2LEAD_CODES) {
@@ -39,7 +39,7 @@ export async function onRequestGet(context) {
 
   return json({
     ok: true,
-    moved_to: `/hoc-sinh?code=${encodeURIComponent(accessCode)}`,
+    moved_to: `/ho-so?code=${encodeURIComponent(accessCode)}`,
     story_progress: buildStoryProgressForProfile({
       reviewHistory,
       studentName: progress.student_name || codeData.student_profile?.student_name || '',

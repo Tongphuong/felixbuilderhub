@@ -3,8 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 
 const lessonPage = readFileSync('src/pages/read2lead/lesson.astro', 'utf8');
-const parentPage = readFileSync('src/pages/phu-huynh/index.astro', 'utf8');
-const parentScript = readFileSync('src/pages/phu-huynh/phu-huynh.ts', 'utf8');
+const parentScript = readFileSync('src/pages/ho-so/ho-so.ts', 'utf8') + '\n' + readFileSync('src/pages/ho-so/ho-so-parent-view.ts', 'utf8');
 const feedbackVisual = readFileSync('src/scripts/r2l-feedback-visual.js', 'utf8');
 const replayControl = readFileSync('src/scripts/r2l-replay-control.js', 'utf8');
 const creditsPage = readFileSync('src/pages/credits.astro', 'utf8');
@@ -28,11 +27,10 @@ test('lesson mounts dual waveform and sends learning metric payload', () => {
   assert.match(lessonPage, /prefers-reduced-motion: reduce/);
 });
 
-test('parent dashboard includes learning quality card and alert copy', () => {
+test('parent dashboard includes learning quality section', () => {
   assert.match(parentScript, /data-learning-quality/);
-  assert.match(parentScript, /Chất lượng luyện nói 7 ngày/);
   assert.match(parentScript, /dễ mất tập trung/);
-  assert.match(parentPage, /parent-quality-bars/);
+  assert.match(parentScript, /parent-quality-bars/);
 });
 
 test('credits page includes required wavesurfer BSD-3 attribution', () => {

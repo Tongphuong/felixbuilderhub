@@ -10,7 +10,7 @@ import {
 import { canAccessPackForPractice } from '../functions/api/_read2lead-pack-access.js';
 
 const speakingPage = readFileSync('src/pages/read2lead/speaking.astro', 'utf-8');
-const parentPortal = readFileSync('src/pages/hoc-sinh/index.astro', 'utf-8');
+const parentPortal = readFileSync('src/pages/ho-so/index.astro', 'utf-8') + '\n' + readFileSync('src/pages/ho-so/ho-so.ts', 'utf-8') + '\n' + readFileSync('src/pages/ho-so/ho-so-parent-view.ts', 'utf-8');
 
 test('speaking page exists with coaching-first copy and no AI marketing', () => {
   assert.match(speakingPage, /Luyện nói với Minny/);
@@ -37,12 +37,9 @@ test('speaking page has kid-friendly mode cards and video fallback', () => {
   assert.match(speakingPage, /progress-dots/);
 });
 
-test('parent portal deprioritizes standalone speaking page', () => {
-  assert.match(parentPortal, /Luyện nói với Minny/);
-  assert.match(parentPortal, /profile-action-tile--soon/);
-  assert.match(parentPortal, /Sắp ra mắt/);
-  assert.match(parentPortal, /luyện nói ngay trong bài Read2Lead/i);
-  assert.doesNotMatch(parentPortal, /href="\/read2lead\/speaking/);
+test('unified profile renders parent view with portfolio and dashboard', () => {
+  assert.match(parentPortal, /renderParentView/);
+  assert.match(parentPortal, /renderFullDashboard/);
 });
 
 test('buildSpeakingModes returns output-focused retell and questions modes', () => {

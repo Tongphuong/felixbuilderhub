@@ -225,7 +225,7 @@ export async function onRequestGet(context) {
   const practice = pickPracticePack(codeData);
   const practiceLog = progress.minny_practice || { sessions_this_week: 0, last_at: null };
 
-  const profileLink = `/hoc-sinh?code=${encodeURIComponent(accessCode)}`;
+  const profileLink = `/ho-so?code=${encodeURIComponent(accessCode)}`;
   const coachingLink = '/coaching#book';
 
   if (!practice) {
