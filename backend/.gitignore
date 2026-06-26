@@ -1,0 +1,36 @@
+# Python cache
+__pycache__/
+api/__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Secrets and local environment
+.env
+.env.*
+
+# Generated outputs
+generated/
+logs/
+*.log
+
+# Claude specs are shared source-of-truth. Keep operational results/logs local.
+_claude/*
+!_claude/*.md
+_claude/*RESULT*.md
+_claude/*LOG*.md
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
