@@ -1,9 +1,8 @@
 """Tests for V2 model routing and retry wiring.
 
-Verifies Felix cost-cut routing:
-- L1/L2 -> gpt-5-mini on attempts 1-2
-- L3-L5 -> gpt-5.4-mini on attempts 1-2
-- Attempt 3 -> Anthropic Sonnet fallback
+Verifies routing:
+- Attempts 1-2: gpt-5.4-mini (all levels)
+- Attempt 3: Anthropic Opus 4.6 fallback
 
 All tests use mocking — no real OpenAI/Anthropic calls.
 """
@@ -51,17 +50,17 @@ def test_resolve_provider_openai_for_first_two_attempts():
 
 
 def test_resolve_openai_model_by_level():
-    assert resolve_openai_model_for_level("L1") == "gpt-5-mini"
-    assert resolve_openai_model_for_level("l2") == "gpt-5-mini"
+    assert resolve_openai_model_for_level("L1") == "gpt-5.4-mini"
+    assert resolve_openai_model_for_level("l2") == "gpt-5.4-mini"
     assert resolve_openai_model_for_level("L3") == "gpt-5.4-mini"
     assert resolve_openai_model_for_level("L4") == "gpt-5.4-mini"
     assert resolve_openai_model_for_level("L5") == "gpt-5.4-mini"
 
 
-@patch.dict(os.environ, {"OPENAI_MODEL_V2_L12": "custom-mini", "OPENAI_MODEL_V2_L345": "custom-54"})
-def test_resolve_openai_model_respects_env_overrides():
-    assert resolve_openai_model_for_level("L1") == "custom-mini"
-    assert resolve_openai_model_for_level("L5") == "custom-54"
+@patch.dict(os.environ, {"OPENAI_MODEL_V2": "custom-model"})
+def test_resolve_openai_model_respects_env_override():
+    assert resolve_openai_model_for_level("L1") == "custom-model"
+    assert resolve_openai_model_for_level("L5") == "custom-model"
 
 
 def _fake_anthropic_response():
@@ -91,7 +90,7 @@ def _fake_openai_response(text='{"ok": true, "from": "openai"}'):
 
 
 @patch.dict(os.environ, {"ANTHROPIC_API_KEY": "test", "OPENAI_API_KEY": "test"})
-def test_attempt_zero_l2_uses_gpt5_mini():
+def test_attempt_zero_l2_uses_gpt54_mini():
     with patch("generator_v2.OpenAI") as mock_openai_cls:
         mock_client = MagicMock()
         mock_client.chat.completions.create.return_value = _fake_openai_response()
@@ -100,9 +99,9 @@ def test_attempt_zero_l2_uses_gpt5_mini():
         _, usage = generate_pack_v2("Bin", 7, "L2", "boy", attempt_index=0)
 
         assert usage["provider"] == "openai"
-        assert usage["model"] == "gpt-5-mini"
+        assert usage["model"] == "gpt-5.4-mini"
         kwargs = mock_client.chat.completions.create.call_args.kwargs
-        assert kwargs["model"] == "gpt-5-mini"
+        assert kwargs["model"] == "gpt-5.4-mini"
 
 
 @patch.dict(os.environ, {"ANTHROPIC_API_KEY": "test", "OPENAI_API_KEY": "test"})

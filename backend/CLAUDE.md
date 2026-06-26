@@ -18,7 +18,7 @@ Read this file first. Every session. No exceptions.
 
 **Output**: Pack JSON with story + activities + per-sentence audio URLs.
 
-**Model routing**: gpt-5-mini for L1-L2, gpt-5.4-mini for L3-L5, Opus 4.6 fallback. Anthropic Sonnet is EOL — do NOT route Anthropic primary.
+**Model routing**: gpt-5.4-mini for all levels (primary), Opus 4.6 fallback. gpt-5-mini dropped 2026-06-27 (Activity A validation failures). Anthropic Sonnet is EOL — do NOT route Anthropic primary.
 
 **Hub** (same repo, root level): Astro site on Cloudflare Pages, reads pack from KV, renders interactive lesson at `/read2lead/lesson`.
 

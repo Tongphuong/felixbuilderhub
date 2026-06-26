@@ -19,7 +19,7 @@ for key in [
 
 
 def _corrupt_like_render_log(pack: dict) -> dict:
-    """Mirror gpt-5-mini drift from Render validation failure."""
+    """Mirror LLM drift from Render validation failure."""
     activities = pack["activities"]
     for activity in activities:
         activity.pop("instructions_vi", None)
@@ -67,7 +67,7 @@ def test_hydrate_normalizes_render_log_schema_drift():
 
 
 def test_hydrate_backfills_missing_listen_and_speak_ids():
-    """Render 2026-06-10: gpt-5-mini dropped id on listen_and_speak items."""
+    """Render 2026-06-10: LLM dropped id on listen_and_speak items."""
     from server import _hydrate_v2_pack_defaults
     from validator_v2 import validate_pack_v2
 

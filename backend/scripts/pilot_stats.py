@@ -98,7 +98,7 @@ def summarize(rows):
 
     # Quality flags Phuong should investigate.
     if fallback_rate > 20:
-        print(f"  ⚠ Fallback rate {fallback_rate:.0f}% > 20% — gpt-5-mini may not be viable")
+        print(f"  ⚠ Fallback rate {fallback_rate:.0f}% > 20% — primary model may not be viable")
     if (len(fail_val) + len(fail_exc)) > 0:
         print(f"  ⚠ {len(fail_val) + len(fail_exc)} pack(s) failed — investigate task IDs:")
         for row in fail_val + fail_exc:

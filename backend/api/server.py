@@ -343,7 +343,7 @@ def _pick_activity_b_replacement_sentence(
 def _repair_activity_b_tokens(pack: dict) -> dict:
     """Re-derive scrambled_tokens and correct_order_indices from original_sentence.
 
-    gpt-5-mini with reasoning_effort=low frequently drops words when building
+    LLMs with reasoning_effort=low frequently drop words when building
     scrambled_tokens (e.g. "The takes a little water" instead of "The boat
     takes on a little water"). Since scrambling is a deterministic whitespace-
     split + shuffle, the server can always fix it.

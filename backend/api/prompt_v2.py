@@ -368,7 +368,7 @@ Output the JSON only, with no surrounding text or markdown."""
 # ===========================================================================
 # V2.5 STORY 2-PASS POLISH (behind READ2LEAD_STORY_2PASS flag)
 # ---------------------------------------------------------------------------
-# Pass 1 (gpt-5-mini) writes the full pack. Pass 2 (gpt-5.4-mini) rewrites
+# Pass 1 (gpt-5.4-mini) writes the full pack. Pass 2 (gpt-5.4-mini) rewrites
 # ONLY story.paragraphs_en/title/sentences/trivia_vi against a narrative arc
 # rubric so L1 stories stop reading like a flat list of actions. Activities
 # are never regenerated in pass 2.

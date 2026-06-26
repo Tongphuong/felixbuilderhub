@@ -1,7 +1,7 @@
-"""V2 Read2Lead pack generator with level-based OpenAI routing + Opus fallback.
+"""V2 Read2Lead pack generator with OpenAI primary + Opus fallback.
 
-Routing (Felix cost-cut decision, 2026-06-06; Opus fallback update 2026-06-19):
-- Attempts 1-2: OpenAI primary — L1/L2 -> gpt-5-mini, L3-L5 -> gpt-5.4-mini
+Routing (updated 2026-06-27 — gpt-5-mini dropped due to Activity A failures):
+- Attempts 1-2: OpenAI gpt-5.4-mini (all levels)
 - Attempt 3: Anthropic Opus 4.6 fallback after two failed validation attempts
 
 Surgical retry: on validation failure, the next attempt sees the previous failed
@@ -31,8 +31,7 @@ from prompt_v2 import (
 from validator_v2 import validate_story_only
 
 DEFAULT_MODEL_V2 = "claude-opus-4-6-20250610"
-DEFAULT_OPENAI_MODEL_L12 = "gpt-5-mini"
-DEFAULT_OPENAI_MODEL_L345 = "gpt-5.4-mini"
+DEFAULT_OPENAI_MODEL = "gpt-5.4-mini"
 PRIMARY_OPENAI_ATTEMPTS = 2
 
 # V2.5 story 2-pass polish (behind READ2LEAD_STORY_2PASS). Pass 2 rewrites only
@@ -60,11 +59,8 @@ def normalize_level(level: str) -> str:
 
 
 def resolve_openai_model_for_level(level: str) -> str:
-    """Pick the cheaper OpenAI model for the student's reading level."""
-    lv = normalize_level(level)
-    if lv in ("L1", "L2"):
-        return os.environ.get("OPENAI_MODEL_V2_L12", DEFAULT_OPENAI_MODEL_L12)
-    return os.environ.get("OPENAI_MODEL_V2_L345", DEFAULT_OPENAI_MODEL_L345)
+    """Return the OpenAI model for pack generation (all levels)."""
+    return os.environ.get("OPENAI_MODEL_V2", DEFAULT_OPENAI_MODEL)
 
 
 def resolve_provider_for_attempt(attempt_index: int) -> str:
@@ -473,7 +469,7 @@ def _generate_guided_listening_via_openai(prompt: str) -> tuple[str, dict]:
     Returns (raw_json_text, usage_dict).
     """
     client = OpenAI(api_key=_openai_api_key())
-    model = "gpt-5-mini"
+    model = DEFAULT_OPENAI_MODEL
 
     response = client.chat.completions.create(
         model=model,
@@ -609,7 +605,7 @@ def _generate_pack_two_call(
             {"story": story, "activities": activities},
             llm_fallback=gl_fallback,
         )
-        gl_model = "gpt-5-mini"
+        gl_model = DEFAULT_OPENAI_MODEL
     except Exception as exc:
         print(f"[two-call] guided_listening generation failed, proceeding without: {exc}")
         pack = {"story": story, "activities": activities}
