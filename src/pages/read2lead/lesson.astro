@@ -3444,7 +3444,7 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
         <div class="r2l-guided-question__feedback mt-2 hidden text-sm text-cream/80" data-question-feedback></div>
       `;
 
-      qa.querySelector('[data-question-text]').textContent = qData.question_vi || '';
+      qa.querySelector('[data-question-text]').textContent = qData.question_en || qData.question_vi || '';
 
       const answerKey = `${sentenceIndex}:${qId}`;
       const existingAnswer = state.guidedListening.answers[answerKey];
