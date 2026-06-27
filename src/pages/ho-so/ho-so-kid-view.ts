@@ -525,7 +525,7 @@ function renderRankBoard(host: HTMLElement, state: Record<string, unknown>) {
     const current = index === tierIndex;
     const next = index === tierIndex + 1;
     const note = current ? 'Bạn đang ở đây' : next && starsToNext ? `còn ${starsToNext} sao` : index < tierIndex ? 'Đã qua' : 'Chưa mở';
-    return `<div class="ho-so-tier" style="--tier-color:${color}" data-current="${current}" data-next="${next}"><span class="ho-so-tier__dot"></span><strong>${escapeHtml(name)}</strong><small>${escapeHtml(note)}</small></div>`;
+    return `<div class="ho-so-tier" style="--tier-color:${color}" data-current="${current}" data-next="${next}"><span class="ho-so-tier__dot"></span><div><strong>${escapeHtml(name)}</strong><small>${escapeHtml(note)}</small></div></div>`;
   }).join('');
   const progress = Number(ladder.stars_per_division) > 0 ? Math.round((stars / Number(ladder.stars_per_division)) * 100) : 0;
   host.innerHTML = `<div class="ho-so-card-head"><p class="fx-eyebrow ho-so-accent-eyebrow">Bậc hiện tại</p><small>${starsToNext ? `Còn ${starsToNext} sao đến ${escapeHtml(ladder.next_label_vi || 'bậc mới')}` : 'Đã ở đỉnh bảng hạng'}</small></div><div class="ho-so-rank-summary"><div class="ho-so-rank-orb">${stars || '★'}</div><div><h3>${escapeHtml(ladder.label_vi || PROFILE_TIERS[tierIndex][0])}</h3><p>${rankPoints} RP mùa này</p></div></div><span class="fx-progress" role="progressbar" aria-label="Tiến độ sao trong bậc" aria-valuenow="${Math.min(100, progress)}" aria-valuemin="0" aria-valuemax="100"><span class="fx-progress__fill fx-progress__fill--gradient" style="width:${Math.min(100, progress)}%"></span></span><div class="ho-so-ladder">${tierHtml}</div>`;
