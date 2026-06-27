@@ -9,15 +9,6 @@ export function isV3Enabled(): boolean {
   return false;
 }
 
-/** W1 gate: env flag OR client-side ?w1=1 preview override. */
-export function isW1Enabled(): boolean {
-  if (import.meta.env.PUBLIC_R2L_W1 === '1') return true;
-  if (typeof window !== 'undefined') {
-    return new URLSearchParams(window.location.search).get('w1') === '1';
-  }
-  return false;
-}
-
 /** Unified profile gate: env flag OR client-side ?profile=1 preview override. */
 export function isProfileEnabled(): boolean {
   if (import.meta.env.PUBLIC_R2L_PROFILE === '1') return true;

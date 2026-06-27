@@ -15,10 +15,8 @@ export type ShopRow = {
 };
 
 export type ShopPageHooks = {
-  w1: boolean;
   confirmBuy: () => Promise<boolean>;
   onError: (message: string) => void;
-  onToast?: (message: string) => void;
 };
 
 function w7DecorationsEnabled(): boolean {
@@ -232,17 +230,8 @@ export function initShopPage(hooks: ShopPageHooks): void {
 
   const setShopCoins = (value: number) => {
     shopCoins = Number(value) || 0;
-    const legacy = qs('#shop-coins');
-    if (legacy) legacy.textContent = String(shopCoins);
-    const pill = qs('[data-r2l-coin-value]');
-    if (pill) {
-      pill.textContent = String(shopCoins);
-      const wrap = pill.closest('.r2l-kid-coin-pill');
-      if (wrap) {
-        wrap.classList.add('is-bump');
-        window.setTimeout(() => wrap.classList.remove('is-bump'), 400);
-      }
-    }
+    const coins = qs('#shop-coins');
+    if (coins) coins.textContent = String(shopCoins);
   };
 
   const bindShopActions = () => {
@@ -283,7 +272,6 @@ export function initShopPage(hooks: ShopPageHooks): void {
           minny.textContent = 'Minny thích phụ kiện mới! 🎉';
           minny.classList.remove('hidden');
         }
-        hooks.onToast?.('Mua xong! Phụ kiện vào tủ rồi.');
         qs('#shop-error')?.classList.add('hidden');
         renderShop();
       });

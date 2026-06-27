@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import { createServer } from 'vite';
 import { getViteConfig } from 'astro/config';
 import { experimental_AstroContainer as AstroContainer } from 'astro/container';
@@ -38,14 +39,8 @@ test.after(async () => {
   if (viteServer) await viteServer.close();
 });
 
-const SHOP_ITEM = {
-  id: 'png-default-detail-blue-horn-small',
-  rarity: 'rare',
-  price: 80,
-  name: 'Sừng xanh nhỏ',
-  owned: false,
-  can_afford: true,
-};
+const shopUxSource = readFileSync('src/lib/shop-ux.ts', 'utf8');
+const shopPage = readFileSync('src/pages/read2lead/shop.astro', 'utf8');
 
 test('RarityBadge renders Vietnamese label per rarity', async () => {
   const html = await renderComponent('/src/components/read2lead/v4/RarityBadge.astro', {
@@ -71,53 +66,25 @@ test('RarityBadge color CSS var matches mobile convention', async () => {
   assert.match(html, /--badge-color/);
 });
 
-test('ShopItem rare has blue border data-rarity', async () => {
-  const html = await renderComponent('/src/components/read2lead/v4/ShopItem.astro', {
-    ...SHOP_ITEM,
-    rarity: 'rare',
-  });
-  assert.match(html, /class="shop-item"/);
-  assert.match(html, /data-rarity="?rare"?/);
+test('active shop renderer emits item rarity and affordability metadata', () => {
+  assert.match(shopUxSource, /class=\"shop-item\"/);
+  assert.match(shopUxSource, /data-rarity=\"/);
+  assert.match(shopUxSource, /data-can-afford=\"/);
+  assert.match(shopUxSource, /item\.can_afford \? \x27\x27 : \x27disabled\x27/);
 });
 
-test('ShopItem epic has purple border + glow', async () => {
-  const html = await renderComponent('/src/components/read2lead/v4/ShopItem.astro', {
-    ...SHOP_ITEM,
-    rarity: 'epic',
-    price: 200,
-  });
-  assert.match(html, /data-rarity="?epic"?/);
-  assert.match(html, /#a855f7|168 85 247/);
+test('active shop renderer groups epic, rare, then common and hides empty sections', () => {
+  const epic = shopUxSource.indexOf("renderSection('epic'");
+  const rare = shopUxSource.indexOf("renderSection('rare'");
+  const common = shopUxSource.indexOf("renderSection('common'");
+  assert.ok(epic >= 0 && rare > epic && common > rare);
+  assert.match(shopUxSource, /if \(!items\.length\) return \x27\x27/);
 });
 
-test('ShopItem disabled when !can_afford', async () => {
-  const html = await renderComponent('/src/components/read2lead/v4/ShopItem.astro', {
-    ...SHOP_ITEM,
-    can_afford: false,
-  });
-  assert.match(html, /data-can-afford="?false"?/);
-  assert.match(html, /disabled/);
-});
-
-test('ShopGrid groups items into epic / rare sections', async () => {
-  const html = await renderComponent('/src/components/read2lead/v4/ShopGrid.astro', {
-    items: [
-      { ...SHOP_ITEM, id: 'r1', rarity: 'rare' },
-      { ...SHOP_ITEM, id: 'e1', rarity: 'epic', price: 200 },
-    ],
-  });
-  assert.match(html, /data-tier="epic"/);
-  assert.match(html, /data-tier="rare"/);
-  assert.match(html, /Sử Thi — 1 món/);
-  assert.match(html, /Hiếm — 1 món/);
-});
-
-test('ShopGrid hides empty tier section', async () => {
-  const html = await renderComponent('/src/components/read2lead/v4/ShopGrid.astro', {
-    items: [{ ...SHOP_ITEM, rarity: 'rare' }],
-  });
-  assert.doesNotMatch(html, /data-tier="epic"/);
-  assert.match(html, /data-tier="rare"/);
+test('dark shop styles apply W6 rarity borders and reduced motion', () => {
+  assert.match(shopPage, /var\(--w6-rare\)/);
+  assert.match(shopPage, /var\(--w6-epic\)/);
+  assert.match(shopPage, /prefers-reduced-motion: reduce/);
 });
 
 test('InsufficientCoinsModal opens with correct deficit number', async () => {

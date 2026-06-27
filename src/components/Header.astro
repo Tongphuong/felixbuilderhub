@@ -1,34 +1,20 @@
 ---
 export interface Props {
   read2LeadState?: boolean;
-  kidMode?: boolean;
 }
 
 import { ZALO_URL } from '../config/contact';
 import '../styles/rank-ladder.css';
 
-const { read2LeadState = false, kidMode = false } = Astro.props;
+const { read2LeadState = false } = Astro.props;
 const contactHref = ZALO_URL;
-const w1KidSsr = kidMode && import.meta.env.PUBLIC_R2L_W1 === '1';
 const progressHref = '/ho-so';
 ---
-
-{kidMode && (
-  <header class="r2l-kid-header" data-r2l-kid-header hidden={!w1KidSsr}>
-    <div class="r2l-kid-header__inner">
-      <a href="/read2lead" class="flex items-center" aria-label="Read2Lead">
-        <img src="/logo/felixbuilderhub_website_header_logo.webp" alt="Felix Coaching" class="h-8 w-auto" width="525" height="190" />
-      </a>
-      <span data-r2l-header-avatar aria-hidden="true"></span>
-    </div>
-  </header>
-)}
 
 {read2LeadState ? (
   <header
     class="r2l-lesson-focus sticky top-0 z-50 border-b border-cream-dim/20 bg-navy-950/95 backdrop-blur"
     data-r2l-legacy-header
-    data-r2l-header-kid-slot="0"
   >
     <div class="mx-auto flex min-h-16 max-w-6xl items-center gap-3 px-4 py-2 sm:px-6 lg:px-8">
       <a href="/" class="flex shrink-0 items-center" aria-label="Felix Coaching — Trang chủ">
@@ -102,8 +88,6 @@ const progressHref = '/ho-so';
   <header
     class="sticky top-0 z-50 border-b border-cream-dim/20 bg-navy-950/85 backdrop-blur"
     data-r2l-legacy-header
-    data-r2l-header-kid-slot={kidMode ? '1' : '0'}
-    hidden={w1KidSsr || undefined}
   >
     <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-4">
       <a href="/" class="flex items-center" aria-label="Felix Coaching — Trang chủ">
@@ -145,14 +129,7 @@ const progressHref = '/ho-so';
 <script>
   import { applyV3HeaderRank } from '../lib/rank-header';
   import { applyHeaderMonsterAvatar } from '../lib/monster-avatar';
-  import { isV3Enabled, isW1Enabled } from '../config/flags';
-
-  const legacyHeader = document.querySelector('[data-r2l-legacy-header]');
-  if (legacyHeader?.getAttribute('data-r2l-header-kid-slot') === '1' && isW1Enabled()) {
-    const kidHeader = document.querySelector('[data-r2l-kid-header]');
-    if (kidHeader instanceof HTMLElement) kidHeader.hidden = false;
-    if (legacyHeader instanceof HTMLElement) legacyHeader.hidden = true;
-  }
+  import { isV3Enabled } from '../config/flags';
 
   const toggle = document.getElementById('mobile-nav-toggle');
   const nav = document.getElementById('mobile-nav');

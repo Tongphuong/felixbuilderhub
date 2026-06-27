@@ -2,21 +2,9 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
-import KidButton from '../../components/read2lead/v4/KidButton.astro';
-import KidCard from '../../components/read2lead/v4/KidCard.astro';
-import CoinPill from '../../components/read2lead/v4/CoinPill.astro';
-import KidModal from '../../components/read2lead/v4/KidModal.astro';
-import KidToast from '../../components/read2lead/v4/KidToast.astro';
 import InsufficientCoinsModal from '../../components/read2lead/v4/InsufficientCoinsModal.astro';
 import UnlockCelebration from '../../components/read2lead/v4/UnlockCelebration.astro';
-import '../../styles/r2l-kid.css';
 import '../../styles/r2l-w6-tiers.css';
-import '@fontsource-variable/baloo-2/index.css';
-
-const w1Ssr = import.meta.env.PUBLIC_R2L_W1 === '1';
-const mainClass = w1Ssr
-  ? 'r2l-kid flex-1 px-4 py-8 sm:px-6'
-  : 'flex-1 bg-navy-950 px-4 py-8 sm:px-6';
 ---
 
 <BaseLayout
@@ -24,72 +12,38 @@ const mainClass = w1Ssr
   description="Dùng xu để mua phụ kiện quái vật."
   robots="noindex, follow"
 >
-  <Header read2LeadState={false} kidMode={true} />
+  <Header read2LeadState={false} />
 
-  <main id="main" class={mainClass}>
+  <main id="main" class="flex-1 bg-navy-950 px-4 py-8 sm:px-6">
     <section class="mx-auto max-w-4xl">
-      {w1Ssr ? (
-        <>
-          <p class="r2l-kid-eyebrow">Read2Lead</p>
-          <h1 class="r2l-kid-title">Cửa hàng Minny</h1>
-          <p class="r2l-kid-lead">🪙 Mua phụ kiện bằng xu học bài.</p>
-        </>
-      ) : (
-        <>
-          <p class="text-xs font-extrabold uppercase tracking-widest text-accent">Read2Lead</p>
-          <h1 class="mt-2 font-display text-3xl font-extrabold text-cream">Cửa hàng Minny</h1>
-          <p class="mt-2 text-sm text-cream-muted">🪙 Mua phụ kiện bằng xu học bài.</p>
-        </>
-      )}
+      <p class="text-xs font-extrabold uppercase tracking-widest text-accent">Read2Lead</p>
+      <h1 class="mt-2 font-display text-3xl font-extrabold text-cream">Cửa hàng Minny</h1>
+      <p class="mt-2 text-sm text-cream-muted">🪙 Mua phụ kiện bằng xu học bài.</p>
 
-      <div id="shop-gate" class:list={['mt-6 hidden', w1Ssr ? 'r2l-kid-card r2l-kid-muted' : 'rounded-2xl border border-cream/15 bg-navy-900/80 p-6 text-sm text-cream-muted']}>
+      <div id="shop-gate" class="mt-6 hidden rounded-2xl border border-cream/15 bg-navy-900/80 p-6 text-sm text-cream-muted">
         Cửa hàng chỉ mở khi bật chế độ V3 preview (<code>?v3=1</code>).
       </div>
 
-      {w1Ssr ? (
-        <div id="shop-entry" class="mt-6 hidden">
-          <KidCard>
-            <label for="shop-code" class="text-sm font-bold text-[var(--r2l-ink)]">Mã học sinh</label>
-            <div class="mt-3 flex flex-col gap-3 sm:flex-row">
-              <input id="shop-code" maxlength="40" autocomplete="off" placeholder="R2L-..." class="r2l-kid-input" />
-              <KidButton id="shop-load" class="shrink-0">Vào cửa hàng</KidButton>
-            </div>
-          </KidCard>
+      <div id="shop-entry" class="mt-6 hidden rounded-2xl border border-cream/15 bg-navy-900/80 p-5">
+        <label for="shop-code" class="text-sm font-semibold text-cream">Mã học sinh</label>
+        <div class="mt-3 flex flex-col gap-3 sm:flex-row">
+          <input id="shop-code" maxlength="40" autocomplete="off" placeholder="R2L-..." class="min-h-[64px] w-full rounded-xl border border-cream/15 bg-navy-950 px-4 uppercase text-cream" />
+          <button id="shop-load" type="button" data-r2l-kid-upgrade="primary" class="min-h-[64px] rounded-xl bg-accent px-6 font-extrabold text-navy-950">Vào cửa hàng</button>
         </div>
-      ) : (
-        <div id="shop-entry" class="mt-6 hidden rounded-2xl border border-cream/15 bg-navy-900/80 p-5">
-          <label for="shop-code" class="text-sm font-semibold text-cream">Mã học sinh</label>
-          <div class="mt-3 flex flex-col gap-3 sm:flex-row">
-            <input id="shop-code" maxlength="40" autocomplete="off" placeholder="R2L-..." class="min-h-[64px] w-full rounded-xl border border-cream/15 bg-navy-950 px-4 uppercase text-cream" />
-            <button id="shop-load" type="button" data-r2l-kid-upgrade="primary" class="min-h-[64px] rounded-xl bg-accent px-6 font-extrabold text-navy-950">Vào cửa hàng</button>
-          </div>
-        </div>
-      )}
+      </div>
 
-      <div id="shop-error" class:list={['mt-4 hidden', w1Ssr ? 'r2l-kid-error' : 'rounded-xl border border-red-400/40 bg-red-500/10 px-4 py-3 text-sm text-red-200']}></div>
+      <div id="shop-error" class="mt-4 hidden rounded-xl border border-red-400/40 bg-red-500/10 px-4 py-3 text-sm text-red-200"></div>
 
       <div id="shop-shell" class="mt-6 hidden space-y-6">
-        {w1Ssr ? (
-          <KidCard>
-            <div class="r2l-kid-balance-row">
-              <div>
-                <p class="text-sm r2l-kid-muted">Số dư của con</p>
-                <CoinPill id="shop-coins-pill" value={0} />
-              </div>
-              <a id="shop-profile-link" href="/ho-so" class="r2l-kid-btn r2l-kid-btn--ghost r2l-kid-btn--md no-underline">← Về hồ sơ</a>
-            </div>
-          </KidCard>
-        ) : (
-          <div class="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-gold/30 bg-gold/10 px-5 py-4">
-            <div>
-              <p class="text-sm text-cream-muted">Số dư của con</p>
-              <p class="font-display text-3xl font-extrabold text-gold"><span id="shop-coins">0</span> 🪙</p>
-            </div>
-            <a id="shop-profile-link" href="/ho-so" class="min-h-[64px] rounded-xl border border-cream/20 px-4 py-2 text-sm font-bold text-cream inline-flex items-center">← Về hồ sơ</a>
+        <div class="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-gold/30 bg-gold/10 px-5 py-4">
+          <div>
+            <p class="text-sm text-cream-muted">Số dư của con</p>
+            <p class="font-display text-3xl font-extrabold text-gold"><span id="shop-coins">0</span> 🪙</p>
           </div>
-        )}
+          <a id="shop-profile-link" href="/ho-so" class="min-h-[64px] rounded-xl border border-cream/20 px-4 py-2 text-sm font-bold text-cream inline-flex items-center">← Về hồ sơ</a>
+        </div>
 
-        <p id="shop-minny" class:list={['hidden px-4 py-3 text-sm font-semibold', w1Ssr ? 'r2l-kid-card border-2 border-[var(--r2l-accent)] text-[var(--r2l-ink)]' : 'rounded-xl border border-accent/30 bg-accent/10 text-accent']}></p>
+        <p id="shop-minny" class="hidden rounded-xl border border-accent/30 bg-accent/10 px-4 py-3 text-sm font-semibold text-accent"></p>
 
         <div id="shop-grid" class="shop-host"></div>
       </div>
@@ -100,63 +54,32 @@ const mainClass = w1Ssr
   <UnlockCelebration part_name="" rarity="rare" />
 
   <Footer />
-  {w1Ssr && <KidModal />}
-  {w1Ssr && <KidToast />}
 </BaseLayout>
 
 <script>
-  import { isV3Enabled, isW1Enabled } from '../../config/flags';
-  import { applyW1PageShell, upgradeKidControls } from '../../scripts/r2l-w1-page';
-  import { kidConfirm } from '../../scripts/r2l-kid-modal';
-  import { kidToast } from '../../scripts/r2l-kid-toast';
-  import { initShopPage } from '../../lib/shop-ux';
-
-  const w1 = isW1Enabled();
-  if (w1) {
-    applyW1PageShell();
-    upgradeKidControls(document.getElementById('main'));
-    if (!document.getElementById('r2l-kid-modal-root')) {
-      import('../../scripts/r2l-kid-modal').then((m) => m.initKidModal());
-    }
-    if (!document.getElementById('r2l-kid-toast')) {
-      import('../../scripts/r2l-kid-toast').then((m) => m.initKidToast());
-    }
-  }
+  import { isV3Enabled } from "../../config/flags";
+  import { initShopPage } from "../../lib/shop-ux";
 
   /** @param {string} sel */
   const qs = (sel) => document.querySelector(sel);
 
   async function confirmBuy() {
-    if (w1) {
-      return kidConfirm({
-        title: 'Mua phụ kiện?',
-        body: 'Con dùng xu mua món này nhé?',
-        okText: 'Mua',
-        cancelText: 'Để sau',
-      });
-    }
-    return window.confirm('Con dùng xu mua món này nhé?');
+    return window.confirm("Con dùng xu mua món này nhé?");
   }
 
   /** @param {string} message */
   function showShopError(message) {
-    const errorEl = qs('#shop-error');
+    const errorEl = qs("#shop-error");
     if (!errorEl) return;
     errorEl.textContent = message;
-    errorEl.classList.remove('hidden');
-    if (w1) kidToast(message);
+    errorEl.classList.remove("hidden");
   }
 
   if (!isV3Enabled()) {
-    qs('#shop-gate')?.classList.remove('hidden');
+    qs("#shop-gate")?.classList.remove("hidden");
   } else {
-    qs('#shop-entry')?.classList.remove('hidden');
-    initShopPage({
-      w1,
-      confirmBuy,
-      onError: showShopError,
-      onToast: w1 ? kidToast : undefined,
-    });
+    qs("#shop-entry")?.classList.remove("hidden");
+    initShopPage({ confirmBuy, onError: showShopError });
   }
 </script>
 

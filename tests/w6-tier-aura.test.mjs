@@ -36,15 +36,7 @@ test.after(async () => {
 
 const css = readFileSync('src/styles/r2l-w6-tiers.css', 'utf8');
 const cssLines = css.split(/\r?\n/).length;
-const shopItem = {
-  id: 'part',
-  rarity: 'rare',
-  price: 80,
-  name: 'Sừng xanh nhỏ',
-  thumbnail_url: '/assets/monsters/raw/PNG/Default/detail_blue_horn_small.png',
-  owned: false,
-  can_afford: true,
-};
+const shopPage = readFileSync('src/pages/read2lead/shop.astro', 'utf8');
 
 test('tier stylesheet defines the four approved color tokens under 200 lines', () => {
   assert.match(css, /--w6-common:\s*#94a3b8/);
@@ -99,9 +91,9 @@ test('RarityBadge reads the shared W6 token with its approved fallback', async (
   assert.match(html, /✨/);
 });
 
-test('ShopItem wraps its thumbnail in TierAura', async () => {
-  const html = await renderComponent('/src/components/read2lead/v4/ShopItem.astro', shopItem);
-  assert.match(html, /class="w6-tier-aura"/);
-  assert.match(html, /data-rarity="?rare"?/);
-  assert.match(html, /detail_blue_horn_small\.png/);
+test('live shop keeps shared W6 rarity tokens and reduced-motion styling', () => {
+  assert.match(shopPage, /r2l-w6-tiers\.css/);
+  assert.match(shopPage, /var\(--w6-rare\)/);
+  assert.match(shopPage, /var\(--w6-epic\)/);
+  assert.match(shopPage, /prefers-reduced-motion: reduce/);
 });
