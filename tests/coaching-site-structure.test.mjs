@@ -22,8 +22,7 @@ test('homepage features coaching as primary service', () => {
   assert.match(homePage, /tăng cường bởi AI/);
   assert.match(homePage, /tích điểm và leo cấp/);
   assert.match(homePage, /Read2Lead/);
-  assert.match(homePage, /id="msmw"/);
-  assert.match(homePage, /MSMW — My Story, My World/);
+  assert.match(homePage, /Sản phẩm giáo dục/);
   assert.match(homePage, /ogImage="\/images\/felix\.jpg"/);
   assert.match(homePage, /Lớp online nhóm nhỏ tối đa 4 bé/);
   assert.doesNotMatch(homePage, /Felix Sharing Space/);
@@ -34,8 +33,8 @@ test('header navigation prioritizes coaching, parent portal, and separate produc
   assert.match(header, /ho-so|ho-so/);
   assert.match(header, /href="\/read2lead"/);
   assert.match(header, /Luyện đọc/);
-  assert.match(header, /href="\/msmw"/);
-  assert.match(header, /Sách cho con/);
+  assert.match(header, /href="\/speak-up"/);
+  assert.match(header, /SpeakUp/);
   assert.match(header, /Xem tiến độ con/);
   assert.doesNotMatch(header, /Công cụ khác/);
 });

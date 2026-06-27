@@ -1,0 +1,34 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<BaseLayout
+  title="Sản phẩm giáo dục — Felix Coaching"
+  description="Read2Lead và SpeakUp — công cụ luyện đọc và luyện nói tiếng Anh tăng cường bởi AI cho trẻ em."
+>
+  <Header />
+
+  <main id="main" class="flex-1">
+    <section class="mx-auto max-w-4xl px-6 py-16 md:py-20">
+      <p class="text-center text-sm font-bold uppercase tracking-wider text-accent">Sản phẩm giáo dục</p>
+      <h1 class="mt-4 text-center font-display text-3xl font-extrabold text-cream md:text-4xl">Chọn sản phẩm cho con</h1>
+
+      <div class="mt-10 grid gap-6 sm:grid-cols-2">
+        <a href="/read2lead" class="fx-card fx-card--interactive flex flex-col items-center gap-4 rounded-2xl p-10 text-center">
+          <span class="flex h-20 w-20 items-center justify-center rounded-full bg-accent text-4xl text-navy-950">📖</span>
+          <span class="font-display text-2xl font-extrabold text-cream">Read2Lead</span>
+          <span class="text-sm text-cream-muted">Luyện đọc và nghe tăng cường bởi AI — con chọn chủ đề, làm bài, tích điểm leo cấp.</span>
+        </a>
+        <a href="/speak-up" class="fx-card fx-card--interactive flex flex-col items-center gap-4 rounded-2xl p-10 text-center">
+          <span class="flex h-20 w-20 items-center justify-center rounded-full bg-gold text-4xl text-navy-950">🎤</span>
+          <span class="font-display text-2xl font-extrabold text-cream">SpeakUp</span>
+          <span class="text-sm text-cream-muted">Luyện nói tiếng Anh với Minny — bạn đồng hành AI giúp con tự tin phát âm và kể chuyện.</span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>

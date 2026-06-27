@@ -230,6 +230,7 @@ async function loadProfile() {
     const urlRole = params.get('role');
     const role =
       (urlRole === 'kid' || urlRole === 'parent' ? urlRole : null) ||
+      preSelectedRole ||
       savedRole(code) ||
       autoDetectRole(data);
 
@@ -280,6 +281,17 @@ function handleRoleToggle() {
 
 // ── Init ──
 
+let preSelectedRole: Role | null = null;
+
+function selectEntryRole(role: Role) {
+  preSelectedRole = role;
+  const parentBtn = qs<HTMLElement>('#ho-so-role-parent-entry');
+  const kidBtn = qs<HTMLElement>('#ho-so-role-kid-entry');
+  if (parentBtn) parentBtn.style.outline = role === 'parent' ? '3px solid var(--accent)' : '';
+  if (kidBtn) kidBtn.style.outline = role === 'kid' ? '3px solid var(--gold)' : '';
+  qs<HTMLInputElement>('#ho-so-code-input')?.focus();
+}
+
 export function initHoSo() {
   const params = new URLSearchParams(window.location.search);
   const initialCode = params.get('code');
@@ -288,6 +300,9 @@ export function initHoSo() {
     if (input) input.value = initialCode.toUpperCase();
     void loadProfile();
   }
+
+  qs('#ho-so-role-parent-entry')?.addEventListener('click', () => selectEntryRole('parent'));
+  qs('#ho-so-role-kid-entry')?.addEventListener('click', () => selectEntryRole('kid'));
 
   qs('#ho-so-load-btn')?.addEventListener('click', () => void loadProfile());
   qs('#ho-so-change-code')?.addEventListener('click', handleChangeCode);

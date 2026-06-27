@@ -62,6 +62,26 @@ const socialLinks = [
       </div>
     </section>
 
+    <section class="mx-auto max-w-5xl px-6 py-12 md:py-16">
+      <div class="grid gap-6 sm:grid-cols-3">
+        <a href="/coaching" class="fx-card fx-card--interactive flex flex-col items-center gap-4 rounded-2xl p-8 text-center">
+          <span class="flex h-16 w-16 items-center justify-center rounded-full bg-accent text-3xl text-navy-950">💬</span>
+          <span class="font-display text-2xl font-extrabold text-cream">Coaching</span>
+          <span class="text-sm text-cream-muted">Lớp online nhóm nhỏ tối đa 4 bé — rèn tự tin nói, kể chuyện, thuyết trình.</span>
+        </a>
+        <a href="/san-pham" class="fx-card fx-card--interactive flex flex-col items-center gap-4 rounded-2xl p-8 text-center">
+          <span class="flex h-16 w-16 items-center justify-center rounded-full bg-gold text-3xl text-navy-950">📚</span>
+          <span class="font-display text-2xl font-extrabold text-cream">Sản phẩm giáo dục</span>
+          <span class="text-sm text-cream-muted">Read2Lead và SpeakUp — công cụ luyện đọc và luyện nói tăng cường bởi AI.</span>
+        </a>
+        <a href="/ho-so" class="fx-card fx-card--interactive flex flex-col items-center gap-4 rounded-2xl p-8 text-center">
+          <span class="flex h-16 w-16 items-center justify-center rounded-full bg-cream/20 text-3xl">🎓</span>
+          <span class="font-display text-2xl font-extrabold text-cream">Hồ sơ học sinh</span>
+          <span class="text-sm text-cream-muted">Xem tiến độ con — cấp độ, điểm, bài đang học.</span>
+        </a>
+      </div>
+    </section>
+
     <section class="mx-auto max-w-6xl px-6 py-20 md:py-28">
       <div class="text-center">
         <Badge variant="accent">Dịch vụ chính · Nhóm nhỏ tối đa 4 bé · Online</Badge>
@@ -100,7 +120,7 @@ const socialLinks = [
             con dám mở miệng, kể chuyện có cấu trúc, thuyết trình trước lớp và tranh luận có lý lẽ.
           </p>
           <p class="mt-3 leading-relaxed text-cream-muted">
-            Ngoài lớp coaching, tôi xây dựng <strong class="text-cream">Read2Lead</strong> và <strong class="text-cream">MSMW</strong> — sản phẩm giáo dục tăng cường bởi AI, bổ trợ con luyện đọc và đọc truyện tại nhà.
+            Ngoài lớp coaching, tôi xây dựng <strong class="text-cream">Read2Lead</strong> và <strong class="text-cream">SpeakUp</strong> — sản phẩm giáo dục tăng cường bởi AI, bổ trợ con luyện đọc và luyện nói tại nhà.
           </p>
           <p class="mt-3 leading-relaxed text-cream-muted">
             Mỗi học sinh có <a href="/ho-so" class="font-semibold text-accent underline">trang xem tiến độ riêng</a> — bố mẹ nhập mã là thấy bài con đang học, truyện đã hoàn thành và (sắp tới) luyện nói chuyên sâu.
@@ -131,23 +151,20 @@ const socialLinks = [
           <Button variant="primary" href="/read2lead" class="shrink-0">Tạo bài miễn phí →</Button>
         </div>
       </Card>
-    </section>
-
-    <section id="msmw" class="bg-navy-900 px-6 py-20">
-      <div class="mx-auto grid max-w-6xl items-center gap-10 md:grid-cols-2">
-        <div>
-          <SectionHeading eyebrow="Sản phẩm riêng" title="MSMW — My Story, My World" />
-          <p class="mt-4 leading-relaxed text-cream-muted">
-            Sách truyện song ngữ Việt–Anh với <strong class="text-cream">chính con là nhân vật chính</strong> — Felix dùng AI tạo minh hoạ riêng từ ảnh thật của bé. Món quà ý nghĩa cho sinh nhật, Tết thiếu nhi hoặc dịp đặc biệt.
-          </p>
-          <p class="mt-3 text-sm text-cream-dim">Bản số từ 69k · Bản in từ 129k · Giao toàn quốc</p>
-          <Button variant="secondary" href="/msmw" class="mt-6">Xem trang MSMW →</Button>
+      <Card variant="accent" class="mt-4">
+        <div class="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+          <div class="max-w-2xl">
+            <div class="flex flex-wrap items-center gap-3">
+              <h3 class="font-display text-2xl font-bold text-cream">SpeakUp</h3>
+              <Badge variant="gold">Sắp ra mắt</Badge>
+            </div>
+            <p class="mt-4 leading-relaxed text-cream-muted">
+              Công cụ luyện nói tiếng Anh tăng cường bởi AI — con tập phát âm, kể chuyện và thuyết trình với Minny.
+            </p>
+          </div>
+          <Button variant="secondary" href="/speak-up" class="shrink-0">Tìm hiểu thêm →</Button>
         </div>
-        <div class="grid grid-cols-2 gap-4">
-          <img src="/msmw/thumb-toy-brick.jpg" alt="Bìa sách MSMW Thành Phố Gạch Màu" width="240" height="360" loading="lazy" class="rounded-xl border border-cream-dim/20 object-cover shadow-lg" />
-          <img src="/msmw/thumb-heart-garden.jpg" alt="Bìa sách MSMW Khu Vườn Trái Tim" width="240" height="360" loading="lazy" class="mt-8 rounded-xl border border-cream-dim/20 object-cover shadow-lg" />
-        </div>
-      </div>
+      </Card>
     </section>
 
     <section id="contact" class="mx-auto max-w-6xl px-6 py-20">

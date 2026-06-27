@@ -1,0 +1,62 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Badge from '../components/ui/Badge.astro';
+import Button from '../components/ui/Button.astro';
+import { ZALO_DISPLAY, ZALO_URL } from '../config/contact';
+---
+
+<BaseLayout
+  title="SpeakUp — Luyện nói tiếng Anh tăng cường bởi AI | Felix Coaching"
+  description="Minny là bạn đồng hành AI — giúp con tập phát âm, kể chuyện và thuyết trình tiếng Anh. Sắp ra mắt."
+  ogImage="/images/felix.jpg"
+>
+  <Header />
+
+  <main id="main" class="flex-1">
+    <section class="mx-auto max-w-5xl px-5 pb-6 pt-12 text-center sm:pt-16">
+      <Badge variant="gold">Sắp ra mắt</Badge>
+      <h1 class="mx-auto mt-6 max-w-3xl font-display text-3xl font-extrabold leading-tight text-cream sm:text-4xl md:text-5xl">
+        Luyện nói tiếng Anh — tăng cường bởi AI
+      </h1>
+      <p class="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-cream-muted sm:text-lg">
+        Minny là bạn đồng hành AI — con tập phát âm, kể chuyện, thuyết trình. Bố mẹ xem tiến độ qua trang hồ sơ.
+      </p>
+    </section>
+
+    <section class="mx-auto max-w-3xl px-5 py-12 text-center">
+      <div class="rounded-2xl border border-gold/30 bg-gold/5 p-10">
+        <span class="text-5xl">🎤</span>
+        <h2 class="mt-4 font-display text-2xl font-bold text-cream">SpeakUp đang được xây dựng</h2>
+        <p class="mt-3 text-cream-muted">Minny sẽ sớm sẵn sàng luyện nói cùng con. Nhắn Zalo để được thông báo khi ra mắt.</p>
+        <div class="mt-6">
+          <Button variant="primary" href={ZALO_URL}>Nhắn Zalo {ZALO_DISPLAY} →</Button>
+        </div>
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-5xl px-5 py-14">
+      <h2 class="text-center font-display text-2xl font-bold text-cream">Con sẽ làm gì với SpeakUp?</h2>
+      <div class="mt-8 grid gap-4 sm:grid-cols-3">
+        <div class="rounded-xl border border-cream-dim/20 bg-navy-900/70 p-5 text-center">
+          <span class="text-3xl">🗣️</span>
+          <h3 class="mt-3 font-display text-lg font-bold text-cream">Tập phát âm</h3>
+          <p class="mt-2 text-sm text-cream-muted">Nghe câu mẫu, thu âm và nhận góp ý từ Minny.</p>
+        </div>
+        <div class="rounded-xl border border-cream-dim/20 bg-navy-900/70 p-5 text-center">
+          <span class="text-3xl">📖</span>
+          <h3 class="mt-3 font-display text-lg font-bold text-cream">Kể chuyện</h3>
+          <p class="mt-2 text-sm text-cream-muted">Con kể lại câu chuyện bằng giọng của mình.</p>
+        </div>
+        <div class="rounded-xl border border-cream-dim/20 bg-navy-900/70 p-5 text-center">
+          <span class="text-3xl">🎤</span>
+          <h3 class="mt-3 font-display text-lg font-bold text-cream">Thuyết trình</h3>
+          <p class="mt-2 text-sm text-cream-muted">Trình bày ý tưởng trước Minny và nhận điểm.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>

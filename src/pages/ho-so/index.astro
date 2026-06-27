@@ -2,8 +2,6 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
-import KidButton from '../../components/read2lead/v4/KidButton.astro';
-import KidCard from '../../components/read2lead/v4/KidCard.astro';
 import MonsterBuilder from '../../components/read2lead/v3/avatar/MonsterBuilder.astro';
 import MedalCabinet from '../../components/read2lead/v3/rank/MedalCabinet.astro';
 import RankUpModal from '../../components/read2lead/v3/rank/RankUpModal.astro';
@@ -19,21 +17,37 @@ import '@fontsource-variable/baloo-2/index.css';
   description="Xem tien do hoc tap, avatar, xu va cap do cua con."
   robots="noindex, follow"
 >
-  <Header kidMode={true} />
+  <Header />
 
-  <main id="main" class="ho-so-page r2l-kid flex-1 px-4 py-8 sm:px-6">
+  <main id="main" class="ho-so-page flex-1 px-4 py-8 sm:px-6">
     <section class="mx-auto max-w-lg">
 
       <!-- CODE ENTRY -->
       <section id="ho-so-entry">
-        <p class="r2l-kid-eyebrow">Read2Lead</p>
-        <h1 class="r2l-kid-title">Ho so hoc sinh</h1>
-        <p class="r2l-kid-lead">Nhap ma Felix gui qua Zalo de xem tien do con.</p>
+        <h1 class="text-center font-display text-3xl font-extrabold text-cream md:text-4xl">Hồ sơ học sinh</h1>
+        <p class="mt-3 text-center text-cream-muted">Chọn vai trò và nhập mã Felix gửi qua Zalo để xem tiến độ con.</p>
 
-        <KidCard class="mt-6">
-          <label for="ho-so-code-input" class="text-sm font-bold">Ma cua con</label>
-          <p class="mt-1 text-xs r2l-kid-muted">VD: R2L-LINH-8F3KQ2</p>
-          <div class="mt-4 flex flex-col gap-3 sm:flex-row">
+        <div class="mt-8 grid grid-cols-2 gap-4">
+          <button id="ho-so-role-parent-entry" type="button"
+            class="flex flex-col items-center gap-3 rounded-2xl border-2 border-accent/40 bg-accent/10 p-6 text-center transition hover:border-accent hover:bg-accent/20"
+            style="min-height:140px">
+            <span class="text-4xl">👨‍👩‍👧</span>
+            <span class="font-display text-lg font-extrabold text-cream">Phụ huynh</span>
+            <span class="text-xs text-cream-muted">Xem tiến độ, báo cáo học tập</span>
+          </button>
+          <button id="ho-so-role-kid-entry" type="button"
+            class="flex flex-col items-center gap-3 rounded-2xl border-2 border-gold/40 bg-gold/10 p-6 text-center transition hover:border-gold hover:bg-gold/20"
+            style="min-height:140px">
+            <span class="text-4xl">🎒</span>
+            <span class="font-display text-lg font-extrabold text-cream">Học sinh</span>
+            <span class="text-xs text-cream-muted">Xem thành tích, tạo bài mới</span>
+          </button>
+        </div>
+
+        <div class="mt-6 rounded-xl border border-cream-dim/20 bg-navy-900/70 p-5">
+          <label for="ho-so-code-input" class="text-sm font-semibold text-cream">Mã học sinh</label>
+          <p class="mt-1 text-xs text-cream-dim">VD: R2L-LINH-8F3KQ2</p>
+          <div class="mt-3 flex flex-col gap-3 sm:flex-row">
             <input
               id="ho-so-code-input"
               name="access_code"
@@ -46,13 +60,12 @@ import '@fontsource-variable/baloo-2/index.css';
               inputmode="text"
               placeholder="R2L-..."
               data-clarity-mask="true"
-              class="r2l-kid-input"
+              class="min-h-[48px] w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-4 text-cream placeholder:text-cream-dim/50 focus:border-accent focus:outline-none"
             />
-            <KidButton id="ho-so-load-btn" type="button" class="shrink-0">
-              Xem ho so
-            </KidButton>
+            <button id="ho-so-load-btn" type="button"
+              class="fx-btn fx-btn--primary shrink-0 px-6">Xem hồ sơ</button>
           </div>
-        </KidCard>
+        </div>
       </section>
 
       <!-- SESSION BAR -->
