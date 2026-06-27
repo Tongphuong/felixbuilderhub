@@ -4,6 +4,18 @@ Read this file first. Every session. No exceptions.
 
 ---
 
+## 🚨 FIRST: cd to the repos root
+
+All project files and `_ops/` docs are under `/home/felixbuilderhub/work/repos/`. Before reading anything else:
+
+```bash
+cd /home/felixbuilderhub/work/repos/
+```
+
+Then `_ops/` resolves to `_ops/AGENTS.md`, and `hub/` resolves to `hub/CLAUDE.md` etc.
+
+---
+
 ## What this project is
 
 **felixbuilderhub** is the monorepo for Felix's English coaching products. It contains:

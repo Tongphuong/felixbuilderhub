@@ -1,7 +1,8 @@
 # AGENTS.md — felixbuilderhub (hub) repo rules
 
-> **Canonical multi-agent rules live in `_ops/AGENTS.md`** (GitHub: Tongphuong/read2lead-ops).
+> **Canonical multi-agent rules live in `_ops/AGENTS.md`** (at /home/felixbuilderhub/work/repos/_ops/).
 > Read that FIRST every session. This file only contains hub-specific zones + invariants.
+> **Note for agents:** All `_ops/` paths are relative to `/home/felixbuilderhub/work/repos/`. cd there first.
 
 ---
 
