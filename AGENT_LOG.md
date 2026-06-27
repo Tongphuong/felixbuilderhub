@@ -16,13 +16,45 @@ Append-only log of significant changes. Read last 10 entries for context.
 - Merged to `main` (commit `64cbac9`), auto-deploy triggered
 
 ### What's left
-- **Wave 1 (frontend):** ReadAloud UI in lesson.astro + rename listen_and_speak to "Nói theo"
 - **Wave 2:** SpeakUp conversation mode on `/read2lead/speaking.astro`
 
 ### Git state
 - Branch: `codex/wave1-read-aloud` (pushed, merged)
 - main: `64cbac9`, clean, pushed
 - Tests: 636/636 pass
+
+---
+
+## 2026-06-27 — Why-Not-You (backup architect) — Session: Wave 1 Frontend (ReadAloud UI)
+
+### What was done
+- **New component:** `src/components/read2lead/v2/ReadAloud.astro` — mic shell, Minny hero, activity body placeholder
+- **lesson.astro (12 edits):**
+  - Import + HTML for ReadAloud component
+  - ACTIVITY_LABELS: added `read_aloud: 'Đọc to'`, renamed `listen_and_speak: 'Nói theo'`
+  - FRONTEND_ACTIVITY_ORDER: added 5th slot
+  - MINNY_COMMANDS: added read_aloud command, updated speak command text
+  - PARENT_GUIDE: added read_aloud guide
+  - W1_QUEST_ICONS: added 📖
+  - `useLargeMinny`: extended to read_aloud
+  - `renderAllActivitiesOnce`: added read_aloud branch → `renderReadAloudActivity`
+  - New `renderReadAloudActivity` function — no listen step, direct record
+  - New `_r2lMergeReadAloudScores` — parallel scoring function
+  - New `persistReadAloudItemResult` + `restoreReadAloudProgress`
+  - Scoring callback: shell-type detection for persist/merge routing
+  - `activityItemsFromCard`: now handles both shells
+  - `_r2lLessonNeedsMic`: extended to read_aloud
+  - `_r2lApplyMicGate`: extended to both shells
+  - Mic check mount: extended to read_aloud
+  - `_r2lSkipMicSpeakingProgress`: extended to read_aloud
+- **ActivityProgress.astro:** 4-step → 5-step nav
+- **5 tests updated** from "legacy/retired" to "active activity"
+- **Tests:** 636/636 pass
+
+### Git state
+- Branch: `hermes/wave1-read-aloud` (pushed, not merged)
+- `154f6d2` — single commit
+- 7 files changed, 262 insertions, 32 deletions
 
 ## 2026-06-27 — Claude — Session: monorepo merge + site redesign
 
