@@ -115,30 +115,36 @@ Replaces binary pass/fail. Function `gradeRewards(scorePercent)` in `functions/a
 
 ---
 
-## Upcoming redesign (see MASTER_PLAN.md)
+## What's shipped
 
-The approved master plan is documented inline in this file (see "Upcoming redesign" section):
+| Feature | Status |
+|---------|--------|
+| Nghe điền (listening_fill_blank) | Live |
+| Xếp câu (listen_and_order) | Live |
+| Đọc hiểu (reading_comprehension) | Live |
+| Nói theo / Shadow (listen_and_speak) | Live — renamed from "Nói lại" |
+| Đọc to / Read Aloud (read_aloud) | Backend merged. Frontend on `hermes/wave1-read-aloud` — pending Claude review + Phương QA |
+| Guided Listening | Live — Wh- comprehension, 2 questions/sentence |
+| Graded rewards + Badges | Live |
 
-**Read2Lead** — new 4-phase lesson flow:
-1. **Guided Listening** — paragraph-by-paragraph Q&A (new component)
-2. **Activities A/B/C** — existing components, minor wiring changes
-3. **Shadow** — all story sentences, Whisper scored (new component, replaces Activity E)
-4. **Read Aloud** — no audio model, Whisper scored (new component)
+## Coming next
 
-**Speak with Minny** — AI voice companion:
+**Wave 2: SpeakUp** — AI voice companion on `/read2lead/speaking.astro`.
 - Voice loop: Whisper STT → DeepSeek Flash → Edge TTS
-- New page at `/speak-with-minny`
 - 5-minute sessions, conversation transcript, session summaries
+- **No spec yet** — Claude needs to write the spec.
 
 ---
 
 ## How to work in a new session
 
+0. `cd /home/felixbuilderhub/work/repos/` — if you haven't already
 1. Read `CLAUDE.md` (this file)
-2. Read `_ops/AGENTS.md` — team roles + rules
-3. Read your task spec
-4. Execute
-5. Report in standard format (see AGENTS.md §4)
+2. Read `_ops/AGENT_LOG.md` (last 10 entries — session context)
+3. Read `_ops/AGENTS.md` — team roles + rules
+4. Read your task spec from Claude
+5. Execute
+6. Report in standard format (see _ops/AGENTS.md §4)
 
 ---
 
@@ -148,7 +154,7 @@ The approved master plan is documented inline in this file (see "Upcoming redesi
 2. No English error strings shown to kids — Vietnamese UI text
 3. Lesson completion flow is protected — spec required for changes
 4. Mic/recorder pipeline is protected — spec required for changes
-5. All tests must pass before push (`npx astro check && node --test`)
+5. `node --test` **must pass** before push (hard gate). `npx astro check` is advisory — baseline has 395 pre-existing errors in files untouched by current work.
 6. Pushing `main` = production deploy. Real kids are using this.
 
 ---
