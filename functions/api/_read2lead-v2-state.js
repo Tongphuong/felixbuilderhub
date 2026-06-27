@@ -25,6 +25,7 @@ import {
   rollChest,
 } from './_read2lead-chests.js';
 import { getPartRarity } from './_read2lead-shop-v2.js';
+import { compactActivityScores } from './_read2lead-profile-quality.js';
 
 export { MONSTER_COLORS, MONSTER_MANIFEST, MONSTER_SLOTS };
 
@@ -1431,6 +1432,7 @@ export function applyPackCompletion(
       ...(scorePercent !== null && scorePercent !== undefined
         ? { score_percent: Number(scorePercent) }
         : {}),
+      activity_scores: compactActivityScores(activityResults),
     },
     ...state.pack_history,
   ].slice(0, 50);

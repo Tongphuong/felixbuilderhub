@@ -33,6 +33,7 @@ export function listCompletedStories(reviewHistory = []) {
       topic: String(entry.topic || '').trim(),
       level: String(entry.level || 'L1').trim() || 'L1',
       completed_at: entry.reviewed_at || entry.completed_at || null,
+      ...(entry.score_percent != null && Number.isFinite(Number(entry.score_percent)) ? { score_percent: Math.max(0, Math.min(100, Math.round(Number(entry.score_percent)))) } : {}),
       emoji: topicEmoji(entry.topic),
     }));
 }

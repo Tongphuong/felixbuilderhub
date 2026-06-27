@@ -62,8 +62,8 @@ test('buildStoryProgressForProfile handles empty state for parents', () => {
 
 test('unified profile renders story list for parents', () => {
   const reviewPage = readFileSync('src/pages/ho-so/index.astro', 'utf-8') + '\n' + readFileSync('src/pages/ho-so/ho-so.ts', 'utf-8') + '\n' + readFileSync('src/pages/ho-so/ho-so-parent-view.ts', 'utf-8');
-  assert.match(reviewPage, /renderStoryList/);
-  assert.match(reviewPage, /Chưa có truyện hoàn thành/);
+  assert.match(reviewPage, /renderStories/);
+  assert.match(reviewPage, /Chưa có truyện nào/);
   assert.doesNotMatch(reviewPage, /Rừng kỳ diệu/);
 });
 

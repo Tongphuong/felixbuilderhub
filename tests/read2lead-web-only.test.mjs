@@ -50,7 +50,7 @@ test('review dashboard does not offer PDF or MP3 action links', () => {
 });
 
 test('unified profile renders story list and noindex robots tag', () => {
-  assert.match(reviewPage, /renderStoryList/);
+  assert.match(reviewPage, /renderStories/);
   assert.match(reviewPage, /robots="noindex, follow"/);
   assert.match(reviewPage, /ho-so-code-input/);
 });

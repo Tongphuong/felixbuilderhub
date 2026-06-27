@@ -1,6 +1,5 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
 
 import {
   MEDALS_FIXTURE,
@@ -15,8 +14,6 @@ import {
   renderSeasonBannerHtml,
 } from '../src/components/read2lead/v3/rank/season-rank-render.mjs';
 
-const seasonBanner = readFileSync('src/components/read2lead/v3/rank/SeasonBanner.astro', 'utf-8');
-const medalCabinet = readFileSync('src/components/read2lead/v3/rank/MedalCabinet.astro', 'utf-8');
 
 test('season banner renders compact line with rank pill from fixture', () => {
   const html = renderSeasonBannerHtml(SEASON_FIXTURE);

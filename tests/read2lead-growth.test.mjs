@@ -57,7 +57,7 @@ test('progress API includes weekly_growth payload', () => {
 });
 
 test('student profile renders weekly growth section', () => {
-  assert.match(reviewPage, /renderGrowthSection/);
-  assert.match(reviewPage, /Tiến bộ theo tuần/);
+  assert.match(reviewPage, /renderGrowth/);
+  assert.match(reviewPage, /Tăng trưởng 6 tuần/);
   assert.match(reviewPage, /weekly_growth/);
 });

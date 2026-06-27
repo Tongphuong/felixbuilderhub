@@ -28,9 +28,9 @@ test('lesson mounts dual waveform and sends learning metric payload', () => {
 });
 
 test('parent dashboard includes learning quality section', () => {
-  assert.match(parentScript, /data-learning-quality/);
-  assert.match(parentScript, /dễ mất tập trung/);
-  assert.match(parentScript, /parent-quality-bars/);
+  assert.match(parentScript, /Chất lượng theo kĩ năng/);
+  assert.match(parentScript, /Felix gợi ý/);
+  assert.match(parentScript, /ho-so-quality/);
 });
 
 test('credits page includes required wavesurfer BSD-3 attribution', () => {

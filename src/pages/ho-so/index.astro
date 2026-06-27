@@ -3,150 +3,43 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import MonsterBuilder from '../../components/read2lead/v3/avatar/MonsterBuilder.astro';
-import MedalCabinet from '../../components/read2lead/v3/rank/MedalCabinet.astro';
 import RankUpModal from '../../components/read2lead/v3/rank/RankUpModal.astro';
-import SeasonBanner from '../../components/read2lead/v3/rank/SeasonBanner.astro';
-import '../../styles/r2l-kid.css';
-import '../../styles/rank-ladder.css';
 import './ho-so.css';
-import '@fontsource-variable/baloo-2/index.css';
 ---
 
-<BaseLayout
-  title="Ho so hoc sinh — Read2Lead | Felix Coaching"
-  description="Xem tien do hoc tap, avatar, xu va cap do cua con."
-  robots="noindex, follow"
->
+<BaseLayout title="Hồ sơ học sinh — Read2Lead | Felix Coaching" description="Xem tiến độ học tập, avatar, xu và cấp độ của con." robots="noindex, follow">
   <Header />
-
-  <main id="main" class="ho-so-page flex-1 px-4 py-8 sm:px-6">
-    <section class="mx-auto max-w-lg">
-
-      <!-- CODE ENTRY -->
-      <section id="ho-so-entry">
-        <h1 class="text-center font-display text-3xl font-extrabold text-cream md:text-4xl">Hồ sơ học sinh</h1>
-        <p class="mt-3 text-center text-cream-muted">Chọn vai trò và nhập mã Felix gửi qua Zalo để xem tiến độ con.</p>
-
-        <div class="mt-8 grid grid-cols-2 gap-4">
-          <button id="ho-so-role-parent-entry" type="button"
-            class="flex flex-col items-center gap-3 rounded-2xl border-2 border-accent/40 bg-accent/10 p-6 text-center transition hover:border-accent hover:bg-accent/20"
-            style="min-height:140px">
-            <span class="text-4xl">👨‍👩‍👧</span>
-            <span class="font-display text-lg font-extrabold text-cream">Phụ huynh</span>
-            <span class="text-xs text-cream-muted">Xem tiến độ, báo cáo học tập</span>
-          </button>
-          <button id="ho-so-role-kid-entry" type="button"
-            class="flex flex-col items-center gap-3 rounded-2xl border-2 border-gold/40 bg-gold/10 p-6 text-center transition hover:border-gold hover:bg-gold/20"
-            style="min-height:140px">
-            <span class="text-4xl">🎒</span>
-            <span class="font-display text-lg font-extrabold text-cream">Học sinh</span>
-            <span class="text-xs text-cream-muted">Xem thành tích, tạo bài mới</span>
-          </button>
+  <main id="main" class="ho-so-page flex-1">
+    <section id="ho-so-entry" class="ho-so-entry star-field">
+      <div class="ho-so-entry__panel">
+        <header class="ho-so-entry__header">
+          <p class="fx-eyebrow ho-so-accent-eyebrow">Hồ sơ học sinh</p>
+          <h1>Xem tiến độ của con</h1>
+          <p>Chọn vai trò và nhập mã Felix gửi qua Zalo.</p>
+        </header>
+        <div class="ho-so-role-grid" role="radiogroup" aria-label="Bạn là ai?">
+          <button id="ho-so-role-parent-entry" class="ho-so-role-tile" type="button" role="radio" aria-checked="false" data-role="parent"><span class="ho-so-role-tile__icon" aria-hidden="true">👨‍👩‍👧</span><strong>Phụ huynh</strong><span>Báo cáo, video, việc tuần</span></button>
+          <button id="ho-so-role-kid-entry" class="ho-so-role-tile" type="button" role="radio" aria-checked="true" data-role="kid" data-selected="true"><span class="ho-so-role-tile__icon" aria-hidden="true">🎒</span><strong>Học sinh</strong><span>Avatar, huy hiệu, tạo bài</span></button>
         </div>
-
-        <div class="mt-6 rounded-xl border border-cream-dim/20 bg-navy-900/70 p-5">
-          <label for="ho-so-code-input" class="text-sm font-semibold text-cream">Mã học sinh</label>
-          <p class="mt-1 text-xs text-cream-dim">VD: R2L-LINH-8F3KQ2</p>
-          <div class="mt-3 flex flex-col gap-3 sm:flex-row">
-            <input
-              id="ho-so-code-input"
-              name="access_code"
-              required
-              maxlength="40"
-              autocomplete="off"
-              autocapitalize="characters"
-              autocorrect="off"
-              spellcheck="false"
-              inputmode="text"
-              placeholder="R2L-..."
-              data-clarity-mask="true"
-              class="min-h-[48px] w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-4 text-cream placeholder:text-cream-dim/50 focus:border-accent focus:outline-none"
-            />
-            <button id="ho-so-load-btn" type="button"
-              class="fx-btn fx-btn--primary shrink-0 px-6">Xem hồ sơ</button>
-          </div>
+        <div>
+          <label class="fx-label" for="ho-so-code-input">Mã học sinh <span class="fx-label__req">*</span></label>
+          <input id="ho-so-code-input" class="fx-field ho-so-code-field" name="access_code" required maxlength="40" autocomplete="off" autocapitalize="characters" autocorrect="off" spellcheck="false" inputmode="text" placeholder="R2L-..." data-clarity-mask="true" aria-describedby="ho-so-code-hint ho-so-entry-error" />
+          <p id="ho-so-code-hint" class="ho-so-field-hint">VD: R2L-LINH-8F3KQ2 · không phân biệt hoa thường</p>
+          <p id="ho-so-entry-error" class="ho-so-inline-error hidden" role="alert"></p>
         </div>
-      </section>
-
-      <!-- SESSION BAR -->
-      <div
-        id="ho-so-session-bar"
-        class="mt-6 hidden items-center justify-between gap-3 rounded-[var(--r2l-radius)] border-2 border-[rgb(30_42_74/0.1)] bg-[var(--r2l-surface)] px-4 py-3 shadow-[var(--r2l-shadow)]"
-      >
-        <div class="flex min-w-0 items-center gap-2">
-          <p class="min-w-0 truncate text-sm font-bold">
-            <span class="r2l-kid-muted">Xin chao</span>
-            <span id="ho-so-student-name" class="ml-1" data-clarity-mask="true"></span>
-          </p>
-        </div>
-        <div class="flex shrink-0 items-center gap-2">
-          <button
-            id="ho-so-role-toggle"
-            type="button"
-            class="r2l-kid-btn r2l-kid-btn--ghost r2l-kid-btn--md hidden text-xs"
-          >
-            Doi goc nhin
-          </button>
-          <button
-            id="ho-so-change-code"
-            type="button"
-            class="r2l-kid-btn r2l-kid-btn--ghost r2l-kid-btn--md shrink-0"
-          >
-            Doi ma
-          </button>
-        </div>
+        <button id="ho-so-load-btn" class="fx-btn fx-btn--primary fx-btn--lg fx-btn--block ho-so-primary-action" type="button">Xem hồ sơ →</button>
+        <aside class="fx-card fx-card--accent ho-so-helper-card"><span aria-hidden="true">💬</span><div><strong>Chưa có mã?</strong><p>Nhắn Zalo Felix — mã sẽ gửi trong 24h, miễn phí.</p><a href="/coaching#contact" class="fx-btn fx-btn--secondary fx-btn--sm">Nhắn Zalo Felix →</a></div></aside>
       </div>
-
-      <!-- ERROR -->
-      <section id="ho-so-error" class="r2l-kid-error mt-4 hidden"></section>
-
-      <!-- LOADING -->
-      <div id="ho-so-loading" class="mt-8 hidden text-center">
-        <div class="ho-so-spinner"></div>
-        <p class="mt-3 text-sm r2l-kid-muted">Dang tai ho so...</p>
-      </div>
-
-      <!-- ROLE PICKER -->
-      <section id="ho-so-role-picker" class="mt-6 hidden">
-        <p class="text-center text-sm font-bold r2l-kid-muted mb-4">Ban la ai?</p>
-        <div class="grid grid-cols-2 gap-4">
-          <button
-            id="ho-so-role-kid"
-            type="button"
-            class="ho-so-role-btn"
-          >
-            <span class="text-3xl">🎒</span>
-            <span class="mt-2 text-base font-bold">Con</span>
-            <span class="text-xs r2l-kid-muted">Hoc sinh</span>
-          </button>
-          <button
-            id="ho-so-role-parent"
-            type="button"
-            class="ho-so-role-btn"
-          >
-            <span class="text-3xl">👨‍👩‍👧</span>
-            <span class="mt-2 text-base font-bold">Bo / Me</span>
-            <span class="text-xs r2l-kid-muted">Phu huynh</span>
-          </button>
-        </div>
-      </section>
-
-      <!-- DASHBOARD (kid or parent view rendered here) -->
-      <SeasonBanner />
-      <section id="ho-so-dashboard" class="mt-6 hidden"></section>
-      <MedalCabinet />
-
-      <!-- KID VIEW: generation UX -->
-      <div id="ho-so-create-sheet" class="hidden" aria-hidden="true"></div>
-      <div id="ho-so-wait-scene" class="mt-6 hidden" aria-live="polite"></div>
-
-      <!-- KID VIEW: monster builder + celebrations -->
-      <MonsterBuilder />
-      <RankUpModal />
-
     </section>
+    <div id="ho-so-loading" class="ho-so-state-layer hidden" aria-live="polite"><div class="ho-so-loading-grid" aria-label="Đang tải hồ sơ"><div class="fx-card ho-so-skeleton"></div><div class="fx-card ho-so-skeleton"></div><div class="fx-card ho-so-skeleton"></div></div></div>
+    <section id="ho-so-error" class="ho-so-global-error hidden" role="alert"><span data-ho-so-error-message></span><button id="ho-so-retry" class="fx-btn fx-btn--secondary fx-btn--sm" type="button">Thử lại ↻</button></section>
+    <section id="ho-so-kid" class="ho-so-kid star-field hidden"><div class="ho-so-pad"><div id="ho-so-kid-session"></div><section id="ho-so-kid-hero" class="fx-card"></section><section id="ho-so-kid-stats" class="ho-so-stats" aria-label="Thành tích nhanh"></section><section class="ho-so-board"><div id="ho-so-kid-rank" class="fx-card fx-card--accent"></div><div id="ho-so-kid-medals" class="fx-card"></div></section><section id="ho-so-kid-season"></section><section id="ho-so-kid-extras" class="ho-so-kid-extras"></section><section id="ho-so-kid-cta"></section></div></section>
+    <section id="ho-so-parent" class="ho-so-parent star-field hidden"><div class="ho-so-pad"><div id="ho-so-parent-session"></div><header id="ho-so-parent-header"></header><section id="ho-so-parent-stats" class="ho-so-p-stats"></section><section id="ho-so-parent-charts" class="ho-so-p-charts"></section><section class="ho-so-p-bottom"><div id="ho-so-parent-stories" class="fx-card"></div><div class="ho-so-p-side"><div id="ho-so-parent-tasks" class="fx-card fx-card--accent"></div><div id="ho-so-parent-portfolio" class="fx-card"></div></div></section></div></section>
+    <div id="ho-so-create-sheet" class="hidden" aria-hidden="true"></div>
+    <div id="ho-so-wait-scene" class="hidden" aria-live="polite"></div>
+    <MonsterBuilder />
+    <RankUpModal />
   </main>
-
   <Footer />
 </BaseLayout>
 

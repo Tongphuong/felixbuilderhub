@@ -92,5 +92,5 @@ test('daysUntilNextStreakFreezeMilestone counts down from partial streak', () =>
 
 test('unified profile parent view mentions streak in tasks', () => {
   assert.match(reviewPage, /streak/i);
-  assert.match(reviewPage, /Ngày liên tiếp/);
+  assert.match(reviewPage, /ngày liên tiếp/i);
 });

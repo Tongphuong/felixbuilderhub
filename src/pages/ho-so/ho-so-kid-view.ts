@@ -9,23 +9,10 @@ import { isV3Enabled } from '../../config/flags';
 import { renderEggHtml } from '../../lib/egg-renderer';
 import { renderMonster, type EquippedDisplayItem } from '../../lib/monster-avatar';
 import { monsterBuilderHtml, mountMonsterBuilder } from '../../lib/monster-builder';
-import { rankBadgeHtml } from '../../lib/rank-ladder-ui';
+import { showRankUpModal } from '../../lib/rank-up-celebration';
 import { kidToast } from '../../scripts/r2l-kid-toast';
 import { renderQuestPath, type QuestNode } from '../../scripts/r2l-quest-path';
-import {
-  detectSeasonRankJump,
-  isSeasonPayload,
-  newestMedalForCongrats,
-  parseMedals,
-  renderCapLockHintHtml,
-  renderMedalCabinetHtml,
-  renderMedalCongratsHtml,
-  renderSeasonBannerHtml,
-  setLastSeenMedalTs,
-  showSeasonRankJumpModal,
-  type MedalPayload,
-  type SeasonPayload,
-} from '../../components/read2lead/v3/rank/season-rank-ui';
+import { isSeasonPayload, type SeasonPayload } from '../../components/read2lead/v3/rank/season-rank-ui';
 import { HUB_TOPICS } from '../ho-so/ho-so-topics';
 
 // ── Constants ──
@@ -260,54 +247,6 @@ function showFirstHatchCeremony(accessCode: string) {
     if (dialog.open && typeof dialog.close === 'function') dialog.close();
     else dialog.removeAttribute('open');
   }, 5000);
-}
-
-// ── Season chrome ──
-
-function clearSeasonChrome() {
-  ['#hub-season-banner', '#hub-medal-cabinet', '#hub-medal-congrats'].forEach((selector) => {
-    const host = qs<HTMLElement>(selector);
-    if (!host) return;
-    host.innerHTML = '';
-    host.classList.add('hidden');
-  });
-}
-
-function renderSeasonChrome(read2LeadState: Record<string, unknown>) {
-  const seasonRaw = read2LeadState.season;
-  if (!isSeasonPayload(seasonRaw)) { clearSeasonChrome(); return; }
-
-  const season = seasonRaw as SeasonPayload;
-  const medals = parseMedals(read2LeadState.medals) as MedalPayload[];
-  const bannerHost = qs<HTMLElement>('#hub-season-banner');
-  const cabinetHost = qs<HTMLElement>('#hub-medal-cabinet');
-  const congratsHost = qs<HTMLElement>('#hub-medal-congrats');
-
-  if (bannerHost) {
-    bannerHost.innerHTML = renderSeasonBannerHtml(season) + renderCapLockHintHtml(season);
-    bannerHost.classList.remove('hidden');
-  }
-  if (cabinetHost) {
-    cabinetHost.innerHTML = renderMedalCabinetHtml(medals);
-    cabinetHost.classList.remove('hidden');
-  }
-
-  const newestMedal = newestMedalForCongrats(medals);
-  if (congratsHost && newestMedal) {
-    congratsHost.innerHTML = renderMedalCongratsHtml(newestMedal);
-    congratsHost.classList.remove('hidden');
-    setLastSeenMedalTs(newestMedal.ts);
-    congratsHost.querySelector('[data-r2l-medal-congrats-dismiss]')?.addEventListener('click', () => {
-      congratsHost.innerHTML = '';
-      congratsHost.classList.add('hidden');
-    });
-  } else if (congratsHost) {
-    congratsHost.innerHTML = '';
-    congratsHost.classList.add('hidden');
-  }
-
-  const rankJump = detectSeasonRankJump(currentAccessCode, season);
-  if (rankJump.jumped) showSeasonRankJumpModal(rankJump.label);
 }
 
 // ── Generation flow ──
@@ -555,135 +494,136 @@ function wireW2Handlers(dash: HTMLElement, code: string) {
   }
 }
 
-// ── Main render ──
+// ── Redesigned dashboard rendering ──
 
-export function renderKidView(
-  container: Element,
-  data: ProgressPayload,
-  accessCode: string,
-) {
+const PROFILE_TIERS = [
+  ['Đồng', 'var(--rank-bronze)', 'bronze'],
+  ['Bạc', 'var(--rank-silver)', 'silver'],
+  ['Vàng', 'var(--rank-gold)', 'gold'],
+  ['Bạch Kim', 'var(--rank-silver)', 'silver'],
+  ['Kim Cương', 'var(--rank-diamond)', 'diamond'],
+  ['Tinh Anh', 'var(--rank-legend)', 'legend'],
+  ['Cao Thủ', 'var(--rank-legend)', 'legend'],
+  ['Thách Đấu', 'var(--rank-legend)', 'legend'],
+] as const;
+
+function defaultMonsterSvg() {
+  return `<svg viewBox="0 0 120 120" aria-hidden="true"><defs><radialGradient id="hs-glow"><stop offset="0%" stop-color="#c89bff" stop-opacity=".45"/><stop offset="100%" stop-color="#c89bff" stop-opacity="0"/></radialGradient><linearGradient id="hs-body" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#b08af0"/><stop offset="100%" stop-color="#7558c7"/></linearGradient></defs><circle cx="60" cy="64" r="46" fill="url(#hs-glow)"/><line x1="48" y1="42" x2="42" y2="22" stroke="#7558c7" stroke-width="3"/><circle cx="42" cy="20" r="3.5" fill="#f2cc7e"/><line x1="72" y1="42" x2="78" y2="22" stroke="#7558c7" stroke-width="3"/><circle cx="78" cy="20" r="3.5" fill="#f2cc7e"/><path d="M28 72Q28 38 60 38T92 72Q92 100 60 100T28 72Z" fill="url(#hs-body)"/><ellipse cx="60" cy="82" rx="20" ry="12" fill="#d6c1f7" opacity=".5"/><circle cx="48" cy="64" r="10" fill="#fff"/><circle cx="72" cy="64" r="10" fill="#fff"/><circle cx="50" cy="66" r="4.5" fill="#10273a"/><circle cx="74" cy="66" r="4.5" fill="#10273a"/><path d="M50 80Q60 88 70 80" stroke="#10273a" stroke-width="2.6" stroke-linecap="round" fill="none"/></svg>`;
+}
+
+function renderSession(host: HTMLElement, name: string, code: string) {
+  host.innerHTML = `<div class="ho-so-session"><div class="ho-so-session__identity"><span class="fx-eyebrow">Học sinh</span><span class="ho-so-session__name" data-clarity-mask="true">${escapeHtml(firstName(name))}</span><span class="ho-so-session__code" data-clarity-mask="true">${escapeHtml(code)}</span></div><div class="ho-so-session__actions"><button class="fx-btn fx-btn--ghost fx-btn--sm" type="button" data-ho-so-switch-role>Xem như phụ huynh</button><button class="fx-btn fx-btn--secondary fx-btn--sm" type="button" data-ho-so-change-code>Đổi mã</button></div></div>`;
+}
+
+function renderRankBoard(host: HTMLElement, state: Record<string, unknown>) {
+  const ladder = (state.rank_ladder || {}) as Record<string, unknown>;
+  const tierIndex = Math.max(0, Math.min(7, Number(ladder.tier_index) || 0));
+  const stars = Number(ladder.stars || 0);
+  const starsToNext = Number(ladder.stars_to_next || 0);
+  const rankPoints = Number((state.season as Record<string, unknown> | undefined)?.rp || 0);
+  const tierHtml = PROFILE_TIERS.map(([name, color], index) => {
+    const current = index === tierIndex;
+    const next = index === tierIndex + 1;
+    const note = current ? 'Bạn đang ở đây' : next && starsToNext ? `còn ${starsToNext} sao` : index < tierIndex ? 'Đã qua' : 'Chưa mở';
+    return `<div class="ho-so-tier" style="--tier-color:${color}" data-current="${current}" data-next="${next}"><span class="ho-so-tier__dot"></span><strong>${escapeHtml(name)}</strong><small>${escapeHtml(note)}</small></div>`;
+  }).join('');
+  const progress = Number(ladder.stars_per_division) > 0 ? Math.round((stars / Number(ladder.stars_per_division)) * 100) : 0;
+  host.innerHTML = `<div class="ho-so-card-head"><p class="fx-eyebrow ho-so-accent-eyebrow">Bậc hiện tại</p><small>${starsToNext ? `Còn ${starsToNext} sao đến ${escapeHtml(ladder.next_label_vi || 'bậc mới')}` : 'Đã ở đỉnh bảng hạng'}</small></div><div class="ho-so-rank-summary"><div class="ho-so-rank-orb">${stars || '★'}</div><div><h3>${escapeHtml(ladder.label_vi || PROFILE_TIERS[tierIndex][0])}</h3><p>${rankPoints} RP mùa này</p></div></div><span class="fx-progress" role="progressbar" aria-label="Tiến độ sao trong bậc" aria-valuenow="${Math.min(100, progress)}" aria-valuemin="0" aria-valuemax="100"><span class="fx-progress__fill fx-progress__fill--gradient" style="width:${Math.min(100, progress)}%"></span></span><div class="ho-so-ladder">${tierHtml}</div>`;
+}
+
+function renderBadges(host: HTMLElement, state: Record<string, unknown>) {
+  const badges = Array.isArray(state.badges) ? state.badges as Array<Record<string, unknown>> : [];
+  const unlocked = badges.filter((badge) => badge.unlocked === true).length;
+  host.innerHTML = `<div class="ho-so-card-head"><h3>Huy hiệu</h3><small>${unlocked} / ${badges.length} đã mở</small></div><div class="ho-so-medals">${badges.map((badge) => `<article class="ho-so-medal" data-locked="${badge.unlocked !== true}" title="${escapeHtml(badge.description_vi || '')}"><span aria-hidden="true">${escapeHtml(badge.emoji || '🏅')}</span><strong>${escapeHtml(badge.label_vi || 'Huy hiệu')}</strong></article>`).join('')}</div>`;
+}
+
+function renderSeason(host: HTMLElement, state: Record<string, unknown>) {
+  const candidate = state.season;
+  if (!isSeasonPayload(candidate)) { host.innerHTML = ''; return; }
+  const season = candidate as SeasonPayload;
+  const end = new Date(`${season.ends_at}T23:59:59`);
+  const days = Math.max(0, Math.ceil((end.getTime() - Date.now()) / 86400000));
+  host.innerHTML = `<div class="fx-card ho-so-season"><div class="ho-so-season__icon" aria-hidden="true">${escapeHtml(season.emoji)}</div><div class="ho-so-season__copy"><p class="fx-eyebrow ho-so-accent-eyebrow">${escapeHtml(season.name_vi)}</p><h3>${escapeHtml(season.ladder.label_vi)} · ${Number(season.rp) || 0} RP</h3><p>Còn ${days} ngày — mỗi bài hoàn thành giúp con tiến gần bậc tiếp theo.</p></div><a class="fx-btn fx-btn--secondary" href="/read2lead/leaderboard">Xem bảng xếp hạng →</a></div>`;
+}
+
+function renderDailyExtras(state: Record<string, unknown>, pack: Record<string, unknown> | null | undefined, data: ProgressPayload, name: string, shopHref: string) {
+  const quests = ((state.daily_quests_view as { quests?: W2QuestRow[] } | undefined)?.quests || []);
+  const questHtml = quests.map((quest) => {
+    const percent = quest.target > 0 ? Math.min(100, Math.round((quest.progress / quest.target) * 100)) : 0;
+    const action = quest.claimed ? '<span>✓ Đã nhận</span>' : quest.complete ? `<button class="fx-btn fx-btn--secondary fx-btn--sm" type="button" data-w2-quest-claim="${escapeHtml(quest.id)}">Nhận thưởng</button>` : `<span>${quest.progress}/${quest.target}</span>`;
+    return `<article class="ho-so-quest"><div class="ho-so-card-head"><strong>${escapeHtml(quest.label_vi)}</strong>${action}</div><div class="ho-so-quest__bar"><span style="width:${percent}%"></span></div><small>🪙 +${quest.reward_coins}${quest.reward_rp ? ` · ⭐ +${quest.reward_rp}` : ''}</small></article>`;
+  }).join('');
+  const chest = state.daily_login_chest as { available?: boolean; coins?: number } | undefined;
+  const chestHtml = chest?.available ? `<button class="fx-btn fx-btn--secondary" type="button" data-w2-daily-chest>🎁 Nhận +${Number(chest.coins) || 0} xu hôm nay</button>` : chest ? '<span class="fx-badge fx-badge--neutral">🎁 Đã nhận quà hôm nay</span>' : '';
+  const status = statusMeta(data.state || '', pack);
+  const v3 = isV3Enabled();
+  const avatarStage = String(state.avatar_stage || 'basic');
+  const builder = v3 && avatarStage === 'custom' ? monsterBuilderHtml(name, shopHref) : '';
+  return `<section class="fx-card ho-so-extra-card"><div class="ho-so-card-head"><h3>Nhiệm vụ hôm nay</h3>${chestHtml}</div>${questHtml ? `<div class="ho-so-quest-grid">${questHtml}</div>` : '<p class="ho-so-empty">Hoàn thành một bài để mở nhiệm vụ hôm nay.</p>'}${pack && !status.completed ? `<p class="ho-so-chart-note">${escapeHtml(pack.story_title || 'Bài đang mở')} · ${escapeHtml(status.label)}</p>` : ''}</section>${builder}<nav class="ho-so-extra-actions" aria-label="Tiện ích"><a class="fx-btn fx-btn--ghost" href="${shopHref}">🛒 Cửa hàng</a><a class="fx-btn fx-btn--ghost" href="/read2lead/games?code=${encodeURIComponent(currentAccessCode)}&v3=1">🎮 Mini game</a><a class="fx-btn fx-btn--ghost" href="/read2lead/leaderboard">🏆 Bảng hạng</a></nav>`;
+}
+
+function maybeShowRankUp(code: string, ladder: Record<string, unknown>, kidName: string) {
+  const key = `r2l-rank-seen:${code}`;
+  const current = Number(ladder.tier_index);
+  if (!Number.isFinite(current)) return;
+  let previous: number | null = null;
+  try { const raw = localStorage.getItem(key); previous = raw == null ? null : Number(raw); localStorage.setItem(key, String(current)); } catch { /* optional */ }
+  if (previous == null || !Number.isFinite(previous) || current <= previous) return;
+  showRankUpModal({ changed: true, from_label: PROFILE_TIERS[Math.min(7, previous)]?.[0] || '', to_label: String(ladder.label_vi || PROFILE_TIERS[current]?.[0] || ''), tier_changed: true }, ladder as Parameters<typeof showRankUpModal>[1], { kidName });
+}
+
+export function renderKidView(_container: Element, data: ProgressPayload, accessCode: string) {
   currentAccessCode = accessCode;
   dashboardData = data;
-
   const progress = (data.progress || {}) as Record<string, unknown>;
-  const read2LeadState = (data.read2lead_state || {}) as Record<string, unknown>;
+  const state = (data.read2lead_state || {}) as Record<string, unknown>;
   const pack = progress.current_pack as Record<string, unknown> | null | undefined;
-  const code = accessCode;
-  const name = String(progress.student_name || 'Bé yêu');
-  const status = statusMeta(data.state || '', pack);
-  const cta = buildHeroCta(pack, data, code);
-  const nearMiss = nearMissLine(read2LeadState);
+  const name = String(progress.student_name || state.student_name || 'Bé yêu');
+  const first = firstName(name);
+  const ladder = (state.rank_ladder || {}) as Record<string, unknown>;
+  const cta = buildHeroCta(pack, data, accessCode);
+  const shopHref = `/read2lead/shop?code=${encodeURIComponent(accessCode)}&v3=1`;
+
+  const sessionHost = qs<HTMLElement>('#ho-so-kid-session');
+  const heroHost = qs<HTMLElement>('#ho-so-kid-hero');
+  const statsHost = qs<HTMLElement>('#ho-so-kid-stats');
+  const rankHost = qs<HTMLElement>('#ho-so-kid-rank');
+  const badgesHost = qs<HTMLElement>('#ho-so-kid-medals');
+  const seasonHost = qs<HTMLElement>('#ho-so-kid-season');
+  const extrasHost = qs<HTMLElement>('#ho-so-kid-extras');
+  const ctaHost = qs<HTMLElement>('#ho-so-kid-cta');
+  if (!sessionHost || !heroHost || !statsHost || !rankHost || !badgesHost || !seasonHost || !extrasHost || !ctaHost) return;
+
+  renderSession(sessionHost, name, accessCode);
+  heroHost.className = 'fx-card ho-so-hero-card';
+  heroHost.innerHTML = `<div class="ho-so-hero"><div class="ho-so-hero__avatar" data-hub-monster>${defaultMonsterSvg()}</div><div><p class="fx-eyebrow">Bạn đồng hành</p><h1>Felix · Quái vật học việc</h1><p>Cùng ${escapeHtml(first)} đọc xong <strong>${Number(progress.completed_packs || state.completed_packs || 0)} truyện</strong> và giữ chuỗi <strong>${Number(state.streak_days || 0)} ngày</strong>.</p><div class="ho-so-pill-row"><span class="fx-rank fx-rank--${PROFILE_TIERS[Math.min(7, Number(ladder.tier_index) || 0)][2]}"><span class="fx-rank__dot"></span>${escapeHtml(ladder.label_vi || state.rank_title || 'Đồng')}</span><span class="fx-badge fx-badge--neutral">${escapeHtml((state.season as Record<string, unknown> | undefined)?.name_vi || 'Mùa hiện tại')}</span></div></div></div>`;
+  statsHost.innerHTML = `<article class="fx-card ho-so-stat"><span class="fx-eyebrow">XP tổng</span><strong>${Number(state.total_xp || 0).toLocaleString('vi-VN')}</strong><small>${Number(state.xp_in_level || 0)} / ${Number(state.xp_to_next_level || 0)} XP cấp hiện tại</small></article><article class="fx-card ho-so-stat ho-so-stat--coins"><span class="fx-eyebrow">Xu</span><strong>${Number(state.coins || 0)}</strong><small>Dùng để trang trí quái vật</small></article><article class="fx-card ho-so-stat"><span class="fx-eyebrow">Chuỗi ngày</span><strong>🔥 ${Number(state.streak_days || 0)}</strong><small>Học thêm một bài để giữ nhịp</small></article>`;
+  renderRankBoard(rankHost, state);
+  renderBadges(badgesHost, state);
+  renderSeason(seasonHost, state);
+  extrasHost.innerHTML = renderDailyExtras(state, pack, data, name, shopHref);
+
+  const ctaHtml = cta.action === 'lesson' && cta.href ? `<a class="fx-btn fx-btn--primary fx-btn--lg fx-btn--block" href="${escapeHtml(cta.href)}">${escapeHtml(cta.label)}</a>` : `<button id="ho-so-hero-cta" class="fx-btn fx-btn--primary fx-btn--lg fx-btn--block" type="button" ${cta.action === 'wait' ? 'disabled' : ''}>${escapeHtml(cta.label)}</button>`;
+  ctaHost.innerHTML = `<div class="ho-so-cta">${ctaHtml}<p>Mất khoảng 30 giây — Felix viết riêng một truyện theo chủ đề con chọn.</p></div>`;
+
+  const monsterSlot = qs<HTMLElement>('[data-hub-monster]', heroHost);
   const v3 = isV3Enabled();
-  const avatarStage = String(read2LeadState.avatar_stage || 'basic');
-  const shopHref = `/read2lead/shop?code=${encodeURIComponent(code)}&v3=1`;
-  const ladder = read2LeadState.rank_ladder as Record<string, unknown> | undefined;
-  const rankLabel = ladder
-    ? String(ladder.label_vi || read2LeadState.rank_title || 'Đồng')
-    : String(read2LeadState.rank_title || 'Đồng');
+  const avatarStage = String(state.avatar_stage || 'basic');
+  if (v3 && avatarStage === 'egg' && monsterSlot) {
+    monsterSlot.innerHTML = renderEggHtml(name, String(state.current_level || 'L1'), Number(state.packs_until_level_up || 0));
+    monsterSlot.querySelector('[data-r2l-egg]')?.addEventListener('click', () => kidToast('Con lên hạng Bạc thì trứng sẽ nở nhé!'));
+  } else if (v3 && (state.avatar as { monster?: unknown } | undefined)?.monster && monsterSlot) renderHubMonster(monsterSlot, state);
 
-  const ctaHtml = cta.action === 'lesson' && cta.href
-    ? `<a href="${escapeHtml(cta.href)}" class="r2l-kid-btn r2l-kid-btn--primary r2l-kid-btn--lg r2l-hub-hero-cta">${escapeHtml(cta.label)}</a>`
-    : `<button type="button" id="ho-so-hero-cta" class="r2l-kid-btn r2l-kid-btn--primary r2l-kid-btn--lg r2l-hub-hero-cta" ${cta.action === 'wait' ? 'disabled' : ''}>${escapeHtml(cta.label)}</button>`;
+  const builderRoot = extrasHost.querySelector('[data-r2l-monster-builder-root]');
+  if (v3 && avatarStage === 'custom' && builderRoot instanceof HTMLElement) mountMonsterBuilder(builderRoot, accessCode, state, (nextState) => { if (monsterSlot && nextState.avatar?.monster) renderHubMonster(monsterSlot, nextState as Record<string, unknown>); });
+  if (v3 && avatarStage === 'basic') showFirstHatchCeremony(accessCode);
+  qs('#ho-so-hero-cta')?.addEventListener('click', () => { if (cta.action === 'create') openCreateSheet(); else if (cta.action === 'wait') showWaitScene(); });
+  wireW2Handlers(extrasHost, accessCode);
+  maybeShowRankUp(accessCode, ladder, first);
 
-  renderSeasonChrome(read2LeadState);
-
-  container.innerHTML = `
-    <section class="r2l-hub-hook">
-      <div class="r2l-hub-hook__top">
-        <div class="r2l-hub-monster-slot r2l-hub-monster-slot--pop" data-hub-monster aria-hidden="true"></div>
-        <p class="r2l-hub-bubble" data-clarity-mask="true">${escapeHtml(greetingLine(name))}</p>
-      </div>
-      <div class="r2l-hub-strip">
-        <span class="r2l-hub-strip-pill">🔥 ${Number(read2LeadState.streak_days || 0)} ngày</span>
-        <span class="r2l-hub-strip-pill">🏅 ${escapeHtml(rankLabel)}</span>
-        <span class="r2l-hub-strip-pill">🪙 ${Number(read2LeadState.coins || 0)}</span>
-        ${nearMiss ? `<p class="r2l-hub-near-miss">${escapeHtml(nearMiss)}</p>` : ''}
-      </div>
-      ${ctaHtml}
-      <div>
-        <p class="text-xs font-extrabold uppercase tracking-wide text-[var(--r2l-ink-soft)]">Nhiệm vụ hôm nay</p>
-        <ol class="r2l-kid-quest-path mt-2" data-hub-mission-path></ol>
-      </div>
-      ${renderW2DailyQuestsHtml(read2LeadState)}
-      ${renderW2DailyChestHtml(read2LeadState)}
-      ${
-        pack && !status.completed
-          ? `<div class="r2l-kid-card mt-1">
-              <p class="text-sm font-bold">${escapeHtml(String(pack.story_title || 'Bài đang mở'))}</p>
-              <p class="mt-1 text-xs r2l-kid-muted">${escapeHtml(status.label)}</p>
-            </div>`
-          : ''
-      }
-      ${v3 && avatarStage === 'custom' ? monsterBuilderHtml(name, shopHref) : ''}
-      ${
-        v3 && avatarStage === 'basic'
-          ? `<section class="r2l-kid-card text-center" data-r2l-basic-avatar-cta>
-              <p class="text-sm font-bold">Quái của con đã nở!</p>
-              <a href="${shopHref}" class="r2l-kid-btn r2l-kid-btn--primary r2l-kid-btn--lg mt-3">🛒 Trang trí ở Cửa hàng</a>
-            </section>`
-          : ''
-      }
-      <div class="r2l-hub-kid-links">
-        <a href="${shopHref}" class="r2l-kid-btn r2l-kid-btn--ghost r2l-kid-btn--md">🛒 Cửa hàng</a>
-        <a href="/read2lead/games?code=${encodeURIComponent(code)}&v3=1" class="r2l-kid-btn r2l-kid-btn--ghost r2l-kid-btn--md">🎮 Mini game</a>
-        <a href="/read2lead/leaderboard" class="r2l-kid-btn r2l-kid-btn--ghost r2l-kid-btn--md">🏆 Bảng hạng</a>
-      </div>
-      ${
-        data.is_test || data.is_shared
-          ? '<p class="r2l-kid-card text-sm r2l-kid-muted">Mã test — con có thể tạo bài mới bất cứ lúc nào.</p>'
-          : ''
-      }
-    </section>`;
-
-  // Quest path
-  const missionEl = qs('[data-hub-mission-path]', container);
-  if (missionEl instanceof HTMLElement) renderQuestPath(missionEl, missionNodes(pack, data));
-
-  // Monster / egg / rank badge
-  const monsterSlot = qs('[data-hub-monster]', container);
-  if (v3 && avatarStage === 'egg' && monsterSlot instanceof HTMLElement) {
-    monsterSlot.removeAttribute('aria-hidden');
-    monsterSlot.innerHTML = renderEggHtml(
-      name,
-      String(read2LeadState.current_level || 'L1'),
-      Number(read2LeadState.packs_until_level_up || 0),
-    );
-    monsterSlot.querySelector('[data-r2l-egg]')?.addEventListener('click', () => {
-      kidToast('Con lên hạng Bạc thì trứng sẽ nở nhé!');
-    });
-  } else if (v3 && read2LeadState.avatar && monsterSlot instanceof HTMLElement) {
-    const avatar = read2LeadState.avatar as { monster?: unknown };
-    if (avatar.monster) renderHubMonster(monsterSlot, read2LeadState);
-    else if (ladder) monsterSlot.innerHTML = rankBadgeHtml(ladder as Parameters<typeof rankBadgeHtml>[0], 'large');
-  } else if (ladder && monsterSlot) {
-    monsterSlot.innerHTML = rankBadgeHtml(ladder as Parameters<typeof rankBadgeHtml>[0], 'large');
-  }
-
-  // Monster builder
-  const builderRoot = container.querySelector('[data-r2l-monster-builder-root]');
-  if (v3 && avatarStage === 'custom' && builderRoot instanceof HTMLElement) {
-    mountMonsterBuilder(builderRoot, code, read2LeadState, (nextState) => {
-      const slot = container.querySelector('[data-hub-monster]');
-      if (slot instanceof HTMLElement && nextState.avatar?.monster)
-        renderHubMonster(slot, nextState as Record<string, unknown>);
-    });
-  }
-  if (v3 && avatarStage === 'basic') showFirstHatchCeremony(code);
-
-  // CTA handler
-  qs('#ho-so-hero-cta')?.addEventListener('click', () => {
-    if (cta.action === 'create') openCreateSheet();
-    else if (cta.action === 'wait') showWaitScene();
-  });
-
-  wireW2Handlers(container as HTMLElement, code);
-
-  // Resume generation polling if in progress
-  const pending = loadPendingGeneration(code);
+  const pending = loadPendingGeneration(accessCode);
   const taskId = (pack?.task_id as string) || (pack?.generation_task_id as string) || pending?.taskId || '';
-  if ((data.state === 'generation_in_progress' || pack?.status === 'generation_in_progress') && taskId) {
-    resumePolling(code, taskId);
-  }
+  if ((data.state === 'generation_in_progress' || pack?.status === 'generation_in_progress') && taskId) resumePolling(accessCode, taskId);
 }
 
 export function cleanupKidView() {
@@ -693,7 +633,6 @@ export function cleanupKidView() {
   generationComplete = false;
   pollAttempts = 0;
   pollInFlight = false;
-  clearSeasonChrome();
   qs('#ho-so-create-sheet')?.classList.add('hidden');
   qs('#ho-so-wait-scene')?.classList.add('hidden');
 }

@@ -39,7 +39,7 @@ test('speaking page has kid-friendly mode cards and video fallback', () => {
 
 test('unified profile renders parent view with portfolio and dashboard', () => {
   assert.match(parentPortal, /renderParentView/);
-  assert.match(parentPortal, /renderFullDashboard/);
+  assert.match(parentPortal, /renderAll/);
 });
 
 test('buildSpeakingModes returns output-focused retell and questions modes', () => {

@@ -53,7 +53,7 @@ test('unified profile page supports code entry and role switching', () => {
   assert.match(parentPortal, /ho-so-entry/);
   assert.match(parentPortal, /ho-so-code-input/);
   assert.match(parentPortal, /read2lead-progress/);
-  assert.match(parentPortal, /ho-so-role-picker/);
+  assert.match(parentPortal, /ho-so-role-grid/);
   assert.match(parentPortal, /renderParentView/);
 });
 
@@ -63,14 +63,14 @@ test('parent portal formats story portfolio levels for parents', () => {
 });
 
 test('unified profile renders growth before stories in parent view', () => {
-  const growthIdx = parentPortal.indexOf('renderGrowthSection');
-  const storyIdx = parentPortal.indexOf('renderStoryList');
+  const growthIdx = parentPortal.indexOf('renderGrowth');
+  const storyIdx = parentPortal.indexOf('renderStories');
   assert.ok(growthIdx >= 0 && storyIdx > growthIdx, 'growth section should precede story list');
 });
 
 test('parent portal uses parent-friendly level labels', () => {
   assert.match(parentPortal, /function formatLevel/);
-  assert.match(parentPortal, /Cấp \$\{match\[1\]\}/);
+  assert.match(parentPortal, /"Cấp " \+ match\[1\]/);
 });
 
 test('legacy review route redirects to parent portal', () => {

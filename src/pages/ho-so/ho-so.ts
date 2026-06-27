@@ -1,17 +1,23 @@
-/**
- * Unified profile controller — code entry, role picker, view routing.
- */
+/** Unified profile controller — code entry, role routing, errors, and history. */
 
 const ROLE_STORAGE_PREFIX = 'r2l_profile_role:';
+const CODE_PATTERN = /^R2L-[A-Z0-9]+(?:-[A-Z0-9]+)*$/;
+
+export type SkillQuality = {
+  window_days?: number;
+  skills?: Array<{ key: string; label_vi: string; emoji: string; score_percent: number | null; sample_count: number }>;
+};
 
 export type ProgressPayload = {
   ok?: boolean;
+  error?: string;
   message?: string;
   state?: string;
   progress?: Record<string, unknown>;
   read2lead_state?: Record<string, unknown>;
   story_progress?: Record<string, unknown>;
   weekly_growth?: Record<string, unknown>;
+  skill_quality?: SkillQuality;
   is_test?: boolean;
   is_shared?: boolean;
 };
@@ -21,9 +27,10 @@ type Role = 'kid' | 'parent';
 let currentAccessCode = '';
 let dashboardData: ProgressPayload | null = null;
 let currentRole: Role | null = null;
+let selectedEntryRole: Role = 'kid';
+let entryRoleTouched = false;
 let kidViewCleanup: (() => void) | null = null;
-
-// ── DOM helpers ──
+let loading = false;
 
 export function qs<T extends Element = Element>(sel: string, root: ParentNode = document) {
   return root.querySelector<T>(sel);
@@ -38,286 +45,192 @@ export function escapeHtml(value: unknown) {
 }
 
 export function firstName(full: string) {
-  const t = String(full || '').trim();
-  return t ? t.split(/\s+/)[0] : 'bé';
+  const text = String(full || '').trim();
+  return text ? text.split(/\s+/)[0] : 'bé';
 }
-
-// ── Role persistence ──
 
 function savedRole(code: string): Role | null {
   try {
-    const v = localStorage.getItem(ROLE_STORAGE_PREFIX + code);
-    return v === 'kid' || v === 'parent' ? v : null;
-  } catch {
-    return null;
-  }
+    const value = localStorage.getItem(ROLE_STORAGE_PREFIX + code);
+    return value === 'kid' || value === 'parent' ? value : null;
+  } catch { return null; }
 }
 
 function saveRole(code: string, role: Role) {
-  try {
-    localStorage.setItem(ROLE_STORAGE_PREFIX + code, role);
-  } catch {
-    /* ignore */
-  }
+  try { localStorage.setItem(ROLE_STORAGE_PREFIX + code, role); } catch { /* optional */ }
 }
 
 function clearRole(code: string) {
-  try {
-    localStorage.removeItem(ROLE_STORAGE_PREFIX + code);
-  } catch {
-    /* ignore */
-  }
+  try { localStorage.removeItem(ROLE_STORAGE_PREFIX + code); } catch { /* optional */ }
 }
 
-// ── View management ──
+function setVisibleState(state: 'entry' | 'loading' | 'kid' | 'parent') {
+  qs('#ho-so-entry')?.classList.toggle('hidden', state !== 'entry');
+  qs('#ho-so-loading')?.classList.toggle('hidden', state !== 'loading');
+  qs('#ho-so-kid')?.classList.toggle('hidden', state !== 'kid');
+  qs('#ho-so-parent')?.classList.toggle('hidden', state !== 'parent');
+}
+
+function setEntryError(message = '') {
+  const error = qs<HTMLElement>('#ho-so-entry-error');
+  if (!error) return;
+  error.textContent = message;
+  error.classList.toggle('hidden', !message);
+}
+
+function setGlobalError(message = '') {
+  const root = qs<HTMLElement>('#ho-so-error');
+  const text = qs<HTMLElement>('[data-ho-so-error-message]', root || document);
+  if (text) text.textContent = message;
+  root?.classList.toggle('hidden', !message);
+}
+
+function updateUrl(code: string, role: Role | null) {
+  const url = new URL(window.location.href);
+  if (code) url.searchParams.set('code', code);
+  else url.searchParams.delete('code');
+  if (role) url.searchParams.set('role', role);
+  else url.searchParams.delete('role');
+  window.history.replaceState({}, '', url);
+}
+
+function setEntryRole(role: Role, focusInput = true) {
+  selectedEntryRole = role;
+  if (focusInput) entryRoleTouched = true;
+  document.querySelectorAll<HTMLElement>('[data-role]').forEach((button) => {
+    const selected = button.dataset.role === role;
+    button.dataset.selected = String(selected);
+    button.setAttribute('aria-checked', String(selected));
+  });
+  if (focusInput) qs<HTMLInputElement>('#ho-so-code-input')?.focus();
+}
 
 function showEntry() {
-  qs('#ho-so-entry')?.classList.remove('hidden');
-  qs('#ho-so-session-bar')?.classList.add('hidden');
-  qs('#ho-so-role-picker')?.classList.add('hidden');
-  qs('#ho-so-dashboard')?.classList.add('hidden');
-  qs('#ho-so-loading')?.classList.add('hidden');
-  qs('#ho-so-error')?.classList.add('hidden');
-  qs('#ho-so-role-toggle')?.classList.add('hidden');
-
-  const input = qs<HTMLInputElement>('#ho-so-code-input');
-  if (input) {
-    input.value = '';
-    input.focus();
-  }
+  if (kidViewCleanup) { kidViewCleanup(); kidViewCleanup = null; }
+  setGlobalError();
+  setEntryError();
+  setVisibleState('entry');
+  qs<HTMLInputElement>('#ho-so-code-input')?.focus();
 }
-
-function showLoading() {
-  qs('#ho-so-loading')?.classList.remove('hidden');
-  qs('#ho-so-role-picker')?.classList.add('hidden');
-  qs('#ho-so-dashboard')?.classList.add('hidden');
-}
-
-function hideLoading() {
-  qs('#ho-so-loading')?.classList.add('hidden');
-}
-
-function showError(msg: string) {
-  const el = qs('#ho-so-error');
-  if (el) {
-    el.textContent = msg;
-    el.classList.remove('hidden');
-  }
-}
-
-function clearError() {
-  const el = qs('#ho-so-error');
-  if (el) {
-    el.textContent = '';
-    el.classList.add('hidden');
-  }
-}
-
-function showSessionBar(name: string) {
-  qs('#ho-so-entry')?.classList.add('hidden');
-  const bar = qs('#ho-so-session-bar');
-  if (bar) bar.classList.remove('hidden');
-
-  const nameEl = qs('#ho-so-student-name');
-  if (nameEl) nameEl.textContent = firstName(name);
-}
-
-function showRolePicker() {
-  qs('#ho-so-role-picker')?.classList.remove('hidden');
-  qs('#ho-so-dashboard')?.classList.add('hidden');
-}
-
-function showDashboard() {
-  qs('#ho-so-role-picker')?.classList.add('hidden');
-  qs('#ho-so-dashboard')?.classList.remove('hidden');
-
-  const toggle = qs('#ho-so-role-toggle');
-  if (toggle) {
-    toggle.classList.remove('hidden');
-    toggle.textContent = currentRole === 'kid' ? 'Bố/Mẹ' : 'Con';
-  }
-}
-
-// ── Role auto-detection (5-lens audit fix #1) ──
-
-function autoDetectRole(data: ProgressPayload): Role | null {
-  const state = data.read2lead_state as Record<string, unknown> | undefined;
-  if (state && state.avatar_stage && state.avatar_stage !== 'egg') {
-    return 'kid';
-  }
-  return null;
-}
-
-// ── View rendering ──
 
 async function renderView(role: Role) {
+  if (!dashboardData || !currentAccessCode) return;
   const previousRole = currentRole;
-  if (kidViewCleanup) {
-    kidViewCleanup();
-    kidViewCleanup = null;
-  }
-
+  if (kidViewCleanup) { kidViewCleanup(); kidViewCleanup = null; }
   currentRole = role;
   saveRole(currentAccessCode, role);
-
-  const main = qs('#main');
-  if (main) {
-    main.classList.toggle('ho-so-parent', role === 'parent');
-    main.classList.toggle('r2l-kid', role === 'kid');
-  }
-
-  const dashboard = qs('#ho-so-dashboard');
-  if (!dashboard || !dashboardData) return;
-
-  showDashboard();
+  updateUrl(currentAccessCode, role);
+  setGlobalError();
+  setVisibleState(role);
 
   if (role === 'kid') {
     const { renderKidView, cleanupKidView } = await import('./ho-so-kid-view');
     kidViewCleanup = cleanupKidView;
-    renderKidView(dashboard, dashboardData, currentAccessCode);
+    renderKidView(qs('#ho-so-kid')!, dashboardData, currentAccessCode);
   } else {
     const { renderParentView, invalidateParentCache } = await import('./ho-so-parent-view');
     if (previousRole === 'kid') invalidateParentCache();
-    renderParentView(dashboard, dashboardData, currentAccessCode);
+    await renderParentView(qs('#ho-so-parent')!, dashboardData, currentAccessCode);
   }
 }
 
-// ── Code validation + load ──
+function profileErrorMessage(error: string | undefined, fallback: string | undefined) {
+  if (error === 'code_not_found') return 'Felix chưa tìm thấy mã này. Nếu mới đăng kí, đợi 24h hoặc nhắn Zalo Felix.';
+  if (error === 'rate_limited') return fallback || 'Bạn thử lại sau ít phút nhé.';
+  return fallback || 'Chưa tải được hồ sơ. Vui lòng thử lại.';
+}
 
 async function loadProfile() {
-  clearError();
+  if (loading) return;
   const input = qs<HTMLInputElement>('#ho-so-code-input');
-  const code = (input?.value || '').trim().toUpperCase();
-  if (!code) {
-    showError('Vui lòng nhập mã học sinh.');
+  const code = String(input?.value || currentAccessCode).trim().toUpperCase();
+  if (!CODE_PATTERN.test(code)) {
+    setVisibleState('entry');
+    setEntryError('Mã không đúng định dạng. Kiểm tra lại trong tin nhắn Zalo của Felix.');
+    input?.focus();
     return;
   }
 
-  const loadBtn = qs<HTMLButtonElement>('#ho-so-load-btn');
-  if (loadBtn) {
-    loadBtn.disabled = true;
-    loadBtn.textContent = 'Đang tải...';
-  }
-
-  showLoading();
+  loading = true;
+  setEntryError();
+  setGlobalError();
+  setVisibleState('loading');
+  const button = qs<HTMLButtonElement>('#ho-so-load-btn');
+  if (button) { button.disabled = true; button.textContent = 'Đang tải...'; }
 
   try {
-    const res = await fetch(`/api/read2lead-progress?code=${encodeURIComponent(code)}`);
-    const data = (await res.json()) as ProgressPayload;
-
-    if (!res.ok || !data.ok) {
-      hideLoading();
-      showError(data.message || 'Không tìm thấy mã học sinh.');
-      qs('#ho-so-entry')?.classList.remove('hidden');
+    const response = await fetch(`/api/read2lead-progress?code=${encodeURIComponent(code)}`);
+    const data = (await response.json()) as ProgressPayload;
+    if (!response.ok || !data.ok) {
+      currentAccessCode = '';
+      dashboardData = null;
+      setVisibleState('entry');
+      setEntryError(profileErrorMessage(data.error, data.message));
       return;
     }
 
     currentAccessCode = code;
     dashboardData = data;
-
-    const studentName = String(
-      (data.progress as Record<string, unknown>)?.student_name || 'Bé yêu',
-    );
-    showSessionBar(studentName);
-    hideLoading();
-
-    const url = new URL(window.location.href);
-    url.searchParams.set('code', code);
-    window.history.replaceState({}, '', url);
-
-    // Determine role: URL param > localStorage > auto-detect > show picker
     const params = new URLSearchParams(window.location.search);
     const urlRole = params.get('role');
-    const role =
-      (urlRole === 'kid' || urlRole === 'parent' ? urlRole : null) ||
-      preSelectedRole ||
-      savedRole(code) ||
-      autoDetectRole(data);
-
-    if (role) {
-      await renderView(role);
-    } else {
-      showRolePicker();
-    }
+    const role = (urlRole === 'kid' || urlRole === 'parent' ? urlRole : null)
+      || (entryRoleTouched ? selectedEntryRole : null)
+      || savedRole(code)
+      || selectedEntryRole;
+    await renderView(role);
   } catch {
-    hideLoading();
-    showError('Mạng không ổn định. Vui lòng thử lại.');
-    qs('#ho-so-entry')?.classList.remove('hidden');
-  } finally {
-    if (loadBtn) {
-      loadBtn.disabled = false;
-      loadBtn.textContent = 'Xem hồ sơ';
+    if (dashboardData && currentRole) {
+      setVisibleState(currentRole);
+      setGlobalError('Mất kết nối. Thử lại ↻');
+    } else {
+      setVisibleState('entry');
+      setEntryError('Mất kết nối. Kiểm tra mạng rồi thử lại.');
     }
+  } finally {
+    loading = false;
+    if (button) { button.disabled = false; button.textContent = 'Xem hồ sơ →'; }
   }
 }
 
-// ── Change code ──
-
 function handleChangeCode() {
-  if (kidViewCleanup) {
-    kidViewCleanup();
-    kidViewCleanup = null;
-  }
   if (currentAccessCode) clearRole(currentAccessCode);
+  if (kidViewCleanup) { kidViewCleanup(); kidViewCleanup = null; }
   currentAccessCode = '';
   dashboardData = null;
   currentRole = null;
-
-  const url = new URL(window.location.href);
-  url.searchParams.delete('code');
-  url.searchParams.delete('role');
-  window.history.replaceState({}, '', url);
-
+  updateUrl('', null);
+  const input = qs<HTMLInputElement>('#ho-so-code-input');
+  if (input) input.value = '';
   showEntry();
 }
 
-// ── Role toggle ──
-
-function handleRoleToggle() {
-  if (!dashboardData || !currentAccessCode) return;
-  const nextRole: Role = currentRole === 'kid' ? 'parent' : 'kid';
-  void renderView(nextRole);
-}
-
-// ── Init ──
-
-let preSelectedRole: Role | null = null;
-
-function selectEntryRole(role: Role) {
-  preSelectedRole = role;
-  const parentBtn = qs<HTMLElement>('#ho-so-role-parent-entry');
-  const kidBtn = qs<HTMLElement>('#ho-so-role-kid-entry');
-  if (parentBtn) parentBtn.style.outline = role === 'parent' ? '3px solid var(--accent)' : '';
-  if (kidBtn) kidBtn.style.outline = role === 'kid' ? '3px solid var(--gold)' : '';
-  qs<HTMLInputElement>('#ho-so-code-input')?.focus();
+function bindDelegatedActions() {
+  document.addEventListener('click', (event) => {
+    const target = event.target as Element | null;
+    if (target?.closest('[data-ho-so-change-code]')) handleChangeCode();
+    const switchButton = target?.closest<HTMLElement>('[data-ho-so-switch-role]');
+    if (switchButton && dashboardData) void renderView(currentRole === 'kid' ? 'parent' : 'kid');
+    if (target?.closest('[data-ho-so-print]')) window.print();
+  });
 }
 
 export function initHoSo() {
   const params = new URLSearchParams(window.location.search);
-  const initialCode = params.get('code');
-  if (initialCode) {
-    const input = qs<HTMLInputElement>('#ho-so-code-input');
-    if (input) input.value = initialCode.toUpperCase();
-    void loadProfile();
-  }
+  const requestedRole = params.get('role');
+  setEntryRole(requestedRole === 'parent' ? 'parent' : 'kid', false);
 
-  qs('#ho-so-role-parent-entry')?.addEventListener('click', () => selectEntryRole('parent'));
-  qs('#ho-so-role-kid-entry')?.addEventListener('click', () => selectEntryRole('kid'));
-
+  qs('#ho-so-role-parent-entry')?.addEventListener('click', () => setEntryRole('parent'));
+  qs('#ho-so-role-kid-entry')?.addEventListener('click', () => setEntryRole('kid'));
   qs('#ho-so-load-btn')?.addEventListener('click', () => void loadProfile());
-  qs('#ho-so-change-code')?.addEventListener('click', handleChangeCode);
-  qs('#ho-so-role-toggle')?.addEventListener('click', handleRoleToggle);
-
-  qs('#ho-so-role-kid')?.addEventListener('click', () => void renderView('kid'));
-  qs('#ho-so-role-parent')?.addEventListener('click', () => void renderView('parent'));
+  qs('#ho-so-retry')?.addEventListener('click', () => void loadProfile());
+  bindDelegatedActions();
 
   const input = qs<HTMLInputElement>('#ho-so-code-input');
-  input?.addEventListener('paste', () => {
-    setTimeout(() => {
-      if (input) input.value = input.value.trim().toUpperCase();
-    }, 0);
-  });
-  input?.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') void loadProfile();
-  });
+  input?.addEventListener('input', () => { input.value = input.value.toUpperCase(); setEntryError(); });
+  input?.addEventListener('keydown', (event) => { if (event.key === 'Enter') void loadProfile(); });
+
+  window.addEventListener('popstate', () => window.location.reload());
+  const initialCode = String(params.get('code') || '').trim().toUpperCase();
+  if (initialCode && input) { input.value = initialCode; void loadProfile(); }
+  else showEntry();
 }

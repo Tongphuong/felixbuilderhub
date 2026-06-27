@@ -39,11 +39,11 @@ function codeRecord() {
 }
 
 test('parent view contains portfolio section and seen/reaction calls', () => {
-  assert.match(parentScript, /Video & nhận xét của thầy/);
+  assert.match(parentScript, /Sổ tay video/);
   assert.match(parentScript, /\/api\/parent\/portfolio-seen/);
   assert.match(parentScript, /\/api\/parent\/portfolio-react/);
   assert.match(parentScript, /playsinline/);
-  assert.match(parentScript, /renderPortfolioSection/);
+  assert.match(parentScript, /renderPortfolio/);
 });
 
 test('admin page has upload form and delete confirmation', () => {
