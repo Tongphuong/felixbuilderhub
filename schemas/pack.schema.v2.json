@@ -61,14 +61,15 @@
     "activities": {
       "type": "array",
       "minItems": 4,
-      "maxItems": 5,
+      "maxItems": 6,
       "items": {
         "oneOf": [
           { "$ref": "#/definitions/listening_fill_blank" },
           { "$ref": "#/definitions/listen_and_order" },
           { "$ref": "#/definitions/reading_comprehension" },
           { "$ref": "#/definitions/written_response" },
-          { "$ref": "#/definitions/listen_and_speak" }
+          { "$ref": "#/definitions/listen_and_speak" },
+          { "$ref": "#/definitions/read_aloud" }
         ]
       }
     },
@@ -210,6 +211,36 @@
       "additionalProperties": false,
       "properties": {
         "type": { "const": "listen_and_speak" },
+        "title_vi": { "type": "string", "minLength": 1 },
+        "identity_vi": { "type": "string", "minLength": 1 },
+        "instructions_vi": { "type": "string", "minLength": 1 },
+        "scoring_mode": { "type": "string", "enum": ["self_rate", "whisper_stt"] },
+        "items": {
+          "type": "array",
+          "minItems": 5,
+          "maxItems": 35,
+          "items": {
+            "type": "object",
+            "required": ["id", "text_en", "text_vi", "tip_vi"],
+            "additionalProperties": false,
+            "properties": {
+              "id": { "type": "string", "minLength": 1 },
+              "audio_url": { "type": "string" },
+              "text_en": { "type": "string", "minLength": 1 },
+              "text_vi": { "type": "string", "minLength": 1 },
+              "tip_vi": { "type": "string", "minLength": 1 }
+            }
+          }
+        }
+      }
+    },
+
+    "read_aloud": {
+      "type": "object",
+      "required": ["type", "title_vi", "identity_vi", "instructions_vi", "items", "scoring_mode"],
+      "additionalProperties": false,
+      "properties": {
+        "type": { "const": "read_aloud" },
         "title_vi": { "type": "string", "minLength": 1 },
         "identity_vi": { "type": "string", "minLength": 1 },
         "instructions_vi": { "type": "string", "minLength": 1 },
