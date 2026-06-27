@@ -33,11 +33,11 @@ Touching any of these requires a Claude-written spec — no exceptions.
 |---|---|---|
 | `src/pages/read2lead/lesson.astro` | Claude spec only | Protected completion logic |
 | `public/scripts/r2l-*.js` | Claude spec only | Protected mic/recorder flow |
-| `src/pages/` (other pages) | Hermes Frontend | Standard frontend work |
-| `src/components/` | Hermes Frontend | UI components |
-| `src/styles/` | Hermes Frontend | CSS |
-| `functions/` | Hermes Frontend | CF Worker API endpoints |
-| `public/assets/` | Hermes Frontend | Static assets |
+| `src/pages/` (other pages) | Codex | Standard frontend work |
+| `src/components/` | Codex | UI components |
+| `src/styles/` | Codex | CSS |
+| `functions/` | Codex | CF Worker API endpoints |
+| `public/assets/` | Codex | Static assets |
 
 ---
 

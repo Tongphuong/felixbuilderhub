@@ -23,8 +23,6 @@ Append-only log of significant changes. Read last 10 entries for context.
 - main: `64cbac9`, clean, pushed
 - Tests: 636/636 pass
 
----
-
 ## 2026-06-27 — Why-Not-You (backup architect) — Session: Wave 1 Frontend (ReadAloud UI)
 
 ### What was done
