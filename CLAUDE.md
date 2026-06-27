@@ -105,7 +105,7 @@ Replaces binary pass/fail. Function `gradeRewards(scorePercent)` in `functions/a
 
 ## Upcoming redesign (see MASTER_PLAN.md)
 
-The approved master plan at `_ops/specs/MASTER_PLAN.md` describes:
+The approved master plan is documented inline in this file (see "Upcoming redesign" section):
 
 **Read2Lead** — new 4-phase lesson flow:
 1. **Guided Listening** — paragraph-by-paragraph Q&A (new component)
@@ -145,7 +145,7 @@ The approved master plan at `_ops/specs/MASTER_PLAN.md` describes:
 
 | Doc | Purpose |
 |---|---|
-| `_ops/specs/MASTER_PLAN.md` | Approved roadmap for 4-phase redesign + Speak with Minny |
+| Documented inline in this file (see "Upcoming redesign" section) | Approved roadmap for 4-phase redesign + Speak with Minny |
 | `_ops/AGENTS.md` | Team roles, rules, permissions |
 | `docs/ENV.md` | Environment variables and setup |
 | `design_handoff/brand-spec.md` | Brand guidelines |
