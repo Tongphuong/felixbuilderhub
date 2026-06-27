@@ -4,6 +4,26 @@ Append-only log of significant changes. Read last 10 entries for context.
 
 ---
 
+## 2026-06-27 — Why-Not-You → Codex — Session: Wave 0 + Wave 1 (ReadAloud backend)
+
+### What was done
+- **Wave 0B:** Synced root schema (`schemas/pack.schema.v2.json`) from backend (guided_listening, activity constraints)
+- **Wave 0C:** Removed dead `MASTER_PLAN.md` references from CLAUDE.md
+- **Wave 1A:** `read_aloud` items now populated from story sentences in `_read2lead-lesson-activities.js`
+- **Wave 1E:** Submission endpoint accepts `read_aloud` as valid activity + speaking type
+- **Wave 1F:** Both schemas (root + backend) updated to allow 6 activities incl. `read_aloud`
+- **Wave 1G:** 2 new tests (636 total, 0 fail)
+- Merged to `main` (commit `64cbac9`), auto-deploy triggered
+
+### What's left
+- **Wave 1 (frontend):** ReadAloud UI in lesson.astro + rename listen_and_speak to "Nói theo"
+- **Wave 2:** SpeakUp conversation mode on `/read2lead/speaking.astro`
+
+### Git state
+- Branch: `codex/wave1-read-aloud` (pushed, merged)
+- main: `64cbac9`, clean, pushed
+- Tests: 636/636 pass
+
 ## 2026-06-27 — Claude — Session: monorepo merge + site redesign
 
 ### What was done
@@ -70,7 +90,6 @@ origin/hermes/guided-listening
 ```
 
 ### Next steps planned
-- **Wave 0:** Delete stale branches + sync root schema + fix CLAUDE.md dead reference
-- **Wave 1:** Add ReadAloud as 5th lesson activity + rename listen_and_speak label to "Nói theo" (Shadow)
+- **Wave 1 (frontend):** Add ReadAloud UI in lesson.astro + rename listen_and_speak to "Nói theo" (Shadow)
 - **Wave 2:** Add conversation mode to `/read2lead/speaking.astro` (SpeakUp with Minny)
 - Full plan at `.claude/plans/sharded-knitting-beaver.md`

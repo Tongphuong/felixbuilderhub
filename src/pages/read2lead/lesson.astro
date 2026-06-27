@@ -7,6 +7,7 @@ import IdentityBanner from '../../components/read2lead/v2/IdentityBanner.astro';
 import ListeningFillBlank from '../../components/read2lead/v2/ListeningFillBlank.astro';
 import ListenAndOrder from '../../components/read2lead/v2/ListenAndOrder.astro';
 import ListenAndSpeak from '../../components/read2lead/v2/ListenAndSpeak.astro';
+import ReadAloud from '../../components/read2lead/v2/ReadAloud.astro';
 import LevelUpModal from '../../components/read2lead/v2/LevelUpModal.astro';
 import RankUpModal from '../../components/read2lead/v3/rank/RankUpModal.astro';
 import ProgressBar from '../../components/read2lead/v2/ProgressBar.astro';
@@ -102,6 +103,7 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
           <ListenAndOrder />
           <ReadingComprehension />
           <ListenAndSpeak />
+          <ReadAloud />
         </section>
 
         <section id="global-cta" class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 flex flex-col gap-2">
@@ -917,20 +919,23 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
     listening_fill_blank: 'Nghe điền',
     listen_and_order: 'Xếp câu',
     reading_comprehension: 'Đọc hiểu',
-    listen_and_speak: 'Nói lại',
+    listen_and_speak: 'Nói theo',
+    read_aloud: 'Đọc to',
   };
   const FRONTEND_ACTIVITY_ORDER = [
     'listening_fill_blank',
     'listen_and_order',
     'reading_comprehension',
     'listen_and_speak',
+    'read_aloud',
   ];
 
   const MINNY_COMMANDS = {
     listening_fill_blank: 'Con nghe rồi chọn cụm từ còn thiếu nhé!',
     listen_and_order: 'Con nghe câu rồi bấm từ theo đúng thứ tự nhé!',
     reading_comprehension: 'Con đọc truyện rồi chọn đáp án đúng!',
-    listen_and_speak: 'Nghe rồi nói lại cho Minny nghe nhé!',
+    listen_and_speak: 'Nghe rồi nói theo cho Minny nghe nhé!',
+    read_aloud: 'Con đọc to từng câu cho Minny nghe nhé!',
   };
 
   const MINNY_CELEBRATE = [
@@ -961,9 +966,14 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
       stuck: 'Bấm "Mở truyện" để đọc lại',
     },
     listen_and_speak: {
-      doing: (n, total) => `Phần ${n}/${total}: Nói lại — nghe rồi đọc theo`,
+      doing: (n, total) => `Phần ${n}/${total}: Nói theo — nghe rồi đọc theo`,
       needs: 'Bấm Kiểm tra micro, rồi Nghe, rồi Con nói',
       stuck: 'Micro: Windows/Mac → Cài đặt → Microphone → bật cho Chrome/Safari; copy hướng dẫn trong khung vàng',
+    },
+    read_aloud: {
+      doing: (n, total) => `Phần ${n}/${total}: Đọc to — con đọc từng câu`,
+      needs: 'Con đọc câu trên màn hình, rồi bấm Con nói',
+      stuck: 'Con đọc chậm, rõ ràng — không cần nghe mẫu',
     },
   };
 
@@ -1067,6 +1077,7 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
     listen_and_order: '🔨',
     reading_comprehension: '📚',
     listen_and_speak: '🎙️',
+    read_aloud: '📖',
   };
 
   let _w1ReadAlong = { running: false, paused: false, sentenceIdx: 0, cardIdx: 0 };
@@ -1242,7 +1253,8 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
   function _r2lApplyMicGate(ready) {
     _r2lMicGateReady = ready;
     const speakShell = qs('[data-activity-shell="listen_and_speak"]');
-    [speakShell].forEach((shell) => {
+    const readAloudShell = qs('[data-activity-shell="read_aloud"]');
+    [speakShell, readAloudShell].filter(Boolean).forEach((shell) => {
       if (!shell || shell.hidden) return;
       shell.querySelectorAll('[data-speak-record]').forEach((btn) => {
         if (ready) {
@@ -1502,7 +1514,7 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
   }
 
   function _r2lLessonNeedsMic(activities) {
-    return (activities || []).some((a) => a?.type === 'listen_and_speak');
+    return (activities || []).some((a) => a?.type === 'listen_and_speak' || a?.type === 'read_aloud');
   }
 
   function _r2lUpdateMicPrepBanner(activities) {
@@ -1778,11 +1790,17 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
           };
       _r2lRenderSpeakFeedback(cardEl, friendlyPayload);
       if (passed) {
-        const heroEl = cardEl.closest('[data-activity-shell="listen_and_speak"]')?.querySelector('[data-minny-hero]');
+        const shellType = cardEl.closest('[data-activity-shell="listen_and_speak"], [data-activity-shell="read_aloud"]')?.dataset?.activityShell || 'listen_and_speak';
+        const heroEl = cardEl.closest(`[data-activity-shell="${shellType}"]`)?.querySelector('[data-minny-hero]');
         _r2lSetMinnyMood(_r2lMinnyMoodForScore(payload.score_percent), heroEl);
-        persistSpeakItemResult(itemKey, _r2lRecorderState.perItem.get(itemKey));
+        if (shellType === 'read_aloud') {
+          persistReadAloudItemResult(itemKey, _r2lRecorderState.perItem.get(itemKey));
+        } else {
+          persistSpeakItemResult(itemKey, _r2lRecorderState.perItem.get(itemKey));
+        }
       } else if (payload?.ok) {
-        const heroEl = cardEl.closest('[data-activity-shell="listen_and_speak"]')?.querySelector('[data-minny-hero]');
+        const shellType = cardEl.closest('[data-activity-shell="listen_and_speak"], [data-activity-shell="read_aloud"]')?.dataset?.activityShell || 'listen_and_speak';
+        const heroEl = cardEl.closest(`[data-activity-shell="${shellType}"]`)?.querySelector('[data-minny-hero]');
         _r2lSetMinnyMood('encourage', heroEl);
         showToast('Minny cần nghe được ít nhất 50%. Con thu lại nhé!');
         const nativeUrl = cardEl?.dataset?.nativeAudioUrl || '';
@@ -1790,7 +1808,13 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
           void window.R2LReplayControl?.playUrl?.(nativeUrl, 0.75);
         }
       }
-      _r2lMergeSpeakActivityScores(activityItemsFromCard(cardEl));
+      const act = activityItemsFromCard(cardEl);
+      const isReadAloud = !!cardEl.closest('[data-activity-shell="read_aloud"]');
+      if (isReadAloud) {
+        _r2lMergeReadAloudScores(act);
+      } else {
+        _r2lMergeSpeakActivityScores(act);
+      }
       _r2lMaybeOfferSpeakSkip();
     } catch (error) {
       if (!_r2lSpeakUploadActive(itemKey, uploadSeq)) return;
@@ -1876,7 +1900,7 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
   function _r2lSkipMicSpeakingProgress() {
     const activities = state.lesson?.activities || [];
     const current = activities[state.activityIndex];
-    if (current?.type === 'listen_and_speak') {
+    if (current?.type === 'listen_and_speak' || current?.type === 'read_aloud') {
       _r2lCompleteSpeakActivityOnMicSkip(current);
       showToast('Mình sang phần tiếp nhé. Phần nói này không nhận thưởng.');
       return;
@@ -1938,9 +1962,56 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
     }
   }
 
+  function _r2lMergeReadAloudScores(activity) {
+    if (!activity) return;
+    const itemKeys = _r2lSpeakItemKeysForActivity(activity);
+    let exactTotal = 0;
+    let closeTotal = 0;
+    let wordTotal = 0;
+    let scoredItems = 0;
+    let passedItems = 0;
+    itemKeys.forEach((itemKey) => {
+      const entry = _r2lRecorderState.perItem.get(itemKey);
+      if (entry?.checkResult?.ok) {
+        scoredItems += 1;
+        exactTotal += Number(entry.checkResult.exact_count ?? entry.checkResult.correct_count ?? 0);
+        closeTotal += Number(entry.checkResult.close_count ?? (entry.checkResult.words_close?.length || 0));
+        wordTotal += Number(entry.checkResult.total_count || 0);
+        if (Number(entry.checkResult.score_percent || 0) >= _R2L_SPEAKING_PASS_PERCENT) {
+          passedItems += 1;
+        }
+      }
+    });
+    if (!scoredItems) return;
+    const weighted = scoredItems > 0 && wordTotal > 0
+      ? Math.round(((exactTotal + closeTotal * 0.5) / wordTotal) * 100)
+      : 0;
+    state.activityResults.read_aloud = {
+      type: 'read_aloud',
+      attempted: true,
+      correct_count: exactTotal,
+      total_count: wordTotal,
+      wrong_count: Math.max(0, wordTotal - exactTotal),
+      score_percent: weighted,
+      whisper_scored_items: scoredItems,
+      passed_items: passedItems,
+    };
+    if (passedItems >= itemKeys.length && !state.completedTypes.has('read_aloud')) {
+      completeActivity('read_aloud', {
+        correct_count: exactTotal,
+        total_count: wordTotal,
+        wrong_count: Math.max(0, wordTotal - exactTotal),
+        score_percent: weighted,
+        whisper_scored_items: scoredItems,
+        passed_items: passedItems,
+      });
+    }
+  }
+
   function activityItemsFromCard(cardEl) {
-    const shell = cardEl?.closest('[data-activity-shell="listen_and_speak"]');
-    const index = (state.lesson?.activities || []).findIndex((a) => a.type === 'listen_and_speak');
+    const shell = cardEl?.closest('[data-activity-shell="listen_and_speak"], [data-activity-shell="read_aloud"]');
+    const shellType = shell?.dataset?.activityShell;
+    const index = (state.lesson?.activities || []).findIndex((a) => a.type === shellType);
     return index >= 0 ? state.lesson.activities[index] : null;
   }
 
@@ -2797,6 +2868,56 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
     _r2lMergeSpeakActivityScores(activity);
   }
 
+  function persistReadAloudItemResult(itemKey, entry) {
+    const progress = state.activityProgress.read_aloud || { heard: [], items: {} };
+    const items = { ...(progress.items || {}) };
+    if (entry?.checkResult?.ok) {
+      items[itemKey] = {
+        checkStatus: entry.checkStatus,
+        checkResult: entry.checkResult,
+        expectedText: entry.expectedText || '',
+      };
+    } else {
+      delete items[itemKey];
+    }
+    patchActivityProgress('read_aloud', {
+      heard: progress.heard || [],
+      items,
+    });
+  }
+
+  function restoreReadAloudProgress(root, activity) {
+    const saved = state.activityProgress.read_aloud;
+    if (!saved) return;
+    (saved.heard || []).forEach((itemIndex) => {
+      const recordBtn = root.querySelector(`[data-speak-record="${itemIndex}"]`);
+      if (recordBtn) {
+        recordBtn.dataset.heard = 'true';
+        recordBtn.disabled = !_r2lMicIsReady();
+      }
+    });
+    Object.entries(saved.items || {}).forEach(([itemKey, itemData]) => {
+      const itemIndex = (activity.items || []).findIndex((item, index) => (item.id || `ra_${index}`) === itemKey);
+      if (itemIndex < 0) return;
+      const cardEl = root.querySelector(`[data-speak-card="${itemIndex}"]`);
+      if (!cardEl) return;
+      _r2lRecorderState.perItem.set(itemKey, {
+        mediaRecorder: null,
+        chunks: [],
+        blob: null,
+        blobUrl: null,
+        status: 'recorded',
+        expectedText: itemData.expectedText || activity.items[itemIndex]?.text_en || '',
+        checkStatus: itemData.checkStatus || 'idle',
+        checkResult: itemData.checkResult || null,
+      });
+      _r2lSyncMinnyRecordButton(itemKey, cardEl);
+      if (itemData.checkResult) {
+        _r2lRenderSpeakFeedback(cardEl, itemData.checkResult);
+      }
+    });
+    _r2lMergeReadAloudScores(activity);
+  }
 
   window.addEventListener('pagehide', saveLessonSession);
 
@@ -3833,6 +3954,8 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
         renderOrderActivity(body, activity);
       } else if (activity.type === 'listen_and_speak') {
         renderSpeakActivity(body, activity);
+      } else if (activity.type === 'read_aloud') {
+        renderReadAloudActivity(body, activity);
       }
     });
   }
@@ -3962,7 +4085,7 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
     setMinnyStrip('idle', MINNY_COMMANDS[activity.type] || '');
     _itemStreak = 0;
 
-    const useLargeMinny = activity.type === 'listen_and_speak';
+    const useLargeMinny = activity.type === 'listen_and_speak' || activity.type === 'read_aloud';
     const minnyStrip = qs('#minny-strip');
     if (minnyStrip) minnyStrip.hidden = useLargeMinny;
     const heroWrap = shell.querySelector('.r2l-minny-hero-wrap');
@@ -3973,7 +4096,7 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
     updateGlobalCta();
     scheduleSaveLessonSession();
 
-    if (activity.type === 'listen_and_speak') {
+    if (activity.type === 'listen_and_speak' || activity.type === 'read_aloud') {
       _r2lMountMicCheck(shell);
       if (window.R2LMicCheck?.sessionPassed?.()) {
         _r2lApplyMicGate(true);
@@ -4850,6 +4973,55 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
         }
       });
     });
+  }
+
+  function renderReadAloudActivity(root, activity) {
+    const heroScope = root.closest('[data-activity-shell="read_aloud"]');
+    _r2lInitMinnyHero(heroScope);
+
+    root.innerHTML = `
+      <p class="mt-2 text-sm font-semibold text-gold">Con đọc to từng câu — không cần nghe mẫu.</p>
+      <div class="mt-5 space-y-5">
+        ${(activity.items || [])
+          .map(
+            (item, idx) => `
+              <article class="r2l-minny-sentence-card" data-speak-card="${idx}" data-item-key="${escapeHtml(item.id || 'ra_' + idx)}" data-native-audio-url="${escapeHtml(item.audio_url || '')}">
+                <p class="r2l-minny-sentence-en">${escapeHtml(item.text_en)}</p>
+                ${item.text_vi ? '<p class="r2l-minny-sentence-vi">' + escapeHtml(item.text_vi) + '</p>' : ''}
+                <div class="r2l-minny-speak-actions">
+                  <button type="button" class="minny-btn minny-btn--record" data-speak-record="${idx}">🎤 Con nói</button>
+                </div>
+                <div class="mt-3 hidden rounded-md border border-cream/10 bg-navy-950/35 p-3 text-sm text-cream/80" data-speak-feedback></div>
+              </article>
+            `,
+          )
+          .join('')}
+      </div>
+    `;
+
+    // Wire record buttons — no listen step needed for read_aloud
+    root.querySelectorAll('[data-speak-record]').forEach((btn) => {
+      const idx = Number(btn.dataset.speakRecord);
+      const item = activity.items?.[idx] || {};
+      const itemKey = item.id || 'ra_' + idx;
+      const cardEl = root.querySelector('[data-speak-card="' + idx + '"]');
+
+      // Mark as "heard" immediately (no listen step)
+      btn.dataset.heard = 'true';
+      _r2lInitSpeakRecorder(itemKey, cardEl, item?.text_en || '');
+
+      btn.addEventListener('click', () => {
+        const entry = _r2lRecorderState.perItem.get(itemKey);
+        if (entry?.status === 'recording') {
+          _r2lStopRecording(itemKey, cardEl);
+        } else if (entry?.checkStatus !== 'uploading') {
+          _r2lSetMinnyMood('listen', heroScope);
+          _r2lStartRecording(itemKey, cardEl);
+        }
+      });
+    });
+
+    restoreReadAloudProgress(root, activity);
   }
 
   function completeActivity(type, details) {

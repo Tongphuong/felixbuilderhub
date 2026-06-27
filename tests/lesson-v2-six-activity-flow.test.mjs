@@ -8,41 +8,43 @@ const listenAndSpeak = readFileSync('src/components/read2lead/v2/ListenAndSpeak.
 const stateModule = readFileSync('functions/api/_read2lead-v2-state.js', 'utf-8');
 const submitModule = readFileSync('functions/api/submit-read2lead-lesson.js', 'utf-8');
 
-test('lesson page filters legacy packs to the four active frontend activities', () => {
+test('lesson page filters legacy packs to the five active frontend activities', () => {
   assert.match(lessonPage, /function ensureLessonActivities/);
   assert.match(lessonPage, /const FRONTEND_ACTIVITY_ORDER/);
   assert.match(lessonPage, /FRONTEND_ACTIVITY_ORDER\.includes/);
-  assert.doesNotMatch(lessonPage, /read_aloud/);
+  assert.match(lessonPage, /read_aloud/);
   assert.doesNotMatch(lessonPage, /written_response/);
 });
 
-test('lesson page supports the four-activity V2 flow', () => {
+test('lesson page supports the five-activity V2 flow', () => {
   for (const type of [
     'listening_fill_blank',
     'listen_and_order',
     'reading_comprehension',
     'listen_and_speak',
+    'read_aloud',
   ]) {
     assert.match(lessonPage, new RegExp(type));
   }
   assert.match(lessonPage, /function renderFillBlankActivity/);
+  assert.match(lessonPage, /function renderReadAloudActivity/);
   assert.doesNotMatch(lessonPage, /function renderWrittenActivity/);
-  assert.doesNotMatch(lessonPage, /function renderReadAloudActivity/);
   assert.doesNotMatch(lessonPage, /speaking-check-section/);
   assert.doesNotMatch(lessonPage, /Câu hỏi mở bonus/);
 });
 
-test('activity progress shows exactly four steps in the active order', () => {
+test('activity progress shows exactly five steps in the active order', () => {
   const labels = [
     '1. Nghe điền',
     '2. Xếp câu',
     '3. Đọc hiểu',
-    '4. Nói lại',
+    '4. Nói theo',
+    '5. Đọc to',
   ];
   for (const label of labels) {
     assert.match(activityProgress, new RegExp(label));
   }
-  assert.equal((activityProgress.match(/data-step-button=/g) || []).length, 4);
+  assert.equal((activityProgress.match(/data-step-button=/g) || []).length, 5);
 });
 
 test('listen_and_speak uses Minny hero and nghe-before-speak gating', () => {
@@ -59,9 +61,9 @@ test('listen_and_speak uses Minny hero and nghe-before-speak gating', () => {
 });
 
 test('retired activity shells and dispatch branches are absent', () => {
-  assert.doesNotMatch(lessonPage, /data-activity-shell="read_aloud"/);
+  assert.match(lessonPage, /data-activity-shell="read_aloud"/);
   assert.doesNotMatch(lessonPage, /data-activity-shell="written_response"/);
-  assert.doesNotMatch(lessonPage, /renderReadAloudActivity/);
+  assert.match(lessonPage, /renderReadAloudActivity/);
   assert.doesNotMatch(lessonPage, /renderWrittenActivity/);
 });
 
