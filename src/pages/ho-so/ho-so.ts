@@ -122,6 +122,7 @@ async function renderView(role: Role) {
   updateUrl(currentAccessCode, role);
   setGlobalError();
   setVisibleState(role);
+  window.scrollTo({ top: 0, behavior: 'instant' });
 
   if (role === 'kid') {
     const { renderKidView, cleanupKidView } = await import('./ho-so-kid-view');

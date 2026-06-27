@@ -152,6 +152,7 @@
   .ho-so-p-portfolio { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 @media (prefers-reduced-motion: reduce) { .ho-so-skeleton, .ho-so-spinner { animation: none !important; } .ho-so-page * { scroll-behavior: auto !important; } }
+.ho-so-entry.hidden, .ho-so-kid.hidden, .ho-so-parent.hidden, .ho-so-state-layer.hidden, .ho-so-global-error.hidden { display: none; }
 @media print {
   body { background: #fff !important; }
   body > header, body > footer, #ho-so-entry, #ho-so-kid, #ho-so-loading, #ho-so-error, .ho-so-session, #ho-so-parent-header .fx-btn, .ho-so-reaction { display: none !important; }
