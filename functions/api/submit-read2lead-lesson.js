@@ -135,8 +135,9 @@ const ACTIVE_LESSON_ACTIVITY_TYPES = new Set([
   'listen_and_order',
   'reading_comprehension',
   'listen_and_speak',
+  'read_aloud',
 ]);
-const SPEAKING_ACTIVITY_TYPES = new Set(['listen_and_speak']);
+const SPEAKING_ACTIVITY_TYPES = new Set(['listen_and_speak', 'read_aloud']);
 
 function isRecentDuplicateSubmit(currentPack) {
   const last = currentPack?.web_lesson_summary;
@@ -314,7 +315,7 @@ async function submitV2Lesson({
     // === V4 W2 hooks ===
     const w2DateKey = vietnamDateKey(submittedAt);
     const hasSpeakActivity = activityResults.some(
-      (result) => result?.type === 'listen_and_speak',
+      (result) => result?.type === 'listen_and_speak' || result?.type === 'read_aloud',
     );
     nextProgressState = applyQuestProgress(
       nextProgressState,

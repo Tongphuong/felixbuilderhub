@@ -22,6 +22,7 @@ function activities() {
     { type: 'reading_comprehension', questions: [{ correct_index: 0 }] },
     { type: 'written_response', questions: [{ question_en: 'What happened?' }] },
     { type: 'listen_and_speak', items: [{ text_en: 'Once upon a time.' }] },
+    { type: 'read_aloud', items: [{ text_en: 'Once upon a time.' }] },
     { type: 'retell_summary', retell_template: { lines: [{ text: 'Once ___.' }] } },
   ];
 }
@@ -34,6 +35,15 @@ function activityResults({ speakScore = 50, skipSpeak = false } = {}) {
     { type: 'written_response', attempted: true, correct_count: 1, total_count: 1 },
     {
       type: 'listen_and_speak',
+      attempted: true,
+      correct_count: skipSpeak ? 0 : 1,
+      total_count: 1,
+      wrong_count: skipSpeak ? 1 : 0,
+      score_percent: skipSpeak ? 0 : speakScore,
+      ...(skipSpeak ? { skipped_due_to_mic: true } : {}),
+    },
+    {
+      type: 'read_aloud',
       attempted: true,
       correct_count: skipSpeak ? 0 : 1,
       total_count: 1,

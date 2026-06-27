@@ -7,6 +7,7 @@ export const READ_ALOUD_ACTIVITY = {
   title_vi: 'Đọc to',
   identity_vi: 'Con đọc to từng câu cho Minny nghe nhé!',
   instructions_vi: 'Con đọc từng câu trong truyện, Minny sẽ chấm điểm.',
+  scoring_mode: 'whisper_stt',
 };
 
 /**
@@ -33,6 +34,15 @@ export function ensureSixActivities(activities, lessonContext = null, env = unde
   if (list.some((activity) => activity.type === 'read_aloud')) return list;
 
   const readAloud = { ...READ_ALOUD_ACTIVITY };
+  if (lessonContext?.story?.sentences?.length) {
+    readAloud.items = lessonContext.story.sentences.map((sentence, i) => ({
+      id: `ra_${i}`,
+      text_en: sentence.text_en || '',
+      text_vi: sentence.text_vi || '',
+      tip_vi: 'Con đọc to, rõ ràng nhé!',
+      audio_url: sentence.audio_url || '',
+    }));
+  }
   const speakIndex = list.findIndex((activity) => activity.type === 'listen_and_speak');
   if (speakIndex >= 0) {
     list.splice(speakIndex + 1, 0, readAloud);

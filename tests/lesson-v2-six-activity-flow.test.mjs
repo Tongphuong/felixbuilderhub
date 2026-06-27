@@ -164,7 +164,10 @@ test('scoring formula uses soft penalty (wrong * 0.5)', () => {
 test('pass threshold is 50% and XP penalty is 0', () => {
   assert.match(stateModule, /PASS_THRESHOLD_PERCENT = 50/);
   assert.match(stateModule, /XP_PENALTY_BELOW_THRESHOLD = 0/);
-  assert.match(submitModule, /const SPEAKING_ACTIVITY_TYPES = new Set\(\['listen_and_speak'\]\)/);
+  assert.match(
+    submitModule,
+    /const SPEAKING_ACTIVITY_TYPES = new Set\(\['listen_and_speak', 'read_aloud'\]\)/,
+  );
 });
 
 test('student name is wired to IdentityBanner via id', () => {
