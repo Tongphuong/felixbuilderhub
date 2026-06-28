@@ -144,7 +144,7 @@ export function buildV2LessonPayload({ accessCode, codeData, pack, v2Pack, env }
     schema_version: 2,
     pack_id: pack.pack_id,
     access_code_masked: maskAccessCode(accessCode),
-    student_name: v2Pack.student_name || profile.student_name || progress.student_name || '',
+    student_name: profile.student_name || progress.student_name || v2Pack.student_name || '',
     level: v2Pack.level || pack.level || progress.current_level || '',
     level_label: v2Pack.level_label || pack.level_label || '',
     topic: v2Pack.topic || pack.topic || '',

@@ -173,12 +173,13 @@ test('valid book payload passes all book fields and keeps exactly A/B/D', () => 
   const context = bookContext();
   const lesson = buildV2LessonPayload({
     accessCode: ACCESS_CODE,
-    codeData: {},
+    codeData: { student_profile: { student_name: 'Minh' } },
     pack: { pack_id: PACK_ID, status: 'ready' },
     v2Pack: context,
     env: { R2L_AUDIO_HOST: 'https://audio.felixbuilderhub.com' },
   });
   assert.equal(isValidBookPack(context), true);
+  assert.equal(lesson.student_name, 'Minh');
   assert.equal(lesson.book_slug, 'book_123');
   assert.equal(lesson.book_images.length, 3);
   assert.equal(lesson.book_page_audio.length, 3);
