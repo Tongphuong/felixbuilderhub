@@ -20,7 +20,7 @@ then reference in code.
 ## Variables (non-secret)
 | Variable | Purpose | Default |
 |---|---|---|
-| READ2LEAD_BOOK_LEVELS | Comma-separated StoryWeaver allowlist for generate-read2lead-pack (for example L1 or L1,L2). Only L1-L4 are accepted. Missing/empty values keep every level on legacy generation; L5 always uses legacy generation. Activate preview levels before production. | Empty / book mode off |
+| READ2LEAD_BOOK_LEVELS | Comma-separated StoryWeaver allowlist for generate-read2lead-pack (for example L1 or L1,L2). Only L1-L4 are accepted. When empty, the private book publisher may supply the same allowlist through `config:book_levels` in READ2LEAD_CODES. L5 always uses legacy generation. | Empty / book mode off |
 ## Per-endpoint binding matrix
 | Endpoint | KV | Backend URL | Backend Secret | Admin PW | Telegram |
 |---|---|---|---|---|---|
@@ -36,6 +36,7 @@ then reference in code.
 | `api/admin/codes.js` | ✓ | — | — | — | — |
 | `api/admin/codes/[code].js` | ✓ | — | — | — | — |
 | `api/admin/codes/[code]/set-level.js` | ✓ | — | — | — | — |
+| `api/publish-read2lead-book.js` | ✓ | — | ✓ | — | — |
 | `api/coaching-booking.js` | — | — | — | — | ✓ |
 | `api/msmw-lead.js` | — | — | — | — | ✓ |
 | `api/sharing-subscribe.js` | — | — | — | — | ✓ |

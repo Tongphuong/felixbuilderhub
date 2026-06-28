@@ -90,7 +90,7 @@ export async function onRequestPost(context) {
   const interests = (data.interests || '').toString().trim().slice(0, 120);
   const topic = (data.topic || '').toString().trim().slice(0, 60);
   const levelForPack = progress.current_level || 'L1';
-  const useBookPool = parseBookLevels(env.READ2LEAD_BOOK_LEVELS).has(levelForPack);
+  const useBookPool = (await loadBookLevels(env)).has(levelForPack);
   const backendUrl = env.READ2LEAD_BACKEND_URL;
   const backendSecret = env.READ2LEAD_BACKEND_SECRET;
   if (!useBookPool && !backendUrl) {
@@ -294,6 +294,13 @@ export function parseBookLevels(raw) {
       .map((value) => value.trim().toUpperCase())
       .filter((value) => allowed.has(value)),
   );
+}
+
+export async function loadBookLevels(env) {
+  const configured = parseBookLevels(env.READ2LEAD_BOOK_LEVELS);
+  if (configured.size || !env.READ2LEAD_CODES) return configured;
+  const stored = await env.READ2LEAD_CODES.get('config:book_levels', { type: 'json' });
+  return parseBookLevels(Array.isArray(stored) ? stored.join(',') : stored);
 }
 
 export function selectUnreadBook(
