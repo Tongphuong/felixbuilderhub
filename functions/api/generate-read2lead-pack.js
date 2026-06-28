@@ -87,18 +87,18 @@ export async function onRequestPost(context) {
     );
   }
 
-  const backendUrl = env.READ2LEAD_BACKEND_URL;
-  if (!backendUrl) {
-    return json({ ok: false, error: 'backend_not_configured', message: 'Backend chưa cấu hình.' }, 500);
-  }
-  const backendSecret = env.READ2LEAD_BACKEND_SECRET;
-  if (!backendSecret) {
-    return json({ ok: false, error: 'backend_auth_not_configured', message: 'Backend chưa cấu hình bảo mật.' }, 500);
-  }
-
   const interests = (data.interests || '').toString().trim().slice(0, 120);
   const topic = (data.topic || '').toString().trim().slice(0, 60);
   const levelForPack = progress.current_level || 'L1';
+  const useBookPool = parseBookLevels(env.READ2LEAD_BOOK_LEVELS).has(levelForPack);
+  const backendUrl = env.READ2LEAD_BACKEND_URL;
+  const backendSecret = env.READ2LEAD_BACKEND_SECRET;
+  if (!useBookPool && !backendUrl) {
+    return json({ ok: false, error: 'backend_not_configured', message: 'Backend chưa cấu hình.' }, 500);
+  }
+  if (!useBookPool && !backendSecret) {
+    return json({ ok: false, error: 'backend_auth_not_configured', message: 'Backend chưa cấu hình bảo mật.' }, 500);
+  }
   const lockCreatedAt = new Date().toISOString();
   const pendingPackId = crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random().toString(16).slice(2)}`;
   const pendingPack = {
@@ -130,6 +130,32 @@ export async function onRequestPost(context) {
   );
 
   try {
+    if (useBookPool) {
+      try {
+        return await assignBookPack({
+          env,
+          accessCode,
+          codeData,
+          progress,
+          lockedProgress,
+          pendingPack,
+          levelForPack,
+          previousPack: progress.current_pack,
+        });
+      } catch (err) {
+        console.error('Book assignment failed:', err?.name || 'BookAssignmentError');
+        await clearGenerationLock(env.READ2LEAD_CODES, accessCode, pendingPackId);
+        return json(
+          {
+            ok: false,
+            error: err?.code || 'book_unavailable',
+            message: err?.publicMessage || 'Chưa mở được truyện mới. Con thử lại sau một chút nhé.',
+          },
+          err?.status || 503,
+        );
+      }
+    }
+
     const reviewUrl = `${new URL(request.url).origin}/ho-so?code=${encodeURIComponent(accessCode)}`;
     // Challenge dial uses LIFETIME points, never season RP: the W2R ladder
     // soft-resets each season, and pack difficulty must not drop with it.
@@ -257,6 +283,160 @@ export async function onRequestPost(context) {
     await clearGenerationLock(env.READ2LEAD_CODES, accessCode, pendingPackId);
     return json({ ok: false, error: 'backend_unavailable', message: 'Backend không phản hồi. Thử lại sau.' }, 502);
   }
+}
+
+
+export function parseBookLevels(raw) {
+  const allowed = new Set(['L1', 'L2', 'L3', 'L4']);
+  return new Set(
+    String(raw || '')
+      .split(',')
+      .map((value) => value.trim().toUpperCase())
+      .filter((value) => allowed.has(value)),
+  );
+}
+
+export function selectUnreadBook(
+  rawIndex,
+  completedBooks = [],
+  currentBook = '',
+  random = Math.random,
+) {
+  if (!Array.isArray(rawIndex)) return null;
+  const completed = new Set(
+    (Array.isArray(completedBooks) ? completedBooks : []).map((value) => String(value)),
+  );
+  if (currentBook) completed.add(String(currentBook));
+  const unread = [...new Set(
+    rawIndex
+      .map((value) => String(value || '').trim())
+      .filter((value) => /^book_[0-9]+$/.test(value)),
+  )].filter((slug) => !completed.has(slug));
+  if (!unread.length) return null;
+  const roll = Number(random());
+  const index = Number.isFinite(roll)
+    ? Math.min(unread.length - 1, Math.max(0, Math.floor(roll * unread.length)))
+    : 0;
+  return unread[index];
+}
+
+function bookSlugFromPack(pack) {
+  return (
+    pack?.book_slug
+    || pack?.review_context?.book_slug
+    || pack?.pack?.book_slug
+    || pack?.pack_json?.book_slug
+    || ''
+  );
+}
+
+class BookPoolError extends Error {
+  constructor(code, publicMessage, status = 503) {
+    super(code);
+    this.name = 'BookPoolError';
+    this.code = code;
+    this.publicMessage = publicMessage;
+    this.status = status;
+  }
+}
+
+function validStoredBookPack(pack, expectedSlug) {
+  return Boolean(
+    pack
+    && pack.schema_version === 2
+    && pack.book_slug === expectedSlug
+    && Array.isArray(pack.book_images)
+    && pack.book_images.length >= 3
+    && Array.isArray(pack.book_page_audio)
+    && pack.book_page_audio.length === pack.book_images.length
+    && Array.isArray(pack.story?.paragraphs_en)
+    && pack.story.paragraphs_en.length === pack.book_images.length
+    && Array.isArray(pack.activities)
+    && pack.activities.map((activity) => activity?.type).join(',')
+      === 'listening_fill_blank,listen_and_order,read_aloud'
+  );
+}
+
+async function assignBookPack({
+  env,
+  accessCode,
+  codeData,
+  progress,
+  lockedProgress,
+  pendingPack,
+  levelForPack,
+  previousPack,
+}) {
+  const rawIndex = await env.READ2LEAD_CODES.get('book_index:' + levelForPack, { type: 'json' });
+  if (!Array.isArray(rawIndex)) {
+    throw new BookPoolError(
+      'book_pool_unavailable',
+      'Kho truyện đang được cập nhật. Con thử lại sau một chút nhé.',
+    );
+  }
+  const rng = typeof env.RNG === 'function' ? env.RNG : Math.random;
+  const slug = selectUnreadBook(
+    rawIndex,
+    codeData.completed_books,
+    bookSlugFromPack(previousPack),
+    rng,
+  );
+  if (!slug) {
+    throw new BookPoolError(
+      'book_pool_exhausted',
+      'Con đã đọc hết truyện ở cấp này rồi. Felix sẽ mở thêm truyện mới sớm nhé.',
+      409,
+    );
+  }
+  const storedPack = await env.READ2LEAD_CODES.get('book:' + slug, { type: 'json' });
+  if (!validStoredBookPack(storedPack, slug)) {
+    throw new BookPoolError(
+      'book_unavailable',
+      'Chưa mở được truyện mới. Con thử lại sau một chút nhé.',
+    );
+  }
+
+  const finalPack = buildFinalV2Pack({
+    pendingPack,
+    pack: storedPack,
+    createdAt: new Date().toISOString(),
+  });
+  const nextProgress = {
+    ...lockedProgress,
+    current_pack: finalPack,
+    packs_created: (progress.packs_created || 0) + 1,
+  };
+  await env.READ2LEAD_CODES.put(
+    accessCode,
+    JSON.stringify({
+      ...codeData,
+      student_profile: {
+        ...(codeData.student_profile || {}),
+        student_name: progress.student_name,
+        age: progress.age,
+        level: finalPack.level,
+        child_gender: progress.child_gender,
+      },
+      progress: nextProgress,
+      uses_remaining: Math.max(0, (codeData.uses_remaining ?? 0) - 1),
+      last_used_at: finalPack.created_at.slice(0, 10),
+    }),
+  );
+
+  return json({
+    ok: true,
+    status: 'done',
+    pack_id: finalPack.pack_id,
+    topic: finalPack.topic,
+    story_title: finalPack.story_title,
+    child_name: progress.student_name,
+    review_link: '/ho-so?code=' + encodeURIComponent(accessCode),
+    lesson_link: '/read2lead/lesson?code=' + encodeURIComponent(accessCode)
+      + '&pack_id=' + encodeURIComponent(finalPack.pack_id),
+    current_pack: publicPack(finalPack),
+    progress: publicProgress(nextProgress),
+    level: finalPack.level,
+  });
 }
 
 function validate(data) {

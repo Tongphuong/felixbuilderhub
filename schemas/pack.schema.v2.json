@@ -27,13 +27,13 @@
         "paragraphs_en": {
           "type": "array",
           "minItems": 2,
-          "maxItems": 6,
+          "maxItems": 24,
           "items": { "type": "string", "minLength": 1 }
         },
         "paragraphs_vi": {
           "type": "array",
           "minItems": 2,
-          "maxItems": 6,
+          "maxItems": 24,
           "items": { "type": "string", "minLength": 1 }
         },
         "full_audio_url": { "type": "string" },
@@ -42,7 +42,7 @@
         "sentences": {
           "type": "array",
           "minItems": 6,
-          "maxItems": 35,
+          "maxItems": 200,
           "items": {
             "type": "object",
             "required": ["text_en", "paragraph_index"],
@@ -60,7 +60,7 @@
 
     "activities": {
       "type": "array",
-      "minItems": 4,
+      "minItems": 3,
       "maxItems": 6,
       "items": {
         "oneOf": [
@@ -69,7 +69,8 @@
           { "$ref": "#/definitions/reading_comprehension" },
           { "$ref": "#/definitions/written_response" },
           { "$ref": "#/definitions/listen_and_speak" },
-          { "$ref": "#/definitions/read_aloud" }
+          { "$ref": "#/definitions/read_aloud" },
+          { "$ref": "#/definitions/book_read_aloud" }
         ]
       }
     },
@@ -92,8 +93,66 @@
     },
 
     "parent_note_vi": { "type": "string", "minLength": 10, "maxLength": 400 },
-    "next_suggestion_vi": { "type": "string", "minLength": 10, "maxLength": 200 }
+    "next_suggestion_vi": { "type": "string", "minLength": 10, "maxLength": 200 },
+    "book_slug": { "type": "string", "pattern": "^book_[0-9]+$", "maxLength": 100 },
+    "book_images": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 24,
+      "items": { "type": "string", "format": "uri", "pattern": "^https://" }
+    },
+    "book_page_audio": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 24,
+      "items": { "type": "string", "format": "uri", "pattern": "^https://.*\\.mp3(?:[?#].*)?$" }
+    },
+    "book_attribution": { "$ref": "#/definitions/book_attribution" }
   },
+
+  "allOf": [
+    {
+      "if": { "required": ["book_slug"] },
+      "then": {
+        "required": [
+          "schema_version",
+          "level",
+          "slug",
+          "audio_filename",
+          "guided_listening",
+          "book_images",
+          "book_page_audio",
+          "book_attribution"
+        ],
+        "properties": {
+          "slug": { "pattern": "^book_[0-9]+$" },
+          "audio_filename": { "pattern": "\\.mp3$" },
+          "story": {
+            "properties": {
+              "paragraphs_en": { "minItems": 3, "maxItems": 24 },
+              "sentences": { "minItems": 10, "maxItems": 200 }
+            }
+          },
+          "activities": {
+            "minItems": 3,
+            "maxItems": 3,
+            "items": {
+              "oneOf": [
+                { "$ref": "#/definitions/listening_fill_blank" },
+                { "$ref": "#/definitions/listen_and_order" },
+                { "$ref": "#/definitions/book_read_aloud" }
+              ]
+            }
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "activities": { "minItems": 4, "maxItems": 6 }
+        }
+      }
+    }
+  ],
 
   "definitions": {
     "guided_listening_paragraph": {
@@ -235,6 +294,45 @@
       }
     },
 
+    "book_attribution": {
+      "type": "object",
+      "required": ["title", "creators", "publisher", "credit_text", "source_url", "image_credits", "license"],
+      "additionalProperties": false,
+      "properties": {
+        "title": { "type": "string", "minLength": 1 },
+        "creators": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "publisher": { "type": "string", "minLength": 1 },
+        "credit_text": { "type": "string", "minLength": 1 },
+        "source_url": { "type": "string", "format": "uri", "pattern": "^https://" },
+        "image_credits": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["page_index", "credit_text"],
+            "additionalProperties": false,
+            "properties": {
+              "page_index": { "type": "integer", "minimum": 0, "maximum": 23 },
+              "credit_text": { "type": "string", "minLength": 1 }
+            }
+          }
+        },
+        "license": {
+          "type": "object",
+          "required": ["name", "url"],
+          "additionalProperties": false,
+          "properties": {
+            "name": { "const": "CC BY 4.0" },
+            "url": { "const": "https://creativecommons.org/licenses/by/4.0/" }
+          }
+        }
+      }
+    },
+
     "read_aloud": {
       "type": "object",
       "required": ["type", "title_vi", "identity_vi", "instructions_vi", "items", "scoring_mode"],
@@ -259,6 +357,34 @@
               "text_en": { "type": "string", "minLength": 1 },
               "text_vi": { "type": "string", "minLength": 1 },
               "tip_vi": { "type": "string", "minLength": 1 }
+            }
+          }
+        }
+      }
+    },
+
+    "book_read_aloud": {
+      "type": "object",
+      "required": ["type", "title_vi", "identity_vi", "instructions_vi", "items", "scoring_mode"],
+      "additionalProperties": false,
+      "properties": {
+        "type": { "const": "read_aloud" },
+        "title_vi": { "type": "string", "minLength": 1 },
+        "identity_vi": { "type": "string", "minLength": 1 },
+        "instructions_vi": { "type": "string", "minLength": 1 },
+        "scoring_mode": { "const": "whisper_stt" },
+        "items": {
+          "type": "array",
+          "minItems": 10,
+          "maxItems": 200,
+          "items": {
+            "type": "object",
+            "required": ["id", "text_en", "audio_url"],
+            "additionalProperties": false,
+            "properties": {
+              "id": { "type": "string", "pattern": "^ra_[0-9]+$" },
+              "text_en": { "type": "string", "minLength": 1 },
+              "audio_url": { "type": "string", "format": "uri", "pattern": "^https://.*\\.mp3(?:[?#].*)?$" }
             }
           }
         }

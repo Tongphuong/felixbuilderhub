@@ -75,6 +75,42 @@ async function mergeDeferredFullStoryAudio(env, pack, v2Pack) {
   return v2Pack;
 }
 
+
+export function isValidBookPack(v2Pack) {
+  const paragraphs = v2Pack?.story?.paragraphs_en;
+  const images = v2Pack?.book_images;
+  const pageAudio = v2Pack?.book_page_audio;
+  return Boolean(
+    typeof v2Pack?.book_slug === 'string'
+    && /^book_[0-9]+$/.test(v2Pack.book_slug)
+    && Array.isArray(paragraphs)
+    && paragraphs.length >= 3
+    && Array.isArray(images)
+    && images.length === paragraphs.length
+    && images.every((value) => typeof value === 'string' && value)
+    && Array.isArray(pageAudio)
+    && pageAudio.length === paragraphs.length
+    && pageAudio.every((value) => typeof value === 'string' && value)
+    && v2Pack.book_attribution
+    && typeof v2Pack.book_attribution === 'object'
+  );
+}
+
+function rewriteActivityAudio(activities, env) {
+  return (Array.isArray(activities) ? activities : []).filter(Boolean).map((activity) => ({
+    ...activity,
+    ...(Array.isArray(activity.items)
+      ? {
+          items: activity.items.map((item) => (
+            item && typeof item === 'object' && Object.hasOwn(item, 'audio_url')
+              ? { ...item, audio_url: rewriteAudioHost(item.audio_url, env) }
+              : item
+          )),
+        }
+      : {}),
+  }));
+}
+
 export function buildV2LessonPayload({ accessCode, codeData, pack, v2Pack, env }) {
   const progress = codeData.progress || {};
   const profile = codeData.student_profile || {};
@@ -91,6 +127,18 @@ export function buildV2LessonPayload({ accessCode, codeData, pack, v2Pack, env }
         }
       : {}),
   };
+  const isBook = isValidBookPack(v2Pack);
+  const activities = isBook
+    ? rewriteActivityAudio(v2Pack.activities, env)
+    : ensureSixActivities(
+        v2Pack.activities,
+        {
+          story: v2Pack.story,
+          topic: v2Pack.topic || pack.topic || '',
+          activities: v2Pack.activities,
+        },
+        env,
+      );
 
   return {
     schema_version: 2,
@@ -101,15 +149,15 @@ export function buildV2LessonPayload({ accessCode, codeData, pack, v2Pack, env }
     level_label: v2Pack.level_label || pack.level_label || '',
     topic: v2Pack.topic || pack.topic || '',
     story,
-    activities: ensureSixActivities(
-      v2Pack.activities,
-      {
-        story: v2Pack.story,
-        topic: v2Pack.topic || pack.topic || '',
-        activities: v2Pack.activities,
-      },
-      env,
-    ),
+    activities,
+    ...(isBook
+      ? {
+          book_slug: v2Pack.book_slug,
+          book_images: v2Pack.book_images.map((url) => rewriteAudioHost(url, env)),
+          book_page_audio: v2Pack.book_page_audio.map((url) => rewriteAudioHost(url, env)),
+          book_attribution: v2Pack.book_attribution,
+        }
+      : {}),
     rewards: v2Pack.rewards || {
       coins_on_complete: 15,
       xp_on_complete: 20,

@@ -18,7 +18,9 @@ then reference in code.
 | `TELEGRAM_BOT_TOKEN` | Bot token for the Felix lead-bot Telegram bot. Used to push lead notifications. | coaching-booking, msmw-lead, sharing-subscribe | https://t.me/BotFather |
 | `TELEGRAM_CHAT_ID` | Chat ID where bot messages land (Phương's chat). | Same as `TELEGRAM_BOT_TOKEN` consumers | Bot getUpdates response |
 ## Variables (non-secret)
-None currently. Add to this table when introduced.
+| Variable | Purpose | Default |
+|---|---|---|
+| READ2LEAD_BOOK_LEVELS | Comma-separated StoryWeaver allowlist for generate-read2lead-pack (for example L1 or L1,L2). Only L1-L4 are accepted. Missing/empty values keep every level on legacy generation; L5 always uses legacy generation. Activate preview levels before production. | Empty / book mode off |
 ## Per-endpoint binding matrix
 | Endpoint | KV | Backend URL | Backend Secret | Admin PW | Telegram |
 |---|---|---|---|---|---|
@@ -50,6 +52,7 @@ or new account):
 2. Environment variables → add (Encrypt for all secrets):
    - `READ2LEAD_BACKEND_URL`
    - `READ2LEAD_BACKEND_SECRET`
+   - Optional preview-only book pilot: READ2LEAD_BOOK_LEVELS=L1
    - `ADMIN_PASSWORD`
    - `TELEGRAM_BOT_TOKEN`
    - `TELEGRAM_CHAT_ID`

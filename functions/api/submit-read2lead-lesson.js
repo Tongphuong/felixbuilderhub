@@ -107,11 +107,32 @@ function extractV2LessonContext(pack) {
   if (!context) return null;
   return {
     ...context,
-    activities: ensureSixActivities(context.activities, {
-      story: context.story,
-      topic: context.topic || '',
-      activities: context.activities,
-    }),
+    activities: isBookLessonContext(context)
+      ? context.activities
+      : ensureSixActivities(context.activities, {
+          story: context.story,
+          topic: context.topic || '',
+          activities: context.activities,
+        }),
+  };
+}
+
+function isBookLessonContext(context) {
+  return Boolean(
+    /^book_[0-9]+$/.test(String(context?.book_slug || ''))
+    && context.activities?.map((activity) => activity?.type).join(',')
+      === 'listening_fill_blank,listen_and_order,read_aloud'
+  );
+}
+
+function withCompletedBook(codeData, lessonContext) {
+  if (!isBookLessonContext(lessonContext)) return codeData;
+  return {
+    ...codeData,
+    completed_books: [...new Set([
+      ...(Array.isArray(codeData.completed_books) ? codeData.completed_books : []),
+      lessonContext.book_slug,
+    ].filter(Boolean))],
   };
 }
 
@@ -189,6 +210,9 @@ async function submitV2Lesson({
   const expectedTypes = (Array.isArray(lessonContext.activities) ? lessonContext.activities : [])
     .map((activity) => activity?.type)
     .filter((type) => ACTIVE_LESSON_ACTIVITY_TYPES.has(type));
+  if (isBookLessonContext(lessonContext)) {
+    expectedTypes.unshift('guided_listening');
+  }
   const completedTypes = new Set(
     activityResults
       .filter((result) => result && result.attempted !== false)
@@ -248,6 +272,7 @@ async function submitV2Lesson({
       progress,
       attempt,
       webAttempts,
+      lessonContext,
       submittedAt,
       scorePercent,
       correctCount,
@@ -424,7 +449,7 @@ async function submitV2Lesson({
   await env.READ2LEAD_CODES.put(
     accessCode,
     JSON.stringify({
-      ...codeData,
+      ...withCompletedBook(codeData, lessonContext),
       progress: nextProgress,
       last_reviewed_at: submittedAt,
     }),
@@ -512,6 +537,7 @@ async function finalizeWithoutReward({
   progress,
   attempt,
   webAttempts,
+  lessonContext,
   submittedAt,
   scorePercent,
   correctCount,
@@ -543,7 +569,7 @@ async function finalizeWithoutReward({
   await env.READ2LEAD_CODES.put(
     accessCode,
     JSON.stringify({
-      ...codeData,
+      ...withCompletedBook(codeData, lessonContext),
       progress: nextProgress,
     }),
   );
@@ -613,6 +639,13 @@ async function respondFromCachedAttempt({
 function scoreActivityResults(activityResults, lessonContext) {
   const expectedActivities = (Array.isArray(lessonContext.activities) ? lessonContext.activities : [])
     .filter((activity) => ACTIVE_LESSON_ACTIVITY_TYPES.has(activity?.type));
+  if (isBookLessonContext(lessonContext)) {
+    expectedActivities.unshift({
+      type: 'guided_listening',
+      questions: (lessonContext.guided_listening || [])
+        .flatMap((entry) => Array.isArray(entry?.questions) ? entry.questions : []),
+    });
+  }
   const resultsByType = new Map(
     (Array.isArray(activityResults) ? activityResults : [])
       .filter((result) => result?.type)
