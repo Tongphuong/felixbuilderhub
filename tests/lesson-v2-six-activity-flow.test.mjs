@@ -8,11 +8,12 @@ const listenAndSpeak = readFileSync('src/components/read2lead/v2/ListenAndSpeak.
 const stateModule = readFileSync('functions/api/_read2lead-v2-state.js', 'utf-8');
 const submitModule = readFileSync('functions/api/submit-read2lead-lesson.js', 'utf-8');
 
-test('lesson page filters legacy packs to the four active frontend activities', () => {
+test('lesson page keeps legacy A/B/C/E and book A/B/D orders separate', () => {
   assert.match(lessonPage, /function ensureLessonActivities/);
   assert.match(lessonPage, /const FRONTEND_ACTIVITY_ORDER/);
-  assert.match(lessonPage, /FRONTEND_ACTIVITY_ORDER\.includes/);
-  assert.doesNotMatch(lessonPage, /read_aloud/);
+  assert.match(lessonPage, /const BOOK_ACTIVITY_ORDER/);
+  assert.match(lessonPage, /const activityOrder = isBookLesson\(lesson\)/);
+  assert.match(lessonPage, /read_aloud/);
   assert.doesNotMatch(lessonPage, /written_response/);
 });
 
@@ -58,10 +59,10 @@ test('listen_and_speak uses Minny hero and nghe-before-speak gating', () => {
   assert.match(lessonPage, /tryPlay\('mp4'\)/);
 });
 
-test('retired activity shells and dispatch branches are absent', () => {
-  assert.doesNotMatch(lessonPage, /data-activity-shell="read_aloud"/);
+test('book read-aloud shell is present while written response stays retired', () => {
+  assert.match(lessonPage, /import ReadAloud/);
+  assert.match(lessonPage, /<ReadAloud \/>/);
   assert.doesNotMatch(lessonPage, /data-activity-shell="written_response"/);
-  assert.doesNotMatch(lessonPage, /renderReadAloudActivity/);
   assert.doesNotMatch(lessonPage, /renderWrittenActivity/);
 });
 

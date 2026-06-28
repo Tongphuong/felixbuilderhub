@@ -65,7 +65,7 @@ test('lesson nghe cau buttons never call reward voice helpers', () => {
   for (const { name, anchor } of markers) {
     const markerIndex = lessonPage.indexOf(anchor);
     assert.ok(markerIndex > -1, `${name} play buttons should exist`);
-    const snippet = lessonPage.slice(markerIndex, markerIndex + 700);
+    const snippet = lessonPage.slice(markerIndex, markerIndex + (name === 'data-speak-listen' ? 1800 : 700));
     if (name !== 'data-speak-listen') {
       assert.match(snippet, /playAudio\(url, button\)/);
     } else {

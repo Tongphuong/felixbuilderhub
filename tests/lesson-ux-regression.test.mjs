@@ -32,10 +32,11 @@ test('global CTA replaces per-activity prev next nav', () => {
   assert.doesNotMatch(lessonPage, /data-activity-prev/);
 });
 
-test('legacy written and read-aloud activities are filtered out of the frontend', () => {
+test('legacy activities stay A/B/C/E while books use A/B/D', () => {
   assert.match(lessonPage, /function ensureLessonActivities/);
   assert.match(lessonPage, /FRONTEND_ACTIVITY_ORDER/);
-  assert.doesNotMatch(lessonPage, /data-activity-shell="read_aloud"/);
+  assert.match(lessonPage, /BOOK_ACTIVITY_ORDER/);
+  assert.match(lessonPage, /isBookLesson\(lesson\)/);
   assert.doesNotMatch(lessonPage, /data-activity-shell="written_response"/);
   assert.match(lessonPage, /showActivity\(state\.activityIndex \+ 1\)/);
 });

@@ -275,9 +275,10 @@ test('runSpeakingCheck supports open check_mode', async () => {
   assert.ok(payload.score_percent >= 35);
 });
 
-test('lesson page wires listen_and_speak with speaking check and removes read_aloud', () => {
+test('lesson page wires legacy speaking and book read-aloud through the speaking check', () => {
   assert.match(lessonPage, /listen_and_speak/);
-  assert.doesNotMatch(lessonPage, /read_aloud/);
+  assert.match(lessonPage, /read_aloud/);
+  assert.match(lessonPage, /BOOK_ACTIVITY_ORDER/);
   assert.match(lessonPage, /read2lead-speaking-check/);
   assert.match(lessonPage, /function renderSpeakActivity/);
   assert.match(lessonPage, /_r2lMicIsReady/);

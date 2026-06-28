@@ -7,6 +7,7 @@ import IdentityBanner from '../../components/read2lead/v2/IdentityBanner.astro';
 import ListeningFillBlank from '../../components/read2lead/v2/ListeningFillBlank.astro';
 import ListenAndOrder from '../../components/read2lead/v2/ListenAndOrder.astro';
 import ListenAndSpeak from '../../components/read2lead/v2/ListenAndSpeak.astro';
+import ReadAloud from '../../components/read2lead/v2/ReadAloud.astro';
 import LevelUpModal from '../../components/read2lead/v2/LevelUpModal.astro';
 import RankUpModal from '../../components/read2lead/v3/rank/RankUpModal.astro';
 import ProgressBar from '../../components/read2lead/v2/ProgressBar.astro';
@@ -69,6 +70,36 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
           <button id="w1-open-quests" class="r2l-primary w-full text-lg" type="button" disabled>Mở nhiệm vụ 🎯</button>
         </section>
 
+        <section id="w1-book-reader-phase" class="r2l-book-reader hidden space-y-4" aria-labelledby="book-reader-title">
+          <div class="flex flex-wrap items-center justify-between gap-3">
+            <h2 id="book-reader-title" class="font-display text-2xl font-bold text-cream">Đọc truyện tranh</h2>
+            <p id="book-reader-page-counter" class="fx-badge fx-badge--accent" aria-live="polite"></p>
+          </div>
+          <figure class="r2l-book-page">
+            <img id="book-reader-img" src="" alt="" width="1200" height="800" />
+            <figcaption id="book-reader-page-text" class="r2l-book-page__text"></figcaption>
+          </figure>
+          <div id="book-reader-audio-gate" class="r2l-book-gate">
+            <p class="font-bold text-cream">Con nghe hết trang này trước nhé.</p>
+            <button id="book-reader-listen-btn" class="r2l-primary" type="button">🔊 Nghe trang</button>
+            <p id="book-reader-audio-status" class="text-sm text-cream/75" role="status" aria-live="polite"></p>
+          </div>
+          <section id="book-reader-sentence-panel" class="hidden space-y-3" aria-live="polite">
+            <p id="book-reader-sentence-counter" class="text-sm font-bold text-gold"></p>
+            <p id="book-reader-sentence-text" class="text-lg leading-relaxed text-cream"></p>
+            <div id="book-reader-questions" class="space-y-3"></div>
+          </section>
+          <div class="flex flex-col gap-2 sm:flex-row sm:justify-between">
+            <button id="book-reader-prev" class="r2l-secondary" type="button">← Trang trước</button>
+            <button id="book-reader-next" class="r2l-primary" type="button" disabled>Trang tiếp →</button>
+          </div>
+          <details class="r2l-book-attribution">
+            <summary>Thông tin tác giả và bản quyền</summary>
+            <div id="book-reader-attribution-content" class="mt-3 space-y-2 text-sm text-cream/75"></div>
+          </details>
+        </section>
+
+
         <section id="w1-guided-listening-phase" class="hidden space-y-4 rounded-md border border-cream/10 bg-cream/[0.04] p-4">
           <h2 class="font-display text-2xl font-bold text-cream">Nghe và trả lời</h2>
           <GuidedListener paragraphs={[]} />
@@ -102,6 +133,7 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
           <ListenAndOrder />
           <ReadingComprehension />
           <ListenAndSpeak />
+          <ReadAloud />
         </section>
 
         <section id="global-cta" class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 flex flex-col gap-2">
@@ -792,6 +824,80 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
     background: rgb(167 139 250);
     font-size: 1.1rem;
   }
+
+  .r2l-book-reader {
+    border: 1px solid rgb(200 143 56 / 0.35);
+    border-radius: 16px;
+    background: rgb(23 53 74 / 0.72);
+    padding: 1rem;
+  }
+
+  .r2l-book-page {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgb(245 230 200 / 0.18);
+    border-radius: 14px;
+    background: rgb(16 39 58);
+  }
+
+  .r2l-book-page img {
+    display: block;
+    width: 100%;
+    max-height: 72vh;
+    object-fit: contain;
+    background: rgb(16 39 58);
+  }
+
+  .r2l-book-page__text {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    max-height: 42%;
+    overflow-y: auto;
+    background: linear-gradient(transparent, rgb(16 39 58 / 0.96) 24%);
+    padding: 3rem 1.25rem 1.25rem;
+    font-size: clamp(1rem, 2.2vw, 1.35rem);
+    font-weight: 700;
+    line-height: 1.65;
+    color: rgb(245 230 200);
+    text-shadow: 0 1px 2px rgb(0 0 0 / 0.8);
+  }
+
+  .r2l-book-gate {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+    border: 1px solid rgb(200 143 56 / 0.28);
+    border-radius: 12px;
+    background: rgb(200 143 56 / 0.08);
+    padding: 1rem;
+  }
+
+  .r2l-book-attribution {
+    border-top: 1px solid rgb(245 230 200 / 0.14);
+    padding-top: 0.75rem;
+    color: rgb(217 199 164);
+  }
+
+  .r2l-book-attribution summary {
+    min-height: 44px;
+    cursor: pointer;
+    font-weight: 800;
+    color: rgb(242 204 126);
+  }
+
+  @media (max-width: 639px) {
+    .r2l-book-page__text {
+      position: static;
+      max-height: none;
+      background: rgb(16 39 58);
+      padding: 1rem;
+      text-shadow: none;
+    }
+  }
+
 </style>
 
 <script is:inline set:html={dictationHelperInline} />
@@ -903,9 +1009,55 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
     w1MidpointCelebrated: false,
     storyGate: { read_done: false, listen_done: false, paragraphs_played: [], card_index: 0 },
     guidedListening: { progressVersion: 2, phase: 'idle', sentenceIndex: 0, sentencePlayed: [], sentencesDone: [], answers: {} },
+    bookReader: { pageIndex: 0, sentenceIndex: 0, audioCompleted: [], pagesDone: [], answers: {} },
     questionOutcomes: {},
     learningMetrics: { startedAt: new Date().toISOString(), events: [] },
   };
+
+
+  function isBookLesson(lesson = state.lesson) {
+    const paragraphs = lesson?.story?.paragraphs_en;
+    const images = lesson?.book_images;
+    const pageAudio = lesson?.book_page_audio;
+    return Boolean(
+      /^book_[0-9]+$/.test(String(lesson?.book_slug || ''))
+      && Array.isArray(paragraphs)
+      && paragraphs.length >= 3
+      && Array.isArray(images)
+      && images.length === paragraphs.length
+      && Array.isArray(pageAudio)
+      && pageAudio.length === paragraphs.length
+      && lesson.activities?.map((activity) => activity?.type).join(',')
+        === 'listening_fill_blank,listen_and_order,read_aloud'
+    );
+  }
+
+  function configureActivityProgress() {
+    if (!isBookLesson()) return;
+    const nav = qs('[data-activity-progress]');
+    if (!nav) return;
+    nav.className = 'grid gap-2 sm:grid-cols-3';
+    nav.innerHTML = '';
+    (state.lesson.activities || []).forEach((activity, index) => {
+      const button = document.createElement('button');
+      button.className = 'r2l-step';
+      button.type = 'button';
+      button.dataset.stepButton = String(index);
+      button.textContent = String(index + 1) + '. ' + (ACTIVITY_LABELS[activity.type] || 'Nhiệm vụ');
+      nav.appendChild(button);
+    });
+    const dots = qs('#progress-dots');
+    if (dots) {
+      dots.innerHTML = '';
+      (state.lesson.activities || []).forEach((_, index) => {
+        const dot = document.createElement('span');
+        dot.className = 'r2l-dot';
+        dot.dataset.dot = String(index);
+        dots.appendChild(dot);
+      });
+    }
+  }
+
 
   const lessonAudioState = {
     audio: null,
@@ -918,6 +1070,7 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
     listen_and_order: 'Xếp câu',
     reading_comprehension: 'Đọc hiểu',
     listen_and_speak: 'Nói lại',
+    read_aloud: 'Đọc to',
   };
   const FRONTEND_ACTIVITY_ORDER = [
     'listening_fill_blank',
@@ -925,12 +1078,15 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
     'reading_comprehension',
     'listen_and_speak',
   ];
+  const BOOK_ACTIVITY_ORDER = ['listening_fill_blank', 'listen_and_order', 'read_aloud'];
+  const SPEAKING_ACTIVITY_TYPES = new Set(['listen_and_speak', 'read_aloud']);
 
   const MINNY_COMMANDS = {
     listening_fill_blank: 'Con nghe rồi chọn cụm từ còn thiếu nhé!',
     listen_and_order: 'Con nghe câu rồi bấm từ theo đúng thứ tự nhé!',
     reading_comprehension: 'Con đọc truyện rồi chọn đáp án đúng!',
     listen_and_speak: 'Nghe rồi nói lại cho Minny nghe nhé!',
+    read_aloud: 'Nghe mẫu rồi đọc to cho Minny nghe nhé!',
   };
 
   const MINNY_CELEBRATE = [
@@ -964,6 +1120,11 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
       doing: (n, total) => `Phần ${n}/${total}: Nói lại — nghe rồi đọc theo`,
       needs: 'Bấm Kiểm tra micro, rồi Nghe, rồi Con nói',
       stuck: 'Micro: Windows/Mac → Cài đặt → Microphone → bật cho Chrome/Safari; copy hướng dẫn trong khung vàng',
+    },
+    read_aloud: {
+      doing: (n, total) => 'Phần ' + n + '/' + total + ': Đọc to — nghe mẫu rồi đọc',
+      needs: 'Bấm Kiểm tra micro, rồi Nghe, rồi Con nói',
+      stuck: 'Micro: Windows/Mac → Cài đặt → Microphone → bật cho Chrome/Safari',
     },
   };
 
@@ -1067,6 +1228,7 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
     listen_and_order: '🔨',
     reading_comprehension: '📚',
     listen_and_speak: '🎙️',
+    read_aloud: '📖',
   };
 
   let _w1ReadAlong = { running: false, paused: false, sentenceIdx: 0, cardIdx: 0 };
@@ -1241,8 +1403,8 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
 
   function _r2lApplyMicGate(ready) {
     _r2lMicGateReady = ready;
-    const speakShell = qs('[data-activity-shell="listen_and_speak"]');
-    [speakShell].forEach((shell) => {
+    const speakShells = qsa('[data-activity-shell="listen_and_speak"], [data-activity-shell="read_aloud"]');
+    speakShells.forEach((shell) => {
       if (!shell || shell.hidden) return;
       shell.querySelectorAll('[data-speak-record]').forEach((btn) => {
         if (ready) {
@@ -1502,7 +1664,7 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
   }
 
   function _r2lLessonNeedsMic(activities) {
-    return (activities || []).some((a) => a?.type === 'listen_and_speak');
+    return (activities || []).some((a) => a?.type === 'listen_and_speak' || a?.type === 'read_aloud');
   }
 
   function _r2lUpdateMicPrepBanner(activities) {
@@ -1778,11 +1940,11 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
           };
       _r2lRenderSpeakFeedback(cardEl, friendlyPayload);
       if (passed) {
-        const heroEl = cardEl.closest('[data-activity-shell="listen_and_speak"]')?.querySelector('[data-minny-hero]');
+        const heroEl = cardEl.closest('[data-activity-shell]')?.querySelector('[data-minny-hero]');
         _r2lSetMinnyMood(_r2lMinnyMoodForScore(payload.score_percent), heroEl);
-        persistSpeakItemResult(itemKey, _r2lRecorderState.perItem.get(itemKey));
+        persistSpeakItemResult(activityItemsFromCard(cardEl), itemKey, _r2lRecorderState.perItem.get(itemKey));
       } else if (payload?.ok) {
-        const heroEl = cardEl.closest('[data-activity-shell="listen_and_speak"]')?.querySelector('[data-minny-hero]');
+        const heroEl = cardEl.closest('[data-activity-shell]')?.querySelector('[data-minny-hero]');
         _r2lSetMinnyMood('encourage', heroEl);
         showToast('Minny cần nghe được ít nhất 50%. Con thu lại nhé!');
         const nativeUrl = cardEl?.dataset?.nativeAudioUrl || '';
@@ -1840,7 +2002,8 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
   }
 
   function _r2lCompleteSpeakActivityOnMicSkip(activity) {
-    if (!activity || state.completedTypes.has('listen_and_speak')) return;
+    const activityType = activity?.type;
+    if (!activity || !SPEAKING_ACTIVITY_TYPES.has(activityType) || state.completedTypes.has(activityType)) return;
     const itemKeys = _r2lSpeakItemKeysForActivity(activity);
     itemKeys.forEach((itemKey, itemIndex) => {
       const existing = _r2lRecorderState.perItem.get(itemKey) || {};
@@ -1858,13 +2021,14 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
         checkStatus: 'error',
         checkResult: { ok: false, skipped_due_to_mic: true },
       });
-      const cardEl = qs(`[data-activity-shell="listen_and_speak"]`)?.querySelector(`[data-speak-card="${itemIndex}"]`);
+      const shell = qs('[data-activity-shell="' + activityType + '"]');
+      const cardEl = shell?.querySelector('[data-speak-card="' + itemIndex + '"]');
       if (cardEl) {
         _r2lRenderRecorderUi(itemKey, cardEl);
         _r2lRenderSpeakFeedback(cardEl, { ok: false, message: _R2L_MIC_SKIP_MSG });
       }
     });
-    completeActivity('listen_and_speak', {
+    completeActivity(activityType, {
       correct_count: 0,
       total_count: Math.max(itemKeys.length, 1),
       wrong_count: Math.max(itemKeys.length, 1),
@@ -1876,10 +2040,9 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
   function _r2lSkipMicSpeakingProgress() {
     const activities = state.lesson?.activities || [];
     const current = activities[state.activityIndex];
-    if (current?.type === 'listen_and_speak') {
+    if (SPEAKING_ACTIVITY_TYPES.has(current?.type)) {
       _r2lCompleteSpeakActivityOnMicSkip(current);
       showToast('Mình sang phần tiếp nhé. Phần nói này không nhận thưởng.');
-      return;
     }
   }
 
@@ -1891,9 +2054,9 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
     });
   }
 
-
   function _r2lMergeSpeakActivityScores(activity) {
     if (!activity) return;
+    const activityType = activity.type;
     const itemKeys = _r2lSpeakItemKeysForActivity(activity);
     let exactTotal = 0;
     let closeTotal = 0;
@@ -1913,11 +2076,11 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
       }
     });
     if (!scoredItems) return;
-    const weighted = scoredItems > 0 && wordTotal > 0
+    const weighted = wordTotal > 0
       ? Math.round(((exactTotal + closeTotal * 0.5) / wordTotal) * 100)
       : 0;
-    state.activityResults.listen_and_speak = {
-      type: 'listen_and_speak',
+    state.activityResults[activityType] = {
+      type: activityType,
       attempted: true,
       correct_count: exactTotal,
       total_count: wordTotal,
@@ -1926,8 +2089,8 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
       whisper_scored_items: scoredItems,
       passed_items: passedItems,
     };
-    if (passedItems >= itemKeys.length && !state.completedTypes.has('listen_and_speak')) {
-      completeActivity('listen_and_speak', {
+    if (passedItems >= itemKeys.length && !state.completedTypes.has(activityType)) {
+      completeActivity(activityType, {
         correct_count: exactTotal,
         total_count: wordTotal,
         wrong_count: Math.max(0, wordTotal - exactTotal),
@@ -1939,9 +2102,8 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
   }
 
   function activityItemsFromCard(cardEl) {
-    const shell = cardEl?.closest('[data-activity-shell="listen_and_speak"]');
-    const index = (state.lesson?.activities || []).findIndex((a) => a.type === 'listen_and_speak');
-    return index >= 0 ? state.lesson.activities[index] : null;
+    const activityType = cardEl?.closest('[data-activity-shell]')?.dataset.activityShell;
+    return (state.lesson?.activities || []).find((activity) => activity.type === activityType) || null;
   }
 
   function _r2lInitSpeakRecorder(itemKey, cardEl, expectedText) {
@@ -2095,7 +2257,7 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
       });
       _r2lRenderRecorderUi(itemKey, cardEl);
       _r2lRenderSpeakFeedback(cardEl, { ok: false, message: _r2lRecorderHelpMessage(err) });
-      _r2lFocusMicHelp(cardEl?.closest('[data-activity-shell="listen_and_speak"]'));
+      _r2lFocusMicHelp(cardEl?.closest('[data-activity-shell]'));
     }
   }
 
@@ -2623,6 +2785,7 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
           w1_midpoint_celebrated: state.w1MidpointCelebrated,
           story_gate: state.storyGate,
           guided_listening: state.guidedListening,
+          book_reader: state.bookReader,
           question_outcomes: state.questionOutcomes,
         } : {}),
       };
@@ -2685,7 +2848,7 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
     }
     state.activityIndex = Math.max(0, Math.min(index, Math.max(0, activities.length - 1)));
     if (isW1()) {
-      state.w1Phase = saved.w1_phase === 'activities' || saved.w1_phase === 'result' || saved.w1_phase === 'guided_listening' ? saved.w1_phase : 'story';
+      state.w1Phase = saved.w1_phase === 'activities' || saved.w1_phase === 'result' || saved.w1_phase === 'guided_listening' || saved.w1_phase === 'book_reader' ? saved.w1_phase : 'story';
       state.w1MaxUnlocked = Number.isFinite(Number(saved.w1_max_unlocked))
         ? Math.max(0, Number(saved.w1_max_unlocked))
         : Math.max(0, state.completedTypes.size - 1);
@@ -2727,6 +2890,16 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
           answers: gl.answers || {},
         };
       }
+      if (saved.book_reader && typeof saved.book_reader === 'object') {
+        const book = saved.book_reader;
+        state.bookReader = {
+          pageIndex: Number(book.pageIndex) || 0,
+          sentenceIndex: Number(book.sentenceIndex) || 0,
+          audioCompleted: Array.isArray(book.audioCompleted) ? book.audioCompleted.slice() : [],
+          pagesDone: Array.isArray(book.pagesDone) ? book.pagesDone.slice() : [],
+          answers: book.answers && typeof book.answers === 'object' ? book.answers : {},
+        };
+      }
     }
     return true;
   }
@@ -2740,14 +2913,17 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
   }
 
   function markSpeakHeard(activity, itemIndex) {
-    const progress = state.activityProgress.listen_and_speak || { heard: [], items: {} };
+    const activityType = activity.type;
+    const progress = state.activityProgress[activityType] || { heard: [], items: {} };
     const heard = Array.isArray(progress.heard) ? progress.heard.slice() : [];
     if (!heard.includes(itemIndex)) heard.push(itemIndex);
-    patchActivityProgress('listen_and_speak', { heard, items: progress.items || {} });
+    patchActivityProgress(activityType, { heard, items: progress.items || {} });
   }
 
-  function persistSpeakItemResult(itemKey, entry) {
-    const progress = state.activityProgress.listen_and_speak || { heard: [], items: {} };
+  function persistSpeakItemResult(activity, itemKey, entry) {
+    const activityType = activity?.type;
+    if (!activityType) return;
+    const progress = state.activityProgress[activityType] || { heard: [], items: {} };
     const items = { ...(progress.items || {}) };
     if (entry?.checkResult?.ok) {
       items[itemKey] = {
@@ -2758,26 +2934,28 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
     } else {
       delete items[itemKey];
     }
-    patchActivityProgress('listen_and_speak', {
+    patchActivityProgress(activityType, {
       heard: progress.heard || [],
       items,
     });
   }
 
   function restoreSpeakActivityProgress(root, activity) {
-    const saved = state.activityProgress.listen_and_speak;
+    const saved = state.activityProgress[activity.type];
     if (!saved) return;
     (saved.heard || []).forEach((itemIndex) => {
-      const recordBtn = root.querySelector(`[data-speak-record="${itemIndex}"]`);
+      const recordBtn = root.querySelector('[data-speak-record="' + itemIndex + '"]');
       if (recordBtn) {
         recordBtn.dataset.heard = 'true';
         recordBtn.disabled = !_r2lMicIsReady();
       }
     });
     Object.entries(saved.items || {}).forEach(([itemKey, itemData]) => {
-      const itemIndex = (activity.items || []).findIndex((item, index) => (item.id || `ls_${index}`) === itemKey);
+      const itemIndex = (activity.items || []).findIndex(
+        (item, index) => (item.id || 'ls_' + index) === itemKey,
+      );
       if (itemIndex < 0) return;
-      const cardEl = root.querySelector(`[data-speak-card="${itemIndex}"]`);
+      const cardEl = root.querySelector('[data-speak-card="' + itemIndex + '"]');
       if (!cardEl) return;
       _r2lRecorderState.perItem.set(itemKey, {
         mediaRecorder: null,
@@ -2790,12 +2968,11 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
         checkResult: itemData.checkResult || null,
       });
       _r2lSyncMinnyRecordButton(itemKey, cardEl);
-      if (itemData.checkResult) {
-        _r2lRenderSpeakFeedback(cardEl, itemData.checkResult);
-      }
+      if (itemData.checkResult) _r2lRenderSpeakFeedback(cardEl, itemData.checkResult);
     });
     _r2lMergeSpeakActivityScores(activity);
   }
+
 
 
   window.addEventListener('pagehide', saveLessonSession);
@@ -2959,12 +3136,15 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
 
   function ensureLessonActivities(lesson) {
     const activities = Array.isArray(lesson?.activities) ? lesson.activities : [];
+    const activityOrder = isBookLesson(lesson)
+      ? BOOK_ACTIVITY_ORDER
+      : FRONTEND_ACTIVITY_ORDER;
     const activityByType = new Map(
       activities
-        .filter((activity) => FRONTEND_ACTIVITY_ORDER.includes(activity?.type))
+        .filter((activity) => activityOrder.includes(activity?.type))
         .map((activity) => [activity.type, activity]),
     );
-    lesson.activities = FRONTEND_ACTIVITY_ORDER
+    lesson.activities = activityOrder
       .map((type) => activityByType.get(type))
       .filter(Boolean);
     return lesson;
@@ -3152,9 +3332,414 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
     w1RunReadAlong();
   }
 
+
+  let _bookReaderBound = false;
+
+  function bookSentenceIndexes(pageIndex) {
+    const sentences = state.lesson?.story?.sentences || [];
+    return sentences
+      .map((sentence, index) => ({ sentence, index }))
+      .filter((entry) => (Number(entry.sentence?.paragraph_index) || 0) === pageIndex);
+  }
+
+  function bookEnsureSentenceForPage(pageIndex) {
+    const entries = bookSentenceIndexes(pageIndex);
+    if (!entries.length) return;
+    if (!entries.some((entry) => entry.index === state.bookReader.sentenceIndex)) {
+      const unfinished = entries.find((entry) => !bookSentenceComplete(entry.index));
+      state.bookReader.sentenceIndex = (unfinished || entries[0]).index;
+    }
+  }
+
+  function bookQuestionsForSentence(sentenceIndex) {
+    return (window.__bookReaderNorm?.questions || [])
+      .filter((question) => question.sentence_index === sentenceIndex);
+  }
+
+  function bookSentenceComplete(sentenceIndex) {
+    const questions = bookQuestionsForSentence(sentenceIndex);
+    if (questions.length !== 2) return false;
+    return questions.every((question) => {
+      const answer = state.bookReader.answers[String(sentenceIndex) + ':' + question.id];
+      return answer?.correct || answer?.outcome === 'revealed';
+    });
+  }
+
+  function w1InitBookReaderPhase() {
+    state.w1Phase = 'book_reader';
+    qs('#w1-story-phase')?.classList.add('hidden');
+    qs('#w1-guided-listening-phase')?.classList.add('hidden');
+    qs('#w1-book-reader-phase')?.classList.remove('hidden');
+    qs('#w1-quest-path')?.classList.add('hidden');
+    qs('#w1-legacy-progress')?.classList.add('hidden');
+    qs('#global-cta')?.classList.add('hidden');
+    qsa('[data-activity-shell]').forEach((shell) => { shell.hidden = true; });
+
+    const totalPages = state.lesson.book_images.length;
+    state.bookReader.pageIndex = Math.max(
+      0,
+      Math.min(Number(state.bookReader.pageIndex) || 0, totalPages - 1),
+    );
+    state.bookReader.audioCompleted = Array.from(
+      { length: totalPages },
+      (_, index) => Boolean(state.bookReader.audioCompleted[index]),
+    );
+    state.bookReader.pagesDone = Array.from(
+      { length: totalPages },
+      (_, index) => Boolean(state.bookReader.pagesDone[index]),
+    );
+    const sentences = state.lesson?.story?.sentences || [];
+    window.__bookReaderNorm = normalizeGuidedListening(
+      Array.isArray(state.lesson.guided_listening) ? state.lesson.guided_listening : [],
+      sentences,
+    );
+    state.bookReader.pagesDone = Array.from({ length: totalPages }, (_, pageIndex) => {
+      const pageSentences = bookSentenceIndexes(pageIndex);
+      return Boolean(state.bookReader.pagesDone[pageIndex])
+        || (pageSentences.length > 0
+          && pageSentences.every((entry) => bookSentenceComplete(entry.index)));
+    });
+    bookEnsureSentenceForPage(state.bookReader.pageIndex);
+    bookRenderAttribution();
+    bookShowPage();
+
+    if (_bookReaderBound) return;
+    _bookReaderBound = true;
+    qs('#book-reader-listen-btn')?.addEventListener('click', bookPlayPageAudio);
+    qs('#book-reader-prev')?.addEventListener('click', () => {
+      if (state.bookReader.pageIndex <= 0) return;
+      stopLessonAudio();
+      state.bookReader.pageIndex -= 1;
+      bookEnsureSentenceForPage(state.bookReader.pageIndex);
+      bookShowPage();
+      scheduleSaveLessonSession();
+    });
+    qs('#book-reader-next')?.addEventListener('click', () => {
+      const pageIndex = state.bookReader.pageIndex;
+      const total = state.lesson.book_images.length;
+      if (!state.bookReader.pagesDone[pageIndex]) return;
+      if (pageIndex >= total - 1) {
+        bookFinishReader();
+        return;
+      }
+      stopLessonAudio();
+      state.bookReader.pageIndex += 1;
+      bookEnsureSentenceForPage(state.bookReader.pageIndex);
+      bookShowPage();
+      scheduleSaveLessonSession();
+    });
+  }
+
+  function bookShowPage() {
+    const pageIndex = state.bookReader.pageIndex;
+    const total = state.lesson.book_images.length;
+    const counter = qs('#book-reader-page-counter');
+    if (counter) counter.textContent = 'Trang ' + (pageIndex + 1) + ' / ' + total;
+    const image = qs('#book-reader-img');
+    if (image) {
+      image.src = state.lesson.book_images[pageIndex] || '';
+      image.alt = 'Minh họa trang ' + (pageIndex + 1) + ' của truyện ' + (state.lesson.story?.title || '');
+    }
+    const pageText = qs('#book-reader-page-text');
+    if (pageText) pageText.textContent = state.lesson.story.paragraphs_en[pageIndex] || '';
+    const status = qs('#book-reader-audio-status');
+    if (status) status.textContent = state.bookReader.audioCompleted[pageIndex]
+      ? 'Con đã nghe xong trang này.'
+      : '';
+    const gate = qs('#book-reader-audio-gate');
+    const sentencePanel = qs('#book-reader-sentence-panel');
+    const listen = qs('#book-reader-listen-btn');
+    if (state.bookReader.audioCompleted[pageIndex]) {
+      gate?.classList.add('hidden');
+      sentencePanel?.classList.remove('hidden');
+      bookShowSentence();
+    } else {
+      gate?.classList.remove('hidden');
+      sentencePanel?.classList.add('hidden');
+      if (listen) {
+        listen.disabled = false;
+        listen.textContent = '🔊 Nghe trang';
+      }
+      const questions = qs('#book-reader-questions');
+      if (questions) questions.innerHTML = '';
+    }
+    bookUpdateNavigation();
+  }
+
+  function bookAudioFailure(message) {
+    const button = qs('#book-reader-listen-btn');
+    if (button) {
+      button.disabled = false;
+      button.textContent = '🔊 Thử nghe lại';
+    }
+    const status = qs('#book-reader-audio-status');
+    if (status) status.textContent = message;
+  }
+
+  function bookPlayPageAudio() {
+    const pageIndex = state.bookReader.pageIndex;
+    const url = state.lesson.book_page_audio[pageIndex] || '';
+    if (!url || isRewardSfxUrl(url)) {
+      bookAudioFailure('Audio trang chưa sẵn sàng. Con thử lại sau nhé.');
+      return;
+    }
+    const button = qs('#book-reader-listen-btn');
+    if (button) {
+      button.disabled = true;
+      button.textContent = '🔊 Đang phát...';
+    }
+    const status = qs('#book-reader-audio-status');
+    if (status) status.textContent = 'Con nghe hết trang nhé...';
+    playAudio(url, button);
+    const audio = lessonAudioState.audio;
+    if (!audio) {
+      bookAudioFailure('Chưa phát được audio. Con bấm thử nghe lại nhé.');
+      return;
+    }
+    const fail = () => {
+      if (!state.bookReader.audioCompleted[pageIndex]) {
+        bookAudioFailure('Chưa phát được audio. Con bấm thử nghe lại nhé.');
+      }
+    };
+    audio.addEventListener('error', fail, { once: true });
+    audio.addEventListener('r2l-play-error', fail, { once: true });
+    audio.addEventListener('ended', () => {
+      if (pageIndex !== state.bookReader.pageIndex) return;
+      const completed = state.bookReader.audioCompleted.slice();
+      completed[pageIndex] = true;
+      state.bookReader.audioCompleted = completed;
+      qs('#book-reader-audio-gate')?.classList.add('hidden');
+      qs('#book-reader-sentence-panel')?.classList.remove('hidden');
+      bookShowSentence();
+      bookUpdateNavigation();
+      scheduleSaveLessonSession();
+    }, { once: true });
+  }
+
+  function bookShowSentence() {
+    const pageIndex = state.bookReader.pageIndex;
+    bookEnsureSentenceForPage(pageIndex);
+    const entries = bookSentenceIndexes(pageIndex);
+    const localIndex = entries.findIndex(
+      (entry) => entry.index === state.bookReader.sentenceIndex,
+    );
+    const current = entries[localIndex];
+    if (!current) return;
+    const counter = qs('#book-reader-sentence-counter');
+    if (counter) {
+      counter.textContent = 'Câu ' + (localIndex + 1) + ' / ' + entries.length
+        + ' trong trang này';
+    }
+    const text = qs('#book-reader-sentence-text');
+    if (text) text.textContent = current.sentence.text_en || '';
+    bookRenderQuestions(current.index);
+  }
+
+  function bookRenderQuestions(sentenceIndex) {
+    const container = qs('#book-reader-questions');
+    if (!container) return;
+    const questions = bookQuestionsForSentence(sentenceIndex);
+    container.innerHTML = '';
+    if (questions.length !== 2) {
+      const error = document.createElement('p');
+      error.className = 'rounded-md border border-gold/30 bg-gold/10 p-3 text-sm text-cream';
+      error.textContent = 'Trang này đang thiếu câu hỏi. Con nhờ ba mẹ tải lại bài nhé.';
+      container.appendChild(error);
+      return;
+    }
+
+    questions.forEach((question) => {
+      const card = document.createElement('article');
+      card.className = 'r2l-activity r2l-guided-question';
+      const title = document.createElement('p');
+      title.className = 'text-sm font-semibold text-cream';
+      title.textContent = question.question_en || '';
+      const options = document.createElement('div');
+      options.className = 'r2l-guided-question__options mt-3 flex flex-wrap gap-2';
+      const feedback = document.createElement('div');
+      feedback.className = 'r2l-guided-question__feedback mt-2 hidden text-sm text-cream/80';
+      const key = String(sentenceIndex) + ':' + question.id;
+      const existing = state.bookReader.answers[key];
+
+      (question.options_en || []).forEach((option, optionIndex) => {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'r2l-guided-question__option';
+        button.textContent = option;
+        button.dataset.optionIndex = String(optionIndex);
+        const finalAnswer = existing?.correct || existing?.outcome === 'revealed';
+        if (finalAnswer) {
+          button.disabled = true;
+          if (optionIndex === question.correct_index) button.dataset.state = 'revealed';
+          else if (optionIndex === existing.selectedIndex) button.dataset.state = 'selected-wrong';
+        } else {
+          button.addEventListener('click', () => {
+            const previous = state.bookReader.answers[key];
+            const attempts = Number(previous?.attempts || 0) + 1;
+            const correct = optionIndex === question.correct_index;
+            const outcome = correct
+              ? (attempts === 1 ? 'first_try' : 'second_try')
+              : (attempts >= 2 ? 'revealed' : 'second_try');
+            state.bookReader.answers[key] = {
+              sentenceIndex,
+              questionId: question.id,
+              selectedIndex: optionIndex,
+              correct,
+              outcome,
+              attempts,
+            };
+            if (correct) {
+              feedback.textContent = 'Đúng rồi! 🎉';
+            } else if (outcome === 'revealed') {
+              feedback.textContent = 'Đáp án đúng: '
+                + (question.options_en[question.correct_index] || '');
+            } else {
+              feedback.textContent = 'Chưa đúng — con thử lại nhé!';
+            }
+            feedback.classList.remove('hidden');
+            scheduleSaveLessonSession();
+            if (correct || outcome === 'revealed') {
+              bookRenderQuestions(sentenceIndex);
+              bookAdvanceAfterSentence(sentenceIndex);
+            } else {
+              button.dataset.state = 'selected-wrong';
+            }
+          });
+        }
+        options.appendChild(button);
+      });
+
+      if (existing?.correct) {
+        feedback.textContent = 'Đúng rồi! 🎉';
+        feedback.classList.remove('hidden');
+      } else if (existing?.outcome === 'revealed') {
+        feedback.textContent = 'Đáp án đúng: '
+          + (question.options_en[question.correct_index] || '');
+        feedback.classList.remove('hidden');
+      } else if (existing?.attempts) {
+        feedback.textContent = 'Chưa đúng — con thử lại nhé!';
+        feedback.classList.remove('hidden');
+      }
+      card.append(title, options, feedback);
+      container.appendChild(card);
+    });
+  }
+
+  function bookAdvanceAfterSentence(sentenceIndex) {
+    if (!bookSentenceComplete(sentenceIndex)) return;
+    const pageIndex = state.bookReader.pageIndex;
+    const entries = bookSentenceIndexes(pageIndex);
+    const localIndex = entries.findIndex((entry) => entry.index === sentenceIndex);
+    if (localIndex < entries.length - 1) {
+      window.setTimeout(() => {
+        if (state.bookReader.sentenceIndex !== sentenceIndex) return;
+        state.bookReader.sentenceIndex = entries[localIndex + 1].index;
+        bookShowSentence();
+        scheduleSaveLessonSession();
+      }, 500);
+      return;
+    }
+    const done = state.bookReader.pagesDone.slice();
+    done[pageIndex] = true;
+    state.bookReader.pagesDone = done;
+    bookUpdateNavigation();
+    scheduleSaveLessonSession();
+  }
+
+  function bookUpdateNavigation() {
+    const pageIndex = state.bookReader.pageIndex;
+    const total = state.lesson.book_images.length;
+    const previous = qs('#book-reader-prev');
+    const next = qs('#book-reader-next');
+    if (previous) previous.hidden = pageIndex === 0;
+    if (!next) return;
+    next.disabled = !state.bookReader.pagesDone[pageIndex];
+    if (pageIndex >= total - 1) {
+      next.textContent = state.bookReader.pagesDone[pageIndex]
+        ? 'Bắt đầu nhiệm vụ 🎯'
+        : 'Trả lời hết câu hỏi trước';
+    } else if (state.bookReader.pagesDone[pageIndex]) {
+      next.textContent = 'Trang tiếp →';
+    } else if (state.bookReader.audioCompleted[pageIndex]) {
+      next.textContent = 'Trả lời hết câu hỏi trước';
+    } else {
+      next.textContent = 'Nghe trang trước';
+    }
+  }
+
+  function bookRenderAttribution() {
+    const root = qs('#book-reader-attribution-content');
+    if (!root || root.dataset.rendered === 'true') return;
+    root.dataset.rendered = 'true';
+    const attribution = state.lesson.book_attribution || {};
+    const addText = (label, value) => {
+      if (!value) return;
+      const paragraph = document.createElement('p');
+      const strong = document.createElement('strong');
+      strong.textContent = label + ': ';
+      paragraph.append(strong, document.createTextNode(String(value)));
+      root.appendChild(paragraph);
+    };
+    addText('Tên truyện', attribution.title);
+    addText('Tác giả / họa sĩ', (attribution.creators || []).join(', '));
+    addText('Nhà xuất bản', attribution.publisher);
+    addText('Ghi công', attribution.credit_text);
+    const addLink = (label, href) => {
+      if (!href) return;
+      const link = document.createElement('a');
+      link.href = href;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      link.className = 'block min-h-11 py-2 font-bold text-gold underline';
+      link.textContent = label;
+      root.appendChild(link);
+    };
+    addLink('Xem truyện gốc trên StoryWeaver', attribution.source_url);
+    addLink(
+      'Giấy phép ' + (attribution.license?.name || 'CC BY 4.0'),
+      attribution.license?.url,
+    );
+    if (Array.isArray(attribution.image_credits) && attribution.image_credits.length) {
+      const heading = document.createElement('p');
+      heading.className = 'font-bold text-cream';
+      heading.textContent = 'Ghi công hình ảnh';
+      root.appendChild(heading);
+      const list = document.createElement('ol');
+      list.className = 'list-decimal space-y-1 pl-5';
+      attribution.image_credits.forEach((credit) => {
+        const item = document.createElement('li');
+        item.textContent = credit.credit_text || '';
+        list.appendChild(item);
+      });
+      root.appendChild(list);
+    }
+  }
+
+  function bookFinishReader() {
+    const answers = Object.values(state.bookReader.answers);
+    const total = answers.length;
+    state.activityResults.guided_listening = {
+      type: 'guided_listening',
+      attempted: true,
+      correct_count: answers.filter((answer) => answer.correct).length,
+      total_count: total,
+      wrong_count: answers.filter((answer) => answer.outcome === 'revealed').length,
+      question_outcomes: answers.map((answer) => ({
+        id: answer.questionId,
+        outcome: answer.outcome,
+        attempts: answer.attempts,
+      })),
+    };
+    qs('#w1-book-reader-phase')?.classList.add('hidden');
+    w1EnterActivitiesPhase(false);
+    saveLessonSession();
+  }
+
   function w1EnterActivitiesPhase(resume) {
     state.w1Phase = 'activities';
     qs('#w1-story-phase')?.classList.add('hidden');
+    qs('#w1-book-reader-phase')?.classList.add('hidden');
+    qs('#w1-legacy-progress')?.classList.remove('hidden');
     qs('#w1-quest-path')?.classList.remove('hidden');
     qs('#global-cta')?.classList.remove('hidden');
     w1EnsureHudStoryButton();
@@ -3792,16 +4377,28 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
     });
     const resumed = restoreLessonSession();
     renderAllActivitiesOnce(lesson.activities || []);
+    configureActivityProgress();
     if (isW1()) {
-      if (!resumed || state.w1Phase === 'story') {
-        state.w1Phase = w1GateComplete() ? 'guided_listening' : 'story';
-      }
-      if (state.w1Phase === 'story') {
-        w1InitStoryPhase();
-      } else if (state.w1Phase === 'guided_listening') {
-        w1InitGuidedListeningPhase();
+      if (isBookLesson()) {
+        if (!resumed || !['book_reader', 'activities', 'result'].includes(state.w1Phase)) {
+          state.w1Phase = 'book_reader';
+        }
+        if (state.w1Phase === 'book_reader') {
+          w1InitBookReaderPhase();
+        } else {
+          w1EnterActivitiesPhase(resumed);
+        }
       } else {
-        w1EnterActivitiesPhase(resumed);
+        if (!resumed || state.w1Phase === 'story') {
+          state.w1Phase = w1GateComplete() ? 'guided_listening' : 'story';
+        }
+        if (state.w1Phase === 'story') {
+          w1InitStoryPhase();
+        } else if (state.w1Phase === 'guided_listening') {
+          w1InitGuidedListeningPhase();
+        } else {
+          w1EnterActivitiesPhase(resumed);
+        }
       }
     } else {
       showActivity(resumed ? state.activityIndex : 0);
@@ -3831,7 +4428,7 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
         renderMcqActivity(body, activity);
       } else if (activity.type === 'listen_and_order') {
         renderOrderActivity(body, activity);
-      } else if (activity.type === 'listen_and_speak') {
+      } else if (activity.type === 'listen_and_speak' || activity.type === 'read_aloud') {
         renderSpeakActivity(body, activity);
       }
     });
@@ -3920,7 +4517,7 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
     const activities = state.lesson.activities || [];
     const maxIndex = Math.max(0, activities.length - 1);
     const nextIndex = Math.max(0, Math.min(index, maxIndex));
-    if (isW1() && state.w1Phase === 'story') return;
+    if (isW1() && (state.w1Phase === 'story' || state.w1Phase === 'book_reader')) return;
     if (isW1() && nextIndex > state.w1MaxUnlocked && !state.completedTypes.has(activities[nextIndex]?.type)) {
       showToast('Xong nhiệm vụ này trước đã nha!');
       return;
@@ -3962,7 +4559,7 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
     setMinnyStrip('idle', MINNY_COMMANDS[activity.type] || '');
     _itemStreak = 0;
 
-    const useLargeMinny = activity.type === 'listen_and_speak';
+    const useLargeMinny = activity.type === 'listen_and_speak' || activity.type === 'read_aloud';
     const minnyStrip = qs('#minny-strip');
     if (minnyStrip) minnyStrip.hidden = useLargeMinny;
     const heroWrap = shell.querySelector('.r2l-minny-hero-wrap');
@@ -3973,7 +4570,7 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
     updateGlobalCta();
     scheduleSaveLessonSession();
 
-    if (activity.type === 'listen_and_speak') {
+    if (activity.type === 'listen_and_speak' || activity.type === 'read_aloud') {
       _r2lMountMicCheck(shell);
       if (window.R2LMicCheck?.sessionPassed?.()) {
         _r2lApplyMicGate(true);
@@ -4763,7 +5360,7 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
   }
 
   function renderSpeakActivity(root, activity) {
-    const heroScope = root.closest('[data-activity-shell="listen_and_speak"]');
+    const heroScope = root.closest('[data-activity-shell]');
     _r2lInitMinnyHero(heroScope);
 
     root.innerHTML = `
@@ -4811,22 +5408,32 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
       button.addEventListener('click', () => {
         _r2lSetMinnyMood('listen', heroScope);
         const onEnd = () => _r2lSetMinnyMood('idle', heroScope);
+        const unlockRecording = () => {
+          if (recordBtn) {
+            recordBtn.dataset.heard = 'true';
+            recordBtn.disabled = !_r2lMicIsReady();
+          }
+          markSpeakHeard(activity, itemIndex);
+        };
         if (url && !isRewardSfxUrl(url)) {
           playAudio(url, button);
           const audio = lessonAudioState.audio;
           if (audio) {
             audio.addEventListener('ended', onEnd, { once: true });
+            if (activity.type === 'read_aloud') {
+              audio.addEventListener('ended', unlockRecording, { once: true });
+            }
           } else {
             onEnd();
           }
+          if (activity.type !== 'read_aloud') unlockRecording();
+        } else if (activity.type === 'read_aloud') {
+          onEnd();
+          showToast('Câu mẫu chưa có audio. Con thử lại sau nhé!');
         } else {
           _r2lSpeakEnglishLine(item.text_en, onEnd);
+          unlockRecording();
         }
-        if (recordBtn) {
-          recordBtn.dataset.heard = 'true';
-          recordBtn.disabled = !_r2lMicIsReady();
-        }
-        markSpeakHeard(activity, itemIndex);
       });
 
       _r2lInitSpeakRecorder(itemKey, cardEl, item?.text_en || '');
@@ -5027,6 +5634,7 @@ const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 
       if (lessonAudioState.audio === audio) stopLessonAudio({ resetTime: false });
     });
     audio.play().catch(() => {
+      audio.dispatchEvent(new Event('r2l-play-error'));
       if (lessonAudioState.audio === audio) stopLessonAudio();
       showToast('Chưa phát được audio. Con bấm lại một lần nữa nhé!');
     });
