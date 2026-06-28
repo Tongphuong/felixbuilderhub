@@ -32,6 +32,7 @@ from validator_v2 import validate_story_only
 
 DEFAULT_MODEL_V2 = "claude-opus-4-6-20250610"
 DEFAULT_OPENAI_MODEL = "gpt-5.4-mini"
+GUIDED_LISTENING_MODEL = "gpt-5-mini"
 PRIMARY_OPENAI_ATTEMPTS = 2
 
 # V2.5 story 2-pass polish (behind READ2LEAD_STORY_2PASS). Pass 2 rewrites only
@@ -469,7 +470,7 @@ def _generate_guided_listening_via_openai(prompt: str) -> tuple[str, dict]:
     Returns (raw_json_text, usage_dict).
     """
     client = OpenAI(api_key=_openai_api_key())
-    model = DEFAULT_OPENAI_MODEL
+    model = GUIDED_LISTENING_MODEL
 
     response = client.chat.completions.create(
         model=model,
@@ -605,7 +606,7 @@ def _generate_pack_two_call(
             {"story": story, "activities": activities},
             llm_fallback=gl_fallback,
         )
-        gl_model = DEFAULT_OPENAI_MODEL
+        gl_model = GUIDED_LISTENING_MODEL
     except Exception as exc:
         print(f"[two-call] guided_listening generation failed, proceeding without: {exc}")
         pack = {"story": story, "activities": activities}
