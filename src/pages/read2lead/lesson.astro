@@ -1191,6 +1191,15 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
     playWrongSfx(questionId);
   }
 
+  function onBookReaderCorrect({ coinTone = false } = {}) {
+    onItemCorrect();
+    if (coinTone) window.__r2lJuice?.playSynthTone?.('coin', _r2lSfxState.muted);
+  }
+
+  function onBookReaderWrong(questionId) {
+    onItemWrong(questionId);
+  }
+
   function _r2lUpdateActiveHeroMood(mood) {
     const activity = state.lesson?.activities?.[state.activityIndex];
     if (!activity?.type) return;
@@ -3677,6 +3686,7 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
       button.textContent = option;
       button.addEventListener('click', () => {
         const correct = optionIndex === question.correct_index;
+        const questionId = `book:${state.lesson?.book_slug || 'book'}:${question.id}`;
         page.question_results.push({
           question_id: question.id,
           sentence_index: question.sentence_index,
@@ -3692,6 +3702,12 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
           ? 'Đúng rồi! Mình sang câu tiếp nhé.'
           : `Đáp án đúng là: ${question.options_en[question.correct_index]}.`;
         feedback.classList.remove('hidden');
+        if (correct) {
+          clearWrongStreak(questionId);
+          onBookReaderCorrect();
+        } else {
+          onBookReaderWrong(questionId);
+        }
         scheduleSaveLessonSession();
         window.setTimeout(() => {
           if (state.bookReader.stage === 'questions') bookRenderQuestion();
@@ -3824,10 +3840,16 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
     chunk.attempts += 1;
     chunk.score_percent = score;
     chunk.latest_feedback = payload;
+    const questionId = `book-shadow:${chunk.chunk_id}`;
     if (score >= _R2L_SPEAKING_PASS_PERCENT) {
       chunk.status = 'passed';
+      clearWrongStreak(questionId);
+      onBookReaderCorrect({ coinTone: true });
     } else if (chunk.attempts >= 3) {
       chunk.status = 'skipped';
+      onBookReaderWrong(questionId);
+    } else {
+      onBookReaderWrong(questionId);
     }
     const attemptStatus = card?.querySelector('[data-book-attempt-status]');
     if (attemptStatus) {

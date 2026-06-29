@@ -78,6 +78,18 @@ test('book questions are selected once, spoken, answered one at a time, and reve
   assert.match(lesson, /page\.question_results\.push/);
 });
 
+test('book questions reuse old reward and wrong-answer SFX hooks', () => {
+  assert.match(lesson, /function onBookReaderCorrect/);
+  assert.match(lesson, /function onBookReaderWrong/);
+  const start = lesson.indexOf('function bookRenderQuestion');
+  const end = lesson.indexOf('function bookCurrentChunk', start);
+  const body = lesson.slice(start, end);
+  assert.match(body, /const questionId = `book:\$\{state\.lesson\?\.book_slug \|\| 'book'\}:\$\{question\.id\}`/);
+  assert.match(body, /clearWrongStreak\(questionId\)/);
+  assert.match(body, /onBookReaderCorrect\(\)/);
+  assert.match(body, /onBookReaderWrong\(questionId\)/);
+});
+
 test('shadow chunks play sentence audio in order before unlocking the shared recorder', () => {
   assert.match(lesson, /buildBookShadowChunks\(/);
   const start = lesson.indexOf('async function bookPlayShadowChunk');
@@ -102,12 +114,27 @@ test('pronunciation feedback stays visible and chunk advance is manual', () => {
   assert.match(lesson, /bookCompleteShadowChunk\(chunk\.chunk_id\)/);
 });
 
+test('shadow reading pass and pronunciation fail reuse old celebration and wrong SFX hooks', () => {
+  const start = lesson.indexOf('function bookHandleShadowScore');
+  const end = lesson.indexOf('function bookHandleShadowTechnicalFailure', start);
+  const body = lesson.slice(start, end);
+  assert.match(body, /const questionId = `book-shadow:\$\{chunk\.chunk_id\}`/);
+  assert.match(body, /clearWrongStreak\(questionId\)/);
+  assert.match(body, /onBookReaderCorrect\(\{ coinTone: true \}\)/);
+  assert.match(body, /onBookReaderWrong\(questionId\)/);
+  assert.match(body, /continueButton\.classList\.remove\('hidden'\)/);
+});
+
 test('technical failures still use separate counters and explicit no-reward skip', () => {
   assert.match(lesson, /chunk\.technical_failures \+= 1/);
   assert.match(lesson, /chunk\.technical_failures >= 2/);
   assert.match(lesson, /technical_skip = true/);
   assert.match(lesson, /bookFinishReader\(\);/);
   assert.match(lesson, /Minny đang tự động lưu kết quả/);
+  const start = lesson.indexOf('function bookHandleShadowTechnicalFailure');
+  const end = lesson.indexOf('function bookSkipCurrentChunkForTechnicalFailure', start);
+  const body = lesson.slice(start, end);
+  assert.doesNotMatch(body, /onBookReaderCorrect|onBookReaderWrong|showReward|playSfx/);
 });
 
 test('book submission sends explicit v2 pages while legacy activity routing remains available', () => {
