@@ -7,11 +7,19 @@ import {
 } from '../functions/api/read2lead-lesson.js';
 import { onRequestPost } from '../functions/api/submit-read2lead-lesson.js';
 import { progressKey } from '../functions/api/_read2lead-v2-state.js';
+import { buildBookShadowChunks, selectBookQuestions } from '../src/lib/read2lead-book-flow.mjs';
 
 const ACCESS_CODE = 'R2L-BOOK-COMPLETE';
 const PACK_ID = 'book-pack-id';
 
 function bookContext() {
+  const sentences = ['One small cat.', 'Two red kites.', 'Three tall trees.'].map(
+    (text_en, paragraph_index) => ({
+      text_en,
+      paragraph_index,
+      audio_url: `https://pub-test.r2.dev/books/book_123/s_00${paragraph_index}.mp3`,
+    }),
+  );
   return {
     schema_version: 2,
     book_slug: 'book_123',
@@ -41,66 +49,56 @@ function bookContext() {
     topic: 'Book',
     story: {
       title: 'Book',
-      paragraphs_en: ['One.', 'Two.', 'Three.'],
-      sentences: [
-        {
-          text_en: 'One.',
-          paragraph_index: 0,
-          audio_url: 'https://pub-test.r2.dev/books/book_123/s_000.mp3',
-        },
-      ],
+      paragraphs_en: sentences.map((sentence) => sentence.text_en),
+      sentences,
     },
-    guided_listening: [{ paragraph_index: 0, questions: [{ id: 'q1' }, { id: 'q2' }] }],
+    guided_listening: sentences.map((_, paragraph_index) => ({
+      paragraph_index,
+      questions: [0, 1].map((questionIndex) => ({
+        id: `p${paragraph_index}_q${questionIndex}`,
+        sentence_index: paragraph_index,
+        question_en: questionIndex === 0 ? 'What is here?' : 'How many?',
+        options_en: ['One', 'Two', 'Three'],
+        correct_index: paragraph_index,
+      })),
+    })),
     activities: [
       { type: 'listening_fill_blank', items: [{ id: 'a1' }] },
       { type: 'listen_and_order', items: [{ id: 'b1' }] },
       {
         type: 'read_aloud',
-        items: [
-          {
-            id: 'ra_0',
-            text_en: 'One.',
-            audio_url: 'https://pub-test.r2.dev/books/book_123/s_000.mp3',
-          },
-        ],
+        items: sentences.map((sentence, index) => ({
+          id: `ra_${index}`,
+          text_en: sentence.text_en,
+          audio_url: sentence.audio_url,
+        })),
       },
     ],
   };
 }
 
-function results({ readScore = 100, skipped = false } = {}) {
-  return [
-    {
-      type: 'guided_listening',
-      attempted: true,
-      correct_count: 2,
-      total_count: 2,
-      wrong_count: 0,
-    },
-    {
-      type: 'listening_fill_blank',
-      attempted: true,
-      correct_count: 1,
-      total_count: 1,
-      wrong_count: 0,
-    },
-    {
-      type: 'listen_and_order',
-      attempted: true,
-      correct_count: 1,
-      total_count: 1,
-      wrong_count: 0,
-    },
-    {
-      type: 'read_aloud',
-      attempted: true,
-      correct_count: skipped ? 0 : 1,
-      total_count: 1,
-      wrong_count: skipped ? 1 : 0,
-      score_percent: skipped ? 0 : readScore,
-      ...(skipped ? { skipped_due_to_mic: true } : {}),
-    },
-  ];
+function bookReader({ score = 70, skip = null, technical = false } = {}) {
+  const context = bookContext();
+  return {
+    pages: context.story.paragraphs_en.map((_, pageIndex) => ({
+      page_index: pageIndex,
+      audio_completed: true,
+      question_results: selectBookQuestions(
+        context.guided_listening,
+        context.story.sentences,
+        pageIndex,
+      ).map((question) => ({ question_id: question.id, correct: true })),
+      shadow_chunks: buildBookShadowChunks(context.story.sentences, pageIndex).map((chunk) => ({
+        chunk_id: chunk.chunk_id,
+        sentence_indexes: chunk.sentence_indexes,
+        attempts: skip === pageIndex && !technical ? 3 : (technical && skip === pageIndex ? 0 : 1),
+        status: skip === pageIndex ? 'skipped' : 'passed',
+        score_percent: skip === pageIndex ? 49 : score,
+        technical_failures: technical && skip === pageIndex ? 2 : 0,
+        ...(technical && skip === pageIndex ? { technical_skip: true } : {}),
+      })),
+    })),
+  };
 }
 
 function makeFixture(existingCompleted = []) {
@@ -144,17 +142,14 @@ function makeFixture(existingCompleted = []) {
           return value == null ? null : structuredClone(value);
         },
         async put(key, value) {
-          store.set(
-            key,
-            typeof value === 'string' ? JSON.parse(value) : structuredClone(value),
-          );
+          store.set(key, typeof value === 'string' ? JSON.parse(value) : structuredClone(value));
         },
       },
     },
   };
 }
 
-async function submit(activityResults, fixture) {
+async function submit(bookReaderState, fixture) {
   return onRequestPost({
     request: new Request('https://example.com/api/submit-read2lead-lesson', {
       method: 'POST',
@@ -162,14 +157,18 @@ async function submit(activityResults, fixture) {
       body: JSON.stringify({
         access_code: ACCESS_CODE,
         pack_id: PACK_ID,
-        answers: { activity_results: activityResults },
+        answers: {
+          book_flow_version: 2,
+          book_reader: bookReaderState,
+          activity_results: [],
+        },
       }),
     }),
     env: fixture.env,
   });
 }
 
-test('valid book payload passes all book fields and keeps exactly A/B/D', () => {
+test('valid book payload passes all book fields and keeps stored A/B/D data internal', () => {
   const context = bookContext();
   const lesson = buildV2LessonPayload({
     accessCode: ACCESS_CODE,
@@ -189,7 +188,6 @@ test('valid book payload passes all book fields and keeps exactly A/B/D', () => 
     ['listening_fill_blank', 'listen_and_order', 'read_aloud'],
   );
   assert.match(lesson.book_page_audio[0], /^https:\/\/audio\.felixbuilderhub\.com/);
-  assert.match(lesson.activities[2].items[0].audio_url, /^https:\/\/audio\.felixbuilderhub\.com/);
 });
 
 test('mismatched page arrays do not expose book mode fields', () => {
@@ -206,26 +204,41 @@ test('mismatched page arrays do not expose book mode fields', () => {
   assert.equal('book_slug' in lesson, false);
 });
 
-test('rewarded completion appends the book slug idempotently', async () => {
+test('all passed chunks reward completion and append the book slug idempotently', async () => {
   const fixture = makeFixture(['book_999', 'book_123']);
-  const response = await submit(results(), fixture);
+  const response = await submit(bookReader(), fixture);
   const payload = await response.json();
   assert.equal(payload.passed, true);
   assert.deepEqual(fixture.store.get(ACCESS_CODE).completed_books, ['book_999', 'book_123']);
 });
 
-test('failed submission does not mark the book complete', async () => {
-  const fixture = makeFixture([]);
-  const response = await submit(results({ readScore: 49 }), fixture);
-  const payload = await response.json();
-  assert.equal(payload.passed, false);
-  assert.equal(payload.next_pack_unlocked, false);
-  assert.deepEqual(fixture.store.get(ACCESS_CODE).completed_books, []);
+test('server rejects unheard pages and a passed chunk scored at 49', async () => {
+  const unheardFixture = makeFixture([]);
+  const unheard = bookReader();
+  unheard.pages[1].audio_completed = false;
+  const unheardResponse = await submit(unheard, unheardFixture);
+  assert.equal(unheardResponse.status, 400);
+  assert.deepEqual(unheardFixture.store.get(ACCESS_CODE).completed_books, []);
+
+  const lowFixture = makeFixture([]);
+  const low = bookReader();
+  low.pages[0].shadow_chunks[0].score_percent = 49;
+  const lowResponse = await submit(low, lowFixture);
+  assert.equal(lowResponse.status, 400);
 });
 
-test('explicit mic skip marks the book complete without rewards', async () => {
+test('three low scores complete the book without rewards', async () => {
   const fixture = makeFixture([]);
-  const response = await submit(results({ skipped: true }), fixture);
+  const response = await submit(bookReader({ skip: 1 }), fixture);
+  const payload = await response.json();
+  assert.equal(payload.completed_without_reward, true);
+  assert.deepEqual(payload.rewards_earned, { coins: 0, xp: 0 });
+  assert.deepEqual(fixture.store.get(ACCESS_CODE).completed_books, ['book_123']);
+});
+
+test('two technical failures allow explicit no-reward completion without pronunciation attempts', async () => {
+  const fixture = makeFixture([]);
+  const response = await submit(bookReader({ skip: 2, technical: true }), fixture);
   const payload = await response.json();
   assert.equal(payload.completed_without_reward, true);
   assert.deepEqual(payload.rewards_earned, { coins: 0, xp: 0 });

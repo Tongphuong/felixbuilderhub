@@ -1,5 +1,6 @@
 import { getClientIp, checkCodeRateLimit, recordCodeFailure, rateLimitedResponse } from './_rate-limit.js';
 import { ensureSixActivities } from './_read2lead-lesson-activities.js';
+import { validateBookFlowSubmission } from '../../src/lib/read2lead-book-flow.mjs';
 import {
   applyQuestProgress,
   applyPackCompletion,
@@ -204,22 +205,60 @@ async function submitV2Lesson({
   }
 
   const submittedAt = new Date().toISOString();
-  const activityResults = Array.isArray(submittedAnswers.activity_results)
+  const isBookFlowV2 = isBookLessonContext(lessonContext);
+  let bookFlowValidation = null;
+  if (isBookFlowV2) {
+    if (Number(submittedAnswers.book_flow_version) !== 2) {
+      return json({
+        ok: false,
+        error: 'invalid_book_flow',
+        message: 'Bai doc sach can du lieu tien do moi. Con tai lai bai nhe.',
+      }, 400);
+    }
+    bookFlowValidation = validateBookFlowSubmission(submittedAnswers.book_reader, lessonContext);
+    if (!bookFlowValidation.ok) {
+      return json({
+        ok: false,
+        error: 'invalid_book_flow',
+        message: 'Tien do doc sach chua day du. Con hoan thanh tung trang nhe.',
+        details: bookFlowValidation.errors,
+      }, 400);
+    }
+  }
+
+  const submittedActivityResults = Array.isArray(submittedAnswers.activity_results)
     ? submittedAnswers.activity_results
     : [];
-  const expectedTypes = (Array.isArray(lessonContext.activities) ? lessonContext.activities : [])
-    .map((activity) => activity?.type)
-    .filter((type) => ACTIVE_LESSON_ACTIVITY_TYPES.has(type));
-  if (isBookLessonContext(lessonContext)) {
-    expectedTypes.unshift('guided_listening');
-  }
+  const activityResults = isBookFlowV2
+    ? [{
+        type: 'read_aloud',
+        attempted: true,
+        correct_count: bookFlowValidation.summary.chunks_passed,
+        total_count: bookFlowValidation.summary.chunks_passed + bookFlowValidation.summary.chunks_skipped,
+        wrong_count: bookFlowValidation.summary.chunks_skipped,
+        score_percent: bookFlowValidation.summary.average_pronunciation_score,
+        ...(bookFlowValidation.skipped ? { skipped_due_to_mic: true } : {}),
+      }]
+    : submittedActivityResults;
+  const expectedTypes = isBookFlowV2
+    ? ['read_aloud']
+    : (Array.isArray(lessonContext.activities) ? lessonContext.activities : [])
+        .map((activity) => activity?.type)
+        .filter((type) => ACTIVE_LESSON_ACTIVITY_TYPES.has(type));
   const completedTypes = new Set(
     activityResults
       .filter((result) => result && result.attempted !== false)
       .map((result) => result.type)
       .filter(Boolean),
   );
-  const score = scoreActivityResults(activityResults, lessonContext);
+  const score = isBookFlowV2
+    ? {
+        correct_count: bookFlowValidation.summary.chunks_passed,
+        total_count: bookFlowValidation.summary.chunks_passed + bookFlowValidation.summary.chunks_skipped,
+        wrong_count: bookFlowValidation.summary.chunks_skipped,
+        score_percent: bookFlowValidation.summary.average_pronunciation_score,
+      }
+    : scoreActivityResults(activityResults, lessonContext);
   const totalCount = score.total_count || expectedTypes.length || ACTIVE_LESSON_ACTIVITY_TYPES.size;
   const correctCount = score.correct_count;
   const allActivitiesAttempted = expectedTypes.length > 0
@@ -247,6 +286,11 @@ async function submitV2Lesson({
     correct_count: correctCount,
     total_count: totalCount,
     activity_results: activityResults,
+    ...(isBookFlowV2 ? {
+      book_flow_version: 2,
+      book_reader: submittedAnswers.book_reader,
+      book_summary: bookFlowValidation.summary,
+    } : {}),
     rewards_earned: rewardsEarned,
   };
   const learningMetric = passed
