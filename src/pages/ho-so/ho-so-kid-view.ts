@@ -22,7 +22,7 @@ const MAX_POLL_ATTEMPTS = 60;
 const POLL_INTERVAL_MS = 5000;
 
 const WAIT_STAGES = [
-  'Minny đang viết truyện riêng cho con...',
+  'Minny đang chuẩn bị bài đọc cho con...',
   'Đang chuẩn bị phần nghe hay ho...',
   'Đang làm bài tập thú vị...',
   'Sắp xong rồi — Minny mở cửa nhé!',
@@ -99,15 +99,15 @@ function buildHeroCta(
   code: string,
 ) {
   const encoded = encodeURIComponent(code);
-  if (!pack) return { label: 'Tạo truyện mới ✨', action: 'create' as const, href: null };
+  if (!pack) return { label: 'Tạo bài đọc mới ✨', action: 'create' as const, href: null };
   if (data.state === 'generation_in_progress' || pack.status === 'generation_in_progress')
-    return { label: 'Minny đang viết...', action: 'wait' as const, href: null };
+    return { label: 'Minny đang chuẩn bị...', action: 'wait' as const, href: null };
   if (
     data.state === 'reviewed' ||
     pack.status === 'reviewed_pass' ||
     pack.status === 'reviewed_pass_web' ||
     pack.status === 'reviewed_pass_web_v2'
-  ) return { label: 'Tạo truyện mới ✨', action: 'create' as const, href: null };
+  ) return { label: 'Tạo bài đọc mới ✨', action: 'create' as const, href: null };
   return {
     label: 'Đọc tiếp 📖',
     action: 'lesson' as const,
@@ -133,7 +133,7 @@ function missionNodes(pack: Record<string, unknown> | null | undefined, data: Pr
 
 function waitQuestNodes(stageIndex: number): QuestNode[] {
   return [
-    { icon: '✍️', label: 'Viết truyện', state: stageIndex > 0 ? 'done' : 'current' },
+    { icon: '📚', label: 'Chọn truyện', state: stageIndex > 0 ? 'done' : 'current' },
     { icon: '🎧', label: 'Chuẩn bị', state: stageIndex > 1 ? 'done' : stageIndex === 1 ? 'current' : 'locked' },
     { icon: '🚀', label: 'Mở bài', state: stageIndex > 2 ? 'done' : stageIndex === 2 ? 'current' : 'locked' },
   ];

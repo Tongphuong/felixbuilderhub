@@ -24,7 +24,7 @@ function prefersReducedMotion(): boolean {
 }
 
 const STAGE_LABELS = [
-  'Đang viết câu chuyện riêng cho con…',
+  'Đang chọn truyện phù hợp với con…',
   'Đang chuẩn bị phần nghe…',
   'Đang ghi âm các cụm câu…',
   'Đang chuẩn bị nhiệm vụ web…',

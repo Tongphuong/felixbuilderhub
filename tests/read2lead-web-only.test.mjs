@@ -3,8 +3,17 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 
 const landingPage = readFileSync('src/pages/read2lead.astro', 'utf-8');
+const buildPage = readFileSync('src/pages/read2lead/build.astro', 'utf-8');
+const builderClient = readFileSync('src/scripts/r2l-builder.client.ts', 'utf-8');
+const kidProfileView = readFileSync('src/pages/ho-so/ho-so-kid-view.ts', 'utf-8');
 const lessonPage = readFileSync('src/pages/read2lead/lesson.astro', 'utf-8');
 const reviewPage = readFileSync('src/pages/ho-so/index.astro', 'utf-8') + '\n' + readFileSync('src/pages/ho-so/ho-so.ts', 'utf-8') + '\n' + readFileSync('src/pages/ho-so/ho-so-parent-view.ts', 'utf-8');
+const read2LeadPublicCopy = [
+  landingPage,
+  buildPage,
+  builderClient,
+  kidProfileView,
+].join('\n');
 
 const publicPackEndpoints = [
   'functions/api/generate-read2lead-pack.js',
@@ -20,18 +29,24 @@ test('Read2Lead landing page does not expose PDF or MP3 download surfaces', () =
   assert.doesNotMatch(landingPage, /mp3_url/);
   assert.doesNotMatch(landingPage, /Read2Lead-Sample-Pack\.pdf/);
   assert.doesNotMatch(landingPage, /\bPDF\b|\bMP3\b|\/read2lead\/(story|chunk|parents)\.png/);
-  assert.match(landingPage, /tăng cường bởi AI/);
   assert.doesNotMatch(landingPage, /tự học tại nhà|học tại nhà|file nghe|đóng gói file/i);
 });
 
 test('Read2Lead landing page is profile-first and web-first', () => {
   assert.match(
     landingPage,
-    /Luyện đọc và nghe qua truyện — tăng cường bởi AI/,
+    /Luyện đọc và nghe qua truyện phù hợp với con/,
   );
   assert.match(landingPage, /Tạo bài cho con/);
   assert.match(landingPage, /Bảng xếp hạng/);
   assert.match(landingPage, /Xem tiến độ con/);
+});
+
+test('Read2Lead public copy does not promise AI-written personalized stories', () => {
+  assert.doesNotMatch(read2LeadPublicCopy, /câu chuyện riêng/i);
+  assert.doesNotMatch(read2LeadPublicCopy, /viết truyện riêng/i);
+  assert.doesNotMatch(read2LeadPublicCopy, /AI tạo bài cá nhân/i);
+  assert.doesNotMatch(read2LeadPublicCopy, /Tạo truyện mới/i);
 });
 
 test('public Read2Lead API payloads do not expose standalone PDF or MP3 urls', () => {
