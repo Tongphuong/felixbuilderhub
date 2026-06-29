@@ -8,6 +8,7 @@ import ListeningFillBlank from '../../components/read2lead/v2/ListeningFillBlank
 import ListenAndOrder from '../../components/read2lead/v2/ListenAndOrder.astro';
 import ListenAndSpeak from '../../components/read2lead/v2/ListenAndSpeak.astro';
 import ReadAloud from '../../components/read2lead/v2/ReadAloud.astro';
+import MicCheckPanel from '../../components/read2lead/v2/MicCheckPanel.astro';
 import LevelUpModal from '../../components/read2lead/v2/LevelUpModal.astro';
 import RankUpModal from '../../components/read2lead/v3/rank/RankUpModal.astro';
 import ProgressBar from '../../components/read2lead/v2/ProgressBar.astro';
@@ -99,7 +100,7 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
           <section id="book-reader-shadow-stage" class="hidden space-y-3" data-book-stage-container="shadow" aria-live="polite">
             <p id="book-reader-shadow-counter" class="text-sm font-bold text-gold"></p>
             <p class="text-sm font-semibold text-cream/75">Nghe hết đoạn, rồi đọc lại cho Minny nhé.</p>
-            <div data-r2l-mic-check></div>
+            <MicCheckPanel />
             <div id="book-reader-shadow-body" data-activity-body></div>
             <aside id="book-reader-parent-help" class="hidden rounded-md border border-gold/30 bg-gold/10 p-4 text-sm text-cream/85">
               <p class="font-bold text-gold">Ba mẹ giúp con kiểm tra micro hoặc mạng nhé.</p>
