@@ -63,8 +63,6 @@ function bookContext() {
       })),
     })),
     activities: [
-      { type: 'listening_fill_blank', items: [{ id: 'a1' }] },
-      { type: 'listen_and_order', items: [{ id: 'b1' }] },
       {
         type: 'read_aloud',
         items: sentences.map((sentence, index) => ({
@@ -168,7 +166,7 @@ async function submit(bookReaderState, fixture) {
   });
 }
 
-test('valid book payload passes all book fields and keeps stored A/B/D data internal', () => {
+test('valid read-aloud-only book payload passes all book fields', () => {
   const context = bookContext();
   const lesson = buildV2LessonPayload({
     accessCode: ACCESS_CODE,
@@ -185,7 +183,7 @@ test('valid book payload passes all book fields and keeps stored A/B/D data inte
   assert.deepEqual(lesson.book_attribution, context.book_attribution);
   assert.deepEqual(
     lesson.activities.map((activity) => activity.type),
-    ['listening_fill_blank', 'listen_and_order', 'read_aloud'],
+    ['read_aloud'],
   );
   assert.match(lesson.book_page_audio[0], /^https:\/\/audio\.felixbuilderhub\.com/);
 });

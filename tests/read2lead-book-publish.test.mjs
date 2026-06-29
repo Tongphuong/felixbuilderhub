@@ -14,8 +14,6 @@ function validPack() {
     book_attribution: { title: 'Book' },
     story: { paragraphs_en: ['One.', 'Two.', 'Three.'] },
     activities: [
-      { type: 'listening_fill_blank' },
-      { type: 'listen_and_order' },
       { type: 'read_aloud' },
     ],
   };

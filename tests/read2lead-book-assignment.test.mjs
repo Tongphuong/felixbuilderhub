@@ -24,8 +24,6 @@ function storedBook(slug, title) {
       sentences: [],
     },
     activities: [
-      { type: 'listening_fill_blank', items: [] },
-      { type: 'listen_and_order', items: [] },
       { type: 'read_aloud', items: [] },
     ],
   };

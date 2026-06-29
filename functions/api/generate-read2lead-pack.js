@@ -359,8 +359,8 @@ function validStoredBookPack(pack, expectedSlug) {
     && Array.isArray(pack.story?.paragraphs_en)
     && pack.story.paragraphs_en.length === pack.book_images.length
     && Array.isArray(pack.activities)
-    && pack.activities.map((activity) => activity?.type).join(',')
-      === 'listening_fill_blank,listen_and_order,read_aloud'
+    && pack.activities.length >= 1
+    && pack.activities.some((activity) => activity?.type === 'read_aloud')
   );
 }
 

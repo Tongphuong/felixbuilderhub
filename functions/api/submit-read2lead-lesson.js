@@ -121,8 +121,8 @@ function extractV2LessonContext(pack) {
 function isBookLessonContext(context) {
   return Boolean(
     /^book_[0-9]+$/.test(String(context?.book_slug || ''))
-    && context.activities?.map((activity) => activity?.type).join(',')
-      === 'listening_fill_blank,listen_and_order,read_aloud'
+    && Array.isArray(context.activities)
+    && context.activities.some((activity) => activity?.type === 'read_aloud')
   );
 }
 
