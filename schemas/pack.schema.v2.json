@@ -60,7 +60,7 @@
 
     "activities": {
       "type": "array",
-      "minItems": 3,
+      "minItems": 1,
       "maxItems": 6,
       "items": {
         "oneOf": [
@@ -134,12 +134,10 @@
             }
           },
           "activities": {
-            "minItems": 3,
-            "maxItems": 3,
+            "minItems": 1,
+            "maxItems": 1,
             "items": {
               "oneOf": [
-                { "$ref": "#/definitions/listening_fill_blank" },
-                { "$ref": "#/definitions/listen_and_order" },
                 { "$ref": "#/definitions/book_read_aloud" }
               ]
             }

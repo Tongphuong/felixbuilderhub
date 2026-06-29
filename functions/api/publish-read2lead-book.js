@@ -26,7 +26,7 @@ export async function onRequestPost({ request, env }) {
   }
 
   const activityTypes = (pack.activities || []).map((activity) => activity?.type);
-  if (activityTypes.join(',') !== 'listening_fill_blank,listen_and_order,read_aloud') {
+  if (activityTypes.join(',') !== 'read_aloud') {
     return json({ ok: false, error: 'invalid_book_activities' }, 400);
   }
 
