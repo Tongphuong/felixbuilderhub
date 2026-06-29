@@ -3,62 +3,106 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 
 const lesson = readFileSync('src/pages/read2lead/lesson.astro', 'utf8');
-const progress = readFileSync('src/components/read2lead/v2/ActivityProgress.astro', 'utf8');
-const readAloud = readFileSync('src/components/read2lead/v2/ReadAloud.astro', 'utf8');
 
-test('book reader uses explicit page audio and unlocks only on ended', () => {
+test('book page audio must end before the question stage unlocks', () => {
   assert.match(lesson, /state\.lesson\.book_page_audio\[pageIndex\]/);
   const playStart = lesson.indexOf('function bookPlayPageAudio');
-  const playEnd = lesson.indexOf('function bookShowSentence', playStart);
+  const playEnd = lesson.indexOf('function bookRenderQuestion', playStart);
   const body = lesson.slice(playStart, playEnd);
   const ended = body.indexOf("audio.addEventListener('ended'");
-  const unlock = body.indexOf('completed[pageIndex] = true');
+  const unlock = body.indexOf('audio_completed = true');
   assert.ok(ended > -1 && unlock > ended);
   assert.match(body, /addEventListener\('error', fail/);
   assert.match(body, /addEventListener\('r2l-play-error', fail/);
   assert.doesNotMatch(
     body.slice(body.indexOf('function bookAudioFailure'), body.indexOf('function bookPlayPageAudio')),
-    /audioCompleted.*true/,
+    /audio_completed\s*=\s*true/,
   );
 });
 
-test('book reader requires exactly two questions and persists full position state', () => {
-  assert.match(lesson, /questions\.length !== 2/);
+test('book reader persists flow version 2 and migrates only legacy completed audio', () => {
+  assert.match(lesson, /flowVersion: 2/);
   assert.match(lesson, /book_reader: state\.bookReader/);
-  assert.match(lesson, /pageIndex: Number\(book\.pageIndex\)/);
-  assert.match(lesson, /sentenceIndex: Number\(book\.sentenceIndex\)/);
-  assert.match(lesson, /audioCompleted: Array\.isArray/);
-  assert.match(lesson, /pagesDone: Array\.isArray/);
-  assert.match(lesson, /answers: book\.answers/);
+  assert.match(lesson, /Number\(book\.flowVersion\) === 2/);
+  assert.match(lesson, /const completedAudio = Array\.isArray\(book\.audioCompleted\)/);
+  assert.match(lesson, /selected_questions: \[\]/);
+  assert.match(lesson, /question_results: \[\]/);
+  assert.match(lesson, /shadow_chunks: \[\]/);
 });
 
-test('book progress and activities are exactly A, B, D', () => {
-  assert.match(progress, /data-activity-progress/);
-  assert.match(lesson, /configureActivityProgress/);
-  assert.match(lesson, /dots\.innerHTML = ''/);
-  assert.match(lesson, /dot\.dataset\.dot = String\(index\)/);
+test('book reader exposes semantic listen, questions, shadow, and next stages', () => {
+  for (const stage of ['listen', 'questions', 'shadow', 'next']) {
+    assert.match(lesson, new RegExp(`data-book-stage-container="${stage}"`));
+  }
+  assert.match(lesson, /bookSetStage\('questions'\)/);
+  assert.match(lesson, /bookSetStage\('shadow'\)/);
+  assert.match(lesson, /bookSetStage\('next'\)/);
   assert.match(
     lesson,
-    /listening_fill_blank,listen_and_order,read_aloud/,
+    /\.r2l-book-reader \[data-book-stage-container\]\.hidden\s*{[^}]*display: none;/s,
   );
-  assert.match(readAloud, /data-activity-shell="read_aloud"/);
-  assert.doesNotMatch(readAloud, /data-activity-shell="listen_and_speak"/);
+  assert.match(lesson, /if \(!isBookLesson\(\)\) renderAllActivitiesOnce/);
+  assert.match(lesson, /lesson-activity-progress-panel.*classList\.add\('hidden'\)/s);
+  assert.match(lesson, /lesson-submit-panel.*classList\.add\('hidden'\)/s);
 });
 
-test('read aloud reuses replay gate, whisper scoring, and type-derived mic skip', () => {
-  assert.match(lesson, /recordBtn\.dataset\.heard = 'true'/);
-  assert.match(lesson, /recordBtn\.disabled = !_r2lMicIsReady\(\)/);
-  assert.match(lesson, /_R2L_SPEAKING_PASS_PERCENT = 50/);
-  assert.match(lesson, /const activityType = activity\?\.type/);
-  assert.match(lesson, /completeActivity\(activityType/);
-  assert.match(lesson, /state\.activityResults\[activityType\]/);
+test('book questions are selected once, spoken, answered one at a time, and reveal immediately', () => {
+  assert.match(lesson, /selectBookQuestions\(/);
+  assert.match(lesson, /selected_questions: selectedQuestions/);
+  assert.match(lesson, /const questionIndex = page\?\.question_results\.length/);
+  assert.match(lesson, /_r2lSpeakEnglishLine\(question\.question_en\)/);
+  assert.match(lesson, /Đáp án đúng là:/);
+  assert.match(lesson, /page\.question_results\.push/);
 });
 
-test('book reader stores question outcomes and legacy routing remains separate', () => {
-  assert.match(lesson, /state\.activityResults\.guided_listening/);
-  assert.match(lesson, /question_outcomes: answers\.map/);
-  assert.match(lesson, /if \(isBookLesson\(\)\)/);
-  assert.match(lesson, /w1InitBookReaderPhase\(\)/);
-  assert.match(lesson, /w1InitStoryPhase\(\)/);
-  assert.match(lesson, /w1InitGuidedListeningPhase\(\)/);
+test('shadow chunks play sentence audio in order before unlocking the shared recorder', () => {
+  assert.match(lesson, /buildBookShadowChunks\(/);
+  const start = lesson.indexOf('async function bookPlayShadowChunk');
+  const end = lesson.indexOf('function bookChunkFromCard', start);
+  const body = lesson.slice(start, end);
+  assert.match(body, /for \(const sentenceIndex of chunk\.sentence_indexes\)/);
+  assert.match(body, /await new Promise/);
+  assert.match(body, /chunk\.playback_completed = true/);
+  assert.match(body, /recordButton\.dataset\.heard = 'true'/);
+  assert.match(lesson, /_r2lStartRecording\(itemKey, card\)/);
+  assert.match(lesson, /bookHandleShadowScore\(cardEl, payload\)/);
+});
+
+test('pronunciation and technical failures use separate counters and automatic final save', () => {
+  assert.match(lesson, /chunk\.attempts \+= 1/);
+  assert.match(lesson, /score >= _R2L_SPEAKING_PASS_PERCENT/);
+  assert.match(lesson, /chunk\.attempts >= 3/);
+  assert.match(lesson, /chunk\.technical_failures \+= 1/);
+  assert.match(lesson, /chunk\.technical_failures >= 2/);
+  assert.match(lesson, /technical_skip = true/);
+  assert.match(lesson, /bookFinishReader\(\);/);
+  assert.match(lesson, /Minny đang tự động lưu kết quả/);
+});
+
+test('book submission sends explicit v2 pages while legacy activity routing remains available', () => {
+  assert.match(lesson, /book_flow_version: 2/);
+  assert.match(lesson, /book_reader: bookSubmissionState\(\)/);
+  assert.match(lesson, /page_index: page\.page_index/);
+  assert.match(lesson, /question_results: page\.question_results/);
+  assert.match(lesson, /sentence_indexes: chunk\.sentence_indexes/);
+  assert.match(lesson, /status: chunk\.status/);
+  assert.match(lesson, /function w1EnterActivitiesPhase/);
+  assert.match(lesson, /function w1InitGuidedListeningPhase/);
+});
+
+test('book reader keeps complete mixed-aspect illustrations clear of its stable caption band', () => {
+  assert.match(lesson, /class="r2l-book-page__art"/);
+  assert.doesNotMatch(lesson, /id="book-reader-img"[^>]+width="1200"[^>]+height="800"/);
+  assert.match(
+    lesson,
+    /\.r2l-book-page__art\s*{[^}]*height: clamp\(18rem, min\(52vw, 58vh\), 36rem\);[^}]*overflow: hidden;/s,
+  );
+  assert.match(
+    lesson,
+    /\.r2l-book-page img\s*{[^}]*position: absolute;[^}]*inset: 0;[^}]*width: 100%;[^}]*height: 100%;[^}]*object-fit: contain;/s,
+  );
+  const captionRule = lesson.match(/\.r2l-book-page__text\s*{([^}]*)}/)?.[1] || '';
+  assert.match(captionRule, /height: clamp\(10rem, 18vw, 13rem\)/);
+  assert.match(captionRule, /overflow-y: auto/);
+  assert.doesNotMatch(captionRule, /position: absolute|max-height: 42%/);
 });
