@@ -46,6 +46,16 @@ test('book reader exposes semantic listen, questions, shadow, and next stages', 
   assert.match(lesson, /lesson-submit-panel.*classList\.add\('hidden'\)/s);
 });
 
+test('read-aloud-only StoryWeaver packs activate book reader mode', () => {
+  assert.match(lesson, /const activities = lesson\?\.activities/);
+  assert.match(lesson, /Array\.isArray\(activities\)/);
+  assert.match(lesson, /activities\.some\(\(activity\) => activity\?\.type === 'read_aloud'\)/);
+  assert.doesNotMatch(
+    lesson,
+    /listening_fill_blank,listen_and_order,read_aloud/,
+  );
+});
+
 test('book questions are selected once, spoken, answered one at a time, and reveal immediately', () => {
   assert.match(lesson, /selectBookQuestions\(/);
   assert.match(lesson, /selected_questions: selectedQuestions/);

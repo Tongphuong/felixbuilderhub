@@ -1066,6 +1066,7 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
     const paragraphs = lesson?.story?.paragraphs_en;
     const images = lesson?.book_images;
     const pageAudio = lesson?.book_page_audio;
+    const activities = lesson?.activities;
     return Boolean(
       /^book_[0-9]+$/.test(String(lesson?.book_slug || ''))
       && Array.isArray(paragraphs)
@@ -1074,8 +1075,8 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
       && images.length === paragraphs.length
       && Array.isArray(pageAudio)
       && pageAudio.length === paragraphs.length
-      && lesson.activities?.map((activity) => activity?.type).join(',')
-        === 'listening_fill_blank,listen_and_order,read_aloud'
+      && Array.isArray(activities)
+      && activities.some((activity) => activity?.type === 'read_aloud')
     );
   }
 
