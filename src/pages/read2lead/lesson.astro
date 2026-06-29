@@ -84,9 +84,10 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
             </div>
             <figcaption id="book-reader-page-text" class="r2l-book-page__text"></figcaption>
           </figure>
-          <div id="book-reader-audio-gate" class="r2l-book-gate" data-book-stage-container="listen">
-            <p class="font-bold text-cream">Con nghe hết trang này trước nhé.</p>
+          <div id="book-reader-audio-gate" class="r2l-book-gate" data-book-stage-container="story">
+            <p class="font-bold text-cream">Đọc và nghe hết truyện trước khi làm nhiệm vụ nhé.</p>
             <button id="book-reader-listen-btn" class="r2l-primary" type="button">🔊 Nghe trang</button>
+            <button id="book-reader-story-next" class="r2l-primary hidden" type="button" disabled>Trang tiếp →</button>
             <p id="book-reader-audio-status" class="text-sm text-cream/75" role="status" aria-live="polite"></p>
           </div>
           <section id="book-reader-question-stage" class="hidden space-y-3" data-book-stage-container="questions" aria-live="polite">
@@ -1052,7 +1053,8 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
     bookReader: {
       flowVersion: 2,
       pageIndex: 0,
-      stage: 'listen',
+      stage: 'story',
+      story_completed: false,
       questionIndex: 0,
       chunkIndex: 0,
       pages: [],
@@ -2933,9 +2935,10 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
           state.bookReader = {
             flowVersion: 2,
             pageIndex: Number(book.pageIndex) || 0,
-            stage: ['listen', 'questions', 'shadow', 'next', 'summary'].includes(book.stage)
-              ? book.stage
-              : 'listen',
+            stage: ['story', 'listen', 'questions', 'shadow', 'next', 'summary'].includes(book.stage)
+              ? (book.stage === 'listen' ? 'story' : book.stage)
+              : 'story',
+            story_completed: Boolean(book.story_completed),
             questionIndex: Math.max(0, Number(book.questionIndex) || 0),
             chunkIndex: Math.max(0, Number(book.chunkIndex) || 0),
             pages: Array.isArray(book.pages) ? book.pages : [],
@@ -2945,7 +2948,8 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
           state.bookReader = {
             flowVersion: 2,
             pageIndex: Math.max(0, Number(book.pageIndex) || 0),
-            stage: completedAudio[Number(book.pageIndex) || 0] ? 'questions' : 'listen',
+            stage: completedAudio.every(Boolean) && completedAudio.length ? 'questions' : 'story',
+            story_completed: completedAudio.every(Boolean) && completedAudio.length > 0,
             questionIndex: 0,
             chunkIndex: 0,
             pages: completedAudio.map((audioCompleted, pageIndex) => ({
@@ -3397,8 +3401,33 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
     return state.bookReader.pages[pageIndex] || null;
   }
 
+  function bookHasPracticeProgress(pages = state.bookReader.pages) {
+    return (Array.isArray(pages) ? pages : []).some((page) => {
+      const hasAnswers = Array.isArray(page?.question_results) && page.question_results.length > 0;
+      const hasSettledChunk = Array.isArray(page?.shadow_chunks)
+        && page.shadow_chunks.some((chunk) => chunk?.status === 'passed' || chunk?.status === 'skipped' || Number(chunk?.attempts) > 0);
+      return hasAnswers || hasSettledChunk;
+    });
+  }
+
+  function bookPracticeStageForPage(page = bookPageState()) {
+    if (!page) return 'summary';
+    if (page.question_results.length < page.selected_questions.length) {
+      state.bookReader.questionIndex = page.question_results.length;
+      return 'questions';
+    }
+    const pendingChunk = page.shadow_chunks.findIndex((chunk) => chunk.status === 'pending');
+    if (pendingChunk >= 0) {
+      state.bookReader.chunkIndex = pendingChunk;
+      return 'shadow';
+    }
+    return 'next';
+  }
+
   function bookInitializeState() {
     const resumeSummary = state.bookReader.stage === 'summary';
+    const restoredStage = state.bookReader.stage;
+    const restoredStoryCompleted = Boolean(state.bookReader.story_completed);
     const totalPages = state.lesson.book_images.length;
     const sentences = state.lesson?.story?.sentences || [];
     const savedPages = Array.isArray(state.bookReader.pages) ? state.bookReader.pages : [];
@@ -3425,6 +3454,7 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
           score_percent: Number.isFinite(Number(previous.score_percent))
             ? Number(previous.score_percent)
             : 0,
+          ...(previous.latest_feedback ? { latest_feedback: previous.latest_feedback } : {}),
           ...(previous.technical_skip === true ? { technical_skip: true } : {}),
         };
       });
@@ -3441,19 +3471,18 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
       Math.min(Number(state.bookReader.pageIndex) || 0, totalPages - 1),
     );
     const page = bookPageState();
-    if (!page?.audio_completed) {
-      state.bookReader.stage = 'listen';
-    } else if (page.question_results.length < page.selected_questions.length) {
-      state.bookReader.stage = 'questions';
-      state.bookReader.questionIndex = page.question_results.length;
+    const allPagesHeard = state.bookReader.pages.length > 0
+      && state.bookReader.pages.every((bookPage) => bookPage.audio_completed === true);
+    const hasPracticeProgress = bookHasPracticeProgress();
+    state.bookReader.story_completed = restoredStoryCompleted || allPagesHeard || hasPracticeProgress;
+    if (!state.bookReader.story_completed) {
+      const firstUnheard = state.bookReader.pages.findIndex((bookPage) => bookPage.audio_completed !== true);
+      state.bookReader.pageIndex = firstUnheard >= 0 ? firstUnheard : state.bookReader.pageIndex;
+      state.bookReader.stage = 'story';
+    } else if (restoredStage === 'questions' || restoredStage === 'shadow' || restoredStage === 'next') {
+      state.bookReader.stage = bookPracticeStageForPage(page);
     } else {
-      const pendingChunk = page.shadow_chunks.findIndex((chunk) => chunk.status === 'pending');
-      if (pendingChunk >= 0) {
-        state.bookReader.stage = 'shadow';
-        state.bookReader.chunkIndex = pendingChunk;
-      } else {
-        state.bookReader.stage = 'next';
-      }
+      state.bookReader.stage = bookPracticeStageForPage(page);
     }
     if (resumeSummary && state.bookReader.pageIndex >= totalPages - 1) {
       state.bookReader.stage = 'summary';
@@ -3478,12 +3507,13 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
     if (_bookReaderBound) return;
     _bookReaderBound = true;
     qs('#book-reader-listen-btn')?.addEventListener('click', bookPlayPageAudio);
+    qs('#book-reader-story-next')?.addEventListener('click', bookGoToNextStoryPage);
     qs('#book-reader-next')?.addEventListener('click', () => {
       const total = state.lesson.book_images.length;
       if (state.bookReader.stage !== 'next' || state.bookReader.pageIndex >= total - 1) return;
       stopLessonAudio();
       state.bookReader.pageIndex += 1;
-      state.bookReader.stage = bookPageState()?.audio_completed ? 'questions' : 'listen';
+      state.bookReader.stage = bookPracticeStageForPage(bookPageState());
       state.bookReader.questionIndex = 0;
       state.bookReader.chunkIndex = 0;
       bookShowPage();
@@ -3513,16 +3543,19 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
   }
 
   function bookSetStage(stage) {
+    if (stage === 'listen') stage = 'story';
     state.bookReader.stage = stage;
     qsa('[data-book-stage-container]').forEach((container) => {
       container.classList.toggle('hidden', container.dataset.bookStageContainer !== stage);
     });
-    if (stage === 'listen') {
+    if (stage === 'story') {
       const listen = qs('#book-reader-listen-btn');
+      const page = bookPageState();
       if (listen) {
-        listen.disabled = false;
-        listen.textContent = '🔊 Nghe trang';
+        listen.disabled = Boolean(page?.audio_completed);
+        listen.textContent = page?.audio_completed ? '✓ Đã nghe trang' : '🔊 Nghe trang';
       }
+      bookUpdateStoryNavigation();
     } else if (stage === 'questions') {
       bookRenderQuestion();
     } else if (stage === 'shadow') {
@@ -3532,6 +3565,37 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
     } else if (stage === 'summary') {
       bookFinishReader();
     }
+    scheduleSaveLessonSession();
+  }
+
+  function bookUpdateStoryNavigation() {
+    const page = bookPageState();
+    const pageIndex = state.bookReader.pageIndex;
+    const total = state.lesson.book_images.length;
+    const next = qs('#book-reader-story-next');
+    if (!next) return;
+    next.classList.toggle('hidden', !page?.audio_completed);
+    next.disabled = !page?.audio_completed;
+    next.textContent = pageIndex >= total - 1 ? 'Mở nhiệm vụ 🎯' : 'Trang tiếp →';
+  }
+
+  function bookGoToNextStoryPage() {
+    const page = bookPageState();
+    if (!page?.audio_completed || state.bookReader.stage !== 'story') return;
+    const total = state.lesson.book_images.length;
+    stopLessonAudio();
+    if (state.bookReader.pageIndex >= total - 1) {
+      state.bookReader.story_completed = true;
+      state.bookReader.pageIndex = 0;
+      state.bookReader.questionIndex = 0;
+      state.bookReader.chunkIndex = 0;
+      state.bookReader.stage = bookPracticeStageForPage(bookPageState(0));
+      showToast('Con đã nghe hết truyện — mình làm nhiệm vụ nhé!', 3500);
+    } else {
+      state.bookReader.pageIndex += 1;
+      state.bookReader.stage = 'story';
+    }
+    bookShowPage();
     scheduleSaveLessonSession();
   }
 
@@ -3575,8 +3639,16 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
     audio.addEventListener('ended', () => {
       if (pageIndex !== state.bookReader.pageIndex) return;
       bookPageState(pageIndex).audio_completed = true;
-      state.bookReader.questionIndex = bookPageState(pageIndex).question_results.length;
-      bookSetStage('questions');
+      if (state.bookReader.stage === 'story') {
+        const status = qs('#book-reader-audio-status');
+        if (status) status.textContent = pageIndex >= state.lesson.book_images.length - 1
+          ? 'Con đã nghe hết truyện. Bấm mở nhiệm vụ nhé!'
+          : 'Con đã nghe xong trang này. Bấm sang trang tiếp nhé.';
+        bookSetStage('story');
+      } else {
+        state.bookReader.questionIndex = bookPageState(pageIndex).question_results.length;
+        bookSetStage('questions');
+      }
     }, { once: true });
   }
 
@@ -3648,15 +3720,17 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
     qs('#book-reader-shadow-counter').textContent = `Đoạn ${state.bookReader.chunkIndex + 1}/${page.shadow_chunks.length}`;
     const itemKey = bookChunkItemKey(chunk);
     const body = qs('#book-reader-shadow-body');
+    const settled = chunk.status === 'passed' || chunk.status === 'skipped';
     body.innerHTML = `
       <article class="r2l-minny-sentence-card" data-speak-card="0" data-item-key="${escapeHtml(itemKey)}" data-book-chunk-id="${escapeHtml(chunk.chunk_id)}">
         <p class="r2l-minny-sentence-en">${escapeHtml(chunk.text_en)}</p>
         <p class="mt-2 text-sm text-cream/70" data-book-attempt-status>Lần đọc: ${chunk.attempts}/3</p>
         <div class="r2l-minny-speak-actions">
           <button type="button" class="minny-btn minny-btn--listen" data-speak-listen="0">🔊 Nghe đoạn</button>
-          <button type="button" class="minny-btn minny-btn--record" data-speak-record="0" ${chunk.playback_completed ? '' : 'disabled'}>🎤 Con nói</button>
+          <button type="button" class="minny-btn minny-btn--record" data-speak-record="0" ${chunk.playback_completed && !settled ? '' : 'disabled'}>🎤 Con nói</button>
         </div>
         <div class="mt-3 hidden rounded-md border border-cream/10 bg-navy-950/35 p-3 text-sm text-cream/80" data-speak-feedback></div>
+        <button type="button" class="r2l-primary mt-3 w-full ${settled ? '' : 'hidden'}" data-book-shadow-continue>${bookShadowContinueLabel()}</button>
         <div class="r2l-wave-panel hidden" data-speak-waveform aria-label="Sóng âm bài đọc của con"></div>
       </article>
     `;
@@ -3664,7 +3738,11 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
     const recordButton = body.querySelector('[data-speak-record]');
     if (chunk.playback_completed && recordButton) recordButton.dataset.heard = 'true';
     _r2lInitSpeakRecorder(itemKey, card, chunk.text_en);
+    if (chunk.latest_feedback) {
+      _r2lRenderSpeakFeedback(card, chunk.latest_feedback);
+    }
     _r2lSyncMinnyRecordButton(itemKey, card);
+    if (settled && recordButton) recordButton.disabled = true;
     body.querySelector('[data-speak-listen]')?.addEventListener('click', () => bookPlayShadowChunk(chunk, card));
     recordButton?.addEventListener('click', () => {
       const entry = _r2lRecorderState.perItem.get(itemKey);
@@ -3674,7 +3752,19 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
         _r2lStartRecording(itemKey, card);
       }
     });
+    body.querySelector('[data-book-shadow-continue]')?.addEventListener('click', () => bookCompleteShadowChunk(chunk.chunk_id));
     qs('#book-reader-parent-help')?.classList.toggle('hidden', chunk.technical_failures < 2);
+  }
+
+  function bookShadowContinueLabel() {
+    const page = bookPageState();
+    const nextPending = page?.shadow_chunks.findIndex(
+      (chunk, index) => index > state.bookReader.chunkIndex && chunk.status === 'pending',
+    );
+    if (nextPending >= 0) return 'Tiếp đoạn →';
+    return state.bookReader.pageIndex >= state.lesson.book_images.length - 1
+      ? 'Lưu chiến công'
+      : 'Trang tiếp →';
   }
 
   async function bookPlayShadowChunk(chunk, card) {
@@ -3709,7 +3799,7 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
       chunk.playback_completed = true;
       if (recordButton) {
         recordButton.dataset.heard = 'true';
-        recordButton.disabled = !_r2lMicIsReady();
+        recordButton.disabled = chunk.status !== 'pending' || !_r2lMicIsReady();
       }
       scheduleSaveLessonSession();
     } catch {
@@ -3733,6 +3823,7 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
     const score = Math.max(0, Math.min(100, Number(payload.score_percent) || 0));
     chunk.attempts += 1;
     chunk.score_percent = score;
+    chunk.latest_feedback = payload;
     if (score >= _R2L_SPEAKING_PASS_PERCENT) {
       chunk.status = 'passed';
     } else if (chunk.attempts >= 3) {
@@ -3748,7 +3839,13 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
     }
     scheduleSaveLessonSession();
     if (chunk.status !== 'pending') {
-      window.setTimeout(() => bookCompleteShadowChunk(chunk.chunk_id), 800);
+      const continueButton = card?.querySelector('[data-book-shadow-continue]');
+      if (continueButton) {
+        continueButton.textContent = bookShadowContinueLabel();
+        continueButton.classList.remove('hidden');
+      }
+      const recordButton = card?.querySelector('[data-speak-record]');
+      if (recordButton) recordButton.disabled = true;
     }
   }
 
