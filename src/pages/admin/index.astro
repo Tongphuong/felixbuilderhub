@@ -1,0 +1,71 @@
+---
+import AdminLayout from '../../layouts/AdminLayout.astro';
+
+const navCards = [
+  {
+    href: '/admin/codes',
+    title: 'Mã học sinh',
+    icon: '🔑',
+    desc: 'Tạo mã, quản lý lượt, edit thông tin, set level test.',
+  },
+  {
+    href: '/admin/classes',
+    title: 'Lớp coaching',
+    icon: '👨‍🏫',
+    desc: 'Tạo lớp, thêm học sinh, điểm danh, thưởng XP/xu live.',
+  },
+  {
+    href: '/admin/portfolio',
+    title: 'Video & nhận xét',
+    icon: '🎬',
+    desc: 'Tải video bài nói, gửi nhận xét cho phụ huynh.',
+  },
+];
+---
+
+<AdminLayout title="Dashboard | Felix Admin">
+  <section class="mx-auto max-w-7xl px-4 py-8 md:px-6 md:py-10">
+    <h1 class="admin-page-title font-display text-3xl font-bold text-cream md:text-4xl">
+      Felix Admin Dashboard
+    </h1>
+    <p class="mt-2 text-cream-muted">Quản lý Read2Lead — mã học sinh, lớp coaching, và video.</p>
+
+    <div class="mt-8 grid gap-5 md:grid-cols-3">
+      {navCards.map((card) => (
+        <a
+          href={card.href}
+          class="group rounded-2xl border border-cream-dim/15 bg-navy-900/60 p-6 transition hover:border-accent/40 hover:bg-navy-900/80 hover:shadow-lg hover:shadow-accent/5"
+        >
+          <span class="text-4xl">{card.icon}</span>
+          <h2 class="mt-4 font-display text-xl font-bold text-cream group-hover:text-accent transition">
+            {card.title}
+          </h2>
+          <p class="mt-2 text-sm leading-relaxed text-cream-muted">{card.desc}</p>
+          <span class="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-accent">
+            Mở trang →
+          </span>
+        </a>
+      ))}
+    </div>
+
+    <div class="admin-chrome mt-10">
+      <div class="rounded-2xl border border-cream-dim/15 bg-navy-900/50 p-6">
+        <h2 class="font-display text-lg font-bold text-cream">Mẹo sử dụng</h2>
+        <ul class="mt-4 space-y-2 text-sm text-cream-muted">
+          <li class="flex items-start gap-2">
+            <span class="text-accent mt-0.5">•</span>
+            <span>Trang <strong class="text-cream">Lớp coaching</strong> có chế độ <strong class="text-cream">Presentation</strong> — bấm nút ở góc phải để phóng to cho máy chiếu khi dạy live.</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-accent mt-0.5">•</span>
+            <span>Thưởng XP/xu trực tiếp trên bảng lớp — có hiệu ứng confetti, âm thanh, và emoji 🎉 khi thưởng.</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-accent mt-0.5">•</span>
+            <span>Trang <strong class="text-cream">Mã học sinh</strong> có tìm kiếm và lọc để tìm nhanh mã cần sửa.</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</AdminLayout>

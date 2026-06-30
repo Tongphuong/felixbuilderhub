@@ -1,0 +1,110 @@
+---
+// EditCodeModal — modal dialog for editing access code records.
+// Replaces the browser prompt() chain in the original codes.astro.
+---
+
+<dialog
+  id="edit-code-modal"
+  class="rounded-2xl border border-cream-dim/20 bg-navy-900 p-0 shadow-2xl shadow-navy-950/50 backdrop:bg-navy-950/70 backdrop:backdrop-blur"
+  aria-labelledby="edit-code-title"
+>
+  <form id="edit-code-form" method="dialog" class="flex flex-col">
+    <div class="flex items-center justify-between border-b border-cream-dim/15 px-6 py-4">
+      <h2 id="edit-code-title" class="font-display text-lg font-bold text-cream">Sửa mã học sinh</h2>
+      <button
+        type="button"
+        class="rounded-md p-1 text-cream-dim transition hover:text-cream"
+        onclick="document.getElementById('edit-code-modal').close()"
+        aria-label="Đóng"
+      >
+        ✕
+      </button>
+    </div>
+
+    <div class="space-y-4 px-6 py-5">
+      <input type="hidden" name="code" id="edit-modal-code" />
+
+      <div>
+        <label class="mb-1 block text-sm font-medium text-cream-muted">Tên phụ huynh</label>
+        <input
+          name="parent_name"
+          id="edit-parent-name"
+          maxlength="100"
+          class="fx-field w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-3 py-2 text-cream focus:border-accent focus:outline-none"
+        />
+      </div>
+
+      <div>
+        <label class="mb-1 block text-sm font-medium text-cream-muted">Zalo / SĐT</label>
+        <input
+          name="parent_zalo"
+          id="edit-parent-zalo"
+          maxlength="30"
+          class="fx-field w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-3 py-2 text-cream focus:border-accent focus:outline-none"
+        />
+      </div>
+
+      <div>
+        <label class="mb-1 block text-sm font-medium text-cream-muted">Tên con</label>
+        <input
+          name="student_name"
+          id="edit-student-name"
+          maxlength="50"
+          class="fx-field w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-3 py-2 text-cream focus:border-accent focus:outline-none"
+        />
+      </div>
+
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label class="mb-1 block text-sm font-medium text-cream-muted">Tuổi</label>
+          <input
+            name="student_age"
+            id="edit-student-age"
+            type="number"
+            min="5"
+            max="14"
+            class="fx-field w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-3 py-2 text-cream focus:border-accent focus:outline-none"
+          />
+        </div>
+        <div>
+          <label class="mb-1 block text-sm font-medium text-cream-muted">Giới tính</label>
+          <select
+            name="child_gender"
+            id="edit-child-gender"
+            class="fx-field w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-3 py-2 text-cream focus:border-accent focus:outline-none"
+          >
+            <option value="">Chưa chọn</option>
+            <option value="girl">Bé gái</option>
+            <option value="boy">Bé trai</option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <label class="mb-1 block text-sm font-medium text-cream-muted">Ghi chú</label>
+        <input
+          name="notes"
+          id="edit-notes"
+          maxlength="500"
+          class="fx-field w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-3 py-2 text-cream focus:border-accent focus:outline-none"
+        />
+      </div>
+    </div>
+
+    <div class="flex flex-wrap items-center justify-end gap-2 border-t border-cream-dim/15 px-6 py-4">
+      <button
+        type="button"
+        class="rounded-lg border border-cream-dim/30 px-4 py-2 text-sm font-medium text-cream transition hover:border-accent hover:text-accent"
+        onclick="document.getElementById('edit-code-modal').close()"
+      >
+        Hủy
+      </button>
+      <button
+        type="submit"
+        class="rounded-lg bg-accent px-5 py-2 text-sm font-semibold text-navy-950 transition hover:bg-accent-hover"
+      >
+        Lưu thay đổi
+      </button>
+    </div>
+  </form>
+</dialog>

@@ -1,169 +1,133 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import EditCodeModal from '../../components/admin/EditCodeModal.astro';
 ---
-<BaseLayout
+
+<AdminLayout
   title="Quản lý mã đăng nhập Read2Lead | Felix Admin"
   description="Trang admin để tạo và quản lý access code Read2Lead."
 >
-  <header class="border-b border-cream-dim/20 bg-navy-950/85 backdrop-blur">
-    <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-      <a href="/" class="flex items-center" aria-label="Felix Coaching — Trang chủ">
-        <img src="/logo/felixbuilderhub_website_header_logo.webp" alt="Felix Coaching" class="h-9 w-auto md:h-10" width="525" height="190" />
-      </a>
-      <span class="rounded-md bg-accent/15 px-3 py-1 text-xs font-semibold text-accent">ADMIN — chỉ Felix dùng</span>
+  <section class="mx-auto max-w-7xl px-4 py-8 md:px-6 md:py-10">
+    <h1 class="admin-page-title font-display text-3xl font-bold text-cream">Quản lý mã Read2Lead</h1>
+    <p class="mt-2 text-cream-muted">Tạo mã mới + xem danh sách + edit/revoke.</p>
+
+    <!-- Create new code -->
+    <div class="mt-8 rounded-2xl border border-cream-dim/20 bg-navy-900/70 p-6">
+      <h2 class="font-display text-xl font-bold text-cream">Tạo mã mới</h2>
+      <form id="create-form" class="mt-5 grid gap-4 md:grid-cols-2">
+        <div>
+          <label class="mb-1 block text-sm text-cream-muted">Tên phụ huynh <span class="text-red-400">*</span></label>
+          <input name="parent_name" required maxlength="100" placeholder="Chị Mai" class="fx-field w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-3 py-2 text-cream focus:border-accent focus:outline-none" />
+        </div>
+        <div>
+          <label class="mb-1 block text-sm text-cream-muted">Zalo / SĐT</label>
+          <input name="parent_zalo" maxlength="30" placeholder="0901234567" class="fx-field w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-3 py-2 text-cream focus:border-accent focus:outline-none" />
+        </div>
+        <div>
+          <label class="mb-1 block text-sm text-cream-muted">Tên con <span class="text-red-400">*</span></label>
+          <input name="student_name" required maxlength="50" placeholder="Linh" class="fx-field w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-3 py-2 text-cream focus:border-accent focus:outline-none" />
+          <p class="mt-1 text-xs text-cream-dim">Nếu điền tên con, mã sẽ dễ nhớ hơn, ví dụ R2L-LINH-A4F2. Tên chỉ dùng chữ cái — không số (vd. "Pilot", không "Pilot L3").</p>
+        </div>
+        <div>
+          <label class="mb-1 block text-sm text-cream-muted">Tuổi con <span class="text-red-400">*</span></label>
+          <input name="student_age" type="number" min="5" max="14" required placeholder="8" class="fx-field w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-3 py-2 text-cream focus:border-accent focus:outline-none" />
+        </div>
+        <div class="rounded-lg border border-accent/30 bg-accent/10 p-4 text-sm leading-relaxed text-cream-muted md:col-span-2">
+          Tài khoản mới luôn bắt đầu ở L1. Với <strong class="text-cream">mã test</strong>, anh có thể set L1–L5 trong danh sách bên dưới để pilot nhanh (ví dụ L3 cho Phase 1).
+        </div>
+        <div>
+          <label class="mb-1 block text-sm text-cream-muted">Giới tính <span class="text-red-400">*</span></label>
+          <select name="child_gender" required class="fx-field w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-3 py-2 text-cream focus:border-accent focus:outline-none">
+            <option value="">Chưa chọn</option>
+            <option value="girl">Bé gái</option>
+            <option value="boy">Bé trai</option>
+          </select>
+        </div>
+        <div>
+          <label class="mb-1 block text-sm text-cream-muted">Số lượt</label>
+          <input name="uses" type="number" min="1" max="1000" value="10" required class="fx-field w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-3 py-2 text-cream focus:border-accent focus:outline-none" />
+        </div>
+        <div>
+          <label class="mb-1 block text-sm text-cream-muted">Hạn (ngày)</label>
+          <input name="expiry_days" type="number" min="1" max="3650" value="60" required class="fx-field w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-3 py-2 text-cream focus:border-accent focus:outline-none" />
+        </div>
+        <div class="md:col-span-2">
+          <label class="mb-1 block text-sm text-cream-muted">Ghi chú</label>
+          <input name="notes" maxlength="500" placeholder="Bé Linh, L2, thử nghiệm" class="fx-field w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-3 py-2 text-cream focus:border-accent focus:outline-none" />
+        </div>
+        <div class="grid gap-3 rounded-lg border border-cream-dim/20 bg-navy-950/60 p-4 md:col-span-2 sm:grid-cols-2">
+          <label class="flex cursor-pointer items-start gap-3 text-sm text-cream">
+            <input name="is_test" type="checkbox" class="mt-1 h-4 w-4 accent-accent" />
+            <span>
+              <span class="block font-semibold text-cream">Mã test</span>
+              <span class="block text-xs text-cream-muted">Không bắt buộc nộp bài cũ trước khi tạo bài mới.</span>
+            </span>
+          </label>
+          <label class="flex cursor-pointer items-start gap-3 text-sm text-cream">
+            <input name="is_shared" type="checkbox" class="mt-1 h-4 w-4 accent-accent" />
+            <span>
+              <span class="block font-semibold text-cream">Mã dùng chung</span>
+              <span class="block text-xs text-cream-muted">Dùng cho pilot/Facebook nhiều phụ huynh, không enforce progression.</span>
+            </span>
+          </label>
+        </div>
+        <div class="md:col-span-2">
+          <button type="submit" class="w-full rounded-lg bg-accent px-5 py-2.5 font-semibold text-navy-950 transition hover:bg-accent-hover sm:w-auto">Tạo mã</button>
+        </div>
+      </form>
+      <div id="create-result" class="mt-5 hidden rounded-lg border border-gold/40 bg-gold/10 p-4 text-cream">
+        <p class="text-sm text-cream-muted">Mã mới (bấm để copy):</p>
+        <button id="copy-code" type="button" class="mt-2 inline-flex items-center gap-2 rounded-lg bg-navy-950 px-4 py-2 font-mono text-2xl font-bold text-gold-light transition hover:bg-navy-800"></button>
+        <p id="copy-status" class="mt-2 text-xs text-cream-dim"></p>
+      </div>
+      <div id="create-error" class="mt-5 hidden rounded-lg border border-red-500/30 bg-red-500/10 p-4 text-red-300"></div>
     </div>
-  </header>
 
-  <main id="main" class="flex-1">
-    <section class="mx-auto max-w-6xl px-6 py-10">
-      <h1 class="font-display text-3xl font-bold text-cream">Quản lý mã Read2Lead</h1>
-      <p class="mt-2 text-cream-muted">Felix Class Hub + tạo mã mới + xem danh sách mã đã cấp + edit/revoke.</p>
-
-      <div id="class-hub" class="mt-8 rounded-xl border border-accent/30 bg-navy-900/80 p-6 shadow-xl shadow-accent/5">
-        <div class="flex flex-wrap items-center justify-between gap-4">
-          <div>
-            <p class="text-sm font-semibold uppercase tracking-[0.25em] text-accent">Felix Class Hub</p>
-            <h2 class="mt-1 font-display text-2xl font-bold text-cream">Bảng lớp live trên Zoom</h2>
-            <p class="mt-1 text-sm text-cream-muted">Tạo nhóm nhỏ, thêm mã học sinh, thưởng XP/xu và điểm danh ngay lúc dạy.</p>
-          </div>
-          <button id="create-class" type="button" class="rounded-lg bg-accent px-4 py-2 font-semibold text-navy-950 transition hover:bg-accent-hover">+ Tạo lớp</button>
-        </div>
-
-        <div class="mt-6 grid gap-5 lg:grid-cols-[260px_minmax(0,1fr)]">
-          <aside class="rounded-xl border border-cream-dim/20 bg-navy-950/70 p-4">
-            <div class="flex items-center justify-between gap-2">
-              <h3 class="font-semibold text-cream">Lớp coaching</h3>
-              <button id="refresh-classes" type="button" class="rounded border border-cream-dim/30 px-2 py-1 text-xs text-cream transition hover:border-accent hover:text-accent">↻</button>
-            </div>
-            <p id="class-status" class="mt-2 text-xs text-cream-dim">Đang tải lớp...</p>
-            <div id="class-list" class="mt-3 space-y-2"></div>
-          </aside>
-
-          <section class="rounded-xl border border-cream-dim/20 bg-navy-950/60 p-4">
-            <div id="class-empty" class="rounded-lg border border-dashed border-cream-dim/30 p-8 text-center text-cream-muted">
-              Chọn hoặc tạo một lớp để mở bảng thưởng live.
-            </div>
-            <div id="class-detail" class="hidden">
-              <div class="flex flex-wrap items-end justify-between gap-3 border-b border-cream-dim/20 pb-4">
-                <div class="min-w-0 flex-1">
-                  <label class="mb-1 block text-xs font-semibold uppercase tracking-[0.18em] text-cream-dim">Tên lớp</label>
-                  <input id="class-name" class="w-full rounded-lg border border-cream-dim/30 bg-navy-900 px-3 py-2 text-xl font-bold text-cream focus:border-accent focus:outline-none" />
-                </div>
-                <button id="save-class-name" type="button" class="rounded-lg border border-accent/50 px-4 py-2 text-sm font-semibold text-accent transition hover:bg-accent/10">Lưu tên lớp</button>
-              </div>
-
-              <form id="add-student-form" class="mt-4 flex flex-wrap items-end gap-3">
-                <div class="min-w-[220px] flex-1">
-                  <label class="mb-1 block text-sm text-cream-muted">Thêm học sinh bằng mã Read2Lead</label>
-                  <input name="code" maxlength="32" placeholder="R2L-LINH-A4F2" class="w-full rounded-lg border border-cream-dim/30 bg-navy-900 px-3 py-2 font-mono text-cream uppercase focus:border-accent focus:outline-none" />
-                </div>
-                <button type="submit" class="rounded-lg bg-gold px-4 py-2 font-semibold text-navy-950 transition hover:bg-gold-light">Thêm vào lớp</button>
-              </form>
-
-              <details class="mt-4 rounded-lg border border-cream-dim/20 bg-navy-900/70 p-4">
-                <summary class="cursor-pointer font-semibold text-cream">Sửa nút thưởng / cần cố gắng</summary>
-                <div id="preset-editor" class="mt-4 grid gap-5 xl:grid-cols-2"></div>
-              </details>
-
-              <div id="class-board" class="mt-5 grid gap-4 xl:grid-cols-2"></div>
-            </div>
-          </section>
+    <!-- Search & filters -->
+    <div class="mt-10">
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <h2 class="font-display text-xl font-bold text-cream">Danh sách mã</h2>
+        <div class="flex flex-wrap gap-2">
+          <button id="sync-bot-presets" type="button" class="rounded-lg border border-purple-400/40 px-3 py-1.5 text-sm text-purple-200 transition hover:bg-purple-500/10">🤖 Sync bot (Pilot + Ong)</button>
+          <button id="reset-levels" type="button" class="rounded-lg border border-red-500/40 px-3 py-1.5 text-sm text-red-300 transition hover:bg-red-500/10">Reset tất cả về L1</button>
+          <button id="refresh-list" type="button" class="rounded-lg border border-cream-dim/30 px-3 py-1.5 text-sm text-cream transition hover:border-accent hover:text-accent">↻ Tải lại</button>
         </div>
       </div>
 
-      <div class="mt-8 rounded-xl border border-cream-dim/20 bg-navy-900/70 p-6">
-        <h2 class="font-display text-xl font-bold text-cream">Tạo mã mới</h2>
-        <form id="create-form" class="mt-5 grid gap-4 md:grid-cols-2">
-          <div>
-            <label class="mb-1 block text-sm text-cream-muted">Tên phụ huynh <span class="text-red-400">*</span></label>
-            <input name="parent_name" required maxlength="100" placeholder="Chị Mai" class="w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-3 py-2 text-cream focus:border-accent focus:outline-none" />
-          </div>
-          <div>
-            <label class="mb-1 block text-sm text-cream-muted">Zalo / SĐT</label>
-            <input name="parent_zalo" maxlength="30" placeholder="0901234567" class="w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-3 py-2 text-cream focus:border-accent focus:outline-none" />
-          </div>
-          <div>
-            <label class="mb-1 block text-sm text-cream-muted">Tên con <span class="text-red-400">*</span></label>
-            <input name="student_name" required maxlength="50" placeholder="Linh" class="w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-3 py-2 text-cream focus:border-accent focus:outline-none" />
-            <p class="mt-1 text-xs text-cream-dim">Nếu điền tên con, mã sẽ dễ nhớ hơn, ví dụ R2L-LINH-A4F2. Tên chỉ dùng chữ cái — không số (vd. "Pilot", không "Pilot L3").</p>
-          </div>
-          <div>
-            <label class="mb-1 block text-sm text-cream-muted">Tuổi con <span class="text-red-400">*</span></label>
-            <input name="student_age" type="number" min="5" max="14" required placeholder="8" class="w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-3 py-2 text-cream focus:border-accent focus:outline-none" />
-          </div>
-          <div class="rounded-lg border border-accent/30 bg-accent/10 p-4 text-sm leading-relaxed text-cream-muted md:col-span-2">
-            Tài khoản mới luôn bắt đầu ở L1. Với <strong class="text-cream">mã test</strong>, anh có thể set L1–L5 trong danh sách bên dưới để pilot nhanh (ví dụ L3 cho Phase 1).
-          </div>
-          <div>
-            <label class="mb-1 block text-sm text-cream-muted">Giới tính <span class="text-red-400">*</span></label>
-            <select name="child_gender" required class="w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-3 py-2 text-cream focus:border-accent focus:outline-none">
-              <option value="">Chưa chọn</option>
-              <option value="girl">Bé gái</option>
-              <option value="boy">Bé trai</option>
-            </select>
-          </div>
-          <div>
-            <label class="mb-1 block text-sm text-cream-muted">Số lượt</label>
-            <input name="uses" type="number" min="1" max="1000" value="10" required class="w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-3 py-2 text-cream focus:border-accent focus:outline-none" />
-          </div>
-          <div>
-            <label class="mb-1 block text-sm text-cream-muted">Hạn (ngày)</label>
-            <input name="expiry_days" type="number" min="1" max="3650" value="60" required class="w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-3 py-2 text-cream focus:border-accent focus:outline-none" />
-          </div>
-          <div class="md:col-span-2">
-            <label class="mb-1 block text-sm text-cream-muted">Ghi chú</label>
-            <input name="notes" maxlength="500" placeholder="Bé Linh, L2, thử nghiệm" class="w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-3 py-2 text-cream focus:border-accent focus:outline-none" />
-          </div>
-          <div class="grid gap-3 rounded-lg border border-cream-dim/20 bg-navy-950/60 p-4 md:col-span-2 sm:grid-cols-2">
-            <label class="flex cursor-pointer items-start gap-3 text-sm text-cream">
-              <input name="is_test" type="checkbox" class="mt-1 h-4 w-4 accent-accent" />
-              <span>
-                <span class="block font-semibold text-cream">Mã test</span>
-                <span class="block text-xs text-cream-muted">Không bắt buộc nộp bài cũ trước khi tạo bài mới.</span>
-              </span>
-            </label>
-            <label class="flex cursor-pointer items-start gap-3 text-sm text-cream">
-              <input name="is_shared" type="checkbox" class="mt-1 h-4 w-4 accent-accent" />
-              <span>
-                <span class="block font-semibold text-cream">Mã dùng chung</span>
-                <span class="block text-xs text-cream-muted">Dùng cho pilot/Facebook nhiều phụ huynh, không enforce progression.</span>
-              </span>
-            </label>
-          </div>
-          <div class="md:col-span-2">
-            <button type="submit" class="w-full rounded-lg bg-accent px-5 py-2.5 font-semibold text-navy-950 transition hover:bg-accent-hover sm:w-auto">Tạo mã</button>
-          </div>
-        </form>
-        <div id="create-result" class="mt-5 hidden rounded-lg border border-gold/40 bg-gold/10 p-4 text-cream">
-          <p class="text-sm text-cream-muted">Mã mới (bấm để copy):</p>
-          <button id="copy-code" type="button" class="mt-2 inline-flex items-center gap-2 rounded-lg bg-navy-950 px-4 py-2 font-mono text-2xl font-bold text-gold-light transition hover:bg-navy-800"></button>
-          <p id="copy-status" class="mt-2 text-xs text-cream-dim"></p>
+      <div class="mt-4 flex flex-wrap items-center gap-3">
+        <div class="relative flex-1 min-w-[240px]">
+          <input
+            id="search-codes"
+            type="text"
+            placeholder="Tìm mã, tên phụ huynh, tên con..."
+            class="fx-field w-full rounded-lg border border-cream-dim/30 bg-navy-950 px-3 py-2 pl-9 text-cream focus:border-accent focus:outline-none"
+          />
+          <svg class="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-cream-dim" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
         </div>
-        <div id="create-error" class="mt-5 hidden rounded-lg border border-red-500/30 bg-red-500/10 p-4 text-red-300"></div>
+        <div class="flex flex-wrap gap-1.5">
+          <button type="button" data-filter="all" class="filter-chip rounded-full border border-accent/40 bg-accent/15 px-3 py-1 text-xs font-semibold text-accent transition hover:bg-accent/25">Tất cả</button>
+          <button type="button" data-filter="active" class="filter-chip rounded-full border border-cream-dim/20 bg-navy-950/60 px-3 py-1 text-xs font-semibold text-cream-muted transition hover:border-green-400/40 hover:text-green-300">Hoạt động</button>
+          <button type="button" data-filter="expired" class="filter-chip rounded-full border border-cream-dim/20 bg-navy-950/60 px-3 py-1 text-xs font-semibold text-cream-muted transition hover:border-red-400/40 hover:text-red-300">Hết hạn</button>
+          <button type="button" data-filter="exhausted" class="filter-chip rounded-full border border-cream-dim/20 bg-navy-950/60 px-3 py-1 text-xs font-semibold text-cream-muted transition hover:border-amber-400/40 hover:text-amber-300">Hết lượt</button>
+          <button type="button" data-filter="test" class="filter-chip rounded-full border border-cream-dim/20 bg-navy-950/60 px-3 py-1 text-xs font-semibold text-cream-muted transition hover:border-yellow-400/40 hover:text-yellow-300">Test</button>
+          <button type="button" data-filter="shared" class="filter-chip rounded-full border border-cream-dim/20 bg-navy-950/60 px-3 py-1 text-xs font-semibold text-cream-muted transition hover:border-blue-400/40 hover:text-blue-300">Shared</button>
+        </div>
       </div>
 
-      <div class="mt-10 rounded-xl border border-cream-dim/20 bg-navy-900/70 p-6">
-        <div class="flex items-center justify-between gap-4">
-          <h2 class="font-display text-xl font-bold text-cream">Danh sách mã</h2>
-          <div class="flex flex-wrap gap-2">
-            <button id="sync-bot-presets" type="button" class="rounded-lg border border-purple-400/40 px-3 py-1.5 text-sm text-purple-200 transition hover:bg-purple-500/10">🤖 Sync bot (Pilot + Ong)</button>
-            <button id="reset-levels" type="button" class="rounded-lg border border-red-500/40 px-3 py-1.5 text-sm text-red-300 transition hover:bg-red-500/10">Reset tất cả về L1</button>
-            <button id="refresh-list" type="button" class="rounded-lg border border-cream-dim/30 px-3 py-1.5 text-sm text-cream transition hover:border-accent hover:text-accent">↻ Tải lại</button>
-          </div>
-        </div>
-        <p id="list-status" class="mt-3 text-sm text-cream-dim">Đang tải...</p>
-        <div id="codes-list" class="mt-5 space-y-3"></div>
+      <p id="list-status" class="mt-3 text-sm text-cream-dim">Đang tải...</p>
+      <div id="codes-list" class="mt-5 space-y-3"></div>
+      <div id="load-more-wrap" class="mt-5 hidden text-center">
+        <button id="load-more" type="button" class="rounded-lg border border-cream-dim/30 px-5 py-2 text-sm font-medium text-cream transition hover:border-accent hover:text-accent">Tải thêm →</button>
       </div>
-    </section>
-  </main>
+    </div>
+  </section>
 
-  <footer class="mt-auto border-t border-cream-dim/20 py-6 text-center text-sm text-cream-dim/80">
-    Felix Admin — handle with care
-  </footer>
+  <EditCodeModal />
 
   <script>
-    import { fireLessonPassConfetti, playSynthTone } from '../../lib/lesson-juice';
-    import { renderMonster } from '../../lib/monster-avatar';
+    import { escapeHtml, formatDate, TEST_LEVELS } from '../../lib/admin-shared.mjs';
 
     const createForm = document.getElementById('create-form');
     const createResult = document.getElementById('create-result');
@@ -175,25 +139,19 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     const syncBotPresetsBtn = document.getElementById('sync-bot-presets');
     const listEl = document.getElementById('codes-list');
     const listStatus = document.getElementById('list-status');
-    const createClassBtn = document.getElementById('create-class');
-    const refreshClassesBtn = document.getElementById('refresh-classes');
-    const classStatus = document.getElementById('class-status');
-    const classListEl = document.getElementById('class-list');
-    const classEmpty = document.getElementById('class-empty');
-    const classDetail = document.getElementById('class-detail');
-    const classNameInput = document.getElementById('class-name');
-    const saveClassNameBtn = document.getElementById('save-class-name');
-    const addStudentForm = document.getElementById('add-student-form');
-    const presetEditor = document.getElementById('preset-editor');
-    const classBoard = document.getElementById('class-board');
-    const TEST_LEVELS = [
-      ['L1', 'L1 · Đồng'],
-      ['L2', 'L2 · Bạc'],
-      ['L3', 'L3 · Vàng'],
-      ['L4', 'L4 · Kim cương'],
-      ['L5', 'L5 · Huyền thoại'],
-    ];
-    let classState = { classes: [], selectedId: '' };
+    const searchInput = document.getElementById('search-codes');
+    const loadMoreWrap = document.getElementById('load-more-wrap');
+    const loadMoreBtn = document.getElementById('load-more');
+    const filterChips = document.querySelectorAll('.filter-chip');
+    const editModal = document.getElementById('edit-code-modal');
+    const editForm = document.getElementById('edit-code-form');
+
+    let allItems = [];
+    let filteredItems = [];
+    let activeFilter = 'all';
+    let searchQuery = '';
+    let nextCursor = null;
+    let listComplete = true;
 
     function showCreateError(msg) {
       createResult.classList.add('hidden');
@@ -236,7 +194,6 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
           createForm.querySelector('[name=uses]').value = '10';
           createForm.querySelector('[name=expiry_days]').value = '60';
           await loadList();
-          await loadClasses();
         } else {
           showCreateError(result.message || result.error || 'Lỗi không xác định');
         }
@@ -248,280 +205,54 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       }
     });
 
-    function escapeHtml(s) {
-      if (s == null) return '';
-      return String(s)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;');
-    }
+    function filterItems() {
+      const q = searchQuery.toLowerCase().trim();
+      filteredItems = allItems.filter((item) => {
+        const profile = item.student_profile || {};
+        const progress = item.progress || {};
+        const studentName = profile.student_name || progress.student_name || '';
+        const parentName = item.parent_name || '';
+        const code = item.code || '';
 
-    function currentClass() {
-      return classState.classes.find((klass) => klass.id === classState.selectedId) || classState.classes[0] || null;
-    }
+        const matchesSearch = !q ||
+          code.toLowerCase().includes(q) ||
+          parentName.toLowerCase().includes(q) ||
+          studentName.toLowerCase().includes(q);
 
-    function signed(value, suffix = '') {
-      const n = Number(value) || 0;
-      if (!n) return '';
-      return `${n > 0 ? '+' : ''}${n}${suffix}`;
-    }
+        const today = new Date().toISOString().slice(0, 10);
+        const expired = item.expires_at && item.expires_at < today;
+        const exhausted = (item.uses_remaining ?? 0) <= 0;
+        const active = !expired && !exhausted;
 
-    function presetText(preset) {
-      const parts = [
-        signed(preset.xp_delta, ' XP'),
-        signed(preset.coins_delta, ' xu'),
-      ].filter(Boolean);
-      return parts.length ? parts.join(' · ') : 'ghi nhận';
-    }
+        let matchesFilter = true;
+        if (activeFilter === 'active') matchesFilter = active;
+        else if (activeFilter === 'expired') matchesFilter = expired;
+        else if (activeFilter === 'exhausted') matchesFilter = exhausted;
+        else if (activeFilter === 'test') matchesFilter = item.is_test;
+        else if (activeFilter === 'shared') matchesFilter = item.is_shared;
 
-    function renderClassList() {
-      if (!classState.classes.length) {
-        classListEl.innerHTML = '';
-        classStatus.textContent = 'Chưa có lớp nào.';
-        classEmpty.classList.remove('hidden');
-        classDetail.classList.add('hidden');
-        return;
-      }
-      if (!classState.selectedId) classState.selectedId = classState.classes[0].id;
-      classStatus.textContent = `${classState.classes.length} lớp.`;
-      classListEl.innerHTML = classState.classes.map((klass) => {
-        const active = klass.id === classState.selectedId;
-        return `
-          <button type="button" data-class-id="${escapeHtml(klass.id)}" class="w-full rounded-lg border px-3 py-2 text-left transition ${active ? 'border-accent bg-accent/15 text-cream' : 'border-cream-dim/20 bg-navy-900/60 text-cream-muted hover:border-accent/60 hover:text-cream'}">
-            <span class="block truncate font-semibold">${escapeHtml(klass.name)}</span>
-            <span class="mt-1 block text-xs">${klass.students?.length || klass.student_codes?.length || 0} học sinh</span>
-          </button>
-        `;
-      }).join('');
-    }
-
-    function renderPresetRows(title, type, presets) {
-      return `
-        <div>
-          <h4 class="font-semibold text-cream">${escapeHtml(title)}</h4>
-          <div class="mt-3 space-y-2">
-            ${(presets || []).map((preset, index) => `
-              <div class="grid gap-2 rounded-lg border border-cream-dim/15 bg-navy-950/70 p-2 sm:grid-cols-[minmax(0,1fr)_80px_80px]" data-preset-row data-preset-type="${escapeHtml(type)}" data-index="${index}">
-                <input data-field="label" value="${escapeHtml(preset.label)}" class="rounded border border-cream-dim/20 bg-navy-900 px-2 py-1 text-sm text-cream focus:border-accent focus:outline-none" />
-                <input data-field="xp_delta" type="number" value="${Number(preset.xp_delta || 0)}" class="rounded border border-cream-dim/20 bg-navy-900 px-2 py-1 text-sm text-cream focus:border-accent focus:outline-none" />
-                <input data-field="coins_delta" type="number" value="${Number(preset.coins_delta || 0)}" class="rounded border border-cream-dim/20 bg-navy-900 px-2 py-1 text-sm text-cream focus:border-accent focus:outline-none" />
-              </div>
-            `).join('')}
-          </div>
-          <p class="mt-2 text-xs text-cream-dim">Cột 2 là XP, cột 3 là xu. Có thể dùng số âm cho “cần cố gắng”.</p>
-        </div>
-      `;
-    }
-
-    function renderPresetEditor(klass) {
-      presetEditor.innerHTML = `
-        ${renderPresetRows('Thưởng tích cực', 'positive_presets', klass.positive_presets || [])}
-        ${renderPresetRows('Cần cố gắng', 'needs_work_presets', klass.needs_work_presets || [])}
-        <div class="xl:col-span-2">
-          <button type="button" id="save-presets" class="rounded-lg border border-accent/50 px-4 py-2 text-sm font-semibold text-accent transition hover:bg-accent/10">Lưu các nút thưởng</button>
-        </div>
-      `;
-    }
-
-    function renderStudentCard(student, klass) {
-      const state = student.read2lead_state || {};
-      const ladder = state.rank_ladder || {};
-      const rankLabel = ladder.label_vi || state.rank_title || state.current_level || 'Read2Lead';
-      const xpLabel = `${state.xp_in_level ?? 0}/${state.xp_to_next_level ?? 0} XP`;
-      const xpPercent = Math.max(0, Math.min(100, Number(state.xp_percent || 0)));
-      const attendance = student.attendance_today;
-      if (student.missing) {
-        return `
-          <article class="rounded-2xl border border-red-500/30 bg-red-500/10 p-5" data-class-student="${escapeHtml(student.code)}">
-            <p class="font-mono text-sm text-red-200">${escapeHtml(student.code)}</p>
-            <p class="mt-2 font-semibold text-red-100">Không tìm thấy mã này trong KV.</p>
-            <button type="button" data-class-action="remove-student" data-code="${escapeHtml(student.code)}" class="mt-3 rounded border border-red-400/40 px-3 py-1 text-xs text-red-200">Gỡ khỏi lớp</button>
-          </article>
-        `;
-      }
-      const rewardButtons = (klass.positive_presets || []).map((preset) => `
-        <button type="button" data-class-action="reward" data-kind="positive" data-code="${escapeHtml(student.code)}" data-reason="${escapeHtml(preset.label)}" data-xp="${Number(preset.xp_delta || 0)}" data-coins="${Number(preset.coins_delta || 0)}" class="rounded-xl bg-accent px-3 py-3 text-left font-semibold text-navy-950 shadow-lg shadow-accent/10 transition hover:-translate-y-0.5 hover:bg-accent-hover">
-          <span class="block">${escapeHtml(preset.label)}</span>
-          <span class="text-xs opacity-80">${escapeHtml(presetText(preset))}</span>
-        </button>
-      `).join('');
-      const needsWorkButtons = (klass.needs_work_presets || []).map((preset) => `
-        <button type="button" data-class-action="reward" data-kind="needs_work" data-code="${escapeHtml(student.code)}" data-reason="${escapeHtml(preset.label)}" data-xp="${Number(preset.xp_delta || 0)}" data-coins="${Number(preset.coins_delta || 0)}" class="rounded-lg border border-amber-400/35 px-3 py-2 text-left text-sm font-semibold text-amber-100 transition hover:bg-amber-500/10">
-          <span class="block">${escapeHtml(preset.label)}</span>
-          <span class="text-xs text-amber-100/70">${escapeHtml(presetText(preset))}</span>
-        </button>
-      `).join('');
-      return `
-        <article class="relative overflow-hidden rounded-2xl border border-cream-dim/20 bg-gradient-to-br from-navy-900 to-navy-950 p-5 shadow-xl shadow-navy-950/30" data-class-student="${escapeHtml(student.code)}">
-          <div class="flex gap-4">
-            <div class="flex h-36 w-36 shrink-0 items-center justify-center rounded-2xl border border-cream-dim/20 bg-navy-900/80 text-7xl" data-class-avatar="${escapeHtml(student.code)}" aria-hidden="true"></div>
-            <div class="min-w-0 flex-1">
-              <div class="flex flex-wrap items-start justify-between gap-2">
-                <div>
-                  <h3 class="truncate font-display text-3xl font-extrabold text-cream">${escapeHtml(student.student_name || student.code)}</h3>
-                  <p class="mt-1 text-sm text-cream-muted">${student.age ? `${escapeHtml(student.age)} tuổi · ` : ''}<span class="font-mono">${escapeHtml(student.code)}</span></p>
-                </div>
-                <button type="button" data-class-action="remove-student" data-code="${escapeHtml(student.code)}" class="rounded border border-red-500/30 px-2 py-1 text-xs text-red-200 transition hover:bg-red-500/10">Gỡ</button>
-              </div>
-              <div class="mt-4 grid grid-cols-2 gap-2 text-sm">
-                <div class="rounded-lg border border-gold/25 bg-gold/10 p-3 text-gold-light"><span class="block text-xs text-gold-light/70">Xu</span><strong class="text-xl">${Number(state.coins || 0)}</strong></div>
-                <div class="rounded-lg border border-accent/25 bg-accent/10 p-3 text-accent"><span class="block text-xs text-accent/70">Rank</span><strong class="text-base">${escapeHtml(rankLabel)}</strong></div>
-                <div class="col-span-2 rounded-lg border border-cream-dim/15 bg-navy-900/80 p-3">
-                  <div class="flex justify-between text-xs text-cream-muted"><span>XP</span><span>${escapeHtml(xpLabel)}</span></div>
-                  <div class="mt-2 h-2 overflow-hidden rounded-full bg-navy-950"><span class="block h-full rounded-full bg-accent" style="width:${xpPercent}%"></span></div>
-                </div>
-                <div class="rounded-lg border border-cream-dim/15 bg-navy-900/80 p-3 text-cream"><span class="block text-xs text-cream-muted">Read2Lead streak</span><strong>${Number(state.streak_days || 0)} ngày</strong></div>
-                <div class="rounded-lg border border-cream-dim/15 bg-navy-900/80 p-3 text-cream"><span class="block text-xs text-cream-muted">Điểm danh lớp</span><strong>${attendance === 'present' ? 'Có mặt' : attendance === 'absent' ? 'Vắng' : 'Chưa chọn'}</strong></div>
-              </div>
-            </div>
-          </div>
-          <div class="mt-5 flex flex-wrap gap-2">
-            <button type="button" data-class-action="attendance" data-code="${escapeHtml(student.code)}" data-status="present" class="rounded-lg border ${attendance === 'present' ? 'border-green-400 bg-green-400/15 text-green-100' : 'border-green-400/30 text-green-200'} px-3 py-2 text-sm font-semibold">Có mặt</button>
-            <button type="button" data-class-action="attendance" data-code="${escapeHtml(student.code)}" data-status="absent" class="rounded-lg border ${attendance === 'absent' ? 'border-red-400 bg-red-400/15 text-red-100' : 'border-red-400/30 text-red-200'} px-3 py-2 text-sm font-semibold">Vắng</button>
-          </div>
-          <div class="mt-5">
-            <p class="mb-2 text-sm font-semibold text-cream">Thưởng nhanh</p>
-            <div class="grid gap-2 sm:grid-cols-2">${rewardButtons}</div>
-          </div>
-          <details class="mt-4 rounded-xl border border-amber-400/20 bg-amber-500/5 p-3">
-            <summary class="cursor-pointer text-sm font-semibold text-amber-100">Cần cố gắng</summary>
-            <div class="mt-3 grid gap-2 sm:grid-cols-2">${needsWorkButtons}</div>
-          </details>
-          <form class="mt-4 grid gap-2 rounded-xl border border-cream-dim/15 bg-navy-900/70 p-3 sm:grid-cols-[1fr_1fr_auto]" data-custom-reward data-code="${escapeHtml(student.code)}">
-            <input name="xp_delta" type="number" placeholder="+/- XP" class="rounded border border-cream-dim/20 bg-navy-950 px-3 py-2 text-cream focus:border-accent focus:outline-none" />
-            <input name="coins_delta" type="number" placeholder="+/- xu" class="rounded border border-cream-dim/20 bg-navy-950 px-3 py-2 text-cream focus:border-accent focus:outline-none" />
-            <button type="submit" class="rounded-lg border border-accent/50 px-4 py-2 font-semibold text-accent transition hover:bg-accent/10">Áp dụng</button>
-          </form>
-        </article>
-      `;
-    }
-
-    function renderClassAvatars(students) {
-      for (const student of students || []) {
-        const host = Array.from(classBoard.querySelectorAll('[data-class-avatar]')).find((node) => node.dataset.classAvatar === student.code);
-        if (!host) continue;
-        const state = student.read2lead_state || {};
-        if (state.avatar_stage === 'egg') {
-          host.textContent = '🥚';
-          host.className = 'flex h-36 w-36 shrink-0 items-center justify-center rounded-2xl border border-cream-dim/20 bg-navy-900/80 text-7xl';
-          continue;
-        }
-        if (state.avatar?.monster) {
-          renderMonster(host, state.avatar.monster, {
-            size: 'large',
-            animate: true,
-            equipped: state.equipped,
-            equippedDisplay: state.equipped_display,
-          });
-        } else {
-          host.textContent = '👾';
-        }
-      }
-    }
-
-    function renderClassDetail() {
-      const klass = currentClass();
-      if (!klass) {
-        classEmpty.classList.remove('hidden');
-        classDetail.classList.add('hidden');
-        return;
-      }
-      classEmpty.classList.add('hidden');
-      classDetail.classList.remove('hidden');
-      classNameInput.value = klass.name || 'Felix coaching group';
-      renderPresetEditor(klass);
-      if (!klass.students?.length) {
-        classBoard.innerHTML = '<div class="rounded-lg border border-dashed border-cream-dim/30 p-8 text-center text-cream-muted xl:col-span-2">Lớp này chưa có học sinh. Thêm mã Read2Lead ở trên.</div>';
-      } else {
-        classBoard.innerHTML = klass.students.map((student) => renderStudentCard(student, klass)).join('');
-        renderClassAvatars(klass.students);
-      }
-    }
-
-    function renderClasses() {
-      renderClassList();
-      renderClassDetail();
-    }
-
-    async function loadClasses() {
-      classStatus.textContent = 'Đang tải lớp...';
-      try {
-        const res = await fetch('/api/admin/classes');
-        const result = await res.json();
-        if (!res.ok || !result.ok) throw new Error(result.message || result.error || 'Không tải được lớp');
-        classState.classes = result.classes || [];
-        if (classState.selectedId && !classState.classes.some((klass) => klass.id === classState.selectedId)) {
-          classState.selectedId = '';
-        }
-        renderClasses();
-      } catch (err) {
-        classStatus.textContent = '⚠ ' + err.message;
-      }
-    }
-
-    async function patchClass(body) {
-      const klass = currentClass();
-      if (!klass) throw new Error('Chưa chọn lớp');
-      const res = await fetch(`/api/admin/classes/${encodeURIComponent(klass.id)}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body),
+        return matchesSearch && matchesFilter;
       });
-      const result = await res.json();
-      if (!res.ok || !result.ok) throw new Error(result.message || result.error || 'Không lưu được lớp');
-      const idx = classState.classes.findIndex((item) => item.id === klass.id);
-      if (idx >= 0) classState.classes[idx] = result.class;
-      renderClasses();
-      return result.class;
+      renderFilteredItems();
     }
 
-    function collectPresets(type) {
-      return Array.from(presetEditor.querySelectorAll(`[data-preset-row][data-preset-type="${type}"]`)).map((row) => ({
-        id: `${type}-${row.dataset.index}`,
-        label: row.querySelector('[data-field="label"]')?.value || '',
-        xp_delta: Number(row.querySelector('[data-field="xp_delta"]')?.value || 0),
-        coins_delta: Number(row.querySelector('[data-field="coins_delta"]')?.value || 0),
-        kind: type === 'needs_work_presets' ? 'needs_work' : 'positive',
-      }));
-    }
+    searchInput.addEventListener('input', (e) => {
+      searchQuery = e.target.value;
+      filterItems();
+    });
 
-    function rewardBurst(card, text) {
-      const burst = document.createElement('div');
-      burst.className = 'pointer-events-none absolute right-5 top-5 z-10 rounded-full bg-gold px-4 py-2 text-lg font-extrabold text-navy-950 shadow-xl';
-      burst.textContent = text || 'Tuyệt!';
-      card.appendChild(burst);
-      burst.animate(
-        [
-          { transform: 'translateY(8px) scale(0.85)', opacity: 0 },
-          { transform: 'translateY(0) scale(1)', opacity: 1 },
-          { transform: 'translateY(-28px) scale(1.08)', opacity: 0 },
-        ],
-        { duration: 1300, easing: 'cubic-bezier(.2,.8,.2,1)' },
-      ).finished.finally(() => burst.remove());
-    }
-
-    async function applyClassReward({ code, xpDelta, coinsDelta, reason, kind, sourceEl }) {
-      const klass = currentClass();
-      if (!klass) return;
-      const res = await fetch(`/api/admin/classes/${encodeURIComponent(klass.id)}/reward`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ code, xp_delta: xpDelta, coins_delta: coinsDelta, reason, kind }),
+    filterChips.forEach((chip) => {
+      chip.addEventListener('click', () => {
+        filterChips.forEach((c) => {
+          c.classList.remove('border-accent/40', 'bg-accent/15', 'text-accent');
+          c.classList.add('border-cream-dim/20', 'bg-navy-950/60', 'text-cream-muted');
+        });
+        chip.classList.remove('border-cream-dim/20', 'bg-navy-950/60', 'text-cream-muted');
+        chip.classList.add('border-accent/40', 'bg-accent/15', 'text-accent');
+        activeFilter = chip.dataset.filter;
+        filterItems();
       });
-      const result = await res.json();
-      if (!res.ok || !result.ok) {
-        alert('Lỗi thưởng: ' + (result.message || result.error || 'Không áp dụng được'));
-        return;
-      }
-      if (kind !== 'needs_work') {
-        fireLessonPassConfetti();
-        playSynthTone(Number(result.applied?.coins_delta || 0) > 0 ? 'coin' : 'correct');
-        const card = sourceEl?.closest('[data-class-student]');
-        if (card) rewardBurst(card, `${signed(result.applied?.xp_delta || 0, ' XP')} ${signed(result.applied?.coins_delta || 0, ' xu')}`.trim());
-      }
-      await loadClasses();
-    }
+    });
 
     function renderItem(item) {
       const today = new Date().toISOString().slice(0, 10);
@@ -533,9 +264,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       const usesTotal = item.uses_total ?? item.uses_remaining;
       const usesLabel = usesRemaining != null && usesTotal != null
         ? `${usesRemaining} / ${usesTotal}`
-        : usesRemaining != null
-          ? `${usesRemaining} / —`
-          : '—';
+        : usesRemaining != null ? `${usesRemaining} / —` : '—';
       const profile = item.student_profile || {};
       const progress = item.progress || {};
       const studentName = profile.student_name || progress.student_name || '';
@@ -546,14 +275,13 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         item.is_shared ? '<span class="rounded-md border border-blue-500/40 px-2 py-0.5 text-[11px] font-semibold text-blue-300">SHARED</span>' : '',
       ].filter(Boolean).join(' ');
       const levelOptions = TEST_LEVELS.map(
-        ([value, label]) =>
-          `<option value="${value}"${studentLevel === value ? ' selected' : ''}>${label}</option>`,
+        ([value, label]) => `<option value="${value}"${studentLevel === value ? ' selected' : ''}>${label}</option>`,
       ).join('');
       const testLevelControls = item.is_test
         ? `
           <div class="mt-3 flex flex-wrap items-center gap-2 border-t border-yellow-500/20 pt-3">
             <span class="text-xs font-semibold text-yellow-300">Set level (test):</span>
-            <select data-role="test-level" class="rounded border border-yellow-500/30 bg-navy-950 px-2 py-1 text-xs text-cream focus:border-accent focus:outline-none">
+            <select data-role="test-level" class="fx-field rounded border border-yellow-500/30 bg-navy-950 px-2 py-1 text-xs text-cream focus:border-accent focus:outline-none">
               ${levelOptions}
             </select>
             <button type="button" data-action="set-level" class="rounded border border-yellow-500/40 px-3 py-1 text-xs font-semibold text-yellow-200 transition hover:bg-yellow-500/10">Áp dụng</button>
@@ -562,7 +290,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         : '';
 
       return `
-        <article class="rounded-lg border border-cream-dim/20 bg-navy-950/60 p-4" data-code="${escapeHtml(item.code)}">
+        <article class="rounded-xl border border-cream-dim/20 bg-navy-950/60 p-4 transition hover:border-cream-dim/30" data-code="${escapeHtml(item.code)}">
           <div class="flex flex-wrap items-start justify-between gap-3">
             <div>
               <p class="font-mono text-lg font-bold text-gold-light">${escapeHtml(item.code)}</p>
@@ -579,21 +307,33 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
           <div class="mt-3 grid grid-cols-2 gap-2 text-xs text-cream-muted sm:grid-cols-4">
             <div><span class="text-cream-dim">Lượt:</span> ${usesLabel}</div>
             <div><span class="text-cream-dim">Level:</span> ${escapeHtml(studentLevel || '—')}</div>
-            <div><span class="text-cream-dim">Hết hạn:</span> ${escapeHtml(item.expires_at || '—')}</div>
-            <div><span class="text-cream-dim">Dùng lần cuối:</span> ${escapeHtml(item.last_used_at || '—')}</div>
+            <div><span class="text-cream-dim">Hết hạn:</span> ${escapeHtml(formatDate(item.expires_at))}</div>
+            <div><span class="text-cream-dim">Dùng lần cuối:</span> ${escapeHtml(formatDate(item.last_used_at))}</div>
           </div>
           <div class="mt-3 flex flex-wrap gap-2">
-            <button type="button" data-action="edit" class="rounded border border-cream-dim/30 px-3 py-1 text-xs text-cream transition hover:border-accent hover:text-accent">Edit</button>
+            <button type="button" data-action="edit" class="rounded border border-cream-dim/30 px-3 py-1 text-xs text-cream transition hover:border-accent hover:text-accent">✏️ Sửa</button>
             <button type="button" data-action="refund" class="rounded border border-cream-dim/30 px-3 py-1 text-xs text-cream transition hover:border-accent hover:text-accent">+1 lượt</button>
             <button type="button" data-action="extend" class="rounded border border-cream-dim/30 px-3 py-1 text-xs text-cream transition hover:border-accent hover:text-accent">+30 ngày</button>
             <button type="button" data-action="toggle-test" class="rounded border border-yellow-500/40 px-3 py-1 text-xs text-yellow-300 transition hover:bg-yellow-500/10">${item.is_test ? 'Test OFF' : 'Test ON'}</button>
             <button type="button" data-action="toggle-shared" class="rounded border border-blue-500/40 px-3 py-1 text-xs text-blue-300 transition hover:bg-blue-500/10">${item.is_shared ? 'Shared OFF' : 'Shared ON'}</button>
-            <button type="button" data-action="copy" class="rounded border border-cream-dim/30 px-3 py-1 text-xs text-cream transition hover:border-accent hover:text-accent">Copy code</button>
-            <button type="button" data-action="revoke" class="rounded border border-red-500/40 px-3 py-1 text-xs text-red-300 transition hover:bg-red-500/10">Revoke</button>
+            <button type="button" data-action="copy" class="rounded border border-cream-dim/30 px-3 py-1 text-xs text-cream transition hover:border-accent hover:text-accent">📋 Copy</button>
+            <button type="button" data-action="revoke" class="rounded border border-red-500/40 px-3 py-1 text-xs text-red-300 transition hover:bg-red-500/10">🗑️ Revoke</button>
           </div>
           ${testLevelControls}
         </article>
       `;
+    }
+
+    function renderFilteredItems() {
+      if (filteredItems.length === 0) {
+        listEl.innerHTML = '';
+        listStatus.textContent = allItems.length === 0 ? 'Chưa có mã nào.' : 'Không tìm thấy mã phù hợp.';
+        loadMoreWrap.classList.add('hidden');
+        return;
+      }
+      listStatus.textContent = `${filteredItems.length} mã${filteredItems.length !== allItems.length ? ` (trong tổng ${allItems.length})` : ''}.`;
+      listEl.innerHTML = filteredItems.map(renderItem).join('');
+      loadMoreWrap.classList.toggle('hidden', listComplete);
     }
 
     async function loadList() {
@@ -605,18 +345,37 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
           listStatus.textContent = '⚠ Lỗi: ' + (result.message || result.error || 'Không tải được');
           return;
         }
-        const items = result.items || [];
-        if (items.length === 0) {
-          listEl.innerHTML = '';
-          listStatus.textContent = 'Chưa có mã nào.';
-          return;
-        }
-        listStatus.textContent = `${items.length} mã.`;
-        listEl.innerHTML = items.map(renderItem).join('');
+        allItems = result.items || [];
+        nextCursor = result.cursor || null;
+        listComplete = result.list_complete || true;
+        filterItems();
       } catch (err) {
         listStatus.textContent = '⚠ Lỗi mạng: ' + err.message;
       }
     }
+
+    async function loadMore() {
+      if (!nextCursor || listComplete) return;
+      loadMoreBtn.disabled = true;
+      loadMoreBtn.textContent = 'Đang tải...';
+      try {
+        const res = await fetch(`/api/admin/codes?cursor=${encodeURIComponent(nextCursor)}`);
+        const result = await res.json();
+        if (res.ok && result.ok) {
+          allItems = [...allItems, ...(result.items || [])];
+          nextCursor = result.cursor || null;
+          listComplete = result.list_complete || true;
+          filterItems();
+        }
+      } catch (err) {
+        console.error('Load more failed:', err);
+      } finally {
+        loadMoreBtn.disabled = false;
+        loadMoreBtn.textContent = 'Tải thêm →';
+      }
+    }
+
+    loadMoreBtn.addEventListener('click', loadMore);
 
     async function patchCode(code, body) {
       const res = await fetch(`/api/admin/codes/${encodeURIComponent(code)}`, {
@@ -645,7 +404,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         try {
           await navigator.clipboard.writeText(code);
           btn.textContent = '✓ Copied';
-          setTimeout(() => (btn.textContent = 'Copy code'), 1500);
+          setTimeout(() => (btn.textContent = '📋 Copy'), 1500);
         } catch {
           alert('Copy thất bại — bôi đen mã và copy tay.');
         }
@@ -658,7 +417,6 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         const result = await res.json();
         if (res.ok && result.ok) {
           await loadList();
-          await loadClasses();
         } else {
           alert('Lỗi: ' + (result.error || 'Không revoke được'));
         }
@@ -666,10 +424,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       }
 
       if (action === 'refund') {
-        // refund 1 use — fetch current value first to know what to add 1 to
-        const listRes = await fetch('/api/admin/codes');
-        const listData = await listRes.json();
-        const current = listData.items?.find((it) => it.code === code);
+        const current = allItems.find((it) => it.code === code);
         if (!current) return;
         const result = await patchCode(code, { uses_remaining: (current.uses_remaining ?? 0) + 1 });
         if (result.ok) await loadList();
@@ -678,9 +433,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       }
 
       if (action === 'extend') {
-        const listRes = await fetch('/api/admin/codes');
-        const listData = await listRes.json();
-        const current = listData.items?.find((it) => it.code === code);
+        const current = allItems.find((it) => it.code === code);
         if (!current) return;
         const today = new Date().toISOString().slice(0, 10);
         const base = (current.expires_at || today) < today ? today : current.expires_at || today;
@@ -692,9 +445,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       }
 
       if (action === 'toggle-test' || action === 'toggle-shared') {
-        const listRes = await fetch('/api/admin/codes');
-        const listData = await listRes.json();
-        const current = listData.items?.find((it) => it.code === code);
+        const current = allItems.find((it) => it.code === code);
         if (!current) return;
         const field = action === 'toggle-test' ? 'is_test' : 'is_shared';
         const result = await patchCode(code, { [field]: !current[field] });
@@ -732,157 +483,46 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       }
 
       if (action === 'edit') {
-        const listRes = await fetch('/api/admin/codes');
-        const listData = await listRes.json();
-        const current = listData.items?.find((it) => it.code === code);
+        const current = allItems.find((it) => it.code === code);
         if (!current) return;
         const profile = current.student_profile || {};
-        const newName = prompt('Tên phụ huynh:', current.parent_name || '');
-        if (newName === null) return;
-        const newZalo = prompt('Zalo / SĐT:', current.parent_zalo || '');
-        if (newZalo === null) return;
-        const newStudentName = prompt('Tên con:', profile.student_name || current.progress?.student_name || '');
-        if (newStudentName === null) return;
-        const newStudentAge = prompt('Tuổi con:', profile.age || current.progress?.age || '');
-        if (newStudentAge === null) return;
-        const newGender = prompt('Giới tính con (boy/girl):', profile.child_gender || current.progress?.child_gender || '');
-        if (newGender === null) return;
-        const newNotes = prompt('Ghi chú:', current.notes || '');
-        if (newNotes === null) return;
-        const result = await patchCode(code, {
-          parent_name: newName,
-          parent_zalo: newZalo,
-          notes: newNotes,
-          student_profile: {
-            student_name: newStudentName,
-            age: newStudentAge,
-            child_gender: newGender,
-          },
-        });
-        if (result.ok) await loadList();
-        else alert('Lỗi: ' + (result.error || 'patch failed'));
+        const progress = current.progress || {};
+
+        document.getElementById('edit-modal-code').value = code;
+        document.getElementById('edit-parent-name').value = current.parent_name || '';
+        document.getElementById('edit-parent-zalo').value = current.parent_zalo || '';
+        document.getElementById('edit-student-name').value = profile.student_name || progress.student_name || '';
+        document.getElementById('edit-student-age').value = profile.age ?? progress.age ?? '';
+        document.getElementById('edit-child-gender').value = profile.child_gender || progress.child_gender || '';
+        document.getElementById('edit-notes').value = current.notes || '';
+
+        editModal.showModal();
+      }
+    });
+
+    editForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const code = document.getElementById('edit-modal-code').value;
+      const body = {
+        parent_name: document.getElementById('edit-parent-name').value,
+        parent_zalo: document.getElementById('edit-parent-zalo').value,
+        notes: document.getElementById('edit-notes').value,
+        student_profile: {
+          student_name: document.getElementById('edit-student-name').value,
+          age: document.getElementById('edit-student-age').value,
+          child_gender: document.getElementById('edit-child-gender').value,
+        },
+      };
+      const result = await patchCode(code, body);
+      if (result.ok) {
+        editModal.close();
+        await loadList();
+      } else {
+        alert('Lỗi: ' + (result.error || 'patch failed'));
       }
     });
 
     refreshBtn.addEventListener('click', loadList);
-    refreshClassesBtn.addEventListener('click', loadClasses);
-    createClassBtn.addEventListener('click', async () => {
-      createClassBtn.disabled = true;
-      createClassBtn.textContent = 'Đang tạo...';
-      try {
-        const res = await fetch('/api/admin/classes', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name: 'Felix coaching group' }),
-        });
-        const result = await res.json();
-        if (!res.ok || !result.ok) throw new Error(result.message || result.error || 'Không tạo được lớp');
-        classState.selectedId = result.class.id;
-        await loadClasses();
-      } catch (err) {
-        alert('Lỗi tạo lớp: ' + err.message);
-      } finally {
-        createClassBtn.disabled = false;
-        createClassBtn.textContent = '+ Tạo lớp';
-      }
-    });
-
-    classListEl.addEventListener('click', (event) => {
-      const btn = event.target.closest('[data-class-id]');
-      if (!btn) return;
-      classState.selectedId = btn.dataset.classId;
-      renderClasses();
-    });
-
-    saveClassNameBtn.addEventListener('click', async () => {
-      try {
-        await patchClass({ name: classNameInput.value });
-      } catch (err) {
-        alert('Lỗi lưu tên lớp: ' + err.message);
-      }
-    });
-
-    addStudentForm.addEventListener('submit', async (event) => {
-      event.preventDefault();
-      const codeInput = addStudentForm.querySelector('[name="code"]');
-      const code = codeInput.value.trim().toUpperCase();
-      if (!code) return;
-      try {
-        await patchClass({ add_code: code });
-        codeInput.value = '';
-      } catch (err) {
-        alert('Lỗi thêm học sinh: ' + err.message);
-      }
-    });
-
-    presetEditor.addEventListener('click', async (event) => {
-      const btn = event.target.closest('#save-presets');
-      if (!btn) return;
-      btn.disabled = true;
-      btn.textContent = 'Đang lưu...';
-      try {
-        await patchClass({
-          positive_presets: collectPresets('positive_presets'),
-          needs_work_presets: collectPresets('needs_work_presets'),
-        });
-      } catch (err) {
-        alert('Lỗi lưu nút thưởng: ' + err.message);
-      } finally {
-        btn.disabled = false;
-        btn.textContent = 'Lưu các nút thưởng';
-      }
-    });
-
-    classBoard.addEventListener('click', async (event) => {
-      const btn = event.target.closest('[data-class-action]');
-      if (!btn) return;
-      const action = btn.dataset.classAction;
-      const code = btn.dataset.code;
-      if (action === 'remove-student') {
-        if (!confirm(`Gỡ ${code} khỏi lớp này?`)) return;
-        try {
-          await patchClass({ remove_code: code });
-        } catch (err) {
-          alert('Lỗi gỡ học sinh: ' + err.message);
-        }
-        return;
-      }
-      if (action === 'attendance') {
-        try {
-          await patchClass({ attendance: { code, status: btn.dataset.status } });
-        } catch (err) {
-          alert('Lỗi điểm danh: ' + err.message);
-        }
-        return;
-      }
-      if (action === 'reward') {
-        await applyClassReward({
-          code,
-          xpDelta: Number(btn.dataset.xp || 0),
-          coinsDelta: Number(btn.dataset.coins || 0),
-          reason: btn.dataset.reason || '',
-          kind: btn.dataset.kind || 'positive',
-          sourceEl: btn,
-        });
-      }
-    });
-
-    classBoard.addEventListener('submit', async (event) => {
-      const form = event.target.closest('[data-custom-reward]');
-      if (!form) return;
-      event.preventDefault();
-      const xpDelta = Number(form.querySelector('[name="xp_delta"]')?.value || 0);
-      const coinsDelta = Number(form.querySelector('[name="coins_delta"]')?.value || 0);
-      const kind = xpDelta < 0 || coinsDelta < 0 ? 'needs_work' : 'positive';
-      await applyClassReward({
-        code: form.dataset.code,
-        xpDelta,
-        coinsDelta,
-        reason: 'Tuỳ chỉnh',
-        kind,
-        sourceEl: form,
-      });
-    });
 
     syncBotPresetsBtn.addEventListener('click', async () => {
       if (!confirm('Áp dụng stats cố định cho Pilot (Vàng II, 39 bài) và Ong (Vàng III, 19 bài)?')) return;
@@ -908,6 +548,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         syncBotPresetsBtn.textContent = '🤖 Sync bot (Pilot + Ong)';
       }
     });
+
     resetLevelsBtn.addEventListener('click', async () => {
       if (!confirm('Reset TẤT CẢ mã Read2Lead về L1 và xoá XP/progress V2 hiện tại?')) return;
       resetLevelsBtn.disabled = true;
@@ -925,7 +566,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         resetLevelsBtn.textContent = 'Reset tất cả về L1';
       }
     });
+
     loadList();
-    loadClasses();
   </script>
-</BaseLayout>
+</AdminLayout>

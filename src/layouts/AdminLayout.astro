@@ -1,0 +1,70 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+export interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = 'Felix Admin — Read2Lead management' } = Astro.props;
+
+const navTabs = [
+  { href: '/admin', label: 'Dashboard', icon: '📊' },
+  { href: '/admin/codes', label: 'Mã học sinh', icon: '🔑' },
+  { href: '/admin/classes', label: 'Lớp coaching', icon: '👨‍🏫' },
+  { href: '/admin/portfolio', label: 'Video', icon: '🎬' },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<BaseLayout title={title} description={description} robots="noindex, nofollow">
+  <div class="admin-nav flex flex-col">
+    <header class="border-b border-cream-dim/20 bg-navy-950/85 backdrop-blur">
+      <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 md:px-6">
+        <a href="/" class="flex items-center gap-3" aria-label="Felix Coaching — Trang chủ">
+          <img
+            src="/logo/felixbuilderhub_website_header_logo.webp"
+            alt="Felix Coaching"
+            class="h-8 w-auto md:h-9"
+            width="525"
+            height="190"
+          />
+          <span class="hidden rounded-md bg-accent/15 px-2.5 py-1 text-xs font-semibold text-accent sm:inline">
+            ADMIN
+          </span>
+        </a>
+
+        <nav class="flex items-center gap-1 md:gap-2" aria-label="Admin navigation">
+          {navTabs.map((tab) => {
+            const isActive = currentPath === tab.href || currentPath.startsWith(tab.href + '/');
+            return (
+              <a
+                href={tab.href}
+                class={`flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium transition md:gap-2 md:px-3.5 md:py-2.5 ${
+                  isActive
+                    ? 'bg-accent/15 text-accent'
+                    : 'text-cream-muted hover:bg-navy-900/60 hover:text-cream'
+                }`}
+                aria-current={isActive ? 'page' : undefined}
+              >
+                <span class="text-base leading-none">{tab.icon}</span>
+                <span class="hidden sm:inline">{tab.label}</span>
+              </a>
+            );
+          })}
+        </nav>
+      </div>
+    </header>
+
+    <main id="main" class="flex-1">
+      <slot />
+    </main>
+
+    <footer class="admin-footer mt-auto border-t border-cream-dim/20 py-5 text-center text-sm text-cream-dim/70">
+      <div class="mx-auto max-w-7xl px-4 md:px-6">
+        Felix Admin — handle with care
+      </div>
+    </footer>
+  </div>
+</BaseLayout>
