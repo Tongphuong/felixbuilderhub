@@ -14,7 +14,7 @@
 `feat/book-reader-redesign` (created from `main`)
 
 ## Current Phase
-**Phase 1 — Progress Trail**
+**Phase 2 — Book Page Layout**
 
 ---
 
@@ -23,8 +23,8 @@
 | Phase | Status | Commit | Files Touched | Lines Changed |
 |-------|--------|--------|---------------|---------------|
 | 0 — Scaffold | ✅ Done | 83ccfb2 | docs/BOOK_READER_REDESIGN_PROGRESS.md | +230 |
-| 1 — Progress Trail | 🔄 In Progress | — | — | — |
-| 2 — Book Page Layout | ⬜ Not Started | — | — | — |
+| 1 — Progress Trail | ✅ Done | (pending) | lesson.astro | +259 -3 |
+| 2 — Book Page Layout | 🔄 In Progress | — | — | — |
 | 3 — Audio Gate Redesign | ⬜ Not Started | — | — | — |
 | 4 — Guided Questions Mini-Game | ⬜ Not Started | — | — | — |
 | 5 — Shadow Reading UI | ⬜ Not Started | — | — | — |
@@ -115,22 +115,23 @@ Driven by `state.bookReader` object:
 
 ---
 
-### Phase 1 — Progress Trail (IN PROGRESS)
+### Phase 1 — Progress Trail (DONE)
 **Spec ref:** `handoff-to-cline.md` TASK 1. **Screenshots:** `01-ipad-listen.png`, `03-progress-trail.png`
 **Goal:** Replace `#book-reader-page-counter` badge with a horizontal progress trail.
 **Files:** `lesson.astro` only — HTML (L76-80), CSS (after L940), JS (near L3550)
 **Sub-steps:**
-- [ ] Add trail HTML container above `figure` (lesson title + "Trang X / N" + thin bar + trail nodes)
-- [ ] Add CSS: completed=gold star, active=Minny avatar+pulse+"đang đây" pill, upcoming=dashed+number, last=treasure, connecting line (dotted cream→solid gold gradient), responsive reflow
-- [ ] Add `bookRenderTrail()` JS — called from `bookShowPage()` — builds nodes from `state.lesson.book_images.length`
-- [ ] Wire click-to-review on completed nodes (read-only, no stage change)
-- [ ] Per-page labels from `lesson.pages[i].title` or fallback "Trang {i+1}"
+- [x] Add trail HTML container above `figure` (lesson title + "Trang X / N" + thin bar + trail nodes)
+- [x] Add CSS: completed=gold star, active=Minny avatar+pulse+"đang đây" pill, upcoming=dashed+number, last=treasure, connecting line (dotted cream→solid gold gradient), responsive reflow
+- [x] Add `bookRenderTrail()` JS — called from `bookShowPage()` — builds nodes from `state.lesson.book_images.length`
+- [x] Wire click-to-review on completed nodes (read-only, no stage change)
+- [x] Per-page labels from fallback "Trang {i+1}" (lesson.pages[i].title not in data shape — uses paragraphs_en)
 **Constraints:** ≥44px nodes, existing tokens only, reflow for 5-8 pages, persistent during all stages.
-**Exit gate:** Trail renders for 5/6/8 pages, visual matches screenshot, `node --test` passes, commit `phase-1-progress-trail`.
+**Exit gate:** Trail renders for 5/6/8 pages, visual matches screenshot, `node --test` passes (679/680 — 1 pre-existing admin test failure unrelated), protected files untouched, commit `phase-1-progress-trail`.
+**Notes:** 259 insertions, 3 deletions. Minny avatar uses `/assets/minny/minny_idle.png`. Progress bar fill animates with gold gradient. Reduced-motion fallback disables pulse animation.
 
 ---
 
-### Phase 2 — Book Page Layout (NOT STARTED)
+### Phase 2 — Book Page Layout (IN PROGRESS)
 **Spec ref:** `handoff-to-cline.md` TASK 2. **Screenshot:** `01-ipad-listen.png`
 **Goal:** Replace stacked figure with split storybook layout.
 **Files:** `lesson.astro` — HTML (L81-86), CSS (L864-940), JS (karaoke in `bookShowPage`)

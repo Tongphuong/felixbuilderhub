@@ -74,9 +74,15 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
         </section>
 
         <section id="w1-book-reader-phase" class="r2l-book-reader hidden space-y-4" aria-labelledby="book-reader-title">
-          <div class="flex flex-wrap items-center justify-between gap-3">
-            <h2 id="book-reader-title" class="font-display text-2xl font-bold text-cream">Đọc truyện tranh</h2>
-            <p id="book-reader-page-counter" class="fx-badge fx-badge--accent" aria-live="polite"></p>
+          <div id="book-reader-trail-header" class="r2l-book-trail-header">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+              <h2 id="book-reader-title" class="font-display text-2xl font-bold text-cream">Đọc truyện tranh</h2>
+              <p id="book-reader-page-counter" class="fx-badge fx-badge--accent" aria-live="polite"></p>
+            </div>
+            <div id="book-reader-progress-bar" class="r2l-book-trail-bar" aria-hidden="true">
+              <div id="book-reader-progress-fill" class="r2l-book-trail-bar__fill"></div>
+            </div>
+            <ol id="book-reader-trail" class="r2l-book-trail" aria-label="Tiến trình truyện"></ol>
           </div>
           <figure class="r2l-book-page">
             <div class="r2l-book-page__art">
@@ -935,6 +941,181 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
       height: clamp(15rem, 72vw, 19rem);
       padding: 1rem;
       text-shadow: none;
+    }
+  }
+
+  /* ===== Phase 1: Progress Trail ===== */
+  .r2l-book-trail-header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2, 0.5rem);
+  }
+
+  .r2l-book-trail-bar {
+    height: 4px;
+    border-radius: var(--radius-full, 9999px);
+    background: color-mix(in srgb, var(--cream-dim, #aa9673) 20%, transparent);
+    overflow: hidden;
+  }
+
+  .r2l-book-trail-bar__fill {
+    height: 100%;
+    width: 0%;
+    border-radius: var(--radius-full, 9999px);
+    background: linear-gradient(90deg, var(--gold, #c88f38), var(--gold-light, #f2cc7e));
+    transition: width 400ms ease;
+  }
+
+  .r2l-book-trail {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+    margin: 0;
+    padding: var(--space-2, 0.5rem) 0;
+    list-style: none;
+    overflow-x: auto;
+    scrollbar-width: thin;
+  }
+
+  .r2l-book-trail__node {
+    position: relative;
+    flex: 1 1 0;
+    min-width: 48px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .r2l-book-trail__node::before {
+    content: '';
+    position: absolute;
+    top: 22px;
+    left: -50%;
+    width: 100%;
+    height: 3px;
+    background: color-mix(in srgb, var(--cream-dim, #aa9673) 30%, transparent);
+    background-image: repeating-linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--cream-dim, #aa9673) 40%, transparent) 0,
+      color-mix(in srgb, var(--cream-dim, #aa9673) 40%, transparent) 4px,
+      transparent 4px,
+      transparent 8px
+    );
+  }
+
+  .r2l-book-trail__node:first-child::before {
+    display: none;
+  }
+
+  .r2l-book-trail__node[data-state='completed']::before {
+    background: linear-gradient(90deg, var(--gold, #c88f38), var(--gold-light, #f2cc7e));
+    background-image: none;
+  }
+
+  .r2l-book-trail__btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-1, 0.25rem);
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
+  }
+
+  .r2l-book-trail__btn:disabled {
+    cursor: default;
+  }
+
+  .r2l-book-trail__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-full, 9999px);
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--cream, #f5e6c8);
+    border: 2px dashed color-mix(in srgb, var(--cream-dim, #aa9673) 40%, transparent);
+    background: var(--navy-900, #17354a);
+  }
+
+  .r2l-book-trail__node[data-state='completed'] .r2l-book-trail__icon {
+    border: 2px solid var(--gold, #c88f38);
+    background: var(--gold, #c88f38);
+    color: var(--navy-950, #10273a);
+  }
+
+  .r2l-book-trail__node[data-state='active'] .r2l-book-trail__icon {
+    border: 2px solid var(--gold, #c88f38);
+    background: color-mix(in srgb, var(--gold, #c88f38) 15%, transparent);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--gold, #c88f38) 20%, transparent);
+    animation: r2l-book-trail-pulse 1.8s ease-in-out infinite;
+  }
+
+  .r2l-book-trail__minny {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-full, 9999px);
+    object-fit: contain;
+  }
+
+  .r2l-book-trail__pill {
+    position: absolute;
+    top: -6px;
+    background: var(--gold, #c88f38);
+    color: var(--navy-950, #10273a);
+    font-size: 0.65rem;
+    font-weight: 800;
+    padding: 1px 6px;
+    border-radius: var(--radius-full, 9999px);
+    white-space: nowrap;
+  }
+
+  .r2l-book-trail__label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--cream-muted, #d9c7a4);
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  .r2l-book-trail__node[data-state='upcoming'] .r2l-book-trail__label {
+    color: var(--cream-dim, #aa9673);
+    opacity: 0.6;
+  }
+
+  @keyframes r2l-book-trail-pulse {
+    0%, 100% { box-shadow: 0 0 0 4px color-mix(in srgb, var(--gold, #c88f38) 20%, transparent); }
+    50% { box-shadow: 0 0 0 8px color-mix(in srgb, var(--gold, #c88f38) 10%, transparent); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .r2l-book-trail__node[data-state='active'] .r2l-book-trail__icon {
+      animation: none;
+    }
+  }
+
+  @media (max-width: 639px) {
+    .r2l-book-trail__icon {
+      width: 36px;
+      height: 36px;
+      font-size: 0.9rem;
+    }
+    .r2l-book-trail__minny {
+      width: 26px;
+      height: 26px;
+    }
+    .r2l-book-trail__label {
+      font-size: 0.6rem;
+    }
+    .r2l-book-trail__node {
+      min-width: 36px;
     }
   }
 
@@ -3548,7 +3729,82 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
     if (status) status.textContent = page?.audio_completed
       ? 'Con đã nghe xong trang này.'
       : '';
+    bookRenderTrail();
     bookSetStage(state.bookReader.stage);
+  }
+
+  function bookRenderTrail() {
+    const trail = qs('#book-reader-trail');
+    if (!trail) return;
+    const totalPages = state.lesson.book_images.length;
+    const currentIndex = state.bookReader.pageIndex;
+    const pages = state.bookReader.pages || [];
+    const storyCompleted = state.bookReader.story_completed;
+    trail.innerHTML = '';
+    for (let i = 0; i < totalPages; i++) {
+      const pageState = pages[i] || {};
+      const isCompleted = storyCompleted || pageState.audio_completed === true;
+      const isActive = i === currentIndex && !storyCompleted;
+      const isLast = i === totalPages - 1;
+      const li = document.createElement('li');
+      li.className = 'r2l-book-trail__node';
+      li.dataset.pageIndex = String(i);
+      if (isCompleted) li.dataset.state = 'completed';
+      else if (isActive) li.dataset.state = 'active';
+      else li.dataset.state = 'upcoming';
+
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'r2l-book-trail__btn';
+      btn.setAttribute('aria-label', 'Trang ' + (i + 1));
+      btn.disabled = !isCompleted || isActive;
+
+      const icon = document.createElement('span');
+      icon.className = 'r2l-book-trail__icon';
+      if (isLast && isCompleted) {
+        icon.textContent = '🎁';
+      } else if (isCompleted) {
+        icon.textContent = '★';
+      } else if (isActive) {
+        icon.innerHTML = '<img src="/assets/minny/minny_idle.png" alt="Minny" class="r2l-book-trail__minny" />';
+      } else {
+        icon.textContent = String(i + 1);
+      }
+      btn.appendChild(icon);
+
+      if (isActive) {
+        const pill = document.createElement('span');
+        pill.className = 'r2l-book-trail__pill';
+        pill.textContent = 'đang đây';
+        btn.appendChild(pill);
+      }
+
+      const label = document.createElement('span');
+      label.className = 'r2l-book-trail__label';
+      label.textContent = 'Trang ' + (i + 1);
+      btn.appendChild(label);
+
+      if (isCompleted && !isActive) {
+        btn.addEventListener('click', () => {
+          if (state.bookReader.stage === 'summary') return;
+          stopLessonAudio();
+          state.bookReader.pageIndex = i;
+          state.bookReader.stage = 'story';
+          bookShowPage();
+          scheduleSaveLessonSession();
+        });
+      }
+
+      li.appendChild(btn);
+      trail.appendChild(li);
+    }
+
+    const fill = qs('#book-reader-progress-fill');
+    if (fill) {
+      const completedCount = pages.filter((p) => p?.audio_completed === true).length;
+      const pct = totalPages > 0 ? Math.round((completedCount / totalPages) * 100) : 0;
+      fill.style.width = pct + '%';
+    }
   }
 
   function bookSetStage(stage) {
