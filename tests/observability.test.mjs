@@ -18,6 +18,11 @@ test('BaseLayout gates Sentry loader on PUBLIC_SENTRY_LOADER_SRC', () => {
   assert.match(baseLayout, /sendDefaultPii:\s*false/);
 });
 
+test('BaseLayout does not show the global maintenance banner', () => {
+  assert.doesNotMatch(baseLayout, /MAINTENANCE BANNER/);
+  assert.doesNotMatch(baseLayout, /Hệ thống đang bảo trì nâng cấp/);
+});
+
 test('Sentry config scrubs code and access_code from URLs', () => {
   assert.match(baseLayout, /beforeSend/);
   assert.match(baseLayout, /beforeBreadcrumb/);
