@@ -14,7 +14,7 @@
 `feat/book-reader-redesign` (created from `main`)
 
 ## Current Phase
-**Phase 0 — Scaffold & Progress Tracker**
+**Phase 1 — Progress Trail**
 
 ---
 
@@ -22,8 +22,8 @@
 
 | Phase | Status | Commit | Files Touched | Lines Changed |
 |-------|--------|--------|---------------|---------------|
-| 0 — Scaffold | 🔄 In Progress | — | PROGRESS.md | — |
-| 1 — Progress Trail | ⬜ Not Started | — | — | — |
+| 0 — Scaffold | ✅ Done | 83ccfb2 | docs/BOOK_READER_REDESIGN_PROGRESS.md | +230 |
+| 1 — Progress Trail | 🔄 In Progress | — | — | — |
 | 2 — Book Page Layout | ⬜ Not Started | — | — | — |
 | 3 — Audio Gate Redesign | ⬜ Not Started | — | — | — |
 | 4 — Guided Questions Mini-Game | ⬜ Not Started | — | — | — |
@@ -106,18 +106,16 @@ Driven by `state.bookReader` object:
 
 ## Phase Details
 
-### Phase 0 — Scaffold & Progress Tracker (IN PROGRESS)
+### Phase 0 — Scaffold & Progress Tracker (DONE)
 **Goal:** Set up the safety net so no phase ever loses context.
 - [x] Create feature branch `feat/book-reader-redesign` from `main`
 - [x] Create PROGRESS.md (this file)
-- [ ] Commit `phase-0-scaffold`
-- **Exit gate:** PROGRESS.md exists, branch created, commit made.
-
-**TODO:** Commit this file.
+- [x] Commit `phase-0-scaffold` (83ccfb2)
+- **Exit gate:** PROGRESS.md exists, branch created, commit made. ✅
 
 ---
 
-### Phase 1 — Progress Trail (NOT STARTED)
+### Phase 1 — Progress Trail (IN PROGRESS)
 **Spec ref:** `handoff-to-cline.md` TASK 1. **Screenshots:** `01-ipad-listen.png`, `03-progress-trail.png`
 **Goal:** Replace `#book-reader-page-counter` badge with a horizontal progress trail.
 **Files:** `lesson.astro` only — HTML (L76-80), CSS (after L940), JS (near L3550)
