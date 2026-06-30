@@ -8,15 +8,16 @@
 
 ## 0. Read order before any task
 
-1. `_ops/AGENTS.md` — role + behavior rules (canonical)
-2. `_ops/PERMISSIONS.md` — what you can / cannot do
-3. `CLAUDE.md` — hub architecture, folder map, key files
-4. This file — hub-specific zones + invariants
-5. Your spec (`_ops/specs/SPEC_*.md`)
+1. `_ops/LONEWOLF.md` — PM session entry point
+2. `_ops/AGENTS.md` — role + behavior rules (canonical)
+3. `_ops/AGENT_LOG.md` — last 10 lines for session context
+4. `CLAUDE.md` — hub architecture, folder map, key files
+5. This file — hub-specific zones + invariants
+6. Your spec (`_ops/specs/SPEC_*.md`)
 
 ---
 
-## 1. Hub-specific protected invariants — DO NOT touch without a Claude spec
+## 1. Hub-specific protected invariants — DO NOT touch without a Lonewolf spec
 
 1. **Minny voice (M0):** Minny says "Minny"/"con"; no red/"wrong"/FOMO language; 1-2 sentences; Vietnamese primary for encouragement; praise effort not rank. Any Minny copy must follow this.
 2. **R2L positioning:** lesson/hero copy stays **functional** (exercises, vocabulary, self-study). No USP/personalization hype/anti-competitor copy.
@@ -24,7 +25,7 @@
 4. **The mic flow** (`public/scripts/r2l-mic-check.js`, `public/scripts/r2l-recorder.js`, the warmup countdown, `_r2lStartRecording`). Hard-won. Change only to a spec.
 5. **Backend contract:** the pack JSON shape the hub reads from backend. Do not rename fields the lesson renderer depends on.
 
-Touching any of these requires a Claude-written spec — no exceptions.
+Touching any of these requires a Lonewolf-written spec — no exceptions.
 
 ---
 
@@ -32,13 +33,13 @@ Touching any of these requires a Claude-written spec — no exceptions.
 
 | Zone | Owner | Notes |
 |---|---|---|
-| `src/pages/read2lead/lesson.astro` | Claude spec only | Protected completion logic |
-| `public/scripts/r2l-*.js` | Claude spec only | Protected mic/recorder flow |
-| `src/pages/` (other pages) | Hermes Frontend | Standard frontend work |
-| `src/components/` | Hermes Frontend | UI components |
-| `src/styles/` | Hermes Frontend | CSS |
-| `functions/` | Hermes Frontend | CF Worker API endpoints |
-| `public/assets/` | Hermes Frontend | Static assets |
+| `src/pages/read2lead/lesson.astro` | Lonewolf spec only | Protected completion logic |
+| `public/scripts/r2l-*.js` | Lonewolf spec only | Protected mic/recorder flow |
+| `src/pages/` (other pages) | Codex | Standard frontend work |
+| `src/components/` | Codex | UI components |
+| `src/styles/` | Codex | CSS |
+| `functions/` | Codex | CF Worker API endpoints |
+| `public/assets/` | Codex | Static assets |
 
 ---
 

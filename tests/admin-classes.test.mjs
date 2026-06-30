@@ -7,6 +7,8 @@ import { onRequestPatch as patchClass } from '../functions/api/admin/classes/[id
 import { onRequestPost as rewardClassStudent } from '../functions/api/admin/classes/[id]/reward.js';
 
 const adminCodesPage = readFileSync('src/pages/admin/codes.astro', 'utf-8');
+const adminClassesPage = readFileSync('src/pages/admin/classes.astro', 'utf-8');
+const adminLayout = readFileSync('src/layouts/AdminLayout.astro', 'utf-8');
 
 function makeKv(records = new Map()) {
   return {
@@ -45,12 +47,14 @@ async function jsonResponse(handler, { method = 'GET', path = '/api/admin/classe
   return { response, body: await response.json() };
 }
 
-test('admin codes page exposes Felix Class Hub without removing code management', () => {
-  assert.match(adminCodesPage, /Felix Class Hub/);
-  assert.match(adminCodesPage, /Bảng lớp live trên Zoom/);
+test('admin navigation exposes the coaching class hub without removing code management', () => {
+  assert.match(adminLayout, /href: '\/admin\/classes'/);
+  assert.match(adminClassesPage, /Lớp coaching Read2Lead/);
+  assert.match(adminClassesPage, /Bảng lớp live/);
+  assert.match(adminClassesPage, /id="create-class"/);
   assert.match(adminCodesPage, /id="create-form"/);
   assert.match(adminCodesPage, /id="codes-list"/);
-  assert.match(adminCodesPage, /\/api\/admin\/classes/);
+  assert.match(adminClassesPage, /\/api\/admin\/classes/);
 });
 
 test('class APIs manage membership, attendance, and shared Read2Lead rewards', async () => {

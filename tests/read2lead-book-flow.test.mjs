@@ -57,12 +57,12 @@ function validSubmission(lesson = context()) {
   };
 }
 
-test('question selection distributes four short questions across sentences with two stable choices', () => {
+test('question selection distributes two short questions across sentences with two stable choices', () => {
   const lesson = context();
   const selected = selectBookQuestions(lesson.guided_listening, lesson.story.sentences, 0);
-  assert.equal(selected.length, 4);
-  assert.deepEqual(selected.map((question) => question.sentence_index), [0, 1, 2, 3]);
-  assert.deepEqual(selected.map((question) => question.id), ['short_0', 'short_1', 'short_2', 'short_3']);
+  assert.equal(selected.length, 2);
+  assert.deepEqual(selected.map((question) => question.sentence_index), [0, 1]);
+  assert.deepEqual(selected.map((question) => question.id), ['short_0', 'short_1']);
   assert.deepEqual(selected[0].options_en, ['Yes', 'Maybe']);
   assert.equal(selected[0].correct_index, 1);
 });
@@ -112,7 +112,7 @@ test('summary reports parent-facing page, question, chunk, and average counts', 
   submission.pages[0].shadow_chunks[1].score_percent = 80;
   assert.deepEqual(summarizeBookFlow(submission), {
     pages_heard: 1,
-    questions_answered: 4,
+    questions_answered: 2,
     chunks_passed: 2,
     chunks_skipped: 0,
     average_pronunciation_score: 70,

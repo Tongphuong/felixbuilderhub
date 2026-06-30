@@ -1185,6 +1185,23 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
     opacity: 0.6;
   }
 
+  .r2l-book-trail__sub {
+    font-size: 0.58rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--cream-dim, #aa9673);
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  .r2l-book-trail__node[data-state='completed'] .r2l-book-trail__sub {
+    color: var(--gold-light, #f2cc7e);
+  }
+
+  .r2l-book-trail__node[data-state='active'] .r2l-book-trail__sub {
+    color: var(--cream-muted, #d9c7a4);
+  }
+
   @keyframes r2l-book-trail-pulse {
     0%, 100% { box-shadow: 0 0 0 4px color-mix(in srgb, var(--gold, #c88f38) 20%, transparent); }
     50% { box-shadow: 0 0 0 8px color-mix(in srgb, var(--gold, #c88f38) 10%, transparent); }
@@ -2361,6 +2378,7 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
     .r2l-book-trail__minny { width: 32px; height: 32px; }
     .r2l-book-trail__pill { top: -7px; left: 30px; }
     .r2l-book-trail__label { text-align: left; white-space: normal; }
+    .r2l-book-trail__sub { text-align: left; white-space: normal; font-size: 0.56rem; }
 
     .r2l-book-workspace {
       grid-column: 2;
@@ -2405,7 +2423,8 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
     }
     .r2l-book-trail__minny { width: 25px; height: 25px; }
     .r2l-book-trail__label,
-    .r2l-book-trail__pill { display: none; }
+    .r2l-book-trail__pill,
+    .r2l-book-trail__sub { display: none; }
 
     .r2l-book-workspace { gap: var(--space-3); perspective: none; }
     .r2l-book-page__art { height: clamp(14rem, 38vh, 19rem); }
@@ -5431,8 +5450,8 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
       icon.className = 'r2l-book-trail__icon';
       if (isActive) {
         icon.innerHTML = '<img src="/assets/minny/minny_idle.png" alt="Minny" class="r2l-book-trail__minny" />';
-      } else if (isLast) {
-        icon.textContent = '▣';
+      } else if (isLast && !isCompleted) {
+        icon.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>';
       } else if (isCompleted) {
         icon.textContent = '★';
       } else {
@@ -5451,6 +5470,20 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
       label.className = 'r2l-book-trail__label';
       label.textContent = isLast && !isActive ? 'Phần thưởng' : bookPageLabel(i);
       btn.appendChild(label);
+
+      const sub = document.createElement('span');
+      sub.className = 'r2l-book-trail__sub';
+      if (isCompleted && !isActive) {
+        sub.textContent = 'HOÀN THÀNH ★';
+      } else if (isActive) {
+        const stageLabels = { story: 'NGHE', questions: 'HỎI', shadow: 'ĐỌC', next: 'XONG' };
+        sub.textContent = ['NGHE', 'HỎI', 'ĐỌC'].map((s) => s === stageLabels[state.bookReader.stage] ? s : s).join(' → ');
+      } else if (isLast && !isCompleted) {
+        sub.textContent = '+50 XP · HUY HIỆU';
+      } else {
+        sub.textContent = 'Tiếp theo';
+      }
+      btn.appendChild(sub);
 
       if (isCompleted && !isActive) {
         btn.addEventListener('click', () => {

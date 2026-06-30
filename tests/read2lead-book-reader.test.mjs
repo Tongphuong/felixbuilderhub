@@ -197,6 +197,9 @@ test('progress trail uses full page completion during practice and remains data 
   assert.match(trail, /practiceStarted \? bookPageIsComplete\(pageState\) : pageState\.audio_completed === true/);
   assert.match(trail, /bookPageLabel\(i\)/);
   assert.match(trail, /Phần thưởng/);
+  assert.match(trail, /svg.*viewBox.*rect.*path/s);
+  assert.match(trail, /r2l-book-trail__sub/);
+  assert.match(trail, /HOÀN THÀNH/);
 });
 
 test('shadow redesign wraps but does not replace protected recorder and scoring hooks', () => {
