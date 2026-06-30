@@ -73,51 +73,146 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
           <button id="w1-open-quests" class="r2l-primary w-full text-lg" type="button" disabled>Mở nhiệm vụ 🎯</button>
         </section>
 
-        <section id="w1-book-reader-phase" class="r2l-book-reader hidden space-y-4" aria-labelledby="book-reader-title">
-          <div id="book-reader-trail-header" class="r2l-book-trail-header">
-            <div class="flex flex-wrap items-center justify-between gap-3">
-              <h2 id="book-reader-title" class="font-display text-2xl font-bold text-cream">Đọc truyện tranh</h2>
-              <p id="book-reader-page-counter" class="fx-badge fx-badge--accent" aria-live="polite"></p>
+        <section id="w1-book-reader-phase" class="r2l-book-reader hidden" aria-labelledby="book-reader-title" data-book-stage="story">
+          <header id="book-reader-trail-header" class="r2l-book-trail-header">
+            <div class="r2l-book-trail-header__copy">
+              <p class="r2l-book-eyebrow">Hành trình</p>
+              <div class="r2l-book-trail-header__title-row">
+                <div>
+                  <h2 id="book-reader-title" class="r2l-book-trail-header__title">Đọc truyện tranh</h2>
+                  <p id="book-reader-trail-meta" class="r2l-book-trail-header__meta"></p>
+                </div>
+                <p id="book-reader-page-counter" class="r2l-book-page-count" aria-live="polite"></p>
+              </div>
             </div>
             <div id="book-reader-progress-bar" class="r2l-book-trail-bar" aria-hidden="true">
               <div id="book-reader-progress-fill" class="r2l-book-trail-bar__fill"></div>
             </div>
             <ol id="book-reader-trail" class="r2l-book-trail" aria-label="Tiến trình truyện"></ol>
-          </div>
-          <figure class="r2l-book-page">
-            <div class="r2l-book-page__art">
-              <img id="book-reader-img" src="" alt="" />
+          </header>
+
+          <div id="book-reader-workspace" class="r2l-book-workspace">
+            <div id="book-reader-page-shell" class="r2l-book-page-shell">
+              <figure class="r2l-book-page">
+                <div class="r2l-book-page__art">
+                  <img id="book-reader-img" src="" alt="" />
+                  <span id="book-reader-page-badge" class="r2l-book-page__badge">Trang 1</span>
+                  <span id="book-reader-art-credit" class="r2l-book-page__credit">Minh hoạ truyện</span>
+                  <button id="book-reader-art-prev" class="r2l-book-page__nav r2l-book-page__nav--prev" type="button" aria-label="Xem lại trang trước">←</button>
+                  <button id="book-reader-art-next" class="r2l-book-page__nav r2l-book-page__nav--next" type="button" aria-label="Sang trang tiếp">→</button>
+                </div>
+                <figcaption class="r2l-book-karaoke">
+                  <p class="r2l-book-eyebrow">Câu đang nghe</p>
+                  <p id="book-reader-karaoke-text" class="r2l-book-karaoke__text">Bấm nghe để Minny bắt đầu đọc.</p>
+                </figcaption>
+              </figure>
             </div>
-            <figcaption id="book-reader-page-text" class="r2l-book-page__text"></figcaption>
-          </figure>
-          <div id="book-reader-audio-gate" class="r2l-book-gate" data-book-stage-container="story">
-            <p class="font-bold text-cream">Đọc và nghe hết truyện trước khi làm nhiệm vụ nhé.</p>
-            <button id="book-reader-listen-btn" class="r2l-primary" type="button">🔊 Nghe trang</button>
-            <button id="book-reader-story-next" class="r2l-primary hidden" type="button" disabled>Trang tiếp →</button>
-            <p id="book-reader-audio-status" class="text-sm text-cream/75" role="status" aria-live="polite"></p>
+
+            <div class="r2l-book-panel">
+              <nav id="book-reader-stage-stepper" class="r2l-book-stepper" aria-label="Ba bước của trang">
+                <span class="r2l-book-stepper__step" data-book-step="story"><b>1</b><span>Nghe</span></span>
+                <span class="r2l-book-stepper__arrow" aria-hidden="true">›</span>
+                <span class="r2l-book-stepper__step" data-book-step="questions"><b>2</b><span>Câu hỏi</span></span>
+                <span class="r2l-book-stepper__arrow" aria-hidden="true">›</span>
+                <span class="r2l-book-stepper__step" data-book-step="shadow"><b>3</b><span>Đọc theo</span></span>
+              </nav>
+
+              <article class="r2l-book-story-card">
+                <div class="r2l-book-story-card__heading">
+                  <p class="r2l-book-eyebrow">Đoạn truyện</p>
+                  <span>EN · Mới bắt đầu</span>
+                </div>
+                <div id="book-reader-page-text" class="r2l-book-page__text"></div>
+                <div class="r2l-book-helpers" aria-label="Trợ giúp đọc truyện">
+                  <button id="book-reader-translate" class="r2l-book-helper" type="button" aria-expanded="false">▣ Dịch tiếng Việt</button>
+                  <button id="book-reader-vocab" class="r2l-book-helper" type="button" aria-expanded="false">⌕ Từ khó</button>
+                  <button id="book-reader-help-read" class="r2l-book-helper" type="button">◉ Giúp con</button>
+                </div>
+                <div id="book-reader-translation-panel" class="r2l-book-helper-panel hidden" aria-live="polite"></div>
+                <div id="book-reader-vocab-panel" class="r2l-book-helper-panel hidden" aria-live="polite"></div>
+              </article>
+
+              <div id="book-reader-stage-stack" class="r2l-book-stage-stack">
+                <section id="book-reader-audio-gate" class="r2l-book-gate" data-book-stage-container="story" data-audio-state="idle" aria-labelledby="book-reader-audio-title">
+                  <div class="r2l-book-audio__copy">
+                    <p class="r2l-book-eyebrow">Trạng thái · Nghe</p>
+                    <h3 id="book-reader-audio-title">Bấm để Minny đọc trang này</h3>
+                    <p id="book-reader-audio-status" role="status" aria-live="polite">Hai câu hỏi nhỏ, rồi tới phần con đọc lại.</p>
+                  </div>
+                  <button id="book-reader-listen-btn" class="r2l-book-audio__button" type="button" aria-label="Nghe Minny đọc trang" aria-pressed="false">
+                    <span class="r2l-book-audio__play" aria-hidden="true">▶</span>
+                    <span class="r2l-book-audio__pause" aria-hidden="true">Ⅱ</span>
+                    <span class="r2l-book-audio__check" aria-hidden="true">✓</span>
+                    <span class="r2l-book-audio__wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+                    <span class="r2l-book-audio__mobile-label">Nghe trang</span>
+                  </button>
+                  <div class="r2l-book-audio__timeline" aria-hidden="true">
+                    <span id="book-reader-audio-current">0:00</span>
+                    <div class="r2l-book-audio__track"><span id="book-reader-audio-progress"></span></div>
+                    <span id="book-reader-audio-duration">0:00</span>
+                  </div>
+                  <p id="book-reader-audio-excerpt" class="r2l-book-audio__excerpt"></p>
+                  <button id="book-reader-story-next" class="r2l-book-next-cta hidden" type="button" disabled>Trang tiếp →</button>
+                </section>
+
+                <section id="book-reader-question-stage" class="r2l-book-question-stage hidden" data-book-stage-container="questions" aria-live="polite">
+                  <article class="r2l-book-question-card">
+                    <p id="book-reader-question-counter" class="r2l-book-eyebrow"></p>
+                    <h3 id="book-reader-question-text"></h3>
+                    <div id="book-reader-question-options" class="r2l-book-question-options"></div>
+                    <div id="book-reader-question-feedback" class="r2l-book-question-feedback hidden" role="status">
+                      <img id="book-reader-question-minny" src="/assets/r2l/minny/smile.png" alt="Minny" />
+                      <div>
+                        <p id="book-reader-question-feedback-title" class="r2l-book-question-feedback__title"></p>
+                        <p id="book-reader-question-feedback-copy"></p>
+                      </div>
+                    </div>
+                    <div id="book-reader-question-rewards" class="r2l-book-question-rewards hidden" aria-hidden="true">
+                      <span>+10 XP</span><span>★ Combo x2</span>
+                    </div>
+                    <aside id="book-reader-question-hint" class="r2l-book-question-hint hidden">
+                      <strong>Gợi ý của Minny</strong>
+                      <p id="book-reader-question-hint-copy"></p>
+                    </aside>
+                    <button id="book-reader-question-retry" class="r2l-book-retry hidden" type="button">↶ Chọn lại</button>
+                  </article>
+                </section>
+
+                <section id="book-reader-shadow-stage" class="r2l-book-shadow-stage hidden" data-book-stage-container="shadow" aria-live="polite">
+                  <div class="r2l-book-shadow-stage__heading">
+                    <div>
+                      <p class="r2l-book-eyebrow">Trạng thái · Đọc theo</p>
+                      <h3>Minny đang nghe con đọc…</h3>
+                    </div>
+                    <p id="book-reader-shadow-counter"></p>
+                  </div>
+                  <p class="r2l-book-shadow-stage__lead">Nghe hết đoạn, rồi đọc lại cho Minny nhé.</p>
+                  <MicCheckPanel />
+                  <div id="book-reader-shadow-body" data-activity-body></div>
+                  <aside id="book-reader-parent-help" class="r2l-book-parent-help hidden">
+                    <p><strong>Ba mẹ giúp con kiểm tra micro hoặc mạng nhé.</strong></p>
+                    <p>Mở quyền micro cho Chrome/Safari, tắt Zoom hoặc Zalo đang giữ micro, rồi thử lại.</p>
+                    <button id="book-reader-technical-skip" class="r2l-secondary" type="button">Bỏ qua đoạn này và hoàn thành không thưởng</button>
+                  </aside>
+                </section>
+
+                <section id="book-reader-next-stage" class="r2l-book-reward hidden" data-book-stage-container="next" aria-live="polite">
+                  <div class="r2l-book-reward__sparkles" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+                  <span class="r2l-book-reward__star" aria-hidden="true"><i></i><i></i><b></b></span>
+                  <p class="r2l-book-eyebrow">Trang hoàn thành</p>
+                  <h3>Con được 1 ngôi sao!</h3>
+                  <p>Minny: “Con bỏ túi một sao! Sang trang tiếp theo nhé.”</p>
+                  <div class="r2l-book-reward__pills"><span>+25 XP</span><span>+5 xu</span></div>
+                  <button id="book-reader-next" class="r2l-book-next-cta" type="button" disabled>Trang tiếp →</button>
+                </section>
+              </div>
+
+              <div class="r2l-book-shortcuts" aria-label="Phím tắt">
+                <span><kbd>Space</kbd> phát/dừng</span><span><kbd>R</kbd> nghe lại</span><span><kbd>1–4</kbd> chọn</span><span><kbd>Enter</kbd> tiếp</span><span><kbd>M</kbd> thu âm</span>
+              </div>
+            </div>
           </div>
-          <section id="book-reader-question-stage" class="hidden space-y-3" data-book-stage-container="questions" aria-live="polite">
-            <p id="book-reader-question-counter" class="text-sm font-bold text-gold"></p>
-            <article class="r2l-activity r2l-guided-question">
-              <p id="book-reader-question-text" class="text-lg font-semibold text-cream"></p>
-              <div id="book-reader-question-options" class="mt-3 grid gap-3 sm:grid-cols-2"></div>
-              <p id="book-reader-question-feedback" class="hidden text-sm text-cream/80" role="status"></p>
-            </article>
-          </section>
-          <section id="book-reader-shadow-stage" class="hidden space-y-3" data-book-stage-container="shadow" aria-live="polite">
-            <p id="book-reader-shadow-counter" class="text-sm font-bold text-gold"></p>
-            <p class="text-sm font-semibold text-cream/75">Nghe hết đoạn, rồi đọc lại cho Minny nhé.</p>
-            <MicCheckPanel />
-            <div id="book-reader-shadow-body" data-activity-body></div>
-            <aside id="book-reader-parent-help" class="hidden rounded-md border border-gold/30 bg-gold/10 p-4 text-sm text-cream/85">
-              <p class="font-bold text-gold">Ba mẹ giúp con kiểm tra micro hoặc mạng nhé.</p>
-              <p class="mt-1">Mở quyền micro cho Chrome/Safari, tắt Zoom hoặc Zalo đang giữ micro, rồi thử lại.</p>
-              <button id="book-reader-technical-skip" class="r2l-secondary mt-3 w-full" type="button">Bỏ qua đoạn này và hoàn thành không thưởng</button>
-            </aside>
-          </section>
-          <div id="book-reader-next-stage" class="hidden" data-book-stage-container="next">
-            <button id="book-reader-next" class="r2l-primary" type="button" disabled>Trang tiếp →</button>
-          </div>
+
           <section id="book-reader-summary" class="hidden rounded-md border border-gold/30 bg-gold/10 p-5" aria-live="polite">
             <h3 class="font-display text-xl font-bold text-gold">Tóm tắt cho ba mẹ</h3>
             <div id="book-reader-summary-content" class="mt-3 grid gap-2 text-sm text-cream/85 sm:grid-cols-2"></div>
@@ -1116,6 +1211,1283 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
     }
     .r2l-book-trail__node {
       min-width: 36px;
+    }
+  }
+
+  /* ===== Book Reader redesign: storybook quest ===== */
+  .r2l-book-reader {
+    --book-panel: color-mix(in srgb, var(--navy-850) 88%, var(--navy-950));
+    --book-panel-soft: color-mix(in srgb, var(--navy-900) 82%, transparent);
+    display: block;
+    width: 100%;
+    max-width: 92rem;
+    margin-inline: auto;
+    padding: clamp(0.75rem, 2vw, 1.5rem);
+    border: 1px solid color-mix(in srgb, var(--cream) 14%, transparent);
+    border-radius: var(--radius-2xl);
+    background:
+      radial-gradient(circle at 72% 0%, color-mix(in srgb, var(--gold) 7%, transparent), transparent 30rem),
+      var(--navy-950);
+    box-shadow: var(--shadow-2xl);
+    color: var(--cream);
+  }
+
+  .r2l-book-reader.hidden {
+    display: none;
+  }
+
+  .r2l-book-reader .hidden {
+    display: none;
+  }
+
+  .r2l-book-eyebrow {
+    margin: 0;
+    color: var(--gold-light);
+    font-size: 0.69rem;
+    font-weight: 800;
+    letter-spacing: 0.15em;
+    line-height: 1.3;
+    text-transform: uppercase;
+  }
+
+  .r2l-book-trail-header {
+    gap: var(--space-4);
+    margin-bottom: var(--space-5);
+    padding: clamp(1rem, 2vw, 1.4rem);
+    border: 1px solid color-mix(in srgb, var(--cream) 12%, transparent);
+    border-radius: var(--radius-xl);
+    background: var(--book-panel);
+    box-shadow: var(--shadow-card);
+  }
+
+  .r2l-book-trail-header__title-row {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--space-4);
+    margin-top: var(--space-2);
+  }
+
+  .r2l-book-trail-header__title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(1.1rem, 2.5vw, 1.45rem);
+    font-weight: 800;
+    line-height: 1.2;
+    color: var(--cream);
+  }
+
+  .r2l-book-trail-header__meta,
+  .r2l-book-page-count {
+    margin: var(--space-1) 0 0;
+    color: var(--cream-dim);
+    font-size: 0.76rem;
+    font-weight: 650;
+  }
+
+  .r2l-book-page-count {
+    flex: none;
+    color: var(--cream-muted);
+  }
+
+  .r2l-book-trail-bar {
+    height: 6px;
+    background: color-mix(in srgb, var(--cream) 12%, transparent);
+  }
+
+  .r2l-book-trail-bar__fill {
+    background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    box-shadow: 0 0 16px color-mix(in srgb, var(--gold) 55%, transparent);
+  }
+
+  .r2l-book-trail {
+    align-items: flex-start;
+    overflow: visible;
+    padding: var(--space-2) 0 0;
+  }
+
+  .r2l-book-trail__node {
+    min-width: 44px;
+  }
+
+  .r2l-book-trail__node::before {
+    top: 27px;
+    height: 4px;
+  }
+
+  .r2l-book-trail__btn {
+    width: 100%;
+    gap: var(--space-2);
+    color: inherit;
+  }
+
+  .r2l-book-trail__btn:not(:disabled):hover .r2l-book-trail__icon,
+  .r2l-book-trail__btn:focus-visible .r2l-book-trail__icon {
+    transform: translateY(-2px);
+    border-color: var(--gold-light);
+  }
+
+  .r2l-book-trail__btn:focus-visible {
+    border-radius: var(--radius-lg);
+    outline: 3px solid color-mix(in srgb, var(--gold-light) 65%, transparent);
+    outline-offset: 3px;
+  }
+
+  .r2l-book-trail__icon {
+    width: 54px;
+    height: 54px;
+    border-color: color-mix(in srgb, var(--cream-muted) 42%, transparent);
+    background: color-mix(in srgb, var(--cream) 7%, var(--navy-900));
+    font-family: var(--font-display);
+    font-size: 1rem;
+    transition: transform 180ms ease, border-color 180ms ease;
+  }
+
+  .r2l-book-trail__node[data-state='completed'] .r2l-book-trail__icon {
+    border-color: var(--gold-light);
+    background: linear-gradient(160deg, var(--gold-light), var(--gold));
+    box-shadow: 0 0 0 4px var(--navy-850), var(--shadow-md);
+  }
+
+  .r2l-book-trail__node[data-state='active'] .r2l-book-trail__icon {
+    width: 60px;
+    height: 60px;
+    border-width: 3px;
+    background: var(--navy-900);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--gold) 20%, transparent), var(--shadow-lg);
+  }
+
+  .r2l-book-trail__node[data-state='reward'] .r2l-book-trail__icon {
+    border-style: solid;
+    color: var(--gold-light);
+  }
+
+  .r2l-book-trail__minny {
+    width: 42px;
+    height: 42px;
+  }
+
+  .r2l-book-trail__pill {
+    top: -9px;
+    border: 2px solid var(--navy-850);
+    font-size: 0.6rem;
+  }
+
+  .r2l-book-trail__label {
+    max-width: 7rem;
+    overflow: hidden;
+    color: var(--cream);
+    font-size: 0.69rem;
+    line-height: 1.25;
+    text-overflow: ellipsis;
+  }
+
+  .r2l-book-workspace {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-5);
+    perspective: 1200px;
+  }
+
+  .r2l-book-page-shell,
+  .r2l-book-panel {
+    min-width: 0;
+  }
+
+  .r2l-book-page-shell {
+    transform-origin: left center;
+  }
+
+  .r2l-book-page-shell.is-turning {
+    animation: r2l-book-page-turn 600ms cubic-bezier(0.22, 0.75, 0.3, 1) both;
+  }
+
+  .r2l-book-page-shell.is-entering {
+    animation: r2l-book-page-enter 420ms cubic-bezier(0.22, 0.75, 0.3, 1) both;
+  }
+
+  .r2l-book-page {
+    display: flex;
+    min-height: 0;
+    flex-direction: column;
+    border-color: color-mix(in srgb, var(--cream) 14%, transparent);
+    border-radius: var(--radius-2xl);
+    background: var(--navy-900);
+    box-shadow: var(--shadow-xl);
+  }
+
+  .r2l-book-page__art {
+    height: clamp(18rem, 54vw, 34rem);
+    border-radius: calc(var(--radius-2xl) - 1px) calc(var(--radius-2xl) - 1px) 0 0;
+    background: var(--navy-900);
+    isolation: isolate;
+  }
+
+  .r2l-book-page__art::before {
+    content: '';
+    position: absolute;
+    inset: -12px;
+    z-index: 0;
+    background-image: var(--book-art-image);
+    background-position: center;
+    background-size: cover;
+    filter: blur(12px) saturate(0.82);
+    opacity: 0.52;
+    transform: scale(1.04);
+  }
+
+  .r2l-book-page__art::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: color-mix(in srgb, var(--navy-950) 32%, transparent);
+    pointer-events: none;
+  }
+
+  .r2l-book-page img {
+    z-index: 2;
+    object-fit: contain;
+    background: color-mix(in srgb, var(--navy-950) 12%, transparent);
+  }
+
+  .r2l-book-page__badge,
+  .r2l-book-page__credit {
+    position: absolute;
+    top: var(--space-4);
+    z-index: 3;
+    display: inline-flex;
+    min-height: 32px;
+    align-items: center;
+    border: 1px solid color-mix(in srgb, var(--cream) 20%, transparent);
+    border-radius: var(--radius-full);
+    background: color-mix(in srgb, var(--navy-950) 78%, transparent);
+    padding: 0 var(--space-3);
+    color: var(--cream);
+    font-size: 0.72rem;
+    font-weight: 750;
+    backdrop-filter: blur(8px);
+  }
+
+  .r2l-book-page__badge { left: var(--space-4); }
+  .r2l-book-page__credit { right: var(--space-4); color: var(--cream-muted); }
+
+  .r2l-book-page__nav {
+    position: absolute;
+    top: 50%;
+    z-index: 3;
+    display: none;
+    width: 44px;
+    height: 44px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid color-mix(in srgb, var(--cream) 20%, transparent);
+    border-radius: var(--radius-full);
+    background: color-mix(in srgb, var(--navy-950) 76%, transparent);
+    color: var(--cream);
+    font-size: 1.2rem;
+    transform: translateY(-50%);
+    backdrop-filter: blur(8px);
+  }
+
+  .r2l-book-page__nav--prev { left: var(--space-4); }
+  .r2l-book-page__nav--next { right: var(--space-4); }
+  .r2l-book-page__nav:hover { background: var(--gold); color: var(--navy-950); }
+  .r2l-book-page__nav:disabled { opacity: 0.35; cursor: default; }
+
+  .r2l-book-karaoke {
+    min-height: 8.2rem;
+    border-top: 1px solid color-mix(in srgb, var(--cream) 12%, transparent);
+    background: linear-gradient(180deg, color-mix(in srgb, var(--navy-900) 72%, transparent), var(--navy-950));
+    padding: var(--space-4) var(--space-5);
+  }
+
+  .r2l-book-karaoke__text {
+    margin: var(--space-2) 0 0;
+    color: var(--cream-dim);
+    font-family: var(--font-display);
+    font-size: clamp(1.12rem, 2.1vw, 1.38rem);
+    font-weight: 750;
+    line-height: 1.45;
+  }
+
+  .r2l-book-karaoke__text[data-active='true'] {
+    color: var(--cream);
+    background-image: linear-gradient(180deg, transparent 64%, color-mix(in srgb, var(--gold) 48%, transparent) 64%);
+    background-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+
+  .r2l-book-panel {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .r2l-book-stepper {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2);
+    border: 1px solid color-mix(in srgb, var(--cream) 12%, transparent);
+    border-radius: var(--radius-xl);
+    background: var(--book-panel);
+  }
+
+  .r2l-book-stepper__step {
+    display: flex;
+    min-height: 44px;
+    min-width: 0;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    border: 1px solid color-mix(in srgb, var(--cream) 14%, transparent);
+    border-radius: var(--radius-lg);
+    color: var(--cream-muted);
+    font-size: 0.78rem;
+    font-weight: 750;
+  }
+
+  .r2l-book-stepper__step b {
+    display: inline-flex;
+    width: 25px;
+    height: 25px;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-full);
+    background: color-mix(in srgb, var(--cream) 12%, transparent);
+    color: var(--cream-muted);
+    font-size: 0.72rem;
+  }
+
+  .r2l-book-stepper__arrow { color: var(--cream-dim); }
+
+  .r2l-book-reader[data-book-stage='story'] [data-book-step='story'],
+  .r2l-book-reader[data-book-stage='questions'] [data-book-step='questions'],
+  .r2l-book-reader[data-book-stage='shadow'] [data-book-step='shadow'] {
+    border-color: color-mix(in srgb, var(--gold) 55%, transparent);
+    background: color-mix(in srgb, var(--gold) 16%, transparent);
+    color: var(--gold-light);
+  }
+
+  .r2l-book-reader[data-book-stage='story'] [data-book-step='story'] b,
+  .r2l-book-reader[data-book-stage='questions'] [data-book-step='questions'] b,
+  .r2l-book-reader[data-book-stage='shadow'] [data-book-step='shadow'] b {
+    background: var(--gold);
+    color: var(--navy-950);
+  }
+
+  .r2l-book-reader[data-book-stage='questions'] [data-book-step='story'],
+  .r2l-book-reader[data-book-stage='shadow'] [data-book-step='story'],
+  .r2l-book-reader[data-book-stage='shadow'] [data-book-step='questions'],
+  .r2l-book-reader[data-book-stage='next'] .r2l-book-stepper__step {
+    border-color: color-mix(in srgb, var(--success) 45%, transparent);
+    color: var(--success);
+  }
+
+  .r2l-book-story-card,
+  .r2l-book-gate,
+  .r2l-book-question-card,
+  .r2l-book-shadow-stage,
+  .r2l-book-reward {
+    border: 1px solid color-mix(in srgb, var(--cream) 12%, transparent);
+    border-radius: var(--radius-2xl);
+    background: var(--book-panel);
+    box-shadow: var(--shadow-card);
+  }
+
+  .r2l-book-story-card {
+    padding: clamp(1rem, 2vw, 1.5rem);
+  }
+
+  .r2l-book-story-card__heading {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .r2l-book-story-card__heading::after {
+    content: '';
+    height: 1px;
+    flex: 1;
+    background: color-mix(in srgb, var(--cream) 14%, transparent);
+  }
+
+  .r2l-book-story-card__heading > span {
+    color: var(--cream-dim);
+    font-size: 0.67rem;
+  }
+
+  .r2l-book-page__text {
+    height: auto;
+    min-height: 9.25rem;
+    max-height: 18rem;
+    margin-top: var(--space-3);
+    overflow-y: auto;
+    border: 0;
+    background: transparent;
+    padding: 0 var(--space-1) 0 0;
+    color: var(--cream-muted);
+    font-family: var(--font-display);
+    font-size: clamp(1.125rem, 2.2vw, 1.38rem);
+    font-weight: 650;
+    line-height: 1.62;
+    text-shadow: none;
+  }
+
+  .r2l-book-sentence {
+    border-radius: 0.2rem;
+    transition: color 160ms ease, background-image 160ms ease;
+  }
+
+  .r2l-book-sentence[data-active='true'] {
+    color: var(--cream);
+    background-image: linear-gradient(180deg, transparent 66%, color-mix(in srgb, var(--gold) 55%, transparent) 66%);
+    background-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+
+  .r2l-book-sentence-translation {
+    display: block;
+    margin: var(--space-1) 0 var(--space-2);
+    color: var(--cream-dim);
+    font-family: var(--font-sans);
+    font-size: 0.82rem;
+    font-weight: 550;
+    line-height: 1.45;
+  }
+
+  .r2l-book-helpers {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-top: var(--space-4);
+  }
+
+  .r2l-book-helper,
+  .r2l-book-retry {
+    min-height: 44px;
+    border: 1px solid color-mix(in srgb, var(--cream-muted) 28%, transparent);
+    border-radius: var(--radius-full);
+    background: color-mix(in srgb, var(--cream) 6%, transparent);
+    padding: 0 var(--space-4);
+    color: var(--cream-muted);
+    font-size: 0.75rem;
+    font-weight: 750;
+  }
+
+  .r2l-book-helper:hover,
+  .r2l-book-helper[aria-expanded='true'],
+  .r2l-book-helper:focus-visible,
+  .r2l-book-retry:hover {
+    border-color: var(--gold);
+    color: var(--gold-light);
+  }
+
+  .r2l-book-helper-panel {
+    margin-top: var(--space-3);
+    border: 1px solid color-mix(in srgb, var(--gold) 25%, transparent);
+    border-radius: var(--radius-lg);
+    background: color-mix(in srgb, var(--gold) 8%, transparent);
+    padding: var(--space-3);
+    color: var(--cream-muted);
+    font-size: 0.82rem;
+    line-height: 1.55;
+  }
+
+  .r2l-book-stage-stack {
+    position: relative;
+    min-height: 15rem;
+  }
+
+  .r2l-book-reader [data-book-stage-container]:not(.hidden) {
+    animation: r2l-book-stage-in 250ms ease both;
+  }
+
+  .r2l-book-reader [data-book-stage-container].is-leaving {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    display: block;
+    pointer-events: none;
+    animation: r2l-book-stage-out 180ms ease both;
+  }
+
+  .r2l-book-gate {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: var(--space-4);
+    min-height: 15rem;
+    padding: clamp(1rem, 2.5vw, 1.5rem);
+    background:
+      radial-gradient(circle at 84% 42%, color-mix(in srgb, var(--gold) 20%, transparent), transparent 9rem),
+      var(--book-panel);
+  }
+
+  .r2l-book-audio__copy h3,
+  .r2l-book-question-card h3,
+  .r2l-book-shadow-stage h3,
+  .r2l-book-reward h3 {
+    margin: var(--space-2) 0;
+    color: var(--cream);
+    font-family: var(--font-display);
+    font-size: clamp(1.25rem, 2.7vw, 1.7rem);
+    font-weight: 850;
+    line-height: 1.25;
+  }
+
+  .r2l-book-audio__copy > p:last-child,
+  .r2l-book-audio__excerpt {
+    margin: 0;
+    color: var(--cream-dim);
+    font-size: 0.82rem;
+    line-height: 1.5;
+  }
+
+  .r2l-book-audio__button {
+    position: relative;
+    display: grid;
+    width: 88px;
+    height: 88px;
+    min-width: 44px;
+    min-height: 44px;
+    place-items: center;
+    border: 2px solid var(--gold-light);
+    border-radius: var(--radius-full);
+    background: linear-gradient(160deg, var(--gold-light), var(--gold));
+    box-shadow: 0 0 0 8px color-mix(in srgb, var(--gold) 10%, transparent), var(--shadow-lg);
+    color: var(--navy-950);
+    font-size: 1.65rem;
+    transition: transform 160ms ease, box-shadow 160ms ease;
+  }
+
+  .r2l-book-audio__button:hover { transform: translateY(-2px) scale(1.02); }
+  .r2l-book-audio__button:focus-visible { outline: 4px solid color-mix(in srgb, var(--cream) 60%, transparent); outline-offset: 4px; }
+  .r2l-book-audio__pause,
+  .r2l-book-audio__check,
+  .r2l-book-audio__wave,
+  .r2l-book-audio__mobile-label { display: none; }
+
+  .r2l-book-gate[data-audio-state='playing'] .r2l-book-audio__button {
+    animation: r2l-book-audio-halo 1.4s ease-in-out infinite;
+  }
+
+  .r2l-book-gate[data-audio-state='playing'] .r2l-book-audio__play,
+  .r2l-book-gate[data-audio-state='playing'] .r2l-book-audio__check,
+  .r2l-book-gate[data-audio-state='paused'] .r2l-book-audio__play,
+  .r2l-book-gate[data-audio-state='done'] .r2l-book-audio__play { display: none; }
+  .r2l-book-gate[data-audio-state='playing'] .r2l-book-audio__wave,
+  .r2l-book-gate[data-audio-state='paused'] .r2l-book-audio__pause,
+  .r2l-book-gate[data-audio-state='done'] .r2l-book-audio__check { display: flex; }
+
+  .r2l-book-audio__wave {
+    height: 32px;
+    align-items: center;
+    gap: 3px;
+  }
+
+  .r2l-book-audio__wave i {
+    width: 4px;
+    height: 11px;
+    border-radius: var(--radius-full);
+    background: var(--navy-950);
+    animation: r2l-book-wave 700ms ease-in-out infinite alternate;
+  }
+  .r2l-book-audio__wave i:nth-child(2) { animation-delay: -300ms; }
+  .r2l-book-audio__wave i:nth-child(3) { animation-delay: -500ms; }
+  .r2l-book-audio__wave i:nth-child(4) { animation-delay: -200ms; }
+  .r2l-book-audio__wave i:nth-child(5) { animation-delay: -400ms; }
+
+  .r2l-book-audio__timeline {
+    display: grid;
+    grid-column: 1 / -1;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--cream-dim);
+    font-size: 0.68rem;
+  }
+
+  .r2l-book-audio__track {
+    height: 6px;
+    overflow: hidden;
+    border-radius: var(--radius-full);
+    background: color-mix(in srgb, var(--cream) 12%, transparent);
+  }
+
+  .r2l-book-audio__track span {
+    display: block;
+    width: 0;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light));
+  }
+
+  .r2l-book-audio__excerpt {
+    grid-column: 1 / -1;
+    min-height: 1.25rem;
+    text-align: center;
+  }
+
+  .r2l-book-next-cta {
+    min-height: 52px;
+    border: 1px solid var(--gold-light);
+    border-radius: var(--radius-xl);
+    background: linear-gradient(160deg, var(--gold-light), var(--gold));
+    box-shadow: 0 8px 0 color-mix(in srgb, var(--gold) 55%, var(--navy-950)), var(--shadow-md);
+    padding: 0 var(--space-6);
+    color: var(--navy-950);
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 850;
+  }
+
+  .r2l-book-gate .r2l-book-next-cta { grid-column: 1 / -1; width: 100%; }
+  .r2l-book-next-cta:not(:disabled):hover { transform: translateY(-1px); filter: brightness(1.06); }
+  .r2l-book-next-cta:disabled { opacity: 0.46; cursor: not-allowed; }
+
+  .r2l-book-question-card,
+  .r2l-book-shadow-stage,
+  .r2l-book-reward {
+    min-height: 15rem;
+    padding: clamp(1rem, 2.5vw, 1.5rem);
+  }
+
+  .r2l-book-question-options {
+    display: grid;
+    gap: var(--space-3);
+    margin-top: var(--space-4);
+  }
+
+  .r2l-book-guided-option {
+    position: relative;
+    min-height: 64px;
+    border: 1px solid color-mix(in srgb, var(--cream-muted) 26%, transparent);
+    border-radius: var(--radius-xl);
+    background: color-mix(in srgb, var(--cream) 6%, transparent);
+    padding: var(--space-3) var(--space-4) var(--space-3) 3.4rem;
+    color: var(--cream);
+    font-size: 1rem;
+    font-weight: 750;
+    text-align: left;
+    transition: transform 150ms ease, border-color 150ms ease, background 150ms ease;
+  }
+
+  .r2l-book-guided-option::before {
+    content: attr(data-option-label);
+    position: absolute;
+    left: var(--space-4);
+    display: inline-flex;
+    width: 25px;
+    height: 25px;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-full);
+    background: color-mix(in srgb, var(--cream) 12%, transparent);
+    color: var(--cream-muted);
+    font-size: 0.72rem;
+  }
+
+  .r2l-book-guided-option:not(:disabled):hover,
+  .r2l-book-guided-option:focus-visible {
+    transform: translateY(-2px);
+    border-color: var(--gold);
+    background: color-mix(in srgb, var(--gold) 10%, transparent);
+  }
+
+  .r2l-book-guided-option[data-state='correct'] {
+    border: 2px solid var(--success);
+    background: color-mix(in srgb, var(--success) 18%, transparent);
+    color: var(--cream);
+  }
+
+  .r2l-book-guided-option[data-state='correct']::before {
+    content: '✓';
+    background: var(--success);
+    color: var(--navy-950);
+  }
+
+  .r2l-book-guided-option[data-state='retry'] {
+    border-style: dashed;
+    color: var(--cream-dim);
+    text-decoration: line-through;
+  }
+
+  .r2l-book-question-feedback {
+    display: grid;
+    grid-template-columns: 56px minmax(0, 1fr);
+    align-items: center;
+    gap: var(--space-3);
+    margin-top: var(--space-4);
+    border-radius: var(--radius-xl);
+    padding: var(--space-3);
+  }
+
+  .r2l-book-question-feedback[data-state='correct'] {
+    border: 1px solid color-mix(in srgb, var(--success) 52%, transparent);
+    background: color-mix(in srgb, var(--success) 13%, transparent);
+  }
+
+  .r2l-book-question-feedback[data-state='retry'] {
+    border: 1px dashed color-mix(in srgb, var(--gold) 45%, transparent);
+    background: color-mix(in srgb, var(--gold) 8%, transparent);
+  }
+
+  .r2l-book-question-feedback img {
+    width: 56px;
+    height: 56px;
+    object-fit: contain;
+    animation: r2l-book-minny-bob 1s ease-in-out 2;
+  }
+
+  .r2l-book-question-feedback[data-state='retry'] img { animation-name: r2l-book-gentle-wobble; }
+  .r2l-book-question-feedback p { margin: 0; color: var(--cream-muted); font-size: 0.78rem; }
+  .r2l-book-question-feedback__title { color: var(--cream) !important; font-weight: 850; }
+
+  .r2l-book-question-rewards,
+  .r2l-book-reward__pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-top: var(--space-3);
+  }
+
+  .r2l-book-question-rewards span,
+  .r2l-book-reward__pills span {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    border: 1px solid color-mix(in srgb, var(--gold) 45%, transparent);
+    border-radius: var(--radius-full);
+    background: color-mix(in srgb, var(--gold) 12%, transparent);
+    padding: 0 var(--space-4);
+    color: var(--gold-light);
+    font-size: 0.78rem;
+    font-weight: 800;
+  }
+
+  .r2l-book-question-hint {
+    margin-top: var(--space-3);
+    border: 1px solid color-mix(in srgb, var(--gold) 40%, transparent);
+    border-radius: var(--radius-xl);
+    background: color-mix(in srgb, var(--gold) 8%, transparent);
+    padding: var(--space-4);
+    color: var(--cream-muted);
+    font-size: 0.8rem;
+    line-height: 1.5;
+  }
+  .r2l-book-question-hint strong { color: var(--gold-light); text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.68rem; }
+  .r2l-book-question-hint p { margin: var(--space-2) 0 0; }
+  .r2l-book-retry { margin-top: var(--space-3); }
+
+  .r2l-book-shadow-stage {
+    background:
+      radial-gradient(circle at 82% 20%, color-mix(in srgb, var(--danger) 13%, transparent), transparent 11rem),
+      var(--book-panel);
+  }
+
+  .r2l-book-shadow-stage__heading {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-3);
+  }
+
+  .r2l-book-shadow-stage__heading > p {
+    margin: 0;
+    color: var(--gold-light);
+    font-size: 0.72rem;
+    font-weight: 800;
+  }
+
+  .r2l-book-shadow-stage__lead { margin: 0 0 var(--space-3); color: var(--cream-dim); font-size: 0.8rem; }
+
+  .r2l-book-shadow-card {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid color-mix(in srgb, var(--cream) 12%, transparent);
+    border-radius: var(--radius-xl);
+    background: color-mix(in srgb, var(--navy-950) 64%, transparent);
+    padding: var(--space-4);
+  }
+
+  .r2l-book-shadow-card__visuals {
+    display: grid;
+    grid-template-columns: 112px minmax(100px, 1fr);
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-5);
+    max-width: 22rem;
+    margin: 0 auto var(--space-4);
+  }
+
+  .r2l-book-shadow-card [data-speak-record] {
+    position: relative;
+    width: 110px;
+    height: 110px;
+    min-height: 110px;
+    border: 2px solid color-mix(in srgb, var(--cream) 55%, transparent);
+    border-radius: var(--radius-full);
+    background: linear-gradient(160deg, color-mix(in srgb, var(--danger) 72%, var(--gold-light)), var(--danger));
+    box-shadow: 0 0 0 10px color-mix(in srgb, var(--danger) 10%, transparent), var(--shadow-xl);
+    color: var(--cream);
+    font-size: 0.82rem;
+    font-weight: 850;
+  }
+
+  .r2l-book-shadow-card[data-rec-state='recording'] [data-speak-record] {
+    animation: r2l-book-record-pulse 1.15s ease-in-out infinite;
+  }
+
+  .r2l-book-shadow-card[data-rec-state='recording'] [data-speak-record]::after {
+    content: '● REC';
+    position: absolute;
+    top: -8px;
+    right: -6px;
+    border-radius: var(--radius-full);
+    background: var(--navy-950);
+    padding: 3px 7px;
+    color: var(--cream);
+    font-size: 0.58rem;
+    letter-spacing: 0.08em;
+  }
+
+  .r2l-book-shadow-meter {
+    position: relative;
+    display: grid;
+    min-height: 110px;
+    place-items: center;
+  }
+
+  .r2l-book-shadow-meter__star {
+    position: relative;
+    width: 92px;
+    height: 92px;
+    overflow: hidden;
+    clip-path: polygon(50% 0%, 61% 34%, 97% 36%, 68% 57%, 78% 92%, 50% 72%, 22% 92%, 32% 57%, 3% 36%, 39% 34%);
+    background: color-mix(in srgb, var(--cream) 12%, transparent);
+    box-shadow: inset 0 0 0 2px var(--gold);
+  }
+
+  .r2l-book-shadow-meter__fill {
+    position: absolute;
+    inset: auto 0 0;
+    width: 100% !important;
+    height: 6%;
+    background: linear-gradient(180deg, var(--gold-light), var(--gold));
+    transition: height 100ms linear;
+  }
+
+  .r2l-book-shadow-wave {
+    display: flex;
+    height: 44px;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    margin: var(--space-3) 0;
+  }
+
+  .r2l-book-shadow-wave i {
+    width: 4px;
+    height: 8px;
+    border-radius: var(--radius-full);
+    background: var(--gold-light);
+    transition: height 90ms linear;
+  }
+
+  .r2l-book-shadow-card[data-rec-state='recording'] .r2l-book-shadow-wave i {
+    animation: r2l-book-wave 620ms ease-in-out infinite alternate;
+  }
+
+  .r2l-book-shadow-card__text {
+    margin: var(--space-3) 0;
+    color: var(--cream);
+    font-family: var(--font-display);
+    font-size: 1.06rem;
+    font-weight: 750;
+    line-height: 1.45;
+    text-align: center;
+  }
+
+  .r2l-book-shadow-card__hint,
+  .r2l-book-shadow-card [data-book-attempt-status] {
+    margin: var(--space-2) 0;
+    color: var(--cream-dim);
+    font-size: 0.75rem;
+    text-align: center;
+  }
+
+  .r2l-book-shadow-card [data-speak-listen],
+  .r2l-book-shadow-card [data-book-shadow-continue] {
+    min-height: 48px;
+    border-radius: var(--radius-xl);
+  }
+
+  .r2l-book-shadow-result {
+    margin-top: var(--space-3);
+    border: 1px solid color-mix(in srgb, var(--success) 40%, transparent);
+    border-radius: var(--radius-xl);
+    background: color-mix(in srgb, var(--success) 10%, transparent);
+    padding: var(--space-3);
+    color: var(--cream-muted);
+    font-size: 0.8rem;
+    text-align: center;
+  }
+
+  .r2l-book-parent-help {
+    margin-top: var(--space-3);
+    border: 1px solid color-mix(in srgb, var(--gold) 35%, transparent);
+    border-radius: var(--radius-xl);
+    background: color-mix(in srgb, var(--gold) 9%, transparent);
+    padding: var(--space-4);
+    color: var(--cream-muted);
+    font-size: 0.78rem;
+  }
+  .r2l-book-parent-help p { margin: 0 0 var(--space-2); }
+  .r2l-book-parent-help strong { color: var(--gold-light); }
+  .r2l-book-parent-help button { width: 100%; min-height: 44px; }
+
+  .r2l-book-reward {
+    position: relative;
+    overflow: hidden;
+    border-color: color-mix(in srgb, var(--gold) 65%, transparent);
+    background:
+      radial-gradient(circle at 50% 15%, color-mix(in srgb, var(--gold) 22%, transparent), transparent 10rem),
+      var(--book-panel);
+    text-align: center;
+  }
+
+  .r2l-book-reward__star {
+    position: relative;
+    z-index: 1;
+    display: block;
+    width: 112px;
+    height: 112px;
+    margin-inline: auto;
+    clip-path: polygon(50% 0%, 61% 34%, 97% 36%, 68% 57%, 78% 92%, 50% 72%, 22% 92%, 32% 57%, 3% 36%, 39% 34%);
+    background: linear-gradient(160deg, var(--gold-light), var(--gold));
+    box-shadow: 0 0 34px color-mix(in srgb, var(--gold) 48%, transparent);
+    animation: r2l-book-minny-bob 1.3s ease-in-out infinite;
+  }
+
+  .r2l-book-reward__star i {
+    position: absolute;
+    top: 43%;
+    z-index: 2;
+    width: 7px;
+    height: 10px;
+    border-radius: var(--radius-full);
+    background: var(--navy-950);
+  }
+  .r2l-book-reward__star i:first-child { left: 35%; }
+  .r2l-book-reward__star i:nth-child(2) { right: 35%; }
+  .r2l-book-reward__star b {
+    position: absolute;
+    left: 50%;
+    top: 55%;
+    z-index: 2;
+    width: 30px;
+    height: 15px;
+    border-bottom: 4px solid var(--navy-950);
+    border-radius: 0 0 var(--radius-full) var(--radius-full);
+    transform: translateX(-50%);
+  }
+
+  .r2l-book-reward > p:not(.r2l-book-eyebrow) { margin: var(--space-2) auto; max-width: 28rem; color: var(--cream-muted); }
+  .r2l-book-reward__pills { justify-content: center; }
+  .r2l-book-reward .r2l-book-next-cta { width: min(100%, 24rem); margin-top: var(--space-4); }
+
+  .r2l-book-reward__sparkles i {
+    position: absolute;
+    width: 7px;
+    height: 7px;
+    border-radius: var(--radius-full);
+    background: var(--gold-light);
+    animation: r2l-book-spark 1.4s ease-out infinite;
+  }
+  .r2l-book-reward__sparkles i:nth-child(1) { left: 15%; top: 25%; }
+  .r2l-book-reward__sparkles i:nth-child(2) { left: 27%; top: 68%; animation-delay: -500ms; }
+  .r2l-book-reward__sparkles i:nth-child(3) { right: 17%; top: 30%; animation-delay: -900ms; }
+  .r2l-book-reward__sparkles i:nth-child(4) { right: 25%; top: 72%; animation-delay: -250ms; }
+  .r2l-book-reward__sparkles i:nth-child(5) { left: 51%; top: 9%; animation-delay: -700ms; }
+
+  .r2l-book-shortcuts {
+    display: none;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    color: var(--cream-dim);
+    font-size: 0.64rem;
+  }
+
+  .r2l-book-shortcuts kbd {
+    border: 1px solid color-mix(in srgb, var(--cream) 20%, transparent);
+    border-radius: var(--radius-sm);
+    background: var(--navy-900);
+    padding: 2px 5px;
+    color: var(--cream-muted);
+    font-family: var(--font-sans);
+  }
+
+  .r2l-book-attribution { margin-top: var(--space-5); }
+
+  @keyframes r2l-book-stage-in {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes r2l-book-stage-out {
+    from { opacity: 1; transform: translateY(0); }
+    to { opacity: 0; transform: translateY(-8px); }
+  }
+  @keyframes r2l-book-page-turn {
+    0% { opacity: 1; transform: rotateY(0deg) translateX(0); }
+    100% { opacity: 0; transform: rotateY(-32deg) translateX(-10%); }
+  }
+  @keyframes r2l-book-page-enter {
+    from { opacity: 0; transform: translateX(9%); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes r2l-book-audio-halo {
+    0%, 100% { box-shadow: 0 0 0 8px color-mix(in srgb, var(--gold) 10%, transparent), var(--shadow-lg); }
+    50% { box-shadow: 0 0 0 16px color-mix(in srgb, var(--gold) 4%, transparent), 0 0 34px color-mix(in srgb, var(--gold) 35%, transparent); }
+  }
+  @keyframes r2l-book-wave {
+    from { height: 8px; }
+    to { height: 30px; }
+  }
+  @keyframes r2l-book-minny-bob {
+    0%, 100% { transform: translateY(0) rotate(-2deg); }
+    50% { transform: translateY(-6px) rotate(2deg); }
+  }
+  @keyframes r2l-book-gentle-wobble {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-5deg); }
+    75% { transform: rotate(5deg); }
+  }
+  @keyframes r2l-book-record-pulse {
+    0%, 100% { box-shadow: 0 0 0 10px color-mix(in srgb, var(--danger) 10%, transparent), var(--shadow-xl); }
+    50% { box-shadow: 0 0 0 18px color-mix(in srgb, var(--danger) 4%, transparent), var(--shadow-xl); }
+  }
+  @keyframes r2l-book-spark {
+    0% { opacity: 0; transform: scale(0.3) translateY(6px); }
+    35% { opacity: 1; }
+    100% { opacity: 0; transform: scale(1.5) translateY(-18px); }
+  }
+
+  @media (min-width: 960px) {
+    .r2l-book-reader {
+      width: min(calc(100vw - 4rem), 80rem);
+      margin-left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .r2l-book-workspace {
+      grid-template-columns: minmax(0, 1.12fr) minmax(21rem, 0.88fr);
+      align-items: start;
+    }
+
+    .r2l-book-page__art { height: clamp(22rem, 36vw, 30rem); }
+    .r2l-book-page__nav { display: inline-flex; }
+    .r2l-book-question-options { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (min-width: 1360px), (min-width: 1280px) and (max-height: 850px) {
+    .r2l-book-reader {
+      display: grid;
+      width: min(calc(100vw - 4rem), 92rem);
+      grid-template-columns: 220px minmax(0, 1fr);
+      gap: var(--space-6);
+      padding: var(--space-6);
+    }
+
+    .r2l-book-trail-header {
+      position: sticky;
+      top: var(--space-4);
+      grid-column: 1;
+      align-self: start;
+      margin: 0;
+    }
+
+    .r2l-book-trail-header__title-row { align-items: flex-start; }
+    .r2l-book-trail-header__meta { max-width: 10rem; }
+    .r2l-book-page-count { color: var(--gold-light); }
+
+    .r2l-book-trail {
+      flex-direction: column;
+      gap: var(--space-2);
+      padding: var(--space-2) 0;
+    }
+
+    .r2l-book-trail__node {
+      width: 100%;
+      min-width: 0;
+      align-items: flex-start;
+    }
+
+    .r2l-book-trail__node::before {
+      top: -18px;
+      left: 26px;
+      width: 4px;
+      height: 36px;
+      background-image: repeating-linear-gradient(180deg, color-mix(in srgb, var(--cream-dim) 42%, transparent) 0 4px, transparent 4px 8px);
+    }
+
+    .r2l-book-trail__node[data-state='completed']::before {
+      background: linear-gradient(180deg, var(--gold), var(--gold-light));
+    }
+
+    .r2l-book-trail__btn {
+      min-height: 48px;
+      flex-direction: row;
+      justify-content: flex-start;
+      border: 1px solid transparent;
+      border-radius: var(--radius-lg);
+      padding: var(--space-1) var(--space-2);
+    }
+
+    .r2l-book-trail__node[data-state='active'] .r2l-book-trail__btn {
+      border-color: color-mix(in srgb, var(--gold) 48%, transparent);
+      background: color-mix(in srgb, var(--gold) 10%, transparent);
+    }
+
+    .r2l-book-trail__icon,
+    .r2l-book-trail__node[data-state='active'] .r2l-book-trail__icon {
+      width: 42px;
+      height: 42px;
+      flex: none;
+    }
+    .r2l-book-trail__minny { width: 32px; height: 32px; }
+    .r2l-book-trail__pill { top: -7px; left: 30px; }
+    .r2l-book-trail__label { text-align: left; white-space: normal; }
+
+    .r2l-book-workspace {
+      grid-column: 2;
+      grid-template-columns: minmax(21rem, 1.1fr) minmax(20rem, 0.95fr);
+      gap: var(--space-5);
+    }
+
+    .r2l-book-page__art { height: clamp(31rem, 61vh, 43rem); }
+    .r2l-book-karaoke { min-height: 7rem; }
+    .r2l-book-shortcuts { display: flex; }
+    .r2l-book-reader > #book-reader-summary,
+    .r2l-book-reader > .r2l-book-attribution { grid-column: 2; }
+  }
+
+  @media (max-width: 639px) {
+    .r2l-book-reader {
+      width: calc(100% + 1rem);
+      margin-inline: -0.5rem;
+      padding: 0.65rem 0.65rem calc(5.5rem + env(safe-area-inset-bottom));
+      border-radius: var(--radius-xl);
+    }
+
+    .r2l-book-trail-header {
+      margin-bottom: var(--space-3);
+      padding: var(--space-3);
+    }
+
+    .r2l-book-trail-header .r2l-book-eyebrow,
+    .r2l-book-trail-header__meta { display: none; }
+    .r2l-book-trail-header__title { font-size: 1rem; }
+    .r2l-book-page-count { font-size: 0.66rem; }
+    .r2l-book-trail-bar { height: 4px; }
+    .r2l-book-trail { gap: 0; overflow: visible; }
+    .r2l-book-trail__node { min-width: 0; }
+    .r2l-book-trail__node::before { top: 17px; }
+
+    .r2l-book-trail__icon,
+    .r2l-book-trail__node[data-state='active'] .r2l-book-trail__icon {
+      width: 32px;
+      height: 32px;
+      font-size: 0.7rem;
+    }
+    .r2l-book-trail__minny { width: 25px; height: 25px; }
+    .r2l-book-trail__label,
+    .r2l-book-trail__pill { display: none; }
+
+    .r2l-book-workspace { gap: var(--space-3); perspective: none; }
+    .r2l-book-page__art { height: clamp(14rem, 38vh, 19rem); }
+    .r2l-book-page__badge,
+    .r2l-book-page__credit { top: var(--space-2); min-height: 28px; font-size: 0.64rem; }
+    .r2l-book-page__badge { left: var(--space-2); }
+    .r2l-book-page__credit { right: var(--space-2); }
+    .r2l-book-page__nav { display: none; }
+    .r2l-book-karaoke { min-height: 7.4rem; padding: var(--space-3); }
+    .r2l-book-karaoke__text { font-size: 1.12rem; }
+
+    .r2l-book-stepper { gap: var(--space-1); }
+    .r2l-book-stepper__step { min-height: 40px; border: 0; padding: 0; }
+    .r2l-book-stepper__step span { display: none; }
+    .r2l-book-stepper__arrow { display: none; }
+
+    .r2l-book-story-card { padding: var(--space-4); }
+    .r2l-book-story-card__heading > span { display: none; }
+    .r2l-book-page__text {
+      min-height: 0;
+      max-height: none;
+      overflow: visible;
+      font-size: 1.125rem;
+      line-height: 1.55;
+    }
+    .r2l-book-helpers { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .r2l-book-helper { min-width: 0; padding: 0 var(--space-2); font-size: 0.66rem; }
+
+    .r2l-book-stage-stack { min-height: 11rem; }
+    .r2l-book-gate {
+      position: fixed;
+      left: 0.5rem;
+      right: 0.5rem;
+      bottom: 0;
+      z-index: 80;
+      display: flex;
+      width: auto;
+      min-height: 0;
+      flex-direction: row;
+      padding: var(--space-2) var(--space-2) calc(var(--space-2) + env(safe-area-inset-bottom));
+      border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+      box-shadow: 0 -12px 30px color-mix(in srgb, var(--navy-950) 75%, transparent);
+    }
+
+    .r2l-book-audio__copy,
+    .r2l-book-audio__timeline,
+    .r2l-book-audio__excerpt { display: none; }
+    .r2l-book-audio__button {
+      display: flex;
+      width: 100%;
+      height: 56px;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-md);
+      font-size: 1rem;
+    }
+    .r2l-book-audio__mobile-label { display: inline; font-family: var(--font-display); font-weight: 850; }
+    .r2l-book-gate:has(#book-reader-story-next:not(.hidden)) .r2l-book-audio__button { display: none; }
+    .r2l-book-gate .r2l-book-next-cta { margin: 0; }
+    .r2l-book-question-card,
+    .r2l-book-shadow-stage,
+    .r2l-book-reward { padding: var(--space-4); }
+    .r2l-book-shadow-card__visuals { grid-template-columns: 100px 1fr; gap: var(--space-3); }
+    .r2l-book-shadow-card [data-speak-record] { width: 96px; height: 96px; min-height: 96px; }
+    .r2l-book-shadow-meter__star { width: 78px; height: 78px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .r2l-book-reader *,
+    .r2l-book-reader *::before,
+    .r2l-book-reader *::after {
+      scroll-behavior: auto !important;
+      animation-duration: 1ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 1ms !important;
+    }
+
+    .r2l-book-page-shell.is-turning,
+    .r2l-book-page-shell.is-entering {
+      transform: none;
     }
   }
 
@@ -2676,6 +4048,7 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
       button.textContent = '🎤 Con nói';
       button.disabled = button.dataset.heard !== 'true' || !_r2lMicIsReady();
     }
+    bookSyncShadowVisualState(cardEl, status, entry?.checkStatus || 'idle');
   }
 
   function _r2lRenderRecorderUi(itemKey, cardEl) {
@@ -3319,6 +4692,7 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
           return;
         }
       } catch (error) {
+        console.warn('[r2l-lesson] load attempt failed', error);
         // Network / timeout — also transient; keep retrying within the budget.
         retryable = true;
         lastError = error.name === 'AbortError'
@@ -3586,6 +4960,251 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
 
 
   let _bookReaderBound = false;
+  let _bookAudioUiState = 'idle';
+  let _bookAudioPageIndex = -1;
+  let _bookShowTranslations = false;
+  let _bookVocabOpen = false;
+  let _bookStageLeaveTimer = null;
+  let _bookPageTurnTimer = null;
+  let _bookMeterObserver = null;
+
+  function bookPageSentences(pageIndex = state.bookReader.pageIndex) {
+    return (state.lesson?.story?.sentences || [])
+      .map((sentence, sentenceIndex) => ({ ...sentence, sentenceIndex }))
+      .filter((sentence) => Number(sentence.paragraph_index) === Number(pageIndex));
+  }
+
+  function bookPageLabel(pageIndex) {
+    const generatedPage = state.lesson?.pages?.[pageIndex] || state.lesson?.book_pages?.[pageIndex] || {};
+    return String(generatedPage.title_vi || `Trang ${pageIndex + 1}`);
+  }
+
+  function bookPageIsComplete(page) {
+    if (!page?.audio_completed) return false;
+    const questionsDone = (page.selected_questions || []).length === 0
+      || (page.question_results || []).filter((result) => result?.correct === true).length >= page.selected_questions.length;
+    const shadowDone = (page.shadow_chunks || []).every((chunk) => chunk.status === 'passed' || chunk.status === 'skipped');
+    return questionsDone && shadowDone;
+  }
+
+  function bookFormatTime(value) {
+    const seconds = Math.max(0, Number.isFinite(Number(value)) ? Math.floor(Number(value)) : 0);
+    return `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`;
+  }
+
+  function bookRenderStoryText() {
+    const pageIndex = state.bookReader.pageIndex;
+    const root = qs('#book-reader-page-text');
+    const sentences = bookPageSentences(pageIndex);
+    if (root) {
+      if (sentences.length) {
+        root.innerHTML = sentences.map((sentence, localIndex) => `
+          <span class="r2l-book-sentence" data-book-sentence-index="${localIndex}">${escapeHtml(sentence.text_en || '')}</span>${_bookShowTranslations && sentence.text_vi
+            ? `<span class="r2l-book-sentence-translation">${escapeHtml(sentence.text_vi)}</span>`
+            : ' '}
+        `).join('');
+      } else {
+        root.textContent = state.lesson?.story?.paragraphs_en?.[pageIndex] || '';
+      }
+    }
+
+    const translate = qs('#book-reader-translate');
+    if (translate) {
+      translate.setAttribute('aria-expanded', String(_bookShowTranslations));
+      translate.textContent = _bookShowTranslations ? '▣ Ẩn bản dịch' : '▣ Dịch tiếng Việt';
+    }
+    const translationPanel = qs('#book-reader-translation-panel');
+    const hasTranslations = sentences.some((sentence) => Boolean(sentence.text_vi));
+    if (translationPanel) {
+      translationPanel.classList.toggle('hidden', !_bookShowTranslations || hasTranslations);
+      translationPanel.textContent = _bookShowTranslations && !hasTranslations
+        ? 'Trang này chưa có bản dịch tiếng Việt riêng.'
+        : '';
+    }
+  }
+
+  function bookPageVocabulary(pageIndex = state.bookReader.pageIndex) {
+    const pageVocab = state.lesson?.pages?.[pageIndex]?.vocab
+      || state.lesson?.book_pages?.[pageIndex]?.vocab
+      || [];
+    const lessonVocab = state.lesson?.vocabulary || state.lesson?.vocab || [];
+    return [...(Array.isArray(pageVocab) ? pageVocab : []), ...(Array.isArray(lessonVocab) ? lessonVocab : [])]
+      .filter((item) => item && (item.paragraph_index == null || Number(item.paragraph_index) === Number(pageIndex)));
+  }
+
+  function bookRenderVocabPanel() {
+    const panel = qs('#book-reader-vocab-panel');
+    const button = qs('#book-reader-vocab');
+    if (!panel || !button) return;
+    button.setAttribute('aria-expanded', String(_bookVocabOpen));
+    panel.classList.toggle('hidden', !_bookVocabOpen);
+    if (!_bookVocabOpen) return;
+    const words = bookPageVocabulary();
+    panel.innerHTML = words.length
+      ? words.map((item) => `<p><strong>${escapeHtml(item.word_en || item.word || item.text_en || '')}</strong>${item.meaning_vi || item.translation_vi || item.text_vi ? ` — ${escapeHtml(item.meaning_vi || item.translation_vi || item.text_vi)}` : ''}</p>`).join('')
+      : '<p>Trang này chưa có danh sách từ khó riêng. Con có thể bấm “Giúp con” để nghe Minny đọc chậm.</p>';
+  }
+
+  function bookSetActiveSentence(localIndex, { completed = false } = {}) {
+    const sentences = bookPageSentences();
+    const safeIndex = sentences.length
+      ? Math.max(0, Math.min(Number(localIndex) || 0, sentences.length - 1))
+      : 0;
+    qsa('[data-book-sentence-index]').forEach((sentence) => {
+      sentence.dataset.active = String(Number(sentence.dataset.bookSentenceIndex) === safeIndex);
+    });
+    const karaoke = qs('#book-reader-karaoke-text');
+    const excerpt = qs('#book-reader-audio-excerpt');
+    const text = sentences[safeIndex]?.text_en || state.lesson?.story?.paragraphs_en?.[state.bookReader.pageIndex] || '';
+    if (karaoke) {
+      karaoke.textContent = text || 'Bấm nghe để Minny bắt đầu đọc.';
+      karaoke.dataset.active = String(Boolean(text));
+    }
+    if (excerpt) excerpt.textContent = text ? `“${text}”` : '';
+    if (completed && sentences.length) {
+      qsa('[data-book-sentence-index]').forEach((sentence) => {
+        sentence.dataset.active = String(Number(sentence.dataset.bookSentenceIndex) === sentences.length - 1);
+      });
+    }
+  }
+
+  function bookSetAudioUiState(nextState) {
+    _bookAudioUiState = nextState;
+    const gate = qs('#book-reader-audio-gate');
+    const button = qs('#book-reader-listen-btn');
+    if (gate) gate.dataset.audioState = nextState;
+    if (button) {
+      const playing = nextState === 'playing';
+      button.setAttribute('aria-pressed', String(playing));
+      button.setAttribute('aria-label', playing ? 'Tạm dừng Minny đọc' : nextState === 'paused' ? 'Tiếp tục nghe Minny đọc' : 'Nghe Minny đọc trang');
+    }
+  }
+
+  function bookResetAudioUi(page = bookPageState()) {
+    const finished = Boolean(page?.audio_completed);
+    bookSetAudioUiState(finished ? 'done' : 'idle');
+    const progress = qs('#book-reader-audio-progress');
+    if (progress) progress.style.width = finished ? '100%' : '0%';
+    const current = qs('#book-reader-audio-current');
+    if (current) current.textContent = '0:00';
+    const duration = qs('#book-reader-audio-duration');
+    if (duration) duration.textContent = '0:00';
+    bookSetActiveSentence(finished ? Math.max(0, bookPageSentences().length - 1) : 0, { completed: finished });
+  }
+
+  function bookSyncAudioProgress(audio, pageIndex) {
+    if (!audio || pageIndex !== state.bookReader.pageIndex) return;
+    const duration = Number(audio.duration) || 0;
+    const currentTime = Number(audio.currentTime) || 0;
+    const ratio = duration > 0 ? Math.max(0, Math.min(1, currentTime / duration)) : 0;
+    const progress = qs('#book-reader-audio-progress');
+    if (progress) progress.style.width = `${Math.round(ratio * 100)}%`;
+    const current = qs('#book-reader-audio-current');
+    if (current) current.textContent = bookFormatTime(currentTime);
+    const total = qs('#book-reader-audio-duration');
+    if (total) total.textContent = bookFormatTime(duration);
+    const sentences = bookPageSentences(pageIndex);
+    const activeIndex = sentences.length ? Math.min(sentences.length - 1, Math.floor(ratio * sentences.length)) : 0;
+    bookSetActiveSentence(activeIndex);
+  }
+
+  function bookAnimatePageTurn(updatePage) {
+    const shell = qs('#book-reader-page-shell');
+    if (!shell || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      updatePage();
+      return;
+    }
+    if (_bookPageTurnTimer) window.clearTimeout(_bookPageTurnTimer);
+    shell.classList.remove('is-entering');
+    shell.classList.add('is-turning');
+    _bookPageTurnTimer = window.setTimeout(() => {
+      updatePage();
+      shell.classList.remove('is-turning');
+      void shell.offsetWidth;
+      shell.classList.add('is-entering');
+      window.setTimeout(() => shell.classList.remove('is-entering'), 440);
+      _bookPageTurnTimer = null;
+    }, 560);
+  }
+
+  function bookSyncStageUi(stage) {
+    const reader = qs('#w1-book-reader-phase');
+    if (reader) reader.dataset.bookStage = stage;
+    const stageOrder = { story: 0, questions: 1, shadow: 2, next: 3 };
+    const current = stageOrder[stage] ?? 0;
+    qsa('[data-book-step]').forEach((step, index) => {
+      step.dataset.state = index < current ? 'completed' : index === current ? 'active' : 'upcoming';
+    });
+  }
+
+  function bookSyncShadowVisualState(card, status = 'idle', checkStatus = 'idle') {
+    if (!card?.dataset?.bookChunkId) return;
+    const visualState = checkStatus === 'uploading' ? 'checking' : status;
+    card.dataset.recState = visualState;
+    const heading = card.querySelector('[data-book-rec-heading]');
+    const hint = card.querySelector('[data-book-rec-hint]');
+    if (heading) {
+      heading.textContent = visualState === 'warming'
+        ? 'Minny đang đếm ngược…'
+        : visualState === 'recording'
+          ? 'Minny đang nghe con đọc…'
+          : visualState === 'checking'
+            ? 'Minny đang lắng nghe…'
+            : 'Bấm để bắt đầu đọc';
+    }
+    if (hint) {
+      hint.textContent = visualState === 'recording'
+        ? 'Bấm dừng khi con đọc xong.'
+        : visualState === 'checking'
+          ? 'Minny đang kiểm tra bài đọc của con.'
+          : 'Nghe mẫu trước, rồi bấm micro nhé.';
+    }
+  }
+
+  function bookObserveRecordMeter(card) {
+    if (_bookMeterObserver) _bookMeterObserver.disconnect();
+    const meter = card?.querySelector('[data-rec-meter]');
+    if (!meter || typeof MutationObserver === 'undefined') return;
+    const update = () => {
+      const level = Math.max(5, Math.min(100, Number.parseFloat(meter.style.width) || 5));
+      meter.style.height = `${level}%`;
+      const bars = card.querySelectorAll('.r2l-book-shadow-wave i');
+      bars.forEach((bar, index) => {
+        const factor = 0.45 + ((index * 7) % 10) / 18;
+        bar.style.height = `${Math.max(7, Math.round(level * factor * 0.42))}px`;
+      });
+    };
+    _bookMeterObserver = new MutationObserver(update);
+    _bookMeterObserver.observe(meter, { attributes: true, attributeFilter: ['style'] });
+    update();
+  }
+
+  function bookHandleKeyboard(event) {
+    const reader = qs('#w1-book-reader-phase');
+    if (!reader || reader.classList.contains('hidden') || event.altKey || event.ctrlKey || event.metaKey) return;
+    const target = event.target;
+    if (target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement || target instanceof HTMLSelectElement || target?.isContentEditable) return;
+    const key = String(event.key || '').toLowerCase();
+    if (key === ' ' && state.bookReader.stage === 'story') {
+      event.preventDefault();
+      bookPlayPageAudio();
+    } else if (key === 'r') {
+      event.preventDefault();
+      bookPlayPageAudio({ restart: true });
+    } else if (/^[1-4]$/.test(key) && state.bookReader.stage === 'questions') {
+      const option = qs(`#book-reader-question-options button:nth-child(${Number(key)})`);
+      option?.click();
+    } else if (key === 'enter') {
+      const next = state.bookReader.stage === 'story' ? qs('#book-reader-story-next') : state.bookReader.stage === 'next' ? qs('#book-reader-next') : null;
+      if (next && !next.disabled) {
+        event.preventDefault();
+        next.click();
+      }
+    } else if (key === 'm' && state.bookReader.stage === 'shadow') {
+      event.preventDefault();
+      qs('#book-reader-shadow-body [data-speak-record]')?.click();
+    }
+  }
 
   function bookPageState(pageIndex = state.bookReader.pageIndex) {
     return state.bookReader.pages[pageIndex] || null;
@@ -3631,7 +5250,7 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
       const questionResults = selectedQuestions
         .map((question) => (Array.isArray(saved.question_results) ? saved.question_results : [])
           .find((result) => String(result?.question_id || '') === question.id))
-        .filter(Boolean);
+        .filter((result) => Boolean(result?.correct));
       const savedChunks = Array.isArray(saved.shadow_chunks) ? saved.shadow_chunks : [];
       const shadowChunks = buildBookShadowChunks(sentences, pageIndex).map((chunk) => {
         const previous = savedChunks.find((savedChunk) => savedChunk?.chunk_id === chunk.chunk_id) || {};
@@ -3700,16 +5319,43 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
     qs('#book-reader-story-next')?.addEventListener('click', bookGoToNextStoryPage);
     qs('#book-reader-next')?.addEventListener('click', () => {
       const total = state.lesson.book_images.length;
-      if (state.bookReader.stage !== 'next' || state.bookReader.pageIndex >= total - 1) return;
+      if (state.bookReader.stage !== 'next') return;
       stopLessonAudio();
-      state.bookReader.pageIndex += 1;
-      state.bookReader.stage = bookPracticeStageForPage(bookPageState());
-      state.bookReader.questionIndex = 0;
-      state.bookReader.chunkIndex = 0;
-      bookShowPage();
-      scheduleSaveLessonSession();
+      if (state.bookReader.pageIndex >= total - 1) {
+        bookFinishReader();
+        return;
+      }
+      bookAnimatePageTurn(() => {
+        state.bookReader.pageIndex += 1;
+        state.bookReader.stage = bookPracticeStageForPage(bookPageState());
+        state.bookReader.questionIndex = 0;
+        state.bookReader.chunkIndex = 0;
+        bookShowPage();
+        scheduleSaveLessonSession();
+      });
     });
+    qs('#book-reader-translate')?.addEventListener('click', () => {
+      _bookShowTranslations = !_bookShowTranslations;
+      bookRenderStoryText();
+    });
+    qs('#book-reader-vocab')?.addEventListener('click', () => {
+      _bookVocabOpen = !_bookVocabOpen;
+      bookRenderVocabPanel();
+    });
+    qs('#book-reader-help-read')?.addEventListener('click', () => bookPlayPageAudio({ restart: true, slow: true }));
+    qs('#book-reader-question-retry')?.addEventListener('click', bookRenderQuestion);
+    qs('#book-reader-art-prev')?.addEventListener('click', () => {
+      if (state.bookReader.stage !== 'story' || state.bookReader.pageIndex <= 0) return;
+      stopLessonAudio();
+      bookAnimatePageTurn(() => {
+        state.bookReader.pageIndex -= 1;
+        state.bookReader.stage = 'story';
+        bookShowPage();
+      });
+    });
+    qs('#book-reader-art-next')?.addEventListener('click', bookGoToNextStoryPage);
     qs('#book-reader-technical-skip')?.addEventListener('click', bookSkipCurrentChunkForTechnicalFailure);
+    document.addEventListener('keydown', bookHandleKeyboard);
   }
 
   function bookShowPage() {
@@ -3717,18 +5363,39 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
     const total = state.lesson.book_images.length;
     const counter = qs('#book-reader-page-counter');
     if (counter) counter.textContent = 'Trang ' + (pageIndex + 1) + ' / ' + total;
+    const title = qs('#book-reader-title');
+    if (title) title.textContent = state.lesson?.story?.title || 'Đọc truyện tranh';
+    const meta = qs('#book-reader-trail-meta');
+    if (meta) meta.textContent = `${total} trang · khoảng ${Math.max(4, total + 2)} phút`;
+    const pageBadge = qs('#book-reader-page-badge');
+    if (pageBadge) pageBadge.textContent = `Trang ${pageIndex + 1}`;
+    const credit = qs('#book-reader-art-credit');
+    if (credit) {
+      const attribution = state.lesson?.book_attribution || {};
+      credit.textContent = attribution.publisher ? `Minh hoạ · ${attribution.publisher}` : 'Minh hoạ truyện';
+    }
     const image = qs('#book-reader-img');
+    const imageUrl = state.lesson.book_images[pageIndex] || '';
     if (image) {
-      image.src = state.lesson.book_images[pageIndex] || '';
+      image.src = imageUrl;
       image.alt = 'Minh họa trang ' + (pageIndex + 1) + ' của truyện ' + (state.lesson.story?.title || '');
     }
-    const pageText = qs('#book-reader-page-text');
-    if (pageText) pageText.textContent = state.lesson.story.paragraphs_en[pageIndex] || '';
+    const art = qs('.r2l-book-page__art');
+    if (art) art.style.setProperty('--book-art-image', imageUrl ? `url("${encodeURI(imageUrl).replaceAll('"', '%22')}")` : 'none');
+    bookRenderStoryText();
+    _bookVocabOpen = false;
+    bookRenderVocabPanel();
     const page = bookPageState(pageIndex);
     const status = qs('#book-reader-audio-status');
     if (status) status.textContent = page?.audio_completed
       ? 'Con đã nghe xong trang này.'
-      : '';
+      : 'Hai câu hỏi nhỏ, rồi tới phần con đọc lại.';
+    _bookAudioPageIndex = pageIndex;
+    bookResetAudioUi(page);
+    const previous = qs('#book-reader-art-prev');
+    if (previous) previous.disabled = state.bookReader.stage !== 'story' || pageIndex <= 0;
+    const nextArt = qs('#book-reader-art-next');
+    if (nextArt) nextArt.disabled = state.bookReader.stage !== 'story' || !page?.audio_completed;
     bookRenderTrail();
     bookSetStage(state.bookReader.stage);
   }
@@ -3739,18 +5406,19 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
     const totalPages = state.lesson.book_images.length;
     const currentIndex = state.bookReader.pageIndex;
     const pages = state.bookReader.pages || [];
-    const storyCompleted = state.bookReader.story_completed;
+    const practiceStarted = state.bookReader.story_completed;
     trail.innerHTML = '';
     for (let i = 0; i < totalPages; i++) {
       const pageState = pages[i] || {};
-      const isCompleted = storyCompleted || pageState.audio_completed === true;
-      const isActive = i === currentIndex && !storyCompleted;
+      const isCompleted = practiceStarted ? bookPageIsComplete(pageState) : pageState.audio_completed === true;
+      const isActive = i === currentIndex;
       const isLast = i === totalPages - 1;
       const li = document.createElement('li');
       li.className = 'r2l-book-trail__node';
       li.dataset.pageIndex = String(i);
-      if (isCompleted) li.dataset.state = 'completed';
-      else if (isActive) li.dataset.state = 'active';
+      if (isActive) li.dataset.state = 'active';
+      else if (isCompleted) li.dataset.state = 'completed';
+      else if (isLast) li.dataset.state = 'reward';
       else li.dataset.state = 'upcoming';
 
       const btn = document.createElement('button');
@@ -3761,12 +5429,12 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
 
       const icon = document.createElement('span');
       icon.className = 'r2l-book-trail__icon';
-      if (isLast && isCompleted) {
-        icon.textContent = '🎁';
+      if (isActive) {
+        icon.innerHTML = '<img src="/assets/minny/minny_idle.png" alt="Minny" class="r2l-book-trail__minny" />';
+      } else if (isLast) {
+        icon.textContent = '▣';
       } else if (isCompleted) {
         icon.textContent = '★';
-      } else if (isActive) {
-        icon.innerHTML = '<img src="/assets/minny/minny_idle.png" alt="Minny" class="r2l-book-trail__minny" />';
       } else {
         icon.textContent = String(i + 1);
       }
@@ -3781,7 +5449,7 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
 
       const label = document.createElement('span');
       label.className = 'r2l-book-trail__label';
-      label.textContent = 'Trang ' + (i + 1);
+      label.textContent = isLast && !isActive ? 'Phần thưởng' : bookPageLabel(i);
       btn.appendChild(label);
 
       if (isCompleted && !isActive) {
@@ -3801,7 +5469,7 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
 
     const fill = qs('#book-reader-progress-fill');
     if (fill) {
-      const completedCount = pages.filter((p) => p?.audio_completed === true).length;
+      const completedCount = pages.filter((page) => practiceStarted ? bookPageIsComplete(page) : page?.audio_completed === true).length;
       const pct = totalPages > 0 ? Math.round((completedCount / totalPages) * 100) : 0;
       fill.style.width = pct + '%';
     }
@@ -3809,17 +5477,34 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
 
   function bookSetStage(stage) {
     if (stage === 'listen') stage = 'story';
+    const target = qs(`[data-book-stage-container="${stage}"]`);
+    const previous = qsa('[data-book-stage-container]').find((container) => !container.classList.contains('hidden') && container !== target);
     state.bookReader.stage = stage;
+    bookSyncStageUi(stage);
+    if (_bookStageLeaveTimer) window.clearTimeout(_bookStageLeaveTimer);
     qsa('[data-book-stage-container]').forEach((container) => {
-      container.classList.toggle('hidden', container.dataset.bookStageContainer !== stage);
+      if (container === target) {
+        container.classList.remove('hidden', 'is-leaving');
+      } else if (container !== previous) {
+        container.classList.add('hidden');
+        container.classList.remove('is-leaving');
+      }
     });
+    if (previous) {
+      previous.classList.add('is-leaving');
+      _bookStageLeaveTimer = window.setTimeout(() => {
+        previous.classList.add('hidden');
+        previous.classList.remove('is-leaving');
+        _bookStageLeaveTimer = null;
+      }, 190);
+    }
     if (stage === 'story') {
       const listen = qs('#book-reader-listen-btn');
       const page = bookPageState();
       if (listen) {
-        listen.disabled = Boolean(page?.audio_completed);
-        listen.textContent = page?.audio_completed ? '✓ Đã nghe trang' : '🔊 Nghe trang';
+        listen.disabled = false;
       }
+      if (_bookAudioPageIndex !== state.bookReader.pageIndex || _bookAudioUiState !== 'playing') bookResetAudioUi(page);
       bookUpdateStoryNavigation();
     } else if (stage === 'questions') {
       bookRenderQuestion();
@@ -3842,6 +5527,8 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
     next.classList.toggle('hidden', !page?.audio_completed);
     next.disabled = !page?.audio_completed;
     next.textContent = pageIndex >= total - 1 ? 'Mở nhiệm vụ 🎯' : 'Trang tiếp →';
+    const nextArt = qs('#book-reader-art-next');
+    if (nextArt) nextArt.disabled = !page?.audio_completed;
   }
 
   function bookGoToNextStoryPage() {
@@ -3849,51 +5536,73 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
     if (!page?.audio_completed || state.bookReader.stage !== 'story') return;
     const total = state.lesson.book_images.length;
     stopLessonAudio();
-    if (state.bookReader.pageIndex >= total - 1) {
-      state.bookReader.story_completed = true;
-      state.bookReader.pageIndex = 0;
-      state.bookReader.questionIndex = 0;
-      state.bookReader.chunkIndex = 0;
-      state.bookReader.stage = bookPracticeStageForPage(bookPageState(0));
-      showToast('Con đã nghe hết truyện — mình làm nhiệm vụ nhé!', 3500);
-    } else {
-      state.bookReader.pageIndex += 1;
-      state.bookReader.stage = 'story';
-    }
-    bookShowPage();
-    scheduleSaveLessonSession();
+    bookAnimatePageTurn(() => {
+      if (state.bookReader.pageIndex >= total - 1) {
+        state.bookReader.story_completed = true;
+        state.bookReader.pageIndex = 0;
+        state.bookReader.questionIndex = 0;
+        state.bookReader.chunkIndex = 0;
+        state.bookReader.stage = bookPracticeStageForPage(bookPageState(0));
+        showToast('Con đã nghe hết truyện — mình làm nhiệm vụ nhé!', 3500);
+      } else {
+        state.bookReader.pageIndex += 1;
+        state.bookReader.stage = 'story';
+      }
+      bookShowPage();
+      scheduleSaveLessonSession();
+    });
   }
 
   function bookAudioFailure(message) {
     const button = qs('#book-reader-listen-btn');
-    if (button) {
-      button.disabled = false;
-      button.textContent = '🔊 Thử nghe lại';
-    }
+    if (button) button.disabled = false;
+    bookSetAudioUiState('idle');
     const status = qs('#book-reader-audio-status');
     if (status) status.textContent = message;
   }
 
-  function bookPlayPageAudio() {
+  function bookPlayPageAudio({ restart = false, slow = false } = {}) {
     const pageIndex = state.bookReader.pageIndex;
     const url = state.lesson.book_page_audio[pageIndex] || '';
     if (!url || isRewardSfxUrl(url)) {
       bookAudioFailure('Audio trang chưa sẵn sàng. Con thử lại sau nhé.');
       return;
     }
-    const button = qs('#book-reader-listen-btn');
-    if (button) {
-      button.disabled = true;
-      button.textContent = '🔊 Đang phát...';
+    const currentAudio = lessonAudioState.audio;
+    if (!restart && currentAudio && lessonAudioState.url === url) {
+      if (!currentAudio.paused) {
+        currentAudio.pause();
+        bookSetAudioUiState('paused');
+        const pausedStatus = qs('#book-reader-audio-status');
+        if (pausedStatus) pausedStatus.textContent = 'Minny đang tạm dừng. Con bấm lại để nghe tiếp nhé.';
+        return;
+      }
+      currentAudio.playbackRate = slow ? 0.82 : 1;
+      currentAudio.play().then(() => {
+        bookSetAudioUiState('playing');
+        const resumedStatus = qs('#book-reader-audio-status');
+        if (resumedStatus) resumedStatus.textContent = slow ? 'Minny đang đọc chậm cho con nghe...' : 'Minny đang đọc...';
+      }).catch(() => bookAudioFailure('Chưa phát được audio. Con bấm thử nghe lại nhé.'));
+      return;
     }
+    if (restart) stopLessonAudio();
+    const button = qs('#book-reader-listen-btn');
+    if (button) button.disabled = false;
+    _bookAudioPageIndex = pageIndex;
+    bookSetAudioUiState('playing');
     const status = qs('#book-reader-audio-status');
-    if (status) status.textContent = 'Con nghe hết trang nhé...';
-    playAudio(url, button);
+    if (status) status.textContent = slow ? 'Minny đang đọc chậm cho con nghe...' : 'Minny đang đọc...';
+    playAudio(url, null);
     const audio = lessonAudioState.audio;
     if (!audio) {
       bookAudioFailure('Chưa phát được audio. Con bấm thử nghe lại nhé.');
       return;
     }
+    audio.playbackRate = slow ? 0.82 : 1;
+    const syncProgress = () => bookSyncAudioProgress(audio, pageIndex);
+    audio.addEventListener('loadedmetadata', syncProgress);
+    audio.addEventListener('durationchange', syncProgress);
+    audio.addEventListener('timeupdate', syncProgress);
     const fail = () => {
       if (!bookPageState(pageIndex)?.audio_completed) {
         bookAudioFailure('Chưa phát được audio. Con bấm thử nghe lại nhé.');
@@ -3904,6 +5613,11 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
     audio.addEventListener('ended', () => {
       if (pageIndex !== state.bookReader.pageIndex) return;
       bookPageState(pageIndex).audio_completed = true;
+      bookSetAudioUiState('done');
+      bookSyncAudioProgress(audio, pageIndex);
+      bookSetActiveSentence(Math.max(0, bookPageSentences(pageIndex).length - 1), { completed: true });
+      playSfx(SFX.activityComplete, { volume: 0.55 });
+      bookRenderTrail();
       if (state.bookReader.stage === 'story') {
         const status = qs('#book-reader-audio-status');
         if (status) status.textContent = pageIndex >= state.lesson.book_images.length - 1
@@ -3928,46 +5642,64 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
       bookSetStage(page?.shadow_chunks.length ? 'shadow' : 'next');
       return;
     }
-    qs('#book-reader-question-counter').textContent = `Câu hỏi ${questionIndex + 1}/${page.selected_questions.length}`;
-    qs('#book-reader-question-text').textContent = question.question_en;
+    qs('#book-reader-question-counter').textContent = `Câu ${questionIndex + 1} / ${page.selected_questions.length} · Chọn một đáp án`;
+    qs('#book-reader-question-text').textContent = question.question_vi || question.question_en;
     const feedback = qs('#book-reader-question-feedback');
-    feedback.textContent = '';
     feedback.classList.add('hidden');
+    feedback.dataset.state = '';
+    qs('#book-reader-question-rewards')?.classList.add('hidden');
+    qs('#book-reader-question-hint')?.classList.add('hidden');
+    qs('#book-reader-question-retry')?.classList.add('hidden');
     const options = qs('#book-reader-question-options');
     options.innerHTML = '';
-    question.options_en.forEach((option, optionIndex) => {
+    const shuffledOptions = question.options_en
+      .map((option, originalIndex) => ({ option, originalIndex }))
+      .sort(() => Math.random() - 0.5);
+    shuffledOptions.forEach(({ option, originalIndex }, visualIndex) => {
       const button = document.createElement('button');
       button.type = 'button';
-      button.className = 'r2l-guided-question__option';
+      button.className = 'r2l-book-guided-option';
+      button.dataset.optionLabel = String.fromCharCode(65 + visualIndex);
       button.textContent = option;
       button.addEventListener('click', () => {
-        const correct = optionIndex === question.correct_index;
+        const correct = originalIndex === question.correct_index;
         const questionId = `book:${state.lesson?.book_slug || 'book'}:${question.id}`;
-        page.question_results.push({
-          question_id: question.id,
-          sentence_index: question.sentence_index,
-          selected_index: optionIndex,
-          correct_index: question.correct_index,
-          correct,
-        });
-        options.querySelectorAll('button').forEach((optionButton, index) => {
-          optionButton.disabled = true;
-          if (index === question.correct_index) optionButton.dataset.state = 'revealed';
-        });
-        feedback.textContent = correct
-          ? 'Đúng rồi! Mình sang câu tiếp nhé.'
-          : `Đáp án đúng là: ${question.options_en[question.correct_index]}.`;
+        options.querySelectorAll('button').forEach((optionButton) => { optionButton.disabled = true; });
         feedback.classList.remove('hidden');
         if (correct) {
+          page.question_results.push({
+            question_id: question.id,
+            sentence_index: question.sentence_index,
+            selected_index: originalIndex,
+            correct_index: question.correct_index,
+            correct: true,
+          });
+          button.dataset.state = 'correct';
+          feedback.dataset.state = 'correct';
+          qs('#book-reader-question-counter').textContent = `Câu ${questionIndex + 1} / ${page.selected_questions.length} · Đúng rồi!`;
+          qs('#book-reader-question-feedback-title').textContent = 'Tốt lắm, con ơi!';
+          qs('#book-reader-question-feedback-copy').textContent = `Minny: “Đúng “${option}” rồi đó con.”`;
+          qs('#book-reader-question-minny').src = '/assets/r2l/minny/smile.png';
+          qs('#book-reader-question-rewards')?.classList.remove('hidden');
           clearWrongStreak(questionId);
           onBookReaderCorrect();
+          scheduleSaveLessonSession();
+          window.setTimeout(() => {
+            if (state.bookReader.stage === 'questions') bookRenderQuestion();
+          }, 1200);
         } else {
+          button.dataset.state = 'retry';
+          feedback.dataset.state = 'retry';
+          qs('#book-reader-question-counter').textContent = `Câu ${questionIndex + 1} / ${page.selected_questions.length} · Thử lại`;
+          qs('#book-reader-question-feedback-title').textContent = 'Gần đúng rồi, con!';
+          qs('#book-reader-question-feedback-copy').textContent = 'Minny đợi con chọn lại nhé.';
+          qs('#book-reader-question-minny').src = '/assets/r2l/minny/thinking.png';
+          const hint = question.hint || 'Con nhìn lại đoạn truyện và tìm từ khóa giống trong câu hỏi nhé.';
+          qs('#book-reader-question-hint-copy').textContent = hint;
+          qs('#book-reader-question-hint')?.classList.remove('hidden');
+          qs('#book-reader-question-retry')?.classList.remove('hidden');
           onBookReaderWrong(questionId);
         }
-        scheduleSaveLessonSession();
-        window.setTimeout(() => {
-          if (state.bookReader.stage === 'questions') bookRenderQuestion();
-        }, 700);
       }, { once: true });
       options.appendChild(button);
     });
@@ -3994,14 +5726,23 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
     const body = qs('#book-reader-shadow-body');
     const settled = chunk.status === 'passed' || chunk.status === 'skipped';
     body.innerHTML = `
-      <article class="r2l-minny-sentence-card" data-speak-card="0" data-item-key="${escapeHtml(itemKey)}" data-book-chunk-id="${escapeHtml(chunk.chunk_id)}">
-        <p class="r2l-minny-sentence-en">${escapeHtml(chunk.text_en)}</p>
-        <p class="mt-2 text-sm text-cream/70" data-book-attempt-status>Lần đọc: ${chunk.attempts}/3</p>
+      <article class="r2l-book-shadow-card" data-speak-card="0" data-item-key="${escapeHtml(itemKey)}" data-book-chunk-id="${escapeHtml(chunk.chunk_id)}" data-rec-state="idle">
+        <p class="r2l-book-eyebrow" data-book-rec-heading>Bấm để bắt đầu đọc</p>
+        <div class="r2l-book-shadow-card__visuals">
+          <button type="button" data-speak-record="0" ${chunk.playback_completed && !settled ? '' : 'disabled'}>🎤 Con nói</button>
+          <div class="r2l-book-shadow-meter" aria-label="Mức âm thanh của con">
+            <div class="r2l-book-shadow-meter__star"><span class="r2l-book-shadow-meter__fill" data-rec-meter></span></div>
+          </div>
+        </div>
+        <div class="r2l-book-shadow-wave" aria-hidden="true">${Array.from({ length: 14 }, () => '<i></i>').join('')}</div>
+        <p class="r2l-book-shadow-card__text">“${escapeHtml(chunk.text_en)}”</p>
+        <p class="r2l-book-shadow-card__hint" data-book-rec-hint data-rec-hint>Nghe mẫu trước, rồi bấm micro nhé.</p>
+        <p data-book-attempt-status>Lần đọc: ${chunk.attempts}/3</p>
         <div class="r2l-minny-speak-actions">
           <button type="button" class="minny-btn minny-btn--listen" data-speak-listen="0">🔊 Nghe đoạn</button>
-          <button type="button" class="minny-btn minny-btn--record" data-speak-record="0" ${chunk.playback_completed && !settled ? '' : 'disabled'}>🎤 Con nói</button>
         </div>
-        <div class="mt-3 hidden rounded-md border border-cream/10 bg-navy-950/35 p-3 text-sm text-cream/80" data-speak-feedback></div>
+        <div class="hidden rounded-md border border-cream/10 bg-navy-950/35 p-3 text-sm text-cream/80" data-speak-feedback></div>
+        <div class="r2l-book-shadow-result hidden" data-book-shadow-result></div>
         <button type="button" class="r2l-primary mt-3 w-full ${settled ? '' : 'hidden'}" data-book-shadow-continue>${bookShadowContinueLabel()}</button>
         <div class="r2l-wave-panel hidden" data-speak-waveform aria-label="Sóng âm bài đọc của con"></div>
       </article>
@@ -4014,6 +5755,8 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
       _r2lRenderSpeakFeedback(card, chunk.latest_feedback);
     }
     _r2lSyncMinnyRecordButton(itemKey, card);
+    bookSyncShadowVisualState(card, _r2lRecorderState.perItem.get(itemKey)?.status || 'idle', _r2lRecorderState.perItem.get(itemKey)?.checkStatus || 'idle');
+    bookObserveRecordMeter(card);
     if (settled && recordButton) recordButton.disabled = true;
     body.querySelector('[data-speak-listen]')?.addEventListener('click', () => bookPlayShadowChunk(chunk, card));
     recordButton?.addEventListener('click', () => {
@@ -4125,6 +5868,18 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
       const recordButton = card?.querySelector('[data-speak-record]');
       if (recordButton) recordButton.disabled = true;
     }
+    const result = card?.querySelector('[data-book-shadow-result]');
+    if (result) {
+      result.classList.remove('hidden');
+      result.textContent = score >= 80
+        ? `Đọc rất rõ! Con đạt ${score}% và nhận 2 sao.`
+        : score >= 60
+          ? `Khá tốt! Con đạt ${score}% và nhận 1 sao.`
+          : chunk.status === 'passed'
+            ? `Con đã hoàn thành với ${score}%. Mình sang đoạn tiếp nhé.`
+            : `Đọc chậm hơn nhé con. Minny đợi.`;
+    }
+    bookSyncShadowVisualState(card, chunk.status === 'pending' ? 'idle' : 'result', 'done');
   }
 
   function bookHandleShadowTechnicalFailure(card) {
@@ -4160,9 +5915,11 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
       return;
     }
     if (state.bookReader.pageIndex >= state.lesson.book_images.length - 1) {
-      bookFinishReader();
+      playSfx(SFX.levelUp, { volume: 0.6 });
+      bookSetStage('next');
       return;
     }
+    playSfx(SFX.levelUp, { volume: 0.6 });
     bookSetStage('next');
   }
 
@@ -4171,8 +5928,8 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
     const total = state.lesson.book_images.length;
     const next = qs('#book-reader-next');
     if (!next) return;
-    next.disabled = pageIndex >= total - 1;
-    next.textContent = pageIndex >= total - 1 ? 'Đang lưu kết quả...' : 'Trang tiếp →';
+    next.disabled = false;
+    next.textContent = pageIndex >= total - 1 ? 'Hoàn thành →' : 'Trang tiếp →';
   }
 
   function bookRenderAttribution() {

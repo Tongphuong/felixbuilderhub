@@ -69,13 +69,21 @@ test('read-aloud-only StoryWeaver packs activate book reader mode', () => {
   );
 });
 
-test('book questions are selected once, spoken, answered one at a time, and reveal immediately', () => {
+test('book questions advance only on correct answers and use a gentle retry state', () => {
   assert.match(lesson, /selectBookQuestions\(/);
   assert.match(lesson, /selected_questions: selectedQuestions/);
   assert.match(lesson, /const questionIndex = page\?\.question_results\.length/);
   assert.match(lesson, /_r2lSpeakEnglishLine\(question\.question_en\)/);
-  assert.match(lesson, /Đáp án đúng là:/);
-  assert.match(lesson, /page\.question_results\.push/);
+  const start = lesson.indexOf('function bookRenderQuestion');
+  const end = lesson.indexOf('function bookCurrentChunk', start);
+  const body = lesson.slice(start, end);
+  assert.match(body, /if \(correct\) \{\s*page\.question_results\.push/s);
+  assert.match(body, /dataState = 'retry'|dataset\.state = 'retry'/);
+  assert.match(body, /book-reader-question-retry/);
+  assert.match(body, /Gợi ý của Minny|Con nhìn lại đoạn truyện/);
+  assert.doesNotMatch(body, /question\.hint_vi/);
+  assert.doesNotMatch(body, /Đáp án đúng là:|["'`]Sai["'`]|màu đỏ/);
+  assert.match(body, /1200/);
 });
 
 test('book questions reuse old reward and wrong-answer SFX hooks', () => {
@@ -148,19 +156,102 @@ test('book submission sends explicit v2 pages while legacy activity routing rema
   assert.match(lesson, /function w1InitGuidedListeningPhase/);
 });
 
-test('book reader keeps complete mixed-aspect illustrations clear of its stable caption band', () => {
+test('storybook layout renders karaoke sentences and all three helper controls', () => {
+  assert.match(lesson, /id="book-reader-workspace" class="r2l-book-workspace"/);
+  assert.match(lesson, /id="book-reader-karaoke-text"/);
+  assert.match(lesson, /id="book-reader-translate"/);
+  assert.match(lesson, /id="book-reader-vocab"/);
+  assert.match(lesson, /id="book-reader-help-read"/);
+  assert.match(lesson, /function bookRenderStoryText/);
+  assert.match(lesson, /sentence\.text_vi/);
+  assert.match(lesson, /function bookPageVocabulary/);
+  assert.match(lesson, /bookPlayPageAudio\(\{ restart: true, slow: true \}\)/);
+  assert.match(lesson, /playbackRate = slow \? 0\.82 : 1/);
+});
+
+test('audio event exposes idle playing paused and done states with karaoke timing', () => {
+  for (const state of ['idle', 'playing', 'paused', 'done']) {
+    assert.match(lesson, new RegExp(`bookSetAudioUiState\\('${state}'\\)`));
+  }
+  assert.match(lesson, /currentAudio\.pause\(\)/);
+  assert.match(lesson, /currentAudio\.play\(\)/);
+  assert.match(lesson, /addEventListener\('timeupdate', syncProgress\)/);
+  assert.match(lesson, /bookSyncAudioProgress\(audio, pageIndex\)/);
+  assert.match(lesson, /bookSetActiveSentence/);
+  assert.match(lesson, /r2l-book-audio__wave/);
+  assert.match(lesson, /prefers-reduced-motion: reduce/);
+});
+
+test('progress trail uses full page completion during practice and remains data driven', () => {
+  const start = lesson.indexOf('function bookPageIsComplete');
+  const end = lesson.indexOf('function bookFormatTime', start);
+  const completion = lesson.slice(start, end);
+  assert.match(completion, /page\?\.audio_completed/);
+  assert.match(completion, /question_results/);
+  assert.match(completion, /shadow_chunks/);
+  assert.match(completion, /status === 'passed' \|\| chunk\.status === 'skipped'/);
+  const trailStart = lesson.indexOf('function bookRenderTrail');
+  const trailEnd = lesson.indexOf('function bookSetStage', trailStart);
+  const trail = lesson.slice(trailStart, trailEnd);
+  assert.match(trail, /state\.lesson\.book_images\.length/);
+  assert.match(trail, /practiceStarted \? bookPageIsComplete\(pageState\) : pageState\.audio_completed === true/);
+  assert.match(trail, /bookPageLabel\(i\)/);
+  assert.match(trail, /Phần thưởng/);
+});
+
+test('shadow redesign wraps but does not replace protected recorder and scoring hooks', () => {
+  assert.match(lesson, /class="r2l-book-shadow-card"/);
+  assert.match(lesson, /data-speak-record="0"/);
+  assert.match(lesson, /data-rec-meter/);
+  assert.match(lesson, /function bookObserveRecordMeter/);
+  assert.match(lesson, /MutationObserver/);
+  assert.match(lesson, /bookSyncShadowVisualState\(cardEl, status, entry\?\.checkStatus/);
+  assert.match(lesson, /_r2lStartRecording\(itemKey, card\)/);
+  assert.match(lesson, /_r2lStopRecording\(itemKey, card\)/);
+  assert.match(lesson, /score >= _R2L_SPEAKING_PASS_PERCENT/);
+  assert.match(lesson, /Đọc rất rõ! Con đạt/);
+  assert.match(lesson, /Đọc chậm hơn nhé con\. Minny đợi\./);
+});
+
+test('page reward, page turn, keyboard controls, and reduced motion are present', () => {
+  assert.match(lesson, /id="book-reader-next-stage" class="r2l-book-reward/);
+  assert.match(lesson, /Con được 1 ngôi sao!/);
+  assert.match(lesson, /function bookAnimatePageTurn/);
+  assert.match(lesson, /is-turning/);
+  assert.match(lesson, /rotateY\(-32deg\)/);
+  assert.match(lesson, /function bookHandleKeyboard/);
+  assert.match(lesson, /key === ' '/);
+  assert.match(lesson, /key === 'r'/);
+  assert.match(lesson, /\^\[1-4\]\$/);
+  assert.match(lesson, /key === 'enter'/);
+  assert.match(lesson, /key === 'm'/);
+  assert.match(lesson, /@media \(prefers-reduced-motion: reduce\)/);
+});
+
+test('responsive rules match phone tablet and laptop reader compositions', () => {
+  const redesign = lesson.slice(lesson.indexOf('/* ===== Book Reader redesign'));
+  assert.match(redesign, /@media \(max-width: 639px\)/);
+  assert.match(redesign, /height: clamp\(14rem, 38vh, 19rem\)/);
+  assert.match(redesign, /env\(safe-area-inset-bottom\)/);
+  assert.match(redesign, /font-size: 1\.125rem/);
+  assert.match(redesign, /@media \(min-width: 960px\)/);
+  assert.match(redesign, /grid-template-columns: minmax\(0, 1\.12fr\) minmax\(21rem, 0\.88fr\)/);
+  assert.match(redesign, /@media \(min-width: 1360px\), \(min-width: 1280px\) and \(max-height: 850px\)/);
+  assert.match(redesign, /grid-template-columns: 220px minmax\(0, 1fr\)/);
+  assert.match(redesign, /min-height: 44px/);
+});
+
+test('book reader keeps complete mixed-aspect illustrations clear of its caption band', () => {
   assert.match(lesson, /class="r2l-book-page__art"/);
   assert.doesNotMatch(lesson, /id="book-reader-img"[^>]+width="1200"[^>]+height="800"/);
-  assert.match(
-    lesson,
-    /\.r2l-book-page__art\s*{[^}]*height: clamp\(18rem, min\(52vw, 58vh\), 36rem\);[^}]*overflow: hidden;/s,
-  );
+  const redesign = lesson.slice(lesson.indexOf('/* ===== Book Reader redesign'));
+  assert.match(redesign, /\.r2l-book-page__art\s*{[^}]*height: clamp\(18rem, 54vw, 34rem\)/s);
   assert.match(
     lesson,
     /\.r2l-book-page img\s*{[^}]*position: absolute;[^}]*inset: 0;[^}]*width: 100%;[^}]*height: 100%;[^}]*object-fit: contain;/s,
   );
-  const captionRule = lesson.match(/\.r2l-book-page__text\s*{([^}]*)}/)?.[1] || '';
-  assert.match(captionRule, /height: clamp\(10rem, 18vw, 13rem\)/);
+  const captionRule = redesign.match(/\.r2l-book-page__text\s*{([^}]*)}/)?.[1] || '';
+  assert.match(captionRule, /height: auto/);
   assert.match(captionRule, /overflow-y: auto/);
   assert.doesNotMatch(captionRule, /position: absolute|max-height: 42%/);
 });
