@@ -19,6 +19,15 @@ export async function onRequestPost({ request, env }) {
     return json({ ok: false, error: 'invalid_json' }, 400);
   }
 
+  if (data?.activate_only === true) {
+    const level = String(data?.level || '').toUpperCase();
+    if (!VALID_LEVELS.has(level)) return json({ ok: false, error: 'invalid_level' }, 400);
+    const active = await env.READ2LEAD_CODES.get('config:book_levels', { type: 'json' });
+    const nextActive = Array.from(new Set([...(Array.isArray(active) ? active : []), level])).sort();
+    await env.READ2LEAD_CODES.put('config:book_levels', JSON.stringify(nextActive));
+    return json({ ok: true, book_levels: nextActive });
+  }
+
   const pack = data?.pack;
   const level = String(data?.level || pack?.level || '').toUpperCase();
   if (!VALID_LEVELS.has(level) || !isValidBookPack(pack)) {
