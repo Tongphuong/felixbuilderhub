@@ -39,11 +39,11 @@ export function signed(value, suffix = '') {
   return `${n > 0 ? '+' : ''}${n}${suffix}`;
 }
 
-/** Format a preset's XP/coins delta as a readable string. */
+/** Format a preset's diamond/coins delta as a readable string. */
 export function presetText(preset) {
   const parts = [
-    signed(preset.xp_delta, ' XP'),
-    signed(preset.coins_delta, ' xu'),
+    signed(preset.diamond_delta ?? preset.xp_delta, ' 💎'),
+    signed(preset.coins_delta, ' 🪙'),
   ].filter(Boolean);
   return parts.length ? parts.join(' · ') : 'ghi nhận';
 }

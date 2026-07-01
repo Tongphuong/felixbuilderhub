@@ -4179,7 +4179,7 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
     const completedWithoutReward = data.completed_without_reward === true;
     qs('#completion-copy').textContent = completedWithoutReward
       ? 'Bài đã kết thúc. Phần nói được bỏ qua nên con không nhận sao hay điểm, nhưng vẫn có thể tạo bài mới.'
-      : `Con nhận ${rewards.coins || 0} xu và ${rewards.xp || 0} XP cho nhiệm vụ này.`;
+      : `Con nhận 🪙 ${rewards.coins || 0} xu và ⭐ ${rewards.xp || 0} XP cho nhiệm vụ này.`;
     qs('#completion-card').classList.remove('hidden');
     if (state.accessCode) {
       qs('#completion-new-pack').href = `/read2lead?code=${encodeURIComponent(state.accessCode)}#form`;
@@ -8120,9 +8120,9 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
         rankImage.alt = `Rank ${read2LeadState.rank_title || read2LeadState.current_level || 'Read2Lead'}`;
       }
     }
-    header.querySelector('[data-r2l-xp-label]').textContent = `${read2LeadState.xp_in_level ?? 0}/${read2LeadState.xp_to_next_level ?? 60} XP`;
+    header.querySelector('[data-r2l-xp-label]').textContent = `⭐ ${read2LeadState.xp_in_level ?? 0}/${read2LeadState.xp_to_next_level ?? 60} XP`;
     header.querySelector('[data-r2l-xp-fill]').style.width = `${read2LeadState.xp_percent ?? 0}%`;
-    header.querySelector('[data-r2l-coins]').textContent = `${read2LeadState.coins || 0} xu`;
+    header.querySelector('[data-r2l-coins]').textContent = `🪙 ${read2LeadState.coins || 0} xu`;
     header.querySelector('[data-r2l-streak]').textContent = `${read2LeadState.streak_days || 0} ngày`;
   }
 

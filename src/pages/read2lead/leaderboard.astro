@@ -246,14 +246,18 @@ const rankLadder = [
           <p class="mt-1 text-sm ${inkDim}">${escapeHtml(leader.masked_code)}</p>
           <p class="mt-4 rounded-md bg-navy-950/70 px-3 py-2 font-semibold text-accent">${escapeHtml(leader.season_rank_label || leader.rank_vi)}</p>
           ${badgeHtml(leader)}
-          <div class="mt-5 grid grid-cols-3 gap-3">
+          <div class="mt-5 grid grid-cols-4 gap-3">
             <div class="${statBoxGold}">
               <p class="text-xs ${inkDim}">RP mùa</p>
               <p class="text-2xl font-bold font-display text-gold-light">${leader.season_rp}</p>
             </div>
             <div class="${statBoxDark}">
-              <p class="text-xs ${inkDim}">Xu</p>
+              <p class="text-xs ${inkDim}">🪙 Xu</p>
               <p class="text-2xl font-bold ${titleFont.split(' ')[0]} ${ink}">${leader.coins}</p>
+            </div>
+            <div class="${statBoxDark}">
+              <p class="text-xs ${inkDim}">💎 KC</p>
+              <p class="text-2xl font-bold ${titleFont.split(' ')[0]} ${ink}">${leader.diamonds || 0}</p>
             </div>
             <div class="${statBoxDark}">
               <p class="text-xs ${inkDim}">Bài</p>
@@ -281,14 +285,18 @@ const rankLadder = [
               ${xpBar(leader)}
             </div>
           </div>
-          <div class="grid grid-cols-3 gap-2 text-center md:w-60">
+          <div class="grid grid-cols-4 gap-2 text-center md:w-72">
             <div class="${statBoxGold}">
               <p class="text-xs ${inkDim}">RP mùa</p>
               <p class="text-xl font-bold font-display text-gold-light">${leader.season_rp}</p>
             </div>
             <div class="${statBoxDark}">
-              <p class="text-xs ${inkDim}">Xu</p>
+              <p class="text-xs ${inkDim}">🪙 Xu</p>
               <p class="text-xl font-bold ${titleFont.split(' ')[0]} ${ink}">${leader.coins}</p>
+            </div>
+            <div class="${statBoxDark}">
+              <p class="text-xs ${inkDim}">💎 KC</p>
+              <p class="text-xl font-bold ${titleFont.split(' ')[0]} ${ink}">${leader.diamonds || 0}</p>
             </div>
             <div class="${statBoxDark}">
               <p class="text-xs ${inkDim}">Bài</p>
@@ -313,7 +321,7 @@ const rankLadder = [
     function xpBar(leader) {
       const percent = Math.max(0, Math.min(100, Number(leader.xp_percent || 0)));
       const target = Number(leader.xp_to_next_level || 0);
-      const label = target > 0 ? `${leader.xp_in_level}/${target} XP trong rank` : 'Rank cao nhất';
+      const label = target > 0 ? `⭐ ${leader.xp_in_level}/${target} XP trong rank` : 'Rank cao nhất';
       return `
         <div class="mt-4">
           <div class="${xpTrack}">

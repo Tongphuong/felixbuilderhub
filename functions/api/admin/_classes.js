@@ -1,28 +1,26 @@
 import {
-  LEVELS,
   loadProgressState,
   publicProgressState,
   saveProgressState,
-  xpToNextLevel,
 } from '../_read2lead-v2-state.js';
 
 export const CLASS_STORE_KEY = 'admin:classes:v1';
 export const DEFAULT_CLASS_NAME = 'Felix coaching group';
 
 export const DEFAULT_POSITIVE_PRESETS = [
-  { id: 'brave_speaking', label: 'Can đảm nói', xp_delta: 10, coins_delta: 5, kind: 'positive' },
-  { id: 'focus', label: 'Tập trung tốt', xp_delta: 5, coins_delta: 0, kind: 'positive' },
-  { id: 'full_sentence', label: 'Câu đầy đủ', xp_delta: 10, coins_delta: 0, kind: 'positive' },
-  { id: 'pronunciation', label: 'Phát âm tốt', xp_delta: 10, coins_delta: 0, kind: 'positive' },
-  { id: 'help_friend', label: 'Giúp bạn', xp_delta: 0, coins_delta: 5, kind: 'positive' },
-  { id: 'homework', label: 'Làm bài về nhà', xp_delta: 15, coins_delta: 10, kind: 'positive' },
+  { id: 'brave_speaking', label: 'Can đảm nói', diamond_delta: 10, coins_delta: 5, kind: 'positive' },
+  { id: 'focus', label: 'Tập trung tốt', diamond_delta: 5, coins_delta: 0, kind: 'positive' },
+  { id: 'full_sentence', label: 'Câu đầy đủ', diamond_delta: 10, coins_delta: 0, kind: 'positive' },
+  { id: 'pronunciation', label: 'Phát âm tốt', diamond_delta: 10, coins_delta: 0, kind: 'positive' },
+  { id: 'help_friend', label: 'Giúp bạn', diamond_delta: 0, coins_delta: 5, kind: 'positive' },
+  { id: 'homework', label: 'Làm bài về nhà', diamond_delta: 15, coins_delta: 10, kind: 'positive' },
 ];
 
 export const DEFAULT_NEEDS_WORK_PRESETS = [
-  { id: 'forgot_homework', label: 'Quên bài', xp_delta: -5, coins_delta: 0, kind: 'needs_work' },
-  { id: 'distracted', label: 'Mất tập trung', xp_delta: -5, coins_delta: 0, kind: 'needs_work' },
-  { id: 'late', label: 'Đi trễ', xp_delta: -3, coins_delta: 0, kind: 'needs_work' },
-  { id: 'practice_more', label: 'Cần luyện thêm', xp_delta: 0, coins_delta: 0, kind: 'needs_work' },
+  { id: 'forgot_homework', label: 'Quên bài', diamond_delta: -5, coins_delta: 0, kind: 'needs_work' },
+  { id: 'distracted', label: 'Mất tập trung', diamond_delta: -5, coins_delta: 0, kind: 'needs_work' },
+  { id: 'late', label: 'Đi trễ', diamond_delta: -3, coins_delta: 0, kind: 'needs_work' },
+  { id: 'practice_more', label: 'Cần luyện thêm', diamond_delta: 0, coins_delta: 0, kind: 'needs_work' },
 ];
 
 export function json(body, status = 200) {
@@ -63,7 +61,8 @@ function normalizePreset(raw, fallback, index) {
   return {
     id: cleanId(raw?.id || fallbackId) || fallbackId,
     label,
-    xp_delta: clampDelta(raw?.xp_delta ?? base.xp_delta ?? 0),
+    // Migrate from legacy xp_delta to diamond_delta; fall back to 0 for new presets.
+    diamond_delta: clampDelta(raw?.diamond_delta ?? base.diamond_delta ?? raw?.xp_delta ?? 0),
     coins_delta: clampDelta(raw?.coins_delta ?? base.coins_delta ?? 0),
     kind,
   };
@@ -210,48 +209,23 @@ function clampDelta(value) {
   return Math.max(-500, Math.min(500, parsed));
 }
 
-function nextLevel(level) {
-  const index = LEVELS.indexOf(level);
-  return index >= 0 && index < LEVELS.length - 1 ? LEVELS[index + 1] : null;
-}
-
-export function applyManualReward(state, { xpDelta = 0, coinsDelta = 0 } = {}) {
-  let xpChange = clampDelta(xpDelta);
+export function applyManualReward(state, { diamondDelta = 0, coinsDelta = 0 } = {}) {
+  const diamondChange = clampDelta(diamondDelta);
   let coinChange = clampDelta(coinsDelta);
   const startedRankPoints = state.rank_points;
-  let currentLevel = LEVELS.includes(state.current_level) ? state.current_level : 'L1';
-  let xpInLevel = Math.max(0, Number(state.xp_in_level) || 0);
-  let totalXp = Math.max(0, Number(state.total_xp) || 0);
 
-  if (xpChange > 0) {
-    totalXp += xpChange;
-    xpInLevel += xpChange;
-    while (true) {
-      const target = xpToNextLevel(currentLevel);
-      const level = nextLevel(currentLevel);
-      if (!target || !level || xpInLevel < target) break;
-      xpInLevel -= target;
-      currentLevel = level;
-    }
-    xpInLevel = Math.min(xpInLevel, xpToNextLevel(currentLevel) || xpInLevel);
-  } else if (xpChange < 0) {
-    const loss = Math.min(Math.abs(xpChange), xpInLevel, totalXp);
-    xpChange = -loss;
-    xpInLevel = Math.max(0, xpInLevel - loss);
-    totalXp = Math.max(0, totalXp - loss);
-  }
+  // Diamonds are a coaching-only currency — they do NOT affect XP, level
+  // progression, or rank points. This isolates coaching rewards from the
+  // reading level system so kids who attend lots of coaching don't
+  // artificially inflate their reading level.
+  const diamonds = Math.max(0, (Number(state.diamonds) || 0) + diamondChange);
 
   const coins = Math.max(0, (Number(state.coins) || 0) + coinChange);
   coinChange = coins - (Number(state.coins) || 0);
-  const unlockedLevels = Array.from(new Set([...(state.unlocked_levels || []), currentLevel]));
   return {
     ...state,
-    current_level: currentLevel,
-    unlocked_levels: unlockedLevels,
     coins,
-    total_xp: totalXp,
-    xp_in_level: xpInLevel,
-    xp_to_next_level: xpToNextLevel(currentLevel),
+    diamonds,
     ...(startedRankPoints !== undefined ? { rank_points: startedRankPoints } : {}),
     last_manual_reward_at: new Date().toISOString(),
   };
@@ -270,7 +244,7 @@ export async function rewardStudent(env, code, reward) {
     ok: true,
     code: cleanCode,
     applied: {
-      xp_delta: Number(saved.total_xp || 0) - Number(state.total_xp || 0),
+      diamond_delta: Number(saved.diamonds || 0) - Number(state.diamonds || 0),
       coins_delta: Number(saved.coins || 0) - Number(state.coins || 0),
     },
     rank_points_unchanged: beforeRankPoints === saved.rank_points,

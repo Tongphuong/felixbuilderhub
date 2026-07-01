@@ -22,14 +22,14 @@ export async function onRequestPost(context) {
     const code = normalizeCode(body.code || body.access_code);
     if (!klass.student_codes.includes(code)) return json({ ok: false, error: 'student_not_in_class' }, 400);
 
-    const xpDelta = Math.trunc(Number(body.xp_delta) || 0);
+    const diamondDelta = Math.trunc(Number(body.diamond_delta ?? body.xp_delta) || 0);
     const coinsDelta = Math.trunc(Number(body.coins_delta) || 0);
-    if (xpDelta === 0 && coinsDelta === 0) {
+    if (diamondDelta === 0 && coinsDelta === 0) {
       return json({ ok: false, error: 'empty_reward' }, 400);
     }
 
     const result = await rewardStudent(env, code, {
-      xpDelta,
+      diamondDelta,
       coinsDelta,
       reason: String(body.reason || '').trim().slice(0, 80),
       kind: body.kind === 'needs_work' ? 'needs_work' : 'positive',

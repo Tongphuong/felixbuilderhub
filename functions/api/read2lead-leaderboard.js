@@ -209,6 +209,7 @@ async function publicLeader(context, code, codeData) {
     display_name: studentName || 'Bạn đọc bí mật',
     masked_code: maskCode(code),
     total_xp: numberOrZero(publicState.total_xp),
+    diamonds: numberOrZero(publicState.diamonds),
     xp_in_level: numberOrZero(publicState.xp_in_level),
     xp_to_next_level: numberOrZero(publicState.xp_to_next_level),
     xp_percent: numberOrZero(publicState.xp_percent),

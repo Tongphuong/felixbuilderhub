@@ -67,8 +67,9 @@ const progressHref = '/ho-so';
           <div class="absolute right-0 top-12 z-50 w-64 overflow-hidden rounded-lg border border-cream-dim/20 bg-navy-950 shadow-2xl">
             <div class="border-b border-cream-dim/15 p-3">
               <p class="mb-2 text-[11px] font-semibold uppercase tracking-wide text-cream-dim">Thành tích</p>
-              <div class="grid grid-cols-2 gap-2">
-                <span class="rounded-md bg-cream/5 px-3 py-2 font-bold text-gold" data-r2l-coins>0 xu</span>
+              <div class="grid grid-cols-3 gap-2">
+                <span class="rounded-md bg-cream/5 px-3 py-2 font-bold text-gold" data-r2l-coins>🪙 0</span>
+                <span class="rounded-md bg-cream/5 px-3 py-2 font-bold text-cyan-300" data-r2l-diamonds>💎 0</span>
                 <span class="rounded-md bg-cream/5 px-3 py-2 font-bold text-cream" data-r2l-streak>0 ngày</span>
               </div>
             </div>
@@ -167,8 +168,9 @@ const progressHref = '/ho-so';
           if (isV3Enabled() && state.avatar?.monster) {
             applyHeaderMonsterAvatar(state, stateHeader);
           }
-          setText('[data-r2l-xp-label]', `${state.xp_in_level ?? 0}/${state.xp_to_next_level ?? 60} XP`);
-          setText('[data-r2l-coins]', `${state.coins || 0} xu`);
+          setText('[data-r2l-xp-label]', `⭐ ${state.xp_in_level ?? 0}/${state.xp_to_next_level ?? 60} XP`);
+          setText('[data-r2l-coins]', `🪙 ${state.coins || 0}`);
+          setText('[data-r2l-diamonds]', `💎 ${state.diamonds || 0}`);
           setText('[data-r2l-streak]', `${state.streak_days || 0} ngày`);
           const xpFill = stateHeader.querySelector('[data-r2l-xp-fill]');
           if (xpFill instanceof HTMLElement) {

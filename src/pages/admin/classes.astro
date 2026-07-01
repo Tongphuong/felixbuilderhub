@@ -4,13 +4,13 @@ import AdminLayout from '../../layouts/AdminLayout.astro';
 
 <AdminLayout
   title="Lớp coaching Read2Lead | Felix Admin"
-  description="Bảng lớp live — điểm danh, thưởng XP/xu, quản lý học sinh."
+  description="Bảng lớp live — điểm danh, thưởng 💎/🪙, quản lý học sinh."
 >
   <section class="mx-auto max-w-7xl px-4 py-8 md:px-6 md:py-10">
     <div class="flex flex-wrap items-center justify-between gap-3">
       <div>
         <h1 class="admin-page-title font-display text-3xl font-bold text-cream">Lớp coaching Read2Lead</h1>
-        <p class="mt-2 text-cream-muted">Bảng lớp live — điểm danh, thưởng XP/xu, quản lý học sinh.</p>
+        <p class="mt-2 text-cream-muted">Bảng lớp live — điểm danh, thưởng 💎 kim cương / 🪙 xu, quản lý học sinh.</p>
       </div>
       <div class="flex flex-wrap gap-2">
         <button id="presentation-toggle" type="button" class="rounded-lg border border-accent/40 bg-accent/10 px-3 py-2 text-sm font-semibold text-accent transition hover:bg-accent/20">
@@ -125,12 +125,12 @@ import AdminLayout from '../../layouts/AdminLayout.astro';
             ${(presets || []).map((preset, index) => `
               <div class="grid gap-2 rounded-lg border border-cream-dim/15 bg-navy-950/70 p-2 sm:grid-cols-[minmax(0,1fr)_80px_80px]" data-preset-row data-preset-type="${escapeHtml(type)}" data-index="${index}">
                 <input data-field="label" value="${escapeHtml(preset.label)}" class="rounded border border-cream-dim/20 bg-navy-900 px-2 py-1 text-sm text-cream focus:border-accent focus:outline-none" />
-                <input data-field="xp_delta" type="number" value="${Number(preset.xp_delta || 0)}" class="rounded border border-cream-dim/20 bg-navy-900 px-2 py-1 text-sm text-cream focus:border-accent focus:outline-none" />
+                <input data-field="diamond_delta" type="number" value="${Number(preset.diamond_delta ?? preset.xp_delta || 0)}" class="rounded border border-cream-dim/20 bg-navy-900 px-2 py-1 text-sm text-cream focus:border-accent focus:outline-none" />
                 <input data-field="coins_delta" type="number" value="${Number(preset.coins_delta || 0)}" class="rounded border border-cream-dim/20 bg-navy-900 px-2 py-1 text-sm text-cream focus:border-accent focus:outline-none" />
               </div>
             `).join('')}
           </div>
-          <p class="mt-2 text-xs text-cream-dim">Cột 2 là XP, cột 3 là xu. Có thể dùng số âm cho "cần cố gắng".</p>
+          <p class="mt-2 text-xs text-cream-dim">Cột 2 là 💎 kim cương, cột 3 là 🪙 xu. Có thể dùng số âm cho "cần cố gắng".</p>
         </div>
       `;
     }
@@ -149,7 +149,7 @@ import AdminLayout from '../../layouts/AdminLayout.astro';
       const state = student.read2lead_state || {};
       const ladder = state.rank_ladder || {};
       const rankLabel = ladder.label_vi || state.rank_title || state.current_level || 'Read2Lead';
-      const xpLabel = `${state.xp_in_level ?? 0}/${state.xp_to_next_level ?? 0} XP`;
+      const xpLabel = `⭐ ${state.xp_in_level ?? 0}/${state.xp_to_next_level ?? 0} XP`;
       const xpPercent = Math.max(0, Math.min(100, Number(state.xp_percent || 0)));
       const attendance = student.attendance_today;
       if (student.missing) {
@@ -162,13 +162,13 @@ import AdminLayout from '../../layouts/AdminLayout.astro';
         `;
       }
       const rewardButtons = (klass.positive_presets || []).map((preset) => `
-        <button type="button" data-class-action="reward" data-kind="positive" data-code="${escapeHtml(student.code)}" data-reason="${escapeHtml(preset.label)}" data-xp="${Number(preset.xp_delta || 0)}" data-coins="${Number(preset.coins_delta || 0)}" class="reward-btn rounded-xl bg-accent px-3 py-3 text-left font-semibold text-navy-950 shadow-lg shadow-accent/10 transition hover:-translate-y-0.5 hover:bg-accent-hover">
+        <button type="button" data-class-action="reward" data-kind="positive" data-code="${escapeHtml(student.code)}" data-reason="${escapeHtml(preset.label)}" data-diamonds="${Number(preset.diamond_delta ?? preset.xp_delta || 0)}" data-coins="${Number(preset.coins_delta || 0)}" class="reward-btn rounded-xl bg-accent px-3 py-3 text-left font-semibold text-navy-950 shadow-lg shadow-accent/10 transition hover:-translate-y-0.5 hover:bg-accent-hover">
           <span class="block">${escapeHtml(preset.label)}</span>
           <span class="text-xs opacity-80">${escapeHtml(presetText(preset))}</span>
         </button>
       `).join('');
       const needsWorkButtons = (klass.needs_work_presets || []).map((preset) => `
-        <button type="button" data-class-action="reward" data-kind="needs_work" data-code="${escapeHtml(student.code)}" data-reason="${escapeHtml(preset.label)}" data-xp="${Number(preset.xp_delta || 0)}" data-coins="${Number(preset.coins_delta || 0)}" class="rounded-lg border border-amber-400/35 px-3 py-2 text-left text-sm font-semibold text-amber-100 transition hover:bg-amber-500/10">
+        <button type="button" data-class-action="reward" data-kind="needs_work" data-code="${escapeHtml(student.code)}" data-reason="${escapeHtml(preset.label)}" data-diamonds="${Number(preset.diamond_delta ?? preset.xp_delta || 0)}" data-coins="${Number(preset.coins_delta || 0)}" class="rounded-lg border border-amber-400/35 px-3 py-2 text-left text-sm font-semibold text-amber-100 transition hover:bg-amber-500/10">
           <span class="block">${escapeHtml(preset.label)}</span>
           <span class="text-xs text-amber-100/70">${escapeHtml(presetText(preset))}</span>
         </button>
@@ -186,10 +186,11 @@ import AdminLayout from '../../layouts/AdminLayout.astro';
                 <button type="button" data-class-action="remove-student" data-code="${escapeHtml(student.code)}" class="rounded border border-red-500/30 px-2 py-1 text-xs text-red-200 transition hover:bg-red-500/10">Gỡ</button>
               </div>
               <div class="mt-4 grid grid-cols-2 gap-2 text-sm">
-                <div class="rounded-lg border border-gold/25 bg-gold/10 p-3 text-gold-light"><span class="block text-xs text-gold-light/70">Xu</span><strong class="text-xl">${Number(state.coins || 0)}</strong></div>
+                <div class="rounded-lg border border-gold/25 bg-gold/10 p-3 text-gold-light"><span class="block text-xs text-gold-light/70">🪙 Xu</span><strong class="text-xl">${Number(state.coins || 0)}</strong></div>
+                <div class="rounded-lg border border-cyan-400/25 bg-cyan-400/10 p-3 text-cyan-200"><span class="block text-xs text-cyan-200/70">💎 Kim cương</span><strong class="text-xl">${Number(state.diamonds || 0)}</strong></div>
                 <div class="rounded-lg border border-accent/25 bg-accent/10 p-3 text-accent"><span class="block text-xs text-accent/70">Rank</span><strong class="text-base">${escapeHtml(rankLabel)}</strong></div>
                 <div class="col-span-2 rounded-lg border border-cream-dim/15 bg-navy-900/80 p-3">
-                  <div class="flex justify-between text-xs text-cream-muted"><span>XP</span><span>${escapeHtml(xpLabel)}</span></div>
+                  <div class="flex justify-between text-xs text-cream-muted"><span>⭐ XP đọc</span><span>${escapeHtml(xpLabel)}</span></div>
                   <div class="xp-bar mt-2 h-2 overflow-hidden rounded-full bg-navy-950"><span class="block h-full rounded-full bg-accent transition-[width]" style="width:${xpPercent}%"></span></div>
                 </div>
                 <div class="rounded-lg border border-cream-dim/15 bg-navy-900/80 p-3 text-cream"><span class="block text-xs text-cream-muted">Read2Lead streak</span><strong>${Number(state.streak_days || 0)} ngày</strong></div>
@@ -210,8 +211,8 @@ import AdminLayout from '../../layouts/AdminLayout.astro';
             <div class="mt-3 grid gap-2 sm:grid-cols-2">${needsWorkButtons}</div>
           </details>
           <form class="mt-4 grid gap-2 rounded-xl border border-cream-dim/15 bg-navy-900/70 p-3 sm:grid-cols-[1fr_1fr_auto]" data-custom-reward data-code="${escapeHtml(student.code)}">
-            <input name="xp_delta" type="number" placeholder="+/- XP" class="fx-field rounded border border-cream-dim/20 bg-navy-950 px-3 py-2 text-cream focus:border-accent focus:outline-none" />
-            <input name="coins_delta" type="number" placeholder="+/- xu" class="fx-field rounded border border-cream-dim/20 bg-navy-950 px-3 py-2 text-cream focus:border-accent focus:outline-none" />
+            <input name="diamond_delta" type="number" placeholder="+/- 💎" class="fx-field rounded border border-cream-dim/20 bg-navy-950 px-3 py-2 text-cream focus:border-accent focus:outline-none" />
+            <input name="coins_delta" type="number" placeholder="+/- 🪙" class="fx-field rounded border border-cream-dim/20 bg-navy-950 px-3 py-2 text-cream focus:border-accent focus:outline-none" />
             <button type="submit" class="rounded-lg border border-accent/50 px-4 py-2 font-semibold text-accent transition hover:bg-accent/10">Áp dụng</button>
           </form>
         </article>
@@ -301,19 +302,19 @@ import AdminLayout from '../../layouts/AdminLayout.astro';
       return Array.from(presetEditor.querySelectorAll(`[data-preset-row][data-preset-type="${type}"]`)).map((row) => ({
         id: `${type}-${row.dataset.index}`,
         label: row.querySelector('[data-field="label"]')?.value || '',
-        xp_delta: Number(row.querySelector('[data-field="xp_delta"]')?.value || 0),
+        diamond_delta: Number(row.querySelector('[data-field="diamond_delta"]')?.value || 0),
         coins_delta: Number(row.querySelector('[data-field="coins_delta"]')?.value || 0),
         kind: type === 'needs_work_presets' ? 'needs_work' : 'positive',
       }));
     }
 
-    async function applyClassReward({ code, xpDelta, coinsDelta, reason, kind, sourceEl }) {
+    async function applyClassReward({ code, diamondDelta, coinsDelta, reason, kind, sourceEl }) {
       const klass = currentClass();
       if (!klass) return;
       const res = await fetch(`/api/admin/classes/${encodeURIComponent(klass.id)}/reward`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ code, xp_delta: xpDelta, coins_delta: coinsDelta, reason, kind }),
+        body: JSON.stringify({ code, diamond_delta: diamondDelta, coins_delta: coinsDelta, reason, kind }),
       });
       const result = await res.json();
       if (!res.ok || !result.ok) {
@@ -323,23 +324,10 @@ import AdminLayout from '../../layouts/AdminLayout.astro';
 
       if (kind !== 'needs_work') {
         // 🎉 Gamification juice!
-        await playRewardSound(kind, xpDelta, coinsDelta);
-        await fireRewardCannon(xpDelta, coinsDelta);
-        showEmojiBurst(sourceEl, xpDelta > 0 && coinsDelta > 0 ? '⭐' : coinsDelta > 0 ? '🪙' : '✨');
-        showXpPopup(sourceEl, `${signed(result.applied?.xp_delta || 0, ' XP')} ${signed(result.applied?.coins_delta || 0, ' xu')}`.trim());
-
-        // Check for level-up
-        const beforeLevel = result.read2lead_state?.current_level;
-        if (beforeLevel && result.read2lead_state?.rank_points !== undefined) {
-          // Simple heuristic: if we got positive XP and the student is near level threshold
-          if (xpDelta > 0) {
-            setTimeout(async () => {
-              await playLevelUpSound();
-              await fireLevelUpConfetti();
-              showEmojiBurst(sourceEl, '🏆');
-            }, 400);
-          }
-        }
+        await playRewardSound(kind, diamondDelta, coinsDelta);
+        await fireRewardCannon(diamondDelta, coinsDelta);
+        showEmojiBurst(sourceEl, diamondDelta > 0 && coinsDelta > 0 ? '💎' : diamondDelta > 0 ? '💎' : coinsDelta > 0 ? '🪙' : '✨');
+        showXpPopup(sourceEl, `${signed(result.applied?.diamond_delta || 0, ' 💎')} ${signed(result.applied?.coins_delta || 0, ' 🪙')}`.trim());
       }
 
       await loadClasses();
@@ -421,7 +409,7 @@ import AdminLayout from '../../layouts/AdminLayout.astro';
       if (action === 'reward') {
         await applyClassReward({
           code,
-          xpDelta: Number(btn.dataset.xp || 0),
+          diamondDelta: Number(btn.dataset.diamonds || 0),
           coinsDelta: Number(btn.dataset.coins || 0),
           reason: btn.dataset.reason || '',
           kind: btn.dataset.kind || 'positive',
@@ -434,12 +422,12 @@ import AdminLayout from '../../layouts/AdminLayout.astro';
       const form = event.target.closest('[data-custom-reward]');
       if (!form) return;
       event.preventDefault();
-      const xpDelta = Number(form.querySelector('[name="xp_delta"]')?.value || 0);
+      const diamondDelta = Number(form.querySelector('[name="diamond_delta"]')?.value || 0);
       const coinsDelta = Number(form.querySelector('[name="coins_delta"]')?.value || 0);
-      const kind = xpDelta < 0 || coinsDelta < 0 ? 'needs_work' : 'positive';
+      const kind = diamondDelta < 0 || coinsDelta < 0 ? 'needs_work' : 'positive';
       await applyClassReward({
         code: form.dataset.code,
-        xpDelta,
+        diamondDelta,
         coinsDelta,
         reason: 'Tuỳ chỉnh',
         kind,

@@ -1093,6 +1093,7 @@ export function normalizeProgressState(raw, { accessCode, codeData = null, nowIs
     : START_LEVEL;
   const completedPacks = numberOrZero(raw?.completed_packs ?? legacyProgress.completed_packs);
   const coins = numberOrZero(raw?.coins);
+  const diamonds = numberOrZero(raw?.diamonds);
   const totalXp = hasCurrentLevelReset ? numberOrZero(raw?.total_xp) : 0;
   const xpInLevel = hasCurrentLevelReset
     ? Math.min(xpToNextLevel(currentLevel), numberOrZero(raw?.xp_in_level ?? raw?.xp))
@@ -1140,6 +1141,7 @@ export function normalizeProgressState(raw, { accessCode, codeData = null, nowIs
     rank_title: RANK_TITLES[currentLevel] || RANK_TITLES[START_LEVEL],
     rank_asset_url: RANK_ASSETS[currentLevel] || RANK_ASSETS[START_LEVEL],
     coins,
+    diamonds,
     total_xp: totalXp,
     xp_in_level: xpInLevel,
     xp_to_next_level: xpToNextLevel(currentLevel),
@@ -1757,6 +1759,7 @@ export function publicProgressState(state) {
     rank_asset_url: state.rank_asset_url || RANK_ASSETS[currentLevel] || RANK_ASSETS[START_LEVEL],
     coins: state.coins,
     coins_tooltip: COINS_TOOLTIP,
+    diamonds: numberOrZero(state.diamonds),
     total_xp: state.total_xp,
     xp: state.xp_in_level,
     xp_in_level: state.xp_in_level,

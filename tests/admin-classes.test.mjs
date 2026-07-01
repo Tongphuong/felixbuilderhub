@@ -139,23 +139,24 @@ test('class APIs manage membership, attendance, and shared Read2Lead rewards', a
     method: 'POST',
     path: `/api/admin/classes/${classId}/reward`,
     params: { id: classId },
-    body: { code, xp_delta: 10, coins_delta: 5, reason: 'Can đảm nói', kind: 'positive' },
+    body: { code, diamond_delta: 10, coins_delta: 5, reason: 'Can đảm nói', kind: 'positive' },
     env,
   });
   assert.equal(rewarded.response.status, 200);
   assert.equal(rewarded.body.read2lead_state.coins, 17);
-  assert.equal(rewarded.body.read2lead_state.xp_in_level, 30);
+  assert.equal(rewarded.body.read2lead_state.diamonds, 10);
+  assert.equal(rewarded.body.read2lead_state.xp_in_level, 20);
   assert.equal(records.get(`progress:${code}`).rank_points, 42);
 
   const clamped = await jsonResponse(rewardClassStudent, {
     method: 'POST',
     path: `/api/admin/classes/${classId}/reward`,
     params: { id: classId },
-    body: { code, xp_delta: -999, coins_delta: -999, reason: 'Cần luyện thêm', kind: 'needs_work' },
+    body: { code, diamond_delta: -999, coins_delta: -999, reason: 'Cần luyện thêm', kind: 'needs_work' },
     env,
   });
   assert.equal(clamped.response.status, 200);
   assert.equal(clamped.body.read2lead_state.coins, 0);
-  assert.equal(clamped.body.read2lead_state.xp_in_level, 0);
+  assert.equal(clamped.body.read2lead_state.diamonds, 0);
   assert.equal(records.get(`progress:${code}`).rank_points, 42);
 });
