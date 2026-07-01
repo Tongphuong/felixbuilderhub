@@ -50,6 +50,7 @@ export function presetText(preset) {
 
 /** Test account level options. */
 export const TEST_LEVELS = [
+  ['L0', 'L0 · Mầm non'],
   ['L1', 'L1 · Đồng'],
   ['L2', 'L2 · Bạc'],
   ['L3', 'L3 · Vàng'],

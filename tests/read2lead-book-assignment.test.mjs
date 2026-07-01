@@ -8,6 +8,24 @@ import {
 } from '../functions/api/generate-read2lead-pack.js';
 
 const ACCESS_CODE = 'R2L-BOOK-1234';
+const PROGRESS_KEY = `progress:${ACCESS_CODE}`;
+
+function progressAtL1() {
+  return {
+    schema_version: 2,
+    level_reset_version: 20260606,
+    current_level: 'L1',
+    initial_level: 'L0',
+    unlocked_levels: ['L0', 'L1'],
+    xp_in_level: 0,
+    total_xp: 100,
+    level_progress: { L0: 5, L1: 0, L2: 0, L3: 0, L4: 0, L5: 0 },
+    completed_packs: 5,
+    completed_pack_ids: [],
+    coins: 0,
+    streak_days: 0,
+  };
+}
 
 function storedBook(slug, title) {
   return {
@@ -107,6 +125,7 @@ test('unread selection excludes completed/current books and is deterministic', (
 test('active L1 assigns an unread book immediately without backend fetch', async () => {
   const fixture = makeKv({
     [ACCESS_CODE]: codeData({ completed: ['book_1'], currentBook: 'book_2' }),
+    [PROGRESS_KEY]: progressAtL1(),
     'book_index:L1': ['book_1', 'book_2', 'book_3'],
     'book:book_3': storedBook('book_3', 'Fresh Book'),
   });
@@ -138,6 +157,7 @@ test('active L1 assigns an unread book immediately without backend fetch', async
 test('all books read clears assignment lock and does not decrement uses', async () => {
   const fixture = makeKv({
     [ACCESS_CODE]: codeData({ completed: ['book_1'], currentBook: 'book_2' }),
+    [PROGRESS_KEY]: progressAtL1(),
     'book_index:L1': ['book_1', 'book_2'],
   });
   const response = await generate({

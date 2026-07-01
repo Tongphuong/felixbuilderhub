@@ -12,7 +12,7 @@
   "properties": {
     "schema_version": { "type": "integer", "const": 2 },
     "student_name": { "type": "string", "minLength": 1, "maxLength": 50 },
-    "level": { "type": "string", "enum": ["L1", "L2", "L3", "L4", "L5"] },
+    "level": { "type": "string", "enum": ["L0", "L1", "L2", "L3", "L4", "L5"] },
     "level_label": { "type": "string", "minLength": 1 },
     "topic": { "type": "string", "minLength": 1, "maxLength": 80 },
     "slug": { "type": "string", "pattern": "^[a-z0-9_]+$", "minLength": 1, "maxLength": 100 },
@@ -41,7 +41,7 @@
         "trivia_en": { "type": "string", "minLength": 20, "maxLength": 200 },
         "sentences": {
           "type": "array",
-          "minItems": 6,
+          "minItems": 5,
           "maxItems": 200,
           "items": {
             "type": "object",
@@ -130,7 +130,7 @@
           "story": {
             "properties": {
               "paragraphs_en": { "minItems": 3, "maxItems": 24 },
-              "sentences": { "minItems": 10, "maxItems": 200 }
+              "sentences": { "minItems": 5, "maxItems": 200 }
             }
           },
           "activities": {
@@ -373,7 +373,7 @@
         "scoring_mode": { "const": "whisper_stt" },
         "items": {
           "type": "array",
-          "minItems": 10,
+          "minItems": 5,
           "maxItems": 200,
           "items": {
             "type": "object",

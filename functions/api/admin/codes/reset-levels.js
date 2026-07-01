@@ -1,10 +1,7 @@
 // POST /api/admin/codes/reset-levels
-// Reset all existing Read2Lead codes and V2 progress states back to L1.
+// Reset all existing Read2Lead codes and V2 progress states back to START_LEVEL.
 
-import { isAccessCodeKey } from '../../_read2lead-v2-state.js';
-
-const START_LEVEL = 'L1';
-const LEVEL_RESET_VERSION = 20260606;
+import { isAccessCodeKey, START_LEVEL, LEVEL_RESET_VERSION, RANK_TITLES, RANK_ASSETS } from '../../_read2lead-v2-state.js';
 
 function json(body, status = 200) {
   return new Response(JSON.stringify(body), {
@@ -64,7 +61,7 @@ function resetCodeRecord(record) {
       xp_in_level: 0,
       total_xp: 0,
       unlocked_levels: [START_LEVEL],
-      level_progress: { L1: 0, L2: 0, L3: 0, L4: 0, L5: 0 },
+      level_progress: { L0: 0, L1: 0, L2: 0, L3: 0, L4: 0, L5: 0 },
       level_reset_version: LEVEL_RESET_VERSION,
     },
   };
@@ -82,8 +79,8 @@ function resetProgressState(accessCode, record) {
     current_level: START_LEVEL,
     initial_level: START_LEVEL,
     unlocked_levels: [START_LEVEL],
-    rank_title: 'Đồng',
-    rank_asset_url: '/assets/r2l/ranks/rank-l1-bronze.svg',
+    rank_title: RANK_TITLES[START_LEVEL] || 'Mầm non',
+    rank_asset_url: RANK_ASSETS[START_LEVEL] || '/assets/r2l/ranks/rank-l0-seedling.svg',
     coins: 0,
     total_xp: 0,
     xp_in_level: 0,
@@ -91,7 +88,7 @@ function resetProgressState(accessCode, record) {
     completed_packs: 0,
     completed_pack_ids: [],
     penalized_pack_ids: [],
-    level_progress: { L1: 0, L2: 0, L3: 0, L4: 0, L5: 0 },
+    level_progress: { L0: 0, L1: 0, L2: 0, L3: 0, L4: 0, L5: 0 },
     streak_days: 0,
     streak_freeze_tokens: 0,
     streak_freeze_milestones_granted: 0,

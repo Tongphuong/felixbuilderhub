@@ -1,6 +1,6 @@
 import { isValidBookPack } from './read2lead-lesson.js';
 
-const VALID_LEVELS = new Set(['L1', 'L2', 'L3', 'L4']);
+const VALID_LEVELS = new Set(['L0', 'L1', 'L2', 'L3', 'L4']);
 
 export async function onRequestPost({ request, env }) {
   const providedSecret = request.headers.get('X-Read2Lead-Secret') || '';

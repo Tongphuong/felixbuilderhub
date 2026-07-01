@@ -1,5 +1,5 @@
 // POST /api/admin/codes/:code/set-level
-// Test accounts only — snap V2 progress to L1–L5 for pilot validation.
+// Test accounts only — snap V2 progress to L0–L5 for pilot validation.
 
 import {
   LEVELS,
@@ -48,7 +48,7 @@ export async function onRequestPost(context) {
 
   const level = String(body.level || '').trim().toUpperCase();
   if (!LEVELS.includes(level)) {
-    return json({ ok: false, error: 'level_invalid', message: 'level must be L1–L5' }, 400);
+    return json({ ok: false, error: 'level_invalid', message: 'level must be L0–L5' }, 400);
   }
 
   let existingProgress = null;

@@ -205,7 +205,7 @@ test('W2R level gate blocks level-up when recent average is below 70%', () => {
     state = result.state;
     if (i === 5) {
       assert.equal(result.level_gate_hint_vi, 'Sắp lên Level rồi! Con luyện thêm cho điểm trung bình đạt 70% nhé.');
-      assert.equal(state.current_level, 'L1');
+      assert.equal(state.current_level, 'L0');
     }
   }
 });
@@ -225,7 +225,7 @@ test('W2R level gate allows level-up when recent average reaches 70%', () => {
     });
     state = promoted.state;
   }
-  assert.equal(promoted.level_up?.to_level, 'L2');
+  assert.equal(promoted.level_up?.to_level, 'L1');
 });
 
 test('old records without season fields normalize without losing rank', () => {

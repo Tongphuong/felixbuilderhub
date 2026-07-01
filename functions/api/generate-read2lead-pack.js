@@ -287,7 +287,7 @@ export async function onRequestPost(context) {
 
 
 export function parseBookLevels(raw) {
-  const allowed = new Set(['L1', 'L2', 'L3', 'L4']);
+  const allowed = new Set(['L0', 'L1', 'L2', 'L3', 'L4']);
   return new Set(
     String(raw || '')
       .split(',')

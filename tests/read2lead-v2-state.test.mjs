@@ -17,18 +17,20 @@ import {
   vietnamDateKey,
 } from '../functions/api/_read2lead-v2-state.js';
 
-test('V2 keeps 5 active generation levels', () => {
-  assert.deepEqual(LEVELS, ['L1', 'L2', 'L3', 'L4', 'L5']);
+test('V2 keeps 6 active levels', () => {
+  assert.deepEqual(LEVELS, ['L0', 'L1', 'L2', 'L3', 'L4', 'L5']);
 });
 
 test('V2 rank titles and assets are game-style Vietnamese ladder', () => {
   assert.deepEqual(RANK_TITLES, {
+    L0: 'Mầm non',
     L1: 'Đồng',
     L2: 'Bạc',
     L3: 'Vàng',
     L4: 'Kim cương',
     L5: 'Huyền thoại',
   });
+  assert.equal(RANK_ASSETS.L0, '/assets/r2l/ranks/rank-l0-seedling.svg');
   assert.equal(RANK_ASSETS.L1, '/assets/r2l/ranks/rank-l1-bronze.svg');
   assert.equal(RANK_ASSETS.L5, '/assets/r2l/ranks/rank-l5-legend.svg');
 });
@@ -51,7 +53,7 @@ test('pack completion increments coins and XP once', () => {
     codeData: { student_profile: { student_name: 'Bin', level: 'L2' } },
     nowIso: '2026-06-05T01:00:00.000Z',
   });
-  assert.equal(base.current_level, 'L1');
+  assert.equal(base.current_level, 'L0');
 
   const first = applyPackCompletion(base, {
     packId: 'pack-1',
@@ -74,7 +76,7 @@ test('pack completion increments coins and XP once', () => {
   assert.equal(duplicate.state.coins, 23);
 });
 
-test('fifth L1 pack triggers level-up and resets level XP', () => {
+test('fifth L0 pack triggers level-up and resets level XP', () => {
   let state = normalizeProgressState(null, {
     accessCode: 'R2L-TEST-1234',
     codeData: { student_profile: { student_name: 'Bin', level: 'L2' } },
@@ -95,12 +97,12 @@ test('fifth L1 pack triggers level-up and resets level XP', () => {
   });
   const publicState = publicProgressState(fifth.state);
 
-  assert.equal(fifth.level_up.from_level, 'L1');
-  assert.equal(fifth.level_up.to_level, 'L2');
-  assert.equal(publicState.current_level, 'L2');
+  assert.equal(fifth.level_up.from_level, 'L0');
+  assert.equal(fifth.level_up.to_level, 'L1');
+  assert.equal(publicState.current_level, 'L1');
   assert.equal(publicState.xp_in_level, 0);
-  assert.equal(publicState.xp_to_next_level, 300);
-  assert.equal(publicState.packs_until_level_up, 15);
+  assert.equal(publicState.xp_to_next_level, 100);
+  assert.equal(publicState.packs_until_level_up, 5);
 });
 
 test('L2 needs 15 passed packs to unlock L3', () => {
@@ -359,7 +361,8 @@ test('buildAdminTestLevelState snaps test accounts to any ladder level', () => {
     codeData: { student_profile: { student_name: 'Pilot L3' } },
   });
   assert.equal(l3.current_level, 'L3');
-  assert.deepEqual(l3.unlocked_levels, ['L1', 'L2', 'L3']);
+  assert.deepEqual(l3.unlocked_levels, ['L0', 'L1', 'L2', 'L3']);
+  assert.equal(l3.level_progress.L0, 5);
   assert.equal(l3.level_progress.L1, 5);
   assert.equal(l3.level_progress.L2, 15);
   assert.equal(l3.level_progress.L3, 0);
@@ -369,6 +372,6 @@ test('buildAdminTestLevelState snaps test accounts to any ladder level', () => {
 
   const l1 = buildAdminTestLevelState(l3, 'L1', { accessCode: 'R2L-PILOT-L3' });
   assert.equal(l1.current_level, 'L1');
-  assert.deepEqual(l1.unlocked_levels, ['L1']);
+  assert.deepEqual(l1.unlocked_levels, ['L0', 'L1']);
   assert.equal(l1.level_progress.L1, 0);
 });

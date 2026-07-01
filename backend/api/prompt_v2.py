@@ -150,6 +150,19 @@ Output JSON only after self-check passes.
 
 
 LEVEL_REQUIREMENTS = {
+    "L0": {
+        "label": "L0 Emergent / Pre-A1",
+        "words": "20-50",
+        "target_words": "30-45",
+        "paragraphs": "2-3",
+        "sentences": "4-8",
+        "vocab": "top 200 most frequent English words",
+        "difficulty": "single words or very short phrases (2-4 words), one idea, present tense, repetition encouraged",
+        "activity_a_items": 3,
+        "activity_b_items": 3,
+        "activity_c_questions": 3,
+        "activity_e_items": "all",
+    },
     "L1": {
         "label": "L1 Beginner / A1",
         "words": "60-100",
@@ -385,6 +398,10 @@ Preserve sentences[*].text_en VERBATIM matches from new paragraphs_en (split on 
 # Per-level narrative arc + sensory + dialogue requirements. The arc shape is
 # the same wish -> obstacle -> change -> result spine; richness scales by level.
 STORY_ARC_RULES = {
+    "L0": (
+        "L0: paragraph 1 = introduce character + one thing they like. paragraph 2 = simple action + result. "
+        "Max 6 sentences total. Repeat key words 2-3 times. One sensory word per paragraph."
+    ),
     "L1": (
         "L1: paragraph 1 = SETUP + desire (\"kid wants X\"). paragraph 2 = simple obstacle. "
         "paragraph 3 = action + result + specific feeling. 1 sensory detail per paragraph "
@@ -527,6 +544,7 @@ Output JSON only."""
 # ---------------------------------------------------------------------------
 
 _LEVEL_VOICE_HINT = {
+    "L0": "L0 voice — present tense, top-200 words, very short phrases (2-4 words), word repetition, one sensory word per paragraph",
     "L1": "L1 voice — present tense, top-500 words, every sentence adds a concrete detail, one dialogue line, one shown feeling",
     "L2": "L2 voice — present + simple past, top-800 words, simple connectors, one small moment with a twist, dialogue welcome",
     "L3": "L3 voice — moderate sentences, compound/complex with because/so/when, a small problem the child solves, dialogue exchange",
@@ -535,6 +553,15 @@ _LEVEL_VOICE_HINT = {
 }
 
 GOLDEN_STORY_BANK: dict[str, list[str]] = {
+    # ------------------------------------------------------------------
+    # L0 — 3 stories (present tense, top-200 words, ~20-50 words each)
+    # Emergent reader: very short, repetitive, one idea per page
+    # ------------------------------------------------------------------
+    "L0": [
+        '"I see a cat. The cat is big. I see a dog. The dog is small. The cat and the dog play. They play and play."',
+        '"The sun is up. I go out. I see a tree. The tree is green. A bird sits in the tree. The bird sings."',
+        '"Mom has a ball. The ball is red. I kick the ball. The ball goes far. I run and run. I get the ball."',
+    ],
     # ------------------------------------------------------------------
     # L1 — 6 stories (present tense, top-500 words, ~60-100 words each)
     # Arc coverage: discovery, cosy, wish, helping, worry, surprise
@@ -744,6 +771,7 @@ Output JSON only after self-check passes."""
 
 
 _ACTIVITY_C_SECTION_MIX = {
+    "L0": "Find It x2 + Think About It x1",
     "L1": "Find It x4 + Think About It x1",
     "L2": "Find It x4 + Think About It x1",
     "L3": "Find It x3 + Think About It x2",
@@ -752,7 +780,7 @@ _ACTIVITY_C_SECTION_MIX = {
 }
 
 _ACTIVITY_B_TOKEN_RANGE = {
-    "L1": "5-7", "L2": "6-9", "L3": "6-9", "L4": "7-12", "L5": "7-12",
+    "L0": "3-5", "L1": "5-7", "L2": "6-9", "L3": "6-9", "L4": "7-12", "L5": "7-12",
 }
 
 

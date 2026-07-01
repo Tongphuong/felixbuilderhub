@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title">
+  <title id="title">Read2Lead rank Mầm non</title>
+  <defs>
+    <linearGradient id="g" x1="46" y1="22" x2="205" y2="232" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#a8e6a3"/>
+      <stop offset=".45" stop-color="#4caf50"/>
+      <stop offset="1" stop-color="#1b5e20"/>
+    </linearGradient>
+    <linearGradient id="shine" x1="80" y1="46" x2="168" y2="156" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#e8f5e9" stop-opacity=".9"/>
+      <stop offset="1" stop-color="#e8f5e9" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <path fill="#1b2436" d="M128 8 224 44v72c0 63-39 105-96 134C71 221 32 179 32 116V44Z"/>
+  <path fill="url(#g)" d="M128 20 210 51v64c0 54-33 91-82 116-49-25-82-62-82-116V51Z"/>
+  <path fill="#0d3311" opacity=".35" d="M128 35 194 60v52c0 43-26 73-66 94-40-21-66-51-66-94V60Z"/>
+  <path fill="url(#shine)" d="M66 63 128 39l61 24v7c-42 11-81 30-119 58-3-12-4-24-4-37Z"/>
+  <path fill="#e8f5e9" d="M128 150v-48c0 0-30-20-38 0s18 24 38 0"/>
+  <path fill="#c8e6c9" d="M128 150v-48c0 0 30-20 38 0s-18 24-38 0"/>
+  <circle fill="#e8f5e9" cx="128" cy="155" r="6"/>
+  <text x="128" y="218" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="800" fill="#e8f5e9">MẦM NON</text>
+</svg>

@@ -29,8 +29,9 @@ import { compactActivityScores } from './_read2lead-profile-quality.js';
 
 export { MONSTER_COLORS, MONSTER_MANIFEST, MONSTER_SLOTS };
 
-export const LEVELS = ['L1', 'L2', 'L3', 'L4', 'L5'];
+export const LEVELS = ['L0', 'L1', 'L2', 'L3', 'L4', 'L5'];
 export const PACKS_TO_NEXT_LEVEL = {
+  L0: 5,
   L1: 5,
   L2: 15,
   L3: 25,
@@ -53,7 +54,7 @@ export function gradeRewards(scorePercent) {
   return GRADE_TIERS.find((tier) => pct >= tier.min_percent) ?? GRADE_TIERS[GRADE_TIERS.length - 1];
 }
 export const LEVEL_RESET_VERSION = 20260606;
-export const START_LEVEL = 'L1';
+export const START_LEVEL = 'L0';
 export const COINS_TOOLTIP = 'Tiết kiệm xu cho cửa hàng sắp mở! 🛒';
 export const SHOP_SLOTS = ['hat', 'pet', 'frame', 'name_color'];
 
@@ -102,6 +103,7 @@ export const BADGE_DEFINITIONS = [
 const STARTER_BADGE_DEFINITIONS = BADGE_DEFINITIONS;
 
 export const RANK_TITLES = {
+  L0: 'Mầm non',
   L1: 'Đồng',
   L2: 'Bạc',
   L3: 'Vàng',
@@ -110,6 +112,7 @@ export const RANK_TITLES = {
 };
 
 export const RANK_ASSETS = {
+  L0: '/assets/r2l/ranks/rank-l0-seedling.svg',
   L1: '/assets/r2l/ranks/rank-l1-bronze.svg',
   L2: '/assets/r2l/ranks/rank-l2-silver.svg',
   L3: '/assets/r2l/ranks/rank-l3-gold.svg',
@@ -132,7 +135,7 @@ const RANK_LADDER_DIVISIONS = ['III', 'II', 'I'];
 export const RANK_RP_PER_PACK = { below65: 0, from65: 1, from85: 2 };
 export const RANK_DAILY_RP_CAP = 3;
 export const RANK_TIER_COSTS = [9, 9, 12, 12, 15, 15, 15];
-export const RANK_TIER_CAP_BY_LEVEL = { L1: 2, L2: 3, L3: 4, L4: 6, L5: 7 };
+export const RANK_TIER_CAP_BY_LEVEL = { L0: 1, L1: 2, L2: 3, L3: 4, L4: 6, L5: 7 };
 export const LEVEL_GATE_HINT_VI =
   'Sắp lên Level rồi! Con luyện thêm cho điểm trung bình đạt 70% nhé.';
 

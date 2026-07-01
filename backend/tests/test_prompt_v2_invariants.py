@@ -35,10 +35,9 @@ def test_prompt_specifies_story_first():
     assert "STORY FIRST" in SYSTEM_PROMPT_V2
 
 
-def test_prompt_specifies_5_levels():
-    for level in ("L1", "L2", "L3", "L4", "L5"):
+def test_prompt_specifies_6_levels():
+    for level in ("L0", "L1", "L2", "L3", "L4", "L5"):
         assert level in SYSTEM_PROMPT_V2
-    assert "L0" not in SYSTEM_PROMPT_V2  # L0 cut in V2
 
 
 def test_prompt_lists_4_activity_types():
@@ -110,7 +109,7 @@ def test_prompt_requires_wh_comprehension_guided_listening_questions():
 # ---------------- Level requirement table ----------------
 
 def test_level_requirements_has_all_5_levels():
-    assert set(LEVEL_REQUIREMENTS.keys()) == {"L1", "L2", "L3", "L4", "L5"}
+    assert set(LEVEL_REQUIREMENTS.keys()) == {"L0", "L1", "L2", "L3", "L4", "L5"}
 
 
 def test_level_requirements_have_activity_counts():
@@ -289,7 +288,7 @@ def test_narrative_rubric_constant_exists():
 
 
 def test_story_arc_rules_cover_all_levels():
-    assert set(STORY_ARC_RULES.keys()) == {"L1", "L2", "L3", "L4", "L5"}
+    assert set(STORY_ARC_RULES.keys()) == {"L0", "L1", "L2", "L3", "L4", "L5"}
     for level, rule in STORY_ARC_RULES.items():
         assert isinstance(rule, str) and rule.strip(), f"{level} arc rule empty"
     # L1 is the level the "nhảm nhí" bug was observed on — guard its shape.
@@ -317,7 +316,7 @@ def test_build_polish_user_message_contains_arc_rules_for_level():
             "trivia_vi": "Mot su that nho.",
         }
     }
-    for level in ("L1", "L2", "L3", "L4", "L5"):
+    for level in ("L0", "L1", "L2", "L3", "L4", "L5"):
         msg = build_story_polish_user_message(draft, level, "Bin", topic="games_toys")
         assert STORY_ARC_RULES[level] in msg, f"{level} arc rule missing from polish msg"
         # Draft story + forbidden patterns + child name carried through.

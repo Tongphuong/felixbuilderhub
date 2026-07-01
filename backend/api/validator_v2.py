@@ -32,6 +32,19 @@ LEVEL_RULES_V2 = {
     # │ retry context — do not widen the validator.                     │
     # │ Last audit: 2026-06-09 (Claude).                               │
     # └──────────────────────────────────────────────────────────────────┘
+    "L0": {
+        "label": "L0 Emergent / Pre-A1",
+        "min_words": 15,
+        "min_paragraphs": 2,
+        "max_paragraphs": 4,
+        "min_sentences": 3,
+        "max_sentences": 12,
+        "activity_a_items": 3,
+        "activity_b_items": 3,
+        "activity_c_questions": 3,
+        "activity_c_section_mix": ["Find It", "Find It", "Think About It"],
+        "activity_e_items": "all",
+    },
     "L1": {
         "label": "L1 Beginner / A1",
         "min_words": 50,    # was 60

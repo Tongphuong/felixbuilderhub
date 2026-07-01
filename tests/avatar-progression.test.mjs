@@ -177,6 +177,6 @@ test('getEggOrMonsterView returns egg data without monster config', () => {
   const view = getEggOrMonsterView(state);
   assert.equal(view.stage, 'egg');
   assert.equal(view.name, 'Linh');
-  assert.equal(view.level, 'L1');
+  assert.equal(view.level, 'L0');
   assert.equal('monster' in view, false);
 });

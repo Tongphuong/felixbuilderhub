@@ -81,6 +81,7 @@ BACKEND_SECRET_HEADER = "X-Read2Lead-Secret"
 # Task state được publish lên Cloudflare KV qua proxy endpoint /api/task-state.
 # Persistent qua Render restart, không còn in-memory dict.
 TTS_SPEED_BY_LEVEL = {
+    "L0": 0.80,
     "L1": 0.85,
     "L2": 0.95,
     "L3": 1.0,
@@ -235,8 +236,8 @@ def generate_async_v2():
             raise ValueError()
     except (TypeError, ValueError):
         return jsonify({"ok": False, "error": "Invalid age (5-14)"}), 400
-    if level not in ("L1", "L2", "L3", "L4", "L5"):
-        return jsonify({"ok": False, "error": "Invalid level (L1-L5)"}), 400
+    if level not in ("L0", "L1", "L2", "L3", "L4", "L5"):
+        return jsonify({"ok": False, "error": "Invalid level (L0-L5)"}), 400
     if gender not in ("boy", "girl"):
         return jsonify({"ok": False, "error": "Invalid child_gender (boy/girl)"}), 400
 
