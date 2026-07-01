@@ -232,6 +232,18 @@ export function initHoSo() {
 
   window.addEventListener('popstate', () => window.location.reload());
   const initialCode = String(params.get('code') || '').trim().toUpperCase();
-  if (initialCode && input) { input.value = initialCode; void loadProfile(); }
-  else showEntry();
+  if (initialCode && input) {
+    input.value = initialCode;
+    void loadProfile();
+  } else {
+    const sessionCode = (() => {
+      try { return sessionStorage.getItem('r2l_access_code'); } catch { return null; }
+    })();
+    if (sessionCode && CODE_PATTERN.test(sessionCode) && input) {
+      input.value = sessionCode;
+      void loadProfile();
+    } else {
+      showEntry();
+    }
+  }
 }

@@ -317,9 +317,15 @@ import EditCodeModal from '../../components/admin/EditCodeModal.astro';
             <button type="button" data-action="toggle-test" class="rounded border border-yellow-500/40 px-3 py-1 text-xs text-yellow-300 transition hover:bg-yellow-500/10">${item.is_test ? 'Test OFF' : 'Test ON'}</button>
             <button type="button" data-action="toggle-shared" class="rounded border border-blue-500/40 px-3 py-1 text-xs text-blue-300 transition hover:bg-blue-500/10">${item.is_shared ? 'Shared OFF' : 'Shared ON'}</button>
             <button type="button" data-action="copy" class="rounded border border-cream-dim/30 px-3 py-1 text-xs text-cream transition hover:border-accent hover:text-accent">📋 Copy</button>
+            <button type="button" data-action="create-link" class="rounded border border-purple-500/40 px-3 py-1 text-xs text-purple-300 transition hover:bg-purple-500/10">🔗 Link</button>
             <button type="button" data-action="revoke" class="rounded border border-red-500/40 px-3 py-1 text-xs text-red-300 transition hover:bg-red-500/10">🗑️ Revoke</button>
           </div>
           ${testLevelControls}
+          <div data-link-result class="mt-3 hidden rounded-lg border border-purple-500/30 bg-purple-500/10 p-3">
+            <p class="text-xs text-cream-muted">Magic link (bấm để copy):</p>
+            <button type="button" data-role="copy-link" class="mt-1 block w-full break-all rounded bg-navy-950 px-3 py-2 text-left font-mono text-sm text-purple-200 transition hover:bg-navy-800"></button>
+            <p data-link-copy-status class="mt-1 text-xs text-cream-dim"></p>
+          </div>
         </article>
       `;
     }
@@ -393,6 +399,19 @@ import EditCodeModal from '../../components/admin/EditCodeModal.astro';
     }
 
     listEl.addEventListener('click', async (e) => {
+      const copyLinkBtn = e.target.closest('[data-role="copy-link"]');
+      if (copyLinkBtn) {
+        try {
+          await navigator.clipboard.writeText(copyLinkBtn.textContent);
+          const status = copyLinkBtn.closest('[data-link-result]')?.querySelector('[data-link-copy-status]');
+          if (status) status.textContent = '✓ Đã copy link vào clipboard.';
+        } catch {
+          const status = copyLinkBtn.closest('[data-link-result]')?.querySelector('[data-link-copy-status]');
+          if (status) status.textContent = 'Không copy được — bôi đen link và copy tay.';
+        }
+        return;
+      }
+
       const btn = e.target.closest('button[data-action]');
       if (!btn) return;
       const article = btn.closest('article[data-code]');
@@ -407,6 +426,37 @@ import EditCodeModal from '../../components/admin/EditCodeModal.astro';
           setTimeout(() => (btn.textContent = '📋 Copy'), 1500);
         } catch {
           alert('Copy thất bại — bôi đen mã và copy tay.');
+        }
+        return;
+      }
+
+      if (action === 'create-link') {
+        btn.disabled = true;
+        btn.textContent = 'Đang tạo...';
+        try {
+          const res = await fetch(`/api/admin/codes/${encodeURIComponent(code)}/links`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({}),
+          });
+          const result = await res.json();
+          if (res.ok && result.ok && result.link) {
+            const linkResult = article.querySelector('[data-link-result]');
+            const copyLinkBtn = article.querySelector('[data-role="copy-link"]');
+            const linkStatus = article.querySelector('[data-link-copy-status]');
+            if (linkResult && copyLinkBtn) {
+              copyLinkBtn.textContent = result.link;
+              linkResult.classList.remove('hidden');
+              if (linkStatus) linkStatus.textContent = 'Bấm vào link để copy. Gửi link này qua Zalo cho phụ huynh.';
+            }
+          } else {
+            alert('Lỗi tạo link: ' + (result.error || 'Không xác định'));
+          }
+        } catch (err) {
+          alert('Lỗi mạng: ' + err.message);
+        } finally {
+          btn.disabled = false;
+          btn.textContent = '🔗 Link';
         }
         return;
       }
