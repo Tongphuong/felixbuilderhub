@@ -197,7 +197,6 @@ export function validateBookFlowSubmission(bookReader, lessonContext) {
       if (
         JSON.stringify(submitted.sentence_indexes) !== JSON.stringify(expected.sentence_indexes)
         || expected.sentence_indexes.length > BOOK_CHUNK_SENTENCE_LIMIT
-        || expected.word_count > BOOK_CHUNK_WORD_LIMIT
       ) {
         errors.push(`book_reader.pages[${pageIndex}].shadow_chunks[${chunkIndex}] does not cover the expected sentences`);
       }

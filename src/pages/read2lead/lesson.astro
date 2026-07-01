@@ -8122,7 +8122,6 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
       const data = await safeJson(res);
       if (!res.ok || !data.ok) throw new Error(data.message || data.error || 'Chưa lưu được.');
       clearPendingSubmit();
-      clearLessonSession();
       if (!data.passed && !data.completed_without_reward) {
         qs('#submit-hint').textContent = data.message || 'Chưa đạt điểm tối thiểu. Không sao, mình thử lại nhé!';
         if (isBookLesson()) {
@@ -8133,6 +8132,7 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
         submitBtn.disabled = false;
         return;
       }
+      clearLessonSession();
       if (data.completed_without_reward) {
         updateStateHeader(data.read2lead_state);
         qs('#submit-hint').textContent = data.message || 'Bài đã kết thúc không thưởng.';

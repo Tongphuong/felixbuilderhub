@@ -114,6 +114,13 @@ test('lesson progress survives refresh and tab closure via durable local storage
   assert.match(lessonPage, /sessionStorage\.removeItem\(key\)/);
 });
 
+test('a failed submission retains the lesson snapshot for retry and refresh', () => {
+  assert.match(
+    lessonPage,
+    /if \(!data\.passed && !data\.completed_without_reward\) \{[\s\S]*?return;[\s\S]*?\}\s*clearLessonSession\(\);\s*if \(data\.completed_without_reward\)/,
+  );
+});
+
 test('retired written response state is removed while global CTA navigation remains', () => {
   assert.doesNotMatch(lessonPage, /writtenDrafts/);
   assert.doesNotMatch(lessonPage, /function collectWrittenAnswers/);

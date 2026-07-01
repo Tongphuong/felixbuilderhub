@@ -7,7 +7,11 @@ import {
 } from '../functions/api/read2lead-lesson.js';
 import { onRequestPost } from '../functions/api/submit-read2lead-lesson.js';
 import { progressKey } from '../functions/api/_read2lead-v2-state.js';
-import { buildBookShadowChunks, selectBookQuestions } from '../src/lib/read2lead-book-flow.mjs';
+import {
+  buildBookShadowChunks,
+  selectBookQuestions,
+  validateBookFlowSubmission,
+} from '../src/lib/read2lead-book-flow.mjs';
 
 const ACCESS_CODE = 'R2L-BOOK-COMPLETE';
 const PACK_ID = 'book-pack-id';
@@ -223,6 +227,47 @@ test('server rejects unheard pages and a passed chunk scored at 49', async () =>
   low.pages[0].shadow_chunks[0].score_percent = 49;
   const lowResponse = await submit(low, lowFixture);
   assert.equal(lowResponse.status, 400);
+});
+
+test('a single sentence over 24 words remains a valid indivisible shadow chunk', () => {
+  const context = bookContext();
+  const longSentence = Array.from({ length: 25 }, (_, index) => 'word' + (index + 1)).join(' ');
+  context.story.sentences[1].text_en = longSentence;
+  context.story.paragraphs_en[1] = longSentence;
+
+  const reader = {
+    pages: context.story.paragraphs_en.map((_, pageIndex) => ({
+      page_index: pageIndex,
+      audio_completed: true,
+      question_results: selectBookQuestions(
+        context.guided_listening,
+        context.story.sentences,
+        pageIndex,
+      ).map((question) => ({ question_id: question.id, correct: true })),
+      shadow_chunks: buildBookShadowChunks(context.story.sentences, pageIndex).map((chunk) => ({
+        chunk_id: chunk.chunk_id,
+        sentence_indexes: chunk.sentence_indexes,
+        attempts: 1,
+        status: 'passed',
+        score_percent: 100,
+        technical_failures: 0,
+      })),
+    })),
+  };
+
+  assert.equal(buildBookShadowChunks(context.story.sentences, 1)[0].word_count, 25);
+  assert.deepEqual(validateBookFlowSubmission(reader, context), {
+    ok: true,
+    errors: [],
+    summary: {
+      pages_heard: 3,
+      questions_answered: 6,
+      chunks_passed: 3,
+      chunks_skipped: 0,
+      average_pronunciation_score: 100,
+    },
+    skipped: false,
+  });
 });
 
 test('three low scores complete the book without rewards', async () => {
