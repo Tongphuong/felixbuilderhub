@@ -5649,7 +5649,6 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
       bookSetAudioUiState('done');
       bookSyncAudioProgress(audio, pageIndex);
       bookSetActiveSentence(Math.max(0, bookPageSentences(pageIndex).length - 1), { completed: true });
-      playSfx(SFX.activityComplete, { volume: 0.55 });
       bookRenderTrail();
       if (state.bookReader.stage === 'story') {
         const status = qs('#book-reader-audio-status');
