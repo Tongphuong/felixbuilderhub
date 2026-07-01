@@ -1,5 +1,5 @@
 import { getClientIp, checkCodeRateLimit, rateLimitedResponse } from './_rate-limit.js';
-import { loadProgressState, publicProgressState, RANK_ASSETS, RANK_TITLES } from './_read2lead-v2-state.js';
+import { isAccessCodeKey, loadProgressState, publicProgressState, RANK_ASSETS, RANK_TITLES } from './_read2lead-v2-state.js';
 import { PRE_SEASON, SEASONS as SEASON_CONFIG } from './_read2lead-seasons.js';
 
 const LEADERBOARD_CACHE_KEY = 'leaderboard-cache';
@@ -43,7 +43,16 @@ export async function onRequestGet(context) {
     });
   }
 
-  const leaders = await computeLeaders(context);
+  let leaders;
+  try {
+    leaders = await computeLeaders(context);
+  } catch (err) {
+    return json({
+      ok: false,
+      error: 'leaderboard_compute_failed',
+      message: 'Không tải được bảng xếp hạng. Vui lòng thử lại sau ít phút.',
+    }, 500);
+  }
   const season = leaderboardSeason(leaders);
   const previousSeasonId = previousSeasonIdFor(season?.id);
   const medalRows = leaders.flatMap((leader) =>
@@ -90,10 +99,19 @@ async function computeLeaders(context) {
 
     const records = await Promise.all(
       list.keys.map(async (key) => {
-        if (key.name.startsWith('task:') || key.name.startsWith('progress:')) return null;
-        if (key.name.startsWith('rl:') || key.name.startsWith('debug:') || key.name === LEADERBOARD_CACHE_KEY) return null;
+        // Allowlist: only process R2L-* access-code keys. This filters out
+        // task:, progress:, rl:, debug:, config:, leaderboard-cache, and any
+        // future non-student keys without needing to maintain a denylist.
+        if (!isAccessCodeKey(key.name)) return null;
         const value = await context.env.READ2LEAD_CODES.get(key.name, { type: 'json' });
-        return value ? publicLeader(context, key.name, value) : null;
+        if (!value) return null;
+        try {
+          return await publicLeader(context, key.name, value);
+        } catch {
+          // Isolate per-student errors so one bad record can't crash the
+          // whole leaderboard. The student is simply skipped.
+          return null;
+        }
       }),
     );
 
