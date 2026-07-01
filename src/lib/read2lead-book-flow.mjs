@@ -116,6 +116,8 @@ export function buildBookShadowChunks(
     if (current.length && (current.length >= sentenceLimit || currentWords + wordCount > wordLimit)) {
       flush();
     }
+    // The word limit is a soft grouping target. A single source sentence stays
+    // intact even when it exceeds the target; validation checks exact coverage.
     current.push(entry);
     currentWords += wordCount;
   });

@@ -156,6 +156,18 @@ test('book submission sends explicit v2 pages while legacy activity routing rema
   assert.match(lesson, /function w1InitGuidedListeningPhase/);
 });
 
+test('invalid book submissions identify affected pages and keep progress retryable', () => {
+  assert.match(lesson, /function bookSubmitErrorMessage\(data\)/);
+  assert.match(lesson, /data\?\.error !== 'invalid_book_flow'/);
+  assert.match(lesson, /book_reader\\\.pages\\\[\(\\d\+\)\\\]/);
+  assert.match(lesson, /Tiến độ của con vẫn được giữ/);
+  assert.match(lesson, /throw new Error\(bookSubmitErrorMessage\(data\)\)/);
+  const submitStart = lesson.indexOf('async function submitLesson');
+  const submitEnd = lesson.indexOf("qs('#submit-lesson').addEventListener", submitStart);
+  const submitBody = lesson.slice(submitStart, submitEnd);
+  assert.ok(submitBody.indexOf('clearLessonSession();') > submitBody.indexOf('if (!data.passed'));
+});
+
 test('storybook layout renders karaoke sentences and all three helper controls', () => {
   assert.match(lesson, /id="book-reader-workspace" class="r2l-book-workspace"/);
   assert.match(lesson, /id="book-reader-karaoke-text"/);

@@ -67,13 +67,25 @@ test('question selection distributes two short questions across sentences with t
   assert.equal(selected[0].correct_index, 1);
 });
 
-test('chunking covers every sentence once in order within three-sentence and 24-word limits', () => {
+test('chunking covers ordinary sentences once in order within three-sentence and 24-word targets', () => {
   const lesson = context();
   const chunks = buildBookShadowChunks(lesson.story.sentences, 0);
   assert.deepEqual(chunks.flatMap((chunk) => chunk.sentence_indexes), [0, 1, 2, 3]);
   assert.ok(chunks.every((chunk) => chunk.sentence_indexes.length <= 3));
   assert.ok(chunks.every((chunk) => chunk.word_count <= 24));
   assert.deepEqual(chunks.map((chunk) => chunk.chunk_id), ['p0_c0', 'p0_c1']);
+});
+
+test('an indivisible sentence may exceed the 24-word grouping target and still validate', () => {
+  const lesson = context();
+  lesson.story.sentences[0].text_en = Array.from(
+    { length: 26 },
+    (_, index) => `word${index + 1}`,
+  ).join(' ');
+  const chunks = buildBookShadowChunks(lesson.story.sentences, 0);
+  assert.equal(chunks[0].word_count, 26);
+  assert.deepEqual(chunks[0].sentence_indexes, [0]);
+  assert.equal(validateBookFlowSubmission(validSubmission(lesson), lesson).ok, true);
 });
 
 test('50 percent passes while 49 percent cannot claim a passed chunk', () => {

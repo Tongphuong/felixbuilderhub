@@ -8080,6 +8080,26 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
     };
   }
 
+  function bookSubmitErrorMessage(data) {
+    const fallback = data?.message || data?.error || 'Chưa lưu được kết quả. Con bấm Gửi lại nhé!';
+    if (!isBookLesson() || data?.error !== 'invalid_book_flow' || !Array.isArray(data?.details)) {
+      return fallback;
+    }
+    const pageNumbers = [...new Set(data.details
+      .map((detail) => String(detail || '').match(/book_reader\.pages\[(\d+)\]/))
+      .filter(Boolean)
+      .map((match) => Number(match[1]) + 1)
+      .filter(Number.isFinite))]
+      .sort((left, right) => left - right);
+    if (!pageNumbers.length) {
+      return 'Tiến độ của con vẫn được giữ. Con bấm Gửi lại kết quả nhé!';
+    }
+    const pageLabel = pageNumbers.length === 1
+      ? `Trang ${pageNumbers[0]}`
+      : `Các trang ${pageNumbers.join(', ')}`;
+    return `${pageLabel} chưa đồng bộ đủ. Tiến độ của con vẫn được giữ; con mở lại ${pageNumbers.length === 1 ? 'trang này' : 'các trang này'} rồi bấm Gửi lại kết quả nhé!`;
+  }
+
   async function submitLesson() {
     if (submitInFlight) return;
     submitInFlight = true;
@@ -8120,7 +8140,7 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
       });
       clearTimeout(timer);
       const data = await safeJson(res);
-      if (!res.ok || !data.ok) throw new Error(data.message || data.error || 'Chưa lưu được.');
+      if (!res.ok || !data.ok) throw new Error(bookSubmitErrorMessage(data));
       clearPendingSubmit();
       if (!data.passed && !data.completed_without_reward) {
         qs('#submit-hint').textContent = data.message || 'Chưa đạt điểm tối thiểu. Không sao, mình thử lại nhé!';
