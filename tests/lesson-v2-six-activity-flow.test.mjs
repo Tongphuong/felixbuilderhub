@@ -101,13 +101,17 @@ test('listen_and_order accepts duplicate tokens by sentence text, not strict ind
   assert.doesNotMatch(lessonPage, /correct_order_indices\.every\(\(idx, i\) => idx === st\[i\]\)/);
 });
 
-test('lesson progress survives accidental page refresh via session storage', () => {
+test('lesson progress survives refresh and tab closure via durable local storage', () => {
   assert.match(lessonPage, /function saveLessonSession/);
   assert.match(lessonPage, /function restoreLessonSession/);
   assert.match(lessonPage, /function clearLessonSession/);
   assert.match(lessonPage, /r2l_lesson_session:/);
   assert.match(lessonPage, /activityProgress/);
   assert.match(lessonPage, /scheduleSaveLessonSession/);
+  assert.match(lessonPage, /localStorage\.setItem\(key, serialized\)/);
+  assert.match(lessonPage, /const durable = parseLessonSession\(durableRaw\)/);
+  assert.match(lessonPage, /localStorage\.removeItem\(key\)/);
+  assert.match(lessonPage, /sessionStorage\.removeItem\(key\)/);
 });
 
 test('retired written response state is removed while global CTA navigation remains', () => {

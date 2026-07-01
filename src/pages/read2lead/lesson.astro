@@ -124,9 +124,9 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
                 </div>
                 <div id="book-reader-page-text" class="r2l-book-page__text"></div>
                 <div class="r2l-book-helpers" aria-label="Trợ giúp đọc truyện">
-                  <button id="book-reader-translate" class="r2l-book-helper" type="button" aria-expanded="false">▣ Dịch tiếng Việt</button>
+                  <button id="book-reader-listen-again" class="r2l-book-helper" type="button">🔊 Nghe lại</button>
                   <button id="book-reader-vocab" class="r2l-book-helper" type="button" aria-expanded="false">⌕ Từ khó</button>
-                  <button id="book-reader-help-read" class="r2l-book-helper" type="button">◉ Giúp con</button>
+                  <button id="book-reader-translate" class="r2l-book-helper" type="button" aria-expanded="false">▣ Dịch từng câu</button>
                 </div>
                 <div id="book-reader-translation-panel" class="r2l-book-helper-panel hidden" aria-live="polite"></div>
                 <div id="book-reader-vocab-panel" class="r2l-book-helper-panel hidden" aria-live="polite"></div>
@@ -1712,6 +1712,28 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
     color: var(--cream-muted);
     font-size: 0.82rem;
     line-height: 1.55;
+  }
+
+  .r2l-vocab-card {
+    padding: var(--space-3) 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--cream) 10%, transparent);
+  }
+  .r2l-vocab-card:last-child { border-bottom: none; }
+  .r2l-vocab-word {
+    font-size: var(--text-base);
+    color: var(--gold-light);
+  }
+  .r2l-vocab-context {
+    margin-top: var(--space-1);
+    font-size: 0.88rem;
+    font-style: italic;
+    color: var(--cream-muted);
+    line-height: var(--leading-relaxed);
+  }
+  .r2l-vocab-vi {
+    margin-top: var(--space-1);
+    font-size: 0.75rem;
+    color: var(--cream-dim);
   }
 
   .r2l-book-stage-stack {
@@ -4390,29 +4412,44 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
     return `r2l_lesson_session:${code}:${packId}`;
   }
 
+  function lessonSessionSnapshot() {
+    return {
+      schema_version: LESSON_SESSION_VERSION,
+      saved_at: new Date().toISOString(),
+      activity_index: state.activityIndex,
+      completed_types: Array.from(state.completedTypes),
+      activity_results: state.activityResults,
+      activity_progress: state.activityProgress,
+      ...(isW1() ? {
+        w1_phase: state.w1Phase,
+        w1_max_unlocked: state.w1MaxUnlocked,
+        w1_midpoint_celebrated: state.w1MidpointCelebrated,
+        story_gate: state.storyGate,
+        guided_listening: state.guidedListening,
+        book_reader: state.bookReader,
+        question_outcomes: state.questionOutcomes,
+      } : {}),
+    };
+  }
+
   function saveLessonSession() {
     if (!state.accessCode || !state.packId || !state.lesson) return;
+    const key = lessonSessionKey(state.accessCode, state.packId);
+    let serialized;
     try {
-      const snapshot = {
-        schema_version: LESSON_SESSION_VERSION,
-        saved_at: new Date().toISOString(),
-        activity_index: state.activityIndex,
-        completed_types: Array.from(state.completedTypes),
-        activity_results: state.activityResults,
-        activity_progress: state.activityProgress,
-        ...(isW1() ? {
-          w1_phase: state.w1Phase,
-          w1_max_unlocked: state.w1MaxUnlocked,
-          w1_midpoint_celebrated: state.w1MidpointCelebrated,
-          story_gate: state.storyGate,
-          guided_listening: state.guidedListening,
-          book_reader: state.bookReader,
-          question_outcomes: state.questionOutcomes,
-        } : {}),
-      };
-      sessionStorage.setItem(lessonSessionKey(state.accessCode, state.packId), JSON.stringify(snapshot));
+      serialized = JSON.stringify(lessonSessionSnapshot());
     } catch {
-      // sessionStorage full or unavailable
+      return;
+    }
+    try {
+      localStorage.setItem(key, serialized);
+    } catch {
+      // Durable storage can be disabled or full.
+    }
+    try {
+      sessionStorage.setItem(key, serialized);
+    } catch {
+      // Keep the lesson usable when browser storage is unavailable.
     }
   }
 
@@ -4424,10 +4461,9 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
     }, 250);
   }
 
-  function loadLessonSession() {
+  function parseLessonSession(raw) {
+    if (!raw) return null;
     try {
-      const raw = sessionStorage.getItem(lessonSessionKey(state.accessCode, state.packId));
-      if (!raw) return null;
       const parsed = JSON.parse(raw);
       if (parsed?.schema_version !== 1 && parsed?.schema_version !== LESSON_SESSION_VERSION) return null;
       return parsed;
@@ -4436,12 +4472,29 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
     }
   }
 
-  function clearLessonSession() {
+  function loadLessonSession() {
+    const key = lessonSessionKey(state.accessCode, state.packId);
+    let durableRaw = null;
+    let sessionRaw = null;
+    try { durableRaw = localStorage.getItem(key); } catch {}
+    try { sessionRaw = sessionStorage.getItem(key); } catch {}
+
+    const durable = parseLessonSession(durableRaw);
+    if (durable) return durable;
+    const session = parseLessonSession(sessionRaw);
+    if (!session) return null;
     try {
-      sessionStorage.removeItem(lessonSessionKey(state.accessCode, state.packId));
+      localStorage.setItem(key, sessionRaw);
     } catch {
-      // ignore
+      // Best-effort migration; the session snapshot can still be restored.
     }
+    return session;
+  }
+
+  function clearLessonSession() {
+    const key = lessonSessionKey(state.accessCode, state.packId);
+    try { localStorage.removeItem(key); } catch {}
+    try { sessionStorage.removeItem(key); } catch {}
   }
 
   function restoreLessonSession() {
@@ -4983,6 +5036,9 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
   let _bookAudioPageIndex = -1;
   let _bookShowTranslations = false;
   let _bookVocabOpen = false;
+  let _bookListenAgainCount = 0;
+  let _bookListenAgainSlow = false;
+  let _bookTranslationUsedPages = new Set();
   let _bookStageLeaveTimer = null;
   let _bookPageTurnTimer = null;
   let _bookMeterObserver = null;
@@ -5030,7 +5086,7 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
     const translate = qs('#book-reader-translate');
     if (translate) {
       translate.setAttribute('aria-expanded', String(_bookShowTranslations));
-      translate.textContent = _bookShowTranslations ? '▣ Ẩn bản dịch' : '▣ Dịch tiếng Việt';
+      translate.textContent = _bookShowTranslations ? '▣ Ẩn bản dịch' : '▣ Dịch từng câu';
     }
     const translationPanel = qs('#book-reader-translation-panel');
     const hasTranslations = sentences.some((sentence) => Boolean(sentence.text_vi));
@@ -5059,9 +5115,29 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
     panel.classList.toggle('hidden', !_bookVocabOpen);
     if (!_bookVocabOpen) return;
     const words = bookPageVocabulary();
-    panel.innerHTML = words.length
-      ? words.map((item) => `<p><strong>${escapeHtml(item.word_en || item.word || item.text_en || '')}</strong>${item.meaning_vi || item.translation_vi || item.text_vi ? ` — ${escapeHtml(item.meaning_vi || item.translation_vi || item.text_vi)}` : ''}</p>`).join('')
-      : '<p>Trang này chưa có danh sách từ khó riêng. Con có thể bấm “Giúp con” để nghe Minny đọc chậm.</p>';
+    const sentences = bookPageSentences();
+    if (!words.length) {
+      panel.innerHTML = '<p>Trang này chưa có danh sách từ khó riêng. Con có thể bấm “🔊 Nghe lại” để nghe Minny đọc lại.</p>';
+      return;
+    }
+    panel.innerHTML = words.map((item) => {
+      const word = item.word_en || item.word || item.text_en || '';
+      const vi = item.meaning_vi || item.translation_vi || item.text_vi || '';
+      const contextSentence = sentences.find(s =>
+        (s.text_en || '').toLowerCase().includes(word.toLowerCase())
+      );
+      return `<div class=”r2l-vocab-card”>
+        <strong class=”r2l-vocab-word”>${escapeHtml(word)}</strong>
+        ${contextSentence ? `<p class=”r2l-vocab-context”>”${escapeHtml(contextSentence.text_en)}”</p>` : ''}
+        ${vi ? `<p class=”r2l-vocab-vi”>${escapeHtml(vi)}</p>` : ''}
+      </div>`;
+    }).join('');
+  }
+
+  function bookCheckAutoEncourage() {
+    if (_bookListenAgainCount >= 2 && _bookTranslationUsedPages.has(state.bookReader.pageIndex)) {
+      setMinnyStrip('celebrate', 'Con cố gắng giỏi lắm! Thử sang trang tiếp nhé!');
+    }
   }
 
   function bookSetActiveSentence(localIndex, { completed = false } = {}) {
@@ -5353,15 +5429,28 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
         scheduleSaveLessonSession();
       });
     });
+    qs('#book-reader-listen-again')?.addEventListener('click', () => {
+      _bookListenAgainCount += 1;
+      _bookListenAgainSlow = _bookListenAgainCount > 1;
+      bookPlayPageAudio({ restart: true, slow: _bookListenAgainSlow });
+      setMinnyStrip('encourage', _bookListenAgainSlow
+        ? 'Chậm hơn cho con nghe rõ!'
+        : 'Nghe lần nữa nhé!');
+      bookCheckAutoEncourage();
+    });
     qs('#book-reader-translate')?.addEventListener('click', () => {
       _bookShowTranslations = !_bookShowTranslations;
       bookRenderStoryText();
+      if (_bookShowTranslations && !_bookTranslationUsedPages.has(state.bookReader.pageIndex)) {
+        _bookTranslationUsedPages.add(state.bookReader.pageIndex);
+        setMinnyStrip('encourage', 'Không sao, xem tiếng Việt cũng tốt! Sau đó thử nghe lại nhé.');
+      }
+      bookCheckAutoEncourage();
     });
     qs('#book-reader-vocab')?.addEventListener('click', () => {
       _bookVocabOpen = !_bookVocabOpen;
       bookRenderVocabPanel();
     });
-    qs('#book-reader-help-read')?.addEventListener('click', () => bookPlayPageAudio({ restart: true, slow: true }));
     qs('#book-reader-question-retry')?.addEventListener('click', bookRenderQuestion);
     qs('#book-reader-art-prev')?.addEventListener('click', () => {
       if (state.bookReader.stage !== 'story' || state.bookReader.pageIndex <= 0) return;
@@ -5403,6 +5492,8 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
     if (art) art.style.setProperty('--book-art-image', imageUrl ? `url("${encodeURI(imageUrl).replaceAll('"', '%22')}")` : 'none');
     bookRenderStoryText();
     _bookVocabOpen = false;
+    _bookListenAgainCount = 0;
+    _bookListenAgainSlow = false;
     bookRenderVocabPanel();
     const page = bookPageState(pageIndex);
     const status = qs('#book-reader-audio-status');

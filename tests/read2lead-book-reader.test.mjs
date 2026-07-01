@@ -161,11 +161,11 @@ test('storybook layout renders karaoke sentences and all three helper controls',
   assert.match(lesson, /id="book-reader-karaoke-text"/);
   assert.match(lesson, /id="book-reader-translate"/);
   assert.match(lesson, /id="book-reader-vocab"/);
-  assert.match(lesson, /id="book-reader-help-read"/);
+  assert.match(lesson, /id="book-reader-listen-again"/);
   assert.match(lesson, /function bookRenderStoryText/);
   assert.match(lesson, /sentence\.text_vi/);
   assert.match(lesson, /function bookPageVocabulary/);
-  assert.match(lesson, /bookPlayPageAudio\(\{ restart: true, slow: true \}\)/);
+  assert.match(lesson, /bookPlayPageAudio\(\{ restart: true, slow: _bookListenAgainSlow \}\)/);
   assert.match(lesson, /playbackRate = slow \? 0\.82 : 1/);
 });
 
