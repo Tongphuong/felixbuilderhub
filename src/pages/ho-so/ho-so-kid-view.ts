@@ -596,7 +596,7 @@ export function renderKidView(_container: Element, data: ProgressPayload, access
 
   renderSession(sessionHost, name, accessCode);
   heroHost.className = 'fx-card ho-so-hero-card';
-  heroHost.innerHTML = `<div class="ho-so-hero"><div class="ho-so-hero__avatar" data-hub-monster>${defaultMonsterSvg()}</div><div><p class="fx-eyebrow">Bạn đồng hành</p><h1>Felix · Quái vật học việc</h1><p>Cùng ${escapeHtml(first)} đọc xong <strong>${Number(progress.completed_packs || state.completed_packs || 0)} truyện</strong> và giữ chuỗi <strong>${Number(state.streak_days || 0)} ngày</strong>.</p><div class="ho-so-pill-row"><span class="fx-rank fx-rank--${PROFILE_TIERS[Math.min(7, Number(ladder.tier_index) || 0)][2]}"><span class="fx-rank__dot"></span>${escapeHtml(ladder.label_vi || state.rank_title || 'Đồng')}</span><span class="fx-badge fx-badge--neutral">${escapeHtml((state.season as Record<string, unknown> | undefined)?.name_vi || 'Mùa hiện tại')}</span></div></div></div>`;
+  heroHost.innerHTML = `<div class="ho-so-hero"><div class="ho-so-hero__avatar" data-hub-monster>${defaultMonsterSvg()}</div><div><p class="fx-eyebrow">Hồ sơ của con</p><h1>${escapeHtml(name)}</h1><p>Đã đọc xong <strong>${Number(progress.completed_packs || state.completed_packs || 0)} truyện</strong> và giữ chuỗi <strong>${Number(state.streak_days || 0)} ngày</strong>.</p><div class="ho-so-pill-row"><span class="fx-rank fx-rank--${PROFILE_TIERS[Math.min(7, Number(ladder.tier_index) || 0)][2]}"><span class="fx-rank__dot"></span>${escapeHtml(ladder.label_vi || state.rank_title || 'Đồng')}</span><span class="fx-badge fx-badge--neutral">${escapeHtml((state.season as Record<string, unknown> | undefined)?.name_vi || 'Mùa hiện tại')}</span></div></div></div>`;
   statsHost.innerHTML = `<article class="fx-card ho-so-stat"><span class="fx-eyebrow">⭐ XP tổng</span><strong>${Number(state.total_xp || 0).toLocaleString('vi-VN')}</strong><small>${Number(state.xp_in_level || 0)} / ${Number(state.xp_to_next_level || 0)} XP cấp hiện tại</small></article><article class="fx-card ho-so-stat ho-so-stat--coins"><span class="fx-eyebrow">🪙 Xu</span><strong>${Number(state.coins || 0)}</strong><small>Dùng để trang trí quái vật</small></article><article class="fx-card ho-so-stat"><span class="fx-eyebrow">💎 Kim cương</span><strong>${Number(state.diamonds || 0)}</strong><small>Thưởng từ buổi coaching</small></article><article class="fx-card ho-so-stat"><span class="fx-eyebrow">Chuỗi ngày</span><strong>🔥 ${Number(state.streak_days || 0)}</strong><small>Học thêm một bài để giữ nhịp</small></article>`;
   renderRankBoard(rankHost, state);
   renderBadges(badgesHost, state);
@@ -604,7 +604,7 @@ export function renderKidView(_container: Element, data: ProgressPayload, access
   extrasHost.innerHTML = renderDailyExtras(state, pack, data, name, shopHref);
 
   const ctaHtml = cta.action === 'lesson' && cta.href ? `<a class="fx-btn fx-btn--primary fx-btn--lg fx-btn--block" href="${escapeHtml(cta.href)}">${escapeHtml(cta.label)}</a>` : `<button id="ho-so-hero-cta" class="fx-btn fx-btn--primary fx-btn--lg fx-btn--block" type="button" ${cta.action === 'wait' ? 'disabled' : ''}>${escapeHtml(cta.label)}</button>`;
-  ctaHost.innerHTML = `<div class="ho-so-cta">${ctaHtml}<p>Mất khoảng 30 giây — Felix viết riêng một truyện theo chủ đề con chọn.</p></div>`;
+  ctaHost.innerHTML = `<div class="ho-so-cta">${ctaHtml}<p>Mất khoảng 30 giây — Minny viết riêng một truyện theo chủ đề con chọn.</p></div>`;
 
   const monsterSlot = qs<HTMLElement>('[data-hub-monster]', heroHost);
   const v3 = isV3Enabled();
