@@ -125,7 +125,7 @@ import AdminLayout from '../../layouts/AdminLayout.astro';
             ${(presets || []).map((preset, index) => `
               <div class="grid gap-2 rounded-lg border border-cream-dim/15 bg-navy-950/70 p-2 sm:grid-cols-[minmax(0,1fr)_80px_80px]" data-preset-row data-preset-type="${escapeHtml(type)}" data-index="${index}">
                 <input data-field="label" value="${escapeHtml(preset.label)}" class="rounded border border-cream-dim/20 bg-navy-900 px-2 py-1 text-sm text-cream focus:border-accent focus:outline-none" />
-                <input data-field="diamond_delta" type="number" value="${Number(preset.diamond_delta ?? preset.xp_delta || 0)}" class="rounded border border-cream-dim/20 bg-navy-900 px-2 py-1 text-sm text-cream focus:border-accent focus:outline-none" />
+                <input data-field="diamond_delta" type="number" value="${Number(preset.diamond_delta ?? (preset.xp_delta || 0))}" class="rounded border border-cream-dim/20 bg-navy-900 px-2 py-1 text-sm text-cream focus:border-accent focus:outline-none" />
                 <input data-field="coins_delta" type="number" value="${Number(preset.coins_delta || 0)}" class="rounded border border-cream-dim/20 bg-navy-900 px-2 py-1 text-sm text-cream focus:border-accent focus:outline-none" />
               </div>
             `).join('')}
@@ -162,13 +162,13 @@ import AdminLayout from '../../layouts/AdminLayout.astro';
         `;
       }
       const rewardButtons = (klass.positive_presets || []).map((preset) => `
-        <button type="button" data-class-action="reward" data-kind="positive" data-code="${escapeHtml(student.code)}" data-reason="${escapeHtml(preset.label)}" data-diamonds="${Number(preset.diamond_delta ?? preset.xp_delta || 0)}" data-coins="${Number(preset.coins_delta || 0)}" class="reward-btn rounded-xl bg-accent px-3 py-3 text-left font-semibold text-navy-950 shadow-lg shadow-accent/10 transition hover:-translate-y-0.5 hover:bg-accent-hover">
+        <button type="button" data-class-action="reward" data-kind="positive" data-code="${escapeHtml(student.code)}" data-reason="${escapeHtml(preset.label)}" data-diamonds="${Number(preset.diamond_delta ?? (preset.xp_delta || 0))}" data-coins="${Number(preset.coins_delta || 0)}" class="reward-btn rounded-xl bg-accent px-3 py-3 text-left font-semibold text-navy-950 shadow-lg shadow-accent/10 transition hover:-translate-y-0.5 hover:bg-accent-hover">
           <span class="block">${escapeHtml(preset.label)}</span>
           <span class="text-xs opacity-80">${escapeHtml(presetText(preset))}</span>
         </button>
       `).join('');
       const needsWorkButtons = (klass.needs_work_presets || []).map((preset) => `
-        <button type="button" data-class-action="reward" data-kind="needs_work" data-code="${escapeHtml(student.code)}" data-reason="${escapeHtml(preset.label)}" data-diamonds="${Number(preset.diamond_delta ?? preset.xp_delta || 0)}" data-coins="${Number(preset.coins_delta || 0)}" class="rounded-lg border border-amber-400/35 px-3 py-2 text-left text-sm font-semibold text-amber-100 transition hover:bg-amber-500/10">
+        <button type="button" data-class-action="reward" data-kind="needs_work" data-code="${escapeHtml(student.code)}" data-reason="${escapeHtml(preset.label)}" data-diamonds="${Number(preset.diamond_delta ?? (preset.xp_delta || 0))}" data-coins="${Number(preset.coins_delta || 0)}" class="rounded-lg border border-amber-400/35 px-3 py-2 text-left text-sm font-semibold text-amber-100 transition hover:bg-amber-500/10">
           <span class="block">${escapeHtml(preset.label)}</span>
           <span class="text-xs text-amber-100/70">${escapeHtml(presetText(preset))}</span>
         </button>
