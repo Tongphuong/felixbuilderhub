@@ -4672,7 +4672,21 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
 
 
 
-  window.addEventListener('pagehide', saveLessonSession);
+  function _r2lFlushAndSave() {
+    if (_r2lSaveSessionTimer) {
+      window.clearTimeout(_r2lSaveSessionTimer);
+      _r2lSaveSessionTimer = null;
+    }
+    saveLessonSession();
+  }
+
+  window.addEventListener('pagehide', _r2lFlushAndSave);
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'hidden') _r2lFlushAndSave();
+  });
+
+  document.addEventListener('freeze', _r2lFlushAndSave);
 
   // ── Toast: non-destructive error (does NOT hide lesson) ──
   function showToast(message, durationMs = 4000) {
