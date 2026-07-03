@@ -8,9 +8,9 @@
 
 - Code change complete: yes
 - Tests pass: yes (704/704)
-- Pushed: no
-- Merged: no
-- Phuong approval: pending
+- Pushed: yes
+- Merged: yes (03046c3)
+- Phuong approval: yes (2026-07-03)
 
 ## What changed
 
