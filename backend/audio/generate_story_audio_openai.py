@@ -186,6 +186,8 @@ def normalize_mp3_loudness(output_path: Path, target_lufs: float = DEFAULT_TARGE
         "libmp3lame",
         "-b:a",
         "192k",
+        "-f",
+        "mp3",
         str(temp_path),
     ]
 
@@ -241,14 +243,16 @@ def generate_mp3(
     normalize_audio: bool = True,
     target_lufs: float = DEFAULT_TARGET_LUFS,
     instructions: str | None = None,
+    client: OpenAI | None = None,
 ) -> None:
     validate_speed(speed)
-    api_key, key_source = get_api_key()
-    print(f"Using API key from: {key_source}")
+    owns_client = client is None
+    if owns_client:
+        api_key, key_source = get_api_key()
+        print(f"Using API key from: {key_source}")
+        client = OpenAI(api_key=api_key)
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
-
-    client = OpenAI(api_key=api_key)
     speech_kwargs, extra_body = build_speech_create_kwargs(
         model=model,
         voice=voice,
@@ -272,6 +276,7 @@ def generate_story_audio(
     instructions: str | None = None,
     normalize_audio: bool = True,
     target_lufs: float = DEFAULT_TARGET_LUFS,
+    client: OpenAI | None = None,
 ) -> None:
     """Generate one story/audio snippet MP3 from raw text."""
     generate_mp3(
@@ -283,6 +288,7 @@ def generate_story_audio(
         instructions=instructions,
         normalize_audio=normalize_audio,
         target_lufs=target_lufs,
+        client=client,
     )
 
 

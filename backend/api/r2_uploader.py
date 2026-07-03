@@ -16,9 +16,16 @@ def get_r2_client():
     )
 
 
-def upload_file(local_path: str, key: str, content_type: str) -> str:
-    """Upload file to R2 and return public URL."""
-    client = get_r2_client()
+def upload_file(local_path: str, key: str, content_type: str, client=None) -> str:
+    """Upload file to R2 and return public URL.
+
+    If ``client`` is None a fresh boto3 S3 client is created (backward
+    compatible). Pass a long-lived client to avoid rebuilding TLS connections
+    for every upload.
+    """
+    owns_client = client is None
+    if owns_client:
+        client = get_r2_client()
     bucket = os.environ["R2_BUCKET_NAME"]
     public_url_base = os.environ["R2_PUBLIC_URL"].rstrip("/")
 

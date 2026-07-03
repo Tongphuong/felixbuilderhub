@@ -62,7 +62,7 @@ or new account):
    — should return JSON, not 500.
 ## Drift detection (manual)
 Run this grep periodically; new bindings must appear in this doc:
-cd D:/felixbuilderhub
+cd /home/felixbuilderhub/work/repos/felixbuilderhub
 grep -rohE "env\.[A-Z][A-Z0-9_]+" functions/ | sort -u
 
 Compare output to the bindings listed in the Secrets and KV tables

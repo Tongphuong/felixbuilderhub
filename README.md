@@ -88,26 +88,16 @@ Push to `main` → Cloudflare Pages auto-builds + deploys to
 https://felixbuilderhub.com within ~2 minutes. Preview deploys are
 created for other branches automatically.
 
-## Sister repos
+## Backend
 
-- **Read2Lead backend** (Python on Render): `D:/Read2lead/read2lead_v0_codex/`
-  — generates pack JSON + PDF + MP3, calls back to hub via
-  `READ2LEAD_BACKEND_URL` + `READ2LEAD_BACKEND_SECRET`
-- **MSMW PDF generator** (Python on local Windows): `D:/MSMW/` — manual
-  workflow triggered after Telegram lead
+The Read2Lead Python API lives at `backend/` in this repo (monorepo).
+It deploys to Render via `backend/Dockerfile`. See `backend/CLAUDE.md`
+for architecture details.
 
-## Roadmap (internal)
+## Roadmap
 
-- **V2 waves W1–W13**: `D:/Read2lead/read2lead_v0_codex/_claude/V2_PIVOT_ROADMAP.md`
-- **Minny Learning Companion (Phase 5)**: `docs/MINNY_ROADMAP.md` · M0 outcome: `docs/MINNY_M0_DESIGN_OUTCOME.md` · canonical:
-  `D:/Read2lead/read2lead_v0_codex/_claude/MINNY_ROADMAP.md`
-  — MSMW *Lost Toy Brick City* robot (primary UI character on **`/read2lead/speaking`**,
-  not a generic mascot); student memory personalizes practice; `/hoc-sinh` tile =
-  discovery entry; skills apply in **`/coaching`**. Runtime sprites:
-  `public/assets/minny/` (source: `D:/MSMW/marketing/seedance_minny/references/`).
-  M0 design session next (docs only, no code yet). **Assets:** `minny.png` imported;
-  mood sprites (`minny_idle`, `listen`, `celebrate`, `encourage`) pending M0/M2 — see
-  `public/assets/minny/README.md`
+- V2 waves and feature specs: see `_ops/specs/`
+- Minny Learning Companion: see `_ops/specs/` and `public/assets/minny/README.md`
 
 ## Conventions
 
