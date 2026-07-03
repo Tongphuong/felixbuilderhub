@@ -1,6 +1,7 @@
-# FELIXBUILDERHUB — SESSION ENTRY POINT
+# FELIXBUILDERHUB — REPOSITORY ENTRY POINT
 
-Read this file first. Every session. No exceptions.
+Read `_ops/LEAD.md`, the last 10 lines of `_ops/AGENT_LOG.md`, and
+`_ops/AGENTS.md` before this repository-specific file.
 
 ---
 
@@ -132,19 +133,21 @@ Replaces binary pass/fail. Function `gradeRewards(scorePercent)` in `functions/a
 **Wave 2: SpeakUp** — AI voice companion on `/read2lead/speaking.astro`.
 - Voice loop: Whisper STT → DeepSeek Flash → Edge TTS
 - 5-minute sessions, conversation transcript, session summaries
-- **No spec yet** — Claude needs to write the spec.
+- **No full spec yet** — Claude Lead owns planning and may dispatch a bounded
+  implementation packet to Codex or Cline only after Phuong's approval.
 
 ---
 
 ## How to work in a new session
 
-0. `cd /home/felixbuilderhub/work/repos/` — if you haven't already
-1. Read `CLAUDE.md` (this file)
-2. Read `_ops/AGENT_LOG.md` (last 10 entries — session context)
-3. Read `_ops/AGENTS.md` — team roles + rules
-4. Read your task spec from Claude
-5. Execute
-6. Report in standard format (see _ops/AGENTS.md §4)
+0. `cd /home/felixbuilderhub/work/repos/` — if you have not already
+1. Read `_ops/LEAD.md`
+2. Read the last 10 lines of `_ops/AGENT_LOG.md`
+3. Read `_ops/AGENTS.md`, `_ops/PRODUCT_CONTEXT.md`, and `_ops/DESIGN_SYSTEM.md`
+4. Read `felixbuilderhub/CLAUDE.md` and `felixbuilderhub/AGENTS.md`
+5. Read the Claude-assigned spec and product controls
+6. Execute only the named files, tests, stop condition, and cost ceiling
+7. Report to Claude in the standard `_ops/AGENTS.md` completion format
 
 ---
 

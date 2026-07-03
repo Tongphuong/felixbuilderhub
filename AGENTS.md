@@ -1,23 +1,25 @@
 # AGENTS.md — felixbuilderhub (hub) repo rules
 
-> **Canonical multi-agent rules live in `_ops/AGENTS.md`** (at /home/felixbuilderhub/work/repos/_ops/).
-> Read that FIRST every session. This file only contains hub-specific zones + invariants.
+> **Canonical multi-agent rules live in `_ops/LEAD.md` and `_ops/AGENTS.md`**
+> (at `/home/felixbuilderhub/work/repos/_ops/`). Read them first every session.
+> This file only contains hub-specific zones and invariants.
 > **Note for agents:** All `_ops/` paths are relative to `/home/felixbuilderhub/work/repos/`. cd there first.
 
 ---
 
 ## 0. Read order before any task
 
-1. `_ops/LONEWOLF.md` — PM session entry point
-2. `_ops/AGENTS.md` — role + behavior rules (canonical)
-3. `_ops/AGENT_LOG.md` — last 10 lines for session context
-4. `CLAUDE.md` — hub architecture, folder map, key files
-5. This file — hub-specific zones + invariants
-6. Your spec (`_ops/specs/SPEC_*.md`)
+1. `_ops/LEAD.md` — Claude Lead entry point
+2. `_ops/AGENT_LOG.md` — last 10 lines for session context
+3. `_ops/AGENTS.md` — canonical roles and behavior rules
+4. `_ops/PRODUCT_CONTEXT.md` and `_ops/DESIGN_SYSTEM.md`
+5. `CLAUDE.md` — hub architecture, folder map, key files
+6. This file — hub-specific zones and invariants
+7. The assigned spec and SpeakUp `CONTROL.md`, `CHECKPOINT.md`, and `BUDGET.md`
 
 ---
 
-## 1. Hub-specific protected invariants — DO NOT touch without a Lonewolf spec
+## 1. Hub-specific protected invariants
 
 1. **Minny voice (M0):** Minny says "Minny"/"con"; no red/"wrong"/FOMO language; 1-2 sentences; Vietnamese primary for encouragement; praise effort not rank. Any Minny copy must follow this.
 2. **R2L positioning:** lesson/hero copy stays **functional** (exercises, vocabulary, self-study). No USP/personalization hype/anti-competitor copy.
@@ -25,7 +27,8 @@
 4. **The mic flow** (`public/scripts/r2l-mic-check.js`, `public/scripts/r2l-recorder.js`, the warmup countdown, `_r2lStartRecording`). Hard-won. Change only to a spec.
 5. **Backend contract:** the pack JSON shape the hub reads from backend. Do not rename fields the lesson renderer depends on.
 
-Touching any of these requires a Lonewolf-written spec — no exceptions.
+Touching any of these requires a Claude-reviewed written spec and Phuong's
+explicit approval. Neither Codex nor Cline may expand into these files casually.
 
 ---
 
@@ -33,13 +36,16 @@ Touching any of these requires a Lonewolf-written spec — no exceptions.
 
 | Zone | Owner | Notes |
 |---|---|---|
-| `src/pages/read2lead/lesson.astro` | Lonewolf spec only | Protected completion logic |
-| `public/scripts/r2l-*.js` | Lonewolf spec only | Protected mic/recorder flow |
-| `src/pages/` (other pages) | Codex | Standard frontend work |
-| `src/components/` | Codex | UI components |
-| `src/styles/` | Codex | CSS |
-| `functions/` | Codex | CF Worker API endpoints |
-| `public/assets/` | Codex | Static assets |
+| `src/pages/read2lead/lesson.astro` | Approved spec owner only | Protected completion logic |
+| `public/scripts/r2l-*.js` | Approved spec owner only | Protected mic/recorder flow |
+| `src/pages/` (other pages) | Claude-assigned Codex or Cline | Standard frontend work |
+| `src/components/` | Claude-assigned Codex or Cline | UI components |
+| `src/styles/` | Claude-assigned Codex or Cline | CSS |
+| `functions/` | Claude-assigned Codex or Cline | CF Worker API endpoints |
+| `public/assets/` | Claude-assigned Codex or Cline | Static assets |
+
+The active spec or product `CONTROL.md` must name one owner and exact files. A
+zone being eligible for both workers never permits simultaneous ownership.
 
 ---
 
