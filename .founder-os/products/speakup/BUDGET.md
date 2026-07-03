@@ -4,29 +4,24 @@
 - Total monthly limit: USD 80
 - Warning threshold: USD 60
 - Stop-new-experiments threshold: USD 70
-- Active agent ceiling: USD 56 provisional
-- Product/hosting room if Cursor no longer bills: USD 24
-- Worst-case July room if the old Cursor charge remains: USD 4
+- Active agent ceiling: USD 57
+- Product/hosting room: USD 23
 
 ## Active agent team
 
 | Provider | Role | Billing type | Monthly ceiling | Verification |
 |---|---|---|---:|---|
 | Claude Code Pro | Lead | fixed subscription | 20 | Local auth confirms Claude Pro |
-| Codex | Engineering worker | fixed subscription | 20 provisional | ChatGPT login confirmed; invoice/plan still needs confirmation |
+| Codex | Engineering worker | fixed subscription | 21 | Confirmed USD 21/month by Phuong on 2026-07-03 |
 | Cline with GLM 5.2 or Kimi | Engineering worker in VS Code | fixed subscription | 6 | Amount supplied by Phuong |
 | Lonewolf with DeepSeek V4 Flash | Read-only bridge | metered | 10 | Model confirmed; external API-key cap not yet lowered |
-| **Active agent total** |  |  | **56 provisional** | Assumes Codex costs USD 20 |
+| **Active agent total** |  |  | **57** | Confirmed |
 
 ## Inactive or legacy cost
 
 | Provider | Status | Possible July amount | Required action |
 |---|---|---:|---|
-| Cursor | Not part of the four-agent team | 20 | Confirm cancellation and whether July was already charged |
-
-Cursor is excluded from the active USD 56 total but remains visible until its
-billing status is confirmed. Costs must not disappear from the ledger merely
-because a tool leaves the team.
+| Cursor | Cancelled | 0 | Confirmed cancelled by Phuong on 2026-07-03; no July charge |
 
 ## Metered-cost controls
 
@@ -52,7 +47,7 @@ because a tool leaves the team.
 
 ## Open confirmations
 
-1. Confirm the actual Codex subscription charge.
-2. Confirm Cursor cancellation and July charge status.
-3. Replace or update the Lonewolf OpenRouter key with a USD 10 monthly hard limit.
+1. ~~Confirm the actual Codex subscription charge.~~ Done: USD 21/month.
+2. ~~Confirm Cursor cancellation and July charge status.~~ Done: cancelled, no July charge.
+3. Lonewolf OpenRouter key USD 10 monthly hard limit — Phuong will enforce today.
 

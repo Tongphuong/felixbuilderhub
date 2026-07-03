@@ -1,0 +1,20 @@
+{
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "files.exclude": {
+    "node_modules": true,
+    ".astro": true,
+    "dist": true
+  },
+  "search.exclude": {
+    "node_modules": true,
+    "dist": true,
+    ".astro": true,
+    "backend/__pycache__": true
+  },
+  "terminal.integrated.cwd": "/home/felixbuilderhub/work/repos",
+  "git.branchProtection": ["main"],
+  "git.branchProtectionPrompt": "alwaysPrompt",
+  "cline.customInstructions": "Read _ops/CLINE.md first every session. You are a worker — implement only Claude-assigned packets. Never push main.",
+  "chatgpt.customInstructions": "Read _ops/CODEX.md first every session. You are a worker — implement only Claude-assigned packets. Never push main."
+}
