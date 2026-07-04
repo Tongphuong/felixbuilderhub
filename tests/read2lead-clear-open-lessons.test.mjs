@@ -43,8 +43,10 @@ function createKv(records = {}) {
   };
 }
 
-function codeRecord(status) {
-  return {
+function codeRecord(status, opts = {}) {
+  const usesRemaining = opts.usesRemaining !== undefined ? opts.usesRemaining : 5;
+  const usesTotal = opts.usesTotal !== undefined ? opts.usesTotal : undefined;
+  const record = {
     student_profile: { student_name: 'Bin', age: 8, level: 'L2', child_gender: 'boy' },
     progress: {
       current_level: 'L2',
@@ -57,8 +59,12 @@ function codeRecord(status) {
       },
       review_history: [{ pack_id: 'old-pack', status: 'reviewed_pass_web_v2' }],
     },
-    uses_remaining: 5,
+    uses_remaining: usesRemaining,
   };
+  if (usesTotal !== undefined) {
+    record.uses_total = usesTotal;
+  }
+  return record;
 }
 
 test('shouldClearOpenPack matches unfinished statuses only', () => {
@@ -78,13 +84,20 @@ test('clearOpenLessonsFromKv clears locks but preserves progress:{code}', async 
 
   const result = await clearOpenLessonsFromKv(kv, {});
 
-  assert.equal(result.cleared_count, 2);
+  assert.equal(result.cleared_count, 1);
+  assert.equal(result.refunded_use_count, 0);
   assert.equal(JSON.parse(kv.store.get(CODE_A)).progress.current_pack, null);
-  assert.equal(JSON.parse(kv.store.get(CODE_B)).progress.current_pack, null);
+  // CODE_B must NOT be cleared
+  assert.notEqual(JSON.parse(kv.store.get(CODE_B)).progress.current_pack, null);
+  assert.equal(JSON.parse(kv.store.get(CODE_B)).progress.current_pack.status, 'awaiting_review');
   assert.equal(kv.store.has(`progress:${CODE_A}`), true);
   assert.equal(kv.store.has(`progress:${CODE_B}`), true);
   assert.equal(JSON.parse(kv.store.get(`progress:${CODE_A}`)).lifetime_rp, 42);
   assert.equal(kv.store.has('task:task-abc'), false);
+  // skipped entry
+  const skippedEntry = result.skipped_with_other_status.find(s => s.code === CODE_B);
+  assert.ok(skippedEntry);
+  assert.equal(skippedEntry.status, 'awaiting_review');
 });
 
 test('admin clear-open-lessons supports dry_run', async () => {
@@ -104,6 +117,80 @@ test('admin clear-open-lessons supports dry_run', async () => {
   assert.equal(body.dry_run, true);
   assert.equal(body.cleared_count, 1);
   assert.notEqual(JSON.parse(kv.store.get(CODE_A)).progress.current_pack, null);
+});
+
+test('default call does not clear awaiting_review pack', async () => {
+  const kv = createKv({ [CODE_B]: codeRecord('awaiting_review') });
+  const result = await clearOpenLessonsFromKv(kv, {});
+  assert.equal(result.cleared_count, 0);
+  assert.equal(result.refunded_use_count, 0);
+  const record = JSON.parse(kv.store.get(CODE_B));
+  assert.equal(record.progress.current_pack.status, 'awaiting_review');
+  assert.equal(record.uses_remaining, 5);
+  const skippedEntry = result.skipped_with_other_status.find(s => s.code === CODE_B);
+  assert.ok(skippedEntry);
+  assert.equal(skippedEntry.status, 'awaiting_review');
+});
+
+test('explicit awaiting_review clears and refunds luot', async () => {
+  const kv = createKv({
+    [CODE_B]: codeRecord('awaiting_review', { usesRemaining: 5, usesTotal: 10 }),
+    'task:task-abc': { status: 'pending' },
+  });
+  const result = await clearOpenLessonsFromKv(kv, { statuses: ['awaiting_review'] });
+  assert.equal(result.cleared_count, 1);
+  assert.equal(result.refunded_use_count, 1);
+  const entry = result.cleared[0];
+  assert.equal(entry.refunded_use, true);
+  const record = JSON.parse(kv.store.get(CODE_B));
+  assert.equal(record.uses_remaining, 6);
+  assert.equal(record.progress.current_pack, null);
+  assert.equal(kv.store.has('task:task-abc'), false);
+});
+
+test('explicit awaiting_review refund capped at uses_total', async () => {
+  const kv = createKv({
+    [CODE_B]: codeRecord('awaiting_review', { usesRemaining: 10, usesTotal: 10 }),
+    'task:task-abc': { status: 'pending' },
+  });
+  const result = await clearOpenLessonsFromKv(kv, { statuses: ['awaiting_review'] });
+  assert.equal(result.cleared_count, 1);
+  assert.equal(result.refunded_use_count, 1);
+  const record = JSON.parse(kv.store.get(CODE_B));
+  assert.equal(record.uses_remaining, 10);
+  assert.equal(record.progress.current_pack, null);
+});
+
+test('dryRun awaiting_review reports refund but does not write', async () => {
+  const kv = createKv({
+    [CODE_B]: codeRecord('awaiting_review', { usesRemaining: 5, usesTotal: 10 }),
+    'task:task-abc': { status: 'pending' },
+  });
+  const beforeRecord = JSON.parse(kv.store.get(CODE_B));
+  const result = await clearOpenLessonsFromKv(kv, { statuses: ['awaiting_review'], dryRun: true });
+  assert.equal(result.cleared_count, 1);
+  assert.equal(result.refunded_use_count, 1);
+  const entry = result.cleared[0];
+  assert.equal(entry.refunded_use, true);
+  const afterRecord = JSON.parse(kv.store.get(CODE_B));
+  assert.equal(afterRecord.uses_remaining, beforeRecord.uses_remaining);
+  assert.notEqual(afterRecord.progress.current_pack, null);
+  assert.equal(kv.store.has('task:task-abc'), true);
+});
+
+test('generation_in_progress clear does not refund luot', async () => {
+  const kv = createKv({
+    [CODE_A]: codeRecord('generation_in_progress'),
+    'task:task-abc': { status: 'pending' },
+  });
+  const result = await clearOpenLessonsFromKv(kv, {});
+  assert.equal(result.cleared_count, 1);
+  assert.equal(result.refunded_use_count, 0);
+  const entry = result.cleared[0];
+  assert.equal(entry.refunded_use, false);
+  const record = JSON.parse(kv.store.get(CODE_A));
+  assert.equal(record.uses_remaining, 5);
+  assert.equal(record.progress.current_pack, null);
 });
 
 test('PATCH admin code clear_current_pack nulls current_pack only', async () => {

@@ -19,7 +19,7 @@ Decision path: `Phuong -> Claude -> one worker -> Claude review -> Phuong approv
 
 ## Current task
 
-- Status: in progress
+- Status: active
 - Task ID: R2L-CLEAR-LESSONS-REFUND
 - Owner: Claude (spec) -> aider-senior (execute) -> Claude (review)
 - Lane: product (bug fix, protected "lesson completion logic" invariant)

@@ -4,11 +4,13 @@
  * Never reads or writes `progress:{ACCESS_CODE}` (rank / XP / level_progress).
  */
 
-export const DEFAULT_CLEAR_STATUSES = ['generation_in_progress', 'awaiting_review'];
+export const DEFAULT_CLEAR_STATUSES = ['generation_in_progress'];
+export const ALLOWED_CLEAR_STATUSES = ['generation_in_progress', 'awaiting_review'];
+export const REFUND_ON_CLEAR_STATUSES = ['awaiting_review'];
 
 export function normalizeClearStatuses(raw) {
   if (!Array.isArray(raw) || raw.length === 0) return [...DEFAULT_CLEAR_STATUSES];
-  const allowed = new Set(DEFAULT_CLEAR_STATUSES);
+  const allowed = new Set(ALLOWED_CLEAR_STATUSES);
   const picked = raw
     .map((s) => String(s || '').trim())
     .filter((s) => allowed.has(s));
@@ -61,11 +63,13 @@ export async function clearOpenLessonsFromKv(kv, options = {}) {
       }
 
       const taskId = currentPack.task_id || currentPack.generation_task_id || null;
+      const shouldRefund = REFUND_ON_CLEAR_STATUSES.includes(currentPack.status);
       const entry = {
         code: key.name,
         previous_status: currentPack.status,
         pack_id: currentPack.pack_id || null,
         task_id: taskId,
+        refunded_use: shouldRefund,
       };
 
       if (!dryRun) {
@@ -76,6 +80,15 @@ export async function clearOpenLessonsFromKv(kv, options = {}) {
             current_pack: null,
           },
         };
+        if (shouldRefund) {
+          const usesRemaining = Number(record.uses_remaining) || 0;
+          const usesTotal = Number(record.uses_total);
+          let newUsesRemaining = usesRemaining + 1;
+          if (Number.isFinite(usesTotal) && newUsesRemaining > usesTotal) {
+            newUsesRemaining = usesTotal;
+          }
+          updated.uses_remaining = newUsesRemaining;
+        }
         await kv.put(key.name, JSON.stringify(updated));
         if (taskId) {
           try {
@@ -97,5 +110,6 @@ export async function clearOpenLessonsFromKv(kv, options = {}) {
     cleared_count: cleared.length,
     cleared,
     skipped_with_other_status: skipped,
+    refunded_use_count: cleared.filter(e => e.refunded_use).length,
   };
 }

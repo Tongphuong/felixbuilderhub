@@ -6,28 +6,48 @@
 
 ## Status
 
-- Code change complete: in progress (dispatched to aider-senior)
-- Tests pass: pending
+- Code change complete: yes
+- Tests pass: yes (709/709, full `tests/` suite)
 - Pushed: no
 - Merged: no
 - Phuong approval: plan approved 2026-07-04; merge approval pending
 
 ## What changed
 
-Root cause found: the admin "clear stuck lessons" cleanup endpoint
-(`functions/api/_read2lead-clear-open-lessons.js`) defaults to also clearing
-`awaiting_review` packs — packs that already cost the student a lượt and
-were just waiting to be opened, not actually stuck. This silently destroyed
-already-generated packs for multiple students. Fix: narrow the default to
-only `generation_in_progress` (the real stuck-lock state), keep
-`awaiting_review` clearable only via explicit opt-in, and refund the lượt
-when that explicit path is used. See plan:
-/home/felixbuilderhub/.claude/plans/composed-exploring-galaxy.md
+Root cause: the admin "clear stuck lessons" cleanup endpoint
+(`functions/api/_read2lead-clear-open-lessons.js`) defaulted to also
+clearing `awaiting_review` packs — packs that already cost the student a
+lượt and were just waiting to be opened, not actually stuck. Any call to
+that endpoint without an explicit `statuses` filter silently destroyed
+already-generated, already-paid-for packs with no refund.
+
+Fix (implemented by aider-senior, reviewed by Claude):
+
+- `DEFAULT_CLEAR_STATUSES` narrowed to `['generation_in_progress']` only —
+  the real stuck-lock state, where no lượt has been spent yet.
+- New `ALLOWED_CLEAR_STATUSES` (unchanged set) still lets an admin
+  explicitly opt into clearing an `awaiting_review` pack on purpose.
+- New `REFUND_ON_CLEAR_STATUSES` (`['awaiting_review']`) — clearing one of
+  these now refunds `uses_remaining` by 1, capped at `uses_total`, reported
+  in both dry-run and real calls via `refunded_use` per entry and
+  `refunded_use_count` in the response.
+- `functions/api/admin/codes/clear-open-lessons.js` response message now
+  reports the refund count.
+- `tests/read2lead-clear-open-lessons.test.mjs`: corrected the one test that
+  asserted the old buggy default behavior, added 5 new cases (default skips
+  awaiting_review, explicit clear + refund, refund capped at uses_total,
+  dry-run reports without writing, generation_in_progress never refunds).
+
+Verification: `node --test tests/*.test.mjs` → 709/709 pass.
+`founder_check.py --repo felixbuilderhub --product read2lead --gate build` →
+PASS.
 
 ## Next action
 
-- aider-senior implements the 3-file fix
-- Claude reviews diff, runs node --test, runs founder_check.py --gate build
-- Report to Phuong; on approval, restore 3 known affected codes
-  (R2L-MINA-RV5Y, R2L-DANGNEMO-2UNF, R2L-HIEUENZO-3BVV) and request admin
-  access for a 72-hour scan of other affected students
+- Report diff + test results to Phuong; on her approval, push branch and
+  merge to `main` (auto-deploys).
+- After deploy: restore the 3 known affected codes (R2L-MINA-RV5Y,
+  R2L-DANGNEMO-2UNF, R2L-HIEUENZO-3BVV) by +1 `uses_remaining` each.
+- Request read access to the live admin API (the `ADMIN_PASSWORD` behind
+  `/api/admin/*`, or Phuong pulls the codes list herself) to scan the last
+  72 hours for any other students hit by this bug before it's fixed.

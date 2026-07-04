@@ -35,11 +35,13 @@ export async function onRequestPost(context) {
     onlyCodes,
   });
 
+  const refundCount = result.refunded_use_count || 0;
+  const message = dryRun
+    ? `Dry run — no KV writes performed. Would refund ${refundCount} use(s).`
+    : `Cleared open lessons. Refunded ${refundCount} use(s). progress:{code} rank/XP untouched.`;
   return json({
     ok: true,
-    message: dryRun
-      ? 'Dry run — no KV writes performed.'
-      : 'Cleared open lessons. progress:{code} rank/XP untouched.',
+    message,
     ...result,
   });
 }
