@@ -1,16 +1,18 @@
 # Checkpoint — Read2Lead
 
 - Last updated: 2026-07-04
-- Branch: fix/clear-open-lessons-refund
-- Commit: pending
+- Branch: merged to main (branch deleted)
+- Commit: 0393669
 
 ## Status
 
 - Code change complete: yes
 - Tests pass: yes (709/709, full `tests/` suite)
-- Pushed: no
-- Merged: no
-- Phuong approval: plan approved 2026-07-04; merge approval pending
+- Pushed: yes
+- Merged: yes (fast-forwarded main to 0393669)
+- Phuong approval: yes (2026-07-04) — approved merge/deploy; declined the
+  offered remediation help ("no need, I'll do it manually" / "no need for
+  the check")
 
 ## What changed
 
@@ -44,10 +46,7 @@ PASS.
 
 ## Next action
 
-- Report diff + test results to Phuong; on her approval, push branch and
-  merge to `main` (auto-deploys).
-- After deploy: restore the 3 known affected codes (R2L-MINA-RV5Y,
-  R2L-DANGNEMO-2UNF, R2L-HIEUENZO-3BVV) by +1 `uses_remaining` each.
-- Request read access to the live admin API (the `ADMIN_PASSWORD` behind
-  `/api/admin/*`, or Phuong pulls the codes list herself) to scan the last
-  72 hours for any other students hit by this bug before it's fixed.
+- None — task closed. Merged and pushed to `main` (Cloudflare Pages
+  auto-deploys). Phuong is handling remediation for the 3 known affected
+  codes and any wider check herself; no further Claude action needed on
+  this task.
