@@ -1,9 +1,9 @@
 # Control — Read2Lead
 
 - Product: Read2Lead
-- Current goal: Fix packs silently disappearing after lượt is spent (clear-open-lessons bug)
+- Current goal: Fix in-progress lesson resetting to zero after browser/tab close
 - Latest staging URL: none
-- Active workers: 0
+- Active workers: 1 (aider-senior)
 - Last updated: 2026-07-04
 
 ## Operating team
@@ -18,6 +18,34 @@
 Decision path: `Phuong -> Claude -> one worker -> Claude review -> Phuong approval`.
 
 ## Current task
+
+- Status: active
+- Task ID: R2L-LESSON-CHECKPOINT
+- Owner: Claude (spec) -> aider-senior (execute) -> Claude (review)
+- Lane: product (bug fix, protected "lesson completion logic" invariant)
+- Root cause: in-progress lesson state is 100% client-side (localStorage/
+  sessionStorage) with no server fallback, so a kid loses all progress if
+  browser storage is wiped between visits (private/incognito mode, in-app
+  WebView like Zalo's browser, OS storage eviction, device switch) even
+  though the existing background/pagehide save logic is correct.
+- Acceptance criteria: new lightweight `current_pack.web_session_checkpoint`
+  KV field written only via `functions/api/read2lead-checkpoint-save.js` on
+  existing pagehide/visibilitychange/freeze flush points (no new listeners,
+  no per-keystroke writes); read back for free via
+  `functions/api/read2lead-lesson.js`; client falls back to it when local
+  storage is empty; checkpoint stripped on pack submit (all 3 write sites
+  in submit-read2lead-lesson.js); fully isolated from uses_remaining/rank/
+  XP/lượt logic; node --test passes; no unrelated refactor.
+- Files owned: functions/api/read2lead-checkpoint-save.js (new),
+  functions/api/read2lead-lesson.js, src/pages/read2lead/lesson.astro,
+  functions/api/submit-read2lead-lesson.js,
+  tests/read2lead-checkpoint-save.test.mjs (new), plus targeted test
+  additions to existing submit/lesson-flow test files
+- Stop condition: tests green, Claude review clean, founder_check.py
+  --gate build passes, Phuong approves merge to main
+- See plan: /home/felixbuilderhub/.claude/plans/composed-exploring-galaxy.md
+
+## Previous task
 
 - Status: complete
 - Task ID: R2L-CLEAR-LESSONS-REFUND
@@ -39,7 +67,7 @@ Decision path: `Phuong -> Claude -> one worker -> Claude review -> Phuong approv
 - Remediation of already-affected students (3 known codes + wider check):
   Phuong is handling manually herself, not part of this packet.
 
-## Previous task
+## Earlier task history
 
 - Status: complete
 - Task ID: R2L-PROGRESS-SAVE

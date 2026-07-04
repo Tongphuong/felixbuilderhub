@@ -1,52 +1,37 @@
 # Checkpoint — Read2Lead
 
 - Last updated: 2026-07-04
-- Branch: merged to main (branch deleted)
-- Commit: 0393669
+- Branch: fix/lesson-session-checkpoint
+- Commit: pending
 
 ## Status
 
-- Code change complete: yes
-- Tests pass: yes (709/709, full `tests/` suite)
-- Pushed: yes
-- Merged: yes (fast-forwarded main to 0393669)
-- Phuong approval: yes (2026-07-04) — approved merge/deploy; declined the
-  offered remediation help ("no need, I'll do it manually" / "no need for
-  the check")
+- Code change complete: in progress (dispatched to aider-senior)
+- Tests pass: pending
+- Pushed: no
+- Merged: no
+- Phuong approval: plan approved 2026-07-04; merge approval pending
 
 ## What changed
 
-Root cause: the admin "clear stuck lessons" cleanup endpoint
-(`functions/api/_read2lead-clear-open-lessons.js`) defaulted to also
-clearing `awaiting_review` packs — packs that already cost the student a
-lượt and were just waiting to be opened, not actually stuck. Any call to
-that endpoint without an explicit `statuses` filter silently destroyed
-already-generated, already-paid-for packs with no refund.
+Second, separate bug: a kid mid-lesson who closes the browser/tab loses all
+in-progress progress and has to restart the whole pack. The existing
+client-side save/restore system (localStorage + sessionStorage, fixed for
+backgrounding in an earlier task) is correct but has no server-side
+fallback — so private/incognito browsing, in-app WebView browsers (e.g.
+Zalo), or storage eviction wipe everything with nothing to recover.
 
-Fix (implemented by aider-senior, reviewed by Claude):
-
-- `DEFAULT_CLEAR_STATUSES` narrowed to `['generation_in_progress']` only —
-  the real stuck-lock state, where no lượt has been spent yet.
-- New `ALLOWED_CLEAR_STATUSES` (unchanged set) still lets an admin
-  explicitly opt into clearing an `awaiting_review` pack on purpose.
-- New `REFUND_ON_CLEAR_STATUSES` (`['awaiting_review']`) — clearing one of
-  these now refunds `uses_remaining` by 1, capped at `uses_total`, reported
-  in both dry-run and real calls via `refunded_use` per entry and
-  `refunded_use_count` in the response.
-- `functions/api/admin/codes/clear-open-lessons.js` response message now
-  reports the refund count.
-- `tests/read2lead-clear-open-lessons.test.mjs`: corrected the one test that
-  asserted the old buggy default behavior, added 5 new cases (default skips
-  awaiting_review, explicit clear + refund, refund capped at uses_total,
-  dry-run reports without writing, generation_in_progress never refunds).
-
-Verification: `node --test tests/*.test.mjs` → 709/709 pass.
-`founder_check.py --repo felixbuilderhub --product read2lead --gate build` →
-PASS.
+Fix: add a small, isolated `current_pack.web_session_checkpoint` KV field,
+written only on real leave events (pagehide/visibilitychange/freeze,
+piggybacking on the existing flush points — no new listeners) via a new
+endpoint `functions/api/read2lead-checkpoint-save.js`, read back for free
+via `functions/api/read2lead-lesson.js`, used as a fallback restore source
+in `lesson.astro` when local storage is empty, and stripped on pack submit
+in `submit-read2lead-lesson.js`. Fully isolated from rank/XP/uses_remaining
+logic. See plan: /home/felixbuilderhub/.claude/plans/composed-exploring-galaxy.md
 
 ## Next action
 
-- None — task closed. Merged and pushed to `main` (Cloudflare Pages
-  auto-deploys). Phuong is handling remediation for the 3 known affected
-  codes and any wider check herself; no further Claude action needed on
-  this task.
+- aider-senior implements the fix across the 4 files + new test file
+- Claude reviews diff, runs node --test, runs founder_check.py --gate build
+- Report to Phuong; on approval, merge and deploy
