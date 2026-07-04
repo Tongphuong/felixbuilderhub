@@ -1,5 +1,6 @@
 ---
 import AdminLayout from '../../layouts/AdminLayout.astro';
+import HomeworkModal from '../../components/admin/HomeworkModal.astro';
 ---
 
 <AdminLayout
@@ -43,6 +44,7 @@ import AdminLayout from '../../layouts/AdminLayout.astro';
               <input id="class-name" class="fx-field w-full rounded-lg border border-cream-dim/30 bg-navy-900 px-3 py-2 text-xl font-bold text-cream focus:border-accent focus:outline-none" />
             </div>
             <button id="save-class-name" type="button" class="rounded-lg border border-accent/50 px-4 py-2 text-sm font-semibold text-accent transition hover:bg-accent/10">Lưu tên lớp</button>
+            <button id="assign-class-homework" type="button" class="rounded-lg border border-accent/50 px-4 py-2 text-sm font-semibold text-accent transition hover:bg-accent/10">📚 Giao bài tập</button>
           </div>
 
           <form id="add-student-form" class="mt-4 flex flex-wrap items-end gap-3">
@@ -63,6 +65,8 @@ import AdminLayout from '../../layouts/AdminLayout.astro';
       </section>
     </div>
   </section>
+
+  <HomeworkModal />
 
   <script>
     import { escapeHtml, signed, presetText } from '../../lib/admin-shared.mjs';
@@ -152,6 +156,9 @@ import AdminLayout from '../../layouts/AdminLayout.astro';
       const xpLabel = `⭐ ${state.xp_in_level ?? 0}/${state.xp_to_next_level ?? 0} XP`;
       const xpPercent = Math.max(0, Math.min(100, Number(state.xp_percent || 0)));
       const attendance = student.attendance_today;
+      const homeworkTag = student.homework
+        ? `<span class="ml-2 inline-block rounded bg-accent/10 px-2 py-0.5 text-xs text-accent">📚 có bài (${new Date(student.homework.updated_at).toLocaleDateString('vi-VN')})</span>`
+        : '';
       if (student.missing) {
         return `
           <article class="student-card rounded-2xl border border-red-500/30 bg-red-500/10 p-5" data-class-student="${escapeHtml(student.code)}">
@@ -181,9 +188,10 @@ import AdminLayout from '../../layouts/AdminLayout.astro';
               <div class="flex flex-wrap items-start justify-between gap-2">
                 <div>
                   <h3 class="truncate font-display text-3xl font-extrabold text-cream">${escapeHtml(student.student_name || student.code)}</h3>
-                  <p class="mt-1 text-sm text-cream-muted">${student.age ? `${escapeHtml(student.age)} tuổi · ` : ''}<span class="font-mono">${escapeHtml(student.code)}</span></p>
+                  <p class="mt-1 text-sm text-cream-muted">${student.age ? `${escapeHtml(student.age)} tuổi · ` : ''}<span class="font-mono">${escapeHtml(student.code)}</span>${homeworkTag}</p>
                 </div>
                 <button type="button" data-class-action="remove-student" data-code="${escapeHtml(student.code)}" class="rounded border border-red-500/30 px-2 py-1 text-xs text-red-200 transition hover:bg-red-500/10">Gỡ</button>
+                <button type="button" data-class-action="assign-homework" data-code="${escapeHtml(student.code)}" data-student-name="${escapeHtml(student.student_name || student.code)}" class="rounded border border-accent/30 px-2 py-1 text-xs text-accent transition hover:bg-accent/10">📚</button>
               </div>
               <div class="mt-4 grid grid-cols-2 gap-2 text-sm">
                 <div class="rounded-lg border border-gold/25 bg-gold/10 p-3 text-gold-light"><span class="block text-xs text-gold-light/70">🪙 Xu</span><strong class="text-xl">${Number(state.coins || 0)}</strong></div>
@@ -415,6 +423,24 @@ import AdminLayout from '../../layouts/AdminLayout.astro';
           kind: btn.dataset.kind || 'positive',
           sourceEl: btn,
         });
+        return;
+      }
+      if (action === 'assign-homework') {
+        const studentName = btn.dataset.studentName;
+        const klass = currentClass();
+        if (!klass) return;
+        const student = klass.students?.find(s => s.code === code);
+        const modal = document.getElementById('homework-modal');
+        document.getElementById('homework-class-id').value = klass.id;
+        document.getElementById('homework-code').value = code;
+        document.getElementById('homework-title').textContent = `Giao bài tập riêng cho ${studentName}`;
+        const hw = student?.homework;
+        document.getElementById('homework-sentences').value = hw?.sentences ? hw.sentences.map(s => s.text_en).join('\n') : '';
+        document.getElementById('homework-frame').value = hw?.frame?.stems ? hw.frame.stems.map(s => s.text_en).join('\n') : '';
+        document.getElementById('homework-duration').value = hw?.frame?.duration_s ?? 60;
+        document.getElementById('homework-note').value = hw?.note_vi || '';
+        modal.showModal();
+        return;
       }
     });
 
@@ -462,6 +488,62 @@ import AdminLayout from '../../layouts/AdminLayout.astro';
       const isOn = document.body.dataset.presentation === 'true';
       presentationToggle.textContent = isOn ? '🔙 Thoát Presentation' : '🖥️ Presentation';
       presentationToggle.classList.toggle('bg-accent/20', isOn);
+    });
+
+    // Class-level homework button
+    document.getElementById('assign-class-homework')?.addEventListener('click', () => {
+      const klass = currentClass();
+      if (!klass) return;
+      const modal = document.getElementById('homework-modal');
+      document.getElementById('homework-class-id').value = klass.id;
+      document.getElementById('homework-code').value = '';
+      document.getElementById('homework-title').textContent = 'Giao bài tập cho cả lớp';
+      document.getElementById('homework-sentences').value = '';
+      document.getElementById('homework-frame').value = '';
+      document.getElementById('homework-duration').value = '60';
+      document.getElementById('homework-note').value = '';
+      modal.showModal();
+    });
+
+    // Homework form submit
+    document.getElementById('homework-form')?.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const classId = document.getElementById('homework-class-id').value;
+      const code = document.getElementById('homework-code').value;
+      const sentencesText = document.getElementById('homework-sentences').value;
+      const frameText = document.getElementById('homework-frame').value;
+      const frameDurationS = Number(document.getElementById('homework-duration').value) || 60;
+      const noteVi = document.getElementById('homework-note').value;
+      const body = {
+        sentences_text: sentencesText,
+        frame_text: frameText,
+        frame_duration_s: frameDurationS,
+        note_vi: noteVi,
+      };
+      if (code) {
+        body.codes = [code];
+      }
+      const submitBtn = event.target.querySelector('button[type="submit"]');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Đang lưu...';
+      try {
+        const res = await fetch(`/api/admin/classes/${encodeURIComponent(classId)}/homework`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body),
+        });
+        const result = await res.json();
+        if (!res.ok || !result.ok) {
+          throw new Error(result.message || result.error || 'Không lưu được bài tập');
+        }
+        document.getElementById('homework-modal').close();
+        await loadClasses();
+      } catch (err) {
+        alert('Lỗi giao bài tập: ' + err.message);
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Lưu bài tập';
+      }
     });
 
     loadClasses();

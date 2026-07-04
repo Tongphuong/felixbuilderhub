@@ -195,6 +195,7 @@ export async function enrichClass(env, klass) {
       attendance_today: klass.attendance_by_date?.[today]?.[code] || null,
       class_attendance_streak: attendanceStreak(klass.attendance_by_date, code),
       read2lead_state: publicState,
+      homework: codeData.homework || null,
     });
   }
   return {
