@@ -3,7 +3,7 @@
 - Product: Read2Lead
 - Current goal: Fix in-progress lesson resetting to zero after browser/tab close
 - Latest staging URL: none
-- Active workers: 1 (aider-senior)
+- Active workers: 0
 - Last updated: 2026-07-04
 
 ## Operating team
@@ -19,7 +19,7 @@ Decision path: `Phuong -> Claude -> one worker -> Claude review -> Phuong approv
 
 ## Current task
 
-- Status: active
+- Status: complete
 - Task ID: R2L-LESSON-CHECKPOINT
 - Owner: Claude (spec) -> aider-senior (execute) -> Claude (review)
 - Lane: product (bug fix, protected "lesson completion logic" invariant)

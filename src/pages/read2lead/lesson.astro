@@ -4432,6 +4432,39 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
     };
   }
 
+  function sendCheckpointToServer() {
+    if (!state.accessCode || !state.packId || !state.lesson) return;
+    let payload;
+    try {
+      payload = JSON.stringify({
+        access_code: state.accessCode,
+        pack_id: state.packId,
+        snapshot: lessonSessionSnapshot(),
+      });
+    } catch {
+      return;
+    }
+    try {
+      if (navigator.sendBeacon) {
+        const blob = new Blob([payload], { type: 'application/json' });
+        navigator.sendBeacon('/api/read2lead-checkpoint-save', blob);
+        return;
+      }
+    } catch {
+      // fall through to fetch
+    }
+    try {
+      fetch('/api/read2lead-checkpoint-save', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: payload,
+        keepalive: true,
+      }).catch(() => {});
+    } catch {
+      // best-effort only -- never block the unload path
+    }
+  }
+
   function saveLessonSession() {
     if (!state.accessCode || !state.packId || !state.lesson) return;
     const key = lessonSessionKey(state.accessCode, state.packId);
@@ -4482,13 +4515,32 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
     const durable = parseLessonSession(durableRaw);
     if (durable) return durable;
     const session = parseLessonSession(sessionRaw);
-    if (!session) return null;
-    try {
-      localStorage.setItem(key, sessionRaw);
-    } catch {
-      // Best-effort migration; the session snapshot can still be restored.
+    if (session) {
+      try {
+        localStorage.setItem(key, sessionRaw);
+      } catch {
+        // Best-effort migration; the session snapshot can still be restored.
+      }
+      return session;
     }
-    return session;
+
+    // Both browser storages are empty (private/incognito mode, in-app
+    // WebView storage wipe, OS eviction, new device/browser) -- fall back
+    // to the server-side checkpoint that rode along on this page's initial
+    // lesson fetch.
+    const serverCheckpoint = state.lesson?.web_session_checkpoint?.snapshot;
+    if (!serverCheckpoint) return null;
+    let serialized;
+    try {
+      serialized = JSON.stringify(serverCheckpoint);
+    } catch {
+      return null;
+    }
+    const parsedServer = parseLessonSession(serialized);
+    if (!parsedServer) return null;
+    try { localStorage.setItem(key, serialized); } catch {}
+    try { sessionStorage.setItem(key, serialized); } catch {}
+    return parsedServer;
   }
 
   function clearLessonSession() {
@@ -4678,6 +4730,7 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
       _r2lSaveSessionTimer = null;
     }
     saveLessonSession();
+    sendCheckpointToServer();
   }
 
   window.addEventListener('pagehide', _r2lFlushAndSave);

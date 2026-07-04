@@ -81,3 +81,133 @@ test('second rapid submit after a passing attempt returns already_completed with
   assert.equal(payload.already_completed, true);
   assert.equal(saveCalls, 0, 'must not persist a second award');
 });
+
+test('passing submission removes web_session_checkpoint from the stored pack', async () => {
+  let savedRecord = null;
+  const codeData = {
+    student_profile: { student_name: 'Bin', age: 8, level: 'L2', child_gender: 'boy' },
+    progress: {
+      current_level: 'L2',
+      packs_created: 2,
+      current_pack: {
+        pack_id: 'pack-save-2',
+        schema_version: 2,
+        status: 'awaiting_review',
+        story: { title: 'Test Story', paragraphs_en: ['Once upon a time.'] },
+        activities: [
+          { type: 'listening_fill_blank', items: [{ blank_word: 'time', sentence: 'Once upon a time.' }] },
+          { type: 'listen_and_order', items: [{ tokens: ['Once', 'upon', 'a', 'time'] }] },
+          { type: 'reading_comprehension', questions: [{ correct_index: 0, options_en: ['A', 'B', 'C'] }] },
+          { type: 'listen_and_speak', items: [{ text_en: 'Once upon a time.' }] },
+        ],
+        web_session_checkpoint: {
+          saved_at: '2026-07-01T00:00:00.000Z',
+          snapshot: { schema_version: 2, activity_index: 1, completed_types: [] },
+        },
+        web_attempts: [],
+      },
+      review_history: [],
+    },
+    uses_remaining: 5,
+  };
+  const env = {
+    READ2LEAD_CODES: {
+      async get() { return codeData; },
+      async put(key, value) { savedRecord = JSON.parse(value); },
+    },
+  };
+
+  const response = await onRequestPost({
+    request: new Request('https://example.com/api/submit-read2lead-lesson', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        access_code: 'R2L-TEST-IDM',
+        pack_id: 'pack-save-2',
+        answers: {
+          activity_results: [
+            { type: 'listening_fill_blank', attempted: true, correct_count: 2, total_count: 2, wrong_count: 0, score_percent: 100 },
+            { type: 'listen_and_order', attempted: true, correct_count: 2, total_count: 2, wrong_count: 0, score_percent: 100 },
+            { type: 'reading_comprehension', attempted: true, correct_count: 2, total_count: 2, wrong_count: 0, score_percent: 100 },
+            { type: 'listen_and_speak', attempted: true, correct_count: 2, total_count: 2, wrong_count: 0, score_percent: 100 },
+            { type: 'read_aloud', attempted: true, correct_count: 2, total_count: 2, wrong_count: 0, score_percent: 100 },
+          ],
+        },
+      }),
+    }),
+    env,
+  });
+
+  const payload = await response.json();
+  assert.equal(payload.ok, true);
+  assert.equal(payload.passed, true);
+  assert.ok(savedRecord);
+  const finalPack = savedRecord.progress.current_pack;
+  assert.equal(Object.hasOwn(finalPack, 'web_session_checkpoint'), false);
+  assert.equal(finalPack.status, 'reviewed_pass_web_v2');
+});
+
+test('failing submission removes web_session_checkpoint from the stored pack', async () => {
+  let savedRecord = null;
+  const codeData = {
+    student_profile: { student_name: 'Bin', age: 8, level: 'L2', child_gender: 'boy' },
+    progress: {
+      current_level: 'L2',
+      packs_created: 2,
+      current_pack: {
+        pack_id: 'pack-save-3',
+        schema_version: 2,
+        status: 'awaiting_review',
+        story: { title: 'Test Story', paragraphs_en: ['Once upon a time.'] },
+        activities: [
+          { type: 'listening_fill_blank', items: [{ blank_word: 'time', sentence: 'Once upon a time.' }] },
+          { type: 'listen_and_order', items: [{ tokens: ['Once', 'upon', 'a', 'time'] }] },
+          { type: 'reading_comprehension', questions: [{ correct_index: 0, options_en: ['A', 'B', 'C'] }] },
+          { type: 'listen_and_speak', items: [{ text_en: 'Once upon a time.' }] },
+        ],
+        web_session_checkpoint: {
+          saved_at: '2026-07-01T00:00:00.000Z',
+          snapshot: { schema_version: 2, activity_index: 0, completed_types: [] },
+        },
+        web_attempts: [],
+      },
+      review_history: [],
+    },
+    uses_remaining: 5,
+  };
+  const env = {
+    READ2LEAD_CODES: {
+      async get() { return codeData; },
+      async put(key, value) { savedRecord = JSON.parse(value); },
+    },
+  };
+
+  const response = await onRequestPost({
+    request: new Request('https://example.com/api/submit-read2lead-lesson', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        access_code: 'R2L-TEST-IDM',
+        pack_id: 'pack-save-3',
+        answers: {
+          activity_results: [
+            { type: 'listening_fill_blank', attempted: true, correct_count: 0, total_count: 2, wrong_count: 2, score_percent: 0 },
+            { type: 'listen_and_order', attempted: true, correct_count: 0, total_count: 2, wrong_count: 2, score_percent: 0 },
+            { type: 'reading_comprehension', attempted: true, correct_count: 0, total_count: 2, wrong_count: 2, score_percent: 0 },
+            { type: 'listen_and_speak', attempted: true, correct_count: 0, total_count: 2, wrong_count: 2, score_percent: 0 },
+          ],
+        },
+      }),
+    }),
+    env,
+  });
+
+  const payload = await response.json();
+  assert.equal(payload.ok, true);
+  assert.equal(payload.passed, false);
+  assert.ok(savedRecord);
+  const finalPack = savedRecord.progress.current_pack;
+  assert.equal(Object.hasOwn(finalPack, 'web_session_checkpoint'), false);
+  // status should NOT be 'reviewed_pass_web_v2' (retry path)
+  assert.equal(finalPack.status, 'awaiting_review');
+});

@@ -22,6 +22,11 @@ import {
   saveProgressState,
 } from './_read2lead-v2-state.js';
 
+function withoutSessionCheckpoint(pack) {
+  const { web_session_checkpoint, ...rest } = pack || {};
+  return rest;
+}
+
 export async function onRequestPost(context) {
   const { request, env } = context;
   if (!env.READ2LEAD_CODES) {
@@ -333,7 +338,7 @@ async function submitV2Lesson({
     });
     const savedProgressState = await saveProgressState(env, accessCode, penaltyResult.state);
     const updatedPack = {
-      ...currentPack,
+      ...withoutSessionCheckpoint(currentPack),
       web_attempts: webAttempts,
       web_lesson_summary: attempt,
     };
@@ -452,7 +457,7 @@ async function submitV2Lesson({
   const rankUp = computeRankUp(rankLadderBefore, rankLadderAfter);
 
   const reviewedPack = {
-    ...currentPack,
+    ...withoutSessionCheckpoint(currentPack),
     status: 'reviewed_pass_web_v2',
     reviewed_at: submittedAt,
     web_attempts: webAttempts,
@@ -590,7 +595,7 @@ async function finalizeWithoutReward({
   const progressState = await loadProgressState(env, accessCode, codeData);
   const rewardsEarned = { coins: 0, xp: 0 };
   const reviewedPack = {
-    ...currentPack,
+    ...withoutSessionCheckpoint(currentPack),
     status: 'reviewed_pass_web_v2',
     reviewed_at: submittedAt,
     web_attempts: webAttempts,

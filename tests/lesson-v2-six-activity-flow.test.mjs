@@ -194,3 +194,15 @@ test('flag-off path renders V2.1 maintenance screen for schema_version "2.1" pac
   assert.match(lessonPage, /'2\.1'/);
   assert.match(lessonPage, /v21-maintenance/);
 });
+
+test('lesson page contains server checkpoint backup logic', () => {
+  assert.match(lessonPage, /function sendCheckpointToServer/);
+  assert.match(lessonPage, /read2lead-checkpoint-save/);
+  assert.match(lessonPage, /navigator\.sendBeacon/);
+  assert.match(lessonPage, /keepalive: true/);
+  assert.match(lessonPage, /web_session_checkpoint/);
+  const pagehideMatches = (lessonPage.match(/addEventListener\('pagehide'/g) || []).length;
+  assert.equal(pagehideMatches, 1);
+  assert.match(lessonPage, /addEventListener\('visibilitychange'/);
+  assert.match(lessonPage, /addEventListener\('freeze'/);
+});

@@ -1,13 +1,13 @@
 # Checkpoint — Read2Lead
 
 - Last updated: 2026-07-04
-- Branch: fix/lesson-session-checkpoint
+- Branch: fix/lesson-session-checkpoint (not yet merged)
 - Commit: pending
 
 ## Status
 
-- Code change complete: in progress (dispatched to aider-senior)
-- Tests pass: pending
+- Code change complete: yes
+- Tests pass: yes (722/722, full `tests/*.test.mjs` suite)
 - Pushed: no
 - Merged: no
 - Phuong approval: plan approved 2026-07-04; merge approval pending
@@ -17,21 +17,46 @@
 Second, separate bug: a kid mid-lesson who closes the browser/tab loses all
 in-progress progress and has to restart the whole pack. The existing
 client-side save/restore system (localStorage + sessionStorage, fixed for
-backgrounding in an earlier task) is correct but has no server-side
+backgrounding in an earlier task) is correct but had no server-side
 fallback — so private/incognito browsing, in-app WebView browsers (e.g.
 Zalo), or storage eviction wipe everything with nothing to recover.
 
-Fix: add a small, isolated `current_pack.web_session_checkpoint` KV field,
-written only on real leave events (pagehide/visibilitychange/freeze,
-piggybacking on the existing flush points — no new listeners) via a new
-endpoint `functions/api/read2lead-checkpoint-save.js`, read back for free
-via `functions/api/read2lead-lesson.js`, used as a fallback restore source
-in `lesson.astro` when local storage is empty, and stripped on pack submit
-in `submit-read2lead-lesson.js`. Fully isolated from rank/XP/uses_remaining
-logic. See plan: /home/felixbuilderhub/.claude/plans/composed-exploring-galaxy.md
+Fix (implemented by aider-senior, reviewed by Claude):
+
+- New `functions/api/read2lead-checkpoint-save.js` endpoint writes a small
+  `current_pack.web_session_checkpoint` field, only when `pack_id` matches
+  and `status === 'awaiting_review'` (never on a stuck generation lock or
+  an already-completed pack) — full spread-preserving read-modify-write,
+  fully isolated from `uses_remaining`/rank/XP.
+- `lesson.astro`: new `sendCheckpointToServer()` fires on the same existing
+  `pagehide`/`visibilitychange`/`freeze` flush points (no new listeners,
+  no per-keystroke writes) via `sendBeacon`/`fetch(keepalive)`.
+  `loadLessonSession()` gained a third fallback tier: when both
+  `localStorage` and `sessionStorage` are empty, restore from the server
+  checkpoint that rides along on the lesson's existing initial GET.
+- `functions/api/read2lead-lesson.js`: `buildV2LessonPayload()` now returns
+  `web_session_checkpoint` alongside `status` — zero extra round trips.
+- `functions/api/submit-read2lead-lesson.js`: all 3 places that spread
+  `...currentPack` on submit now strip the checkpoint via a new
+  `withoutSessionCheckpoint()` helper, so it never lingers past the attempt
+  it was saved for.
+- New `tests/read2lead-checkpoint-save.test.mjs` (10 cases), 2 new cases in
+  `tests/read2lead-submit-idempotency.test.mjs`, 1 new case in
+  `tests/lesson-v2-six-activity-flow.test.mjs`.
+
+Claude review found one test-fixture bug (unrelated to the fix itself): the
+"passing submission" test only submitted 4 of the 5 activity types the real
+scoring logic expects (`ensureSixActivities` auto-adds a `read_aloud`
+activity when missing), so `passed` came back `false`. Fixed by adding a
+`read_aloud` result to that test's fixture. Also added the standard
+`config_error` guard (missing KV binding) to the new endpoint for
+consistency with every sibling endpoint — aider had omitted it.
+
+Verification: `node --test tests/*.test.mjs` → 722/722 pass.
+`founder_check.py --repo felixbuilderhub --product read2lead --gate build`
+→ PASS.
 
 ## Next action
 
-- aider-senior implements the fix across the 4 files + new test file
-- Claude reviews diff, runs node --test, runs founder_check.py --gate build
-- Report to Phuong; on approval, merge and deploy
+- Report diff + test results to Phuong; on her approval, merge and push to
+  `main` (auto-deploys), same pattern as the previous fix.

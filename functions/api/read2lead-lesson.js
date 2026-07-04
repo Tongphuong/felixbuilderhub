@@ -167,6 +167,7 @@ export function buildV2LessonPayload({ accessCode, codeData, pack, v2Pack, env }
     next_suggestion_vi: v2Pack.next_suggestion_vi || '',
     guided_listening: v2Pack.guided_listening || pack.guided_listening || [],
     status: pack.status,
+    web_session_checkpoint: pack.web_session_checkpoint || null,
   };
 }
 
