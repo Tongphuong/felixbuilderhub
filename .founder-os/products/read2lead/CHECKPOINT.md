@@ -1,21 +1,33 @@
 # Checkpoint — Read2Lead
 
-- Last updated: 2026-07-03
-- Branch: fix/lesson-progress-visibility
+- Last updated: 2026-07-04
+- Branch: fix/clear-open-lessons-refund
 - Commit: pending
 
 ## Status
 
-- Code change complete: yes
-- Tests pass: yes (704/704)
-- Pushed: yes
-- Merged: yes (03046c3)
-- Phuong approval: yes (2026-07-03)
+- Code change complete: in progress (dispatched to aider-senior)
+- Tests pass: pending
+- Pushed: no
+- Merged: no
+- Phuong approval: plan approved 2026-07-04; merge approval pending
 
 ## What changed
 
-Added `visibilitychange` and `freeze` event listeners next to the existing `pagehide` listener in lesson.astro. All three now flush the debounce timer before saving. This ensures progress is saved when kids switch apps or receive phone calls on iPad/iPhone.
+Root cause found: the admin "clear stuck lessons" cleanup endpoint
+(`functions/api/_read2lead-clear-open-lessons.js`) defaults to also clearing
+`awaiting_review` packs — packs that already cost the student a lượt and
+were just waiting to be opened, not actually stuck. This silently destroyed
+already-generated packs for multiple students. Fix: narrow the default to
+only `generation_in_progress` (the real stuck-lock state), keep
+`awaiting_review` clearable only via explicit opt-in, and refund the lượt
+when that explicit path is used. See plan:
+/home/felixbuilderhub/.claude/plans/composed-exploring-galaxy.md
 
 ## Next action
 
-- Phuong approves → commit, push, and merge to main
+- aider-senior implements the 3-file fix
+- Claude reviews diff, runs node --test, runs founder_check.py --gate build
+- Report to Phuong; on approval, restore 3 known affected codes
+  (R2L-MINA-RV5Y, R2L-DANGNEMO-2UNF, R2L-HIEUENZO-3BVV) and request admin
+  access for a 72-hour scan of other affected students

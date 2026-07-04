@@ -1,10 +1,10 @@
 # Control — Read2Lead
 
 - Product: Read2Lead
-- Current goal: Fix lesson progress loss on mobile app interruption
+- Current goal: Fix packs silently disappearing after lượt is spent (clear-open-lessons bug)
 - Latest staging URL: none
-- Active workers: 0
-- Last updated: 2026-07-03
+- Active workers: 1 (aider-senior)
+- Last updated: 2026-07-04
 
 ## Operating team
 
@@ -18,6 +18,29 @@
 Decision path: `Phuong -> Claude -> one worker -> Claude review -> Phuong approval`.
 
 ## Current task
+
+- Status: in progress
+- Task ID: R2L-CLEAR-LESSONS-REFUND
+- Owner: Claude (spec) -> aider-senior (execute) -> Claude (review)
+- Lane: product (bug fix, protected "lesson completion logic" invariant)
+- Root cause: `DEFAULT_CLEAR_STATUSES` in `functions/api/_read2lead-clear-open-lessons.js`
+  includes `awaiting_review`, so the admin cleanup endpoint wipes freshly
+  generated (lượt-already-spent) packs by default, not just stuck locks.
+- Acceptance criteria: default clear only touches `generation_in_progress`;
+  explicit clear of `awaiting_review` refunds `uses_remaining` (capped at
+  `uses_total`); admin response reports refund count; node --test passes
+  (existing buggy-behavior test corrected, new cases added); no unrelated
+  refactor.
+- Files owned: functions/api/_read2lead-clear-open-lessons.js,
+  functions/api/admin/codes/clear-open-lessons.js,
+  tests/read2lead-clear-open-lessons.test.mjs
+- Stop condition: tests green, Claude 5-lens review clean,
+  founder_check.py --gate build passes, Phuong approves merge to main
+- Follow-up (not in this packet): restore 3 known affected codes
+  (R2L-MINA-RV5Y, R2L-DANGNEMO-2UNF, R2L-HIEUENZO-3BVV) and scan last 72h
+  for other affected students once fix is deployed.
+
+## Previous task
 
 - Status: complete
 - Task ID: R2L-PROGRESS-SAVE
