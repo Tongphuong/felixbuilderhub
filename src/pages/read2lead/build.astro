@@ -135,13 +135,14 @@ const INITIAL_PROGRESS = ((0 + 1) / 4) * 100;
         ))}
       </ol>
 
-      <Card variant="raised" class="mt-8 text-center">
-        <h2 class="font-display r2l-result-title">Chưa tạo được bài học</h2>
+      <Card variant="raised" id="error-card" class="mt-8 text-center">
+        <h2 id="error-heading" class="font-display r2l-result-title">Chưa tạo được bài học</h2>
         <p class="r2l-result-text" id="error-message" aria-live="polite" role="alert"></p>
         <div class="r2l-result-actions">
+          <a id="resume-link" class="fx-btn fx-btn--primary fx-btn--lg" href="#" style="display:none">Đọc tiếp bài cũ 📖</a>
           <Button variant="primary" size="lg" id="retry">Thử lại</Button>
         </div>
-        <p class="r2l-gen-note">Nếu vẫn lỗi, anh chị nhắn Zalo Felix để được hỗ trợ.</p>
+        <p id="error-note" class="r2l-gen-note">Nếu vẫn lỗi, anh chị nhắn Zalo Felix để được hỗ trợ.</p>
       </Card>
     </section>
 

@@ -71,14 +71,20 @@ export async function onRequestPost(context) {
   if (profileError) return profileError;
   const requireReviewBeforeNextPack = shouldRequireReviewBeforeNextPack(codeData);
   if (currentPackBlocksGeneration(progress.current_pack, requireReviewBeforeNextPack)) {
+    const isGenerating = progress.current_pack.status === 'generation_in_progress';
+    const errorCode = isGenerating ? 'generation_in_progress' : 'previous_pack_needs_review';
+    const message = isGenerating
+      ? 'Felixar đang tạo bài cho con. Vui lòng đợi thêm một chút, đừng bấm tạo lại.'
+      : 'Bài của con sắp xong rồi! Con cần hoàn thành bài cũ trước khi mở bài mới nhé!';
+    const lessonLink = isGenerating
+      ? null
+      : `/read2lead/lesson?code=${encodeURIComponent(accessCode)}&pack_id=${encodeURIComponent(progress.current_pack.pack_id)}`;
     return json(
       {
         ok: false,
-        error: progress.current_pack.status === 'generation_in_progress' ? 'generation_in_progress' : 'previous_pack_needs_review',
-        message:
-          progress.current_pack.status === 'generation_in_progress'
-            ? 'Felixar đang tạo bài cho con. Vui lòng đợi thêm một chút, đừng bấm tạo lại.'
-            : 'Con cần hoàn thành bài đang mở trên web trước khi tạo bài mới. Mở bài học, làm xong 5 nhiệm vụ rồi bấm lưu chiến công.',
+        error: errorCode,
+        message,
+        ...(lessonLink ? { lesson_link: lessonLink } : {}),
         review_link: `/ho-so?code=${encodeURIComponent(accessCode)}`,
         current_pack: publicPack(progress.current_pack),
         progress: publicProgress(progress),
