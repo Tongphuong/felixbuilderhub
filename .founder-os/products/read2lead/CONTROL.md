@@ -19,7 +19,7 @@ Decision path: `Phuong -> Claude -> one worker -> Claude review -> Phuong approv
 
 ## Current task
 
-- Status: active
+- Status: complete
 - Task ID: R2L-BOT-STATS-MANUAL
 - Owner: Claude (spec + execute + review)
 - Lane: admin tooling only (internal `/admin/codes` page; no kid/parent-facing
@@ -43,9 +43,9 @@ Decision path: `Phuong -> Claude -> one worker -> Claude review -> Phuong approv
   existing "Sync bot (Pilot + Ong)" button; no unrelated refactor.
 - Files owned: src/pages/admin/codes.astro,
   tests/admin-set-bot-stats.test.mjs (new)
-- Stop condition: tests green, founder_check.py --gate build PASS, Phuong
-  approves merge to main — she then creates/tunes bot accounts herself via
-  the new control.
+- Stop condition: tests green (727/727), founder_check.py --gate build PASS,
+  Phuong approved merge to main (2026-07-04) — done. She now creates/tunes
+  bot accounts herself via the new control.
 
 ## Previous task
 
