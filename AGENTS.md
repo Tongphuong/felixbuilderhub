@@ -28,7 +28,7 @@
 5. **Backend contract:** the pack JSON shape the hub reads from backend. Do not rename fields the lesson renderer depends on.
 
 Touching any of these requires a Claude-reviewed written spec and Phuong's
-explicit approval. Neither Codex nor Cline may expand into these files casually.
+explicit approval. Aider workers may not expand into these files.
 
 ---
 
@@ -38,11 +38,11 @@ explicit approval. Neither Codex nor Cline may expand into these files casually.
 |---|---|---|
 | `src/pages/read2lead/lesson.astro` | Approved spec owner only | Protected completion logic |
 | `public/scripts/r2l-*.js` | Approved spec owner only | Protected mic/recorder flow |
-| `src/pages/` (other pages) | Claude-assigned Codex or Cline | Standard frontend work |
-| `src/components/` | Claude-assigned Codex or Cline | UI components |
-| `src/styles/` | Claude-assigned Codex or Cline | CSS |
-| `functions/` | Claude-assigned Codex or Cline | CF Worker API endpoints |
-| `public/assets/` | Claude-assigned Codex or Cline | Static assets |
+| `src/pages/` (other pages) | Claude-assigned Aider worker | Standard frontend work |
+| `src/components/` | Claude-assigned Aider worker | UI components |
+| `src/styles/` | Claude-assigned Aider worker | CSS |
+| `functions/` | Claude-assigned Aider worker | CF Worker API endpoints |
+| `public/assets/` | Claude-assigned Aider worker | Static assets |
 
 The active spec or product `CONTROL.md` must name one owner and exact files. A
 zone being eligible for both workers never permits simultaneous ownership.
