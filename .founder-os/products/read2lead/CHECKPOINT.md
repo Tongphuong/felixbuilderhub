@@ -1,16 +1,16 @@
 # Checkpoint — Read2Lead
 
 - Last updated: 2026-07-04
-- Branch: fix/lesson-session-checkpoint (not yet merged)
-- Commit: pending
+- Branch: merged to main (branch deleted)
+- Commit: 18ebf75
 
 ## Status
 
 - Code change complete: yes
 - Tests pass: yes (722/722, full `tests/*.test.mjs` suite)
-- Pushed: no
-- Merged: no
-- Phuong approval: plan approved 2026-07-04; merge approval pending
+- Pushed: yes
+- Merged: yes (fast-forwarded main to 18ebf75)
+- Phuong approval: yes (2026-07-04) — "pushed and merged"
 
 ## What changed
 
@@ -58,5 +58,7 @@ Verification: `node --test tests/*.test.mjs` → 722/722 pass.
 
 ## Next action
 
-- Report diff + test results to Phuong; on her approval, merge and push to
-  `main` (auto-deploys), same pattern as the previous fix.
+- None — task closed. Merged and pushed to `main` (Cloudflare Pages
+  auto-deploys). Suggest a real-world spot-check when possible: clear
+  local/session storage mid-lesson (or use a private window) and confirm
+  progress resumes from the server checkpoint instead of restarting.
