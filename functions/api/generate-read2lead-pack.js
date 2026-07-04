@@ -75,7 +75,7 @@ export async function onRequestPost(context) {
     const errorCode = isGenerating ? 'generation_in_progress' : 'previous_pack_needs_review';
     const message = isGenerating
       ? 'Felixar đang tạo bài cho con. Vui lòng đợi thêm một chút, đừng bấm tạo lại.'
-      : 'Bài đọc trước của con sắp xong rồi! Con cần hoàn thành bài đang mở trên web, làm nốt 5 nhiệm vụ rồi bấm lưu chiến công là mở khóa được bài mới ngay 🌟';
+      : 'Bài của con sắp xong rồi! Con cần hoàn thành bài cũ trước khi mở bài mới nhé!';
     const lessonLink = isGenerating
       ? null
       : `/read2lead/lesson?code=${encodeURIComponent(accessCode)}&pack_id=${encodeURIComponent(progress.current_pack.pack_id)}`;
