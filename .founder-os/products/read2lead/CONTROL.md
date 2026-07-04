@@ -1,7 +1,7 @@
 # Control — Read2Lead
 
 - Product: Read2Lead
-- Current goal: Make the "finish your old pack first" block feel encouraging and give kids a one-tap button straight into the unfinished pack
+- Current goal: Give kids a nearby, beatable rival on the ranking board instead of only Gold-tier bots that are out of reach for most of them
 - Latest staging URL: none
 - Active workers: 0
 - Last updated: 2026-07-04
@@ -18,6 +18,36 @@
 Decision path: `Phuong -> Claude -> one worker -> Claude review -> Phuong approval`.
 
 ## Current task
+
+- Status: active
+- Task ID: R2L-BOT-STATS-MANUAL
+- Owner: Claude (spec + execute + review)
+- Lane: admin tooling only (internal `/admin/codes` page; no kid/parent-facing
+  surface, so the design-first mock rule doesn't apply)
+- Problem: Phuong reported "no motivation for kids in the ranking." The
+  Pilot/Ong bot-competitor system already exists (shipped commit 2ea625b) and
+  is live in production, but both bots sit at Gold tier (39 and 19 completed
+  packs) while 7 of 13 real kids have 0 completed packs — the bots are
+  unreachable long-term targets, not a near-term rival for most kids. Phuong
+  wants bots at "ALL ranks" but wants to set the exact rank/packs/coins
+  herself rather than have Claude hardcode more preset numbers.
+- Acceptance criteria: a new inline "Set bot stats" control appears in
+  `src/pages/admin/codes.astro` for any code row where `is_test` or `is_bot`
+  is true (rank_label_vi text input, completed_packs number input, coins
+  number input, "Áp dụng" button with a confirm() guard, matching the
+  existing `set-level` row-control pattern); it POSTs to the already-existing
+  `/api/admin/codes/:code/set-bot-stats` endpoint (no backend changes) and
+  refreshes the list on success; `tests/admin-set-bot-stats.test.mjs` covers
+  the endpoint's reject/accept paths; `node --test tests/*.test.mjs` passes;
+  no changes to `LEADERBOARD_BOT_PRESETS`, `apply-bot-presets.js`, or the
+  existing "Sync bot (Pilot + Ong)" button; no unrelated refactor.
+- Files owned: src/pages/admin/codes.astro,
+  tests/admin-set-bot-stats.test.mjs (new)
+- Stop condition: tests green, founder_check.py --gate build PASS, Phuong
+  approves merge to main — she then creates/tunes bot accounts herself via
+  the new control.
+
+## Previous task
 
 - Status: complete
 - Task ID: R2L-PACK-BLOCK-CTA
@@ -48,7 +78,7 @@ Decision path: `Phuong -> Claude -> one worker -> Claude review -> Phuong approv
   typing), founder_check.py --gate build PASS, Phuong approved merge to
   main (2026-07-04) — done.
 
-## Previous task
+## Earlier task history
 
 - Status: complete
 - Task ID: R2L-LESSON-CHECKPOINT
@@ -75,8 +105,6 @@ Decision path: `Phuong -> Claude -> one worker -> Claude review -> Phuong approv
 - Stop condition: tests green, Claude review clean, founder_check.py
   --gate build passes, Phuong approves merge to main
 - See plan: /home/felixbuilderhub/.claude/plans/composed-exploring-galaxy.md
-
-## Earlier task history
 
 - Status: complete
 - Task ID: R2L-CLEAR-LESSONS-REFUND
