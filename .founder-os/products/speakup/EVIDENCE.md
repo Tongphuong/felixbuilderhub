@@ -1,7 +1,8 @@
 # Evidence — SpeakUp
 
 - Decision: prototype
-- Last reviewed: 2026-07-03
+- Last reviewed: 2026-07-04
+- 2026-07-04 update: V0 scope widened to 20 students and two modes (homework practice + time-restricted free talking), per Phuong's direct decision. See PRODUCT.md and IDEAS.md for detail. "Prototype" decision unchanged for now — revisit once the architecture roadmap (Fable 5) comes back.
 
 ## User reports
 
@@ -26,7 +27,7 @@
 
 ## Pilot target
 
-- Onboard all ten coaching children
+- Onboard up to 20 pilot students
 - Collect at least 100 completed sessions before public release
 - Compare baseline and final recordings for the same task
 - Track session start, completion, time spoken, exercise, return use, and feedback viewed

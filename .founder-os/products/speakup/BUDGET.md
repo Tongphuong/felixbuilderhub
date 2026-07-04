@@ -1,21 +1,26 @@
 # Budget — SpeakUp
 
 - Month: 2026-07
-- Total monthly limit: USD 80
+- Monthly limit: USD 80
+- Spent: USD 0
 - Warning threshold: USD 60
 - Stop-new-experiments threshold: USD 70
-- Active agent ceiling: USD 57
-- Product/hosting room: USD 23
+- Active agent ceiling: USD 31 (see note below — Codex/Cline retired, figure needs Phuong's confirmation)
+- Product/hosting room: USD 49
 
 ## Active agent team
+
+**Note (2026-07-04): this table still lists Codex and Cline, which are retired
+org-wide and replaced by Aider Senior/Junior. Figures below are carried over
+unconfirmed — Phuong should confirm actual Aider spend before this is relied
+on for a real budget gate.**
 
 | Provider | Role | Billing type | Monthly ceiling | Verification |
 |---|---|---|---:|---|
 | Claude Code Pro | Lead | fixed subscription | 20 | Local auth confirms Claude Pro |
-| Codex | Engineering worker | fixed subscription | 21 | Confirmed USD 21/month by Phuong on 2026-07-03 |
-| Cline with GLM 5.2 or Kimi | Engineering worker in VS Code | fixed subscription | 6 | Amount supplied by Phuong |
-| Lonewolf with DeepSeek V4 Flash | Read-only bridge | metered | 10 | Model confirmed; external API-key cap not yet lowered |
-| **Active agent total** |  |  | **57** | Confirmed |
+| Aider Senior + Junior (DeepSeek V4 Pro/Flash) | Engineering workers | metered via OpenRouter | 10 | Org-wide Aider budget, shared across products — see `_ops/AIDER.md` |
+| Lonewolf with DeepSeek V4 Flash | Read-only bridge | metered | 1 | Model confirmed; external API-key cap not yet lowered |
+| **Active agent total** |  |  | **31** | Unconfirmed — pending Phuong |
 
 ## Inactive or legacy cost
 

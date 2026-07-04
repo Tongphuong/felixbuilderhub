@@ -6,10 +6,11 @@
 - Status: prototype
 - Founder approved: no
 - Created: 2026-07-03
+- Scope updated: 2026-07-04 (V0 pilot scope superseding the 2026-07-03 fixed-homework-only draft below — see IDEAS.md for the change log)
 
 ## User
 
-- Primary user: Children aged 8–14, mostly A2 with some B1, beginning with Phuong's ten coaching students
+- Primary user: Children aged 8–14, mostly A2 with some B1. V0 pilot capped at 20 students max.
 - Payer: Parents; V1 is included with limited usage in Phuong's coaching service
 
 ## Problem
@@ -19,20 +20,24 @@
 
 ## Outcome
 
-- Product promise: Turn Phuong's weekly speaking homework into a guided daily practice companion that listens to the full answer, then gives positive and constructive pronunciation and vocabulary feedback
-- Success metric: All ten coaching children onboarded and at least 100 completed pilot sessions before public release, with repeat use and observable pronunciation/confidence improvement
+- Product promise: An AI voice companion ("Minny") that gives kids two ways to practice speaking English: guided homework practice against what Phuong actually taught them, and time-boxed free conversation practice
+- Success metric: 20-student V0 pilot completes without safety incidents or cost overrun, with repeat use and observable pronunciation/confidence improvement
 
-## V1 scope
+## V0 scope (current — see IDEAS.md 2026-07-04 entry for what changed and why)
 
-- Included: Fixed teacher-authored lesson, model input, vocabulary support, structured speaking frame, uninterrupted full attempt, positive pronunciation and vocabulary feedback, final recording, coach summary, parent summary, consent, retention policy, and limited daily usage
-- Not included: Open conversation, unrestricted topics, public self-service signup, unlimited use, payments, ranking, shop, avatar, monster customization, or unrelated gamification
+- **Two modes only:**
+  1. **Homework practice** — kid practices homework Phuong personally assigned in her live lessons; Minny gives feedback on pronunciation accuracy and how well the attempt matches what was taught. Needs a mechanism for Phuong to get that homework content into the system (simple form, not a dev task for her).
+  2. **Free talking** — open-ended spoken conversation with Minny. Time-restricted (exact session length/turn cap TBD from the architecture roadmap). Requires a concrete guardrail mechanism (system-prompt rules + a technical backstop, not just an instruction) to keep it on-topic and safe — this is the highest-risk part of V0.
+- Not included: public self-service signup, unlimited use, payments, ranking, shop, avatar, monster customization, or unrelated gamification
+- Note: the live `/speak-up` placeholder page currently advertises three teasers (pronunciation practice, story retelling, presentation) — that copy predates this scope and needs a separate marketing update once V0 ships; it is not an engineering task.
 
 ## Constraints
 
 - Monthly budget: USD 80 including subscriptions
 - Visible-result deadline: one week after an approved prototype task begins
 - Production approval: Phuong
-- Pilot audience: ten existing coaching children
-- Public-release evidence: at least 100 completed sessions
+- Pilot audience: up to 20 students
+- Public-release evidence: at least 100 completed pilot sessions
 - Audio retention target: up to 60 days with parent consent
+- **Build principle (new, 2026-07-04): before writing any new capability from scratch, search for an existing open-source library, package, or forkable project that solves it (e.g. conversation guardrail/moderation libraries, TTS clients, audio-session helpers). Only hand-roll it if nothing suitable exists, and note that search briefly in the relevant spec/evidence entry.**
 
