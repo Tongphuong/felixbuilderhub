@@ -231,6 +231,17 @@ function initBuilder(): void {
     generationComplete = false;
     pollAttempts = 0;
     setPhase('build');
+    const resumeEl = document.querySelector<HTMLAnchorElement>('#resume-link');
+    if (resumeEl) {
+      resumeEl.style.display = 'none';
+      resumeEl.href = '#';
+    }
+    const noteEl = document.getElementById('error-note');
+    if (noteEl) noteEl.style.display = '';
+    const cardEl = document.getElementById('error-card');
+    if (cardEl) cardEl.classList.remove('fx-card--accent');
+    const headingEl = document.getElementById('error-heading');
+    if (headingEl) headingEl.textContent = 'Chưa tạo được bài học';
   }
 
   function reset(): void {
@@ -329,11 +340,32 @@ function initBuilder(): void {
       const result: PackResult = await res.json();
 
       if (!res.ok || !result.ok) {
-        showError(
-          result.review_link
-            ? `${result.message || result.error || 'Có lỗi xảy ra.'} Mở hồ sơ: ${result.review_link}`
-            : result.message || result.error || 'Có lỗi xảy ra, con thử lại nhé.',
-        );
+        if (result.error === 'previous_pack_needs_review') {
+          // Friendly 'unfinished pack' card
+          clearStageTimer();
+          clearPollTimer();
+          activeTaskId = null;
+          pollInFlight = false;
+          const msgEl = document.getElementById('error-message');
+          if (msgEl) msgEl.textContent = result.message || '';
+          const headingEl = document.getElementById('error-heading');
+          if (headingEl) headingEl.textContent = 'Con có bài đang chờ! 📖';
+          const resumeEl = document.querySelector<HTMLAnchorElement>('#resume-link');
+          if (resumeEl) {
+            resumeEl.href = result.lesson_link || '#';
+            resumeEl.style.display = '';
+          }
+          const noteEl = document.getElementById('error-note');
+          if (noteEl) noteEl.style.display = 'none';
+          const cardEl = document.getElementById('error-card');
+          if (cardEl) cardEl.classList.add('fx-card--accent');
+          setPhase('error');
+          return;
+        }
+        // original error handling – keep the existing message, but
+        // strip the review_link concatenation to avoid raw URL injection.
+        const msg = result.message || result.error || 'Có lỗi xảy ra, con thử lại nhé.';
+        showError(msg);
         return;
       }
 

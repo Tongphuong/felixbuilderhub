@@ -1,9 +1,9 @@
 # Control — Read2Lead
 
 - Product: Read2Lead
-- Current goal: Fix packs silently disappearing after lượt is spent (clear-open-lessons bug)
+- Current goal: Make the "finish your old pack first" block feel encouraging and give kids a one-tap button straight into the unfinished pack
 - Latest staging URL: none
-- Active workers: 0
+- Active workers: 1 (aider-senior)
 - Last updated: 2026-07-04
 
 ## Operating team
@@ -18,6 +18,36 @@
 Decision path: `Phuong -> Claude -> one worker -> Claude review -> Phuong approval`.
 
 ## Current task
+
+- Status: active
+- Task ID: R2L-PACK-BLOCK-CTA
+- Owner: Claude (spec) -> aider-senior (execute) -> Claude (review)
+- Lane: product (UI/copy, touches the protected "block generation until
+  previous pack is done" invariant — same class of code as R2L-CLEAR-LESSONS-REFUND)
+- Problem: when a kid tries to generate a new pack while an old one is
+  unfinished, the block message reads negatively (red error box) and the
+  only way back to the old pack is a raw text URL to `/ho-so?code=...`,
+  which requires login + scrolling to the bottom of the profile page to
+  find the real resume button.
+- Acceptance criteria: `functions/api/generate-read2lead-pack.js` returns a
+  positive-voice message (keeps the substring `"Con cần hoàn thành bài đang
+  mở trên web"` so `tests/read2lead-generate-gate.test.mjs` stays green) plus
+  a new `lesson_link` field (`/read2lead/lesson?code=...&pack_id=...`) for
+  the `previous_pack_needs_review` case only; both live UI flows
+  (`/read2lead` via `read2lead.astro`, `/read2lead/build` via
+  `build.astro` + `r2l-builder.client.ts`) swap the red error framing for a
+  friendly/accent card with a working "Đọc tiếp bài cũ 📖" button wired to
+  `lesson_link` for that case only; genuine errors keep today's red framing
+  unchanged; `node --test tests/*.test.mjs` passes; no unrelated refactor.
+- Files owned: functions/api/generate-read2lead-pack.js,
+  src/pages/read2lead/build.astro, src/scripts/r2l-builder.client.ts,
+  src/pages/read2lead.astro
+- Stop condition: tests green, Claude 5-lens review clean, founder_check.py
+  --gate build passes, manual walkthrough of both entry points confirms the
+  button deep-links straight into the unfinished pack, Phuong approves
+  merge to main.
+
+## Previous task
 
 - Status: complete
 - Task ID: R2L-CLEAR-LESSONS-REFUND
@@ -38,13 +68,3 @@ Decision path: `Phuong -> Claude -> one worker -> Claude review -> Phuong approv
   founder_check.py --gate build PASS, Phuong approved merge to main (2026-07-04) — done.
 - Remediation of already-affected students (3 known codes + wider check):
   Phuong is handling manually herself, not part of this packet.
-
-## Previous task
-
-- Status: complete
-- Task ID: R2L-PROGRESS-SAVE
-- Owner: Claude
-- Lane: product
-- Acceptance criteria: visibilitychange and freeze listeners save lesson state on app background; node --test passes; no state shape changes
-- Files owned: src/pages/read2lead/lesson.astro
-- Stop condition: Three event listeners wired, tests pass, Phuong approves merge to main

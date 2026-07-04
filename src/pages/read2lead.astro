@@ -231,7 +231,8 @@ const faqItems = [
 
         <!-- Error state -->
         <div id="error-section" class="hidden rounded-lg border border-red-500/30 bg-red-500/10 p-6 text-center">
-          <p class="text-lg font-semibold text-red-400">Có lỗi xảy ra: <span id="error-message"></span></p>
+          <p id="error-heading-text" class="text-lg font-semibold text-red-400"><span id="error-heading-label">Có lỗi xảy ra: </span><span id="error-message"></span></p>
+          <a id="lesson-resume-link" class="hidden mt-5 inline-flex items-center gap-2 rounded-lg bg-accent px-5 py-2.5 font-semibold text-navy-950 transition hover:bg-accent-hover" href="#">Đọc tiếp bài cũ 📖</a>
           <button id="retry-btn" type="button" class="mt-5 rounded-lg bg-accent px-5 py-2.5 font-semibold text-navy-950 transition hover:bg-accent-hover">Thử lại</button>
           <p class="mt-4 text-sm text-cream-muted">Nếu lỗi tiếp tục, nhắn Zalo {ZALO_DISPLAY}</p>
         </div>
@@ -453,6 +454,26 @@ const faqItems = [
       formSection.classList.remove('hidden');
       resultSection.classList.add('hidden');
       errorSection.classList.add('hidden');
+      // reset resume link and styling
+      const resumeLink = document.getElementById('lesson-resume-link');
+      if (resumeLink) {
+        resumeLink.href = '#';
+        resumeLink.classList.add('hidden');
+        resumeLink.classList.remove('inline-flex');
+      }
+      if (errorSection) {
+        errorSection.classList.add('border-red-500/30', 'bg-red-500/10');
+        errorSection.classList.remove('border-gold/40', 'bg-gold/10');
+      }
+      const headingEl = document.getElementById('error-heading-text');
+      if (headingEl) {
+        headingEl.classList.add('text-red-400');
+        headingEl.classList.remove('text-gold');
+      }
+      const headingLabelEl = document.getElementById('error-heading-label');
+      if (headingLabelEl) headingLabelEl.textContent = 'Có lỗi xảy ra: ';
+      const msgEl = document.getElementById('error-message');
+      if (msgEl) msgEl.textContent = '';
       form.reset();
       formSection.scrollIntoView({ behavior: 'smooth' });
     }
@@ -536,7 +557,31 @@ const faqItems = [
         const result = await res.json();
 
         if (!res.ok || !result.ok) {
-          showError(result.review_link ? `${result.message || result.error} Mở hồ sơ: ${result.review_link}` : (result.message || result.error || 'Có lỗi xảy ra, vui lòng thử lại.'));
+          if (result.error === 'previous_pack_needs_review') {
+            const msgEl = document.getElementById('error-message');
+            if (msgEl) msgEl.textContent = result.message || '';
+            const headingEl = document.getElementById('error-heading-text');
+            if (headingEl) {
+              headingEl.classList.remove('text-red-400');
+              headingEl.classList.add('text-gold');
+            }
+            const headingLabelEl = document.getElementById('error-heading-label');
+            if (headingLabelEl) headingLabelEl.textContent = 'Con có bài đang chờ! 📖 ';
+            const resumeLink = document.getElementById('lesson-resume-link');
+            if (resumeLink) {
+              resumeLink.href = result.lesson_link || '#';
+              resumeLink.classList.remove('hidden');
+              resumeLink.classList.add('inline-flex');
+            }
+            if (errorSection) {
+              errorSection.classList.remove('border-red-500/30', 'bg-red-500/10');
+              errorSection.classList.add('border-gold/40', 'bg-gold/10');
+            }
+            errorSection.classList.remove('hidden');
+            errorSection.scrollIntoView({ behavior: 'smooth' });
+            return;
+          }
+          showError(result.message || result.error || 'Có lỗi xảy ra, vui lòng thử lại.');
           return;
         }
 
