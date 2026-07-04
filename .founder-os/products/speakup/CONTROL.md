@@ -1,10 +1,35 @@
 # Control — SpeakUp
 
 - Product: SpeakUp
-- Current goal: Get an architecture roadmap from Fable 5 for the V0 pilot (homework practice + free talking), then dispatch phases to Aider
-- Latest staging URL: none
+- Current goal: Build all 8 phases of `_ops/specs/SPEC_SPEAKUP_V0.md` on branch `claude/speakup-v0`, QA the full pilot on preview, THEN merge to main. No phase merges to main individually.
+- Branch: `claude/speakup-v0` (off `main`)
+- Preview URL: `claude-speakup-v0.felixbuilderhub.pages.dev` (Cloudflare Pages auto-deploy per push, per `claude/<topic>` convention in `BRANCH_CONVENTIONS.md`)
 - Active workers: 0
 - Last updated: 2026-07-04
+
+## Phase tracker (source of truth: `_ops/specs/SPEC_SPEAKUP_V0.md`)
+
+Wave grouping respects file-ownership: phases sharing a file (mostly `speaking.astro`)
+run sequentially even where the spec's dependency graph would allow parallel work.
+
+| Wave | Phase | Owner | Status | Merged to branch | Phuong QA'd on preview |
+|---|---|---|---|---|---|
+| 1 | Phase 1 — Homework store + class-board form | Aider Senior (API/schema) + Aider Junior (modal) | not started | no | no |
+| 1 | Phase 7a — Homework-feedback design mocks | Claude Design | not started | n/a (design folder) | no |
+| 2 | Phase 2 — Homework Practice mode (no TTS) | Aider Senior | not started | no | no |
+| 3 | Phase 3 — Minny TTS + audio cache + canned phrases | Aider Senior | not started | no | no |
+| 4 | Phase 4 — Session summaries → parent profile | Aider Senior | not started | no | no |
+| 4 | Phase 5 — Conversation turn endpoint (test codes only) | Aider Senior | not started | no | no |
+| 4 | Phase 7b — Conversation UI design mocks | Claude Design | not started | n/a | no |
+| 5 | Phase 6 — Guardrail layer + red-team suite | Aider Senior (plumbing) + Sonnet 5 (wordlists/redirects/red-team) | not started | no | no |
+| 6 | Phase 8 — Free Talking UI + pilot enablement | Aider Senior; gate-removal is a separate final commit | not started | no | no |
+
+Waves 1 and 4 have two parallelizable items each (no shared files); everything
+else is strictly sequential because it touches `speaking.astro`. **No phase
+merges to `main`.** All 8 land on `claude/speakup-v0`, get QA'd together on
+the preview URL, and only then does the whole branch merge to `main` —
+per Phuong's explicit instruction (2026-07-04): build full V0 before push to
+prod.
 
 ## Operating team
 
@@ -34,27 +59,46 @@ assigns, commits, merges, deploys, or spends.
 
 ## Current task
 
-- Status: none
-- Task ID: none
-- Owner: none
-- Lane: none
-- Acceptance criteria: none
-- Files owned: none
-- Stop condition: none
-- Started: none
+- Status: active
+- Task ID: SPEAKUP-P1-HOMEWORK-STORE
+- Owner: Claude (spec/review) -> aider-senior (API/schema) + aider-junior (modal markup)
+- Lane: product (SpeakUp V0, Phase 1 of `_ops/specs/SPEC_SPEAKUP_V0.md`)
+- Acceptance criteria: class-level homework save writes the `homework` block onto
+  every roster member's code record without touching any other field; per-student
+  save updates only that student; validation per D8b (sentences 0-12/stems 0-8,
+  charset, blank-parsing); round-trip test proves no field clobbering; node --test
+  green; founder_check.py --gate build passes.
+- Files owned: functions/api/_homework.js (new), functions/api/admin/classes/[id]/homework.js (new),
+  src/components/admin/HomeworkModal.astro (new), src/pages/admin/classes.astro (modify),
+  tests/admin-homework.test.mjs (new)
+- Stop condition: tests green, Claude review clean, founder_check.py --gate build
+  passes, committed to `claude/speakup-v0` (not merged to main — see Phase tracker)
+- Started: 2026-07-04
 - Cost spent: USD 0
 
 ## File ownership
 
 | Path or area | Owner | State |
 |---|---|---|
-| none | none | none |
+| functions/api/_homework.js | aider-senior | active |
+| functions/api/admin/classes/[id]/homework.js | aider-senior | active |
+| src/components/admin/HomeworkModal.astro | aider-junior | active |
+| src/pages/admin/classes.astro | aider-junior | active |
+| tests/admin-homework.test.mjs | aider-senior | active |
 
 ## Daily update
 
-- Visible result: SpeakUp V0 scope reconciled (20 students, two modes) and hard rules (Founder OS mandatory, reuse-before-build) recorded
-- Completed: PRODUCT.md/IDEAS.md/EVIDENCE.md updated to current scope; scoped rule file added; architecture prompt prepared for Fable 5
+- Visible result: SPEC_SPEAKUP_V0.md approved and reconciled into Founder OS
+  (Founder approved: yes, Decision: build); phase tracker set up in this file;
+  Phase 1 dispatched
+- Completed: PRODUCT.md/EVIDENCE.md/CONTROL.md updated to reflect the approved
+  8-phase roadmap; spec claims spot-verified against real code (function names,
+  KV keys, existing patterns all confirmed); `claude/speakup-v0` branch created
 - Cost today: USD 0
 - Problem: none
-- Next: Phuong sends the prepared prompt to Fable 5; Claude turns the returned roadmap into dispatch packets
-- Need Phuong: confirm "Founder approved" in PRODUCT.md when ready to move past prototype
+- Next: review Aider's Phase 1 diff, run tests + founder_check.py, commit to
+  `claude/speakup-v0`, then start Phase 7a (homework-feedback design mocks) and
+  Phase 2
+- Need Phuong: one open question flagged for Phase 1 — see chat. Full list of
+  open questions from the spec will surface at their relevant phase, not all at
+  once.

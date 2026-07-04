@@ -1,8 +1,9 @@
 # Evidence — SpeakUp
 
-- Decision: prototype
+- Decision: build
 - Last reviewed: 2026-07-04
-- 2026-07-04 update: V0 scope widened to 20 students and two modes (homework practice + time-restricted free talking), per Phuong's direct decision. See PRODUCT.md and IDEAS.md for detail. "Prototype" decision unchanged for now — revisit once the architecture roadmap (Fable 5) comes back.
+- 2026-07-04 update: V0 scope widened to 20 students and two modes (homework practice + time-restricted free talking), per Phuong's direct decision. See PRODUCT.md and IDEAS.md for detail.
+- 2026-07-04 update 2: Phuong approved the 8-phase architecture roadmap from Fable 5, `_ops/specs/SPEC_SPEAKUP_V0.md`. Decision moved from "prototype" to "build" — this is now a committed engineering build against an approved spec, not an open-ended validation experiment.
 
 ## User reports
 

@@ -3,10 +3,12 @@
 - Product: SpeakUp
 - Slug: speakup
 - Founder: Phuong
-- Status: prototype
-- Founder approved: no
+- Status: build
+- Founder approved: yes
+- Approved: 2026-07-04 — approved the phased build roadmap, `_ops/specs/SPEC_SPEAKUP_V0.md`
 - Created: 2026-07-03
 - Scope updated: 2026-07-04 (V0 pilot scope superseding the 2026-07-03 fixed-homework-only draft below — see IDEAS.md for the change log)
+- Architecture roadmap: `_ops/specs/SPEC_SPEAKUP_V0.md` — 8 phases, dispatch source of truth, supersedes this file's scope description wherever they conflict
 
 ## User
 
@@ -40,4 +42,3 @@
 - Public-release evidence: at least 100 completed pilot sessions
 - Audio retention target: up to 60 days with parent consent
 - **Build principle (new, 2026-07-04): before writing any new capability from scratch, search for an existing open-source library, package, or forkable project that solves it (e.g. conversation guardrail/moderation libraries, TTS clients, audio-session helpers). Only hand-roll it if nothing suitable exists, and note that search briefly in the relevant spec/evidence entry.**
-
