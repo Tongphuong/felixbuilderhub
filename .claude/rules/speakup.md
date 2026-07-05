@@ -33,6 +33,20 @@ or `EVIDENCE.md` entry for that phase. This applies to both Claude and
 Aider workers. (Expanded 2026-07-05 after Phase 7a built a custom design
 workflow before checking whether Claude Design already covered it.)
 
+## Acceptance-criteria reconciliation and cost ceilings (added 2026-07-05)
+
+Per `_ops/AGENTS.md` rules 14-15, applying from here forward (not retroactive
+to Phases 1-3):
+
+- Before marking any SpeakUp phase "done" in CONTROL.md, re-open that phase's
+  section in `_ops/specs/SPEC_SPEAKUP_V0.md` and check its acceptance-criteria
+  bullets one by one. Record PASS / SKIPPED (one-line reason) / N/A for each
+  — `node --test` passing is not the same claim as "the spec's criteria are
+  met." A skipped test or file must be a visible line, not a silent gap.
+- Every CONTROL.md "Current task" entry for this product must state a cost
+  ceiling at dispatch time, separate from the actual-spend figure recorded
+  at completion.
+
 ## Scope reminder
 
 V0 pilot is capped at 20 students, two modes: homework practice (feedback
