@@ -23,11 +23,15 @@ product:
 
 Before writing a new capability from scratch for SpeakUp (conversation
 guardrails/moderation, TTS client, audio session handling, an admin
-homework-entry form, etc.), search for an existing open-source library,
-maintained package, or forkable project that already solves it. Only
-hand-roll it if nothing suitable exists, and note that search — what you
-looked at and why it didn't fit — briefly in the spec or `EVIDENCE.md` entry
-for that phase. This applies to both Claude and Aider workers.
+homework-entry form, etc.), check in this order: (1) an open-source GitHub
+project to clone/fork, (2) a free library or maintained package, (3) an
+existing plugin, connector, or MCP server that already solves it (e.g.
+Claude Design, Figma MCP, other integrations), (4) extend an already-proven
+system already running. Only hand-roll it if none of these fit, and note
+that search — what was checked and why it didn't fit — briefly in the spec
+or `EVIDENCE.md` entry for that phase. This applies to both Claude and
+Aider workers. (Expanded 2026-07-05 after Phase 7a built a custom design
+workflow before checking whether Claude Design already covered it.)
 
 ## Scope reminder
 
