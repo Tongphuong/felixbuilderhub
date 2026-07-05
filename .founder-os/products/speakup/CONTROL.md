@@ -5,7 +5,7 @@
 - Branch: `claude/speakup-v0` (off `main`)
 - Preview URL: `claude-speakup-v0.felixbuilderhub.pages.dev` (Cloudflare Pages auto-deploy per push, per `claude/<topic>` convention in `BRANCH_CONVENTIONS.md`)
 - Active workers: 0
-- Last updated: 2026-07-05
+- Last updated: 2026-07-05 (Phase 3 closed out)
 
 ## Phase tracker (source of truth: `_ops/specs/SPEC_SPEAKUP_V0.md`)
 
@@ -17,7 +17,7 @@ run sequentially even where the spec's dependency graph would allow parallel wor
 | 1 | Phase 1 — Homework store + class-board form | Aider Senior (API/schema) + Aider Junior (modal) | done | yes (fb348b8) | no |
 | 1 | Phase 7a — Homework-feedback design mocks | Claude Design | approved (Phuong, 2026-07-05) | n/a (design folder: `design_handoff_speakup_phase_7a/`) | n/a |
 | 2 | Phase 2 — Homework Practice mode (no TTS) | Aider Senior (backend) + Claude Sonnet 5 (frontend) | done | yes (b35da76) | no |
-| 3 | Phase 3 — Minny TTS + audio cache + canned phrases | Aider Senior | not started | no | no |
+| 3 | Phase 3 — Minny TTS + audio cache + canned phrases | Aider Senior | done | yes (1aeaba3) | no |
 | 4 | Phase 4 — Session summaries → parent profile | Aider Senior | not started | no | no |
 | 4 | Phase 5 — Conversation turn endpoint (test codes only) | Aider Senior | not started | no | no |
 | 4 | Phase 7b — Conversation UI design mocks | Claude Design | not started | n/a | no |
@@ -77,54 +77,44 @@ assigns, commits, merges, deploys, or spends.
 
 ## Daily update
 
-- Visible result: Phase 1 (homework store + class-board form) and Phase 2
-  (homework practice mode end-to-end: sentence + speech-frame scoring,
-  homework mode card, frame-step UI, rubric result, end-of-set summary) both
-  built, reviewed, tested, and committed to `claude/speakup-v0` — not yet on
-  preview QA by Phuong. Phase 7a design mocks approved by Phuong (2026-07-05).
-- Completed: resolved a design-provenance mix-up — two design bundles existed
-  (`design_handoff_speakup/` and `design_handoff_speakup_phase_7a/`); Phuong
-  deleted the former and confirmed the latter (`_ds/` design-system tokens +
-  `dc-runtime`-generated `support.js`) as the genuine Claude Design output to
-  build from. Also caught and fixed a pronoun mismatch: the approved spec's
-  Vietnamese copy said "cô Phương" (female teacher) in two places while the
-  design mock and the site's existing live copy (`index.astro`, `coaching.astro`)
-  both use "thầy Phương" (male); Phuong confirmed thầy is correct, fixed in
-  `_ops/specs/SPEC_SPEAKUP_V0.md`.
-  Phase 2 backend (`minny-speaking-context.js`'s `buildHomeworkSteps`,
-  `read2lead-speaking-check.js`'s `scoreSpeechFrame`) dispatched to Aider
-  Senior — succeeded on the second attempt; the first full-phase dispatch
-  (4 files at once) degenerated into a runaway repetition loop generating CSS
-  and produced nothing, so the task was split into a smaller backend-only
-  dispatch, which succeeded cleanly ($0.03). A follow-up one-line test fix
-  dispatched to Aider Junior hallucinated garbled text into the file; fixed
-  directly rather than re-dispatching a trivial revert. Phuong then approved
-  running a parallel Claude Sonnet 5 background agent (enabled by her Claude
-  Max upgrade) for the frontend (`speaking.astro`) piece specifically because
-  of Aider's reliability issues on this file cluster — it built the
-  homework-mode UI (frame-step stems display, rubric checklist, smile
-  reminder, end-of-set summary) cleanly and flagged one real integration gap
-  (the backend's `expected_text` field was unconditionally required, which
-  would have rejected every frame-mode submission since frame steps carry no
-  `expected_text`) — fixed with a one-line backend validation relaxation.
-  Full suite: 747/747 green. `founder_check.py --gate build`: PASS.
-- Cost today: USD ~0.03 (Aider Senior backend dispatch; Aider Junior dispatch
-  cost negligible) + Claude Max usage for the parallel frontend agent (not
-  metered against the DeepSeek budget)
-- Problem: none blocking. Aider (both Senior and Junior) proved unreliable
-  today on this specific file cluster (speaking.astro / read2lead-speaking-check.js)
-  — two degenerate/hallucinated outputs on tasks of very different sizes.
-  Worth watching whether this recurs on Phase 3 (also touches these files).
-- Next: Phase 7b (conversation UI mocks) still not started — gates Phase 8.
-  Phase 3 (Minny TTS + audio cache) is next in the wave order and only
-  depends on Phase 1.
-- Need Phuong: (1) the Phase 1 open question — is "same homework for the
-  whole group, occasionally tweaked for one kid" the right default, or does
-  she routinely assign fully different homework per kid? Proceeding with the
-  class-first default in the UI either way, easy to flip. (2) whether saving
-  homework should notify the parent on Zalo — proceeding with no for V0 per
-  the spec's own recommendation, revisit after pilot. (3) confirm the
-  `design_handoff_speakup_phase_7a/` bundle's other copy (README calls it
-  "SpeakUp" with a koala mascot "Minny" narrating a "MY TRIP STORY" flow) has
-  no other assumptions that clash with the approved spec beyond the
-  thầy/cô one already fixed — flagging in case a closer read turns up more.
+- Visible result: Phase 3 (Minny voice service) built, reviewed, tested, and
+  committed to `claude/speakup-v0` (1aeaba3) — not yet on preview QA by
+  Phuong. Phases 1, 2, and 7a remain as previously recorded (done/approved,
+  not yet on preview either — the whole pilot QAs together at the end).
+- Completed: dispatched backend (`_minny-tts.js`: OpenAI tts-1-hd/nova call,
+  sha256 cache key, KV cache with no expiry; `_minny-phrases.js`: 12 canned
+  lines; `minny-voice.js`: the POST endpoint, allowlisted to only the
+  caller's own homework sentences or a canned phrase id — never open text)
+  to Aider Senior in one clean pass, no repetition-loop or hallucination
+  incident this time. Reviewed the diff directly against the spec's D3/D6/D7
+  cost and safety reasoning — allowlist is the cost-abuse guard, cache means
+  repeat requests for the same line cost nothing after the first. Then
+  dispatched a small, surgical instruction to Aider Senior for
+  `speaking.astro`'s `playMinnyAudio` (try `/api/minny-voice` for homework
+  steps, fall back to the existing `speechSynthesis` path on any failure
+  including an autoplay-gesture rejection) — applied exactly as specified,
+  no drift, despite this file's rocky history in Phase 2. 754/754 tests green
+  (7 new). `founder_check.py --gate build`: PASS.
+- Cost today: ~USD 0.017 (two Aider Senior dispatches, per aider's own
+  session cost report — `aider-cost` itself has no data yet, worth checking
+  why it isn't tracking).
+- Problem: none blocking. The spec's Phase 3 egress-verification acceptance
+  criterion (a real OpenAI TTS call from the deployed preview, checking for
+  the 403 geo-block class that hit Whisper on 2026-06-11) was **not** run —
+  this session had no Cloudflare/KV credentials to safely call the live
+  preview with a real access code without risking production data. This is
+  the one open acceptance-criterion item for Phase 3.
+- Next: Phase 3's live egress check (needs Phuong or a session with prod
+  credentials). Then Phase 7b (conversation UI mocks, gates Phase 8) and
+  Phase 4 (session summaries) / Phase 5 (conversation endpoint) are next in
+  wave order.
+- Need Phuong: (1) carried over — Phase 1's group-vs-per-kid homework default
+  question, and the Zalo-notify-on-save question (proceeding with the
+  spec's own recommended defaults on both, low-cost to flip later); (2) the
+  `design_handoff_speakup_phase_7a/` bundle's copy still needs a closer read
+  for assumption clashes beyond the thầy/cô fix already made; (3) **new**:
+  the 12 canned Minny phrases in `_minny-phrases.js` need your review before
+  they ship — per the spec, this is brand-voice content, not mechanical
+  copy, and Claude drafted it without your sign-off; (4) **new**: run or
+  authorize the live egress check on the preview once it's live before
+  treating Phase 3 as fully verified.
