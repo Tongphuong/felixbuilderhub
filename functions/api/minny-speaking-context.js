@@ -123,11 +123,54 @@ export function buildQuestionSteps({ v2Pack, storyTitle, topic }) {
   }));
 }
 
-export function buildSpeakingModes({ studentName, storyTitle, topic, v2Pack }) {
+export function buildHomeworkSteps(codeData) {
+  const homework = codeData?.homework;
+  if (!homework) return null;
+  const sentences = Array.isArray(homework.sentences) ? homework.sentences : [];
+  const frame = homework.frame || null;
+  const steps = [];
+
+  for (const item of sentences) {
+    steps.push({
+      id: `hw_${item.id}`,
+      kind: 'homework',
+      prompt_vi: 'Con đọc câu này cho Minny nghe nhé',
+      prompt_en: item.text_en,
+      expected_text: item.text_en,
+      check_mode: 'read',
+      max_seconds: 30,
+    });
+  }
+
+  if (frame && Array.isArray(frame.stems) && frame.stems.length) {
+    steps.push({
+      id: 'hw_frame',
+      kind: 'speech',
+      check_mode: 'frame',
+      prompt_vi: 'Con thuyết trình theo khung nhé — nói một mạch!',
+      stems: frame.stems,
+      max_seconds: (frame.duration_s || 60) + 15,
+    });
+  }
+
+  const note = homework.note_vi || '';
+  const updatedAt = homework.updated_at || '';
+
+  return {
+    id: 'homework',
+    title_vi: 'Bài tập thầy giao',
+    subtitle_vi: note ? `Thầy Phương nhắn: ${note}` : 'Thầy Phương giao bài tập luyện nói.',
+    steps,
+    homework_note_vi: note,
+    homework_updated_at: updatedAt,
+  };
+}
+
+export function buildSpeakingModes({ studentName, storyTitle, topic, v2Pack, codeData }) {
   const retellSteps = buildRetellSteps({ storyTitle, topic, v2Pack });
   const questionSteps = buildQuestionSteps({ studentName, storyTitle, topic, v2Pack });
 
-  return [
+  const modes = [
     {
       id: 'retell',
       title_vi: 'Kể lại truyện',
@@ -141,12 +184,21 @@ export function buildSpeakingModes({ studentName, storyTitle, topic, v2Pack }) {
       steps: questionSteps,
     },
   ];
+
+  const homeworkMode = buildHomeworkSteps(codeData);
+  if (homeworkMode) {
+    modes.unshift(homeworkMode);
+  }
+
+  return modes;
 }
 
 /** @deprecated use buildSpeakingModes — kept for tests */
 export function buildPracticePrompts(opts) {
-  const modes = buildSpeakingModes(opts);
-  return [...modes[0].steps, ...modes[1].steps];
+  const modes = buildSpeakingModes({ ...opts, codeData: opts.codeData });
+  const retellMode = modes.find(m => m.id === 'retell');
+  const questionsMode = modes.find(m => m.id === 'questions');
+  return [...(retellMode?.steps || []), ...(questionsMode?.steps || [])];
 }
 
 export function pickPracticePack(codeData) {
@@ -229,7 +281,15 @@ export async function onRequestGet(context) {
   const coachingLink = '/coaching#book';
 
   if (!practice) {
-    const modes = buildSpeakingModes({ studentName, storyTitle: '', topic: '', v2Pack: null });
+    const modes = buildSpeakingModes({ studentName, storyTitle: '', topic: '', v2Pack: null, codeData });
+    let greeting;
+    const homeworkMode = modes.find(m => m.id === 'homework');
+    if (homeworkMode && homeworkMode.homework_updated_at) {
+      const dateStr = new Date(homeworkMode.homework_updated_at).toLocaleDateString('vi-VN', { day: 'numeric', month: 'long', year: 'numeric' });
+      greeting = `Chào ${studentName || 'bé'}! Hôm nay mình luyện bài thầy Phương giao ngày ${dateStr} — chuẩn bị cho buổi coaching với Felix nhé.`;
+    } else {
+      greeting = `Chào ${studentName || 'bé'}! Minny luyện nói cùng con trước buổi coaching với Felix.`;
+    }
     return json({
       ok: true,
       student_name: studentName,
@@ -237,7 +297,7 @@ export async function onRequestGet(context) {
       pack_id: 'general',
       story_title: '',
       modes,
-      greeting_vi: `Chào ${studentName || 'bé'}! Minny luyện nói cùng con trước buổi coaching với Felix.`,
+      greeting_vi: greeting,
       practice_count_this_week: numberOrZero(practiceLog.sessions_this_week),
       coaching_link: coachingLink,
       profile_link: profileLink,
@@ -249,11 +309,19 @@ export async function onRequestGet(context) {
     storyTitle: practice.story_title,
     topic: practice.topic,
     v2Pack: practice.v2Pack,
+    codeData,
   });
 
-  const greeting = practice.story_title
-    ? `Chào ${studentName || 'bé'}! Hôm nay mình luyện nói về "${practice.story_title}" — chuẩn bị cho buổi coaching với Felix nhé.`
-    : `Chào ${studentName || 'bé'}! Minny sẵn sàng luyện nói cùng con trước buổi coaching.`;
+  let greeting;
+  const homeworkMode = modes.find(m => m.id === 'homework');
+  if (homeworkMode && homeworkMode.homework_updated_at) {
+    const dateStr = new Date(homeworkMode.homework_updated_at).toLocaleDateString('vi-VN', { day: 'numeric', month: 'long', year: 'numeric' });
+    greeting = `Chào ${studentName || 'bé'}! Hôm nay mình luyện bài thầy Phương giao ngày ${dateStr} — chuẩn bị cho buổi coaching với Felix nhé.`;
+  } else if (practice.story_title) {
+    greeting = `Chào ${studentName || 'bé'}! Hôm nay mình luyện nói về "${practice.story_title}" — chuẩn bị cho buổi coaching với Felix nhé.`;
+  } else {
+    greeting = `Chào ${studentName || 'bé'}! Minny sẵn sàng luyện nói cùng con trước buổi coaching.`;
+  }
 
   return json({
     ok: true,

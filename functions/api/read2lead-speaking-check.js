@@ -205,6 +205,78 @@ export function scoreOpenTranscript(transcript, storyContext) {
   };
 }
 
+/**
+ * Score a speech frame (presentation) against anchor-word stems.
+ *
+ * @param {string} transcript - ASR transcript
+ * @param {Array<{id:string, text_en:string, anchor_words:string[]}>} stems
+ * @param {number} durationTargetSec - target duration in seconds
+ * @param {object} telemetry - client telemetry (peak_level, duration_seconds, etc.)
+ * @returns {object} result shape described in SPEC_SPEAKUP_V0.md Phase 2
+ */
+export function scoreSpeechFrame(transcript, stems, durationTargetSec, telemetry = {}) {
+  const transcriptWords = tokenize(transcript)
+    .map((word) => normalizeWord(word))
+    .filter(Boolean);
+  const wordCount = transcriptWords.length;
+
+  const stemResults = stems.map((stem) => {
+    const anchorWords = Array.isArray(stem.anchor_words) ? stem.anchor_words : [];
+    if (anchorWords.length === 0) {
+      return { id: stem.id, text_en: stem.text_en, matched: true, coveragePct: 100 };
+    }
+    let matchedCount = 0;
+    for (const anchor of anchorWords) {
+      const normAnchor = normalizeWord(anchor);
+      const found = transcriptWords.some((tw) => wordSimilarity(tw, normAnchor) >= SIMILARITY_THRESHOLD);
+      if (found) matchedCount++;
+    }
+    const coveragePct = Math.round((matchedCount / anchorWords.length) * 100);
+    // A stem is considered matched when at least 50% of its anchor words appear in the transcript.
+    const matched = coveragePct >= 50;
+    return { id: stem.id, text_en: stem.text_en, matched, coveragePct };
+  });
+
+  const matchPct = stemResults.length
+    ? Math.round(stemResults.reduce((sum, s) => sum + s.coveragePct, 0) / stemResults.length)
+    : 0;
+
+  const spokeAllStems = stemResults.every(s => s.matched);
+
+  // Duration tolerance: +/-20% of target
+  let durationOnTarget = false;
+  let durationSec = 0;
+  if (typeof durationTargetSec === 'number' && durationTargetSec > 0) {
+    const actual = Number.isFinite(telemetry?.duration_seconds) ? telemetry.duration_seconds : 0;
+    durationSec = actual;
+    const lower = durationTargetSec * 0.8;
+    const upper = durationTargetSec * 1.2;
+    durationOnTarget = actual >= lower && actual <= upper;
+  }
+
+  // Soft spokeClearly signal derived from peak_level telemetry; never punitive.
+  let spokeClearly = true;
+  const peakRaw = telemetry?.peak_level;
+  if (peakRaw !== undefined && peakRaw !== null && peakRaw !== '') {
+    const peak = parseFloat(peakRaw);
+    if (!Number.isNaN(peak) && peak <= 0) {
+      spokeClearly = false;
+    }
+  }
+
+  return {
+    matchPct,
+    rubric: {
+      spokeAllStems,
+      durationOnTarget,
+      spokeClearly,
+    },
+    stems: stemResults,
+    wordCount,
+    durationSec,
+  };
+}
+
 export function inferAudioFilename(blob) {
   // MIME type wins over client filename — Safari records MP4 but some pages still name the file audio.webm.
   const type = String(blob?.type || '').toLowerCase();
@@ -327,7 +399,10 @@ export async function runSpeakingCheck({
   ai = null,
   openaiApiKey,
   fetchFn = fetch,
-}) {
+  stems,
+  durationTargetSec,
+  telemetry,
+} = {}) {
   const transcript = await transcribeAudio(audioBlob, { ai, openaiApiKey, fetchFn });
   if (!transcript) {
     const error = new Error('empty_transcript');
@@ -339,6 +414,15 @@ export async function runSpeakingCheck({
     return {
       ok: true,
       ...scoreOpenTranscript(transcript, expectedText),
+    };
+  }
+
+  if (checkMode === 'frame') {
+    const result = scoreSpeechFrame(transcript, stems || [], durationTargetSec || 0, telemetry || {});
+    return {
+      ok: true,
+      ...result,
+      check_mode: 'frame',
     };
   }
 
@@ -397,7 +481,7 @@ export async function onRequestPost(context) {
 
   const reportSilent = String(formData.get('report_silent') || '').trim() === '1';
 
-  if (!accessCode || !packId || !expectedText || (!audio && !reportSilent)) {
+  if (!accessCode || !packId || (!expectedText && checkMode !== 'frame') || (!audio && !reportSilent)) {
     return json(
       { ok: false, error: 'missing_fields', message: 'Thieu ma hoc sinh, ma bai, noi dung hoac file thu am.' },
       400,
@@ -466,13 +550,34 @@ export async function onRequestPost(context) {
   const audioName = audio?.name || 'unknown';
   const audioType = audio?.type || 'unknown';
 
+  let stems = [];
+  let durationTargetSec = 0;
+  let durationSec = undefined;
+  if (checkMode === 'frame') {
+    const stemsRaw = formData.get('stems');
+    if (stemsRaw) {
+      try {
+        stems = JSON.parse(stemsRaw);
+      } catch {}
+    }
+    durationTargetSec = Number(formData.get('max_seconds') || 0);
+    const durRaw = formData.get('duration_seconds');
+    if (durRaw !== null && durRaw !== '') {
+      const parsed = parseFloat(durRaw);
+      if (Number.isFinite(parsed)) durationSec = parsed;
+    }
+  }
+
   try {
     const result = await runSpeakingCheck({
       audioBlob: audio,
       expectedText,
-      checkMode: checkMode === 'open' ? 'open' : 'read',
+      checkMode: checkMode === 'open' ? 'open' : (checkMode === 'frame' ? 'frame' : 'read'),
       ai: workersAi,
       openaiApiKey,
+      stems,
+      durationTargetSec,
+      telemetry: { ...clientTelemetry, duration_seconds: durationSec },
     });
     return json(result);
   } catch (error) {

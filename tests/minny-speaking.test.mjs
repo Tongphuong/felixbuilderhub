@@ -6,6 +6,7 @@ import {
   buildPracticePrompts,
   buildSpeakingModes,
   pickPracticePack,
+  buildHomeworkSteps,
 } from '../functions/api/minny-speaking-context.js';
 import { canAccessPackForPractice } from '../functions/api/_read2lead-pack-access.js';
 
@@ -118,4 +119,114 @@ test('pickPracticePack prefers current pack with story', () => {
 
 test('practice mode allows general pack without story history', () => {
   assert.equal(canAccessPackForPractice({ progress: {} }, 'general'), true);
+});
+
+test('buildHomeworkSteps returns null when no homework', () => {
+  assert.equal(buildHomeworkSteps({}), null);
+  assert.equal(buildHomeworkSteps({ homework: null }), null);
+});
+
+test('buildHomeworkSteps creates sentence steps and optional frame step', () => {
+  const codeData = {
+    homework: {
+      schema_version: 1,
+      updated_at: '2026-07-01T08:00:00.000Z',
+      note_vi: 'Luyện phát âm',
+      sentences: [
+        { id: 's1', text_en: 'I like apples.', hint_vi: null },
+        { id: 's2', text_en: 'She runs fast.', hint_vi: null },
+      ],
+      frame: {
+        stems: [
+          { id: 'f1', text_en: 'Last summer, I went to ___.', anchor_words: ['last','summer','i','went','to'] },
+          { id: 'f2', text_en: 'I saw ___.', anchor_words: ['i','saw'] },
+        ],
+        duration_s: 45,
+      },
+      history: [],
+    },
+  };
+  const mode = buildHomeworkSteps(codeData);
+  assert.ok(mode);
+  assert.equal(mode.id, 'homework');
+  assert.equal(mode.title_vi, 'Bài tập thầy giao');
+  assert.match(mode.subtitle_vi, /Thầy Phương nhắn: Luyện phát âm/);
+  assert.equal(mode.homework_note_vi, 'Luyện phát âm');
+  assert.equal(mode.homework_updated_at, '2026-07-01T08:00:00.000Z');
+  assert.equal(mode.steps.length, 3);
+  assert.equal(mode.steps[0].id, 'hw_s1');
+  assert.equal(mode.steps[0].kind, 'homework');
+  assert.equal(mode.steps[0].check_mode, 'read');
+  assert.equal(mode.steps[0].prompt_en, 'I like apples.');
+  assert.equal(mode.steps[1].id, 'hw_s2');
+  assert.equal(mode.steps[2].id, 'hw_frame');
+  assert.equal(mode.steps[2].kind, 'speech');
+  assert.equal(mode.steps[2].check_mode, 'frame');
+  assert.equal(mode.steps[2].max_seconds, 60); // 45 + 15
+  assert.deepEqual(mode.steps[2].stems, codeData.homework.frame.stems);
+});
+
+test('buildHomeworkSteps frame-only (no sentences)', () => {
+  const codeData = {
+    homework: {
+      updated_at: '2026-07-02T10:00:00.000Z',
+      sentences: [],
+      frame: {
+        stems: [{ id: 'f1', text_en: 'My trip', anchor_words: ['my','trip'] }],
+        duration_s: 30,
+      },
+    },
+  };
+  const mode = buildHomeworkSteps(codeData);
+  assert.ok(mode);
+  assert.equal(mode.steps.length, 1);
+  assert.equal(mode.steps[0].id, 'hw_frame');
+  assert.equal(mode.steps[0].max_seconds, 45);
+});
+
+test('buildHomeworkSteps sentences-only (no frame)', () => {
+  const codeData = {
+    homework: {
+      updated_at: '2026-07-03T12:00:00.000Z',
+      sentences: [{ id: 's1', text_en: 'Hello world.', hint_vi: null }],
+      frame: null,
+    },
+  };
+  const mode = buildHomeworkSteps(codeData);
+  assert.ok(mode);
+  assert.equal(mode.steps.length, 1);
+  assert.equal(mode.steps[0].id, 'hw_s1');
+  assert.equal(mode.steps[0].check_mode, 'read');
+});
+
+test('buildSpeakingModes includes homework mode first when homework present', () => {
+  const codeData = {
+    homework: {
+      updated_at: '2026-07-04T09:00:00.000Z',
+      sentences: [{ id: 's1', text_en: 'Test.', hint_vi: null }],
+    },
+  };
+  const modes = buildSpeakingModes({
+    studentName: 'Linh',
+    storyTitle: 'The Puppy',
+    topic: 'animals',
+    v2Pack: null,
+    codeData,
+  });
+  assert.equal(modes.length, 3);
+  assert.equal(modes[0].id, 'homework');
+  assert.equal(modes[1].id, 'retell');
+  assert.equal(modes[2].id, 'questions');
+});
+
+test('buildSpeakingModes without homework unchanged', () => {
+  const modes = buildSpeakingModes({
+    studentName: 'Linh',
+    storyTitle: 'The Puppy',
+    topic: 'animals',
+    v2Pack: null,
+  });
+  assert.equal(modes.length, 2);
+  assert.equal(modes[0].id, 'retell');
+  assert.equal(modes[1].id, 'questions');
 });

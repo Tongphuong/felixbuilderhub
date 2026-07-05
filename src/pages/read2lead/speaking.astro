@@ -87,6 +87,8 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
             <p id="prompt-en" class="mt-2 text-sm leading-relaxed text-cream-muted"></p>
           </div>
 
+          <div id="frame-stems" class="hidden space-y-3 rounded-3xl border border-cream/10 bg-navy-900/60 p-5"></div>
+
           <button id="speaking-listen" type="button" class="minny-btn minny-btn--listen w-full">
             🔊 Nghe Minny
           </button>
@@ -313,7 +315,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       try { if (m && typeof m.stop === 'function') m.stop(); } catch {}
     }
 
-    const MODE_EMOJI = { retell: '📖', questions: '💬' };
+    const MODE_EMOJI = { homework: '📚', retell: '📖', questions: '💬' };
 
     const state = {
       accessCode: '',
@@ -330,6 +332,8 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       activeAudio: null,
       videoAvailable: {},
       micGateReady: false,
+      homeworkResults: [],
+      homeworkComplete: false,
     };
 
     if (params.get('code')) {
@@ -412,6 +416,8 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       state.activeModeId = modeId;
       state.stepIndex = 0;
       state.modePicked = true;
+      state.homeworkResults = [];
+      state.homeworkComplete = false;
       stopPlayback();
       modePicker?.classList.add('hidden');
       practiceScreen?.classList.remove('hidden');
@@ -528,6 +534,28 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
         .join('');
     }
 
+    function renderFrameStems(step) {
+      const el = document.getElementById('frame-stems');
+      if (!el) return;
+      const stems = step?.check_mode === 'frame' && Array.isArray(step.stems) ? step.stems : null;
+      if (!stems || !stems.length) {
+        el.classList.add('hidden');
+        el.innerHTML = '';
+        return;
+      }
+      el.innerHTML = stems
+        .map(
+          (stem, i) => `
+            <div class="flex items-start gap-3">
+              <span class="mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-gold/20 text-xs font-extrabold text-gold">${i + 1}</span>
+              <p class="text-sm leading-relaxed text-cream-muted">${escapeHtml(stem.text_en || '')}</p>
+            </div>
+          `,
+        )
+        .join('');
+      el.classList.remove('hidden');
+    }
+
     function renderStep() {
       const mode = activeMode();
       const step = currentStep();
@@ -539,6 +567,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
 
       viEl.textContent = step.prompt_vi || step.question_vi || step.label_vi || '';
       enEl.textContent = step.prompt_en || step.question_en || '';
+      renderFrameStems(step);
 
       const isQuestion = step.kind === 'question';
       recordBtn.textContent = isQuestion ? '🎤 Trả lời Minny' : '🎤 Con nói';
@@ -558,6 +587,84 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       return words.map((w) => `<span class="minny-word minny-word--${tone}">${escapeHtml(w)}</span>`).join('');
     }
 
+    // Homework mode (any step kind) accumulates each completed step's score so
+    // the end-of-set summary can list them; keyed by step id so a retry on the
+    // same step replaces its entry instead of duplicating it.
+    function finalizeHomeworkStep(result, isLast) {
+      if (state.activeModeId !== 'homework') return;
+      const step = currentStep();
+      const stepId = step?.id || `step_${state.stepIndex}`;
+      const scorePercent = result.check_mode === 'frame' ? result.matchPct : result.score_percent;
+      const entry = { step_id: stepId, ok: true, score_percent: scorePercent };
+      const existingIdx = state.homeworkResults.findIndex((r) => r.step_id === stepId);
+      if (existingIdx >= 0) state.homeworkResults[existingIdx] = entry;
+      else state.homeworkResults.push(entry);
+      if (isLast) appendHomeworkSummary();
+    }
+
+    function appendHomeworkSummary() {
+      const resultEl = document.getElementById('speaking-result');
+      const nextBtn = document.getElementById('speaking-next');
+      if (!resultEl || !nextBtn) return;
+
+      const rows = state.homeworkResults
+        .map((r, i) => {
+          const pct = Number.isFinite(Number(r.score_percent)) ? `${Math.round(Number(r.score_percent))}%` : '—';
+          return `<p class="mt-1 text-sm text-cream-muted">Câu ${i + 1}: ${pct}</p>`;
+        })
+        .join('');
+
+      const summary = document.createElement('div');
+      summary.className = 'mt-4 border-t border-cream/10 pt-4';
+      summary.innerHTML = `
+        <p class="font-display text-lg font-bold text-cream">Con đã hoàn thành bài tập thầy giao! 🎉</p>
+        ${rows}
+      `;
+      resultEl.appendChild(summary);
+
+      state.homeworkComplete = true;
+      nextBtn.classList.remove('hidden');
+      nextBtn.textContent = 'Xong bài tập';
+    }
+
+    function rubricRow(ok, label) {
+      const mark = ok
+        ? '<span class="minny-word minny-word--good">✓</span>'
+        : '<span class="minny-word minny-word--miss">—</span>';
+      return `<p class="mt-2 flex items-center gap-2 text-sm text-cream/85">${mark}<span>${escapeHtml(label)}</span></p>`;
+    }
+
+    function renderFrameResult(result) {
+      const resultEl = document.getElementById('speaking-result');
+      const actionsEl = document.getElementById('speaking-actions');
+      const matchPct = Math.round(Number(result.matchPct) || 0);
+      setMinnyMood(matchPct >= 70 ? 'celebrate' : 'encourage');
+
+      const rubric = result.rubric || {};
+      const rubricHtml = [
+        rubricRow(!!rubric.spokeAllStems, 'Nói đủ các câu trong khung'),
+        rubricRow(!!rubric.durationOnTarget, 'Đủ thời gian'),
+        rubricRow(!!rubric.spokeClearly, 'Nói to, rõ ràng'),
+      ].join('');
+
+      resultEl.classList.remove('hidden');
+      resultEl.innerHTML = `
+        <p class="font-display text-xl font-bold text-gold">Khớp bài thầy dạy: ${matchPct}%</p>
+        <div class="mt-3">${rubricHtml}</div>
+        <p class="mt-4 rounded-2xl border border-dashed border-accent/40 px-4 py-2 text-sm text-cream-muted">😄 Con nhớ cười khi quay video nộp bài thầy nhé!</p>
+      `;
+
+      actionsEl.classList.remove('hidden');
+      const mode = activeMode();
+      const isLast = mode ? state.stepIndex >= mode.steps.length - 1 : true;
+      document.getElementById('speaking-next').classList.toggle('hidden', isLast);
+      document.getElementById('speaking-next').textContent = 'Bước tiếp theo';
+
+      finalizeHomeworkStep(result, isLast);
+
+      logPractice({ ...result, score_percent: matchPct });
+    }
+
     function renderResult(result) {
       const resultEl = document.getElementById('speaking-result');
       const actionsEl = document.getElementById('speaking-actions');
@@ -567,6 +674,11 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
         resultEl.innerHTML = `<p class="text-lg font-bold text-gold">${escapeHtml(result?.message || 'Chưa nghe rõ — thử lại nhé!')}</p>`;
         actionsEl.classList.remove('hidden');
         document.getElementById('speaking-next').classList.add('hidden');
+        return;
+      }
+
+      if (result.check_mode === 'frame') {
+        renderFrameResult(result);
         return;
       }
 
@@ -602,6 +714,8 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       const stepKind = currentStep()?.kind;
       document.getElementById('speaking-next').textContent =
         stepKind === 'question' ? 'Câu tiếp theo' : 'Bước tiếp theo';
+
+      finalizeHomeworkStep(result, isLast);
 
       logPractice(result);
     }
@@ -766,12 +880,26 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       const formData = new FormData();
       formData.append('access_code', state.accessCode);
       formData.append('pack_id', state.packId || 'practice');
+      const isFrame = prompt.check_mode === 'frame';
       formData.append(
         'expected_text',
-        prompt.expected_text || prompt.story_context || prompt.question_en || prompt.prompt_en || '',
+        prompt.expected_text
+          || prompt.story_context
+          || prompt.question_en
+          || prompt.prompt_en
+          // Frame steps have none of the above (they carry `stems` instead) —
+          // fall back to the stem text so the backend's required expected_text
+          // field is never empty for a frame submission.
+          || (isFrame && Array.isArray(prompt.stems) ? prompt.stems.map((s) => s.text_en || '').join(' ') : '')
+          || '',
       );
       formData.append('check_mode', prompt.check_mode || 'open');
       formData.append('practice_mode', '1');
+      formData.append('max_seconds', String(stepMaxSeconds(prompt)));
+      if (isFrame) {
+        formData.append('stems', JSON.stringify(prompt.stems || []));
+        formData.append('duration_seconds', String(telemetry?.duration_seconds ?? 0));
+      }
       formData.append('audio', blob, audioUploadFilename(blob));
       if (telemetry && window.R2LRecorder?.appendTelemetry) {
         window.R2LRecorder.appendTelemetry(formData, telemetry);
@@ -888,6 +1016,10 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
             clearInterval(state.timerId);
             state.timerId = null;
           }
+          // state.secondsLeft still holds the countdown value at the moment
+          // recording stopped (cleanupRecording, which resets it, hasn't run
+          // yet) — so target minus remaining gives actual elapsed seconds.
+          const elapsedSeconds = Math.max(0, stepMaxSeconds(prompt) - state.secondsLeft);
           let blob = null;
           try {
             blob = await recorder.stop();
@@ -914,6 +1046,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
               voiced,
               engine: recorder.engine || 'mr',
               mimeType: blob.type || recorder.mimeType || '',
+              duration_seconds: elapsedSeconds,
             });
           } else {
             state.status = 'idle';
@@ -1032,6 +1165,12 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
     });
 
     document.getElementById('speaking-next')?.addEventListener('click', () => {
+      if (state.activeModeId === 'homework' && state.homeworkComplete) {
+        state.homeworkComplete = false;
+        state.homeworkResults = [];
+        showModePicker();
+        return;
+      }
       const mode = activeMode();
       if (mode && state.stepIndex < mode.steps.length - 1) {
         state.stepIndex += 1;
