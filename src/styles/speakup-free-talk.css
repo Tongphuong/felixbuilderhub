@@ -1,0 +1,390 @@
+/* SpeakUp Phase 8a — Free Talking conversation UI.
+   New states only: everything here is additive, scoped to #free-talk-screen.
+   Existing Phase 2/7a homework styles (speaking.astro's inline <style>) are
+   untouched. Tokens come from design-system.css (--navy-*, --gold*, --cream*). */
+
+#free-talk-screen .minny-end-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 999px;
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-body);
+  background: transparent;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+#free-talk-screen .minny-end-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.minny-timer {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 800;
+  font-size: 1.25rem;
+  color: var(--gold-light);
+  font-variant-numeric: tabular-nums;
+  transition: color 250ms ease;
+}
+
+.minny-timer--warn {
+  color: #f2a86b;
+}
+
+.minny-timer--settled {
+  color: var(--gold);
+  opacity: 0.5;
+}
+
+.minny-turn-dots {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+@media (min-width: 640px) {
+  .minny-turn-dots {
+    gap: 6px;
+  }
+}
+
+.minny-turn-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--cream) 18%, transparent);
+  flex-shrink: 0;
+}
+
+@media (min-width: 640px) {
+  .minny-turn-dot {
+    width: 9px;
+    height: 9px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .minny-turn-dot {
+    width: 10px;
+    height: 10px;
+  }
+}
+
+.minny-turn-dot--used {
+  background: var(--gold);
+}
+
+/* "Minny đang nghĩ..." thinking state */
+
+.minny-avatar--thinking {
+  animation: minny-breathe 2.4s ease-in-out infinite;
+}
+
+@keyframes minny-breathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.03); }
+}
+
+.minny-bubble--thinking {
+  display: none;
+  align-items: center;
+  gap: 6px;
+  margin-top: 0.5rem;
+}
+
+.minny-bubble--thinking.is-visible {
+  display: flex;
+}
+
+.minny-bubble--thinking span {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--gold-light);
+  animation: minny-thinking-dot 1.2s infinite;
+}
+
+.minny-bubble--thinking span:nth-child(2) { animation-delay: 0.2s; }
+.minny-bubble--thinking span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes minny-thinking-dot {
+  0%, 80%, 100% { opacity: 0.25; transform: translateY(0); }
+  40% { opacity: 1; transform: translateY(-3px); }
+}
+
+/* Tap-to-play fallback chip (iOS Safari autoplay block) */
+
+.minny-play-chip {
+  display: none;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.5rem;
+  border: none;
+  border-radius: 999px;
+  padding: 10px 20px;
+  font-size: 0.9rem;
+  font-weight: 800;
+  background: var(--gold);
+  color: var(--navy-950);
+  box-shadow:
+    0 4px 20px -4px color-mix(in srgb, var(--gold) 60%, transparent),
+    0 0 0 4px color-mix(in srgb, var(--gold) 15%, transparent);
+  animation: minny-glow 2s ease-in-out infinite;
+  transition: opacity 200ms ease;
+}
+
+.minny-play-chip.is-visible {
+  display: inline-flex;
+}
+
+.minny-play-chip:active {
+  transform: translateY(1px);
+}
+
+@keyframes minny-glow {
+  0%, 100% {
+    box-shadow:
+      0 4px 20px -4px color-mix(in srgb, var(--gold) 60%, transparent),
+      0 0 0 4px color-mix(in srgb, var(--gold) 15%, transparent);
+  }
+  50% {
+    box-shadow:
+      0 4px 28px -2px color-mix(in srgb, var(--gold) 75%, transparent),
+      0 0 0 7px color-mix(in srgb, var(--gold) 22%, transparent);
+  }
+}
+
+/* Turn transcript */
+
+.minny-transcript {
+  max-height: 46vh;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+
+.minny-transcript__turn {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.minny-transcript__kid-chip {
+  align-self: flex-end;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--navy-950);
+  background: var(--cream-muted);
+  max-width: 80%;
+}
+
+.minny-transcript__reply {
+  align-self: flex-start;
+  border-radius: 16px;
+  padding: 10px 16px;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  color: var(--cream);
+  background: color-mix(in srgb, var(--cream) 10%, transparent);
+  max-width: 85%;
+}
+
+@media (min-width: 1024px) {
+  .minny-transcript__reply,
+  .minny-transcript__kid-chip {
+    max-width: 72%;
+  }
+}
+
+/* Record button — recording-state ring, additive only; base .minny-btn /
+   .minny-btn--record styling (shared with the homework screen) is untouched */
+
+#free-talk-record {
+  position: relative;
+  border-radius: 999px;
+  width: 96px;
+  height: 96px;
+  min-height: 0;
+  padding: 0;
+  font-size: 2rem;
+  margin: 0 auto;
+}
+
+@media (min-width: 640px) {
+  #free-talk-record { width: 104px; height: 104px; }
+}
+
+@media (min-width: 1024px) {
+  #free-talk-record { width: 120px; height: 120px; }
+}
+
+#free-talk-record.is-recording::after {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  border-radius: 999px;
+  border: 3px solid color-mix(in srgb, var(--danger) 70%, var(--gold));
+  animation: minny-pulse-ring 1.4s ease-out infinite;
+}
+
+@keyframes minny-pulse-ring {
+  0% { transform: scale(0.92); opacity: 0.9; }
+  100% { transform: scale(1.25); opacity: 0; }
+}
+
+/* Desktop waveform strip — decorative only, not audio-reactive */
+
+.minny-waveform {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 3px;
+  height: 28px;
+  margin-top: 12px;
+}
+
+.minny-waveform span {
+  width: 3px;
+  border-radius: 2px;
+  background: var(--cream-dim);
+  height: 8px;
+}
+
+.minny-waveform.is-recording span {
+  animation: minny-wave 600ms ease-in-out infinite;
+  background: var(--gold-light);
+}
+
+.minny-waveform span:nth-child(2n) { animation-delay: 100ms; }
+.minny-waveform span:nth-child(3n) { animation-delay: 200ms; }
+.minny-waveform span:nth-child(4n) { animation-delay: 300ms; }
+
+@keyframes minny-wave {
+  0%, 100% { height: 8px; }
+  50% { height: 24px; }
+}
+
+/* Layout grid: phone (default) single column; tablet/desktop split */
+
+.minny-conversation-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+.minny-recorder-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 16px;
+}
+
+@media (min-width: 768px) {
+  .minny-conversation-grid {
+    grid-template-columns: 1fr 280px;
+  }
+
+  .minny-recorder-panel {
+    border-radius: 20px;
+    background: var(--navy-850);
+    align-self: start;
+  }
+}
+
+@media (min-width: 1024px) {
+  .minny-conversation-grid {
+    grid-template-columns: 320px 1fr 320px;
+  }
+}
+
+/* Wrap-up + summary panels */
+
+.minny-wrap-up,
+.minny-summary-panel {
+  border-radius: 24px;
+  background: var(--navy-900);
+  padding: 24px;
+  text-align: center;
+}
+
+.minny-wrap-up__text {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--cream);
+  margin-bottom: 16px;
+}
+
+.minny-summary-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin: 16px 0;
+}
+
+.minny-summary-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.minny-summary-stat strong {
+  font-family: 'Manrope', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--gold-light);
+}
+
+.minny-summary-stat span {
+  font-size: 0.75rem;
+  color: var(--cream-dim);
+}
+
+.minny-summary-line {
+  color: var(--cream-muted);
+  font-size: 0.9rem;
+  margin-bottom: 16px;
+}
+
+/* Reduced motion — freeze/soften every animated element above */
+
+@media (prefers-reduced-motion: reduce) {
+  .minny-avatar--thinking {
+    animation: none;
+    transform: scale(1);
+  }
+
+  .minny-bubble--thinking span {
+    animation: none;
+    opacity: 0.5;
+    transform: none;
+  }
+
+  #free-talk-record.is-recording::after {
+    animation: none;
+    transform: scale(1.1);
+    opacity: 0.6;
+  }
+
+  .minny-play-chip {
+    animation: none;
+  }
+
+  .minny-waveform.is-recording span {
+    animation: none;
+    background: var(--gold-light);
+  }
+
+  .minny-timer {
+    transition: none;
+  }
+}

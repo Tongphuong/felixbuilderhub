@@ -190,6 +190,15 @@ export function buildSpeakingModes({ studentName, storyTitle, topic, v2Pack, cod
     modes.unshift(homeworkMode);
   }
 
+  if (codeData?.is_test === true) {
+    modes.push({
+      id: 'free_talk',
+      title_vi: 'Nói chuyện với Minny',
+      subtitle_vi: 'Con trò chuyện tự do với Minny bằng tiếng Anh.',
+      steps: [],
+    });
+  }
+
   return modes;
 }
 

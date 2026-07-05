@@ -4,8 +4,8 @@
 - Current goal: Build all 8 phases of `_ops/specs/SPEC_SPEAKUP_V0.md` on branch `claude/speakup-v0`, QA the full pilot on preview, THEN merge to main. No phase merges to main individually.
 - Branch: `claude/speakup-v0` (off `main`)
 - Preview URL: `claude-speakup-v0.felixbuilderhub.pages.dev` (Cloudflare Pages auto-deploy per push, per `claude/<topic>` convention in `BRANCH_CONVENTIONS.md`)
-- Active workers: 0
-- Last updated: 2026-07-05 (Phase 4 + Phase 5 closed out)
+- Active workers: 1 (Aider Senior, Phase 8a dispatch in progress)
+- Last updated: 2026-07-05 (Phase 7b approved by Phuong; Phase 8a — Free Talking UI build — started)
 
 ## Phase tracker (source of truth: `_ops/specs/SPEC_SPEAKUP_V0.md`)
 
@@ -20,9 +20,10 @@ run sequentially even where the spec's dependency graph would allow parallel wor
 | 3 | Phase 3 — Minny TTS + audio cache + canned phrases | Aider Senior | done | yes (1aeaba3) | no |
 | 4 | Phase 4 — Session summaries → parent profile | Aider Senior | done | yes (5921180) | no |
 | 4 | Phase 5 — Conversation turn endpoint (test codes only) | Aider Senior | done | yes (5921180) | no |
-| 4 | Phase 7b — Conversation UI design mocks | Claude Design | brief drafted (`_ops/specs/BRIEF_SPEAKUP_PHASE7B_DESIGN.md`), awaiting Phuong to run it through Claude Design | n/a | no |
+| 4 | Phase 7b — Conversation UI design mocks | Claude Design | approved (Phuong, 2026-07-05) | n/a (design folder: `SpeakUp Phase 7b Free Talking/design_handoff_speakup_phase_7b/`) | n/a |
 | 5 | Phase 6 — Guardrail layer + red-team suite | Aider Senior (plumbing) + Sonnet 5 (wordlists/redirects/red-team) | not started | no | no |
-| 6 | Phase 8 — Free Talking UI + pilot enablement | Aider Senior; gate-removal is a separate final commit | not started | no | no |
+| 6 | Phase 8a — Free Talking UI (build only, `is_test`-gated, no pilot enablement) | Aider Senior (dispatch) + Claude (review) | in progress | no | no |
+| 6 | Phase 8b — Gate removal (pilot enablement) | Aider Senior; separate final commit, blocked on Phase 6 | not started | no | no |
 
 Waves 1 and 4 have two parallelizable items each (no shared files); everything
 else is strictly sequential because it touches `speaking.astro`. **No phase
@@ -60,26 +61,60 @@ assigns, commits, merges, deploys, or spends.
 
 ## Current task
 
-- Status: none
-- Task ID: none
-- Owner: none
-- Lane: none
-- Acceptance criteria: none
-- Files owned: none
-- Stop condition: none
-- Cost ceiling: none
-- Started: none
+- Status: active
+- Task ID: speakup-phase8a-free-talking-ui
+- Owner: Aider Senior (dispatch packets) + Claude (review/integration)
+- Lane: `claude/speakup-v0`, primary checkout (no new worktree needed —
+  `hub-claude-speakup-v0-worktree2` remains idle/clean)
+- Acceptance criteria:
+  1. Screen 1 (main conversation view: hero+bubble, scrolling transcript,
+     mm:ss countdown, 12-turn dot indicator, existing record button reused)
+  2. Screen 2 ("Minny đang nghĩ..." thinking state: breathing avatar + 3-dot
+     bounce, record button disabled)
+  3. Screen 3 (tap-to-play fallback chip for autoplay-blocked audio)
+  4. Screen 4 (cap-reached wrap-up, distinct 5-min vs 12-turn copy)
+  5. Screen 5 (session summary: turns/sentences/minutes + encouragement +
+     2 CTAs — XP/rank/streak lines dropped per Phuong's decision, spec's own
+     non-goal)
+  6. Wired to existing `/api/minny-conversation` start/turn actions;
+     `is_test` gate line untouched
+  7. Transcript obtained via existing `/api/read2lead-speaking-check`
+     (`pack_id: 'general'`) — no new transcription endpoint
+  8. Client never invents cap/end state independently — always re-synced
+     from the server's last response
+  9. `prefers-reduced-motion` variants + ARIA attributes per the Phase 7b
+     design README, built alongside the visuals
+  10. Existing Phase 2/7a components (mode card, mic-check, record button,
+      homework flow) untouched
+  11. `node --test` green, `founder_check.py --gate build` PASS
+- Files owned: `src/pages/read2lead/speaking.astro`,
+  `src/styles/speakup-free-talk.css` (new),
+  `functions/api/minny-speaking-context.js`,
+  `functions/api/minny-conversation.js` (TTS-embedding lines only — not the
+  `is_test` check), `tests/minny-speaking.test.mjs`,
+  `tests/minny-conversation.test.mjs`
+- Stop condition: any diff touching the `is_test` check,
+  `r2l-recorder-script.mjs`, `r2l-mic-check.js`, or an existing homework-mode
+  function body — stop and escalate before continuing
+- Cost ceiling: USD 15–20 across the 3 dispatch packets (estimate; this is
+  code/markup editing, not inference-heavy)
+- Started: 2026-07-05
 - Cost spent: USD 0
 
 ## File ownership
 
 | Path or area | Owner | State |
 |---|---|---|
-| none | none | none |
+| `src/pages/read2lead/speaking.astro` | Aider Senior (dispatch) + Claude (review) | active |
+| `src/styles/speakup-free-talk.css` (new) | Aider Senior (dispatch) + Claude (review) | active |
+| `functions/api/minny-speaking-context.js` | Aider Senior (dispatch) + Claude (review) | active |
+| `functions/api/minny-conversation.js` | Aider Senior (dispatch, TTS lines only) + Claude (review) | active |
+| `tests/minny-speaking.test.mjs`, `tests/minny-conversation.test.mjs` | Aider Senior (dispatch) + Claude (review) | active |
 
 ## Acceptance criteria reconciliation
 
-- none
+- pending — will be filled in per-bullet against the 11 criteria above once
+  all 3 dispatch packets land and tests pass
 
 ## Daily update
 

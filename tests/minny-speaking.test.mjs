@@ -230,3 +230,34 @@ test('buildSpeakingModes without homework unchanged', () => {
   assert.equal(modes[0].id, 'retell');
   assert.equal(modes[1].id, 'questions');
 });
+
+test('buildSpeakingModes appends free_talk mode only for is_test codes', () => {
+  const withTest = buildSpeakingModes({
+    studentName: 'Linh',
+    storyTitle: 'The Puppy',
+    topic: 'animals',
+    v2Pack: null,
+    codeData: { is_test: true },
+  });
+  assert.equal(withTest.length, 3);
+  assert.equal(withTest[2].id, 'free_talk');
+  assert.equal(withTest[2].steps.length, 0);
+
+  const withoutTest = buildSpeakingModes({
+    studentName: 'Linh',
+    storyTitle: 'The Puppy',
+    topic: 'animals',
+    v2Pack: null,
+    codeData: { is_test: false },
+  });
+  assert.equal(withoutTest.length, 2);
+  assert.ok(!withoutTest.some((m) => m.id === 'free_talk'));
+
+  const withoutCodeData = buildSpeakingModes({
+    studentName: 'Linh',
+    storyTitle: 'The Puppy',
+    topic: 'animals',
+    v2Pack: null,
+  });
+  assert.equal(withoutCodeData.length, 2);
+});

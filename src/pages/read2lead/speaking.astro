@@ -4,6 +4,7 @@ import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import MicCheckPanel from '../../components/read2lead/v2/MicCheckPanel.astro';
 import { r2lRecorderScriptSrc } from '../../scripts/r2l-recorder-script.mjs';
+import '../../styles/speakup-free-talk.css';
 
 const r2lRecorderSrc = r2lRecorderScriptSrc();
 ---
@@ -104,6 +105,56 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
           <div id="speaking-actions" class="hidden grid grid-cols-1 gap-3 sm:grid-cols-2">
             <button id="speaking-retry" type="button" class="minny-btn minny-btn--secondary">Luyện lại</button>
             <button id="speaking-next" type="button" class="minny-btn minny-btn--primary">Tiếp theo</button>
+          </div>
+        </div>
+
+        <!-- Free Talking screen (Phase 8a). Hidden by default. Sibling of
+             #practice-screen. Reuses the shared Minny hero/avatar above
+             (#minny-video/#minny-fallback/#minny-greeting, already visible
+             inside #speaking-shell) — this screen does not repeat it. -->
+        <div id="free-talk-screen" class="hidden space-y-4">
+          <div class="flex items-center justify-between gap-3">
+            <button id="free-talk-end" type="button" class="minny-end-btn">Kết thúc</button>
+            <div class="flex items-center gap-3">
+              <div id="free-talk-dots" class="minny-turn-dots" aria-label="Còn 12 lượt trong tổng 12"></div>
+              <span id="free-talk-timer" class="minny-timer" role="timer" aria-live="off">5:00</span>
+              <span id="free-talk-timer-announce" class="sr-only" aria-live="polite"></span>
+            </div>
+          </div>
+
+          <div id="free-talk-status-bubble" class="minny-bubble rounded-3xl bg-cream/10 p-4 shadow-md shadow-black/10">
+            <p id="free-talk-status-eyebrow" class="fx-eyebrow">Đợi con nói</p>
+            <div id="free-talk-thinking-dots" class="minny-bubble--thinking"><span></span><span></span><span></span></div>
+            <button id="free-talk-play-chip" type="button" class="minny-play-chip" aria-label="Nghe Minny nói">🔊 Nghe Minny</button>
+          </div>
+
+          <div id="free-talk-transcript" class="minny-transcript space-y-3" role="log" aria-live="polite" aria-atomic="false"></div>
+
+          <div class="minny-conversation-grid">
+            <div class="minny-recorder-panel">
+              <button id="free-talk-record" type="button" class="minny-btn minny-btn--record" aria-label="Nhấn để nói">🎤</button>
+              <p id="free-talk-record-label" class="text-center text-sm text-cream-muted">Nhấn để nói</p>
+              <div id="free-talk-waveform" class="minny-waveform" aria-hidden="true">
+                <span></span><span></span><span></span><span></span><span></span><span></span>
+                <span></span><span></span><span></span><span></span><span></span><span></span>
+              </div>
+            </div>
+          </div>
+
+          <div id="free-talk-wrapup" class="hidden minny-wrap-up">
+            <p id="free-talk-wrapup-text" class="minny-wrap-up__text"></p>
+            <button id="free-talk-wrapup-cta" type="button" class="fx-btn fx-btn--primary">Xem tóm tắt →</button>
+          </div>
+
+          <div id="free-talk-summary" class="hidden minny-summary-panel">
+            <p class="fx-eyebrow">Tóm tắt hôm nay</p>
+            <h3 class="font-display text-lg font-bold text-cream">Con đã trò chuyện rất giỏi!</h3>
+            <div id="free-talk-summary-stats" class="minny-summary-stats"></div>
+            <p id="free-talk-summary-line" class="minny-summary-line"></p>
+            <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+              <button id="free-talk-summary-again" type="button" class="fx-btn fx-btn--primary">Nói chuyện nữa với Minny</button>
+              <button id="free-talk-summary-home" type="button" class="minny-btn minny-btn--secondary">Về trang chính</button>
+            </div>
           </div>
         </div>
 
@@ -315,7 +366,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       try { if (m && typeof m.stop === 'function') m.stop(); } catch {}
     }
 
-    const MODE_EMOJI = { homework: '📚', retell: '📖', questions: '💬' };
+    const MODE_EMOJI = { homework: '📚', retell: '📖', questions: '💬', free_talk: '🗣️' };
 
     const state = {
       accessCode: '',
