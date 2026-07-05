@@ -475,7 +475,32 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       }
 
       const text = step.prompt_en || step.question_en || '';
+      if (step.kind === 'homework' && text) {
+        playMinnyVoice(text);
+        return;
+      }
       speakEnglish(text);
+    }
+
+    async function playMinnyVoice(text) {
+      try {
+        const res = await fetch('/api/minny-voice', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ access_code: state.accessCode, text }),
+        });
+        const data = await res.json();
+        if (!res.ok || !data?.ok || !data.audio_b64) throw new Error('minny_voice_failed');
+        const audio = new Audio(`data:${data.content_type || 'audio/mpeg'};base64,${data.audio_b64}`);
+        state.activeAudio = audio;
+        audio.addEventListener('ended', () => {
+          setMinnyMood('idle');
+          state.activeAudio = null;
+        });
+        await audio.play();
+      } catch {
+        speakEnglish(text);
+      }
     }
 
     function speakEnglish(text) {
