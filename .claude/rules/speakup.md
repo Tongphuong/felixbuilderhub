@@ -54,6 +54,21 @@ to Phases 1-3):
   actual-spend figure recorded at completion — `founder_check.py --gate
   build` now enforces this field is non-empty.
 
+## Visual verification against Claude Design mocks (added 2026-07-06)
+
+Per `_ops/AGENTS.md` rule 18. Any speaking.astro screen whose acceptance
+criteria reference a Phase 7a/7b (or later) Claude Design mock is not done
+until you have actually rendered it — a local `wrangler pages dev` + seeded
+KV code, or the Cloudflare preview — and taken a screenshot to compare
+side-by-side against the mock's `.dc.html`. Record the file path and verdict
+in CONTROL.md's acceptance-criteria reconciliation. Passing `node --test`
+and a clean code review do not establish this — added after Phases 2 and 8a
+both shipped and were marked done with a real gap between the approved
+design and the live page (mic-check panel left visible during Free Talking;
+the entire Phase 7a visual redesign never implemented for the homework frame
+screen), undetected because no session had rendered the page until Phương
+found it by eye.
+
 ## Scope reminder
 
 V0 pilot is capped at 20 students, two modes: homework practice (feedback

@@ -89,13 +89,20 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
           </div>
 
           <div id="frame-stems" class="hidden space-y-3 rounded-3xl border border-cream/10 bg-navy-900/60 p-5"></div>
+          <p id="frame-meta" class="hidden -mt-2 text-xs font-extrabold uppercase tracking-widest text-cream-dim"></p>
 
           <button id="speaking-listen" type="button" class="minny-btn minny-btn--listen w-full">
             🔊 Nghe Minny
           </button>
 
           <div class="space-y-2">
-            <button id="speaking-record" type="button" class="minny-btn minny-btn--record w-full">🎤 Con nói</button>
+            <div id="record-ring" class="minny-frame-ring-wrap">
+              <button id="speaking-record" type="button" class="minny-btn minny-btn--record w-full">🎤 Con nói</button>
+            </div>
+            <p id="frame-listening-caption" class="hidden minny-frame-listening">
+              <span class="minny-frame-listening__dot"></span>
+              Minny đang lắng nghe 🎧
+            </p>
             <p id="speaking-status" class="text-center text-sm text-cream-muted"></p>
             <span id="speaking-timer" class="hidden block text-center text-lg font-bold text-gold"></span>
           </div>
@@ -173,7 +180,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
 
   <Footer />
 
-  <style>
+  <style is:global>
     .minny-avatar {
       width: 11rem;
       height: 11rem;
@@ -349,6 +356,154 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       background: rgb(245 230 211 / 0.1);
       color: rgb(245 230 211 / 0.75);
     }
+
+.minny-frame-ring-wrap {
+  --pct: 0;
+}
+.minny-frame-ring-wrap.is-frame {
+  width: 112px;
+  height: 112px;
+  margin: 0 auto;
+  padding: 8px;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: conic-gradient(rgb(200 143 56) calc(var(--pct) * 1%), rgb(200 143 56 / 0.15) 0);
+  transition: background 0.2s linear;
+}
+.minny-frame-ring-wrap.is-frame .minny-btn--record {
+  width: 96px;
+  height: 96px;
+  min-height: 96px;
+  border-radius: 9999px;
+  font-size: 1.75rem;
+  background: linear-gradient(160deg, rgb(248 113 113), rgb(214 69 69));
+  border-color: rgb(214 69 69 / 0.6);
+  box-shadow: 0 4px 0 rgb(120 30 30);
+}
+.minny-frame-ring-wrap.is-frame .minny-btn--record.is-recording {
+  animation: minny-frame-pulse 1.6s ease-in-out infinite;
+}
+@keyframes minny-frame-pulse {
+  0%, 100% { box-shadow: 0 4px 0 rgb(120 30 30), 0 0 0 0 rgb(248 113 113 / 0.45); }
+  50% { box-shadow: 0 4px 0 rgb(120 30 30), 0 0 0 14px rgb(248 113 113 / 0); }
+}
+.minny-frame-listening {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  color: rgb(217 199 164);
+}
+.minny-frame-listening.hidden {
+  display: none;
+}
+.minny-frame-listening__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  background: rgb(248 113 113);
+  box-shadow: 0 0 6px rgb(248 113 113 / 0.8);
+  animation: minny-frame-dot 1.2s ease-in-out infinite;
+}
+@keyframes minny-frame-dot {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+.minny-frame-stem__num {
+  background: rgb(200 143 56 / 0.2);
+  color: rgb(200 143 56);
+}
+.minny-blank {
+  display: inline-block;
+  min-width: 2.5em;
+  border-bottom: 2px dashed rgb(200 143 56 / 0.6);
+  color: rgb(242 204 126);
+}
+.minny-frame-score-card {
+  border-radius: 20px;
+  padding: 20px;
+  background: linear-gradient(160deg, rgb(200 143 56 / 0.22), rgb(23 53 74 / 0.6));
+  border: 1px solid rgb(200 143 56 / 0.35);
+  text-align: center;
+}
+.minny-frame-score-card__eyebrow {
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgb(217 199 164);
+}
+.minny-frame-score-card__value {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 800;
+  font-size: 2.75rem;
+  color: rgb(242 204 126);
+  line-height: 1.1;
+}
+.minny-frame-rubric-card {
+  margin-top: 12px;
+  border-radius: 18px;
+  border: 1px solid rgb(245 230 211 / 0.12);
+  background: rgb(23 53 74 / 0.5);
+  padding: 16px;
+}
+.minny-frame-rubric-card__eyebrow {
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgb(170 150 115);
+  margin-bottom: 8px;
+}
+.minny-frame-rubric-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 0;
+}
+.minny-frame-rubric-row__mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+  border-radius: 9999px;
+  font-size: 0.85rem;
+  font-weight: 800;
+}
+.minny-frame-rubric-row__mark.is-ok {
+  background: rgb(111 207 151 / 0.2);
+  color: rgb(111 207 151);
+}
+.minny-frame-rubric-row__mark.is-miss {
+  background: rgb(245 230 211 / 0.1);
+  color: rgb(170 150 115);
+}
+.minny-frame-smile-chip {
+  margin-top: 12px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  border-radius: 16px;
+  border: 2px dashed rgb(200 143 56 / 0.45);
+  padding: 14px;
+}
+.minny-frame-smile-chip__eyebrow {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: rgb(200 143 56);
+}
+@media (prefers-reduced-motion: reduce) {
+  .minny-frame-ring-wrap.is-frame .minny-btn--record.is-recording { animation: none; }
+  .minny-frame-listening__dot { animation: none; opacity: 0.9; }
+}
   </style>
 
   <script>
@@ -458,6 +613,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
 
     function showModePicker() {
       state.modePicked = false;
+      document.querySelector('[data-r2l-mic-check]')?.classList.remove('hidden');
       modePicker?.classList.remove('hidden');
       practiceScreen?.classList.add('hidden');
       setMinnyMood('idle');
@@ -616,24 +772,32 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
 
     function renderFrameStems(step) {
       const el = document.getElementById('frame-stems');
+      const metaEl = document.getElementById('frame-meta');
       if (!el) return;
       const stems = step?.check_mode === 'frame' && Array.isArray(step.stems) ? step.stems : null;
       if (!stems || !stems.length) {
         el.classList.add('hidden');
         el.innerHTML = '';
+        if (metaEl) metaEl.classList.add('hidden');
         return;
       }
+      const withBlanks = (text) => escapeHtml(text || '').replace(/_{2,}/g, '<span class="minny-blank">___</span>');
       el.innerHTML = stems
         .map(
           (stem, i) => `
             <div class="flex items-start gap-3">
-              <span class="mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-gold/20 text-xs font-extrabold text-gold">${i + 1}</span>
-              <p class="text-sm leading-relaxed text-cream-muted">${escapeHtml(stem.text_en || '')}</p>
+              <span class="mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full minny-frame-stem__num text-xs font-extrabold">${i + 1}</span>
+              <p class="text-sm leading-relaxed text-cream-muted">${withBlanks(stem.text_en)}</p>
             </div>
           `,
         )
         .join('');
       el.classList.remove('hidden');
+      if (metaEl) {
+        const seconds = Number(step.max_seconds) || 60;
+        metaEl.textContent = `${stems.length} câu · ~${seconds} giây`;
+        metaEl.classList.remove('hidden');
+      }
     }
 
     function renderStep() {
@@ -735,10 +899,14 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
     }
 
     function rubricRow(ok, label) {
-      const mark = ok
-        ? '<span class="minny-word minny-word--good">✓</span>'
-        : '<span class="minny-word minny-word--miss">—</span>';
-      return `<p class="mt-2 flex items-center gap-2 text-sm text-cream/85">${mark}<span>${escapeHtml(label)}</span></p>`;
+      const markClass = ok ? 'is-ok' : 'is-miss';
+      const mark = ok ? '✓' : '—';
+      return `
+        <div class="minny-frame-rubric-row">
+          <span class="minny-frame-rubric-row__mark ${markClass}">${mark}</span>
+          <span class="text-sm text-cream/85">${escapeHtml(label)}</span>
+        </div>
+      `;
     }
 
     function renderFrameResult(result) {
@@ -756,9 +924,22 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
 
       resultEl.classList.remove('hidden');
       resultEl.innerHTML = `
-        <p class="font-display text-xl font-bold text-gold">Khớp bài thầy dạy: ${matchPct}%</p>
-        <div class="mt-3">${rubricHtml}</div>
-        <p class="mt-4 rounded-2xl border border-dashed border-accent/40 px-4 py-2 text-sm text-cream-muted">😄 Con nhớ cười khi quay video nộp bài thầy nhé!</p>
+        <div class="minny-frame-score-card">
+          <p class="minny-frame-score-card__eyebrow">Điểm hoàn thành</p>
+          <p class="minny-frame-score-card__value">${matchPct}%</p>
+          <p class="mt-1 text-sm text-cream-muted">Khớp bài thầy dạy</p>
+        </div>
+        <div class="minny-frame-rubric-card">
+          <p class="minny-frame-rubric-card__eyebrow">Bảng đánh giá</p>
+          ${rubricHtml}
+        </div>
+        <div class="minny-frame-smile-chip">
+          <span class="text-2xl leading-none">😄</span>
+          <span>
+            <span class="minny-frame-smile-chip__eyebrow">Nhắc nhẹ từ Minny</span>
+            <span class="text-sm text-cream-muted">Con nhớ cười khi quay video nộp bài thầy nhé!</span>
+          </span>
+        </div>
       `;
 
       actionsEl.classList.remove('hidden');
@@ -916,8 +1097,21 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       const isQuestion = step?.kind === 'question';
       const idleLabel = isQuestion ? '🎤 Trả lời Minny' : '🎤 Con nói';
 
+      const isFrame = step?.check_mode === 'frame';
+      const ringEl = document.getElementById('record-ring');
+      const captionEl = document.getElementById('frame-listening-caption');
+      const isRecording = state.status === 'recording';
+      ringEl?.classList.toggle('is-frame', isFrame);
+      btn.classList.toggle('is-recording', isFrame && isRecording);
+      if (isFrame && ringEl) {
+        const maxSeconds = Number(step.max_seconds) || DEFAULT_MAX_SECONDS;
+        const pct = isRecording ? Math.round(100 - (state.secondsLeft / maxSeconds) * 100) : 0;
+        ringEl.style.setProperty('--pct', String(Math.max(0, Math.min(100, pct))));
+      }
+      captionEl?.classList.toggle('hidden', !(isFrame && isRecording));
+
       if (state.status === 'warming') {
-        btn.textContent = '⏳ Chờ micro...';
+        btn.textContent = isFrame ? '⏳' : '⏳ Chờ micro...';
         btn.disabled = true;
         timerEl.classList.add('hidden');
         statusEl.textContent = state.warmupMessage || 'Micro đã bật — chờ 3 giây rồi mới nói nhé…';
@@ -926,7 +1120,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       }
 
       if (state.status === 'recording') {
-        btn.textContent = '⏹ Dừng';
+        btn.textContent = isFrame ? '⏹' : '⏹ Dừng';
         btn.disabled = false;
         timerEl.classList.remove('hidden');
         timerEl.textContent = `${state.secondsLeft}s`;
@@ -937,7 +1131,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
 
       if (state.status === 'uploading') {
         btn.disabled = true;
-        btn.textContent = idleLabel;
+        btn.textContent = isFrame ? '🎤' : idleLabel;
         timerEl.classList.add('hidden');
         statusEl.textContent = 'Minny đang nhận xét...';
         setMinnyMood('listen');
@@ -946,7 +1140,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
 
       const micBlocked = state.modePicked && !state.micGateReady;
       btn.disabled = !micReady() || micBlocked;
-      btn.textContent = idleLabel;
+      btn.textContent = isFrame ? '🎤' : idleLabel;
       timerEl.classList.add('hidden');
       if (micBlocked) {
         statusEl.textContent = 'Con kiểm tra micro ở khung phía trên trước nhé.';
@@ -1459,6 +1653,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
 
     function enterFreeTalking() {
       ftReset();
+      document.querySelector('[data-r2l-mic-check]')?.classList.add('hidden');
       modePicker?.classList.add('hidden');
       practiceScreen?.classList.add('hidden');
       document.getElementById('free-talk-screen')?.classList.remove('hidden');
