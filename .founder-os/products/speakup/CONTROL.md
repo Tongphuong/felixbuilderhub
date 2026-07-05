@@ -5,7 +5,7 @@
 - Branch: `claude/speakup-v0` (off `main`)
 - Preview URL: `claude-speakup-v0.felixbuilderhub.pages.dev` (Cloudflare Pages auto-deploy per push, per `claude/<topic>` convention in `BRANCH_CONVENTIONS.md`)
 - Active workers: 0
-- Last updated: 2026-07-05 (Phase 3 closed out)
+- Last updated: 2026-07-05 (Phase 4 + Phase 5 closed out)
 
 ## Phase tracker (source of truth: `_ops/specs/SPEC_SPEAKUP_V0.md`)
 
@@ -18,9 +18,9 @@ run sequentially even where the spec's dependency graph would allow parallel wor
 | 1 | Phase 7a — Homework-feedback design mocks | Claude Design | approved (Phuong, 2026-07-05) | n/a (design folder: `design_handoff_speakup_phase_7a/`) | n/a |
 | 2 | Phase 2 — Homework Practice mode (no TTS) | Aider Senior (backend) + Claude Sonnet 5 (frontend) | done | yes (b35da76) | no |
 | 3 | Phase 3 — Minny TTS + audio cache + canned phrases | Aider Senior | done | yes (1aeaba3) | no |
-| 4 | Phase 4 — Session summaries → parent profile | Aider Senior | not started | no | no |
-| 4 | Phase 5 — Conversation turn endpoint (test codes only) | Aider Senior | not started | no | no |
-| 4 | Phase 7b — Conversation UI design mocks | Claude Design | not started | n/a | no |
+| 4 | Phase 4 — Session summaries → parent profile | Aider Senior | done | yes (5921180) | no |
+| 4 | Phase 5 — Conversation turn endpoint (test codes only) | Aider Senior | done | yes (5921180) | no |
+| 4 | Phase 7b — Conversation UI design mocks | Claude Design | brief drafted (`_ops/specs/BRIEF_SPEAKUP_PHASE7B_DESIGN.md`), awaiting Phuong to run it through Claude Design | n/a | no |
 | 5 | Phase 6 — Guardrail layer + red-team suite | Aider Senior (plumbing) + Sonnet 5 (wordlists/redirects/red-team) | not started | no | no |
 | 6 | Phase 8 — Free Talking UI + pilot enablement | Aider Senior; gate-removal is a separate final commit | not started | no | no |
 
@@ -77,44 +77,69 @@ assigns, commits, merges, deploys, or spends.
 
 ## Daily update
 
-- Visible result: Phase 3 (Minny voice service) built, reviewed, tested, and
-  committed to `claude/speakup-v0` (1aeaba3) — not yet on preview QA by
-  Phuong. Phases 1, 2, and 7a remain as previously recorded (done/approved,
-  not yet on preview either — the whole pilot QAs together at the end).
-- Completed: dispatched backend (`_minny-tts.js`: OpenAI tts-1-hd/nova call,
-  sha256 cache key, KV cache with no expiry; `_minny-phrases.js`: 12 canned
-  lines; `minny-voice.js`: the POST endpoint, allowlisted to only the
-  caller's own homework sentences or a canned phrase id — never open text)
-  to Aider Senior in one clean pass, no repetition-loop or hallucination
-  incident this time. Reviewed the diff directly against the spec's D3/D6/D7
-  cost and safety reasoning — allowlist is the cost-abuse guard, cache means
-  repeat requests for the same line cost nothing after the first. Then
-  dispatched a small, surgical instruction to Aider Senior for
-  `speaking.astro`'s `playMinnyAudio` (try `/api/minny-voice` for homework
-  steps, fall back to the existing `speechSynthesis` path on any failure
-  including an autoplay-gesture rejection) — applied exactly as specified,
-  no drift, despite this file's rocky history in Phase 2. 754/754 tests green
-  (7 new). `founder_check.py --gate build`: PASS.
-- Cost today: ~USD 0.017 (two Aider Senior dispatches, per aider's own
-  session cost report — `aider-cost` itself has no data yet, worth checking
-  why it isn't tracking).
-- Problem: none blocking. The spec's Phase 3 egress-verification acceptance
-  criterion (a real OpenAI TTS call from the deployed preview, checking for
-  the 403 geo-block class that hit Whisper on 2026-06-11) was **not** run —
-  this session had no Cloudflare/KV credentials to safely call the live
-  preview with a real access code without risking production data. This is
-  the one open acceptance-criterion item for Phase 3.
-- Next: Phase 3's live egress check (needs Phuong or a session with prod
-  credentials). Then Phase 7b (conversation UI mocks, gates Phase 8) and
-  Phase 4 (session summaries) / Phase 5 (conversation endpoint) are next in
-  wave order.
+- Visible result: Phase 4 (session summaries → parent profile) and Phase 5
+  (Free Talking conversation turn endpoint, test-codes-only) built, reviewed,
+  tested, and committed to `claude/speakup-v0` (5921180) — not yet on preview
+  QA by Phuong. Phases 1–3 and 7a remain as previously recorded; the whole
+  pilot still QAs together at the end, per the standing rule.
+- Completed: Phase 4 — `minny-practice-log.js` now accepts an optional
+  `summary` object per log entry (schema_version 2, tolerant of old v1
+  entries with no summary key); caught during review that the spec's file
+  list omitted `read2lead-progress.js`, which never exposed
+  `progress.minny_practice` to the parent view at all — added it there too,
+  otherwise the new "🎤 Luyện nói cùng Minny" card on `/ho-so` would have
+  rendered permanently empty. Phase 5 — `_minny-convo.js` (pure helpers:
+  level-register table, starter topics, system-prompt builder, reply
+  parser, cap/session logic; Sonnet 5 authored the system prompt and
+  register text directly per the spec's "prompt content is architecture"
+  instruction, Aider wired it verbatim) and `minny-conversation.js` (the
+  start/turn endpoint — `is_test` gate checked before any session/KV/LLM
+  work on both actions, since guardrail layers 2/3 are still stubs;
+  gpt-5.4-mini primary, Workers AI llama-3.3-70b fallback, canned-redirect
+  on any parse/provider failure). Caught and fixed a real design bug during
+  review: the first cut ended a session after 2 canned-redirect turns,
+  conflating a provider-outage signal with Phase 6's real safety-flag
+  concept — an LLM outage lasting a whole session would have cut a kid off
+  after 2 turns instead of letting them use their full 12-turn/5-min cap on
+  canned lines. Fixed so technical failures just consume the normal cap;
+  the test that had encoded the old (wrong) behavior was rewritten to match,
+  and a second test-only bug (an equality check against `undefined` that
+  can never pass) was fixed alongside it. 791/791 tests green (37 new).
+  `founder_check.py --gate build`: PASS.
+- Also drafted the Phase 7b design brief
+  (`_ops/specs/BRIEF_SPEAKUP_PHASE7B_DESIGN.md`) — covers the 5 Free Talking
+  screens/states (conversation view, "Minny đang nghĩ…" waiting state,
+  tap-to-play autoplay fallback, cap-reached wrap-up, session summary),
+  ready for Phuong to paste into Claude Design.
+- Tooling note: this session hit Aider's URL auto-scrape feature twice
+  (a literal `https://` in a dispatch instruction made Aider try to browse
+  it instead of treating it as example text, burning a timeout each time
+  trying to install Playwright) and Aider's own reply preamble twice leaked
+  into a generated filename (`We'll output only the block.functions/...`,
+  `I'll now output the file listing.tests/...`), creating a stray duplicate
+  file alongside the correctly-named one. Both were caught in review and
+  cleaned up (content was correct in every case, only the path was wrong).
+  Worth remembering for future dispatch instructions: avoid literal
+  `https://` strings, describe endpoints by reference to an existing file
+  instead.
+- Cost today: not yet reconciled against `aider-cost` (same tracking gap
+  noted in Phase 3's update).
+- Problem: none blocking. Two open items carry over unchanged from Phase 3
+  (need Phuong, not code): the live egress check for OpenAI calls from the
+  deployed preview (now needed for both TTS and the new gpt-5.4-mini call —
+  same 403 geo-block risk class as the 2026-06-11 outage), and sign-off on
+  the 12 canned Minny phrases as brand-voice content.
+- Next: Phase 7b design approval (needs Phuong to run the drafted brief
+  through Claude Design), then Phase 6 (guardrail layer + red-team suite —
+  the gate before any real kid can reach Free Talking) and Phase 8 (Free
+  Talking UI, gated on both Phase 6 and the Phase 7b mocks).
 - Need Phuong: (1) carried over — Phase 1's group-vs-per-kid homework default
   question, and the Zalo-notify-on-save question (proceeding with the
   spec's own recommended defaults on both, low-cost to flip later); (2) the
   `design_handoff_speakup_phase_7a/` bundle's copy still needs a closer read
-  for assumption clashes beyond the thầy/cô fix already made; (3) **new**:
-  the 12 canned Minny phrases in `_minny-phrases.js` need your review before
-  they ship — per the spec, this is brand-voice content, not mechanical
-  copy, and Claude drafted it without your sign-off; (4) **new**: run or
-  authorize the live egress check on the preview once it's live before
-  treating Phase 3 as fully verified.
+  for assumption clashes beyond the thầy/cô fix already made; (3) the 12
+  canned Minny phrases in `_minny-phrases.js` need your review before they
+  ship; (4) run or authorize the live egress check (TTS + LLM) on the
+  preview; (5) **new**: run `_ops/specs/BRIEF_SPEAKUP_PHASE7B_DESIGN.md`
+  through Claude Design when you have a moment, so Phase 8 isn't blocked
+  later.
