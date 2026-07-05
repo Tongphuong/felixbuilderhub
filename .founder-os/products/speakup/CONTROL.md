@@ -4,8 +4,8 @@
 - Current goal: Build all 8 phases of `_ops/specs/SPEC_SPEAKUP_V0.md` on branch `claude/speakup-v0`, QA the full pilot on preview, THEN merge to main. No phase merges to main individually.
 - Branch: `claude/speakup-v0` (off `main`)
 - Preview URL: `claude-speakup-v0.felixbuilderhub.pages.dev` (Cloudflare Pages auto-deploy per push, per `claude/<topic>` convention in `BRANCH_CONVENTIONS.md`)
-- Active workers: 1 (Aider Senior, Phase 8a dispatch in progress)
-- Last updated: 2026-07-05 (Phase 7b approved by Phuong; Phase 8a — Free Talking UI build — started)
+- Active workers: 0
+- Last updated: 2026-07-05 (Phase 7b approved by Phuong; Phase 8a — Free Talking UI build — done)
 
 ## Phase tracker (source of truth: `_ops/specs/SPEC_SPEAKUP_V0.md`)
 
@@ -22,7 +22,7 @@ run sequentially even where the spec's dependency graph would allow parallel wor
 | 4 | Phase 5 — Conversation turn endpoint (test codes only) | Aider Senior | done | yes (5921180) | no |
 | 4 | Phase 7b — Conversation UI design mocks | Claude Design | approved (Phuong, 2026-07-05) | n/a (design folder: `SpeakUp Phase 7b Free Talking/design_handoff_speakup_phase_7b/`) | n/a |
 | 5 | Phase 6 — Guardrail layer + red-team suite | Aider Senior (plumbing) + Sonnet 5 (wordlists/redirects/red-team) | not started | no | no |
-| 6 | Phase 8a — Free Talking UI (build only, `is_test`-gated, no pilot enablement) | Aider Senior (dispatch) + Claude (review) | in progress | no | no |
+| 6 | Phase 8a — Free Talking UI (build only, `is_test`-gated, no pilot enablement) | Aider Senior (dispatch) + Claude (review) | done | yes (c324b2e, 9566a31, cd8cc28, bd19129) | no |
 | 6 | Phase 8b — Gate removal (pilot enablement) | Aider Senior; separate final commit, blocked on Phase 6 | not started | no | no |
 
 Waves 1 and 4 have two parallelizable items each (no shared files); everything
@@ -61,7 +61,7 @@ assigns, commits, merges, deploys, or spends.
 
 ## Current task
 
-- Status: active
+- Status: complete
 - Task ID: speakup-phase8a-free-talking-ui
 - Owner: Aider Senior (dispatch packets) + Claude (review/integration)
 - Lane: `claude/speakup-v0`, primary checkout (no new worktree needed —
@@ -99,22 +99,82 @@ assigns, commits, merges, deploys, or spends.
 - Cost ceiling: USD 15–20 across the 3 dispatch packets (estimate; this is
   code/markup editing, not inference-heavy)
 - Started: 2026-07-05
-- Cost spent: USD 0
+- Cost spent: ~USD 0.06 (3 aider-senior dispatches + 1 aider-junior fix,
+  per each call's own reported token cost; not yet cross-checked against
+  `aider-cost`, same reconciliation gap noted since Phase 3)
 
 ## File ownership
 
 | Path or area | Owner | State |
 |---|---|---|
-| `src/pages/read2lead/speaking.astro` | Aider Senior (dispatch) + Claude (review) | active |
-| `src/styles/speakup-free-talk.css` (new) | Aider Senior (dispatch) + Claude (review) | active |
-| `functions/api/minny-speaking-context.js` | Aider Senior (dispatch) + Claude (review) | active |
-| `functions/api/minny-conversation.js` | Aider Senior (dispatch, TTS lines only) + Claude (review) | active |
-| `tests/minny-speaking.test.mjs`, `tests/minny-conversation.test.mjs` | Aider Senior (dispatch) + Claude (review) | active |
+| `src/pages/read2lead/speaking.astro` | Aider Senior (dispatch) + Claude (review) | done |
+| `src/styles/speakup-free-talk.css` (new) | Claude (direct — not a guarded extension) | done |
+| `functions/api/minny-speaking-context.js` | Aider Senior (dispatch) + Claude (review) | done |
+| `functions/api/minny-conversation.js` | Aider Senior (dispatch, TTS lines only) + Claude (review) | done |
+| `tests/minny-speaking.test.mjs`, `tests/minny-conversation.test.mjs` | Aider Senior (dispatch) + Aider Junior (1 test-order fix) + Claude (review) | done |
 
 ## Acceptance criteria reconciliation
 
-- pending — will be filled in per-bullet against the 11 criteria above once
-  all 3 dispatch packets land and tests pass
+1. Screen 1 (main conversation view) — PASS. Markup/CSS/JS verified in
+   reviewed diffs and confirmed present in the actual production bundle
+   (`speaking.fskcByB1.css`, `speaking.astro_astro_type_script...js`) via a
+   local `wrangler pages dev` + KV run. **Not visually screenshotted** — no
+   browser is available in this sandboxed session (no network access to
+   install Playwright/Chromium, no `chromium-cli`) — see note below.
+2. Screen 2 ("Minny đang nghĩ..." thinking state) — PASS. Breathing-avatar
+   CSS + 3-dot bounce + record-button-disabled wiring confirmed in diff and
+   present in the bundle. Not visually screenshotted (same gap as #1).
+3. Screen 3 (tap-to-play fallback) — PASS on markup/CSS/JS wiring
+   (confirmed in diff and bundle). The actual iOS-Safari-autoplay-blocked
+   trigger path was not exercised live (no real device/browser available);
+   the code path (`audio.play().catch(...)` → show chip) mirrors the
+   already-shipped `playMinnyVoice` fallback pattern.
+4. Screen 4 (cap-reached wrap-up, 2 copy variants) — PASS. Verified in diff:
+   distinct Vietnamese strings for the 5-min vs 12-turn cap, matching the
+   approved Phase 7b README's copy table.
+5. Screen 5 (session summary) — PASS. XP/rank/streak lines correctly
+   dropped per Phuong's decision; turns/sentences/minutes stats verified in
+   diff.
+6. Wired to existing `/api/minny-conversation` start/turn actions, `is_test`
+   gate untouched — PASS. Exercised for real against a local
+   `wrangler pages dev` + local KV instance: confirmed `free_talk` mode
+   appears only for `is_test:true` codes and is absent for `is_test:false`;
+   confirmed `start` and `turn` actions return the exact shape the frontend
+   expects. Diff review confirms the `is_test` check's line and body are
+   byte-for-byte unchanged.
+7. Transcript via existing `/api/read2lead-speaking-check`
+   (`pack_id:'general'`) — PASS on code path (verified in diff, matches the
+   already-proven `canAccessPackForPractice` general-pack allowance).
+   **SKIPPED** for a real end-to-end audio recording: no Workers AI/OpenAI
+   credentials available in this sandboxed session to exercise real
+   transcription, same class of gap as Phase 3's live-egress item.
+8. Client never invents cap/end state independently — PASS. Verified in
+   diff: `ftSubmitTurn` always re-syncs `turns_left`/`seconds_left` from the
+   server's last response; wrap-up triggers only from a server-confirmed
+   `turns_left === 0`, the locally-mirrored countdown reaching 0, or a
+   server-returned `ended:true`.
+9. `prefers-reduced-motion` + ARIA — PASS on code (confirmed present in the
+   built CSS bundle and in the markup diff — `role="timer"`, `role="log"`,
+   `aria-label`s, single reduced-motion media block). Not visually verified
+   with an actual reduced-motion browser toggle (same sandboxing gap as #1).
+10. Existing Phase 2/7a components untouched — PASS. Diffs are additive
+    only, plus the single one-line `enterPracticeMode` branch; no existing
+    function body, class, or id was altered.
+11. `node --test` green, `founder_check.py --gate build` PASS — PASS.
+    793/793 tests (`node --test tests/**/*.test.mjs`), `astro build`
+    succeeds, `founder_check.py --repo felixbuilderhub --product speakup
+    --gate build` returns PASS.
+
+**Known gap, carried forward, needs Phuong or a session with real
+credentials/a real browser**: (a) visual/pixel QA of the 5 new screens at
+phone/tablet/desktop and with reduced-motion toggled on — this sandboxed
+session has no network access to install a browser and no `chromium-cli`;
+(b) a real audio recording exercised through Whisper/Workers AI and real
+OpenAI TTS end-to-end — this session had no such credentials locally
+(same class of gap as Phase 3's still-open live-egress item). Recommend
+QA'ing both live on the Cloudflare preview
+(`claude-speakup-v0.felixbuilderhub.pages.dev`) once this branch is pushed,
+with a real `is_test:true` access code.
 
 ## Daily update
 
@@ -181,6 +241,29 @@ assigns, commits, merges, deploys, or spends.
   for assumption clashes beyond the thầy/cô fix already made; (3) the 12
   canned Minny phrases in `_minny-phrases.js` need your review before they
   ship; (4) run or authorize the live egress check (TTS + LLM) on the
-  preview; (5) **new**: run `_ops/specs/BRIEF_SPEAKUP_PHASE7B_DESIGN.md`
-  through Claude Design when you have a moment, so Phase 8 isn't blocked
-  later.
+  preview.
+
+---
+
+- 2026-07-05: **Phase 8a done — Free Talking UI built** (commits `c324b2e`,
+  `9566a31`, `cd8cc28`, `bd19129`). Phase 7b's design handoff
+  (`SpeakUp Phase 7b Free Talking/design_handoff_speakup_phase_7b/`) was
+  found already on disk from an earlier session, confirmed approved by
+  Phuong directly this session, and implemented in 3 aider-senior dispatch
+  packets (markup+CSS scaffold; JS state machine+turn-wiring; TTS
+  embedding+tap-to-play) plus one aider-junior test fix. Two content
+  decisions confirmed with Phuong before building: 🗣️ (not 💬, already used
+  by "questions") for the mode-card emoji, and dropping the design mock's
+  XP/rank/streak lines from the summary screen (matches the spec's own
+  no-XP-hooks non-goal). Closed a real gap in Phase 5's own spec along the
+  way: `minny-conversation.js` now actually returns `audio_b64` as its spec
+  always said it should — added as its own dispatch packet, `is_test`
+  gate line untouched. The `is_test`-gated Free Talking mode card only
+  appears in the picker for test codes, so no real pilot student can reach
+  a half-built feature. **Not done yet**: the actual `is_test` gate
+  *removal* (pilot enablement) — that is Phase 8b, explicitly blocked on
+  Phase 6 (guardrails) per the roadmap, and was not touched in this
+  session. 793/793 tests, `astro build` clean, `founder_check.py --gate
+  build` PASS. See the Acceptance criteria reconciliation section above for
+  the full per-bullet check and the known visual-QA/live-credentials gap
+  carried to the next session with browser/API access.
