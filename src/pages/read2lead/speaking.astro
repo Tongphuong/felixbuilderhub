@@ -115,52 +115,93 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
           </div>
         </div>
 
-        <!-- Free Talking screen (Phase 8a). Hidden by default. Sibling of
-             #practice-screen. Reuses the shared Minny hero/avatar above
-             (#minny-video/#minny-fallback/#minny-greeting, already visible
-             inside #speaking-shell) — this screen does not repeat it. -->
-        <div id="free-talk-screen" class="hidden space-y-4">
-          <div class="flex items-center justify-between gap-3">
-            <button id="free-talk-end" type="button" class="minny-end-btn">Kết thúc</button>
-            <div class="flex items-center gap-3">
-              <div id="free-talk-dots" class="minny-turn-dots" aria-label="Còn 12 lượt trong tổng 12"></div>
-              <span id="free-talk-timer" class="minny-timer" role="timer" aria-live="off">5:00</span>
-              <span id="free-talk-timer-announce" class="sr-only" aria-live="polite"></span>
+        <!-- Free Talking screen (Phase 7b/8a). Hidden by default. Self-contained:
+             owns its avatar (#ft-minny-*) and hides the shared #speaking-shell
+             hero while active, so the conversation reflows into the design's
+             per-breakpoint layout (phone stack / tablet 2-col / desktop 3-col
+             left-rail). Rebuilt 2026-07-06 to match design_handoff_speakup_phase_7b. -->
+        <div id="free-talk-screen" class="hidden">
+          <!-- Conversation state (grid-template-areas: topbar / hero / transcript / recorder) -->
+          <div id="ft-conversation" class="ft-conversation">
+            <div class="ft-topbar">
+              <button id="free-talk-end" type="button" class="minny-end-btn">
+                <span class="ft-end-arrow" aria-hidden="true">← </span>Kết thúc<span class="ft-end-long"> cuộc trò chuyện</span>
+              </button>
+              <div class="ft-topbar__meta">
+                <div id="free-talk-dots" class="minny-turn-dots" aria-label="Còn 12 lượt trong tổng 12"></div>
+                <span id="free-talk-timer" class="minny-timer" role="timer" aria-live="off">5:00</span>
+                <span id="free-talk-timer-announce" class="sr-only" aria-live="polite"></span>
+              </div>
             </div>
-          </div>
 
-          <div id="free-talk-status-bubble" class="minny-bubble rounded-3xl bg-cream/10 p-4 shadow-md shadow-black/10">
-            <p id="free-talk-status-eyebrow" class="fx-eyebrow">Đợi con nói</p>
-            <div id="free-talk-thinking-dots" class="minny-bubble--thinking"><span></span><span></span><span></span></div>
-            <button id="free-talk-play-chip" type="button" class="minny-play-chip" aria-label="Nghe Minny nói">🔊 Nghe Minny</button>
-          </div>
+            <div class="ft-hero">
+              <div class="ft-hero__avatar">
+                <video
+                  id="ft-minny-video"
+                  class="minny-avatar__media hidden"
+                  poster="/assets/minny/minny_idle.png"
+                  autoplay loop muted playsinline aria-hidden="true"
+                ></video>
+                <img id="ft-minny-fallback" src="/assets/minny/minny_idle.png" alt="Minny" width="200" height="200" class="minny-avatar__media" />
+              </div>
+              <div class="ft-hero__body">
+                <p id="free-talk-status-eyebrow" class="fx-eyebrow ft-hero__eyebrow">Minny · Đợi con nói</p>
+                <p id="ft-hero-line" class="ft-hero__line"></p>
+                <div id="free-talk-thinking-dots" class="minny-bubble--thinking"><span></span><span></span><span></span></div>
+                <button id="free-talk-play-chip" type="button" class="minny-play-chip" aria-label="Nghe Minny nói">🔊 Nghe Minny</button>
+                <p class="ft-hero__mood-cap"><span id="ft-mood">Đợi con nói</span></p>
+                <div class="ft-hero__turns">
+                  <span class="ft-hero__turns-label">Lượt còn lại</span>
+                  <span id="ft-turns-count" class="ft-hero__turns-count">12 / 12</span>
+                </div>
+              </div>
+            </div>
 
-          <div id="free-talk-transcript" class="minny-transcript space-y-3" role="log" aria-live="polite" aria-atomic="false"></div>
+            <div class="ft-transcript">
+              <p class="ft-section-label">Lượt trò chuyện</p>
+              <div id="free-talk-transcript" class="minny-transcript space-y-3" role="log" aria-live="polite" aria-atomic="false"></div>
+            </div>
 
-          <div class="minny-conversation-grid">
-            <div class="minny-recorder-panel">
+            <div class="ft-recorder minny-recorder-panel">
+              <p class="ft-section-label ft-recorder__label">Ghi âm</p>
               <button id="free-talk-record" type="button" class="minny-btn minny-btn--record" aria-label="Nhấn để nói">🎤</button>
               <p id="free-talk-record-label" class="text-center text-sm text-cream-muted">Nhấn để nói</p>
               <div id="free-talk-waveform" class="minny-waveform" aria-hidden="true">
-                <span></span><span></span><span></span><span></span><span></span><span></span>
-                <span></span><span></span><span></span><span></span><span></span><span></span>
+                <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+                <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
               </div>
             </div>
           </div>
 
+          <!-- Wrap-up state (cap reached): celebrating Minny + goodbye + forward CTA -->
           <div id="free-talk-wrapup" class="hidden minny-wrap-up">
-            <p id="free-talk-wrapup-text" class="minny-wrap-up__text"></p>
-            <button id="free-talk-wrapup-cta" type="button" class="fx-btn fx-btn--primary">Xem tóm tắt →</button>
+            <div class="minny-wrap-up__avatar">
+              <img src="/assets/minny/minny_celebrate.png" alt="Minny" width="200" height="200" class="minny-avatar__media" />
+            </div>
+            <div class="minny-wrap-up__body">
+              <p class="fx-eyebrow">Minny · celebrate</p>
+              <p id="free-talk-wrapup-text" class="minny-wrap-up__text"></p>
+              <div class="minny-wrap-up__actions">
+                <button id="free-talk-wrapup-cta" type="button" class="fx-btn fx-btn--primary">Xem tóm tắt →</button>
+                <button id="free-talk-wrapup-home" type="button" class="minny-btn minny-btn--secondary">Về trang chính</button>
+              </div>
+            </div>
           </div>
 
+          <!-- Summary state (kid-facing close-out). No XP/rank/streak — Phuong's call. -->
           <div id="free-talk-summary" class="hidden minny-summary-panel">
-            <p class="fx-eyebrow">Tóm tắt hôm nay</p>
-            <h3 class="font-display text-lg font-bold text-cream">Con đã trò chuyện rất giỏi!</h3>
-            <div id="free-talk-summary-stats" class="minny-summary-stats"></div>
-            <p id="free-talk-summary-line" class="minny-summary-line"></p>
-            <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
-              <button id="free-talk-summary-again" type="button" class="fx-btn fx-btn--primary">Nói chuyện nữa với Minny</button>
-              <button id="free-talk-summary-home" type="button" class="minny-btn minny-btn--secondary">Về trang chính</button>
+            <div class="minny-summary__avatar">
+              <img src="/assets/minny/minny_celebrate.png" alt="Minny" width="200" height="200" class="minny-avatar__media" />
+            </div>
+            <div class="minny-summary__body">
+              <p class="fx-eyebrow">Tóm tắt hôm nay</p>
+              <h3 class="font-display text-lg font-bold text-cream">Con đã trò chuyện rất giỏi!</h3>
+              <div id="free-talk-summary-stats" class="minny-summary-stats"></div>
+              <p id="free-talk-summary-line" class="minny-summary-line"></p>
+              <div class="minny-summary__actions grid grid-cols-1 gap-3 sm:grid-cols-2">
+                <button id="free-talk-summary-again" type="button" class="fx-btn fx-btn--primary">Nói chuyện nữa với Minny</button>
+                <button id="free-talk-summary-home" type="button" class="minny-btn minny-btn--secondary">Về trang chính</button>
+              </div>
             </div>
           </div>
         </div>
@@ -560,27 +601,27 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       return `/assets/minny/minny_${file}`;
     }
 
-    function showMinnyPng(mood) {
-      const img = document.getElementById('minny-fallback');
-      const video = document.getElementById('minny-video');
+    function showMinnyPng(mood, videoId = 'minny-video', imgId = 'minny-fallback') {
+      const img = document.getElementById(imgId);
+      const video = document.getElementById(videoId);
       if (!img) return;
       img.src = `${minnyAssetBase(mood)}.png`;
       img.classList.remove('hidden');
       if (video) video.classList.add('hidden');
     }
 
-    function setMinnyMood(mood) {
-      const video = document.getElementById('minny-video');
-      const img = document.getElementById('minny-fallback');
+    function setMinnyMood(mood, videoId = 'minny-video', imgId = 'minny-fallback') {
+      const video = document.getElementById(videoId);
+      const img = document.getElementById(imgId);
       const base = minnyAssetBase(mood);
 
       if (!video) {
-        showMinnyPng(mood);
+        showMinnyPng(mood, videoId, imgId);
         return;
       }
 
       if (state.videoAvailable[mood] === false) {
-        showMinnyPng(mood);
+        showMinnyPng(mood, videoId, imgId);
         return;
       }
 
@@ -590,18 +631,18 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
             video.src = `${base}.webm`;
             video.onerror = () => {
               state.videoAvailable[mood] = false;
-              showMinnyPng(mood);
+              showMinnyPng(mood, videoId, imgId);
             };
           } else {
             state.videoAvailable[mood] = false;
-            showMinnyPng(mood);
+            showMinnyPng(mood, videoId, imgId);
           }
         };
         video.onloadeddata = () => {
           state.videoAvailable[mood] = true;
           video.classList.remove('hidden');
           if (img) img.classList.add('hidden');
-          video.play().catch(() => showMinnyPng(mood));
+          video.play().catch(() => showMinnyPng(mood, videoId, imgId));
         };
         video.poster = `${base}.png`;
         video.src = `${base}.${ext}`;
@@ -609,6 +650,23 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       };
 
       tryPlay('mp4');
+    }
+
+    // Free Talking owns its own avatar (#ft-minny-*) + mood caption; the shared
+    // #speaking-shell hero is hidden while Free Talking is active.
+    const FT_MOOD_CAP = {
+      idle: 'Đợi con nói',
+      listen: 'Minny đang nghe',
+      celebrate: 'Đang cổ vũ con',
+      encourage: 'Minny đang cổ vũ',
+    };
+    function ftSetMood(mood) {
+      setMinnyMood(mood, 'ft-minny-video', 'ft-minny-fallback');
+      const cap = FT_MOOD_CAP[mood] || FT_MOOD_CAP.idle;
+      const moodEl = document.getElementById('ft-mood');
+      if (moodEl) moodEl.textContent = cap;
+      const eyebrow = document.getElementById('free-talk-status-eyebrow');
+      if (eyebrow && !ft.awaitingReply) eyebrow.textContent = `Minny · ${cap}`;
     }
 
     function showModePicker() {
@@ -1531,6 +1589,8 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
 
     function ftRenderDots() {
       const el = document.getElementById('free-talk-dots');
+      const turnsCount = document.getElementById('ft-turns-count');
+      if (turnsCount) turnsCount.textContent = `${ft.turnsLeft} / 12`;
       if (!el) return;
       const used = Math.max(0, Math.min(12, 12 - ft.turnsLeft));
       el.setAttribute('aria-label', `Còn ${ft.turnsLeft} lượt trong tổng 12`);
@@ -1561,13 +1621,13 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
     }
 
     function ftSetThinking(isThinking) {
-      const avatar = document.querySelector('.minny-avatar');
+      const avatar = document.querySelector('.ft-hero__avatar');
       const eyebrow = document.getElementById('free-talk-status-eyebrow');
       const dots = document.getElementById('free-talk-thinking-dots');
       avatar?.classList.toggle('minny-avatar--thinking', isThinking);
       dots?.classList.toggle('is-visible', isThinking);
       if (eyebrow) {
-        eyebrow.textContent = isThinking ? 'Minny đang nghĩ...' : 'Đợi con nói';
+        eyebrow.textContent = isThinking ? 'Minny đang nghĩ...' : 'Minny · Đợi con nói';
         eyebrow.style.color = isThinking ? 'var(--gold-light)' : '';
       }
       ft.awaitingReply = isThinking;
@@ -1584,7 +1644,10 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       bubble.textContent = text;
       list.appendChild(bubble);
       list.scrollTop = list.scrollHeight;
-      setMinnyMood(mood || 'idle');
+      // Minny's latest line also shows in the hero bubble (phone/tablet).
+      const heroLine = document.getElementById('ft-hero-line');
+      if (heroLine) heroLine.textContent = text;
+      ftSetMood(mood || 'idle');
     }
 
     function ftAppendKidChip(durationSeconds) {
@@ -1621,7 +1684,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       const audio = new Audio(`data:${contentType || 'audio/mpeg'};base64,${audioB64}`);
       state.activeAudio = audio;
       audio.addEventListener('ended', () => {
-        setMinnyMood('idle');
+        ftSetMood('idle');
         state.activeAudio = null;
       });
       audio.play().catch(() => {
@@ -1654,14 +1717,20 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
     function enterFreeTalking() {
       ftReset();
       document.querySelector('[data-r2l-mic-check]')?.classList.add('hidden');
+      // Free Talking owns its own avatar/layout — hide the shared shell hero.
+      document.querySelector('.minny-hero')?.classList.add('hidden');
       modePicker?.classList.add('hidden');
       practiceScreen?.classList.add('hidden');
       document.getElementById('free-talk-screen')?.classList.remove('hidden');
+      document.getElementById('ft-conversation')?.classList.remove('hidden');
       document.getElementById('free-talk-wrapup')?.classList.add('hidden');
       document.getElementById('free-talk-summary')?.classList.add('hidden');
       const transcriptEl = document.getElementById('free-talk-transcript');
       if (transcriptEl) transcriptEl.innerHTML = '';
+      const heroLine = document.getElementById('ft-hero-line');
+      if (heroLine) heroLine.textContent = '';
       ftSetThinking(false);
+      ftSetMood('idle');
       ftRenderDots();
       ftUpdateTimerDisplay();
       startFreeTalkSession();
@@ -1670,6 +1739,8 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
     function ftExitToModes() {
       ftReset();
       document.getElementById('free-talk-screen')?.classList.add('hidden');
+      // Restore the shared shell hero for the mode picker / homework flow.
+      document.querySelector('.minny-hero')?.classList.remove('hidden');
       showModePicker();
     }
 
@@ -1945,7 +2016,8 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       ftCleanupRecording();
       const recordBtn = document.getElementById('free-talk-record');
       if (recordBtn) recordBtn.disabled = true;
-      setMinnyMood('celebrate');
+      // Wrap-up replaces the conversation grid (its own celebrate avatar shows).
+      document.getElementById('ft-conversation')?.classList.add('hidden');
 
       const texts = {
         time: 'Hôm nay nói chuyện vui quá! Hẹn gặp lại con nhé!',
@@ -1960,6 +2032,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
     }
 
     function ftShowSummary() {
+      document.getElementById('ft-conversation')?.classList.add('hidden');
       document.getElementById('free-talk-wrapup')?.classList.add('hidden');
       const minutesUsed = Math.max(1, Math.round((300 - ft.secondsLeft) / 60));
 
@@ -2018,6 +2091,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
     });
 
     document.getElementById('free-talk-wrapup-cta')?.addEventListener('click', ftShowSummary);
+    document.getElementById('free-talk-wrapup-home')?.addEventListener('click', ftExitToModes);
 
     document.getElementById('free-talk-summary-again')?.addEventListener('click', () => {
       document.getElementById('free-talk-summary')?.classList.add('hidden');

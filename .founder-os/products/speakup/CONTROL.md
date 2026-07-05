@@ -62,67 +62,49 @@ assigns, commits, merges, deploys, or spends.
 ## Current task
 
 - Status: active
-- Task ID: speakup-phase6-guardrails
-- Owner: Aider Senior (plumbing) + Claude (wordlists/redirect copy/red-team
-  fixtures, authored directly per the spec's own "safety content is
-  review-critical, not mechanical" note — same precedent as Phase 5's system
-  prompt)
-- Lane: `claude/speakup-v0`, primary checkout (collision-checked clean via
-  `check-worktree-collision.sh`; Active workers 0 → 1)
-- Acceptance criteria: see numbered list below (verbatim, `SPEC_SPEAKUP_V0.md` Phase 6)
-  1. Every red-team fixture yields a canned redirect (never the model's raw
-     output) — full-suite assertion
-  2. Llama Guard runs on every model reply before TTS; fail-closed on
-     error/timeout
-  3. 2 flags in one session → early wrap-up + session marked `flagged: true`
-     in the practice-log summary; flagged ring visible to Phuong (JSON
-     readout link, same pattern as `debug-speaking.js`)
-  4. 30-minute live red-team by a human finds no break, recorded in the
-     phase report — **Phuong will run this herself on the Cloudflare
-     preview once built** (her explicit choice; no browser in this sandbox)
-  5. Latency with Llama Guard in the path re-measured, still within Phase 5
-     bounds (~200–400ms added, budgeted)
-  6. `node --test` green
-- Files owned: `functions/api/_minny-guardrails.js` (new, pure functions),
-  a new sibling wordlist file (banned-topic content, separate + reviewable
-  per spec D0), `functions/api/minny-conversation.js` (guardrail wiring +
-  flag counter + KV ring only — not the `is_test` check), a new
-  `functions/api/debug-convo-flags.js` (flag-log admin readout),
-  `tests/minny-guardrails.test.mjs` (new), a small tightly-scoped change to
-  `src/pages/read2lead/speaking.astro` (pass `flagged` through to the
-  practice-log summary — `ftReset`/`ftSubmitTurn`/`ftHandleCapReached`/
-  `ftShowSummary` only)
-- Stop condition: any diff touching the `is_test` check itself (that's
-  Phase 8b, separate, blocked further on Phuong's go-ahead + pilot-rollout
-  shape) — stop and escalate before continuing
-- Cost ceiling: USD 10–15 across Aider Senior dispatch packets (small scoped
-  packets, code editing not inference-heavy); Llama Guard calls on Workers
-  AI are near-free at this volume per spec
-- Started: 2026-07-05
-- Correction mid-session: initially assumed no outbound network access
-  (one `curl` to `raw.githubusercontent.com` timed out) and shipped a
-  hand-authored substitute wordlist. A later cross-session log entry
-  (another concurrent session had just diagnosed this machine's egress as
-  an *allowlist*, not a blanket block, while wiring up a Playwright/Chrome
-  MCP server) prompted a retest: `git clone`/`git ls-remote` against
-  GitHub, `npm view`, and a retried `curl` to the same host all succeeded
-  on retry. Re-verified and vendored the real public LDNOOBW English word
-  list (402 entries, CC BY 4.0 —
-  github.com/LDNOOBW/List-of-Dirty-Naughty-Obscene-and-Otherwise-Bad-Words,
-  `en` file, license text confirmed in-repo) via `git clone` rather than
-  the flakier raw-file `curl`. No Vietnamese list exists upstream in that
-  project, so Vietnamese entries remain hand-authored (that part of the
-  original plan was accurate regardless of network access).
-- Second bug caught during the same correction pass: `scanBannedTopics`'s
-  original plain-substring matching would have false-positived on common
-  English words a kid learning English needs to say — e.g. "ass" inside
-  "class"/"assignment", "tit" inside "title", "sex" inside no real English
-  word but still worth guarding generally (the classic profanity-filter
-  "Scunthorpe problem"), now made much more likely to bite by the vendored
-  list's many short entries. Fixed by switching to Unicode-aware
-  word-boundary matching (`containsWordBoundaryMatch` in
-  `_minny-guardrails.js`) before shipping, not after Phuong's red-team run
-  surfaced it as confusing false alarms.
+- Task ID: speakup-freetalk-ui-fidelity
+- Owner: Claude Lead — **direct execution, with a real-browser render-verify
+  loop** (not dispatched to Aider/bg). Justified override of
+  `aider-dispatch-guard.py` on `speaking.astro`: the root cause being fixed is
+  *blind builds with no render step*, so a blind dispatch worker cannot do this
+  work by definition. Precedent: Phase 2 frontend and commit `c90c8bf` were both
+  done directly/with-browser after Aider reliability failures on this exact file.
+- Lane: `claude/speakup-v0`, primary checkout (collision-checked; lock refreshed
+  via `check-worktree-collision.sh lock`; other session last touched ~40 min
+  prior, tree clean).
+- Problem: the Free Talking (Phase 7b) screen does not match the approved Claude
+  Design handoff. `#free-talk-transcript` sits outside `.minny-conversation-grid`,
+  which holds only the recorder panel — so the tablet 2-col / desktop 3-col
+  layouts never render (single narrow column on anything wider than a phone). No
+  desktop left rail (avatar + mood + "Lượt còn lại N/12"), no section labels,
+  Minny's line not shown in the hero bubble.
+- Acceptance criteria:
+  1. All 5 Free Talking states (conversation, thinking, tap-to-play, wrap-up,
+     summary) match the Phase 7b design at phone (390), tablet (768–820), and
+     desktop (1024–1280) — **verified by screenshot against the design boards**,
+     not just by build/tests.
+  2. Desktop renders the 3-column layout (rail / transcript / recorder); tablet
+     renders the 2-column layout; phone stays single-column.
+  3. `prefers-reduced-motion` variant still correct.
+  4. Homework (7a) screen re-rendered and confirmed still matching its design (or
+     fixed if it diverges).
+  5. `node --test` green; `astro build` clean.
+- Locked decisions (Phuong, this session): keep the real **robot** Minny avatar
+  (design's koala was a stand-in); summary stays **without XP/rank/streak** (prior
+  pedagogy call holds); scope = Free Talking rebuild + homework 7a re-verify.
+- Files owned: `src/pages/read2lead/speaking.astro` (free-talk markup + JS only),
+  `src/styles/speakup-free-talk.css`. No change to conversation/guardrail logic,
+  TTS, the API, or the `is_test` gate.
+- Stop condition: any diff touching the `is_test` check (that's Phase 8b) — stop
+  and escalate. Do not merge to main (full-pilot-QA-together rule).
+- Cost ceiling: Claude Lead direct — Claude Max plan usage, not metered.
+- Started: 2026-07-06
+
+**Phase 6 (guardrails) — parked, not lost:** build is done and committed
+(`e387eea`, `e71f770`); it stays `active` in the tracker only because it awaits
+Phuong's live 30-min red-team + latency re-measure on the preview (see the
+`## Acceptance criteria reconciliation` section below, items 4–5, still SKIPPED).
+This UI-fidelity task does not touch any Phase 6 file.
 
 ## File ownership
 
@@ -136,6 +118,38 @@ assigns, commits, merges, deploys, or spends.
 | `src/pages/read2lead/speaking.astro` | Aider Senior (dispatch, flagged-passthrough lines only) + Claude (review) | done |
 
 ## Acceptance criteria reconciliation
+
+### speakup-freetalk-ui-fidelity (2026-07-06)
+
+1. All 5 Free Talking states match the Phase 7b design at phone/tablet/desktop
+   — **PASS (screenshot-verified)**. Rendered each state via headless Chrome
+   (system `google-chrome-stable` + `playwright-core`) at 390/820/1280 and
+   diffed against the design boards `design-s1/s2/s4/s5`: conversation,
+   thinking, tap-to-play, wrap-up, summary all match. Before/after/design
+   screenshots kept for Phuong's review.
+2. Desktop 3-col (rail/transcript/recorder), tablet 2-col, phone single-col —
+   **PASS**. `#free-talk-screen` breaks out of the homework flow's `max-w-lg`
+   reading column on tablet+ so the columns have room; `grid-template-areas`
+   reflow verified at all three widths.
+3. `prefers-reduced-motion` variant — **PASS (code-verified)**. The
+   reduced-motion `@media` block (freeze breathe/thinking-dots/pulse-ring/
+   glow/waveform, instant timer color) carried over intact; a static
+   screenshot can't capture animation state, so verified by code.
+4. Homework (7a) screen still matches its design — **PASS (screenshot-verified)**.
+   Rendered the practice screen; numbered gold stem circles, dashed-gold
+   blanks, red circular record button inside the gold progress ring (the
+   `.is-frame` state the JS sets for frame steps), score card, rubric card,
+   and smile chip all match `design_handoff_speakup_phase_7a`. No fix needed.
+5. `node --test` green + `astro build` clean — **PASS**. 824/824 tests, zero
+   regressions; `astro build` clean; `founder_check.py --gate build` PASS.
+
+**Known minor gaps (carried, not blocking):** the design's wrap-up screen shows
+a settled `0:00` timer and faint decorative `★` around the avatar; both were
+left out as decorative extras (the wrap-up reads clearly without them). Flagged
+for Phuong to decide whether to add. Robot avatar kept (design's koala was a
+stand-in); summary XP/rank/streak intentionally omitted (Phuong's call).
+
+### speakup-phase6-guardrails
 
 1. Every red-team fixture yields a canned redirect, never the model's raw
    output — PASS. 31 new tests in `tests/minny-guardrails.test.mjs`,
