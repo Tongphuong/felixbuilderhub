@@ -1405,6 +1405,44 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       list.scrollTop = list.scrollHeight;
     }
 
+    function ftHidePlayChip() {
+      const chip = document.getElementById('free-talk-play-chip');
+      chip?.classList.remove('is-visible');
+      if (chip) chip.onclick = null;
+    }
+
+    // Real TTS audio when available; falls back to browser speechSynthesis
+    // when audio_b64 is absent (server-side TTS failure) or when .play()
+    // rejects (iOS Safari autoplay-gesture block) -- in the latter case a
+    // tap-to-play chip appears inside Minny's bubble instead of failing
+    // silently, per the Phase 7b design.
+    function playConversationAudio(audioB64, contentType, fallbackText) {
+      ftHidePlayChip();
+      if (!audioB64) {
+        speakEnglish(fallbackText);
+        return;
+      }
+      stopPlayback();
+      const audio = new Audio(`data:${contentType || 'audio/mpeg'};base64,${audioB64}`);
+      state.activeAudio = audio;
+      audio.addEventListener('ended', () => {
+        setMinnyMood('idle');
+        state.activeAudio = null;
+      });
+      audio.play().catch(() => {
+        const chip = document.getElementById('free-talk-play-chip');
+        if (!chip) {
+          speakEnglish(fallbackText);
+          return;
+        }
+        chip.classList.add('is-visible');
+        chip.onclick = () => {
+          ftHidePlayChip();
+          audio.play().catch(() => speakEnglish(fallbackText));
+        };
+      });
+    }
+
     function ftReset() {
       ft.sessionId = null;
       ft.turnsLeft = 12;
@@ -1460,7 +1498,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
         ftUpdateTimerDisplay();
         ftStartCountdown();
         ftAppendReplyBubble(data.greeting?.text_en, 'idle');
-        speakEnglish(data.greeting?.text_en || '');
+        playConversationAudio(data.greeting?.audio_b64, data.greeting?.content_type, data.greeting?.text_en || '');
         if (recordBtn) recordBtn.disabled = false;
       } catch {
         ftExitToModes();
@@ -1498,6 +1536,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
 
     async function ftStartRecording() {
       if (ft.ended || ft.awaitingReply) return;
+      stopPlayback();
       if (!micReady()) {
         ftUpdateRecordUi('Micro chưa sẵn sàng. Con thử trình duyệt khác nhé!');
         return;
@@ -1689,13 +1728,13 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
 
         if (data.ended) {
           ftAppendReplyBubble(data.reply_en, data.mood || 'celebrate');
-          speakEnglish(data.reply_en);
+          playConversationAudio(data.audio_b64, data.content_type, data.reply_en);
           ftHandleCapReached(ft.secondsLeft <= 0 ? 'time' : 'turns');
           return;
         }
 
         ftAppendReplyBubble(data.reply_en, data.mood || 'idle');
-        speakEnglish(data.reply_en);
+        playConversationAudio(data.audio_b64, data.content_type, data.reply_en);
       } catch {
         ftSetThinking(false);
         ftUpdateRecordUi('Mạng không ổn định. Con thử lại nhé!');

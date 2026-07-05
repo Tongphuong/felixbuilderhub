@@ -363,3 +363,61 @@ test('turn without transcript returns error transcript_missing', async () => {
   assert.equal(turnBody.ok, false);
   assert.equal(turnBody.error, 'transcript_missing');
 });
+
+test('audio_b64 is embedded in start/turn responses when TTS succeeds, and safely absent when it does not', async () => {
+  const fakeKv = createFakeKv();
+  await fakeKv.put('R2L-TEST', JSON.stringify({ is_test: true, progress: { current_level: 'L2' } }));
+
+  const originalFetch = globalThis.fetch;
+  const env = { READ2LEAD_CODES: fakeKv, OPENAI_API_KEY: 'test-key' };
+
+  try {
+    // TTS failure first, on a clean/empty cache -- must never throw, and the
+    // response must simply omit audio_b64 rather than fail the whole request.
+    globalThis.fetch = async () => {
+      throw new Error('network down');
+    };
+    const failReq = new Request('http://x/api/minny-conversation', {
+      method: 'POST',
+      body: JSON.stringify({ action: 'start', access_code: 'R2L-TEST' }),
+    });
+    const failResp = await onRequestPost({ request: failReq, env });
+    const failData = await failResp.json();
+    assert.equal(failData.ok, true);
+    assert.equal(failData.greeting.audio_b64, undefined);
+
+    // Now TTS succeeds. getOrSynthesize caches by (text, voice) -- this also
+    // exercises the cache-write path for a greeting not yet cached above.
+    globalThis.fetch = async () => ({
+      ok: true,
+      arrayBuffer: async () => new TextEncoder().encode('fake-mp3-bytes').buffer,
+    });
+
+    const startReq = new Request('http://x/api/minny-conversation', {
+      method: 'POST',
+      body: JSON.stringify({ action: 'start', access_code: 'R2L-TEST' }),
+    });
+    const startResp = await onRequestPost({ request: startReq, env });
+    const startData = await startResp.json();
+    assert.equal(startData.ok, true);
+    assert.ok(startData.greeting.audio_b64, 'greeting should carry synthesized audio');
+    assert.equal(startData.greeting.content_type, 'audio/mpeg');
+
+    const turnReq = new Request('http://x/api/minny-conversation', {
+      method: 'POST',
+      body: JSON.stringify({
+        action: 'turn',
+        access_code: 'R2L-TEST',
+        session_id: startData.session_id,
+        transcript: 'I like dogs',
+      }),
+    });
+    const turnResp = await onRequestPost({ request: turnReq, env });
+    const turnData = await turnResp.json();
+    assert.equal(turnData.ok, true);
+    assert.ok(turnData.audio_b64, 'turn reply should carry synthesized audio');
+    assert.equal(turnData.content_type, 'audio/mpeg');
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});

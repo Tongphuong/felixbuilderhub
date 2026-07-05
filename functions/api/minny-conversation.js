@@ -1,6 +1,6 @@
 import { getClientIp, checkCodeRateLimit, recordCodeFailure, rateLimitedResponse } from './_rate-limit.js';
 import { buildSystemPrompt, parseModelReply, sessionCapsExceeded, nextSession, pickStarterTopic } from './_minny-convo.js';
-import { resolveOpenAiApiKey } from './_minny-tts.js';
+import { resolveOpenAiApiKey, getOrSynthesize } from './_minny-tts.js';
 import { findPhrase } from './_minny-phrases.js';
 
 function json(body, status = 200) {
@@ -8,6 +8,20 @@ function json(body, status = 200) {
     status,
     headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' },
   });
+}
+
+// Best-effort inline TTS for Free Talking replies (Phase 8a, closing a gap
+// in Phase 5's own spec). Never throws -- a TTS failure must never block
+// a reply; the client already falls back to speechSynthesis when
+// audio_b64 is absent. Independent of, and does not touch, the is_test
+// gate below.
+async function synthesizeOrNull(env, apiKey, text) {
+  if (!apiKey || !env.READ2LEAD_CODES || !text) return null;
+  try {
+    return await getOrSynthesize(env.READ2LEAD_CODES, text, apiKey);
+  } catch {
+    return null;
+  }
 }
 
 export async function onRequestPost(context) {
@@ -44,6 +58,7 @@ export async function onRequestPost(context) {
     return json({ ok: false, error: 'not_available', message: 'Chế độ trò chuyện tự do chưa mở cho mã này.' }, 403);
   }
 
+  const apiKey = resolveOpenAiApiKey(env);
   const level = codeData?.progress?.current_level || codeData?.student_profile?.level || 'L1';
 
   const action = String(body.action || '').trim().toLowerCase();
@@ -111,6 +126,7 @@ export async function onRequestPost(context) {
     }
 
     const greeting = findPhrase('greeting');
+    const greetingAudio = await synthesizeOrNull(env, apiKey, greeting.text_en);
     return json({
       ok: true,
       session_id: sessionId,
@@ -118,6 +134,7 @@ export async function onRequestPost(context) {
       greeting: {
         text_en: greeting.text_en,
         subtitle_vi: greeting.subtitle_vi,
+        ...(greetingAudio ? { audio_b64: greetingAudio.audio_b64, content_type: greetingAudio.content_type } : {}),
       },
       turns_left: 12,
       seconds_left: 300,
@@ -152,6 +169,7 @@ export async function onRequestPost(context) {
   if (sessionCapsExceeded(session, now)) {
     const wrapUp = findPhrase('wrap_up_1');
     try { await env.READ2LEAD_CODES.delete(sessionKey); } catch {}
+    const wrapUpAudio = await synthesizeOrNull(env, apiKey, wrapUp.text_en);
     return json({
       ok: true,
       ended: true,
@@ -160,6 +178,7 @@ export async function onRequestPost(context) {
       mood: 'celebrate',
       turns_left: 0,
       seconds_left: 0,
+      ...(wrapUpAudio ? { audio_b64: wrapUpAudio.audio_b64, content_type: wrapUpAudio.content_type } : {}),
     });
   }
 
@@ -176,7 +195,6 @@ export async function onRequestPost(context) {
 
   let rawReply = null;
 
-  const apiKey = resolveOpenAiApiKey(env);
   if (apiKey) {
     try {
       const gptRes = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -235,12 +253,14 @@ export async function onRequestPost(context) {
     const turnsLeft = Math.max(0, 12 - newSession.turns);
     const secondsLeft = Math.max(0, 300 - Math.floor((now - newSession.started_at) / 1000));
 
+    const redirectAudio = await synthesizeOrNull(env, apiKey, redirect.text_en);
     return json({
       ok: true,
       reply_en: redirect.text_en,
       mood: 'idle',
       turns_left: turnsLeft,
       seconds_left: secondsLeft,
+      ...(redirectAudio ? { audio_b64: redirectAudio.audio_b64, content_type: redirectAudio.content_type } : {}),
     });
   }
 
@@ -260,11 +280,13 @@ export async function onRequestPost(context) {
   const turnsLeft = Math.max(0, 12 - updatedSession.turns);
   const secondsLeft = Math.max(0, 300 - Math.floor((now - updatedSession.started_at) / 1000));
 
+  const replyAudio = await synthesizeOrNull(env, apiKey, parsed.reply_en);
   return json({
     ok: true,
     reply_en: parsed.reply_en,
     mood: parsed.mood,
     turns_left: turnsLeft,
     seconds_left: secondsLeft,
+    ...(replyAudio ? { audio_b64: replyAudio.audio_b64, content_type: replyAudio.content_type } : {}),
   });
 }
