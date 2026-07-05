@@ -464,6 +464,10 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
     }
 
     function enterPracticeMode(modeId) {
+      if (modeId === 'free_talk') {
+        enterFreeTalking();
+        return;
+      }
       state.activeModeId = modeId;
       state.stepIndex = 0;
       state.modePicked = true;
@@ -1289,6 +1293,499 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       document.getElementById('speaking-actions').classList.add('hidden');
       showModePicker();
     });
+
+    // ── Free Talking (Phase 8a) ──────────────────────────────────────────
+    // Separate state object from `state` above: Free Talking is not a
+    // stepped mode (no steps[]/stepIndex), so it does not touch any
+    // homework/retell/questions state. Voice is browser speechSynthesis
+    // only in this change; real TTS audio_b64 + tap-to-play land later.
+    const ft = {
+      sessionId: null,
+      turnsLeft: 12,
+      secondsLeft: 300,
+      countdownId: null,
+      recTimerId: null,
+      recSecondsLeft: DEFAULT_MAX_SECONDS,
+      recording: null,
+      ended: false,
+      awaitingReply: false,
+      sentenceCount: 0,
+      turnsUsed: 0,
+    };
+
+    function ftFormatTime(totalSeconds) {
+      const s = Math.max(0, Math.floor(totalSeconds));
+      const m = Math.floor(s / 60);
+      const r = s % 60;
+      return `${m}:${String(r).padStart(2, '0')}`;
+    }
+
+    function ftUpdateTimerDisplay() {
+      const el = document.getElementById('free-talk-timer');
+      if (!el) return;
+      el.textContent = ftFormatTime(ft.secondsLeft);
+      el.classList.remove('minny-timer--warn', 'minny-timer--settled');
+      if (ft.secondsLeft <= 0) el.classList.add('minny-timer--settled');
+      else if (ft.secondsLeft <= 30) el.classList.add('minny-timer--warn');
+
+      const announceEl = document.getElementById('free-talk-timer-announce');
+      if (announceEl && [60, 30, 10].includes(ft.secondsLeft)) {
+        announceEl.textContent = `Còn ${ftFormatTime(ft.secondsLeft)}`;
+      }
+    }
+
+    function ftRenderDots() {
+      const el = document.getElementById('free-talk-dots');
+      if (!el) return;
+      const used = Math.max(0, Math.min(12, 12 - ft.turnsLeft));
+      el.setAttribute('aria-label', `Còn ${ft.turnsLeft} lượt trong tổng 12`);
+      el.innerHTML = Array.from({ length: 12 }, (_, i) => {
+        const cls = i < used ? 'minny-turn-dot minny-turn-dot--used' : 'minny-turn-dot';
+        return `<span class="${cls}" aria-hidden="true"></span>`;
+      }).join('');
+    }
+
+    function ftStartCountdown() {
+      if (ft.countdownId) clearInterval(ft.countdownId);
+      ft.countdownId = window.setInterval(() => {
+        ft.secondsLeft -= 1;
+        ftUpdateTimerDisplay();
+        if (ft.secondsLeft <= 0) {
+          clearInterval(ft.countdownId);
+          ft.countdownId = null;
+          ftHandleCapReached('time');
+        }
+      }, 1000);
+    }
+
+    function ftStopCountdown() {
+      if (ft.countdownId) {
+        clearInterval(ft.countdownId);
+        ft.countdownId = null;
+      }
+    }
+
+    function ftSetThinking(isThinking) {
+      const avatar = document.querySelector('.minny-avatar');
+      const eyebrow = document.getElementById('free-talk-status-eyebrow');
+      const dots = document.getElementById('free-talk-thinking-dots');
+      avatar?.classList.toggle('minny-avatar--thinking', isThinking);
+      dots?.classList.toggle('is-visible', isThinking);
+      if (eyebrow) {
+        eyebrow.textContent = isThinking ? 'Minny đang nghĩ...' : 'Đợi con nói';
+        eyebrow.style.color = isThinking ? 'var(--gold-light)' : '';
+      }
+      ft.awaitingReply = isThinking;
+      const recordBtn = document.getElementById('free-talk-record');
+      if (recordBtn) recordBtn.disabled = isThinking;
+      ftUpdateRecordUi();
+    }
+
+    function ftAppendReplyBubble(text, mood) {
+      const list = document.getElementById('free-talk-transcript');
+      if (!list || !text) return;
+      const bubble = document.createElement('div');
+      bubble.className = 'minny-transcript__reply';
+      bubble.textContent = text;
+      list.appendChild(bubble);
+      list.scrollTop = list.scrollHeight;
+      setMinnyMood(mood || 'idle');
+    }
+
+    function ftAppendKidChip(durationSeconds) {
+      const list = document.getElementById('free-talk-transcript');
+      if (!list) return;
+      const chip = document.createElement('div');
+      chip.className = 'minny-transcript__kid-chip';
+      const rounded = Math.round(durationSeconds);
+      chip.innerHTML = Number.isFinite(rounded)
+        ? `con vừa nói xong <span class="hidden lg:inline">· ${rounded} giây</span>`
+        : 'con vừa nói xong';
+      list.appendChild(chip);
+      list.scrollTop = list.scrollHeight;
+    }
+
+    function ftReset() {
+      ft.sessionId = null;
+      ft.turnsLeft = 12;
+      ft.secondsLeft = 300;
+      ft.ended = false;
+      ft.awaitingReply = false;
+      ft.sentenceCount = 0;
+      ft.turnsUsed = 0;
+      ftStopCountdown();
+      ftCleanupRecording();
+    }
+
+    function enterFreeTalking() {
+      ftReset();
+      modePicker?.classList.add('hidden');
+      practiceScreen?.classList.add('hidden');
+      document.getElementById('free-talk-screen')?.classList.remove('hidden');
+      document.getElementById('free-talk-wrapup')?.classList.add('hidden');
+      document.getElementById('free-talk-summary')?.classList.add('hidden');
+      const transcriptEl = document.getElementById('free-talk-transcript');
+      if (transcriptEl) transcriptEl.innerHTML = '';
+      ftSetThinking(false);
+      ftRenderDots();
+      ftUpdateTimerDisplay();
+      startFreeTalkSession();
+    }
+
+    function ftExitToModes() {
+      ftReset();
+      document.getElementById('free-talk-screen')?.classList.add('hidden');
+      showModePicker();
+    }
+
+    async function startFreeTalkSession() {
+      const recordBtn = document.getElementById('free-talk-record');
+      if (recordBtn) recordBtn.disabled = true;
+      try {
+        const res = await fetch('/api/minny-conversation', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ access_code: state.accessCode, action: 'start' }),
+        });
+        const data = await res.json();
+        if (!res.ok || !data.ok) {
+          ftExitToModes();
+          showError(data.message || 'Không mở được phiên trò chuyện. Con thử lại nhé!');
+          return;
+        }
+        ft.sessionId = data.session_id;
+        ft.turnsLeft = data.turns_left ?? 12;
+        ft.secondsLeft = data.seconds_left ?? 300;
+        ftRenderDots();
+        ftUpdateTimerDisplay();
+        ftStartCountdown();
+        ftAppendReplyBubble(data.greeting?.text_en, 'idle');
+        speakEnglish(data.greeting?.text_en || '');
+        if (recordBtn) recordBtn.disabled = false;
+      } catch {
+        ftExitToModes();
+        showError('Mạng không ổn định. Con thử lại nhé!');
+      }
+    }
+
+    function ftCleanupRecording() {
+      if (ft.recTimerId) {
+        clearInterval(ft.recTimerId);
+        ft.recTimerId = null;
+      }
+      safeStopMonitor(ft.recording?.monitor);
+      if (ft.recording?.stream) {
+        ft.recording.stream.getTracks().forEach((t) => t.stop());
+      }
+      ft.recording = null;
+      ftUpdateRecordUi();
+    }
+
+    function ftUpdateRecordUi(message) {
+      const btn = document.getElementById('free-talk-record');
+      const label = document.getElementById('free-talk-record-label');
+      const wave = document.getElementById('free-talk-waveform');
+      if (!btn) return;
+      const recording = ft.recording?.status === 'recording';
+      btn.classList.toggle('is-recording', recording);
+      wave?.classList.toggle('is-recording', recording);
+      btn.setAttribute('aria-label', recording ? 'Dừng ghi âm' : 'Nhấn để nói');
+      if (label) {
+        label.textContent = message
+          || (recording ? 'Đang nghe con nói...' : (ft.awaitingReply ? 'Đợi Minny trả lời...' : 'Nhấn để nói'));
+      }
+    }
+
+    async function ftStartRecording() {
+      if (ft.ended || ft.awaitingReply) return;
+      if (!micReady()) {
+        ftUpdateRecordUi('Micro chưa sẵn sàng. Con thử trình duyệt khác nhé!');
+        return;
+      }
+      if (!state.micGateReady && !window.R2LMicCheck?.sessionPassed?.()) {
+        ftUpdateRecordUi('Con bấm Kiểm tra micro ở khung phía trên trước nhé.');
+        return;
+      }
+
+      ftCleanupRecording();
+      try {
+        const stream = window.R2LRecorder?.getStream
+          ? await window.R2LRecorder.getStream()
+          : window.R2LMicCheck?.getMicStream
+            ? await window.R2LMicCheck.getMicStream()
+            : await navigator.mediaDevices.getUserMedia({
+                audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true },
+              });
+
+        ft.recording = { stream, status: 'warming' };
+        ftUpdateRecordUi('Micro đã bật — chờ 3 giây rồi mới nói nhé…');
+
+        if (window.R2LMicCheck?.runMicWarmupCountdown) {
+          await window.R2LMicCheck.runMicWarmupCountdown({
+            onMessage: (msg) => {
+              if (ft.recording?.status !== 'warming') return;
+              ftUpdateRecordUi(msg);
+            },
+          });
+        } else {
+          await new Promise((resolve) => window.setTimeout(resolve, 3000));
+        }
+        if (!ft.recording || ft.recording.status !== 'warming') {
+          stream.getTracks().forEach((t) => t.stop());
+          return;
+        }
+
+        const recorder = window.R2LRecorder?.createRecorder
+          ? window.R2LRecorder.createRecorder(stream)
+          : (() => {
+              const { mediaRecorder, mimeType } = createRecorder(stream);
+              const chunks = [];
+              let resolveStop = null;
+              const stopped = new Promise((resolve) => { resolveStop = resolve; });
+              mediaRecorder.addEventListener('dataavailable', (event) => {
+                if (event.data?.size > 0) chunks.push(event.data);
+              });
+              mediaRecorder.addEventListener('stop', () => {
+                resolveStop(new Blob(chunks, { type: mediaRecorder.mimeType || mimeType || 'audio/mp4' }));
+              });
+              return {
+                engine: 'mr',
+                mimeType,
+                start() { mediaRecorder.start(250); },
+                stop() { stopMediaRecorder(mediaRecorder); return stopped; },
+              };
+            })();
+
+        const monitor = window.R2LRecorder?.startMonitor
+          ? await window.R2LRecorder.startMonitor(stream, {
+              onSilenceHint: () => {
+                if (ft.recording?.status === 'recording') {
+                  ftUpdateRecordUi('Minny chưa thấy tiếng — con nói TO hơn nhé!');
+                }
+              },
+            })
+          : { available: false, peak: () => -1, voiced: () => true, stop: () => {} };
+
+        let finished = false;
+        const finishRecording = async () => {
+          if (finished) return;
+          finished = true;
+          if (ft.recTimerId) {
+            clearInterval(ft.recTimerId);
+            ft.recTimerId = null;
+          }
+          const elapsedSeconds = Math.max(0, DEFAULT_MAX_SECONDS - ft.recSecondsLeft);
+          let blob = null;
+          try {
+            blob = await recorder.stop();
+          } catch {
+            blob = null;
+          }
+          safeStopMonitor(monitor);
+          stream.getTracks().forEach((t) => t.stop());
+          const voiced = window.R2LRecorder?.recordingLooksVoiced
+            ? window.R2LRecorder.recordingLooksVoiced(monitor, blob?.size || 0)
+            : (monitor.available ? monitor.voiced() : true);
+
+          if (blob && blob.size > 0 && !voiced) {
+            window.R2LRecorder?.bumpProfile?.();
+            ft.recording = null;
+            ftUpdateRecordUi('Minny không thấy tiếng vào micro. Con thử lại nhé!');
+            return;
+          }
+          if (blob && blob.size > 0) {
+            ftSubmitAudio(blob, elapsedSeconds);
+          } else {
+            ft.recording = null;
+            ftUpdateRecordUi('Không thu được tiếng. Con thử nói to hơn nhé.');
+          }
+        };
+
+        ft.recording = { stream, status: 'recording', recorderCtl: recorder, monitor, finishRecording };
+        ft.recSecondsLeft = DEFAULT_MAX_SECONDS;
+        recorder.start();
+        ftUpdateRecordUi();
+
+        ft.recTimerId = window.setInterval(() => {
+          ft.recSecondsLeft -= 1;
+          if (ft.recSecondsLeft <= 0) finishRecording();
+        }, 1000);
+      } catch (error) {
+        const message = window.R2LMicCheck?.helpMessage?.(error)
+          || 'Không mở được micro. Con nhờ bố mẹ cho phép micro nhé.';
+        ftUpdateRecordUi(message);
+        window.R2LMicCheck?.focusMicHelpInShell?.(shell);
+        ftCleanupRecording();
+      }
+    }
+
+    function ftStopRecording() {
+      if (ft.recording?.finishRecording) {
+        ft.recording.finishRecording();
+      }
+    }
+
+    async function ftSubmitAudio(blob, durationSeconds) {
+      ftSetThinking(true);
+      const formData = new FormData();
+      formData.append('access_code', state.accessCode);
+      formData.append('pack_id', 'general');
+      formData.append('expected_text', 'free_talking_no_score');
+      formData.append('check_mode', 'open');
+      formData.append('practice_mode', '1');
+      formData.append('max_seconds', String(DEFAULT_MAX_SECONDS));
+      formData.append('audio', blob, audioUploadFilename(blob));
+
+      try {
+        const res = await fetch('/api/read2lead-speaking-check', { method: 'POST', body: formData });
+        const data = await res.json();
+        if (!res.ok || !data.ok || !data.transcript) {
+          ftSetThinking(false);
+          ftUpdateRecordUi('Minny chưa nghe rõ. Con thử nói lại nhé!');
+          return;
+        }
+        ftAppendKidChip(durationSeconds);
+        ft.sentenceCount += (data.transcript.match(/[.!?]+/g) || [1]).length;
+        await ftSubmitTurn(data.transcript);
+      } catch {
+        ftSetThinking(false);
+        ftUpdateRecordUi('Mạng không ổn định. Con thử lại nhé!');
+      }
+    }
+
+    async function ftSubmitTurn(transcript) {
+      try {
+        const res = await fetch('/api/minny-conversation', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            access_code: state.accessCode,
+            action: 'turn',
+            session_id: ft.sessionId,
+            transcript,
+          }),
+        });
+        const data = await res.json();
+
+        if (!res.ok || !data.ok) {
+          ftSetThinking(false);
+          ftUpdateRecordUi('Minny chưa trả lời được. Con thử nói lại nhé!');
+          return;
+        }
+
+        if (data.ended && !data.reply_en) {
+          // Session expired/missing server-side — rare edge case, not a cap.
+          ftSetThinking(false);
+          ftHandleCapReached('expired', data.message_vi);
+          return;
+        }
+
+        ft.turnsUsed += 1;
+        ft.turnsLeft = data.turns_left ?? Math.max(0, ft.turnsLeft - 1);
+        ft.secondsLeft = data.seconds_left ?? ft.secondsLeft;
+        ftRenderDots();
+        ftUpdateTimerDisplay();
+        ftSetThinking(false);
+
+        if (data.ended) {
+          ftAppendReplyBubble(data.reply_en, data.mood || 'celebrate');
+          speakEnglish(data.reply_en);
+          ftHandleCapReached(ft.secondsLeft <= 0 ? 'time' : 'turns');
+          return;
+        }
+
+        ftAppendReplyBubble(data.reply_en, data.mood || 'idle');
+        speakEnglish(data.reply_en);
+      } catch {
+        ftSetThinking(false);
+        ftUpdateRecordUi('Mạng không ổn định. Con thử lại nhé!');
+      }
+    }
+
+    function ftHandleCapReached(reason, overrideText) {
+      ft.ended = true;
+      ftStopCountdown();
+      ftCleanupRecording();
+      const recordBtn = document.getElementById('free-talk-record');
+      if (recordBtn) recordBtn.disabled = true;
+      setMinnyMood('celebrate');
+
+      const texts = {
+        time: 'Hôm nay nói chuyện vui quá! Hẹn gặp lại con nhé!',
+        turns: 'Con nói giỏi quá! Nghỉ tay một tí rồi tiếp nhé!',
+        expired: overrideText || 'Phiên trò chuyện đã kết thúc rồi. Con bắt đầu phiên mới nhé!',
+      };
+
+      const wrapupText = document.getElementById('free-talk-wrapup-text');
+      if (wrapupText) wrapupText.textContent = texts[reason] || texts.time;
+      document.getElementById('free-talk-wrapup')?.classList.remove('hidden');
+    }
+
+    function ftShowSummary() {
+      document.getElementById('free-talk-wrapup')?.classList.add('hidden');
+      const minutesUsed = Math.max(1, Math.round((300 - ft.secondsLeft) / 60));
+
+      const statsEl = document.getElementById('free-talk-summary-stats');
+      if (statsEl) {
+        statsEl.innerHTML = [
+          { value: ft.turnsUsed, label: 'lượt trò chuyện' },
+          { value: ft.sentenceCount, label: 'câu con đã nói' },
+          { value: minutesUsed, label: 'phút trò chuyện' },
+        ].map((s) => `
+          <div class="minny-summary-stat">
+            <strong>${s.value}</strong>
+            <span>${s.label}</span>
+          </div>
+        `).join('');
+      }
+      const lineEl = document.getElementById('free-talk-summary-line');
+      if (lineEl) lineEl.textContent = 'Con nói rõ ràng và tự tin lắm. Ngày mai kể tiếp cho Minny nghe nhé!';
+
+      document.getElementById('free-talk-summary')?.classList.remove('hidden');
+
+      if (state.accessCode && state.packId) {
+        fetch('/api/minny-practice-log', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            access_code: state.accessCode,
+            pack_id: state.packId,
+            prompt_id: 'free_talk_summary',
+            mode_id: 'free_talk',
+            summary: {
+              mode: 'free_talk',
+              turns: ft.turnsUsed,
+              sentence_count: ft.sentenceCount,
+              minutes: minutesUsed,
+            },
+          }),
+        }).catch(() => {});
+      }
+    }
+
+    document.getElementById('free-talk-record')?.addEventListener('click', () => {
+      if (ft.recording?.status === 'recording') {
+        ftStopRecording();
+      } else {
+        ftStartRecording();
+      }
+    });
+
+    document.getElementById('free-talk-end')?.addEventListener('click', () => {
+      ft.ended = true;
+      ftStopCountdown();
+      ftCleanupRecording();
+      ftShowSummary();
+    });
+
+    document.getElementById('free-talk-wrapup-cta')?.addEventListener('click', ftShowSummary);
+
+    document.getElementById('free-talk-summary-again')?.addEventListener('click', () => {
+      document.getElementById('free-talk-summary')?.classList.add('hidden');
+      enterFreeTalking();
+    });
+
+    document.getElementById('free-talk-summary-home')?.addEventListener('click', ftExitToModes);
 
     loadBtn?.addEventListener('click', loadSession);
   </script>
