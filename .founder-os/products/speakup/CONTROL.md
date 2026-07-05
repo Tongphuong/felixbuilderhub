@@ -51,8 +51,8 @@ assigns, commits, merges, deploys, or spends.
 
 1. **Founder OS is mandatory from the first task, no exceptions.** Before any
    code change: check this file for an active task, run
-   `founder_check.py --repo felixbuilderhub --product speakup --gate build`
-   before committing. See `.claude/rules/speakup.md`.
+   `founder_check.py --repo . --product speakup --gate build` (from inside
+   this repo's root) before committing. See `.claude/rules/speakup.md`.
 2. **Reuse before building.** Before writing any new capability from scratch
    (conversation guardrails, TTS client, audio session handling, admin
    homework-entry form, etc.), search for an existing open-source library,

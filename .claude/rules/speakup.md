@@ -14,8 +14,10 @@ No exceptions, including "simple" fixes. Before any code change on this
 product:
 
 1. Read `.founder-os/products/speakup/CONTROL.md` for the current task.
-2. Run `founder_check.py --repo felixbuilderhub --product speakup --gate build`
-   before committing.
+2. Run `founder_check.py --repo . --product speakup --gate build` (run from
+   inside this repo's root — a bare repo name like `felixbuilderhub` here
+   resolves relative to your current directory and will double the path if
+   you're already inside it) before committing.
 3. Never set "Founder approved: yes" in `PRODUCT.md` yourself — that gate is
    Phuong's alone.
 
@@ -44,8 +46,9 @@ to Phases 1-3):
   — `node --test` passing is not the same claim as "the spec's criteria are
   met." A skipped test or file must be a visible line, not a silent gap.
   Write this into CONTROL.md's `## Acceptance criteria reconciliation`
-  section, then run `founder_check.py --repo felixbuilderhub --product
-  speakup --gate complete` before setting `Status: complete`.
+  section, then run `founder_check.py --repo . --product speakup --gate
+  complete` (from inside this repo's root) before setting `Status:
+  complete`.
 - Every CONTROL.md "Current task" entry for this product must state a cost
   ceiling at dispatch time (the `Cost ceiling` field), separate from the
   actual-spend figure recorded at completion — `founder_check.py --gate
