@@ -1,0 +1,365 @@
+// tests/minny-conversation.test.mjs
+import test from 'node:test';
+import assert from 'node:assert/strict';
+
+import {
+  pickStarterTopic,
+  buildSystemPrompt,
+  parseModelReply,
+  sessionCapsExceeded,
+  nextSession,
+  LEVEL_REGISTER,
+  STARTER_TOPICS,
+} from '../functions/api/_minny-convo.js';
+
+import { onRequestPost } from '../functions/api/minny-conversation.js';
+
+// ---------------------------------------------------------------------------
+// Helper: create an in-memory KV mock that mirrors Cloudflare KV behaviour
+// ---------------------------------------------------------------------------
+function createFakeKv() {
+  const store = new Map();
+  return {
+    async get(key, opts) {
+      const raw = store.get(key);
+      if (raw === undefined) return null;
+      if (opts?.type === 'json') {
+        return JSON.parse(raw);
+      }
+      return raw;
+    },
+    async put(key, value) {
+      store.set(key, value);
+    },
+    async delete(key) {
+      store.delete(key);
+    },
+  };
+}
+
+// ---------------------------------------------------------------------------
+// Pure function tests
+// ---------------------------------------------------------------------------
+
+test('pickStarterTopic L1 indices 0 and 1 return two different L1 topics', () => {
+  const t0 = pickStarterTopic('L1', 0);
+  const t1 = pickStarterTopic('L1', 1);
+  assert.notEqual(t0, t1);
+  // both should be from the L1 topic list
+  const l1Topics = STARTER_TOPICS.L1;
+  assert.ok(l1Topics.includes(t0));
+  assert.ok(l1Topics.includes(t1));
+});
+
+test('pickStarterTopic L1 index 2 wraps back to index 0', () => {
+  const t0 = pickStarterTopic('L1', 0);
+  const t2 = pickStarterTopic('L1', 2);
+  assert.equal(t0, t2);
+});
+
+test('pickStarterTopic unknown level falls back to L3', () => {
+  const t = pickStarterTopic('L9', 0);
+  const l3Topics = STARTER_TOPICS.L3;
+  assert.ok(l3Topics.includes(t));
+});
+
+test('buildSystemPrompt includes level register and starter topic', () => {
+  const prompt = buildSystemPrompt('L1', 'their favorite color');
+  assert.ok(prompt.includes(LEVEL_REGISTER.L1));
+  assert.ok(prompt.includes('their favorite color'));
+});
+
+test('buildSystemPrompt unknown level falls back to L3 register', () => {
+  const prompt = buildSystemPrompt('L9', 'x');
+  assert.ok(prompt.includes(LEVEL_REGISTER.L3));
+  assert.ok(prompt.includes('x'));
+});
+
+test('parseModelReply valid JSON returns object', () => {
+  const result = parseModelReply('{"reply_en":"Hi there!","mood":"celebrate"}');
+  assert.deepEqual(result, { reply_en: 'Hi there!', mood: 'celebrate' });
+});
+
+test('parseModelReply non-JSON returns null', () => {
+  const result = parseModelReply('not json at all');
+  assert.equal(result, null);
+});
+
+test('parseModelReply empty reply_en returns null', () => {
+  const result = parseModelReply('{"reply_en":"","mood":"idle"}');
+  assert.equal(result, null);
+});
+
+test('parseModelReply invalid mood returns null', () => {
+  const result = parseModelReply('{"reply_en":"hi","mood":"angry"}');
+  assert.equal(result, null);
+});
+
+test('parseModelReply markdown-fenced JSON still parses', () => {
+  const result = parseModelReply('```json\n{"reply_en":"Hi!","mood":"idle"}\n```');
+  assert.deepEqual(result, { reply_en: 'Hi!', mood: 'idle' });
+});
+
+test('sessionCapsExceeded turn cap exceeded returns true', () => {
+  const now = Date.now();
+  const session = { turns: 12, started_at: now };
+  assert.equal(sessionCapsExceeded(session, now), true);
+});
+
+test('sessionCapsExceeded time cap exceeded returns true', () => {
+  const now = Date.now();
+  const session = { turns: 0, started_at: now - 6 * 60 * 1000 }; // 6 minutes ago
+  assert.equal(sessionCapsExceeded(session, now), true);
+});
+
+test('sessionCapsExceeded within both caps returns false', () => {
+  const now = Date.now();
+  const session = { turns: 5, started_at: now };
+  assert.equal(sessionCapsExceeded(session, now), false);
+});
+
+test('nextSession increments turns and appends history without mutation', () => {
+  const original = { turns: 2, history: [{ a: 1 }, { b: 2 }] };
+  const newEntry = { c: 3 };
+  const result = nextSession(original, newEntry);
+  assert.equal(result.turns, 3);
+  assert.deepEqual(result.history, [{ a: 1 }, { b: 2 }, { c: 3 }]);
+  // original unchanged
+  assert.equal(original.turns, 2);
+  assert.deepEqual(original.history, [{ a: 1 }, { b: 2 }]);
+});
+
+test('nextSession drops oldest entry when history length would exceed 6', () => {
+  const history = [];
+  for (let i = 0; i < 6; i++) {
+    history.push({ idx: i });
+  }
+  const original = { turns: 6, history };
+  const newEntry = { idx: 6 };
+  const result = nextSession(original, newEntry);
+  assert.equal(result.history.length, 6);
+  // oldest (idx 0) dropped, newest (idx 6) appended
+  assert.deepEqual(result.history[0], { idx: 1 });
+  assert.deepEqual(result.history[5], { idx: 6 });
+});
+
+// ---------------------------------------------------------------------------
+// Endpoint tests (with fake KV, no real network)
+// ---------------------------------------------------------------------------
+
+test('action start with non-test code returns 403', async () => {
+  const fakeKv = createFakeKv();
+  await fakeKv.put('R2L-REAL', JSON.stringify({ is_test: false, progress: { current_level: 'L2' } }));
+
+  const env = { READ2LEAD_CODES: fakeKv };
+  const request = new Request('https://example.com/api/minny-conversation', {
+    method: 'POST',
+    body: JSON.stringify({ action: 'start', access_code: 'R2L-REAL' }),
+  });
+  const response = await onRequestPost({ request, env });
+  assert.equal(response.status, 403);
+  const body = await response.json();
+  assert.ok(body.error);
+});
+
+test('action start with test code returns ok and session data', async () => {
+  const fakeKv = createFakeKv();
+  await fakeKv.put('R2L-TEST', JSON.stringify({ is_test: true, progress: { current_level: 'L2' } }));
+
+  const env = { READ2LEAD_CODES: fakeKv };
+  const request = new Request('https://example.com/api/minny-conversation', {
+    method: 'POST',
+    body: JSON.stringify({ action: 'start', access_code: 'R2L-TEST' }),
+  });
+  const response = await onRequestPost({ request, env });
+  assert.equal(response.status, 200);
+  const body = await response.json();
+  assert.equal(body.ok, true);
+  assert.ok(typeof body.session_id === 'string');
+  assert.equal(body.turns_left, 12);
+  assert.equal(body.seconds_left, 300);
+  assert.ok(body.greeting);
+  assert.ok(typeof body.greeting.text_en === 'string');
+  assert.ok(typeof body.greeting.subtitle_vi === 'string');
+});
+
+test('action start with unknown code returns error code_not_found', async () => {
+  const fakeKv = createFakeKv();
+  // no seed
+  const env = { READ2LEAD_CODES: fakeKv };
+  const request = new Request('https://example.com/api/minny-conversation', {
+    method: 'POST',
+    body: JSON.stringify({ action: 'start', access_code: 'UNKNOWN' }),
+  });
+  const response = await onRequestPost({ request, env });
+  const body = await response.json();
+  assert.equal(body.ok, false);
+  assert.equal(body.error, 'code_not_found');
+});
+
+test('action turn with garbage session_id returns ended gracefully', async () => {
+  const fakeKv = createFakeKv();
+  await fakeKv.put('R2L-TEST', JSON.stringify({ is_test: true, progress: { current_level: 'L2' } }));
+
+  const env = { READ2LEAD_CODES: fakeKv };
+  const request = new Request('https://example.com/api/minny-conversation', {
+    method: 'POST',
+    body: JSON.stringify({ action: 'turn', access_code: 'R2L-TEST', session_id: 'garbage', transcript: 'hi' }),
+  });
+  const response = await onRequestPost({ request, env });
+  assert.equal(response.status, 200);
+  const body = await response.json();
+  assert.equal(body.ok, true);
+  assert.equal(body.ended, true);
+});
+
+test('turn with non-test access_code rejected even with valid session_id', async () => {
+  const fakeKv = createFakeKv();
+  await fakeKv.put('R2L-TEST', JSON.stringify({ is_test: true, progress: { current_level: 'L2' } }));
+  await fakeKv.put('R2L-REAL', JSON.stringify({ is_test: false, progress: { current_level: 'L2' } }));
+
+  const env = { READ2LEAD_CODES: fakeKv };
+
+  // start with test code to get a session_id
+  const startReq = new Request('https://example.com/api/minny-conversation', {
+    method: 'POST',
+    body: JSON.stringify({ action: 'start', access_code: 'R2L-TEST' }),
+  });
+  const startResp = await onRequestPost({ request: startReq, env });
+  const startBody = await startResp.json();
+  const sessionId = startBody.session_id;
+
+  // now turn with real code
+  const turnReq = new Request('https://example.com/api/minny-conversation', {
+    method: 'POST',
+    body: JSON.stringify({ action: 'turn', access_code: 'R2L-REAL', session_id: sessionId, transcript: 'hi' }),
+  });
+  const turnResp = await onRequestPost({ request: turnReq, env });
+  assert.equal(turnResp.status, 403);
+  const turnBody = await turnResp.json();
+  assert.ok(turnBody.error);
+});
+
+test('full flow with test code: turn decrements turns_left and uses canned redirect', async () => {
+  const fakeKv = createFakeKv();
+  await fakeKv.put('R2L-TEST', JSON.stringify({ is_test: true, progress: { current_level: 'L2' } }));
+
+  const env = { READ2LEAD_CODES: fakeKv };
+
+  // start
+  const startReq = new Request('https://example.com/api/minny-conversation', {
+    method: 'POST',
+    body: JSON.stringify({ action: 'start', access_code: 'R2L-TEST' }),
+  });
+  const startResp = await onRequestPost({ request: startReq, env });
+  const startBody = await startResp.json();
+  const sessionId = startBody.session_id;
+  assert.equal(startBody.turns_left, 12);
+
+  // first turn
+  const turn1Req = new Request('https://example.com/api/minny-conversation', {
+    method: 'POST',
+    body: JSON.stringify({ action: 'turn', access_code: 'R2L-TEST', session_id: sessionId, transcript: 'I like dogs' }),
+  });
+  const turn1Resp = await onRequestPost({ request: turn1Req, env });
+  const turn1Body = await turn1Resp.json();
+  assert.equal(turn1Body.ok, true);
+  assert.ok(typeof turn1Body.reply_en === 'string' && turn1Body.reply_en.length > 0);
+  assert.equal(turn1Body.mood, 'idle');
+  assert.equal(turn1Body.turns_left, 11);
+
+  // second turn
+  const turn2Req = new Request('https://example.com/api/minny-conversation', {
+    method: 'POST',
+    body: JSON.stringify({ action: 'turn', access_code: 'R2L-TEST', session_id: sessionId, transcript: 'I like cats' }),
+  });
+  const turn2Resp = await onRequestPost({ request: turn2Req, env });
+  const turn2Body = await turn2Resp.json();
+  assert.equal(turn2Body.turns_left, 10);
+});
+
+test('repeated canned-redirect turns (LLM unavailable the whole session) still consume the normal turn cap, not an early wrap-up', async () => {
+  // No OPENAI_API_KEY / env.AI configured, so every turn falls through to the
+  // canned-redirect path. A provider outage must not cut the session short --
+  // only the real 12-turn/5-min caps (or, later, real Phase 6 safety flags)
+  // should end a session early.
+  const fakeKv = createFakeKv();
+  await fakeKv.put('R2L-TEST', JSON.stringify({ is_test: true, progress: { current_level: 'L2' } }));
+
+  const env = { READ2LEAD_CODES: fakeKv };
+
+  const startReq = new Request('https://example.com/api/minny-conversation', {
+    method: 'POST',
+    body: JSON.stringify({ action: 'start', access_code: 'R2L-TEST' }),
+  });
+  const startResp = await onRequestPost({ request: startReq, env });
+  const startBody = await startResp.json();
+  const sessionId = startBody.session_id;
+
+  for (let i = 1; i <= 4; i++) {
+    const turnReq = new Request('https://example.com/api/minny-conversation', {
+      method: 'POST',
+      body: JSON.stringify({ action: 'turn', access_code: 'R2L-TEST', session_id: sessionId, transcript: `turn ${i}` }),
+    });
+    const turnResp = await onRequestPost({ request: turnReq, env });
+    const turnBody = await turnResp.json();
+    assert.equal(turnBody.ok, true);
+    assert.equal(turnBody.ended, undefined); // never ends early on technical failures alone
+    assert.ok(typeof turnBody.reply_en === 'string' && turnBody.reply_en.length > 0);
+    assert.equal(turnBody.turns_left, 12 - i);
+  }
+});
+
+test('daily cap of 3 sessions per code enforced', async () => {
+  const fakeKv = createFakeKv();
+  await fakeKv.put('R2L-TEST', JSON.stringify({ is_test: true, progress: { current_level: 'L2' } }));
+
+  const env = { READ2LEAD_CODES: fakeKv };
+
+  const startSession = async () => {
+    const req = new Request('https://example.com/api/minny-conversation', {
+      method: 'POST',
+      body: JSON.stringify({ action: 'start', access_code: 'R2L-TEST' }),
+    });
+    return onRequestPost({ request: req, env });
+  };
+
+  // first three starts should succeed
+  for (let i = 0; i < 3; i++) {
+    const resp = await startSession();
+    const body = await resp.json();
+    assert.equal(body.ok, true);
+  }
+
+  // fourth start should be rejected
+  const resp4 = await startSession();
+  const body4 = await resp4.json();
+  assert.equal(body4.ok, false);
+  assert.equal(body4.error, 'daily_cap');
+});
+
+test('turn without transcript returns error transcript_missing', async () => {
+  const fakeKv = createFakeKv();
+  await fakeKv.put('R2L-TEST', JSON.stringify({ is_test: true, progress: { current_level: 'L2' } }));
+
+  const env = { READ2LEAD_CODES: fakeKv };
+
+  // start
+  const startReq = new Request('https://example.com/api/minny-conversation', {
+    method: 'POST',
+    body: JSON.stringify({ action: 'start', access_code: 'R2L-TEST' }),
+  });
+  const startResp = await onRequestPost({ request: startReq, env });
+  const startBody = await startResp.json();
+  const sessionId = startBody.session_id;
+
+  // turn without transcript
+  const turnReq = new Request('https://example.com/api/minny-conversation', {
+    method: 'POST',
+    body: JSON.stringify({ action: 'turn', access_code: 'R2L-TEST', session_id: sessionId }),
+  });
+  const turnResp = await onRequestPost({ request: turnReq, env });
+  const turnBody = await turnResp.json();
+  assert.equal(turnBody.ok, false);
+  assert.equal(turnBody.error, 'transcript_missing');
+});

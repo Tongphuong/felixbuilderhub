@@ -639,17 +639,44 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
         })
         .join('');
 
+      const matchPercent = (() => {
+        const valid = state.homeworkResults.filter(r => Number.isFinite(Number(r.score_percent)));
+        if (valid.length === 0) return null;
+        const sum = valid.reduce((acc, r) => acc + Number(r.score_percent), 0);
+        return Math.round(sum / valid.length);
+      })();
+
       const summary = document.createElement('div');
       summary.className = 'mt-4 border-t border-cream/10 pt-4';
       summary.innerHTML = `
         <p class="font-display text-lg font-bold text-cream">Con đã hoàn thành bài tập thầy giao! 🎉</p>
         ${rows}
+        ${matchPercent !== null ? `<p class="mt-3 font-display text-lg font-bold text-gold">Khớp bài thầy dạy: ${matchPercent}%</p>` : ''}
       `;
       resultEl.appendChild(summary);
 
       state.homeworkComplete = true;
       nextBtn.classList.remove('hidden');
       nextBtn.textContent = 'Xong bài tập';
+
+      if (state.accessCode && state.packId) {
+        fetch('/api/minny-practice-log', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            access_code: state.accessCode,
+            pack_id: state.packId,
+            prompt_id: 'homework_summary',
+            mode_id: 'homework',
+            summary: {
+              mode: 'homework',
+              turns: state.homeworkResults.length,
+              match_percent: matchPercent,
+              homework_note_vi: (activeMode() && activeMode().homework_note_vi) || null,
+            },
+          }),
+        }).catch(() => {});
+      }
     }
 
     function rubricRow(ok, label) {
