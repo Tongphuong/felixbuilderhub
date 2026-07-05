@@ -10,12 +10,15 @@
 
 | Agent | Role | Current authority |
 |---|---|---|
-| Claude | Lead | Plans, dispatches, reviews, and integrates |
-| Codex | Worker | Executes only a Claude-assigned packet |
-| Cline (GLM 5.2 or Kimi) | Worker | Executes only a Claude-assigned packet in VS Code |
+| Claude | Lead + Reviewer | Plans, dispatches, reviews, and integrates |
+| Aider Senior (DeepSeek V4 Pro) | Senior worker | Features, multi-file changes, complex logic via `aider-senior` |
+| Aider Junior (DeepSeek V4 Flash) | Junior worker | Renames, simple edits, tests via `aider-junior` |
+| Claude Sonnet (background worker) | Coding worker | General first-choice dispatch option alongside Aider — own isolated worktree/branch (`claude-bg/<topic>`), commits/pushes its own branch only. See `~/.claude/rules/claude-bg-dispatch.md`. |
 | Lonewolf | Read-only bridge | Explains progress, decisions, learning, budget, and blockers |
 
-Decision path: `Phuong -> Claude -> one worker -> Claude review -> Phuong approval`.
+Decision path: `Phuong -> Claude -> Aider/Claude Sonnet -> Claude review -> Phuong approval`.
+Codex and Cline are retired org-wide (see `_ops/AGENTS.md`) — this table was
+stale until 2026-07-05.
 
 ## Current task
 
@@ -47,6 +50,11 @@ Decision path: `Phuong -> Claude -> one worker -> Claude review -> Phuong approv
   message text, a leaked cosmetic-stage timer, missing anchor-element
   typing), founder_check.py --gate build PASS, Phuong approved merge to
   main (2026-07-04) — done.
+- Cost ceiling: none
+
+## Acceptance criteria reconciliation
+
+- none
 
 ## Previous task
 

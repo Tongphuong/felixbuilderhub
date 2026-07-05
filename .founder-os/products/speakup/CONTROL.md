@@ -39,10 +39,11 @@ prod.
 | Claude | Lead + Reviewer | Plans, turns Fable 5's roadmap into dispatch packets, reviews every diff, integrates after Phuong's approval |
 | Aider Senior (DeepSeek V4 Pro) | Senior worker | Features, multi-file changes, complex logic via `aider-senior` |
 | Aider Junior (DeepSeek V4 Flash) | Junior worker | Renames, simple edits, tests via `aider-junior` |
+| Claude Sonnet (background worker) | Coding worker | General first-choice dispatch option alongside Aider — own isolated worktree/branch (`claude-bg/<topic>`), commits/pushes its own branch only. Formalizes the ad hoc usage already recorded for Phase 2 (frontend) and Phase 6 (content authorship) in the phase tracker below. |
 | Lonewolf | Read-only bridge | Explains progress, decisions, learning, budget, and blockers |
 
-Decision path: `Phuong -> Fable 5 (roadmap) -> Claude (dispatch + review) -> Aider (execute) -> Claude review -> Phuong approval`.
-Aider workers never own the same file simultaneously. Lonewolf never edits,
+Decision path: `Phuong -> Fable 5 (roadmap) -> Claude (dispatch + review) -> Aider/Claude Sonnet (execute) -> Claude review -> Phuong approval`.
+Workers never own the same file simultaneously. Lonewolf never edits,
 assigns, commits, merges, deploys, or spends.
 
 ## Hard rules for this product (added 2026-07-04, per Phuong)
@@ -66,6 +67,7 @@ assigns, commits, merges, deploys, or spends.
 - Acceptance criteria: none
 - Files owned: none
 - Stop condition: none
+- Cost ceiling: none
 - Started: none
 - Cost spent: USD 0
 
@@ -74,6 +76,10 @@ assigns, commits, merges, deploys, or spends.
 | Path or area | Owner | State |
 |---|---|---|
 | none | none | none |
+
+## Acceptance criteria reconciliation
+
+- none
 
 ## Daily update
 

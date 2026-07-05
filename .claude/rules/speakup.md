@@ -43,9 +43,13 @@ to Phases 1-3):
   bullets one by one. Record PASS / SKIPPED (one-line reason) / N/A for each
   — `node --test` passing is not the same claim as "the spec's criteria are
   met." A skipped test or file must be a visible line, not a silent gap.
+  Write this into CONTROL.md's `## Acceptance criteria reconciliation`
+  section, then run `founder_check.py --repo felixbuilderhub --product
+  speakup --gate complete` before setting `Status: complete`.
 - Every CONTROL.md "Current task" entry for this product must state a cost
-  ceiling at dispatch time, separate from the actual-spend figure recorded
-  at completion.
+  ceiling at dispatch time (the `Cost ceiling` field), separate from the
+  actual-spend figure recorded at completion — `founder_check.py --gate
+  build` now enforces this field is non-empty.
 
 ## Scope reminder
 
