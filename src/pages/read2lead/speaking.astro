@@ -1311,6 +1311,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       awaitingReply: false,
       sentenceCount: 0,
       turnsUsed: 0,
+      flaggedSession: false,
     };
 
     function ftFormatTime(totalSeconds) {
@@ -1451,6 +1452,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       ft.awaitingReply = false;
       ft.sentenceCount = 0;
       ft.turnsUsed = 0;
+      ft.flaggedSession = false;
       ftStopCountdown();
       ftCleanupRecording();
     }
@@ -1729,7 +1731,8 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
         if (data.ended) {
           ftAppendReplyBubble(data.reply_en, data.mood || 'celebrate');
           playConversationAudio(data.audio_b64, data.content_type, data.reply_en);
-          ftHandleCapReached(ft.secondsLeft <= 0 ? 'time' : 'turns');
+          if (data.flagged) ft.flaggedSession = true;
+          ftHandleCapReached(data.flagged ? 'flagged' : (ft.secondsLeft <= 0 ? 'time' : 'turns'));
           return;
         }
 
@@ -1752,6 +1755,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       const texts = {
         time: 'Hôm nay nói chuyện vui quá! Hẹn gặp lại con nhé!',
         turns: 'Con nói giỏi quá! Nghỉ tay một tí rồi tiếp nhé!',
+        flagged: 'Con nói giỏi quá! Nghỉ tay một tí rồi tiếp nhé!',
         expired: overrideText || 'Phiên trò chuyện đã kết thúc rồi. Con bắt đầu phiên mới nhé!',
       };
 
@@ -1796,6 +1800,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
               turns: ft.turnsUsed,
               sentence_count: ft.sentenceCount,
               minutes: minutesUsed,
+              flagged: ft.flaggedSession === true,
             },
           }),
         }).catch(() => {});

@@ -5,7 +5,7 @@
 - Branch: `claude/speakup-v0` (off `main`)
 - Preview URL: `claude-speakup-v0.felixbuilderhub.pages.dev` (Cloudflare Pages auto-deploy per push, per `claude/<topic>` convention in `BRANCH_CONVENTIONS.md`)
 - Active workers: 0
-- Last updated: 2026-07-05 (Phase 7b approved by Phuong; Phase 8a — Free Talking UI build — done)
+- Last updated: 2026-07-05 (Phase 6 — guardrail layer + red-team suite — build done, tests green; awaiting Phuong's live red-team run before Status: complete)
 
 ## Phase tracker (source of truth: `_ops/specs/SPEC_SPEAKUP_V0.md`)
 
@@ -21,7 +21,7 @@ run sequentially even where the spec's dependency graph would allow parallel wor
 | 4 | Phase 4 — Session summaries → parent profile | Aider Senior | done | yes (5921180) | no |
 | 4 | Phase 5 — Conversation turn endpoint (test codes only) | Aider Senior | done | yes (5921180) | no |
 | 4 | Phase 7b — Conversation UI design mocks | Claude Design | approved (Phuong, 2026-07-05) | n/a (design folder: `SpeakUp Phase 7b Free Talking/design_handoff_speakup_phase_7b/`) | n/a |
-| 5 | Phase 6 — Guardrail layer + red-team suite | Aider Senior (plumbing) + Sonnet 5 (wordlists/redirects/red-team) | not started | no | no |
+| 5 | Phase 6 — Guardrail layer + red-team suite | Aider Senior (plumbing) + Sonnet 5 (wordlists/redirects/red-team) | active | no | no |
 | 6 | Phase 8a — Free Talking UI (build only, `is_test`-gated, no pilot enablement) | Aider Senior (dispatch) + Claude (review) | done | yes (c324b2e, 9566a31, cd8cc28, bd19129) | no |
 | 6 | Phase 8b — Gate removal (pilot enablement) | Aider Senior; separate final commit, blocked on Phase 6 | not started | no | no |
 
@@ -61,120 +61,109 @@ assigns, commits, merges, deploys, or spends.
 
 ## Current task
 
-- Status: complete
-- Task ID: speakup-phase8a-free-talking-ui
-- Owner: Aider Senior (dispatch packets) + Claude (review/integration)
-- Lane: `claude/speakup-v0`, primary checkout (no new worktree needed —
-  `hub-claude-speakup-v0-worktree2` remains idle/clean)
-- Acceptance criteria:
-  1. Screen 1 (main conversation view: hero+bubble, scrolling transcript,
-     mm:ss countdown, 12-turn dot indicator, existing record button reused)
-  2. Screen 2 ("Minny đang nghĩ..." thinking state: breathing avatar + 3-dot
-     bounce, record button disabled)
-  3. Screen 3 (tap-to-play fallback chip for autoplay-blocked audio)
-  4. Screen 4 (cap-reached wrap-up, distinct 5-min vs 12-turn copy)
-  5. Screen 5 (session summary: turns/sentences/minutes + encouragement +
-     2 CTAs — XP/rank/streak lines dropped per Phuong's decision, spec's own
-     non-goal)
-  6. Wired to existing `/api/minny-conversation` start/turn actions;
-     `is_test` gate line untouched
-  7. Transcript obtained via existing `/api/read2lead-speaking-check`
-     (`pack_id: 'general'`) — no new transcription endpoint
-  8. Client never invents cap/end state independently — always re-synced
-     from the server's last response
-  9. `prefers-reduced-motion` variants + ARIA attributes per the Phase 7b
-     design README, built alongside the visuals
-  10. Existing Phase 2/7a components (mode card, mic-check, record button,
-      homework flow) untouched
-  11. `node --test` green, `founder_check.py --gate build` PASS
-- Files owned: `src/pages/read2lead/speaking.astro`,
-  `src/styles/speakup-free-talk.css` (new),
-  `functions/api/minny-speaking-context.js`,
-  `functions/api/minny-conversation.js` (TTS-embedding lines only — not the
-  `is_test` check), `tests/minny-speaking.test.mjs`,
-  `tests/minny-conversation.test.mjs`
-- Stop condition: any diff touching the `is_test` check,
-  `r2l-recorder-script.mjs`, `r2l-mic-check.js`, or an existing homework-mode
-  function body — stop and escalate before continuing
-- Cost ceiling: USD 15–20 across the 3 dispatch packets (estimate; this is
-  code/markup editing, not inference-heavy)
+- Status: active
+- Task ID: speakup-phase6-guardrails
+- Owner: Aider Senior (plumbing) + Claude (wordlists/redirect copy/red-team
+  fixtures, authored directly per the spec's own "safety content is
+  review-critical, not mechanical" note — same precedent as Phase 5's system
+  prompt)
+- Lane: `claude/speakup-v0`, primary checkout (collision-checked clean via
+  `check-worktree-collision.sh`; Active workers 0 → 1)
+- Acceptance criteria: see numbered list below (verbatim, `SPEC_SPEAKUP_V0.md` Phase 6)
+  1. Every red-team fixture yields a canned redirect (never the model's raw
+     output) — full-suite assertion
+  2. Llama Guard runs on every model reply before TTS; fail-closed on
+     error/timeout
+  3. 2 flags in one session → early wrap-up + session marked `flagged: true`
+     in the practice-log summary; flagged ring visible to Phuong (JSON
+     readout link, same pattern as `debug-speaking.js`)
+  4. 30-minute live red-team by a human finds no break, recorded in the
+     phase report — **Phuong will run this herself on the Cloudflare
+     preview once built** (her explicit choice; no browser in this sandbox)
+  5. Latency with Llama Guard in the path re-measured, still within Phase 5
+     bounds (~200–400ms added, budgeted)
+  6. `node --test` green
+- Files owned: `functions/api/_minny-guardrails.js` (new, pure functions),
+  a new sibling wordlist file (banned-topic content, separate + reviewable
+  per spec D0), `functions/api/minny-conversation.js` (guardrail wiring +
+  flag counter + KV ring only — not the `is_test` check), a new
+  `functions/api/debug-convo-flags.js` (flag-log admin readout),
+  `tests/minny-guardrails.test.mjs` (new), a small tightly-scoped change to
+  `src/pages/read2lead/speaking.astro` (pass `flagged` through to the
+  practice-log summary — `ftReset`/`ftSubmitTurn`/`ftHandleCapReached`/
+  `ftShowSummary` only)
+- Stop condition: any diff touching the `is_test` check itself (that's
+  Phase 8b, separate, blocked further on Phuong's go-ahead + pilot-rollout
+  shape) — stop and escalate before continuing
+- Cost ceiling: USD 10–15 across Aider Senior dispatch packets (small scoped
+  packets, code editing not inference-heavy); Llama Guard calls on Workers
+  AI are near-free at this volume per spec
 - Started: 2026-07-05
-- Cost spent: ~USD 0.06 (3 aider-senior dispatches + 1 aider-junior fix,
-  per each call's own reported token cost; not yet cross-checked against
-  `aider-cost`, same reconciliation gap noted since Phase 3)
+- Known deviation flagged upfront: the spec's D0 called for vendoring the
+  public LDNOOBW word list; this sandboxed session has no outbound network
+  access (confirmed via a direct connectivity test) to fetch it, so the
+  banned-topic wordlist is authored directly instead of vendored — same
+  class of environment-constraint gap as prior phases' missing
+  browser/credentials, disclosed here rather than silently substituted.
 
 ## File ownership
 
 | Path or area | Owner | State |
 |---|---|---|
-| `src/pages/read2lead/speaking.astro` | Aider Senior (dispatch) + Claude (review) | done |
-| `src/styles/speakup-free-talk.css` (new) | Claude (direct — not a guarded extension) | done |
-| `functions/api/minny-speaking-context.js` | Aider Senior (dispatch) + Claude (review) | done |
-| `functions/api/minny-conversation.js` | Aider Senior (dispatch, TTS lines only) + Claude (review) | done |
-| `tests/minny-speaking.test.mjs`, `tests/minny-conversation.test.mjs` | Aider Senior (dispatch) + Aider Junior (1 test-order fix) + Claude (review) | done |
+| `functions/api/_minny-guardrails.js` (new) | Aider Senior (dispatch) + Claude (review) | done |
+| Wordlist sibling file (new) | Claude (direct-authored content, dispatched verbatim) | done |
+| `functions/api/minny-conversation.js` | Aider Senior (dispatch, guardrail-wiring lines only) + Claude (review) | done |
+| `functions/api/debug-convo-flags.js` (new) | Aider Senior (dispatch) + Claude (review) | done |
+| `tests/minny-guardrails.test.mjs` (new) | Aider Senior (dispatch) + Claude (review) | done |
+| `src/pages/read2lead/speaking.astro` | Aider Senior (dispatch, flagged-passthrough lines only) + Claude (review) | done |
 
 ## Acceptance criteria reconciliation
 
-1. Screen 1 (main conversation view) — PASS. Markup/CSS/JS verified in
-   reviewed diffs and confirmed present in the actual production bundle
-   (`speaking.fskcByB1.css`, `speaking.astro_astro_type_script...js`) via a
-   local `wrangler pages dev` + KV run. **Not visually screenshotted** — no
-   browser is available in this sandboxed session (no network access to
-   install Playwright/Chromium, no `chromium-cli`) — see note below.
-2. Screen 2 ("Minny đang nghĩ..." thinking state) — PASS. Breathing-avatar
-   CSS + 3-dot bounce + record-button-disabled wiring confirmed in diff and
-   present in the bundle. Not visually screenshotted (same gap as #1).
-3. Screen 3 (tap-to-play fallback) — PASS on markup/CSS/JS wiring
-   (confirmed in diff and bundle). The actual iOS-Safari-autoplay-blocked
-   trigger path was not exercised live (no real device/browser available);
-   the code path (`audio.play().catch(...)` → show chip) mirrors the
-   already-shipped `playMinnyVoice` fallback pattern.
-4. Screen 4 (cap-reached wrap-up, 2 copy variants) — PASS. Verified in diff:
-   distinct Vietnamese strings for the 5-min vs 12-turn cap, matching the
-   approved Phase 7b README's copy table.
-5. Screen 5 (session summary) — PASS. XP/rank/streak lines correctly
-   dropped per Phuong's decision; turns/sentences/minutes stats verified in
-   diff.
-6. Wired to existing `/api/minny-conversation` start/turn actions, `is_test`
-   gate untouched — PASS. Exercised for real against a local
-   `wrangler pages dev` + local KV instance: confirmed `free_talk` mode
-   appears only for `is_test:true` codes and is absent for `is_test:false`;
-   confirmed `start` and `turn` actions return the exact shape the frontend
-   expects. Diff review confirms the `is_test` check's line and body are
-   byte-for-byte unchanged.
-7. Transcript via existing `/api/read2lead-speaking-check`
-   (`pack_id:'general'`) — PASS on code path (verified in diff, matches the
-   already-proven `canAccessPackForPractice` general-pack allowance).
-   **SKIPPED** for a real end-to-end audio recording: no Workers AI/OpenAI
-   credentials available in this sandboxed session to exercise real
-   transcription, same class of gap as Phase 3's live-egress item.
-8. Client never invents cap/end state independently — PASS. Verified in
-   diff: `ftSubmitTurn` always re-syncs `turns_left`/`seconds_left` from the
-   server's last response; wrap-up triggers only from a server-confirmed
-   `turns_left === 0`, the locally-mirrored countdown reaching 0, or a
-   server-returned `ended:true`.
-9. `prefers-reduced-motion` + ARIA — PASS on code (confirmed present in the
-   built CSS bundle and in the markup diff — `role="timer"`, `role="log"`,
-   `aria-label`s, single reduced-motion media block). Not visually verified
-   with an actual reduced-motion browser toggle (same sandboxing gap as #1).
-10. Existing Phase 2/7a components untouched — PASS. Diffs are additive
-    only, plus the single one-line `enterPracticeMode` branch; no existing
-    function body, class, or id was altered.
-11. `node --test` green, `founder_check.py --gate build` PASS — PASS.
-    793/793 tests (`node --test tests/**/*.test.mjs`), `astro build`
-    succeeds, `founder_check.py --repo felixbuilderhub --product speakup
-    --gate build` returns PASS.
+1. Every red-team fixture yields a canned redirect, never the model's raw
+   output — PASS. 31 new tests in `tests/minny-guardrails.test.mjs`,
+   including 9 red-team fixtures (instruction injection, character-break,
+   personal-info solicitation, violence in English and Vietnamese,
+   over-long reply, URL-bearing reply, Llama-Guard-down, Llama-Guard-safe),
+   each asserting the flagged content never appears in `reply_en`.
+2. Llama Guard runs on every model reply before TTS; fail-closed on
+   error/timeout — PASS. `screenWithLlamaGuard` is called on every
+   LLM-parsed reply (after the deterministic shape/character/topic checks
+   pass) before `synthesizeOrNull`/TTS. Fail-closed verified for a missing
+   `env.AI` binding, a thrown error, and a non-"safe" response via 4 unit
+   tests plus 1 end-to-end red-team test.
+3. 2 flags in one session → early wrap-up + `flagged: true` in the
+   practice-log summary; flagged ring visible to Phuong — PASS. Verified via
+   test: 2 flags in a session yield `ended:true, flagged:true,
+   turns_left:0, seconds_left:0`, and `debug:convo-flags` holds 2 entries.
+   Client pass-through reviewed in the `speaking.astro` diff: the server's
+   `flagged` bit sets `ft.flaggedSession`, which flows into
+   `/api/minny-practice-log`'s `summary.flagged` field. New
+   `functions/api/debug-convo-flags.js` mirrors the existing
+   `debug-speaking.js` secret-gated pattern exactly, reusing
+   `DEBUG_SPEAKING_KEY` rather than provisioning a second secret.
+4. 30-minute live red-team by a human finds no break, recorded in the phase
+   report — **SKIPPED**. Phuong will run this herself on the Cloudflare
+   preview once this branch is live (her explicit choice this session — no
+   browser available in this sandbox). A scripted checklist has been
+   prepared for her; result to be recorded here once she reports back.
+5. Latency with Llama Guard in the path re-measured, still within Phase 5
+   bounds — **SKIPPED**. No live Cloudflare/Workers AI credentials available
+   in this sandboxed session to measure real latency (same class of gap as
+   Phase 3's live-egress item and Phase 8a's browser gap). The code path
+   adds exactly one additional `env.AI.run` call, capped at a 4-second
+   timeout, and only when the deterministic checks already pass. Recommend
+   measuring this alongside item 4 on the live preview.
+6. `node --test` green — PASS. 824/824 tests (793 prior + 31 new), zero
+   regressions. `astro build` also completes cleanly.
 
-**Known gap, carried forward, needs Phuong or a session with real
-credentials/a real browser**: (a) visual/pixel QA of the 5 new screens at
-phone/tablet/desktop and with reduced-motion toggled on — this sandboxed
-session has no network access to install a browser and no `chromium-cli`;
-(b) a real audio recording exercised through Whisper/Workers AI and real
-OpenAI TTS end-to-end — this session had no such credentials locally
-(same class of gap as Phase 3's still-open live-egress item). Recommend
-QA'ing both live on the Cloudflare preview
-(`claude-speakup-v0.felixbuilderhub.pages.dev`) once this branch is pushed,
-with a real `is_test:true` access code.
+**Known gaps, carried forward, needs Phuong or a session with real
+Cloudflare/Workers AI credentials**: (a) the banned-topic wordlist is
+Claude-authored rather than vendored from the public LDNOOBW list per the
+spec's original D0 decision — this sandboxed session has no outbound
+network access (confirmed via a direct connectivity test) to fetch it; (b)
+items 4 and 5 above (live red-team + latency measurement) need the
+Cloudflare preview. Status stays `active`, not `complete`, until Phuong has
+run the red-team and these are closed out.
 
 ## Daily update
 

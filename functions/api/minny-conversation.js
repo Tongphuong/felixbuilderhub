@@ -2,6 +2,7 @@ import { getClientIp, checkCodeRateLimit, recordCodeFailure, rateLimitedResponse
 import { buildSystemPrompt, parseModelReply, sessionCapsExceeded, nextSession, pickStarterTopic } from './_minny-convo.js';
 import { resolveOpenAiApiKey, getOrSynthesize } from './_minny-tts.js';
 import { findPhrase } from './_minny-phrases.js';
+import { screenTranscript, validateReplyShape, detectCharacterBreak, scanBannedTopics, screenWithLlamaGuard } from './_minny-guardrails.js';
 
 function json(body, status = 200) {
   return new Response(JSON.stringify(body), {
@@ -22,6 +23,76 @@ async function synthesizeOrNull(env, apiKey, text) {
   } catch {
     return null;
   }
+}
+
+// Phase 6: append a flagged turn to the debug ring Phuong reviews (mirrors
+// the existing debug:speaking-errors ring pattern in
+// read2lead-speaking-check.js -- same shape, same best-effort semantics).
+async function recordConvoFlag(env, record) {
+  try {
+    if (!env.READ2LEAD_CODES) return;
+    const KEY = 'debug:convo-flags';
+    const existing = await env.READ2LEAD_CODES.get(KEY, { type: 'json' });
+    const ring = Array.isArray(existing) ? existing : [];
+    ring.unshift(record);
+    await env.READ2LEAD_CODES.put(KEY, JSON.stringify(ring.slice(0, 50)), { expirationTtl: 604800 });
+  } catch {
+    /* diagnostics are best-effort; never break the response */
+  }
+}
+
+// Phase 6: a kid transcript or model reply was flagged by the guardrail
+// stack. Never surface the flagged content -- always a canned redirect.
+// 2 flags in one session -> early warm wrap-up, session marked flagged:true.
+async function handleGuardrailFlag(env, apiKey, session, sessionKey, accessCode, kidTranscript, matchedRule, direction, now) {
+  const newFlags = (session.flags || 0) + 1;
+  const redirectId = `redirect_${((session.turns || 0) % 6) + 1}`;
+  const redirect = findPhrase(redirectId);
+  const turnRecord = { kid_transcript: kidTranscript, reply_en: redirect.text_en, mood: 'idle' };
+  const updatedSession = { ...nextSession(session, turnRecord), flags: newFlags };
+
+  await recordConvoFlag(env, {
+    code: accessCode,
+    at: now,
+    direction,
+    matched_rule: matchedRule || 'unknown',
+  });
+
+  const turnsLeft = Math.max(0, 12 - updatedSession.turns);
+  const secondsLeft = Math.max(0, 300 - Math.floor((now - updatedSession.started_at) / 1000));
+
+  if (newFlags >= 2) {
+    try { await env.READ2LEAD_CODES.delete(sessionKey); } catch {}
+    const wrapUp = findPhrase('wrap_up_1');
+    const wrapUpAudio = await synthesizeOrNull(env, apiKey, wrapUp.text_en);
+    return json({
+      ok: true,
+      ended: true,
+      flagged: true,
+      reply_en: wrapUp.text_en,
+      subtitle_vi: wrapUp.subtitle_vi,
+      mood: 'celebrate',
+      turns_left: 0,
+      seconds_left: 0,
+      ...(wrapUpAudio ? { audio_b64: wrapUpAudio.audio_b64, content_type: wrapUpAudio.content_type } : {}),
+    });
+  }
+
+  try {
+    await env.READ2LEAD_CODES.put(sessionKey, JSON.stringify(updatedSession), { expirationTtl: 600 });
+  } catch {
+    // best-effort
+  }
+
+  const redirectAudio = await synthesizeOrNull(env, apiKey, redirect.text_en);
+  return json({
+    ok: true,
+    reply_en: redirect.text_en,
+    mood: 'idle',
+    turns_left: turnsLeft,
+    seconds_left: secondsLeft,
+    ...(redirectAudio ? { audio_b64: redirectAudio.audio_b64, content_type: redirectAudio.content_type } : {}),
+  });
 }
 
 export async function onRequestPost(context) {
@@ -105,6 +176,7 @@ export async function onRequestPost(context) {
       started_at: Date.now(),
       turns: 0,
       strikes: 0,
+      flags: 0,
       history: [],
       starter_topic: starterTopic,
     };
@@ -165,6 +237,14 @@ export async function onRequestPost(context) {
   }
 
   const now = Date.now();
+
+  // Phase 6 guardrail layer 1: screen the kid's own transcript before it
+  // ever reaches the LLM. An unsafe/off-bounds transcript never gets sent
+  // to the model at all.
+  const transcriptScreen = screenTranscript(transcript);
+  if (transcriptScreen.flagged) {
+    return handleGuardrailFlag(env, apiKey, session, sessionKey, accessCode, transcript, transcriptScreen.category, 'kid', now);
+  }
 
   if (sessionCapsExceeded(session, now)) {
     const wrapUp = findPhrase('wrap_up_1');
@@ -227,6 +307,23 @@ export async function onRequestPost(context) {
   }
 
   const parsed = rawReply ? parseModelReply(rawReply) : null;
+
+  if (parsed) {
+    // Phase 6 guardrail layers 2-4: deterministic shape/character checks,
+    // then the Llama Guard ML backstop, before TTS ever synthesizes the
+    // model's words. Any flag here means the kid never hears the raw reply.
+    const shapeCheck = validateReplyShape(parsed.reply_en);
+    const characterCheck = detectCharacterBreak(parsed.reply_en);
+    const topicCheck = scanBannedTopics(parsed.reply_en);
+    const deterministicFlag = shapeCheck.flagged || characterCheck.flagged || topicCheck.flagged;
+    const guardResult = deterministicFlag
+      ? { flagged: true, category: shapeCheck.reason || characterCheck.marker || topicCheck.category }
+      : await screenWithLlamaGuard(env.AI, parsed.reply_en);
+
+    if (guardResult.flagged) {
+      return handleGuardrailFlag(env, apiKey, session, sessionKey, accessCode, transcript, guardResult.category || 'llama_guard', 'model', now);
+    }
+  }
 
   if (!parsed) {
     // ── canned redirect path ──
