@@ -15,8 +15,8 @@ run sequentially even where the spec's dependency graph would allow parallel wor
 | Wave | Phase | Owner | Status | Merged to branch | Phuong QA'd on preview |
 |---|---|---|---|---|---|
 | 1 | Phase 1 — Homework store + class-board form | Aider Senior (API/schema) + Aider Junior (modal) | done | yes (fb348b8) | no |
-| 1 | Phase 7a — Homework-feedback design mocks | Claude Design | not started | n/a (design folder) | no |
-| 2 | Phase 2 — Homework Practice mode (no TTS) | Aider Senior | not started | no | no |
+| 1 | Phase 7a — Homework-feedback design mocks | Claude Design | approved (Phuong, 2026-07-05) | n/a (design folder: `design_handoff_speakup_phase_7a/`) | n/a |
+| 2 | Phase 2 — Homework Practice mode (no TTS) | Aider Senior (backend) + Claude Sonnet 5 (frontend) | done | yes (b35da76) | no |
 | 3 | Phase 3 — Minny TTS + audio cache + canned phrases | Aider Senior | not started | no | no |
 | 4 | Phase 4 — Session summaries → parent profile | Aider Senior | not started | no | no |
 | 4 | Phase 5 — Conversation turn endpoint (test codes only) | Aider Senior | not started | no | no |
@@ -77,30 +77,54 @@ assigns, commits, merges, deploys, or spends.
 
 ## Daily update
 
-- Visible result: Phase 1 (homework store + class-board form) built, reviewed,
-  tested, and committed to `claude/speakup-v0` (commit fb348b8) — not yet on
-  preview QA by Phuong
-- Completed: dispatched to aider-senior (backend: `_homework.js`, the
-  `[id]/homework.js` endpoint, `admin-homework.test.mjs`) and aider-junior
-  (frontend: `HomeworkModal.astro`, `classes.astro` wiring) in parallel per
-  the file-ownership split; reviewed both diffs; found and fixed two gaps via
-  a small follow-up aider-junior patch — `enrichClass()` in `_classes.js`
-  wasn't exposing `codeData.homework` to the class board (so the "📚 có bài"
-  tag could never show), and the per-student prefill read a field shape
-  (`sentences_text`/`frame_text`) that doesn't exist on the real homework
-  record; full suite (735/735) green; `founder_check.py --gate build`: PASS
-- Cost today: USD 0 (DeepSeek metered calls — actual OpenRouter spend to be
-  confirmed against `BUDGET.md`'s unconfirmed figures)
-- Problem: none
-- Next: start Phase 7a (homework-feedback design mocks) and Phase 2
-  (Homework Practice mode) — Phase 2 depends on Phase 7a's approved mock per
-  the spec
+- Visible result: Phase 1 (homework store + class-board form) and Phase 2
+  (homework practice mode end-to-end: sentence + speech-frame scoring,
+  homework mode card, frame-step UI, rubric result, end-of-set summary) both
+  built, reviewed, tested, and committed to `claude/speakup-v0` — not yet on
+  preview QA by Phuong. Phase 7a design mocks approved by Phuong (2026-07-05).
+- Completed: resolved a design-provenance mix-up — two design bundles existed
+  (`design_handoff_speakup/` and `design_handoff_speakup_phase_7a/`); Phuong
+  deleted the former and confirmed the latter (`_ds/` design-system tokens +
+  `dc-runtime`-generated `support.js`) as the genuine Claude Design output to
+  build from. Also caught and fixed a pronoun mismatch: the approved spec's
+  Vietnamese copy said "cô Phương" (female teacher) in two places while the
+  design mock and the site's existing live copy (`index.astro`, `coaching.astro`)
+  both use "thầy Phương" (male); Phuong confirmed thầy is correct, fixed in
+  `_ops/specs/SPEC_SPEAKUP_V0.md`.
+  Phase 2 backend (`minny-speaking-context.js`'s `buildHomeworkSteps`,
+  `read2lead-speaking-check.js`'s `scoreSpeechFrame`) dispatched to Aider
+  Senior — succeeded on the second attempt; the first full-phase dispatch
+  (4 files at once) degenerated into a runaway repetition loop generating CSS
+  and produced nothing, so the task was split into a smaller backend-only
+  dispatch, which succeeded cleanly ($0.03). A follow-up one-line test fix
+  dispatched to Aider Junior hallucinated garbled text into the file; fixed
+  directly rather than re-dispatching a trivial revert. Phuong then approved
+  running a parallel Claude Sonnet 5 background agent (enabled by her Claude
+  Max upgrade) for the frontend (`speaking.astro`) piece specifically because
+  of Aider's reliability issues on this file cluster — it built the
+  homework-mode UI (frame-step stems display, rubric checklist, smile
+  reminder, end-of-set summary) cleanly and flagged one real integration gap
+  (the backend's `expected_text` field was unconditionally required, which
+  would have rejected every frame-mode submission since frame steps carry no
+  `expected_text`) — fixed with a one-line backend validation relaxation.
+  Full suite: 747/747 green. `founder_check.py --gate build`: PASS.
+- Cost today: USD ~0.03 (Aider Senior backend dispatch; Aider Junior dispatch
+  cost negligible) + Claude Max usage for the parallel frontend agent (not
+  metered against the DeepSeek budget)
+- Problem: none blocking. Aider (both Senior and Junior) proved unreliable
+  today on this specific file cluster (speaking.astro / read2lead-speaking-check.js)
+  — two degenerate/hallucinated outputs on tasks of very different sizes.
+  Worth watching whether this recurs on Phase 3 (also touches these files).
+- Next: Phase 7b (conversation UI mocks) still not started — gates Phase 8.
+  Phase 3 (Minny TTS + audio cache) is next in the wave order and only
+  depends on Phase 1.
 - Need Phuong: (1) the Phase 1 open question — is "same homework for the
   whole group, occasionally tweaked for one kid" the right default, or does
   she routinely assign fully different homework per kid? Proceeding with the
   class-first default in the UI either way, easy to flip. (2) whether saving
   homework should notify the parent on Zalo — proceeding with no for V0 per
-  the spec's own recommendation, revisit after pilot. (3) Phase 1 is on the
-  branch only — nothing is on the live preview to look at yet by itself;
-  Phuong QA's the whole pilot once more phases land, per the "no phase
-  merges to main individually" rule.
+  the spec's own recommendation, revisit after pilot. (3) confirm the
+  `design_handoff_speakup_phase_7a/` bundle's other copy (README calls it
+  "SpeakUp" with a koala mascot "Minny" narrating a "MY TRIP STORY" flow) has
+  no other assumptions that clash with the approved spec beyond the
+  thầy/cô one already fixed — flagging in case a closer read turns up more.
