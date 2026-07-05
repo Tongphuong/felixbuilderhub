@@ -7,6 +7,19 @@
 
 import { BANNED_TOPICS } from './_minny-guardrail-wordlists.js';
 
+function escapeRegExp(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+// Word-boundary-aware match (Unicode-safe, so Vietnamese diacritic letters
+// count as word characters too) -- avoids the classic profanity-filter
+// false-positive problem where a short banned word is also a substring of
+// a completely innocent word (e.g. "ass" inside "class" or "assignment").
+function containsWordBoundaryMatch(text, phrase) {
+  const pattern = new RegExp(`(?<![\\p{L}\\p{N}])${escapeRegExp(phrase)}(?![\\p{L}\\p{N}])`, 'iu');
+  return pattern.test(text);
+}
+
 const URL_PATTERN = /(https?:\/\/|www\.)\S+/i;
 const EMAIL_PATTERN = /[\w.+-]+@[\w-]+\.[a-z]{2,}/i;
 const PHONE_PATTERN = /(\+?\d[\d\s\-().]{7,}\d)/;
@@ -26,7 +39,7 @@ export function scanBannedTopics(text) {
   if (!normalized) return { flagged: false, category: null, matched: null };
   for (const [category, words] of Object.entries(BANNED_TOPICS)) {
     for (const word of words) {
-      if (normalized.includes(word.toLowerCase())) {
+      if (containsWordBoundaryMatch(normalized, word.toLowerCase())) {
         return { flagged: true, category, matched: word };
       }
     }

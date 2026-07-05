@@ -99,12 +99,30 @@ assigns, commits, merges, deploys, or spends.
   packets, code editing not inference-heavy); Llama Guard calls on Workers
   AI are near-free at this volume per spec
 - Started: 2026-07-05
-- Known deviation flagged upfront: the spec's D0 called for vendoring the
-  public LDNOOBW word list; this sandboxed session has no outbound network
-  access (confirmed via a direct connectivity test) to fetch it, so the
-  banned-topic wordlist is authored directly instead of vendored — same
-  class of environment-constraint gap as prior phases' missing
-  browser/credentials, disclosed here rather than silently substituted.
+- Correction mid-session: initially assumed no outbound network access
+  (one `curl` to `raw.githubusercontent.com` timed out) and shipped a
+  hand-authored substitute wordlist. A later cross-session log entry
+  (another concurrent session had just diagnosed this machine's egress as
+  an *allowlist*, not a blanket block, while wiring up a Playwright/Chrome
+  MCP server) prompted a retest: `git clone`/`git ls-remote` against
+  GitHub, `npm view`, and a retried `curl` to the same host all succeeded
+  on retry. Re-verified and vendored the real public LDNOOBW English word
+  list (402 entries, CC BY 4.0 —
+  github.com/LDNOOBW/List-of-Dirty-Naughty-Obscene-and-Otherwise-Bad-Words,
+  `en` file, license text confirmed in-repo) via `git clone` rather than
+  the flakier raw-file `curl`. No Vietnamese list exists upstream in that
+  project, so Vietnamese entries remain hand-authored (that part of the
+  original plan was accurate regardless of network access).
+- Second bug caught during the same correction pass: `scanBannedTopics`'s
+  original plain-substring matching would have false-positived on common
+  English words a kid learning English needs to say — e.g. "ass" inside
+  "class"/"assignment", "tit" inside "title", "sex" inside no real English
+  word but still worth guarding generally (the classic profanity-filter
+  "Scunthorpe problem"), now made much more likely to bite by the vendored
+  list's many short entries. Fixed by switching to Unicode-aware
+  word-boundary matching (`containsWordBoundaryMatch` in
+  `_minny-guardrails.js`) before shipping, not after Phuong's red-team run
+  surfaced it as confusing false alarms.
 
 ## File ownership
 
@@ -156,13 +174,10 @@ assigns, commits, merges, deploys, or spends.
 6. `node --test` green — PASS. 824/824 tests (793 prior + 31 new), zero
    regressions. `astro build` also completes cleanly.
 
-**Known gaps, carried forward, needs Phuong or a session with real
-Cloudflare/Workers AI credentials**: (a) the banned-topic wordlist is
-Claude-authored rather than vendored from the public LDNOOBW list per the
-spec's original D0 decision — this sandboxed session has no outbound
-network access (confirmed via a direct connectivity test) to fetch it; (b)
-items 4 and 5 above (live red-team + latency measurement) need the
-Cloudflare preview. Status stays `active`, not `complete`, until Phuong has
+**Known gap, carried forward, needs Phuong and the Cloudflare preview**:
+items 4 and 5 above (live red-team + latency measurement). The wordlist
+provenance item is resolved (see the correction note above) — it is not a
+carried-forward gap. Status stays `active`, not `complete`, until Phuong has
 run the red-team and these are closed out.
 
 ## Daily update

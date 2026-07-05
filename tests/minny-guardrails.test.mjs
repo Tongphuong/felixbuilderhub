@@ -104,7 +104,7 @@ test('scanBannedTopics flags violent content in Vietnamese', () => {
 test('scanBannedTopics flags sexual content', () => {
   const result = scanBannedTopics('let us talk about sex');
   assert.equal(result.flagged, true);
-  assert.equal(result.category, 'sexual');
+  assert.equal(result.category, 'profanity');
 });
 
 test('scanBannedTopics flags personal-info solicitation', () => {
