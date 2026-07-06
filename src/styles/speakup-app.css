@@ -412,9 +412,9 @@
   grid-template-areas: "topbar" "rail" "story" "recorder";
 }
 
+/* Full-bleed on wide screens — the fixed rails hug the edges and the story
+   column absorbs the rest (Phương: components spread the full screen). */
 .spk-practice.is-frame-layout:not(.hidden) {
-  max-width: 1400px;
-  margin: 0 auto;
   justify-content: stretch;
   grid-template-columns: minmax(0, 1fr);
 }
@@ -919,7 +919,7 @@
 
 /* ===================== Free Talking (7b) =============================== */
 
-#free-talk-screen { max-width: 1400px; margin: 0 auto; }
+#free-talk-screen { width: 100%; }
 #free-talk-screen.hidden { display: none; }
 
 .ft-conversation:not(.hidden) {
