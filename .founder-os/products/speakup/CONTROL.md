@@ -121,8 +121,20 @@ assigns, commits, merges, deploys, or spends.
   `.spk-btn` display (entry-104 class) and grid children overlapping on
   implicit tracks (missing named areas). **Regression:** `/read2lead/speaking`
   loads and works untouched. `node --test` 824/824, `astro build` clean.
-- Verified commit: 7f60c5c (standalone app page at /speak-up + cap-fix +
-  full-bleed; on origin/claude/speakup-v0 — deploy-parity rule 20)
+  **Fidelity round from Phương's review (commit `328cea9`, verified on the
+  DEPLOYED preview):** (1) page bg was `#0a1622` (the boards' canvas backdrop) —
+  corrected to `navy-950 #10273a`, the actual app surface ("page bg", 7b README
+  token table); (2) screens now center vertically in the viewport and the
+  desktop FT/frame grids fill the height (auto/1fr rows, panels stretch,
+  rail/recorder content centered) — Minny + the red button sit mid-screen, not
+  pushed to the top; (3) kid-friendly type scale up across every screen
+  (bubbles 15→18, stems 17→21, mode cards 17→21 + 48px emoji, FT timer 30→36,
+  transcript 15→18, buttons 16→18/58px, summary stats 26→36). Re-verified live
+  at 1280 (modes / 7a frame / 7b conversation: `_ops/fid-modes-1280.png`,
+  `_ops/fid-frame-1280.png`, `_ops/fid-ft-1280.png`) + phone 390
+  (`_ops/fid-frame-390.png`). 824/824 tests, build clean.
+- Verified commit: 328cea9 (navy bg + vertical centering + kid-scale type on
+  the standalone app page; on origin/claude/speakup-v0 — deploy-parity rule 20)
 - Founder handoff: Presented a **design → new page** visual artifact from live
   deployed screenshots + the preview link, plain language. Bounded asks only:
   bless the two screens that had no design board (code entry + mode select,
