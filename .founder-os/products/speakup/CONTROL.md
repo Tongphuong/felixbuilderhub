@@ -5,7 +5,7 @@
 - Branch: `claude/speakup-v0` (off `main`)
 - Preview URL: `claude-speakup-v0.felixbuilderhub.pages.dev` (Cloudflare Pages auto-deploy per push, per `claude/<topic>` convention in `BRANCH_CONVENTIONS.md`)
 - Active workers: 0
-- Last updated: 2026-07-06 (new task `speakup-separation-and-freetalk-enable`: Free Talk for all codes now, SpeakUp/Read2Lead activity separation, old speaking page deleted — all per Phương's explicit decisions)
+- Last updated: 2026-07-06 (all 8 phases built and on preview; Free Talk open to all codes; SpeakUp/Read2Lead separated; Phương spot-QA'd the preview: "ok for now" — see Daily update for the go-live list)
 
 ## Phase tracker (source of truth: `_ops/specs/SPEC_SPEAKUP_V0.md`)
 
@@ -31,6 +31,11 @@ merges to `main`.** All 8 land on `claude/speakup-v0`, get QA'd together on
 the preview URL, and only then does the whole branch merge to `main` —
 per Phuong's explicit instruction (2026-07-04): build full V0 before push to
 prod.
+
+**QA note (2026-07-06):** Phương spot-QA'd the post-separation preview build
+and called it "ok for now" — this is not the full all-phases QA-together
+pass; the per-phase QA column stays "no" until that final joint run before
+the merge.
 
 ## Operating team
 
@@ -267,6 +272,40 @@ run the red-team and these are closed out.
 
 ## Daily update
 
+- 2026-07-06: **V0 build is complete — all 8 phases live on the preview
+  branch; nothing on the live site yet.** Today: standalone SpeakUp app page
+  at `/speak-up` rebuilt to the 7a/7b designs (navy surface, centered,
+  kid-scale type, red record button, robot Minny); the cap flash-back bug
+  fixed (designed "Mai nói chuyện tiếp với Minny nhé!" wrap-up); **Free Talk
+  opened to every student code** (Phase 8b done — Phương's explicit order,
+  ahead of his Phase 6 red-team, risk flagged); **SpeakUp fully separated
+  from Read2Lead** (shared student codes/XP/ranking only — retell/questions
+  story modes removed, no pack/story reads, old `/read2lead/speaking` page
+  deleted outright, no redirect, per Phương). **Phương spot-QA'd the preview
+  2026-07-06: "ok for now."** Full all-phases QA together still required
+  before merge. Tests 823/823, build clean, all Founder OS gates PASS,
+  deploy-parity PASS (`b6ed0d8`).
+- Item closed: the long-carried **live egress check** (OpenAI TTS + LLM from
+  the deployed preview) is observed working — real Free Talking sessions ran
+  on the deployed preview during 2026-07-06 testing (that is what spent
+  ONG's 3/day cap), with spoken greetings and scored turns. No geo-block.
+- Remaining before merge to main (the go-live list):
+  1. **Phương's Phase 6 red-team** (~30 min on the preview: try to make
+     Minny misbehave) + latency feel-check — reconciliation items 4–5,
+     still SKIPPED. Top priority now that Free Talk is open to all codes.
+  2. **Canned Minny phrases sign-off** (12 phrases in `_minny-phrases.js`)
+     — carried since Phase 3, needs Phương's read as brand voice.
+  3. **Real-class dry run on preview**: Phương assigns real homework via
+     the admin board; a couple of kids' codes checked (both cards show;
+     recording works on their real devices).
+  4. Then the whole branch merges to `main` together — Phương's call,
+     `Founder approved` in PRODUCT.md is his alone.
+- Also open (not blocking): back up the local `founder-os` repo to a
+  private GitHub repo (offered 2026-07-06, no answer yet).
+
+---
+
+- 2026-07-05 snapshot (Phases 4/5 build day), kept as written:
 - Visible result: Phase 4 (session summaries → parent profile) and Phase 5
   (Free Talking conversation turn endpoint, test-codes-only) built, reviewed,
   tested, and committed to `claude/speakup-v0` (5921180) — not yet on preview
