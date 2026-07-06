@@ -51,13 +51,14 @@ export async function onRequestPost(context) {
     return json({ ok: false, error: 'text_missing', message: 'Thiếu nội dung cần đọc.' }, 400);
   }
 
-  const apiKey = resolveOpenAiApiKey(env);
-  if (!apiKey) {
+  // Voice runs on the Workers AI binding — no API key required. The OpenAI
+  // key only matters for the last-resort path when the binding is absent.
+  if (!env.AI && !resolveOpenAiApiKey(env)) {
     return json({ ok: false, error: 'config_error', message: 'Hệ thống chưa cấu hình giọng nói.' }, 500);
   }
 
   try {
-    const result = await getOrSynthesize(env.READ2LEAD_CODES, textToSynthesize, apiKey);
+    const result = await getOrSynthesize(env, textToSynthesize);
     return json({ ok: true, audio_b64: result.audio_b64, content_type: result.content_type });
   } catch (err) {
     console.error('[minny-voice] tts failed:', err?.message || err);

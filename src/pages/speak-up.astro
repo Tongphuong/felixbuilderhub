@@ -481,19 +481,28 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       }
 
       const text = step.prompt_en || step.question_en || '';
+      if (step.check_mode === 'frame') {
+        // The frame step has no prompt_en; its spoken intro is a whitelisted
+        // canned phrase (previously this Listen button played nothing).
+        playMinnyVoice(
+          { phrase_id: 'frame_intro' },
+          'Now tell me your story! Speak in full sentences, from start to finish. You can do it!',
+        );
+        return;
+      }
       if (step.kind === 'homework' && text) {
-        playMinnyVoice(text);
+        playMinnyVoice({ text }, text);
         return;
       }
       speakEnglish(text);
     }
 
-    async function playMinnyVoice(text) {
+    async function playMinnyVoice(payload, fallbackText) {
       try {
         const res = await fetch('/api/minny-voice', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ access_code: state.accessCode, text }),
+          body: JSON.stringify({ access_code: state.accessCode, ...payload }),
         });
         const data = await res.json();
         if (!res.ok || !data?.ok || !data.audio_b64) throw new Error('minny_voice_failed');
@@ -506,7 +515,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
         });
         await audio.play();
       } catch {
-        speakEnglish(text);
+        speakEnglish(fallbackText || payload.text || '');
       }
     }
 
@@ -1083,8 +1092,12 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
           return;
         }
 
+        // Homework read steps record raw WAV 16k (the engine's existing WAV
+        // path) — required by Azure Pronunciation Assessment's REST endpoint.
+        const recStep = currentStep();
+        const recorderOptions = recStep && recStep.check_mode === 'read' ? { engine: 'wav' } : {};
         const recorder = window.R2LRecorder?.createRecorder
-          ? window.R2LRecorder.createRecorder(stream)
+          ? window.R2LRecorder.createRecorder(stream, recorderOptions)
           : (() => {
               const { mediaRecorder, mimeType } = createRecorder(stream);
               const chunks = [];

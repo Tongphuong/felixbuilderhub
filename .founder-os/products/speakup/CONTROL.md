@@ -66,90 +66,57 @@ assigns, commits, merges, deploys, or spends.
 
 ## Current task
 
-- Status: complete
-- Task ID: speakup-separation-and-freetalk-enable
-- Owner: Claude Lead — direct execution. Justified override of
-  `aider-dispatch-guard.py`: the diff removes a child-safety gate and
-  reconciles its tests across files — small, review-critical, not a shape to
-  hand a blind worker. Precedent: entries 104/108/109.
-- Lane: `claude/speakup-v0`, primary checkout (collision-checked: tree clean,
-  local == origin at `6da6a0d` at task start).
-- Problem (Phương, 2026-07-06): (1) real student codes with homework assigned
-  never see "Nói chuyện với Minny" — `free_talk` is `is_test`-gated in both
-  `minny-speaking-context.js` (menu) and `minny-conversation.js` (server);
-  (2) the SpeakUp menu contains two Read2Lead activities (retell/questions,
-  built from the kid's current R2L story). His ruling: the two products are
-  completely separate — shared student codes/XP/ranking only, never activities.
-- Decisions locked (AskUserQuestion, 2026-07-06): Free Talk for **all** student
-  codes now — caps + moderation stay on; this supersedes the Phase 8b
-  "blocked on Phase 6 red-team" sequencing (his explicit call; the
-  before-red-team risk was flagged in the question and in the plan he
-  approved). Remove retell + questions from SpeakUp. **Delete**
-  `/read2lead/speaking` outright, no redirect. No XP from SpeakUp yet.
+- Status: active
+- Task ID: speakup-voice-aura2-workers-ai
+- Owner: Claude Lead — direct execution (single tightly-coupled TTS helper +
+  its call sites + ear-test handoff; justified guard override, precedent
+  entries 104/108).
+- Lane: `claude/speakup-v0`, primary checkout.
+- Problem: Minny's voice was hand-rolled OpenAI tts-1-hd behind a
+  per-environment API key; the preview env never had the key, so kids (and
+  Phương) heard the browser robot fallback 100% of the time. Phương:
+  research 2026 options, stop building from scratch, <$20/mo.
+- Reuse survey: Workers AI `@cf/deepgram/aura-2-en` (ADOPTED — natural
+  context-aware TTS, $0.030/1k chars ≈ $2–5/mo cached, runs on the existing
+  `env.AI` binding: no API key, works on preview automatically);
+  Workers AI `@cf/myshell-ai/melotts` (ADOPTED as free fallback tier,
+  $0.0002/audio-min, replaces the browser robot voice); OpenAI
+  gpt-4o-mini-tts (REJECTED — same quality tier but keeps the fragile
+  per-env API-key dependency that caused this bug); ElevenLabs (REJECTED —
+  ~$103/1M chars, over budget; escalation path if Phương's ear demands it);
+  Kokoro-82M / Chatterbox OSS (REJECTED — no GPU host; hosted resellers =
+  new vendor for savings we don't need at pilot scale); MiniMax/Inworld on
+  Workers AI (DEFERRED — pricing unpublished on the CF pricing page).
 - Acceptance criteria:
-  1. Menu for any valid code = "Bài tập thầy giao" (when homework assigned) +
-     "Nói chuyện với Minny" — nothing else. No R2L story lookup; the greeting
-     never names a story.
-  2. `minny-conversation.js` `is_test` gate removed; 3/day cap, 5-min/12-turn
-     session caps, moderation, and the global kill switch untouched.
-  3. `speak-up.astro`: removed modes' icons dropped; no-homework state shows
-     the FT card plus a soft "Thầy chưa giao bài tập mới" note — no empty
-     screen.
-  4. `src/pages/read2lead/speaking.astro` deleted; build emits no such route.
-  5. Tests updated to assert the new behavior; `node --test` green;
-     `astro build` clean.
-  6. Verified on the DEPLOYED preview (rule 20).
-- Problem: three rounds of patching `/read2lead/speaking` still left the SpeakUp
-  screens reading as components embedded in the marketing site rather than the
-  designed app (Phương: "drop this marketing site and build a new page that
-  looks exactly like the design"). Also reproduced his "flash to the new page
-  and straight back" bug: `startFreeTalkSession()` bounces to the mode picker
-  on `daily_cap` instead of showing the 7b design's kill-switch wrap-up.
-- Files owned: `functions/api/minny-speaking-context.js`,
-  `functions/api/minny-conversation.js` (the gate block only),
-  `src/pages/speak-up.astro` (small tidy-ups), `src/pages/read2lead/
-  speaking.astro` (delete), test files asserting the old menu/gate.
-- Stop condition: any diff touching guardrails plumbing beyond the single gate
-  block, the protected recorder/mic files, XP/coins/badge state code, or the
-  admin homework endpoints — stop and escalate. Do not merge to main
-  (full-pilot-QA-together rule).
-- Cost ceiling: Claude Lead direct — Claude Max plan usage, not metered.
-- Design self-verification: **Verified on the DEPLOYED preview** (commits
-  `bbb6761` + `b6ed0d8`) at `/speak-up/?code=R2L-ONG-U5M6`. Live API check:
-  `/api/minny-speaking-context` returns `modes: ['free_talk']` only, greeting
-  names no story, `has_story:false/pack_id:'general'` kept for page-JS shape.
-  Live flows: mode select shows the no-homework note + a single centered
-  Free Talk card (1280: `_ops/sep-modes-centered-1280.png`, phone 390:
-  `_ops/sep-modes-390.png`); clicking Free Talk with the still-capped ONG
-  code renders the designed "Mai nói chuyện tiếp với Minny nhé!" wrap-up and
-  stays — no bounce (`_ops/sep-ft-cap-1280.png`; conversation screen renders
-  correctly in the interim, `_ops/sep-ft-click-1280.png`). Two-card state
-  (homework + Free Talk) rendered on the live bundle with injected card
-  markup (`_ops/sep-modes-hw-1280.png`) — same grid as the previously
-  verified multi-card menu. Old page: cache-busted
-  `/read2lead/speaking/?nocache=…` → **404** (a stale Cloudflare edge copy
-  still answers the bare URL with `cf-cache-status: HIT`, age ~19h — ages
-  out on its own; the deployment no longer contains the route, `astro build`
-  emits 25 pages without it). Gate removal for real codes is covered by the
-  updated endpoint test (non-test code → 200 + session data, fake KV) — a
-  live real-code session run wasn't possible: ONG's 3/day cap is spent and
-  burning a real student's cap slot for testing is off-limits; the cap
-  screen above is the same code path past the removed gate. `node --test`
-  823/823 (removed 3 story-mode tests, added 2 separation tests +
-  strengthened 2 gate tests), `astro build` clean.
-- Verified commit: b6ed0d8 (Free Talk for all codes, R2L separation, old
-  page deleted, lone-card centering; on origin/claude/speakup-v0 — rule 20)
-- Founder handoff: Reported in plain language with live deployed
-  screenshots: what every kid now sees (homework when assigned + Free Talk
-  always, nothing else), the cap screen behaving as designed, and the two
-  honest caveats — Free Talk is now open to real kids ahead of his Phase 6
-  red-team run (his explicit call, risk flagged twice), and old saved
-  /read2lead/speaking links now dead by his choice. Bounded ask only:
-  QA-with-me on preview when he assigns real homework to a class.
+  1. `_minny-tts.js` synthesis chain: Aura-2 via `env.AI` primary → MeloTTS
+     fallback → OpenAI only if the binding is absent; voice/engine in one
+     exported constant; KV cache key includes engine+voice (stale nova audio
+     never served).
+  2. `/api/minny-voice` returns real audio on the DEPLOYED preview with no
+     OpenAI key present.
+  3. Free Talk greeting/replies and homework "Nghe Minny" play the new voice;
+     browser speechSynthesis is last resort only; frame step gets a spoken
+     intro via the canned-phrase whitelist (new phrase → Phương sign-off
+     list).
+  4. Tests updated (mock `env.AI`), suite green, build clean.
+  5. Handoff = Phương ear test + one-line voice-switch instruction.
+- Files owned: `functions/api/_minny-tts.js`, `functions/api/minny-voice.js`,
+  `functions/api/minny-conversation.js` (TTS call sites only),
+  `functions/api/_minny-phrases.js`, `src/pages/speak-up.astro` (playback
+  chain), related tests.
+- Stop condition: any diff touching guardrail screening, caps, the `is_test`
+  remnants, or protected recorder/mic files — stop and escalate. No merge to
+  main.
+- Cost ceiling: Claude Lead direct — Max plan, not metered; runtime TTS cost
+  ceiling USD 5/month (Aura-2 at pilot volume, KV-cached).
+- Design self-verification: pending (deployed-preview run at end of task)
+- Verified commit: pending
+- Founder handoff: pending
 - Started: 2026-07-06
-- Prior task `speakup-standalone-app-page` (done, verified `328cea9`): full
-  narrative in git history of this file and `_ops/AGENT_LOG.md` entries
-  110–112.
+- Prior tasks `speakup-standalone-app-page` (verified `328cea9`) and
+  `speakup-separation-and-freetalk-enable` (verified `b6ed0d8`, Phương
+  spot-QA'd "ok for now"): full narratives in git history of this file and
+  `_ops/AGENT_LOG.md` entries 110–114.
 
 **Phase 6 (guardrails) — parked, not lost:** build is done and committed
 (`e387eea`, `e71f770`); it stays `active` in the tracker only because it awaits

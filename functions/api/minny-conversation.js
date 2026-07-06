@@ -14,11 +14,13 @@ function json(body, status = 200) {
 // Best-effort inline TTS for Free Talking replies (Phase 8a, closing a gap
 // in Phase 5's own spec). Never throws -- a TTS failure must never block
 // a reply; the client already falls back to speechSynthesis when
-// audio_b64 is absent.
+// audio_b64 is absent. Runs on the Workers AI binding (no API key); the
+// apiKey argument is kept for the binding-less last-resort path only.
 async function synthesizeOrNull(env, apiKey, text) {
-  if (!apiKey || !env.READ2LEAD_CODES || !text) return null;
+  if (!env.READ2LEAD_CODES || !text) return null;
+  if (!env.AI && !apiKey) return null;
   try {
-    return await getOrSynthesize(env.READ2LEAD_CODES, text, apiKey);
+    return await getOrSynthesize(env, text);
   } catch {
     return null;
   }

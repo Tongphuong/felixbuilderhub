@@ -59,6 +59,14 @@ export const MINNY_PHRASES = [
     text_en: 'There is no homework yet today. Check back after your next lesson!',
     subtitle_vi: 'Hôm nay chưa có bài tập về nhà. Con kiểm tra lại sau buổi học tiếp theo nhé!',
   },
+  {
+    // Spoken intro for the speech-frame ("thuyết trình") step — before this,
+    // the frame screen's Listen button played nothing at all. Awaiting
+    // Phương's brand-voice sign-off together with the other phrases.
+    id: 'frame_intro',
+    text_en: 'Now tell me your story! Speak in full sentences, from start to finish. You can do it!',
+    subtitle_vi: 'Giờ con thuyết trình nhé! Nói thành câu đầy đủ, một mạch từ đầu đến cuối. Con làm được mà!',
+  },
 ];
 
 export function findPhrase(id) {
