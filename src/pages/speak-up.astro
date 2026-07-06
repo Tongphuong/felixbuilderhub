@@ -1,62 +1,1911 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import Badge from '../components/ui/Badge.astro';
-import Button from '../components/ui/Button.astro';
-import { ZALO_DISPLAY, ZALO_URL } from '../config/contact';
+/**
+ * SpeakUp — the standalone app page (replaces the old "Sắp ra mắt" marketing
+ * page on Phương's instruction, 2026-07-06). Built exactly to the Claude
+ * Design handoffs: design_handoff_speakup_phase_7a (homework flow) and
+ * …phase_7b (Free Talking). Full-screen app shell (SpeakUpAppLayout), no
+ * marketing chrome. The JS below is the proven state machine ported from
+ * /read2lead/speaking (same element ids, same five APIs, R2LRecorder +
+ * R2LMicCheck pipelines untouched) with one behavior fix: a Free Talking
+ * start rejected by the server (daily_cap / global_cap / not_available)
+ * renders the designed wrap-up state instead of bouncing back to the mode
+ * picker (the "flashes then goes straight back" bug Phương reported).
+ */
+import SpeakUpAppLayout from '../layouts/SpeakUpAppLayout.astro';
+import MicCheckPanel from '../components/read2lead/v2/MicCheckPanel.astro';
+import { r2lRecorderScriptSrc } from '../scripts/r2l-recorder-script.mjs';
+
+const r2lRecorderSrc = r2lRecorderScriptSrc();
 ---
 
-<BaseLayout
-  title="SpeakUp — Luyện nói tiếng Anh tăng cường bởi AI | Felix Coaching"
-  description="Minny là bạn đồng hành AI — giúp con tập phát âm, kể chuyện và thuyết trình tiếng Anh. Sắp ra mắt."
-  ogImage="/images/felix.jpg"
+<SpeakUpAppLayout
+  title="SpeakUp — Luyện nói cùng Minny | Felix Coaching"
+  robots="noindex, follow"
 >
-  <Header />
+  <!-- shared SVG defs: gold gradient for the recorder progress ring -->
+  <svg width="0" height="0" aria-hidden="true" style="position:absolute">
+    <defs>
+      <linearGradient id="spk-ring-grad" x1="0" x2="1">
+        <stop offset="0" stop-color="#c88f38"></stop>
+        <stop offset="1" stop-color="#f2cc7e"></stop>
+      </linearGradient>
+    </defs>
+  </svg>
 
-  <main id="main" class="flex-1">
-    <section class="mx-auto max-w-5xl px-5 pb-6 pt-12 text-center sm:pt-16">
-      <Badge variant="gold">Sắp ra mắt</Badge>
-      <h1 class="mx-auto mt-6 max-w-3xl font-display text-3xl font-extrabold leading-tight text-cream sm:text-4xl md:text-5xl">
-        Luyện nói tiếng Anh — tăng cường bởi AI
-      </h1>
-      <p class="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-cream-muted sm:text-lg">
-        Minny là bạn đồng hành AI — con tập phát âm, kể chuyện, thuyết trình. Bố mẹ xem tiến độ qua trang hồ sơ.
+  <header class="spk-appbar">
+    <div class="spk-appbar__brand">
+      <a class="spk-appbar__logo" href="/">SpeakUp</a>
+      <span class="spk-appbar__dot" aria-hidden="true">·</span>
+      <span class="spk-appbar__sub" id="appbar-sub">Luyện nói cùng <b>Minny</b></span>
+    </div>
+    <div class="spk-appbar__student hidden" id="appbar-student">
+      <span class="spk-appbar__student-name" id="appbar-student-name"></span>
+      <span class="spk-appbar__avatar" id="appbar-student-avatar" aria-hidden="true"></span>
+    </div>
+  </header>
+
+  <main id="main" class="spk-main">
+    <!-- ============ Code entry (gate) ============ -->
+    <section id="speaking-code-card" class="spk-gate">
+      <div class="spk-gate__avatar">
+        <img src="/assets/minny/minny_idle.png" alt="Minny" width="200" height="200" />
+      </div>
+      <p class="spk-gate__eyebrow">Felix Coaching · SpeakUp</p>
+      <h1 class="spk-gate__title">Luyện nói cùng Minny</h1>
+      <p class="spk-gate__sub">Con nói — Minny nghe. Bài tập thầy Phương giao và trò chuyện tiếng Anh.</p>
+      <div class="spk-gate__card">
+        <label for="speaking-code" class="spk-gate__label">Mã học sinh</label>
+        <div class="spk-gate__row">
+          <input
+            id="speaking-code"
+            class="spk-input"
+            maxlength="40"
+            autocomplete="off"
+            placeholder="VD: R2L-LINH-8F3KQ2"
+          />
+          <button id="speaking-load" type="button" class="spk-btn spk-btn--gold">Bắt đầu</button>
+        </div>
+      </div>
+    </section>
+
+    <p id="speaking-error" class="spk-error hidden"></p>
+
+    <!-- ============ App shell (after code load) ============ -->
+    <div id="speaking-shell" class="hidden">
+
+      <!-- Mode select -->
+      <section id="spk-modes-screen" class="spk-modes">
+        <div class="spk-modes__greeting">
+          <div class="spk-modes__avatar">
+            <video
+              id="minny-video"
+              class="hidden"
+              poster="/assets/minny/minny_idle.png"
+              autoplay loop muted playsinline aria-hidden="true"
+            ></video>
+            <img id="minny-fallback" src="/assets/minny/minny_idle.png" alt="Minny" width="200" height="200" />
+          </div>
+          <p class="spk-modes__bubble" id="minny-greeting"></p>
+        </div>
+
+        <MicCheckPanel />
+
+        <div id="mode-picker">
+          <p class="spk-modes__label">Con chọn cách luyện hôm nay</p>
+          <div id="mode-cards"></div>
+        </div>
+      </section>
+
+      <!-- ============ Practice (7a homework flow + sentence steps) ============ -->
+      <section id="practice-screen" class="spk-practice hidden">
+        <div class="spk-topbar" style="grid-column: 1 / -1;">
+          <button id="back-to-modes" type="button" class="spk-back">← Chọn cách luyện</button>
+          <div id="progress-dots" aria-label="Tiến độ"></div>
+        </div>
+
+        <!-- LEFT rail (frame steps only): bobbing Minny + bubble + hint -->
+        <aside class="spk-hw-rail">
+          <div class="spk-hw-rail__avatar-wrap spk-hw-rail__bob">
+            <div class="spk-hw-rail__glow" aria-hidden="true"></div>
+            <div class="spk-hw-rail__avatar">
+              <video id="hw-minny-video" class="hidden" poster="/assets/minny/minny_idle.png" autoplay loop muted playsinline aria-hidden="true"></video>
+              <img id="hw-minny-fallback" src="/assets/minny/minny_idle.png" alt="Minny" width="200" height="200" />
+            </div>
+          </div>
+          <div class="spk-hw-rail__bubble">
+            <p class="spk-hw-rail__title">Con nói to, rõ ràng nha!</p>
+            <p class="spk-hw-rail__sub">Kể liền một mạch cả các câu. Minny đang nghe từ đầu đến cuối. 🎧</p>
+          </div>
+          <p class="spk-hw-hint">💡 Gợi ý: kể như đang nói với bạn, không cần đọc từng chữ.</p>
+        </aside>
+
+        <!-- CENTER: story card + result -->
+        <div class="spk-hw-story">
+          <div class="spk-story-card">
+            <div class="spk-story-card__head">
+              <div>
+                <p class="spk-story-card__eyebrow" id="story-eyebrow">Luyện nói</p>
+                <h2 class="spk-story-card__title" id="prompt-vi"></h2>
+              </div>
+              <p class="spk-story-card__meta hidden" id="frame-meta"></p>
+            </div>
+            <p class="spk-story-card__en" id="prompt-en"></p>
+            <ol id="frame-stems" class="hidden"></ol>
+          </div>
+
+          <div id="speaking-result" class="hidden"></div>
+
+          <div id="speaking-actions" class="spk-actions hidden">
+            <button id="speaking-retry" type="button" class="spk-btn spk-btn--ghost">Luyện lại</button>
+            <button id="speaking-next" type="button" class="spk-btn spk-btn--green">Tiếp theo</button>
+          </div>
+        </div>
+
+        <!-- RIGHT: recorder panel (7a board values) -->
+        <div class="spk-hw-recorder spk-recorder">
+          <p class="spk-recorder__eyebrow" id="recorder-eyebrow">Ghi âm</p>
+          <button id="speaking-listen" type="button" class="spk-listen-btn">🔊 Nghe Minny</button>
+          <span id="speaking-timer" class="spk-recorder__timer" role="timer" aria-live="off">0:00</span>
+          <div id="record-ring" class="spk-ring">
+            <svg viewBox="0 0 200 200" aria-hidden="true">
+              <circle class="spk-ring__track" cx="100" cy="100" r="90"></circle>
+              <circle class="spk-ring__bar" cx="100" cy="100" r="90"></circle>
+            </svg>
+            <div class="spk-ring__center">
+              <button id="speaking-record" type="button" class="spk-rec-btn" aria-label="Nhấn để nói">
+                <span class="spk-rec-btn__icon" aria-hidden="true"></span>
+              </button>
+            </div>
+          </div>
+          <p id="frame-listening-caption" class="spk-rec-caption hidden">
+            <span class="spk-rec-caption__dot" aria-hidden="true"></span>
+            Minny đang lắng nghe 🎧
+          </p>
+          <p id="speaking-status" class="spk-rec-status"></p>
+          <p class="spk-rec-hint">Bấm nút đỏ để dừng · phím <b>Space</b></p>
+          <div id="hw-waveform" class="spk-waveform" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ Free Talking (7b) ============ -->
+      <div id="free-talk-screen" class="hidden">
+        <div id="ft-conversation" class="ft-conversation">
+          <div class="ft-topbar">
+            <button id="free-talk-end" type="button" class="minny-end-btn">
+              <span class="ft-end-arrow" aria-hidden="true">← </span>Kết thúc<span class="ft-end-long"> cuộc trò chuyện</span>
+            </button>
+            <div class="ft-topbar__meta">
+              <div id="free-talk-dots" class="minny-turn-dots" aria-label="Còn 12 lượt trong tổng 12"></div>
+              <span id="free-talk-timer" class="minny-timer" role="timer" aria-live="off">5:00</span>
+              <span id="free-talk-timer-announce" class="sr-only" aria-live="polite"></span>
+            </div>
+          </div>
+
+          <div class="ft-hero">
+            <div class="ft-hero__avatar">
+              <video
+                id="ft-minny-video"
+                class="hidden"
+                poster="/assets/minny/minny_idle.png"
+                autoplay loop muted playsinline aria-hidden="true"
+              ></video>
+              <img id="ft-minny-fallback" src="/assets/minny/minny_idle.png" alt="Minny" width="200" height="200" />
+            </div>
+            <div class="ft-hero__body">
+              <p id="free-talk-status-eyebrow" class="ft-hero__eyebrow">Minny · Đợi con nói</p>
+              <p id="ft-hero-line" class="ft-hero__line"></p>
+              <div id="free-talk-thinking-dots" class="minny-bubble--thinking"><span></span><span></span><span></span></div>
+              <button id="free-talk-play-chip" type="button" class="minny-play-chip" aria-label="Nghe Minny nói">🔊 Nghe Minny</button>
+              <p class="ft-hero__mood-cap"><span id="ft-mood">Đợi con nói</span></p>
+              <div class="ft-hero__turns">
+                <span class="ft-hero__turns-label">Lượt còn lại</span>
+                <span id="ft-turns-count" class="ft-hero__turns-count">12 / 12</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="ft-transcript">
+            <p class="ft-section-label">Lượt trò chuyện</p>
+            <div id="free-talk-transcript" class="minny-transcript" role="log" aria-live="polite" aria-atomic="false"></div>
+          </div>
+
+          <div class="ft-recorder">
+            <p class="ft-section-label">Ghi âm</p>
+            <button id="free-talk-record" type="button" class="spk-rec-btn" aria-label="Nhấn để nói">
+              <span class="spk-rec-btn__icon" aria-hidden="true"></span>
+            </button>
+            <p id="free-talk-record-label">Nhấn để nói</p>
+            <div id="free-talk-waveform" class="spk-waveform" aria-hidden="true">
+              <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+              <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Wrap-up (cap reached / session end / start blocked) -->
+        <div id="free-talk-wrapup" class="hidden minny-wrap-up">
+          <div class="minny-wrap-up__avatar">
+            <img id="ft-wrapup-avatar" src="/assets/minny/minny_celebrate.png" alt="Minny" width="200" height="200" />
+          </div>
+          <div class="minny-wrap-up__body">
+            <p class="spk-eyebrow" id="free-talk-wrapup-eyebrow">Minny</p>
+            <p id="free-talk-wrapup-text" class="minny-wrap-up__text"></p>
+            <div class="minny-wrap-up__actions">
+              <button id="free-talk-wrapup-cta" type="button" class="spk-btn spk-btn--gold">Xem tóm tắt →</button>
+              <button id="free-talk-retry" type="button" class="spk-btn spk-btn--gold hidden">Thử lại</button>
+              <button id="free-talk-wrapup-home" type="button" class="spk-btn spk-btn--ghost">Về trang chính</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Summary (kid-facing close-out; no XP/rank/streak — Phương's call) -->
+        <div id="free-talk-summary" class="hidden minny-summary-panel">
+          <div class="minny-summary__avatar">
+            <img src="/assets/minny/minny_celebrate.png" alt="Minny" width="200" height="200" />
+          </div>
+          <div class="minny-summary__body">
+            <p class="spk-eyebrow">Tóm tắt hôm nay</p>
+            <h3 class="spk-summary-title">Con đã trò chuyện rất giỏi!</h3>
+            <div id="free-talk-summary-stats" class="minny-summary-stats"></div>
+            <p id="free-talk-summary-line" class="minny-summary-line"></p>
+            <div class="minny-summary__actions">
+              <button id="free-talk-summary-again" type="button" class="spk-btn spk-btn--gold">Nói chuyện nữa với Minny</button>
+              <button id="free-talk-summary-home" type="button" class="spk-btn spk-btn--ghost">Về trang chính</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- tiny app footer: practice stats + links (no marketing) -->
+      <p id="speaking-foot" class="spk-footlinks">
+        <span id="practice-stats"></span>
+        <a id="profile-link" href="/ho-so">Hồ sơ con</a>
+        <span aria-hidden="true"> · </span>
+        <a id="coaching-link" href="/coaching#book">Đặt lịch coaching</a>
       </p>
-    </section>
-
-    <section class="mx-auto max-w-3xl px-5 py-12 text-center">
-      <div class="rounded-2xl border border-gold/30 bg-gold/5 p-10">
-        <span class="text-5xl">🎤</span>
-        <h2 class="mt-4 font-display text-2xl font-bold text-cream">SpeakUp đang được xây dựng</h2>
-        <p class="mt-3 text-cream-muted">Minny sẽ sớm sẵn sàng luyện nói cùng con. Nhắn Zalo để được thông báo khi ra mắt.</p>
-        <div class="mt-6">
-          <Button variant="primary" href={ZALO_URL}>Nhắn Zalo {ZALO_DISPLAY} →</Button>
-        </div>
-      </div>
-    </section>
-
-    <section class="mx-auto max-w-5xl px-5 py-14">
-      <h2 class="text-center font-display text-2xl font-bold text-cream">Con sẽ làm gì với SpeakUp?</h2>
-      <div class="mt-8 grid gap-4 sm:grid-cols-3">
-        <div class="rounded-xl border border-cream-dim/20 bg-navy-900/70 p-5 text-center">
-          <span class="text-3xl">🗣️</span>
-          <h3 class="mt-3 font-display text-lg font-bold text-cream">Tập phát âm</h3>
-          <p class="mt-2 text-sm text-cream-muted">Nghe câu mẫu, thu âm và nhận góp ý từ Minny.</p>
-        </div>
-        <div class="rounded-xl border border-cream-dim/20 bg-navy-900/70 p-5 text-center">
-          <span class="text-3xl">📖</span>
-          <h3 class="mt-3 font-display text-lg font-bold text-cream">Kể chuyện</h3>
-          <p class="mt-2 text-sm text-cream-muted">Con kể lại câu chuyện bằng giọng của mình.</p>
-        </div>
-        <div class="rounded-xl border border-cream-dim/20 bg-navy-900/70 p-5 text-center">
-          <span class="text-3xl">🎤</span>
-          <h3 class="mt-3 font-display text-lg font-bold text-cream">Thuyết trình</h3>
-          <p class="mt-2 text-sm text-cream-muted">Trình bày ý tưởng trước Minny và nhận điểm.</p>
-        </div>
-      </div>
-    </section>
+    </div>
   </main>
 
-  <Footer />
-</BaseLayout>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const codeInput = document.getElementById('speaking-code');
+    const loadBtn = document.getElementById('speaking-load');
+    const codeCard = document.getElementById('speaking-code-card');
+    const shell = document.getElementById('speaking-shell');
+    const errorEl = document.getElementById('speaking-error');
+    const modesScreen = document.getElementById('spk-modes-screen');
+    const practiceScreen = document.getElementById('practice-screen');
+    const DEFAULT_MAX_SECONDS = 30;
+
+    function safeStopMonitor(m) {
+      try { if (m && typeof m.stop === 'function') m.stop(); } catch {}
+    }
+
+    const MODE_EMOJI = { homework: '📚', retell: '📖', questions: '💬', free_talk: '🗣️' };
+
+    const state = {
+      accessCode: '',
+      packId: '',
+      studentName: '',
+      modes: [],
+      activeModeId: 'retell',
+      modePicked: false,
+      stepIndex: 0,
+      recording: null,
+      status: 'idle',
+      secondsLeft: DEFAULT_MAX_SECONDS,
+      timerId: null,
+      lastResult: null,
+      activeAudio: null,
+      videoAvailable: {},
+      micGateReady: false,
+      homeworkResults: [],
+      homeworkComplete: false,
+    };
+
+    function escapeHtml(value) {
+      return String(value || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function fmtClock(totalSeconds) {
+      const s = Math.max(0, Math.floor(totalSeconds));
+      return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
+    }
+
+    function minnyAssetBase(mood) {
+      const file = ['idle', 'listen', 'celebrate', 'encourage'].includes(mood) ? mood : 'idle';
+      return `/assets/minny/minny_${file}`;
+    }
+
+    function showMinnyPng(mood, videoId = 'minny-video', imgId = 'minny-fallback') {
+      const img = document.getElementById(imgId);
+      const video = document.getElementById(videoId);
+      if (!img) return;
+      img.src = `${minnyAssetBase(mood)}.png`;
+      img.classList.remove('hidden');
+      if (video) video.classList.add('hidden');
+    }
+
+    function setMinnyMood(mood, videoId = 'minny-video', imgId = 'minny-fallback') {
+      const video = document.getElementById(videoId);
+      const img = document.getElementById(imgId);
+      const base = minnyAssetBase(mood);
+
+      if (!video) {
+        showMinnyPng(mood, videoId, imgId);
+        return;
+      }
+      if (state.videoAvailable[mood] === false) {
+        showMinnyPng(mood, videoId, imgId);
+        return;
+      }
+
+      const tryPlay = (ext) => {
+        video.onerror = () => {
+          if (ext === 'mp4') {
+            video.src = `${base}.webm`;
+            video.onerror = () => {
+              state.videoAvailable[mood] = false;
+              showMinnyPng(mood, videoId, imgId);
+            };
+          } else {
+            state.videoAvailable[mood] = false;
+            showMinnyPng(mood, videoId, imgId);
+          }
+        };
+        video.onloadeddata = () => {
+          state.videoAvailable[mood] = true;
+          video.classList.remove('hidden');
+          if (img) img.classList.add('hidden');
+          video.play().catch(() => showMinnyPng(mood, videoId, imgId));
+        };
+        video.poster = `${base}.png`;
+        video.src = `${base}.${ext}`;
+        video.load();
+      };
+
+      tryPlay('mp4');
+    }
+
+    function hwSetMood(mood) {
+      setMinnyMood(mood, 'hw-minny-video', 'hw-minny-fallback');
+    }
+
+    const FT_MOOD_CAP = {
+      idle: 'Đợi con nói',
+      listen: 'Minny đang nghe',
+      celebrate: 'Đang cổ vũ con',
+      encourage: 'Minny đang cổ vũ',
+    };
+    function ftSetMood(mood) {
+      setMinnyMood(mood, 'ft-minny-video', 'ft-minny-fallback');
+      const cap = FT_MOOD_CAP[mood] || FT_MOOD_CAP.idle;
+      const moodEl = document.getElementById('ft-mood');
+      if (moodEl) moodEl.textContent = cap;
+      const eyebrow = document.getElementById('free-talk-status-eyebrow');
+      if (eyebrow && !ft.awaitingReply) eyebrow.textContent = `Minny · ${cap}`;
+    }
+
+    function setAppbarSubtitle(html) {
+      const sub = document.getElementById('appbar-sub');
+      if (sub) sub.innerHTML = html;
+    }
+
+    function showModePicker() {
+      state.modePicked = false;
+      practiceScreen?.classList.remove('is-frame-layout');
+      practiceScreen?.classList.add('hidden');
+      document.getElementById('free-talk-screen')?.classList.add('hidden');
+      modesScreen?.classList.remove('hidden');
+      setAppbarSubtitle('Luyện nói cùng <b>Minny</b>');
+      setMinnyMood('idle');
+    }
+
+    function enterPracticeMode(modeId) {
+      if (modeId === 'free_talk') {
+        enterFreeTalking();
+        return;
+      }
+      state.activeModeId = modeId;
+      state.stepIndex = 0;
+      state.modePicked = true;
+      state.homeworkResults = [];
+      state.homeworkComplete = false;
+      stopPlayback();
+      modesScreen?.classList.add('hidden');
+      practiceScreen?.classList.remove('hidden');
+      if (modeId === 'homework') {
+        setAppbarSubtitle('Bài tập của <b>thầy Phương</b>');
+      }
+      renderStep();
+      updateRecordUi();
+    }
+
+    function showError(message) {
+      errorEl.textContent = message;
+      errorEl.classList.remove('hidden');
+    }
+
+    function clearError() {
+      errorEl.classList.add('hidden');
+      errorEl.textContent = '';
+    }
+
+    function activeMode() {
+      return state.modes.find((mode) => mode.id === state.activeModeId) || state.modes[0] || null;
+    }
+
+    function currentStep() {
+      const mode = activeMode();
+      if (!mode) return null;
+      return mode.steps[state.stepIndex] || null;
+    }
+
+    function stepMaxSeconds(step) {
+      const n = Number(step?.max_seconds);
+      return Number.isFinite(n) && n > 0 ? n : DEFAULT_MAX_SECONDS;
+    }
+
+    function stopPlayback() {
+      if (state.activeAudio) {
+        state.activeAudio.pause();
+        state.activeAudio = null;
+      }
+      if (window.speechSynthesis) window.speechSynthesis.cancel();
+    }
+
+    function playMinnyAudio(step) {
+      if (!step) return;
+      stopPlayback();
+      setMinnyMood('listen');
+      hwSetMood('listen');
+
+      if (step.audio_url) {
+        const audio = new Audio(step.audio_url);
+        state.activeAudio = audio;
+        audio.addEventListener('ended', () => {
+          setMinnyMood('idle');
+          hwSetMood('idle');
+          state.activeAudio = null;
+        });
+        audio.play().catch(() => speakEnglish(step.prompt_en || step.question_en));
+        return;
+      }
+
+      const text = step.prompt_en || step.question_en || '';
+      if (step.kind === 'homework' && text) {
+        playMinnyVoice(text);
+        return;
+      }
+      speakEnglish(text);
+    }
+
+    async function playMinnyVoice(text) {
+      try {
+        const res = await fetch('/api/minny-voice', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ access_code: state.accessCode, text }),
+        });
+        const data = await res.json();
+        if (!res.ok || !data?.ok || !data.audio_b64) throw new Error('minny_voice_failed');
+        const audio = new Audio(`data:${data.content_type || 'audio/mpeg'};base64,${data.audio_b64}`);
+        state.activeAudio = audio;
+        audio.addEventListener('ended', () => {
+          setMinnyMood('idle');
+          hwSetMood('idle');
+          state.activeAudio = null;
+        });
+        await audio.play();
+      } catch {
+        speakEnglish(text);
+      }
+    }
+
+    function speakEnglish(text) {
+      const line = String(text || '').trim();
+      if (!line || !window.speechSynthesis) return;
+      const utterance = new SpeechSynthesisUtterance(line);
+      utterance.lang = 'en-US';
+      utterance.rate = 0.92;
+      utterance.onend = () => { setMinnyMood('idle'); hwSetMood('idle'); };
+      window.speechSynthesis.speak(utterance);
+    }
+
+    function renderModeCards() {
+      const cardsEl = document.getElementById('mode-cards');
+      if (!cardsEl) return;
+      cardsEl.innerHTML = state.modes
+        .map(
+          (mode) => `
+            <button type="button" class="spk-mode-card" data-mode-id="${escapeHtml(mode.id)}">
+              <span class="spk-mode-card__emoji" aria-hidden="true">${MODE_EMOJI[mode.id] || '✨'}</span>
+              <span class="spk-mode-card__title">${escapeHtml(mode.title_vi)}</span>
+              <span class="spk-mode-card__desc">${escapeHtml(mode.subtitle_vi || '')}</span>
+            </button>
+          `,
+        )
+        .join('');
+
+      cardsEl.querySelectorAll('[data-mode-id]').forEach((button) => {
+        button.addEventListener('click', () => enterPracticeMode(button.dataset.modeId));
+      });
+    }
+
+    function renderProgressDots() {
+      const dotsEl = document.getElementById('progress-dots');
+      const mode = activeMode();
+      if (!dotsEl || !mode) return;
+
+      if (mode.steps.length <= 1) {
+        dotsEl.innerHTML = '';
+        dotsEl.classList.add('hidden');
+        return;
+      }
+
+      dotsEl.classList.remove('hidden');
+      dotsEl.innerHTML = mode.steps
+        .map((_, i) => {
+          let cls = 'minny-dot';
+          if (i < state.stepIndex) cls += ' minny-dot--done';
+          else if (i === state.stepIndex) cls += ' minny-dot--active';
+          return `<span class="${cls}" title="Bước ${i + 1}"></span>`;
+        })
+        .join('');
+    }
+
+    function renderFrameStems(step) {
+      const el = document.getElementById('frame-stems');
+      const metaEl = document.getElementById('frame-meta');
+      if (!el) return;
+      const stems = step?.check_mode === 'frame' && Array.isArray(step.stems) ? step.stems : null;
+      if (!stems || !stems.length) {
+        el.classList.add('hidden');
+        el.innerHTML = '';
+        if (metaEl) metaEl.classList.add('hidden');
+        return;
+      }
+      const withBlanks = (text) => escapeHtml(text || '').replace(/_{2,}/g, '<span class="spk-blank">&nbsp;</span>');
+      el.innerHTML = stems
+        .map(
+          (stem, i) => `
+            <li class="spk-stem">
+              <span class="spk-stem__num">${i + 1}</span>
+              <span>${withBlanks(stem.text_en)}</span>
+            </li>
+          `,
+        )
+        .join('');
+      el.classList.remove('hidden');
+      if (metaEl) {
+        const seconds = Number(step.max_seconds) || 60;
+        metaEl.textContent = `${stems.length} câu · ~${seconds} giây · Một mạch`;
+        metaEl.classList.remove('hidden');
+      }
+    }
+
+    function renderStep() {
+      const mode = activeMode();
+      const step = currentStep();
+      if (!mode || !step) return;
+
+      const viEl = document.getElementById('prompt-vi');
+      const enEl = document.getElementById('prompt-en');
+      const eyebrowEl = document.getElementById('story-eyebrow');
+
+      viEl.textContent = step.prompt_vi || step.question_vi || step.label_vi || '';
+      enEl.textContent = step.prompt_en || step.question_en || '';
+      if (eyebrowEl) eyebrowEl.textContent = mode.title_vi || 'Luyện nói';
+      renderFrameStems(step);
+
+      // Frame steps get the 7a rail/story/recorder layout.
+      const isFrameStep = step.check_mode === 'frame';
+      practiceScreen.classList.toggle('is-frame-layout', isFrameStep);
+      if (isFrameStep) hwSetMood('idle');
+
+      const recorderEyebrow = document.getElementById('recorder-eyebrow');
+      if (recorderEyebrow) {
+        recorderEyebrow.textContent = isFrameStep
+          ? `Ghi âm · mục tiêu ~${stepMaxSeconds(step)}s`
+          : 'Ghi âm';
+      }
+
+      renderProgressDots();
+      setMinnyMood('idle');
+      document.getElementById('speaking-result').classList.add('hidden');
+      document.getElementById('speaking-actions').classList.add('hidden');
+      document.getElementById('speaking-record').disabled = false;
+      const isQuestion = step.kind === 'question';
+      document.getElementById('speaking-status').textContent = isQuestion
+        ? 'Nghe Minny hỏi, rồi con trả lời nhé.'
+        : 'Nghe Minny nhắc, rồi con kể nhé.';
+    }
+
+    function wordChips(words, tone) {
+      if (!Array.isArray(words) || !words.length) return '';
+      return words.map((w) => `<span class="minny-word minny-word--${tone}">${escapeHtml(w)}</span>`).join('');
+    }
+
+    // Homework mode accumulates each completed step's score for the
+    // end-of-set summary; keyed by step id so retries replace, not duplicate.
+    function finalizeHomeworkStep(result, isLast) {
+      if (state.activeModeId !== 'homework') return;
+      const step = currentStep();
+      const stepId = step?.id || `step_${state.stepIndex}`;
+      const scorePercent = result.check_mode === 'frame' ? result.matchPct : result.score_percent;
+      const entry = { step_id: stepId, ok: true, score_percent: scorePercent };
+      const existingIdx = state.homeworkResults.findIndex((r) => r.step_id === stepId);
+      if (existingIdx >= 0) state.homeworkResults[existingIdx] = entry;
+      else state.homeworkResults.push(entry);
+      if (isLast) appendHomeworkSummary();
+    }
+
+    function appendHomeworkSummary() {
+      const resultEl = document.getElementById('speaking-result');
+      const nextBtn = document.getElementById('speaking-next');
+      if (!resultEl || !nextBtn) return;
+
+      const rows = state.homeworkResults
+        .map((r, i) => {
+          const pct = Number.isFinite(Number(r.score_percent)) ? `${Math.round(Number(r.score_percent))}%` : '—';
+          return `<p style="margin:4px 0 0;font-size:14px;color:var(--cream-muted)">Câu ${i + 1}: ${pct}</p>`;
+        })
+        .join('');
+
+      const matchPercent = (() => {
+        const valid = state.homeworkResults.filter(r => Number.isFinite(Number(r.score_percent)));
+        if (valid.length === 0) return null;
+        const sum = valid.reduce((acc, r) => acc + Number(r.score_percent), 0);
+        return Math.round(sum / valid.length);
+      })();
+
+      const summary = document.createElement('div');
+      summary.className = 'minny-frame-rubric-card';
+      summary.innerHTML = `
+        <p class="minny-frame-rubric-card__eyebrow">Hoàn thành bài tập</p>
+        <p style="margin:0;font-family:Manrope,sans-serif;font-weight:800;font-size:18px;color:var(--cream)">Con đã hoàn thành bài tập thầy giao! 🎉</p>
+        ${rows}
+        ${matchPercent !== null ? `<p style="margin:10px 0 0;font-family:Manrope,sans-serif;font-weight:800;font-size:18px;color:var(--gold-light)">Khớp bài thầy dạy: ${matchPercent}%</p>` : ''}
+      `;
+      resultEl.appendChild(summary);
+
+      state.homeworkComplete = true;
+      nextBtn.classList.remove('hidden');
+      nextBtn.textContent = 'Xong bài tập 🎯';
+
+      if (state.accessCode && state.packId) {
+        fetch('/api/minny-practice-log', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            access_code: state.accessCode,
+            pack_id: state.packId,
+            prompt_id: 'homework_summary',
+            mode_id: 'homework',
+            summary: {
+              mode: 'homework',
+              turns: state.homeworkResults.length,
+              match_percent: matchPercent,
+              homework_note_vi: (activeMode() && activeMode().homework_note_vi) || null,
+            },
+          }),
+        }).catch(() => {});
+      }
+    }
+
+    function rubricRow(ok, label, subtext) {
+      const markClass = ok ? 'is-ok' : 'is-miss';
+      const mark = ok ? '✓' : '—';
+      const sub = subtext && !ok
+        ? `<span style="display:block;font-size:12.5px;color:var(--cream-dim);margin-top:2px">${escapeHtml(subtext)}</span>`
+        : '';
+      return `
+        <div class="minny-frame-rubric-row">
+          <span class="minny-frame-rubric-row__mark ${markClass}">${mark}</span>
+          <span style="font-size:14.5px;color:var(--cream)">${escapeHtml(label)}${sub}</span>
+        </div>
+      `;
+    }
+
+    function renderFrameResult(result) {
+      const resultEl = document.getElementById('speaking-result');
+      const actionsEl = document.getElementById('speaking-actions');
+      const matchPct = Math.round(Number(result.matchPct) || 0);
+      const celebrate = matchPct >= 70;
+      setMinnyMood(celebrate ? 'celebrate' : 'encourage');
+      hwSetMood(celebrate ? 'celebrate' : 'encourage');
+
+      const rubric = result.rubric || {};
+      const rubricHtml = [
+        rubricRow(!!rubric.spokeAllStems, 'Nói đủ các câu trong khung'),
+        rubricRow(!!rubric.durationOnTarget, 'Đủ thời gian', 'Kể chậm lại một chút, hít thở giữa các câu.'),
+        rubricRow(!!rubric.spokeClearly, 'Nói to, rõ ràng', 'Nói to hơn một xíu, như đang kể cho bạn nghe.'),
+      ].join('');
+
+      resultEl.classList.remove('hidden');
+      resultEl.innerHTML = `
+        <div class="minny-frame-score-card">
+          <p class="minny-frame-score-card__eyebrow">${celebrate ? 'Điểm hoàn thành' : 'Đã đạt'}</p>
+          <p class="minny-frame-score-card__value">${matchPct}%</p>
+          <p style="margin:4px 0 0;font-size:14px;color:var(--cream-muted)">${celebrate ? 'Khớp bài thầy dạy — tuyệt vời con ơi!' : 'Sát rồi con ơi! Mình cùng thử lại nhé.'}</p>
+        </div>
+        <div class="minny-frame-rubric-card">
+          <p class="minny-frame-rubric-card__eyebrow">${celebrate ? 'Bảng đánh giá' : 'Cùng nhìn lại nào'}</p>
+          ${rubricHtml}
+        </div>
+        <div class="minny-frame-smile-chip">
+          <span style="font-size:24px;line-height:1" aria-hidden="true">😄</span>
+          <span>
+            <span class="minny-frame-smile-chip__eyebrow">Nhắc nhẹ từ Minny</span>
+            <span style="font-size:14px;color:var(--cream-muted)">Con nhớ cười thật tươi khi quay video gửi thầy Phương nhé!</span>
+          </span>
+        </div>
+      `;
+
+      actionsEl.classList.remove('hidden');
+      actionsEl.classList.toggle('is-encourage', !celebrate);
+      const retryBtn = document.getElementById('speaking-retry');
+      if (retryBtn) retryBtn.textContent = celebrate ? 'Luyện lại' : 'Thử lại 🎤';
+      const mode = activeMode();
+      const isLast = mode ? state.stepIndex >= mode.steps.length - 1 : true;
+      document.getElementById('speaking-next').classList.toggle('hidden', isLast);
+      document.getElementById('speaking-next').textContent = 'Bước tiếp theo';
+
+      finalizeHomeworkStep(result, isLast);
+      logPractice({ ...result, score_percent: matchPct });
+    }
+
+    function renderResult(result) {
+      const resultEl = document.getElementById('speaking-result');
+      const actionsEl = document.getElementById('speaking-actions');
+      if (!result?.ok) {
+        setMinnyMood('encourage');
+        hwSetMood('encourage');
+        resultEl.classList.remove('hidden');
+        resultEl.innerHTML = `<div class="minny-frame-rubric-card"><p style="margin:0;font-family:Manrope,sans-serif;font-weight:800;font-size:17px;color:var(--gold-light)">${escapeHtml(result?.message || 'Chưa nghe rõ — thử lại nhé!')}</p></div>`;
+        actionsEl.classList.remove('hidden');
+        actionsEl.classList.add('is-encourage');
+        document.getElementById('speaking-next').classList.add('hidden');
+        return;
+      }
+
+      if (result.check_mode === 'frame') {
+        renderFrameResult(result);
+        return;
+      }
+
+      const isOpen = result.check_mode === 'open';
+      const passed = Number(result.score_percent) >= 50;
+      setMinnyMood(passed ? 'celebrate' : 'encourage');
+
+      const missed = !isOpen && result.words_missed?.length
+        ? `<p style="margin:10px 0 0;font-size:14px;color:var(--cream-muted)"><strong>Luyện thêm:</strong> ${wordChips(result.words_missed, 'miss')}</p>`
+        : '';
+      const close = !isOpen && result.words_close?.length
+        ? `<p style="margin:10px 0 0;font-size:14px;color:var(--cream-muted)"><strong>Gần đúng:</strong> ${wordChips(result.words_close, 'close')}</p>`
+        : '';
+      const matched = isOpen && result.words_matched?.length
+        ? `<p style="margin:10px 0 0;font-size:14px;color:var(--cream-muted)"><strong>Con nhắc tới:</strong> ${wordChips(result.words_matched, 'good')}</p>`
+        : '';
+      const transcript = result.transcript
+        ? `<p style="margin:8px 0 0;font-size:14px;color:var(--cream-dim)">Minny nghe: “${escapeHtml(result.transcript)}”</p>`
+        : '';
+
+      resultEl.classList.remove('hidden');
+      resultEl.innerHTML = `
+        <div class="minny-frame-rubric-card">
+          <p style="margin:0;font-family:Manrope,sans-serif;font-weight:800;font-size:19px;color:var(--gold-light)">${escapeHtml(result.feedback_vi || 'Hay lắm!')}</p>
+          ${transcript}
+          ${matched}
+          ${close}
+          ${missed}
+        </div>
+      `;
+      actionsEl.classList.remove('hidden');
+      actionsEl.classList.toggle('is-encourage', !passed);
+      const mode = activeMode();
+      const isLast = mode ? state.stepIndex >= mode.steps.length - 1 : true;
+      document.getElementById('speaking-next').classList.toggle('hidden', isLast);
+      const stepKind = currentStep()?.kind;
+      document.getElementById('speaking-next').textContent =
+        stepKind === 'question' ? 'Câu tiếp theo' : 'Bước tiếp theo';
+
+      finalizeHomeworkStep(result, isLast);
+      logPractice(result);
+    }
+
+    async function logPractice(result, readyForClass = false) {
+      const step = currentStep();
+      if (!state.accessCode || !state.packId) return;
+      try {
+        await fetch('/api/minny-practice-log', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            access_code: state.accessCode,
+            pack_id: state.packId,
+            prompt_id: step?.id || '',
+            mode_id: state.activeModeId,
+            score_percent: result?.score_percent,
+            ready_for_class: readyForClass,
+          }),
+        });
+      } catch {
+        /* non-blocking */
+      }
+    }
+
+    function micReady() {
+      return !!(navigator.mediaDevices?.getUserMedia && window.MediaRecorder);
+    }
+
+    function createRecorder(stream) {
+      const candidates = [
+        'audio/mp4',
+        'audio/aac',
+        'audio/webm;codecs=opus',
+        'audio/webm',
+        'audio/ogg;codecs=opus',
+      ];
+      for (const mimeType of candidates) {
+        try {
+          if (typeof MediaRecorder.isTypeSupported === 'function' && !MediaRecorder.isTypeSupported(mimeType)) {
+            continue;
+          }
+          const mediaRecorder = new MediaRecorder(stream, { mimeType });
+          return { mediaRecorder, mimeType: mediaRecorder.mimeType || mimeType };
+        } catch {
+          // try next Safari-friendly codec
+        }
+      }
+      const mediaRecorder = new MediaRecorder(stream);
+      return { mediaRecorder, mimeType: mediaRecorder.mimeType || 'audio/mp4' };
+    }
+
+    function audioUploadFilename(blob) {
+      const type = String(blob?.type || '').toLowerCase();
+      if (type.includes('mp4') || type.includes('m4a') || type.includes('aac')) return 'audio.mp4';
+      if (type.includes('ogg')) return 'audio.ogg';
+      if (type.includes('wav')) return 'audio.wav';
+      return 'audio.webm';
+    }
+
+    function stopMediaRecorder(mediaRecorder) {
+      if (!mediaRecorder || mediaRecorder.state !== 'recording') return;
+      try {
+        mediaRecorder.requestData();
+      } catch {
+        /* optional on some browsers */
+      }
+      mediaRecorder.stop();
+    }
+
+    function cleanupRecording() {
+      if (state.timerId) {
+        clearInterval(state.timerId);
+        state.timerId = null;
+      }
+      safeStopMonitor(state.recording?.monitor);
+      if (state.recording?.stream) {
+        state.recording.stream.getTracks().forEach((t) => t.stop());
+      }
+      state.recording = null;
+      state.status = 'idle';
+      state.secondsLeft = DEFAULT_MAX_SECONDS;
+    }
+
+    // The record button is icon-only per the design — state is communicated
+    // through the ring, timer, caption, waveform and status line, never by
+    // rewriting the button's contents.
+    function updateRecordUi() {
+      const btn = document.getElementById('speaking-record');
+      const statusEl = document.getElementById('speaking-status');
+      const timerEl = document.getElementById('speaking-timer');
+      const ringEl = document.getElementById('record-ring');
+      const captionEl = document.getElementById('frame-listening-caption');
+      const waveEl = document.getElementById('hw-waveform');
+      const step = currentStep();
+      if (!btn) return;
+
+      const maxSeconds = stepMaxSeconds(step);
+      const isRecording = state.status === 'recording';
+      const elapsed = isRecording ? Math.max(0, maxSeconds - state.secondsLeft) : 0;
+
+      btn.classList.toggle('is-recording', isRecording);
+      waveEl?.classList.toggle('is-recording', isRecording);
+      captionEl?.classList.toggle('hidden', !isRecording);
+      if (ringEl) ringEl.style.setProperty('--ring-pct', String(isRecording ? Math.min(1, elapsed / maxSeconds) : 0));
+      if (timerEl) timerEl.textContent = fmtClock(elapsed);
+      btn.setAttribute('aria-label', isRecording ? 'Dừng ghi âm' : 'Nhấn để nói');
+
+      if (state.status === 'warming') {
+        btn.disabled = true;
+        statusEl.textContent = state.warmupMessage || 'Micro đã bật — chờ 3 giây rồi mới nói nhé…';
+        setMinnyMood('listen');
+        return;
+      }
+
+      if (isRecording) {
+        btn.disabled = false;
+        statusEl.textContent = 'Minny đang nghe con...';
+        setMinnyMood('listen');
+        return;
+      }
+
+      if (state.status === 'uploading') {
+        btn.disabled = true;
+        statusEl.textContent = 'Minny đang nhận xét...';
+        setMinnyMood('listen');
+        return;
+      }
+
+      const micBlocked = state.modePicked && !state.micGateReady;
+      btn.disabled = !micReady() || micBlocked;
+      if (micBlocked) {
+        statusEl.textContent = 'Con kiểm tra micro ở màn hình trước nhé.';
+      } else {
+        statusEl.textContent = micReady() ? 'Bấm nút đỏ rồi nói to, rõ nhé.' : 'Micro chưa sẵn sàng.';
+      }
+      if (state.modePicked) setMinnyMood('idle');
+    }
+
+    function mountSpeakingMicCheck() {
+      const panel = shell?.querySelector('[data-r2l-mic-check]');
+      if (!panel || panel.dataset.r2lMicMounted === 'true') return;
+      if (!window.R2LMicCheck?.mount) {
+        window.setTimeout(mountSpeakingMicCheck, 50);
+        return;
+      }
+      window.R2LMicCheck.mount(panel, {
+        blockUntilPass: true,
+        onPass: () => {
+          state.micGateReady = true;
+          updateRecordUi();
+        },
+        onFail: () => {
+          state.micGateReady = false;
+          updateRecordUi();
+        },
+      });
+    }
+
+    document.addEventListener('r2l-mic-gate', (event) => {
+      state.micGateReady = Boolean(event.detail?.ready);
+      updateRecordUi();
+    });
+
+    async function submitAudio(blob, prompt, telemetry = null) {
+      state.status = 'uploading';
+      updateRecordUi();
+      const formData = new FormData();
+      formData.append('access_code', state.accessCode);
+      formData.append('pack_id', state.packId || 'practice');
+      const isFrame = prompt.check_mode === 'frame';
+      formData.append(
+        'expected_text',
+        prompt.expected_text
+          || prompt.story_context
+          || prompt.question_en
+          || prompt.prompt_en
+          // Frame steps carry `stems` instead — fall back to stem text so the
+          // backend's required expected_text is never empty.
+          || (isFrame && Array.isArray(prompt.stems) ? prompt.stems.map((s) => s.text_en || '').join(' ') : '')
+          || '',
+      );
+      formData.append('check_mode', prompt.check_mode || 'open');
+      formData.append('practice_mode', '1');
+      formData.append('max_seconds', String(stepMaxSeconds(prompt)));
+      if (isFrame) {
+        formData.append('stems', JSON.stringify(prompt.stems || []));
+        formData.append('duration_seconds', String(telemetry?.duration_seconds ?? 0));
+      }
+      formData.append('audio', blob, audioUploadFilename(blob));
+      if (telemetry && window.R2LRecorder?.appendTelemetry) {
+        window.R2LRecorder.appendTelemetry(formData, telemetry);
+      }
+
+      try {
+        const res = await fetch('/api/read2lead-speaking-check', { method: 'POST', body: formData });
+        const data = await res.json();
+        // Analyser heard speech but ASR heard nothing → broken platform
+        // encoder; record raw WAV on this machine from now on.
+        if (
+          data && !data.ok && data.error === 'transcription_failed'
+          && telemetry && telemetry.voiced === true && telemetry.engine === 'mr'
+        ) {
+          window.R2LRecorder?.useWavEngine?.();
+        }
+        state.lastResult = data;
+        state.status = 'done';
+        renderResult(data);
+      } catch {
+        renderResult({ ok: false, message: 'Mạng không ổn định. Con thử lại nhé!' });
+      } finally {
+        state.status = 'idle';
+        updateRecordUi();
+      }
+    }
+
+    async function startRecording() {
+      const prompt = currentStep();
+      if (!prompt) return;
+      stopPlayback();
+      if (!micReady()) {
+        renderResult({ ok: false, message: 'Micro chưa sẵn sàng. Con thử trình duyệt khác hoặc cho phép micro nhé.' });
+        return;
+      }
+      if (!state.micGateReady && !window.R2LMicCheck?.sessionPassed?.()) {
+        renderResult({ ok: false, message: 'Con bấm Kiểm tra micro ở màn hình chọn cách luyện trước nhé.' });
+        return;
+      }
+
+      cleanupRecording();
+      try {
+        const stream = window.R2LRecorder?.getStream
+          ? await window.R2LRecorder.getStream()
+          : window.R2LMicCheck?.getMicStream
+            ? await window.R2LMicCheck.getMicStream()
+            : await navigator.mediaDevices.getUserMedia({
+                audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true },
+              });
+        state.recording = { stream, mediaRecorder: null };
+        state.status = 'warming';
+        state.warmupMessage = 'Micro đã bật — chờ 3 giây rồi mới nói nhé…';
+        updateRecordUi();
+
+        // NOTE: no primeAudioPipeline here — creating/closing an AudioContext
+        // on the live stream right before recording leaves the track feeding
+        // silence on Windows/Realtek (root cause fixed in lesson.astro; the
+        // 3s countdown warms the pipeline naturally).
+        if (window.R2LMicCheck?.runMicWarmupCountdown) {
+          await window.R2LMicCheck.runMicWarmupCountdown({
+            onMessage: (msg) => {
+              if (state.status !== 'warming') return;
+              state.warmupMessage = msg;
+              updateRecordUi();
+            },
+          });
+        } else {
+          await new Promise((resolve) => window.setTimeout(resolve, 3000));
+        }
+        if (state.status !== 'warming') {
+          stream.getTracks().forEach((t) => t.stop());
+          return;
+        }
+
+        const recorder = window.R2LRecorder?.createRecorder
+          ? window.R2LRecorder.createRecorder(stream)
+          : (() => {
+              const { mediaRecorder, mimeType } = createRecorder(stream);
+              const chunks = [];
+              let resolveStop = null;
+              const stopped = new Promise((resolve) => { resolveStop = resolve; });
+              mediaRecorder.addEventListener('dataavailable', (event) => {
+                if (event.data?.size > 0) chunks.push(event.data);
+              });
+              mediaRecorder.addEventListener('stop', () => {
+                resolveStop(new Blob(chunks, { type: mediaRecorder.mimeType || mimeType || 'audio/mp4' }));
+              });
+              return {
+                engine: 'mr',
+                mimeType,
+                start() { mediaRecorder.start(250); },
+                stop() { stopMediaRecorder(mediaRecorder); return stopped; },
+              };
+            })();
+        const monitor = window.R2LRecorder?.startMonitor
+          ? await window.R2LRecorder.startMonitor(stream, {
+              onSilenceHint: () => {
+                const statusEl = document.getElementById('speaking-status');
+                if (statusEl && state.status === 'recording') {
+                  statusEl.textContent = 'Minny chưa thấy tiếng — con nói TO hơn nhé!';
+                }
+              },
+            })
+          : { available: false, peak: () => -1, voiced: () => true, stop: () => {} };
+
+        let finished = false;
+        const finishRecording = async () => {
+          if (finished) return;
+          finished = true;
+          if (state.timerId) {
+            clearInterval(state.timerId);
+            state.timerId = null;
+          }
+          // state.secondsLeft still holds the countdown value at stop time,
+          // so target minus remaining gives actual elapsed seconds.
+          const elapsedSeconds = Math.max(0, stepMaxSeconds(prompt) - state.secondsLeft);
+          let blob = null;
+          try {
+            blob = await recorder.stop();
+          } catch {
+            blob = null;
+          }
+          safeStopMonitor(monitor);
+          stream.getTracks().forEach((t) => t.stop());
+          const voiced = window.R2LRecorder?.recordingLooksVoiced
+            ? window.R2LRecorder.recordingLooksVoiced(monitor, blob?.size || 0)
+            : (monitor.available ? monitor.voiced() : true);
+          if (blob && blob.size > 0 && !voiced) {
+            // Silent capture caught on-device: relax constraints next try
+            // instead of sending silence to the server.
+            window.R2LRecorder?.bumpProfile?.();
+            state.status = 'idle';
+            renderResult({ ok: false, message: 'Minny không thấy tiếng vào micro. Con thử lại — nói TO hơn, hoặc kiểm tra micro nhé.' });
+            updateRecordUi();
+            return;
+          }
+          if (blob && blob.size > 0) {
+            submitAudio(blob, prompt, {
+              peak: monitor.available ? monitor.peak() : -1,
+              voiced,
+              engine: recorder.engine || 'mr',
+              mimeType: blob.type || recorder.mimeType || '',
+              duration_seconds: elapsedSeconds,
+            });
+          } else {
+            state.status = 'idle';
+            renderResult({ ok: false, message: 'Không thu được tiếng. Con thử nói to hơn nhé.' });
+            updateRecordUi();
+          }
+        };
+
+        state.recording = { stream, mediaRecorder: null, recorderCtl: recorder, monitor, finishRecording };
+        state.status = 'recording';
+        state.secondsLeft = stepMaxSeconds(prompt);
+        recorder.start();
+        updateRecordUi();
+
+        state.timerId = window.setInterval(() => {
+          state.secondsLeft -= 1;
+          updateRecordUi();
+          if (state.secondsLeft <= 0) {
+            finishRecording();
+          }
+        }, 1000);
+      } catch (error) {
+        const message = window.R2LMicCheck?.helpMessage?.(error)
+          || 'Không mở được micro. Con nhờ bố mẹ cho phép micro nhé.';
+        renderResult({ ok: false, message });
+        window.R2LMicCheck?.focusMicHelpInShell?.(shell);
+        cleanupRecording();
+        updateRecordUi();
+      }
+    }
+
+    function stopRecording() {
+      if (state.recording?.finishRecording) {
+        state.recording.finishRecording();
+        return;
+      }
+      if (state.recording?.mediaRecorder) {
+        stopMediaRecorder(state.recording.mediaRecorder);
+      }
+      if (state.timerId) {
+        clearInterval(state.timerId);
+        state.timerId = null;
+      }
+    }
+
+    async function loadSession() {
+      clearError();
+      const code = codeInput.value.trim().toUpperCase();
+      if (!code) {
+        showError('Vui lòng nhập mã học sinh.');
+        return;
+      }
+
+      loadBtn.disabled = true;
+      loadBtn.textContent = 'Đang tải...';
+
+      try {
+        const res = await fetch(`/api/minny-speaking-context?code=${encodeURIComponent(code)}`);
+        const data = await res.json();
+        if (!res.ok || !data.ok) {
+          showError(data.message || 'Không tìm thấy mã học sinh.');
+          shell.classList.add('hidden');
+          return;
+        }
+
+        state.accessCode = code;
+        state.packId = data.pack_id || 'practice';
+        state.studentName = data.student_name || '';
+        state.modes = Array.isArray(data.modes) ? data.modes : [];
+        state.activeModeId = state.modes[0]?.id || 'retell';
+        state.stepIndex = 0;
+        state.modePicked = false;
+
+        document.getElementById('minny-greeting').textContent = data.greeting_vi || 'Chào con! Minny sẵn sàng luyện nói.';
+        document.getElementById('practice-stats').textContent =
+          data.practice_count_this_week > 0
+            ? `Tuần này con luyện ${data.practice_count_this_week} lần · `
+            : 'Buổi luyện đầu tuần · ';
+        document.getElementById('profile-link').href = data.profile_link || `/ho-so?code=${encodeURIComponent(code)}`;
+
+        if (!data.has_story && !data.pack_id) {
+          document.getElementById('minny-greeting').textContent = data.message_vi || data.greeting_vi;
+        }
+
+        // App bar: student identity (7a board right side)
+        const studentWrap = document.getElementById('appbar-student');
+        const nameEl = document.getElementById('appbar-student-name');
+        const avatarEl = document.getElementById('appbar-student-avatar');
+        if (state.studentName && studentWrap && nameEl && avatarEl) {
+          nameEl.textContent = state.studentName;
+          avatarEl.textContent = state.studentName.trim().charAt(0).toUpperCase() || 'M';
+          studentWrap.classList.remove('hidden');
+        }
+
+        codeCard.classList.add('hidden');
+        shell.classList.remove('hidden');
+        mountSpeakingMicCheck();
+        showModePicker();
+        renderModeCards();
+        setMinnyMood('idle');
+
+        const url = new URL(window.location.href);
+        url.searchParams.set('code', code);
+        window.history.replaceState({}, '', url);
+      } catch {
+        showError('Mạng không ổn định. Vui lòng thử lại.');
+      } finally {
+        loadBtn.disabled = false;
+        loadBtn.textContent = 'Bắt đầu';
+      }
+    }
+
+    document.getElementById('speaking-listen')?.addEventListener('click', () => {
+      playMinnyAudio(currentStep());
+    });
+
+    document.getElementById('speaking-record')?.addEventListener('click', () => {
+      if (state.status === 'recording') stopRecording();
+      else startRecording();
+    });
+
+    // 7a interaction: Space toggles record on desktop (never while typing).
+    document.addEventListener('keydown', (event) => {
+      if (event.code !== 'Space') return;
+      if (practiceScreen?.classList.contains('hidden')) return;
+      const target = event.target;
+      if (target && ['INPUT', 'TEXTAREA', 'SELECT', 'BUTTON'].includes(target.tagName)) return;
+      event.preventDefault();
+      if (state.status === 'recording') stopRecording();
+      else if (state.status === 'idle') startRecording();
+    });
+
+    document.getElementById('speaking-retry')?.addEventListener('click', () => {
+      document.getElementById('speaking-result').classList.add('hidden');
+      document.getElementById('speaking-actions').classList.add('hidden');
+      renderStep();
+      updateRecordUi();
+    });
+
+    document.getElementById('speaking-next')?.addEventListener('click', () => {
+      if (state.activeModeId === 'homework' && state.homeworkComplete) {
+        state.homeworkComplete = false;
+        state.homeworkResults = [];
+        showModePicker();
+        return;
+      }
+      const mode = activeMode();
+      if (mode && state.stepIndex < mode.steps.length - 1) {
+        state.stepIndex += 1;
+        renderStep();
+        updateRecordUi();
+      }
+    });
+
+    document.getElementById('back-to-modes')?.addEventListener('click', () => {
+      stopPlayback();
+      cleanupRecording();
+      document.getElementById('speaking-result').classList.add('hidden');
+      document.getElementById('speaking-actions').classList.add('hidden');
+      showModePicker();
+    });
+
+    // ── Free Talking (7b) ────────────────────────────────────────────────
+    const ft = {
+      sessionId: null,
+      turnsLeft: 12,
+      secondsLeft: 300,
+      countdownId: null,
+      recTimerId: null,
+      recSecondsLeft: DEFAULT_MAX_SECONDS,
+      recording: null,
+      ended: false,
+      awaitingReply: false,
+      sentenceCount: 0,
+      turnsUsed: 0,
+      flaggedSession: false,
+      lastKidChip: null,
+      lastKidChipSeconds: null,
+    };
+
+    function ftUpdateTimerDisplay() {
+      const el = document.getElementById('free-talk-timer');
+      if (!el) return;
+      el.textContent = fmtClock(ft.secondsLeft);
+      el.classList.remove('minny-timer--warn', 'minny-timer--settled');
+      if (ft.secondsLeft <= 0) el.classList.add('minny-timer--settled');
+      else if (ft.secondsLeft <= 30) el.classList.add('minny-timer--warn');
+
+      const announceEl = document.getElementById('free-talk-timer-announce');
+      if (announceEl && [60, 30, 10].includes(ft.secondsLeft)) {
+        announceEl.textContent = `Còn ${fmtClock(ft.secondsLeft)}`;
+      }
+    }
+
+    function ftRenderDots() {
+      const el = document.getElementById('free-talk-dots');
+      const turnsCount = document.getElementById('ft-turns-count');
+      if (turnsCount) turnsCount.textContent = `${ft.turnsLeft} / 12`;
+      if (!el) return;
+      const used = Math.max(0, Math.min(12, 12 - ft.turnsLeft));
+      el.setAttribute('aria-label', `Còn ${ft.turnsLeft} lượt trong tổng 12`);
+      el.innerHTML = Array.from({ length: 12 }, (_, i) => {
+        const cls = i < used ? 'minny-turn-dot minny-turn-dot--used' : 'minny-turn-dot';
+        return `<span class="${cls}" aria-hidden="true"></span>`;
+      }).join('');
+    }
+
+    function ftStartCountdown() {
+      if (ft.countdownId) clearInterval(ft.countdownId);
+      ft.countdownId = window.setInterval(() => {
+        ft.secondsLeft -= 1;
+        ftUpdateTimerDisplay();
+        if (ft.secondsLeft <= 0) {
+          clearInterval(ft.countdownId);
+          ft.countdownId = null;
+          ftHandleCapReached('time');
+        }
+      }, 1000);
+    }
+
+    function ftStopCountdown() {
+      if (ft.countdownId) {
+        clearInterval(ft.countdownId);
+        ft.countdownId = null;
+      }
+    }
+
+    function ftSetThinking(isThinking) {
+      const avatar = document.querySelector('.ft-hero__avatar');
+      const eyebrow = document.getElementById('free-talk-status-eyebrow');
+      const dots = document.getElementById('free-talk-thinking-dots');
+      avatar?.classList.toggle('minny-avatar--thinking', isThinking);
+      dots?.classList.toggle('is-visible', isThinking);
+      if (eyebrow) {
+        eyebrow.textContent = isThinking ? 'Minny đang nghĩ...' : 'Minny · Đợi con nói';
+        eyebrow.style.color = isThinking ? 'var(--gold-light)' : '';
+      }
+      ft.awaitingReply = isThinking;
+      const recordBtn = document.getElementById('free-talk-record');
+      if (recordBtn) recordBtn.disabled = isThinking;
+      ftUpdateRecordUi();
+    }
+
+    function ftAppendReplyBubble(text, mood) {
+      const list = document.getElementById('free-talk-transcript');
+      if (!list || !text) return;
+      const bubble = document.createElement('div');
+      bubble.className = 'minny-transcript__reply';
+      bubble.textContent = text;
+      list.appendChild(bubble);
+      list.scrollTop = list.scrollHeight;
+      // Minny's latest line also shows in the hero bubble (phone/tablet).
+      const heroLine = document.getElementById('ft-hero-line');
+      if (heroLine) heroLine.textContent = text;
+      ftSetMood(mood || 'idle');
+      // Once Minny replies, the previous "con vừa nói xong" chip settles to
+      // "con đã nói · Ns" per the 7b transcript-chip spec.
+      if (ft.lastKidChip) {
+        const secs = ft.lastKidChipSeconds;
+        ft.lastKidChip.innerHTML = Number.isFinite(secs)
+          ? `🎤 con đã nói <span class="hidden lg:inline">· ${secs} giây</span>`
+          : '🎤 con đã nói';
+        ft.lastKidChip = null;
+      }
+    }
+
+    function ftAppendKidChip(durationSeconds) {
+      const list = document.getElementById('free-talk-transcript');
+      if (!list) return;
+      const chip = document.createElement('div');
+      chip.className = 'minny-transcript__kid-chip';
+      chip.innerHTML = '🎤 con vừa nói xong';
+      list.appendChild(chip);
+      list.scrollTop = list.scrollHeight;
+      ft.lastKidChip = chip;
+      ft.lastKidChipSeconds = Math.round(durationSeconds);
+    }
+
+    function ftHidePlayChip() {
+      const chip = document.getElementById('free-talk-play-chip');
+      chip?.classList.remove('is-visible');
+      if (chip) chip.onclick = null;
+    }
+
+    // Real TTS when available; browser speechSynthesis fallback. If .play()
+    // rejects (iOS autoplay-gesture block) a tap-to-play chip appears inside
+    // Minny's bubble instead of failing silently — 7b screen 3.
+    function playConversationAudio(audioB64, contentType, fallbackText) {
+      ftHidePlayChip();
+      if (!audioB64) {
+        speakEnglish(fallbackText);
+        return;
+      }
+      stopPlayback();
+      const audio = new Audio(`data:${contentType || 'audio/mpeg'};base64,${audioB64}`);
+      state.activeAudio = audio;
+      audio.addEventListener('ended', () => {
+        ftSetMood('idle');
+        state.activeAudio = null;
+      });
+      audio.play().catch(() => {
+        const chip = document.getElementById('free-talk-play-chip');
+        if (!chip) {
+          speakEnglish(fallbackText);
+          return;
+        }
+        chip.classList.add('is-visible');
+        chip.onclick = () => {
+          ftHidePlayChip();
+          audio.play().catch(() => speakEnglish(fallbackText));
+        };
+      });
+    }
+
+    function ftReset() {
+      ft.sessionId = null;
+      ft.turnsLeft = 12;
+      ft.secondsLeft = 300;
+      ft.ended = false;
+      ft.awaitingReply = false;
+      ft.sentenceCount = 0;
+      ft.turnsUsed = 0;
+      ft.flaggedSession = false;
+      ft.lastKidChip = null;
+      ft.lastKidChipSeconds = null;
+      ftStopCountdown();
+      ftCleanupRecording();
+    }
+
+    function enterFreeTalking() {
+      ftReset();
+      modesScreen?.classList.add('hidden');
+      practiceScreen?.classList.add('hidden');
+      document.getElementById('free-talk-screen')?.classList.remove('hidden');
+      document.getElementById('ft-conversation')?.classList.remove('hidden');
+      document.getElementById('free-talk-wrapup')?.classList.add('hidden');
+      document.getElementById('free-talk-summary')?.classList.add('hidden');
+      setAppbarSubtitle('Nói chuyện với <b>Minny</b>');
+      const transcriptEl = document.getElementById('free-talk-transcript');
+      if (transcriptEl) transcriptEl.innerHTML = '';
+      const heroLine = document.getElementById('ft-hero-line');
+      if (heroLine) heroLine.textContent = '';
+      ftSetThinking(false);
+      ftSetMood('idle');
+      ftRenderDots();
+      ftUpdateTimerDisplay();
+      startFreeTalkSession();
+    }
+
+    function ftExitToModes() {
+      ftReset();
+      document.getElementById('free-talk-screen')?.classList.add('hidden');
+      showModePicker();
+    }
+
+    // Show the wrap-up panel with configurable copy + buttons. Used for the
+    // normal session end AND for a start blocked by the server (cap /
+    // not-available / network) — the kid never gets bounced back mid-flash.
+    function ftShowWrapup(opts) {
+      document.getElementById('ft-conversation')?.classList.add('hidden');
+      document.getElementById('free-talk-summary')?.classList.add('hidden');
+      const textEl = document.getElementById('free-talk-wrapup-text');
+      if (textEl) textEl.textContent = opts.text;
+      const eyebrowEl = document.getElementById('free-talk-wrapup-eyebrow');
+      if (eyebrowEl) eyebrowEl.textContent = opts.eyebrow || 'Minny';
+      document.getElementById('free-talk-wrapup-cta')?.classList.toggle('hidden', !opts.showSummaryCta);
+      document.getElementById('free-talk-retry')?.classList.toggle('hidden', !opts.showRetry);
+      document.getElementById('free-talk-wrapup')?.classList.remove('hidden');
+    }
+
+    async function startFreeTalkSession() {
+      const recordBtn = document.getElementById('free-talk-record');
+      if (recordBtn) recordBtn.disabled = true;
+      try {
+        const res = await fetch('/api/minny-conversation', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ access_code: state.accessCode, action: 'start' }),
+        });
+        const data = await res.json();
+        if (!res.ok || !data.ok) {
+          // THE FIX for the "flashes then goes straight back" bug: a blocked
+          // start renders the designed wrap-up state (7b kill-switch copy for
+          // the daily cap) — never a bounce back to the mode picker.
+          ft.ended = true;
+          const isCap = data.error === 'daily_cap' || data.error === 'global_cap';
+          const blocked = isCap || data.error === 'not_available';
+          ftShowWrapup({
+            text: data.error === 'daily_cap'
+              ? 'Mai nói chuyện tiếp với Minny nhé!'
+              : (data.message || 'Không mở được phiên trò chuyện. Con thử lại nhé!'),
+            eyebrow: isCap ? 'Minny · Hẹn gặp lại' : 'Minny',
+            showSummaryCta: false,
+            showRetry: !blocked,
+          });
+          return;
+        }
+        ft.sessionId = data.session_id;
+        ft.turnsLeft = data.turns_left ?? 12;
+        ft.secondsLeft = data.seconds_left ?? 300;
+        ftRenderDots();
+        ftUpdateTimerDisplay();
+        ftStartCountdown();
+        ftAppendReplyBubble(data.greeting?.text_en, 'idle');
+        playConversationAudio(data.greeting?.audio_b64, data.greeting?.content_type, data.greeting?.text_en || '');
+        if (recordBtn) recordBtn.disabled = false;
+      } catch {
+        ft.ended = true;
+        ftShowWrapup({
+          text: 'Mạng không ổn định. Con thử lại nhé!',
+          eyebrow: 'Minny',
+          showSummaryCta: false,
+          showRetry: true,
+        });
+      }
+    }
+
+    function ftCleanupRecording() {
+      if (ft.recTimerId) {
+        clearInterval(ft.recTimerId);
+        ft.recTimerId = null;
+      }
+      safeStopMonitor(ft.recording?.monitor);
+      if (ft.recording?.stream) {
+        ft.recording.stream.getTracks().forEach((t) => t.stop());
+      }
+      ft.recording = null;
+      ftUpdateRecordUi();
+    }
+
+    function ftUpdateRecordUi(message) {
+      const btn = document.getElementById('free-talk-record');
+      const label = document.getElementById('free-talk-record-label');
+      const wave = document.getElementById('free-talk-waveform');
+      if (!btn) return;
+      const recording = ft.recording?.status === 'recording';
+      btn.classList.toggle('is-recording', recording);
+      wave?.classList.toggle('is-recording', recording);
+      btn.setAttribute('aria-label', recording ? 'Dừng ghi âm' : 'Nhấn để nói');
+      if (label) {
+        label.textContent = message
+          || (recording ? 'Đang nghe con nói...' : (ft.awaitingReply ? 'Đợi Minny trả lời...' : 'Nhấn để nói'));
+      }
+    }
+
+    async function ftStartRecording() {
+      if (ft.ended || ft.awaitingReply) return;
+      stopPlayback();
+      if (!micReady()) {
+        ftUpdateRecordUi('Micro chưa sẵn sàng. Con thử trình duyệt khác nhé!');
+        return;
+      }
+      if (!state.micGateReady && !window.R2LMicCheck?.sessionPassed?.()) {
+        ftUpdateRecordUi('Con bấm Kiểm tra micro ở màn hình chọn cách luyện nhé.');
+        return;
+      }
+
+      ftCleanupRecording();
+      try {
+        const stream = window.R2LRecorder?.getStream
+          ? await window.R2LRecorder.getStream()
+          : window.R2LMicCheck?.getMicStream
+            ? await window.R2LMicCheck.getMicStream()
+            : await navigator.mediaDevices.getUserMedia({
+                audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true },
+              });
+
+        ft.recording = { stream, status: 'warming' };
+        ftUpdateRecordUi('Micro đã bật — chờ 3 giây rồi mới nói nhé…');
+
+        if (window.R2LMicCheck?.runMicWarmupCountdown) {
+          await window.R2LMicCheck.runMicWarmupCountdown({
+            onMessage: (msg) => {
+              if (ft.recording?.status !== 'warming') return;
+              ftUpdateRecordUi(msg);
+            },
+          });
+        } else {
+          await new Promise((resolve) => window.setTimeout(resolve, 3000));
+        }
+        if (!ft.recording || ft.recording.status !== 'warming') {
+          stream.getTracks().forEach((t) => t.stop());
+          return;
+        }
+
+        const recorder = window.R2LRecorder?.createRecorder
+          ? window.R2LRecorder.createRecorder(stream)
+          : (() => {
+              const { mediaRecorder, mimeType } = createRecorder(stream);
+              const chunks = [];
+              let resolveStop = null;
+              const stopped = new Promise((resolve) => { resolveStop = resolve; });
+              mediaRecorder.addEventListener('dataavailable', (event) => {
+                if (event.data?.size > 0) chunks.push(event.data);
+              });
+              mediaRecorder.addEventListener('stop', () => {
+                resolveStop(new Blob(chunks, { type: mediaRecorder.mimeType || mimeType || 'audio/mp4' }));
+              });
+              return {
+                engine: 'mr',
+                mimeType,
+                start() { mediaRecorder.start(250); },
+                stop() { stopMediaRecorder(mediaRecorder); return stopped; },
+              };
+            })();
+
+        const monitor = window.R2LRecorder?.startMonitor
+          ? await window.R2LRecorder.startMonitor(stream, {
+              onSilenceHint: () => {
+                if (ft.recording?.status === 'recording') {
+                  ftUpdateRecordUi('Minny chưa thấy tiếng — con nói TO hơn nhé!');
+                }
+              },
+            })
+          : { available: false, peak: () => -1, voiced: () => true, stop: () => {} };
+
+        let finished = false;
+        const finishRecording = async () => {
+          if (finished) return;
+          finished = true;
+          if (ft.recTimerId) {
+            clearInterval(ft.recTimerId);
+            ft.recTimerId = null;
+          }
+          const elapsedSeconds = Math.max(0, DEFAULT_MAX_SECONDS - ft.recSecondsLeft);
+          let blob = null;
+          try {
+            blob = await recorder.stop();
+          } catch {
+            blob = null;
+          }
+          safeStopMonitor(monitor);
+          stream.getTracks().forEach((t) => t.stop());
+          const voiced = window.R2LRecorder?.recordingLooksVoiced
+            ? window.R2LRecorder.recordingLooksVoiced(monitor, blob?.size || 0)
+            : (monitor.available ? monitor.voiced() : true);
+
+          if (blob && blob.size > 0 && !voiced) {
+            window.R2LRecorder?.bumpProfile?.();
+            ft.recording = null;
+            ftUpdateRecordUi('Minny không thấy tiếng vào micro. Con thử lại nhé!');
+            return;
+          }
+          if (blob && blob.size > 0) {
+            ftSubmitAudio(blob, elapsedSeconds);
+          } else {
+            ft.recording = null;
+            ftUpdateRecordUi('Không thu được tiếng. Con thử nói to hơn nhé.');
+          }
+        };
+
+        ft.recording = { stream, status: 'recording', recorderCtl: recorder, monitor, finishRecording };
+        ft.recSecondsLeft = DEFAULT_MAX_SECONDS;
+        recorder.start();
+        ftUpdateRecordUi();
+
+        ft.recTimerId = window.setInterval(() => {
+          ft.recSecondsLeft -= 1;
+          if (ft.recSecondsLeft <= 0) finishRecording();
+        }, 1000);
+      } catch (error) {
+        const message = window.R2LMicCheck?.helpMessage?.(error)
+          || 'Không mở được micro. Con nhờ bố mẹ cho phép micro nhé.';
+        ftUpdateRecordUi(message);
+        window.R2LMicCheck?.focusMicHelpInShell?.(shell);
+        ftCleanupRecording();
+      }
+    }
+
+    function ftStopRecording() {
+      if (ft.recording?.finishRecording) {
+        ft.recording.finishRecording();
+      }
+    }
+
+    async function ftSubmitAudio(blob, durationSeconds) {
+      ftSetThinking(true);
+      const formData = new FormData();
+      formData.append('access_code', state.accessCode);
+      formData.append('pack_id', 'general');
+      formData.append('expected_text', 'free_talking_no_score');
+      formData.append('check_mode', 'open');
+      formData.append('practice_mode', '1');
+      formData.append('max_seconds', String(DEFAULT_MAX_SECONDS));
+      formData.append('audio', blob, audioUploadFilename(blob));
+
+      try {
+        const res = await fetch('/api/read2lead-speaking-check', { method: 'POST', body: formData });
+        const data = await res.json();
+        if (!res.ok || !data.ok || !data.transcript) {
+          ftSetThinking(false);
+          ftUpdateRecordUi('Minny chưa nghe rõ. Con thử nói lại nhé!');
+          return;
+        }
+        ftAppendKidChip(durationSeconds);
+        ft.sentenceCount += (data.transcript.match(/[.!?]+/g) || [1]).length;
+        await ftSubmitTurn(data.transcript);
+      } catch {
+        ftSetThinking(false);
+        ftUpdateRecordUi('Mạng không ổn định. Con thử lại nhé!');
+      }
+    }
+
+    async function ftSubmitTurn(transcript) {
+      try {
+        const res = await fetch('/api/minny-conversation', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            access_code: state.accessCode,
+            action: 'turn',
+            session_id: ft.sessionId,
+            transcript,
+          }),
+        });
+        const data = await res.json();
+
+        if (!res.ok || !data.ok) {
+          ftSetThinking(false);
+          ftUpdateRecordUi('Minny chưa trả lời được. Con thử nói lại nhé!');
+          return;
+        }
+
+        if (data.ended && !data.reply_en) {
+          // Session expired/missing server-side — rare edge case, not a cap.
+          ftSetThinking(false);
+          ftHandleCapReached('expired', data.message_vi);
+          return;
+        }
+
+        ft.turnsUsed += 1;
+        ft.turnsLeft = data.turns_left ?? Math.max(0, ft.turnsLeft - 1);
+        ft.secondsLeft = data.seconds_left ?? ft.secondsLeft;
+        ftRenderDots();
+        ftUpdateTimerDisplay();
+        ftSetThinking(false);
+
+        if (data.ended) {
+          ftAppendReplyBubble(data.reply_en, data.mood || 'celebrate');
+          playConversationAudio(data.audio_b64, data.content_type, data.reply_en);
+          if (data.flagged) ft.flaggedSession = true;
+          ftHandleCapReached(data.flagged ? 'flagged' : (ft.secondsLeft <= 0 ? 'time' : 'turns'));
+          return;
+        }
+
+        ftAppendReplyBubble(data.reply_en, data.mood || 'idle');
+        playConversationAudio(data.audio_b64, data.content_type, data.reply_en);
+      } catch {
+        ftSetThinking(false);
+        ftUpdateRecordUi('Mạng không ổn định. Con thử lại nhé!');
+      }
+    }
+
+    function ftHandleCapReached(reason, overrideText) {
+      ft.ended = true;
+      ftStopCountdown();
+      ftCleanupRecording();
+      const recordBtn = document.getElementById('free-talk-record');
+      if (recordBtn) recordBtn.disabled = true;
+
+      const texts = {
+        time: 'Hôm nay nói chuyện vui quá! Hẹn gặp lại con nhé!',
+        turns: 'Con nói giỏi quá! Nghỉ tay một tí rồi tiếp nhé!',
+        flagged: 'Con nói giỏi quá! Nghỉ tay một tí rồi tiếp nhé!',
+        expired: overrideText || 'Phiên trò chuyện đã kết thúc rồi. Con bắt đầu phiên mới nhé!',
+      };
+
+      ftShowWrapup({
+        text: texts[reason] || texts.time,
+        eyebrow: 'Minny · celebrate',
+        showSummaryCta: true,
+        showRetry: false,
+      });
+    }
+
+    function ftShowSummary() {
+      document.getElementById('ft-conversation')?.classList.add('hidden');
+      document.getElementById('free-talk-wrapup')?.classList.add('hidden');
+      const minutesUsed = Math.max(1, Math.round((300 - ft.secondsLeft) / 60));
+
+      const statsEl = document.getElementById('free-talk-summary-stats');
+      if (statsEl) {
+        statsEl.innerHTML = [
+          { value: ft.turnsUsed, label: 'lượt trò chuyện' },
+          { value: ft.sentenceCount, label: 'câu con đã nói' },
+          { value: minutesUsed, label: 'phút trò chuyện' },
+        ].map((s) => `
+          <div class="minny-summary-stat">
+            <strong>${s.value}</strong>
+            <span>${s.label}</span>
+          </div>
+        `).join('');
+      }
+      const lineEl = document.getElementById('free-talk-summary-line');
+      if (lineEl) lineEl.textContent = 'Con nói rõ ràng và tự tin lắm. Ngày mai kể tiếp cho Minny nghe nhé!';
+
+      document.getElementById('free-talk-summary')?.classList.remove('hidden');
+
+      if (state.accessCode && state.packId) {
+        fetch('/api/minny-practice-log', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            access_code: state.accessCode,
+            pack_id: state.packId,
+            prompt_id: 'free_talk_summary',
+            mode_id: 'free_talk',
+            summary: {
+              mode: 'free_talk',
+              turns: ft.turnsUsed,
+              sentence_count: ft.sentenceCount,
+              minutes: minutesUsed,
+              flagged: ft.flaggedSession === true,
+            },
+          }),
+        }).catch(() => {});
+      }
+    }
+
+    document.getElementById('free-talk-record')?.addEventListener('click', () => {
+      if (ft.recording?.status === 'recording') {
+        ftStopRecording();
+      } else {
+        ftStartRecording();
+      }
+    });
+
+    document.getElementById('free-talk-end')?.addEventListener('click', () => {
+      ft.ended = true;
+      ftStopCountdown();
+      ftCleanupRecording();
+      ftShowSummary();
+    });
+
+    document.getElementById('free-talk-wrapup-cta')?.addEventListener('click', ftShowSummary);
+    document.getElementById('free-talk-retry')?.addEventListener('click', () => {
+      enterFreeTalking();
+    });
+    document.getElementById('free-talk-wrapup-home')?.addEventListener('click', ftExitToModes);
+
+    document.getElementById('free-talk-summary-again')?.addEventListener('click', () => {
+      document.getElementById('free-talk-summary')?.classList.add('hidden');
+      enterFreeTalking();
+    });
+
+    document.getElementById('free-talk-summary-home')?.addEventListener('click', ftExitToModes);
+
+    loadBtn?.addEventListener('click', loadSession);
+    codeInput?.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter') loadSession();
+    });
+
+    if (params.get('code')) {
+      codeInput.value = params.get('code').toUpperCase();
+      loadSession();
+    }
+  </script>
+  <script src={r2lRecorderSrc} defer></script>
+  <script src="/scripts/r2l-mic-check.js" defer></script>
+</SpeakUpAppLayout>

@@ -62,41 +62,43 @@ assigns, commits, merges, deploys, or spends.
 ## Current task
 
 - Status: active
-- Task ID: speakup-freetalk-ui-fidelity
-- Owner: Claude Lead — **direct execution, with a real-browser render-verify
-  loop** (not dispatched to Aider/bg). Justified override of
-  `aider-dispatch-guard.py` on `speaking.astro`: the root cause being fixed is
-  *blind builds with no render step*, so a blind dispatch worker cannot do this
-  work by definition. Precedent: Phase 2 frontend and commit `c90c8bf` were both
-  done directly/with-browser after Aider reliability failures on this exact file.
-- Lane: `claude/speakup-v0`, primary checkout (collision-checked; lock refreshed
-  via `check-worktree-collision.sh lock`; other session last touched ~40 min
-  prior, tree clean).
-- Problem: the Free Talking (Phase 7b) screen does not match the approved Claude
-  Design handoff. `#free-talk-transcript` sits outside `.minny-conversation-grid`,
-  which holds only the recorder panel — so the tablet 2-col / desktop 3-col
-  layouts never render (single narrow column on anything wider than a phone). No
-  desktop left rail (avatar + mood + "Lượt còn lại N/12"), no section labels,
-  Minny's line not shown in the hero bubble.
+- Task ID: speakup-standalone-app-page
+- Owner: Claude Lead — **direct execution with a real-browser render-verify
+  loop** (not dispatched). Justified override of `aider-dispatch-guard.py` on
+  the page files: the failure class being fixed is *builds that don't match the
+  rendered design*, which a blind dispatch worker cannot verify by definition.
+  Precedent: entries 104/108/109 in `_ops/AGENT_LOG.md`.
+- Lane: `claude/speakup-v0`, primary checkout (collision-checked: tree clean,
+  local == origin at `3e5e805` at task start).
+- Problem: three rounds of patching `/read2lead/speaking` still left the SpeakUp
+  screens reading as components embedded in the marketing site rather than the
+  designed app (Phương: "drop this marketing site and build a new page that
+  looks exactly like the design"). Also reproduced his "flash to the new page
+  and straight back" bug: `startFreeTalkSession()` bounces to the mode picker
+  on `daily_cap` instead of showing the 7b design's kill-switch wrap-up.
 - Acceptance criteria:
-  1. All 5 Free Talking states (conversation, thinking, tap-to-play, wrap-up,
-     summary) match the Phase 7b design at phone (390), tablet (768–820), and
-     desktop (1024–1280) — **verified by screenshot against the design boards**,
-     not just by build/tests.
-  2. Desktop renders the 3-column layout (rail / transcript / recorder); tablet
-     renders the 2-column layout; phone stays single-column.
-  3. `prefers-reduced-motion` variant still correct.
-  4. Homework (7a) screen re-rendered and confirmed still matching its design (or
-     fixed if it diverges).
-  5. `node --test` green; `astro build` clean.
-- Locked decisions (Phuong, this session): keep the real **robot** Minny avatar
-  (design's koala was a stand-in); summary stays **without XP/rank/streak** (prior
-  pedagogy call holds); scope = Free Talking rebuild + homework 7a re-verify.
-- Files owned: `src/pages/read2lead/speaking.astro` (free-talk markup + JS only),
-  `src/styles/speakup-free-talk.css`. No change to conversation/guardrail logic,
-  TTS, the API, or the `is_test` gate.
-- Stop condition: any diff touching the `is_test` check (that's Phase 8b) — stop
-  and escalate. Do not merge to main (full-pilot-QA-together rule).
+  1. Brand-new standalone app page **replaces `/speak-up`** (marketing
+     "Sắp ra mắt" page deleted): own bare layout (no site header/footer/
+     star-field/Zalo), bg `#0a1622`, app bar per the 7a board.
+  2. Homework flow matches the 7a boards (recording 3-col desktop with Minny
+     rail + hint / story stems / recorder rail with ring, red button, waveform,
+     Space hint; encourage/good results; rubric + smile chip; summary) and
+     Free Talking matches the 7b boards (all 5 states) — **whole-screen**
+     side-by-side at 390/820/1280 **and 1920** (full-bleed, no width cap).
+  3. Record button RED per the design (Phương reversed the earlier gold call).
+  4. Cap fix: `daily_cap`/`global_cap`/`not_available` on FT start renders the
+     designed wrap-up/kill-switch state — never a bounce back.
+  5. `/read2lead/speaking` untouched and still working (redirect is a follow-up
+     after Phương approves the new page).
+  6. `node --test` green; `astro build` clean; verified on the DEPLOYED preview.
+- Locked decisions (Phuong): replace `/speak-up` (route stays, marketing page
+  deleted); record button RED per design; real robot Minny assets (koala =
+  stand-in); summary has no XP/rank/streak (standing call).
+- Files owned: `src/pages/speak-up.astro` (full replacement),
+  `src/styles/speakup-app.css` (new), `src/layouts/SpeakUpAppLayout.astro`
+  (new). No change to `speaking.astro`, APIs, guardrails, or the `is_test` gate.
+- Stop condition: any diff touching the `is_test` check (Phase 8b) or the five
+  APIs — stop and escalate. Do not merge to main (full-pilot-QA-together rule).
 - Cost ceiling: Claude Lead direct — Claude Max plan usage, not metered.
 - Design self-verification: **Full-screen rebuild (commit `8988b8a`) verified on
   the DEPLOYED preview.** After Phương reported both screens still didn't match —
