@@ -100,37 +100,34 @@ assigns, commits, merges, deploys, or spends.
 - Stop condition: any diff touching the `is_test` check (Phase 8b) or the five
   APIs — stop and escalate. Do not merge to main (full-pilot-QA-together rule).
 - Cost ceiling: Claude Lead direct — Claude Max plan usage, not metered.
-- Design self-verification: **Full-screen rebuild (commit `8988b8a`) verified on
-  the DEPLOYED preview.** After Phương reported both screens still didn't match —
-  they were built *inside* the marketing page (site nav + "Luyện nói với Minny"
-  title + a narrow single-column section) instead of the full-screen, multi-column
-  app the mocks show — rebuilt both to the designs (per the corrected reuse rule,
-  AGENTS.md 13 / speakup.md): a `body.spk-immersive` mode hides the site
-  header/footer/title/code-card/mic-check/link-card/Zalo and drops the reading
-  column; the homework frame step gets `.is-frame-layout` (Minny+hint rail · story
-  · recorder panel + waveform; phone 1-col / tablet 2-col / desktop 3-col).
-  Verified live at 390/820/1280 (Free Talking rendered via the frame/conversation
-  code path since ONG hit its 3/day free_talk cap — synthetic data on the real
-  deployed bundle/CSS): **Free Talking** — no site chrome, desktop grid
-  `320px 1fr 320px`, phone stack, matches the 7b board (screens
-  `_ops/rebuild-ft-immersive-1280.png`, `_ops/rebuild-ft-390.png`). **Homework 7a**
-  — no site chrome, desktop `300px 1fr 320px` (rail/story/recorder) with the
-  Minny+hint rail and recorder waveform, phone single-col stack; matches the 7a
-  board (`_ops/rebuild-7a-1280.png`, `_ops/rebuild-7a-390.png`). **Regression
-  check:** sentence steps (retell) still render single-column, non-immersive,
-  header intact, rail hidden (`_ops/rebuild-retell-1280.png`). `node --test`
-  824/824, `astro build` clean. Record button stays GOLD + 🎤 emoji (Phương's
-  gold choice; emoji→icon polish deferred, flagged).
-- Verified commit: 8988b8a (full-screen immersive rebuild of Free Talking + the
-  homework frame; on origin/claude/speakup-v0 — deploy-parity PASS, rule 20)
-- Founder handoff: Presented a **design → before → after** visual artifact
-  (claude.ai/code/artifact/ab83dd50-…) built from live deployed-preview
-  screenshots (`_ops/rebuild-*.png`) — Free Talking + homework recorder now
-  full-screen + multi-column, matching the 7a/7b mocks; a plain-language summary.
-  Bounded decisions asked: (1) swap the record button 🎤 emoji for a clean
-  mic/stop icon (colour stays gold, his prior call)? (2) add the fuller 7a app
-  header ("Bài tập của thầy Phương · Tuần 3") vs the current back link? Not a
-  "go QA the preview and find bugs" handoff.
+- Design self-verification: **Standalone app page (commits `8834fc8`→`7f60c5c`)
+  verified on the DEPLOYED preview** at `/speak-up/?code=R2L-ONG-U5M6`. Real
+  flows driven live: code auto-load → app bar shows student name ("Ong") → mode
+  select → **retell** (single centered column, story card + recorder panel,
+  `_ops/app2-retell-1280.png`) → **Free Talking click with the capped code**:
+  timeline captured — conversation opens, server rejects (`daily_cap`), the
+  **designed wrap-up renders with "Mai nói chuyện tiếp với Minny nhé!"** and
+  stays (no bounce; summary CTA hidden; `_ops/app-cap-wrapup-1280.png`) — the
+  "flashes then goes straight back" bug is fixed on the real deployed flow.
+  Board-matching states (synthetic data on the real deployed bundle, live FT
+  session blocked by the cap): **7a frame** desktop 3-col `300px 1fr 340px`
+  (Minny rail + bubble + "💡 Gợi ý" | story stems + dashed blanks | recorder
+  rail with gold SVG ring, RED record button + white square, timer 0:18,
+  "Minny đang lắng nghe", Space hint, gold waveform — `_ops/app2-frame-1280.png`);
+  **7b conversation** desktop `320px 1fr 320px` + phone stack + full-bleed
+  1840px at 1920 (`_ops/app2-ft-1280.png`, `_ops/app2-ft-390.png`,
+  `_ops/app2-ft-1920.png`); **gate** (`_ops/app2-gate-1280.png`). Whole-screen
+  checks caught and fixed two bugs before handoff: `.hidden` overridden by
+  `.spk-btn` display (entry-104 class) and grid children overlapping on
+  implicit tracks (missing named areas). **Regression:** `/read2lead/speaking`
+  loads and works untouched. `node --test` 824/824, `astro build` clean.
+- Verified commit: 7f60c5c (standalone app page at /speak-up + cap-fix +
+  full-bleed; on origin/claude/speakup-v0 — deploy-parity rule 20)
+- Founder handoff: Presented a **design → new page** visual artifact from live
+  deployed screenshots + the preview link, plain language. Bounded asks only:
+  bless the two screens that had no design board (code entry + mode select,
+  built in the 7a visual language) and the record-button icon (white square per
+  the boards). Not a "go QA the preview and find bugs" handoff.
 - Started: 2026-07-06
 
 **Phase 6 (guardrails) — parked, not lost:** build is done and committed
