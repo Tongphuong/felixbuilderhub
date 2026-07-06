@@ -98,6 +98,17 @@ assigns, commits, merges, deploys, or spends.
 - Stop condition: any diff touching the `is_test` check (that's Phase 8b) — stop
   and escalate. Do not merge to main (full-pilot-QA-together rule).
 - Cost ceiling: Claude Lead direct — Claude Max plan usage, not metered.
+- Design self-verification: Rendered all 5 Free Talking states (conversation,
+  thinking, tap-to-play, wrap-up, summary) at 390/820/1280 via headless Chrome +
+  `playwright-core`, diffed side-by-side against the Phase 7b design boards
+  `design-s1/s2/s4/s5` (scratchpad). Homework 7a screen also re-rendered vs
+  `design_handoff_speakup_phase_7a`. Verdict: match; two decorative extras
+  (wrap-up `0:00` timer + `★`) intentionally omitted. Screenshots in the review
+  artifact below. See CONTROL reconciliation section for the per-criterion table.
+- Founder handoff: Presented a before/after/design review artifact
+  (claude.ai/code/artifact/cb8b2e18-…) plus a plain-language summary; the only
+  decisions asked of Phuong were bounded (keep robot avatar? add wrap-up `0:00`
+  timer + `★`?). Not a "go QA the preview and find bugs" handoff.
 - Started: 2026-07-06
 
 **Phase 6 (guardrails) — parked, not lost:** build is done and committed

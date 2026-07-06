@@ -51,6 +51,11 @@ stale until 2026-07-05.
   typing), founder_check.py --gate build PASS, Phuong approved merge to
   main (2026-07-04) — done.
 - Cost ceiling: none
+- Design self-verification: N/A — no Claude Design mock for this task (positive
+  block-message copy + a `lesson_link` resume field); wording approved by Phuong
+  directly. Task completed + merged 2026-07-04, before this field existed.
+- Founder handoff: N/A — completed and merged before this field existed
+  (2026-07-06); Phuong approved the final wording and the merge to main in-flow.
 
 ## Acceptance criteria reconciliation
 

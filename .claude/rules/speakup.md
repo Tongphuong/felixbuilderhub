@@ -69,6 +69,13 @@ the entire Phase 7a visual redesign never implemented for the homework frame
 screen), undetected because no session had rendered the page until Phương
 found it by eye.
 
+**Now enforced (2026-07-06):** record the render-vs-design check in
+CONTROL.md's `- Design self-verification:` field, and how you handed the result
+to Phương in the `- Founder handoff:` field — `founder_check.py --gate complete`
+blocks on both being non-empty (a bare `none`/`n/a` fails). You verify against
+the design yourself and present her a finished result; you never ask her to QA
+the preview and find the bugs. See `_ops/AGENTS.md` rules 18–19.
+
 ## Scope reminder
 
 V0 pilot is capped at 20 students, two modes: homework practice (feedback
