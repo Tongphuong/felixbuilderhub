@@ -23,7 +23,7 @@ run sequentially even where the spec's dependency graph would allow parallel wor
 | 4 | Phase 7b — Conversation UI design mocks | Claude Design | approved (Phuong, 2026-07-05) | n/a (design folder: `SpeakUp Phase 7b Free Talking/design_handoff_speakup_phase_7b/`) | n/a |
 | 5 | Phase 6 — Guardrail layer + red-team suite | Aider Senior (plumbing) + Sonnet 5 (wordlists/redirects/red-team) | active | no | no |
 | 6 | Phase 8a — Free Talking UI (build only, `is_test`-gated, no pilot enablement) | Aider Senior (dispatch) + Claude (review) | done | yes (c324b2e, 9566a31, cd8cc28, bd19129) | no |
-| 6 | Phase 8b — Gate removal (pilot enablement) | Claude Lead (folded into `speakup-separation-and-freetalk-enable`; Phương explicitly unblocked it from Phase 6 red-team, 2026-07-06) | active | no | no |
+| 6 | Phase 8b — Gate removal (pilot enablement) | Claude Lead (folded into `speakup-separation-and-freetalk-enable`; Phương explicitly unblocked it from Phase 6 red-team, 2026-07-06) | done | yes (bbb6761) | no |
 
 Waves 1 and 4 have two parallelizable items each (no shared files); everything
 else is strictly sequential because it touches `speaking.astro`. **No phase
@@ -61,7 +61,7 @@ assigns, commits, merges, deploys, or spends.
 
 ## Current task
 
-- Status: active
+- Status: complete
 - Task ID: speakup-separation-and-freetalk-enable
 - Owner: Claude Lead — direct execution. Justified override of
   `aider-dispatch-guard.py`: the diff removes a child-safety gate and
@@ -109,9 +109,38 @@ assigns, commits, merges, deploys, or spends.
   admin homework endpoints — stop and escalate. Do not merge to main
   (full-pilot-QA-together rule).
 - Cost ceiling: Claude Lead direct — Claude Max plan usage, not metered.
-- Design self-verification: pending (deployed-preview run at end of task)
-- Verified commit: pending
-- Founder handoff: pending
+- Design self-verification: **Verified on the DEPLOYED preview** (commits
+  `bbb6761` + `b6ed0d8`) at `/speak-up/?code=R2L-ONG-U5M6`. Live API check:
+  `/api/minny-speaking-context` returns `modes: ['free_talk']` only, greeting
+  names no story, `has_story:false/pack_id:'general'` kept for page-JS shape.
+  Live flows: mode select shows the no-homework note + a single centered
+  Free Talk card (1280: `_ops/sep-modes-centered-1280.png`, phone 390:
+  `_ops/sep-modes-390.png`); clicking Free Talk with the still-capped ONG
+  code renders the designed "Mai nói chuyện tiếp với Minny nhé!" wrap-up and
+  stays — no bounce (`_ops/sep-ft-cap-1280.png`; conversation screen renders
+  correctly in the interim, `_ops/sep-ft-click-1280.png`). Two-card state
+  (homework + Free Talk) rendered on the live bundle with injected card
+  markup (`_ops/sep-modes-hw-1280.png`) — same grid as the previously
+  verified multi-card menu. Old page: cache-busted
+  `/read2lead/speaking/?nocache=…` → **404** (a stale Cloudflare edge copy
+  still answers the bare URL with `cf-cache-status: HIT`, age ~19h — ages
+  out on its own; the deployment no longer contains the route, `astro build`
+  emits 25 pages without it). Gate removal for real codes is covered by the
+  updated endpoint test (non-test code → 200 + session data, fake KV) — a
+  live real-code session run wasn't possible: ONG's 3/day cap is spent and
+  burning a real student's cap slot for testing is off-limits; the cap
+  screen above is the same code path past the removed gate. `node --test`
+  823/823 (removed 3 story-mode tests, added 2 separation tests +
+  strengthened 2 gate tests), `astro build` clean.
+- Verified commit: b6ed0d8 (Free Talk for all codes, R2L separation, old
+  page deleted, lone-card centering; on origin/claude/speakup-v0 — rule 20)
+- Founder handoff: Reported in plain language with live deployed
+  screenshots: what every kid now sees (homework when assigned + Free Talk
+  always, nothing else), the cap screen behaving as designed, and the two
+  honest caveats — Free Talk is now open to real kids ahead of his Phase 6
+  red-team run (his explicit call, risk flagged twice), and old saved
+  /read2lead/speaking links now dead by his choice. Bounded ask only:
+  QA-with-me on preview when he assigns real homework to a class.
 - Started: 2026-07-06
 - Prior task `speakup-standalone-app-page` (done, verified `328cea9`): full
   narrative in git history of this file and `_ops/AGENT_LOG.md` entries
@@ -135,6 +164,31 @@ This UI-fidelity task does not touch any Phase 6 file.
 | `src/pages/read2lead/speaking.astro` | Aider Senior (dispatch, flagged-passthrough lines only) + Claude (review) | done |
 
 ## Acceptance criteria reconciliation
+
+### speakup-separation-and-freetalk-enable (2026-07-06)
+
+1. Menu = homework (when assigned) + free_talk, nothing else, no story
+   lookup — **PASS** (live deployed API: `modes: ['free_talk']` for ONG, no
+   story in greeting; unit tests for both menu shapes; `pickPracticePack`/
+   retell/questions builders deleted outright).
+2. `is_test` gate removed, all caps/guardrails untouched — **PASS** (diff
+   touches only the gate block + two comments; caps verified live: capped
+   code still gets the designed wrap-up; guardrail tests all green).
+3. No-homework note + tidy-ups — **PASS** (live screenshots 1280/390; lone
+   card centered via `:only-child` after first render showed it half-width
+   left).
+4. Old page deleted, no route in build — **PASS** (25 pages, no
+   `/read2lead/speaking`; cache-busted request → 404. Caveat: stale
+   Cloudflare edge copy still answers the bare URL until it ages out).
+5. Tests updated, suite green, build clean — **PASS** (823/823; four test
+   files retargeted to `speak-up.astro`, two gate tests rewritten to the
+   new behavior, three obsolete story-mode tests removed, two separation
+   tests added).
+6. Verified on the DEPLOYED preview — **PASS** (rule 20; commits `bbb6761`,
+   `b6ed0d8` both on origin, marker-polled before verifying).
+7. Live real-code Free Talk session — **SKIPPED** (ONG's 3/day cap spent;
+   endpoint test covers non-test start → 200 + session; not burning a real
+   student's cap slot for testing. Re-runnable live after the daily reset.)
 
 ### speakup-freetalk-ui-fidelity (2026-07-06)
 
