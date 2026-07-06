@@ -14,15 +14,17 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
   description="Con luyện nói với Minny trước buổi coaching với Felix — nhận gợi ý nhẹ nhàng và luyện tiếp."
   robots="noindex, follow"
 >
-  <Header read2LeadState={false} />
+  <div class="site-chrome"><Header read2LeadState={false} /></div>
 
   <main id="main" class="min-h-screen bg-navy-950">
-    <section class="mx-auto max-w-lg px-4 py-6 sm:px-6 sm:py-8">
-      <p class="text-center text-xs font-extrabold uppercase tracking-widest text-accent">Felix Coaching</p>
-      <h1 class="mt-1 text-center font-display text-2xl font-extrabold text-cream sm:text-3xl">Luyện nói với Minny</h1>
-      <p class="mt-2 text-center text-sm text-cream-muted">
-        Con nói — Minny nghe — chuẩn bị cho buổi coaching với Felix.
-      </p>
+    <section class="speaking-section mx-auto max-w-lg px-4 py-6 sm:px-6 sm:py-8">
+      <div id="speaking-page-head">
+        <p class="text-center text-xs font-extrabold uppercase tracking-widest text-accent">Felix Coaching</p>
+        <h1 class="mt-1 text-center font-display text-2xl font-extrabold text-cream sm:text-3xl">Luyện nói với Minny</h1>
+        <p class="mt-2 text-center text-sm text-cream-muted">
+          Con nói — Minny nghe — chuẩn bị cho buổi coaching với Felix.
+        </p>
+      </div>
 
       <div id="speaking-code-card" class="mt-6 rounded-3xl bg-navy-900/60 p-5 shadow-lg shadow-black/20">
         <label for="speaking-code" class="text-sm font-semibold text-cream">Mã học sinh</label>
@@ -76,26 +78,55 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
           <div id="mode-cards" class="grid grid-cols-1 gap-4 sm:grid-cols-2"></div>
         </div>
 
-        <!-- Practice wizard (hidden until mode picked) -->
-        <div id="practice-screen" class="hidden space-y-5">
-          <div class="flex items-center justify-between gap-3">
+        <!-- Practice wizard. Sentence steps (retell/questions/homework-read) render
+             as a single column; a frame homework step adds `.is-frame-layout`,
+             which turns this into the Phase 7a layout: Minny+hint rail · story ·
+             recorder panel (phone 1-col / tablet 2-col / desktop 3-col). Every
+             id the JS targets is preserved. Hidden until a mode is picked. -->
+        <div id="practice-screen" class="hidden hw-practice">
+          <div class="hw-topbar">
             <button id="back-to-modes" type="button" class="minny-back-link">← Chọn cách luyện</button>
             <div id="progress-dots" class="flex items-center gap-2" aria-label="Tiến độ"></div>
           </div>
 
-          <div class="minny-bubble rounded-3xl bg-cream/10 p-5 shadow-md shadow-black/10">
-            <p id="prompt-vi" class="text-lg font-bold leading-relaxed text-cream"></p>
-            <p id="prompt-en" class="mt-2 text-sm leading-relaxed text-cream-muted"></p>
+          <!-- Left rail (frame layout only): Minny + encouragement + hint -->
+          <aside class="hw-rail">
+            <div class="hw-rail__avatar minny-avatar">
+              <video id="hw-minny-video" class="minny-avatar__media hidden" poster="/assets/minny/minny_idle.png" autoplay loop muted playsinline aria-hidden="true"></video>
+              <img id="hw-minny-fallback" src="/assets/minny/minny_idle.png" alt="Minny" width="200" height="200" class="minny-avatar__media" />
+            </div>
+            <div class="hw-rail__bubble">
+              <p class="hw-rail__title">Con nói to, rõ ràng nha!</p>
+              <p class="hw-rail__sub">Kể liền một mạch cả các câu — Minny đang nghe từ đầu đến cuối. 🎧</p>
+            </div>
+            <p class="hw-hint">💡 Gợi ý: kể như đang nói với bạn, không cần đọc từng chữ.</p>
+          </aside>
+
+          <!-- Center: story (prompt + stems) then result -->
+          <div class="hw-main">
+            <div class="minny-bubble rounded-3xl bg-cream/10 p-5 shadow-md shadow-black/10">
+              <p id="prompt-vi" class="text-lg font-bold leading-relaxed text-cream"></p>
+              <p id="prompt-en" class="mt-2 text-sm leading-relaxed text-cream-muted"></p>
+            </div>
+
+            <div id="frame-stems" class="hidden space-y-3 rounded-3xl border border-cream/10 bg-navy-900/60 p-5"></div>
+            <p id="frame-meta" class="hidden text-xs font-extrabold uppercase tracking-widest text-cream-dim"></p>
+
+            <div id="speaking-result" class="hidden rounded-3xl bg-navy-900/70 p-5 shadow-md shadow-black/10"></div>
+
+            <div id="speaking-actions" class="hidden grid grid-cols-1 gap-3 sm:grid-cols-2">
+              <button id="speaking-retry" type="button" class="minny-btn minny-btn--secondary">Luyện lại</button>
+              <button id="speaking-next" type="button" class="minny-btn minny-btn--primary">Tiếp theo</button>
+            </div>
           </div>
 
-          <div id="frame-stems" class="hidden space-y-3 rounded-3xl border border-cream/10 bg-navy-900/60 p-5"></div>
-          <p id="frame-meta" class="hidden -mt-2 text-xs font-extrabold uppercase tracking-widest text-cream-dim"></p>
-
-          <button id="speaking-listen" type="button" class="minny-btn minny-btn--listen w-full">
-            🔊 Nghe Minny
-          </button>
-
-          <div class="space-y-2">
+          <!-- Right: recorder (a dedicated panel in frame layout) -->
+          <div class="hw-recorder">
+            <p class="hw-recorder__eyebrow">Ghi âm · mục tiêu ~60s</p>
+            <button id="speaking-listen" type="button" class="minny-btn minny-btn--listen w-full">
+              🔊 Nghe Minny
+            </button>
+            <span id="speaking-timer" class="hidden block text-center font-bold text-gold hw-timer"></span>
             <div id="record-ring" class="minny-frame-ring-wrap">
               <button id="speaking-record" type="button" class="minny-btn minny-btn--record w-full">🎤 Con nói</button>
             </div>
@@ -104,14 +135,10 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
               Minny đang lắng nghe 🎧
             </p>
             <p id="speaking-status" class="text-center text-sm text-cream-muted"></p>
-            <span id="speaking-timer" class="hidden block text-center text-lg font-bold text-gold"></span>
-          </div>
-
-          <div id="speaking-result" class="hidden rounded-3xl bg-navy-900/70 p-5 shadow-md shadow-black/10"></div>
-
-          <div id="speaking-actions" class="hidden grid grid-cols-1 gap-3 sm:grid-cols-2">
-            <button id="speaking-retry" type="button" class="minny-btn minny-btn--secondary">Luyện lại</button>
-            <button id="speaking-next" type="button" class="minny-btn minny-btn--primary">Tiếp theo</button>
+            <div class="hw-waveform minny-waveform" aria-hidden="true">
+              <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+              <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+            </div>
           </div>
         </div>
 
@@ -207,7 +234,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
         </div>
 
         <!-- Compact footer -->
-        <div class="rounded-2xl bg-cream/5 px-4 py-3 text-center text-sm text-cream-muted">
+        <div id="speaking-foot" class="rounded-2xl bg-cream/5 px-4 py-3 text-center text-sm text-cream-muted">
           <p id="practice-stats" class="font-medium"></p>
           <p class="mt-2">
             <a id="coaching-link" href="/coaching#book" class="font-bold text-accent underline">Đặt lịch coaching</a>
@@ -219,7 +246,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
     </section>
   </main>
 
-  <Footer />
+  <div class="site-chrome"><Footer /></div>
 
   <style is:global>
     .minny-avatar {
@@ -669,8 +696,26 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       if (eyebrow && !ft.awaitingReply) eyebrow.textContent = `Minny · ${cap}`;
     }
 
+    // Immersive full-screen: hide the site chrome/title while a kid practices
+    // (Free Talking or a homework frame step) so the screen fills the viewport
+    // like the 7a/7b mocks. CSS keys off body.spk-immersive.
+    function enterImmersive() {
+      document.body.classList.add('spk-immersive');
+      window.scrollTo(0, 0);
+    }
+    function exitImmersive() {
+      document.body.classList.remove('spk-immersive');
+    }
+    // The homework frame rail owns its own Minny avatar (#hw-minny-*), like Free
+    // Talking, since the shared shell hero is hidden in the immersive layout.
+    function hwSetMood(mood) {
+      setMinnyMood(mood, 'hw-minny-video', 'hw-minny-fallback');
+    }
+
     function showModePicker() {
       state.modePicked = false;
+      exitImmersive();
+      practiceScreen?.classList.remove('is-frame-layout');
       document.querySelector('[data-r2l-mic-check]')?.classList.remove('hidden');
       modePicker?.classList.remove('hidden');
       practiceScreen?.classList.add('hidden');
@@ -871,6 +916,17 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       enEl.textContent = step.prompt_en || step.question_en || '';
       renderFrameStems(step);
 
+      // Frame steps get the immersive 7a layout; sentence steps stay in the
+      // normal (non-immersive) single-column wizard.
+      const isFrameStep = step.check_mode === 'frame';
+      practiceScreen.classList.toggle('is-frame-layout', isFrameStep);
+      if (isFrameStep) {
+        enterImmersive();
+        hwSetMood('idle');
+      } else {
+        exitImmersive();
+      }
+
       const isQuestion = step.kind === 'question';
       recordBtn.textContent = isQuestion ? '🎤 Trả lời Minny' : '🎤 Con nói';
 
@@ -972,6 +1028,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       const actionsEl = document.getElementById('speaking-actions');
       const matchPct = Math.round(Number(result.matchPct) || 0);
       setMinnyMood(matchPct >= 70 ? 'celebrate' : 'encourage');
+      hwSetMood(matchPct >= 70 ? 'celebrate' : 'encourage');
 
       const rubric = result.rubric || {};
       const rubricHtml = [
@@ -1716,6 +1773,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
 
     function enterFreeTalking() {
       ftReset();
+      enterImmersive();
       document.querySelector('[data-r2l-mic-check]')?.classList.add('hidden');
       // Free Talking owns its own avatar/layout — hide the shared shell hero.
       document.querySelector('.minny-hero')?.classList.add('hidden');

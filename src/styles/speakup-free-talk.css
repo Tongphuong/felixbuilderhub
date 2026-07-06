@@ -621,3 +621,162 @@
 
   .minny-timer { transition: none; }
 }
+
+/* ============================================================================
+   Immersive full-screen  (Free Talking + homework recording)
+   When a kid is practicing, the screen fills the viewport like the 7a/7b mocks:
+   the site header/footer, page title, code card, mic-check, the bottom link
+   card and the sticky Zalo button all hide, and the reading column is dropped.
+   Toggled by `body.spk-immersive` from the JS state machine.
+   ========================================================================== */
+body.spk-immersive .site-chrome,
+body.spk-immersive #speaking-page-head,
+body.spk-immersive #speaking-code-card,
+body.spk-immersive .minny-hero,
+body.spk-immersive [data-r2l-mic-check],
+body.spk-immersive #speaking-foot,
+body.spk-immersive [data-sticky-zalo] { display: none !important; }
+
+body.spk-immersive .speaking-section {
+  max-width: none;
+  width: 100%;
+  padding: 12px 16px 20px;
+}
+
+@media (min-width: 768px) {
+  body.spk-immersive .speaking-section { padding: 16px clamp(16px, 3vw, 40px) 28px; }
+}
+
+body.spk-immersive #speaking-shell { margin-top: 0; }
+
+/* Section is already full-width in immersive, so Free Talking doesn't need its
+   negative-margin breakout — just centre it. */
+body.spk-immersive #free-talk-screen {
+  width: min(1160px, 100%);
+  margin: 0 auto;
+}
+
+/* ============================================================================
+   Homework practice — Phase 7a layout
+   Sentence steps render single-column (rail hidden). A frame step adds
+   `.is-frame-layout`, turning this into: Minny+hint rail · story · recorder
+   panel  (phone 1-col / tablet 2-col / desktop 3-col).
+   ========================================================================== */
+.hw-practice:not(.hidden) { display: flex; flex-direction: column; gap: 16px; }
+
+.hw-topbar {
+  grid-area: topbar;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.hw-main { grid-area: story; display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+.hw-recorder { grid-area: recorder; display: flex; flex-direction: column; gap: 10px; }
+.hw-rail { grid-area: rail; display: none; }
+
+/* recorder extras + rail hint only appear in the frame panel */
+.hw-recorder__eyebrow { display: none; }
+.hw-waveform { display: none; }
+
+.hw-waveform span:nth-child(odd) { height: 14px; }
+.hw-waveform span:nth-child(3n) { height: 20px; }
+.hw-waveform span:nth-child(5n) { height: 10px; }
+
+/* ---- Frame step: the 7a multi-column layout ---- */
+.hw-practice.is-frame-layout:not(.hidden) {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: 1fr;
+  grid-template-areas: "topbar" "rail" "story" "recorder";
+}
+
+@media (min-width: 768px) {
+  .hw-practice.is-frame-layout:not(.hidden) {
+    grid-template-columns: 1fr 300px;
+    grid-template-areas:
+      "topbar topbar"
+      "rail   rail"
+      "story  recorder";
+    gap: 20px;
+    align-items: start;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hw-practice.is-frame-layout:not(.hidden) {
+    grid-template-columns: 300px 1fr 320px;
+    grid-template-areas:
+      "topbar topbar topbar"
+      "rail   story  recorder";
+    gap: 24px;
+  }
+}
+
+/* rail — Minny + encouragement + hint */
+.is-frame-layout .hw-rail {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  border-radius: 20px;
+  background: var(--navy-900);
+}
+.hw-rail__avatar { width: 56px; height: 56px; flex: 0 0 auto; }
+.hw-rail__bubble { min-width: 0; }
+.hw-rail__title { margin: 0; font-weight: 700; color: var(--cream); }
+.hw-rail__sub { margin: 2px 0 0; font-size: 0.85rem; line-height: 1.4; color: var(--cream-muted); }
+.hw-hint { display: none; margin: 0; }
+
+@media (min-width: 1024px) {
+  .is-frame-layout .hw-rail {
+    flex-direction: column;
+    text-align: center;
+    gap: 14px;
+    padding: 22px 18px;
+    align-self: start;
+  }
+  .is-frame-layout .hw-rail__avatar { width: 160px; height: 160px; }
+  .is-frame-layout .hw-hint {
+    display: block;
+    border: 1px dashed var(--border-accent);
+    border-radius: 14px;
+    padding: 12px 14px;
+    font-size: 0.85rem;
+    line-height: 1.4;
+    color: var(--cream-muted);
+    background: color-mix(in srgb, var(--gold) 7%, transparent);
+  }
+}
+
+/* recorder — a raised panel on tablet+ */
+@media (min-width: 768px) {
+  .is-frame-layout .hw-recorder {
+    align-items: center;
+    border-radius: 20px;
+    background: var(--navy-850);
+    padding: 20px 16px;
+    align-self: start;
+  }
+}
+.is-frame-layout .hw-recorder__eyebrow {
+  display: block;
+  margin: 0;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--cream-dim);
+  text-align: center;
+}
+.is-frame-layout .hw-timer {
+  font-family: 'Manrope', sans-serif;
+  font-size: 2.5rem;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.is-frame-layout .hw-recorder .minny-waveform { display: none; width: 100%; }
+
+@media (min-width: 1024px) {
+  .is-frame-layout .hw-recorder .minny-waveform { display: flex; }
+}
