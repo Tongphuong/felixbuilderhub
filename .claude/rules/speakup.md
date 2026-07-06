@@ -76,6 +76,18 @@ blocks on both being non-empty (a bare `none`/`n/a` fails). You verify against
 the design yourself and present her a finished result; you never ask her to QA
 the preview and find the bugs. See `_ops/AGENTS.md` rules 18–19.
 
+**Verify on the DEPLOYED preview, and push before handoff (rule 20, added
+2026-07-06).** Phương reviews `claude-speakup-v0.felixbuilderhub.pages.dev`,
+which Cloudflare builds from `origin/claude/speakup-v0` — **not** your local
+`wrangler pages dev` or a headless screenshot of your working tree. So: do your
+self-verification against the deployed URL (push first, wait for the rebuild,
+then screenshot), and record the SHA you verified in CONTROL.md's
+`- Verified commit:` field. `founder_check.py --gate complete` now hard-blocks
+if that SHA is not on `origin/claude/speakup-v0`, or if the review surface is
+localhost. This exists because on 2026-07-06 the Free Talking rebuild
+(`e68f168`) was verified locally but never pushed; the preview kept serving
+`c90c8bf` and Phương reviewed the pre-fix screen.
+
 ## Scope reminder
 
 V0 pilot is capped at 20 students, two modes: homework practice (feedback

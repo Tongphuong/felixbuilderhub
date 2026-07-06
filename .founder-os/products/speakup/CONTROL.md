@@ -98,17 +98,26 @@ assigns, commits, merges, deploys, or spends.
 - Stop condition: any diff touching the `is_test` check (that's Phase 8b) — stop
   and escalate. Do not merge to main (full-pilot-QA-together rule).
 - Cost ceiling: Claude Lead direct — Claude Max plan usage, not metered.
-- Design self-verification: Rendered all 5 Free Talking states (conversation,
-  thinking, tap-to-play, wrap-up, summary) at 390/820/1280 via headless Chrome +
-  `playwright-core`, diffed side-by-side against the Phase 7b design boards
-  `design-s1/s2/s4/s5` (scratchpad). Homework 7a screen also re-rendered vs
-  `design_handoff_speakup_phase_7a`. Verdict: match; two decorative extras
-  (wrap-up `0:00` timer + `★`) intentionally omitted. Screenshots in the review
-  artifact below. See CONTROL reconciliation section for the per-criterion table.
-- Founder handoff: Presented a before/after/design review artifact
-  (claude.ai/code/artifact/cb8b2e18-…) plus a plain-language summary; the only
-  decisions asked of Phuong were bounded (keep robot avatar? add wrap-up `0:00`
-  timer + `★`?). Not a "go QA the preview and find bugs" handoff.
+- Design self-verification: Re-verified on the DEPLOYED preview (not a local
+  build) after pushing `e68f168` → tip `73c6cb7`: Free Talking driven live at
+  `claude-speakup-v0.felixbuilderhub.pages.dev/read2lead/speaking/?code=R2L-ONG-U5M6`
+  at 390/820/1280. Computed grid confirms phone single-col
+  (topbar/hero/transcript/recorder), tablet full-width hero + `1fr 280px`,
+  desktop `320px 1fr 320px` (topbar / hero transcript recorder), shared hero
+  hidden while active. Screenshots `_ops/ft-live-390|820|1280.png` diffed vs the
+  Phase 7b boards. Verdict: LAYOUT MATCH at all breakpoints — the reported
+  single-narrow-column defect is fixed. One flagged divergence for Phuong: the
+  record button renders GOLD (base `.minny-btn--record`) while the 7b design
+  specifies RED (`var(--danger)`, "the reused red 96×96 record button") — left
+  as-is pending her call (design stand-ins have been overridden before, e.g.
+  robot vs koala). Homework 7a re-checked, still matches.
+- Verified commit: e68f168 (Free Talking rebuild; on origin/claude/speakup-v0,
+  ancestor of pushed tip 73c6cb7 — deploy-parity PASS, rule 20)
+- Founder handoff: Presented live before/after/design screenshots at 3
+  breakpoints (`_ops/ft-live-*.png`), taken on the DEPLOYED preview, plus a
+  plain-language summary. Bounded decisions asked: (1) record button RED per the
+  7b design, or keep GOLD as built? (2) optional wrap-up `0:00` timer + `★`. Not
+  a "go QA the preview and find bugs" handoff.
 - Started: 2026-07-06
 
 **Phase 6 (guardrails) — parked, not lost:** build is done and committed
