@@ -649,11 +649,12 @@ body.spk-immersive .speaking-section {
 
 body.spk-immersive #speaking-shell { margin-top: 0; }
 
-/* Section is already full-width in immersive, so Free Talking doesn't need its
-   negative-margin breakout — just centre it. */
+/* Section is already full-width in immersive; Free Talking fills it edge-to-edge
+   (drop the homework flow's negative-margin breakout and the earlier max-width
+   cap — the design spreads the conversation across the whole screen). */
 body.spk-immersive #free-talk-screen {
-  width: min(1160px, 100%);
-  margin: 0 auto;
+  width: 100%;
+  margin: 0;
 }
 
 /* ============================================================================
