@@ -342,6 +342,15 @@
 
 @media (min-width: 640px) { #mode-cards { grid-template-columns: repeat(2, 1fr); } }
 
+/* A lone card (Free Talk with no homework assigned) centers instead of
+   sitting half-width in the left column. */
+.spk-mode-card:only-child {
+  grid-column: 1 / -1;
+  justify-self: center;
+  width: 100%;
+  max-width: 460px;
+}
+
 .spk-mode-card {
   display: flex;
   flex-direction: column;
