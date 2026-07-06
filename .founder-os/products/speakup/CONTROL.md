@@ -66,7 +66,7 @@ assigns, commits, merges, deploys, or spends.
 
 ## Current task
 
-- Status: active
+- Status: complete
 - Task ID: speakup-voice-and-grading-reuse-overhaul
 - Owner: Claude Lead — direct execution (single tightly-coupled TTS helper +
   its call sites + ear-test handoff; justified guard override, precedent
@@ -130,9 +130,30 @@ assigns, commits, merges, deploys, or spends.
   main.
 - Cost ceiling: Claude Lead direct — Max plan, not metered; runtime TTS cost
   ceiling USD 5/month (Aura-2 at pilot volume, KV-cached).
-- Design self-verification: pending (deployed-preview run at end of task)
-- Verified commit: pending
-- Founder handoff: pending
+- Design self-verification: **Voice verified on the DEPLOYED preview with no
+  OpenAI key present** (the exact condition that previously produced the
+  robot voice): `/api/minny-voice` returns real Aura-2 audio — greeting
+  19.7KB, new `frame_intro` 33KB, both valid MPEG layer-III 24kHz mono
+  (checked with `file` on the decoded bytes); second call answers in 105ms =
+  KV cache hit under the new `tts:aura2:luna:` key. Audio quality is
+  Phương's ear test (I cannot listen) — voice switch is the one-line
+  `TTS_VOICE` constant in `_minny-tts.js`. GRADING: Azure PA + Vietnamese
+  redirect covered by 9 new unit tests (Azure path incl. client-contract
+  mapping, meter, WAV-only routing, local fallback on Azure failure, VN
+  redirect + free-talk exemption); live Azure verification SKIPPED until
+  Phương creates the free Speech resource (`_ops/AZURE_SPEECH_SETUP.md`);
+  live VN-speech test needs a real microphone — flagged in the handoff for
+  his next test run. No visual/layout changes in this task (no screenshot
+  round needed; playback + scoring only).
+- Verified commit: 4369c5f (with 551c99b; both on origin/claude/speakup-v0
+  — rule 20)
+- Founder handoff: Plain-language report: why the voice was robotic (missing
+  preview key), why it can't recur (voice now runs on Cloudflare's built-in
+  binding, no keys), what to do next — (1) listen to Minny on the preview
+  and judge the Aura-2 'luna' voice, (2) run `_ops/AZURE_SPEECH_SETUP.md`
+  (~10 min, $0) to switch on real pronunciation grading, (3) the 13th canned
+  phrase `frame_intro` joins the brand-voice sign-off list. Bounded asks
+  only.
 - Started: 2026-07-06
 - Prior tasks `speakup-standalone-app-page` (verified `328cea9`) and
   `speakup-separation-and-freetalk-enable` (verified `b6ed0d8`, Phương
@@ -157,6 +178,29 @@ This UI-fidelity task does not touch any Phase 6 file.
 | `src/pages/read2lead/speaking.astro` | Aider Senior (dispatch, flagged-passthrough lines only) + Claude (review) | done |
 
 ## Acceptance criteria reconciliation
+
+### speakup-voice-and-grading-reuse-overhaul (2026-07-06)
+
+1. TTS chain Aura-2 → MeloTTS → OpenAI-only-without-binding, one-line voice
+   constant, engine-scoped cache key — **PASS** (unit tests for all three
+   paths + fallback-not-cached; live: greeting + frame_intro synthesized on
+   the deployed preview with no OpenAI key, cache hit 105ms).
+2. `/api/minny-voice` returns real audio on the deployed preview with no
+   OpenAI key — **PASS** (valid MPEG III 24kHz mono, verified with `file`).
+3. New voice on FT greeting/replies + homework Listen; speechSynthesis last
+   resort; frame step spoken intro — **PASS** (same `getOrSynthesize` path;
+   `frame_intro` whitelisted phrase live; page routes frame steps to it).
+4. Tests + build — **PASS** (835/835, 12 new across TTS + grading; `astro
+   build` clean).
+5. Phương ear test — **PENDING HIS RUN** (handoff includes the one-line
+   voice-switch instruction; not a QA-hunt, a single listen).
+6. Azure PA for read steps with full local fallback — **PASS in unit tests /
+   SKIPPED live** (needs Phương's free Azure resource; until then the
+   fallback path IS production behavior and is live-verified by definition).
+7. Vietnamese redirect — **PASS in unit tests; live SKIPPED** (needs a real
+   microphone speaking Vietnamese; flagged for Phương's next test run).
+8. Azure setup doc — **PASS** (`_ops/AZURE_SPEECH_SETUP.md`, click-by-click,
+   $0 tier, meter explained).
 
 ### speakup-separation-and-freetalk-enable (2026-07-06)
 
