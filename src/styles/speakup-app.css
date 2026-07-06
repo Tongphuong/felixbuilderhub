@@ -233,6 +233,12 @@
 .spk-btn:active:not(:disabled) { transform: translateY(1px); }
 .spk-btn:disabled { opacity: 0.6; cursor: not-allowed; }
 
+/* This stylesheet loads after Tailwind, so any display rule here would beat
+   the `.hidden` utility the JS toggles — re-assert it for toggled elements
+   (the entry-104 lesson: display rules must never override .hidden). */
+.spk-btn.hidden,
+.spk-appbar__student.hidden { display: none; }
+
 .spk-btn--gold {
   background: linear-gradient(180deg, #f2cc7e, #c88f38);
   color: #0a1622;
