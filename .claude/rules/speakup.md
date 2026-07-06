@@ -29,8 +29,10 @@ homework-entry form, etc.), look for an existing **external, free/open-source**
 solution in this order: (1) an open-source GitHub project to clone/fork,
 (2) a free library or maintained package, (3) an existing plugin, connector,
 or MCP server (e.g. Claude Design, Figma MCP). Only hand-roll it if none fit,
-and note that search — what was checked and why it didn't fit — briefly in the
-spec or `EVIDENCE.md` entry for that phase. Applies to both Claude and Aider
+and record that search in CONTROL.md's **`- Reuse survey:`** field — since
+2026-07-06 `founder_check.py --gate build` hard-blocks unless it lists ≥2
+external candidates with verdicts (or `N/A — <reason>` for tasks that build
+nothing new). See `_ops/AGENTS.md` rule 21. Applies to both Claude and Aider
 workers. **This is about reusing what other people built — never a reason to
 reuse our own existing page/layout/scaffold.** For UI: the approved design
 defines the whole screen (full-screen vs. embedded, column count, chrome); "we

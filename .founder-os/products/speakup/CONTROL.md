@@ -67,7 +67,7 @@ assigns, commits, merges, deploys, or spends.
 ## Current task
 
 - Status: active
-- Task ID: speakup-voice-aura2-workers-ai
+- Task ID: speakup-voice-and-grading-reuse-overhaul
 - Owner: Claude Lead — direct execution (single tightly-coupled TTS helper +
   its call sites + ear-test handoff; justified guard override, precedent
   entries 104/108).
@@ -87,6 +87,14 @@ assigns, commits, merges, deploys, or spends.
   Kokoro-82M / Chatterbox OSS (REJECTED — no GPU host; hosted resellers =
   new vendor for savings we don't need at pilot scale); MiniMax/Inworld on
   Workers AI (DEFERRED — pricing unpublished on the CF pricing page).
+  GRADING: Azure AI Speech Pronunciation Assessment (ADOPTED — purpose-built
+  per-word/phoneme scoring for learners, free F0 tier 5 audio-h/mo,
+  REST-callable from Pages Functions, usage hard-capped in KV so default
+  budget is USD 0, full local-scorer fallback); SpeechAce/SpeechSuper/ELSA
+  (REJECTED — enterprise quote-priced); Kaldi GOP OSS goparrot/gop-pykaldi
+  (REJECTED — needs a self-hosted server); Workers AI
+  whisper-large-v3-turbo (KEPT — already the primary transcriber, also
+  reused for the new unpinned Vietnamese-detection pass).
 - Acceptance criteria:
   1. `_minny-tts.js` synthesis chain: Aura-2 via `env.AI` primary → MeloTTS
      fallback → OpenAI only if the binding is absent; voice/engine in one
@@ -100,10 +108,23 @@ assigns, commits, merges, deploys, or spends.
      list).
   4. Tests updated (mock `env.AI`), suite green, build clean.
   5. Handoff = Phương ear test + one-line voice-switch instruction.
+  6. GRADING: homework `read` steps scored by Azure Pronunciation Assessment
+     when configured (WAV recording, ≤30s, free-tier KV meter) — same client
+     response shape; any Azure failure/missing key → the local scorer,
+     never a dead end.
+  7. GRADING: Vietnamese speech on a scored attempt (<20%) returns the warm
+     "thử lại bằng tiếng Anh" redirect instead of a garbage score
+     (unpinned Whisper second pass, diacritics test; free-talk exempt).
+  8. Click-by-click Azure free-tier setup doc for Phương
+     (`_ops/AZURE_SPEECH_SETUP.md`); Azure path verified live once he adds
+     `AZURE_SPEECH_KEY`/`AZURE_SPEECH_REGION`.
 - Files owned: `functions/api/_minny-tts.js`, `functions/api/minny-voice.js`,
   `functions/api/minny-conversation.js` (TTS call sites only),
-  `functions/api/_minny-phrases.js`, `src/pages/speak-up.astro` (playback
-  chain), related tests.
+  `functions/api/_minny-phrases.js`, `functions/api/_azure-pronunciation.js`
+  (new), `functions/api/read2lead-speaking-check.js` (additive Azure/VN
+  branches — protected file; the Phương-approved 2026-07-06 reuse plan is
+  the dedicated spec), `src/pages/speak-up.astro` (playback chain + WAV
+  flag), related tests.
 - Stop condition: any diff touching guardrail screening, caps, the `is_test`
   remnants, or protected recorder/mic files — stop and escalate. No merge to
   main.

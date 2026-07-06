@@ -1,5 +1,13 @@
 import { getClientIp, checkCodeRateLimit, recordCodeFailure, rateLimitedResponse } from './_rate-limit.js';
 import { canAccessPackForPractice } from './_read2lead-pack-access.js';
+import {
+  azureSpeechConfigured,
+  azureUnderFreeTier,
+  azureBumpUsage,
+  assessPronunciationWithAzure,
+  mapAzureReadResult,
+  AZURE_PA_EST_SECONDS_PER_CALL,
+} from './_azure-pronunciation.js';
 
 export const SKIP_WORDS = new Set([
   'a', 'an', 'the', 'is', 'are', 'was', 'were', 'to', 'of', 'in', 'on', 'at',
@@ -392,6 +400,51 @@ export async function transcribeAudio(audioBlob, { ai = null, openaiApiKey = '',
   return transcribeWithOpenAI(audioBlob, openaiApiKey, fetchFn);
 }
 
+// Vietnamese-speech detection (spec's known weakness, line 277): Whisper is
+// pinned to language 'en', so a kid speaking Vietnamese gets a garbage
+// English transcript and a nonsense score. When a scored attempt lands very
+// low, re-transcribe once WITHOUT the language pin (auto-detect) and test for
+// Vietnamese diacritics — if found, return a warm retry message instead of a
+// garbage score. Costs ~$0.0005/audio-min and only fires on very low scores.
+export const VIETNAMESE_REDIRECT_THRESHOLD = 20;
+export const VIETNAMESE_DIACRITICS_RE = /[ăđơưạảấầẩẫậắằẳẵặẹẻẽếềểễệịỉọỏốồổỗộớờởỡợụủứừửữựỳỵỷỹ]/i;
+
+export async function detectVietnameseSpeech(audioBlob, ai) {
+  if (!ai) return false;
+  try {
+    const buffer = await audioBlob.arrayBuffer();
+    const result = await ai.run(WORKERS_AI_ASR_MODEL, {
+      audio: arrayBufferToBase64(buffer),
+      task: 'transcribe',
+    });
+    return VIETNAMESE_DIACRITICS_RE.test(String(result?.text || ''));
+  } catch {
+    return false;
+  }
+}
+
+export const VIETNAMESE_REDIRECT_VI = 'Minny nghe con nói tiếng Việt — mình thử lại bằng tiếng Anh nhé!';
+
+function vietnameseRedirectResult(checkMode) {
+  return {
+    ok: true,
+    vietnamese_detected: true,
+    score_percent: null,
+    transcript: '',
+    exact_count: 0,
+    close_count: 0,
+    correct_count: 0,
+    total_count: 0,
+    words_exact: [],
+    words_close: [],
+    words_missed: [],
+    words_matched: [],
+    word_feedback: [],
+    feedback_vi: VIETNAMESE_REDIRECT_VI,
+    check_mode: checkMode,
+  };
+}
+
 export async function runSpeakingCheck({
   audioBlob,
   expectedText,
@@ -402,7 +455,40 @@ export async function runSpeakingCheck({
   stems,
   durationTargetSec,
   telemetry,
+  env = null,
 } = {}) {
+  // Homework reading: Azure Pronunciation Assessment first (purpose-built,
+  // per-word/phoneme scoring — rule 21 reuse). Requires the WAV recording the
+  // client sends for read steps; any failure, missing config, or exhausted
+  // free tier falls straight through to the local scorer below.
+  const isWav = Boolean(audioBlob && /wav/i.test(String(audioBlob.type || '')));
+  if (checkMode === 'read' && env && azureSpeechConfigured(env) && isWav) {
+    const kv = env.READ2LEAD_CODES;
+    if (await azureUnderFreeTier(kv)) {
+      try {
+        const best = await assessPronunciationWithAzure({
+          env,
+          audioBlob,
+          referenceText: expectedText,
+          fetchFn,
+        });
+        await azureBumpUsage(kv, AZURE_PA_EST_SECONDS_PER_CALL);
+        const mapped = mapAzureReadResult(best);
+        if (mapped.score_percent < VIETNAMESE_REDIRECT_THRESHOLD && (await detectVietnameseSpeech(audioBlob, ai))) {
+          return vietnameseRedirectResult('read');
+        }
+        return {
+          ok: true,
+          ...mapped,
+          feedback_vi: feedbackVi(mapped.score_percent),
+          check_mode: 'read',
+        };
+      } catch (err) {
+        console.error(`[read2lead-speaking-check] azure PA failed (${err?.message} ${err?.detail || ''}); using local scorer`);
+      }
+    }
+  }
+
   const transcript = await transcribeAudio(audioBlob, { ai, openaiApiKey, fetchFn });
   if (!transcript) {
     const error = new Error('empty_transcript');
@@ -411,10 +497,17 @@ export async function runSpeakingCheck({
   }
 
   if (checkMode === 'open') {
-    return {
-      ok: true,
-      ...scoreOpenTranscript(transcript, expectedText),
-    };
+    const result = { ok: true, ...scoreOpenTranscript(transcript, expectedText) };
+    // Free Talking submits expected_text 'free_talking_no_score' and ignores
+    // the score (the conversation LLM handles Vietnamese there) — skip.
+    if (
+      expectedText !== 'free_talking_no_score'
+      && result.score_percent < VIETNAMESE_REDIRECT_THRESHOLD
+      && (await detectVietnameseSpeech(audioBlob, ai))
+    ) {
+      return vietnameseRedirectResult('open');
+    }
+    return result;
   }
 
   if (checkMode === 'frame') {
@@ -426,11 +519,11 @@ export async function runSpeakingCheck({
     };
   }
 
-  return {
-    ok: true,
-    ...scoreTranscript(expectedText, transcript),
-    check_mode: 'read',
-  };
+  const readResult = { ok: true, ...scoreTranscript(expectedText, transcript), check_mode: 'read' };
+  if (readResult.score_percent < VIETNAMESE_REDIRECT_THRESHOLD && (await detectVietnameseSpeech(audioBlob, ai))) {
+    return vietnameseRedirectResult('read');
+  }
+  return readResult;
 }
 
 export async function onRequestPost(context) {
@@ -578,6 +671,7 @@ export async function onRequestPost(context) {
       stems,
       durationTargetSec,
       telemetry: { ...clientTelemetry, duration_seconds: durationSec },
+      env,
     });
     return json(result);
   } catch (error) {
