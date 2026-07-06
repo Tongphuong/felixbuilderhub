@@ -21,19 +21,24 @@ product:
 3. Never set "Founder approved: yes" in `PRODUCT.md` yourself — that gate is
    Phuong's alone.
 
-## Reuse before building
+## Reuse before building — reuse what OTHER people built, not our own scaffold
 
 Before writing a new capability from scratch for SpeakUp (conversation
 guardrails/moderation, TTS client, audio session handling, an admin
-homework-entry form, etc.), check in this order: (1) an open-source GitHub
-project to clone/fork, (2) a free library or maintained package, (3) an
-existing plugin, connector, or MCP server that already solves it (e.g.
-Claude Design, Figma MCP, other integrations), (4) extend an already-proven
-system already running. Only hand-roll it if none of these fit, and note
-that search — what was checked and why it didn't fit — briefly in the spec
-or `EVIDENCE.md` entry for that phase. This applies to both Claude and
-Aider workers. (Expanded 2026-07-05 after Phase 7a built a custom design
-workflow before checking whether Claude Design already covered it.)
+homework-entry form, etc.), look for an existing **external, free/open-source**
+solution in this order: (1) an open-source GitHub project to clone/fork,
+(2) a free library or maintained package, (3) an existing plugin, connector,
+or MCP server (e.g. Claude Design, Figma MCP). Only hand-roll it if none fit,
+and note that search — what was checked and why it didn't fit — briefly in the
+spec or `EVIDENCE.md` entry for that phase. Applies to both Claude and Aider
+workers. **This is about reusing what other people built — never a reason to
+reuse our own existing page/layout/scaffold.** For UI: the approved design
+defines the whole screen (full-screen vs. embedded, column count, chrome); "we
+already have a page that's close" does not override it — build the screen the
+design shows. (Expanded 2026-07-05 after Phase 7a; **corrected 2026-07-06 on
+Phương's instruction** after an "extend our own live code" clause led to the
+SpeakUp screens being built inside the marketing page instead of as the
+full-screen, multi-column app the mocks show. See `_ops/AGENTS.md` rule 13.)
 
 ## Acceptance-criteria reconciliation and cost ceilings (added 2026-07-05)
 
@@ -60,7 +65,11 @@ Per `_ops/AGENTS.md` rule 18. Any speaking.astro screen whose acceptance
 criteria reference a Phase 7a/7b (or later) Claude Design mock is not done
 until you have actually rendered it — a local `wrangler pages dev` + seeded
 KV code, or the Cloudflare preview — and taken a screenshot to compare
-side-by-side against the mock's `.dc.html`. Record the file path and verdict
+side-by-side against the mock's `.dc.html`. **Compare the whole screen, not
+just the new widgets:** a stray site nav/title, the wrong container width, or a
+single column where the design is multi-column all fail the check even when the
+individual stems/buttons/cards look right — that is how these screens shipped
+wedged inside the marketing page. Record the file path and verdict
 in CONTROL.md's acceptance-criteria reconciliation. Passing `node --test`
 and a clean code review do not establish this — added after Phases 2 and 8a
 both shipped and were marked done with a real gap between the approved
@@ -73,7 +82,7 @@ found it by eye.
 CONTROL.md's `- Design self-verification:` field, and how you handed the result
 to Phương in the `- Founder handoff:` field — `founder_check.py --gate complete`
 blocks on both being non-empty (a bare `none`/`n/a` fails). You verify against
-the design yourself and present her a finished result; you never ask her to QA
+the design yourself and present him a finished result; you never ask him to QA
 the preview and find the bugs. See `_ops/AGENTS.md` rules 18–19.
 
 **Verify on the DEPLOYED preview, and push before handoff (rule 20, added
