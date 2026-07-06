@@ -98,41 +98,37 @@ assigns, commits, merges, deploys, or spends.
 - Stop condition: any diff touching the `is_test` check (that's Phase 8b) — stop
   and escalate. Do not merge to main (full-pilot-QA-together rule).
 - Cost ceiling: Claude Lead direct — Claude Max plan usage, not metered.
-- Design self-verification: Re-verified on the DEPLOYED preview (not a local
-  build) after pushing `e68f168` → tip `73c6cb7`: Free Talking driven live at
-  `claude-speakup-v0.felixbuilderhub.pages.dev/read2lead/speaking/?code=R2L-ONG-U5M6`
-  at 390/820/1280. Computed grid confirms phone single-col
-  (topbar/hero/transcript/recorder), tablet full-width hero + `1fr 280px`,
-  desktop `320px 1fr 320px` (topbar / hero transcript recorder), shared hero
-  hidden while active. Screenshots `_ops/ft-live-390|820|1280.png` diffed vs the
-  Phase 7b boards. Verdict: LAYOUT MATCH at all breakpoints — the reported
-  single-narrow-column defect is fixed. Record button renders GOLD (base
-  `.minny-btn--record`) vs the 7b design's RED (`var(--danger)`): **Phương chose
-  GOLD (2026-07-06)** — an intentional deviation from the design, her call,
-  consistent with prior stand-in overrides (robot vs koala).
-- Homework 7a re-check (rendered the frame recording + result states on the
-  deployed CSS, screenshots `_ops/ft-7a-{recording-1280,result-1280,390}.png`):
-  the 7a **components** are built + correctly styled — numbered gold stem
-  circles, dashed-gold blanks, RED record button in the gold progress ring
-  (`.is-frame`), "Minny đang lắng nghe" caption, gold match-% score card,
-  rubric checklist (✓/—), dashed smile-reminder chip. Phone layout matches. The
-  score shows **match %** and the rubric is a **checklist**, per SPEC D8b/Phase
-  2 (intentional, not the mock's `5/6` fraction). **Gap vs the 7a mock, for
-  Phương's call:** the frame screen reuses the single-column wizard on ALL
-  breakpoints — it does NOT implement the mock's tablet 2-col / desktop 3-col
-  recorder layout (mascot rail + live waveform), nor the mock's Minny-celebrate
-  result hero. Spec leans on "reuse the existing wizard," so this may be within
-  V0 scope; bringing it up to the mock's responsive layout is a fidelity
-  decision, not a confirmed defect. (Not driven with a real KV frame-homework
-  code — that needs admin auth + a prod-KV write, avoided; rendered via the
-  frame code path instead, layout single-column is structural not an artifact.)
-- Verified commit: e68f168 (Free Talking rebuild; on origin/claude/speakup-v0,
-  ancestor of pushed tip 73c6cb7 — deploy-parity PASS, rule 20)
-- Founder handoff: Presented live before/after/design screenshots at 3
-  breakpoints (`_ops/ft-live-*.png`), taken on the DEPLOYED preview, plus a
-  plain-language summary. Bounded decisions asked: (1) record button RED per the
-  7b design, or keep GOLD as built? (2) optional wrap-up `0:00` timer + `★`. Not
-  a "go QA the preview and find bugs" handoff.
+- Design self-verification: **Full-screen rebuild (commit `8988b8a`) verified on
+  the DEPLOYED preview.** After Phương reported both screens still didn't match —
+  they were built *inside* the marketing page (site nav + "Luyện nói với Minny"
+  title + a narrow single-column section) instead of the full-screen, multi-column
+  app the mocks show — rebuilt both to the designs (per the corrected reuse rule,
+  AGENTS.md 13 / speakup.md): a `body.spk-immersive` mode hides the site
+  header/footer/title/code-card/mic-check/link-card/Zalo and drops the reading
+  column; the homework frame step gets `.is-frame-layout` (Minny+hint rail · story
+  · recorder panel + waveform; phone 1-col / tablet 2-col / desktop 3-col).
+  Verified live at 390/820/1280 (Free Talking rendered via the frame/conversation
+  code path since ONG hit its 3/day free_talk cap — synthetic data on the real
+  deployed bundle/CSS): **Free Talking** — no site chrome, desktop grid
+  `320px 1fr 320px`, phone stack, matches the 7b board (screens
+  `_ops/rebuild-ft-immersive-1280.png`, `_ops/rebuild-ft-390.png`). **Homework 7a**
+  — no site chrome, desktop `300px 1fr 320px` (rail/story/recorder) with the
+  Minny+hint rail and recorder waveform, phone single-col stack; matches the 7a
+  board (`_ops/rebuild-7a-1280.png`, `_ops/rebuild-7a-390.png`). **Regression
+  check:** sentence steps (retell) still render single-column, non-immersive,
+  header intact, rail hidden (`_ops/rebuild-retell-1280.png`). `node --test`
+  824/824, `astro build` clean. Record button stays GOLD + 🎤 emoji (Phương's
+  gold choice; emoji→icon polish deferred, flagged).
+- Verified commit: 8988b8a (full-screen immersive rebuild of Free Talking + the
+  homework frame; on origin/claude/speakup-v0 — deploy-parity PASS, rule 20)
+- Founder handoff: Presented a **design → before → after** visual artifact
+  (claude.ai/code/artifact/ab83dd50-…) built from live deployed-preview
+  screenshots (`_ops/rebuild-*.png`) — Free Talking + homework recorder now
+  full-screen + multi-column, matching the 7a/7b mocks; a plain-language summary.
+  Bounded decisions asked: (1) swap the record button 🎤 emoji for a clean
+  mic/stop icon (colour stays gold, his prior call)? (2) add the fuller 7a app
+  header ("Bài tập của thầy Phương · Tuần 3") vs the current back link? Not a
+  "go QA the preview and find bugs" handoff.
 - Started: 2026-07-06
 
 **Phase 6 (guardrails) — parked, not lost:** build is done and committed
@@ -209,10 +205,10 @@ stand-in); summary XP/rank/streak intentionally omitted (Phuong's call).
    `debug-speaking.js` secret-gated pattern exactly, reusing
    `DEBUG_SPEAKING_KEY` rather than provisioning a second secret.
 4. 30-minute live red-team by a human finds no break, recorded in the phase
-   report — **SKIPPED**. Phuong will run this herself on the Cloudflare
-   preview once this branch is live (her explicit choice this session — no
+   report — **SKIPPED**. Phuong will run this himself on the Cloudflare
+   preview once this branch is live (his explicit choice this session — no
    browser available in this sandbox). A scripted checklist has been
-   prepared for her; result to be recorded here once she reports back.
+   prepared for him; result to be recorded here once he reports back.
 5. Latency with Llama Guard in the path re-measured, still within Phase 5
    bounds — **SKIPPED**. No live Cloudflare/Workers AI credentials available
    in this sandboxed session to measure real latency (same class of gap as
