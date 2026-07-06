@@ -362,12 +362,12 @@
 /* ===================== Homework practice (7a) ========================== */
 
 .spk-topbar {
+  grid-area: topbar;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  max-width: 1400px;
-  margin: 0 auto 16px;
+  width: 100%;
 }
 
 .spk-back {
@@ -401,28 +401,31 @@
 .minny-dot--done { background: rgba(111, 207, 151, 0.6); }
 
 /* Practice grid: sentence steps = single centered column; a frame step adds
-   .is-frame-layout = the 7a layout (rail | story | recorder). */
+   .is-frame-layout = the 7a layout (rail | story | recorder). Every template
+   names all four areas — children carry grid-area, and unnamed areas would
+   auto-place them onto overlapping implicit tracks. */
 .spk-practice:not(.hidden) {
   display: grid;
   grid-template-columns: minmax(0, 720px);
   justify-content: center;
   gap: 16px;
+  grid-template-areas: "topbar" "rail" "story" "recorder";
 }
 
 .spk-practice.is-frame-layout:not(.hidden) {
   max-width: 1400px;
   margin: 0 auto;
   justify-content: stretch;
-  grid-template-columns: 1fr;
-  grid-template-areas: "rail" "story" "recorder";
+  grid-template-columns: minmax(0, 1fr);
 }
 
 @media (min-width: 768px) {
   .spk-practice.is-frame-layout:not(.hidden) {
     grid-template-columns: minmax(0, 1fr) 300px;
     grid-template-areas:
-      "rail  rail"
-      "story recorder";
+      "topbar topbar"
+      "rail   rail"
+      "story  recorder";
     gap: 20px;
     align-items: start;
   }
@@ -431,7 +434,9 @@
 @media (min-width: 1024px) {
   .spk-practice.is-frame-layout:not(.hidden) {
     grid-template-columns: 300px minmax(0, 1fr) 340px;
-    grid-template-areas: "rail story recorder";
+    grid-template-areas:
+      "topbar topbar topbar"
+      "rail   story  recorder";
     gap: 24px;
   }
 }
