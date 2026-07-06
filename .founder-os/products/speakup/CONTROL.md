@@ -5,7 +5,7 @@
 - Branch: `claude/speakup-v0` (off `main`)
 - Preview URL: `claude-speakup-v0.felixbuilderhub.pages.dev` (Cloudflare Pages auto-deploy per push, per `claude/<topic>` convention in `BRANCH_CONVENTIONS.md`)
 - Active workers: 0
-- Last updated: 2026-07-06 (all 8 phases built and on preview; Free Talk open to all codes; SpeakUp/Read2Lead separated; Phương spot-QA'd the preview: "ok for now" — see Daily update for the go-live list)
+- Last updated: 2026-07-06 late (V0 complete on preview + reuse-first overhaul: rule 21 gate live, Minny voice = Aura-2 on Workers AI (no keys, ear-test pending), Azure pronunciation grading ready pending Phương's 10-min setup — see Daily update)
 
 ## Phase tracker (source of truth: `_ops/specs/SPEC_SPEAKUP_V0.md`)
 
@@ -304,6 +304,24 @@ run the red-team and these are closed out.
 
 ## Daily update
 
+- 2026-07-06 (late session): **Reuse-first overhaul shipped** (Phương's
+  mandate: "stop building from scratch, hard-code it into a gate").
+  (1) **Rule 21 gate live**: `founder_check.py --gate build` hard-blocks any
+  task without a `- Reuse survey:` (≥2 external candidates with verdicts);
+  27/27 founder-os tests. (2) **Minny's real voice is live on the preview**:
+  Deepgram Aura-2 (voice `luna`) on the Workers AI binding — zero API keys,
+  so the robot-voice failure class is dead; MeloTTS free fallback; verified
+  live with no OpenAI key (valid MP3, 105ms cache hits); ~$2–5/mo. The
+  robot voice Phương heard was the browser fallback — the preview env never
+  had the OpenAI key the old tts-1-hd path needed. (3) **Grading upgraded**:
+  Azure Pronunciation Assessment for homework reading (free F0 tier,
+  KV-metered to $0, full local fallback — activates when Phương runs
+  `_ops/AZURE_SPEECH_SETUP.md`), plus Vietnamese-speech warm redirect
+  instead of garbage scores. 835/835 tests. **Awaiting Phương:** ear-test
+  the new voice on the preview; Azure 10-min setup; (carried) Phase 6
+  red-team; canned phrases sign-off (now 13 with `frame_intro`); preview
+  OpenAI key for Free-Talk reply quality (optional); founder-os GitHub
+  backup decision.
 - 2026-07-06: **V0 build is complete — all 8 phases live on the preview
   branch; nothing on the live site yet.** Today: standalone SpeakUp app page
   at `/speak-up` rebuilt to the 7a/7b designs (navy surface, centered,
