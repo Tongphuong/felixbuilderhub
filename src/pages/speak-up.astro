@@ -92,6 +92,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
 
         <div id="mode-picker">
           <p class="spk-modes__label">Con chọn cách luyện hôm nay</p>
+          <p id="no-homework-note" class="spk-modes__note hidden">Thầy chưa giao bài tập mới — con trò chuyện với Minny nhé! 💛</p>
           <div id="mode-cards"></div>
         </div>
       </section>
@@ -284,14 +285,14 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       try { if (m && typeof m.stop === 'function') m.stop(); } catch {}
     }
 
-    const MODE_EMOJI = { homework: '📚', retell: '📖', questions: '💬', free_talk: '🗣️' };
+    const MODE_EMOJI = { homework: '📚', free_talk: '🗣️' };
 
     const state = {
       accessCode: '',
       packId: '',
       studentName: '',
       modes: [],
-      activeModeId: 'retell',
+      activeModeId: '',
       modePicked: false,
       stepIndex: 0,
       recording: null,
@@ -522,6 +523,8 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
     function renderModeCards() {
       const cardsEl = document.getElementById('mode-cards');
       if (!cardsEl) return;
+      const note = document.getElementById('no-homework-note');
+      if (note) note.classList.toggle('hidden', state.modes.some((m) => m.id === 'homework'));
       cardsEl.innerHTML = state.modes
         .map(
           (mode) => `
@@ -1218,7 +1221,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
         state.packId = data.pack_id || 'practice';
         state.studentName = data.student_name || '';
         state.modes = Array.isArray(data.modes) ? data.modes : [];
-        state.activeModeId = state.modes[0]?.id || 'retell';
+        state.activeModeId = state.modes[0]?.id || '';
         state.stepIndex = 0;
         state.modePicked = false;
 

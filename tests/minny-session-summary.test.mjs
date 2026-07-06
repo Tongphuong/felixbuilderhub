@@ -90,8 +90,8 @@ test('publicMinnyPractice - v1 entry tolerant', () => {
   assert.ok(!('summary' in result.history[0]));
 });
 
-test('speaking.astro contains expected strings', () => {
-  const fileUrl = new URL('../src/pages/read2lead/speaking.astro', import.meta.url);
+test('speak-up.astro contains expected strings', () => {
+  const fileUrl = new URL('../src/pages/speak-up.astro', import.meta.url);
   const text = readFileSync(fileUrl, 'utf8');
   assert.ok(text.includes('minny-practice-log'));
   assert.ok(text.includes('Xong bài tập'));

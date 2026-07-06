@@ -14,8 +14,7 @@ function json(body, status = 200) {
 // Best-effort inline TTS for Free Talking replies (Phase 8a, closing a gap
 // in Phase 5's own spec). Never throws -- a TTS failure must never block
 // a reply; the client already falls back to speechSynthesis when
-// audio_b64 is absent. Independent of, and does not touch, the is_test
-// gate below.
+// audio_b64 is absent.
 async function synthesizeOrNull(env, apiKey, text) {
   if (!apiKey || !env.READ2LEAD_CODES || !text) return null;
   try {
@@ -124,10 +123,9 @@ export async function onRequestPost(context) {
     return json({ ok: false, error: 'code_not_found', message: 'Mã học sinh không tồn tại.' }, 404);
   }
 
-  // ⚠️ Phase‑1 gate — must stay until the full safety surface is built.
-  if (codeData.is_test !== true) {
-    return json({ ok: false, error: 'not_available', message: 'Chế độ trò chuyện tự do chưa mở cho mã này.' }, 403);
-  }
+  // Phase 8b (2026-07-06): is_test gate removed on Phương's explicit order —
+  // Free Talk is open to every valid code. All safety caps stay: 3 sessions/
+  // day/kid, 5-min + 12-turn session caps, guardrail screening, global cap.
 
   const apiKey = resolveOpenAiApiKey(env);
   const level = codeData?.progress?.current_level || codeData?.student_profile?.level || 'L1';

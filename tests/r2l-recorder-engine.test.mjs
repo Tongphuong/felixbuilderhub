@@ -7,7 +7,7 @@ const engine = readFileSync('public/scripts/r2l-recorder.js', 'utf-8');
 const versionedRecorderSrc = r2lRecorderScriptSrc();
 const micScript = readFileSync('public/scripts/r2l-mic-check.js', 'utf-8');
 const lessonPage = readFileSync('src/pages/read2lead/lesson.astro', 'utf-8');
-const speakingPage = readFileSync('src/pages/read2lead/speaking.astro', 'utf-8');
+const speakingPage = readFileSync('src/pages/speak-up.astro', 'utf-8');
 const checkApi = readFileSync('functions/api/read2lead-speaking-check.js', 'utf-8');
 
 test('engine exposes the unified recording API', () => {

@@ -324,6 +324,16 @@
   margin: 18px 0 12px;
 }
 
+.spk-modes__note {
+  text-align: center;
+  font-size: 18px;
+  line-height: 1.5;
+  color: var(--cream-dim);
+  margin: 0 0 14px;
+}
+
+.spk-modes__note.hidden { display: none; }
+
 #mode-cards {
   display: grid;
   grid-template-columns: 1fr;

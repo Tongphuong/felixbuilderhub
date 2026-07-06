@@ -3,32 +3,29 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 
 import {
-  buildPracticePrompts,
   buildSpeakingModes,
-  pickPracticePack,
   buildHomeworkSteps,
 } from '../functions/api/minny-speaking-context.js';
 import { canAccessPackForPractice } from '../functions/api/_read2lead-pack-access.js';
 
-const speakingPage = readFileSync('src/pages/read2lead/speaking.astro', 'utf-8');
+const speakingPage = readFileSync('src/pages/speak-up.astro', 'utf-8');
 const parentPortal = readFileSync('src/pages/ho-so/index.astro', 'utf-8') + '\n' + readFileSync('src/pages/ho-so/ho-so.ts', 'utf-8') + '\n' + readFileSync('src/pages/ho-so/ho-so-parent-view.ts', 'utf-8');
 
-test('speaking page exists with coaching-first copy and no AI marketing', () => {
-  assert.match(speakingPage, /Luyện nói với Minny/);
-  assert.match(speakingPage, /Felix Coaching/);
+test('speak-up app page exists with coaching-first copy and no AI marketing', () => {
+  assert.match(speakingPage, /SpeakUp/);
   assert.match(speakingPage, /minny-speaking-context/);
   assert.match(speakingPage, /read2lead-speaking-check/);
   assert.match(speakingPage, /practice_mode/);
   assert.match(speakingPage, /data\.modes/);
-  assert.match(speakingPage, /🎤 Con nói/);
   assert.doesNotMatch(speakingPage, /tăng cường bởi AI/i);
   assert.doesNotMatch(speakingPage, /\bAI\b/);
 });
 
-test('speaking page has kid-friendly mode cards and video fallback', () => {
-  assert.match(speakingPage, /minny-mode-card/);
+test('speak-up page has kid-friendly mode cards and video fallback', () => {
+  assert.match(speakingPage, /spk-mode-card/);
   assert.match(speakingPage, /mode-picker/);
   assert.match(speakingPage, /practice-screen/);
+  assert.match(speakingPage, /no-homework-note/);
   assert.match(speakingPage, /id="minny-video"/);
   assert.match(speakingPage, /id="minny-fallback"/);
   assert.match(speakingPage, /tryPlay\('mp4'\)/);
@@ -38,83 +35,14 @@ test('speaking page has kid-friendly mode cards and video fallback', () => {
   assert.match(speakingPage, /progress-dots/);
 });
 
+test('speak-up page carries no Read2Lead activity (products share codes, not activities)', () => {
+  assert.doesNotMatch(speakingPage, /Kể lại truyện/);
+  assert.doesNotMatch(speakingPage, /Minny hỏi — con trả lời/);
+});
+
 test('unified profile renders parent view with portfolio and dashboard', () => {
   assert.match(parentPortal, /renderParentView/);
   assert.match(parentPortal, /renderAll/);
-});
-
-test('buildSpeakingModes returns output-focused retell and questions modes', () => {
-  const modes = buildSpeakingModes({
-    studentName: 'Linh',
-    storyTitle: 'The Puppy',
-    topic: 'animals',
-    v2Pack: {
-      story: {
-        title: 'The Puppy',
-        paragraphs_en: ['A small puppy plays in the park.'],
-      },
-      topic: 'animals',
-      activities: [
-        {
-          type: 'reading_comprehension',
-          questions: [
-            {
-              section: 'Open Question',
-              question_vi: 'Con thích nhân vật nào nhất?',
-              question_en: 'Which character did you like most?',
-            },
-          ],
-        },
-      ],
-    },
-  });
-
-  assert.equal(modes.length, 2);
-  assert.equal(modes[0].id, 'retell');
-  assert.equal(modes[1].id, 'questions');
-  assert.match(modes[0].title_vi, /Kể lại truyện/);
-  assert.match(modes[1].title_vi, /Minny hỏi/);
-  assert.equal(modes[0].steps[0].kind, 'retell');
-  assert.equal(modes[0].steps[0].check_mode, 'open');
-  assert.equal(modes[1].steps[0].kind, 'question');
-  assert.equal(modes[1].steps[0].check_mode, 'open');
-  assert.ok(modes[0].steps.length >= 2, 'retell mode includes say-more follow-up');
-});
-
-test('buildPracticePrompts flattens modes without sentence read-back', () => {
-  const prompts = buildPracticePrompts({
-    studentName: 'Linh',
-    storyTitle: 'The Puppy',
-    topic: 'animals',
-    v2Pack: {
-      story: {
-        title: 'The Puppy',
-        paragraphs_en: ['A small puppy plays in the park.'],
-      },
-      topic: 'animals',
-    },
-  });
-  assert.ok(prompts.length >= 2);
-  assert.ok(prompts.every((step) => step.check_mode === 'open'));
-  assert.ok(prompts.every((step) => step.kind !== 'repeat'));
-  assert.match(prompts[0].label_vi, /Kể lại truyện/);
-});
-
-test('pickPracticePack prefers current pack with story', () => {
-  const picked = pickPracticePack({
-    progress: {
-      current_pack: {
-        pack_id: 'pack_1',
-        status: 'reviewed_pass_web_v2',
-        story: { title: 'Story' },
-        schema_version: 2,
-        activities: [],
-      },
-      review_history: [{ pack_id: 'pack_1', title: 'Story' }],
-    },
-  });
-  assert.equal(picked.pack_id, 'pack_1');
-  assert.equal(picked.source, 'current_pack');
 });
 
 test('practice mode allows general pack without story history', () => {
@@ -199,65 +127,34 @@ test('buildHomeworkSteps sentences-only (no frame)', () => {
   assert.equal(mode.steps[0].check_mode, 'read');
 });
 
-test('buildSpeakingModes includes homework mode first when homework present', () => {
+test('buildSpeakingModes: homework first, then free_talk, when homework present', () => {
   const codeData = {
     homework: {
       updated_at: '2026-07-04T09:00:00.000Z',
       sentences: [{ id: 's1', text_en: 'Test.', hint_vi: null }],
     },
   };
-  const modes = buildSpeakingModes({
-    studentName: 'Linh',
-    storyTitle: 'The Puppy',
-    topic: 'animals',
-    v2Pack: null,
-    codeData,
-  });
-  assert.equal(modes.length, 3);
-  assert.equal(modes[0].id, 'homework');
-  assert.equal(modes[1].id, 'retell');
-  assert.equal(modes[2].id, 'questions');
-});
-
-test('buildSpeakingModes without homework unchanged', () => {
-  const modes = buildSpeakingModes({
-    studentName: 'Linh',
-    storyTitle: 'The Puppy',
-    topic: 'animals',
-    v2Pack: null,
-  });
+  const modes = buildSpeakingModes(codeData);
   assert.equal(modes.length, 2);
-  assert.equal(modes[0].id, 'retell');
-  assert.equal(modes[1].id, 'questions');
+  assert.equal(modes[0].id, 'homework');
+  assert.equal(modes[1].id, 'free_talk');
+  assert.equal(modes[1].steps.length, 0);
 });
 
-test('buildSpeakingModes appends free_talk mode only for is_test codes', () => {
-  const withTest = buildSpeakingModes({
-    studentName: 'Linh',
-    storyTitle: 'The Puppy',
-    topic: 'animals',
-    v2Pack: null,
-    codeData: { is_test: true },
-  });
-  assert.equal(withTest.length, 3);
-  assert.equal(withTest[2].id, 'free_talk');
-  assert.equal(withTest[2].steps.length, 0);
+test('buildSpeakingModes: free_talk only, when no homework', () => {
+  const modes = buildSpeakingModes({});
+  assert.equal(modes.length, 1);
+  assert.equal(modes[0].id, 'free_talk');
+});
 
-  const withoutTest = buildSpeakingModes({
-    studentName: 'Linh',
-    storyTitle: 'The Puppy',
-    topic: 'animals',
-    v2Pack: null,
-    codeData: { is_test: false },
-  });
-  assert.equal(withoutTest.length, 2);
-  assert.ok(!withoutTest.some((m) => m.id === 'free_talk'));
+test('buildSpeakingModes: free_talk for every code, regardless of is_test (Phase 8b)', () => {
+  for (const codeData of [{ is_test: true }, { is_test: false }, {}, undefined]) {
+    const modes = buildSpeakingModes(codeData);
+    assert.ok(modes.some((m) => m.id === 'free_talk'), `free_talk missing for ${JSON.stringify(codeData)}`);
+  }
+});
 
-  const withoutCodeData = buildSpeakingModes({
-    studentName: 'Linh',
-    storyTitle: 'The Puppy',
-    topic: 'animals',
-    v2Pack: null,
-  });
-  assert.equal(withoutCodeData.length, 2);
+test('buildSpeakingModes: no Read2Lead activity modes ever (product separation)', () => {
+  const modes = buildSpeakingModes({ is_test: true });
+  assert.ok(!modes.some((m) => m.id === 'retell' || m.id === 'questions'));
 });

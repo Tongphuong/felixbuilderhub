@@ -147,7 +147,7 @@ test('nextSession drops oldest entry when history length would exceed 6', () => 
 // Endpoint tests (with fake KV, no real network)
 // ---------------------------------------------------------------------------
 
-test('action start with non-test code returns 403', async () => {
+test('action start with a real (non-test) code succeeds — Phase 8b gate removed', async () => {
   const fakeKv = createFakeKv();
   await fakeKv.put('R2L-REAL', JSON.stringify({ is_test: false, progress: { current_level: 'L2' } }));
 
@@ -157,9 +157,12 @@ test('action start with non-test code returns 403', async () => {
     body: JSON.stringify({ action: 'start', access_code: 'R2L-REAL' }),
   });
   const response = await onRequestPost({ request, env });
-  assert.equal(response.status, 403);
+  assert.equal(response.status, 200);
   const body = await response.json();
-  assert.ok(body.error);
+  assert.equal(body.ok, true);
+  assert.ok(typeof body.session_id === 'string');
+  assert.equal(body.turns_left, 12);
+  assert.equal(body.seconds_left, 300);
 });
 
 test('action start with test code returns ok and session data', async () => {
@@ -213,14 +216,14 @@ test('action turn with garbage session_id returns ended gracefully', async () =>
   assert.equal(body.ended, true);
 });
 
-test('turn with non-test access_code rejected even with valid session_id', async () => {
+test('turn with a code that does not own the session ends gracefully (session binding)', async () => {
   const fakeKv = createFakeKv();
   await fakeKv.put('R2L-TEST', JSON.stringify({ is_test: true, progress: { current_level: 'L2' } }));
   await fakeKv.put('R2L-REAL', JSON.stringify({ is_test: false, progress: { current_level: 'L2' } }));
 
   const env = { READ2LEAD_CODES: fakeKv };
 
-  // start with test code to get a session_id
+  // start with one code to get a session_id
   const startReq = new Request('https://example.com/api/minny-conversation', {
     method: 'POST',
     body: JSON.stringify({ action: 'start', access_code: 'R2L-TEST' }),
@@ -229,15 +232,16 @@ test('turn with non-test access_code rejected even with valid session_id', async
   const startBody = await startResp.json();
   const sessionId = startBody.session_id;
 
-  // now turn with real code
+  // now turn with a different code — the session must not be usable
   const turnReq = new Request('https://example.com/api/minny-conversation', {
     method: 'POST',
     body: JSON.stringify({ action: 'turn', access_code: 'R2L-REAL', session_id: sessionId, transcript: 'hi' }),
   });
   const turnResp = await onRequestPost({ request: turnReq, env });
-  assert.equal(turnResp.status, 403);
+  assert.equal(turnResp.status, 200);
   const turnBody = await turnResp.json();
-  assert.ok(turnBody.error);
+  assert.equal(turnBody.ok, true);
+  assert.equal(turnBody.ended, true);
 });
 
 test('full flow with test code: turn decrements turns_left and uses canned redirect', async () => {

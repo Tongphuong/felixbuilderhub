@@ -5,7 +5,7 @@
 - Branch: `claude/speakup-v0` (off `main`)
 - Preview URL: `claude-speakup-v0.felixbuilderhub.pages.dev` (Cloudflare Pages auto-deploy per push, per `claude/<topic>` convention in `BRANCH_CONVENTIONS.md`)
 - Active workers: 0
-- Last updated: 2026-07-05 (Phase 6 — guardrail layer + red-team suite — build done, tests green; awaiting Phuong's live red-team run before Status: complete)
+- Last updated: 2026-07-06 (new task `speakup-separation-and-freetalk-enable`: Free Talk for all codes now, SpeakUp/Read2Lead activity separation, old speaking page deleted — all per Phương's explicit decisions)
 
 ## Phase tracker (source of truth: `_ops/specs/SPEC_SPEAKUP_V0.md`)
 
@@ -23,7 +23,7 @@ run sequentially even where the spec's dependency graph would allow parallel wor
 | 4 | Phase 7b — Conversation UI design mocks | Claude Design | approved (Phuong, 2026-07-05) | n/a (design folder: `SpeakUp Phase 7b Free Talking/design_handoff_speakup_phase_7b/`) | n/a |
 | 5 | Phase 6 — Guardrail layer + red-team suite | Aider Senior (plumbing) + Sonnet 5 (wordlists/redirects/red-team) | active | no | no |
 | 6 | Phase 8a — Free Talking UI (build only, `is_test`-gated, no pilot enablement) | Aider Senior (dispatch) + Claude (review) | done | yes (c324b2e, 9566a31, cd8cc28, bd19129) | no |
-| 6 | Phase 8b — Gate removal (pilot enablement) | Aider Senior; separate final commit, blocked on Phase 6 | not started | no | no |
+| 6 | Phase 8b — Gate removal (pilot enablement) | Claude Lead (folded into `speakup-separation-and-freetalk-enable`; Phương explicitly unblocked it from Phase 6 red-team, 2026-07-06) | active | no | no |
 
 Waves 1 and 4 have two parallelizable items each (no shared files); everything
 else is strictly sequential because it touches `speaking.astro`. **No phase
@@ -62,85 +62,60 @@ assigns, commits, merges, deploys, or spends.
 ## Current task
 
 - Status: active
-- Task ID: speakup-standalone-app-page
-- Owner: Claude Lead — **direct execution with a real-browser render-verify
-  loop** (not dispatched). Justified override of `aider-dispatch-guard.py` on
-  the page files: the failure class being fixed is *builds that don't match the
-  rendered design*, which a blind dispatch worker cannot verify by definition.
-  Precedent: entries 104/108/109 in `_ops/AGENT_LOG.md`.
+- Task ID: speakup-separation-and-freetalk-enable
+- Owner: Claude Lead — direct execution. Justified override of
+  `aider-dispatch-guard.py`: the diff removes a child-safety gate and
+  reconciles its tests across files — small, review-critical, not a shape to
+  hand a blind worker. Precedent: entries 104/108/109.
 - Lane: `claude/speakup-v0`, primary checkout (collision-checked: tree clean,
-  local == origin at `3e5e805` at task start).
+  local == origin at `6da6a0d` at task start).
+- Problem (Phương, 2026-07-06): (1) real student codes with homework assigned
+  never see "Nói chuyện với Minny" — `free_talk` is `is_test`-gated in both
+  `minny-speaking-context.js` (menu) and `minny-conversation.js` (server);
+  (2) the SpeakUp menu contains two Read2Lead activities (retell/questions,
+  built from the kid's current R2L story). His ruling: the two products are
+  completely separate — shared student codes/XP/ranking only, never activities.
+- Decisions locked (AskUserQuestion, 2026-07-06): Free Talk for **all** student
+  codes now — caps + moderation stay on; this supersedes the Phase 8b
+  "blocked on Phase 6 red-team" sequencing (his explicit call; the
+  before-red-team risk was flagged in the question and in the plan he
+  approved). Remove retell + questions from SpeakUp. **Delete**
+  `/read2lead/speaking` outright, no redirect. No XP from SpeakUp yet.
+- Acceptance criteria:
+  1. Menu for any valid code = "Bài tập thầy giao" (when homework assigned) +
+     "Nói chuyện với Minny" — nothing else. No R2L story lookup; the greeting
+     never names a story.
+  2. `minny-conversation.js` `is_test` gate removed; 3/day cap, 5-min/12-turn
+     session caps, moderation, and the global kill switch untouched.
+  3. `speak-up.astro`: removed modes' icons dropped; no-homework state shows
+     the FT card plus a soft "Thầy chưa giao bài tập mới" note — no empty
+     screen.
+  4. `src/pages/read2lead/speaking.astro` deleted; build emits no such route.
+  5. Tests updated to assert the new behavior; `node --test` green;
+     `astro build` clean.
+  6. Verified on the DEPLOYED preview (rule 20).
 - Problem: three rounds of patching `/read2lead/speaking` still left the SpeakUp
   screens reading as components embedded in the marketing site rather than the
   designed app (Phương: "drop this marketing site and build a new page that
   looks exactly like the design"). Also reproduced his "flash to the new page
   and straight back" bug: `startFreeTalkSession()` bounces to the mode picker
   on `daily_cap` instead of showing the 7b design's kill-switch wrap-up.
-- Acceptance criteria:
-  1. Brand-new standalone app page **replaces `/speak-up`** (marketing
-     "Sắp ra mắt" page deleted): own bare layout (no site header/footer/
-     star-field/Zalo), bg `#0a1622`, app bar per the 7a board.
-  2. Homework flow matches the 7a boards (recording 3-col desktop with Minny
-     rail + hint / story stems / recorder rail with ring, red button, waveform,
-     Space hint; encourage/good results; rubric + smile chip; summary) and
-     Free Talking matches the 7b boards (all 5 states) — **whole-screen**
-     side-by-side at 390/820/1280 **and 1920** (full-bleed, no width cap).
-  3. Record button RED per the design (Phương reversed the earlier gold call).
-  4. Cap fix: `daily_cap`/`global_cap`/`not_available` on FT start renders the
-     designed wrap-up/kill-switch state — never a bounce back.
-  5. `/read2lead/speaking` untouched and still working (redirect is a follow-up
-     after Phương approves the new page).
-  6. `node --test` green; `astro build` clean; verified on the DEPLOYED preview.
-- Locked decisions (Phuong): replace `/speak-up` (route stays, marketing page
-  deleted); record button RED per design; real robot Minny assets (koala =
-  stand-in); summary has no XP/rank/streak (standing call).
-- Files owned: `src/pages/speak-up.astro` (full replacement),
-  `src/styles/speakup-app.css` (new), `src/layouts/SpeakUpAppLayout.astro`
-  (new). No change to `speaking.astro`, APIs, guardrails, or the `is_test` gate.
-- Stop condition: any diff touching the `is_test` check (Phase 8b) or the five
-  APIs — stop and escalate. Do not merge to main (full-pilot-QA-together rule).
+- Files owned: `functions/api/minny-speaking-context.js`,
+  `functions/api/minny-conversation.js` (the gate block only),
+  `src/pages/speak-up.astro` (small tidy-ups), `src/pages/read2lead/
+  speaking.astro` (delete), test files asserting the old menu/gate.
+- Stop condition: any diff touching guardrails plumbing beyond the single gate
+  block, the protected recorder/mic files, XP/coins/badge state code, or the
+  admin homework endpoints — stop and escalate. Do not merge to main
+  (full-pilot-QA-together rule).
 - Cost ceiling: Claude Lead direct — Claude Max plan usage, not metered.
-- Design self-verification: **Standalone app page (commits `8834fc8`→`7f60c5c`)
-  verified on the DEPLOYED preview** at `/speak-up/?code=R2L-ONG-U5M6`. Real
-  flows driven live: code auto-load → app bar shows student name ("Ong") → mode
-  select → **retell** (single centered column, story card + recorder panel,
-  `_ops/app2-retell-1280.png`) → **Free Talking click with the capped code**:
-  timeline captured — conversation opens, server rejects (`daily_cap`), the
-  **designed wrap-up renders with "Mai nói chuyện tiếp với Minny nhé!"** and
-  stays (no bounce; summary CTA hidden; `_ops/app-cap-wrapup-1280.png`) — the
-  "flashes then goes straight back" bug is fixed on the real deployed flow.
-  Board-matching states (synthetic data on the real deployed bundle, live FT
-  session blocked by the cap): **7a frame** desktop 3-col `300px 1fr 340px`
-  (Minny rail + bubble + "💡 Gợi ý" | story stems + dashed blanks | recorder
-  rail with gold SVG ring, RED record button + white square, timer 0:18,
-  "Minny đang lắng nghe", Space hint, gold waveform — `_ops/app2-frame-1280.png`);
-  **7b conversation** desktop `320px 1fr 320px` + phone stack + full-bleed
-  1840px at 1920 (`_ops/app2-ft-1280.png`, `_ops/app2-ft-390.png`,
-  `_ops/app2-ft-1920.png`); **gate** (`_ops/app2-gate-1280.png`). Whole-screen
-  checks caught and fixed two bugs before handoff: `.hidden` overridden by
-  `.spk-btn` display (entry-104 class) and grid children overlapping on
-  implicit tracks (missing named areas). **Regression:** `/read2lead/speaking`
-  loads and works untouched. `node --test` 824/824, `astro build` clean.
-  **Fidelity round from Phương's review (commit `328cea9`, verified on the
-  DEPLOYED preview):** (1) page bg was `#0a1622` (the boards' canvas backdrop) —
-  corrected to `navy-950 #10273a`, the actual app surface ("page bg", 7b README
-  token table); (2) screens now center vertically in the viewport and the
-  desktop FT/frame grids fill the height (auto/1fr rows, panels stretch,
-  rail/recorder content centered) — Minny + the red button sit mid-screen, not
-  pushed to the top; (3) kid-friendly type scale up across every screen
-  (bubbles 15→18, stems 17→21, mode cards 17→21 + 48px emoji, FT timer 30→36,
-  transcript 15→18, buttons 16→18/58px, summary stats 26→36). Re-verified live
-  at 1280 (modes / 7a frame / 7b conversation: `_ops/fid-modes-1280.png`,
-  `_ops/fid-frame-1280.png`, `_ops/fid-ft-1280.png`) + phone 390
-  (`_ops/fid-frame-390.png`). 824/824 tests, build clean.
-- Verified commit: 328cea9 (navy bg + vertical centering + kid-scale type on
-  the standalone app page; on origin/claude/speakup-v0 — deploy-parity rule 20)
-- Founder handoff: Presented a **design → new page** visual artifact from live
-  deployed screenshots + the preview link, plain language. Bounded asks only:
-  bless the two screens that had no design board (code entry + mode select,
-  built in the 7a visual language) and the record-button icon (white square per
-  the boards). Not a "go QA the preview and find bugs" handoff.
+- Design self-verification: pending (deployed-preview run at end of task)
+- Verified commit: pending
+- Founder handoff: pending
 - Started: 2026-07-06
+- Prior task `speakup-standalone-app-page` (done, verified `328cea9`): full
+  narrative in git history of this file and `_ops/AGENT_LOG.md` entries
+  110–112.
 
 **Phase 6 (guardrails) — parked, not lost:** build is done and committed
 (`e387eea`, `e71f770`); it stays `active` in the tracker only because it awaits
