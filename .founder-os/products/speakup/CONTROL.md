@@ -106,11 +106,26 @@ assigns, commits, merges, deploys, or spends.
   desktop `320px 1fr 320px` (topbar / hero transcript recorder), shared hero
   hidden while active. Screenshots `_ops/ft-live-390|820|1280.png` diffed vs the
   Phase 7b boards. Verdict: LAYOUT MATCH at all breakpoints — the reported
-  single-narrow-column defect is fixed. One flagged divergence for Phuong: the
-  record button renders GOLD (base `.minny-btn--record`) while the 7b design
-  specifies RED (`var(--danger)`, "the reused red 96×96 record button") — left
-  as-is pending her call (design stand-ins have been overridden before, e.g.
-  robot vs koala). Homework 7a re-checked, still matches.
+  single-narrow-column defect is fixed. Record button renders GOLD (base
+  `.minny-btn--record`) vs the 7b design's RED (`var(--danger)`): **Phương chose
+  GOLD (2026-07-06)** — an intentional deviation from the design, her call,
+  consistent with prior stand-in overrides (robot vs koala).
+- Homework 7a re-check (rendered the frame recording + result states on the
+  deployed CSS, screenshots `_ops/ft-7a-{recording-1280,result-1280,390}.png`):
+  the 7a **components** are built + correctly styled — numbered gold stem
+  circles, dashed-gold blanks, RED record button in the gold progress ring
+  (`.is-frame`), "Minny đang lắng nghe" caption, gold match-% score card,
+  rubric checklist (✓/—), dashed smile-reminder chip. Phone layout matches. The
+  score shows **match %** and the rubric is a **checklist**, per SPEC D8b/Phase
+  2 (intentional, not the mock's `5/6` fraction). **Gap vs the 7a mock, for
+  Phương's call:** the frame screen reuses the single-column wizard on ALL
+  breakpoints — it does NOT implement the mock's tablet 2-col / desktop 3-col
+  recorder layout (mascot rail + live waveform), nor the mock's Minny-celebrate
+  result hero. Spec leans on "reuse the existing wizard," so this may be within
+  V0 scope; bringing it up to the mock's responsive layout is a fidelity
+  decision, not a confirmed defect. (Not driven with a real KV frame-homework
+  code — that needs admin auth + a prod-KV write, avoided; rendered via the
+  frame code path instead, layout single-column is structural not an artifact.)
 - Verified commit: e68f168 (Free Talking rebuild; on origin/claude/speakup-v0,
   ancestor of pushed tip 73c6cb7 — deploy-parity PASS, rule 20)
 - Founder handoff: Presented live before/after/design screenshots at 3
