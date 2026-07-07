@@ -9,6 +9,14 @@ then reference in code.
 |---|---|---|
 | `READ2LEAD_CODES` | Single KV namespace storing per-student access codes + nested pack data (progress, current_pack, review_context). Acts as primary persistence for Read2Lead. | generate-read2lead-pack, check-generation-status, read2lead-lesson, read2lead-progress, read2lead-progress-update, read2lead-leaderboard, submit-read2lead-lesson, task-state, admin/codes (list + create), admin/codes/[code] (read + update + delete), admin/codes/[code]/set-level (test only) |
 | `READ2LEAD_PROGRESS` | V2 persistent kid state (level, XP, coins, streak, starter badges, forward-compatible avatar placeholders). Code falls back to `READ2LEAD_CODES` if this binding is not configured yet. | read2lead-progress, read2lead-progress-update, submit-read2lead-lesson, admin/codes/[code]/set-level |
+## R2 Buckets
+| Binding | Purpose | Used by |
+|---|---|---|
+| `R2L_MEDIA` | Binary media bucket: teacher-recorded portfolio videos (`portfolio/<CODE>/vp_*.{mp4,webm,mov}`) and SpeakUp homework photos (`homework/<class_id>/hp_*.{jpg,png,webp}`). Metadata/references live in KV; only the bytes live here. Objects are never public — every read is streamed through a code- or admin-authorized Function. | admin/portfolio/upload, admin/portfolio/[id], parent/video, admin/classes/[id]/homework-photo, speakup-homework-photo |
+
+(Documented 2026-07-07 while adding homework photos; this binding predates the
+entry — doc drift. `AI` (Workers AI), `DB`/`STUDENT_PROFILE_DB` (D1) and the
+Azure/OpenAI secrets are still undocumented here; see `grep -rohE "env\.[A-Z_]+" functions/` for the live list.)
 ## Secrets
 | Binding | Purpose | Used by | Source |
 |---|---|---|---|
