@@ -120,9 +120,30 @@ assigns, commits, merges, deploys, or spends.
   files, guardrails, or caps — stop and escalate. No merge to main.
 - Cost ceiling: Aider dispatches ≤ USD 0.50 total; Claude Lead on Max plan
   (not metered); runtime cost ≈ USD 0 (R2 free tier, 10GB).
-- Design self-verification: (pending — packets 6–7)
-- Founder handoff: (pending)
-- Verified commit: (pending)
+- Design self-verification: Kid page verified on the DEPLOYED preview
+  (playwright-core + system Chrome driving the real deployed bundle with
+  route-injected homework modes, photo id + placeholder image — real R2
+  photo blocked on the Preview binding, see below). Screenshots vs the
+  Phương-approved mock (artifact 3e1d3a20, approved 2026-07-07):
+  `_ops/hw-photo-modes-390.png` (📎 badge on mode card),
+  `_ops/hw-photo-read-390.png` (photo card in story card above the
+  sentence), `_ops/hw-photo-lightbox-390.png` (backdrop + caption + ✕ Đóng
+  101×45px ≥44px), `_ops/hw-photo-frame-1280.png` (whole-screen 3-col
+  rail/story/recorder intact, photo above numbered stems),
+  `_ops/hw-photo-none-1280.png` (no-photo homework: no thumb, no badge —
+  regression for the entry-104 class-order bug the concurrent session
+  caught live at dd38587, fixed in 4a2c771). Verdict: MATCH, nothing
+  extra, nothing missing. Admin modal (packet 6) is teacher-facing
+  internal tooling with no design mock — behavior to be exercised in the
+  live end-to-end once the R2 binding lands.
+- Founder handoff: progress reports in chat per packet; mock approved
+  before kid-UI build; remaining asks are bounded: (1) add the R2L_MEDIA
+  R2 binding for the Preview environment (screenshot walked through in
+  chat — bucket `felixbuilderhub-read2lead`, name `R2L_MEDIA`), then say
+  the word for the live end-to-end photo test; (2) Azure KEY 1 rotation
+  still pending from the earlier task.
+- Verified commit: 4a2c771 (on origin/claude/speakup-v0; review surface =
+  deployed preview — rule 20)
 - Started: 2026-07-07
 
 ## Prior task (complete): speakup-azure-pa-utf8-fix
@@ -342,6 +363,32 @@ This UI-fidelity task does not touch any Phase 6 file.
 | `src/pages/read2lead/speaking.astro` | Aider Senior (dispatch, flagged-passthrough lines only) + Claude (review) | done |
 
 ## Acceptance criteria reconciliation
+
+### speakup-homework-photo-v2 (2026-07-07, task still ACTIVE — item 7 blocked)
+
+1. Schema v2 + normalize, no migration, history untouched — **PASS**
+   (packet 1; 843/843 then; v1-compat unit tests).
+2. Admin upload endpoint + preview GET (type/size/HEIC, class-scoped key)
+   — **PASS in unit tests** (packet 3, 7 tests); live upload needs the
+   Preview R2 binding + admin credentials (Phương's dry run covers it).
+3. Kid endpoint code-authorized, current-photo-only — **PASS in unit
+   tests + live security checks** (wrong code → 4xx JSON on the deployed
+   preview; admin routes 401 without password).
+4. Homework POST photo wiring, one object N references — **PASS**
+   (packet 5 endpoint tests).
+5. Modal picker + downscale + clean abort — **PASS (code + build)**;
+   live exercise pending the R2 binding (part of item 7).
+6. Kid page vs approved mock at 390/1280 incl. no-photo regression —
+   **PASS (screenshot-verified on the DEPLOYED preview)** — see Design
+   self-verification; includes the fix for the hidden-thumb bug the
+   concurrent session caught (4a2c771).
+7. Live end-to-end on the deployed preview (real upload → real R2 photo →
+   kid sees it) — **BLOCKED on Phương**: R2L_MEDIA binding missing in the
+   Preview environment (kid endpoint returned `config_error` live;
+   production has the binding — portfolio videos prove it). One dashboard
+   step, instructions handed off in chat 2026-07-07.
+
+Suite at close of packet 7: 860/860, `astro build` clean.
 
 ### speakup-azure-pa-utf8-fix (2026-07-07)
 
