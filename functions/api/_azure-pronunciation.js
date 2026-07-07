@@ -49,13 +49,16 @@ export async function azureBumpUsage(kv, seconds = AZURE_PA_EST_SECONDS_PER_CALL
 export async function assessPronunciationWithAzure({ env, audioBlob, referenceText, fetchFn = fetch }) {
   const region = String(env.AZURE_SPEECH_REGION || '').trim();
   const key = String(env.AZURE_SPEECH_KEY || '').trim();
-  const paHeader = btoa(JSON.stringify({
+  const paJson = JSON.stringify({
     ReferenceText: referenceText,
     GradingSystem: 'HundredMark',
     Granularity: 'Phoneme',
     Dimension: 'Comprehensive',
     EnableMiscue: true,
-  }));
+  });
+  // btoa alone throws on non-Latin1 chars (curly quotes, Vietnamese
+  // diacritics) — encode the UTF-8 bytes instead.
+  const paHeader = btoa(String.fromCharCode(...new TextEncoder().encode(paJson)));
   const url = `https://${region}.stt.speech.microsoft.com/speech/recognition/conversation/cognitiveservices/v1?language=en-US&format=detailed`;
 
   const response = await fetchFn(url, {

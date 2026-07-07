@@ -111,6 +111,30 @@ test('runSpeakingCheck read mode uses Azure PA for WAV audio and keeps the clien
   assert.ok(JSON.parse(kv.store.get(meterKey)) >= 30, 'usage meter bumped');
 });
 
+test('PA header is UTF-8-safe for curly-apostrophe reference text', async () => {
+  const kv = makeFakeKv();
+  let azureCalls = 0;
+  const fetchFn = async (url, init) => {
+    azureCalls += 1;
+    assert.match(url, /southeastasia\.stt\.speech\.microsoft\.com/);
+    assert.ok(init.headers['Pronunciation-Assessment'], 'PA header present');
+    const params = JSON.parse(Buffer.from(init.headers['Pronunciation-Assessment'], 'base64').toString('utf8'));
+    assert.equal(params.ReferenceText, 'Let\u2019s practice speaking together!');
+    return new Response(JSON.stringify(AZURE_NBEST), { status: 200 });
+  };
+
+  const result = await runSpeakingCheck({
+    audioBlob: new Blob(['wav-bytes'], { type: 'audio/wav' }),
+    expectedText: 'Let\u2019s practice speaking together!',
+    checkMode: 'read',
+    env: { AZURE_SPEECH_KEY: 'k', AZURE_SPEECH_REGION: 'southeastasia', READ2LEAD_CODES: kv },
+    fetchFn,
+  });
+
+  assert.equal(azureCalls, 1);
+  assert.equal(result.score_percent, 88);
+});
+
 test('runSpeakingCheck falls back to the local scorer when Azure fails', async () => {
   const kv = makeFakeKv();
   const fetchFn = async () => new Response('boom', { status: 500 });
