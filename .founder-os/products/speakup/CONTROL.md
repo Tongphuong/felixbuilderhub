@@ -69,7 +69,7 @@ assigns, commits, merges, deploys, or spends.
 
 ## Current task
 
-- Status: active
+- Status: complete
 - Task ID: speakup-homework-photo-v2
 - Owner: Claude Lead (plan + review + integration); packets dispatched to
   Aider Junior/Senior per fit; kid-page UI packet gated on a design mock
@@ -142,8 +142,10 @@ assigns, commits, merges, deploys, or spends.
   chat — bucket `felixbuilderhub-read2lead`, name `R2L_MEDIA`), then say
   the word for the live end-to-end photo test; (2) Azure KEY 1 rotation
   still pending from the earlier task.
-- Verified commit: 4a2c771 (on origin/claude/speakup-v0; review surface =
-  deployed preview — rule 20)
+- Verified commit: 5be9632 (on origin/claude/speakup-v0; review surface =
+  deployed preview — rule 20; earlier visual round verified at 4a2c771)
+- Actual cost: USD ~0.005 total Aider (packets 1–6 + validation packet A);
+  runtime USD 0 (R2 free tier).
 - Started: 2026-07-07
 - Addendum 2026-07-07 (validation fix, Phương-approved plan): Phương's real
   Stage-4 assignment failed with a bare `validation_failed` alert. Two
@@ -394,13 +396,29 @@ This UI-fidelity task does not touch any Phase 6 file.
    self-verification; includes the fix for the hidden-thumb bug the
    concurrent session caught (4a2c771).
 7. Live end-to-end on the deployed preview (real upload → real R2 photo →
-   kid sees it) — **PARTIAL**: Preview R2L_MEDIA binding added by Phương
-   and live-verified 2026-07-07 (kid endpoint flipped from `config_error`
-   to `photo_not_found` at deploy `0b64a99` — storage reachable, auth +
-   lookup path correct). Remaining: one real photo assigned through
-   Phương's admin UI (Basic-Auth — the agent holds no admin credentials
-   by design), then agent verifies the kid side; folds into the
-   real-class dry run.
+   kid sees it) — **PASS** (2026-07-07 late, after Phương added the
+   Preview R2L_MEDIA binding and shared the admin password in chat):
+   real JPEG uploaded via the deployed admin endpoint
+   (`hp_5e1e84u1v8yj`, R2 key under `homework/class-mqzmxitv-fqbapn/`),
+   Stage-4 homework (curly-quote stems + Vietnamese note + photo)
+   assigned to R2L-PHUC-7TZV → `ok:true`; kid endpoint returned the real
+   JPEG bytes (image/jpeg, ETag, private cache); context API carries
+   `photo:{id}` only (r2_key leak re-checked live: none); real browser on
+   the kid page loaded the photo (naturalWidth 800×450) in the story card
+   + lightbox — screenshots `_ops/hw-e2e-kid-1280.png`,
+   `_ops/hw-e2e-lightbox-1280.png`, `_ops/hw-e2e-modes-1280.png`.
+
+8. Addendum (validation fix, same day): Phương's real Stage-4 assignment
+   had failed with a bare `validation_failed`. Fixed + live-verified:
+   (a) client alert now shows `error_vi` — browser test captured the
+   real dialog: "Lỗi giao bài tập: Dòng 1 có chỗ trống ___ — câu có chỗ
+   trống thì nhập vào ô \"Khung thuyết trình\" nhé."
+   (`_ops/hw-e2e-admin-alert-1280.png`); (b) teacher input normalized
+   (curly quotes/dashes/ellipsis/NBSP → plain; `_{2,}` → `___`), charset
+   accepts `:;()`, underscore-in-sentences errors redirect to the frame
+   box, unsupported characters are named. Unit-tested (864/864) and the
+   exact curly-quote Stage-4 stems verified live (stored as
+   `"Last summer, I went to ___ ."`, anchor words intact).
 
 Suite at close of packet 7: 860/860, `astro build` clean.
 
