@@ -25,6 +25,35 @@
       <input type="hidden" name="code" id="homework-code" />
 
       <div>
+        <label class="mb-1 block text-sm font-medium text-cream-muted">Ảnh bài tập (tuỳ chọn)</label>
+        <input type="file" id="homework-photo-input" accept="image/jpeg,image/png,image/webp" class="hidden" />
+        <button
+          type="button"
+          id="homework-photo-pick"
+          class="w-full rounded-lg border border-dashed border-cream-dim/40 px-4 py-3 text-sm font-medium text-cream-muted transition hover:border-accent hover:text-accent"
+        >
+          📷 Thêm ảnh bài tập
+        </button>
+        <div id="homework-photo-preview" class="mt-2 hidden items-center gap-3">
+          <img
+            id="homework-photo-thumb"
+            src=""
+            alt="Ảnh bài tập"
+            class="h-16 w-16 rounded-lg border border-cream-dim/30 object-cover"
+          />
+          <button
+            type="button"
+            id="homework-photo-remove"
+            class="flex h-11 min-w-11 items-center justify-center rounded-lg border border-cream-dim/30 px-3 text-sm text-cream-dim transition hover:border-red-400 hover:text-red-300"
+            aria-label="Xoá ảnh"
+          >
+            ✕ Xoá ảnh
+          </button>
+        </div>
+        <p class="mt-1 text-xs text-cream-dim">Ảnh cũ sẽ bị thay khi lưu bài mới. Nhận JPEG/PNG/WebP, tối đa 8MB.</p>
+      </div>
+
+      <div>
         <label class="mb-1 block text-sm font-medium text-cream-muted" for="homework-sentences">Câu / từ cần luyện</label>
         <textarea
           id="homework-sentences"

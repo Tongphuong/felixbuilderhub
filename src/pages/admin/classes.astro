@@ -439,6 +439,7 @@ import HomeworkModal from '../../components/admin/HomeworkModal.astro';
         document.getElementById('homework-frame').value = hw?.frame?.stems ? hw.frame.stems.map(s => s.text_en).join('\n') : '';
         document.getElementById('homework-duration').value = hw?.frame?.duration_s ?? 60;
         document.getElementById('homework-note').value = hw?.note_vi || '';
+        hwPhotoPrefill(hw?.photo || null, klass.id);
         modal.showModal();
         return;
       }
@@ -490,6 +491,72 @@ import HomeworkModal from '../../components/admin/HomeworkModal.astro';
       presentationToggle.classList.toggle('bg-accent/20', isOn);
     });
 
+    // --- Homework photo (one per homework; binary lives in R2, the form
+    // only carries the descriptor returned by the upload endpoint) ---
+    let hwPhotoState = { status: 'none' };
+
+    function hwPhotoShowPreview(src) {
+      const preview = document.getElementById('homework-photo-preview');
+      document.getElementById('homework-photo-thumb').src = src;
+      preview.classList.remove('hidden');
+      preview.classList.add('flex');
+      document.getElementById('homework-photo-pick').classList.add('hidden');
+    }
+
+    function hwPhotoClear() {
+      const thumb = document.getElementById('homework-photo-thumb');
+      if (thumb.src.startsWith('blob:')) URL.revokeObjectURL(thumb.src);
+      thumb.src = '';
+      const preview = document.getElementById('homework-photo-preview');
+      preview.classList.add('hidden');
+      preview.classList.remove('flex');
+      document.getElementById('homework-photo-pick').classList.remove('hidden');
+      hwPhotoState = { status: 'none' };
+    }
+
+    function hwPhotoPrefill(photo, classId) {
+      if (photo && photo.r2_key) {
+        hwPhotoState = { status: 'saved', descriptor: photo };
+        hwPhotoShowPreview(`/api/admin/classes/${encodeURIComponent(classId)}/homework-photo?key=${encodeURIComponent(photo.r2_key)}`);
+      } else {
+        hwPhotoClear();
+      }
+    }
+
+    // Kid screens are ≤1024px wide — a 1600px JPEG is plenty and turns a
+    // 5MB camera photo into ~300KB. Falls back to the original file when
+    // the browser cannot decode it (server caps still apply).
+    async function hwPhotoDownscale(file) {
+      try {
+        const bitmap = await createImageBitmap(file);
+        const maxEdge = 1600;
+        const scale = Math.min(1, maxEdge / Math.max(bitmap.width, bitmap.height));
+        if (scale >= 1 && file.type === 'image/jpeg') return file;
+        const canvas = document.createElement('canvas');
+        canvas.width = Math.max(1, Math.round(bitmap.width * scale));
+        canvas.height = Math.max(1, Math.round(bitmap.height * scale));
+        canvas.getContext('2d').drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+        const blob = await new Promise((resolve) => canvas.toBlob(resolve, 'image/jpeg', 0.85));
+        return blob || file;
+      } catch {
+        return file;
+      }
+    }
+
+    document.getElementById('homework-photo-pick')?.addEventListener('click', () => {
+      document.getElementById('homework-photo-input').click();
+    });
+
+    document.getElementById('homework-photo-input')?.addEventListener('change', (event) => {
+      const file = event.target.files?.[0];
+      event.target.value = '';
+      if (!file) return;
+      hwPhotoState = { status: 'pending', file };
+      hwPhotoShowPreview(URL.createObjectURL(file));
+    });
+
+    document.getElementById('homework-photo-remove')?.addEventListener('click', hwPhotoClear);
+
     // Class-level homework button
     document.getElementById('assign-class-homework')?.addEventListener('click', () => {
       const klass = currentClass();
@@ -502,6 +569,7 @@ import HomeworkModal from '../../components/admin/HomeworkModal.astro';
       document.getElementById('homework-frame').value = '';
       document.getElementById('homework-duration').value = '60';
       document.getElementById('homework-note').value = '';
+      hwPhotoClear();
       modal.showModal();
     });
 
@@ -527,6 +595,25 @@ import HomeworkModal from '../../components/admin/HomeworkModal.astro';
       submitBtn.disabled = true;
       submitBtn.textContent = 'Đang lưu...';
       try {
+        let photoDescriptor = hwPhotoState.status === 'saved' ? hwPhotoState.descriptor : null;
+        if (hwPhotoState.status === 'pending') {
+          submitBtn.textContent = 'Đang tải ảnh...';
+          const blob = await hwPhotoDownscale(hwPhotoState.file);
+          const fd = new FormData();
+          fd.append('photo', blob, blob.type === 'image/jpeg' ? 'photo.jpg' : (hwPhotoState.file.name || 'photo'));
+          const upRes = await fetch(`/api/admin/classes/${encodeURIComponent(classId)}/homework-photo`, {
+            method: 'POST',
+            body: fd,
+          });
+          const upResult = await upRes.json();
+          if (!upRes.ok || !upResult.ok) {
+            throw new Error(upResult.message || upResult.error || 'Không tải được ảnh');
+          }
+          photoDescriptor = upResult.photo;
+          hwPhotoState = { status: 'saved', descriptor: photoDescriptor };
+          submitBtn.textContent = 'Đang lưu...';
+        }
+        body.photo = photoDescriptor;
         const res = await fetch(`/api/admin/classes/${encodeURIComponent(classId)}/homework`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
