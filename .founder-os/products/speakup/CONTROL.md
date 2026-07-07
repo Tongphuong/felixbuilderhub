@@ -5,7 +5,10 @@
 - Branch: `claude/speakup-v0` (off `main`)
 - Preview URL: `claude-speakup-v0.felixbuilderhub.pages.dev` (Cloudflare Pages auto-deploy per push, per `claude/<topic>` convention in `BRANCH_CONVENTIONS.md`)
 - Active workers: 0
-- Last updated: 2026-07-06 late (V0 complete on preview + reuse-first overhaul: rule 21 gate live, Minny voice = Aura-2 on Workers AI (no keys, ear-test pending), Azure pronunciation grading ready pending Phương's 10-min setup — see Daily update)
+- Last updated: 2026-07-07 (Azure Pronunciation Assessment LIVE-VERIFIED on
+  the deployed preview — real per-word grading active for homework reading;
+  btoa non-Latin1 bug found and fixed along the way; key rotation pending —
+  see Daily update)
 
 ## Phase tracker (source of truth: `_ops/specs/SPEC_SPEAKUP_V0.md`)
 
@@ -444,6 +447,24 @@ run the red-team and these are closed out.
 
 ## Daily update
 
+- 2026-07-07: **Azure pronunciation grading is LIVE and verified end-to-end
+  on the deployed preview.** Phương created the free Azure Speech resource
+  and set both Cloudflare variables (his setup was correct on the first
+  try). Verification with a real recording initially kept falling back to
+  the old scorer — root-caused to a real bug in OUR code, not his setup:
+  `btoa()` crashed on curly apostrophes/Vietnamese characters in the
+  reference text and silently skipped Azure. Proven live (same audio: `'` →
+  Azure 96, `’` → local 75), fixed via a one-line UTF-8-safe encoding
+  (Aider Junior, $0.0012, diff reviewed line by line, one new unit test),
+  and re-verified live: the previously-failing sentence now scores
+  `azure_pronunciation` 96/95/96/100 in 2.7s. 836/836 tests, build clean,
+  all gates PASS, deploy-parity PASS (`5cacfc7` on origin). Tasks
+  `speakup-azure-pa-live-verify` and `speakup-azure-pa-utf8-fix` both
+  complete. **New awaiting-Phương item:** rotate Azure KEY 1 (the key was
+  pasted into chat during debugging) and update it in both Cloudflare
+  environments. The prior task's item 6 (live Azure verification) is now
+  closed; item 7 (live Vietnamese-speech redirect) still needs a real
+  microphone.
 - 2026-07-06 (late session): **Reuse-first overhaul shipped** (Phương's
   mandate: "stop building from scratch, hard-code it into a gate").
   (1) **Rule 21 gate live**: `founder_check.py --gate build` hard-blocks any
@@ -479,16 +500,24 @@ run the red-team and these are closed out.
   the deployed preview) is observed working — real Free Talking sessions ran
   on the deployed preview during 2026-07-06 testing (that is what spent
   ONG's 3/day cap), with spoken greetings and scored turns. No geo-block.
-- Remaining before merge to main (the go-live list):
+- Remaining before merge to main (the go-live list, refreshed 2026-07-07):
   1. **Phương's Phase 6 red-team** (~30 min on the preview: try to make
      Minny misbehave) + latency feel-check — reconciliation items 4–5,
      still SKIPPED. Top priority now that Free Talk is open to all codes.
-  2. **Canned Minny phrases sign-off** (12 phrases in `_minny-phrases.js`)
-     — carried since Phase 3, needs Phương's read as brand voice.
-  3. **Real-class dry run on preview**: Phương assigns real homework via
+     Checklist: `_ops/specs/SPEAKUP_PHASE6_REDTEAM_CHECKLIST.md`.
+  2. **Minny voice ear test** (one listen on the preview; Aura-2 'luna',
+     one-line switch if he dislikes it) — pending since 2026-07-06.
+  3. **Canned Minny phrases sign-off** (13 phrases in `_minny-phrases.js`,
+     incl. `frame_intro`) — carried since Phase 3, needs Phương's read as
+     brand voice.
+  4. **Real-class dry run on preview**: Phương assigns real homework via
      the admin board; a couple of kids' codes checked (both cards show;
-     recording works on their real devices).
-  4. Then the whole branch merges to `main` together — Phương's call,
+     recording works on their real devices — this also covers the live
+     Vietnamese-redirect mic test still open from the grading overhaul).
+  5. **Azure key rotation** (~1 min: regenerate KEY 1, update both
+     Cloudflare environments) — hygiene, does not block QA items 1–4 but
+     should happen before merge.
+  6. Then the whole branch merges to `main` together — Phương's call,
      `Founder approved` in PRODUCT.md is his alone.
 - Also open (not blocking): back up the local `founder-os` repo to a
   private GitHub repo (offered 2026-07-06, no answer yet).
