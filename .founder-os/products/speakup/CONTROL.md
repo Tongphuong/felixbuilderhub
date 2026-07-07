@@ -102,9 +102,21 @@ assigns, commits, merges, deploys, or spends.
   runMicWarmupCountdown itself, mic-check panel internals, scoring
   endpoints, or guardrails — stop and escalate. No merge to main.
 - Cost ceiling: Claude Lead on Max plan (not metered); runtime cost ≈ USD 0.
-- Design self-verification: (pending)
-- Founder handoff: (pending)
-- Verified commit: (pending)
+- Design self-verification: live-verified on the deployed preview @ 9765ad4
+  (code R2L-ONG-U5M6, counting getUserMedia stub): exactly 1 mic acquire
+  across a 3-turn conversation with real Minny replies; tap→recording 11ms
+  on every turn (was ~4s); no "chờ 3 giây" text in free talk; rapid tap-tap
+  keeps the stream warm; End click leaves 0 live tracks (mic indicator
+  off); homework mode still shows the full 3s countdown sequence
+  (R2L-PHUC-7TZV); 0 console errors from the new paths.
+- Founder handoff: reported to Phương in-session 2026-07-07 with the
+  real-device checklist (iPhone/Safari + Windows/Realtek: tap and
+  immediately say "Hello Minny" — first word must appear in the transcript;
+  5+ turn conversation; mic indicator off at summary). Note for Phương: the
+  mic indicator staying ON during the whole conversation is the new
+  expected behavior (same as Zoom). Escape hatch on a problem machine:
+  localStorage r2l_ft_warmup=1.
+- Verified commit: 9765ad4 (on origin/claude/speakup-v0)
 - Started: 2026-07-07
 
 ## Prior task (complete): speakup-homework-photo-v2
