@@ -1,11 +1,12 @@
 import { getClientIp, checkCodeRateLimit, recordCodeFailure, rateLimitedResponse } from './_rate-limit.js';
+import { normalizeHomeworkRecord } from './_homework.js';
 
 // SpeakUp is a separate product from Read2Lead: they share student codes and
 // profile/XP state, never activities. This endpoint must not read the kid's
 // Read2Lead pack/story (Phương, 2026-07-06 — retell/questions modes removed).
 
 export function buildHomeworkSteps(codeData) {
-  const homework = codeData?.homework;
+  const homework = normalizeHomeworkRecord(codeData?.homework);
   if (!homework) return null;
   const sentences = Array.isArray(homework.sentences) ? homework.sentences : [];
   const frame = homework.frame || null;
@@ -42,6 +43,7 @@ export function buildHomeworkSteps(codeData) {
     title_vi: 'Bài tập thầy giao',
     subtitle_vi: note ? `Thầy Phương nhắn: ${note}` : 'Thầy Phương giao bài tập luyện nói.',
     steps,
+    photo: homework.photo ? { id: homework.photo.id } : null,
     homework_note_vi: note,
     homework_updated_at: updatedAt,
   };

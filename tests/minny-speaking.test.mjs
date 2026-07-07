@@ -158,3 +158,38 @@ test('buildSpeakingModes: no Read2Lead activity modes ever (product separation)'
   const modes = buildSpeakingModes({ is_test: true });
   assert.ok(!modes.some((m) => m.id === 'retell' || m.id === 'questions'));
 });
+
+test('buildHomeworkSteps: v1 record (no photo field) yields photo:null and unchanged steps', () => {
+  const codeData = {
+    homework: {
+      schema_version: 1,
+      note_vi: '',
+      sentences: [{ id: 's1', text_en: 'I like cats.', hint_vi: null }],
+      frame: { stems: [{ id: 'f1', text_en: 'I went to ___.', anchor_words: ['i', 'went', 'to'] }], duration_s: 60 },
+      history: [],
+    },
+  };
+  const mode = buildHomeworkSteps(codeData);
+  assert.equal(mode.photo, null);
+  assert.equal(mode.steps.length, 2);
+  assert.equal(mode.steps[0].id, 'hw_s1');
+  assert.equal(mode.steps[0].check_mode, 'read');
+  assert.equal(mode.steps[1].id, 'hw_frame');
+  assert.equal(mode.steps[1].check_mode, 'frame');
+});
+
+test('buildHomeworkSteps: v2 record with photo exposes only the photo id', () => {
+  const codeData = {
+    homework: {
+      schema_version: 2,
+      note_vi: '',
+      sentences: [{ id: 's1', text_en: 'I like cats.', hint_vi: null }],
+      frame: null,
+      photo: { id: 'hp_abc123def456', r2_key: 'homework/class1/hp_abc123def456.jpg', content_type: 'image/jpeg', size: 250000 },
+      history: [],
+    },
+  };
+  const mode = buildHomeworkSteps(codeData);
+  assert.deepEqual(mode.photo, { id: 'hp_abc123def456' });
+  assert.equal(JSON.stringify(mode).includes('r2_key'), false, 'r2_key must never reach the client');
+});
