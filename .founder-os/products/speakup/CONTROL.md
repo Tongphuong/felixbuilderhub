@@ -96,6 +96,17 @@ assigns, commits, merges, deploys, or spends.
 - Founder handoff: (pending)
 - Verified commit: (pending)
 - Started: 2026-07-07
+- Progress 2026-07-07: preview redeployed (`f07f1b2`, marker live) and one
+  real WAV (Minny's own Aura-2 greeting, 3.3s, PCM 16k mono) scored on the
+  deployed preview with code R2L-ONG-U5M6 — but the response is the LOCAL
+  scorer's shape (no `scorer: azure_pronunciation` field; score 75, "Minnie"
+  vs "Minny" word chips). Response time 1.6s total = no 15s Azure timeout in
+  the path, so the branch bailed instantly: either the two env vars are not
+  visible to the **Preview** environment, or the key/region value is wrong
+  (an instant 401/URL error also falls back silently). Fallback behavior
+  itself verified working as designed — kids are never blocked. BLOCKED on
+  Phương double-checking the Cloudflare variables (both names exact, Preview
+  enabled, region `southeastasia`); then redeploy + re-verify.
 
 ## Prior task (complete): speakup-voice-and-grading-reuse-overhaul
 
