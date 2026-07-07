@@ -1470,6 +1470,9 @@
 
 /* --- Homework photo (thumb in story card + lightbox) --- */
 .spk-hw-photo { display: block; width: 100%; border: 0; padding: 0; background: none; cursor: pointer; margin-bottom: 14px; text-align: left; }
+/* This block sits after the utility classes, so restate .hidden here or the
+   display:block above overrides it (same class-order trap as entry 104). */
+.spk-hw-photo.hidden { display: none; }
 .spk-hw-photo img { display: block; width: 100%; max-height: 180px; object-fit: cover; border-radius: 14px; border: 1.5px solid rgba(200, 143, 56, 0.45); }
 .spk-hw-photo__cap { display: inline-flex; align-items: center; gap: 6px; margin-top: 6px; color: var(--cream-dim); font-size: 12.5px; }
 .spk-hw-photo:focus-visible img { outline: 3px solid var(--gold-light); outline-offset: 2px; }
