@@ -410,3 +410,80 @@ test('buildHomeworkRecord without photo emits photo:null and preserves v1 histor
   assert.equal(record.history.length, 1);
   assert.equal(record.history[0].schema_version, 1);
 });
+
+test('endpoint: photo descriptor persists to every roster code (one object, N references)', async () => {
+  const kv = createKv({
+    [CLASS_STORE_KEY]: classStoreRecord([
+      {
+        id: 'class1',
+        name: 'Test Class',
+        student_codes: ['CODE1', 'CODE2'],
+        positive_presets: [],
+        needs_work_presets: [],
+        attendance_by_date: {},
+      },
+    ]),
+    CODE1: codeRecord(),
+    CODE2: codeRecord(),
+  });
+
+  const { response, json } = await postHomework(kv, 'class1', {
+    sentences_text: 'I like cats.',
+    frame_text: '',
+    frame_duration_s: 60,
+    note_vi: '',
+    photo: VALID_PHOTO,
+  });
+
+  assert.equal(response.status, 200);
+  assert.equal(json.ok, true);
+  assert.equal(json.updated_count, 2);
+  assert.equal(json.failed_count, 0);
+
+  const code1 = JSON.parse(kv.store.get('CODE1'));
+  const code2 = JSON.parse(kv.store.get('CODE2'));
+  assert.equal(code1.homework.schema_version, 2);
+  assert.deepEqual(code1.homework.photo, VALID_PHOTO);
+  assert.equal(code2.homework.schema_version, 2);
+  assert.deepEqual(code2.homework.photo, VALID_PHOTO);
+});
+
+test('endpoint: invalid photo (r2_key from another class) → 400 validation_failed, no KV writes', async () => {
+  const invalidPhoto = {
+    ...VALID_PHOTO,
+    r2_key: 'homework/other-class/hp_abc123def456.jpg',
+  };
+
+  const kv = createKv({
+    [CLASS_STORE_KEY]: classStoreRecord([
+      {
+        id: 'class1',
+        name: 'Test Class',
+        student_codes: ['CODE1', 'CODE2'],
+        positive_presets: [],
+        needs_work_presets: [],
+        attendance_by_date: {},
+      },
+    ]),
+    CODE1: codeRecord(),
+    CODE2: codeRecord(),
+  });
+
+  const { response, json } = await postHomework(kv, 'class1', {
+    sentences_text: 'I like cats.',
+    frame_text: '',
+    frame_duration_s: 60,
+    note_vi: '',
+    photo: invalidPhoto,
+  });
+
+  assert.equal(response.status, 400);
+  assert.equal(json.ok, false);
+  assert.equal(json.error, 'validation_failed');
+
+  // KV should be untouched – no homework written
+  const code1 = JSON.parse(kv.store.get('CODE1'));
+  const code2 = JSON.parse(kv.store.get('CODE2'));
+  assert.equal(code1.homework, undefined);
+  assert.equal(code2.homework, undefined);
+});

@@ -26,6 +26,8 @@ export async function onRequestPost(context) {
       frame_text: body.frame_text,
       frame_duration_s: body.frame_duration_s,
       note_vi: body.note_vi,
+      photo: body.photo,
+      class_id: klass.id,
     });
     if (!validation.ok) {
       return json({ ok: false, error: 'validation_failed', error_vi: validation.error_vi }, 400);
