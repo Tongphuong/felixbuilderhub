@@ -1,6 +1,56 @@
 // Pure helpers for homework validation and record building.
 // No I/O — importable by tests and the admin endpoint.
 
+export const HOMEWORK_PHOTO_MAX_BYTES = 8 * 1024 * 1024;
+export const HOMEWORK_PHOTO_TYPES = { 'image/jpeg': 'jpg', 'image/png': 'png', 'image/webp': 'webp' };
+
+/**
+ * Validates a photo descriptor (already uploaded to R2 by the admin
+ * photo endpoint) referenced from the homework JSON. Pure — no I/O.
+ * @param {object|null|undefined} photo
+ * @param {string} class_id
+ * @returns {{ ok: true, value: object|null } | { ok: false, error_vi: string }}
+ */
+export function validatePhotoRef(photo, class_id) {
+  if (photo === null || photo === undefined) return { ok: true, value: null };
+  if (typeof photo !== 'object' || Array.isArray(photo)) {
+    return { ok: false, error_vi: 'Ảnh bài tập không hợp lệ.' };
+  }
+  const id = String(photo.id || '');
+  if (!/^hp_[a-z0-9]{12}$/.test(id)) {
+    return { ok: false, error_vi: 'Ảnh bài tập không hợp lệ.' };
+  }
+  const contentType = String(photo.content_type || '');
+  const ext = HOMEWORK_PHOTO_TYPES[contentType];
+  if (!ext) {
+    return { ok: false, error_vi: 'Ảnh phải là JPEG, PNG hoặc WebP.' };
+  }
+  const classSegment = String(class_id || '');
+  if (!/^[a-zA-Z0-9_-]+$/.test(classSegment)) {
+    return { ok: false, error_vi: 'Ảnh bài tập không hợp lệ.' };
+  }
+  const expectedKey = `homework/${classSegment}/${id}.${ext}`;
+  if (String(photo.r2_key || '') !== expectedKey) {
+    return { ok: false, error_vi: 'Ảnh bài tập không hợp lệ.' };
+  }
+  const size = Number(photo.size);
+  if (!Number.isInteger(size) || size <= 0 || size > HOMEWORK_PHOTO_MAX_BYTES) {
+    return { ok: false, error_vi: 'Ảnh tối đa 8MB.' };
+  }
+  return { ok: true, value: { id, r2_key: expectedKey, content_type: contentType, size } };
+}
+
+/**
+ * Normalizes a stored homework record so schema v1 records (no photo
+ * field) read identically to v2 everywhere. Pure — no I/O.
+ * @param {object|null|undefined} hw
+ * @returns {object|null}
+ */
+export function normalizeHomeworkRecord(hw) {
+  if (!hw || typeof hw !== 'object') return null;
+  return { ...hw, photo: hw.photo || null };
+}
+
 /**
  * @param {string} sentences_text
  * @returns {{ ok: true, lines: Array<{id:string, text_en:string}> } | { ok: false, error_vi: string }}
@@ -63,9 +113,11 @@ export function parseFrameStems(frame_text) {
  * @param {string} input.frame_text
  * @param {number|string} input.frame_duration_s
  * @param {string} input.note_vi
+ * @param {object|null|undefined} input.photo
+ * @param {string} input.class_id
  * @returns {{ ok: true, value: object } | { ok: false, error_vi: string }}
  */
-export function validateHomeworkInput({ sentences_text, frame_text, frame_duration_s, note_vi }) {
+export function validateHomeworkInput({ sentences_text, frame_text, frame_duration_s, note_vi, photo, class_id }) {
   const sentencesResult = parseHomeworkLines(sentences_text);
   if (!sentencesResult.ok) return sentencesResult;
 
@@ -82,6 +134,9 @@ export function validateHomeworkInput({ sentences_text, frame_text, frame_durati
 
   const trimmedNote = String(note_vi || '').trim().slice(0, 300);
 
+  const photoResult = validatePhotoRef(photo, class_id);
+  if (!photoResult.ok) return photoResult;
+
   return {
     ok: true,
     value: {
@@ -89,6 +144,7 @@ export function validateHomeworkInput({ sentences_text, frame_text, frame_durati
       frame_stems: frameResult.stems,
       frame_duration_s: duration,
       note_vi: trimmedNote,
+      photo: photoResult.value,
     },
   };
 }
@@ -99,16 +155,17 @@ export function validateHomeworkInput({ sentences_text, frame_text, frame_durati
  * @returns {object}
  */
 export function buildHomeworkRecord(validatedValue, previousHomework) {
-  const { sentences, frame_stems, frame_duration_s, note_vi } = validatedValue;
+  const { sentences, frame_stems, frame_duration_s, note_vi, photo } = validatedValue;
 
   const homework = {
-    schema_version: 1,
+    schema_version: 2,
     updated_at: new Date().toISOString(),
     note_vi,
     sentences: sentences.map(s => ({ id: s.id, text_en: s.text_en, hint_vi: null })),
     frame: frame_stems.length
       ? { stems: frame_stems.map(f => ({ id: f.id, text_en: f.text_en, anchor_words: f.anchor_words })), duration_s: frame_duration_s }
       : null,
+    photo: photo || null,
     history: [],
   };
 

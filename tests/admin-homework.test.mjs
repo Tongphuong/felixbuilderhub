@@ -7,6 +7,8 @@ import {
   parseHomeworkLines,
   parseFrameStems,
   buildHomeworkRecord,
+  validatePhotoRef,
+  normalizeHomeworkRecord,
 } from '../functions/api/_homework.js';
 
 // ---------------------------------------------------------------------------
@@ -34,6 +36,13 @@ function createKv(records = {}) {
 }
 
 const CLASS_STORE_KEY = 'admin:classes:v1';
+
+const VALID_PHOTO = {
+  id: 'hp_abc123def456',
+  r2_key: 'homework/class1/hp_abc123def456.jpg',
+  content_type: 'image/jpeg',
+  size: 250000,
+};
 
 function classStoreRecord(classes) {
   return { schema_version: 1, classes, updated_at: new Date().toISOString() };
@@ -323,4 +332,81 @@ test('invalid JSON body → 400', async () => {
   assert.equal(response.status, 400);
   assert.equal(json.ok, false);
   assert.equal(json.error, 'invalid_json');
+});
+
+test('validatePhotoRef: null and undefined are valid (no photo)', () => {
+  assert.deepEqual(validatePhotoRef(null, 'class1'), { ok: true, value: null });
+  assert.deepEqual(validatePhotoRef(undefined, 'class1'), { ok: true, value: null });
+});
+
+test('validatePhotoRef: valid descriptor round-trips', () => {
+  const res = validatePhotoRef(VALID_PHOTO, 'class1');
+  assert.equal(res.ok, true);
+  assert.deepEqual(res.value, VALID_PHOTO);
+});
+
+test('validatePhotoRef: bad id, HEIC type, oversize, wrong-class key all rejected', () => {
+  assert.equal(validatePhotoRef({ ...VALID_PHOTO, id: 'hp_TOOSHORT' }, 'class1').ok, false);
+  const heic = validatePhotoRef({ ...VALID_PHOTO, content_type: 'image/heic' }, 'class1');
+  assert.equal(heic.ok, false);
+  assert.match(heic.error_vi, /JPEG/);
+  const big = validatePhotoRef({ ...VALID_PHOTO, size: 9 * 1024 * 1024 }, 'class1');
+  assert.equal(big.ok, false);
+  assert.match(big.error_vi, /8MB/);
+  assert.equal(validatePhotoRef(VALID_PHOTO, 'other-class').ok, false);
+});
+
+test('normalizeHomeworkRecord: v1 record gains photo:null, v2 passes through, null stays null', () => {
+  const v1 = { schema_version: 1, sentences: [{ id: 's1', text_en: 'Hi.' }], frame: null, note_vi: '', history: [] };
+  const normalized = normalizeHomeworkRecord(v1);
+  assert.equal(normalized.photo, null);
+  assert.deepEqual(normalized.sentences, v1.sentences);
+  const v2 = { schema_version: 2, sentences: [], frame: null, photo: VALID_PHOTO, history: [] };
+  assert.deepEqual(normalizeHomeworkRecord(v2).photo, VALID_PHOTO);
+  assert.equal(normalizeHomeworkRecord(null), null);
+  assert.equal(normalizeHomeworkRecord(undefined), null);
+});
+
+test('validateHomeworkInput carries photo into value; buildHomeworkRecord emits schema v2 with photo', () => {
+  const validation = validateHomeworkInput({
+    sentences_text: 'I like cats.',
+    frame_text: '',
+    frame_duration_s: 60,
+    note_vi: '',
+    photo: VALID_PHOTO,
+    class_id: 'class1',
+  });
+  assert.equal(validation.ok, true);
+  assert.deepEqual(validation.value.photo, VALID_PHOTO);
+  const record = buildHomeworkRecord(validation.value, null);
+  assert.equal(record.schema_version, 2);
+  assert.deepEqual(record.photo, VALID_PHOTO);
+});
+
+test('validateHomeworkInput with invalid photo fails validation', () => {
+  const validation = validateHomeworkInput({
+    sentences_text: 'I like cats.',
+    frame_text: '',
+    frame_duration_s: 60,
+    note_vi: '',
+    photo: { ...VALID_PHOTO, content_type: 'image/heic' },
+    class_id: 'class1',
+  });
+  assert.equal(validation.ok, false);
+});
+
+test('buildHomeworkRecord without photo emits photo:null and preserves v1 history record untouched', () => {
+  const prev = { schema_version: 1, sentences: [{ id: 's1', text_en: 'Old.' }], frame: null, note_vi: '', history: [] };
+  const validation = validateHomeworkInput({
+    sentences_text: 'New sentence.',
+    frame_text: '',
+    frame_duration_s: 60,
+    note_vi: '',
+  });
+  assert.equal(validation.ok, true);
+  const record = buildHomeworkRecord(validation.value, prev);
+  assert.equal(record.schema_version, 2);
+  assert.equal(record.photo, null);
+  assert.equal(record.history.length, 1);
+  assert.equal(record.history[0].schema_version, 1);
 });
