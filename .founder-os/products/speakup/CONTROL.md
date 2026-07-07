@@ -69,6 +69,46 @@ assigns, commits, merges, deploys, or spends.
 
 ## Current task
 
+- Status: active
+- Task ID: speakup-ft-instant-mic
+- Owner: Claude Lead (direct edit — async/state-machine change woven through
+  speak-up.astro's free-talk recorder + protected r2l-recorder.js; same
+  reliability rationale as speakup-ft-recorder-fix).
+- Lane: `claude/speakup-v0`, primary checkout.
+- Problem: free-talk turns feel slow — every tap pays a fresh getUserMedia
+  plus a fixed 3s warmup countdown plus monitor setup (~4s before the child
+  can speak). Phương asked to examine deleting the 3s wait; investigation
+  (2026-07-07) showed it is a pure sleep whose proven anti-silence role is
+  actually carried by the open analyser (R2LRecorder.startMonitor — the
+  mic-test pipeline records with zero warmup on every machine). Plan
+  approved by Phương 2026-07-07 (plan file:
+  `~/.claude/plans/work-on-project-speakup-enchanted-umbrella.md`).
+- Approach: persistent conversation-scoped mic (Zoom/Meet/ChatGPT-voice
+  pattern) — acquire stream at greeting (post mic-gate), monitor created on
+  first tap (iOS gesture rule), per-turn recorder start/stop only; free
+  talking only, homework keeps its 3s warmup; localStorage escape hatch
+  `r2l_ft_warmup=1` restores the countdown.
+- Reuse survey: persistent-stream tap-to-talk pattern via existing repo
+  primitives getStream/startMonitor/watchTrack/device-prefs (ADOPTED — no
+  new dependency); @ricky0123/vad-web Silero VAD hands-free turn detection
+  (DEFERRED to V1 research — ONNX/WASM runtime + always-listening privacy +
+  barge-in complexity for kids); OpenAI Realtime / LiveKit Agents / Pipecat
+  full realtime stacks (REJECTED — replaces the record→POST→TTS
+  architecture, overkill for the 20-student pilot).
+- Files owned: `src/pages/speak-up.astro` (free-talk section),
+  `public/scripts/r2l-recorder.js` (additive monitor.reset()),
+  `tests/r2l-recorder-engine.test.mjs`.
+- Stop condition: any diff touching homework recording flow,
+  runMicWarmupCountdown itself, mic-check panel internals, scoring
+  endpoints, or guardrails — stop and escalate. No merge to main.
+- Cost ceiling: Claude Lead on Max plan (not metered); runtime cost ≈ USD 0.
+- Design self-verification: (pending)
+- Founder handoff: (pending)
+- Verified commit: (pending)
+- Started: 2026-07-07
+
+## Prior task (complete): speakup-homework-photo-v2
+
 - Status: complete
 - Task ID: speakup-homework-photo-v2
 - Owner: Claude Lead (plan + review + integration); packets dispatched to

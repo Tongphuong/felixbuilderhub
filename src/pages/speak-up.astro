@@ -1025,6 +1025,9 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
           blockUntilPass: true,
           onPass: () => {
             state.micGateReady = true;
+            // A passed test may have pinned a different device — drop an idle
+            // conversation stream so the next free-talk turn picks it up.
+            if (ft.micStream && !ft.recording) ftReleaseMic();
             updateRecordUi();
           },
           onFail: () => {
@@ -1413,6 +1416,14 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       flaggedSession: false,
       lastKidChip: null,
       lastKidChipSeconds: null,
+      // Conversation-scoped mic (Zoom pattern): stream + analyser stay open
+      // across turns so a tap starts recording instantly (no 3s warmup).
+      micStream: null,
+      micMonitor: null,
+      micWatch: null,
+      micAcquire: null,
+      micStreamDead: false,
+      micGen: 0,
     };
 
     function ftUpdateTimerDisplay() {
@@ -1562,6 +1573,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       ft.lastKidChipSeconds = null;
       ftStopCountdown();
       ftCleanupRecording();
+      ftReleaseMic();
     }
 
     function enterFreeTalking() {
@@ -1641,6 +1653,11 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
         ftAppendReplyBubble(data.greeting?.text_en, 'idle');
         playConversationAudio(data.greeting?.audio_b64, data.greeting?.content_type, data.greeting?.text_en || '');
         if (recordBtn) recordBtn.disabled = false;
+        // Warm the conversation mic while Minny's greeting plays — no prompt
+        // possible (mic gate already passed), so the first tap records instantly.
+        if (state.micGateReady || window.R2LMicCheck?.sessionPassed?.()) {
+          ftAcquireMic().catch(() => {});
+        }
       } catch {
         ft.ended = true;
         ftShowWrapup({
@@ -1652,14 +1669,88 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       }
     }
 
+    function ftMicUsable() {
+      if (!ft.micStream) return false;
+      if (window.R2LRecorder?.trackInfo) {
+        const info = window.R2LRecorder.trackInfo(ft.micStream);
+        return info.live && !info.muted;
+      }
+      return ft.micStream.getAudioTracks().some((t) => t.readyState === 'live');
+    }
+
+    function ftReleaseMic() {
+      ft.micGen += 1;
+      if (ft.micWatch) {
+        ft.micWatch();
+        ft.micWatch = null;
+      }
+      safeStopMonitor(ft.micMonitor);
+      ft.micMonitor = null;
+      if (ft.micStream) {
+        ft.micStream.getTracks().forEach((t) => t.stop());
+      }
+      ft.micStream = null;
+      ft.micAcquire = null;
+      ft.micStreamDead = false;
+    }
+
+    // Opens (or reuses) the conversation-scoped mic stream. Kept warm across
+    // turns; reacquired only when the old track died (Windows app grab,
+    // device switch) or the constraint profile was bumped after a silent turn.
+    async function ftAcquireMic() {
+      if (ft.micStream && !ft.micStreamDead && ftMicUsable()) {
+        return { stream: ft.micStream, cold: false };
+      }
+      if (!ft.micAcquire) {
+        ftReleaseMic();
+        const gen = ft.micGen;
+        ft.micAcquire = (async () => {
+          const stream = window.R2LRecorder?.getStream
+            ? await window.R2LRecorder.getStream()
+            : window.R2LMicCheck?.getMicStream
+              ? await window.R2LMicCheck.getMicStream()
+              : await navigator.mediaDevices.getUserMedia({
+                  audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true },
+                });
+          if (ft.micGen !== gen || ft.ended) {
+            // Conversation ended / mic released while acquiring — never leave
+            // a stray live track behind (mic indicator must turn off).
+            stream.getTracks().forEach((t) => t.stop());
+            throw new Error('ft_mic_stale');
+          }
+          ft.micStream = stream;
+          ft.micStreamDead = false;
+          if (window.R2LRecorder?.watchTrack) {
+            ft.micWatch = window.R2LRecorder.watchTrack(stream, () => {
+              // Mid-recording: finishRecording releases at turn end;
+              // idle: release now so the next tap reacquires cleanly.
+              ft.micStreamDead = true;
+              if (!ft.recording) ftReleaseMic();
+            });
+          }
+          return stream;
+        })();
+      }
+      const pending = ft.micAcquire;
+      try {
+        const stream = await pending;
+        return { stream, cold: true };
+      } finally {
+        if (ft.micAcquire === pending) ft.micAcquire = null;
+      }
+    }
+
     function ftCleanupRecording() {
       if (ft.recTimerId) {
         clearInterval(ft.recTimerId);
         ft.recTimerId = null;
       }
-      safeStopMonitor(ft.recording?.monitor);
-      if (ft.recording?.stream) {
-        ft.recording.stream.getTracks().forEach((t) => t.stop());
+      // Stop the in-flight recorder explicitly — the conversation-scoped
+      // stream stays live, so there is no track death to end it implicitly.
+      try {
+        ft.recording?.recorderCtl?.stop();
+      } catch {
+        /* recorder never started */
       }
       ft.recording = null;
       ftUpdateRecordUi();
@@ -1699,33 +1790,29 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       const session = { stream: null, status: 'warming' };
       ft.recording = session;
       try {
-        const stream = window.R2LRecorder?.getStream
-          ? await window.R2LRecorder.getStream()
-          : window.R2LMicCheck?.getMicStream
-            ? await window.R2LMicCheck.getMicStream()
-            : await navigator.mediaDevices.getUserMedia({
-                audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true },
-              });
-        if (ft.recording !== session) {
-          stream.getTracks().forEach((t) => t.stop());
-          return;
-        }
+        // Conversation-scoped stream (usually already warm from the greeting;
+        // never stop its tracks on a bail-out — later turns share it).
+        const { stream, cold } = await ftAcquireMic();
+        if (ft.recording !== session) return;
         session.stream = stream;
-        ftUpdateRecordUi('Micro đã bật — chờ 3 giây rồi mới nói nhé…');
 
-        if (window.R2LMicCheck?.runMicWarmupCountdown) {
+        // Escape hatch: r2l_ft_warmup=1 restores the legacy 3s countdown on a
+        // problem machine without a redeploy.
+        let legacyWarmup = false;
+        try {
+          legacyWarmup = localStorage.getItem('r2l_ft_warmup') === '1';
+        } catch {
+          /* storage blocked */
+        }
+        if (legacyWarmup && window.R2LMicCheck?.runMicWarmupCountdown) {
+          ftUpdateRecordUi('Micro đã bật — chờ 3 giây rồi mới nói nhé…');
           await window.R2LMicCheck.runMicWarmupCountdown({
             onMessage: (msg) => {
               if (ft.recording !== session) return;
               ftUpdateRecordUi(msg);
             },
           });
-        } else {
-          await new Promise((resolve) => window.setTimeout(resolve, 3000));
-        }
-        if (ft.recording !== session) {
-          stream.getTracks().forEach((t) => t.stop());
-          return;
+          if (ft.recording !== session) return;
         }
 
         const recorder = window.R2LRecorder?.createRecorder
@@ -1749,26 +1836,47 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
               };
             })();
 
-        const monitor = window.R2LRecorder?.startMonitor
-          ? await window.R2LRecorder.startMonitor(stream, {
-              onSilenceHint: () => {
-                if (ft.recording?.status === 'recording') {
-                  ftUpdateRecordUi('Minny chưa thấy tiếng — con nói TO hơn nhé!');
-                }
-              },
-            })
-          : { available: false, peak: () => -1, voiced: () => true, stop: () => {} };
-
-        if (ft.recording !== session) {
-          safeStopMonitor(monitor);
-          try {
-            recorder.stop();
-          } catch {
-            /* recorder never started */
+        // Conversation-scoped monitor: created on the first tap (inside the
+        // user gesture — iOS can refuse AudioContext.resume() outside one),
+        // then kept open across turns. Never open/close one per turn on the
+        // live stream — that is the Windows/Realtek silence pattern (7cd5158).
+        if (!ft.micMonitor || !ft.micMonitor.available) {
+          safeStopMonitor(ft.micMonitor);
+          ft.micMonitor = window.R2LRecorder?.startMonitor
+            ? await window.R2LRecorder.startMonitor(stream, {
+                onSilenceHint: () => {
+                  if (ft.recording?.status === 'recording') {
+                    ftUpdateRecordUi('Minny chưa thấy tiếng — con nói TO hơn nhé!');
+                  }
+                },
+              })
+            : { available: false, peak: () => -1, voiced: () => true, reset: () => {}, stop: () => {} };
+          if (ft.recording !== session) {
+            try {
+              recorder.stop();
+            } catch {
+              /* recorder never started */
+            }
+            return;
           }
-          stream.getTracks().forEach((t) => t.stop());
-          return;
         }
+        const monitor = ft.micMonitor;
+
+        // A just-opened stream gets a brief settle so first words are not
+        // clipped; the warm path (every later turn) starts immediately.
+        if (cold && !legacyWarmup) {
+          ftUpdateRecordUi('Micro đang bật…');
+          await new Promise((resolve) => window.setTimeout(resolve, 300));
+          if (ft.recording !== session) {
+            try {
+              recorder.stop();
+            } catch {
+              /* recorder never started */
+            }
+            return;
+          }
+        }
+        monitor.reset?.();
 
         let finished = false;
         const finishRecording = async () => {
@@ -1788,14 +1896,18 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
           } catch {
             blob = null;
           }
-          safeStopMonitor(monitor);
-          stream.getTracks().forEach((t) => t.stop());
+          // Conversation stream + monitor stay warm for the next turn;
+          // release only if the track died mid-turn.
+          if (ft.micStreamDead) ftReleaseMic();
           const voiced = window.R2LRecorder?.recordingLooksVoiced
             ? window.R2LRecorder.recordingLooksVoiced(monitor, blob?.size || 0)
             : (monitor.available ? monitor.voiced() : true);
 
           if (blob && blob.size > 0 && !voiced) {
             window.R2LRecorder?.bumpProfile?.();
+            // Profile changed — the next tap must reopen the mic with the
+            // relaxed constraints, not reuse the stream that recorded silence.
+            ftReleaseMic();
             ftUpdateRecordUi('Minny không thấy tiếng vào micro. Con thử lại nhé!');
             return;
           }
@@ -1823,6 +1935,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
         const message = window.R2LMicCheck?.helpMessage?.(error)
           || 'Không mở được micro. Con nhờ bố mẹ cho phép micro nhé.';
         ftCleanupRecording();
+        ftReleaseMic();
         ftUpdateRecordUi(message);
         window.R2LMicCheck?.focusMicHelpInShell?.(shell);
       }
@@ -1920,6 +2033,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       ft.ended = true;
       ftStopCountdown();
       ftCleanupRecording();
+      ftReleaseMic();
       const recordBtn = document.getElementById('free-talk-record');
       if (recordBtn) recordBtn.disabled = true;
 
@@ -1994,7 +2108,16 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       ft.ended = true;
       ftStopCountdown();
       ftCleanupRecording();
+      ftReleaseMic();
       ftShowSummary();
+    });
+
+    // Free the conversation mic when the tab is hidden and idle (the next tap
+    // reacquires it); never interrupt an in-flight recording.
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'hidden' && ft.micStream && !ft.recording) {
+        ftReleaseMic();
+      }
     });
 
     document.getElementById('free-talk-wrapup-cta')?.addEventListener('click', ftShowSummary);
