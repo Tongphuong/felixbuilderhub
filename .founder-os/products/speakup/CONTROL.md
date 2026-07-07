@@ -66,7 +66,7 @@ assigns, commits, merges, deploys, or spends.
 
 ## Current task
 
-- Status: active
+- Status: complete
 - Task ID: speakup-azure-pa-live-verify
 - Owner: Claude Lead — direct execution (verification-only leg of
   `speakup-voice-and-grading-reuse-overhaul`; no product code changes).
@@ -92,9 +92,22 @@ assigns, commits, merges, deploys, or spends.
   and report — do not patch code under this task.
 - Cost ceiling: $0 (Azure F0 free tier, one ~10s call against a
   5-audio-hour/month meter; Claude Lead on Max plan, not metered).
-- Design self-verification: (pending — API verification, no visuals)
-- Founder handoff: (pending)
-- Verified commit: (pending)
+- Design self-verification: N/A — non-visual API verification (playback/
+  scoring pipeline only; no design reference, no layout change). Live
+  evidence: `scorer: azure_pronunciation` returned by the DEPLOYED preview
+  (score 96, accuracy 95, fluency 96, completeness 100, per-word chips all
+  exact) for a real 3.3s WAV of Minny's Aura-2 greeting, code R2L-ONG-U5M6.
+- Founder handoff: plain-language report in chat — Azure works, his
+  Cloudflare setup was correct all along; the earlier fallbacks were a
+  found-and-isolated bug in OUR code (`btoa()` in
+  `_azure-pronunciation.js` throws on non-Latin1 chars like curly
+  apostrophes in the reference text → silent local-scorer fallback,
+  proven live: same audio scored `azure_pronunciation` with `'` and
+  local with `’`). Bounded asks: (1) approve the one-line UTF-8-safe
+  encoding fix (separate task, spec'd in chat), (2) regenerate Azure
+  KEY 1 after the fix lands (key was pasted into chat during debugging).
+- Verified commit: 0d881cb (on origin/claude/speakup-v0; review surface =
+  deployed preview claude-speakup-v0.felixbuilderhub.pages.dev — rule 20)
 - Started: 2026-07-07
 - Progress 2026-07-07: preview redeployed (`f07f1b2`, marker live) and one
   real WAV (Minny's own Aura-2 greeting, 3.3s, PCM 16k mono) scored on the
@@ -222,6 +235,29 @@ This UI-fidelity task does not touch any Phase 6 file.
 | `src/pages/read2lead/speaking.astro` | Aider Senior (dispatch, flagged-passthrough lines only) + Claude (review) | done |
 
 ## Acceptance criteria reconciliation
+
+### speakup-azure-pa-live-verify (2026-07-07)
+
+1. Preview redeployed after env vars added — **PASS** (marker
+   `azure-pa-verify-2026-07-07-run2` served by the deployed preview;
+   commits `f07f1b2`, `0d881cb` on origin).
+2. Real WAV scored on the DEPLOYED preview returns
+   `scorer: azure_pronunciation` — **PASS** (score 96 / accuracy 95 /
+   fluency 96 / completeness 100 for Minny's own greeting audio; response
+   time ~2s). Along the way this uncovered and live-proved a real bug:
+   reference text containing any non-Latin1 character (curly apostrophe
+   `’`, curly quotes, Vietnamese diacritics) makes `btoa()` in
+   `assessPronunciationWithAzure` throw, silently dropping to the local
+   scorer — same audio, `'` → Azure, `’` → local. Fix is a separate
+   approved-scope task (UTF-8-safe base64), NOT patched under this task
+   per its own stop condition.
+3. Failure falls back to local scorer, kids never blocked — **PASS**
+   (observed live three times during diagnosis: local-scorer shape, 1.6–2s,
+   HTTP 200, valid word chips).
+
+Carried context: this closes prior task item 6/8's "live Azure verification
+SKIPPED"; item 7's live Vietnamese-redirect mic test still needs a real
+microphone (unchanged).
 
 ### speakup-voice-and-grading-reuse-overhaul (2026-07-06)
 
