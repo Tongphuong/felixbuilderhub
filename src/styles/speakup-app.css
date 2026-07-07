@@ -385,11 +385,19 @@
 .spk-mode-card__desc { font-size: 15px; line-height: 1.45; color: var(--cream-muted); }
 
 /* Mic check panel — reuse the proven component, tone the frame to the app */
-.spk-modes .r2l-mic-check {
+.spk-modes .r2l-mic-check,
+.ft-recorder .r2l-mic-check {
   margin: 16px 0 0;
   border-radius: 18px;
   border: 1px solid var(--border-accent);
   background: rgba(23, 53, 74, 0.45);
+}
+
+/* Inside the centered flex column of the FT recorder, stretch full width */
+.ft-recorder .r2l-mic-check {
+  width: 100%;
+  align-self: stretch;
+  margin-top: 8px;
 }
 
 /* ===================== Homework practice (7a) ========================== */

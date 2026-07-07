@@ -223,6 +223,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
               <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
               <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
             </div>
+            <MicCheckPanel />
           </div>
         </div>
 
@@ -969,22 +970,26 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
     }
 
     function mountSpeakingMicCheck() {
-      const panel = shell?.querySelector('[data-r2l-mic-check]');
-      if (!panel || panel.dataset.r2lMicMounted === 'true') return;
+      const panels = shell ? Array.from(shell.querySelectorAll('[data-r2l-mic-check]')) : [];
+      if (!panels.length) return;
       if (!window.R2LMicCheck?.mount) {
         window.setTimeout(mountSpeakingMicCheck, 50);
         return;
       }
-      window.R2LMicCheck.mount(panel, {
-        blockUntilPass: true,
-        onPass: () => {
-          state.micGateReady = true;
-          updateRecordUi();
-        },
-        onFail: () => {
-          state.micGateReady = false;
-          updateRecordUi();
-        },
+      // Two instances: the mode-select gate panel and the free-talk screen's
+      // always-available mic test. mount() self-guards against double-mounting.
+      panels.forEach((panel) => {
+        window.R2LMicCheck.mount(panel, {
+          blockUntilPass: true,
+          onPass: () => {
+            state.micGateReady = true;
+            updateRecordUi();
+          },
+          onFail: () => {
+            state.micGateReady = false;
+            updateRecordUi();
+          },
+        });
       });
     }
 
@@ -1058,7 +1063,14 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
         return;
       }
 
-      cleanupRecording();
+      if (state.recording) return;
+      // Same identity-session pattern as ftStartRecording: installed before the
+      // first await, re-checked after every await, mutated (never reassigned).
+      const session = { stream: null, mediaRecorder: null };
+      state.recording = session;
+      state.status = 'warming';
+      state.warmupMessage = 'Đang bật micro…';
+      updateRecordUi();
       try {
         const stream = window.R2LRecorder?.getStream
           ? await window.R2LRecorder.getStream()
@@ -1067,8 +1079,11 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
             : await navigator.mediaDevices.getUserMedia({
                 audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true },
               });
-        state.recording = { stream, mediaRecorder: null };
-        state.status = 'warming';
+        if (state.recording !== session) {
+          stream.getTracks().forEach((t) => t.stop());
+          return;
+        }
+        session.stream = stream;
         state.warmupMessage = 'Micro đã bật — chờ 3 giây rồi mới nói nhé…';
         updateRecordUi();
 
@@ -1079,7 +1094,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
         if (window.R2LMicCheck?.runMicWarmupCountdown) {
           await window.R2LMicCheck.runMicWarmupCountdown({
             onMessage: (msg) => {
-              if (state.status !== 'warming') return;
+              if (state.recording !== session) return;
               state.warmupMessage = msg;
               updateRecordUi();
             },
@@ -1087,7 +1102,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
         } else {
           await new Promise((resolve) => window.setTimeout(resolve, 3000));
         }
-        if (state.status !== 'warming') {
+        if (state.recording !== session) {
           stream.getTracks().forEach((t) => t.stop());
           return;
         }
@@ -1127,6 +1142,17 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
             })
           : { available: false, peak: () => -1, voiced: () => true, stop: () => {} };
 
+        if (state.recording !== session) {
+          safeStopMonitor(monitor);
+          try {
+            recorder.stop();
+          } catch {
+            /* recorder never started */
+          }
+          stream.getTracks().forEach((t) => t.stop());
+          return;
+        }
+
         let finished = false;
         const finishRecording = async () => {
           if (finished) return;
@@ -1135,6 +1161,8 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
             clearInterval(state.timerId);
             state.timerId = null;
           }
+          // Release the session so the record button works again after this turn.
+          if (state.recording === session) state.recording = null;
           // state.secondsLeft still holds the countdown value at stop time,
           // so target minus remaining gives actual elapsed seconds.
           const elapsedSeconds = Math.max(0, stepMaxSeconds(prompt) - state.secondsLeft);
@@ -1173,7 +1201,9 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
           }
         };
 
-        state.recording = { stream, mediaRecorder: null, recorderCtl: recorder, monitor, finishRecording };
+        session.recorderCtl = recorder;
+        session.monitor = monitor;
+        session.finishRecording = finishRecording;
         state.status = 'recording';
         state.secondsLeft = stepMaxSeconds(prompt);
         recorder.start();
@@ -1187,6 +1217,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
           }
         }, 1000);
       } catch (error) {
+        if (state.recording !== session) return;
         const message = window.R2LMicCheck?.helpMessage?.(error)
           || 'Không mở được micro. Con nhờ bố mẹ cho phép micro nhé.';
         renderResult({ ok: false, message });
@@ -1197,17 +1228,14 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
     }
 
     function stopRecording() {
-      if (state.recording?.finishRecording) {
+      if (!state.recording) return;
+      if (state.status === 'recording' && state.recording.finishRecording) {
         state.recording.finishRecording();
         return;
       }
-      if (state.recording?.mediaRecorder) {
-        stopMediaRecorder(state.recording.mediaRecorder);
-      }
-      if (state.timerId) {
-        clearInterval(state.timerId);
-        state.timerId = null;
-      }
+      // Cancel while the mic is still opening / warming up.
+      cleanupRecording();
+      updateRecordUi();
     }
 
     async function loadSession() {
@@ -1282,7 +1310,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
     });
 
     document.getElementById('speaking-record')?.addEventListener('click', () => {
-      if (state.status === 'recording') stopRecording();
+      if (state.recording) stopRecording();
       else startRecording();
     });
 
@@ -1293,7 +1321,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       const target = event.target;
       if (target && ['INPUT', 'TEXTAREA', 'SELECT', 'BUTTON'].includes(target.tagName)) return;
       event.preventDefault();
-      if (state.status === 'recording') stopRecording();
+      if (state.recording) stopRecording();
       else if (state.status === 'idle') startRecording();
     });
 
@@ -1618,11 +1646,16 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
         return;
       }
       if (!state.micGateReady && !window.R2LMicCheck?.sessionPassed?.()) {
-        ftUpdateRecordUi('Con bấm Kiểm tra micro ở màn hình chọn cách luyện nhé.');
+        ftUpdateRecordUi('Con bấm Kiểm tra micro ngay bên dưới nhé.');
         return;
       }
 
-      ftCleanupRecording();
+      if (ft.recording) return;
+      // One session object per attempt, installed before the first await. Every
+      // await below re-checks identity (not status) so a cancel or a second tap
+      // during the gaps can never detach the live recorder/timer from ft.recording.
+      const session = { stream: null, status: 'warming' };
+      ft.recording = session;
       try {
         const stream = window.R2LRecorder?.getStream
           ? await window.R2LRecorder.getStream()
@@ -1631,21 +1664,24 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
             : await navigator.mediaDevices.getUserMedia({
                 audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true },
               });
-
-        ft.recording = { stream, status: 'warming' };
+        if (ft.recording !== session) {
+          stream.getTracks().forEach((t) => t.stop());
+          return;
+        }
+        session.stream = stream;
         ftUpdateRecordUi('Micro đã bật — chờ 3 giây rồi mới nói nhé…');
 
         if (window.R2LMicCheck?.runMicWarmupCountdown) {
           await window.R2LMicCheck.runMicWarmupCountdown({
             onMessage: (msg) => {
-              if (ft.recording?.status !== 'warming') return;
+              if (ft.recording !== session) return;
               ftUpdateRecordUi(msg);
             },
           });
         } else {
           await new Promise((resolve) => window.setTimeout(resolve, 3000));
         }
-        if (!ft.recording || ft.recording.status !== 'warming') {
+        if (ft.recording !== session) {
           stream.getTracks().forEach((t) => t.stop());
           return;
         }
@@ -1681,6 +1717,17 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
             })
           : { available: false, peak: () => -1, voiced: () => true, stop: () => {} };
 
+        if (ft.recording !== session) {
+          safeStopMonitor(monitor);
+          try {
+            recorder.stop();
+          } catch {
+            /* recorder never started */
+          }
+          stream.getTracks().forEach((t) => t.stop());
+          return;
+        }
+
         let finished = false;
         const finishRecording = async () => {
           if (finished) return;
@@ -1689,6 +1736,9 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
             clearInterval(ft.recTimerId);
             ft.recTimerId = null;
           }
+          // Release the button immediately — a stale ft.recording here left the
+          // UI stuck on "Đang nghe con nói..." after every successful turn.
+          if (ft.recording === session) ft.recording = null;
           const elapsedSeconds = Math.max(0, DEFAULT_MAX_SECONDS - ft.recSecondsLeft);
           let blob = null;
           try {
@@ -1704,19 +1754,20 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
 
           if (blob && blob.size > 0 && !voiced) {
             window.R2LRecorder?.bumpProfile?.();
-            ft.recording = null;
             ftUpdateRecordUi('Minny không thấy tiếng vào micro. Con thử lại nhé!');
             return;
           }
           if (blob && blob.size > 0) {
             ftSubmitAudio(blob, elapsedSeconds);
           } else {
-            ft.recording = null;
             ftUpdateRecordUi('Không thu được tiếng. Con thử nói to hơn nhé.');
           }
         };
 
-        ft.recording = { stream, status: 'recording', recorderCtl: recorder, monitor, finishRecording };
+        session.status = 'recording';
+        session.recorderCtl = recorder;
+        session.monitor = monitor;
+        session.finishRecording = finishRecording;
         ft.recSecondsLeft = DEFAULT_MAX_SECONDS;
         recorder.start();
         ftUpdateRecordUi();
@@ -1726,18 +1777,23 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
           if (ft.recSecondsLeft <= 0) finishRecording();
         }, 1000);
       } catch (error) {
+        if (ft.recording !== session) return;
         const message = window.R2LMicCheck?.helpMessage?.(error)
           || 'Không mở được micro. Con nhờ bố mẹ cho phép micro nhé.';
+        ftCleanupRecording();
         ftUpdateRecordUi(message);
         window.R2LMicCheck?.focusMicHelpInShell?.(shell);
-        ftCleanupRecording();
       }
     }
 
     function ftStopRecording() {
-      if (ft.recording?.finishRecording) {
+      if (!ft.recording) return;
+      if (ft.recording.status === 'recording' && ft.recording.finishRecording) {
         ft.recording.finishRecording();
+        return;
       }
+      // Tap while the mic is still opening / warming up = cancel back to idle.
+      ftCleanupRecording();
     }
 
     async function ftSubmitAudio(blob, durationSeconds) {
@@ -1885,7 +1941,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
     }
 
     document.getElementById('free-talk-record')?.addEventListener('click', () => {
-      if (ft.recording?.status === 'recording') {
+      if (ft.recording) {
         ftStopRecording();
       } else {
         ftStartRecording();
