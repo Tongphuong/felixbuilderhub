@@ -607,7 +607,7 @@ import HomeworkModal from '../../components/admin/HomeworkModal.astro';
           });
           const upResult = await upRes.json();
           if (!upRes.ok || !upResult.ok) {
-            throw new Error(upResult.message || upResult.error || 'Không tải được ảnh');
+            throw new Error(upResult.error_vi || upResult.message || upResult.error || 'Không tải được ảnh');
           }
           photoDescriptor = upResult.photo;
           hwPhotoState = { status: 'saved', descriptor: photoDescriptor };
@@ -621,7 +621,7 @@ import HomeworkModal from '../../components/admin/HomeworkModal.astro';
         });
         const result = await res.json();
         if (!res.ok || !result.ok) {
-          throw new Error(result.message || result.error || 'Không lưu được bài tập');
+          throw new Error(result.error_vi || result.message || result.error || 'Không lưu được bài tập');
         }
         document.getElementById('homework-modal').close();
         await loadClasses();

@@ -52,16 +52,33 @@ export function normalizeHomeworkRecord(hw) {
 }
 
 /**
+ * Real teacher input arrives with curly quotes, long dashes, ellipses and
+ * non-breaking spaces (Word/Zalo/slides). Normalize to the plain forms the
+ * kid page, TTS and Azure grading expect instead of rejecting them.
+ * @param {string} line
+ * @returns {string}
+ */
+export function normalizeTeacherLine(line) {
+  return String(line || '')
+    .replace(/[“”„«»]/g, '"')
+    .replace(/[‘’‚]/g, "'")
+    .replace(/[–—]/g, '-')
+    .replace(/…/g, '...')
+    .replace(/ /g, ' ')
+    .trim();
+}
+
+/**
  * @param {string} sentences_text
  * @returns {{ ok: true, lines: Array<{id:string, text_en:string}> } | { ok: false, error_vi: string }}
  */
 export function parseHomeworkLines(sentences_text) {
   const raw = String(sentences_text || '');
-  const lines = raw.split('\n').map(l => l.trim()).filter(Boolean);
+  const lines = raw.split('\n').map(l => normalizeTeacherLine(l)).filter(Boolean);
   if (lines.length > 12) {
     return { ok: false, error_vi: 'Tối đa 12 câu.' };
   }
-  const allowed = /^[a-zA-Z0-9 .,!?'"-]+$/;
+  const allowed = /^[a-zA-Z0-9 .,!?'":;()-]+$/;
   const result = [];
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
@@ -69,7 +86,11 @@ export function parseHomeworkLines(sentences_text) {
       return { ok: false, error_vi: `Dòng ${i + 1} quá dài (tối đa 200 ký tự).` };
     }
     if (!allowed.test(line)) {
-      return { ok: false, error_vi: `Dòng ${i + 1} chứa ký tự không hợp lệ.` };
+      if (line.includes('_')) {
+        return { ok: false, error_vi: `Dòng ${i + 1} có chỗ trống ___ — câu có chỗ trống thì nhập vào ô "Khung thuyết trình" nhé.` };
+      }
+      const bad = [...line].find(ch => !/[a-zA-Z0-9 .,!?'":;()-]/.test(ch));
+      return { ok: false, error_vi: `Dòng ${i + 1} có ký tự chưa hỗ trợ: "${bad}". Ô này chỉ nhận câu tiếng Anh.` };
     }
     result.push({ id: `s${i + 1}`, text_en: line });
   }
@@ -82,7 +103,7 @@ export function parseHomeworkLines(sentences_text) {
  */
 export function parseFrameStems(frame_text) {
   const raw = String(frame_text || '');
-  const lines = raw.split('\n').map(l => l.trim()).filter(Boolean);
+  const lines = raw.split('\n').map(l => normalizeTeacherLine(l).replace(/_{2,}/g, '___')).filter(Boolean);
   if (lines.length > 8) {
     return { ok: false, error_vi: 'Tối đa 8 dòng khung câu.' };
   }

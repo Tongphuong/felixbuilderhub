@@ -145,6 +145,17 @@ assigns, commits, merges, deploys, or spends.
 - Verified commit: 4a2c771 (on origin/claude/speakup-v0; review surface =
   deployed preview — rule 20)
 - Started: 2026-07-07
+- Addendum 2026-07-07 (validation fix, Phương-approved plan): Phương's real
+  Stage-4 assignment failed with a bare `validation_failed` alert. Two
+  defects: (a) classes.astro throws `result.message||result.error`,
+  swallowing the endpoint's `error_vi`; (b) the sentences-box charset
+  rejects real teacher input (colon titles, curly apostrophes, pasted
+  `___` stems) and frame blanks under 3 underscores fail. Fix inside this
+  task (same files already owned): normalizeTeacherLine (curly→straight,
+  dash/ellipsis/NBSP), `_{2,}`→`___` in frames, charset += `:;()`,
+  actionable error_vi (underscore→"put it in the frame box" hint, else
+  name the character), client shows error_vi. Reuse survey: N/A — bugfix,
+  builds nothing new. Cost: ≤$0.05 Aider Junior.
 
 ## Prior task (complete): speakup-azure-pa-utf8-fix
 

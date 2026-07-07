@@ -9,6 +9,7 @@ import {
   buildHomeworkRecord,
   validatePhotoRef,
   normalizeHomeworkRecord,
+  normalizeTeacherLine,
 } from '../functions/api/_homework.js';
 
 // ---------------------------------------------------------------------------
@@ -486,4 +487,45 @@ test('endpoint: invalid photo (r2_key from another class) → 400 validation_fai
   const code2 = JSON.parse(kv.store.get('CODE2'));
   assert.equal(code1.homework, undefined);
   assert.equal(code2.homework, undefined);
+});
+
+test('teacher input normalization: curly quotes/apostrophes/dashes become plain in sentences', () => {
+  const r = parseHomeworkLines('It’s sunny today.\n“Great job” - said Minny');
+  assert.equal(r.ok, true);
+  assert.equal(r.lines[0].text_en, "It's sunny today.");
+  assert.equal(r.lines[1].text_en, '"Great job" - said Minny');
+});
+
+test('sentences: colon title passes; underscore line gets the frame-box hint; foreign char is named', () => {
+  assert.equal(parseHomeworkLines('Stage 4: MY TRIP STORY!').ok, true);
+  const underscore = parseHomeworkLines('Last summer, I went to ________ .');
+  assert.equal(underscore.ok, false);
+  assert.match(underscore.error_vi, /Khung thuyết trình/);
+  const viet = parseHomeworkLines('Bé đọc to');
+  assert.equal(viet.ok, false);
+  assert.match(viet.error_vi, /"é"/);
+});
+
+test('frame: long underscore runs and 2-underscore blanks normalize to ___; Stage-4 stems all pass', () => {
+  const short = parseFrameStems('I went to __ .');
+  assert.equal(short.ok, true);
+  assert.equal(short.stems[0].text_en, 'I went to ___ .');
+  const stage4 = parseFrameStems([
+    '“Last summer, I went to ________ .”',
+    '“The weather was ________ .”',
+    '“I saw ________ . It was ________ !”',
+    '“I ________ with my ________ .”',
+    '“I felt ________ because ________ .”',
+    '“It was the best trip because ________ !”',
+  ].join('\n'));
+  assert.equal(stage4.ok, true);
+  assert.equal(stage4.stems.length, 6);
+  assert.equal(stage4.stems[0].text_en, '"Last summer, I went to ___ ."');
+  assert.deepEqual(stage4.stems[0].anchor_words, ['last', 'summer', 'i', 'went', 'to']);
+});
+
+test('frame: a line with no blank at all still gets the missing-blank error', () => {
+  const r = parseFrameStems('I like my trip.');
+  assert.equal(r.ok, false);
+  assert.match(r.error_vi, /chỗ trống/);
 });
