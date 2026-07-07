@@ -7,6 +7,7 @@ import {
   makeHomeworkPhotoId,
   validatePhotoFile,
 } from '../functions/api/admin/classes/[id]/homework-photo.js';
+import { onRequestGet as kidPhoto } from '../functions/api/speakup-homework-photo.js';
 
 function createKv(records = {}) {
   const store = new Map();
@@ -155,4 +156,89 @@ test('preview GET streams a valid key and rejects foreign/malformed keys', async
     params: { id: 'class1' },
   });
   assert.equal(traversal.status, 404);
+});
+
+function kidCodeRecord(withPhoto = true) {
+  return {
+    student_profile: { name: 'Linh' },
+    homework: {
+      schema_version: 2,
+      note_vi: '',
+      sentences: [{ id: 's1', text_en: 'Hi.', hint_vi: null }],
+      frame: null,
+      photo: withPhoto
+        ? { id: 'hp_abc123def456', r2_key: 'homework/class1/hp_abc123def456.jpg', content_type: 'image/jpeg', size: 9 }
+        : null,
+      history: [],
+    },
+  };
+}
+
+function kidRequest(code, id) {
+  return new Request(`https://example.com/api/speakup-homework-photo?code=${code}&id=${id}`);
+}
+
+test('kid photo: valid code + current photo id streams the image with private caching', async () => {
+  const kv = createKv({ 'R2L-A-1111': kidCodeRecord() });
+  const r2 = createR2();
+  await r2.put('homework/class1/hp_abc123def456.jpg', 'jpeg-bytes', { httpMetadata: { contentType: 'image/jpeg' } });
+  const response = await kidPhoto({
+    request: kidRequest('R2L-A-1111', 'hp_abc123def456'),
+    env: { READ2LEAD_CODES: kv, R2L_MEDIA: r2 },
+  });
+  assert.equal(response.status, 200);
+  assert.equal(response.headers.get('Content-Type'), 'image/jpeg');
+  assert.match(response.headers.get('Cache-Control'), /private/);
+  assert.ok(response.headers.get('ETag'));
+});
+
+test('kid photo: 304 on matching If-None-Match', async () => {
+  const kv = createKv({ 'R2L-A-1111': kidCodeRecord() });
+  const r2 = createR2();
+  await r2.put('homework/class1/hp_abc123def456.jpg', 'jpeg-bytes', { httpMetadata: { contentType: 'image/jpeg' } });
+  const env = { READ2LEAD_CODES: kv, R2L_MEDIA: r2 };
+  const first = await kidPhoto({ request: kidRequest('R2L-A-1111', 'hp_abc123def456'), env });
+  const etag = first.headers.get('ETag');
+  const second = await kidPhoto({
+    request: new Request(`https://example.com/api/speakup-homework-photo?code=R2L-A-1111&id=hp_abc123def456`, {
+      headers: { 'If-None-Match': etag },
+    }),
+    env,
+  });
+  assert.equal(second.status, 304);
+});
+
+test('kid photo: wrong code → 4xx JSON, never the image', async () => {
+  const kv = createKv({ 'R2L-A-1111': kidCodeRecord() });
+  const r2 = createR2();
+  await r2.put('homework/class1/hp_abc123def456.jpg', 'jpeg-bytes', { httpMetadata: { contentType: 'image/jpeg' } });
+  const response = await kidPhoto({
+    request: kidRequest('R2L-GHOST-9999', 'hp_abc123def456'),
+    env: { READ2LEAD_CODES: kv, R2L_MEDIA: r2 },
+  });
+  assert.equal(response.status, 404);
+  assert.equal((await response.json()).error, 'code_not_found');
+});
+
+test('kid photo: id not on the CURRENT homework (e.g. old/foreign photo) → 404', async () => {
+  const kv = createKv({ 'R2L-A-1111': kidCodeRecord() });
+  const r2 = createR2();
+  await r2.put('homework/class1/hp_zzz999zzz999.jpg', 'old-bytes', { httpMetadata: { contentType: 'image/jpeg' } });
+  const response = await kidPhoto({
+    request: kidRequest('R2L-A-1111', 'hp_zzz999zzz999'),
+    env: { READ2LEAD_CODES: kv, R2L_MEDIA: r2 },
+  });
+  assert.equal(response.status, 404);
+});
+
+test('kid photo: v1 homework (no photo field) → 404, no crash', async () => {
+  const record = kidCodeRecord(false);
+  record.homework.schema_version = 1;
+  delete record.homework.photo;
+  const kv = createKv({ 'R2L-A-1111': record });
+  const response = await kidPhoto({
+    request: kidRequest('R2L-A-1111', 'hp_abc123def456'),
+    env: { READ2LEAD_CODES: kv, R2L_MEDIA: createR2() },
+  });
+  assert.equal(response.status, 404);
 });
