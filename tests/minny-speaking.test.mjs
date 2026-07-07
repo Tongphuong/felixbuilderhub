@@ -193,3 +193,10 @@ test('buildHomeworkSteps: v2 record with photo exposes only the photo id', () =>
   assert.deepEqual(mode.photo, { id: 'hp_abc123def456' });
   assert.equal(JSON.stringify(mode).includes('r2_key'), false, 'r2_key must never reach the client');
 });
+
+test('speak-up page has the homework photo thumb, lightbox, and authorized endpoint URL', () => {
+  assert.ok(speakingPage.includes('hw-photo-thumb-btn'), 'photo thumb button in story card');
+  assert.ok(speakingPage.includes('hw-photo-lightbox'), 'lightbox dialog present');
+  assert.ok(speakingPage.includes('/api/speakup-homework-photo?code='), 'photo fetched through the code-authorized endpoint');
+  assert.ok(speakingPage.includes('spk-mode-card__badge'), 'mode card attachment badge');
+});

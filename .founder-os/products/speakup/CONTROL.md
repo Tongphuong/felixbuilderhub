@@ -69,6 +69,64 @@ assigns, commits, merges, deploys, or spends.
 
 ## Current task
 
+- Status: active
+- Task ID: speakup-homework-photo-v2
+- Owner: Claude Lead (plan + review + integration); packets dispatched to
+  Aider Junior/Senior per fit; kid-page UI packet gated on a design mock
+  Phương approves first.
+- Lane: `claude/speakup-v0`, primary checkout.
+- Problem: homework is text-only (sentences + frame boxes), but Phương
+  usually sends kids a photo (textbook page / picture / exercise — varies);
+  kids must see that photo in the app while practicing. Plan approved by
+  Phương 2026-07-07 (plan file: `~/.claude/plans/while-i-m-testing-i-streamed-falcon.md`).
+  Locked decisions: 1 photo per homework; keep the two-box form; no new
+  task types; grading untouched; photo-only homework is a non-goal.
+- Reuse survey: Cloudflare R2 via existing `R2L_MEDIA` binding + the
+  portfolio upload/serve pattern (ADOPTED — `admin/portfolio/upload.js`
+  formData→validate→R2.put; `parent/video.js` code-authorized streaming;
+  `authorizeParentCode` reused for the kid endpoint); Cloudflare Images
+  (REJECTED — paid add-on, overkill for 20-student pilot); external image
+  CDN e.g. Cloudinary (REJECTED — new vendor for kids' data, R2 already
+  bound); base64-in-KV like the TTS cache (REJECTED — photos are MBs,
+  binary belongs in R2 per the repo's own portfolio precedent).
+- Acceptance criteria (per approved plan):
+  1. Schema v2: `homework.photo` descriptor (single), v1 records normalized
+     on read everywhere, no KV migration, history untouched.
+  2. Admin upload endpoint (Basic-Auth, class-scoped R2 key, jpeg/png/webp
+     ≤8MB, HEIC rejected with Vietnamese message) + admin preview GET.
+  3. Kid endpoint serves the current homework photo only with a valid
+     student code (reuses authorizeParentCode; 4xx JSON otherwise).
+  4. Homework POST accepts/validates the photo descriptor; same descriptor
+     written to every roster code (one R2 object, N references).
+  5. Modal: single photo picker + thumbnail + remove, client downscale
+     1600px/q0.85, clean abort on upload failure.
+  6. Kid page: photo thumb in the story card on every homework step +
+     tap-to-fullscreen lightbox (≥44px targets), design mock approved by
+     Phương BEFORE build; 📎 hint on the mode card.
+  7. Suite green + `astro build` clean per packet; live verification on the
+     deployed preview incl. v1-compat, security (wrong code 4xx), and
+     Azure grading unchanged.
+- Files owned: `functions/api/_homework.js`,
+  `functions/api/minny-speaking-context.js`,
+  `functions/api/admin/classes/[id]/homework.js`,
+  `functions/api/admin/classes/[id]/homework-photo.js` (new),
+  `functions/api/speakup-homework-photo.js` (new),
+  `src/components/admin/HomeworkModal.astro`,
+  `src/pages/admin/classes.astro`, `src/pages/speak-up.astro`,
+  `src/styles/speakup-app.css`, `tests/admin-homework.test.mjs`,
+  `tests/homework-photo.test.mjs` (new), `tests/minny-speaking.test.mjs`,
+  `docs/ENV.md` (R2L_MEDIA drift note).
+- Stop condition: any diff touching the scoring endpoint, recorder/mic
+  files, guardrails, or caps — stop and escalate. No merge to main.
+- Cost ceiling: Aider dispatches ≤ USD 0.50 total; Claude Lead on Max plan
+  (not metered); runtime cost ≈ USD 0 (R2 free tier, 10GB).
+- Design self-verification: (pending — packets 6–7)
+- Founder handoff: (pending)
+- Verified commit: (pending)
+- Started: 2026-07-07
+
+## Prior task (complete): speakup-azure-pa-utf8-fix
+
 - Status: complete
 - Task ID: speakup-azure-pa-utf8-fix
 - Owner: Aider Junior (dispatch) + Claude (review) — one bounded concern,

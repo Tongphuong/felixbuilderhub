@@ -130,6 +130,10 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
               </div>
               <p class="spk-story-card__meta hidden" id="frame-meta"></p>
             </div>
+            <button id="hw-photo-thumb-btn" type="button" class="spk-hw-photo hidden" aria-label="Xem ảnh bài tập">
+              <img id="hw-photo-thumb-img" src="" alt="Ảnh bài tập thầy gửi" loading="lazy" />
+              <span class="spk-hw-photo__cap">📎 Ảnh bài tập của thầy — chạm để phóng to</span>
+            </button>
             <p class="spk-story-card__en" id="prompt-en"></p>
             <ol id="frame-stems" class="hidden"></ol>
           </div>
@@ -170,6 +174,12 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
           </div>
         </div>
       </section>
+
+      <dialog id="hw-photo-lightbox" class="spk-hw-lightbox">
+        <img id="hw-photo-full" src="" alt="Ảnh bài tập phóng to" />
+        <p class="spk-hw-lightbox__cap">Ảnh bài tập của thầy 📎</p>
+        <button id="hw-photo-close" type="button" class="spk-hw-lightbox__close">✕ Đóng</button>
+      </dialog>
 
       <!-- ============ Free Talking (7b) ============ -->
       <div id="free-talk-screen" class="hidden">
@@ -530,6 +540,23 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       window.speechSynthesis.speak(utterance);
     }
 
+    // Homework photo lightbox: tap thumb → full-size; ✕, backdrop tap, or
+    // Esc (native dialog) closes.
+    document.getElementById('hw-photo-thumb-btn')?.addEventListener('click', () => {
+      const lightbox = document.getElementById('hw-photo-lightbox');
+      const full = document.getElementById('hw-photo-full');
+      const thumbImg = document.getElementById('hw-photo-thumb-img');
+      if (!lightbox || !full || !thumbImg?.src) return;
+      full.src = thumbImg.src;
+      lightbox.showModal();
+    });
+    document.getElementById('hw-photo-close')?.addEventListener('click', () => {
+      document.getElementById('hw-photo-lightbox')?.close();
+    });
+    document.getElementById('hw-photo-lightbox')?.addEventListener('click', (event) => {
+      if (event.target === event.currentTarget) event.currentTarget.close();
+    });
+
     function renderModeCards() {
       const cardsEl = document.getElementById('mode-cards');
       if (!cardsEl) return;
@@ -542,6 +569,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
               <span class="spk-mode-card__emoji" aria-hidden="true">${MODE_EMOJI[mode.id] || '✨'}</span>
               <span class="spk-mode-card__title">${escapeHtml(mode.title_vi)}</span>
               <span class="spk-mode-card__desc">${escapeHtml(mode.subtitle_vi || '')}</span>
+              ${mode.id === 'homework' && mode.photo?.id ? '<span class="spk-mode-card__badge">📎 Có ảnh đính kèm</span>' : ''}
             </button>
           `,
         )
@@ -617,6 +645,20 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       enEl.textContent = step.prompt_en || step.question_en || '';
       if (eyebrowEl) eyebrowEl.textContent = mode.title_vi || 'Luyện nói';
       renderFrameStems(step);
+
+      const photoBtn = document.getElementById('hw-photo-thumb-btn');
+      if (photoBtn) {
+        const photoUrl = mode.id === 'homework' && mode.photo?.id
+          ? `/api/speakup-homework-photo?code=${encodeURIComponent(state.accessCode)}&id=${encodeURIComponent(mode.photo.id)}`
+          : null;
+        if (photoUrl) {
+          const thumbImg = document.getElementById('hw-photo-thumb-img');
+          if (thumbImg.getAttribute('src') !== photoUrl) thumbImg.src = photoUrl;
+          photoBtn.classList.remove('hidden');
+        } else {
+          photoBtn.classList.add('hidden');
+        }
+      }
 
       // Frame steps get the 7a rail/story/recorder layout.
       const isFrameStep = step.check_mode === 'frame';
