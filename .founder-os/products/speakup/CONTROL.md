@@ -383,10 +383,13 @@ This UI-fidelity task does not touch any Phase 6 file.
    self-verification; includes the fix for the hidden-thumb bug the
    concurrent session caught (4a2c771).
 7. Live end-to-end on the deployed preview (real upload → real R2 photo →
-   kid sees it) — **BLOCKED on Phương**: R2L_MEDIA binding missing in the
-   Preview environment (kid endpoint returned `config_error` live;
-   production has the binding — portfolio videos prove it). One dashboard
-   step, instructions handed off in chat 2026-07-07.
+   kid sees it) — **PARTIAL**: Preview R2L_MEDIA binding added by Phương
+   and live-verified 2026-07-07 (kid endpoint flipped from `config_error`
+   to `photo_not_found` at deploy `0b64a99` — storage reachable, auth +
+   lookup path correct). Remaining: one real photo assigned through
+   Phương's admin UI (Basic-Auth — the agent holds no admin credentials
+   by design), then agent verifies the kid side; folds into the
+   real-class dry run.
 
 Suite at close of packet 7: 860/860, `astro build` clean.
 
