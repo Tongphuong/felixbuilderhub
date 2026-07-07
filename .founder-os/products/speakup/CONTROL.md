@@ -66,6 +66,39 @@ assigns, commits, merges, deploys, or spends.
 
 ## Current task
 
+- Status: active
+- Task ID: speakup-azure-pa-live-verify
+- Owner: Claude Lead — direct execution (verification-only leg of
+  `speakup-voice-and-grading-reuse-overhaul`; no product code changes).
+- Lane: `claude/speakup-v0`, primary checkout.
+- Problem: Phương completed `_ops/AZURE_SPEECH_SETUP.md` (2026-07-07,
+  "azure is done"). The Azure Pronunciation Assessment path shipped in
+  `4369c5f` is unit-tested but was SKIPPED live (no key existed). Per the
+  setup doc's Part C: trigger a preview redeploy (env vars only apply to
+  new deployments) and verify one real graded recording end-to-end.
+- Reuse survey: N/A — verification of already-shipped code; builds nothing
+  new (only a `public/deploy-marker.txt` to detect the rebuild).
+- Acceptance criteria:
+  1. Preview redeployed after the env vars were added (marker file serves).
+  2. One real WAV recording POSTed to `/api/read2lead-speaking-check`
+     (check_mode 'read') on the DEPLOYED preview returns
+     `scorer: 'azure_pronunciation'` with per-word accuracy — proving key,
+     region, meter, and mapping all work live.
+  3. Any failure falls back to the local scorer (kids never blocked) —
+     report honestly which scorer answered.
+- Files owned: `public/deploy-marker.txt` (new, inert static file),
+  `.founder-os/products/speakup/CONTROL.md` (this record).
+- Stop condition: no product code changes; if Azure fails live, diagnose
+  and report — do not patch code under this task.
+- Cost ceiling: $0 (Azure F0 free tier, one ~10s call against a
+  5-audio-hour/month meter; Claude Lead on Max plan, not metered).
+- Design self-verification: (pending — API verification, no visuals)
+- Founder handoff: (pending)
+- Verified commit: (pending)
+- Started: 2026-07-07
+
+## Prior task (complete): speakup-voice-and-grading-reuse-overhaul
+
 - Status: complete
 - Task ID: speakup-voice-and-grading-reuse-overhaul
 - Owner: Claude Lead — direct execution (single tightly-coupled TTS helper +
