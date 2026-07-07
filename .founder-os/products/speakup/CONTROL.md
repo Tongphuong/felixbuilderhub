@@ -67,6 +67,52 @@ assigns, commits, merges, deploys, or spends.
 ## Current task
 
 - Status: complete
+- Task ID: speakup-azure-pa-utf8-fix
+- Owner: Aider Junior (dispatch) + Claude (review) — one bounded concern,
+  verbatim code provided in the instruction per the reliability rule.
+- Lane: `claude/speakup-v0`, primary checkout.
+- Problem: `btoa(JSON.stringify(...))` in `_azure-pronunciation.js` throws
+  on any non-Latin1 character in the reference text (curly apostrophe `’`,
+  curly quotes, Vietnamese diacritics) → Azure PA silently skipped, local
+  scorer answers. Live-proven 2026-07-07 under speakup-azure-pa-live-verify:
+  same audio scored `azure_pronunciation` with `'` and local with `’`.
+  Phương approved the fix ("go ahead").
+- Reuse survey: N/A — one-line bugfix to already-shipped code (UTF-8-safe
+  base64 via the platform's own TextEncoder + btoa; no new capability).
+- Acceptance criteria:
+  1. PA header built UTF-8-safely; curly-apostrophe/Vietnamese reference
+     text no longer throws.
+  2. New unit test: curly-apostrophe ReferenceText round-trips through the
+     header (UTF-8 base64 decode) and Azure path is taken (azureCalls = 1).
+  3. Full suite green, `astro build` clean.
+  4. Live re-verification on the DEPLOYED preview: the exact curly-apostrophe
+     sentence that fell back yesterday now returns
+     `scorer: azure_pronunciation`.
+- Files owned: `functions/api/_azure-pronunciation.js` (encoding line),
+  `tests/azure-pronunciation.test.mjs` (one new test).
+- Stop condition: any change beyond the header-encoding line and one test —
+  stop and escalate. No merge to main.
+- Cost ceiling: USD 0.05 (Aider Junior, DeepSeek V4 Flash, single small
+  dispatch); runtime cost unchanged (Azure F0 free tier).
+- Design self-verification: N/A — non-visual (encoding line + unit test; no
+  design reference). Live behavioral evidence on the DEPLOYED preview: the
+  exact curly-apostrophe sentence that fell back pre-fix ("Hello! I am
+  Minny. Let’s practice speaking together!") now returns
+  `scorer: azure_pronunciation` — 96/95/96/100, 2.7s, code R2L-ONG-U5M6.
+- Founder handoff: plain-language before/after in chat (old scorer 75 with
+  wrong word chips vs Azure 96 with per-word pronunciation analysis, same
+  audio). Bounded ask: regenerate Azure KEY 1 in the portal and paste the
+  new key into both Cloudflare environments (the old key was exposed in
+  chat during debugging), then say "key rotated" for a final spot check.
+- Verified commit: 5cacfc7 (on origin/claude/speakup-v0; review surface =
+  deployed preview claude-speakup-v0.felixbuilderhub.pages.dev — rule 20)
+- Actual cost: USD 0.0012 (Aider Junior, single dispatch, under the 0.05
+  ceiling).
+- Started: 2026-07-07
+
+## Prior task (complete): speakup-azure-pa-live-verify
+
+- Status: complete
 - Task ID: speakup-azure-pa-live-verify
 - Owner: Claude Lead — direct execution (verification-only leg of
   `speakup-voice-and-grading-reuse-overhaul`; no product code changes).
@@ -235,6 +281,20 @@ This UI-fidelity task does not touch any Phase 6 file.
 | `src/pages/read2lead/speaking.astro` | Aider Senior (dispatch, flagged-passthrough lines only) + Claude (review) | done |
 
 ## Acceptance criteria reconciliation
+
+### speakup-azure-pa-utf8-fix (2026-07-07)
+
+1. PA header built UTF-8-safely, no throw on curly/Vietnamese chars —
+   **PASS** (TextEncoder bytes → btoa; diff reviewed line by line, exactly
+   the instructed change and nothing else).
+2. New unit test: curly-apostrophe ReferenceText round-trips the header,
+   Azure path taken — **PASS** (azureCalls=1, ReferenceText equality via
+   UTF-8 base64 decode, score 88 from the fixture).
+3. Suite green + build clean — **PASS** (836/836, one new; `astro build`
+   25 pages clean).
+4. Live re-verification on the DEPLOYED preview with the pre-fix failing
+   sentence — **PASS** (`scorer: azure_pronunciation`, 96/95/96/100, 2.7s,
+   deployment marker run3, commit 5cacfc7 on origin).
 
 ### speakup-azure-pa-live-verify (2026-07-07)
 
