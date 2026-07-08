@@ -5,10 +5,12 @@
 - Branch: `claude/speakup-v0` (off `main`)
 - Preview URL: `claude-speakup-v0.felixbuilderhub.pages.dev` (Cloudflare Pages auto-deploy per push, per `claude/<topic>` convention in `BRANCH_CONVENTIONS.md`)
 - Active workers: 0
-- Last updated: 2026-07-07 (Azure Pronunciation Assessment LIVE-VERIFIED on
-  the deployed preview — real per-word grading active for homework reading;
-  btoa non-Latin1 bug found and fixed along the way; key rotation pending —
-  see Daily update)
+- Last updated: 2026-07-08 (photo-to-homework LIVE: Minny reads the
+  assignment photo and drafts the boxes for the teacher; photo-only
+  homework = look-and-speak graded by Azure unscripted pronunciation; all
+  live-verified on the deployed preview — see Daily update. Pending
+  Phương: red-team, ear test, phrases sign-off, dry run, key+password
+  rotation, then merge)
 
 ## Phase tracker (source of truth: `_ops/specs/SPEC_SPEAKUP_V0.md`)
 
@@ -69,7 +71,7 @@ assigns, commits, merges, deploys, or spends.
 
 ## Current task
 
-- Status: active
+- Status: complete
 - Task ID: speakup-photo-to-homework
 - Owner: Claude Lead (plan + review + integration); packets to Aider Junior
   with verbatim code; big-`.astro` packets direct-edit if Aider times out
@@ -125,9 +127,31 @@ assigns, commits, merges, deploys, or spends.
   No merge to main.
 - Cost ceiling: Aider ≤ USD 0.10; runtime ≈ USD 0 (free Neurons + Azure F0
   + KV meter).
-- Design self-verification: (pending — packets 2/5)
-- Founder handoff: (pending)
-- Verified commit: (pending)
+- Design self-verification: live-verified on the DEPLOYED preview via real
+  browser (playwright-core + system Chrome, real APIs, no stubbing):
+  (1) admin modal — picked the Stage-4 slide replica, status narrated
+  upload→"🔎 Minny đang đọc ảnh…"→"Minny đã đọc ảnh — thầy kiểm tra rồi
+  sửa giúp nhé ✏️", frame box auto-filled with all 6 stems, sentences box
+  left untouched, no save performed (`_ops/p2h-modal-draft-1280.png`);
+  (2) kid photo-only screen — R2L-PHUC-7TZV's real homework: prompt "Con
+  xem ảnh bài tập rồi thuyết trình theo ảnh nhé", slide legible in the
+  story card, recorder below, at 1280 + 390
+  (`_ops/p2h-kid-phototalk-1280.png`, `-390.png`); composition reuses the
+  already-approved practice layout, nothing extra/missing.
+- Founder handoff: plain-language report in chat with screenshots; PHUC's
+  code intentionally left holding a photo-only demo homework (the Stage-4
+  slide replica) so Phương can try both flows immediately; bounded asks:
+  try one real photo assignment on his phone (his dry-run step), rotate
+  ADMIN_PASSWORD + Azure KEY 1 before merge.
+- Verified commit: 3f8a607 (on origin/claude/speakup-v0; review surface =
+  deployed preview — rule 20)
+- Actual cost: Aider ≈ USD 0.004 (3 packets); vision + unscripted-PA live
+  testing within free tiers (Workers AI Neurons, Azure F0).
+- Live-debug trail (2026-07-08, all admin-authed via `detail` field):
+  Workers AI 5016 → one-time Meta license 'agree' submitted (per-account;
+  a new CF account would need it again); 3030 → messages+image rejected on
+  this build, prompt+byte-array pinned; `response` arrives as a pre-parsed
+  object (handled both shapes).
 - Started: 2026-07-07
 
 ## Prior task (complete): speakup-ft-instant-mic
@@ -495,7 +519,33 @@ This UI-fidelity task does not touch any Phase 6 file.
 
 ## Acceptance criteria reconciliation
 
-### speakup-homework-photo-v2 (2026-07-07, task still ACTIVE — item 7 blocked)
+### speakup-photo-to-homework (2026-07-08)
+
+1. Extract endpoint (vision draft, sanity-passed, failure-tolerant) —
+   **PASS** (unit: 880/880 incl. mocked-AI happy/garbage/thrown/foreign-key
+   cases; live: the Stage-4 slide replica returned all 6 frame stems with
+   `___` blanks on the deployed preview).
+2. Modal upload-on-pick + draft-fills-empty-boxes + status narration —
+   **PASS (live browser)**: real file pick → statuses in sequence → frame
+   box auto-filled 6 lines, sentences box untouched, cancel clean
+   (`_ops/p2h-modal-draft-1280.png`).
+3. Photo-only validation + `photo_talk` record + `hw_photo_talk` step —
+   **PASS** (unit + live: photo-only assignment to R2L-PHUC-7TZV → context
+   returns exactly one open step, max_seconds 75, photo id).
+4. Unscripted grading — **PASS** (unit: PA header WITHOUT ReferenceText
+   asserted, >30s skip; live: real WAV → `azure_pronunciation_unscripted`,
+   score 85 / accuracy 78 / fluency 96, 3.0s; scripted read path
+   regression-clean in suite).
+5. Live e2e + screenshots vs approved layouts — **PASS** (kid photo-only
+   screen at 1280+390, composition reuses the approved practice layout;
+   `_ops/p2h-kid-phototalk-*.png`).
+
+Live-debug detour (recorded in the task block): Meta license 5016 one-time
+'agree', 3030 input-shape pinning, object-shaped `response` handling — all
+resolved same-session; temp probe/debug code removed before completion
+(final endpoint is clean, `git show 3f8a607`).
+
+### speakup-homework-photo-v2 (2026-07-07 — closed same day; item 7 PASS, see task narrative)
 
 1. Schema v2 + normalize, no migration, history untouched — **PASS**
    (packet 1; 843/843 then; v1-compat unit tests).
@@ -702,6 +752,24 @@ run the red-team and these are closed out.
 
 ## Daily update
 
+- 2026-07-08: **Photo-to-homework shipped and live-verified.** Phương's
+  real workflow is photo-first, so now: (1) picking a photo in the
+  homework form uploads it immediately and a vision model (Workers AI
+  Llama 3.2 11B Vision, existing binding, no keys) reads it and drafts
+  the sentence/frame boxes — teacher reviews and saves; live test on a
+  Stage-4 slide replica extracted all 6 stems. (2) Photo-only saves are
+  now valid: kid sees the photo big and speaks about it, graded
+  pronunciation-only via Azure unscripted assessment (live: 85/78/96 in
+  3s; >30s clips fall back to the friendly open scorer). One-time Meta
+  license accepted for the vision model (account-level). Earlier the same
+  day: homework validation made teacher-friendly (curly quotes/blank runs
+  normalized, real error messages surfaced — Phương's Stage-4 assignment
+  had failed on this), homework photo feature completed end-to-end, Azure
+  per-word grading verified live, and two concurrent-session recorder
+  fixes (stuck button; instant mic) landed. 880/880 tests. **Awaiting
+  Phương:** try one real photo assignment on his phone; the standing
+  go-live list (red-team → ear test → phrases → dry run → rotate Azure
+  key + admin password → merge).
 - 2026-07-07: **Azure pronunciation grading is LIVE and verified end-to-end
   on the deployed preview.** Phương created the free Azure Speech resource
   and set both Cloudflare variables (his setup was correct on the first
