@@ -128,9 +128,12 @@ export async function onRequestPost(context) {
     const input = variants[body.variant] || variants.v3;
     const result = await env.AI.run(VISION_MODEL, input);
     const raw = result?.response ?? result?.description ?? '';
-    const draft = buildDraft(parseVisionReply(raw));
+    // Some Workers AI builds return `response` as an already-parsed object
+    // (JSON mode); others as a string to parse.
+    const parsed = raw && typeof raw === 'object' ? raw : parseVisionReply(raw);
+    const draft = buildDraft(parsed);
     if (body.debug === true) {
-      return json({ ok: true, draft, raw: String(raw).slice(0, 1500), result_keys: Object.keys(result || {}) });
+      return json({ ok: true, draft, raw: JSON.stringify(raw).slice(0, 1500), result_keys: Object.keys(result || {}) });
     }
     return json({ ok: true, draft });
   } catch (err) {
