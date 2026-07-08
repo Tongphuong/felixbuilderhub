@@ -503,6 +503,13 @@ import HomeworkModal from '../../components/admin/HomeworkModal.astro';
       document.getElementById('homework-photo-pick').classList.add('hidden');
     }
 
+    function hwPhotoStatus(msg) {
+      const el = document.getElementById('homework-photo-status');
+      if (!el) return;
+      el.textContent = msg || '';
+      el.classList.toggle('hidden', !msg);
+    }
+
     function hwPhotoClear() {
       const thumb = document.getElementById('homework-photo-thumb');
       if (thumb.src.startsWith('blob:')) URL.revokeObjectURL(thumb.src);
@@ -512,6 +519,7 @@ import HomeworkModal from '../../components/admin/HomeworkModal.astro';
       preview.classList.remove('flex');
       document.getElementById('homework-photo-pick').classList.remove('hidden');
       hwPhotoState = { status: 'none' };
+      hwPhotoStatus('');
     }
 
     function hwPhotoPrefill(photo, classId) {
@@ -547,12 +555,60 @@ import HomeworkModal from '../../components/admin/HomeworkModal.astro';
       document.getElementById('homework-photo-input').click();
     });
 
-    document.getElementById('homework-photo-input')?.addEventListener('change', (event) => {
+    // Photo uploads on pick (not at save) so Minny can read it and draft
+    // the boxes while the teacher is still in the form. Extraction is
+    // best-effort: it only ever fills EMPTY boxes and failures just leave
+    // a hint — assignment is never blocked by it.
+    document.getElementById('homework-photo-input')?.addEventListener('change', async (event) => {
       const file = event.target.files?.[0];
       event.target.value = '';
       if (!file) return;
-      hwPhotoState = { status: 'pending', file };
+      const classId = document.getElementById('homework-class-id').value;
       hwPhotoShowPreview(URL.createObjectURL(file));
+      hwPhotoStatus('Đang tải ảnh…');
+      try {
+        const blob = await hwPhotoDownscale(file);
+        const fd = new FormData();
+        fd.append('photo', blob, blob.type === 'image/jpeg' ? 'photo.jpg' : (file.name || 'photo'));
+        const upRes = await fetch(`/api/admin/classes/${encodeURIComponent(classId)}/homework-photo`, {
+          method: 'POST',
+          body: fd,
+        });
+        const upResult = await upRes.json();
+        if (!upRes.ok || !upResult.ok) {
+          throw new Error(upResult.error_vi || upResult.message || upResult.error || 'Không tải được ảnh');
+        }
+        hwPhotoState = { status: 'saved', descriptor: upResult.photo };
+        hwPhotoStatus('🔎 Minny đang đọc ảnh…');
+        const exRes = await fetch(`/api/admin/classes/${encodeURIComponent(classId)}/homework-photo-extract`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ r2_key: upResult.photo.r2_key }),
+        });
+        const exResult = await exRes.json().catch(() => ({}));
+        const draft = exResult && exResult.ok ? exResult.draft : null;
+        if (draft) {
+          const sentencesEl = document.getElementById('homework-sentences');
+          const frameEl = document.getElementById('homework-frame');
+          let filled = false;
+          if (draft.sentences_text && !sentencesEl.value.trim()) {
+            sentencesEl.value = draft.sentences_text;
+            filled = true;
+          }
+          if (draft.frame_text && !frameEl.value.trim()) {
+            frameEl.value = draft.frame_text;
+            filled = true;
+          }
+          hwPhotoStatus(filled
+            ? 'Minny đã đọc ảnh — thầy kiểm tra rồi sửa giúp nhé ✏️'
+            : 'Minny đã đọc ảnh; các ô đã có nội dung nên giữ nguyên.');
+        } else {
+          hwPhotoStatus('Minny chưa đọc được ảnh — thầy nhập tay giúp nhé.');
+        }
+      } catch (err) {
+        hwPhotoClear();
+        alert('Lỗi tải ảnh: ' + err.message);
+      }
     });
 
     document.getElementById('homework-photo-remove')?.addEventListener('click', hwPhotoClear);
@@ -595,25 +651,8 @@ import HomeworkModal from '../../components/admin/HomeworkModal.astro';
       submitBtn.disabled = true;
       submitBtn.textContent = 'Đang lưu...';
       try {
-        let photoDescriptor = hwPhotoState.status === 'saved' ? hwPhotoState.descriptor : null;
-        if (hwPhotoState.status === 'pending') {
-          submitBtn.textContent = 'Đang tải ảnh...';
-          const blob = await hwPhotoDownscale(hwPhotoState.file);
-          const fd = new FormData();
-          fd.append('photo', blob, blob.type === 'image/jpeg' ? 'photo.jpg' : (hwPhotoState.file.name || 'photo'));
-          const upRes = await fetch(`/api/admin/classes/${encodeURIComponent(classId)}/homework-photo`, {
-            method: 'POST',
-            body: fd,
-          });
-          const upResult = await upRes.json();
-          if (!upRes.ok || !upResult.ok) {
-            throw new Error(upResult.error_vi || upResult.message || upResult.error || 'Không tải được ảnh');
-          }
-          photoDescriptor = upResult.photo;
-          hwPhotoState = { status: 'saved', descriptor: photoDescriptor };
-          submitBtn.textContent = 'Đang lưu...';
-        }
-        body.photo = photoDescriptor;
+        // Photo already uploaded on pick; save just references it.
+        body.photo = hwPhotoState.status === 'saved' ? hwPhotoState.descriptor : null;
         const res = await fetch(`/api/admin/classes/${encodeURIComponent(classId)}/homework`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
