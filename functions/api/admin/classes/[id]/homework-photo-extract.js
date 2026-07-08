@@ -90,16 +90,33 @@ export async function onRequestPost(context) {
   }
 
   try {
-    const bytes = new Uint8Array(await object.arrayBuffer());
+    const buffer = await object.arrayBuffer();
+    const contentType = object.httpMetadata?.contentType || 'image/jpeg';
+    // Model input per the Workers AI Llama-vision tutorial: messages +
+    // a base64 data URL in `image` (a prompt + byte-array input throws).
     const result = await env.AI.run(VISION_MODEL, {
-      image: [...bytes],
-      prompt: VISION_PROMPT,
+      messages: [{ role: 'user', content: VISION_PROMPT }],
+      image: `data:${contentType};base64,${arrayBufferToBase64(buffer)}`,
       max_tokens: 1024,
     });
     const draft = buildDraft(parseVisionReply(result?.response ?? result?.description ?? ''));
     return json({ ok: true, draft });
   } catch (err) {
     console.error(`[homework-photo-extract] vision failed: ${err?.message}`);
-    return json({ ok: true, draft: null, reason: 'vision_failed' });
+    // detail is admin-facing (Basic-Auth route) — makes live failures
+    // diagnosable without Cloudflare log access.
+    return json({ ok: true, draft: null, reason: 'vision_failed', detail: String(err?.message || '').slice(0, 200) });
   }
+}
+
+// btoa can't take huge argument spreads; convert in chunks (same pattern
+// as the private helper in _minny-tts.js).
+function arrayBufferToBase64(buffer) {
+  const bytes = new Uint8Array(buffer);
+  let binary = '';
+  const CHUNK = 0x8000;
+  for (let i = 0; i < bytes.length; i += CHUNK) {
+    binary += String.fromCharCode.apply(null, bytes.subarray(i, i + CHUNK));
+  }
+  return btoa(binary);
 }
