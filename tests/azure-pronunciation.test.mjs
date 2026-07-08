@@ -6,7 +6,9 @@ import {
   azureUsageKey,
   azureUnderFreeTier,
   azureBumpUsage,
+  assessPronunciationWithAzure,
   mapAzureReadResult,
+  mapAzureOpenResult,
   AZURE_PA_MONTHLY_FREE_SECONDS,
 } from '../functions/api/_azure-pronunciation.js';
 import {
@@ -226,4 +228,79 @@ test('free-talk submissions are never redirected (LLM handles Vietnamese there)'
 
 test('detectVietnameseSpeech is safe without an AI binding', async () => {
   assert.equal(await detectVietnameseSpeech(new Blob(['x']), null), false);
+});
+
+test('unscripted PA: header has NO ReferenceText and EnableMiscue false; scripted keeps both', async () => {
+  let header = null;
+  const fetchFn = async (url, init) => {
+    header = JSON.parse(Buffer.from(init.headers['Pronunciation-Assessment'], 'base64').toString('utf8'));
+    return new Response(JSON.stringify(AZURE_NBEST), { status: 200 });
+  };
+  await assessPronunciationWithAzure({
+    env: { AZURE_SPEECH_KEY: 'k', AZURE_SPEECH_REGION: 'southeastasia' },
+    audioBlob: new Blob(['wav'], { type: 'audio/wav' }),
+    referenceText: '',
+    fetchFn,
+  });
+  assert.equal('ReferenceText' in header, false);
+  assert.equal(header.EnableMiscue, false);
+  await assessPronunciationWithAzure({
+    env: { AZURE_SPEECH_KEY: 'k', AZURE_SPEECH_REGION: 'southeastasia' },
+    audioBlob: new Blob(['wav'], { type: 'audio/wav' }),
+    referenceText: 'I like apples.',
+    fetchFn,
+  });
+  assert.equal(header.ReferenceText, 'I like apples.');
+  assert.equal(header.EnableMiscue, true);
+});
+
+test('runSpeakingCheck: photo_talk WAV ≤30s graded unscripted, keeps open contract', async () => {
+  const kv = makeFakeKv();
+  let azureCalls = 0;
+  const fetchFn = async (url, init) => {
+    azureCalls += 1;
+    const params = JSON.parse(Buffer.from(init.headers['Pronunciation-Assessment'], 'base64').toString('utf8'));
+    assert.equal('ReferenceText' in params, false);
+    return new Response(JSON.stringify(AZURE_NBEST), { status: 200 });
+  };
+  const result = await runSpeakingCheck({
+    audioBlob: new Blob(['wav-bytes'], { type: 'audio/wav' }),
+    expectedText: 'photo_talk',
+    checkMode: 'open',
+    env: { AZURE_SPEECH_KEY: 'k', AZURE_SPEECH_REGION: 'southeastasia', READ2LEAD_CODES: kv },
+    fetchFn,
+  });
+  assert.equal(azureCalls, 1);
+  assert.equal(result.scorer, 'azure_pronunciation_unscripted');
+  assert.equal(result.check_mode, 'open');
+  assert.equal(result.score_percent, 88);
+  assert.ok(Array.isArray(result.words_matched));
+  assert.ok(result.feedback_vi.length > 0);
+});
+
+test('runSpeakingCheck: photo_talk clip over 30s skips Azure and uses the open scorer', async () => {
+  const kv = makeFakeKv();
+  let azureCalls = 0;
+  const fetchFn = async () => {
+    azureCalls += 1;
+    return new Response(JSON.stringify(AZURE_NBEST), { status: 200 });
+  };
+  const bigWav = new Blob([new Uint8Array(31 * 32000)], { type: 'audio/wav' });
+  const fakeAi = {
+    async run() {
+      return { text: 'I can see a big mountain and a river in the picture.' };
+    },
+  };
+  const result = await runSpeakingCheck({
+    audioBlob: bigWav,
+    expectedText: 'photo_talk',
+    checkMode: 'open',
+    ai: fakeAi,
+    env: { AZURE_SPEECH_KEY: 'k', AZURE_SPEECH_REGION: 'southeastasia', READ2LEAD_CODES: kv },
+    fetchFn,
+  });
+  assert.equal(azureCalls, 0);
+  assert.equal(result.scorer, undefined);
+  assert.equal(result.check_mode, 'open');
+  assert.ok(result.score_percent >= 0);
 });

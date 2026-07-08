@@ -15,6 +15,10 @@ export const AZURE_PA_TIMEOUT_MS = 15000;
 export const AZURE_PA_MONTHLY_FREE_SECONDS = 5 * 3600; // F0 tier: 5 audio hours
 export const AZURE_PA_EST_SECONDS_PER_CALL = 30; // read steps cap at 30s
 
+// Unscripted (no reference text) grading goes through the same short-audio
+// REST endpoint, which caps at 30s. WAV PCM 16k mono is 32000 bytes/s.
+export const AZURE_PA_UNSCRIPTED_MAX_WAV_BYTES = 30 * 32000 + 44;
+
 export function azureSpeechConfigured(env = {}) {
   return Boolean(env.AZURE_SPEECH_KEY && env.AZURE_SPEECH_REGION);
 }
@@ -49,13 +53,21 @@ export async function azureBumpUsage(kv, seconds = AZURE_PA_EST_SECONDS_PER_CALL
 export async function assessPronunciationWithAzure({ env, audioBlob, referenceText, fetchFn = fetch }) {
   const region = String(env.AZURE_SPEECH_REGION || '').trim();
   const key = String(env.AZURE_SPEECH_KEY || '').trim();
-  const paJson = JSON.stringify({
-    ReferenceText: referenceText,
+  // Scripted mode compares against referenceText; unscripted mode (empty
+  // referenceText) grades pronunciation of whatever was said — Microsoft's
+  // "Speaking scenario". Miscue only makes sense with a reference.
+  const paParams = {
     GradingSystem: 'HundredMark',
     Granularity: 'Phoneme',
     Dimension: 'Comprehensive',
-    EnableMiscue: true,
-  });
+  };
+  if (referenceText) {
+    paParams.ReferenceText = referenceText;
+    paParams.EnableMiscue = true;
+  } else {
+    paParams.EnableMiscue = false;
+  }
+  const paJson = JSON.stringify(paParams);
   // btoa alone throws on non-Latin1 chars (curly quotes, Vietnamese
   // diacritics) — encode the UTF-8 bytes instead.
   const paHeader = btoa(String.fromCharCode(...new TextEncoder().encode(paJson)));
@@ -159,5 +171,23 @@ export function mapAzureReadResult(best) {
     words_close: wordsClose,
     words_missed: wordsMissed,
     word_feedback: wordFeedback,
+  };
+}
+
+// Maps Azure's unscripted assessment onto the open-result client contract
+// (feedback_vi and check_mode are composed by the caller).
+export function mapAzureOpenResult(best) {
+  const round = (v) => (Number.isFinite(Number(v)) ? Math.round(Number(v)) : null);
+  return {
+    transcript: String(best.Display || '').trim(),
+    score_percent: round(best.PronScore) ?? 0,
+    accuracy_percent: round(best.AccuracyScore),
+    fluency_percent: round(best.FluencyScore),
+    scorer: 'azure_pronunciation_unscripted',
+    correct_count: 0,
+    total_count: 1,
+    words_missed: [],
+    words_close: [],
+    words_matched: [],
   };
 }

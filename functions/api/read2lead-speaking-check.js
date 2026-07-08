@@ -6,7 +6,9 @@ import {
   azureBumpUsage,
   assessPronunciationWithAzure,
   mapAzureReadResult,
+  mapAzureOpenResult,
   AZURE_PA_EST_SECONDS_PER_CALL,
+  AZURE_PA_UNSCRIPTED_MAX_WAV_BYTES,
 } from './_azure-pronunciation.js';
 
 export const SKIP_WORDS = new Set([
@@ -489,6 +491,40 @@ export async function runSpeakingCheck({
     }
   }
 
+  // Photo-only homework ("photo_talk"): the photo carries the task, so
+  // there is no reference text — grade pronunciation-only via Azure's
+  // unscripted mode (REST caps at 30s of audio). Anything else — longer
+  // clips, Azure down/over tier, non-WAV — falls through to the normal
+  // transcribe + open scorer below. Scripted read grading is untouched.
+  if (
+    checkMode === 'open'
+    && expectedText === 'photo_talk'
+    && env && azureSpeechConfigured(env) && isWav
+    && audioBlob.size <= AZURE_PA_UNSCRIPTED_MAX_WAV_BYTES
+  ) {
+    const kv = env.READ2LEAD_CODES;
+    if (await azureUnderFreeTier(kv)) {
+      try {
+        const best = await assessPronunciationWithAzure({
+          env,
+          audioBlob,
+          referenceText: '',
+          fetchFn,
+        });
+        await azureBumpUsage(kv, AZURE_PA_EST_SECONDS_PER_CALL);
+        const mapped = mapAzureOpenResult(best);
+        return {
+          ok: true,
+          ...mapped,
+          feedback_vi: feedbackOpenVi(mapped.score_percent),
+          check_mode: 'open',
+        };
+      } catch (err) {
+        console.error(`[read2lead-speaking-check] azure unscripted PA failed (${err?.message} ${err?.detail || ''}); using open scorer`);
+      }
+    }
+  }
+
   const transcript = await transcribeAudio(audioBlob, { ai, openaiApiKey, fetchFn });
   if (!transcript) {
     const error = new Error('empty_transcript');
@@ -760,4 +796,3 @@ function json(body, status = 200) {
     headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' },
   });
 }
-
