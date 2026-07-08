@@ -4,6 +4,7 @@ import { buildWeeklyGrowthForProfile } from './_read2lead-growth.js';
 import { buildSkillQuality } from './_read2lead-profile-quality.js';
 import { loadProgressState, PACKS_TO_NEXT_LEVEL, publicProgressState } from './_read2lead-v2-state.js';
 import { isV2PackSchemaVersion, packHasV2Schema } from './_read2lead-pack-schema.js';
+import { reconcileStrandedPack } from './_read2lead-reconcile-stranded.js';
 
 export async function onRequestGet(context) {
   const { request, env } = context;
@@ -34,6 +35,11 @@ export async function onRequestGet(context) {
   // promoted the pack), Felixar dashboard would stay stuck "Đang tạo bài"
   // forever. Reconcile by reading task state KV directly here.
   codeData = await reconcileGenerationState(env.READ2LEAD_CODES, code, codeData);
+
+  // Self-heal finished-but-stranded packs (1502dd6 outage / old manual-save
+  // funnel): finish the save from the kid's own recorded work so the
+  // dashboard shows the truth without requiring the lesson page to be opened.
+  ({ codeData } = await reconcileStrandedPack({ env, accessCode: code, codeData }));
 
   const legacyProgress = normalizeProgress(codeData);
   const v2State = await loadProgressState(env, code, codeData);
