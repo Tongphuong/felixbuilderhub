@@ -97,11 +97,19 @@ test('parent guidance strip with per-activity help', () => {
   assert.ok(minnyIdx > dockIdx, 'MinnyCoachStrip should appear after StoryDock');
 });
 
-test('submit confirmation modal before lesson submit', () => {
-  assert.match(lessonPage, /id="submit-confirm-modal"/);
-  assert.match(lessonPage, /id="submit-confirm-yes"/);
-  assert.match(lessonPage, /id="submit-confirm-no"/);
-  assert.match(lessonPage, /submit-confirm-modal'\)\?\.classList\.remove\('hidden'\)/);
-  assert.match(lessonPage, /submit-confirm-yes.*submit-lesson/s);
-  assert.doesNotMatch(lessonPage, /if \(allDone\) \{\s*qs\('#submit-lesson'\)\?\.click\(\)/s);
+test('lesson auto-submits when all activities complete (no confirm modal)', () => {
+  // The old two-click "Hoàn thành nhiệm vụ → Lưu chiến công" modal funnel lost
+  // ~90% of finished packs; the lesson must save itself with zero clicks.
+  assert.doesNotMatch(lessonPage, /submit-confirm-modal/);
+  assert.doesNotMatch(lessonPage, /submit-confirm-yes/);
+  assert.match(lessonPage, /function _r2lScheduleAutoSubmit/);
+  assert.match(lessonPage, /Minny đang tự động lưu chiến công/);
+  // Last-activity completion schedules the auto-save (burst-friendly delay).
+  assert.match(lessonPage, /_r2lScheduleAutoSubmit\(details\?\.skipped_due_to_mic \? 500 : 1700\)/);
+  // The global CTA all-done branch is a direct manual fallback, not a modal.
+  assert.match(lessonPage, /if \(allDone\) \{\s*submitLesson\(\{ trigger: 'manual' \}\);/s);
+  // A saved-but-unsent payload is re-sent automatically on the next visit.
+  assert.match(lessonPage, /submitLesson\(\{ trigger: 'auto', payload: pendingSubmit \}\)/);
+  // A finished-but-never-submitted resumed session finishes the save itself.
+  assert.match(lessonPage, /_r2lScheduleAutoSubmit\(600\)/);
 });

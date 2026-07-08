@@ -1,10 +1,10 @@
 # Control — Read2Lead
 
 - Product: Read2Lead
-- Current goal: Give kids a nearby, beatable rival on the ranking board instead of only Gold-tier bots that are out of reach for most of them
-- Latest staging URL: none
-- Active workers: 0
-- Last updated: 2026-07-04
+- Current goal: Stop kids losing finished packs — auto-save the lesson the moment the last exercise is done (remove the "Lưu chiến công" click funnel)
+- Latest staging URL: none yet (preview URL recorded after first push of claude/r2l-auto-save)
+- Active workers: 1 (Claude Lead, direct edit — protected file)
+- Last updated: 2026-07-08
 
 ## Operating team
 
@@ -18,6 +18,59 @@
 Decision path: `Phuong -> Claude -> one worker -> Claude review -> Phuong approval`.
 
 ## Current task
+
+- Status: active
+- Started: 2026-07-08
+- Task ID: R2L-AUTO-SAVE-COMPLETION
+- Owner: Claude Lead (spec + execute + review; `lesson.astro` is PROTECTED —
+  Claude edits directly per `~/.claude/hooks/aider-dispatch-protected.json`)
+- Lane: product (protected "lesson completion logic" invariant — dedicated
+  approved spec: `_ops/specs/SPEC_R2L_AUTO_SAVE_COMPLETION.md`, plan approved
+  by Phuong 2026-07-08)
+- Problem: ~90% of kids finish all 5 exercises but never save the pack. The
+  finish path requires clicking "Hoàn thành nhiệm vụ 🎉" → confirming a modal
+  ("Lưu chiến công") → waiting for a network POST. Kids close the tab after
+  the last exercise; the pack stays `awaiting_review` forever.
+- Approach: auto-submit the moment the last activity completes (mirror the
+  existing book-lesson `bookFinishReader()` pattern), delete the confirm
+  modal, keep "Gửi lại" retry on failure, and auto-retry the saved pending
+  payload on next page load. Client-only; server endpoint already idempotent.
+- Acceptance criteria: standard 5-activity lesson auto-submits with zero
+  clicks after the last activity (celebration burst not cut off — 1700ms
+  delay, 500ms on mic-skip); `#submit-confirm-modal` removed; `#lesson-continue`
+  all-done branch calls `submitLesson()` directly as manual fallback;
+  `updateGlobalCta()` shows saving/fallback states; pending submit auto-retries
+  on load with the saved payload; resumed all-done sessions auto-submit;
+  failed-pass and offline paths show toast + "Gửi lại" and re-enable manual
+  save; book/W1 flows unchanged, no double-fire (`submitInFlight` +
+  `_r2lAutoSubmitArmed`); `tests/lesson-ux-regression.test.mjs` modal test
+  rewritten; `node --test` passes; no unrelated refactor.
+- Files owned: src/pages/read2lead/lesson.astro,
+  tests/lesson-ux-regression.test.mjs,
+  .founder-os/products/read2lead/CONTROL.md (this entry)
+- Non-goals: no server function changes (submit endpoint idempotency +
+  once-per-pack penalty already sufficient); no checkpoint-to-finalize
+  server rescue (rejected Option B); no reward/scoring changes.
+- Stop condition: tests green, build clean, live e2e on deployed preview
+  (zero-click auto-save observed via Playwright), founder_check gates PASS,
+  Phuong approves merge to main.
+- Cost ceiling: USD 0 metered — Claude Lead direct on Max plan (protected
+  file, no Aider dispatch); actual cost: USD 0.
+- Reuse survey: (1) in-repo book-lesson auto-submit pattern
+  (`bookFinishReader()`, lesson.astro:6192) — adopted as the model for the
+  trigger; (2) `navigator.sendBeacon` checkpoint rescue promoted to
+  server-side finalization (external pattern: beacon-based analytics
+  saves) — rejected: checkpoint payload lacks submit-shape data, server
+  double-reward risk; (3) localStorage pending-queue libraries (e.g.
+  workbox-background-sync) — rejected: existing hand-rolled
+  savePendingSubmit/loadPendingSubmit already shipped and sufficient, a
+  service-worker dependency is overkill for one endpoint.
+- Design self-verification: pending (no new visual design — flow change uses
+  existing completion card/confetti; will record rendered-preview evidence)
+- Founder handoff: pending
+- Verified commit: pending
+
+## Previous task
 
 - Status: complete
 - Task ID: R2L-BOT-STATS-MANUAL
@@ -46,8 +99,6 @@ Decision path: `Phuong -> Claude -> one worker -> Claude review -> Phuong approv
 - Stop condition: tests green (727/727), founder_check.py --gate build PASS,
   Phuong approved merge to main (2026-07-04) — done. She now creates/tunes
   bot accounts herself via the new control.
-
-## Previous task
 
 - Status: complete
 - Task ID: R2L-PACK-BLOCK-CTA
