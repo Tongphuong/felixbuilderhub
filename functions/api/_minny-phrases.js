@@ -60,6 +60,19 @@ export const MINNY_PHRASES = [
     subtitle_vi: 'Hôm nay chưa có bài tập về nhà. Con kiểm tra lại sau buổi học tiếp theo nhé!',
   },
   {
+    // Short 'thinking' filler lines played while Minny generates a reply,
+    // so the wait feels alive. Awaiting Phuong's brand-voice sign-off
+    // together with the other phrases.
+    id: 'thinking_1',
+    text_en: 'Hmm, let me think!',
+    subtitle_vi: 'Hmm, để Minny nghĩ xíu nhé!',
+  },
+  {
+    id: 'thinking_2',
+    text_en: 'Ooh, let me see!',
+    subtitle_vi: 'Ồ, để Minny xem nào!',
+  },
+  {
     // Spoken intro for the speech-frame ("thuyết trình") step — before this,
     // the frame screen's Listen button played nothing at all. Awaiting
     // Phương's brand-voice sign-off together with the other phrases.

@@ -75,6 +75,14 @@ test('buildSystemPrompt unknown level falls back to L3 register', () => {
   assert.ok(prompt.includes('x'));
 });
 
+test('buildSystemPrompt persona is the red robot, never a koala', () => {
+  // Minny is a red robot (the design mock's koala was a stand-in) — the
+  // persona line must never regress or Minny tells kids she is a koala.
+  const prompt = buildSystemPrompt('L3', 'their favorite food');
+  assert.match(prompt, /red robot/);
+  assert.doesNotMatch(prompt, /koala/i);
+});
+
 test('parseModelReply valid JSON returns object', () => {
   const result = parseModelReply('{"reply_en":"Hi there!","mood":"celebrate"}');
   assert.deepEqual(result, { reply_en: 'Hi there!', mood: 'celebrate' });

@@ -140,3 +140,14 @@ test('MINNY_PHRASES contains exactly 6 redirect and 2 wrap_up ids', () => {
   assert.equal(redirectIds.length, 6);
   assert.equal(wrapUpIds.length, 2);
 });
+
+test('MINNY_PHRASES contains the two short thinking filler phrases', () => {
+  for (const id of ['thinking_1', 'thinking_2']) {
+    const phrase = MINNY_PHRASES.find(p => p.id === id);
+    assert.ok(phrase, `${id} present (free-talk thinking filler)`);
+    // Fillers must stay short — they play in the gap before the real reply
+    // and get cut off the moment the reply audio arrives.
+    assert.ok(phrase.text_en.length > 0 && phrase.text_en.length <= 40, `${id} short text_en`);
+    assert.ok(phrase.subtitle_vi.length > 0, `${id} has subtitle_vi`);
+  }
+});
