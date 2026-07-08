@@ -262,7 +262,7 @@ test('red-team: over-long model reply never reaches the kid, gets a canned redir
   const longReply = 'a'.repeat(250);
   const originalFetch = globalThis.fetch;
   globalThis.fetch = mockFetchFor(longReply);
-  const env = { READ2LEAD_CODES: fakeKv, OPENAI_API_KEY: 'test-key' };
+  const env = { READ2LEAD_CODES: fakeKv, OPENROUTER_API_KEY: 'test-key', OPENAI_API_KEY: 'test-key' };
 
   try {
     const start = await startSession(env);
@@ -281,7 +281,7 @@ test('red-team: URL-bearing model reply never reaches the kid, gets a canned red
   const urlReply = 'Check this out: http://example.com/thing';
   const originalFetch = globalThis.fetch;
   globalThis.fetch = mockFetchFor(urlReply);
-  const env = { READ2LEAD_CODES: fakeKv, OPENAI_API_KEY: 'test-key' };
+  const env = { READ2LEAD_CODES: fakeKv, OPENROUTER_API_KEY: 'test-key', OPENAI_API_KEY: 'test-key' };
 
   try {
     const start = await startSession(env);
@@ -302,6 +302,7 @@ test('red-team: Llama Guard down (throws) fails closed, safe-looking reply still
   globalThis.fetch = mockFetchFor(safeLookingReply);
   const env = {
     READ2LEAD_CODES: fakeKv,
+    OPENROUTER_API_KEY: 'test-key',
     OPENAI_API_KEY: 'test-key',
     AI: { run: async () => { throw new Error('llama guard down'); } },
   };
@@ -325,6 +326,7 @@ test('red-team: Llama Guard reachable and safe lets a clean reply through unchan
   globalThis.fetch = mockFetchFor(safeReply);
   const env = {
     READ2LEAD_CODES: fakeKv,
+    OPENROUTER_API_KEY: 'test-key',
     OPENAI_API_KEY: 'test-key',
     AI: { run: async () => 'safe' },
   };

@@ -71,6 +71,72 @@ assigns, commits, merges, deploys, or spends.
 
 ## Current task
 
+- Status: active
+- Task ID: speakup-brain-deepseek-swap
+- Owner: Claude Lead direct edit (small tightly-coupled 2-hunk swap, verbatim-prepared;
+  Aider tiers retired 2026-07-08 per ~/.claude/rules/worker-dispatch.md; independent
+  fresh-context Claude review agent ran on the diff — APPROVE, author ≠ final reviewer).
+- Lane: `claude/speakup-v0`, primary checkout.
+- Problem: Phương's OpenAI API credit ran out, so Free Talking's primary brain
+  (gpt-5.4-mini) fails every turn and kids silently ride the llama fallback plus a
+  wasted dead API call per turn. Phương chose (AskUserQuestion, 2026-07-08):
+  switch the primary to DeepSeek on his existing OpenRouter worker billing.
+- Reuse survey: OpenRouter DeepSeek V4 Flash (ADOPTED — existing billing,
+  OpenAI-compatible request shape; live-verified pre-change with the real key:
+  strict-JSON reply parses, 130 tokens ≈ $0.00002/turn); OpenAI top-up (REJECTED —
+  Phương declined); Workers AI llama-3.3 as primary (REJECTED — remains the free
+  fallback tier; DeepSeek chosen for reply quality); direct DeepSeek platform API
+  (REJECTED — second vendor account for the same model).
+- Acceptance criteria:
+  1. Primary conversation call goes to openrouter.ai with the pinned
+     `deepseek/deepseek-v4-flash`, JSON mode, 150 max_tokens, 8s timeout, gated on
+     `OPENROUTER_API_KEY`; missing key or any failure → existing llama fallback →
+     canned redirect (unchanged order). Unit-tested with a captured request.
+  2. Guardrails, caps, TTS chain (incl. OpenAI last-resort via `apiKey`) untouched.
+  3. Full suite green + `astro build` clean + independent diff review.
+  4. Live verification on the DEPLOYED preview once Phương adds
+     `OPENROUTER_API_KEY` to both Cloudflare environments — a real Free Talk turn
+     answered by DeepSeek (non-canned reply while llama fallback path also proven).
+- Files owned: `functions/api/minny-conversation.js` (primary-LLM block + model
+  constant), `tests/minny-conversation.test.mjs`, `tests/minny-guardrails.test.mjs`.
+- Stop condition: any diff touching guardrail screening, caps, canned phrases,
+  TTS chain internals, or scoring endpoints — stop and escalate. No merge to main.
+  HOLD PUSH while Phương runs his own preview test pass (2026-07-08 note) — deploy
+  only on his word or after he finishes.
+- Cost ceiling: Claude (Max plan, not metered); runtime ≈ $0.02–0.10/month at pilot
+  volume (150-token replies via OpenRouter).
+- Design self-verification: N/A visual (no UI change); behavioral evidence = new
+  captured-request unit test + pre-change live curl of the exact request shape with
+  the real key (reply parsed, model `deepseek/deepseek-v4-flash-20260423`).
+- Founder handoff: (pending — bounded ask: add OPENROUTER_API_KEY to Cloudflare
+  Preview + Production, then say the word for deploy + live re-verify)
+- Verified commit: (pending)
+- Started: 2026-07-08
+
+## Prior task (complete): speakup-stage-a-live-feel
+
+- Status: complete (full narrative in `_ops/AGENT_LOG.md` DONE entry 2026-07-08;
+  CONTROL.md slot was owned by the concurrent photo-to-homework session at the
+  time — ft-recorder-fix precedent — so this is the fold-in record).
+- Task ID: speakup-stage-a-live-feel
+- Owner: Claude Lead (speak-up.astro free-talk section direct edit, logged
+  precedent) + Aider Junior (persona line, filler phrases — final Aider dispatches
+  before the tier retired).
+- Summary: hands-free turn-taking (VAD on monitor voicedMs(), 1.5s pause auto-send,
+  auto re-arm after Minny speaks, r2l_ft_handsfree=0 escape hatch), thinking filler
+  phrases thinking_1/2 (sign-off list now 15), per-turn latency capture with p50 in
+  the session summary (first live numbers: p50 4469ms on the preview llama path),
+  koala→red-robot persona fix. 880/880 tests, build clean.
+- Design self-verification: live e2e on the DEPLOYED preview @ 4d98bbe (code
+  R2L-ONG-U5M6, stubbed mic fed real Minny TTS speech): 2 turns zero stop-taps,
+  auto re-arm zero clicks, filler prefetch observed, `[ft-latency]` lines + session
+  p50 logged; whole-screen screenshots `_ops/ft-handsfree-live-1280.png`,
+  `_ops/ft-handsfree-summary-1280.png` — 7b layout unchanged.
+- Verified commit: 4d98bbe (on origin/claude/speakup-v0)
+- Cost: Aider $0.0011 (2 dispatches); runtime ≈ $0 (2 cached TTS phrases).
+- Started/completed: 2026-07-08
+
+## Prior task (complete): speakup-photo-to-homework
 - Status: complete
 - Task ID: speakup-photo-to-homework
 - Owner: Claude Lead (plan + review + integration); packets to Aider Junior

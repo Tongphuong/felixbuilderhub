@@ -75,6 +75,67 @@ test('buildSystemPrompt unknown level falls back to L3 register', () => {
   assert.ok(prompt.includes('x'));
 });
 
+test('turn primary brain calls DeepSeek via OpenRouter with strict JSON mode', async () => {
+  // The OpenAI credit was retired 2026-07-08; the primary conversation call
+  // must hit OpenRouter with the pinned DeepSeek model and JSON mode, gated
+  // on OPENROUTER_API_KEY, and never touch api.openai.com.
+  const fakeKv = createFakeKv();
+  await fakeKv.put('R2L-TEST', JSON.stringify({ is_test: true, progress: { current_level: 'L2' } }));
+  const originalFetch = globalThis.fetch;
+  const env = {
+    READ2LEAD_CODES: fakeKv,
+    OPENROUTER_API_KEY: 'or-test-key',
+    AI: { run: async () => 'safe' },
+  };
+  const calls = [];
+  try {
+    globalThis.fetch = async (url, opts) => {
+      calls.push({
+        url: String(url),
+        body: opts?.body ? JSON.parse(opts.body) : null,
+        auth: opts?.headers?.Authorization || null,
+      });
+      if (String(url).includes('chat/completions')) {
+        return {
+          ok: true,
+          json: async () => ({ choices: [{ message: { content: JSON.stringify({ reply_en: 'Nice! Do you have a dog?', mood: 'idle' }) } }] }),
+        };
+      }
+      return { ok: true, arrayBuffer: async () => new TextEncoder().encode('fake-mp3').buffer };
+    };
+
+    const startResp = await onRequestPost({
+      request: new Request('http://x/api/minny-conversation', {
+        method: 'POST',
+        body: JSON.stringify({ action: 'start', access_code: 'R2L-TEST' }),
+      }),
+      env,
+    });
+    const startData = await startResp.json();
+    const turnResp = await onRequestPost({
+      request: new Request('http://x/api/minny-conversation', {
+        method: 'POST',
+        body: JSON.stringify({ action: 'turn', access_code: 'R2L-TEST', session_id: startData.session_id, transcript: 'I like dogs' }),
+      }),
+      env,
+    });
+    const turnData = await turnResp.json();
+    assert.equal(turnData.ok, true);
+    assert.equal(turnData.reply_en, 'Nice! Do you have a dog?');
+
+    const llmCall = calls.find(c => c.url.includes('chat/completions'));
+    assert.ok(llmCall, 'primary LLM call happened');
+    assert.match(llmCall.url, /openrouter\.ai\/api\/v1\/chat\/completions/);
+    assert.equal(llmCall.body.model, 'deepseek/deepseek-v4-flash');
+    assert.deepEqual(llmCall.body.response_format, { type: 'json_object' });
+    assert.equal(llmCall.body.max_tokens, 150);
+    assert.equal(llmCall.auth, 'Bearer or-test-key');
+    assert.ok(calls.every(c => !c.url.includes('api.openai.com')), 'no OpenAI call anywhere in the turn');
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
 test('buildSystemPrompt persona is the red robot, never a koala', () => {
   // Minny is a red robot (the design mock's koala was a stand-in) — the
   // persona line must never regress or Minny tells kids she is a koala.

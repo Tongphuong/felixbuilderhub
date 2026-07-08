@@ -4,6 +4,10 @@ import { resolveOpenAiApiKey, getOrSynthesize } from './_minny-tts.js';
 import { findPhrase } from './_minny-phrases.js';
 import { screenTranscript, validateReplyShape, detectCharacterBreak, scanBannedTopics, screenWithLlamaGuard } from './_minny-guardrails.js';
 
+// Conversation brain: DeepSeek via OpenRouter (existing worker billing).
+// One-line quality upgrade if ever needed: 'deepseek/deepseek-v4-pro'.
+const CONVO_MODEL = 'deepseek/deepseek-v4-flash';
+
 function json(body, status = 200) {
   return new Response(JSON.stringify(body), {
     status,
@@ -275,22 +279,26 @@ export async function onRequestPost(context) {
 
   let rawReply = null;
 
-  if (apiKey) {
+  // Primary brain swapped from OpenAI (credit retired 2026-07-08) to
+  // DeepSeek via OpenRouter — same OpenAI-compatible request shape.
+  // apiKey (OpenAI) remains in use below only for the TTS last-resort path.
+  const convoKey = env.OPENROUTER_API_KEY || null;
+  if (convoKey) {
     try {
-      const gptRes = await fetch('https://api.openai.com/v1/chat/completions', {
+      const llmRes = await fetch('https://openrouter.ai/api/v1/chat/completions', {
         method: 'POST',
-        headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
+        headers: { Authorization: `Bearer ${convoKey}`, 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          model: 'gpt-5.4-mini',
+          model: CONVO_MODEL,
           messages,
           response_format: { type: 'json_object' },
           max_tokens: 150,
         }),
         signal: AbortSignal.timeout(8000),
       });
-      if (gptRes.ok) {
-        const gptData = await gptRes.json();
-        rawReply = gptData?.choices?.[0]?.message?.content;
+      if (llmRes.ok) {
+        const llmData = await llmRes.json();
+        rawReply = llmData?.choices?.[0]?.message?.content;
       }
     } catch {
       // fall through
