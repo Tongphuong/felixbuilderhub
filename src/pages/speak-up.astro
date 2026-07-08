@@ -1426,7 +1426,140 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       micAcquire: null,
       micStreamDead: false,
       micGen: 0,
+      // Hands-free turn-taking (Stage A): silence-pause auto-send + auto
+      // re-arm after Minny speaks. First turn stays a manual tap (the monitor
+      // AudioContext must be created inside a user gesture on iOS).
+      vadTimerId: null,
+      autoArmTimerId: null,
+      // Thinking filler: short cached Minny lines played while the reply is
+      // generated (prefetched once per session, alternated per turn).
+      fillerClips: [],
+      fillerTimerId: null,
+      // Per-turn latency (stt_ms / brain_ms / total_ms); p50 goes into the
+      // session summary — the spec's 2.5s target was never measured live.
+      turnTimings: [],
     };
+
+    // Hands-free tuning. A pause this long after real speech sends the turn;
+    // escape hatch: localStorage r2l_ft_handsfree=0 restores pure tap-to-send.
+    const FT_VAD_PAUSE_MS = 1500;
+    const FT_VAD_MIN_VOICED_MS = 400;
+    const FT_VAD_MAX_WAIT_MS = 12000; // auto-armed mic heard nothing → settle to idle
+    const FT_FILLER_DELAY_MS = 1200; // thinking gap before the filler line plays
+
+    function ftHandsFreeOn() {
+      try {
+        return localStorage.getItem('r2l_ft_handsfree') !== '0';
+      } catch {
+        return true;
+      }
+    }
+
+    function ftStopVad() {
+      if (ft.vadTimerId) {
+        clearInterval(ft.vadTimerId);
+        ft.vadTimerId = null;
+      }
+    }
+
+    function ftCancelAutoArm() {
+      if (ft.autoArmTimerId) {
+        clearTimeout(ft.autoArmTimerId);
+        ft.autoArmTimerId = null;
+      }
+    }
+
+    // Watches monitor.voicedMs() while recording: it only grows while the kid
+    // is audibly speaking, so a frozen value = silence. After enough real
+    // speech plus a natural pause, the turn sends itself — no second tap.
+    function ftStartVad(session, monitor, finishRecording, autoArmed) {
+      ftStopVad();
+      if (!monitor?.available || typeof monitor.voicedMs !== 'function') return;
+      let lastVoicedMs = monitor.voicedMs();
+      let lastVoiceAt = Date.now();
+      const armedAt = Date.now();
+      ft.vadTimerId = window.setInterval(() => {
+        if (ft.recording !== session || session.status !== 'recording') {
+          ftStopVad();
+          return;
+        }
+        const voicedMs = monitor.voicedMs();
+        const now = Date.now();
+        if (voicedMs > lastVoicedMs) {
+          lastVoicedMs = voicedMs;
+          lastVoiceAt = now;
+          return;
+        }
+        if (voicedMs >= FT_VAD_MIN_VOICED_MS) {
+          if (now - lastVoiceAt >= FT_VAD_PAUSE_MS) {
+            ftStopVad();
+            finishRecording();
+          }
+        } else if (autoArmed && now - armedAt >= FT_VAD_MAX_WAIT_MS) {
+          // A hands-free mic that never heard the kid settles back to the
+          // button instead of looping silent recordings forever.
+          ftStopVad();
+          ftCleanupRecording();
+          ftUpdateRecordUi('Minny không nghe thấy con — nhấn nút để nói tiếp nhé!');
+        }
+      }, 150);
+    }
+
+    // After Minny finishes speaking, re-arm the mic so the kid just answers.
+    // Only once a manual tap has created the monitor (iOS gesture rule).
+    function ftMaybeAutoArm() {
+      if (!ftHandsFreeOn() || ft.ended || ft.recording || ft.awaitingReply) return;
+      if (!ft.micMonitor?.available) return;
+      if (document.visibilityState === 'hidden') return;
+      ftCancelAutoArm();
+      // Small gap so the mic never catches the tail of Minny's own audio.
+      ft.autoArmTimerId = window.setTimeout(() => {
+        ft.autoArmTimerId = null;
+        if (ft.ended || ft.recording || ft.awaitingReply) return;
+        if (document.visibilityState === 'hidden') return;
+        ftStartRecording({ auto: true });
+      }, 350);
+    }
+
+    // Prefetch the two thinking clips once per session (KV-cached server-side);
+    // best-effort garnish — a failure just means silence while thinking.
+    function ftPrefetchFiller() {
+      ft.fillerClips = [];
+      ['thinking_1', 'thinking_2'].forEach((phraseId, idx) => {
+        fetch('/api/minny-voice', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ access_code: state.accessCode, phrase_id: phraseId }),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (data?.ok && data.audio_b64) {
+              ft.fillerClips[idx] = { audio_b64: data.audio_b64, content_type: data.content_type };
+            }
+          })
+          .catch(() => {});
+      });
+    }
+
+    function ftPlayFiller() {
+      if (state.activeAudio) return; // never talk over anything
+      const clip = ft.fillerClips[ft.turnsUsed % 2] || ft.fillerClips.find(Boolean);
+      if (!clip) return;
+      const audio = new Audio(`data:${clip.content_type || 'audio/mpeg'};base64,${clip.audio_b64}`);
+      state.activeAudio = audio;
+      audio.addEventListener('ended', () => {
+        if (state.activeAudio === audio) state.activeAudio = null;
+      });
+      audio.play().catch(() => {
+        if (state.activeAudio === audio) state.activeAudio = null;
+      });
+    }
+
+    function ftLatencyP50() {
+      const totals = ft.turnTimings.map((t) => t.total_ms).sort((a, b) => a - b);
+      if (!totals.length) return null;
+      return totals[Math.floor((totals.length - 1) / 2)];
+    }
 
     function ftUpdateTimerDisplay() {
       const el = document.getElementById('free-talk-timer');
@@ -1486,6 +1619,19 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
         eyebrow.style.color = isThinking ? 'var(--gold-light)' : '';
       }
       ft.awaitingReply = isThinking;
+      // While Minny "thinks", a short cached filler line covers the silent
+      // gap — but only if the reply is genuinely slow (> FT_FILLER_DELAY_MS).
+      if (isThinking) {
+        if (!ft.fillerTimerId) {
+          ft.fillerTimerId = window.setTimeout(() => {
+            ft.fillerTimerId = null;
+            if (ft.awaitingReply && !ft.ended) ftPlayFiller();
+          }, FT_FILLER_DELAY_MS);
+        }
+      } else if (ft.fillerTimerId) {
+        clearTimeout(ft.fillerTimerId);
+        ft.fillerTimerId = null;
+      }
       const recordBtn = document.getElementById('free-talk-record');
       if (recordBtn) recordBtn.disabled = isThinking;
       ftUpdateRecordUi();
@@ -1547,6 +1693,9 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       audio.addEventListener('ended', () => {
         ftSetMood('idle');
         state.activeAudio = null;
+        // Minny finished speaking — hands-free mode re-arms the mic so the
+        // kid just answers, no tap (guarded inside for ended/hidden/etc).
+        ftMaybeAutoArm();
       });
       audio.play().catch(() => {
         const chip = document.getElementById('free-talk-play-chip');
@@ -1573,6 +1722,13 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       ft.flaggedSession = false;
       ft.lastKidChip = null;
       ft.lastKidChipSeconds = null;
+      ft.turnTimings = [];
+      ft.fillerClips = [];
+      ftCancelAutoArm();
+      if (ft.fillerTimerId) {
+        clearTimeout(ft.fillerTimerId);
+        ft.fillerTimerId = null;
+      }
       ftStopCountdown();
       ftCleanupRecording();
       ftReleaseMic();
@@ -1660,6 +1816,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
         if (state.micGateReady || window.R2LMicCheck?.sessionPassed?.()) {
           ftAcquireMic().catch(() => {});
         }
+        ftPrefetchFiller();
       } catch {
         ft.ended = true;
         ftShowWrapup({
@@ -1743,6 +1900,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
     }
 
     function ftCleanupRecording() {
+      ftStopVad();
       if (ft.recTimerId) {
         clearInterval(ft.recTimerId);
         ft.recTimerId = null;
@@ -1773,7 +1931,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       }
     }
 
-    async function ftStartRecording() {
+    async function ftStartRecording(opts) {
       if (ft.ended || ft.awaitingReply) return;
       stopPlayback();
       if (!micReady()) {
@@ -1884,6 +2042,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
         const finishRecording = async () => {
           if (finished) return;
           finished = true;
+          ftStopVad();
           if (ft.recTimerId) {
             clearInterval(ft.recTimerId);
             ft.recTimerId = null;
@@ -1927,6 +2086,9 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
         ft.recSecondsLeft = DEFAULT_MAX_SECONDS;
         recorder.start();
         ftUpdateRecordUi();
+        // Hands-free: a natural pause after real speech sends the turn — the
+        // kid talks, stops, and Minny answers. Tap still works as manual send.
+        if (ftHandsFreeOn()) ftStartVad(session, monitor, finishRecording, Boolean(opts?.auto));
 
         ft.recTimerId = window.setInterval(() => {
           ft.recSecondsLeft -= 1;
@@ -1955,6 +2117,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
 
     async function ftSubmitAudio(blob, durationSeconds) {
       ftSetThinking(true);
+      const submitStartedAt = Date.now();
       const formData = new FormData();
       formData.append('access_code', state.accessCode);
       formData.append('pack_id', 'general');
@@ -1974,14 +2137,17 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
         }
         ftAppendKidChip(durationSeconds);
         ft.sentenceCount += (data.transcript.match(/[.!?]+/g) || [1]).length;
-        await ftSubmitTurn(data.transcript);
+        await ftSubmitTurn(data.transcript, {
+          startedAt: submitStartedAt,
+          sttMs: Date.now() - submitStartedAt,
+        });
       } catch {
         ftSetThinking(false);
         ftUpdateRecordUi('Mạng không ổn định. Con thử lại nhé!');
       }
     }
 
-    async function ftSubmitTurn(transcript) {
+    async function ftSubmitTurn(transcript, timing) {
       try {
         const res = await fetch('/api/minny-conversation', {
           method: 'POST',
@@ -2009,6 +2175,18 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
         }
 
         ft.turnsUsed += 1;
+        if (timing) {
+          // stop-tap → transcript (STT) and transcript → spoken reply (LLM +
+          // guardrails + TTS): the two halves of the "Minny thinking" gap.
+          const totalMs = Date.now() - timing.startedAt;
+          const entry = {
+            stt_ms: timing.sttMs,
+            brain_ms: totalMs - timing.sttMs,
+            total_ms: totalMs,
+          };
+          ft.turnTimings.push(entry);
+          console.info('[ft-latency] turn', ft.turnsUsed, entry);
+        }
         ft.turnsLeft = data.turns_left ?? Math.max(0, ft.turnsLeft - 1);
         ft.secondsLeft = data.seconds_left ?? ft.secondsLeft;
         ftRenderDots();
@@ -2076,6 +2254,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       if (lineEl) lineEl.textContent = 'Con nói rõ ràng và tự tin lắm. Ngày mai kể tiếp cho Minny nghe nhé!';
 
       document.getElementById('free-talk-summary')?.classList.remove('hidden');
+      console.info('[ft-latency] session p50:', ftLatencyP50(), 'ms over', ft.turnTimings.length, 'turns');
 
       if (state.accessCode && state.packId) {
         fetch('/api/minny-practice-log', {
@@ -2092,6 +2271,8 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
               sentence_count: ft.sentenceCount,
               minutes: minutesUsed,
               flagged: ft.flaggedSession === true,
+              latency_p50_ms: ftLatencyP50(),
+              latency_turns: ft.turnTimings.length,
             },
           }),
         }).catch(() => {});
@@ -2117,8 +2298,10 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
     // Free the conversation mic when the tab is hidden and idle (the next tap
     // reacquires it); never interrupt an in-flight recording.
     document.addEventListener('visibilitychange', () => {
-      if (document.visibilityState === 'hidden' && ft.micStream && !ft.recording) {
-        ftReleaseMic();
+      if (document.visibilityState === 'hidden') {
+        // Never let a pending hands-free re-arm reopen the mic in a hidden tab.
+        ftCancelAutoArm();
+        if (ft.micStream && !ft.recording) ftReleaseMic();
       }
     });
 

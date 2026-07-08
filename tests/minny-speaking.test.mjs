@@ -40,6 +40,27 @@ test('speak-up page carries no Read2Lead activity (products share codes, not act
   assert.doesNotMatch(speakingPage, /Minny hỏi — con trả lời/);
 });
 
+test('speak-up page wires hands-free turn-taking with escape hatch and safety rails', () => {
+  // Silence-pause auto-send + auto re-arm (Stage A). The VAD polls the
+  // conversation monitor's voicedMs() — no change to r2l-recorder.js.
+  assert.ok(speakingPage.includes('FT_VAD_PAUSE_MS'), 'VAD pause constant present');
+  assert.ok(speakingPage.includes('FT_VAD_MIN_VOICED_MS'), 'min-voiced guard present');
+  assert.ok(speakingPage.includes('FT_VAD_MAX_WAIT_MS'), 'silent auto-arm timeout present');
+  assert.ok(speakingPage.includes("localStorage.getItem('r2l_ft_handsfree')"), 'hands-free escape hatch present');
+  assert.ok(speakingPage.includes('ftMaybeAutoArm'), 'auto re-arm after Minny speaks');
+  assert.ok(speakingPage.includes('ftStartVad(session, monitor, finishRecording'), 'VAD armed on recording start');
+  // Auto re-arm must stay behind the gesture-created monitor and a live tab.
+  assert.ok(speakingPage.includes('ft.micMonitor?.available'), 'auto-arm requires the gesture-created monitor');
+  assert.ok(speakingPage.includes('ftCancelAutoArm();'), 'hidden tab cancels pending auto-arm');
+});
+
+test('speak-up page plays thinking filler and records turn latency', () => {
+  assert.ok(speakingPage.includes("['thinking_1', 'thinking_2']"), 'prefetches both filler phrases');
+  assert.ok(speakingPage.includes('FT_FILLER_DELAY_MS'), 'filler waits for a genuinely slow reply');
+  assert.ok(speakingPage.includes('latency_p50_ms'), 'session summary carries latency p50');
+  assert.ok(speakingPage.includes('stt_ms'), 'per-turn timing split captured');
+});
+
 test('unified profile renders parent view with portfolio and dashboard', () => {
   assert.match(parentPortal, /renderParentView/);
   assert.match(parentPortal, /renderAll/);
