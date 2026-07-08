@@ -77,6 +77,18 @@ export async function onRequestPost(context) {
     return json({ ok: false, error: 'invalid_json' }, 400);
   }
 
+  // TEMPORARY one-time Meta license acceptance (Workers AI error 5016
+  // demands the literal prompt 'agree' once per account). Admin-authed;
+  // remove after the agreement sticks.
+  if (body.agree === true) {
+    try {
+      const res = await env.AI.run(VISION_MODEL, { prompt: 'agree' });
+      return json({ ok: true, agreed: true, result: res });
+    } catch (err) {
+      return json({ ok: false, error: 'agree_failed', detail: String(err?.message || '').slice(0, 300) });
+    }
+  }
+
   const classId = String(params.id || '');
   const key = String(body.r2_key || '');
   if (!/^[a-z0-9_-]+$/.test(classId)
