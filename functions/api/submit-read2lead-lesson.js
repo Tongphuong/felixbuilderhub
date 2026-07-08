@@ -113,13 +113,17 @@ function extractV2LessonContext(pack) {
   if (!context) return null;
   return {
     ...context,
+    // The standard lesson client renders 4 parts (FRONTEND_ACTIVITY_ORDER) and
+    // never submits a read_aloud result — expecting one here made every
+    // standard-pack submit fail since 1502dd6. Books keep read_aloud via the
+    // dedicated isBookFlowV2 path.
     activities: isBookLessonContext(context)
       ? context.activities
       : ensureSixActivities(context.activities, {
           story: context.story,
           topic: context.topic || '',
           activities: context.activities,
-        }),
+        }).filter((activity) => activity?.type !== 'read_aloud'),
   };
 }
 

@@ -289,7 +289,7 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
           <div>
             <p class="font-display text-xl font-bold text-cream">Hoàn thành nhiệm vụ</p>
             <p id="submit-hint" class="mt-1 text-sm text-cream/70">
-              Con hoàn thành đủ 4 phần rồi bấm nút này để lưu kết quả.
+              Làm xong hết các phần, Minny sẽ tự lưu chiến công cho con.
             </p>
           </div>
           <div class="flex flex-col gap-2 sm:flex-row sm:items-center">
@@ -321,17 +321,6 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
     <LevelUpModal />
     <RankUpModal />
 
-    <div id="submit-confirm-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/60">
-      <div class="mx-4 max-w-sm rounded-xl bg-navy-900 border border-gold/30 p-6 text-center">
-        <img src="/assets/minny/minny_celebrate.png" alt="Minny" width="80" height="80" class="mx-auto mb-3" />
-        <p class="font-display text-xl font-bold text-gold">Con đã xong bài!</p>
-        <p class="mt-2 text-sm text-cream/80">Lưu chiến công hôm nay?</p>
-        <div class="mt-5 flex gap-3 justify-center">
-          <button id="submit-confirm-yes" class="r2l-primary px-6" type="button">Lưu chiến công</button>
-          <button id="submit-confirm-no" class="r2l-secondary px-4" type="button">Quay lại</button>
-        </div>
-      </div>
-    </div>
   </main>
   <Footer />
   <script src={r2lRecorderSrc} defer></script>
@@ -4186,6 +4175,7 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
     }
 
     section.classList.remove('hidden');
+    qs('#global-cta')?.classList.add('hidden');
     window.requestAnimationFrame(() => {
       section.dataset.show = 'true';
     });
@@ -4196,6 +4186,7 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
   }
 
   function _r2lShowCompletionAfterTrivia(data) {
+    qs('#global-cta')?.classList.add('hidden');
     if (isW1() && !isBookLesson()) w1ShowResultRecap();
     const rewards = _r2lTriviaState.pendingRewards || data.rewards_earned || {};
     const completedWithoutReward = data.completed_without_reward === true;
@@ -4243,7 +4234,7 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
     const allDone = state.completedTypes.size >= activities.length;
 
     if (allDone) {
-      qs('#submit-confirm-modal')?.classList.remove('hidden');
+      submitLesson({ trigger: 'manual' });
       return;
     }
 
@@ -4251,15 +4242,6 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
     if (state.activityIndex < activities.length - 1) {
       showActivity(state.activityIndex + 1);
     }
-  });
-
-  qs('#submit-confirm-yes')?.addEventListener('click', () => {
-    qs('#submit-confirm-modal')?.classList.add('hidden');
-    qs('#submit-lesson')?.click();
-  });
-
-  qs('#submit-confirm-no')?.addEventListener('click', () => {
-    qs('#submit-confirm-modal')?.classList.add('hidden');
   });
 
   /* ----- Minny hero moods (video → PNG fallback) ----- */
@@ -4375,6 +4357,21 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
   }
 
   let submitInFlight = false;
+  let _r2lAutoSubmitArmed = false;
+  let _r2lAutoSubmitTimer = null;
+
+  // Kids abandoned packs when saving required extra taps after the last
+  // activity — the lesson now saves itself, like the book flow already does.
+  function _r2lScheduleAutoSubmit(delayMs) {
+    if (_r2lAutoSubmitArmed || submitInFlight || isBookLesson()) return;
+    _r2lAutoSubmitArmed = true;
+    qs('#submit-hint').textContent = 'Minny đang tự động lưu chiến công của con...';
+    updateGlobalCta();
+    _r2lAutoSubmitTimer = window.setTimeout(() => {
+      _r2lAutoSubmitTimer = null;
+      submitLesson({ trigger: 'auto' });
+    }, delayMs);
+  }
 
   function pendingSubmitKey(code, packId) {
     return `r2l_pending_submit:${code}:${packId}`;
@@ -6882,9 +6879,16 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
     if (resumed) {
       showToast('Con tiếp tục bài đang làm — không cần làm lại từ đầu nhé!', 5000);
     }
-    if (loadPendingSubmit()) {
-      qs('#submit-hint').textContent = 'Lần trước chưa gửi được kết quả. Con bấm Gửi lại nhé!';
-      qs('#submit-retry')?.classList.remove('hidden');
+    const pendingSubmit = loadPendingSubmit();
+    const totalActivities = (state.lesson?.activities || []).length;
+    if (pendingSubmit) {
+      qs('#submit-hint').textContent = 'Lần trước chưa lưu xong. Minny đang gửi lại kết quả của con...';
+      submitLesson({ trigger: 'auto', payload: pendingSubmit });
+    } else if (resumed && !isBookLesson() && totalActivities > 0
+        && state.completedTypes.size >= totalActivities) {
+      // Everything was finished last visit but the save never started
+      // (e.g. tab closed during the celebration) — finish the job now.
+      _r2lScheduleAutoSubmit(600);
     }
   }
 
@@ -7069,8 +7073,13 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
     const allDone = state.completedTypes.size >= activities.length;
 
     if (allDone) {
-      btn.textContent = 'Hoàn thành nhiệm vụ 🎉';
-      btn.disabled = false;
+      if (submitInFlight || _r2lAutoSubmitArmed) {
+        btn.textContent = 'Minny đang lưu chiến công...';
+        btn.disabled = true;
+      } else {
+        btn.textContent = 'Lưu chiến công 💾';
+        btn.disabled = false;
+      }
     } else if (isCurrentDone && !isLast) {
       const nextActivity = activities[state.activityIndex + 1];
       const nextLabel = ACTIVITY_LABELS[nextActivity?.type] || 'bài tiếp';
@@ -7962,6 +7971,11 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
       showMesoInterstitial(completedIndex, nextIndex);
     }
     saveLessonSession();
+    if (activities.length > 0 && state.completedTypes.size >= activities.length) {
+      // 1700ms lets the celebrate burst (auto-hides at 1450ms) finish first;
+      // mic-skip completions show no burst, so save sooner.
+      _r2lScheduleAutoSubmit(details?.skipped_due_to_mic ? 500 : 1700);
+    }
   }
 
   function updateProgress() {
@@ -8167,9 +8181,13 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
     return `${pageLabel} chưa đồng bộ đủ. Tiến độ của con vẫn được giữ; con mở lại ${pageNumbers.length === 1 ? 'trang này' : 'các trang này'} rồi bấm Gửi lại kết quả nhé!`;
   }
 
-  async function submitLesson() {
+  async function submitLesson({ trigger = 'manual', payload: payloadOverride = null } = {}) {
     if (submitInFlight) return;
     submitInFlight = true;
+    if (_r2lAutoSubmitTimer) {
+      window.clearTimeout(_r2lAutoSubmitTimer);
+      _r2lAutoSubmitTimer = null;
+    }
 
     const submitBtn = qs('#submit-lesson');
     const retryBtn = qs('#submit-retry');
@@ -8178,7 +8196,7 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
     qs('#book-reader-submit-retry')?.classList.add('hidden');
     if (isBookLesson()) qs('#book-reader-save-status').textContent = 'Minny đang tự động lưu kết quả...';
 
-    const payload = {
+    const payload = payloadOverride || {
       access_code: state.accessCode,
       pack_id: state.packId,
       answers: {
@@ -8217,6 +8235,12 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
         }
         submitInFlight = false;
         submitBtn.disabled = false;
+        _r2lAutoSubmitArmed = false;
+        updateGlobalCta();
+        if (trigger === 'auto') {
+          showToast(data.message || 'Chưa đạt điểm tối thiểu. Không sao, mình thử lại nhé!', 6000);
+          qs('#lesson-submit-panel')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
         return;
       }
       clearLessonSession();
@@ -8246,7 +8270,11 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
     } catch (error) {
       const message = error.name === 'AbortError'
         ? 'Mạng hơi chậm, chưa gửi được. Con bấm Gửi lại nhé!'
-        : (error.message || 'Chưa lưu được kết quả. Con bấm Gửi lại nhé!');
+        : (error.name === 'TypeError'
+          // A raw network failure throws an English TypeError ("Failed to
+          // fetch") — kids must only ever see Vietnamese.
+          ? 'Mất mạng rồi, chưa lưu được. Con bấm Gửi lại nhé!'
+          : (error.message || 'Chưa lưu được kết quả. Con bấm Gửi lại nhé!'));
       qs('#submit-hint').textContent = message;
       retryBtn?.classList.remove('hidden');
       if (isBookLesson()) {
@@ -8255,6 +8283,12 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
       }
       submitInFlight = false;
       submitBtn.disabled = false;
+      _r2lAutoSubmitArmed = false;
+      updateGlobalCta();
+      if (trigger === 'auto') {
+        showToast(message, 6000);
+        qs('#lesson-submit-panel')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
     }
   }
 
