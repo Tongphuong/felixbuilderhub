@@ -1,9 +1,9 @@
 # Control — Read2Lead
 
 - Product: Read2Lead
-- Current goal: Stop kids losing finished packs — auto-save the lesson the moment the last exercise is done (remove the "Lưu chiến công" click funnel)
-- Latest staging URL: none yet (preview URL recorded after first push of claude/r2l-auto-save)
-- Active workers: 1 (Claude Lead, direct edit — protected file)
+- Current goal: Rescue every kid's finished-but-stuck pack server-side ("Save all lessons for all kids" — Phuong, 2026-07-08, full authority incl. merge to main)
+- Latest staging URL: https://claude-r2l-stranded-rescue.felixbuilderhub.pages.dev (after first push)
+- Active workers: 1 (Claude Lead, direct — lesson completion logic, spec addendum 2)
 - Last updated: 2026-07-08
 
 ## Operating team
@@ -21,7 +21,95 @@ Decision path: `Phuong -> Claude -> one worker -> Claude review -> Phuong approv
 
 - Status: complete
 - Started: 2026-07-08
-- Completed: 2026-07-08 (awaiting Phuong review + merge approval)
+- Task ID: R2L-STRANDED-RESCUE
+- Owner: Claude Lead (spec + execute + review; lesson completion logic —
+  protected invariant, covered by spec addendum 2 in
+  _ops/specs/SPEC_R2L_AUTO_SAVE_COMPLETION.md; Phuong granted full authority
+  including merge to main: "Save all lessons for all kids... you have full
+  power, no need for my approval", 2026-07-08)
+- Lane: product (remediation of the 1502dd6 outage's stranded packs)
+- Problem: kids whose standard packs are finished but stuck at
+  awaiting_review (blocked by the 27/6–8/7 submit bug or the old click
+  funnel) only get rescued when THEY reopen the lesson page. Phuong wants
+  every stuck lesson saved proactively so dashboards look right immediately
+  and no kid feels bad.
+- Approach: server-side reconciliation on read. New
+  functions/api/_read2lead-reconcile-stranded.js pre-scores the kid's own
+  data (server checkpoint snapshot, else the exact payload of their last
+  failed submit attempt) with the fixed rules, and only when the outcome is
+  a genuine completion calls the real (now exported) submitV2Lesson —
+  identical rewards/gates/idempotency as a real submit. Wired into
+  read2lead-progress GET and the generate-read2lead-pack gate. Books and
+  genuinely-unfinished/below-50% packs are never touched.
+- Acceptance criteria: stranded-by-failed-attempt pack completes with
+  rewards on first progress read and is idempotent on the second;
+  stranded-by-checkpoint pack completes; genuinely-below-threshold pack is
+  left byte-identical (status, attempts, checkpoint); book packs untouched;
+  mic-skip source completes without reward; generate gate unblocks after
+  reconcile; node --test passes; no unrelated refactor.
+- Files owned: functions/api/_read2lead-reconcile-stranded.js (new),
+  functions/api/submit-read2lead-lesson.js (exports + no behavior change),
+  functions/api/read2lead-progress.js, functions/api/generate-read2lead-pack.js,
+  tests/read2lead-stranded-rescue.test.mjs (new),
+  .founder-os/products/read2lead/CONTROL.md (this entry)
+- Non-goals: no KV enumeration/sweep (no admin credentials by design;
+  on-read reconciliation reaches every active kid); no history rewriting
+  (XP penalty constant is 0 — nothing to refund); no book flow changes.
+- Stop condition: tests green, build clean, local wrangler e2e shows a
+  seeded stranded record flip to reviewed_pass_web_v2 on a plain progress
+  GET, gates PASS, merged to main (pre-authorized) and production verified.
+- Cost ceiling: USD 0 metered — Claude Lead direct on Max plan; actual: USD 0.
+- Reuse survey: (1) existing submitV2Lesson pipeline — adopted wholesale via
+  export (rewards/gates/idempotency identical to a real submit, no parallel
+  implementation); (2) wrangler remote KV sweep / admin API batch — rejected:
+  agent holds no CF/admin credentials by design and bulk enumeration of kid
+  records is riskier than on-read reconciliation; (3) client-side self-heal
+  (shipped in R2L-AUTO-SAVE-COMPLETION) — reused but insufficient alone: it
+  requires the kid to open the lesson page, which Phuong explicitly wants to
+  avoid.
+- Design self-verification: N/A visual (server-side behavior, no UI change,
+  no design mock) — behavior self-verified live by the building agent on
+  `wrangler pages dev` + seeded KV at commit 7572af4: (1) bug-window victim
+  record (real captured failed-submit payload, 95% true score) flipped to
+  reviewed_pass_web_v2 with XP 20 / coins 25 on a single plain dashboard
+  GET, idempotent across 3 reads; (2) checkpoint-only mic-skip kid completed
+  without reward; (3) half-finished kid stayed awaiting_review, zero KV
+  writes. 739/739 tests incl. 9 new covering all rescue/no-touch branches.
+- Founder handoff: executed under Phuong's explicit full authority ("Save
+  all lessons for all kids... you have full power, no need for my
+  approval"). Result reported in chat; no decisions pending. Named
+  boundary: production effect on real stranded kids is observable only when
+  their codes are next read — the reconciliation path is identical to the
+  live-verified local run, and production deploy of the same commit was
+  confirmed via bundle marker.
+- Verified commit: 7572af4 (on origin/claude/r2l-stranded-rescue; merged to
+  main immediately after per pre-authorization)
+
+## Acceptance criteria reconciliation
+
+- Stranded-by-failed-attempt pack completes with rewards on first progress
+  read, idempotent on repeat reads: PASS — unit test + live wrangler e2e
+  (3 consecutive GETs, xp/coins/completed_packs stable).
+- Stranded-by-checkpoint pack completes: PASS — unit test + live e2e.
+- Genuinely-below-threshold pack left byte-identical: PASS — unit test
+  asserts deepEqual + zero KV puts.
+- Genuinely-unfinished pack untouched: PASS — unit test + live e2e control.
+- Book packs untouched: PASS — unit test.
+- Mic-skip source completes without reward: PASS — unit test + live e2e
+  (xp 0, coins 0, status reviewed_pass_web_v2).
+- Generate gate unblocks after reconcile: PASS — reconcile wired before
+  the previous_pack_needs_review gate, source-order asserted by test;
+  full generate flow not driven live (would invoke the real Render backend
+  and spend a lượt) — SKIPPED live-drive with that reason.
+- node --test passes: PASS — 739/739 (9 new).
+- No unrelated refactor: PASS — submit endpoint changes are export
+  keywords only.
+
+## Previous task
+
+- Status: complete
+- Started: 2026-07-08
+- Completed: 2026-07-08 — merged to main b59f051 (Phuong approved), production verified live
 - Task ID: R2L-AUTO-SAVE-COMPLETION
 - Owner: Claude Lead (spec + execute + review; `lesson.astro` is PROTECTED —
   Claude edits directly per `~/.claude/hooks/aider-dispatch-protected.json`)
@@ -106,7 +194,7 @@ Decision path: `Phuong -> Claude -> one worker -> Claude review -> Phuong approv
 - Verified commit: 94d6602 (tip of origin/claude/r2l-auto-save; preview
   https://claude-r2l-auto-save.felixbuilderhub.pages.dev)
 
-## Acceptance criteria reconciliation
+### Acceptance criteria reconciliation (R2L-AUTO-SAVE-COMPLETION)
 
 - Zero-click auto-submit after last activity (1700ms / 500ms mic-skip):
   PASS — live e2e on wrangler+KV; hint "Minny đang tự động lưu chiến công
@@ -135,8 +223,6 @@ Decision path: `Phuong -> Claude -> one worker -> Claude review -> Phuong approv
 - No unrelated refactor: PASS — P0 server fix added under the AGENTS.md P0
   exception with a dated spec addendum (documented above), not silent scope
   creep.
-
-## Previous task
 
 - Status: complete
 - Task ID: R2L-BOT-STATS-MANUAL
