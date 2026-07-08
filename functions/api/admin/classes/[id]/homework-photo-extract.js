@@ -104,13 +104,29 @@ export async function onRequestPost(context) {
   try {
     const buffer = await object.arrayBuffer();
     const contentType = object.httpMetadata?.contentType || 'image/jpeg';
-    // Model input per the Workers AI Llama-vision tutorial: messages +
-    // a base64 data URL in `image` (a prompt + byte-array input throws).
-    const result = await env.AI.run(VISION_MODEL, {
-      messages: [{ role: 'user', content: VISION_PROMPT }],
-      image: `data:${contentType};base64,${arrayBufferToBase64(buffer)}`,
-      max_tokens: 1024,
-    });
+    // The exact image-input shape this model build accepts is being pinned
+    // live (Workers AI docs are inconsistent: 5016→license, then 3030 with
+    // messages+dataURL). TEMP: body.variant selects the shape; default v3.
+    const dataUrl = `data:${contentType};base64,${arrayBufferToBase64(buffer)}`;
+    const byteArray = [...new Uint8Array(buffer)];
+    const variants = {
+      v1: { prompt: VISION_PROMPT, image: byteArray, max_tokens: 1024 },
+      v2: { messages: [{ role: 'user', content: VISION_PROMPT }], image: dataUrl, max_tokens: 1024 },
+      v3: { messages: [{ role: 'user', content: VISION_PROMPT }], image: byteArray, max_tokens: 1024 },
+      v4: { prompt: VISION_PROMPT, image: dataUrl, max_tokens: 1024 },
+      v5: {
+        messages: [{
+          role: 'user',
+          content: [
+            { type: 'text', text: VISION_PROMPT },
+            { type: 'image_url', image_url: { url: dataUrl } },
+          ],
+        }],
+        max_tokens: 1024,
+      },
+    };
+    const input = variants[body.variant] || variants.v3;
+    const result = await env.AI.run(VISION_MODEL, input);
     const draft = buildDraft(parseVisionReply(result?.response ?? result?.description ?? ''));
     return json({ ok: true, draft });
   } catch (err) {
