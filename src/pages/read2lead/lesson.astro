@@ -8270,7 +8270,11 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
     } catch (error) {
       const message = error.name === 'AbortError'
         ? 'Mạng hơi chậm, chưa gửi được. Con bấm Gửi lại nhé!'
-        : (error.message || 'Chưa lưu được kết quả. Con bấm Gửi lại nhé!');
+        : (error.name === 'TypeError'
+          // A raw network failure throws an English TypeError ("Failed to
+          // fetch") — kids must only ever see Vietnamese.
+          ? 'Mất mạng rồi, chưa lưu được. Con bấm Gửi lại nhé!'
+          : (error.message || 'Chưa lưu được kết quả. Con bấm Gửi lại nhé!'));
       qs('#submit-hint').textContent = message;
       retryBtn?.classList.remove('hidden');
       if (isBookLesson()) {
