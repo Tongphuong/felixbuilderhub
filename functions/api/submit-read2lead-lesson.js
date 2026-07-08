@@ -101,7 +101,7 @@ export async function onRequestPost(context) {
   });
 }
 
-function extractV2LessonContext(pack) {
+export function extractV2LessonContext(pack) {
   const candidates = [
     pack?.review_context,
     pack?.pack,
@@ -127,7 +127,7 @@ function extractV2LessonContext(pack) {
   };
 }
 
-function isBookLessonContext(context) {
+export function isBookLessonContext(context) {
   return Boolean(
     /^book_[0-9]+$/.test(String(context?.book_slug || ''))
     && Array.isArray(context.activities)
@@ -161,7 +161,7 @@ function isV2PackReviewed(pack) {
 
 const DUPLICATE_SUBMIT_WINDOW_MS = 12000;
 export const SPEAKING_PASS_PERCENT = 50;
-const ACTIVE_LESSON_ACTIVITY_TYPES = new Set([
+export const ACTIVE_LESSON_ACTIVITY_TYPES = new Set([
   'listening_fill_blank',
   'listen_and_order',
   'reading_comprehension',
@@ -182,7 +182,7 @@ function hasPassingWebAttempt(currentPack) {
     .some((attempt) => attempt?.passed === true);
 }
 
-async function submitV2Lesson({
+export async function submitV2Lesson({
   accessCode,
   codeData,
   currentPack,
@@ -689,7 +689,7 @@ async function respondFromCachedAttempt({
   });
 }
 
-function scoreActivityResults(activityResults, lessonContext) {
+export function scoreActivityResults(activityResults, lessonContext) {
   const expectedActivities = (Array.isArray(lessonContext.activities) ? lessonContext.activities : [])
     .filter((activity) => ACTIVE_LESSON_ACTIVITY_TYPES.has(activity?.type));
   if (isBookLessonContext(lessonContext)) {

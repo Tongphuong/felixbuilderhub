@@ -5,6 +5,7 @@ import {
   PACKS_TO_NEXT_LEVEL,
   XP_PER_PASSED_PACK,
 } from './_read2lead-v2-state.js';
+import { reconcileStrandedPack } from './_read2lead-reconcile-stranded.js';
 
 const GENERATION_LOCK_STALE_MS = 15 * 60 * 1000;
 
@@ -56,11 +57,16 @@ export async function onRequestPost(context) {
     return rateLimitedResponse(rl.retryAfter);
   }
 
-  const codeData = await env.READ2LEAD_CODES.get(accessCode, { type: 'json' });
+  let codeData = await env.READ2LEAD_CODES.get(accessCode, { type: 'json' });
   if (!codeData) {
     await recordCodeFailure(env.READ2LEAD_CODES, clientIp);
     return json({ ok: false, error: 'code_not_found', message: 'Mã không tồn tại. Kiểm tra lại hoặc nhắn Zalo Felix.' }, 403);
   }
+
+  // A finished-but-stranded pack (1502dd6 outage / old manual-save funnel)
+  // must not block a kid from creating their next pack — finish its save
+  // from the kid's own recorded work before evaluating the gate.
+  ({ codeData } = await reconcileStrandedPack({ env, accessCode, codeData }));
 
   const availabilityError = checkCodeAvailability(codeData);
   if (availabilityError) return availabilityError;
