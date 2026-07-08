@@ -70,6 +70,72 @@ assigns, commits, merges, deploys, or spends.
 ## Current task
 
 - Status: active
+- Task ID: speakup-photo-to-homework
+- Owner: Claude Lead (plan + review + integration); packets to Aider Junior
+  with verbatim code; big-`.astro` packets direct-edit if Aider times out
+  (rule-3 precedent ×2 on 2026-07-07, logged).
+- Lane: `claude/speakup-v0`, primary checkout.
+- Problem: the photo IS Phương's homework (e.g. the Stage-4 slide); he
+  must re-type its content, and photo-only saves were rejected. Approved
+  plan (Phương, 2026-07-07, "go with what you recommend"): (A) vision
+  model reads the photo at assign time and drafts the two boxes for the
+  teacher to confirm — stored homework stays text, downstream unchanged;
+  (C) deliberate photo-only saves become a look-and-speak step graded
+  pronunciation-only via Azure unscripted assessment (≤30s REST cap),
+  open-scorer fallback. Plan file is the rule-16 spec addendum
+  (`~/.claude/plans/while-i-m-testing-i-streamed-falcon.md`).
+- Reuse survey: Workers AI `@cf/meta/llama-3.2-11b-vision-instruct`
+  (ADOPTED — existing env.AI binding, no keys, free-tier Neurons at pilot
+  volume); OpenAI gpt-4o-mini vision (REJECTED — per-env key fragility,
+  the robot-voice failure class); dedicated OCR e.g. Google Vision/Azure
+  OCR (REJECTED — new vendor/keys; we need stems-vs-sentences intent, not
+  raw OCR); Azure PA unscripted mode (ADOPTED — same configured resource,
+  ReferenceText omitted per Microsoft docs, REST ≤30s); existing
+  `scoreOpenTranscript` (REUSED as the >30s/Azure-down fallback).
+- Acceptance criteria:
+  1. Extract endpoint: class-scoped r2_key → vision draft
+     `{frame_text, sentences_text}` sanity-passed through the existing
+     parsers; malformed model output → `draft: null`, never a teacher
+     error. Unit-tested with mocked env.AI.
+  2. Modal: photo uploads on pick; extraction fills ONLY empty boxes;
+     status line narrates progress; teacher text never overwritten; save
+     uses the saved descriptor (pending-upload branch removed).
+  3. Photo-only saves validate (photo present), store
+     `photo_talk: {duration_s}`, and yield one `hw_photo_talk` open step;
+     v1/v2 regression clean.
+  4. hw_photo_talk records as WAV; ≤30s clips graded
+     `azure_pronunciation_unscripted` (PA header WITHOUT ReferenceText —
+     asserted in tests); >30s or Azure failure → existing open scorer;
+     scripted read path byte-identical.
+  5. Suite green + build clean per packet; live e2e on the deployed
+     preview: real Stage-4 slide extraction quality, photo-only
+     round-trip, whole-screen screenshots vs approved layouts.
+- Files owned: `functions/api/admin/classes/[id]/homework-photo-extract.js`
+  (new), `functions/api/_homework.js`,
+  `functions/api/minny-speaking-context.js`,
+  `functions/api/read2lead-speaking-check.js` (open-branch additive; this
+  plan is its dedicated spec), `functions/api/_azure-pronunciation.js`,
+  `src/components/admin/HomeworkModal.astro`,
+  `src/pages/admin/classes.astro`, `src/pages/speak-up.astro`
+  (recorder-options line + listen phrase), `tests/homework-photo.test.mjs`,
+  `tests/admin-homework.test.mjs`, `tests/minny-speaking.test.mjs`,
+  `tests/azure-pronunciation.test.mjs`.
+- Stop condition: any diff touching recorder/mic protected files,
+  guardrails, caps, or the scripted read scoring path — stop and escalate.
+  No merge to main.
+- Cost ceiling: Aider ≤ USD 0.10; runtime ≈ USD 0 (free Neurons + Azure F0
+  + KV meter).
+- Design self-verification: (pending — packets 2/5)
+- Founder handoff: (pending)
+- Verified commit: (pending)
+- Started: 2026-07-07
+
+## Prior task (complete): speakup-ft-instant-mic
+
+- Status: complete (status flag corrected 2026-07-07 by the photo-session:
+  the task's own record and `_ops` DONE log show it fully verified at
+  9765ad4 with founder handoff delivered; Phương's real-device checklist
+  remains listed in the handoff as his confirm step)
 - Task ID: speakup-ft-instant-mic
 - Owner: Claude Lead (direct edit — async/state-machine change woven through
   speak-up.astro's free-talk recorder + protected r2l-recorder.js; same

@@ -8,6 +8,11 @@ import {
   validatePhotoFile,
 } from '../functions/api/admin/classes/[id]/homework-photo.js';
 import { onRequestGet as kidPhoto } from '../functions/api/speakup-homework-photo.js';
+import {
+  onRequestPost as extractPhoto,
+  parseVisionReply,
+  buildDraft,
+} from '../functions/api/admin/classes/[id]/homework-photo-extract.js';
 
 function createKv(records = {}) {
   const store = new Map();
@@ -241,4 +246,99 @@ test('kid photo: v1 homework (no photo field) → 404, no crash', async () => {
     env: { READ2LEAD_CODES: kv, R2L_MEDIA: createR2() },
   });
   assert.equal(response.status, 404);
+});
+
+test('parseVisionReply: plain JSON, fenced JSON, prose-wrapped JSON, garbage', () => {
+  assert.deepEqual(parseVisionReply('{"frame_lines":["I went to ___."],"sentence_lines":[]}').frame_lines, ['I went to ___.']);
+  assert.deepEqual(parseVisionReply('Here you go:\n```json\n{"frame_lines":[],"sentence_lines":["I like cats."]}\n```').sentence_lines, ['I like cats.']);
+  assert.equal(parseVisionReply('I could not read the image, sorry.'), null);
+  assert.equal(parseVisionReply('{broken json'), null);
+});
+
+test('buildDraft: normalizes curly quotes and long blanks, drops invalid lines, caps counts', () => {
+  const draft = buildDraft({
+    frame_lines: ['“Last summer, I went to ________ .”', 'no blank in this line', '“I saw ________ there.”'],
+    sentence_lines: ['It’s sunny today.', 'Câu tiếng Việt bị loại'],
+  });
+  assert.equal(draft.frame_text, '"Last summer, I went to ___ ."\n"I saw ___ there."');
+  assert.equal(draft.sentences_text, "It's sunny today.");
+  assert.equal(buildDraft({ frame_lines: [], sentence_lines: [] }), null);
+  assert.equal(buildDraft(null), null);
+});
+
+test('extract endpoint: happy path returns sanity-passed draft via mocked env.AI', async () => {
+  const r2 = createR2();
+  await r2.put('homework/class1/hp_abc123def456.jpg', 'jpeg-bytes', { httpMetadata: { contentType: 'image/jpeg' } });
+  let seenModel = null;
+  const env = {
+    R2L_MEDIA: {
+      ...r2,
+      async get(key) {
+        const stored = r2.objects.get(key);
+        if (!stored) return null;
+        return { arrayBuffer: async () => new TextEncoder().encode('jpeg-bytes').buffer };
+      },
+    },
+    AI: {
+      async run(model) {
+        seenModel = model;
+        return { response: '{"frame_lines":["“I went to ________ .”"],"sentence_lines":[]}' };
+      },
+    },
+  };
+  const response = await extractPhoto({
+    request: new Request('https://example.com/api/admin/classes/class1/homework-photo-extract', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ r2_key: 'homework/class1/hp_abc123def456.jpg' }),
+    }),
+    env,
+    params: { id: 'class1' },
+  });
+  assert.equal(response.status, 200);
+  const bodyJson = await response.json();
+  assert.equal(bodyJson.ok, true);
+  assert.equal(bodyJson.draft.frame_text, '"I went to ___ ."');
+  assert.equal(seenModel, '@cf/meta/llama-3.2-11b-vision-instruct');
+});
+
+test('extract endpoint: model garbage or thrown error → ok:true draft:null; foreign key → 404', async () => {
+  const r2 = createR2();
+  await r2.put('homework/class1/hp_abc123def456.jpg', 'x', { httpMetadata: { contentType: 'image/jpeg' } });
+  const baseEnv = {
+    R2L_MEDIA: {
+      async get(key) {
+        if (!r2.objects.has(key)) return null;
+        return { arrayBuffer: async () => new ArrayBuffer(4) };
+      },
+    },
+  };
+  const req = (key, classId = 'class1') => new Request(`https://example.com/api/admin/classes/${classId}/homework-photo-extract`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ r2_key: key }),
+  });
+
+  const garbage = await extractPhoto({
+    request: req('homework/class1/hp_abc123def456.jpg'),
+    env: { ...baseEnv, AI: { async run() { return { response: 'unreadable' }; } } },
+    params: { id: 'class1' },
+  });
+  assert.equal((await garbage.json()).draft, null);
+
+  const thrown = await extractPhoto({
+    request: req('homework/class1/hp_abc123def456.jpg'),
+    env: { ...baseEnv, AI: { async run() { throw new Error('boom'); } } },
+    params: { id: 'class1' },
+  });
+  const thrownJson = await thrown.json();
+  assert.equal(thrownJson.ok, true);
+  assert.equal(thrownJson.draft, null);
+
+  const foreign = await extractPhoto({
+    request: req('homework/class1/hp_abc123def456.jpg', 'class2'),
+    env: { ...baseEnv, AI: { async run() { return { response: '{}' }; } } },
+    params: { id: 'class2' },
+  });
+  assert.equal(foreign.status, 404);
 });
