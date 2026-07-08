@@ -35,6 +35,20 @@ export function buildHomeworkSteps(codeData) {
     });
   }
 
+  // Photo-only homework: the photo carries the task; the kid looks at it
+  // and speaks. Graded pronunciation-only downstream (open check mode).
+  if (!steps.length && homework.photo) {
+    const talkSeconds = homework.photo_talk?.duration_s || 60;
+    steps.push({
+      id: 'hw_photo_talk',
+      kind: 'speech',
+      check_mode: 'open',
+      expected_text: 'photo_talk',
+      prompt_vi: 'Con xem ảnh bài tập rồi thuyết trình theo ảnh nhé — nói một mạch!',
+      max_seconds: talkSeconds + 15,
+    });
+  }
+
   const note = homework.note_vi || '';
   const updatedAt = homework.updated_at || '';
 

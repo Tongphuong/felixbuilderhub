@@ -48,7 +48,7 @@ export function validatePhotoRef(photo, class_id) {
  */
 export function normalizeHomeworkRecord(hw) {
   if (!hw || typeof hw !== 'object') return null;
-  return { ...hw, photo: hw.photo || null };
+  return { ...hw, photo: hw.photo || null, photo_talk: hw.photo_talk || null };
 }
 
 /**
@@ -145,8 +145,12 @@ export function validateHomeworkInput({ sentences_text, frame_text, frame_durati
   const frameResult = parseFrameStems(frame_text);
   if (!frameResult.ok) return frameResult;
 
-  if (sentencesResult.lines.length === 0 && frameResult.stems.length === 0) {
-    return { ok: false, error_vi: 'Cần ít nhất một câu hoặc một khung thuyết trình.' };
+  const photoResult = validatePhotoRef(photo, class_id);
+  if (!photoResult.ok) return photoResult;
+
+  // A photo can be the whole homework (photo-only → look-and-speak step).
+  if (sentencesResult.lines.length === 0 && frameResult.stems.length === 0 && !photoResult.value) {
+    return { ok: false, error_vi: 'Cần ít nhất một câu, một khung thuyết trình hoặc một ảnh bài tập.' };
   }
 
   let duration = Number(frame_duration_s);
@@ -154,9 +158,6 @@ export function validateHomeworkInput({ sentences_text, frame_text, frame_durati
   duration = Math.max(10, Math.min(300, duration));
 
   const trimmedNote = String(note_vi || '').trim().slice(0, 300);
-
-  const photoResult = validatePhotoRef(photo, class_id);
-  if (!photoResult.ok) return photoResult;
 
   return {
     ok: true,
@@ -187,6 +188,9 @@ export function buildHomeworkRecord(validatedValue, previousHomework) {
       ? { stems: frame_stems.map(f => ({ id: f.id, text_en: f.text_en, anchor_words: f.anchor_words })), duration_s: frame_duration_s }
       : null,
     photo: photo || null,
+    photo_talk: (!sentences.length && !frame_stems.length && photo)
+      ? { duration_s: frame_duration_s }
+      : null,
     history: [],
   };
 

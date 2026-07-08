@@ -529,3 +529,36 @@ test('frame: a line with no blank at all still gets the missing-blank error', ()
   assert.equal(r.ok, false);
   assert.match(r.error_vi, /chỗ trống/);
 });
+
+test('photo-only homework validates and stores photo_talk duration', () => {
+  const validation = validateHomeworkInput({
+    sentences_text: '',
+    frame_text: '',
+    frame_duration_s: 90,
+    note_vi: 'Xem ảnh và thuyết trình nhé',
+    photo: VALID_PHOTO,
+    class_id: 'class1',
+  });
+  assert.equal(validation.ok, true);
+  const record = buildHomeworkRecord(validation.value, null);
+  assert.deepEqual(record.photo, VALID_PHOTO);
+  assert.deepEqual(record.photo_talk, { duration_s: 90 });
+  assert.equal(record.sentences.length, 0);
+  assert.equal(record.frame, null);
+});
+
+test('empty homework without photo still rejected; text homework has photo_talk null', () => {
+  const empty = validateHomeworkInput({ sentences_text: '', frame_text: '', frame_duration_s: 60, note_vi: '' });
+  assert.equal(empty.ok, false);
+  assert.match(empty.error_vi, /ảnh bài tập/);
+  const withText = validateHomeworkInput({
+    sentences_text: 'I like cats.',
+    frame_text: '',
+    frame_duration_s: 60,
+    note_vi: '',
+    photo: VALID_PHOTO,
+    class_id: 'class1',
+  });
+  assert.equal(withText.ok, true);
+  assert.equal(buildHomeworkRecord(withText.value, null).photo_talk, null);
+});

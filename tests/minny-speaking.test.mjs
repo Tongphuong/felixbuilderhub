@@ -200,3 +200,24 @@ test('speak-up page has the homework photo thumb, lightbox, and authorized endpo
   assert.ok(speakingPage.includes('/api/speakup-homework-photo?code='), 'photo fetched through the code-authorized endpoint');
   assert.ok(speakingPage.includes('spk-mode-card__badge'), 'mode card attachment badge');
 });
+
+test('buildHomeworkSteps: photo-only record yields one open photo-talk step', () => {
+  const codeData = {
+    homework: {
+      schema_version: 2,
+      note_vi: '',
+      sentences: [],
+      frame: null,
+      photo: { id: 'hp_abc123def456', r2_key: 'homework/class1/hp_abc123def456.jpg', content_type: 'image/jpeg', size: 9 },
+      photo_talk: { duration_s: 90 },
+      history: [],
+    },
+  };
+  const mode = buildHomeworkSteps(codeData);
+  assert.equal(mode.steps.length, 1);
+  assert.equal(mode.steps[0].id, 'hw_photo_talk');
+  assert.equal(mode.steps[0].check_mode, 'open');
+  assert.equal(mode.steps[0].expected_text, 'photo_talk');
+  assert.equal(mode.steps[0].max_seconds, 105);
+  assert.deepEqual(mode.photo, { id: 'hp_abc123def456' });
+});
