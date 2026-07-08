@@ -77,17 +77,6 @@ export async function onRequestPost(context) {
     return json({ ok: false, error: 'invalid_json' }, 400);
   }
 
-  // TEMPORARY one-time Meta license acceptance (Workers AI error 5016
-  // demands the literal prompt 'agree' once per account). Admin-authed;
-  // remove after the agreement sticks.
-  if (body.agree === true) {
-    try {
-      const res = await env.AI.run(VISION_MODEL, { prompt: 'agree' });
-      return json({ ok: true, agreed: true, result: res });
-    } catch (err) {
-      return json({ ok: false, error: 'agree_failed', detail: String(err?.message || '').slice(0, 300) });
-    }
-  }
 
   const classId = String(params.id || '');
   const key = String(body.r2_key || '');
@@ -103,38 +92,21 @@ export async function onRequestPost(context) {
 
   try {
     const buffer = await object.arrayBuffer();
-    const contentType = object.httpMetadata?.contentType || 'image/jpeg';
-    // The exact image-input shape this model build accepts is being pinned
-    // live (Workers AI docs are inconsistent: 5016→license, then 3030 with
-    // messages+dataURL). TEMP: body.variant selects the shape; default v3.
-    const dataUrl = `data:${contentType};base64,${arrayBufferToBase64(buffer)}`;
-    const byteArray = [...new Uint8Array(buffer)];
-    const variants = {
-      v1: { prompt: VISION_PROMPT, image: byteArray, max_tokens: 1024 },
-      v2: { messages: [{ role: 'user', content: VISION_PROMPT }], image: dataUrl, max_tokens: 1024 },
-      v3: { messages: [{ role: 'user', content: VISION_PROMPT }], image: byteArray, max_tokens: 1024 },
-      v4: { prompt: VISION_PROMPT, image: dataUrl, max_tokens: 1024 },
-      v5: {
-        messages: [{
-          role: 'user',
-          content: [
-            { type: 'text', text: VISION_PROMPT },
-            { type: 'image_url', image_url: { url: dataUrl } },
-          ],
-        }],
-        max_tokens: 1024,
-      },
-    };
-    const input = variants[body.variant] || variants.v3;
-    const result = await env.AI.run(VISION_MODEL, input);
+    // Input shape pinned live 2026-07-08: prompt + byte-array image works;
+    // messages+image errors with 3030 on this model build. NOTE: the model
+    // requires a one-time per-account Meta license acceptance (send the
+    // literal prompt 'agree' once — done 2026-07-08; a new CF account would
+    // need it again, symptom is error 5016 in `detail`).
+    const result = await env.AI.run(VISION_MODEL, {
+      prompt: VISION_PROMPT,
+      image: [...new Uint8Array(buffer)],
+      max_tokens: 1024,
+    });
     const raw = result?.response ?? result?.description ?? '';
     // Some Workers AI builds return `response` as an already-parsed object
     // (JSON mode); others as a string to parse.
     const parsed = raw && typeof raw === 'object' ? raw : parseVisionReply(raw);
     const draft = buildDraft(parsed);
-    if (body.debug === true) {
-      return json({ ok: true, draft, raw: JSON.stringify(raw).slice(0, 1500), result_keys: Object.keys(result || {}) });
-    }
     return json({ ok: true, draft });
   } catch (err) {
     console.error(`[homework-photo-extract] vision failed: ${err?.message}`);
@@ -142,16 +114,4 @@ export async function onRequestPost(context) {
     // diagnosable without Cloudflare log access.
     return json({ ok: true, draft: null, reason: 'vision_failed', detail: String(err?.message || '').slice(0, 200) });
   }
-}
-
-// btoa can't take huge argument spreads; convert in chunks (same pattern
-// as the private helper in _minny-tts.js).
-function arrayBufferToBase64(buffer) {
-  const bytes = new Uint8Array(buffer);
-  let binary = '';
-  const CHUNK = 0x8000;
-  for (let i = 0; i < bytes.length; i += CHUNK) {
-    binary += String.fromCharCode.apply(null, bytes.subarray(i, i + CHUNK));
-  }
-  return btoa(binary);
 }
