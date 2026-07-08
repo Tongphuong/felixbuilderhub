@@ -127,7 +127,11 @@ export async function onRequestPost(context) {
     };
     const input = variants[body.variant] || variants.v3;
     const result = await env.AI.run(VISION_MODEL, input);
-    const draft = buildDraft(parseVisionReply(result?.response ?? result?.description ?? ''));
+    const raw = result?.response ?? result?.description ?? '';
+    const draft = buildDraft(parseVisionReply(raw));
+    if (body.debug === true) {
+      return json({ ok: true, draft, raw: String(raw).slice(0, 1500), result_keys: Object.keys(result || {}) });
+    }
     return json({ ok: true, draft });
   } catch (err) {
     console.error(`[homework-photo-extract] vision failed: ${err?.message}`);
