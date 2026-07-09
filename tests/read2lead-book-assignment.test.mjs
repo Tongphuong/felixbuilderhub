@@ -6,6 +6,7 @@ import {
   parseBookLevels,
   selectUnreadBook,
 } from '../functions/api/generate-read2lead-pack.js';
+import { makeStoredBookPack, makeBrokenBookPack } from './helpers/book-pack-fixture.mjs';
 
 const ACCESS_CODE = 'R2L-BOOK-1234';
 const PROGRESS_KEY = `progress:${ACCESS_CODE}`;
@@ -171,6 +172,153 @@ test('all books read clears assignment lock and does not decrement uses', async 
   const saved = fixture.store.get(ACCESS_CODE);
   assert.equal(saved.uses_remaining, 3);
   assert.equal(saved.progress.current_pack, null);
+});
+
+test('a broken book is skipped, a healthy one assigned, and the broken slug quarantined', async () => {
+  const fixture = makeKv({
+    [ACCESS_CODE]: codeData(),
+    [PROGRESS_KEY]: progressAtL1(),
+    'book_index:L1': ['book_1', 'book_2'],
+    'book:book_1': makeBrokenBookPack('order_unreconstructable', 'book_1', { level: 'L1' }),
+    'book:book_2': makeStoredBookPack('book_2', { level: 'L1', title: 'Good Book' }),
+  });
+  const response = await generate({
+    READ2LEAD_CODES: fixture.kv,
+    READ2LEAD_BOOK_LEVELS: 'L1',
+    RNG: () => 0, // always try the first unread book first
+  });
+  const payload = await response.json();
+  assert.equal(response.status, 200);
+  assert.equal(payload.ok, true);
+  const saved = fixture.store.get(ACCESS_CODE);
+  assert.equal(saved.progress.current_pack.review_context.book_slug, 'book_2');
+  assert.equal(saved.uses_remaining, 2);
+  const quarantine = fixture.store.get('book_quarantine:L1');
+  assert.ok(quarantine && quarantine.book_1, 'book_1 should be quarantined');
+  assert.ok(quarantine.book_1.reasons.includes('order_unreconstructable'));
+  assert.equal(quarantine.book_2, undefined, 'the healthy book must not be quarantined');
+});
+
+test('an already-quarantined book is skipped without even reading its record', async () => {
+  const fixture = makeKv({
+    [ACCESS_CODE]: codeData(),
+    [PROGRESS_KEY]: progressAtL1(),
+    'book_index:L1': ['book_1', 'book_2'],
+    'book:book_1': makeBrokenBookPack('order_unreconstructable', 'book_1', { level: 'L1' }),
+    'book:book_2': makeStoredBookPack('book_2', { level: 'L1', title: 'Good Book' }),
+    'book_quarantine:L1': { book_1: { at: '2026-07-01T00:00:00.000Z', reasons: ['order_unreconstructable'] } },
+  });
+  const gets = [];
+  const spiedKv = {
+    ...fixture.kv,
+    async get(key, opts) {
+      gets.push(key);
+      return fixture.kv.get(key, opts);
+    },
+  };
+  const response = await generate({
+    READ2LEAD_CODES: spiedKv,
+    READ2LEAD_BOOK_LEVELS: 'L1',
+    RNG: () => 0,
+  });
+  const payload = await response.json();
+  assert.equal(response.status, 200);
+  assert.equal(payload.ok, true);
+  const saved = fixture.store.get(ACCESS_CODE);
+  assert.equal(saved.progress.current_pack.review_context.book_slug, 'book_2');
+  assert.ok(!gets.includes('book:book_1'), 'a quarantined book must not be re-read');
+});
+
+test('a pool of only cosmetically-flawed books still assigns one (does not strand)', async () => {
+  const fixture = makeKv({
+    [ACCESS_CODE]: codeData(),
+    [PROGRESS_KEY]: progressAtL1(),
+    'book_index:L1': ['book_1', 'book_2'],
+    'book:book_1': makeBrokenBookPack('html_entity', 'book_1', { level: 'L1' }),
+    'book:book_2': makeBrokenBookPack('doubled_word', 'book_2', { level: 'L1' }),
+  });
+  const response = await generate({
+    READ2LEAD_CODES: fixture.kv,
+    READ2LEAD_BOOK_LEVELS: 'L1',
+    RNG: () => 0,
+  });
+  const payload = await response.json();
+  assert.equal(response.status, 200);
+  assert.equal(payload.ok, true);
+  const saved = fixture.store.get(ACCESS_CODE);
+  assert.ok(['book_1', 'book_2'].includes(saved.progress.current_pack.review_context.book_slug));
+  assert.equal(saved.uses_remaining, 2);
+  // Cosmetic-only books are finishable, so they are never quarantined.
+  assert.equal(fixture.store.get('book_quarantine:L1'), undefined);
+});
+
+test('a pool whose only unread books are already quarantined reports needs_repair, not exhausted', async () => {
+  const fixture = makeKv({
+    [ACCESS_CODE]: codeData(),
+    [PROGRESS_KEY]: progressAtL1(),
+    'book_index:L1': ['book_1', 'book_2'],
+    'book:book_1': makeStoredBookPack('book_1', { level: 'L1' }),
+    'book:book_2': makeStoredBookPack('book_2', { level: 'L1' }),
+    'book_quarantine:L1': {
+      book_1: { at: '2026-07-01T00:00:00.000Z', reasons: ['page_audio_empty'] },
+      book_2: { at: '2026-07-01T00:00:00.000Z', reasons: ['order_unreconstructable'] },
+    },
+  });
+  const response = await generate({
+    READ2LEAD_CODES: fixture.kv,
+    READ2LEAD_BOOK_LEVELS: 'L1',
+    RNG: () => 0,
+  });
+  const payload = await response.json();
+  assert.equal(response.status, 409);
+  assert.equal(payload.error, 'book_pool_needs_repair');
+  const saved = fixture.store.get(ACCESS_CODE);
+  assert.equal(saved.uses_remaining, 3);
+});
+
+test('a book served under the wrong slug is rejected as unfinishable', async () => {
+  const fixture = makeKv({
+    [ACCESS_CODE]: codeData(),
+    [PROGRESS_KEY]: progressAtL1(),
+    'book_index:L1': ['book_1', 'book_2'],
+    // book:book_1's record carries the wrong internal slug — must be skipped.
+    'book:book_1': makeStoredBookPack('book_9', { level: 'L1' }),
+    'book:book_2': makeStoredBookPack('book_2', { level: 'L1', title: 'Good Book' }),
+  });
+  const response = await generate({
+    READ2LEAD_CODES: fixture.kv,
+    READ2LEAD_BOOK_LEVELS: 'L1',
+    RNG: () => 0,
+  });
+  const payload = await response.json();
+  assert.equal(response.status, 200);
+  const saved = fixture.store.get(ACCESS_CODE);
+  assert.equal(saved.progress.current_pack.review_context.book_slug, 'book_2');
+  const quarantine = fixture.store.get('book_quarantine:L1');
+  assert.ok(quarantine.book_1.reasons.includes('slug_mismatch'));
+});
+
+test('a pool of only unfinishable books returns needs_repair without stranding', async () => {
+  const fixture = makeKv({
+    [ACCESS_CODE]: codeData(),
+    [PROGRESS_KEY]: progressAtL1(),
+    'book_index:L1': ['book_1', 'book_2'],
+    'book:book_1': makeBrokenBookPack('order_unreconstructable', 'book_1', { level: 'L1' }),
+    'book:book_2': makeBrokenBookPack('page_audio_empty', 'book_2', { level: 'L1' }),
+  });
+  const response = await generate({
+    READ2LEAD_CODES: fixture.kv,
+    READ2LEAD_BOOK_LEVELS: 'L1',
+    RNG: () => 0,
+  });
+  const payload = await response.json();
+  assert.equal(response.status, 409);
+  assert.equal(payload.error, 'book_pool_needs_repair');
+  const saved = fixture.store.get(ACCESS_CODE);
+  assert.equal(saved.uses_remaining, 3, 'a repair-needed pool must not burn a use');
+  assert.equal(saved.progress.current_pack, null, 'the generation lock is cleared');
+  const quarantine = fixture.store.get('book_quarantine:L1');
+  assert.ok(quarantine.book_1 && quarantine.book_2, 'both unfinishable books quarantined');
 });
 
 test('inactive levels preserve backend configuration fallback before locking', async () => {

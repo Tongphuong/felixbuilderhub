@@ -62,6 +62,84 @@ export function makeBookPackLesson({
   };
 }
 
+// Build a stored `book:<slug>` pack in the exact shape KV holds and the health
+// gate (src/lib/read2lead-book-health.mjs) assesses. Reuses makeBookPackLesson
+// for the story/questions and adds the book-pool envelope (schema_version,
+// book_slug, a read_aloud activity, attribution). Defaults to 3 pages so it
+// satisfies the gate's `book_images >= 3` rule. A pack from this helper is
+// HEALTHY — makeBrokenBookPack mutates a copy to introduce one defect.
+export function makeStoredBookPack(slug = 'book_1', {
+  level = 'L1',
+  pages = 3,
+  sentencesPerPage = 2,
+  questionsPerPage = 2,
+  title = 'Test Book',
+} = {}) {
+  const lesson = makeBookPackLesson({ pages, sentencesPerPage, questionsPerPage });
+  return {
+    schema_version: 2,
+    student_name: 'Student',
+    level,
+    topic: title,
+    book_slug: slug,
+    story: { ...lesson.story, title },
+    guided_listening: lesson.guided_listening,
+    book_images: lesson.book_images,
+    book_page_audio: lesson.book_page_audio,
+    book_attribution: lesson.book_attribution,
+    activities: [{ type: 'read_aloud', items: [] }],
+  };
+}
+
+// Return a stored book pack carrying exactly ONE defect of the given kind, so a
+// test can prove the health gate catches it. `hard` kinds are unfinishable
+// (must be skipped); `soft` kinds are cosmetic (deprioritized, not stranding).
+export function makeBrokenBookPack(kind, slug = 'book_broken', opts = {}) {
+  const pack = makeStoredBookPack(slug, opts);
+  switch (kind) {
+    case 'order_unreconstructable':
+      pack.activities.push({
+        type: 'listen_and_order',
+        items: [{
+          scrambled_tokens: ['The', 'cat', 'sat'],
+          correct_order_indices: [0, 1, 2],
+          original_sentence: 'The cat sat down.', // tokens can never reach "down"
+        }],
+      });
+      return pack;
+    case 'order_bad_permutation':
+      pack.activities.push({
+        type: 'listen_and_order',
+        items: [{
+          scrambled_tokens: ['The', 'cat', 'sat'],
+          correct_order_indices: [0, 1, 1], // not a permutation
+          original_sentence: 'The cat sat.',
+        }],
+      });
+      return pack;
+    case 'count_mismatch':
+      pack.book_page_audio.pop(); // audio count != image count
+      return pack;
+    case 'page_audio_empty':
+      pack.book_page_audio[1] = '   '; // present but blank -> audio never completes
+      return pack;
+    case 'sentence_out_of_range':
+      pack.story.sentences[0] = { ...pack.story.sentences[0], paragraph_index: 99 };
+      return pack;
+    case 'no_read_aloud':
+      pack.activities = [{ type: 'reading_comprehension', items: [] }];
+      return pack;
+    case 'html_entity': // SOFT
+      pack.story.paragraphs_en[0] = `A tree said &nbsp; hello &#39; there.`;
+      return pack;
+    case 'doubled_word': // SOFT
+      pack.story.paragraphs_en[0] = 'The the tree stood tall.';
+      return pack;
+    default:
+      throw new Error(`unknown broken pack kind: ${kind}`);
+  }
+}
+
 // Build a completed book_reader state for `lesson`: every page heard, its
 // selected questions answered in order, and every shadow chunk passed. Uses the
 // real selectBookQuestions / buildBookShadowChunks so the result validates.

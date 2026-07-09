@@ -7,3 +7,6 @@ import './lesson-sfx.test.mjs';
 import './read2lead-rank-system.test.mjs';
 import './read2lead-level-gate.test.mjs';
 import './read2lead-web-only.test.mjs';
+import './read2lead-book-health.test.mjs';
+import './read2lead-book-assignment.test.mjs';
+import './read2lead-book-reader-behaviour.test.mjs';

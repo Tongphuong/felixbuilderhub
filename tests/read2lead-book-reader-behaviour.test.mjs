@@ -7,7 +7,20 @@ import {
   scrollBookReaderToTop,
   BOOK_READER_SCROLL_ANCHOR_ID,
 } from '../src/lib/read2lead-book-flow.mjs';
-import { makeBookPackLesson, makeBookReaderState } from './helpers/book-pack-fixture.mjs';
+import { makeBookPackLesson, makeBookReaderState, makeStoredBookPack } from './helpers/book-pack-fixture.mjs';
+import { assessBookHealth } from '../src/lib/read2lead-book-health.mjs';
+
+// The health gate's promise: "passes the gate" ⇒ "a child can finish it". A pack
+// built by the same fixture logic must both pass assessBookHealth AND validate as
+// a completed run through validateBookFlowSubmission — tying the assignment-time
+// gate to the runtime submission contract.
+test('a pack that passes the health gate is runtime-finishable', () => {
+  const params = { pages: 3, sentencesPerPage: 2, questionsPerPage: 2 };
+  assert.equal(assessBookHealth(makeStoredBookPack('book_1', { ...params, level: 'L1' })).ok, true);
+  const lesson = makeBookPackLesson(params);
+  const result = validateBookFlowSubmission(makeBookReaderState(lesson), lesson);
+  assert.equal(result.ok, true, JSON.stringify(result.errors));
+});
 
 // Global sentence indexes belonging to a given page.
 function pageSentenceIndexes(lesson, pageIndex) {

@@ -6,8 +6,13 @@ import {
   XP_PER_PASSED_PACK,
 } from './_read2lead-v2-state.js';
 import { reconcileStrandedPack } from './_read2lead-reconcile-stranded.js';
+import { assessBookHealth } from '../../src/lib/read2lead-book-health.mjs';
 
 const GENERATION_LOCK_STALE_MS = 15 * 60 * 1000;
+
+// Hard cap on how many books we read+assess per assignment request, so a badly
+// poisoned pool can't turn one request into an unbounded run of KV reads.
+const MAX_HEALTH_ATTEMPTS = 8;
 
 // 0-100: how far the child is through the CURRENT level (passed packs / packs
 // required for the next level). null when not computable (L5 has no next level,
@@ -359,21 +364,37 @@ class BookPoolError extends Error {
   }
 }
 
-function validStoredBookPack(pack, expectedSlug) {
-  return Boolean(
-    pack
-    && pack.schema_version === 2
-    && pack.book_slug === expectedSlug
-    && Array.isArray(pack.book_images)
-    && pack.book_images.length >= 3
-    && Array.isArray(pack.book_page_audio)
-    && pack.book_page_audio.length === pack.book_images.length
-    && Array.isArray(pack.story?.paragraphs_en)
-    && pack.story.paragraphs_en.length === pack.book_images.length
-    && Array.isArray(pack.activities)
-    && pack.activities.length >= 1
-    && pack.activities.some((activity) => activity?.type === 'read_aloud')
-  );
+// --- Book-pool quarantine (lightweight, optional-fail) ---------------------
+// A book that fails the finishability gate is remembered per level so we skip it
+// cheaply (before any `book:<slug>` read) on the next request, and so ops can see
+// which books are broken. Quarantine is only an optimization — the gate re-checks
+// every assignment — so a republished-clean book self-heals once its slug leaves
+// the set. We quarantine only HARD (unfinishable) failures; a cosmetically-flawed
+// but finishable book is never quarantined (it stays available as a last resort).
+
+const QUARANTINE_KEY_PREFIX = 'book_quarantine:';
+
+async function loadQuarantine(env, level) {
+  try {
+    const stored = await env.READ2LEAD_CODES.get(QUARANTINE_KEY_PREFIX + level, { type: 'json' });
+    if (stored && typeof stored === 'object') return new Set(Object.keys(stored));
+  } catch (err) {
+    console.warn('quarantine_load_failed', level, err?.message || err);
+  }
+  return new Set();
+}
+
+async function quarantineBook(env, level, slug, reasons, now) {
+  try {
+    const key = QUARANTINE_KEY_PREFIX + level;
+    const stored = (await env.READ2LEAD_CODES.get(key, { type: 'json' })) || {};
+    stored[slug] = { at: now, reasons: reasons.map((reason) => reason.code) };
+    await env.READ2LEAD_CODES.put(key, JSON.stringify(stored));
+    console.warn('book_quarantine', JSON.stringify({ slug, level, reasons: stored[slug].reasons }));
+  } catch (err) {
+    // Never block a student on quarantine bookkeeping.
+    console.warn('quarantine_write_failed', level, slug, err?.message || err);
+  }
 }
 
 async function assignBookPack({
@@ -394,26 +415,81 @@ async function assignBookPack({
     );
   }
   const rng = typeof env.RNG === 'function' ? env.RNG : Math.random;
-  const slug = selectUnreadBook(
-    rawIndex,
-    codeData.completed_books,
-    bookSlugFromPack(previousPack),
-    rng,
-  );
-  if (!slug) {
+  const previousSlug = bookSlugFromPack(previousPack);
+  const now = new Date().toISOString();
+  const quarantined = await loadQuarantine(env, levelForPack);
+  const excluded = new Set();
+  let chosen = null;          // { slug, pack } — a fully healthy book
+  let softFallback = null;    // { slug, pack, reasons } — finishable but cosmetically flawed
+
+  // Keep drawing unread, un-quarantined books until we find a healthy one (or run
+  // out). Quarantined + already-excluded slugs are filtered out of selection, so
+  // known-bad books aren't even re-read. Cosmetically-flawed books are set aside
+  // as a last resort but we keep looking for a clean one first.
+  for (let attempt = 0; attempt < MAX_HEALTH_ATTEMPTS; attempt += 1) {
+    const slug = selectUnreadBook(
+      rawIndex,
+      [...(codeData.completed_books || []), ...excluded, ...quarantined],
+      previousSlug,
+      rng,
+    );
+    if (!slug) break;
+    const candidatePack = await env.READ2LEAD_CODES.get('book:' + slug, { type: 'json' });
+    const health = assessBookHealth(candidatePack, { now, expectedSlug: slug });
+    if (health.ok) {
+      chosen = { slug, pack: candidatePack };
+      break;
+    }
+    excluded.add(slug);
+    if (health.hardOk && candidatePack) {
+      // Finishable, only cosmetic defects — remember the first one, keep hunting.
+      if (!softFallback) softFallback = { slug, pack: candidatePack, reasons: health.reasons };
+    } else {
+      // Genuinely unfinishable — quarantine so we skip it cheaply next time.
+      await quarantineBook(env, levelForPack, slug, health.reasons, now);
+    }
+  }
+
+  if (!chosen && softFallback) {
+    // Don't strand the child: serve the least-bad finishable book and flag it.
+    console.warn('book_pool_degraded', JSON.stringify({
+      slug: softFallback.slug,
+      level: levelForPack,
+      reasons: softFallback.reasons.map((reason) => reason.code),
+    }));
+    chosen = { slug: softFallback.slug, pack: softFallback.pack };
+  }
+
+  if (!chosen) {
+    // Distinguish "child has read every book" from "unread books exist but are all
+    // broken (failed this pass or already quarantined)". The probe ignores the
+    // quarantine + per-pass exclusions and only respects what the child has
+    // actually completed, so a fully-quarantined pool reports needs_repair (a
+    // human signal), not the misleading "you've read them all" message.
+    const hasUnreadBooks = Boolean(selectUnreadBook(
+      rawIndex,
+      codeData.completed_books || [],
+      previousSlug,
+      () => 0,
+    ));
+    if (!hasUnreadBooks) {
+      // No unread books remain at this level at all.
+      throw new BookPoolError(
+        'book_pool_exhausted',
+        'Con đã đọc hết truyện ở cấp này rồi. Felix sẽ mở thêm truyện mới sớm nhé.',
+        409,
+      );
+    }
+    // Unread books existed but every one is unfinishable — needs a human fix.
     throw new BookPoolError(
-      'book_pool_exhausted',
-      'Con đã đọc hết truyện ở cấp này rồi. Felix sẽ mở thêm truyện mới sớm nhé.',
+      'book_pool_needs_repair',
+      'Felix đang chỉnh lại truyện ở cấp này. Con quay lại sau một chút nhé.',
       409,
     );
   }
-  const storedPack = await env.READ2LEAD_CODES.get('book:' + slug, { type: 'json' });
-  if (!validStoredBookPack(storedPack, slug)) {
-    throw new BookPoolError(
-      'book_unavailable',
-      'Chưa mở được truyện mới. Con thử lại sau một chút nhé.',
-    );
-  }
+
+  const slug = chosen.slug;
+  const storedPack = chosen.pack;
 
   const finalPack = buildFinalV2Pack({
     pendingPack,

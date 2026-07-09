@@ -1,10 +1,10 @@
 # Control — Read2Lead
 
 - Product: Read2Lead
-- Current goal: Give the book-reader an automated test seam — a reusable lesson-pack fixture + real (executing, not source-regex) behaviour tests so UI behaviours like scroll-on-page-turn are covered without a live pack or a mic (ratified EVOLUTION_LOG proposal, 2026-07-09)
-- Latest staging URL: n/a (test-only + a byte-identical scroll-helper extraction; no user-facing change)
+- Current goal: A hard finishability gate on book-pack assignment — every book is checked it can actually be completed before it reaches a child; broken books are skipped, quarantined, and logged, and a child is never stranded (fixes founder-reported "some story packs are impossible to finish")
+- Latest staging URL: production (Cloudflare Pages auto-deploys from main); no new UI — a backend gate on the existing assignment endpoint
 - Active workers: 0
-- Last updated: 2026-07-09 (R2L-BOOK-TEST-FIXTURE merged to main ff48675)
+- Last updated: 2026-07-09 (R2L-BOOK-HEALTH-GATE)
 
 ## Operating team
 
@@ -18,6 +18,92 @@
 Decision path: `Phuong -> Claude -> one worker -> Claude review -> Phuong approval`.
 
 ## Current task
+
+- Status: active
+- Started: 2026-07-09
+- Task ID: R2L-BOOK-HEALTH-GATE
+- Owner: Claude Lead (Elon) — direct build (Tier1); `functions/api/generate-read2lead-pack.js`
+  and the new `src/lib/read2lead-book-health.mjs` are author-owned. Author≠reviewer
+  preserved by a mandatory independent Buffet review (Tier2) before commit; plan
+  approved by Felix 2026-07-09
+- Lane: product (backend finishability gate on the book-pool assignment path;
+  no change to scoring, rewards, or the mic/recorder pipeline)
+- Problem: the book pool is picked at random with zero content check, so a book
+  with inconsistent internal data can dead-end a child (a page whose audio can
+  never complete leaves the next button disabled; a word-order item whose tokens
+  can't rebuild the sentence traps a W1 kid) — the founder-reported "some story
+  packs are impossible to finish".
+- Approach: new `src/lib/read2lead-book-health.mjs` (`assessBookHealth`) mirrors
+  the app's own completion logic — reuses the real `selectBookQuestions` /
+  `buildBookShadowChunks` and re-derives the runtime `normalizeOrderSentence` —
+  to prove a book is finishable before assignment, classifying defects HARD
+  (unfinishable → skip) vs SOFT (cosmetic → deprioritize). `assignBookPack` in
+  `generate-read2lead-pack.js` becomes a bounded retry loop (skip broken → try
+  next) with a per-level KV quarantine (`book_quarantine:<level>`) so known-bad
+  books are skipped cheaply and are reportable to ops. Exhaustion is never a
+  strand: a cosmetic-only pool still serves the least-bad finishable book
+  (`book_pool_degraded`), and only an all-unfinishable pool returns
+  `book_pool_needs_repair` (409) without burning a use.
+- Acceptance criteria: a book that fails finishability is skipped and a healthy
+  one assigned; the failed slug is quarantined and never re-read; a cosmetic-only
+  pool still assigns (no strand); an all-unfinishable pool returns
+  book_pool_needs_repair without decrementing uses; the gate never throws on
+  garbage input; a book served under the wrong key is rejected (slug_mismatch);
+  read_aloud-only books with empty sentences remain finishable (no false
+  positive); a pack that passes the gate also passes validateBookFlowSubmission;
+  `node --test` green; astro build clean.
+- Files owned: src/lib/read2lead-book-health.mjs (new),
+  functions/api/generate-read2lead-pack.js,
+  tests/read2lead-book-health.test.mjs (new), tests/helpers/book-pack-fixture.mjs,
+  tests/read2lead-book-assignment.test.mjs,
+  tests/read2lead-book-reader-behaviour.test.mjs, tests/index.js,
+  .founder-os/products/read2lead/CONTROL.md (this entry)
+- Non-goals: does NOT gate the LLM-generated (bespoke per-child) pack path — there
+  is no "other book" to pick there (deferred); does NOT repair the books already
+  broken in the library (the gate skips them; regenerating them is a follow-up).
+- Stop condition: tests green (incl. new gate + integration tests), Buffet review
+  clean, founder build gate PASS, astro build clean, then push to main (Phương
+  approved commit+deploy 2026-07-09).
+- Cost ceiling: USD 0 metered — Claude Lead direct + one Buffet review on the Max
+  plan; actual USD 0.
+- Reuse survey: (1) the product's OWN runtime flow module
+  `src/lib/read2lead-book-flow.mjs` (`selectBookQuestions`/`buildBookShadowChunks`)
+  — ADOPTED wholesale: the gate calls the real production functions so "passes the
+  gate" provably means "the runtime accepts it", never a re-implementation that
+  can drift; (2) a bundled English dictionary / spell-checker (nspell, hunspell,
+  an npm wordlist) for typo detection — REJECTED: heavy for a Cloudflare Worker,
+  high false-positive rate on character names/kid words, and it misses the actual
+  dead-ends (which are structural, not spelling); (3) the existing generation-time
+  validators (`read2lead_v0_codex/api/validator_v2.py`) — NO FIT at assignment
+  time: they run only at generation and can't be trusted for already-shipped KV
+  books, but their reconstruction logic was ported as the reference for the
+  listen_and_order check.
+- Design self-verification: N/A — backend gate, no UI/design surface; verified by
+  the new executing unit + integration tests and the runtime-parity regression.
+- Founder handoff: reported in chat with a plain-language summary; Phương approved
+  commit + deploy. No decisions pending.
+
+## Acceptance criteria reconciliation (R2L-BOOK-HEALTH-GATE)
+
+- Broken book skipped, healthy one assigned, broken slug quarantined: PASS —
+  "a broken book is skipped, a healthy one assigned, and the broken slug
+  quarantined" integration test.
+- Quarantined book skipped without re-read: PASS — get-spy test asserts
+  `book:book_1` is never fetched.
+- Cosmetic-only pool still assigns (no strand): PASS — "a pool of only
+  cosmetically-flawed books still assigns one" test.
+- All-unfinishable pool → needs_repair, no use burned: PASS — two tests (all-hard
+  pool and all-quarantined pool) assert 409 `book_pool_needs_repair`,
+  `uses_remaining` unchanged.
+- Gate never throws on garbage: PASS — null/`{}` return hard-fail, not an
+  exception.
+- Wrong-key pack rejected: PASS — `slug_mismatch` unit + integration tests.
+- Empty-sentence read_aloud books stay finishable: PASS — explicit health test.
+- Gate ⇒ runtime-finishable: PASS — a pack passing `assessBookHealth` also passes
+  `validateBookFlowSubmission`.
+- node --test green: PASS — 765/765 (manifest run 134/134).
+
+## Previous task
 
 - Status: complete
 - Started: 2026-07-09
