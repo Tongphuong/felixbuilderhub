@@ -316,7 +316,7 @@ export async function onRequestPost(context) {
   // the old plain-only call returned free-form prose that never parsed, which is
   // why fallback turns became canned redirects.
   if (!rawReply && env.AI) {
-    for (const input of [{ messages, response_format: { type: 'json_object' } }, { messages }]) {
+    for (const input of [{ messages, max_tokens: 150, response_format: { type: 'json_object' } }, { messages, max_tokens: 150 }]) {
       if (rawReply) break;
       try {
         const aiRes = await env.AI.run('@cf/meta/llama-3.3-70b-instruct-fp8-fast', input);

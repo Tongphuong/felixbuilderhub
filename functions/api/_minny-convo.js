@@ -79,7 +79,10 @@ export function parseModelReply(raw) {
 // safety; it only avoids a generic redirect when the model DID answer.
 export function coerceReply(raw) {
   if (typeof raw !== 'string') return null;
-  const text = raw.trim();
+  // Bound the input before the greedy {…} scan below — a valid reply is <300
+  // chars, so this caps the regex cost on a verbose/misbehaving fallback
+  // response (the match is linear-per-char but grows with input length).
+  const text = raw.trim().slice(0, 2000);
   if (!text) return null;
 
   // 1) Pull the first {...} block out and try to parse it (prose-wrapped JSON).
