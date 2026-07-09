@@ -1,10 +1,10 @@
 # Control — Read2Lead
 
 - Product: Read2Lead
-- Current goal: Rescue every kid's finished-but-stuck pack server-side ("Save all lessons for all kids" — Phuong, 2026-07-08, full authority incl. merge to main)
-- Latest staging URL: https://claude-r2l-stranded-rescue.felixbuilderhub.pages.dev (after first push)
-- Active workers: 1 (Claude Lead, direct — lesson completion logic, spec addendum 2)
-- Last updated: 2026-07-08
+- Current goal: Fix the book-reader page turn so a new page opens at the top, not scrolled to the bottom (Felix-reported UX bug, plan approved 2026-07-09)
+- Latest staging URL: https://claude-r2l-next-page-scroll.felixbuilderhub.pages.dev (after first push)
+- Active workers: 1 (Claude Lead / Elon, direct)
+- Last updated: 2026-07-09
 
 ## Operating team
 
@@ -18,6 +18,56 @@
 Decision path: `Phuong -> Claude -> one worker -> Claude review -> Phuong approval`.
 
 ## Current task
+
+- Status: active
+- Started: 2026-07-09
+- Task ID: R2L-NEXT-PAGE-SCROLL
+- Owner: Claude Lead (Elon) — direct edit; `src/pages/read2lead/lesson.astro`
+  is on the dispatch-guard PROTECTED allowlist (spec required; the approved
+  plan below is that spec), plan approved by Felix 2026-07-09
+- Lane: product (UI/UX scroll behavior only — no change to lesson completion,
+  scoring, rewards, badges, or the mic/recorder pipeline)
+- Problem: when a kid finishes a book-reader page (listen, answer the 2
+  questions, record themselves) and taps "Trang tiếp →", the next page
+  renders in place but the scroll position is never reset. The kid tapped
+  Next from the bottom of the previous page, so the new page opens scrolled
+  to the bottom and they must scroll up to see the story image/title and
+  start reading.
+- Approach: reset scroll to the top of the reader by calling
+  `qs('#w1-book-reader-phase')?.scrollIntoView({ behavior: 'smooth', block: 'start' })`
+  at the end of `bookShowPage()` — the single choke point every page change
+  funnels through (forward "Trang tiếp →", back, progress-trail jump, and
+  story-page next). It does NOT fire on within-page steps (listen →
+  questions → record), which go through `bookSetStage()`, so the reading
+  flow inside a page is undisturbed. Reuses the exact
+  `scrollIntoView({ behavior: 'smooth', block: 'start' })` pattern already in
+  this file (lesson.astro:4193, :4995).
+- Acceptance criteria: after tapping "Trang tiếp →", the new page opens at
+  the top (story image + page title in view), not scrolled to the bottom;
+  the same holds for back-nav and progress-trail jumps; within-page steps
+  are NOT force-scrolled; `node --test tests/*.test.mjs` passes; no unrelated
+  refactor.
+- Files owned: src/pages/read2lead/lesson.astro,
+  .founder-os/products/read2lead/CONTROL.md (this entry)
+- Stop condition: tests green, `founder_check.py --gate build` PASS, live
+  in-browser verification shows a real page turn landing at the top, then
+  Felix + Phuong approve the merge to main (pushing main = live deploy to
+  real kids).
+- Cost ceiling: USD 0 metered — Claude Lead direct on the Max plan; actual USD 0.
+- Reuse survey: (1) native `Element.scrollIntoView` (browser API) — ADOPTED:
+  reuses the exact pattern already used in this file (lesson.astro:4193,
+  :4995), zero new dependency; (2) `scroll-into-view-if-needed` /
+  smooth-scroll npm packages — REJECTED: the native API fully covers a single
+  scroll-to-top, a library would add a dependency for no gain; (3) CSS
+  `scroll-margin` / scroll-snap — REJECTED: the reset must fire imperatively
+  on a JS-driven in-place content swap, not on a native anchor navigation.
+- Design self-verification: N/A visual redesign — no design mock; behavior
+  self-verified live in-browser by the building agent (a page turn lands at
+  the top), screenshot recorded at DONE.
+- Founder handoff: result reported in chat; merge to main gated on Felix +
+  Phuong approval.
+
+## Previous task
 
 - Status: complete
 - Started: 2026-07-08
