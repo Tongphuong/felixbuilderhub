@@ -3,8 +3,8 @@
 - Product: Read2Lead
 - Current goal: Fix the book-reader page turn so a new page opens at the top, not scrolled to the bottom (Felix-reported UX bug, plan approved 2026-07-09)
 - Latest staging URL: https://claude-r2l-next-page-scroll.felixbuilderhub.pages.dev (after first push)
-- Active workers: 1 (Claude Lead / Elon, direct)
-- Last updated: 2026-07-09
+- Active workers: 0
+- Last updated: 2026-07-09 (R2L-NEXT-PAGE-SCROLL shipped to prod 69ac4da)
 
 ## Operating team
 
@@ -19,8 +19,9 @@ Decision path: `Phuong -> Claude -> one worker -> Claude review -> Phuong approv
 
 ## Current task
 
-- Status: active
+- Status: complete
 - Started: 2026-07-09
+- Completed: 2026-07-09 — merged to main 69ac4da (Felix authorized the prod push directly), live-verified on felixbuilderhub.com
 - Task ID: R2L-NEXT-PAGE-SCROLL
 - Owner: Claude Lead (Elon) — direct edit; `src/pages/read2lead/lesson.astro`
   is on the dispatch-guard PROTECTED allowlist (spec required; the approved
@@ -61,11 +62,43 @@ Decision path: `Phuong -> Claude -> one worker -> Claude review -> Phuong approv
   scroll-to-top, a library would add a dependency for no gain; (3) CSS
   `scroll-margin` / scroll-snap — REJECTED: the reset must fire imperatively
   on a JS-driven in-place content swap, not on a native anchor navigation.
-- Design self-verification: N/A visual redesign — no design mock; behavior
-  self-verified live in-browser by the building agent (a page turn lands at
-  the top), screenshot recorded at DONE.
-- Founder handoff: result reported in chat; merge to main gated on Felix +
-  Phuong approval.
+- Design self-verification: N/A — no design mock (behavior fix, not a visual
+  redesign). Verified on the LIVE production deploy (felixbuilderhub.com,
+  commit 69ac4da): the exact scroll-reset line is served in the lesson page
+  (`scrollIntoView` count 5→6; marker present via both curl and a Playwright
+  DOM read), ZERO console errors/warnings on load, and the exact
+  `scrollIntoView({ block: 'start' })` call moves the viewport to the reader
+  top when exercised against the live `#w1-book-reader-phase` element. NOT
+  driven: a full real book-reader page-turn — reaching the "Trang tiếp →"
+  button needs a seeded book pack plus a mic to complete a page, neither
+  reproducible in the sandbox. Mechanism otherwise certain: the reset sits in
+  `bookShowPage()`, the sole choke point every page change funnels through.
+- Founder handoff: pushed to prod under Felix's explicit authorization
+  ("push to prod and check there"). Verified live as above and reported in
+  chat. Recommended residual (not a blocker): Felix taps through one real
+  lesson on a device to confirm the feel of the mic-gated page-turn. No
+  decisions pending.
+- Verified commit: 69ac4da (live on origin/main and origin/claude/r2l-next-page-scroll)
+
+## Acceptance criteria reconciliation
+
+- After tapping "Trang tiếp →", the new page opens at the top (story image +
+  title in view), not scrolled to the bottom: PASS (mechanism + live element
+  check) — the reset is `qs('#w1-book-reader-phase')?.scrollIntoView({block:'start'})`
+  at the end of `bookShowPage()`, the single choke point for every page
+  change; the exact call brings the live reader element to the viewport top
+  (Playwright). SKIPPED live full-flow drive (no mic/seeded pack in sandbox),
+  reason recorded above.
+- Same holds for back-nav and progress-trail jumps: PASS by construction —
+  both call the same `bookShowPage()` (lesson.astro back-nav + trail-node
+  click handlers); code-verified, not separately driven.
+- Within-page steps (listen → questions → record) are NOT force-scrolled:
+  PASS — those transitions go through `bookSetStage()`, which does not call
+  `bookShowPage()`; all 5 `bookShowPage()` call sites are page-index changes
+  (code-verified).
+- `node --test tests/*.test.mjs` passes: PASS — 739/739.
+- No unrelated refactor: PASS — diff is one line + a comment in lesson.astro,
+  plus this CONTROL.md bookkeeping.
 
 ## Previous task
 
@@ -135,7 +168,7 @@ Decision path: `Phuong -> Claude -> one worker -> Claude review -> Phuong approv
 - Verified commit: 7572af4 (on origin/claude/r2l-stranded-rescue; merged to
   main immediately after per pre-authorization)
 
-## Acceptance criteria reconciliation
+## Acceptance criteria reconciliation (R2L-STRANDED-RESCUE)
 
 - Stranded-by-failed-attempt pack completes with rewards on first progress
   read, idempotent on repeat reads: PASS — unit test + live wrangler e2e

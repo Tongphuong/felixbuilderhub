@@ -1,64 +1,50 @@
 # Checkpoint — Read2Lead
 
-- Last updated: 2026-07-04
-- Branch: merged to main (branch deleted)
-- Commit: 18ebf75
+- Last updated: 2026-07-09
+- Branch: merged to main (feature branch `claude/r2l-next-page-scroll`)
+- Commit: 69ac4da
 
 ## Status
 
 - Code change complete: yes
-- Tests pass: yes (722/722, full `tests/*.test.mjs` suite)
-- Pushed: yes
-- Merged: yes (fast-forwarded main to 18ebf75)
-- Phuong approval: yes (2026-07-04) — "pushed and merged"
+- Tests pass: yes (739/739, full `node --test tests/*.test.mjs`)
+- Astro build: clean (26 pages)
+- Founder gates: build PASS, complete PASS
+- Pushed: yes (feature branch + main)
+- Merged: yes (fast-forward main 375370d → 69ac4da)
+- Deployed: yes — live on felixbuilderhub.com (Cloudflare Pages auto-deploy)
+- Felix approval: yes ("push to prod and check there", 2026-07-09)
 
 ## What changed
 
-Second, separate bug: a kid mid-lesson who closes the browser/tab loses all
-in-progress progress and has to restart the whole pack. The existing
-client-side save/restore system (localStorage + sessionStorage, fixed for
-backgrounding in an earlier task) is correct but had no server-side
-fallback — so private/incognito browsing, in-app WebView browsers (e.g.
-Zalo), or storage eviction wipe everything with nothing to recover.
+Book-reader page-turn UX bug: when a kid finished a page (listen, answer the
+2 questions, record) and tapped "Trang tiếp →", they tapped it from the
+bottom of the previous page. The next page's content swapped in place with no
+scroll reset, so the new page opened scrolled to the bottom and the kid had
+to scroll up to see the story image/title and start.
 
-Fix (implemented by aider-senior, reviewed by Claude):
+Fix (one line + comment in `src/pages/read2lead/lesson.astro`): at the end of
+`bookShowPage()` — the single choke point every page change funnels through
+(forward "Trang tiếp →", back, progress-trail jump, story-page next) — call
+`qs('#w1-book-reader-phase')?.scrollIntoView({ behavior: 'smooth', block: 'start' })`.
+It does NOT fire on within-page steps (listen → questions → record), which go
+through `bookSetStage()`, so the reading flow inside a page is undisturbed.
+Reuses the exact smooth-scroll pattern already in this file (lesson.astro:4193,
+:4995) — zero new dependency.
 
-- New `functions/api/read2lead-checkpoint-save.js` endpoint writes a small
-  `current_pack.web_session_checkpoint` field, only when `pack_id` matches
-  and `status === 'awaiting_review'` (never on a stuck generation lock or
-  an already-completed pack) — full spread-preserving read-modify-write,
-  fully isolated from `uses_remaining`/rank/XP.
-- `lesson.astro`: new `sendCheckpointToServer()` fires on the same existing
-  `pagehide`/`visibilitychange`/`freeze` flush points (no new listeners,
-  no per-keystroke writes) via `sendBeacon`/`fetch(keepalive)`.
-  `loadLessonSession()` gained a third fallback tier: when both
-  `localStorage` and `sessionStorage` are empty, restore from the server
-  checkpoint that rides along on the lesson's existing initial GET.
-- `functions/api/read2lead-lesson.js`: `buildV2LessonPayload()` now returns
-  `web_session_checkpoint` alongside `status` — zero extra round trips.
-- `functions/api/submit-read2lead-lesson.js`: all 3 places that spread
-  `...currentPack` on submit now strip the checkpoint via a new
-  `withoutSessionCheckpoint()` helper, so it never lingers past the attempt
-  it was saved for.
-- New `tests/read2lead-checkpoint-save.test.mjs` (10 cases), 2 new cases in
-  `tests/read2lead-submit-idempotency.test.mjs`, 1 new case in
-  `tests/lesson-v2-six-activity-flow.test.mjs`.
+## Verification
 
-Claude review found one test-fixture bug (unrelated to the fix itself): the
-"passing submission" test only submitted 4 of the 5 activity types the real
-scoring logic expects (`ensureSixActivities` auto-adds a `read_aloud`
-activity when missing), so `passed` came back `false`. Fixed by adding a
-`read_aloud` result to that test's fixture. Also added the standard
-`config_error` guard (missing KV binding) to the new endpoint for
-consistency with every sibling endpoint — aider had omitted it.
-
-Verification: `node --test tests/*.test.mjs` → 722/722 pass.
-`founder_check.py --repo felixbuilderhub --product read2lead --gate build`
-→ PASS.
+- Live on prod (felixbuilderhub.com, 69ac4da): exact scroll-reset line served
+  in the lesson page (`scrollIntoView` count 5→6, marker confirmed via curl +
+  Playwright DOM read), zero console errors/warnings on load, and the exact
+  `scrollIntoView({block:'start'})` call moves the viewport to the reader top
+  when exercised against the live `#w1-book-reader-phase` element.
+- NOT driven end-to-end: a full real book-reader page-turn (reaching the
+  "Trang tiếp →" button needs a seeded book pack + a mic to complete a page,
+  neither reproducible in the sandbox).
 
 ## Next action
 
-- None — task closed. Merged and pushed to `main` (Cloudflare Pages
-  auto-deploys). Suggest a real-world spot-check when possible: clear
-  local/session storage mid-lesson (or use a private window) and confirm
-  progress resumes from the server checkpoint instead of restarting.
+- None required — shipped and verified to the extent the sandbox allows.
+- Suggested (not a blocker): Felix taps through one real lesson on a device
+  to confirm the feel of the mic-gated page-turn.
