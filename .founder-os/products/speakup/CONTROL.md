@@ -144,8 +144,13 @@ assigns, commits, merges, deploys, or spends.
   on R2L-KHANHVY-B7YR are spent today; needs a spaced real conversation (Phương
   on device, or next session after the daily reset). This is exactly the case
   the EVOLUTION_LOG proposal (dedicated QA code with relaxed caps) would unblock.
-- Verified commit: dd678f4 (guardrail fix, verified live) + aef1f40 (fallback
-  hardening, tests green, live re-verify deferred) on origin/claude/speakup-v0.
+- Verified commit: on origin/claude/speakup-v0 — dd678f4 (guardrail fix,
+  verified LIVE) + aef1f40 (fallback hardening) + d8255fa (Buffet finding:
+  bound coerceReply + llama max_tokens) + f29dcce (Buffet REQUEST CHANGES:
+  d8255fa's input-slice hid JSON after a long preamble → replaced with
+  brace-index locate; his repro encoded as a passing regression test). Final:
+  894/894, founder build gate PASS, Buffet APPROVE. Fallback hardening live
+  re-verify still DEFERRED (session cap spent).
 - Started: 2026-07-09
 
 ## Prior task (built + pushed, live-blocked then unblocked): speakup-freetalk-react-not-interrogate
