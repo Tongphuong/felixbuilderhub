@@ -19,8 +19,10 @@ Decision path: `Phuong -> Claude -> one worker -> Claude review -> Phuong approv
 
 ## Current task
 
-- Status: active
+- Status: complete
 - Started: 2026-07-09
+- Completed: 2026-07-09 — pushed to main 06d18f9 (Phương approved commit+deploy), 765 tests, astro build clean, Buffet review clean
+- Verified commit: 06d18f9 (origin/main + origin/claude/r2l-book-health-gate)
 - Task ID: R2L-BOOK-HEALTH-GATE
 - Owner: Claude Lead (Elon) — direct build (Tier1); `functions/api/generate-read2lead-pack.js`
   and the new `src/lib/read2lead-book-health.mjs` are author-owned. Author≠reviewer
