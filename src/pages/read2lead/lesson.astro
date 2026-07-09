@@ -22,11 +22,16 @@ import GuidedListener from '../../components/read2lead/guided-listener.astro';
 import dictationHelperSrc from '../../lib/read2lead-dictation.ts?raw';
 import bookFlowHelperSrc from '../../lib/read2lead-book-flow.mjs?raw';
 import { r2lRecorderScriptSrc } from '../../scripts/r2l-recorder-script.mjs';
+import { stripInlineExports } from '../../lib/inline-esm.mjs';
 import '../../styles/r2l-w2-dynamic.css';
 
 const r2lRecorderSrc = r2lRecorderScriptSrc();
-const dictationHelperInline = dictationHelperSrc.replace(/^export function /gm, 'function ');
-const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'function ');
+// These helper modules are authored as real ESM but inlined into classic
+// <script is:inline> blocks below, so every top-level `export` must be stripped
+// (not just `export function`) or the browser throws "Unexpected token 'export'"
+// and the whole block dies. See src/lib/inline-esm.mjs.
+const dictationHelperInline = stripInlineExports(dictationHelperSrc);
+const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
 ---
 
 <BaseLayout
