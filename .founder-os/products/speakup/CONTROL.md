@@ -72,6 +72,94 @@ assigns, commits, merges, deploys, or spends.
 ## Current task
 
 - Status: active
+- Task ID: speakup-freetalk-react-not-interrogate
+- Owner: Elon (Claude Lead) direct edit — verbatim-authored prompt content
+  (kid-facing, safety-adjacent conversational behavior; judgment-heavy
+  authorship kept at Lead per `~/.claude/rules/claude-bg-dispatch.md`, same
+  precedent as the speakup-brain-deepseek-swap 2-hunk verbatim edit).
+  Independent review by Buffet (Sonnet, read-only, fresh context) — author ≠
+  final reviewer. Cost note (Phương 2026-07-09): cheaper-teammate slot placed
+  on the review, not on pasting Lead-authored safety-adjacent prompt text.
+- Lane: `claude/speakup-v0` (dedicated worktree
+  `~/work/repos/speakup-minny-react`; stacks on 56cedfa, itself push-held).
+- Problem: Free Talking feels like an interview — Minny ends almost every turn
+  with a follow-up question instead of reacting to what the child said. Root
+  cause is a single prompt rule ("Ask a simple follow-up question in most
+  replies ... to keep the conversation going") reinforced by every
+  LEVEL_REGISTER being framed as "Ask ... questions". The model obeys literally
+  and interrogates. Bad experience for a 6–12 y/o.
+- Reuse survey: proven conversation-design patterns from leading AI speaking
+  apps, reused as prompt technique (builds no new code/dependency):
+  (1) "React first, ask second" active-listening / backchanneling — ADOPTED as
+  the mandatory first move each turn (Speak, TalkPal; NVIDIA PersonaPlex
+  backchannel research);
+  (2) explicit "one question / not every turn" cap — ADOPTED, the documented
+  cure for LLM "interview mode" (XDA clarifying-question-limit writeup);
+  (3) keep-AI-leading-for-kids topic guidance — KEPT (retain starter-topic
+  fallback + off-topic steer; kid-safety research says the AI should still
+  lead, just not interrogate). N/A on an external library/fork — this re-specs
+  an existing prompt, no new capability to build.
+- Acceptance criteria:
+  1. `_minny-convo.js` buildSystemPrompt: the question mandate is removed; new
+     rules = react-first every turn + at most ONE question in ~half of replies
+     + starter-topic question only when the child gives little; plus a 3-line
+     few-shot showing react / comment / one-question. LEVEL_REGISTER describes
+     the language level only ("if you do ask, ..."), no per-level question
+     mandate.
+  2. Persona, safety rules (PII, character-break, injection resistance), strict
+     JSON output shape, mood logic, caps, guardrails, and the TTS chain — all
+     UNTOUCHED.
+  3. `node --test` green + `astro build` clean + `founder_check --gate build`
+     PASS.
+  4. Offline eval `scripts/eval-minny-question-rate.mjs` reports the
+     question-rate over sample turns (target ~40–60%, was ~100%); calls the
+     live model only when OPENROUTER_API_KEY is set, else prints a skip note.
+  5. Live verification DEFERRED to the deployed preview once push is unheld
+     (needs a real DeepSeek-answered turn) — bundled with the deepseek-swap
+     preview pass Phương already owes.
+- Files owned: `functions/api/_minny-convo.js`,
+  `scripts/eval-minny-question-rate.mjs` (new),
+  `tests/minny-conversation.test.mjs` (only if an assertion needs updating).
+- Stop condition: any diff touching guardrails, caps, the TTS chain, the
+  conversation endpoint control flow, or the prompt's safety rules — stop and
+  escalate. No merge to main. PUSH HELD (bundle with the pending deepseek-swap
+  preview pass).
+- Cost ceiling: Claude team (Max plan, not metered) — Elon edit + Buffet
+  (Sonnet) review; runtime cost unchanged (same model, same ~150-token
+  replies).
+- Design self-verification: N/A visual (no UI change; behavior lives in the
+  reply text the existing Minny bubble already renders). Behavioral evidence =
+  LIVE eval against the real DeepSeek v4 Flash brain (OpenRouter key from
+  ~/.config/aider/.env), 3 scripted answer-and-keep-sharing conversations (12
+  Minny replies): QUESTION-RATE **25% (3/12)**, down from ~100% under the old
+  prompt — Minny now reacts/comments most turns and asks only occasionally;
+  the 3 questions landed at distributed turn positions (3rd/2nd/2nd), which
+  empirically rules out the reviewer's flagged "always-ask-on-last-turn"
+  few-shot-anchoring risk. Sample replies read warm and natural (e.g. "Two
+  cats? Wow, you are so lucky! I love cats.", "Your mom made it? That is so
+  kind of her!"). Note: 25% is a touch below the ~40-60% target — safe
+  direction for THIS bug (over-questioning); "about half" wording is a tunable
+  knob if Phương wants a little more forward momentum. Full live check on the
+  DEPLOYED preview still deferred per criterion 5 (bundled with the
+  deepseek-swap preview pass). `node --test` conversation+guardrail files 58/58
+  green; founder build gate PASS. Independent review: Buffet (Sonnet,
+  read-only, fresh context) — **APPROVE** (safety rules intact, scope
+  contained, pre-existing 5 failures independently reproduced on base 56cedfa).
+- Founder handoff: plain-language before/after in chat; bundled bounded ask —
+  when Phương runs the held preview pass (after adding OPENROUTER_API_KEY),
+  listen for Minny reacting/commenting instead of interrogating.
+- Verified commit: (pending — push held; local commit records the fix, bundled
+  with 56cedfa for the same preview pass)
+- Branch health note (flag for Phương): `claude/speakup-v0` currently has 5
+  FAILING tests unrelated to SpeakUp (gen-monster-parts, monster-horn-position,
+  read2lead-w2-ui, shop-ux, w6-tier-aura) — pre-existing on base 56cedfa, not
+  from this task, but they trip the "node --test must pass before push" hard
+  gate and should be fixed before this branch merges to main.
+- Started: 2026-07-09
+
+## Prior task (built, PUSH HELD — pending Phương preview pass): speakup-brain-deepseek-swap
+
+- Status: built, push held
 - Task ID: speakup-brain-deepseek-swap
 - Owner: Claude Lead direct edit (small tightly-coupled 2-hunk swap, verbatim-prepared;
   Aider tiers retired 2026-07-08 per ~/.claude/rules/worker-dispatch.md; independent
