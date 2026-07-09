@@ -72,6 +72,59 @@ assigns, commits, merges, deploys, or spends.
 ## Current task
 
 - Status: active
+- Task ID: speakup-freetalk-guardrail-degrade-gracefully
+- Owner: Elon (Claude Lead) — plan-mode investigation + fix; Buffet (Sonnet,
+  read-only) independent review. Plan file:
+  `~/.claude/plans/kind-doodling-teapot.md` (Phương-approved 2026-07-09).
+- Lane: `claude/speakup-v0` (worktree `~/work/repos/speakup-minny-react`).
+- Problem: first-ever real live Free Talk test on the deployed preview (code
+  R2L-KHANHVY-B7YR) returned only canned redirects + early wrap — benign kid
+  turns were guardrail-SAFETY-FLAGGED. Root cause: `screenWithLlamaGuard`
+  (`@cf/meta/llama-guard-3-8b`) fail-closed on EVERY reply (it ran on every
+  turn), so any guard infra hiccup (timeout/empty/unparsed/binding) blocked all
+  conversation → 2 flags → early wrap. Deterministic checks were proven sound
+  (word-boundary matched) — not the cause.
+- Reuse survey: N/A — bugfix/hardening of the existing Phase 6 guard; builds no
+  new capability. (Cloudflare Workers AI llama-guard-3-8b docs consulted for the
+  correct messages[] request + {response} output shape.)
+- Approach (APPROVED — "degrade gracefully"): deterministic word-list checks
+  stay the hard always-on kid-safety gate; the ML guard becomes resilient —
+  flags ONLY a genuine parseable "unsafe" verdict, and on infra failure
+  (unavailable/error/timeout/empty/unparsed) returns `degraded:true` → caller
+  delivers the reply (deterministic gate already passed) and records the
+  degradation to the debug ring (NOT a safety flag, no early-wrap). Also fixed
+  the call to pass the kid+assistant exchange (Llama Guard classifies a
+  conversation, not a lone assistant message) and read the Workers AI
+  `{response}` shape; timeout 4s→6s.
+- Acceptance criteria:
+  1. `screenWithLlamaGuard` returns `{flagged,degraded,category,raw}`; infra
+     failures degrade (flagged:false), genuine unsafe still flags.
+  2. Caller passes transcript to the guard + records `guard_degraded` without
+     counting a safety flag. Caps/redirects/early-wrap for genuine flags
+     unchanged.
+  3. Deterministic gate still blocks bad content even when the guard is down
+     (unit + e2e test).
+  4. `node --test` green + founder build gate PASS.
+  5. Live re-verify on the deployed preview: real varied Minny replies, no early
+     wrap, ~40% question-rate; `debug:convo-flags` shows no infra flags on
+     benign turns.
+- Files: `functions/api/_minny-guardrails.js`,
+  `functions/api/minny-conversation.js` (guard call site + degraded record),
+  `tests/minny-guardrails.test.mjs`, `docs/ENV.md` (documented
+  OPENROUTER_API_KEY + DEBUG_SPEAKING_KEY).
+- Stop condition: no change to deterministic wordlists, caps, TTS, or the kid
+  transcript screen. No merge to main.
+- Cost ceiling: Claude team (Max plan, not metered); runtime unchanged (same
+  guard model, 1 call/turn).
+- Design self-verification: (pending live re-verify on preview — see criteria 5)
+- Verified commit: (pending push + live)
+- Started: 2026-07-09
+
+## Prior task (built + pushed, live-blocked then unblocked): speakup-freetalk-react-not-interrogate
+
+- Status: built + pushed to origin/claude/speakup-v0; live verification was
+  blocked by the guardrail bug above, now being fixed under
+  speakup-freetalk-guardrail-degrade-gracefully.
 - Task ID: speakup-freetalk-react-not-interrogate
 - Owner: Elon (Claude Lead) direct edit — verbatim-authored prompt content
   (kid-facing, safety-adjacent conversational behavior; judgment-heavy
@@ -140,9 +193,26 @@ assigns, commits, merges, deploys, or spends.
   in one run) — the guard holds and the "always-ask-last-turn" few-shot-anchor
   risk stays empirically ruled out. Sample replies warm and natural (e.g. "Two
   cats? Wow, you are so lucky — I love cats!", "One goal — that's fantastic! I
-  bet all your friends cheered for you."). Full live check on the DEPLOYED
-  preview still deferred per criterion 5 (bundled with the deepseek-swap preview
-  pass; OPENROUTER_API_KEY now added to Cloudflare by Phương 2026-07-09). Tests:
+  bet all your friends cheered for you."). LIVE PREVIEW CHECK 2026-07-09 (pushed
+  e4963bc..c5be058; code R2L-KHANHVY-B7YR, level L0): **BLOCKED — could NOT
+  validate the fix live because Free Talking on the deployed preview is not
+  producing real conversation at all.** All 3 turns returned verbatim canned
+  phrases (redirect_1, redirect_2, then wrap_up_1 with turns_left->0) — every
+  turn replaced by a guardrail/fallback redirect, session early-wrapped. Code
+  analysis: wrap_up_1+celebrate+turns_left:0 at turn 3 can only be
+  handleGuardrailFlag at flags>=2 (minny-conversation.js:69); redirect_N at
+  turns 1-2 fits both the !parsed LLM-failure path (:347) and the flag path
+  (:54). Conclusion: >=2 benign kid turns SAFETY-FLAGGED + >=1 LLM parse
+  failure. This is the Phase 6 guardrail chain + DeepSeek/llama brain (both
+  PRE-EXISTING, untouched by this task) — NOT the prompt. Likely causes (Phương
+  to check in Cloudflare; I lack DEBUG_SPEAKING_KEY + env visibility): (1)
+  OPENROUTER_API_KEY on Production but not PREVIEW -> DeepSeek skipped ->
+  llama-3.3 non-JSON -> parse fail -> redirect; (2) Llama Guard fail-closing on
+  env.AI error -> flags benign replies -> redirect + early wrap. History shows a
+  real end-to-end Free Talk turn was never live-verified before (SKIPPED on cap
+  grounds) — this is the first true live test and it exposed the chain. NEEDS
+  ESCALATION as its own task (touches guardrails/brain = stop condition). Prompt
+  fix remains proven offline; 2 sessions left on R2L-KHANHVY-B7YR today. Tests:
   full suite **881/881 green** (deps installed in the worktree); founder build
   gate PASS. Independent review: Buffet (Sonnet, read-only, fresh context) —
   **APPROVE** (safety rules intact, scope contained).

@@ -25,6 +25,8 @@ Azure/OpenAI secrets are still undocumented here; see `grep -rohE "env\.[A-Z_]+"
 | `ADMIN_PASSWORD` | Password for `/admin/*` routes. Validated by `functions/_middleware.js`. | _middleware | Manually set |
 | `TELEGRAM_BOT_TOKEN` | Bot token for the Felix lead-bot Telegram bot. Used to push lead notifications. | coaching-booking, msmw-lead, sharing-subscribe | https://t.me/BotFather |
 | `TELEGRAM_CHAT_ID` | Chat ID where bot messages land (Phương's chat). | Same as `TELEGRAM_BOT_TOKEN` consumers | Bot getUpdates response |
+| `OPENROUTER_API_KEY` | Bearer key for the Free Talking conversation brain (DeepSeek v4 Flash via OpenRouter). Missing key → llama-3.3 fallback → canned redirect. **Must be set on BOTH Preview and Production** (a Production-only key means preview Free Talk silently runs the fallback). | minny-conversation | OpenRouter dashboard (same key the retired Aider workers used, in `~/.config/aider/.env`) |
+| `DEBUG_SPEAKING_KEY` | Secret gate for the `/api/debug-speaking` and `/api/debug-convo-flags` diagnostic endpoints (they return 404 unless `?key=` matches). `debug:convo-flags` surfaces why each Free Talk turn was guardrail-flagged (`matched_rule`: `guard_error`/`guard_empty_response`/`sN`/`guard_degraded`/etc.). Optional — endpoints are simply invisible when unset. | debug-speaking, debug-convo-flags | Manually set (any random string; Phương-only diagnostic surface) |
 ## Variables (non-secret)
 | Variable | Purpose | Default |
 |---|---|---|

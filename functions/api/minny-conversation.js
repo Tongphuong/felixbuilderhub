@@ -326,10 +326,24 @@ export async function onRequestPost(context) {
     const deterministicFlag = shapeCheck.flagged || characterCheck.flagged || topicCheck.flagged;
     const guardResult = deterministicFlag
       ? { flagged: true, category: shapeCheck.reason || characterCheck.marker || topicCheck.category }
-      : await screenWithLlamaGuard(env.AI, parsed.reply_en);
+      : await screenWithLlamaGuard(env.AI, parsed.reply_en, transcript);
 
     if (guardResult.flagged) {
       return handleGuardrailFlag(env, apiKey, session, sessionKey, accessCode, transcript, guardResult.category || 'llama_guard', 'model', now);
+    }
+
+    // The ML backstop couldn't produce a usable verdict (outage/timeout/empty).
+    // The deterministic word-list gate already passed, so per the approved
+    // "degrade gracefully" posture we deliver the reply -- but record the guard
+    // degradation to the debug ring for visibility. This does NOT count as a
+    // safety flag and never triggers the 2-flag early wrap-up.
+    if (guardResult.degraded) {
+      await recordConvoFlag(env, {
+        code: accessCode,
+        at: now,
+        direction: 'guard_degraded',
+        matched_rule: guardResult.category || 'guard_degraded',
+      });
     }
   }
 

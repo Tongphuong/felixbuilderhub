@@ -167,25 +167,65 @@ test('screenWithLlamaGuard returns safe when the model says safe', async () => {
   const ai = { run: async () => 'safe' };
   const result = await screenWithLlamaGuard(ai, 'That sounds fun!');
   assert.equal(result.flagged, false);
+  assert.equal(result.degraded, false);
 });
 
 test('screenWithLlamaGuard flags when the model says unsafe', async () => {
   const ai = { run: async () => 'unsafe\nS1' };
   const result = await screenWithLlamaGuard(ai, 'something bad');
   assert.equal(result.flagged, true);
+  assert.equal(result.degraded, false);
+  assert.equal(result.category, 's1');
 });
 
-test('screenWithLlamaGuard fails closed when the binding is missing', async () => {
+test('screenWithLlamaGuard reads the Workers AI {response} object shape', async () => {
+  const ai = { run: async () => ({ response: 'safe' }) };
+  const result = await screenWithLlamaGuard(ai, 'That sounds fun!');
+  assert.equal(result.flagged, false);
+  assert.equal(result.degraded, false);
+});
+
+test('screenWithLlamaGuard passes the kid+assistant exchange to the model', async () => {
+  let seen = null;
+  const ai = { run: async (_model, input) => { seen = input; return 'safe'; } };
+  await screenWithLlamaGuard(ai, 'I love cats!', 'I have two cats');
+  assert.deepEqual(seen.messages, [
+    { role: 'user', content: 'I have two cats' },
+    { role: 'assistant', content: 'I love cats!' },
+  ]);
+});
+
+// New posture (approved 2026-07-09): a guard INFRASTRUCTURE failure degrades
+// gracefully (does NOT flag) -- the deterministic word-list gate stands in.
+test('screenWithLlamaGuard degrades (does not flag) when the binding is missing', async () => {
   const result = await screenWithLlamaGuard(null, 'hello');
-  assert.equal(result.flagged, true);
+  assert.equal(result.flagged, false);
+  assert.equal(result.degraded, true);
   assert.equal(result.category, 'guard_unavailable');
 });
 
-test('screenWithLlamaGuard fails closed when the model call throws', async () => {
+test('screenWithLlamaGuard degrades (does not flag) when the model call throws', async () => {
   const ai = { run: async () => { throw new Error('down'); } };
   const result = await screenWithLlamaGuard(ai, 'hello');
-  assert.equal(result.flagged, true);
+  assert.equal(result.flagged, false);
+  assert.equal(result.degraded, true);
   assert.equal(result.category, 'guard_error');
+});
+
+test('screenWithLlamaGuard degrades (does not flag) on an empty response', async () => {
+  const ai = { run: async () => '' };
+  const result = await screenWithLlamaGuard(ai, 'hello');
+  assert.equal(result.flagged, false);
+  assert.equal(result.degraded, true);
+  assert.equal(result.category, 'guard_empty_response');
+});
+
+test('screenWithLlamaGuard degrades on an unrecognizable (neither safe nor unsafe) response', async () => {
+  const ai = { run: async () => 'I am not sure about this one' };
+  const result = await screenWithLlamaGuard(ai, 'hello');
+  assert.equal(result.flagged, false);
+  assert.equal(result.degraded, true);
+  assert.equal(result.category, 'guard_unparsed');
 });
 
 // ---------------------------------------------------------------------------
@@ -294,7 +334,7 @@ test('red-team: URL-bearing model reply never reaches the kid, gets a canned red
   }
 });
 
-test('red-team: Llama Guard down (throws) fails closed, safe-looking reply still gets a canned redirect', async () => {
+test('red-team: Llama Guard down (throws) DEGRADES -- a deterministically-clean reply is still delivered (posture change 2026-07-09)', async () => {
   const fakeKv = createFakeKv();
   await fakeKv.put('R2L-TEST', JSON.stringify({ is_test: true, progress: { current_level: 'L2' } }));
   const safeLookingReply = 'Oh nice! What is your favorite animal?';
@@ -312,7 +352,39 @@ test('red-team: Llama Guard down (throws) fails closed, safe-looking reply still
     const turn = await submitTurn(env, start.session_id, 'I like cats');
     assert.equal(turn.ok, true);
     assert.notEqual(turn.ended, true);
-    assert.notEqual(turn.reply_en, safeLookingReply);
+    // Guard outage no longer bricks the reply: the deterministic gate passed,
+    // so the clean reply reaches the kid.
+    assert.equal(turn.reply_en, safeLookingReply);
+    // ...but the degradation is recorded for visibility, NOT as a safety flag.
+    const flags = await fakeKv.get('debug:convo-flags', { type: 'json' });
+    assert.equal(flags.length, 1);
+    assert.equal(flags[0].direction, 'guard_degraded');
+    assert.equal(flags[0].matched_rule, 'guard_error');
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test('red-team: with Llama Guard down, the DETERMINISTIC gate still blocks a bad (URL-bearing) reply', async () => {
+  const fakeKv = createFakeKv();
+  await fakeKv.put('R2L-TEST', JSON.stringify({ is_test: true, progress: { current_level: 'L2' } }));
+  const urlReply = 'Sure! Visit http://example.com/thing for more.';
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = mockFetchFor(urlReply);
+  const env = {
+    READ2LEAD_CODES: fakeKv,
+    OPENROUTER_API_KEY: 'test-key',
+    OPENAI_API_KEY: 'test-key',
+    AI: { run: async () => { throw new Error('llama guard down'); } },
+  };
+
+  try {
+    const start = await startSession(env);
+    const turn = await submitTurn(env, start.session_id, 'what website should I visit?');
+    assert.equal(turn.ok, true);
+    // Deterministic URL check flags before the guard is even consulted, so the
+    // reply is redirected even though the ML guard is unavailable.
+    assert.notEqual(turn.reply_en, urlReply);
   } finally {
     globalThis.fetch = originalFetch;
   }

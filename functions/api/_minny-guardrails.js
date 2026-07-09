@@ -2,8 +2,15 @@
 // Phase 6 guardrail layer -- pure functions only, no env/KV access. The
 // caller (minny-conversation.js) wires these in order: kid transcript
 // screen -> LLM call -> shape/deterministic checks -> Llama Guard -> TTS.
-// Every function here is fail-closed: on any ambiguity or error, treat the
-// content as flagged rather than pass it through.
+// The DETERMINISTIC layers (scanBannedTopics/screenTranscript,
+// validateReplyShape, detectCharacterBreak) are the hard, always-on
+// fail-closed safety gate. The ML backstop (screenWithLlamaGuard) is a
+// resilient best-effort layer: it flags only a genuine "unsafe" verdict, and
+// DEGRADES gracefully (does not flag) when the model itself can't run
+// (missing binding / error / timeout / unparsable-empty response) -- because
+// blocking every reply on a guard outage bricked the whole feature (see the
+// 2026-07-09 preview incident). Approved posture: on guard infra-failure,
+// rely on the deterministic gate that already passed.
 
 import { BANNED_TOPICS } from './_minny-guardrail-wordlists.js';
 
@@ -73,30 +80,47 @@ export function detectCharacterBreak(reply) {
 
 // Layer: ML backstop via Cloudflare Workers AI's Llama Guard model. Called
 // only on the model's own reply, after the deterministic layers pass.
-// Fail-closed: any error, timeout, missing binding, or unexpected/empty
-// response is treated as flagged, never as a silent pass-through.
-export async function screenWithLlamaGuard(ai, text) {
+//
+// Returns { flagged, degraded, category, raw }:
+//   - flagged:true  -> a genuine, parseable "unsafe" verdict (redirect the kid).
+//   - degraded:true -> the guard could NOT produce a usable verdict (missing
+//     binding, error, timeout, empty/unparsable response). Per the approved
+//     "degrade gracefully" posture the caller then relies on the deterministic
+//     word-list gate (which already passed) and lets the reply through, rather
+//     than blocking every turn on a guard outage.
+//   - both false    -> a clean "safe" verdict.
+//
+// Llama Guard classifies a CONVERSATION, so we pass the kid's turn plus the
+// assistant reply being screened (not a lone assistant message).
+export async function screenWithLlamaGuard(ai, replyText, userText = '') {
   if (!ai || typeof ai.run !== 'function') {
-    return { flagged: true, category: 'guard_unavailable', raw: null };
+    return { flagged: false, degraded: true, category: 'guard_unavailable', raw: null };
   }
   try {
+    const messages = [];
+    if (userText) messages.push({ role: 'user', content: String(userText) });
+    messages.push({ role: 'assistant', content: String(replyText || '') });
     const result = await Promise.race([
-      ai.run('@cf/meta/llama-guard-3-8b', {
-        messages: [{ role: 'assistant', content: String(text || '') }],
-      }),
-      new Promise((_, reject) => setTimeout(() => reject(new Error('llama_guard_timeout')), 4000)),
+      ai.run('@cf/meta/llama-guard-3-8b', { messages }),
+      new Promise((_, reject) => setTimeout(() => reject(new Error('llama_guard_timeout')), 6000)),
     ]);
-    const raw = typeof result === 'string' ? result : (result?.response || result?.text || '');
-    const normalized = String(raw || '').trim().toLowerCase();
+    const raw = typeof result === 'string' ? result : (result?.response ?? result?.text ?? '');
+    const normalized = String(raw ?? '').trim().toLowerCase();
     if (!normalized) {
-      return { flagged: true, category: 'guard_empty_response', raw };
+      return { flagged: false, degraded: true, category: 'guard_empty_response', raw };
     }
     if (normalized.startsWith('safe')) {
-      return { flagged: false, category: null, raw };
+      return { flagged: false, degraded: false, category: null, raw };
     }
+    // A genuine unsafe verdict: Llama Guard emits "unsafe" and/or an sN code.
     const categoryMatch = normalized.match(/s\d+/);
-    return { flagged: true, category: categoryMatch ? categoryMatch[0] : 'unsafe', raw };
+    if (normalized.includes('unsafe') || categoryMatch) {
+      return { flagged: true, degraded: false, category: categoryMatch ? categoryMatch[0] : 'unsafe', raw };
+    }
+    // Non-empty but neither a clear "safe" nor a clear "unsafe" verdict -- we
+    // can't trust it, so degrade to the deterministic gate rather than block.
+    return { flagged: false, degraded: true, category: 'guard_unparsed', raw };
   } catch {
-    return { flagged: true, category: 'guard_error', raw: null };
+    return { flagged: false, degraded: true, category: 'guard_error', raw: null };
   }
 }
