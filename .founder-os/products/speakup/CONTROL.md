@@ -131,30 +131,36 @@ assigns, commits, merges, deploys, or spends.
   reply text the existing Minny bubble already renders). Behavioral evidence =
   LIVE eval against the real DeepSeek v4 Flash brain (OpenRouter key from
   ~/.config/aider/.env), 3 scripted answer-and-keep-sharing conversations (12
-  Minny replies): QUESTION-RATE **25% (3/12)**, down from ~100% under the old
-  prompt — Minny now reacts/comments most turns and asks only occasionally;
-  the 3 questions landed at distributed turn positions (3rd/2nd/2nd), which
-  empirically rules out the reviewer's flagged "always-ask-on-last-turn"
-  few-shot-anchoring risk. Sample replies read warm and natural (e.g. "Two
-  cats? Wow, you are so lucky! I love cats.", "Your mom made it? That is so
-  kind of her!"). Note: 25% is a touch below the ~40-60% target — safe
-  direction for THIS bug (over-questioning); "about half" wording is a tunable
-  knob if Phương wants a little more forward momentum. Full live check on the
-  DEPLOYED preview still deferred per criterion 5 (bundled with the
-  deepseek-swap preview pass). `node --test` conversation+guardrail files 58/58
-  green; founder build gate PASS. Independent review: Buffet (Sonnet,
-  read-only, fresh context) — **APPROVE** (safety rules intact, scope
-  contained, pre-existing 5 failures independently reproduced on base 56cedfa).
+  Minny replies): first pass QUESTION-RATE **25% (3/12)**, down from ~100%
+  under the old prompt. Per Phương (2026-07-09) the target was raised to ~40%;
+  the rule was reworded from a ceiling ("at most one, only in about half") to a
+  target ("about half the time DO ask") plus a "never two turns in a row"
+  guard. Re-verified LIVE across two runs: **33% (4/12) and 50% (6/12), ≈41%
+  average**; questions land at distributed, non-consecutive turns (e.g. 3/6/8/11
+  in one run) — the guard holds and the "always-ask-last-turn" few-shot-anchor
+  risk stays empirically ruled out. Sample replies warm and natural (e.g. "Two
+  cats? Wow, you are so lucky — I love cats!", "One goal — that's fantastic! I
+  bet all your friends cheered for you."). Full live check on the DEPLOYED
+  preview still deferred per criterion 5 (bundled with the deepseek-swap preview
+  pass; OPENROUTER_API_KEY now added to Cloudflare by Phương 2026-07-09). Tests:
+  full suite **881/881 green** (deps installed in the worktree); founder build
+  gate PASS. Independent review: Buffet (Sonnet, read-only, fresh context) —
+  **APPROVE** (safety rules intact, scope contained).
 - Founder handoff: plain-language before/after in chat; bundled bounded ask —
   when Phương runs the held preview pass (after adding OPENROUTER_API_KEY),
   listen for Minny reacting/commenting instead of interrogating.
 - Verified commit: (pending — push held; local commit records the fix, bundled
   with 56cedfa for the same preview pass)
-- Branch health note (flag for Phương): `claude/speakup-v0` currently has 5
-  FAILING tests unrelated to SpeakUp (gen-monster-parts, monster-horn-position,
-  read2lead-w2-ui, shop-ux, w6-tier-aura) — pre-existing on base 56cedfa, not
-  from this task, but they trip the "node --test must pass before push" hard
-  gate and should be fixed before this branch merges to main.
+- Branch health note (RESOLVED 2026-07-09 — was a FALSE ALARM): the 5
+  "failing" tests (gen-monster-parts, monster-horn-position, read2lead-w2-ui,
+  shop-ux, w6-tier-aura) were not broken/outdated/unrelated — they were
+  ERR_MODULE_NOT_FOUND because the fresh dedicated worktree had no node_modules
+  (gitignored; `pngjs` is a declared devDependency, `vite` comes in via Astro).
+  `npm install` in the worktree → full suite 881/881 green. Nothing to delete
+  or fix in the tests. Minor latent nit flagged separately: `vite` is imported
+  by 3 tests but is not declared in package.json (works only transitively via
+  Astro) — worth adding to devDependencies someday, tangential to SpeakUp, not
+  touched here.
 - Started: 2026-07-09
 
 ## Prior task (built, PUSH HELD — pending Phương preview pass): speakup-brain-deepseek-swap
