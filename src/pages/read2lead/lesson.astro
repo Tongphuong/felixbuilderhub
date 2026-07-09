@@ -5573,10 +5573,10 @@ const bookFlowHelperInline = bookFlowHelperSrc.replace(/^export function /gm, 'f
     bookRenderTrail();
     bookSetStage(state.bookReader.stage);
     // Every page change funnels through here (forward "Trang tiếp →", back,
-    // trail jump, story-page next). The kid taps Next from the bottom of the
-    // previous page and the content swaps in place, so without this the new
-    // page opens scrolled to the bottom — reset to the top of the reader.
-    qs('#w1-book-reader-phase')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // trail jump, story-page next). Reset to the top of the reader so the new
+    // page doesn't open scrolled to where the kid tapped Next. Extracted into
+    // read2lead-book-flow.mjs (scrollBookReaderToTop) so it is unit-testable.
+    scrollBookReaderToTop(document);
   }
 
   function bookRenderTrail() {

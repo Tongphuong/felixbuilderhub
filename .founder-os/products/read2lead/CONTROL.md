@@ -1,10 +1,10 @@
 # Control — Read2Lead
 
 - Product: Read2Lead
-- Current goal: Fix the book-reader page turn so a new page opens at the top, not scrolled to the bottom (Felix-reported UX bug, plan approved 2026-07-09)
-- Latest staging URL: https://claude-r2l-next-page-scroll.felixbuilderhub.pages.dev (after first push)
-- Active workers: 0
-- Last updated: 2026-07-09 (R2L-NEXT-PAGE-SCROLL shipped to prod 69ac4da)
+- Current goal: Give the book-reader an automated test seam — a reusable lesson-pack fixture + real (executing, not source-regex) behaviour tests so UI behaviours like scroll-on-page-turn are covered without a live pack or a mic (ratified EVOLUTION_LOG proposal, 2026-07-09)
+- Latest staging URL: n/a (test-only + a byte-identical scroll-helper extraction; no user-facing change)
+- Active workers: 1 (Claude Lead / Elon, direct)
+- Last updated: 2026-07-09
 
 ## Operating team
 
@@ -18,6 +18,62 @@
 Decision path: `Phuong -> Claude -> one worker -> Claude review -> Phuong approval`.
 
 ## Current task
+
+- Status: active
+- Started: 2026-07-09
+- Task ID: R2L-BOOK-TEST-FIXTURE
+- Owner: Claude Lead (Elon) — direct; `src/pages/read2lead/lesson.astro` is on
+  the dispatch-guard PROTECTED allowlist (spec required; the approved plan is
+  that spec), plan approved by Felix 2026-07-09
+- Lane: product (test infrastructure + a byte-identical refactor of the
+  scroll-reset helper; no change to lesson completion, scoring, rewards, or the
+  mic/recorder pipeline)
+- Problem: the book-reader is only checkable by hand (live pack + mic), and its
+  "tests" are static source-regex assertions that never execute the reader — so
+  a behaviour bug like the scroll-to-bottom one cannot be caught automatically.
+  This is the ratified EVOLUTION_LOG proposal (2026-07-09) to add the missing
+  test seam.
+- Approach: (1) new `tests/helpers/book-pack-fixture.mjs` — `makeBookPackLesson`
+  builds a valid lesson-pack object (story paragraphs/sentences, guided_listening
+  questions, book_images, page audio, attribution) in the exact shape
+  `src/lib/read2lead-book-flow.mjs` + the reader consume, plus `makeBookReaderState`
+  for a completed run; (2) extract the scroll-reset one-liner from the inline
+  `bookShowPage` into `read2lead-book-flow.mjs` as `scrollBookReaderToTop(doc)`
+  (byte-identical runtime — same `#w1-book-reader-phase` + `scrollIntoView({block:'start'})`)
+  and call it from `bookShowPage`, so the exact fix becomes unit-testable;
+  (3) new `tests/read2lead-book-reader-behaviour.test.mjs` — executing tests that
+  feed the fixture through the flow module (question selection, shadow chunks,
+  submission validation) and spy on `scrollIntoView` to prove the page-turn
+  resets to the reader top.
+- Acceptance criteria: fixture produces data that `selectBookQuestions` /
+  `buildBookShadowChunks` / `validateBookFlowSubmission` accept; a completed
+  reader state validates `ok:true`; `scrollBookReaderToTop` targets
+  `#w1-book-reader-phase` with `{behavior:'smooth',block:'start'}` and is null-safe;
+  `bookShowPage` runtime unchanged; `node --test tests/*.test.mjs` passes;
+  astro build clean; no unrelated refactor.
+- Files owned: tests/helpers/book-pack-fixture.mjs (new),
+  tests/read2lead-book-reader-behaviour.test.mjs (new),
+  src/lib/read2lead-book-flow.mjs, src/pages/read2lead/lesson.astro,
+  .founder-os/products/read2lead/CONTROL.md (this entry)
+- Non-goals: no local KV seed / Playwright harness this packet (deferred — the
+  `node --test` coverage is the core ask); no change to reader behaviour beyond
+  the byte-identical scroll-helper extraction.
+- Stop condition: tests green (incl. the new behaviour tests), founder build
+  gate PASS, astro build clean, then Felix + Phương approve merge to main.
+- Cost ceiling: USD 0 metered — Claude Lead direct on the Max plan; actual USD 0.
+- Reuse survey: (1) the existing `src/lib/read2lead-book-flow.mjs` self-contained
+  flow module + its ESM test pattern (`tests/read2lead-book-flow.test.mjs`) —
+  ADOPTED wholesale: extend it and its import-and-run test style rather than build
+  a parallel harness; (2) jsdom / happy-dom for a DOM in tests — REJECTED: not a
+  dependency here, and the repo already has a hand-rolled `globalThis.document`
+  mock idiom (`tests/read2lead-w2-juice.test.mjs`) that the scroll test reuses,
+  zero new deps; (3) Storybook / component-story harness — REJECTED: heavy tooling
+  for an Astro-inline-script page, the fixture + flow module cover the need.
+- Design self-verification: N/A — test infrastructure + a byte-identical helper
+  extraction, no UI/design change; verified by the new executing tests + astro build.
+- Founder handoff: result reported in chat; merge to main gated on Felix + Phương.
+
+## Previous task
 
 - Status: complete
 - Started: 2026-07-09

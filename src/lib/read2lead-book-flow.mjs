@@ -228,3 +228,22 @@ export function validateBookFlowSubmission(bookReader, lessonContext) {
     skipped: summary.chunks_skipped > 0,
   };
 }
+
+// The book reader's phase container. Every page change scrolls back to its top
+// so a new page never opens scrolled to where the kid tapped "Trang tiếp →".
+export const BOOK_READER_SCROLL_ANCHOR_ID = 'w1-book-reader-phase';
+
+// Extracted from lesson.astro's bookShowPage() so the scroll-on-page-turn
+// behaviour is unit-testable. Runtime is identical to the original inline call
+// (`qs('#w1-book-reader-phase')?.scrollIntoView({ behavior: 'smooth', block: 'start' })`).
+// The module is inlined into the page via ?raw, so callers pass the page's
+// `document`; tests pass a mock document. Returns the target element (or null)
+// for assertions. Null-safe on a missing document or a missing element.
+export function scrollBookReaderToTop(doc) {
+  if (!doc || typeof doc.querySelector !== 'function') return null;
+  const target = doc.querySelector('#' + BOOK_READER_SCROLL_ANCHOR_ID);
+  if (target && typeof target.scrollIntoView === 'function') {
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  return target;
+}
