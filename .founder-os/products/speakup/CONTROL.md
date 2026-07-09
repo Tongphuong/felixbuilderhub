@@ -149,8 +149,18 @@ assigns, commits, merges, deploys, or spends.
   bound coerceReply + llama max_tokens) + f29dcce (Buffet REQUEST CHANGES:
   d8255fa's input-slice hid JSON after a long preamble → replaced with
   brace-index locate; his repro encoded as a passing regression test). Final:
-  894/894, founder build gate PASS, Buffet APPROVE. Fallback hardening live
-  re-verify still DEFERRED (session cap spent).
+  894/894, founder build gate PASS, Buffet APPROVE.
+- FALLBACK HARDENING LIVE RE-VERIFY: **PASS (2026-07-09, two fresh codes at
+  human pace)**. Ran the paced (~6s/turn) live check against the deployed
+  preview with R2L-TUANH-X45M and R2L-RYAN-5KGW: **all 5 turns REAL react-first
+  Minny replies on BOTH codes, zero canned redirects, no early wrap**
+  (turns_left 11→10→9→8→7), question-rate 60% and 40%. Confirms (a) the
+  guardrail fix (no false flags), (b) DeepSeek answers every turn on the Preview
+  env at human pace, and (c) the react-not-interrogate prompt. Root cause of
+  yesterday's turns-2–5 redirects CONFIRMED as a test artifact: firing turns
+  back-to-back tripped OpenRouter rate-limiting; at real pace every turn gets a
+  real reply. The whole Free Talking feature is now verified working end-to-end.
+  Ready for Phương's QA-together pass + merge decision (main still untouched).
 - Started: 2026-07-09
 
 ## Prior task (built + pushed, live-blocked then unblocked): speakup-freetalk-react-not-interrogate
