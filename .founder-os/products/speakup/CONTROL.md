@@ -116,8 +116,24 @@ assigns, commits, merges, deploys, or spends.
   transcript screen. No merge to main.
 - Cost ceiling: Claude team (Max plan, not metered); runtime unchanged (same
   guard model, 1 call/turn).
-- Design self-verification: (pending live re-verify on preview — see criteria 5)
-- Verified commit: (pending push + live)
+- Design self-verification: LIVE re-verify on the deployed preview @ dd678f4
+  (code R2L-KHANHVY-B7YR, 5-turn benign conversation): **guardrail fix
+  CONFIRMED** — no early wrap-up (ran all 5 turns, 11→10→9→8→7; was dying at
+  turn 3 before), and a real react-first Minny reply now gets through ("A white
+  and black cat sounds so pretty! I bet they love to play.", turn 2), proving
+  the guard no longer false-flags and the degrade path delivers. Unit/e2e:
+  887/887 (added an e2e test for a genuine unsafe verdict → redirect + model
+  flag, per Buffet). Buffet review: APPROVE. HOWEVER a SEPARATE issue is now
+  visible: 4/5 turns are still canned redirects via the LLM-parse-failure path
+  (redirect_1/3/4/5 counter, NOT guard flags) — the DeepSeek brain isn't
+  answering on most preview turns, so they ride the llama fallback which returns
+  non-JSON → redirect. Most likely OPENROUTER_API_KEY is not active on the
+  PREVIEW env specifically (per-environment), or DeepSeek is timing out (8s).
+  This is a brain-reliability issue, NOT the guardrail — tracked as the next
+  step (verify Preview key + harden the fallback to emit parseable JSON).
+- Verified commit: dd678f4 pushed to origin/claude/speakup-v0 (+ a follow-up
+  test commit); guardrail behavior verified live. Brain-reliability follow-up
+  pending.
 - Started: 2026-07-09
 
 ## Prior task (built + pushed, live-blocked then unblocked): speakup-freetalk-react-not-interrogate

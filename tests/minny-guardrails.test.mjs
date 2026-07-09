@@ -365,6 +365,35 @@ test('red-team: Llama Guard down (throws) DEGRADES -- a deterministically-clean 
   }
 });
 
+test('red-team: a genuine Llama Guard "unsafe" verdict redirects the reply and counts a model-direction flag', async () => {
+  const fakeKv = createFakeKv();
+  await fakeKv.put('R2L-TEST', JSON.stringify({ is_test: true, progress: { current_level: 'L2' } }));
+  const cleanLookingReply = 'Oh nice! What is your favorite animal?';
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = mockFetchFor(cleanLookingReply);
+  const env = {
+    READ2LEAD_CODES: fakeKv,
+    OPENROUTER_API_KEY: 'test-key',
+    OPENAI_API_KEY: 'test-key',
+    AI: { run: async () => 'unsafe\nS1' }, // guard reachable, returns a real unsafe verdict
+  };
+
+  try {
+    const start = await startSession(env);
+    const turn = await submitTurn(env, start.session_id, 'I like cats');
+    assert.equal(turn.ok, true);
+    // A genuine unsafe verdict still redirects (the reply never reaches the kid)...
+    assert.notEqual(turn.reply_en, cleanLookingReply);
+    // ...and is recorded as a real safety flag on the model direction.
+    const flags = await fakeKv.get('debug:convo-flags', { type: 'json' });
+    assert.equal(flags.length, 1);
+    assert.equal(flags[0].direction, 'model');
+    assert.equal(flags[0].matched_rule, 's1');
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
 test('red-team: with Llama Guard down, the DETERMINISTIC gate still blocks a bad (URL-bearing) reply', async () => {
   const fakeKv = createFakeKv();
   await fakeKv.put('R2L-TEST', JSON.stringify({ is_test: true, progress: { current_level: 'L2' } }));
