@@ -3,8 +3,8 @@
 - Product: Read2Lead
 - Current goal: Give the book-reader an automated test seam — a reusable lesson-pack fixture + real (executing, not source-regex) behaviour tests so UI behaviours like scroll-on-page-turn are covered without a live pack or a mic (ratified EVOLUTION_LOG proposal, 2026-07-09)
 - Latest staging URL: n/a (test-only + a byte-identical scroll-helper extraction; no user-facing change)
-- Active workers: 1 (Claude Lead / Elon, direct)
-- Last updated: 2026-07-09
+- Active workers: 0
+- Last updated: 2026-07-09 (R2L-BOOK-TEST-FIXTURE merged to main ff48675)
 
 ## Operating team
 
@@ -19,8 +19,9 @@ Decision path: `Phuong -> Claude -> one worker -> Claude review -> Phuong approv
 
 ## Current task
 
-- Status: active
+- Status: complete
 - Started: 2026-07-09
+- Completed: 2026-07-09 — merged to main ff48675 (Felix approved), 744/744 tests, astro build clean
 - Task ID: R2L-BOOK-TEST-FIXTURE
 - Owner: Claude Lead (Elon) — direct; `src/pages/read2lead/lesson.astro` is on
   the dispatch-guard PROTECTED allowlist (spec required; the approved plan is
@@ -71,7 +72,24 @@ Decision path: `Phuong -> Claude -> one worker -> Claude review -> Phuong approv
   for an Astro-inline-script page, the fixture + flow module cover the need.
 - Design self-verification: N/A — test infrastructure + a byte-identical helper
   extraction, no UI/design change; verified by the new executing tests + astro build.
-- Founder handoff: result reported in chat; merge to main gated on Felix + Phương.
+- Founder handoff: result reported in chat; merged to main ff48675 under Felix's approval. No decisions pending.
+- Verified commit: ff48675 (on origin/main and origin/claude/r2l-book-test-fixture)
+
+## Acceptance criteria reconciliation
+
+- Fixture produces data selectBookQuestions / buildBookShadowChunks /
+  validateBookFlowSubmission accept: PASS — the new behaviour tests execute all
+  three against the fixture output.
+- A completed reader state validates ok:true: PASS — "a completed reader state
+  built from the fixture validates ok" test (pages_heard 2, questions_answered 4).
+- scrollBookReaderToTop targets #w1-book-reader-phase with
+  {behavior:'smooth', block:'start'} and is null-safe: PASS — two behaviour
+  tests (a scrollIntoView spy + a null-safety case).
+- bookShowPage runtime unchanged: PASS — byte-identical extraction; the built
+  page confirms scrollBookReaderToTop is inlined and called.
+- node --test passes: PASS — 744/744 (5 new).
+- astro build clean: PASS — 26 pages.
+- No unrelated refactor: PASS — 5 files, +257/-8, all inside the packet.
 
 ## Previous task
 
