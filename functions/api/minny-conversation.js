@@ -1,5 +1,5 @@
 import { getClientIp, checkCodeRateLimit, recordCodeFailure, rateLimitedResponse } from './_rate-limit.js';
-import { buildSystemPrompt, parseModelReply, sessionCapsExceeded, nextSession, pickStarterTopic } from './_minny-convo.js';
+import { buildSystemPrompt, parseModelReply, coerceReply, sessionCapsExceeded, nextSession, pickStarterTopic } from './_minny-convo.js';
 import { resolveOpenAiApiKey, getOrSynthesize } from './_minny-tts.js';
 import { findPhrase } from './_minny-phrases.js';
 import { screenTranscript, validateReplyShape, detectCharacterBreak, scanBannedTopics, screenWithLlamaGuard } from './_minny-guardrails.js';
@@ -282,39 +282,55 @@ export async function onRequestPost(context) {
   // Primary brain swapped from OpenAI (credit retired 2026-07-08) to
   // DeepSeek via OpenRouter — same OpenAI-compatible request shape.
   // apiKey (OpenAI) remains in use below only for the TTS last-resort path.
+  // Retry once on a transient failure (rate-limit / timeout / 5xx): a single
+  // hiccup on one turn must not cost the child a real reply and drop them to a
+  // canned redirect. Rapid or throttled turns can make OpenRouter blip — the
+  // retry absorbs that.
   const convoKey = env.OPENROUTER_API_KEY || null;
   if (convoKey) {
-    try {
-      const llmRes = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-        method: 'POST',
-        headers: { Authorization: `Bearer ${convoKey}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          model: CONVO_MODEL,
-          messages,
-          response_format: { type: 'json_object' },
-          max_tokens: 150,
-        }),
-        signal: AbortSignal.timeout(8000),
-      });
-      if (llmRes.ok) {
-        const llmData = await llmRes.json();
-        rawReply = llmData?.choices?.[0]?.message?.content;
+    for (let attempt = 0; attempt < 2 && !rawReply; attempt++) {
+      try {
+        const llmRes = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+          method: 'POST',
+          headers: { Authorization: `Bearer ${convoKey}`, 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            model: CONVO_MODEL,
+            messages,
+            response_format: { type: 'json_object' },
+            max_tokens: 150,
+          }),
+          signal: AbortSignal.timeout(7000),
+        });
+        if (llmRes.ok) {
+          const llmData = await llmRes.json();
+          rawReply = llmData?.choices?.[0]?.message?.content || null;
+        }
+      } catch {
+        // transient — try again, then the fallback
       }
-    } catch {
-      // fall through
     }
   }
 
+  // Fallback brain: Workers AI Llama 3.3. Ask for JSON first (so parseModelReply
+  // succeeds), and retry as a plain call if the model rejects response_format —
+  // the old plain-only call returned free-form prose that never parsed, which is
+  // why fallback turns became canned redirects.
   if (!rawReply && env.AI) {
-    try {
-      const aiRes = await env.AI.run('@cf/meta/llama-3.3-70b-instruct-fp8-fast', { messages });
-      rawReply = typeof aiRes === 'string' ? aiRes : (aiRes?.response || aiRes?.text || null);
-    } catch {
-      // fall through
+    for (const input of [{ messages, response_format: { type: 'json_object' } }, { messages }]) {
+      if (rawReply) break;
+      try {
+        const aiRes = await env.AI.run('@cf/meta/llama-3.3-70b-instruct-fp8-fast', input);
+        rawReply = typeof aiRes === 'string' ? aiRes : (aiRes?.response || aiRes?.text || null);
+      } catch {
+        // try the plain shape / fall through
+      }
     }
   }
 
-  const parsed = rawReply ? parseModelReply(rawReply) : null;
+  // Prefer strict JSON; if the model wrapped it in prose/fences or bent the
+  // format, salvage a usable reply rather than dropping to a canned redirect.
+  // The salvaged reply still passes through every guardrail below.
+  const parsed = rawReply ? (parseModelReply(rawReply) || coerceReply(rawReply)) : null;
 
   if (parsed) {
     // Phase 6 guardrail layers 2-4: deterministic shape/character checks,

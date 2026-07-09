@@ -6,6 +6,7 @@ import {
   pickStarterTopic,
   buildSystemPrompt,
   parseModelReply,
+  coerceReply,
   sessionCapsExceeded,
   nextSession,
   LEVEL_REGISTER,
@@ -167,6 +168,34 @@ test('parseModelReply invalid mood returns null', () => {
 test('parseModelReply markdown-fenced JSON still parses', () => {
   const result = parseModelReply('```json\n{"reply_en":"Hi!","mood":"idle"}\n```');
   assert.deepEqual(result, { reply_en: 'Hi!', mood: 'idle' });
+});
+
+test('coerceReply salvages JSON wrapped in prose', () => {
+  const result = coerceReply('Sure thing! {"reply_en":"That sounds so fun!","mood":"celebrate"} Hope you like it.');
+  assert.deepEqual(result, { reply_en: 'That sounds so fun!', mood: 'celebrate' });
+});
+
+test('coerceReply salvages loose JSON with a missing/invalid mood (defaults to idle)', () => {
+  const result = coerceReply('{"reply_en":"Yay, cats!","mood":"happy"}');
+  assert.deepEqual(result, { reply_en: 'Yay, cats!', mood: 'idle' });
+});
+
+test('coerceReply salvages a plain-prose reply with a speaker label', () => {
+  const result = coerceReply('Minny: That sounds like a lot of fun!');
+  assert.deepEqual(result, { reply_en: 'That sounds like a lot of fun!', mood: 'idle' });
+});
+
+test('coerceReply returns null on empty / non-string input', () => {
+  assert.equal(coerceReply(''), null);
+  assert.equal(coerceReply('   '), null);
+  assert.equal(coerceReply(null), null);
+  assert.equal(coerceReply(42), null);
+});
+
+test('coerceReply caps an over-long prose reply at a sentence boundary', () => {
+  const long = 'This is fun. ' + 'x'.repeat(300);
+  const result = coerceReply(long);
+  assert.ok(result.reply_en.length <= 220);
 });
 
 test('sessionCapsExceeded turn cap exceeded returns true', () => {
@@ -380,6 +409,52 @@ test('repeated canned-redirect turns (LLM unavailable the whole session) still c
     assert.equal(turnBody.ended, undefined); // never ends early on technical failures alone
     assert.ok(typeof turnBody.reply_en === 'string' && turnBody.reply_en.length > 0);
     assert.equal(turnBody.turns_left, 12 - i);
+  }
+});
+
+test('fallback hardening: DeepSeek fails but the llama fallback prose-JSON is salvaged into a real reply (not a canned redirect)', async () => {
+  // Reproduces the live preview symptom: OpenRouter blips on a turn, the llama
+  // fallback answers but wraps its JSON in prose. Before hardening that became a
+  // canned redirect; now it must be salvaged into the real reply.
+  const fakeKv = createFakeKv();
+  await fakeKv.put('R2L-TEST', JSON.stringify({ is_test: true, progress: { current_level: 'L2' } }));
+  const originalFetch = globalThis.fetch;
+  let openRouterCalls = 0;
+  const env = {
+    READ2LEAD_CODES: fakeKv,
+    OPENROUTER_API_KEY: 'or-key',
+    AI: {
+      run: async (model) => {
+        if (String(model).includes('llama-guard')) return 'safe';
+        if (String(model).includes('llama-3.3')) return 'Okay! {"reply_en":"A white and black cat sounds so pretty!","mood":"celebrate"} :)';
+        throw new Error('no tts in test'); // TTS optional, safely absent
+      },
+    },
+  };
+  try {
+    globalThis.fetch = async (url) => {
+      if (String(url).includes('chat/completions')) {
+        openRouterCalls++;
+        return { ok: false, status: 429, json: async () => ({}) }; // DeepSeek throttled both attempts
+      }
+      return { ok: true, arrayBuffer: async () => new TextEncoder().encode('x').buffer };
+    };
+    const startResp = await onRequestPost({
+      request: new Request('http://x/api/minny-conversation', { method: 'POST', body: JSON.stringify({ action: 'start', access_code: 'R2L-TEST' }) }),
+      env,
+    });
+    const startData = await startResp.json();
+    const turnResp = await onRequestPost({
+      request: new Request('http://x/api/minny-conversation', { method: 'POST', body: JSON.stringify({ action: 'turn', access_code: 'R2L-TEST', session_id: startData.session_id, transcript: 'They are white and black' }) }),
+      env,
+    });
+    const turnData = await turnResp.json();
+    assert.equal(turnData.ok, true);
+    assert.equal(turnData.reply_en, 'A white and black cat sounds so pretty!');
+    assert.equal(turnData.mood, 'celebrate');
+    assert.equal(openRouterCalls, 2, 'DeepSeek was retried once before falling back');
+  } finally {
+    globalThis.fetch = originalFetch;
   }
 });
 

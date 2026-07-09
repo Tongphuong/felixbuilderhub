@@ -70,6 +70,44 @@ export function parseModelReply(raw) {
   return { reply_en, mood };
 }
 
+// Fallback-only salvage: turn a not-quite-strict model reply into a usable
+// { reply_en, mood } instead of dropping the child to a canned redirect.
+// Strict JSON is handled by parseModelReply (tried first by the caller); this
+// rescues the common fallback-model failure modes -- JSON wrapped in prose or
+// fences, a missing/invalid mood, or a plain-text reply. The salvaged reply
+// still passes through every guardrail downstream, so this never bypasses
+// safety; it only avoids a generic redirect when the model DID answer.
+export function coerceReply(raw) {
+  if (typeof raw !== 'string') return null;
+  const text = raw.trim();
+  if (!text) return null;
+
+  // 1) Pull the first {...} block out and try to parse it (prose-wrapped JSON).
+  const objMatch = text.match(/\{[\s\S]*\}/);
+  if (objMatch) {
+    const strict = parseModelReply(objMatch[0]);
+    if (strict) return strict;
+    const reMatch = objMatch[0].match(/"reply_en"\s*:\s*"((?:[^"\\]|\\.){1,300})"/);
+    if (reMatch) {
+      const moodMatch = objMatch[0].match(/"mood"\s*:\s*"(idle|listen|celebrate|encourage)"/);
+      const reply = reMatch[1].replace(/\\"/g, '"').replace(/\\n/g, ' ').trim();
+      if (reply) return { reply_en: reply.slice(0, 220).trim(), mood: moodMatch ? moodMatch[1] : 'idle' };
+    }
+  }
+
+  // 2) Plain prose: strip code fences and an obvious speaker label, cap length.
+  let prose = text.replace(/```(?:json)?/gi, '').trim();
+  prose = prose.replace(/^(minny|reply|response|assistant)\s*[:\-]\s*/i, '').trim();
+  // If it still looks like unparsable JSON, give up (caller uses a redirect).
+  if (!prose || prose.startsWith('{') || prose.startsWith('[')) return null;
+  if (prose.length > 220) {
+    const cut = prose.slice(0, 220);
+    const stop = Math.max(cut.lastIndexOf('. '), cut.lastIndexOf('! '), cut.lastIndexOf('? '));
+    prose = (stop > 40 ? cut.slice(0, stop + 1) : cut).trim();
+  }
+  return { reply_en: prose, mood: 'idle' };
+}
+
 export function sessionCapsExceeded(session, nowMs) {
   const turns = Number(session?.turns) || 0;
   const started = Number(session?.started_at);
