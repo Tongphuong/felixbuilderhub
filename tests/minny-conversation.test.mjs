@@ -198,6 +198,16 @@ test('coerceReply caps an over-long prose reply at a sentence boundary', () => {
   assert.ok(result.reply_en.length <= 220);
 });
 
+test('coerceReply still finds valid JSON located after a long (>2000 char) preamble', () => {
+  // Regression guard: a chatty fallback may ramble for thousands of chars
+  // before emitting its JSON. The salvage must still find it, not deliver the
+  // ramble as Minny's reply. (Caught by review of an earlier input-slice fix.)
+  const ramble = 'Sure, I can help with that. '.repeat(90); // ~2500 chars
+  const raw = ramble + '{"reply_en":"Wow, a puppy! What is its name?","mood":"celebrate"}';
+  const result = coerceReply(raw);
+  assert.deepEqual(result, { reply_en: 'Wow, a puppy! What is its name?', mood: 'celebrate' });
+});
+
 test('sessionCapsExceeded turn cap exceeded returns true', () => {
   const now = Date.now();
   const session = { turns: 12, started_at: now };
@@ -420,13 +430,17 @@ test('fallback hardening: DeepSeek fails but the llama fallback prose-JSON is sa
   await fakeKv.put('R2L-TEST', JSON.stringify({ is_test: true, progress: { current_level: 'L2' } }));
   const originalFetch = globalThis.fetch;
   let openRouterCalls = 0;
+  let llamaInput = null;
   const env = {
     READ2LEAD_CODES: fakeKv,
     OPENROUTER_API_KEY: 'or-key',
     AI: {
-      run: async (model) => {
+      run: async (model, input) => {
         if (String(model).includes('llama-guard')) return 'safe';
-        if (String(model).includes('llama-3.3')) return 'Okay! {"reply_en":"A white and black cat sounds so pretty!","mood":"celebrate"} :)';
+        if (String(model).includes('llama-3.3')) {
+          llamaInput = input;
+          return 'Okay! {"reply_en":"A white and black cat sounds so pretty!","mood":"celebrate"} :)';
+        }
         throw new Error('no tts in test'); // TTS optional, safely absent
       },
     },
@@ -453,6 +467,7 @@ test('fallback hardening: DeepSeek fails but the llama fallback prose-JSON is sa
     assert.equal(turnData.reply_en, 'A white and black cat sounds so pretty!');
     assert.equal(turnData.mood, 'celebrate');
     assert.equal(openRouterCalls, 2, 'DeepSeek was retried once before falling back');
+    assert.equal(llamaInput?.max_tokens, 150, 'llama fallback request carries the max_tokens cap');
   } finally {
     globalThis.fetch = originalFetch;
   }

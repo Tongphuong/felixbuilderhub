@@ -131,9 +131,21 @@ assigns, commits, merges, deploys, or spends.
   PREVIEW env specifically (per-environment), or DeepSeek is timing out (8s).
   This is a brain-reliability issue, NOT the guardrail — tracked as the next
   step (verify Preview key + harden the fallback to emit parseable JSON).
-- Verified commit: dd678f4 pushed to origin/claude/speakup-v0 (+ a follow-up
-  test commit); guardrail behavior verified live. Brain-reliability follow-up
-  pending.
+- Follow-on (brain-reliability, aef1f40): 2nd live check (after Phương added
+  the Preview key + redeployed) confirmed DeepSeek now answers (turn 1 real
+  react-first reply) and no early wrap — but turns 2–5 still fell to canned
+  redirects via the LLM-parse-failure path, because a per-turn OpenRouter blip
+  drops to the llama fallback whose free-form output never parsed as strict
+  JSON. Hardened the brain block: DeepSeek retry-once on transient failure;
+  llama fallback now requests JSON (with a plain-call retry); new `coerceReply`
+  salvage recovers prose/fence-wrapped or plain-text replies. Salvaged replies
+  still pass every guardrail. 893/893, founder build gate PASS, Buffet review
+  in progress. LIVE re-verify of the hardening DEFERRED — all 3 daily sessions
+  on R2L-KHANHVY-B7YR are spent today; needs a spaced real conversation (Phương
+  on device, or next session after the daily reset). This is exactly the case
+  the EVOLUTION_LOG proposal (dedicated QA code with relaxed caps) would unblock.
+- Verified commit: dd678f4 (guardrail fix, verified live) + aef1f40 (fallback
+  hardening, tests green, live re-verify deferred) on origin/claude/speakup-v0.
 - Started: 2026-07-09
 
 ## Prior task (built + pushed, live-blocked then unblocked): speakup-freetalk-react-not-interrogate

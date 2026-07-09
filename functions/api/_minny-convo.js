@@ -79,20 +79,22 @@ export function parseModelReply(raw) {
 // safety; it only avoids a generic redirect when the model DID answer.
 export function coerceReply(raw) {
   if (typeof raw !== 'string') return null;
-  // Bound the input before the greedy {…} scan below — a valid reply is <300
-  // chars, so this caps the regex cost on a verbose/misbehaving fallback
-  // response (the match is linear-per-char but grows with input length).
-  const text = raw.trim().slice(0, 2000);
+  const text = raw.trim();
   if (!text) return null;
 
-  // 1) Pull the first {...} block out and try to parse it (prose-wrapped JSON).
-  const objMatch = text.match(/\{[\s\S]*\}/);
-  if (objMatch) {
-    const strict = parseModelReply(objMatch[0]);
+  // 1) Locate the {...} block by brace indices — indexOf/lastIndexOf are
+  //    linear and have no greedy-regex backtracking, so this is cheap even on
+  //    a verbose fallback response AND (unlike an input-length cap) still finds
+  //    JSON that appears after a long preamble, anywhere in the string.
+  const first = text.indexOf('{');
+  const last = text.lastIndexOf('}');
+  if (first !== -1 && last > first) {
+    const candidate = text.slice(first, last + 1);
+    const strict = parseModelReply(candidate);
     if (strict) return strict;
-    const reMatch = objMatch[0].match(/"reply_en"\s*:\s*"((?:[^"\\]|\\.){1,300})"/);
+    const reMatch = candidate.match(/"reply_en"\s*:\s*"((?:[^"\\]|\\.){1,300})"/);
     if (reMatch) {
-      const moodMatch = objMatch[0].match(/"mood"\s*:\s*"(idle|listen|celebrate|encourage)"/);
+      const moodMatch = candidate.match(/"mood"\s*:\s*"(idle|listen|celebrate|encourage)"/);
       const reply = reMatch[1].replace(/\\"/g, '"').replace(/\\n/g, ' ').trim();
       if (reply) return { reply_en: reply.slice(0, 220).trim(), mood: moodMatch ? moodMatch[1] : 'idle' };
     }
