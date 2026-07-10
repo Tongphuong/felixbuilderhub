@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 
 import { onRequestPost as checkpointSave } from '../functions/api/read2lead-checkpoint-save.js';
-import { onRequestGet as dropoffReport } from '../functions/api/admin/read2lead-dropoff.js';
+import { onRequestGet as dropoffReport } from '../functions/api/read2lead-dropoff.js';
 
 function createKv(records = {}) {
   const store = new Map();
@@ -111,7 +111,7 @@ test('drop-off write is best-effort: missing book_reader still saves, with null 
 test('drop-off report requires the admin secret', async () => {
   const kv = createKv();
   const res = await dropoffReport({
-    request: new Request('https://x/api/admin/read2lead-dropoff'),
+    request: new Request('https://x/api/read2lead-dropoff'),
     env: { READ2LEAD_CODES: kv, READ2LEAD_BACKEND_SECRET: 's3cret' },
   });
   assert.equal(res.status, 401);
@@ -133,7 +133,7 @@ test('drop-off report buckets abandoned, excludes completed and still-active', a
   });
 
   const res = await dropoffReport({
-    request: new Request('https://x/api/admin/read2lead-dropoff', {
+    request: new Request('https://x/api/read2lead-dropoff', {
       headers: { 'X-Read2Lead-Secret': 's3cret' },
     }),
     env: { READ2LEAD_CODES: kv, READ2LEAD_BACKEND_SECRET: 's3cret' },

@@ -1,9 +1,13 @@
-import { loadProgressState } from '../_read2lead-v2-state.js';
+import { loadProgressState } from './_read2lead-v2-state.js';
 
-// Admin-only drop-off report. Reads the compact `dropoff:*` records written
-// (best-effort) by read2lead-checkpoint-save.js and buckets the ABANDONED ones
-// (kid left, never completed the pack) by lesson phase/stage and by page, so we
-// can see WHERE kids stop instead of guessing "too long" vs "too hard".
+// Machine-readable drop-off report, gated by the shared READ2LEAD_BACKEND_SECRET
+// (X-Read2Lead-Secret header) so a scheduled job can pull it without the human
+// admin Basic-Auth. Lives at /api/ (not /api/admin/) on purpose: it is consumed
+// by the weekly drop-off cron, not a browser. Reads the compact `dropoff:*`
+// records written (best-effort) by read2lead-checkpoint-save.js and buckets the
+// ABANDONED ones (kid left, never completed the pack) by lesson phase/stage and
+// by page, so we can see WHERE kids stop instead of guessing "too long" vs
+// "too hard".
 //
 // A record is treated as abandoned when:
 //   - its (code, pack) is not in that kid's completed packs (authoritative v2
