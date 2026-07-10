@@ -1,6 +1,6 @@
 # Handoff: SpeakUp V1 — Wave D (Choice-chip Free Talking + Homework Feedback v2)
 
-> Status: draft, awaiting Phương's approval (Wave D acceptance in
+> Status: **APPROVED by Phương 2026-07-10** (as-drawn; open questions resolved to the mocks' defaults; Vietnamese copy tone pass rides the build phases). Was: draft, awaiting approval (Wave D acceptance in
 > `_ops/specs/SPEC_SPEAKUP_V1.md`: *"Phương approves both handoffs (recorded
 > ack) before V1.2/V1.4 build."*) Nothing here is shipped code — no product
 > file was touched to produce this handoff.

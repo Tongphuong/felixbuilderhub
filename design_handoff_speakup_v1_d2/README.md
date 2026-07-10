@@ -1,6 +1,6 @@
 # Handoff: SpeakUp V1 — Wave D2 (L3–L5 Free Talking: Topic Spark)
 
-> Status: draft, awaiting Phương's approval (Wave D2 acceptance in
+> Status: **APPROVED by Phương 2026-07-10** (as-drawn; open questions resolved to the mocks' defaults; Vietnamese copy tone pass rides the build phases). Was: draft, awaiting approval (Wave D2 acceptance in
 > `_ops/specs/SPEC_SPEAKUP_V1.md`: Packet 2 build starts only after this
 > handoff is approved + Packet 1 lands). Nothing here is shipped code — no
 > product file was touched to produce this handoff.

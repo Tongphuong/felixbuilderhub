@@ -74,8 +74,8 @@ assigns, commits, merges, deploys, or spends.
 | Wave/Phase | What | Owner | Status | Gate |
 |---|---|---|---|---|
 | Wave 0 | V0 close-out: ~~red-team~~ **DONE (Phương 2026-07-10)**; remaining: ear test, phrases sign-off, dry run; key rotation (Azure KEY 1, ADMIN_PASSWORD, OpenRouter key/CF token in `~/SpeakUp project/` vault) happens as the pre-merge step per Phương — not an open item to re-ask; then merge → main, pilot start | **Phương** | in progress | hard blocker for all V1 code |
-| Wave D | Design mocks batch 1: choice-chip conversation view (L1–L2) + homework feedback panel v2 + fix-it round | Steve (delivered f141620) | **delivered — awaiting Phương approval** | combined approval pass with Wave D2 |
-| Wave D2 | Design mocks batch 2: L3–L5 free talk — topic picker (R2L HUB_TOPICS/TopicTile reuse), 💡 hint-on-demand states, L4–L5 game cards (build-a-story / debate / would-you-rather) | Steve (dispatched) | active | Phương approves (one pass with Wave D) |
+| Wave D | Design mocks batch 1: choice-chip conversation view (L1–L2) + homework feedback panel v2 + fix-it round | Steve (delivered f141620) | **APPROVED (Phương, 2026-07-10)** — as-drawn; README open questions resolved to the mocks' defaults; Vietnamese copy tone pass rides the build phases | done |
+| Wave D2 | Design mocks batch 2: L3–L5 free talk — topic picker (R2L HUB_TOPICS/TopicTile reuse), 💡 hint-on-demand states, L4–L5 game cards (build-a-story / debate / would-you-rather) | Steve (delivered e903682) | **APPROVED (Phương, 2026-07-10)** — as-drawn, same terms; V1-D6 teacher-panel mock exemption stands (not vetoed) | done |
 | V1.1 | Free-talk brain (backend): L1–L2 chips protocol + expected-answer matching + repair ladder; L3–L5 topic-seeded prompt + hint field; L4–L5 game protocols (former V1.P, folded) | Elon (prompt) + Mark (glue) + Buffet (review) | not started | Wave 0 |
 | V1.2 | Free-talk UI, 2 sequential packets: (1) L1–L2 chips + hands-free toggle; (2) L3–L5 topic picker + hint button + game cards | Steve + Buffet | not started | packet 1: Wave D approval + V1.1; packet 2: Wave D2 approval + packet 1 |
 | V1.3 | Homework feedback sandwich (relaxes zero-LLM per V1-D1; consumes homework brief) | Elon (prompt) + Mark + Buffet (red-team) | not started | Wave 0 + **explicit Phương ack of zero-LLM relaxation** |
@@ -160,8 +160,12 @@ assigns, commits, merges, deploys, or spends.
 - Verified commit: e903682 (on origin/claude/speakup-v0)
 - Actual cost: USD 0 runtime.
 - Started: 2026-07-10 (evening)
-- Completed: 2026-07-10 (evening; Wave D + D2 approval itself remains OPEN
-  with Phương — tracked in the V1 phase tracker, not by this task)
+- Completed: 2026-07-10 (evening)
+- Addendum 2026-07-10: **Phương APPROVED Wave D + Wave D2** (as-drawn; README
+  open questions resolve to the mocks' defaults; Vietnamese copy tone pass
+  rides the build phases; V1-D6 teacher-panel exemption not vetoed) and
+  acked the _ops push (0c7e311..dc9675e). Design side of V1.2/V1.4 is now
+  unblocked; build remains gated on Wave 0.
 
 ## Prior task (complete): speakup-v1-spec-and-design
 
