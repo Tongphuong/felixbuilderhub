@@ -10,3 +10,5 @@ import './read2lead-web-only.test.mjs';
 import './read2lead-book-health.test.mjs';
 import './read2lead-book-assignment.test.mjs';
 import './read2lead-book-reader-behaviour.test.mjs';
+import './read2lead-checkpoint-save.test.mjs';
+import './read2lead-dropoff.test.mjs';
