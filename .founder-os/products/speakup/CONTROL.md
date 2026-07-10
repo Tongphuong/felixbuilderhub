@@ -73,7 +73,7 @@ assigns, commits, merges, deploys, or spends.
 
 | Wave/Phase | What | Owner | Status | Gate |
 |---|---|---|---|---|
-| Wave 0 | V0 close-out: ~~red-team~~ **DONE (Phương 2026-07-10)**; remaining: ear test, phrases sign-off, dry run; key rotation (Azure KEY 1, ADMIN_PASSWORD, OpenRouter key/CF token in `~/SpeakUp project/` vault) happens as the pre-merge step per Phương — not an open item to re-ask; then merge → main, pilot start | **Phương** | in progress | hard blocker for all V1 code |
+| Wave 0 | V0 close-out: ~~red-team~~ ~~ear test~~ ~~phrases sign-off~~ ~~dry run~~ ~~key rotation~~ **ALL DONE (Phương, reported 2026-07-11)** — sole remaining step: **merge `claude/speakup-v0` → main** (Phương's call), then pilot start | **Phương** | merge pending | hard blocker for all V1 code |
 | Wave D | Design mocks batch 1: choice-chip conversation view (L1–L2) + homework feedback panel v2 + fix-it round | Steve (delivered f141620) | **APPROVED (Phương, 2026-07-10)** — as-drawn; README open questions resolved to the mocks' defaults; Vietnamese copy tone pass rides the build phases | done |
 | Wave D2 | Design mocks batch 2: L3–L5 free talk — topic picker (R2L HUB_TOPICS/TopicTile reuse), 💡 hint-on-demand states, L4–L5 game cards (build-a-story / debate / would-you-rather) | Steve (delivered e903682) | **APPROVED (Phương, 2026-07-10)** — as-drawn, same terms; V1-D6 teacher-panel mock exemption stands (not vetoed) | done |
 | V1.1 | Free-talk brain (backend): L1–L2 chips protocol + expected-answer matching + repair ladder; L3–L5 topic-seeded prompt + hint field; L4–L5 game protocols (former V1.P, folded) | Elon (prompt) + Mark (glue) + Buffet (review) | not started | Wave 0 |
