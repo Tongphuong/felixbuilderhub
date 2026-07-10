@@ -156,8 +156,20 @@ assigns, commits, merges, deploys, or spends.
 - Reuse survey (Step C): reuse existing `transcribeAudio` STT orchestrator
   (ADOPTED — do not re-roll Whisper). N/A external — this merges our own
   round-trips, no new capability.
-- Step D (stream voice) PENDING — own design (guard-before-stream safety
-  tradeoff). Started: 2026-07-10
+- OUTCOME (2026-07-10): founder re-tested after Step C+VAD → **~4s/turn**
+  (24s → 7s → 4s across Steps B/C/VAD). Latency goal for this session met.
+- Hands-free finding (NOT a code bug): founder had to tap record/end every turn.
+  Diagnosed to a stale `localStorage['r2l_ft_handsfree']='0'` in his browser
+  (the manual escape-hatch flag; nothing in code sets it). Cleared it
+  (`localStorage.removeItem` + reload) → hands-free auto-arm + VAD auto-send work.
+  Follow-up idea logged: a visible in-app hands-free toggle + "listening…"
+  indicator so the state can never be silently stuck (see IDEAS.md).
+- Step D (stream voice) DEFERRED — own design needed (guard-before-stream safety
+  tradeoff); at ~4s the founder chose to stop here. Streaming STT is the other
+  candidate if more speed is wanted later.
+- Status: this latency task's shipped scope (Steps A/B/C + VAD) is COMPLETE and
+  live-verified on preview; main still untouched (awaits founder merge decision).
+- Started: 2026-07-10
 
 ## Prior task (complete): speakup-freetalk-guardrail-degrade-gracefully
 
