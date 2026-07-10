@@ -523,7 +523,9 @@ test('ML guard flag on the concurrent guard||TTS path returns a canned redirect,
 
 test('daily cap of 3 sessions per code enforced', async () => {
   const fakeKv = createFakeKv();
-  await fakeKv.put('R2L-TEST', JSON.stringify({ is_test: true, progress: { current_level: 'L2' } }));
+  // Fixture must be a NORMAL code: since 2026-07-11 is_test codes are exempt
+  // from the daily cap (that exemption has its own tests below).
+  await fakeKv.put('R2L-TEST', JSON.stringify({ is_test: false, progress: { current_level: 'L2' } }));
 
   const env = { READ2LEAD_CODES: fakeKv };
 
@@ -859,6 +861,73 @@ test('no waitUntil in context (plain node) -> deferred audio still lands in KV v
   } finally {
     globalThis.fetch = originalFetch;
   }
+});
+
+// ---------------------------------------------------------------------------
+// Test-code cap bypass (2026-07-11): is_test codes get unlimited daily
+// sessions and never touch the daily/global counters; normal codes keep
+// every cap exactly as before.
+// ---------------------------------------------------------------------------
+
+test('is_test code starts a 4th+ session same day and never touches the daily/global counters', async () => {
+  const fakeKv = createFakeKv();
+  await fakeKv.put('R2L-TESTKID', JSON.stringify({ is_test: true, progress: { current_level: 'L2' } }));
+  const putKeys = [];
+  const origPut = fakeKv.put.bind(fakeKv);
+  fakeKv.put = async (key, value, opts) => { putKeys.push(key); return origPut(key, value, opts); };
+
+  const env = { READ2LEAD_CODES: fakeKv };
+  for (let i = 0; i < 5; i++) {
+    const resp = await onRequestPost({
+      request: new Request('http://x/api/minny-conversation', { method: 'POST', body: JSON.stringify({ action: 'start', access_code: 'R2L-TESTKID' }) }),
+      env,
+    });
+    assert.equal(resp.status, 200, `start #${i + 1} succeeds for a test code`);
+    const body = await resp.json();
+    assert.equal(body.ok, true);
+  }
+  assert.ok(!putKeys.some((k) => k.startsWith('convo-daily:')), 'test-code sessions never write the daily counter');
+  assert.ok(!putKeys.some((k) => k.startsWith('convo-global:')), 'test-code sessions never write the global counter');
+});
+
+test('normal code still blocks at 3 sessions/day and still increments both counters', async () => {
+  const fakeKv = createFakeKv();
+  await fakeKv.put('R2L-NORMALKID', JSON.stringify({ is_test: false, progress: { current_level: 'L2' } }));
+
+  const env = { READ2LEAD_CODES: fakeKv };
+  const today = new Date().toISOString().slice(0, 10);
+  for (let i = 0; i < 3; i++) {
+    const resp = await onRequestPost({
+      request: new Request('http://x/api/minny-conversation', { method: 'POST', body: JSON.stringify({ action: 'start', access_code: 'R2L-NORMALKID' }) }),
+      env,
+    });
+    assert.equal(resp.status, 200, `start #${i + 1} within the cap succeeds`);
+  }
+  assert.equal(await fakeKv.get(`convo-daily:R2L-NORMALKID:${today}`, { type: 'json' }), 3, 'daily counter incremented');
+  assert.equal(await fakeKv.get(`convo-global:${today}`, { type: 'json' }), 3, 'global counter incremented');
+
+  const fourth = await onRequestPost({
+    request: new Request('http://x/api/minny-conversation', { method: 'POST', body: JSON.stringify({ action: 'start', access_code: 'R2L-NORMALKID' }) }),
+    env,
+  });
+  assert.equal(fourth.status, 429, '4th start blocked');
+  const fourthBody = await fourth.json();
+  assert.equal(fourthBody.error, 'daily_cap');
+});
+
+test('is_test code still starts fine when the global cap is exhausted (never consumes, never blocked by it)', async () => {
+  const fakeKv = createFakeKv();
+  await fakeKv.put('R2L-TESTKID', JSON.stringify({ is_test: true }));
+  const today = new Date().toISOString().slice(0, 10);
+  await fakeKv.put(`convo-global:${today}`, JSON.stringify(60));
+
+  const env = { READ2LEAD_CODES: fakeKv };
+  const resp = await onRequestPost({
+    request: new Request('http://x/api/minny-conversation', { method: 'POST', body: JSON.stringify({ action: 'start', access_code: 'R2L-TESTKID' }) }),
+    env,
+  });
+  assert.equal(resp.status, 200);
+  assert.equal(await fakeKv.get(`convo-global:${today}`, { type: 'json' }), 60, 'global counter untouched by the test code');
 });
 
 test('action audio validates its inputs and unknown records return ready:false', async () => {

@@ -87,6 +87,42 @@ assigns, commits, merges, deploys, or spends.
 
 ## Current task
 
+- Status: active
+- Task ID: speakup-v0-test-code-cap-bypass
+- Owner: Elon (Claude Lead), Tier1 direct (~10-line single-endpoint change;
+  dispatch-guard justification stated; mandatory Buffet review — author ≠
+  reviewer). Phương GO 2026-07-11 on the presented plan.
+- Lane: `claude/speakup-v0` (pre-merge V0 branch).
+- Problem: Phương needs to test Free Talk repeatedly; the 3-sessions/day cap
+  blocks him (and diagnosis burns real session budget — it consumed all 3 of
+  the test code's sessions on 2026-07-10).
+- Fix shape (approved): codes with the existing `is_test: true` KV field skip
+  the daily-3 cap AND don't increment the daily/global counters (test runs
+  never burn the kids' global 60/day kill-switch budget). Guardrails, session
+  caps (12 turns/5 min), rate limiting, ownership checks: unchanged — never
+  bypassed. Flag is server-side only (admin-set via the existing codes
+  endpoints), not client-settable.
+- Reuse survey: N/A — no new capability built; this flips the semantics of
+  the existing `is_test` record field (already created/edited by
+  admin/codes.js + admin/codes/[code].js, already consumed by
+  read2lead-progress.js) inside one existing endpoint. Nothing external to
+  adopt for a 10-line cap exemption.
+- Cost ceiling: Claude team (Max plan, not metered); runtime USD 0.
+- Acceptance criteria (reconcile before complete):
+  1. `is_test` code can start a 4th+ session same day (test); daily/global
+     counter keys stay untouched by its sessions (test).
+  2. Normal code still blocks at 3/day (test) and still increments both
+     counters (test).
+  3. Guardrail and session-cap paths unchanged for test codes (regression:
+     existing suite).
+  4. `node --test` green; founder build gate PASS; Buffet review.
+  5. Deployed to preview; live handoff = Phương ticks `is_test` on his test
+     code in the admin (or creates a fresh code with the box checked) and
+     runs >3 sessions.
+- Started: 2026-07-11
+
+## Prior task (complete): speakup-v0-freetalk-perceived-latency
+
 - Status: complete
 - Task ID: speakup-v0-freetalk-perceived-latency
 - Owner: Elon (Claude Lead), Tier1 direct build (tightly-coupled client+server

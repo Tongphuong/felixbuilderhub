@@ -230,6 +230,14 @@ export async function onRequestPost(context) {
 
   if (action === 'start') {
     /* ── daily / global caps ── */
+    // Test-code exemption (2026-07-11, Phương-approved): a code whose KV
+    // record carries the existing admin-set `is_test: true` flag skips the
+    // daily-3 cap AND never increments the daily/global counters, so founder
+    // testing can't burn the kids' global kill-switch budget. Server-side
+    // record field only — nothing the client sends can set it. Everything
+    // else (guardrails, 12-turn/5-min session caps, rate limiting) applies
+    // to test codes unchanged: what gets tested is what kids get.
+    const isTestCode = codeData?.is_test === true;
     const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
     const dailyKey = `convo-daily:${accessCode}:${today}`;
     const globalKey = `convo-global:${today}`;
@@ -238,24 +246,26 @@ export async function onRequestPost(context) {
     let dailyCount = 0;
     let globalCount = 0;
 
-    try {
-      const dRaw = await env.READ2LEAD_CODES.get(dailyKey, { type: 'json' });
-      dailyCount = Number.isFinite(dRaw) ? dRaw : 0;
-    } catch {
-      // best‑effort read
-    }
-    try {
-      const gRaw = await env.READ2LEAD_CODES.get(globalKey, { type: 'json' });
-      globalCount = Number.isFinite(gRaw) ? gRaw : 0;
-    } catch {
-      // best‑effort
-    }
+    if (!isTestCode) {
+      try {
+        const dRaw = await env.READ2LEAD_CODES.get(dailyKey, { type: 'json' });
+        dailyCount = Number.isFinite(dRaw) ? dRaw : 0;
+      } catch {
+        // best‑effort read
+      }
+      try {
+        const gRaw = await env.READ2LEAD_CODES.get(globalKey, { type: 'json' });
+        globalCount = Number.isFinite(gRaw) ? gRaw : 0;
+      } catch {
+        // best‑effort
+      }
 
-    if (dailyCount >= 3) {
-      return json({ ok: false, error: 'daily_cap', message: 'Hôm nay con đã trò chuyện đủ 3 lần với Minny rồi, hẹn con ngày mai nhé!' }, 429);
-    }
-    if (globalCount >= 60) {
-      return json({ ok: false, error: 'global_cap', message: 'Minny đang nghỉ một chút hôm nay — con luyện bài tập nhé!' }, 429);
+      if (dailyCount >= 3) {
+        return json({ ok: false, error: 'daily_cap', message: 'Hôm nay con đã trò chuyện đủ 3 lần với Minny rồi, hẹn con ngày mai nhé!' }, 429);
+      }
+      if (globalCount >= 60) {
+        return json({ ok: false, error: 'global_cap', message: 'Minny đang nghỉ một chút hôm nay — con luyện bài tập nhé!' }, 429);
+      }
     }
 
     /* ── create session ── */
@@ -276,16 +286,18 @@ export async function onRequestPost(context) {
       expirationTtl: 600,
     });
 
-    /* increment counters (best‑effort) */
-    try {
-      await env.READ2LEAD_CODES.put(dailyKey, JSON.stringify(dailyCount + 1), { expirationTtl: ttlSeconds });
-    } catch {
-      // ignore
-    }
-    try {
-      await env.READ2LEAD_CODES.put(globalKey, JSON.stringify(globalCount + 1), { expirationTtl: ttlSeconds });
-    } catch {
-      // ignore
+    /* increment counters (best‑effort); test codes never touch them */
+    if (!isTestCode) {
+      try {
+        await env.READ2LEAD_CODES.put(dailyKey, JSON.stringify(dailyCount + 1), { expirationTtl: ttlSeconds });
+      } catch {
+        // ignore
+      }
+      try {
+        await env.READ2LEAD_CODES.put(globalKey, JSON.stringify(globalCount + 1), { expirationTtl: ttlSeconds });
+      } catch {
+        // ignore
+      }
     }
 
     const greeting = findPhrase('greeting');
