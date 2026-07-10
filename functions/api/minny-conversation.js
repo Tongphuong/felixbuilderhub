@@ -4,10 +4,17 @@ import { resolveOpenAiApiKey, getOrSynthesize } from './_minny-tts.js';
 import { findPhrase } from './_minny-phrases.js';
 import { screenTranscript, validateReplyShape, detectCharacterBreak, scanBannedTopics, screenWithLlamaGuard } from './_minny-guardrails.js';
 
-// Conversation brain: DeepSeek via OpenRouter (existing worker billing).
-// Upgraded 2026-07-10 flash -> pro for warmer, more relevant kid replies
-// (Phương-approved mid step). Fallback to Workers AI Llama 3.3 unchanged.
-const CONVO_MODEL = 'deepseek/deepseek-v4-pro';
+// Conversation brain: Llama-3.3-70B via OpenRouter, routed to the fastest
+// provider (Groq/Cerebras) — see CONVO_PROVIDER below. Swapped 2026-07-10 from
+// deepseek-v4-pro: a live test measured ~24s/turn and DeepSeek (esp. pro) was
+// the bottleneck. Groq/Cerebras answer this in ~0.5-1s and Llama-3.3-70B is
+// warm enough for kids. Bonus: our Workers-AI fallback is the SAME model, so a
+// provider blip degrades to identical wording on slower infra, not a worse model.
+const CONVO_MODEL = 'meta-llama/llama-3.3-70b-instruct';
+// OpenRouter provider preference: pick the highest-throughput host that still
+// supports our JSON response_format. Keeps us on Groq/Cerebras/SambaNova-class
+// infra without pinning a single provider (allow_fallbacks stays on by default).
+const CONVO_PROVIDER = { sort: 'throughput', require_parameters: true };
 
 function json(body, status = 200) {
   return new Response(JSON.stringify(body), {
@@ -321,15 +328,16 @@ export async function onRequestPost(context) {
           headers: { Authorization: `Bearer ${convoKey}`, 'Content-Type': 'application/json' },
           body: JSON.stringify({
             model: CONVO_MODEL,
+            provider: CONVO_PROVIDER,
             messages,
             response_format: { type: 'json_object' },
             max_tokens: 150,
             temperature: 0.8,
           }),
-          // 5s (was 7s): DeepSeek normally answers in ~2-3s. A request past 5s
-          // is effectively hung -- fail fast to the retry / fast Workers-AI
-          // fallback so a hiccup never costs the child ~14s of dead air.
-          signal: AbortSignal.timeout(5000),
+          // 4s: a Groq/Cerebras-class host answers a 150-token reply in ~0.5-1s.
+          // Anything past 4s means the fast provider is degraded -- fail fast to
+          // the retry / Workers-AI fallback rather than leave the child waiting.
+          signal: AbortSignal.timeout(4000),
         });
         if (llmRes.ok) {
           const llmData = await llmRes.json();

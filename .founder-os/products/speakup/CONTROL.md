@@ -121,9 +121,21 @@ assigns, commits, merges, deploys, or spends.
   latency then (B) **fast brain via existing OpenRouter key** (route to
   Groq/Cerebras Llama-3.3-70B, sub-1s), (C) merge round-trips, (D) stream voice.
   Speed chosen over the Pro quality bump. Step A (instrumentation: llm/guard/tts
-  timing ring + response `timing` field + debug endpoint) built, 895 tests green,
-  Buffet review in flight; deploy → one live session → read split via
-  `GET /api/debug-convo-flags?key=<DEBUG_SPEAKING_KEY>` before Step B.
+  timing ring + response `timing` field + debug endpoint) built, Buffet APPROVE,
+  pushed a741ac3.
+- Step B DONE (founder chose "just fix it now" — measuring was blocked: debug key
+  not set + must not spray student codes at the live endpoint): primary brain
+  deepseek-v4-pro → meta-llama/llama-3.3-70b-instruct via OpenRouter with
+  provider {sort:throughput, require_parameters:true} (routes to
+  Groq/Cerebras/SambaNova, ~0.5-1s), timeout 5s→4s. Workers-AI Llama-3.3-70B
+  fallback is now the SAME model family. OpenRouter slug + provider params
+  docs-verified. 895 tests green, Buffet review in flight. The deployed timing
+  ring will confirm the speedup on the founder's next real session (expect llm_ms
+  ~15-20s → ~1s, llm_source openrouter).
+- Reuse survey (Step B): OpenRouter provider routing to Groq/Cerebras (ADOPTED —
+  free fast inference on the existing key, no new account) vs Gemini 2.0 Flash
+  (rejected — needs a new API key/account) vs staying on DeepSeek (rejected — the
+  measured bottleneck). Reuses external fast-inference infra via the existing key.
 - Started: 2026-07-10
 
 ## Prior task (complete): speakup-freetalk-guardrail-degrade-gracefully

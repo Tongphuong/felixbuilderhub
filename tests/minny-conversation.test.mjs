@@ -129,7 +129,8 @@ test('turn primary brain calls DeepSeek via OpenRouter with strict JSON mode', a
     const llmCall = calls.find(c => c.url.includes('chat/completions'));
     assert.ok(llmCall, 'primary LLM call happened');
     assert.match(llmCall.url, /openrouter\.ai\/api\/v1\/chat\/completions/);
-    assert.equal(llmCall.body.model, 'deepseek/deepseek-v4-pro');
+    assert.equal(llmCall.body.model, 'meta-llama/llama-3.3-70b-instruct');
+    assert.deepEqual(llmCall.body.provider, { sort: 'throughput', require_parameters: true });
     assert.deepEqual(llmCall.body.response_format, { type: 'json_object' });
     assert.equal(llmCall.body.max_tokens, 150);
     assert.equal(llmCall.body.temperature, 0.8);
