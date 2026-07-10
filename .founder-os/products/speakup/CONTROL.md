@@ -74,16 +74,67 @@ assigns, commits, merges, deploys, or spends.
 | Wave/Phase | What | Owner | Status | Gate |
 |---|---|---|---|---|
 | Wave 0 | V0 close-out: ~~red-team~~ **DONE (Phương 2026-07-10)**; remaining: ear test, phrases sign-off, dry run; key rotation (Azure KEY 1, ADMIN_PASSWORD, OpenRouter key/CF token in `~/SpeakUp project/` vault) happens as the pre-merge step per Phương — not an open item to re-ask; then merge → main, pilot start | **Phương** | in progress | hard blocker for all V1 code |
-| Wave D | Design mocks: choice-chip conversation view + repair states + hands-free toggle; homework feedback panel v2 + fix-it round | Claude Design (dispatched) | active | Phương approves both handoffs |
-| V1.1 | Scaffolded free-talk brain (backend): expected-answer matching, Whisper prompt bias, repair ladder, TPRS circling prompt | Elon (prompt) + Mark (glue) + Buffet (review) | not started | Wave 0 + 24h idea aging |
-| V1.2 | Choice-chip UI + visible hands-free toggle | Steve + Buffet | not started | Wave D approval + V1.1 |
-| V1.3 | Homework feedback sandwich (relaxes zero-LLM per V1-D1) | Elon (prompt) + Mark + Buffet (red-team) | not started | Wave 0 + **explicit Phương ack of zero-LLM relaxation** |
-| V1.4 | Fix-it round + listen-and-compare | Steve + Mark + Buffet | not started | Wave D approval + V1.2 + V1.3 |
-| V1.P | **Production level for advanced kids** (story / presentation / debate — founder directive 2026-07-10; scaffolds become L1–L2 only) | Elon (prompt/rubric with Phương) + Mark + Steve + Buffet | scope added — needs own design mock + phase spec detail | Wave 0 + Phương confirms task order (recommended: presentation → story → debate) |
+| Wave D | Design mocks batch 1: choice-chip conversation view (L1–L2) + homework feedback panel v2 + fix-it round | Steve (delivered f141620) | **delivered — awaiting Phương approval** | combined approval pass with Wave D2 |
+| Wave D2 | Design mocks batch 2: L3–L5 free talk — topic picker (R2L HUB_TOPICS/TopicTile reuse), 💡 hint-on-demand states, L4–L5 game cards (build-a-story / debate / would-you-rather) | Steve (dispatched) | active | Phương approves (one pass with Wave D) |
+| V1.1 | Free-talk brain (backend): L1–L2 chips protocol + expected-answer matching + repair ladder; L3–L5 topic-seeded prompt + hint field; L4–L5 game protocols (former V1.P, folded) | Elon (prompt) + Mark (glue) + Buffet (review) | not started | Wave 0 |
+| V1.2 | Free-talk UI, 2 sequential packets: (1) L1–L2 chips + hands-free toggle; (2) L3–L5 topic picker + hint button + game cards | Steve + Buffet | not started | packet 1: Wave D approval + V1.1; packet 2: Wave D2 approval + packet 1 |
+| V1.3 | Homework feedback sandwich (relaxes zero-LLM per V1-D1; consumes homework brief) | Elon (prompt) + Mark + Buffet (red-team) | not started | Wave 0 + **explicit Phương ack of zero-LLM relaxation** |
+| V1.3b | Homework brief "Minny hiểu bài như này" (V1-D6): assign-time generation + teacher confirm in HomeworkModal (photo-extract draft pattern; design-mock exempt as internal pattern-copy — Phương may veto) | Elon (prompt) + Mark + Buffet | not started | Wave 0; lands with/just before V1.3 |
+| V1.4 | Fix-it round + listen-and-compare | Steve + Mark + Buffet | not started | Wave D approval + V1.2 packet 1 + V1.3 |
+| ~~V1.P~~ | **FOLDED 2026-07-10 evening** into V1.1/V1.2 as the L4–L5 free-talk game protocols/UI (Phương's clean mode separation: production lives in Free Talk as activities, homework not involved) | — | folded | — |
 | V1.5–V1.7 | Error profile / teacher digest / tenant-readiness config | — | HELD | pilot-evidence review (~2 weeks of pilot) |
 | S2S spike | Speech-to-speech cost comparison (already approved) | own session | queued | own gate; recommended after V1.1 |
 
 ## Current task
+
+- Status: active
+- Task ID: speakup-v1-freetalk-content-model
+- Owner: Elon (Claude Lead). Plan file:
+  `~/.claude/plans/inherited-jingling-babbage.md` (Phương-approved evening
+  revision 2026-07-10, after his mode-separation decisions).
+- Lane: `claude/speakup-v0` (IDEAS/CONTROL/design handoff) + `_ops` main
+  (spec revision). No product code — docs + Wave D2 design dispatch only.
+- Problem: Phương clarified the product model (evening 2026-07-10): the two
+  modes are cleanly separated — Free Talk must NOT involve homework and has
+  NO photos; L1–L2 stay guided (chips), L3–L5 get topic-spark + hints on
+  demand + L4–L5 production games (former V1.P); homework understanding
+  (brief) exists only for feedback, generated at assign time with his
+  confirm. The morning spec needed revision before any build phase runs on
+  a superseded design.
+- Reuse survey: external per rule 21 — (1) OpenRouter JSON-schema mode for
+  brief generation: ADOPT (existing key + the shipped JSON-mode pattern in
+  minny-conversation.js); (2) Vercel AI SDK / Instructor-style structured-
+  output libraries: REJECT (repo convention: raw fetch, no npm runtime deps
+  in functions/ — same verdict as V0 D0); internal pattern-reuse noted
+  separately (not claimed as the external survey): HUB_TOPICS +
+  TopicTile.astro + r2l/start.astro grid (topic picker),
+  homework-photo-extract.js draft→confirm flow (brief preview),
+  TOPIC_LABELS prompt pattern from backend/api/prompt_v2.py (replicated
+  edge-side).
+- Approach: (A) IDEAS.md 3 evening decision rows; (B) full revision of
+  `_ops/specs/SPEC_SPEAKUP_V1.md` (V1-D3 rewritten, V1-D2 level-split,
+  NEW V1-D6 homework brief, V1.1/V1.2/V1.3 rescoped, NEW V1.3b, V1.P
+  folded, Wave D2 section); (C) this CONTROL update (tracker + task);
+  (D) dispatch Wave D2 mock set to Steve (allowlisted folder
+  `design_handoff_speakup_v1_d2/`), Lead renders + reviews, present to
+  Phương as ONE combined approval pass with the pending Wave D.
+- Acceptance criteria:
+  1. Spec/IDEAS/CONTROL consistent with Phương's three recorded evening
+     decisions (mode separation + no photos; topic-spark/hints/games with
+     R2L topic-pick reuse; brief with teacher confirm). No product code
+     touched.
+  2. founder build gate PASS on product-repo commits.
+  3. Wave D2 handoff produced, Lead-rendered, committed with SHA, and
+     presented to Phương together with Wave D (single approval pass).
+- Files: `.founder-os/products/speakup/IDEAS.md`, this file,
+  `_ops/specs/SPEC_SPEAKUP_V1.md`, `_ops/AGENT_LOG.md`,
+  `design_handoff_speakup_v1_d2/` (new, design artifacts only).
+- Stop condition: any product-code diff — stop; build phases remain gated
+  on Wave 0 + approved mocks per the spec. No merge to main.
+- Cost ceiling: Claude team (Max plan, not metered); runtime USD 0.
+- Started: 2026-07-10 (evening)
+
+## Prior task (complete): speakup-v1-spec-and-design
 
 - Status: complete
 - Task ID: speakup-v1-spec-and-design
