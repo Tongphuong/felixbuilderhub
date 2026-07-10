@@ -5,12 +5,11 @@
 - Branch: `claude/speakup-v0` (off `main`)
 - Preview URL: `claude-speakup-v0.felixbuilderhub.pages.dev` (Cloudflare Pages auto-deploy per push, per `claude/<topic>` convention in `BRANCH_CONVENTIONS.md`)
 - Active workers: 0
-- Last updated: 2026-07-08 (photo-to-homework LIVE: Minny reads the
-  assignment photo and drafts the boxes for the teacher; photo-only
-  homework = look-and-speak graded by Azure unscripted pronunciation; all
-  live-verified on the deployed preview — see Daily update. Pending
+- Last updated: 2026-07-10 (V1 roadmap APPROVED — "Coach's Gym" niche +
+  2-pillar V1, `_ops/specs/SPEC_SPEAKUP_V1.md`; V1 phase tracker added
+  below; Wave D design mocks dispatched. V0 close-out still pending
   Phương: red-team, ear test, phrases sign-off, dry run, key+password
-  rotation, then merge)
+  rotation, then merge — Wave 0, hard blocker for V1 code)
 
 ## Phase tracker (source of truth: `_ops/specs/SPEC_SPEAKUP_V0.md`)
 
@@ -69,9 +68,64 @@ assigns, commits, merges, deploys, or spends.
    package, or forkable project. Only hand-roll it if nothing suitable
    exists, and note that search briefly in the spec for that phase.
 
+## V1 phase tracker (source of truth: `_ops/specs/SPEC_SPEAKUP_V1.md`, approved 2026-07-10)
+
+| Wave/Phase | What | Owner | Status | Gate |
+|---|---|---|---|---|
+| Wave 0 | V0 close-out: red-team, ear test, phrases sign-off, dry run, key rotation (Azure KEY 1, ADMIN_PASSWORD, + OpenRouter key/CF token exposed in `~/SpeakUp project/` vault), merge → main, pilot start | **Phương** | pending | hard blocker for all V1 code |
+| Wave D | Design mocks: choice-chip conversation view + repair states + hands-free toggle; homework feedback panel v2 + fix-it round | Claude Design (dispatched) | active | Phương approves both handoffs |
+| V1.1 | Scaffolded free-talk brain (backend): expected-answer matching, Whisper prompt bias, repair ladder, TPRS circling prompt | Elon (prompt) + Mark (glue) + Buffet (review) | not started | Wave 0 + 24h idea aging |
+| V1.2 | Choice-chip UI + visible hands-free toggle | Steve + Buffet | not started | Wave D approval + V1.1 |
+| V1.3 | Homework feedback sandwich (relaxes zero-LLM per V1-D1) | Elon (prompt) + Mark + Buffet (red-team) | not started | Wave 0 + **explicit Phương ack of zero-LLM relaxation** |
+| V1.4 | Fix-it round + listen-and-compare | Steve + Mark + Buffet | not started | Wave D approval + V1.2 + V1.3 |
+| V1.5–V1.7 | Error profile / teacher digest / tenant-readiness config | — | HELD | pilot-evidence review (~2 weeks of pilot) |
+| S2S spike | Speech-to-speech cost comparison (already approved) | own session | queued | own gate; recommended after V1.1 |
+
 ## Current task
 
 - Status: active
+- Task ID: speakup-v1-spec-and-design
+- Owner: Elon (Claude Lead) — niche strategy + V1 roadmap ratified by Phương
+  in-session 2026-07-10 ("GO AHEAD"); this task executes the docs/spec/design
+  leg only. Plan file: `~/.claude/plans/inherited-jingling-babbage.md`
+  (Phương-approved 2026-07-10).
+- Lane: `claude/speakup-v0` (IDEAS.md/CONTROL.md) + `_ops` main (spec). No
+  product code lane — V1 build phases are each their own future task.
+- Problem: V0 measures performance but doesn't cause improvement (founder's
+  2026-07-09 "45% only" test), and free talking fails low-level kids (don't
+  know what to say; mistranscribed speech → bad replies). Strategy session
+  ratified the "Coach's Gym" niche (own coaching only, architected to keep the
+  white-label path open) and a 2-pillar V1.
+- Reuse survey: N/A — governance/spec/design-mock task, builds no new product
+  capability. (Per-phase reuse surveys are mandated inside
+  `SPEC_SPEAKUP_V1.md` for each build phase; market research 2026-07-10
+  already surveyed external options: Azure PA retained, Speechace fallback,
+  Whisper prompt-bias, Buddy.ai/Amira/TPRS interaction patterns as prompt/UI
+  technique, no new vendors.)
+- Approach: (1) five new V1 idea rows appended to IDEAS.md (24h clock started;
+  rows dated 2026-07-10); (2) `_ops/specs/SPEC_SPEAKUP_V1.md` written —
+  V1-D1..D5 decisions + Wave 0/D + phases V1.1–V1.4 committed, V1.5–V1.7 HELD
+  for pilot evidence; (3) this CONTROL.md update + AGENT_LOG START; (4) Wave D
+  dispatched to Claude Design → `design_handoff_speakup_v1/` for Phương's
+  approval.
+- Acceptance criteria:
+  1. IDEAS.md rows + spec + CONTROL.md consistent with the ratified plan; no
+     product code touched.
+  2. founder build gate PASS on the product-repo commit.
+  3. Wave D handoff folder produced (both mock sets) and presented to Phương.
+- Files: `.founder-os/products/speakup/IDEAS.md`, this file,
+  `_ops/specs/SPEC_SPEAKUP_V1.md`, `_ops/AGENT_LOG.md`,
+  `design_handoff_speakup_v1/` (new, design artifacts only).
+- Stop condition: any product-code diff under this task — stop; V1 code starts
+  only after Wave 0 (V0 merge) under per-phase tasks. No merge to main.
+- Cost ceiling: Claude team (Max plan, not metered); runtime USD 0 (docs +
+  local HTML mocks; no paid APIs).
+- Started: 2026-07-10
+
+## Prior task (complete): speakup-freetalk-latency-quality-phase1
+
+- Status: complete (24s → 4s live-verified; Steps A/B/C + VAD shipped, Step D
+  deferred — see the full record below)
 - Task ID: speakup-freetalk-latency-quality-phase1
 - Owner: Elon (Claude Lead) — plan-mode investigation + Phase-1 build; Buffet
   (Sonnet, read-only) independent review. Plan file:
