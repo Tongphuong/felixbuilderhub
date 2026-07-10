@@ -1442,7 +1442,11 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
 
     // Hands-free tuning. A pause this long after real speech sends the turn;
     // escape hatch: localStorage r2l_ft_handsfree=0 restores pure tap-to-send.
-    const FT_VAD_PAUSE_MS = 1500;
+    // Trimmed 1500->900ms (2026-07-10): the trailing-silence window sits entirely
+    // in the child's wait, so it was ~0.6s of dead time every turn. 900ms still
+    // leaves room for a kid's mid-thought pause without clipping them; tune up if
+    // real sessions show turns sending before the child finishes.
+    const FT_VAD_PAUSE_MS = 900;
     const FT_VAD_MIN_VOICED_MS = 400;
     const FT_VAD_MAX_WAIT_MS = 12000; // auto-armed mic heard nothing → settle to idle
     const FT_FILLER_DELAY_MS = 1200; // thinking gap before the filler line plays
@@ -2115,55 +2119,30 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       ftCleanupRecording();
     }
 
+    // Merged voice turn (Step C, 2026-07-10): upload the audio straight to the
+    // conversation endpoint in ONE request. The server transcribes (Whisper),
+    // runs the brain + guardrails + TTS, and returns transcript + reply + audio
+    // together — removing the separate /api/read2lead-speaking-check round-trip
+    // (and its extra function cold-start) that the two-call flow paid every turn.
     async function ftSubmitAudio(blob, durationSeconds) {
       ftSetThinking(true);
       const submitStartedAt = Date.now();
       const formData = new FormData();
       formData.append('access_code', state.accessCode);
-      formData.append('pack_id', 'general');
-      formData.append('expected_text', 'free_talking_no_score');
-      formData.append('check_mode', 'open');
-      formData.append('practice_mode', '1');
-      formData.append('max_seconds', String(DEFAULT_MAX_SECONDS));
+      formData.append('action', 'turn');
+      formData.append('session_id', ft.sessionId);
       formData.append('audio', blob, audioUploadFilename(blob));
 
       try {
-        const res = await fetch('/api/read2lead-speaking-check', { method: 'POST', body: formData });
-        const data = await res.json();
-        if (!res.ok || !data.ok || !data.transcript) {
-          ftSetThinking(false);
-          ftUpdateRecordUi('Minny chưa nghe rõ. Con thử nói lại nhé!');
-          return;
-        }
-        ftAppendKidChip(durationSeconds);
-        ft.sentenceCount += (data.transcript.match(/[.!?]+/g) || [1]).length;
-        await ftSubmitTurn(data.transcript, {
-          startedAt: submitStartedAt,
-          sttMs: Date.now() - submitStartedAt,
-        });
-      } catch {
-        ftSetThinking(false);
-        ftUpdateRecordUi('Mạng không ổn định. Con thử lại nhé!');
-      }
-    }
-
-    async function ftSubmitTurn(transcript, timing) {
-      try {
-        const res = await fetch('/api/minny-conversation', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            access_code: state.accessCode,
-            action: 'turn',
-            session_id: ft.sessionId,
-            transcript,
-          }),
-        });
+        const res = await fetch('/api/minny-conversation', { method: 'POST', body: formData });
         const data = await res.json();
 
         if (!res.ok || !data.ok) {
           ftSetThinking(false);
-          ftUpdateRecordUi('Minny chưa trả lời được. Con thử nói lại nhé!');
+          // transcript_missing = Minny didn't catch the words; else a reply error.
+          ftUpdateRecordUi(data.error === 'transcript_missing'
+            ? 'Minny chưa nghe rõ. Con thử nói lại nhé!'
+            : 'Minny chưa trả lời được. Con thử nói lại nhé!');
           return;
         }
 
@@ -2174,19 +2153,24 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
           return;
         }
 
+        ftAppendKidChip(durationSeconds);
+        if (data.transcript) ft.sentenceCount += (data.transcript.match(/[.!?]+/g) || [1]).length;
+
         ft.turnsUsed += 1;
-        if (timing) {
-          // stop-tap → transcript (STT) and transcript → spoken reply (LLM +
-          // guardrails + TTS): the two halves of the "Minny thinking" gap.
-          const totalMs = Date.now() - timing.startedAt;
-          const entry = {
-            stt_ms: timing.sttMs,
-            brain_ms: totalMs - timing.sttMs,
-            total_ms: totalMs,
-          };
-          ft.turnTimings.push(entry);
-          console.info('[ft-latency] turn', ft.turnsUsed, entry);
-        }
+        // One request now, so the client times the whole record→reply gap; the
+        // server's per-stage split (stt/llm/guard/tts) rides in data.timing.
+        const totalMs = Date.now() - submitStartedAt;
+        const server = data.timing || {};
+        const entry = {
+          stt_ms: server.stt_ms ?? null,
+          brain_ms: totalMs - (server.stt_ms ?? 0),
+          total_ms: totalMs,
+          llm_source: server.llm_source,
+          server,
+        };
+        ft.turnTimings.push(entry);
+        console.info('[ft-latency] turn', ft.turnsUsed, entry);
+
         ft.turnsLeft = data.turns_left ?? Math.max(0, ft.turnsLeft - 1);
         ft.secondsLeft = data.seconds_left ?? ft.secondsLeft;
         ftRenderDots();

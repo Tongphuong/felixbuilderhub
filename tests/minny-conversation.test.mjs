@@ -575,6 +575,57 @@ test('turn without transcript returns error transcript_missing', async () => {
   assert.equal(turnBody.error, 'transcript_missing');
 });
 
+test('merged voice turn: multipart audio upload is transcribed server-side and returns transcript + reply in one request', async () => {
+  // Step C — the client now uploads audio straight to /api/minny-conversation
+  // (no separate STT call). The endpoint must transcribe (Workers AI Whisper),
+  // then run the normal brain/guardrail/TTS pipeline, and return the transcript
+  // alongside the reply so the client can render the kid's chip.
+  const fakeKv = createFakeKv();
+  await fakeKv.put('R2L-TEST', JSON.stringify({ is_test: true, progress: { current_level: 'L2' } }));
+  const originalFetch = globalThis.fetch;
+  const env = {
+    READ2LEAD_CODES: fakeKv,
+    OPENROUTER_API_KEY: 'or-key',
+    AI: {
+      run: async (model) => {
+        if (String(model).includes('whisper')) return { text: 'I have a red ball' };
+        if (String(model).includes('llama-guard')) return 'safe';
+        return new TextEncoder().encode('audio').buffer; // TTS
+      },
+    },
+  };
+  try {
+    globalThis.fetch = async (url) => {
+      if (String(url).includes('chat/completions')) {
+        return { ok: true, json: async () => ({ choices: [{ message: { content: JSON.stringify({ reply_en: 'A red ball is so fun!', mood: 'celebrate' }) } }] }) };
+      }
+      return { ok: true, arrayBuffer: async () => new TextEncoder().encode('x').buffer };
+    };
+    const startResp = await onRequestPost({
+      request: new Request('http://x/api/minny-conversation', { method: 'POST', body: JSON.stringify({ action: 'start', access_code: 'R2L-TEST' }) }),
+      env,
+    });
+    const { session_id } = await startResp.json();
+
+    const form = new FormData();
+    form.append('access_code', 'R2L-TEST');
+    form.append('action', 'turn');
+    form.append('session_id', session_id);
+    form.append('audio', new File([new Uint8Array([1, 2, 3, 4])], 'turn.webm', { type: 'audio/webm' }));
+    const turnResp = await onRequestPost({
+      request: new Request('http://x/api/minny-conversation', { method: 'POST', body: form }),
+      env,
+    });
+    const data = await turnResp.json();
+    assert.equal(data.ok, true);
+    assert.equal(data.transcript, 'I have a red ball', 'server transcribed the uploaded audio and echoed it back');
+    assert.equal(data.reply_en, 'A red ball is so fun!');
+    assert.ok(data.timing && typeof data.timing.stt_ms === 'number', 'timing includes server-side STT duration');
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
 test('audio_b64 is embedded in start/turn responses when TTS succeeds, and safely absent when it does not', async () => {
   const fakeKv = createFakeKv();
   await fakeKv.put('R2L-TEST', JSON.stringify({ is_test: true, progress: { current_level: 'L2' } }));

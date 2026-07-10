@@ -3,6 +3,10 @@ import { buildSystemPrompt, parseModelReply, coerceReply, sessionCapsExceeded, n
 import { resolveOpenAiApiKey, getOrSynthesize } from './_minny-tts.js';
 import { findPhrase } from './_minny-phrases.js';
 import { screenTranscript, validateReplyShape, detectCharacterBreak, scanBannedTopics, screenWithLlamaGuard } from './_minny-guardrails.js';
+// Step C (2026-07-10): merged voice turn — the client now uploads audio straight
+// to this endpoint (one round-trip) instead of calling read2lead-speaking-check
+// for STT first. Reuse that route's proven Whisper orchestrator, don't re-roll it.
+import { transcribeAudio } from './read2lead-speaking-check.js';
 
 // Conversation brain: Llama-3.3-70B via OpenRouter, routed to the fastest
 // provider (Groq/Cerebras) — see CONVO_PROVIDER below. Swapped 2026-07-10 from
@@ -98,6 +102,7 @@ async function handleGuardrailFlag(env, apiKey, session, sessionKey, accessCode,
       ok: true,
       ended: true,
       flagged: true,
+      transcript: kidTranscript,
       reply_en: wrapUp.text_en,
       subtitle_vi: wrapUp.subtitle_vi,
       mood: 'celebrate',
@@ -116,6 +121,7 @@ async function handleGuardrailFlag(env, apiKey, session, sessionKey, accessCode,
   const redirectAudio = await synthesizeOrNull(env, apiKey, redirect.text_en);
   return json({
     ok: true,
+    transcript: kidTranscript,
     reply_en: redirect.text_en,
     mood: 'idle',
     turns_left: turnsLeft,
@@ -131,11 +137,31 @@ export async function onRequestPost(context) {
     return json({ ok: false, error: 'config_error', message: 'Hệ thống chưa cấu hình mã học sinh.' }, 500);
   }
 
-  let body;
-  try {
-    body = await request.json();
-  } catch {
-    return json({ ok: false, error: 'bad_request', message: 'Yêu cầu không hợp lệ.' }, 400);
+  // Body is JSON for `start` (and legacy JSON `turn` with a client-supplied
+  // transcript), OR multipart/form-data for the merged voice turn (audio upload).
+  let body = {};
+  let audioBlob = null;
+  const contentType = request.headers.get('content-type') || '';
+  if (contentType.includes('multipart/form-data')) {
+    try {
+      const form = await request.formData();
+      body = {
+        access_code: form.get('access_code'),
+        action: form.get('action'),
+        session_id: form.get('session_id'),
+        transcript: form.get('transcript'),
+      };
+      const a = form.get('audio');
+      if (a && typeof a.arrayBuffer === 'function') audioBlob = a;
+    } catch {
+      return json({ ok: false, error: 'bad_request', message: 'Yêu cầu không hợp lệ.' }, 400);
+    }
+  } else {
+    try {
+      body = await request.json();
+    } catch {
+      return json({ ok: false, error: 'bad_request', message: 'Yêu cầu không hợp lệ.' }, 400);
+    }
   }
 
   const accessCode = String(body.access_code || '').trim().toUpperCase();
@@ -247,11 +273,6 @@ export async function onRequestPost(context) {
     return json({ ok: false, error: 'session_missing', message: 'Thiếu phiên trò chuyện.' }, 400);
   }
 
-  const transcript = String(body.transcript || '').trim();
-  if (!transcript) {
-    return json({ ok: false, error: 'transcript_missing', message: 'Minny chưa nghe được con nói gì.' }, 400);
-  }
-
   const sessionKey = `convo-session:${sessionId}`;
   let session;
   try {
@@ -262,6 +283,28 @@ export async function onRequestPost(context) {
 
   if (!session || session.code !== accessCode) {
     return json({ ok: true, ended: true, message_vi: 'Phiên trò chuyện đã kết thúc rồi. Con bắt đầu phiên mới nhé!' });
+  }
+
+  // Resolve the kid's words: either a client-supplied transcript (legacy JSON
+  // path) or, in the merged voice turn, transcribe the uploaded audio here so
+  // the whole record→reply round-trip is a single request. STT reuses the
+  // read2lead Whisper orchestrator (Workers AI, OpenAI fallback).
+  let transcript = String(body.transcript || '').trim();
+  let sttMs = 0;
+  if (!transcript && audioBlob) {
+    if (audioBlob.size > 6 * 1024 * 1024) {
+      return json({ ok: false, error: 'audio_too_large', message: 'Đoạn ghi âm quá dài. Con nói ngắn hơn nhé!' }, 413);
+    }
+    const sttStart = Date.now();
+    try {
+      transcript = String(await transcribeAudio(audioBlob, { ai: env.AI, openaiApiKey: apiKey }) || '').trim();
+    } catch {
+      transcript = '';
+    }
+    sttMs = Date.now() - sttStart;
+  }
+  if (!transcript) {
+    return json({ ok: false, error: 'transcript_missing', message: 'Minny chưa nghe được con nói gì.' }, 400);
   }
 
   const now = Date.now();
@@ -441,11 +484,12 @@ export async function onRequestPost(context) {
     const secondsLeft = Math.max(0, 300 - Math.floor((now - updatedSession.started_at) / 1000));
 
     // Server-side latency breakdown for this turn -> debug ring + response.
-    const timing = { llm_ms: llmMs, guard_ms: guardMs, tts_ms: ttsMs, llm_source: llmSource, llm_attempts: llmAttempts, model: CONVO_MODEL };
+    const timing = { stt_ms: sttMs, llm_ms: llmMs, guard_ms: guardMs, tts_ms: ttsMs, llm_source: llmSource, llm_attempts: llmAttempts, model: CONVO_MODEL };
     await recordConvoTiming(env, { code: accessCode, at: now, ...timing });
 
     return json({
       ok: true,
+      transcript,
       reply_en: parsed.reply_en,
       mood: parsed.mood,
       turns_left: turnsLeft,
@@ -484,10 +528,11 @@ export async function onRequestPost(context) {
     const redirectAudio = await synthesizeOrNull(env, apiKey, redirect.text_en);
     // A redirect turn means the brain failed/parsed empty -- llm_ms here is the
     // time we burned before giving up, the key signal for a slow/hung brain.
-    const timing = { llm_ms: llmMs, guard_ms: 0, tts_ms: Date.now() - ttsStart, llm_source: llmSource, llm_attempts: llmAttempts, model: CONVO_MODEL, path: 'redirect' };
+    const timing = { stt_ms: sttMs, llm_ms: llmMs, guard_ms: 0, tts_ms: Date.now() - ttsStart, llm_source: llmSource, llm_attempts: llmAttempts, model: CONVO_MODEL, path: 'redirect' };
     await recordConvoTiming(env, { code: accessCode, at: now, ...timing });
     return json({
       ok: true,
+      transcript,
       reply_en: redirect.text_en,
       mood: 'idle',
       turns_left: turnsLeft,

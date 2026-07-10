@@ -136,7 +136,28 @@ assigns, commits, merges, deploys, or spends.
   free fast inference on the existing key, no new account) vs Gemini 2.0 Flash
   (rejected — needs a new API key/account) vs staying on DeepSeek (rejected — the
   measured bottleneck). Reuses external fast-inference infra via the existing key.
-- Started: 2026-07-10
+- Founder tested Step B: **24s → ~7s** (brain confirmed as the bottleneck).
+  Founder asked to push further + research trending apps (Airlearn/Speak).
+  Research 2026-07-10: they use streaming cascaded (fast) or speech-to-speech
+  (Realtime API — fastest but removes the text step our guardrails need; logged
+  to IDEAS.md as explore-later). Next latency work (founder-approved): VAD trim +
+  Step C merge + Step D streaming voice; target ~2-3s to first sound.
+- VAD trim DONE: FT_VAD_PAUSE_MS 1500→900ms in speak-up.astro (~0.6s free; the
+  trailing-silence window sat entirely in the child's wait). Tunable up if kids
+  get clipped mid-thought.
+- Step C DONE (merge two round-trips): client uploads audio once to
+  /api/minny-conversation (multipart); server transcribes via the reused
+  read2lead `transcribeAudio` Whisper orchestrator, then runs the existing
+  brain/guardrail/TTS pipeline; all turn responses now carry `transcript` +
+  `timing.stt_ms`. Removes a browser↔edge round-trip + a 2nd function cold-start
+  per turn. read2lead-speaking-check.js unchanged (still used for homework;
+  imported, not modified). 896 tests green (+merged-path test), Buffet review in
+  flight.
+- Reuse survey (Step C): reuse existing `transcribeAudio` STT orchestrator
+  (ADOPTED — do not re-roll Whisper). N/A external — this merges our own
+  round-trips, no new capability.
+- Step D (stream voice) PENDING — own design (guard-before-stream safety
+  tradeoff). Started: 2026-07-10
 
 ## Prior task (complete): speakup-freetalk-guardrail-degrade-gracefully
 
