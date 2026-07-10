@@ -7,9 +7,10 @@
 - Active workers: 0
 - Last updated: 2026-07-10 (V1 roadmap APPROVED — "Coach's Gym" niche +
   2-pillar V1, `_ops/specs/SPEC_SPEAKUP_V1.md`; V1 phase tracker added
-  below; Wave D design mocks dispatched. V0 close-out still pending
-  Phương: red-team, ear test, phrases sign-off, dry run, key+password
-  rotation, then merge — Wave 0, hard blocker for V1 code)
+  below; Wave D design mocks dispatched. V0 close-out: **red-team DONE
+  (Phương, 2026-07-10)**; key+password rotation is scheduled as the
+  pre-merge step, NOT an open nag item — do not re-ask; remaining before
+  merge: ear test, phrases sign-off, dry run, then rotate keys + merge)
 
 ## Phase tracker (source of truth: `_ops/specs/SPEC_SPEAKUP_V0.md`)
 
@@ -72,7 +73,7 @@ assigns, commits, merges, deploys, or spends.
 
 | Wave/Phase | What | Owner | Status | Gate |
 |---|---|---|---|---|
-| Wave 0 | V0 close-out: red-team, ear test, phrases sign-off, dry run, key rotation (Azure KEY 1, ADMIN_PASSWORD, + OpenRouter key/CF token exposed in `~/SpeakUp project/` vault), merge → main, pilot start | **Phương** | pending | hard blocker for all V1 code |
+| Wave 0 | V0 close-out: ~~red-team~~ **DONE (Phương 2026-07-10)**; remaining: ear test, phrases sign-off, dry run; key rotation (Azure KEY 1, ADMIN_PASSWORD, OpenRouter key/CF token in `~/SpeakUp project/` vault) happens as the pre-merge step per Phương — not an open item to re-ask; then merge → main, pilot start | **Phương** | in progress | hard blocker for all V1 code |
 | Wave D | Design mocks: choice-chip conversation view + repair states + hands-free toggle; homework feedback panel v2 + fix-it round | Claude Design (dispatched) | active | Phương approves both handoffs |
 | V1.1 | Scaffolded free-talk brain (backend): expected-answer matching, Whisper prompt bias, repair ladder, TPRS circling prompt | Elon (prompt) + Mark (glue) + Buffet (review) | not started | Wave 0 + 24h idea aging |
 | V1.2 | Choice-chip UI + visible hands-free toggle | Steve + Buffet | not started | Wave D approval + V1.1 |
