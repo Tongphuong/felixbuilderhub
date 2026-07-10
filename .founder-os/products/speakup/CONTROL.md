@@ -113,7 +113,11 @@ assigns, commits, merges, deploys, or spends.
   forcing an ML-guard flag on the new concurrent path → asserts canned redirect,
   no leaked model reply). Buffet review: APPROVE (safety unchanged, no dead code,
   Promise.all cannot reject → fallback intact). LIVE preview re-verify PENDING.
-- Verified commit: PENDING push to origin/claude/speakup-v0.
+- Verified commit: 80f6a5a pushed to origin/claude/speakup-v0 (preview
+  rebuild). LIVE latency re-verify pending a real paced voice session
+  (Phương on-device, or a next-session QA-together pass) — same daily-cap
+  constraint as the prior task; a real mic turn is needed to measure the
+  end-to-end record→reply latency the founder reported.
 - Started: 2026-07-10
 
 ## Prior task (complete): speakup-freetalk-guardrail-degrade-gracefully
