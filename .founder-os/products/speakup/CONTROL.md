@@ -72,6 +72,53 @@ assigns, commits, merges, deploys, or spends.
 ## Current task
 
 - Status: active
+- Task ID: speakup-freetalk-latency-quality-phase1
+- Owner: Elon (Claude Lead) — plan-mode investigation + Phase-1 build; Buffet
+  (Sonnet, read-only) independent review. Plan file:
+  `~/.claude/plans/you-are-elon-this-snappy-owl.md` (Phương-approved 2026-07-10).
+- Lane: `claude/speakup-v0` (worktree `~/work/repos/speakup-minny-react`).
+- Problem: founder reports the Free Talking record→AI-reply flow is too slow and
+  answers feel weak. Investigation (3 parallel Explore agents) found the latency
+  is structural: every kid utterance makes TWO sequential browser→edge trips
+  (STT endpoint, then LLM+TTS endpoint), and within the 2nd the Llama Guard (6s)
+  runs sequentially BEFORE TTS, plus a 7s×2 LLM timeout tail; answer quality is
+  floored by the cheapest brain tier (deepseek-v4-flash).
+- Reuse survey: N/A — tuning/parallelizing the existing Phase 6 pipeline and a
+  model-tier bump; builds no new external capability.
+- Approach (APPROVED — 2 phases, quick-wins first): **Phase 1 (this task,
+  low-risk, one file `functions/api/minny-conversation.js`):** (a) LLM hot-path
+  timeout 7s→5s + `temperature:0.8`, retry loop unchanged; (b) brain
+  `deepseek-v4-flash`→`deepseek-v4-pro` (founder-picked mid step); (c) run
+  `screenWithLlamaGuard` CONCURRENTLY with `synthesizeOrNull` via `Promise.all`
+  (deterministic gate still short-circuits first; on ML flag the synthesized
+  audio is discarded and a canned redirect returned). **Phase 2 (next task):**
+  merge the two round-trips into one voice-turn endpoint (reuse existing STT
+  helper). Not started.
+- Acceptance criteria (Phase 1):
+  1. Timeout 5s + temperature 0.8 on the OpenRouter call; brain is
+     `deepseek/deepseek-v4-pro`; fallback to Workers AI Llama unchanged.
+  2. Guard + TTS run concurrently; safety unchanged — no reply audio ever
+     returned without passing the deterministic gate AND (ML guard OR degrade).
+  3. `node --test` green + founder build gate PASS.
+  4. Live re-verify on the deployed preview: real varied Minny replies at human
+     pace, measurably lower per-turn latency (client `ft.turnTimings`).
+- Files: `functions/api/minny-conversation.js`,
+  `tests/minny-conversation.test.mjs`.
+- Stop condition: no change to deterministic wordlists, caps, the kid transcript
+  screen, or the protected recorder pipeline. No merge to main.
+- Cost ceiling: Claude team (Max plan, not metered); runtime = small per-turn
+  bump from flash→pro (still cheap at ≤20-student pilot), TTS/guard call count
+  unchanged (parallelized, not added).
+- Design self-verification: Phase-1 code 895/895 tests green (added an e2e test
+  forcing an ML-guard flag on the new concurrent path → asserts canned redirect,
+  no leaked model reply). Buffet review: APPROVE (safety unchanged, no dead code,
+  Promise.all cannot reject → fallback intact). LIVE preview re-verify PENDING.
+- Verified commit: PENDING push to origin/claude/speakup-v0.
+- Started: 2026-07-10
+
+## Prior task (complete): speakup-freetalk-guardrail-degrade-gracefully
+
+- Status: complete
 - Task ID: speakup-freetalk-guardrail-degrade-gracefully
 - Owner: Elon (Claude Lead) — plan-mode investigation + fix; Buffet (Sonnet,
   read-only) independent review. Plan file:

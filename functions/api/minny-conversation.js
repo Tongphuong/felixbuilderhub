@@ -5,8 +5,9 @@ import { findPhrase } from './_minny-phrases.js';
 import { screenTranscript, validateReplyShape, detectCharacterBreak, scanBannedTopics, screenWithLlamaGuard } from './_minny-guardrails.js';
 
 // Conversation brain: DeepSeek via OpenRouter (existing worker billing).
-// One-line quality upgrade if ever needed: 'deepseek/deepseek-v4-pro'.
-const CONVO_MODEL = 'deepseek/deepseek-v4-flash';
+// Upgraded 2026-07-10 flash -> pro for warmer, more relevant kid replies
+// (Phương-approved mid step). Fallback to Workers AI Llama 3.3 unchanged.
+const CONVO_MODEL = 'deepseek/deepseek-v4-pro';
 
 function json(body, status = 200) {
   return new Response(JSON.stringify(body), {
@@ -298,8 +299,12 @@ export async function onRequestPost(context) {
             messages,
             response_format: { type: 'json_object' },
             max_tokens: 150,
+            temperature: 0.8,
           }),
-          signal: AbortSignal.timeout(7000),
+          // 5s (was 7s): DeepSeek normally answers in ~2-3s. A request past 5s
+          // is effectively hung -- fail fast to the retry / fast Workers-AI
+          // fallback so a hiccup never costs the child ~14s of dead air.
+          signal: AbortSignal.timeout(5000),
         });
         if (llmRes.ok) {
           const llmData = await llmRes.json();
@@ -333,18 +338,33 @@ export async function onRequestPost(context) {
   const parsed = rawReply ? (parseModelReply(rawReply) || coerceReply(rawReply)) : null;
 
   if (parsed) {
-    // Phase 6 guardrail layers 2-4: deterministic shape/character checks,
-    // then the Llama Guard ML backstop, before TTS ever synthesizes the
-    // model's words. Any flag here means the kid never hears the raw reply.
+    // Phase 6 guardrail layers 2-4. Deterministic shape/character/topic checks
+    // run first (cheap, sync). Only if they pass do we spend on the Llama Guard
+    // ML backstop -- and we run that guard call CONCURRENTLY with TTS synthesis
+    // (each up to ~6-8s) instead of one after the other. A guard flag is rare,
+    // and the deterministic word-list gate has already cleared the reply before
+    // any audio is made, so on the rare ML flag we simply drop the synthesized
+    // audio and fall to the redirect path -- safety is unchanged, latency drops
+    // by ~min(guard, TTS) on every good turn.
     const shapeCheck = validateReplyShape(parsed.reply_en);
     const characterCheck = detectCharacterBreak(parsed.reply_en);
     const topicCheck = scanBannedTopics(parsed.reply_en);
     const deterministicFlag = shapeCheck.flagged || characterCheck.flagged || topicCheck.flagged;
-    const guardResult = deterministicFlag
-      ? { flagged: true, category: shapeCheck.reason || characterCheck.marker || topicCheck.category }
-      : await screenWithLlamaGuard(env.AI, parsed.reply_en, transcript);
+
+    if (deterministicFlag) {
+      const category = shapeCheck.reason || characterCheck.marker || topicCheck.category;
+      return handleGuardrailFlag(env, apiKey, session, sessionKey, accessCode, transcript, category, 'model', now);
+    }
+
+    // Deterministic gate passed -> safe to synthesize while the ML backstop
+    // screens the same words in parallel.
+    const [guardResult, replyAudio] = await Promise.all([
+      screenWithLlamaGuard(env.AI, parsed.reply_en, transcript),
+      synthesizeOrNull(env, apiKey, parsed.reply_en),
+    ]);
 
     if (guardResult.flagged) {
+      // Rare: discard the just-synthesized audio and send a canned redirect.
       return handleGuardrailFlag(env, apiKey, session, sessionKey, accessCode, transcript, guardResult.category || 'llama_guard', 'model', now);
     }
 
@@ -361,10 +381,35 @@ export async function onRequestPost(context) {
         matched_rule: guardResult.category || 'guard_degraded',
       });
     }
+
+    // ── LLM success path ──
+    const updatedSession = nextSession(session, {
+      kid_transcript: transcript,
+      reply_en: parsed.reply_en,
+      mood: parsed.mood,
+    });
+
+    try {
+      await env.READ2LEAD_CODES.put(sessionKey, JSON.stringify(updatedSession), { expirationTtl: 600 });
+    } catch {
+      // best‑effort
+    }
+
+    const turnsLeft = Math.max(0, 12 - updatedSession.turns);
+    const secondsLeft = Math.max(0, 300 - Math.floor((now - updatedSession.started_at) / 1000));
+
+    return json({
+      ok: true,
+      reply_en: parsed.reply_en,
+      mood: parsed.mood,
+      turns_left: turnsLeft,
+      seconds_left: secondsLeft,
+      ...(replyAudio ? { audio_b64: replyAudio.audio_b64, content_type: replyAudio.content_type } : {}),
+    });
   }
 
   if (!parsed) {
-    // ── canned redirect path ──
+    // ── canned redirect path (LLM/parse failure) ──
     // A technical LLM/parse failure just gets a canned redirect line and still
     // counts against the normal 12-turn/5-min cap below -- it does NOT end the
     // session early. Ending early on repeated failures is a guardrail-flag
@@ -398,30 +443,4 @@ export async function onRequestPost(context) {
       ...(redirectAudio ? { audio_b64: redirectAudio.audio_b64, content_type: redirectAudio.content_type } : {}),
     });
   }
-
-  // ── LLM success path ──
-  const updatedSession = nextSession(session, {
-    kid_transcript: transcript,
-    reply_en: parsed.reply_en,
-    mood: parsed.mood,
-  });
-
-  try {
-    await env.READ2LEAD_CODES.put(sessionKey, JSON.stringify(updatedSession), { expirationTtl: 600 });
-  } catch {
-    // best‑effort
-  }
-
-  const turnsLeft = Math.max(0, 12 - updatedSession.turns);
-  const secondsLeft = Math.max(0, 300 - Math.floor((now - updatedSession.started_at) / 1000));
-
-  const replyAudio = await synthesizeOrNull(env, apiKey, parsed.reply_en);
-  return json({
-    ok: true,
-    reply_en: parsed.reply_en,
-    mood: parsed.mood,
-    turns_left: turnsLeft,
-    seconds_left: secondsLeft,
-    ...(replyAudio ? { audio_b64: replyAudio.audio_b64, content_type: replyAudio.content_type } : {}),
-  });
 }

@@ -127,9 +127,10 @@ test('turn primary brain calls DeepSeek via OpenRouter with strict JSON mode', a
     const llmCall = calls.find(c => c.url.includes('chat/completions'));
     assert.ok(llmCall, 'primary LLM call happened');
     assert.match(llmCall.url, /openrouter\.ai\/api\/v1\/chat\/completions/);
-    assert.equal(llmCall.body.model, 'deepseek/deepseek-v4-flash');
+    assert.equal(llmCall.body.model, 'deepseek/deepseek-v4-pro');
     assert.deepEqual(llmCall.body.response_format, { type: 'json_object' });
     assert.equal(llmCall.body.max_tokens, 150);
+    assert.equal(llmCall.body.temperature, 0.8);
     assert.equal(llmCall.auth, 'Bearer or-test-key');
     assert.ok(calls.every(c => !c.url.includes('api.openai.com')), 'no OpenAI call anywhere in the turn');
   } finally {
@@ -468,6 +469,50 @@ test('fallback hardening: DeepSeek fails but the llama fallback prose-JSON is sa
     assert.equal(turnData.mood, 'celebrate');
     assert.equal(openRouterCalls, 2, 'DeepSeek was retried once before falling back');
     assert.equal(llamaInput?.max_tokens, 150, 'llama fallback request carries the max_tokens cap');
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test('ML guard flag on the concurrent guard||TTS path returns a canned redirect, never the flagged model reply', async () => {
+  // Guards the safety invariant of the guard/TTS parallelization: the LLM
+  // returns a clean-shaped reply (deterministic gate passes), but Llama Guard
+  // flags it. The kid must get a canned redirect, and the flagged model words
+  // must NOT leak into the response even though TTS ran concurrently.
+  const fakeKv = createFakeKv();
+  await fakeKv.put('R2L-TEST', JSON.stringify({ is_test: true, progress: { current_level: 'L2' } }));
+  const originalFetch = globalThis.fetch;
+  const MODEL_REPLY = 'That sounds like a really fun day!';
+  const env = {
+    READ2LEAD_CODES: fakeKv,
+    OPENROUTER_API_KEY: 'or-key',
+    AI: {
+      run: async (model) => {
+        if (String(model).includes('llama-guard')) return 'unsafe\nS1'; // ML backstop flags it
+        return new TextEncoder().encode('audio').buffer; // TTS ran concurrently
+      },
+    },
+  };
+  try {
+    globalThis.fetch = async (url) => {
+      if (String(url).includes('chat/completions')) {
+        return { ok: true, json: async () => ({ choices: [{ message: { content: JSON.stringify({ reply_en: MODEL_REPLY, mood: 'celebrate' }) } }] }) };
+      }
+      return { ok: true, arrayBuffer: async () => new TextEncoder().encode('x').buffer };
+    };
+    const startResp = await onRequestPost({
+      request: new Request('http://x/api/minny-conversation', { method: 'POST', body: JSON.stringify({ action: 'start', access_code: 'R2L-TEST' }) }),
+      env,
+    });
+    const startData = await startResp.json();
+    const turnResp = await onRequestPost({
+      request: new Request('http://x/api/minny-conversation', { method: 'POST', body: JSON.stringify({ action: 'turn', access_code: 'R2L-TEST', session_id: startData.session_id, transcript: 'We went to the park' }) }),
+      env,
+    });
+    const turnData = await turnResp.json();
+    assert.equal(turnData.ok, true);
+    assert.notEqual(turnData.reply_en, MODEL_REPLY, 'the flagged model reply must never reach the kid');
+    assert.equal(turnData.mood, 'idle', 'a canned redirect is delivered instead');
   } finally {
     globalThis.fetch = originalFetch;
   }
