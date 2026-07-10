@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SpeakUp V1 · Homework Feedback v2 + Fix-it Round</title>
+<style>
+  :root{
+    --bg-page:#0a1622;
+    --navy-950:#10273a;
+    --navy-900:#17354a;
+    --navy-850:#1d3f58;
+    --navy-800:#244a64;
+    --gold:#c88f38;
+    --gold-light:#f2cc7e;
+    --cream:#f5e6c8;
+    --cream-muted:#d9c7a4;
+    --cream-dim:#aa9673;
+    --success:#6fcf97;
+    --danger:#f87171;
+    --border-subtle: rgba(170,150,115,.2);
+    --border-accent: rgba(200,143,56,.4);
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; }
+  body{
+    background:var(--bg-page);
+    color:var(--cream-muted);
+    font-family:'Inter',ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif;
+    padding:56px 24px 120px;
+  }
+  .doc-header{ max-width:820px; margin:0 auto 56px; }
+  .eyebrow{ font-family:'Manrope','Inter',sans-serif; font-weight:800; font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--gold-light); margin:0; }
+  .doc-header h1{ font-family:'Manrope','Inter',sans-serif; font-size:36px; font-weight:800; letter-spacing:-.01em; margin:10px 0 0; color:var(--cream); }
+  .doc-header p{ margin-top:14px; font-size:15.5px; line-height:1.65; color:var(--cream-muted); }
+  .doc-header code{ color:var(--gold-light); background:rgba(200,143,56,.12); padding:1px 6px; border-radius:5px; font-size:.9em; }
+  .nav-pills{ display:flex; flex-wrap:wrap; gap:8px; margin-top:22px; }
+  .nav-pills a{ padding:7px 14px; border-radius:999px; border:1px solid var(--border-subtle); color:var(--cream-muted); font-size:13px; text-decoration:none; }
+  .nav-pills a:hover{ border-color:var(--gold); color:var(--gold-light); }
+
+  section.screen{ margin:0 auto 104px; max-width:1240px; }
+  .screen__kicker{ display:flex; align-items:baseline; gap:16px; }
+  .screen__kicker .rule{ height:1px; flex:1; background:var(--border-subtle); min-width:60px; }
+  .screen__kicker span{ color:var(--gold); font-family:'Manrope','Inter',sans-serif; font-weight:800; font-size:12px; letter-spacing:.14em; text-transform:uppercase; }
+  .screen__title{ font-family:'Manrope','Inter',sans-serif; font-size:24px; font-weight:800; margin:12px 0 0; color:var(--cream); }
+  .screen__desc{ margin-top:8px; font-size:14.5px; color:var(--cream-muted); max-width:760px; line-height:1.65; }
+
+  .boards{ display:flex; gap:36px; align-items:flex-start; justify-content:center; flex-wrap:wrap; margin-top:28px; }
+  .board{ display:flex; flex-direction:column; align-items:center; gap:10px; }
+  .board-label{ font-family:'Manrope','Inter',sans-serif; font-weight:800; font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--cream-dim); }
+
+  .frame-phone{ width:390px; border-radius:40px; background:var(--navy-950); border:8px solid #0a1a26; box-shadow:0 30px 80px -20px rgba(0,0,0,.6); overflow:hidden; position:relative; }
+  .frame-phone .statusbar{ height:40px; display:flex; align-items:center; justify-content:space-between; padding:0 22px; font-family:'Manrope','Inter',sans-serif; font-size:13px; font-weight:700; color:var(--cream); }
+  .battery{ width:16px; height:9px; border:1.5px solid var(--cream); border-radius:2px; position:relative; display:inline-block; }
+  .battery::after{ content:""; position:absolute; inset:1px; background:var(--cream); width:70%; border-radius:1px; }
+  .frame-phone .content{ padding:6px 14px 22px; display:flex; flex-direction:column; gap:14px; background:linear-gradient(180deg,#10273a 0%,#17354a 50%,#0e2233 100%); }
+
+  .frame-desktop{ width:1180px; max-width:100%; border-radius:18px; background:var(--navy-950); border:1px solid var(--border-subtle); box-shadow:0 30px 80px -20px rgba(0,0,0,.6); overflow:hidden; }
+  .frame-desktop .chrome{ height:34px; background:#0a1a26; display:flex; align-items:center; padding:0 16px; gap:8px; border-bottom:1px solid var(--border-subtle); }
+  .frame-desktop .chrome .dot{ width:11px; height:11px; border-radius:50%; }
+  .frame-desktop .chrome .url{ margin-left:14px; font-size:12px; color:var(--cream-dim); }
+  .frame-desktop .content{ padding:26px 40px; background:linear-gradient(180deg,#10273a 0%,#17354a 50%,#0e2233 100%); display:flex; justify-content:center; }
+  .frame-desktop .col{ width:640px; max-width:100%; display:flex; flex-direction:column; gap:14px; }
+
+  /* ============ reused live chrome (do NOT redesign) ============ */
+  .spk-topbar{ display:flex; align-items:center; justify-content:space-between; gap:12px; }
+  .spk-back{ display:inline-flex; align-items:center; gap:6px; border:1px solid var(--border-subtle); border-radius:999px; background:transparent; padding:9px 16px; font-size:14px; font-weight:700; color:var(--cream-muted); }
+  .dots{ display:flex; align-items:center; gap:7px; }
+  .minny-dot{ width:9px; height:9px; border-radius:999px; background:rgba(245,230,200,.18); }
+  .minny-dot--done{ background:rgba(111,207,151,.6); }
+  .minny-dot--active{ background:var(--gold); transform:scale(1.25); }
+
+  .spk-story-card{ background:rgba(23,53,74,.6); border:1px solid rgba(200,143,56,.3); border-radius:20px; padding:16px 18px; }
+  .spk-story-card__eyebrow{ font-family:'Manrope','Inter',sans-serif; font-weight:800; letter-spacing:.14em; font-size:11px; color:var(--gold); text-transform:uppercase; margin:0; }
+  .spk-story-card__title{ font-family:'Manrope','Inter',sans-serif; font-weight:800; font-size:18px; color:var(--cream); margin:3px 0 0; }
+  .spk-story-card__en{ font-size:14px; line-height:1.5; color:var(--cream-muted); margin:8px 0 0; }
+
+  /* result stack — shipped classes, exact values from src/styles/speakup-app.css */
+  .minny-frame-score-card{ border-radius:20px; padding:18px; background:linear-gradient(180deg, rgba(200,143,56,.18), rgba(200,143,56,.06)); border:1px solid rgba(200,143,56,.35); text-align:center; }
+  .minny-frame-score-card__eyebrow{ font-family:'Manrope','Inter',sans-serif; font-size:11px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:var(--cream-muted); margin:0; }
+  .minny-frame-score-card__value{ font-family:'Manrope','Inter',sans-serif; font-weight:800; font-size:44px; color:var(--gold-light); line-height:1.1; margin:4px 0 0; }
+  .minny-frame-score-card__sub{ margin:4px 0 0; font-size:13px; color:var(--cream-muted); }
+
+  .minny-frame-rubric-card{ border-radius:18px; border:1px solid var(--border-subtle); background:rgba(23,53,74,.5); padding:14px 16px; }
+  .minny-frame-rubric-card__eyebrow{ font-family:'Manrope','Inter',sans-serif; font-size:11px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:var(--cream-dim); margin:0 0 6px; }
+  .minny-frame-rubric-row{ display:flex; align-items:center; gap:10px; padding:5px 0; }
+  .minny-frame-rubric-row__mark{ display:inline-flex; align-items:center; justify-content:center; width:26px; height:26px; flex-shrink:0; border-radius:999px; font-size:13px; font-weight:800; }
+  .minny-frame-rubric-row__mark.is-ok{ background:rgba(111,207,151,.2); color:var(--success); }
+  .minny-frame-rubric-row__mark.is-miss{ background:rgba(245,230,200,.1); color:var(--cream-dim); }
+  .minny-frame-rubric-row__label{ font-size:13.5px; color:var(--cream); }
+
+  .minny-frame-smile-chip{ display:flex; align-items:flex-start; gap:9px; border-radius:16px; border:2px dashed rgba(200,143,56,.45); padding:12px; }
+  .minny-frame-smile-chip__eyebrow{ display:block; font-size:10.5px; font-weight:800; letter-spacing:.05em; text-transform:uppercase; color:var(--gold); }
+  .minny-frame-smile-chip__body{ font-size:13px; color:var(--cream-muted); }
+
+  .minny-word{ display:inline-block; margin:2px 3px 2px 0; border-radius:8px; padding:4px 10px; font-size:13.5px; font-weight:700; }
+  .minny-word--good{ background:rgba(111,207,151,.18); color:#bbf7d0; }
+  .minny-word--close{ background:rgba(242,204,126,.18); color:var(--gold-light); }
+  .minny-word--miss{ background:rgba(170,150,115,.15); color:rgba(245,230,200,.7); }
+
+  .spk-btn{ display:inline-flex; align-items:center; justify-content:center; gap:8px; min-height:48px; border:none; border-radius:14px; padding:12px 20px; font-family:'Manrope','Inter',sans-serif; font-weight:800; font-size:15px; cursor:pointer; }
+  .spk-btn--gold{ background:linear-gradient(180deg,#f2cc7e,#c88f38); color:#0a1622; box-shadow:0 10px 24px -8px rgba(200,143,56,.5); }
+  .spk-btn--green{ background:linear-gradient(180deg,#6fcf97,#4fae78); color:#0a1622; box-shadow:0 10px 24px -8px rgba(111,207,151,.5); }
+  .spk-btn--ghost{ background:transparent; border:1px solid rgba(217,199,164,.4); color:var(--cream); }
+  .actions-row{ display:flex; gap:10px; flex-wrap:wrap; }
+
+  .spk-rec-btn{ width:80px; height:80px; border-radius:50%; background:var(--danger); border:none; box-shadow:0 12px 32px -8px rgba(248,113,113,.55), inset 0 -4px 0 rgba(0,0,0,.15); display:flex; align-items:center; justify-content:center; }
+  .spk-rec-btn__icon{ width:22px; height:22px; background:#fff; border-radius:6px; display:block; }
+  .spk-rec-btn--sm{ width:56px; height:56px; }
+  .spk-rec-btn--sm .spk-rec-btn__icon{ width:16px; height:16px; border-radius:4px; }
+
+  /* ============ NEW — feedback sandwich (V1-D1 / V1.3) ============ */
+  .minny-feedback-sandwich{ border-radius:20px; padding:16px 18px; display:flex; flex-direction:column; gap:12px; border:1px solid var(--border-subtle); background:rgba(23,53,74,.45); }
+  .minny-feedback-sandwich.is-celebrate{ border-color:rgba(200,143,56,.35); background:linear-gradient(180deg, rgba(200,143,56,.1), rgba(23,53,74,.45)); }
+  .minny-feedback-sandwich.is-encourage{ border-color:rgba(200,143,56,.25); }
+  .minny-feedback-sandwich__eyebrow{ font-family:'Manrope','Inter',sans-serif; font-size:11px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:var(--gold-light); margin:0; display:flex; align-items:center; gap:6px; }
+  .minny-feedback-sandwich__row{ display:flex; gap:10px; align-items:flex-start; }
+  .minny-feedback-sandwich__row .ico{ flex-shrink:0; font-size:16px; line-height:1.4; }
+  .minny-feedback-sandwich__praise{ margin:0; font-size:14.5px; color:var(--cream); line-height:1.55; }
+  .minny-feedback-sandwich__praise q{ color:var(--gold-light); font-weight:700; font-style:normal; }
+  .minny-feedback-sandwich__focus-label{ margin:0 0 4px; font-size:12px; color:var(--cream-dim); }
+  .minny-word--focus{ font-size:16px; padding:6px 14px; border-radius:10px; }
+  .minny-feedback-sandwich__model{ margin:0; }
+  .minny-feedback-sandwich__model-en{ font-size:15px; color:var(--cream); font-weight:700; margin:0; }
+  .minny-feedback-sandwich__model-vi{ font-size:12.5px; color:var(--cream-dim); margin:2px 0 0; font-style:italic; }
+  .minny-feedback-sandwich__challenge{ margin:0; font-size:13px; color:var(--cream-muted); line-height:1.55; }
+
+  /* ============ NEW — fix-it round (V1.4) ============ */
+  .minny-fixit-invite{ border-radius:20px; padding:20px; background:linear-gradient(180deg, rgba(200,143,56,.14), rgba(23,53,74,.5)); border:1px solid rgba(200,143,56,.35); text-align:center; display:flex; flex-direction:column; align-items:center; gap:12px; }
+  .minny-fixit-invite__avatar{ width:64px; height:64px; border-radius:999px; background:radial-gradient(circle at 30% 30%,#9ab3c4 0%,#6d8797 60%,#4a6270 100%); display:flex; align-items:center; justify-content:center; font-size:32px; box-shadow:0 0 0 4px rgba(200,143,56,.18); }
+  .minny-fixit-invite__title{ margin:0; font-family:'Manrope','Inter',sans-serif; font-weight:800; font-size:18px; color:var(--cream); }
+  .minny-fixit-invite__words{ display:flex; gap:8px; }
+  .minny-fixit-invite__actions{ display:flex; flex-direction:column; align-items:center; gap:8px; width:100%; margin-top:4px; }
+  .minny-fixit-invite__skip{ font-size:13px; color:var(--cream-dim); background:none; border:none; text-decoration:underline; cursor:pointer; min-height:44px; padding:0 6px; }
+
+  .minny-fixit-rep{ border-radius:20px; padding:22px; background:rgba(23,53,74,.55); border:1px solid var(--border-subtle); display:flex; flex-direction:column; align-items:center; gap:14px; text-align:center; }
+  .minny-fixit-rep__progress{ font-size:11.5px; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:var(--cream-dim); margin:0; }
+  .minny-fixit-rep__word{ font-family:'Manrope','Inter',sans-serif; font-weight:800; font-size:38px; color:var(--gold-light); margin:0; }
+  .minny-fixit-rep__compare{ display:flex; gap:10px; flex-wrap:wrap; justify-content:center; }
+  .minny-compare-btn{ min-height:48px; padding:10px 18px; border-radius:999px; font-size:13.5px; font-weight:800; font-family:'Manrope','Inter',sans-serif; cursor:pointer; display:inline-flex; align-items:center; gap:6px; }
+  .minny-compare-btn--minny{ background:var(--gold); color:var(--bg-page); border:none; box-shadow:0 4px 16px -4px rgba(200,143,56,.5); }
+  .minny-compare-btn--kid{ background:rgba(200,143,56,.12); color:var(--cream); border:1px solid rgba(200,143,56,.4); }
+  .minny-fixit-rep__rerecord-label{ font-size:12.5px; color:var(--cream-dim); margin:0; }
+
+  .minny-fixit-celebrate{ border-radius:20px; padding:26px 20px; background:linear-gradient(180deg, rgba(111,207,151,.14), rgba(23,53,74,.5)); border:1px solid rgba(111,207,151,.35); text-align:center; display:flex; flex-direction:column; align-items:center; gap:10px; }
+  .minny-fixit-celebrate__avatar{ width:72px; height:72px; border-radius:999px; background:radial-gradient(circle at 30% 30%,#9ab3c4 0%,#6d8797 60%,#4a6270 100%); display:flex; align-items:center; justify-content:center; font-size:38px; box-shadow:0 0 0 4px rgba(111,207,151,.22); }
+  .minny-fixit-celebrate__title{ margin:0; font-family:'Manrope','Inter',sans-serif; font-weight:800; font-size:19px; color:var(--cream); }
+  .minny-fixit-celebrate__sub{ margin:0; font-size:13.5px; color:var(--cream-muted); }
+
+  .notes{ max-width:1180px; margin:24px auto 0; background:rgba(23,53,74,.5); border:1px solid var(--border-subtle); border-radius:12px; padding:16px 20px; font-size:13px; color:var(--cream-muted); line-height:1.65; }
+  .notes strong{ color:var(--gold-light); }
+  .notes code{ color:var(--gold-light); background:rgba(200,143,56,.1); padding:1px 5px; border-radius:5px; }
+
+  @media (prefers-reduced-motion: reduce){ *,*::before,*::after{ animation:none!important; transition:none!important; } }
+</style>
+</head>
+<body>
+
+<div class="doc-header">
+  <p class="eyebrow">Design handoff · SpeakUp V1 · Wave D · Set 2</p>
+  <h1>Homework feedback panel v2 + fix-it round</h1>
+  <p>Extends the <strong>approved Phase 7a result panel</strong> (<code>minny-frame-score-card</code>, <code>minny-frame-rubric-card</code>, <code>minny-frame-smile-chip</code>, <code>minny-word</code> — all shipped in <code>src/pages/speak-up.astro</code> / <code>speakup-app.css</code> today). The existing score card, rubric and smile chip stay exactly where they are; the new <strong>feedback sandwich</strong> renders directly under them, per <code>SPEC_SPEAKUP_V1.md</code> §V1-D1/V1.3. Fix-it round screens (§V1.4) follow. See <code>README.md</code> for the full component reference and the grounding rule (every quoted word must be one the kid actually said).</p>
+  <div class="nav-pills">
+    <a href="#s1">1 · Sandwich (celebrate)</a>
+    <a href="#s2">2 · Sandwich (encourage)</a>
+    <a href="#s3">3 · Fix-it invitation</a>
+    <a href="#s4">4 · Fix-it rep screen</a>
+    <a href="#s5">5 · Fix-it celebrate</a>
+  </div>
+</div>
+
+<!-- ======================================================================
+     SCREEN 1 — Feedback sandwich, celebrate mood
+     ====================================================================== -->
+<section class="screen" id="s1">
+  <div class="screen__kicker"><span>01 · Feedback sandwich</span><div class="rule"></div></div>
+  <h2 class="screen__title">Celebrate mood — rendered under the existing score/rubric/smile chip</h2>
+  <p class="screen__desc">Scenario: MY TRIP STORY homework, match ≥70%. The deterministic score card, rubric and smile chip render first, unchanged. The feedback sandwich is a new card appended immediately after — one praise line quoting the kid's own words, one focus word, one model sentence (EN + VN subtitle), one tiny challenge.</p>
+
+  <div class="boards">
+    <div class="board">
+      <span class="board-label">Phone · 390</span>
+      <div class="frame-phone">
+        <div class="statusbar"><span>9:41</span><span class="battery"></span></div>
+        <div class="content">
+          <div class="spk-topbar">
+            <button class="spk-back" type="button">← Chọn cách luyện</button>
+            <div class="dots"><span class="minny-dot minny-dot--done"></span><span class="minny-dot minny-dot--done"></span><span class="minny-dot minny-dot--active"></span><span class="minny-dot"></span></div>
+          </div>
+
+          <div class="spk-story-card">
+            <p class="spk-story-card__eyebrow">My Trip Story</p>
+            <h3 class="spk-story-card__title">Kể lại chuyến đi của con</h3>
+            <p class="spk-story-card__en">"Last summer, I went to Đà Nẵng. I went with my family. I felt happy."</p>
+          </div>
+
+          <div class="minny-frame-score-card">
+            <p class="minny-frame-score-card__eyebrow">Điểm hoàn thành</p>
+            <p class="minny-frame-score-card__value">82%</p>
+            <p class="minny-frame-score-card__sub">Khớp bài thầy dạy — tuyệt vời con ơi!</p>
+          </div>
+
+          <div class="minny-frame-rubric-card">
+            <p class="minny-frame-rubric-card__eyebrow">Bảng đánh giá</p>
+            <div class="minny-frame-rubric-row"><span class="minny-frame-rubric-row__mark is-ok">✓</span><span class="minny-frame-rubric-row__label">Nói đủ các câu trong khung</span></div>
+            <div class="minny-frame-rubric-row"><span class="minny-frame-rubric-row__mark is-ok">✓</span><span class="minny-frame-rubric-row__label">Đủ thời gian</span></div>
+            <div class="minny-frame-rubric-row"><span class="minny-frame-rubric-row__mark is-ok">✓</span><span class="minny-frame-rubric-row__label">Nói to, rõ ràng</span></div>
+          </div>
+
+          <div class="minny-frame-smile-chip">
+            <span aria-hidden="true">😄</span>
+            <span><span class="minny-frame-smile-chip__eyebrow">Nhắc nhẹ từ Minny</span><span class="minny-frame-smile-chip__body">Con nhớ cười thật tươi khi quay video gửi thầy Phương nhé!</span></span>
+          </div>
+
+          <!-- NEW -->
+          <div class="minny-feedback-sandwich is-celebrate">
+            <p class="minny-feedback-sandwich__eyebrow">💬 Minny nói thêm</p>
+            <div class="minny-feedback-sandwich__row">
+              <span class="ico">🌟</span>
+              <p class="minny-feedback-sandwich__praise">Con nói rất hay: <q>I went with my family</q> — nghe tự nhiên lắm!</p>
+            </div>
+            <div class="minny-feedback-sandwich__row">
+              <span class="ico">🎯</span>
+              <div>
+                <p class="minny-feedback-sandwich__focus-label">Từ để luyện thêm</p>
+                <span class="minny-word minny-word--close minny-word--focus">went</span>
+              </div>
+            </div>
+            <div class="minny-feedback-sandwich__row">
+              <span class="ico">📘</span>
+              <div class="minny-feedback-sandwich__model">
+                <p class="minny-feedback-sandwich__model-en">"Last summer, I went to Đà Nẵng with my family."</p>
+                <p class="minny-feedback-sandwich__model-vi">Mùa hè trước, con đã đi Đà Nẵng cùng gia đình.</p>
+              </div>
+            </div>
+            <div class="minny-feedback-sandwich__row">
+              <span class="ico">✨</span>
+              <p class="minny-feedback-sandwich__challenge">Thử thêm một câu tả cảm xúc của con nhé: "I felt excited!"</p>
+            </div>
+          </div>
+
+          <div class="actions-row">
+            <button type="button" class="spk-btn spk-btn--ghost">Luyện lại</button>
+            <button type="button" class="spk-btn spk-btn--green">Bước tiếp theo</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="board">
+      <span class="board-label">Desktop · 1280</span>
+      <div class="frame-desktop">
+        <div class="chrome"><span class="dot" style="background:#f87171"></span><span class="dot" style="background:#fbbf24"></span><span class="dot" style="background:#6fcf97"></span><span class="url">speakup.thayphuong.vn/luyen-noi</span></div>
+        <div class="content">
+          <div class="col">
+            <div class="spk-topbar">
+              <button class="spk-back" type="button">← Chọn cách luyện</button>
+              <div class="dots"><span class="minny-dot minny-dot--done"></span><span class="minny-dot minny-dot--done"></span><span class="minny-dot minny-dot--active"></span><span class="minny-dot"></span></div>
+            </div>
+            <div class="spk-story-card">
+              <p class="spk-story-card__eyebrow">My Trip Story</p>
+              <h3 class="spk-story-card__title">Kể lại chuyến đi của con</h3>
+              <p class="spk-story-card__en">"Last summer, I went to Đà Nẵng. I went with my family. I felt happy."</p>
+            </div>
+            <div class="minny-frame-score-card">
+              <p class="minny-frame-score-card__eyebrow">Điểm hoàn thành</p>
+              <p class="minny-frame-score-card__value">82%</p>
+              <p class="minny-frame-score-card__sub">Khớp bài thầy dạy — tuyệt vời con ơi!</p>
+            </div>
+            <div class="minny-frame-rubric-card">
+              <p class="minny-frame-rubric-card__eyebrow">Bảng đánh giá</p>
+              <div class="minny-frame-rubric-row"><span class="minny-frame-rubric-row__mark is-ok">✓</span><span class="minny-frame-rubric-row__label">Nói đủ các câu trong khung</span></div>
+              <div class="minny-frame-rubric-row"><span class="minny-frame-rubric-row__mark is-ok">✓</span><span class="minny-frame-rubric-row__label">Đủ thời gian</span></div>
+              <div class="minny-frame-rubric-row"><span class="minny-frame-rubric-row__mark is-ok">✓</span><span class="minny-frame-rubric-row__label">Nói to, rõ ràng</span></div>
+            </div>
+            <div class="minny-frame-smile-chip">
+              <span aria-hidden="true">😄</span>
+              <span><span class="minny-frame-smile-chip__eyebrow">Nhắc nhẹ từ Minny</span><span class="minny-frame-smile-chip__body">Con nhớ cười thật tươi khi quay video gửi thầy Phương nhé!</span></span>
+            </div>
+            <div class="minny-feedback-sandwich is-celebrate">
+              <p class="minny-feedback-sandwich__eyebrow">💬 Minny nói thêm</p>
+              <div class="minny-feedback-sandwich__row"><span class="ico">🌟</span><p class="minny-feedback-sandwich__praise">Con nói rất hay: <q>I went with my family</q> — nghe tự nhiên lắm!</p></div>
+              <div class="minny-feedback-sandwich__row"><span class="ico">🎯</span><div><p class="minny-feedback-sandwich__focus-label">Từ để luyện thêm</p><span class="minny-word minny-word--close minny-word--focus">went</span></div></div>
+              <div class="minny-feedback-sandwich__row"><span class="ico">📘</span><div class="minny-feedback-sandwich__model"><p class="minny-feedback-sandwich__model-en">"Last summer, I went to Đà Nẵng with my family."</p><p class="minny-feedback-sandwich__model-vi">Mùa hè trước, con đã đi Đà Nẵng cùng gia đình.</p></div></div>
+              <div class="minny-feedback-sandwich__row"><span class="ico">✨</span><p class="minny-feedback-sandwich__challenge">Thử thêm một câu tả cảm xúc của con nhé: "I felt excited!"</p></div>
+            </div>
+            <div class="actions-row">
+              <button type="button" class="spk-btn spk-btn--ghost">Luyện lại</button>
+              <button type="button" class="spk-btn spk-btn--green">Bước tiếp theo</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="notes">
+    <strong>Notes.</strong> Every quoted fragment in <code>minny-feedback-sandwich__praise</code> and <code>__model-en</code> must pass V1.3's deterministic grounding validator — the praise quote is a substring of the kid's actual transcript, never invented. Layout order is fixed: eyebrow → praise → focus word → model sentence → tiny challenge; never reorder, since the "sandwich" name is literal (praise bread / correction filling / encouragement close). <code>minny-word--focus</code> reuses the <code>minny-word--close</code> (amber) palette at a larger size — never <code>--miss</code>'s dim/gray treatment, so the focus word reads as "next goal," not "you got this wrong."
+  </div>
+</section>
+
+<!-- ======================================================================
+     SCREEN 2 — Feedback sandwich, encourage mood
+     ====================================================================== -->
+<section class="screen" id="s2">
+  <div class="screen__kicker"><span>02 · Feedback sandwich</span><div class="rule"></div></div>
+  <h2 class="screen__title">Encourage mood — lower match %, same warm structure</h2>
+  <p class="screen__desc">Scenario: same homework, match &lt;70%. The rubric shows misses with soft coaching subtext (unchanged 7a behavior) and the smile chip stays. The sandwich keeps the exact same 4-part structure — never softer copy that reads as pity, never omitted just because the score is low (per V1-D1: the sandwich renders after every scored attempt, subject to grounding validation).</p>
+
+  <div class="boards">
+    <div class="board">
+      <span class="board-label">Phone · 390</span>
+      <div class="frame-phone">
+        <div class="statusbar"><span>9:41</span><span class="battery"></span></div>
+        <div class="content">
+          <div class="spk-topbar">
+            <button class="spk-back" type="button">← Chọn cách luyện</button>
+            <div class="dots"><span class="minny-dot minny-dot--done"></span><span class="minny-dot minny-dot--done"></span><span class="minny-dot minny-dot--active"></span><span class="minny-dot"></span></div>
+          </div>
+
+          <div class="spk-story-card">
+            <p class="spk-story-card__eyebrow">My Trip Story</p>
+            <h3 class="spk-story-card__title">Kể lại chuyến đi của con</h3>
+            <p class="spk-story-card__en">"Last summer, I went to Đà Nẵng. I went with my family. I felt happy."</p>
+          </div>
+
+          <div class="minny-frame-score-card">
+            <p class="minny-frame-score-card__eyebrow">Đã đạt</p>
+            <p class="minny-frame-score-card__value">48%</p>
+            <p class="minny-frame-score-card__sub">Sát rồi con ơi! Mình cùng thử lại nhé.</p>
+          </div>
+
+          <div class="minny-frame-rubric-card">
+            <p class="minny-frame-rubric-card__eyebrow">Cùng nhìn lại nào</p>
+            <div class="minny-frame-rubric-row"><span class="minny-frame-rubric-row__mark is-ok">✓</span><span class="minny-frame-rubric-row__label">Nói đủ các câu trong khung</span></div>
+            <div class="minny-frame-rubric-row"><span class="minny-frame-rubric-row__mark is-miss">—</span><span class="minny-frame-rubric-row__label">Đủ thời gian</span></div>
+            <div class="minny-frame-rubric-row"><span class="minny-frame-rubric-row__mark is-miss">—</span><span class="minny-frame-rubric-row__label">Nói to, rõ ràng</span></div>
+          </div>
+
+          <div class="minny-frame-smile-chip">
+            <span aria-hidden="true">😄</span>
+            <span><span class="minny-frame-smile-chip__eyebrow">Nhắc nhẹ từ Minny</span><span class="minny-frame-smile-chip__body">Con nhớ cười thật tươi khi quay video gửi thầy Phương nhé!</span></span>
+          </div>
+
+          <!-- NEW -->
+          <div class="minny-feedback-sandwich is-encourage">
+            <p class="minny-feedback-sandwich__eyebrow">💬 Minny nói thêm</p>
+            <div class="minny-feedback-sandwich__row">
+              <span class="ico">🌟</span>
+              <p class="minny-feedback-sandwich__praise">Con đã nói: <q>I go Da Nang</q> — Minny nghe được từ "Đà Nẵng" rõ luôn!</p>
+            </div>
+            <div class="minny-feedback-sandwich__row">
+              <span class="ico">🎯</span>
+              <div>
+                <p class="minny-feedback-sandwich__focus-label">Từ để luyện thêm</p>
+                <span class="minny-word minny-word--close minny-word--focus">went</span>
+              </div>
+            </div>
+            <div class="minny-feedback-sandwich__row">
+              <span class="ico">📘</span>
+              <div class="minny-feedback-sandwich__model">
+                <p class="minny-feedback-sandwich__model-en">"I went to Đà Nẵng last summer."</p>
+                <p class="minny-feedback-sandwich__model-vi">Con đã đi Đà Nẵng vào mùa hè trước.</p>
+              </div>
+            </div>
+            <div class="minny-feedback-sandwich__row">
+              <span class="ico">✨</span>
+              <p class="minny-feedback-sandwich__challenge">Lần sau con thử nói chậm hơn một chút nhé, Minny sẽ nghe rõ hơn!</p>
+            </div>
+          </div>
+
+          <div class="actions-row">
+            <button type="button" class="spk-btn spk-btn--ghost">Xem câu mẫu</button>
+            <button type="button" class="spk-btn spk-btn--gold">Thử lại 🎤</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="board">
+      <span class="board-label">Desktop · 1280</span>
+      <div class="frame-desktop">
+        <div class="chrome"><span class="dot" style="background:#f87171"></span><span class="dot" style="background:#fbbf24"></span><span class="dot" style="background:#6fcf97"></span><span class="url">speakup.thayphuong.vn/luyen-noi</span></div>
+        <div class="content">
+          <div class="col">
+            <div class="spk-topbar">
+              <button class="spk-back" type="button">← Chọn cách luyện</button>
+              <div class="dots"><span class="minny-dot minny-dot--done"></span><span class="minny-dot minny-dot--done"></span><span class="minny-dot minny-dot--active"></span><span class="minny-dot"></span></div>
+            </div>
+            <div class="spk-story-card">
+              <p class="spk-story-card__eyebrow">My Trip Story</p>
+              <h3 class="spk-story-card__title">Kể lại chuyến đi của con</h3>
+              <p class="spk-story-card__en">"Last summer, I went to Đà Nẵng. I went with my family. I felt happy."</p>
+            </div>
+            <div class="minny-frame-score-card">
+              <p class="minny-frame-score-card__eyebrow">Đã đạt</p>
+              <p class="minny-frame-score-card__value">48%</p>
+              <p class="minny-frame-score-card__sub">Sát rồi con ơi! Mình cùng thử lại nhé.</p>
+            </div>
+            <div class="minny-frame-rubric-card">
+              <p class="minny-frame-rubric-card__eyebrow">Cùng nhìn lại nào</p>
+              <div class="minny-frame-rubric-row"><span class="minny-frame-rubric-row__mark is-ok">✓</span><span class="minny-frame-rubric-row__label">Nói đủ các câu trong khung</span></div>
+              <div class="minny-frame-rubric-row"><span class="minny-frame-rubric-row__mark is-miss">—</span><span class="minny-frame-rubric-row__label">Đủ thời gian</span></div>
+              <div class="minny-frame-rubric-row"><span class="minny-frame-rubric-row__mark is-miss">—</span><span class="minny-frame-rubric-row__label">Nói to, rõ ràng</span></div>
+            </div>
+            <div class="minny-frame-smile-chip">
+              <span aria-hidden="true">😄</span>
+              <span><span class="minny-frame-smile-chip__eyebrow">Nhắc nhẹ từ Minny</span><span class="minny-frame-smile-chip__body">Con nhớ cười thật tươi khi quay video gửi thầy Phương nhé!</span></span>
+            </div>
+            <div class="minny-feedback-sandwich is-encourage">
+              <p class="minny-feedback-sandwich__eyebrow">💬 Minny nói thêm</p>
+              <div class="minny-feedback-sandwich__row"><span class="ico">🌟</span><p class="minny-feedback-sandwich__praise">Con đã nói: <q>I go Da Nang</q> — Minny nghe được từ "Đà Nẵng" rõ luôn!</p></div>
+              <div class="minny-feedback-sandwich__row"><span class="ico">🎯</span><div><p class="minny-feedback-sandwich__focus-label">Từ để luyện thêm</p><span class="minny-word minny-word--close minny-word--focus">went</span></div></div>
+              <div class="minny-feedback-sandwich__row"><span class="ico">📘</span><div class="minny-feedback-sandwich__model"><p class="minny-feedback-sandwich__model-en">"I went to Đà Nẵng last summer."</p><p class="minny-feedback-sandwich__model-vi">Con đã đi Đà Nẵng vào mùa hè trước.</p></div></div>
+              <div class="minny-feedback-sandwich__row"><span class="ico">✨</span><p class="minny-feedback-sandwich__challenge">Lần sau con thử nói chậm hơn một chút nhé, Minny sẽ nghe rõ hơn!</p></div>
+            </div>
+            <div class="actions-row">
+              <button type="button" class="spk-btn spk-btn--ghost">Xem câu mẫu</button>
+              <button type="button" class="spk-btn spk-btn--gold">Thử lại 🎤</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="notes">
+    <strong>Notes.</strong> <code>is-encourage</code> only softens the card border (matches the 7a "never red, never punitive" rule already governing the rubric/CTA on this screen) — copy stays specific and warm, never generic ("Great job!"). If the grounding validator rejects the LLM's output (e.g. it invents a word the kid never said), the whole <code>minny-feedback-sandwich</code> is omitted and the screen looks exactly like today's shipped panel — this is a silent-omission failure mode by design (V1.3 acceptance criteria), not shown as a separate board here since it is visually "nothing new," not a new state.
+  </div>
+</section>
+
+<!-- ======================================================================
+     SCREEN 3 — Fix-it invitation
+     ====================================================================== -->
+<section class="screen" id="s3">
+  <div class="screen__kicker"><span>03 · Fix-it round — start</span><div class="rule"></div></div>
+  <h2 class="screen__title">Invitation — skippable, never forced</h2>
+  <p class="screen__desc">After the feedback sandwich (or after end-of-set), an invitation card offers ≤3 reps of missed/focus words only. A kid can skip straight to "Bước tiếp theo" — the fix-it round never blocks progress.</p>
+
+  <div class="boards">
+    <div class="board">
+      <span class="board-label">Phone · 390</span>
+      <div class="frame-phone">
+        <div class="statusbar"><span>9:41</span><span class="battery"></span></div>
+        <div class="content">
+          <div class="spk-topbar">
+            <button class="spk-back" type="button">← Chọn cách luyện</button>
+            <div class="dots"><span class="minny-dot minny-dot--done"></span><span class="minny-dot minny-dot--done"></span><span class="minny-dot minny-dot--active"></span><span class="minny-dot"></span></div>
+          </div>
+
+          <div class="minny-fixit-invite">
+            <div class="minny-fixit-invite__avatar">🐨</div>
+            <p class="minny-fixit-invite__title">Mình luyện lại 2 từ này nhé!</p>
+            <div class="minny-fixit-invite__words">
+              <span class="minny-word minny-word--close minny-word--focus">went</span>
+              <span class="minny-word minny-word--close minny-word--focus">excited</span>
+            </div>
+            <div class="minny-fixit-invite__actions">
+              <button type="button" class="spk-btn spk-btn--gold" style="width:100%">Bắt đầu luyện 🎯</button>
+              <button type="button" class="minny-fixit-invite__skip">Bỏ qua, làm sau</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="board">
+      <span class="board-label">Desktop · 1280</span>
+      <div class="frame-desktop">
+        <div class="chrome"><span class="dot" style="background:#f87171"></span><span class="dot" style="background:#fbbf24"></span><span class="dot" style="background:#6fcf97"></span><span class="url">speakup.thayphuong.vn/luyen-noi</span></div>
+        <div class="content">
+          <div class="col" style="width:480px">
+            <div class="spk-topbar">
+              <button class="spk-back" type="button">← Chọn cách luyện</button>
+              <div class="dots"><span class="minny-dot minny-dot--done"></span><span class="minny-dot minny-dot--done"></span><span class="minny-dot minny-dot--active"></span><span class="minny-dot"></span></div>
+            </div>
+            <div class="minny-fixit-invite">
+              <div class="minny-fixit-invite__avatar" style="width:88px;height:88px;font-size:44px">🐨</div>
+              <p class="minny-fixit-invite__title" style="font-size:20px">Mình luyện lại 2 từ này nhé!</p>
+              <div class="minny-fixit-invite__words">
+                <span class="minny-word minny-word--close minny-word--focus">went</span>
+                <span class="minny-word minny-word--close minny-word--focus">excited</span>
+              </div>
+              <div class="minny-fixit-invite__actions" style="flex-direction:row;justify-content:center">
+                <button type="button" class="spk-btn spk-btn--gold">Bắt đầu luyện 🎯</button>
+                <button type="button" class="minny-fixit-invite__skip">Bỏ qua, làm sau</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="notes">
+    <strong>Notes.</strong> Word list comes straight from the feedback sandwich's <code>focus_word</code> (and, for end-of-set, the accumulated missed words across the set) — never a separate LLM call. Skip is a real link-styled button, 44px hit target despite its small visual footprint (padding, not font-size, provides the target).
+  </div>
+</section>
+
+<!-- ======================================================================
+     SCREEN 4 — Fix-it rep screen
+     ====================================================================== -->
+<section class="screen" id="s4">
+  <div class="screen__kicker"><span>04 · Fix-it round — rep screen</span><div class="rule"></div></div>
+  <h2 class="screen__title">Word large · compare · re-record</h2>
+  <p class="screen__desc">One word per rep, shown large. Two compare buttons let the kid hear Minny's model and their own last recording side-by-side before re-recording. Re-record reuses the standard <code>spk-rec-btn</code> at a smaller size appropriate to this focused context.</p>
+
+  <div class="boards">
+    <div class="board">
+      <span class="board-label">Phone · 390</span>
+      <div class="frame-phone">
+        <div class="statusbar"><span>9:41</span><span class="battery"></span></div>
+        <div class="content">
+          <div class="spk-topbar">
+            <button class="spk-back" type="button">← Chọn cách luyện</button>
+            <div class="dots"><span class="minny-dot minny-dot--done"></span><span class="minny-dot minny-dot--done"></span><span class="minny-dot minny-dot--active"></span><span class="minny-dot"></span></div>
+          </div>
+
+          <div class="minny-fixit-rep">
+            <p class="minny-fixit-rep__progress">Từ 1 / 2</p>
+            <p class="minny-fixit-rep__word">went</p>
+            <div class="minny-fixit-rep__compare">
+              <button type="button" class="minny-compare-btn minny-compare-btn--minny">🔊 Nghe Minny</button>
+              <button type="button" class="minny-compare-btn minny-compare-btn--kid">▶️ Nghe con nói</button>
+            </div>
+            <div class="spk-rec-btn spk-rec-btn--sm"><span class="spk-rec-btn__icon"></span></div>
+            <p class="minny-fixit-rep__rerecord-label">Nhấn để thu âm lại</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="board">
+      <span class="board-label">Desktop · 1280</span>
+      <div class="frame-desktop">
+        <div class="chrome"><span class="dot" style="background:#f87171"></span><span class="dot" style="background:#fbbf24"></span><span class="dot" style="background:#6fcf97"></span><span class="url">speakup.thayphuong.vn/luyen-noi</span></div>
+        <div class="content">
+          <div class="col" style="width:460px">
+            <div class="spk-topbar">
+              <button class="spk-back" type="button">← Chọn cách luyện</button>
+              <div class="dots"><span class="minny-dot minny-dot--done"></span><span class="minny-dot minny-dot--done"></span><span class="minny-dot minny-dot--active"></span><span class="minny-dot"></span></div>
+            </div>
+            <div class="minny-fixit-rep">
+              <p class="minny-fixit-rep__progress">Từ 1 / 2</p>
+              <p class="minny-fixit-rep__word" style="font-size:48px">went</p>
+              <div class="minny-fixit-rep__compare">
+                <button type="button" class="minny-compare-btn minny-compare-btn--minny">🔊 Nghe Minny</button>
+                <button type="button" class="minny-compare-btn minny-compare-btn--kid">▶️ Nghe con nói</button>
+              </div>
+              <div class="spk-rec-btn spk-rec-btn--sm" style="width:64px;height:64px"><span class="spk-rec-btn__icon" style="width:18px;height:18px"></span></div>
+              <p class="minny-fixit-rep__rerecord-label">Nhấn để thu âm lại</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="notes">
+    <strong>Notes.</strong> "▶️ Nghe con nói" is disabled/hidden until the kid has recorded at least once this rep (no recording to play back on first view of a fresh word) — the first-visit state simply omits that button; it appears after the first re-record. Azure F0 usage from these reps is metered per V1.4 acceptance criteria — reps are capped at ≤3 total per set, not per word.
+  </div>
+</section>
+
+<!-- ======================================================================
+     SCREEN 5 — Fix-it celebrate / end
+     ====================================================================== -->
+<section class="screen" id="s5">
+  <div class="screen__kicker"><span>05 · Fix-it round — end</span><div class="rule"></div></div>
+  <h2 class="screen__title">Celebrate / end state</h2>
+  <p class="screen__desc">Closes the loop warmly regardless of how the reps went — no scoring shown here, this is encouragement only. Leads back into the normal "next step" flow.</p>
+
+  <div class="boards">
+    <div class="board">
+      <span class="board-label">Phone · 390</span>
+      <div class="frame-phone">
+        <div class="statusbar"><span>9:41</span><span class="battery"></span></div>
+        <div class="content">
+          <div class="spk-topbar">
+            <button class="spk-back" type="button">← Chọn cách luyện</button>
+            <div class="dots"><span class="minny-dot minny-dot--done"></span><span class="minny-dot minny-dot--done"></span><span class="minny-dot minny-dot--done"></span><span class="minny-dot minny-dot--active"></span></div>
+          </div>
+
+          <div class="minny-fixit-celebrate">
+            <div class="minny-fixit-celebrate__avatar">🐨</div>
+            <p class="minny-fixit-celebrate__title">Tuyệt vời! Con đã luyện xong 2 từ rồi 🎉</p>
+            <p class="minny-fixit-celebrate__sub">Thầy Phương sẽ thấy con tiến bộ nhiều lắm.</p>
+          </div>
+
+          <div class="actions-row">
+            <button type="button" class="spk-btn spk-btn--ghost">Về trang cá nhân</button>
+            <button type="button" class="spk-btn spk-btn--green" style="flex:1">Xong 🎯</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="board">
+      <span class="board-label">Desktop · 1280</span>
+      <div class="frame-desktop">
+        <div class="chrome"><span class="dot" style="background:#f87171"></span><span class="dot" style="background:#fbbf24"></span><span class="dot" style="background:#6fcf97"></span><span class="url">speakup.thayphuong.vn/luyen-noi</span></div>
+        <div class="content">
+          <div class="col" style="width:480px">
+            <div class="spk-topbar">
+              <button class="spk-back" type="button">← Chọn cách luyện</button>
+              <div class="dots"><span class="minny-dot minny-dot--done"></span><span class="minny-dot minny-dot--done"></span><span class="minny-dot minny-dot--done"></span><span class="minny-dot minny-dot--active"></span></div>
+            </div>
+            <div class="minny-fixit-celebrate">
+              <div class="minny-fixit-celebrate__avatar" style="width:96px;height:96px;font-size:48px">🐨</div>
+              <p class="minny-fixit-celebrate__title" style="font-size:22px">Tuyệt vời! Con đã luyện xong 2 từ rồi 🎉</p>
+              <p class="minny-fixit-celebrate__sub">Thầy Phương sẽ thấy con tiến bộ nhiều lắm.</p>
+            </div>
+            <div class="actions-row">
+              <button type="button" class="spk-btn spk-btn--ghost">Về trang cá nhân</button>
+              <button type="button" class="spk-btn spk-btn--green" style="flex:1">Xong 🎯</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="notes">
+    <strong>Notes.</strong> Deliberately reuses the green <code>spk-btn--green</code> primary CTA family (Phase 7a "celebrate" precedent) rather than gold, since this closes a positive loop distinct from the gold "continue browsing options" pattern used elsewhere. No XP/streak numbers shown here — matches the 7b Free Talking summary precedent of keeping fix-it encouragement-only, not another scoring surface.
+  </div>
+</section>
+
+</body>
+</html>
