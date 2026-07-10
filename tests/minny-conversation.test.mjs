@@ -683,3 +683,200 @@ test('audio_b64 is embedded in start/turn responses when TTS succeeds, and safel
     globalThis.fetch = originalFetch;
   }
 });
+
+// ---------------------------------------------------------------------------
+// Two-phase turn audio (2026-07-10): when TTS is still running once the guard
+// clears, the reply goes out text-first (audio_pending) and the audio lands in
+// KV via waitUntil, fetchable through action:'audio'.
+// ---------------------------------------------------------------------------
+
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+// AI mock where the guard answers fast and Aura-2 is deliberately slow —
+// forces the deferred-audio path deterministically.
+function slowTtsAi({ ttsDelayMs = 120, guardVerdict = 'safe' } = {}) {
+  return {
+    async run(model) {
+      if (String(model).includes('llama-guard')) return guardVerdict;
+      if (String(model).includes('aura')) {
+        await sleep(ttsDelayMs);
+        return 'fake-aura-mp3-bytes';
+      }
+      // conversation fallback model — unused in these tests (OpenRouter mock answers)
+      return JSON.stringify({ reply_en: 'Fallback!', mood: 'idle' });
+    },
+  };
+}
+
+function openRouterFetchMock(replyEn) {
+  return async (url) => {
+    if (String(url).includes('chat/completions')) {
+      return { ok: true, json: async () => ({ choices: [{ message: { content: JSON.stringify({ reply_en: replyEn, mood: 'idle' }) } }] }) };
+    }
+    return { ok: true, arrayBuffer: async () => new TextEncoder().encode('x').buffer };
+  };
+}
+
+test('slow TTS -> turn returns text-first with audio_pending, audio fetchable via action:audio after waitUntil', async () => {
+  const fakeKv = createFakeKv();
+  await fakeKv.put('R2L-TEST', JSON.stringify({ is_test: true, progress: { current_level: 'L2' } }));
+  await fakeKv.put('R2L-OTHER', JSON.stringify({ is_test: true, progress: { current_level: 'L2' } }));
+
+  const originalFetch = globalThis.fetch;
+  const env = { READ2LEAD_CODES: fakeKv, OPENROUTER_API_KEY: 'or-test-key', AI: slowTtsAi() };
+  const waits = [];
+  const waitUntil = (p) => waits.push(p);
+
+  try {
+    globalThis.fetch = openRouterFetchMock('Two cats! How lucky!');
+    const startResp = await onRequestPost({
+      request: new Request('http://x/api/minny-conversation', { method: 'POST', body: JSON.stringify({ action: 'start', access_code: 'R2L-TEST' }) }),
+      env,
+      waitUntil,
+    });
+    const { session_id } = await startResp.json();
+
+    const turnResp = await onRequestPost({
+      request: new Request('http://x/api/minny-conversation', { method: 'POST', body: JSON.stringify({ action: 'turn', access_code: 'R2L-TEST', session_id, transcript: 'I have two cats' }) }),
+      env,
+      waitUntil,
+    });
+    const turnData = await turnResp.json();
+    assert.equal(turnData.ok, true);
+    assert.equal(turnData.reply_en, 'Two cats! How lucky!');
+    assert.equal(turnData.audio_b64, undefined, 'no inline audio while TTS is still running');
+    assert.equal(turnData.audio_pending, true);
+    assert.equal(turnData.audio_turn, 1);
+    assert.equal(turnData.timing.tts_ms, null, 'tts_ms unknown at response time when deferred');
+    assert.ok(waits.length >= 1, 'background TTS handed to waitUntil');
+
+    // Poll before the audio exists -> ready:false, never an error.
+    const earlyResp = await onRequestPost({
+      request: new Request('http://x/api/minny-conversation', { method: 'POST', body: JSON.stringify({ action: 'audio', access_code: 'R2L-TEST', session_id, turn: 1 }) }),
+      env,
+    });
+    const earlyData = await earlyResp.json();
+    assert.equal(earlyData.ok, true);
+    assert.equal(earlyData.ready, false);
+
+    await Promise.all(waits);
+
+    const audioResp = await onRequestPost({
+      request: new Request('http://x/api/minny-conversation', { method: 'POST', body: JSON.stringify({ action: 'audio', access_code: 'R2L-TEST', session_id, turn: 1 }) }),
+      env,
+    });
+    const audioData = await audioResp.json();
+    assert.equal(audioData.ok, true);
+    assert.equal(audioData.ready, true);
+    assert.ok(audioData.audio_b64, 'deferred audio is fetchable once stored');
+    assert.equal(audioData.content_type, 'audio/mpeg');
+
+    // Owner check: another valid code must not be able to read this audio.
+    const crossResp = await onRequestPost({
+      request: new Request('http://x/api/minny-conversation', { method: 'POST', body: JSON.stringify({ action: 'audio', access_code: 'R2L-OTHER', session_id, turn: 1 }) }),
+      env,
+    });
+    const crossData = await crossResp.json();
+    assert.equal(crossData.ready, false, 'audio record is owner-checked against the access code');
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test('guard flag with slow TTS -> canned redirect served, deferred audio never stored', async () => {
+  const fakeKv = createFakeKv();
+  await fakeKv.put('R2L-TEST', JSON.stringify({ is_test: true, progress: { current_level: 'L2' } }));
+  const storedKeys = [];
+  const origPut = fakeKv.put.bind(fakeKv);
+  fakeKv.put = async (key, value, opts) => { storedKeys.push(key); return origPut(key, value, opts); };
+
+  const originalFetch = globalThis.fetch;
+  const env = { READ2LEAD_CODES: fakeKv, OPENROUTER_API_KEY: 'or-test-key', AI: slowTtsAi({ guardVerdict: 'unsafe\nS1' }) };
+  const waits = [];
+
+  try {
+    globalThis.fetch = openRouterFetchMock('A reply the ML guard will flag');
+    const startResp = await onRequestPost({
+      request: new Request('http://x/api/minny-conversation', { method: 'POST', body: JSON.stringify({ action: 'start', access_code: 'R2L-TEST' }) }),
+      env,
+      waitUntil: (p) => waits.push(p),
+    });
+    const { session_id } = await startResp.json();
+
+    const turnResp = await onRequestPost({
+      request: new Request('http://x/api/minny-conversation', { method: 'POST', body: JSON.stringify({ action: 'turn', access_code: 'R2L-TEST', session_id, transcript: 'hello' }) }),
+      env,
+      waitUntil: (p) => waits.push(p),
+    });
+    const turnData = await turnResp.json();
+    assert.equal(turnData.ok, true);
+    assert.notEqual(turnData.reply_en, 'A reply the ML guard will flag', 'flagged reply never surfaces');
+
+    // The flag path returns before waitUntil is ever reached for this turn, so
+    // nothing should have been scheduled at all — and even after the dangling
+    // TTS promise (ttsDelayMs 120) has had ample time to finish, no
+    // convo-audio record may exist.
+    assert.equal(waits.length, 0, 'flagged turn never schedules background audio storage');
+    await sleep(400);
+    assert.ok(!storedKeys.some((k) => k.startsWith('convo-audio:')), 'no convo-audio record for a flagged reply');
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test('no waitUntil in context (plain node) -> deferred audio still lands in KV via the fire-and-forget fallback', async () => {
+  const fakeKv = createFakeKv();
+  await fakeKv.put('R2L-TEST', JSON.stringify({ is_test: true, progress: { current_level: 'L2' } }));
+
+  const originalFetch = globalThis.fetch;
+  const env = { READ2LEAD_CODES: fakeKv, OPENROUTER_API_KEY: 'or-test-key', AI: slowTtsAi({ ttsDelayMs: 120 }) };
+
+  try {
+    globalThis.fetch = openRouterFetchMock('No waitUntil here!');
+    const startResp = await onRequestPost({
+      request: new Request('http://x/api/minny-conversation', { method: 'POST', body: JSON.stringify({ action: 'start', access_code: 'R2L-TEST' }) }),
+      env,
+    });
+    const { session_id } = await startResp.json();
+
+    const turnResp = await onRequestPost({
+      request: new Request('http://x/api/minny-conversation', { method: 'POST', body: JSON.stringify({ action: 'turn', access_code: 'R2L-TEST', session_id, transcript: 'hello there' }) }),
+      env,
+    });
+    const turnData = await turnResp.json();
+    assert.equal(turnData.audio_pending, true);
+
+    // No waitUntil was provided — the fallback lets the promise run to
+    // completion on its own. Give it time to pass ttsDelayMs, then fetch.
+    await sleep(400);
+    const audioResp = await onRequestPost({
+      request: new Request('http://x/api/minny-conversation', { method: 'POST', body: JSON.stringify({ action: 'audio', access_code: 'R2L-TEST', session_id, turn: 1 }) }),
+      env,
+    });
+    const audioData = await audioResp.json();
+    assert.equal(audioData.ready, true, 'audio stored even without a waitUntil in context');
+    assert.ok(audioData.audio_b64);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test('action audio validates its inputs and unknown records return ready:false', async () => {
+  const fakeKv = createFakeKv();
+  await fakeKv.put('R2L-TEST', JSON.stringify({ is_test: true }));
+  const env = { READ2LEAD_CODES: fakeKv };
+
+  const badResp = await onRequestPost({
+    request: new Request('http://x/api/minny-conversation', { method: 'POST', body: JSON.stringify({ action: 'audio', access_code: 'R2L-TEST', session_id: 'sid', turn: 'nope' }) }),
+    env,
+  });
+  assert.equal(badResp.status, 400);
+
+  const missingResp = await onRequestPost({
+    request: new Request('http://x/api/minny-conversation', { method: 'POST', body: JSON.stringify({ action: 'audio', access_code: 'R2L-TEST', session_id: 'sid', turn: 3 }) }),
+    env,
+  });
+  const missingData = await missingResp.json();
+  assert.equal(missingData.ok, true);
+  assert.equal(missingData.ready, false);
+});

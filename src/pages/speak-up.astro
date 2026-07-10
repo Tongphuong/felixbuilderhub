@@ -1438,6 +1438,9 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       // Per-turn latency (stt_ms / brain_ms / total_ms); p50 goes into the
       // session summary — the spec's 2.5s target was never measured live.
       turnTimings: [],
+      // Two-phase audio: token guards the background poll for a reply's voice
+      // so a stale poll can never play audio over a newer turn or session.
+      audioPollToken: 0,
     };
 
     // Hands-free tuning. A pause this long after real speech sends the turn;
@@ -1715,6 +1718,49 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       });
     }
 
+    // Two-phase audio, phase 2 (2026-07-10): the turn response carried the
+    // reply TEXT only (audio_pending) — Minny's voice finishes server-side and
+    // lands in KV. Poll briefly and play on arrival; a failed/timed-out fetch
+    // falls back exactly like the old no-audio_b64 path (speechSynthesis).
+    // The token + session checks kill the poll the moment a newer turn,
+    // reset, or session takes over.
+    async function ftFetchPendingAudio(audioTurn, fallbackText) {
+      const sessionAtStart = ft.sessionId;
+      const token = ft.audioPollToken;
+      // Stale when a newer turn / reset / recording superseded it, the session
+      // changed, or the conversation ENDED — "I pressed End and it's over" is a
+      // hard contract; Minny must never speak over the wrap-up screen.
+      const stale = () => ft.audioPollToken !== token || ft.sessionId !== sessionAtStart || ft.ended;
+      const deadline = Date.now() + 8000;
+      while (Date.now() < deadline) {
+        await new Promise((resolve) => setTimeout(resolve, 350));
+        if (stale()) return;
+        try {
+          const res = await fetch('/api/minny-conversation', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              access_code: state.accessCode,
+              action: 'audio',
+              session_id: sessionAtStart,
+              turn: audioTurn,
+            }),
+          });
+          const data = await res.json();
+          if (stale()) return;
+          if (data?.ready && data.audio_b64) {
+            playConversationAudio(data.audio_b64, data.content_type, fallbackText);
+            return;
+          }
+          if (data?.failed) break;
+        } catch {
+          // transient poll error — keep trying until the deadline
+        }
+      }
+      if (stale()) return;
+      playConversationAudio(null, null, fallbackText);
+    }
+
     function ftReset() {
       ft.sessionId = null;
       ft.turnsLeft = 12;
@@ -1728,6 +1774,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       ft.lastKidChipSeconds = null;
       ft.turnTimings = [];
       ft.fillerClips = [];
+      ft.audioPollToken += 1;
       ftCancelAutoArm();
       if (ft.fillerTimerId) {
         clearTimeout(ft.fillerTimerId);
@@ -1938,6 +1985,9 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
     async function ftStartRecording(opts) {
       if (ft.ended || ft.awaitingReply) return;
       stopPlayback();
+      // Kid chose to talk — cancel any still-pending Minny voice so it can
+      // never start playing into the open mic mid-recording.
+      ft.audioPollToken += 1;
       if (!micReady()) {
         ftUpdateRecordUi('Micro chưa sẵn sàng. Con thử trình duyệt khác nhé!');
         return;
@@ -2126,6 +2176,8 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
     // (and its extra function cold-start) that the two-call flow paid every turn.
     async function ftSubmitAudio(blob, durationSeconds) {
       ftSetThinking(true);
+      // A new turn supersedes any still-polling audio from the previous one.
+      ft.audioPollToken += 1;
       const submitStartedAt = Date.now();
       const formData = new FormData();
       formData.append('access_code', state.accessCode);
@@ -2186,7 +2238,11 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
         }
 
         ftAppendReplyBubble(data.reply_en, data.mood || 'idle');
-        playConversationAudio(data.audio_b64, data.content_type, data.reply_en);
+        if (!data.audio_b64 && data.audio_pending) {
+          ftFetchPendingAudio(data.audio_turn, data.reply_en);
+        } else {
+          playConversationAudio(data.audio_b64, data.content_type, data.reply_en);
+        }
       } catch {
         ftSetThinking(false);
         ftUpdateRecordUi('Mạng không ổn định. Con thử lại nhé!');
@@ -2195,6 +2251,8 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
 
     function ftHandleCapReached(reason, overrideText) {
       ft.ended = true;
+      // Session is over — kill any still-pending reply-audio poll.
+      ft.audioPollToken += 1;
       ftStopCountdown();
       ftCleanupRecording();
       ftReleaseMic();
@@ -2273,6 +2331,8 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
 
     document.getElementById('free-talk-end')?.addEventListener('click', () => {
       ft.ended = true;
+      // Kid pressed End — kill any still-pending reply-audio poll too.
+      ft.audioPollToken += 1;
       ftStopCountdown();
       ftCleanupRecording();
       ftReleaseMic();

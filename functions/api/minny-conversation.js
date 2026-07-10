@@ -130,8 +130,19 @@ async function handleGuardrailFlag(env, apiKey, session, sessionKey, accessCode,
   });
 }
 
+// How long a background-synthesized reply audio stays fetchable in KV. The
+// client polls for ~8s; 120s covers slow polls and a tap-to-play retry without
+// accumulating audio blobs (the TTS cache proper lives under tts:* keys).
+const PENDING_AUDIO_TTL_S = 120;
+
 export async function onRequestPost(context) {
   const { request, env } = context;
+  // Pages Functions gives us waitUntil to finish work after the response is
+  // sent (background TTS below). Plain node tests call this handler without
+  // it — fall back to fire-and-forget so the promise still runs to completion.
+  const waitUntil = typeof context.waitUntil === 'function'
+    ? context.waitUntil.bind(context)
+    : (p) => { Promise.resolve(p).catch(() => {}); };
 
   if (!env.READ2LEAD_CODES) {
     return json({ ok: false, error: 'config_error', message: 'Hệ thống chưa cấu hình mã học sinh.' }, 500);
@@ -187,8 +198,34 @@ export async function onRequestPost(context) {
   const level = codeData?.progress?.current_level || codeData?.student_profile?.level || 'L1';
 
   const action = String(body.action || '').trim().toLowerCase();
-  if (!action || (action !== 'start' && action !== 'turn')) {
+  if (!action || (action !== 'start' && action !== 'turn' && action !== 'audio')) {
     return json({ ok: false, error: 'bad_request', message: 'Yêu cầu không hợp lệ.' }, 400);
+  }
+
+  if (action === 'audio') {
+    // Two-phase turn, phase 2 (2026-07-10): fetch the reply audio that a
+    // `turn` response announced with audio_pending. Cheap KV read, owner-
+    // checked against the access code that started the session. `ready:false`
+    // just means "keep polling"; `failed:true` means stop and use the client
+    // fallback (speechSynthesis) — same behavior as a missing audio_b64 today.
+    const audioSessionId = String(body.session_id || '').trim();
+    const audioTurn = Number(body.turn);
+    if (!audioSessionId || !Number.isInteger(audioTurn) || audioTurn < 1 || audioTurn > 20) {
+      return json({ ok: false, error: 'bad_request', message: 'Yêu cầu không hợp lệ.' }, 400);
+    }
+    let audioRecord = null;
+    try {
+      audioRecord = await env.READ2LEAD_CODES.get(`convo-audio:${audioSessionId}:${audioTurn}`, { type: 'json' });
+    } catch {
+      // KV hiccup — report not-ready; the client keeps polling or falls back.
+    }
+    if (!audioRecord || audioRecord.code !== accessCode) {
+      return json({ ok: true, ready: false });
+    }
+    if (audioRecord.failed || !audioRecord.audio_b64) {
+      return json({ ok: true, ready: false, failed: true });
+    }
+    return json({ ok: true, ready: true, audio_b64: audioRecord.audio_b64, content_type: audioRecord.content_type });
   }
 
   if (action === 'start') {
@@ -438,15 +475,18 @@ export async function onRequestPost(context) {
     }
 
     // Deterministic gate passed -> safe to synthesize while the ML backstop
-    // screens the same words in parallel. Time each branch individually (they
-    // run concurrently, so guard_ms and tts_ms overlap in wall-clock).
+    // screens the same words in parallel. Two-phase since 2026-07-10: only the
+    // guard is AWAITED — it alone gates showing the reply. TTS keeps running;
+    // if it happens to finish first (KV cache hit, short line) the audio rides
+    // inline as before, otherwise the response goes out text-first and the
+    // audio lands in KV via waitUntil for the client's action:'audio' fetch.
+    // Live measurement showed Aura-2 at 3.2-3.5s on cache misses — awaiting it
+    // was the single biggest share of the kid's wait.
     const parStart = Date.now();
     let guardMs = 0;
-    let ttsMs = 0;
-    const [guardResult, replyAudio] = await Promise.all([
-      (async () => { const r = await screenWithLlamaGuard(env.AI, parsed.reply_en, transcript); guardMs = Date.now() - parStart; return r; })(),
-      (async () => { const r = await synthesizeOrNull(env, apiKey, parsed.reply_en); ttsMs = Date.now() - parStart; return r; })(),
-    ]);
+    let ttsMs = null;
+    const ttsPromise = (async () => { const r = await synthesizeOrNull(env, apiKey, parsed.reply_en); ttsMs = Date.now() - parStart; return r; })();
+    const guardResult = await (async () => { const r = await screenWithLlamaGuard(env.AI, parsed.reply_en, transcript); guardMs = Date.now() - parStart; return r; })();
 
     if (guardResult.flagged) {
       // Rare: discard the just-synthesized audio and send a canned redirect.
@@ -483,9 +523,51 @@ export async function onRequestPost(context) {
     const turnsLeft = Math.max(0, 12 - updatedSession.turns);
     const secondsLeft = Math.max(0, 300 - Math.floor((now - updatedSession.started_at) / 1000));
 
+    // Zero-wait check: if the TTS already finished (cache hit / fast synth),
+    // inline the audio exactly like the old single-phase response. The
+    // sentinel wins the race only when the audio is still in flight.
+    const TTS_STILL_PENDING = Symbol('tts_pending');
+    const raced = await Promise.race([ttsPromise, Promise.resolve(TTS_STILL_PENDING)]);
+    const ttsSettled = raced !== TTS_STILL_PENDING;
+    // Settled-but-null means the synth already failed — say so now (no
+    // audio_pending) and the client falls straight to speechSynthesis instead
+    // of polling for audio that will never come.
+    const inlineAudio = ttsSettled ? raced : null;
+    const audioTurn = updatedSession.turns;
+
+    if (!ttsSettled) {
+      // Text goes out now; the voice finishes after the response. The audio
+      // record is owner-stamped with the access code and short-lived; a null
+      // synth result is stored as failed:true so the client stops polling
+      // immediately instead of burning its whole poll window.
+      const audioKey = `convo-audio:${sessionId}:${audioTurn}`;
+      waitUntil((async () => {
+        const audio = await ttsPromise;
+        const payload = audio
+          ? { code: accessCode, audio_b64: audio.audio_b64, content_type: audio.content_type }
+          : { code: accessCode, failed: true };
+        try {
+          await env.READ2LEAD_CODES.put(audioKey, JSON.stringify(payload), { expirationTtl: PENDING_AUDIO_TTL_S });
+        } catch {
+          // best-effort — the client falls back to speechSynthesis on timeout
+        }
+        // The timing ring entry waits for the real tts_ms so the debug data
+        // stays truthful about where the seconds went.
+        await recordConvoTiming(env, {
+          code: accessCode,
+          at: now,
+          stt_ms: sttMs, llm_ms: llmMs, guard_ms: guardMs, tts_ms: ttsMs,
+          llm_source: llmSource, llm_attempts: llmAttempts, model: CONVO_MODEL,
+          tts_deferred: true,
+        });
+      })());
+    }
+
     // Server-side latency breakdown for this turn -> debug ring + response.
-    const timing = { stt_ms: sttMs, llm_ms: llmMs, guard_ms: guardMs, tts_ms: ttsMs, llm_source: llmSource, llm_attempts: llmAttempts, model: CONVO_MODEL };
-    await recordConvoTiming(env, { code: accessCode, at: now, ...timing });
+    // When the audio is deferred, tts_ms is not known yet at response time —
+    // the ring entry written in waitUntil above carries the real number.
+    const timing = { stt_ms: sttMs, llm_ms: llmMs, guard_ms: guardMs, tts_ms: ttsSettled ? ttsMs : null, llm_source: llmSource, llm_attempts: llmAttempts, model: CONVO_MODEL };
+    if (ttsSettled) await recordConvoTiming(env, { code: accessCode, at: now, ...timing });
 
     return json({
       ok: true,
@@ -495,7 +577,8 @@ export async function onRequestPost(context) {
       turns_left: turnsLeft,
       seconds_left: secondsLeft,
       timing,
-      ...(replyAudio ? { audio_b64: replyAudio.audio_b64, content_type: replyAudio.content_type } : {}),
+      ...(inlineAudio ? { audio_b64: inlineAudio.audio_b64, content_type: inlineAudio.content_type } : {}),
+      ...(!ttsSettled ? { audio_pending: true, audio_turn: audioTurn } : {}),
     });
   }
 

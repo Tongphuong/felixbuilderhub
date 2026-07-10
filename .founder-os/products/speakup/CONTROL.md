@@ -87,6 +87,53 @@ assigns, commits, merges, deploys, or spends.
 
 ## Current task
 
+- Status: active
+- Task ID: speakup-v0-freetalk-perceived-latency
+- Owner: Elon (Claude Lead), Tier1 direct build (tightly-coupled client+server
+  protocol change with live-debug iteration; dispatch-guard justification
+  stated per rule; mandatory Buffet review — author ≠ reviewer). Plan file:
+  `~/.claude/plans/golden-tinkering-prism.md` (Phương-approved 2026-07-10
+  after his Wave 0 test report "free talking still way too slow").
+- Lane: `claude/speakup-v0` (V0 fix round, pre-merge; part of the Wave 0
+  fix-round slot the session-close note anticipated). No V1 features.
+- Problem: live measurement 2026-07-10 (test code R2L-DANGNEMO-2UNF, 3 real
+  turns on the deployed preview): 5.5–6.3s per turn on the TEXT path alone
+  (kid path adds STT + capture ≈ 7–9s perceived). Per-stage timing shows TTS
+  (Aura-2) 3.2–3.5s on cache misses is the dominant cost; LLM 1–3s; ~1.4s
+  edge/network overhead. Yesterday's "4s" is not holding.
+- Fix shape (approved): two-phase turn — the reply TEXT returns as soon as
+  LLM + guard finish (guard still gates any display; safety order unchanged);
+  TTS completes in the background (`context.waitUntil`) and lands in KV; the
+  client shows the text immediately and fetches/plays audio when ready
+  (existing browser speechSynthesis stays the last-resort fallback). Plus a
+  TTS-latency investigation (first-byte vs full-body; MeloTTS comparison)
+  recorded in this task, not guessed.
+- Reuse survey: (1) SSE/streaming TTS via Workers AI streaming API — REJECT
+  for this round (Aura-2 on the `env.AI` binding returns a complete audio
+  blob; a streaming rework is the deferred Step-D item in IDEAS.md, not a
+  pre-merge fix); (2) Cloudflare `context.waitUntil` + KV handoff (platform
+  primitive, documented Pages Functions API) — ADOPT for background TTS;
+  (3) client Web Audio streaming libs (howler.js etc.) — REJECT (repo
+  convention: no npm runtime deps; plain Audio element already plays b64
+  WAV/MP3 fine).
+- Cost ceiling: Claude team (Max plan, not metered); runtime USD 0 (same
+  models, same call count — one extra KV read/write per turn, free tier).
+- Acceptance criteria (reconcile before complete):
+  1. Turn response returns after LLM+guard with `reply_en` and NO inline
+     `audio_b64`; audio arrives via a session-scoped follow-up fetch;
+     guardrail order and flag semantics unchanged (regression-tested).
+  2. Flagged replies never produce fetchable audio (canned redirect audio
+     only) — test.
+  3. Client renders text immediately, plays audio on arrival; if audio
+     misses its window, kid path continues (speechSynthesis or silent) —
+     never a dead end.
+  4. `node --test` green; founder build gate PASS.
+  5. Live re-measure on the deployed preview with the same 3-turn probe:
+     time-to-text ≤ ~3.5s per turn measured, full audio still arrives.
+- Started: 2026-07-10 (late evening)
+
+## Prior task (complete): speakup-v1-freetalk-content-model
+
 - Status: complete
 - Task ID: speakup-v1-freetalk-content-model
 - Owner: Elon (Claude Lead). Plan file:
