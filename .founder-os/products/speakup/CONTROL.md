@@ -87,7 +87,7 @@ assigns, commits, merges, deploys, or spends.
 
 ## Current task
 
-- Status: active
+- Status: complete
 - Task ID: speakup-v0-test-code-cap-bypass
 - Owner: Elon (Claude Lead), Tier1 direct (~10-line single-endpoint change;
   dispatch-guard justification stated; mandatory Buffet review — author ≠
@@ -108,18 +108,31 @@ assigns, commits, merges, deploys, or spends.
   read2lead-progress.js) inside one existing endpoint. Nothing external to
   adopt for a 10-line cap exemption.
 - Cost ceiling: Claude team (Max plan, not metered); runtime USD 0.
-- Acceptance criteria (reconcile before complete):
-  1. `is_test` code can start a 4th+ session same day (test); daily/global
-     counter keys stay untouched by its sessions (test).
-  2. Normal code still blocks at 3/day (test) and still increments both
-     counters (test).
-  3. Guardrail and session-cap paths unchanged for test codes (regression:
-     existing suite).
-  4. `node --test` green; founder build gate PASS; Buffet review.
-  5. Deployed to preview; live handoff = Phương ticks `is_test` on his test
-     code in the admin (or creates a fresh code with the box checked) and
-     runs >3 sessions.
+- Acceptance criteria reconciliation:
+  1. PASS — dedicated test: 5 consecutive starts succeed for an is_test
+     code; no `convo-daily:`/`convo-global:` key ever written.
+  2. PASS — dedicated test: normal code blocks at 3 (429 daily_cap,
+     byte-identical response) and increments both counters; plus the
+     pre-existing daily-cap test (fixture corrected to a normal code —
+     Buffet verified empirically the old fixture would now hard-fail, so
+     the flip preserves intent and coverage strictly increased).
+  3. PASS — Buffet traced every excluded surface: guardrails, session caps,
+     rate limiting, ownership all structurally independent of is_test;
+     client cannot forge the flag (KV record only; writes behind
+     ADMIN_PASSWORD middleware).
+  4. PASS — 903/903 `node --test`; astro build clean; founder build gate
+     PASS; Buffet verdict SHIP, zero findings.
+  5. PASS (deploy) / HANDOFF (live bypass) — 4e6916e deployed to preview
+     (serving, ~90s); live sanity: normal code still returns 429 daily_cap
+     (DangNemo, capped from diagnosis sessions — proves it is NOT yet
+     is_test). Phương's step: tick `is_test` on the test code in the admin
+     codes screen (or create a fresh code with the box checked), then run
+     >3 sessions. Note: the daily counter tracks UTC days — it resets 7:00
+     sáng giờ VN (pre-existing behavior, unchanged).
+- Verified commit: 4e6916e (origin/claude/speakup-v0), deployed to preview.
+- Actual cost: USD 0 runtime.
 - Started: 2026-07-11
+- Completed: 2026-07-11
 
 ## Prior task (complete): speakup-v0-freetalk-perceived-latency
 
