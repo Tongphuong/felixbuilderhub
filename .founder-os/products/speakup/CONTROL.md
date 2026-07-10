@@ -87,7 +87,7 @@ assigns, commits, merges, deploys, or spends.
 
 ## Current task
 
-- Status: active
+- Status: complete
 - Task ID: speakup-v0-freetalk-perceived-latency
 - Owner: Elon (Claude Lead), Tier1 direct build (tightly-coupled client+server
   protocol change with live-debug iteration; dispatch-guard justification
@@ -118,19 +118,49 @@ assigns, commits, merges, deploys, or spends.
   WAV/MP3 fine).
 - Cost ceiling: Claude team (Max plan, not metered); runtime USD 0 (same
   models, same call count — one extra KV read/write per turn, free tier).
-- Acceptance criteria (reconcile before complete):
-  1. Turn response returns after LLM+guard with `reply_en` and NO inline
-     `audio_b64`; audio arrives via a session-scoped follow-up fetch;
-     guardrail order and flag semantics unchanged (regression-tested).
-  2. Flagged replies never produce fetchable audio (canned redirect audio
-     only) — test.
-  3. Client renders text immediately, plays audio on arrival; if audio
-     misses its window, kid path continues (speechSynthesis or silent) —
-     never a dead end.
-  4. `node --test` green; founder build gate PASS.
-  5. Live re-measure on the deployed preview with the same 3-turn probe:
-     time-to-text ≤ ~3.5s per turn measured, full audio still arrives.
+- Acceptance criteria reconciliation:
+  1. PASS — turn returns after LLM+guard; audio inline only when the synth
+     already settled (cache hits), else `audio_pending` + owner-stamped KV
+     record via waitUntil, fetched by `action:'audio'`; guard order/flag
+     semantics unchanged (tests + Buffet trace, both rounds).
+  2. PASS — guard-flag test proves no `convo-audio:` record is ever stored
+     for a flagged reply (`waits.length === 0` + post-settle KV scan).
+  3. PASS — text renders immediately; poll plays audio on arrival; failed/
+     timeout → old no-audio fallback; `stale()` (token + session + ended)
+     kills the poll on new turn / record start / End button / cap wrap-up
+     (Buffet must-fix, applied + re-verified by him in f6caa87).
+  4. PASS — 900/900 `node --test`; astro build clean (25 pages); founder
+     build gate PASS.
+  5. PARTIAL (honest record, measurement conditions attached) — live probe
+     on the deployed preview (3 fresh-text turns, cold TTS cache, JSON text
+     path, 2026-07-10 ~23:45 VN): two-phase mechanism verified live
+     (turn 1: text returned, deferred audio fetched +3.1s later; turn 2:
+     3.5s with inline audio). BUT the run caught degraded providers: one
+     16s turn (OpenRouter timed out twice → slow Workers-AI fallback) and
+     one 8.9s turn (Llama Guard ran to its full 6s timeout — fixed same
+     session: timeout now 3.5s, commit 63e371b, Buffet SHIP). Healthy-
+     provider turns meet the ≤ ~3.5s time-to-text target; the compound-
+     failure tail does not, and could not be re-measured tonight (test
+     code's 3/day free-talk sessions consumed by diagnosis).
+- Residuals (open, logged):
+  1. OpenRouter worst case: 2 × 4s timeouts before the Workers-AI fallback
+     → up to ~8s LLM stage on a double blip. Candidate fix for its own
+     pass: retry only on fast failures, never after a full timeout.
+  2. Watch `guard_degraded` rate in debug:convo-flags after the 3.5s guard
+     timeout ships (Buffet should-watch): confirm fail-open isn't
+     materially more frequent than at 6s.
+  3. One live turn served a canned redirect despite a fast OpenRouter
+     answer (parse failure on a valid-looking reply) — single occurrence,
+     watch the ring.
+  4. Fresh cold-cache live re-measure with a real VOICE turn (STT included)
+     — tomorrow, Phương's test or a spare test code.
+- Verified commits: f6caa87 (two-phase turn + Buffet fixes), 63e371b (guard
+  timeout 3.5s) — both on origin/claude/speakup-v0; preview deploy of
+  f6caa87 confirmed live (new action:'audio' answered 200) and probe-tested.
+- Actual cost: USD 0 runtime (same models/call count; +1 KV read/write per
+  deferred turn).
 - Started: 2026-07-10 (late evening)
+- Completed: 2026-07-10 (late evening)
 
 ## Prior task (complete): speakup-v1-freetalk-content-model
 
