@@ -102,7 +102,14 @@ export async function screenWithLlamaGuard(ai, replyText, userText = '') {
     messages.push({ role: 'assistant', content: String(replyText || '') });
     const result = await Promise.race([
       ai.run('@cf/meta/llama-guard-3-8b', { messages }),
-      new Promise((_, reject) => setTimeout(() => reject(new Error('llama_guard_timeout')), 6000)),
+      // 3.5s (was 6s, tuned 2026-07-10): the two-phase turn awaits ONLY the
+      // guard before showing the reply, so this timeout directly caps the
+      // kid's time-to-text. Guard p50 is 0.4-1.1s live; a verdict slower than
+      // 3.5s means Workers AI is degraded, and waiting the extra 2.5s buys the
+      // same outcome the timeout already gives: the degraded path (the
+      // deterministic gate already passed; degradation is logged to the flag
+      // ring). Safety order and flag semantics unchanged.
+      new Promise((_, reject) => setTimeout(() => reject(new Error('llama_guard_timeout')), 3500)),
     ]);
     const raw = typeof result === 'string' ? result : (result?.response ?? result?.text ?? '');
     const normalized = String(raw ?? '').trim().toLowerCase();
