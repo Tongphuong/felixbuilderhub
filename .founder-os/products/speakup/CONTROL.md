@@ -79,6 +79,7 @@ assigns, commits, merges, deploys, or spends.
 | V1.2 | Choice-chip UI + visible hands-free toggle | Steve + Buffet | not started | Wave D approval + V1.1 |
 | V1.3 | Homework feedback sandwich (relaxes zero-LLM per V1-D1) | Elon (prompt) + Mark + Buffet (red-team) | not started | Wave 0 + **explicit Phương ack of zero-LLM relaxation** |
 | V1.4 | Fix-it round + listen-and-compare | Steve + Mark + Buffet | not started | Wave D approval + V1.2 + V1.3 |
+| V1.P | **Production level for advanced kids** (story / presentation / debate — founder directive 2026-07-10; scaffolds become L1–L2 only) | Elon (prompt/rubric with Phương) + Mark + Steve + Buffet | scope added — needs own design mock + phase spec detail | Wave 0 + Phương confirms task order (recommended: presentation → story → debate) |
 | V1.5–V1.7 | Error profile / teacher digest / tenant-readiness config | — | HELD | pilot-evidence review (~2 weeks of pilot) |
 | S2S spike | Speech-to-speech cost comparison (already approved) | own session | queued | own gate; recommended after V1.1 |
 
