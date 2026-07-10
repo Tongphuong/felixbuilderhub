@@ -113,11 +113,17 @@ assigns, commits, merges, deploys, or spends.
   forcing an ML-guard flag on the new concurrent path → asserts canned redirect,
   no leaked model reply). Buffet review: APPROVE (safety unchanged, no dead code,
   Promise.all cannot reject → fallback intact). LIVE preview re-verify PENDING.
-- Verified commit: 80f6a5a pushed to origin/claude/speakup-v0 (preview
-  rebuild). LIVE latency re-verify pending a real paced voice session
-  (Phương on-device, or a next-session QA-together pass) — same daily-cap
-  constraint as the prior task; a real mic turn is needed to measure the
-  end-to-end record→reply latency the founder reported.
+- Verified commit: 80f6a5a pushed to origin/claude/speakup-v0 (Phase 1).
+- REVISED 2026-07-10 (live test = **~24s/turn**, unacceptable): Phase-1 tuning
+  insufficient — serial slow-provider stack across two round-trips; the
+  flash→pro bump likely worsened brain latency (Pro > 5s timeout → retry →
+  fallback). Founder-approved new direction: (A) **instrument** per-stage
+  latency then (B) **fast brain via existing OpenRouter key** (route to
+  Groq/Cerebras Llama-3.3-70B, sub-1s), (C) merge round-trips, (D) stream voice.
+  Speed chosen over the Pro quality bump. Step A (instrumentation: llm/guard/tts
+  timing ring + response `timing` field + debug endpoint) built, 895 tests green,
+  Buffet review in flight; deploy → one live session → read split via
+  `GET /api/debug-convo-flags?key=<DEBUG_SPEAKING_KEY>` before Step B.
 - Started: 2026-07-10
 
 ## Prior task (complete): speakup-freetalk-guardrail-degrade-gracefully

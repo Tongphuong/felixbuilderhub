@@ -47,6 +47,22 @@ async function recordConvoFlag(env, record) {
   }
 }
 
+// Per-turn latency ring (2026-07-10) — same best-effort pattern as the flag
+// ring above, read via GET /api/debug-convo-flags (returns both rings). Lets us
+// see the real llm/guard/tts split from a live session without dev-tools.
+async function recordConvoTiming(env, record) {
+  try {
+    if (!env.READ2LEAD_CODES) return;
+    const KEY = 'debug:convo-timing';
+    const existing = await env.READ2LEAD_CODES.get(KEY, { type: 'json' });
+    const ring = Array.isArray(existing) ? existing : [];
+    ring.unshift(record);
+    await env.READ2LEAD_CODES.put(KEY, JSON.stringify(ring.slice(0, 50)), { expirationTtl: 604800 });
+  } catch {
+    /* diagnostics are best-effort; never break the response */
+  }
+}
+
 // Phase 6: a kid transcript or model reply was flagged by the guardrail
 // stack. Never surface the flagged content -- always a canned redirect.
 // 2 flags in one session -> early warm wrap-up, session marked flagged:true.
@@ -280,6 +296,14 @@ export async function onRequestPost(context) {
 
   let rawReply = null;
 
+  // Latency instrumentation (2026-07-10): time each brain stage and record
+  // which path actually answered, so a real session reveals exactly where the
+  // per-turn seconds go (llm vs guard vs tts) rather than us guessing. Written
+  // to the debug:convo-timing ring + echoed in the response `timing` field.
+  const llmStart = Date.now();
+  let llmAttempts = 0;
+  let llmSource = 'none';
+
   // Primary brain swapped from OpenAI (credit retired 2026-07-08) to
   // DeepSeek via OpenRouter — same OpenAI-compatible request shape.
   // apiKey (OpenAI) remains in use below only for the TTS last-resort path.
@@ -290,6 +314,7 @@ export async function onRequestPost(context) {
   const convoKey = env.OPENROUTER_API_KEY || null;
   if (convoKey) {
     for (let attempt = 0; attempt < 2 && !rawReply; attempt++) {
+      llmAttempts++;
       try {
         const llmRes = await fetch('https://openrouter.ai/api/v1/chat/completions', {
           method: 'POST',
@@ -309,6 +334,7 @@ export async function onRequestPost(context) {
         if (llmRes.ok) {
           const llmData = await llmRes.json();
           rawReply = llmData?.choices?.[0]?.message?.content || null;
+          if (rawReply) llmSource = 'openrouter';
         }
       } catch {
         // transient — try again, then the fallback
@@ -323,14 +349,18 @@ export async function onRequestPost(context) {
   if (!rawReply && env.AI) {
     for (const input of [{ messages, max_tokens: 150, response_format: { type: 'json_object' } }, { messages, max_tokens: 150 }]) {
       if (rawReply) break;
+      llmAttempts++;
       try {
         const aiRes = await env.AI.run('@cf/meta/llama-3.3-70b-instruct-fp8-fast', input);
         rawReply = typeof aiRes === 'string' ? aiRes : (aiRes?.response || aiRes?.text || null);
+        if (rawReply) llmSource = 'llama_fallback';
       } catch {
         // try the plain shape / fall through
       }
     }
   }
+
+  const llmMs = Date.now() - llmStart;
 
   // Prefer strict JSON; if the model wrapped it in prose/fences or bent the
   // format, salvage a usable reply rather than dropping to a canned redirect.
@@ -357,10 +387,14 @@ export async function onRequestPost(context) {
     }
 
     // Deterministic gate passed -> safe to synthesize while the ML backstop
-    // screens the same words in parallel.
+    // screens the same words in parallel. Time each branch individually (they
+    // run concurrently, so guard_ms and tts_ms overlap in wall-clock).
+    const parStart = Date.now();
+    let guardMs = 0;
+    let ttsMs = 0;
     const [guardResult, replyAudio] = await Promise.all([
-      screenWithLlamaGuard(env.AI, parsed.reply_en, transcript),
-      synthesizeOrNull(env, apiKey, parsed.reply_en),
+      (async () => { const r = await screenWithLlamaGuard(env.AI, parsed.reply_en, transcript); guardMs = Date.now() - parStart; return r; })(),
+      (async () => { const r = await synthesizeOrNull(env, apiKey, parsed.reply_en); ttsMs = Date.now() - parStart; return r; })(),
     ]);
 
     if (guardResult.flagged) {
@@ -398,12 +432,17 @@ export async function onRequestPost(context) {
     const turnsLeft = Math.max(0, 12 - updatedSession.turns);
     const secondsLeft = Math.max(0, 300 - Math.floor((now - updatedSession.started_at) / 1000));
 
+    // Server-side latency breakdown for this turn -> debug ring + response.
+    const timing = { llm_ms: llmMs, guard_ms: guardMs, tts_ms: ttsMs, llm_source: llmSource, llm_attempts: llmAttempts, model: CONVO_MODEL };
+    await recordConvoTiming(env, { code: accessCode, at: now, ...timing });
+
     return json({
       ok: true,
       reply_en: parsed.reply_en,
       mood: parsed.mood,
       turns_left: turnsLeft,
       seconds_left: secondsLeft,
+      timing,
       ...(replyAudio ? { audio_b64: replyAudio.audio_b64, content_type: replyAudio.content_type } : {}),
     });
   }
@@ -433,13 +472,19 @@ export async function onRequestPost(context) {
     const turnsLeft = Math.max(0, 12 - newSession.turns);
     const secondsLeft = Math.max(0, 300 - Math.floor((now - newSession.started_at) / 1000));
 
+    const ttsStart = Date.now();
     const redirectAudio = await synthesizeOrNull(env, apiKey, redirect.text_en);
+    // A redirect turn means the brain failed/parsed empty -- llm_ms here is the
+    // time we burned before giving up, the key signal for a slow/hung brain.
+    const timing = { llm_ms: llmMs, guard_ms: 0, tts_ms: Date.now() - ttsStart, llm_source: llmSource, llm_attempts: llmAttempts, model: CONVO_MODEL, path: 'redirect' };
+    await recordConvoTiming(env, { code: accessCode, at: now, ...timing });
     return json({
       ok: true,
       reply_en: redirect.text_en,
       mood: 'idle',
       turns_left: turnsLeft,
       seconds_left: secondsLeft,
+      timing,
       ...(redirectAudio ? { audio_b64: redirectAudio.audio_b64, content_type: redirectAudio.content_type } : {}),
     });
   }

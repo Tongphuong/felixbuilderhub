@@ -123,6 +123,8 @@ test('turn primary brain calls DeepSeek via OpenRouter with strict JSON mode', a
     const turnData = await turnResp.json();
     assert.equal(turnData.ok, true);
     assert.equal(turnData.reply_en, 'Nice! Do you have a dog?');
+    assert.ok(turnData.timing && typeof turnData.timing.llm_ms === 'number', 'response carries per-stage latency timing');
+    assert.equal(turnData.timing.llm_source, 'openrouter');
 
     const llmCall = calls.find(c => c.url.includes('chat/completions'));
     assert.ok(llmCall, 'primary LLM call happened');

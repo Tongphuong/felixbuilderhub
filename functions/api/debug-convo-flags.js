@@ -18,10 +18,13 @@ export async function onRequestGet(context) {
   }
 
   const flags = await env.READ2LEAD_CODES.get('debug:convo-flags', { type: 'json' });
+  const timing = await env.READ2LEAD_CODES.get('debug:convo-timing', { type: 'json' });
   return json({
     ok: true,
     count: Array.isArray(flags) ? flags.length : 0,
     flags: Array.isArray(flags) ? flags : [],
+    timing_count: Array.isArray(timing) ? timing.length : 0,
+    timing: Array.isArray(timing) ? timing : [],
   });
 }
 
