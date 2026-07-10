@@ -167,6 +167,11 @@ assigns, commits, merges, deploys, or spends.
 - Step D (stream voice) DEFERRED — own design needed (guard-before-stream safety
   tradeoff); at ~4s the founder chose to stop here. Streaming STT is the other
   candidate if more speed is wanted later.
+- NEXT (founder-approved 2026-07-10): **speech-to-speech cost-comparison spike** —
+  a throwaway S2S test (OpenAI Realtime / Gemini Live), decide build/no-build on
+  cost ($/5-min-session vs today's near-free cascaded), a kid-safe moderation
+  design without the text step, and whether the naturalness beats the current ~4s.
+  Its own session + Founder-OS gate + cost ceiling. Detail in IDEAS.md.
 - Status: this latency task's shipped scope (Steps A/B/C + VAD) is COMPLETE and
   live-verified on preview; main still untouched (awaits founder merge decision).
 - Started: 2026-07-10
