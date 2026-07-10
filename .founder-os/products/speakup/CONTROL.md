@@ -85,7 +85,7 @@ assigns, commits, merges, deploys, or spends.
 
 ## Current task
 
-- Status: active
+- Status: complete
 - Task ID: speakup-v1-spec-and-design
 - Owner: Elon (Claude Lead) — niche strategy + V1 roadmap ratified by Phương
   in-session 2026-07-10 ("GO AHEAD"); this task executes the docs/spec/design
@@ -122,7 +122,42 @@ assigns, commits, merges, deploys, or spends.
   only after Wave 0 (V0 merge) under per-phase tasks. No merge to main.
 - Cost ceiling: Claude team (Max plan, not metered); runtime USD 0 (docs +
   local HTML mocks; no paid APIs).
+- Acceptance criteria reconciliation:
+  1. IDEAS/spec/CONTROL consistency — PASS (5 IDEAS rows bc5339a + production
+     row 5123ab4; spec 20d1072 + V1.P amendment 449b985 on _ops main; V1
+     tracker above; mid-task founder corrections folded in same-turn:
+     red-team DONE d48e315, production ladder 5123ab4).
+  2. founder build gate — PASS (each product-repo commit).
+  3. Wave D handoff produced + presented — PASS (Steve bg-worker authored
+     `design_handoff_speakup_v1/` [2 mock sets + README], Lead review below,
+     committed 0705206; presented to Phương in-session with 5 open questions:
+     Steve's 4 README questions + V1.P task-order confirmation).
+- Design self-verification: both mocks rendered by Lead via playwright +
+  local http server (Steve's chrome-extension attempt honestly failed;
+  Lead re-ran the visual check) — full-page screenshots
+  `_ops/speakup-v1-set1-1280.jpeg` (choice chips: 6 states × phone/desktop;
+  chips → frame reveal → L3 no-hint → repair ladder a/b/c; hands-free toggle
+  + listening indicator) and `_ops/speakup-v1-set2-1280.jpeg` (feedback
+  sandwich celebrate 82% / encourage 48% under the UNCHANGED shipped
+  score/rubric card; skippable fix-it invitation → compare/re-record →
+  celebrate). Verdict: MATCH vs spec Wave D scope, existing navy/gold/cream
+  system + shipped class values, nothing extra/missing. Caveat recorded:
+  mocks are not deployed pages — review surface is the committed handoff
+  files themselves (0705206 on origin), consistent with prior 7a/7b design
+  phases. Level-gating section added to README by Lead post-Steve (his run
+  finished before the founder's production-ladder correction reached him).
+- Founder handoff: in-session report to Phương with both rendered
+  screenshots + the 5 bounded questions (4 Steve README items: repair-step-b
+  tap exception, focus-word cardinality, provisional copy pass, koala
+  placeholder; + confirm V1.P order presentation → story → debate). Approval
+  = Wave D acceptance; copy tone pass can ride the approval.
+- Verified commit: 0705206 (on origin/claude/speakup-v0; design handoff —
+  review surface is the handoff itself + rendered screenshots in _ops, no
+  deployed page exists for mocks)
+- Actual cost: USD 0 runtime (docs + mocks; screenshots local).
 - Started: 2026-07-10
+- Completed: 2026-07-10 (Wave D approval itself remains OPEN with Phương —
+  tracked in the V1 phase tracker above, not by this task)
 
 ## Prior task (complete): speakup-freetalk-latency-quality-phase1
 

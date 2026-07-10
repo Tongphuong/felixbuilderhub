@@ -60,8 +60,11 @@ behalf. That distinction is made visually explicit with a green,
 checkmark-style "Mic đã sẵn sàng" line so nobody mistakes tapping for
 answering. The sentence-starter hint (`minny-starter-hint`) is a second,
 independent scaffold that fades out once a kid no longer needs it —
-shown both present (L1, screen 1) and absent (L3, screen 3) so the
-fade reads as "graduated," not "broken." The repair ladder (screens
+shown both present (L1, screen 1) and faded/gone with later in-range
+progress (L2, screen 3) so the fade reads as "graduated within the
+scaffolded mode," not a level transition — L3 itself is a different
+screen entirely (guided open questions, no chips) that this handoff does
+not cover, per the "Level gating" section above. The repair ladder (screens
 4–6) reuses the *exact same* turn chrome for steps (a) and (c) so nothing
 about the screen changes shape when a kid is being gently corrected — the
 one exception is step (b), whose two oversized choice buttons are
