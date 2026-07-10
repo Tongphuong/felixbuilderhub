@@ -87,7 +87,7 @@ assigns, commits, merges, deploys, or spends.
 
 ## Current task
 
-- Status: active
+- Status: complete
 - Task ID: speakup-v1-freetalk-content-model
 - Owner: Elon (Claude Lead). Plan file:
   `~/.claude/plans/inherited-jingling-babbage.md` (Phương-approved evening
@@ -132,7 +132,36 @@ assigns, commits, merges, deploys, or spends.
 - Stop condition: any product-code diff — stop; build phases remain gated
   on Wave 0 + approved mocks per the spec. No merge to main.
 - Cost ceiling: Claude team (Max plan, not metered); runtime USD 0.
+- Acceptance criteria reconciliation:
+  1. Consistency with Phương's three evening decisions — PASS (IDEAS rows +
+     revised spec d683b06 on _ops [push held for ack] + this tracker; no
+     product code touched, verified via git diff scope).
+  2. founder build gate — PASS (1b8d4d0, e903682).
+  3. Wave D2 handoff — PASS (Steve bg-worker authored
+     `design_handoff_speakup_v1_d2/` [1 mock file, 8 states × 2 breakpoints,
+     + README with 5 open questions]; Lead rendered + reviewed; committed
+     e903682; presented to Phương as the combined Wave D + D2 approval pass).
+- Design self-verification: mock rendered by Lead via playwright + local
+  http server → full-page screenshot `_ops/speakup-v1-d2-1280.jpeg`.
+  Verdict: MATCH vs spec Wave D2 scope — 12 HUB_TOPICS tiles + "Minny chọn
+  🎲" in the r2l 3-col grid pattern; L4–L5 variant adds 3 distinct game
+  cards; hint states idle/offered/revealed (one word EN+VN card that
+  re-hides); story-strip / debate-banner / would-you-rather framings on
+  unchanged ft-* conversation chrome; NO chips, NO sentence frames, NO
+  photos in any L3+ screen (founder constraint checked board-by-board).
+  Steve's own render attempt failed in his sandbox (honestly flagged); his
+  static checks (html.parser balanced, 0 orphan classes) + Lead's rendered
+  screenshot together cover it. Review surface = committed handoff e903682
+  on origin (rule-20 pattern for design phases, per Wave D precedent).
+- Founder handoff: in-session combined approval package — Wave D (f141620)
+  + Wave D2 (e903682) + the V1-D6 teacher-panel design-mock exemption
+  (vetoable) + 9 bounded questions (4 from Wave D README, 5 from Wave D2
+  README). _ops spec push awaiting Phương's ack.
+- Verified commit: e903682 (on origin/claude/speakup-v0)
+- Actual cost: USD 0 runtime.
 - Started: 2026-07-10 (evening)
+- Completed: 2026-07-10 (evening; Wave D + D2 approval itself remains OPEN
+  with Phương — tracked in the V1 phase tracker, not by this task)
 
 ## Prior task (complete): speakup-v1-spec-and-design
 
