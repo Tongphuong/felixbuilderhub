@@ -87,6 +87,28 @@ assigns, commits, merges, deploys, or spends.
 
 ## Current task
 
+- Status: active
+- Task ID: speakup-wave0-merge-to-main
+- Owner: Elon (Claude Lead). Phương gave the explicit merge GO in-session
+  2026-07-11 (AskUserQuestion answer: "Yes — merge V0 now"), after Wave 0
+  founder items were reported ALL DONE incl. key rotation (deeab01). This
+  closes Wave 0 — the hard blocker for all V1 code.
+- Lane: `main` (merge of `origin/claude/speakup-v0`, 119 commits, all 8 V0
+  phases + the Wave 0 fix round). Merge worktree `hub-main-speakup-merge`.
+- Reuse survey: N/A — release/merge task, builds no new capability.
+- Cost ceiling: Claude team (Max plan, not metered); runtime USD 0.
+- Acceptance criteria:
+  1. Merge of `origin/claude/speakup-v0` into `main` conflict-free (or
+     resolutions proven by both products' tests).
+  2. Full `node --test` green + `astro build` clean on the MERGED tree.
+  3. founder build gate PASS before push.
+  4. Production deploy serves the merged build; smoke test: `/speak-up`
+     loads and the speaking-context endpoint answers on production.
+  5. Wave 0 tracker row updated; AGENT_LOG START/DONE logged.
+- Started: 2026-07-11
+
+## Prior task (complete): speakup-v0-test-code-cap-bypass
+
 - Status: complete
 - Task ID: speakup-v0-test-code-cap-bypass
 - Owner: Elon (Claude Lead), Tier1 direct (~10-line single-endpoint change;
