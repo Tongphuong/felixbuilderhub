@@ -592,6 +592,232 @@
   margin: 0;
 }
 
+/* ============================================================================
+   V1.2 packet 1 (Wave D Set 1 mock) — L1-L2 choice chips, sentence frame,
+   sentence-starter hint, repair-choice buttons, hands-free toggle + listening
+   indicator. Values copied verbatim from the approved mock's <style> block
+   (design_handoff_speakup_v1/SpeakUp V1 Free Talking Choice Chips.dc.html)
+   -- the existing --gold/--cream/--navy/--success tokens already match, so
+   no new custom properties are introduced here.
+   ========================================================================== */
+
+.ft-scaffold:empty { display: none; }
+
+.minny-starter-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin: 2px 0 0;
+  padding: 6px 12px;
+  border: 1px dashed rgba(200, 143, 56, 0.5);
+  border-radius: 999px;
+  font-size: 12.5px;
+  color: var(--cream-dim);
+  width: fit-content;
+}
+
+.minny-starter-hint span { color: var(--gold-light); font-weight: 700; }
+
+.minny-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.minny-option-chip {
+  min-height: 44px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(200, 143, 56, 0.4);
+  background: rgba(200, 143, 56, 0.12);
+  color: var(--cream);
+  font-size: 15px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.minny-option-chip.is-selected {
+  background: var(--gold);
+  color: var(--bg-page);
+  border-color: var(--gold);
+  box-shadow: 0 4px 16px -4px rgba(200, 143, 56, 0.6);
+}
+
+.minny-option-chip.is-dimmed { opacity: 0.4; }
+
+.minny-sentence-frame {
+  margin-top: 6px;
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(200, 143, 56, 0.18), rgba(200, 143, 56, 0.05));
+  border: 1px solid rgba(200, 143, 56, 0.4);
+}
+
+.minny-sentence-frame__label {
+  margin: 0 0 6px;
+  font-family: 'Manrope', sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold-light);
+}
+
+.minny-sentence-frame__text {
+  margin: 0;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 800;
+  font-size: 19px;
+  color: var(--cream);
+}
+
+.minny-sentence-frame__blank {
+  color: var(--gold-light);
+  text-decoration: underline dashed var(--gold);
+  text-underline-offset: 4px;
+}
+
+.minny-sentence-frame__mic-armed {
+  margin: 9px 0 0;
+  font-size: 13px;
+  color: var(--success);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+}
+
+.minny-sentence-frame__mic-armed svg { flex-shrink: 0; }
+
+/* subtitle_vi under the English line (repair/vn-nudge turns only) — not
+   drawn in the Set 1 mock (no repair state there shows it), so this is a
+   minimal addition matching the existing muted/dim copy convention. */
+.ft-subtitle-vi {
+  margin: 2px 0 0;
+  font-size: 0.85rem;
+  font-style: italic;
+  color: var(--cream-dim);
+}
+
+/* ---- Hands-free toggle + listening indicator (a real <button>, not the
+   mock's static demo <div>, so it can be tapped in-app) ---- */
+.minny-handsfree {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 44px;
+  padding: 4px 12px 4px 4px;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  cursor: pointer;
+  text-align: left;
+}
+
+.minny-handsfree__track {
+  position: relative;
+  width: 42px;
+  height: 24px;
+  border-radius: 999px;
+  background: rgba(245, 230, 200, 0.12);
+  border: 1px solid var(--border-subtle);
+  flex-shrink: 0;
+  transition: background-color 150ms ease, border-color 150ms ease;
+}
+
+.minny-handsfree__thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--cream-dim);
+  transition: transform 150ms ease, background-color 150ms ease;
+}
+
+.minny-handsfree.is-on .minny-handsfree__track { background: rgba(200, 143, 56, 0.35); border-color: var(--gold); }
+.minny-handsfree.is-on .minny-handsfree__thumb { transform: translateX(18px); background: var(--gold-light); }
+
+.minny-handsfree__label { font-size: 13.5px; font-weight: 700; color: var(--cream); }
+
+.minny-listening-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--gold-light);
+  margin: 0;
+}
+
+.minny-listening-indicator.hidden { display: none; }
+
+.minny-listening-indicator__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--success);
+  box-shadow: 0 0 0 4px rgba(111, 207, 151, 0.25);
+  animation: minny-listen-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes minny-listen-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.35); opacity: 0.55; }
+}
+
+/* ---- Repair-ladder step tag (rephrase / choices / model) — small pill,
+   kid-visible but reads as decoration, not an error. Independent of which
+   scaffold mode (chips / oversized buttons / plain) renders below it. ---- */
+.minny-repair-tag {
+  display: inline-block;
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold-light);
+  background: rgba(200, 143, 56, 0.16);
+  border-radius: 999px;
+  padding: 4px 10px;
+  margin-bottom: 7px;
+}
+
+/* ---- Repair ladder step (b): oversized two-choice buttons (Wave D Set 1
+   screen 5) — deliberately un-chip-like; this is the one state where a tap
+   alone resolves the turn. ---- */
+.minny-repair-choices {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.minny-repair-choice-btn {
+  min-height: 56px;
+  border-radius: 16px;
+  border: 1px solid rgba(200, 143, 56, 0.4);
+  background: rgba(200, 143, 56, 0.12);
+  color: var(--cream);
+  font-family: 'Manrope', sans-serif;
+  font-weight: 800;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 0 18px;
+}
+
+.minny-repair-choice-btn:hover { background: rgba(200, 143, 56, 0.22); border-color: var(--gold-light); }
+.minny-repair-choice-btn:disabled { opacity: 0.6; cursor: default; }
+
+@media (min-width: 768px) {
+  .minny-repair-choices { flex-direction: row; max-width: 420px; }
+}
+
 /* ===================== Reduced motion ===================== */
 
 @media (prefers-reduced-motion: reduce) {
@@ -620,6 +846,17 @@
   }
 
   .minny-timer { transition: none; }
+
+  .minny-listening-indicator__dot {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .minny-handsfree__track,
+  .minny-handsfree__thumb {
+    transition: none;
+  }
 }
 
 /* ============================================================================

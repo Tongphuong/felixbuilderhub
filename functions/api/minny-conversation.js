@@ -515,6 +515,12 @@ export async function onRequestPost(context) {
       subtitle_vi: filled.subtitle_vi,
       mood: 'idle',
       repair: true,
+      // V1.2 packet 1 (2026-07-11): the approved Wave D mock renders each
+      // ladder step differently (screen 4 rephrase = normal chips, screen 5
+      // choices = oversized tap-to-resolve buttons, screen 6 model = plain
+      // chrome, each with its own label) -- the client needs to know which
+      // step this is. Derived from the canned phrase id, never free text.
+      repair_step: step.phraseId.replace(/^repair_/, ''),
       turns_left: turnsLeft,
       seconds_left: secondsLeft,
       // Same options/expected as the previous turn so the client can

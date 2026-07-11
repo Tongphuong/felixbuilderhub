@@ -90,6 +90,35 @@ assigns, commits, merges, deploys, or spends.
 ## Current task
 
 - Status: active
+- Task ID: speakup-v1-2-packet1-chips-ui
+- Owner: Steve (bg worker, sole owner of speak-up.astro + speakup css +
+  UI tests, worktree `hub-main-speakup-merge`, no commits) to the approved
+  Wave D Set 1 mock; Elon line-by-line review + integration; Buffet review;
+  rule-20 deployed-preview screenshot vs mock by Elon. Packet:
+  scratchpad/v12-steve-packet.md.
+- Lane: branch `claude/speakup-v1-1` (stacks on V1.1 8b6995d; single
+  combined branch for the V1.1+V1.2p1 preview + Phương ack).
+- Gate: Wave D approved (Phương 2026-07-10, as-drawn) + V1.1 landed —
+  both satisfied.
+- Reuse survey: N/A — implements an approved internal design mock over the
+  shipped ft-* chrome and the V1.1 API; no new external capability. (Mock
+  itself reused Buddy.ai PPP chip pattern per its README, surveyed at
+  design time.)
+- Cost ceiling: Claude team (Max plan, not metered); runtime USD 0.
+- Acceptance criteria (spec §V1.2 packet 1): per approved mock; whole-screen
+  visual verification on the deployed preview (rule 20, SHA recorded);
+  chips never render without server-sent options (level-gating test); tap
+  reveals frame + arms mic, never submits (except mock's repair step-b
+  two-choice state); hint fade states; hands-free toggle + listening
+  indicator visible in-app; 44px targets; reduced-motion; iPad tap-to-play
+  preserved; node --test green (baseline 1004).
+- Stop condition: any functions/ diff — stop; backend is frozen
+  post-review. No merge to main without Phương's ack.
+- Started: 2026-07-11
+
+## Prior task (complete): speakup-v1-1-freetalk-brain
+
+- Status: complete
 - Task ID: speakup-v1-1-freetalk-brain
 - Owner: Elon (Claude Lead) authors all prompt/copy text verbatim
   (safety-adjacent precedent); Mark (bg worker) builds endpoint glue +
@@ -128,7 +157,52 @@ assigns, commits, merges, deploys, or spends.
   TTS chain internals, or homework scoring paths beyond the optional
   STT prompt param — stop and escalate. No merge to main without
   Phương's ack (per-phase merge cadence).
+- Acceptance criteria reconciliation (spec §V1.1 checklist):
+  1. PASS — reply JSON extends to {reply_en, mood, options?, expected?,
+     hint?}; invalid optional fields dropped independently (parser tests);
+     guardrails screen the WHOLE kid-visible surface incl. expected[]
+     (adversarial banned-word-in-expected fixture); gateReplyForLevel is
+     the single gating source (options/expected ≤L2 only, hint L3+ only;
+     L0 maps to beginner — L0 is R2L's START_LEVEL, caught in review).
+  2. PASS — start accepts topic (TOPIC_SEEDS key or minny_choice) and, at
+     L4–L5, game; invalid → 400; L0–L2 silently ignore; session records
+     topic/game/debate_topic; debate topic ALWAYS server-picked from
+     DEBATE_TOPICS (30-draw test).
+  3. PASS — garbled-but-near L1–L2 transcripts fuzzy-match via
+     wordSimilarity (word-boundary-safe after the catapult fix); L3+
+     passes open with topic-seeded Whisper initial_prompt bias.
+  4. PASS — repair ladder deterministic, max 2 repair turns then move_on,
+     never calls the LLM, never touches flags/strikes, canned Lead-authored
+     lines; L3+ skips the two-choice step; ALL abandonment paths (move_on,
+     guardrail flag, parse-failure redirect) clear chips bookkeeping —
+     the last two found by Buffet's execution probe + Elon's review and
+     regression-tested.
+  5. PASS — debate allowlist constant; no protocol lets the kid set it.
+  6. PASS — Vietnamese-diacritics heuristic fires before any LLM spend.
+  7. PASS (with one WARN) — offline eval (real OpenRouter calls,
+     scripts/eval-minny-freetalk-v11.mjs): L1–L2 chip coverage 100%
+     (target ≥80%); L3+ hint coverage 100%, hint-in-reply leaks 0;
+     debate drift 0; question-rate 61% vs 40–60% target on an 18-turn
+     sample — one point high, small sample, watch in pilot logs rather
+     than re-tune the prompt now.
+  8. PASS — safety regression: guardrail order/caps/is_test/two-phase TTS
+     untouched (Buffet traced + probed); 1004/1004 node --test (950
+     baseline + 54 new); astro build clean; founder build gate PASS.
+- Design self-verification: N/A visual (backend-only phase; UI is V1.2).
+  Behavioral evidence = the offline eval transcript above (real LLM) +
+  Buffet's direct execution probes of the flagged-turn and stall flows +
+  the 1004-test suite. Live preview probe of the deployed branch recorded
+  in AGENT_LOG (start-validation + text turn) — preview URL
+  claude-speakup-v1-1.felixbuilderhub.pages.dev.
+- Founder handoff: plain-language session report to Phương (chips brain
+  built + triple-reviewed; V1.2 chips UI next so kids can actually see
+  it; nothing merges to main without his ack).
+- Verified commit: 8b6995d (origin/claude/speakup-v1-1)
+- Actual cost: USD 0 runtime beyond ~US$0.01 of OpenRouter eval calls.
+- Review trail: Mark built (2 fix rounds), Elon line-by-line (must-fix
+  1–4), Buffet adversarial (must-fix 5, execution-probed, final SHIP).
 - Started: 2026-07-11
+- Completed: 2026-07-11 (pending Phương's merge ack per phase cadence)
 
 ## Prior task (complete): speakup-wave0-merge-to-main
 

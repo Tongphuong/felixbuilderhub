@@ -1398,6 +1398,8 @@ test('endpoint: a low-content reply after an options turn triggers the repair la
     assert.equal(openRouterCalls, 1, 'the repair turn never calls the LLM');
     assert.equal(data2.reply_en, findPhrase('repair_rephrase').text_en);
     assert.deepEqual(data2.options, ['Dogs!', 'Cats!'], 'the same options are re-sent so the client can re-render them');
+    assert.equal(data2.repair, true);
+    assert.equal(data2.repair_step, 'rephrase', 'the client needs the ladder step to render the approved mock state (V1.2 packet 1)');
     assert.equal(data2.turns_left, 10, 'a repair turn still consumes the normal turn cap');
 
     const stored = await fakeKv.get(`convo-session:${session_id}`, { type: 'json' });

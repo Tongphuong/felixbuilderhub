@@ -208,6 +208,11 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
             <div class="ft-hero__body">
               <p id="free-talk-status-eyebrow" class="ft-hero__eyebrow">Minny · Đợi con nói</p>
               <p id="ft-hero-line" class="ft-hero__line"></p>
+              <!-- V1.2 packet 1 (Wave D Set 1): L1-L2 choice chips / sentence
+                   frame / repair-choice buttons render here, per-turn. Empty
+                   and inert unless the turn response carries `options`
+                   (server-gated to L1-L2, never a client-side level check). -->
+              <div id="ft-scaffold" class="ft-scaffold"></div>
               <div id="free-talk-thinking-dots" class="minny-bubble--thinking"><span></span><span></span><span></span></div>
               <button id="free-talk-play-chip" type="button" class="minny-play-chip" aria-label="Nghe Minny nói">🔊 Nghe Minny</button>
               <p class="ft-hero__mood-cap"><span id="ft-mood">Đợi con nói</span></p>
@@ -225,6 +230,17 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
 
           <div class="ft-recorder">
             <p class="ft-section-label">Ghi âm</p>
+            <!-- V1.2 packet 1: hands-free is a visible, always-present,
+                 kid/parent-settable control (IDEAS.md 2026-07-10: "never a
+                 hidden flag again") -- wired to the existing
+                 r2l_ft_handsfree localStorage escape hatch, not a new flag. -->
+            <button id="ft-handsfree-toggle" type="button" class="minny-handsfree" aria-pressed="true">
+              <span class="minny-handsfree__track" aria-hidden="true"><span class="minny-handsfree__thumb"></span></span>
+              <span class="minny-handsfree__label">🎙️ Tự động nghe</span>
+            </button>
+            <p id="ft-listening-indicator" class="minny-listening-indicator hidden" aria-live="polite">
+              <span class="minny-listening-indicator__dot" aria-hidden="true"></span>Minny đang nghe…
+            </p>
             <button id="free-talk-record" type="button" class="spk-rec-btn" aria-label="Nhấn để nói">
               <span class="spk-rec-btn__icon" aria-hidden="true"></span>
             </button>
@@ -1418,6 +1434,10 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       flaggedSession: false,
       lastKidChip: null,
       lastKidChipSeconds: null,
+      // V1.2 packet 1: how many chip-bearing (non-repair) turns this session
+      // has shown, so the starter-hint can fade after the first couple of
+      // turns per the mock (screen 1 vs screen 3) -- see ftShowStarterHint.
+      chipTurnsSeen: 0,
       // Conversation-scoped mic (Zoom pattern): stream + analyser stay open
       // across turns so a tap starts recording instantly (no 3s warmup).
       micStream: null,
@@ -1462,11 +1482,119 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       }
     }
 
+    // ============================================================
+    // V1.2 packet 1 (Wave D Set 1 mock) -- L1-L2 choice-chip / repair-choice
+    // UI. Pure decision helpers live here (no DOM access) so they are
+    // directly unit-testable via source extraction in
+    // tests/speakup-chips-ui.test.mjs; the DOM-writing functions further
+    // below (ftApplyScaffold etc.) stay thin wrappers around these plans.
+    // ============================================================
+
+    // Single source of truth for "does this turn show chip UI at all" --
+    // keyed ONLY on the server sending `options` (gateReplyForLevel already
+    // restricts that field to L1-L2), never a client-side level lookup. The
+    // client has no level value at all, by design.
+    function ftHasChips(data) {
+      return Boolean(data) && Array.isArray(data.options) && data.options.length > 0;
+    }
+
+    // The repair ladder's one exception to "tap never answers" (V1-D2 /
+    // Wave D Set 1 screen 5): step 'choices' renders the oversized two-choice
+    // buttons, and tapping one resolves the turn by sending its text as the
+    // transcript. Keyed on the server's explicit `repair_step` field
+    // (added 2026-07-11 for exactly this) rather than options-presence --
+    // step 'rephrase' ALSO carries options (screen 4: normal chips, tap
+    // reveals frame, never submits), so options-presence alone can't tell
+    // the two apart.
+    function ftIsRepairChoiceState(data) {
+      return Boolean(data) && data.repair_step === 'choices' && ftHasChips(data);
+    }
+
+    // Repair-tag labels (approved mock copy, verbatim) for the ladder steps
+    // that have one; 'move_on' and 'vn_nudge' have no mock state, so no tag.
+    const FT_REPAIR_TAGS = {
+      rephrase: 'Câu hỏi đơn giản hơn',
+      choices: 'Xác nhận lại',
+      model: 'Minny mẫu câu trả lời',
+    };
+    function ftRepairTag(repairStep) {
+      return FT_REPAIR_TAGS[repairStep] || null;
+    }
+
+    function ftNormalizeWord(word) {
+      return String(word || '').toLowerCase().replace(/[^a-z]/g, '');
+    }
+
+    // Builds the sentence-frame text to reveal after a chip tap. The turn
+    // response only gives us the short chip label (e.g. "Dogs!") plus the
+    // turn's `expected[]` fuzzy-match variants -- which, per the system
+    // prompt's own convention (_minny-convo.js), already includes a full
+    // spoken-sentence variant per option (e.g. "i like dogs"). This finds
+    // the longest expected[] entry that contains the tapped option's core
+    // word, so the frame shows a real sentence to say aloud rather than the
+    // bare word; falls back to the option text itself (always renders
+    // *something*) when no expected variant matches.
+    function ftBuildSentenceFrame(optionText, expected) {
+      const word = ftNormalizeWord(optionText);
+      const list = Array.isArray(expected) ? expected : [];
+      const wordRe = word ? new RegExp(`(^|[^a-z])${word}([^a-z]|$)`) : null;
+      const matches = wordRe ? list.filter((v) => wordRe.test(String(v || '').toLowerCase())) : [];
+      if (!matches.length) return { sentence: optionText, blank: optionText };
+      const longest = matches.reduce((a, b) => (String(b).length > String(a).length ? b : a));
+      const sentence = String(longest);
+      return { sentence: sentence.charAt(0).toUpperCase() + sentence.slice(1), blank: word };
+    }
+
+    // Sentence-starter hint (`minny-starter-hint`) fades with "in-range
+    // progress" per the mock (screen 1 shows it, screen 3 -- later in the
+    // same L1-L2 range -- does not). There is no per-kid progress signal on
+    // the client (or in the V1.1 turn response) to key this off, so this is
+    // a session-local proxy: show it only for the session's first
+    // FT_STARTER_HINT_MAX_TURNS chip turns. TODO(elon): replace with a real
+    // signal (e.g. consecutive answerable turns) if/when one exists.
+    const FT_STARTER_HINT_MAX_TURNS = 2;
+    function ftShowStarterHint(chipTurnsSeen) {
+      return chipTurnsSeen <= FT_STARTER_HINT_MAX_TURNS;
+    }
+
+    // Pure "what should this turn's scaffold look like" plan -- no DOM.
+    // Branches on `repair_step`, not raw options-presence (Elon, 2026-07-11
+    // round 2): 'rephrase' renders the SAME normal chip UI as any other
+    // options turn (screen 4); 'choices' renders the oversized tap-resolves
+    // buttons (screen 5); every other repair step ('model', 'move_on',
+    // 'vn_nudge') is plain chrome regardless of whether it happens to carry
+    // options. The repair-tag label (if any) is independent of the mode.
+    function ftPlanScaffold(data, chipTurnsSeen) {
+      const tag = (data && data.repair === true) ? ftRepairTag(data.repair_step) : null;
+
+      if (ftIsRepairChoiceState(data)) {
+        return { mode: 'repair-choices', options: data.options.slice(0, 2), tag };
+      }
+
+      const isRephraseChips = Boolean(data) && data.repair === true && data.repair_step === 'rephrase' && ftHasChips(data);
+      const isNormalChips = ftHasChips(data) && data.repair !== true;
+      if (isRephraseChips || isNormalChips) {
+        return {
+          mode: 'chips',
+          options: data.options,
+          expected: Array.isArray(data.expected) ? data.expected : [],
+          // The rephrase step always shows the hint again (mock screen 4) --
+          // a kid being repaired needs more scaffolding, not less; a normal
+          // turn still follows the session-progress fade.
+          showHint: isRephraseChips || ftShowStarterHint(chipTurnsSeen),
+          tag,
+        };
+      }
+
+      return { mode: 'none', tag };
+    }
+
     function ftStopVad() {
       if (ft.vadTimerId) {
         clearInterval(ft.vadTimerId);
         ft.vadTimerId = null;
       }
+      ftHideListening();
     }
 
     function ftCancelAutoArm() {
@@ -1482,6 +1610,11 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
     function ftStartVad(session, monitor, finishRecording, autoArmed) {
       ftStopVad();
       if (!monitor?.available || typeof monitor.voicedMs !== 'function') return;
+      // "Minny đang nghe…" is shown for exactly the window VAD is actively
+      // watching the mic in hands-free mode (mock screen 1); ftStopVad above
+      // (called from every exit path: turn sent, cap reached, tab hidden,
+      // hands-free turned off) hides it again.
+      ftShowListening();
       let lastVoicedMs = monitor.voicedMs();
       let lastVoiceAt = Date.now();
       const armedAt = Date.now();
@@ -1679,6 +1812,156 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       ft.lastKidChipSeconds = Math.round(durationSeconds);
     }
 
+    // ---- V1.2 packet 1: DOM-writing side of the chip/repair scaffold ----
+    // Thin on purpose: every branching decision already happened in
+    // ftPlanScaffold/ftIsRepairChoiceState above, so this just paints it.
+
+    function ftScaffoldEl() {
+      return document.getElementById('ft-scaffold');
+    }
+
+    // Chips (and any revealed sentence frame) clear on the next turn --
+    // called at the top of every ftApplyScaffold so stale chips from an
+    // abandoned question never linger into a new one.
+    function ftClearScaffold() {
+      const el = ftScaffoldEl();
+      if (el) el.innerHTML = '';
+    }
+
+    function ftApplyScaffold(plan) {
+      const el = ftScaffoldEl();
+      ftClearScaffold();
+      if (!el) return;
+
+      // The repair-tag label is independent of the mode -- e.g. the 'model'
+      // step shows "Minny mẫu câu trả lời" even though it renders as plain
+      // chrome (no chips, no oversized buttons) below it.
+      if (plan.tag) {
+        const tag = document.createElement('span');
+        tag.className = 'minny-repair-tag';
+        tag.textContent = plan.tag;
+        el.appendChild(tag);
+      }
+
+      if (plan.mode === 'none') return;
+
+      if (plan.mode === 'chips') {
+        if (plan.showHint && plan.options[0]) {
+          const frame = ftBuildSentenceFrame(plan.options[0], plan.expected);
+          const hint = document.createElement('p');
+          hint.className = 'minny-starter-hint';
+          hint.innerHTML = `💡 Con có thể nói: <span>${escapeHtml(frame.sentence)}</span>`;
+          el.appendChild(hint);
+        }
+        const group = document.createElement('div');
+        group.className = 'minny-options';
+        group.setAttribute('role', 'group');
+        group.setAttribute('aria-label', 'Gợi ý câu trả lời');
+        plan.options.forEach((optionText) => {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'minny-option-chip';
+          btn.textContent = optionText;
+          btn.addEventListener('click', () => ftOnChipTap(btn, optionText, plan.expected));
+          group.appendChild(btn);
+        });
+        el.appendChild(group);
+        return;
+      }
+
+      if (plan.mode === 'repair-choices') {
+        const wrap = document.createElement('div');
+        wrap.className = 'minny-repair-choices';
+        plan.options.forEach((optionText) => {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'minny-repair-choice-btn';
+          btn.textContent = optionText;
+          btn.addEventListener('click', () => {
+            wrap.querySelectorAll('button').forEach((b) => { b.disabled = true; });
+            // The ladder's one exception: this tap alone resolves the turn,
+            // sending the tapped text as the transcript -- no speaking step.
+            ftSubmitTranscript(optionText);
+          });
+          wrap.appendChild(btn);
+        });
+        el.appendChild(wrap);
+      }
+    }
+
+    // Tapping a chip NEVER submits or skips speaking -- it only marks the
+    // tap and reveals the sentence frame to say aloud (mock screen 2). No
+    // network call fires here; the mic itself is armed by the existing
+    // hands-free/manual flow (ftMaybeAutoArm once Minny's audio ends, or the
+    // kid's own tap on the record button), unchanged by this packet.
+    function ftOnChipTap(clickedBtn, optionText, expected) {
+      const group = clickedBtn.parentElement;
+      group?.querySelectorAll('.minny-option-chip').forEach((btn) => {
+        btn.classList.toggle('is-selected', btn === clickedBtn);
+        btn.classList.toggle('is-dimmed', btn !== clickedBtn);
+      });
+      const scaffold = ftScaffoldEl();
+      scaffold?.querySelector('.minny-sentence-frame')?.remove();
+      if (!scaffold) return;
+      const frame = ftBuildSentenceFrame(optionText, expected);
+      const escapedSentence = escapeHtml(frame.sentence);
+      const escapedBlank = escapeHtml(frame.blank);
+      const blankRe = new RegExp(`(${escapedBlank.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'i');
+      const sentenceHtml = blankRe.test(escapedSentence)
+        ? escapedSentence.replace(blankRe, '<span class="minny-sentence-frame__blank">$1</span>')
+        : escapedSentence;
+      const frameEl = document.createElement('div');
+      frameEl.className = 'minny-sentence-frame';
+      frameEl.innerHTML = `
+        <p class="minny-sentence-frame__label">Con hãy nói to câu này nhé!</p>
+        <p class="minny-sentence-frame__text">${sentenceHtml}</p>
+        <p class="minny-sentence-frame__mic-armed">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="2" width="6" height="12" rx="3"></rect><path d="M5 10a7 7 0 0 0 14 0M12 17v4"></path></svg>
+          Mic đã sẵn sàng — con nói đi nào!
+        </p>
+      `;
+      scaffold.appendChild(frameEl);
+    }
+
+    // subtitle_vi renders under the English line whenever the turn carries
+    // it (repair/vn-nudge lines only -- normal LLM turns never send it).
+    function ftRenderSubtitle(text) {
+      const list = document.getElementById('free-talk-transcript');
+      const existing = document.getElementById('ft-subtitle-vi');
+      if (!text) {
+        existing?.remove();
+        return;
+      }
+      const sub = existing || document.createElement('p');
+      sub.id = 'ft-subtitle-vi';
+      sub.className = 'ft-subtitle-vi';
+      sub.textContent = text;
+      if (!existing && list) {
+        list.appendChild(sub);
+        list.scrollTop = list.scrollHeight;
+      }
+    }
+
+    // Hands-free is a visible, always-present, settable control (never a
+    // hidden localStorage-only flag again, per IDEAS.md 2026-07-10) --
+    // reflects + writes the SAME r2l_ft_handsfree flag the existing VAD
+    // auto-arm logic already reads via ftHandsFreeOn().
+    function ftUpdateHandsFreeToggle() {
+      const btn = document.getElementById('ft-handsfree-toggle');
+      if (!btn) return;
+      const on = ftHandsFreeOn();
+      btn.classList.toggle('is-on', on);
+      btn.setAttribute('aria-pressed', String(on));
+    }
+
+    function ftShowListening() {
+      document.getElementById('ft-listening-indicator')?.classList.remove('hidden');
+    }
+
+    function ftHideListening() {
+      document.getElementById('ft-listening-indicator')?.classList.add('hidden');
+    }
+
     function ftHidePlayChip() {
       const chip = document.getElementById('free-talk-play-chip');
       chip?.classList.remove('is-visible');
@@ -1772,6 +2055,9 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       ft.flaggedSession = false;
       ft.lastKidChip = null;
       ft.lastKidChipSeconds = null;
+      ft.chipTurnsSeen = 0;
+      ftClearScaffold();
+      ftHideListening();
       ft.turnTimings = [];
       ft.fillerClips = [];
       ft.audioPollToken += 1;
@@ -1802,6 +2088,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       ftSetMood('idle');
       ftRenderDots();
       ftUpdateTimerDisplay();
+      ftUpdateHandsFreeToggle();
       startFreeTalkSession();
     }
 
@@ -2174,6 +2461,67 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
     // runs the brain + guardrails + TTS, and returns transcript + reply + audio
     // together — removing the separate /api/read2lead-speaking-check round-trip
     // (and its extra function cold-start) that the two-call flow paid every turn.
+    // Shared post-fetch turn handling for BOTH the merged voice-turn (audio
+    // upload) and the repair-choice tap (client-supplied transcript, no
+    // audio) paths -- factored out so the chip/repair scaffold rendering,
+    // cap handling, and audio playback logic exist in exactly one place.
+    // `opts.submitStartedAt` (audio path only) drives the latency-timing
+    // entry; `opts.kidChipDurationSeconds` (audio path only) appends the
+    // "con vừa nói xong" transcript chip -- the repair-choice tap has
+    // neither (no recording happened), per this packet's report.
+    function ftHandleTurnResponse(data, opts = {}) {
+      if (opts.kidChipDurationSeconds !== undefined) {
+        ftAppendKidChip(opts.kidChipDurationSeconds);
+      }
+      if (data.transcript) ft.sentenceCount += (data.transcript.match(/[.!?]+/g) || [1]).length;
+
+      ft.turnsUsed += 1;
+      if (typeof opts.submitStartedAt === 'number') {
+        // One request now, so the client times the whole record→reply gap;
+        // the server's per-stage split (stt/llm/guard/tts) rides in data.timing.
+        const totalMs = Date.now() - opts.submitStartedAt;
+        const server = data.timing || {};
+        const entry = {
+          stt_ms: server.stt_ms ?? null,
+          brain_ms: totalMs - (server.stt_ms ?? 0),
+          total_ms: totalMs,
+          llm_source: server.llm_source,
+          server,
+        };
+        ft.turnTimings.push(entry);
+        console.info('[ft-latency] turn', ft.turnsUsed, entry);
+      }
+
+      ft.turnsLeft = data.turns_left ?? Math.max(0, ft.turnsLeft - 1);
+      ft.secondsLeft = data.seconds_left ?? ft.secondsLeft;
+      ftRenderDots();
+      ftUpdateTimerDisplay();
+      ftSetThinking(false);
+
+      if (data.ended) {
+        ftAppendReplyBubble(data.reply_en, data.mood || 'celebrate');
+        ftApplyScaffold({ mode: 'none' });
+        ftRenderSubtitle(data.subtitle_vi);
+        playConversationAudio(data.audio_b64, data.content_type, data.reply_en);
+        if (data.flagged) ft.flaggedSession = true;
+        ftHandleCapReached(data.flagged ? 'flagged' : (ft.secondsLeft <= 0 ? 'time' : 'turns'));
+        return;
+      }
+
+      ftAppendReplyBubble(data.reply_en, data.mood || 'idle');
+      // Chips/frame/repair-choices for THIS turn -- level-gated purely by
+      // the response shape (ftHasChips/ftIsRepairChoiceState), never a
+      // client-side level lookup (see V1.2 packet 1 acceptance criteria).
+      if (ftHasChips(data) && data.repair !== true) ft.chipTurnsSeen += 1;
+      ftApplyScaffold(ftPlanScaffold(data, ft.chipTurnsSeen));
+      ftRenderSubtitle(data.subtitle_vi);
+      if (!data.audio_b64 && data.audio_pending) {
+        ftFetchPendingAudio(data.audio_turn, data.reply_en);
+      } else {
+        playConversationAudio(data.audio_b64, data.content_type, data.reply_en);
+      }
+    }
+
     async function ftSubmitAudio(blob, durationSeconds) {
       ftSetThinking(true);
       // A new turn supersedes any still-polling audio from the previous one.
@@ -2205,44 +2553,47 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
           return;
         }
 
-        ftAppendKidChip(durationSeconds);
-        if (data.transcript) ft.sentenceCount += (data.transcript.match(/[.!?]+/g) || [1]).length;
-
-        ft.turnsUsed += 1;
-        // One request now, so the client times the whole record→reply gap; the
-        // server's per-stage split (stt/llm/guard/tts) rides in data.timing.
-        const totalMs = Date.now() - submitStartedAt;
-        const server = data.timing || {};
-        const entry = {
-          stt_ms: server.stt_ms ?? null,
-          brain_ms: totalMs - (server.stt_ms ?? 0),
-          total_ms: totalMs,
-          llm_source: server.llm_source,
-          server,
-        };
-        ft.turnTimings.push(entry);
-        console.info('[ft-latency] turn', ft.turnsUsed, entry);
-
-        ft.turnsLeft = data.turns_left ?? Math.max(0, ft.turnsLeft - 1);
-        ft.secondsLeft = data.seconds_left ?? ft.secondsLeft;
-        ftRenderDots();
-        ftUpdateTimerDisplay();
+        ftHandleTurnResponse(data, { submitStartedAt, kidChipDurationSeconds: durationSeconds });
+      } catch {
         ftSetThinking(false);
+        ftUpdateRecordUi('Mạng không ổn định. Con thử lại nhé!');
+      }
+    }
 
-        if (data.ended) {
-          ftAppendReplyBubble(data.reply_en, data.mood || 'celebrate');
-          playConversationAudio(data.audio_b64, data.content_type, data.reply_en);
-          if (data.flagged) ft.flaggedSession = true;
-          ftHandleCapReached(data.flagged ? 'flagged' : (ft.secondsLeft <= 0 ? 'time' : 'turns'));
+    // V1.1 repair step-(b) exception (Wave D Set 1 screen 5): the oversized
+    // two-choice buttons resolve the turn directly by sending the tapped
+    // option's text as the transcript -- the ladder's one tap-alone-answers
+    // case (V1-D2). Reuses the endpoint's existing legacy JSON `turn` path
+    // (client-supplied transcript, no audio) rather than a new request shape.
+    async function ftSubmitTranscript(text) {
+      ftSetThinking(true);
+      ft.audioPollToken += 1;
+      try {
+        const res = await fetch('/api/minny-conversation', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            access_code: state.accessCode,
+            action: 'turn',
+            session_id: ft.sessionId,
+            transcript: text,
+          }),
+        });
+        const data = await res.json();
+
+        if (!res.ok || !data.ok) {
+          ftSetThinking(false);
+          ftUpdateRecordUi('Minny chưa trả lời được. Con thử lại nhé!');
           return;
         }
 
-        ftAppendReplyBubble(data.reply_en, data.mood || 'idle');
-        if (!data.audio_b64 && data.audio_pending) {
-          ftFetchPendingAudio(data.audio_turn, data.reply_en);
-        } else {
-          playConversationAudio(data.audio_b64, data.content_type, data.reply_en);
+        if (data.ended && !data.reply_en) {
+          ftSetThinking(false);
+          ftHandleCapReached('expired', data.message_vi);
+          return;
         }
+
+        ftHandleTurnResponse(data);
       } catch {
         ftSetThinking(false);
         ftUpdateRecordUi('Mạng không ổn định. Con thử lại nhé!');
@@ -2328,6 +2679,18 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
         ftStartRecording();
       }
     });
+
+    document.getElementById('ft-handsfree-toggle')?.addEventListener('click', () => {
+      const next = ftHandsFreeOn() ? '0' : '1';
+      try { localStorage.setItem('r2l_ft_handsfree', next); } catch {}
+      ftUpdateHandsFreeToggle();
+      if (next === '0') {
+        // Turning hands-free off mid-listen must stop VAD immediately --
+        // the toggle is now the visible source of truth, not a silent flag.
+        ftStopVad();
+      }
+    });
+    ftUpdateHandsFreeToggle();
 
     document.getElementById('free-talk-end')?.addEventListener('click', () => {
       ft.ended = true;
