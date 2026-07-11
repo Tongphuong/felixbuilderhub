@@ -80,6 +80,34 @@ export const MINNY_PHRASES = [
     text_en: 'Now tell me your story! Speak in full sentences, from start to finish. You can do it!',
     subtitle_vi: 'Giờ con thuyết trình nhé! Nói thành câu đầy đủ, một mạch từ đầu đến cuối. Con làm được mà!',
   },
+  // V1.1 (2026-07-11) repair ladder + Vietnamese-nudge canned lines. {a}/{b}/
+  // {model} placeholders are filled per-turn by fillPhrase() below from the
+  // previous turn's own options/expected/hint -- never invented text.
+  {
+    id: 'repair_rephrase',
+    text_en: 'That’s okay! Let me ask again, nice and easy.',
+    subtitle_vi: 'Không sao đâu! Minny hỏi lại chậm hơn nhé.',
+  },
+  {
+    id: 'repair_choices',
+    text_en: 'You can say: {a} — or — {b}. You try!',
+    subtitle_vi: 'Con có thể nói: {a} — hoặc — {b}. Con thử nhé!',
+  },
+  {
+    id: 'repair_model',
+    text_en: 'You can say: {model}. Your turn!',
+    subtitle_vi: 'Con có thể nói: {model}. Đến lượt con!',
+  },
+  {
+    id: 'repair_move_on',
+    text_en: 'Good try! Let’s talk about something else fun.',
+    subtitle_vi: 'Con cố gắng tốt lắm! Mình nói chuyện khác vui hơn nhé.',
+  },
+  {
+    id: 'vn_nudge',
+    text_en: 'Let’s try it in English! You can say: {model}.',
+    subtitle_vi: 'Mình thử nói bằng tiếng Anh nhé! Con có thể nói: {model}.',
+  },
 ];
 
 export function findPhrase(id) {
@@ -88,4 +116,21 @@ export function findPhrase(id) {
 
 export function isKnownPhraseId(id) {
   return Boolean(findPhrase(id));
+}
+
+// Fills {a}/{b}/{model} placeholders in both text_en and subtitle_vi with
+// per-turn values (repair-ladder options/expected/hint words) -- returns a
+// NEW object, never mutates the phrase constant. Unknown placeholders (no
+// matching key in vars) are left intact rather than blanked out. Filled
+// lines go through the normal getOrSynthesize TTS path -- the KV cache
+// dedups repeats, so nothing here needs pre-caching.
+export function fillPhrase(phrase, vars = {}) {
+  const fill = (str) => String(str || '').replace(/\{(\w+)\}/g, (match, key) => (
+    Object.prototype.hasOwnProperty.call(vars, key) ? String(vars[key]) : match
+  ));
+  return {
+    ...phrase,
+    text_en: fill(phrase.text_en),
+    subtitle_vi: fill(phrase.subtitle_vi),
+  };
 }

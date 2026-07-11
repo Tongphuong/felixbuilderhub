@@ -9,9 +9,18 @@ import {
   coerceReply,
   sessionCapsExceeded,
   nextSession,
+  gateReplyForLevel,
+  isBeginnerLevel,
   LEVEL_REGISTER,
   STARTER_TOPICS,
+  TOPIC_SEEDS,
+  DEBATE_TOPICS,
+  GAMES,
 } from '../functions/api/_minny-convo.js';
+
+import { findPhrase, fillPhrase } from '../functions/api/_minny-phrases.js';
+import { isVietnamese, isLowContent, matchesExpected, nextRepairStep } from '../functions/api/_minny-repair.js';
+import { wordSimilarity } from '../functions/api/read2lead-speaking-check.js';
 
 import { onRequestPost } from '../functions/api/minny-conversation.js';
 
@@ -948,4 +957,823 @@ test('action audio validates its inputs and unknown records return ready:false',
   const missingData = await missingResp.json();
   assert.equal(missingData.ok, true);
   assert.equal(missingData.ready, false);
+});
+
+// ---------------------------------------------------------------------------
+// V1.1 (2026-07-11): free-talk brain -- level-branched buildSystemPrompt,
+// options/expected/hint parsing + level gating, topic/game session start,
+// the repair ladder, and the Whisper prompt bias.
+// ---------------------------------------------------------------------------
+
+test('buildSystemPrompt L1-L2 appends ANSWER-SUPPORT rules and the options/expected JSON tail', () => {
+  const prompt = buildSystemPrompt('L1', 'their favorite color');
+  assert.match(prompt, /ANSWER-SUPPORT/);
+  assert.match(prompt, /"options"/);
+  assert.match(prompt, /"expected"/);
+  assert.doesNotMatch(prompt, /"hint"/);
+});
+
+test('buildSystemPrompt L3+ without a topic falls back to starterTopic as the label, no seed list, hint tail', () => {
+  const prompt = buildSystemPrompt('L3', 'their favorite food');
+  assert.match(prompt, /Today's talk is about their favorite food/);
+  assert.doesNotMatch(prompt, /Weave these words/);
+  assert.match(prompt, /"hint"/);
+  assert.doesNotMatch(prompt, /ANSWER-SUPPORT/);
+});
+
+test('buildSystemPrompt L3+ with a valid topic includes the topic label and its seed words', () => {
+  const prompt = buildSystemPrompt('L4', 'x', { topic: 'animals_pets' });
+  assert.match(prompt, /Today's talk is about animals and pets/);
+  assert.match(prompt, /Weave these words in naturally when they fit: dog, cat, fish/);
+});
+
+test('buildSystemPrompt unknown topic key falls back to starterTopic, same as no topic', () => {
+  const prompt = buildSystemPrompt('L3', 'starter fallback topic', { topic: 'not_a_real_topic' });
+  assert.match(prompt, /Today's talk is about starter fallback topic/);
+  assert.doesNotMatch(prompt, /Weave these words/);
+});
+
+test('buildSystemPrompt appends the matching game protocol only at L4/L5 with a valid game id', () => {
+  const debateTopic = DEBATE_TOPICS[2];
+  const promptL4 = buildSystemPrompt('L4', 'x', { topic: 'sports', game: 'debate', debateTopic });
+  assert.match(promptL4, /GAME: Friendly debate/);
+  assert.ok(promptL4.includes(debateTopic));
+
+  const promptL3 = buildSystemPrompt('L3', 'x', { topic: 'sports', game: 'debate', debateTopic });
+  assert.doesNotMatch(promptL3, /GAME:/, 'game protocol never appended below L4');
+
+  const promptNoGame = buildSystemPrompt('L5', 'x', { topic: 'sports' });
+  assert.doesNotMatch(promptNoGame, /GAME:/);
+
+  const promptBadGame = buildSystemPrompt('L4', 'x', { topic: 'sports', game: 'made_up_game' });
+  assert.doesNotMatch(promptBadGame, /GAME:/, 'unrecognized game id is ignored, not appended');
+});
+
+test('buildSystemPrompt debate protocol falls back to the first allowlist topic when debateTopic is not on the allowlist', () => {
+  const prompt = buildSystemPrompt('L5', 'x', { game: 'debate', debateTopic: 'a topic the kid invented' });
+  assert.ok(prompt.includes(DEBATE_TOPICS[0]));
+  assert.doesNotMatch(prompt, /a topic the kid invented/);
+});
+
+test('buildSystemPrompt build_a_story and would_you_rather protocols append verbatim', () => {
+  const story = buildSystemPrompt('L4', 'x', { game: 'build_a_story' });
+  assert.match(story, /GAME: Build a story together/);
+  const wyr = buildSystemPrompt('L5', 'x', { game: 'would_you_rather' });
+  assert.match(wyr, /GAME: Would You Rather/);
+});
+
+// --- parseModelReply optional fields ---------------------------------------
+
+test('parseModelReply accepts valid options/expected and lowercases expected', () => {
+  const raw = JSON.stringify({ reply_en: 'Hi', mood: 'idle', options: ['Dogs!', 'Cats!'], expected: ['DOG', 'A Cat'] });
+  const result = parseModelReply(raw);
+  assert.deepEqual(result.options, ['Dogs!', 'Cats!']);
+  assert.deepEqual(result.expected, ['dog', 'a cat']);
+});
+
+test('parseModelReply accepts a valid hint string', () => {
+  const raw = JSON.stringify({ reply_en: 'Hi', mood: 'idle', hint: 'fetch' });
+  const result = parseModelReply(raw);
+  assert.equal(result.hint, 'fetch');
+});
+
+test('parseModelReply drops options with too many entries, keeps required fields', () => {
+  const raw = JSON.stringify({ reply_en: 'Hi', mood: 'idle', options: ['a', 'b', 'c', 'd'] });
+  const result = parseModelReply(raw);
+  assert.equal(result.options, undefined);
+  assert.equal(result.reply_en, 'Hi');
+});
+
+test('parseModelReply drops a lone (1-element) options array -- the prompt mandates 2-3 choices (SHOULD-FIX 6)', () => {
+  const raw = JSON.stringify({ reply_en: 'Hi', mood: 'idle', options: ['Only one!'] });
+  const result = parseModelReply(raw);
+  assert.equal(result.options, undefined);
+  assert.equal(result.reply_en, 'Hi', 'the reply still parses without options');
+});
+
+test('parseModelReply accepts a valid 2-element options array', () => {
+  const raw = JSON.stringify({ reply_en: 'Hi', mood: 'idle', options: ['A dog!', 'A cat!'] });
+  assert.deepEqual(parseModelReply(raw).options, ['A dog!', 'A cat!']);
+});
+
+test('parseModelReply drops an options entry over 30 chars', () => {
+  const raw = JSON.stringify({ reply_en: 'Hi', mood: 'idle', options: ['x'.repeat(31)] });
+  assert.equal(parseModelReply(raw).options, undefined);
+});
+
+test('parseModelReply drops empty expected array and an expected entry over 40 chars', () => {
+  assert.equal(parseModelReply(JSON.stringify({ reply_en: 'Hi', mood: 'idle', expected: [] })).expected, undefined);
+  assert.equal(parseModelReply(JSON.stringify({ reply_en: 'Hi', mood: 'idle', expected: ['x'.repeat(41)] })).expected, undefined);
+});
+
+test('parseModelReply drops a hint over 80 chars or a non-string hint', () => {
+  assert.equal(parseModelReply(JSON.stringify({ reply_en: 'Hi', mood: 'idle', hint: 'x'.repeat(81) })).hint, undefined);
+  assert.equal(parseModelReply(JSON.stringify({ reply_en: 'Hi', mood: 'idle', hint: 42 })).hint, undefined);
+});
+
+test('parseModelReply drops invalid optional fields independently -- a valid hint survives an invalid options value', () => {
+  const raw = JSON.stringify({ reply_en: 'Hi', mood: 'idle', options: 'not-an-array', hint: 'fetch' });
+  const result = parseModelReply(raw);
+  assert.equal(result.options, undefined);
+  assert.equal(result.hint, 'fetch');
+});
+
+// --- gateReplyForLevel (single source of truth for level gating) ----------
+
+test('gateReplyForLevel strips hint and keeps options/expected at L1/L2', () => {
+  const parsed = { reply_en: 'hi', mood: 'idle', options: ['a', 'b'], expected: ['a'], hint: 'x' };
+  const result = gateReplyForLevel(parsed, 'L1');
+  assert.deepEqual(result, { reply_en: 'hi', mood: 'idle', options: ['a', 'b'], expected: ['a'] });
+  // input not mutated
+  assert.ok('hint' in parsed);
+});
+
+test('gateReplyForLevel strips options/expected and keeps hint at L3+', () => {
+  const parsed = { reply_en: 'hi', mood: 'idle', options: ['a', 'b'], expected: ['a'], hint: 'x' };
+  const result = gateReplyForLevel(parsed, 'L4');
+  assert.deepEqual(result, { reply_en: 'hi', mood: 'idle', hint: 'x' });
+});
+
+test('isBeginnerLevel is true only for L1/L2, unknown levels normalize to L3 (not beginner)', () => {
+  assert.equal(isBeginnerLevel('L1'), true);
+  assert.equal(isBeginnerLevel('L2'), true);
+  assert.equal(isBeginnerLevel('L3'), false);
+  assert.equal(isBeginnerLevel('L5'), false);
+  assert.equal(isBeginnerLevel('L9'), false);
+});
+
+// --- fillPhrase --------------------------------------------------------
+
+test('fillPhrase fills known placeholders in both text_en and subtitle_vi without mutating the source phrase', () => {
+  const phrase = findPhrase('repair_choices');
+  const filled = fillPhrase(phrase, { a: 'A dog!', b: 'A cat!' });
+  assert.ok(filled.text_en.includes('A dog!') && filled.text_en.includes('A cat!'));
+  assert.ok(filled.subtitle_vi.includes('A dog!') && filled.subtitle_vi.includes('A cat!'));
+  assert.doesNotMatch(filled.text_en, /\{a\}|\{b\}/);
+  // source phrase constant untouched
+  assert.match(findPhrase('repair_choices').text_en, /\{a\}/);
+});
+
+test('fillPhrase leaves an unfilled placeholder intact when no matching var is given', () => {
+  const filled = fillPhrase(findPhrase('repair_model'), {});
+  assert.match(filled.text_en, /\{model\}/);
+});
+
+// --- repair-ladder pure helpers (_minny-repair.js) --------------------------
+
+test('isVietnamese detects diacritics and is false for plain English', () => {
+  assert.equal(isVietnamese('con rất thích đi học'), true);
+  assert.equal(isVietnamese('I like dogs'), false);
+});
+
+test('isLowContent: fewer than 2 words or fewer than 6 chars is low-content', () => {
+  assert.equal(isLowContent('hi'), true);
+  assert.equal(isLowContent('dog'), true);
+  assert.equal(isLowContent('I like dogs'), false);
+});
+
+test('matchesExpected: direct phrase match and per-word fuzzy match both count; unrelated speech does not', () => {
+  assert.equal(matchesExpected('i like dogs', ['dog', 'i like dogs'], wordSimilarity), true);
+  assert.equal(matchesExpected('i lik dogz', ['i like dogs'], wordSimilarity), true, 'garbled-but-near transcript still resolves');
+  assert.equal(matchesExpected('banana', ['dog', 'cat'], wordSimilarity), false);
+});
+
+test('nextRepairStep L1-L2 ladder: step1 rephrase -> step2 choices (from last_options) -> step3 move_on + reset', () => {
+  const base = { last_options: ['A dog!', 'A cat!'], last_expected: ['dog', 'cat'] };
+  const step1 = nextRepairStep({ ...base, repair: { step: 0, active: false } }, 'L1');
+  assert.equal(step1.phraseId, 'repair_rephrase');
+  assert.deepEqual(step1.repair, { step: 1, active: true });
+
+  const step2 = nextRepairStep({ ...base, repair: step1.repair }, 'L1');
+  assert.equal(step2.phraseId, 'repair_choices');
+  assert.deepEqual(step2.vars, { a: 'A dog!', b: 'A cat!' });
+  assert.deepEqual(step2.repair, { step: 2, active: true });
+
+  const step3 = nextRepairStep({ ...base, repair: step2.repair }, 'L1');
+  assert.equal(step3.phraseId, 'repair_move_on');
+  assert.deepEqual(step3.repair, { step: 0, active: false }, 'ladder resets after max 2 repair turns -- normal LLM turn resumes next');
+});
+
+test('nextRepairStep L1-L2 step2 falls back to repair_model when fewer than 2 last_options are on record', () => {
+  const step = nextRepairStep({ repair: { step: 1, active: true }, last_options: ['only one'], last_expected: ['dog'] }, 'L2');
+  assert.equal(step.phraseId, 'repair_model');
+  assert.deepEqual(step.vars, { model: 'dog' });
+});
+
+test('nextRepairStep L3+ ladder SKIPS the two-choice step: step2 is repair_model, never repair_choices', () => {
+  const step = nextRepairStep({ repair: { step: 1, active: true }, last_hint: 'fetch' }, 'L4');
+  assert.equal(step.phraseId, 'repair_model');
+  assert.notEqual(step.phraseId, 'repair_choices');
+  assert.equal(step.vars.model, 'I like fetch');
+});
+
+test('nextRepairStep Vietnamese trigger at L1-L2 models the first expected variant and consumes repair step 1', () => {
+  const step = nextRepairStep({ repair: { step: 2, active: true }, last_expected: ['dog', 'cat'] }, 'L2', { vietnamese: true });
+  assert.equal(step.phraseId, 'vn_nudge');
+  assert.equal(step.vars.model, 'dog');
+  assert.deepEqual(step.repair, { step: 1, active: true });
+});
+
+test('nextRepairStep Vietnamese trigger at L3+ models the last hint only when it is a single word, else falls back', () => {
+  const withWordHint = nextRepairStep({ last_hint: 'fetch' }, 'L4', { vietnamese: true });
+  assert.equal(withWordHint.vars.model, 'fetch');
+
+  const withQuestionHint = nextRepairStep({ last_hint: 'What does Bun eat?' }, 'L4', { vietnamese: true });
+  assert.equal(withQuestionHint.vars.model, 'i like it');
+});
+
+// --- start: topic/game validation -------------------------------------
+
+function seedCode(fakeKv, code, level, extra = {}) {
+  return fakeKv.put(code, JSON.stringify({ is_test: true, progress: { current_level: level }, ...extra }));
+}
+
+test('start (L3+): invalid topic value is rejected with 400 bad_request', async () => {
+  const fakeKv = createFakeKv();
+  await seedCode(fakeKv, 'R2L-L3', 'L3');
+  const resp = await onRequestPost({
+    request: new Request('http://x/api/minny-conversation', { method: 'POST', body: JSON.stringify({ action: 'start', access_code: 'R2L-L3', topic: 'not_a_real_topic' }) }),
+    env: { READ2LEAD_CODES: fakeKv },
+  });
+  assert.equal(resp.status, 400);
+  assert.equal((await resp.json()).error, 'bad_request');
+});
+
+test('start (L3+): a valid TOPIC_SEEDS key is accepted and stored on the session', async () => {
+  const fakeKv = createFakeKv();
+  await seedCode(fakeKv, 'R2L-L3', 'L3');
+  const resp = await onRequestPost({
+    request: new Request('http://x/api/minny-conversation', { method: 'POST', body: JSON.stringify({ action: 'start', access_code: 'R2L-L3', topic: 'sports' }) }),
+    env: { READ2LEAD_CODES: fakeKv },
+  });
+  const body = await resp.json();
+  assert.equal(body.ok, true);
+  const stored = await fakeKv.get(`convo-session:${body.session_id}`, { type: 'json' });
+  assert.equal(stored.topic, 'sports');
+});
+
+test('start (L3+): topic "minny_choice" always resolves to a real TOPIC_SEEDS key', async () => {
+  const fakeKv = createFakeKv();
+  await seedCode(fakeKv, 'R2L-L3', 'L3');
+  const seen = new Set();
+  for (let i = 0; i < 30; i++) {
+    const resp = await onRequestPost({
+      request: new Request('http://x/api/minny-conversation', { method: 'POST', body: JSON.stringify({ action: 'start', access_code: 'R2L-L3', topic: 'minny_choice' }) }),
+      env: { READ2LEAD_CODES: fakeKv },
+    });
+    const body = await resp.json();
+    const stored = await fakeKv.get(`convo-session:${body.session_id}`, { type: 'json' });
+    assert.ok(Object.keys(TOPIC_SEEDS).includes(stored.topic));
+    seen.add(stored.topic);
+  }
+  assert.ok(seen.size > 1, 'minny_choice actually varies across many draws');
+});
+
+test('start: game is rejected below L4 (400) even with a valid game id', async () => {
+  const fakeKv = createFakeKv();
+  await seedCode(fakeKv, 'R2L-L3', 'L3');
+  const resp = await onRequestPost({
+    request: new Request('http://x/api/minny-conversation', { method: 'POST', body: JSON.stringify({ action: 'start', access_code: 'R2L-L3', game: 'debate' }) }),
+    env: { READ2LEAD_CODES: fakeKv },
+  });
+  assert.equal(resp.status, 400);
+});
+
+test('start: unknown game id at L4/L5 is rejected with 400', async () => {
+  const fakeKv = createFakeKv();
+  await seedCode(fakeKv, 'R2L-L4', 'L4');
+  const resp = await onRequestPost({
+    request: new Request('http://x/api/minny-conversation', { method: 'POST', body: JSON.stringify({ action: 'start', access_code: 'R2L-L4', game: 'made_up_game' }) }),
+    env: { READ2LEAD_CODES: fakeKv },
+  });
+  assert.equal(resp.status, 400);
+});
+
+test('start: game "debate" at L4/L5 always assigns a debate_topic from the allowlist, never client-set', async () => {
+  const fakeKv = createFakeKv();
+  await seedCode(fakeKv, 'R2L-L5', 'L5');
+  const seen = new Set();
+  for (let i = 0; i < 30; i++) {
+    const resp = await onRequestPost({
+      request: new Request('http://x/api/minny-conversation', { method: 'POST', body: JSON.stringify({ action: 'start', access_code: 'R2L-L5', game: 'debate' }) }),
+      env: { READ2LEAD_CODES: fakeKv },
+    });
+    const body = await resp.json();
+    const stored = await fakeKv.get(`convo-session:${body.session_id}`, { type: 'json' });
+    assert.equal(stored.game, 'debate');
+    assert.ok(DEBATE_TOPICS.includes(stored.debate_topic));
+    seen.add(stored.debate_topic);
+  }
+  assert.ok(seen.size > 1, 'debate topic actually varies across many draws');
+});
+
+test('start: L1/L2 codes ignore topic/game silently -- no 400 even for values that would be rejected at L3+, nothing stored', async () => {
+  const fakeKv = createFakeKv();
+  await seedCode(fakeKv, 'R2L-L1', 'L1');
+  const resp = await onRequestPost({
+    request: new Request('http://x/api/minny-conversation', { method: 'POST', body: JSON.stringify({ action: 'start', access_code: 'R2L-L1', topic: 'not_a_real_topic', game: 'not_a_real_game' }) }),
+    env: { READ2LEAD_CODES: fakeKv },
+  });
+  assert.equal(resp.status, 200);
+  const body = await resp.json();
+  const stored = await fakeKv.get(`convo-session:${body.session_id}`, { type: 'json' });
+  assert.equal(stored.topic, null);
+  assert.equal(stored.game, null);
+  assert.equal(stored.debate_topic, null);
+});
+
+// --- turn: guardrail screens the whole kid-visible surface -----------------
+
+function openRouterJsonMock(replyObj) {
+  return async (url) => {
+    if (String(url).includes('chat/completions')) {
+      return { ok: true, json: async () => ({ choices: [{ message: { content: JSON.stringify(replyObj) } }] }) };
+    }
+    return { ok: true, arrayBuffer: async () => new TextEncoder().encode('x').buffer };
+  };
+}
+
+test('turn: a banned word hidden in options[1] is caught by the guardrail (L1-L2) -- never reaches the kid', async () => {
+  const fakeKv = createFakeKv();
+  await seedCode(fakeKv, 'R2L-L2', 'L2');
+  const env = { READ2LEAD_CODES: fakeKv, OPENROUTER_API_KEY: 'or-key', AI: { run: async (model) => (String(model).includes('llama-guard') ? 'safe' : 'audio') } };
+  const originalFetch = globalThis.fetch;
+  try {
+    globalThis.fetch = openRouterJsonMock({ reply_en: 'Do you like dogs or cats?', mood: 'idle', options: ['A dog!', 'You bastard!'], expected: ['dog', 'cat'] });
+    const startResp = await onRequestPost({ request: new Request('http://x/api/minny-conversation', { method: 'POST', body: JSON.stringify({ action: 'start', access_code: 'R2L-L2' }) }), env });
+    const { session_id } = await startResp.json();
+    const turnResp = await onRequestPost({
+      request: new Request('http://x/api/minny-conversation', { method: 'POST', body: JSON.stringify({ action: 'turn', access_code: 'R2L-L2', session_id, transcript: 'hello' }) }),
+      env,
+    });
+    const turnData = await turnResp.json();
+    assert.equal(turnData.ok, true);
+    assert.notEqual(turnData.reply_en, 'Do you like dogs or cats?', 'the flagged reply never reaches the kid');
+    assert.equal(turnData.options, undefined, 'a flagged turn falls to the canned redirect, no options carried');
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test('turn: a banned word hidden in the hint is caught by the guardrail (L3+) -- never reaches the kid', async () => {
+  const fakeKv = createFakeKv();
+  await seedCode(fakeKv, 'R2L-L4', 'L4');
+  const env = { READ2LEAD_CODES: fakeKv, OPENROUTER_API_KEY: 'or-key', AI: { run: async (model) => (String(model).includes('llama-guard') ? 'safe' : 'audio') } };
+  const originalFetch = globalThis.fetch;
+  try {
+    globalThis.fetch = openRouterJsonMock({ reply_en: 'That sounds fun!', mood: 'idle', hint: 'you bastard' });
+    const startResp = await onRequestPost({ request: new Request('http://x/api/minny-conversation', { method: 'POST', body: JSON.stringify({ action: 'start', access_code: 'R2L-L4' }) }), env });
+    const { session_id } = await startResp.json();
+    const turnResp = await onRequestPost({
+      request: new Request('http://x/api/minny-conversation', { method: 'POST', body: JSON.stringify({ action: 'turn', access_code: 'R2L-L4', session_id, transcript: 'we played outside' }) }),
+      env,
+    });
+    const turnData = await turnResp.json();
+    assert.equal(turnData.ok, true);
+    assert.notEqual(turnData.reply_en, 'That sounds fun!');
+    assert.equal(turnData.hint, undefined);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test('turn: response carries options/expected at L1-L2 and hint at L3+, never both, even if the model emits the wrong-level field', async () => {
+  const fakeKv = createFakeKv();
+  await seedCode(fakeKv, 'R2L-L2', 'L2');
+  await seedCode(fakeKv, 'R2L-L4', 'L4');
+  const env = { READ2LEAD_CODES: fakeKv, OPENROUTER_API_KEY: 'or-key', AI: { run: async (model) => (String(model).includes('llama-guard') ? 'safe' : 'audio') } };
+  const originalFetch = globalThis.fetch;
+  try {
+    // L2 model reply carries a (level-inappropriate) hint too -- must be gated out.
+    globalThis.fetch = openRouterJsonMock({ reply_en: 'Do you like dogs or cats?', mood: 'idle', options: ['Dogs!', 'Cats!'], expected: ['dog', 'cat'], hint: 'oops' });
+    const start2 = await onRequestPost({ request: new Request('http://x/api/minny-conversation', { method: 'POST', body: JSON.stringify({ action: 'start', access_code: 'R2L-L2' }) }), env });
+    const { session_id: sid2 } = await start2.json();
+    const turn2 = await onRequestPost({ request: new Request('http://x/api/minny-conversation', { method: 'POST', body: JSON.stringify({ action: 'turn', access_code: 'R2L-L2', session_id: sid2, transcript: 'hi' }) }), env });
+    const data2 = await turn2.json();
+    assert.deepEqual(data2.options, ['Dogs!', 'Cats!']);
+    assert.deepEqual(data2.expected, ['dog', 'cat']);
+    assert.equal(data2.hint, undefined);
+
+    // L4 model reply carries options/expected too -- must be gated out.
+    globalThis.fetch = openRouterJsonMock({ reply_en: 'Tell me more!', mood: 'idle', hint: 'fetch', options: ['a', 'b'], expected: ['a'] });
+    const start4 = await onRequestPost({ request: new Request('http://x/api/minny-conversation', { method: 'POST', body: JSON.stringify({ action: 'start', access_code: 'R2L-L4' }) }), env });
+    const { session_id: sid4 } = await start4.json();
+    const turn4 = await onRequestPost({ request: new Request('http://x/api/minny-conversation', { method: 'POST', body: JSON.stringify({ action: 'turn', access_code: 'R2L-L4', session_id: sid4, transcript: 'we played outside' }) }), env });
+    const data4 = await turn4.json();
+    assert.equal(data4.hint, 'fetch');
+    assert.equal(data4.options, undefined);
+    assert.equal(data4.expected, undefined);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+// --- repair ladder, wired through the endpoint end-to-end -------------------
+
+test('endpoint: a low-content reply after an options turn triggers the repair ladder without calling the LLM again', async () => {
+  const fakeKv = createFakeKv();
+  await seedCode(fakeKv, 'R2L-L2', 'L2');
+  let openRouterCalls = 0;
+  const env = { READ2LEAD_CODES: fakeKv, OPENROUTER_API_KEY: 'or-key', AI: { run: async (model) => (String(model).includes('llama-guard') ? 'safe' : 'audio') } };
+  const originalFetch = globalThis.fetch;
+  try {
+    globalThis.fetch = async (url) => {
+      if (String(url).includes('chat/completions')) {
+        openRouterCalls++;
+        return { ok: true, json: async () => ({ choices: [{ message: { content: JSON.stringify({ reply_en: 'Do you like dogs or cats?', mood: 'idle', options: ['Dogs!', 'Cats!'], expected: ['dog', 'dogs', 'cat', 'cats'] }) } }] }) };
+      }
+      return { ok: true, arrayBuffer: async () => new TextEncoder().encode('x').buffer };
+    };
+    const startResp = await onRequestPost({ request: new Request('http://x/api/minny-conversation', { method: 'POST', body: JSON.stringify({ action: 'start', access_code: 'R2L-L2' }) }), env });
+    const { session_id } = await startResp.json();
+
+    const turn1 = await onRequestPost({ request: new Request('http://x/api/minny-conversation', { method: 'POST', body: JSON.stringify({ action: 'turn', access_code: 'R2L-L2', session_id, transcript: 'hi' }) }), env });
+    const data1 = await turn1.json();
+    assert.equal(openRouterCalls, 1);
+    assert.deepEqual(data1.expected, ['dog', 'dogs', 'cat', 'cats']);
+
+    // Stall: very short / unclear transcript that doesn't match "dog"/"cat".
+    const turn2 = await onRequestPost({ request: new Request('http://x/api/minny-conversation', { method: 'POST', body: JSON.stringify({ action: 'turn', access_code: 'R2L-L2', session_id, transcript: 'um' }) }), env });
+    const data2 = await turn2.json();
+    assert.equal(openRouterCalls, 1, 'the repair turn never calls the LLM');
+    assert.equal(data2.reply_en, findPhrase('repair_rephrase').text_en);
+    assert.deepEqual(data2.options, ['Dogs!', 'Cats!'], 'the same options are re-sent so the client can re-render them');
+    assert.equal(data2.turns_left, 10, 'a repair turn still consumes the normal turn cap');
+
+    const stored = await fakeKv.get(`convo-session:${session_id}`, { type: 'json' });
+    assert.equal(stored.flags, 0, 'a repair turn never increments flags');
+    assert.equal(stored.strikes, 0, 'a repair turn never increments strikes');
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test('endpoint: repair ladder progresses step1 -> step2 -> move_on across three consecutive stalls, then a normal LLM turn resumes', async () => {
+  const fakeKv = createFakeKv();
+  await seedCode(fakeKv, 'R2L-L2', 'L2');
+  let openRouterCalls = 0;
+  const env = { READ2LEAD_CODES: fakeKv, OPENROUTER_API_KEY: 'or-key', AI: { run: async (model) => (String(model).includes('llama-guard') ? 'safe' : 'audio') } };
+  const originalFetch = globalThis.fetch;
+  try {
+    globalThis.fetch = async (url) => {
+      if (String(url).includes('chat/completions')) {
+        openRouterCalls++;
+        return { ok: true, json: async () => ({ choices: [{ message: { content: JSON.stringify({ reply_en: 'Do you like dogs or cats?', mood: 'idle', options: ['Dogs!', 'Cats!'], expected: ['dog', 'cat'] }) } }] }) };
+      }
+      return { ok: true, arrayBuffer: async () => new TextEncoder().encode('x').buffer };
+    };
+    const startResp = await onRequestPost({ request: new Request('http://x/api/minny-conversation', { method: 'POST', body: JSON.stringify({ action: 'start', access_code: 'R2L-L2' }) }), env });
+    const { session_id } = await startResp.json();
+    await onRequestPost({ request: new Request('http://x/api/minny-conversation', { method: 'POST', body: JSON.stringify({ action: 'turn', access_code: 'R2L-L2', session_id, transcript: 'hi' }) }), env });
+    assert.equal(openRouterCalls, 1);
+
+    const stall = () => onRequestPost({ request: new Request('http://x/api/minny-conversation', { method: 'POST', body: JSON.stringify({ action: 'turn', access_code: 'R2L-L2', session_id, transcript: 'um' }) }), env }).then((r) => r.json());
+
+    const s1 = await stall();
+    assert.equal(s1.reply_en, findPhrase('repair_rephrase').text_en);
+    const s2 = await stall();
+    assert.equal(s2.reply_en, fillPhrase(findPhrase('repair_choices'), { a: 'Dogs!', b: 'Cats!' }).text_en);
+    const s3 = await stall();
+    assert.equal(s3.reply_en, findPhrase('repair_move_on').text_en);
+    assert.equal(openRouterCalls, 1, 'none of the three repair turns called the LLM');
+
+    // Repair reset -- the NEXT turn is a normal LLM turn again.
+    const resumed = await onRequestPost({ request: new Request('http://x/api/minny-conversation', { method: 'POST', body: JSON.stringify({ action: 'turn', access_code: 'R2L-L2', session_id, transcript: 'I like dogs' }) }), env }).then((r) => r.json());
+    assert.equal(openRouterCalls, 2, 'repair resumed a normal LLM turn');
+    assert.equal(resumed.reply_en, 'Do you like dogs or cats?');
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test('endpoint: a Vietnamese transcript triggers vn_nudge before any LLM call, at any level', async () => {
+  const fakeKv = createFakeKv();
+  await seedCode(fakeKv, 'R2L-L4', 'L4');
+  let openRouterCalls = 0;
+  const env = { READ2LEAD_CODES: fakeKv, OPENROUTER_API_KEY: 'or-key', AI: { run: async () => 'audio' } };
+  const originalFetch = globalThis.fetch;
+  try {
+    globalThis.fetch = async (url) => {
+      if (String(url).includes('chat/completions')) openRouterCalls++;
+      return { ok: true, arrayBuffer: async () => new TextEncoder().encode('x').buffer };
+    };
+    const startResp = await onRequestPost({ request: new Request('http://x/api/minny-conversation', { method: 'POST', body: JSON.stringify({ action: 'start', access_code: 'R2L-L4' }) }), env });
+    const { session_id } = await startResp.json();
+    const turnResp = await onRequestPost({
+      request: new Request('http://x/api/minny-conversation', { method: 'POST', body: JSON.stringify({ action: 'turn', access_code: 'R2L-L4', session_id, transcript: 'con rất thích đi học' }) }),
+      env,
+    });
+    const data = await turnResp.json();
+    assert.equal(openRouterCalls, 0, 'Vietnamese heuristic fires before any LLM spend');
+    assert.equal(data.reply_en, fillPhrase(findPhrase('vn_nudge'), { model: 'i like it' }).text_en);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+// --- Whisper prompt bias (Task 5) -------------------------------------------
+
+test('Whisper prompt bias: L1-L2 sends the last turn\'s expected variants as initial_prompt to Workers AI', async () => {
+  const fakeKv = createFakeKv();
+  await seedCode(fakeKv, 'R2L-L2', 'L2');
+  const whisperInputs = [];
+  const env = {
+    READ2LEAD_CODES: fakeKv,
+    OPENROUTER_API_KEY: 'or-key',
+    AI: {
+      run: async (model, input) => {
+        if (String(model).includes('whisper')) { whisperInputs.push(input); return { text: 'i like dogs' }; }
+        if (String(model).includes('llama-guard')) return 'safe';
+        return 'audio';
+      },
+    },
+  };
+  const originalFetch = globalThis.fetch;
+  try {
+    globalThis.fetch = openRouterJsonMock({ reply_en: 'Do you like dogs or cats?', mood: 'idle', options: ['Dogs!', 'Cats!'], expected: ['dog', 'cat'] });
+    const startResp = await onRequestPost({ request: new Request('http://x/api/minny-conversation', { method: 'POST', body: JSON.stringify({ action: 'start', access_code: 'R2L-L2' }) }), env });
+    const { session_id } = await startResp.json();
+
+    // Turn 1 (JSON transcript, no STT) establishes last_expected.
+    await onRequestPost({ request: new Request('http://x/api/minny-conversation', { method: 'POST', body: JSON.stringify({ action: 'turn', access_code: 'R2L-L2', session_id, transcript: 'hi' }) }), env });
+    assert.equal(whisperInputs.length, 0, 'no audio uploaded yet, so no whisper call yet');
+
+    // Turn 2: audio upload -- Whisper should now be biased with last_expected.
+    const form = new FormData();
+    form.append('access_code', 'R2L-L2');
+    form.append('action', 'turn');
+    form.append('session_id', session_id);
+    form.append('audio', new File([new Uint8Array([1, 2, 3])], 'turn.webm', { type: 'audio/webm' }));
+    await onRequestPost({ request: new Request('http://x/api/minny-conversation', { method: 'POST', body: form }), env });
+
+    assert.equal(whisperInputs.length, 1);
+    assert.equal(whisperInputs[0].initial_prompt, 'dog, cat');
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test('Whisper prompt bias: L3+ sends the chosen topic\'s seed words; no topic means no prompt at all', async () => {
+  const fakeKv = createFakeKv();
+  await seedCode(fakeKv, 'R2L-L4', 'L4');
+  await seedCode(fakeKv, 'R2L-L4-NOTOPIC', 'L4');
+  const whisperInputs = [];
+  const env = {
+    READ2LEAD_CODES: fakeKv,
+    OPENROUTER_API_KEY: 'or-key',
+    AI: {
+      run: async (model, input) => {
+        if (String(model).includes('whisper')) { whisperInputs.push(input); return { text: 'we played fetch' }; }
+        if (String(model).includes('llama-guard')) return 'safe';
+        return 'audio';
+      },
+    },
+  };
+  const originalFetch = globalThis.fetch;
+  try {
+    globalThis.fetch = () => Promise.resolve({ ok: true, arrayBuffer: async () => new TextEncoder().encode('x').buffer });
+
+    const uploadTurn = async (code, sessionId) => {
+      const form = new FormData();
+      form.append('access_code', code);
+      form.append('action', 'turn');
+      form.append('session_id', sessionId);
+      form.append('audio', new File([new Uint8Array([1, 2, 3])], 'turn.webm', { type: 'audio/webm' }));
+      return onRequestPost({ request: new Request('http://x/api/minny-conversation', { method: 'POST', body: form }), env });
+    };
+
+    const startWithTopic = await onRequestPost({ request: new Request('http://x/api/minny-conversation', { method: 'POST', body: JSON.stringify({ action: 'start', access_code: 'R2L-L4', topic: 'animals_pets' }) }), env });
+    const { session_id: sidTopic } = await startWithTopic.json();
+    await uploadTurn('R2L-L4', sidTopic);
+    assert.equal(whisperInputs.at(-1).initial_prompt, TOPIC_SEEDS.animals_pets.seeds.join(', '));
+
+    const startNoTopic = await onRequestPost({ request: new Request('http://x/api/minny-conversation', { method: 'POST', body: JSON.stringify({ action: 'start', access_code: 'R2L-L4-NOTOPIC' }) }), env });
+    const { session_id: sidNoTopic } = await startNoTopic.json();
+    await uploadTurn('R2L-L4-NOTOPIC', sidNoTopic);
+    assert.equal(whisperInputs.at(-1).initial_prompt, undefined, 'no topic -> no prompt bias at all');
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+// ---------------------------------------------------------------------------
+// V1.1 review fixes (Elon, second pass, 2026-07-11):
+//   MUST-FIX 1: R2L's L0 (START_LEVEL, most pilot kids) must map onto the
+//     L1 chips branch everywhere, not fall back to L3+.
+//   MUST-FIX 2: repair_move_on must clear stale last_options/last_expected/
+//     last_hint so the ladder doesn't re-trigger against an abandoned
+//     question, and must not re-serve that question's chips.
+//   SHOULD-FIX 3: matchesExpected must be word-boundary aware ("cat" must
+//     not match inside "catapult").
+//   MUST-FIX 4: expected[] must be screened by the guardrail surface scan
+//     too (it is both client-visible in the turn response and later SPOKEN
+//     via TTS by the repair ladder's {model} fill).
+// ---------------------------------------------------------------------------
+
+test('buildSystemPrompt L0 gets the L1 branch (ANSWER-SUPPORT block), not the L3+ hint branch', () => {
+  const prompt = buildSystemPrompt('L0', 'their favorite color');
+  assert.match(prompt, /ANSWER-SUPPORT/);
+  assert.match(prompt, /"options"/);
+  assert.doesNotMatch(prompt, /"hint"/);
+});
+
+test('gateReplyForLevel keeps options/expected (and strips hint) at L0', () => {
+  const parsed = { reply_en: 'hi', mood: 'idle', options: ['a', 'b'], expected: ['a'], hint: 'x' };
+  const result = gateReplyForLevel(parsed, 'L0');
+  assert.deepEqual(result, { reply_en: 'hi', mood: 'idle', options: ['a', 'b'], expected: ['a'] });
+});
+
+test('isBeginnerLevel is true for L0 (R2L START_LEVEL)', () => {
+  assert.equal(isBeginnerLevel('L0'), true);
+});
+
+test('start: L0 codes ignore topic/game silently, same as L1/L2 -- no 400, nothing stored', async () => {
+  const fakeKv = createFakeKv();
+  await seedCode(fakeKv, 'R2L-L0', 'L0');
+  const resp = await onRequestPost({
+    request: new Request('http://x/api/minny-conversation', { method: 'POST', body: JSON.stringify({ action: 'start', access_code: 'R2L-L0', topic: 'not_a_real_topic', game: 'not_a_real_game' }) }),
+    env: { READ2LEAD_CODES: fakeKv },
+  });
+  assert.equal(resp.status, 200);
+  const body = await resp.json();
+  const stored = await fakeKv.get(`convo-session:${body.session_id}`, { type: 'json' });
+  assert.equal(stored.topic, null);
+  assert.equal(stored.game, null);
+  assert.equal(stored.debate_topic, null);
+});
+
+test('nextRepairStep treats L0 as beginner: step2 is repair_choices (not the L3+ repair_model path)', () => {
+  const step = nextRepairStep({ repair: { step: 1, active: true }, last_options: ['A dog!', 'A cat!'], last_expected: ['dog', 'cat'] }, 'L0');
+  assert.equal(step.phraseId, 'repair_choices');
+  assert.deepEqual(step.vars, { a: 'A dog!', b: 'A cat!' });
+});
+
+test('matchesExpected is word-boundary aware: "cat" must not match inside "catapult"', () => {
+  assert.equal(matchesExpected('i like catapult', ['cat'], wordSimilarity), false);
+});
+
+test('endpoint: after stall -> stall -> move_on, the abandoned question\'s chips are cleared -- a later low-content turn reaches the LLM, not the ladder', async () => {
+  const fakeKv = createFakeKv();
+  await seedCode(fakeKv, 'R2L-L2', 'L2');
+  let openRouterCalls = 0;
+  const env = { READ2LEAD_CODES: fakeKv, OPENROUTER_API_KEY: 'or-key', AI: { run: async (model) => (String(model).includes('llama-guard') ? 'safe' : 'audio') } };
+  const originalFetch = globalThis.fetch;
+  try {
+    globalThis.fetch = async (url) => {
+      if (String(url).includes('chat/completions')) {
+        openRouterCalls++;
+        return { ok: true, json: async () => ({ choices: [{ message: { content: JSON.stringify({ reply_en: 'Do you like dogs or cats?', mood: 'idle', options: ['Dogs!', 'Cats!'], expected: ['dog', 'cat'] }) } }] }) };
+      }
+      return { ok: true, arrayBuffer: async () => new TextEncoder().encode('x').buffer };
+    };
+    const startResp = await onRequestPost({ request: new Request('http://x/api/minny-conversation', { method: 'POST', body: JSON.stringify({ action: 'start', access_code: 'R2L-L2' }) }), env });
+    const { session_id } = await startResp.json();
+    await onRequestPost({ request: new Request('http://x/api/minny-conversation', { method: 'POST', body: JSON.stringify({ action: 'turn', access_code: 'R2L-L2', session_id, transcript: 'hi' }) }), env });
+    assert.equal(openRouterCalls, 1);
+
+    const stall = () => onRequestPost({ request: new Request('http://x/api/minny-conversation', { method: 'POST', body: JSON.stringify({ action: 'turn', access_code: 'R2L-L2', session_id, transcript: 'um' }) }), env }).then((r) => r.json());
+
+    await stall(); // step 1: repair_rephrase
+    await stall(); // step 2: repair_choices
+    const moveOn = await stall(); // step 3: repair_move_on
+    assert.equal(moveOn.reply_en, findPhrase('repair_move_on').text_en);
+    assert.equal(moveOn.options, undefined, 'move_on must not re-serve the abandoned question\'s chips');
+    assert.equal(moveOn.expected, undefined);
+    assert.equal(openRouterCalls, 1, 'none of the three repair turns called the LLM');
+
+    const stored = await fakeKv.get(`convo-session:${session_id}`, { type: 'json' });
+    assert.equal(stored.last_options, null, 'move_on clears the abandoned question\'s options');
+    assert.equal(stored.last_expected, null, 'move_on clears the abandoned question\'s expected variants');
+    assert.equal(stored.last_hint, null);
+
+    // The kid's next low-content turn must NOT re-trigger the ladder (there
+    // is no last_expected left to stall against) -- it reaches the LLM.
+    const nextTurn = await onRequestPost({ request: new Request('http://x/api/minny-conversation', { method: 'POST', body: JSON.stringify({ action: 'turn', access_code: 'R2L-L2', session_id, transcript: 'um' }) }), env }).then((r) => r.json());
+    assert.equal(openRouterCalls, 2, 'post-move_on low-content turn reaches the LLM path, not the ladder');
+    assert.equal(nextTurn.reply_en, 'Do you like dogs or cats?');
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test('turn: a banned word hidden in expected[1] is caught by the guardrail -- canned redirect served, nothing persisted to last_expected', async () => {
+  const fakeKv = createFakeKv();
+  await seedCode(fakeKv, 'R2L-L2', 'L2');
+  const env = { READ2LEAD_CODES: fakeKv, OPENROUTER_API_KEY: 'or-key', AI: { run: async (model) => (String(model).includes('llama-guard') ? 'safe' : 'audio') } };
+  const originalFetch = globalThis.fetch;
+  try {
+    globalThis.fetch = openRouterJsonMock({ reply_en: 'Do you like dogs or cats?', mood: 'idle', options: ['A dog!', 'A cat!'], expected: ['dog', 'you bastard'] });
+    const startResp = await onRequestPost({ request: new Request('http://x/api/minny-conversation', { method: 'POST', body: JSON.stringify({ action: 'start', access_code: 'R2L-L2' }) }), env });
+    const { session_id } = await startResp.json();
+    const turnResp = await onRequestPost({
+      request: new Request('http://x/api/minny-conversation', { method: 'POST', body: JSON.stringify({ action: 'turn', access_code: 'R2L-L2', session_id, transcript: 'hello' }) }),
+      env,
+    });
+    const turnData = await turnResp.json();
+    assert.equal(turnData.ok, true);
+    assert.notEqual(turnData.reply_en, 'Do you like dogs or cats?', 'the flagged reply never reaches the kid');
+    assert.equal(turnData.expected, undefined, 'flagged expected[] never rides the response');
+    assert.equal(turnData.options, undefined);
+
+    const stored = await fakeKv.get(`convo-session:${session_id}`, { type: 'json' });
+    assert.equal(stored.last_expected, null, 'the flag path never reaches the success-path session update, so last_expected stays unset');
+    assert.equal(stored.last_options, null);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+// ---------------------------------------------------------------------------
+// V1.1 review fixes, third pass (Elon/Buffet, 2026-07-11):
+//   MUST-FIX 5: EVERY path that abandons the current question (not just
+//     repair_move_on) must clear last_options/last_expected/last_hint and
+//     reset repair -- handleGuardrailFlag's single-flag redirect branch, and
+//     the !parsed LLM-parse-failure redirect path. Both pose a brand-new
+//     canned question; the kid's genuine answer to THAT question must not
+//     be compared against the abandoned chips.
+// ---------------------------------------------------------------------------
+
+test('endpoint: after a guardrail-flagged model reply, the redirect\'s new question is not compared against the abandoned chips', async () => {
+  const fakeKv = createFakeKv();
+  await seedCode(fakeKv, 'R2L-L2', 'L2');
+  let openRouterCalls = 0;
+  const env = { READ2LEAD_CODES: fakeKv, OPENROUTER_API_KEY: 'or-key' };
+  const originalFetch = globalThis.fetch;
+  try {
+    globalThis.fetch = async (url) => {
+      if (String(url).includes('chat/completions')) {
+        openRouterCalls++;
+        if (openRouterCalls === 1) {
+          return { ok: true, json: async () => ({ choices: [{ message: { content: JSON.stringify({ reply_en: 'Do you like dogs or cats?', mood: 'idle', options: ['Dogs!', 'Cats!'], expected: ['dog', 'cat'] }) } }] }) };
+        }
+        if (openRouterCalls === 2) {
+          // Clean-shaped reply that the deterministic word-list gate flags.
+          return { ok: true, json: async () => ({ choices: [{ message: { content: JSON.stringify({ reply_en: 'You are a bastard, kid.', mood: 'idle' }) } }] }) };
+        }
+        return { ok: true, json: async () => ({ choices: [{ message: { content: JSON.stringify({ reply_en: 'Tell me more!', mood: 'idle' }) } }] }) };
+      }
+      return { ok: true, arrayBuffer: async () => new TextEncoder().encode('x').buffer };
+    };
+    const startResp = await onRequestPost({ request: new Request('http://x/api/minny-conversation', { method: 'POST', body: JSON.stringify({ action: 'start', access_code: 'R2L-L2' }) }), env });
+    const { session_id } = await startResp.json();
+    await onRequestPost({ request: new Request('http://x/api/minny-conversation', { method: 'POST', body: JSON.stringify({ action: 'turn', access_code: 'R2L-L2', session_id, transcript: 'hi' }) }), env });
+
+    const flaggedTurn = await onRequestPost({ request: new Request('http://x/api/minny-conversation', { method: 'POST', body: JSON.stringify({ action: 'turn', access_code: 'R2L-L2', session_id, transcript: 'I really like dogs so much' }) }), env }).then((r) => r.json());
+    assert.notEqual(flaggedTurn.reply_en, 'You are a bastard, kid.', 'flagged reply never reaches the kid');
+
+    const stored = await fakeKv.get(`convo-session:${session_id}`, { type: 'json' });
+    assert.equal(stored.last_expected, null, 'the redirect abandons the old question -- stale chips cleared');
+    assert.equal(stored.last_options, null);
+    assert.deepEqual(stored.repair, { step: 0, active: false });
+
+    // The kid's genuine (here: low-content) answer to the redirect's NEW
+    // question must reach the LLM, not the repair ladder (no last_expected
+    // left to stall against).
+    const nextTurn = await onRequestPost({ request: new Request('http://x/api/minny-conversation', { method: 'POST', body: JSON.stringify({ action: 'turn', access_code: 'R2L-L2', session_id, transcript: 'um' }) }), env }).then((r) => r.json());
+    assert.equal(openRouterCalls, 3, 'the low-content answer reached the LLM, not the repair ladder');
+    assert.equal(nextTurn.reply_en, 'Tell me more!');
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test('endpoint: after an LLM parse-failure redirect, the new canned question is not compared against the abandoned chips', async () => {
+  const fakeKv = createFakeKv();
+  await seedCode(fakeKv, 'R2L-L2', 'L2');
+  let openRouterCalls = 0;
+  const env = { READ2LEAD_CODES: fakeKv, OPENROUTER_API_KEY: 'or-key' };
+  const originalFetch = globalThis.fetch;
+  try {
+    globalThis.fetch = async (url) => {
+      if (String(url).includes('chat/completions')) {
+        openRouterCalls++;
+        if (openRouterCalls === 1) {
+          return { ok: true, json: async () => ({ choices: [{ message: { content: JSON.stringify({ reply_en: 'Do you like dogs or cats?', mood: 'idle', options: ['Dogs!', 'Cats!'], expected: ['dog', 'cat'] }) } }] }) };
+        }
+        if (openRouterCalls <= 3) {
+          return { ok: false, status: 500, json: async () => ({}) }; // both retry attempts fail -> parsed stays null
+        }
+        return { ok: true, json: async () => ({ choices: [{ message: { content: JSON.stringify({ reply_en: 'Tell me more!', mood: 'idle' }) } }] }) };
+      }
+      return { ok: true, arrayBuffer: async () => new TextEncoder().encode('x').buffer };
+    };
+    const startResp = await onRequestPost({ request: new Request('http://x/api/minny-conversation', { method: 'POST', body: JSON.stringify({ action: 'start', access_code: 'R2L-L2' }) }), env });
+    const { session_id } = await startResp.json();
+    await onRequestPost({ request: new Request('http://x/api/minny-conversation', { method: 'POST', body: JSON.stringify({ action: 'turn', access_code: 'R2L-L2', session_id, transcript: 'hi' }) }), env });
+
+    const failedTurn = await onRequestPost({ request: new Request('http://x/api/minny-conversation', { method: 'POST', body: JSON.stringify({ action: 'turn', access_code: 'R2L-L2', session_id, transcript: 'I really like dogs so much' }) }), env }).then((r) => r.json());
+    assert.equal(failedTurn.ok, true);
+    assert.equal(failedTurn.options, undefined, 'a parse-failure redirect never carries options');
+
+    const stored = await fakeKv.get(`convo-session:${session_id}`, { type: 'json' });
+    assert.equal(stored.last_expected, null, 'the redirect abandons the old question -- stale chips cleared');
+    assert.equal(stored.last_options, null);
+    assert.deepEqual(stored.repair, { step: 0, active: false });
+
+    const nextTurn = await onRequestPost({ request: new Request('http://x/api/minny-conversation', { method: 'POST', body: JSON.stringify({ action: 'turn', access_code: 'R2L-L2', session_id, transcript: 'um' }) }), env }).then((r) => r.json());
+    assert.equal(openRouterCalls, 4, 'the low-content answer reached the LLM, not the repair ladder');
+    assert.equal(nextTurn.reply_en, 'Tell me more!');
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
 });

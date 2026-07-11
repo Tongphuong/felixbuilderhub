@@ -307,13 +307,14 @@ export function resolveOpenAIApiKey(env = {}) {
   return String(env.OPENAI_API_KEY || env.READ2LEAD_OPENAI_API_KEY || '').trim();
 }
 
-export async function transcribeWithOpenAI(audioBlob, apiKey, fetchFn = fetch) {
+export async function transcribeWithOpenAI(audioBlob, apiKey, fetchFn = fetch, prompt) {
   const filename = inferAudioFilename(audioBlob);
   const formData = new FormData();
   formData.append('file', audioBlob, filename);
   formData.append('model', 'whisper-1');
   formData.append('language', 'en');
   formData.append('response_format', 'json');
+  if (prompt) formData.append('prompt', String(prompt));
 
   let response;
   try {
@@ -364,7 +365,7 @@ function arrayBufferToBase64(buffer) {
 // geo-blocked with 403 "unsupported_country_region_territory" — the root
 // cause of the 2026-06-11 speaking outage. Workers AI never leaves
 // Cloudflare, so there is no border to be blocked at.
-export async function transcribeWithWorkersAI(audioBlob, ai) {
+export async function transcribeWithWorkersAI(audioBlob, ai, prompt) {
   const buffer = await audioBlob.arrayBuffer();
   let result;
   try {
@@ -372,6 +373,12 @@ export async function transcribeWithWorkersAI(audioBlob, ai) {
       audio: arrayBufferToBase64(buffer),
       task: 'transcribe',
       language: 'en',
+      // V1.1 (2026-07-11): whisper-large-v3-turbo's documented input schema
+      // (developers.cloudflare.com/workers-ai/models/whisper-large-v3-turbo/)
+      // supports `initial_prompt` (not `prompt`, which is OpenAI whisper-1's
+      // field name) -- only send it when set, an undocumented extra field is
+      // how requests start 500ing.
+      ...(prompt ? { initial_prompt: String(prompt) } : {}),
     });
   } catch (err) {
     const error = new Error('workers_ai_transcription_failed');
@@ -385,7 +392,7 @@ export async function transcribeWithWorkersAI(audioBlob, ai) {
 }
 
 // Workers AI first; OpenAI (US egress permitting) as automatic fallback.
-export async function transcribeAudio(audioBlob, { ai = null, openaiApiKey = '', fetchFn = fetch } = {}) {
+export async function transcribeAudio(audioBlob, { ai = null, openaiApiKey = '', fetchFn = fetch, prompt } = {}) {
   if (!ai && !openaiApiKey) {
     const error = new Error('no_transcription_provider');
     error.code = 'config_error';
@@ -393,13 +400,13 @@ export async function transcribeAudio(audioBlob, { ai = null, openaiApiKey = '',
   }
   if (ai) {
     try {
-      return await transcribeWithWorkersAI(audioBlob, ai);
+      return await transcribeWithWorkersAI(audioBlob, ai, prompt);
     } catch (err) {
       if (!openaiApiKey) throw err;
       /* fall through to OpenAI */
     }
   }
-  return transcribeWithOpenAI(audioBlob, openaiApiKey, fetchFn);
+  return transcribeWithOpenAI(audioBlob, openaiApiKey, fetchFn, prompt);
 }
 
 // Vietnamese-speech detection (spec's known weakness, line 277): Whisper is

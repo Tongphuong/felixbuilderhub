@@ -1,12 +1,19 @@
 import { getClientIp, checkCodeRateLimit, recordCodeFailure, rateLimitedResponse } from './_rate-limit.js';
-import { buildSystemPrompt, parseModelReply, coerceReply, sessionCapsExceeded, nextSession, pickStarterTopic } from './_minny-convo.js';
+import {
+  buildSystemPrompt, parseModelReply, coerceReply, sessionCapsExceeded, nextSession, pickStarterTopic,
+  gateReplyForLevel, isBeginnerLevel, TOPIC_SEEDS, DEBATE_TOPICS, GAMES,
+} from './_minny-convo.js';
 import { resolveOpenAiApiKey, getOrSynthesize } from './_minny-tts.js';
-import { findPhrase } from './_minny-phrases.js';
+import { findPhrase, fillPhrase } from './_minny-phrases.js';
 import { screenTranscript, validateReplyShape, detectCharacterBreak, scanBannedTopics, screenWithLlamaGuard } from './_minny-guardrails.js';
 // Step C (2026-07-10): merged voice turn — the client now uploads audio straight
 // to this endpoint (one round-trip) instead of calling read2lead-speaking-check
 // for STT first. Reuse that route's proven Whisper orchestrator, don't re-roll it.
-import { transcribeAudio } from './read2lead-speaking-check.js';
+// V1.1 (2026-07-11): also reuse wordSimilarity for the repair ladder's fuzzy
+// expected-answer match (import allowed, modification not -- see
+// _minny-repair.js's header note).
+import { transcribeAudio, wordSimilarity } from './read2lead-speaking-check.js';
+import { isVietnamese, isLowContent, matchesExpected, nextRepairStep } from './_minny-repair.js';
 
 // Conversation brain: Llama-3.3-70B via OpenRouter, routed to the fastest
 // provider (Groq/Cerebras) — see CONVO_PROVIDER below. Swapped 2026-07-10 from
@@ -25,6 +32,24 @@ function json(body, status = 200) {
     status,
     headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' },
   });
+}
+
+// V1.1 (2026-07-11) — Whisper prompt bias (spec V1-D2): L1-L2 biases toward
+// the last turn's expected variants (a garbled "i like dogs" is more likely
+// to transcribe correctly when Whisper already expects those words); L3+
+// biases toward the chosen topic's seed word list. No topic/no expected ->
+// no prompt (undefined), which is byte-identical to today's behavior.
+const WHISPER_PROMPT_MAX_CHARS = 200;
+
+function buildWhisperPromptBias(session) {
+  if (isBeginnerLevel(session.level)) {
+    const expected = Array.isArray(session.last_expected) ? session.last_expected : [];
+    if (!expected.length) return undefined;
+    return expected.join(', ').slice(0, WHISPER_PROMPT_MAX_CHARS);
+  }
+  const topicSeeds = session.topic && TOPIC_SEEDS[session.topic] ? TOPIC_SEEDS[session.topic].seeds : null;
+  if (!topicSeeds) return undefined;
+  return topicSeeds.join(', ').slice(0, WHISPER_PROMPT_MAX_CHARS);
 }
 
 // Best-effort inline TTS for Free Talking replies (Phase 8a, closing a gap
@@ -82,7 +107,21 @@ async function handleGuardrailFlag(env, apiKey, session, sessionKey, accessCode,
   const redirectId = `redirect_${((session.turns || 0) % 6) + 1}`;
   const redirect = findPhrase(redirectId);
   const turnRecord = { kid_transcript: kidTranscript, reply_en: redirect.text_en, mood: 'idle' };
-  const updatedSession = { ...nextSession(session, turnRecord), flags: newFlags };
+  // Fix (Elon/Buffet review, 2026-07-11): the canned redirect ABANDONS
+  // whatever question was on the table (flagged transcript or flagged model
+  // reply) and poses a brand-new one of its own. The stale
+  // last_options/last_expected/last_hint from the abandoned question must
+  // not survive, or the kid's genuine answer to the redirect's NEW question
+  // gets wrongly compared against the old chips and routed into the repair
+  // ladder. Same fix as repair_move_on (MUST-FIX 2, first review round).
+  const updatedSession = {
+    ...nextSession(session, turnRecord),
+    flags: newFlags,
+    last_options: null,
+    last_expected: null,
+    last_hint: null,
+    repair: { step: 0, active: false },
+  };
 
   await recordConvoFlag(env, {
     code: accessCode,
@@ -229,6 +268,42 @@ export async function onRequestPost(context) {
   }
 
   if (action === 'start') {
+    /* ── topic / game validation (V1.1) ── */
+    // L1-L2 codes ignore topic/game silently — no validation, no error: the
+    // V1.2 UI won't send them at this level, but a stale client must not
+    // break (spec: "L1-L2 codes ignore topic/game silently").
+    const isBeginnerCode = isBeginnerLevel(level);
+    const rawTopic = (body.topic === undefined || body.topic === null || body.topic === '') ? '' : String(body.topic).trim();
+    const rawGame = (body.game === undefined || body.game === null || body.game === '') ? '' : String(body.game).trim();
+    let topic = null;
+    let game = null;
+    let debateTopic = null;
+
+    if (!isBeginnerCode) {
+      if (rawTopic) {
+        if (rawTopic === 'minny_choice') {
+          const keys = Object.keys(TOPIC_SEEDS);
+          topic = keys[Math.floor(Math.random() * keys.length)];
+        } else if (TOPIC_SEEDS[rawTopic]) {
+          topic = rawTopic;
+        } else {
+          return json({ ok: false, error: 'bad_request', message: 'Yêu cầu không hợp lệ.' }, 400);
+        }
+      }
+      if (rawGame) {
+        const isGameLevel = level === 'L4' || level === 'L5';
+        if (!isGameLevel || !GAMES.includes(rawGame)) {
+          return json({ ok: false, error: 'bad_request', message: 'Yêu cầu không hợp lệ.' }, 400);
+        }
+        game = rawGame;
+        if (game === 'debate') {
+          // Server picks the debate topic from the allowlist — never from
+          // the client (founder rule: the kid never sets the debate topic).
+          debateTopic = DEBATE_TOPICS[Math.floor(Math.random() * DEBATE_TOPICS.length)];
+        }
+      }
+    }
+
     /* ── daily / global caps ── */
     // Test-code exemption (2026-07-11, Phương-approved): a code whose KV
     // record carries the existing admin-set `is_test: true` flag skips the
@@ -280,6 +355,15 @@ export async function onRequestPost(context) {
       flags: 0,
       history: [],
       starter_topic: starterTopic,
+      topic,
+      game,
+      debate_topic: debateTopic,
+      // V1.1 repair-ladder bookkeeping: the last turn's kid-visible optional
+      // fields (post-gating), and the repair ladder's own step counter.
+      last_options: null,
+      last_expected: null,
+      last_hint: null,
+      repair: { step: 0, active: false },
     };
 
     await env.READ2LEAD_CODES.put(`convo-session:${sessionId}`, JSON.stringify(session), {
@@ -346,7 +430,7 @@ export async function onRequestPost(context) {
     }
     const sttStart = Date.now();
     try {
-      transcript = String(await transcribeAudio(audioBlob, { ai: env.AI, openaiApiKey: apiKey }) || '').trim();
+      transcript = String(await transcribeAudio(audioBlob, { ai: env.AI, openaiApiKey: apiKey, prompt: buildWhisperPromptBias(session) }) || '').trim();
     } catch {
       transcript = '';
     }
@@ -382,8 +466,74 @@ export async function onRequestPost(context) {
     });
   }
 
+  // V1.1 (2026-07-11) repair ladder + Vietnamese/low-content heuristic (spec
+  // V1-D2): evaluated BEFORE any LLM spend, right after the guardrail
+  // transcript screen above. Trigger: the last Minny turn carried `expected`
+  // (L1-L2 only) AND the child's transcript is low-content or doesn't fuzzy-
+  // match any expected variant -- or, at any level, the transcript looks
+  // Vietnamese. A repair turn consumes the normal 12-turn/5-min cap (a
+  // deliberate default -- the kid is still "in session" -- documented here
+  // rather than exempted), but NEVER increments flags/strikes and NEVER
+  // calls the LLM; it replies with a pre-written, pre-cached canned phrase.
+  const vietnameseTriggered = isVietnamese(transcript);
+  const lastExpected = Array.isArray(session.last_expected) ? session.last_expected : [];
+  const stallTriggered = isBeginnerLevel(session.level)
+    && lastExpected.length > 0
+    && (isLowContent(transcript) || !matchesExpected(transcript, lastExpected, wordSimilarity));
+
+  if (vietnameseTriggered || stallTriggered) {
+    const step = nextRepairStep(session, session.level, { vietnamese: vietnameseTriggered });
+    const phrase = findPhrase(step.phraseId);
+    const filled = fillPhrase(phrase, step.vars);
+    // Fix (Elon review, 2026-07-11): repair_move_on (repair.active === false)
+    // means the ladder is abandoning THIS question entirely ("let's talk
+    // about something else fun") -- the stale last_options/last_expected/
+    // last_hint must not survive into the next turn, or the kid's next
+    // genuine answer gets compared against a question Minny already
+    // dropped, restarting the ladder in a loop until the 12-turn cap.
+    // Steps 1-2 keep re-serving the SAME chips (today's behavior).
+    const ladderReset = !step.repair.active;
+    const repairSession = {
+      ...nextSession(session, { kid_transcript: transcript, reply_en: filled.text_en, mood: 'idle' }),
+      repair: step.repair,
+      ...(ladderReset ? { last_options: null, last_expected: null, last_hint: null } : {}),
+    };
+
+    try {
+      await env.READ2LEAD_CODES.put(sessionKey, JSON.stringify(repairSession), { expirationTtl: 600 });
+    } catch {
+      // best-effort
+    }
+
+    const turnsLeft = Math.max(0, 12 - repairSession.turns);
+    const secondsLeft = Math.max(0, 300 - Math.floor((now - repairSession.started_at) / 1000));
+    const repairAudio = await synthesizeOrNull(env, apiKey, filled.text_en);
+    return json({
+      ok: true,
+      transcript,
+      reply_en: filled.text_en,
+      subtitle_vi: filled.subtitle_vi,
+      mood: 'idle',
+      repair: true,
+      turns_left: turnsLeft,
+      seconds_left: secondsLeft,
+      // Same options/expected as the previous turn so the client can
+      // re-render the same chips (spec: "response carries the same options
+      // as the previous turn so the client can re-render them") -- EXCEPT
+      // on the move_on turn, which abandons the question, so re-showing its
+      // chips would be wrong UX as well as stale state.
+      ...(!ladderReset && Array.isArray(session.last_options) ? { options: session.last_options } : {}),
+      ...(!ladderReset && lastExpected.length ? { expected: lastExpected } : {}),
+      ...(repairAudio ? { audio_b64: repairAudio.audio_b64, content_type: repairAudio.content_type } : {}),
+    });
+  }
+
   // ── try LLM ──
-  const systemPrompt = buildSystemPrompt(session.level, session.starter_topic);
+  const systemPrompt = buildSystemPrompt(session.level, session.starter_topic, {
+    topic: session.topic || null,
+    game: session.game || null,
+    debateTopic: session.debate_topic || null,
+  });
   const messages = [
     { role: 'system', content: systemPrompt },
     ...(Array.isArray(session.history) ? session.history.flatMap(h => [
@@ -468,6 +618,12 @@ export async function onRequestPost(context) {
   const parsed = rawReply ? (parseModelReply(rawReply) || coerceReply(rawReply)) : null;
 
   if (parsed) {
+    // V1.1: level-gate the optional fields (options/expected only at L1-L2,
+    // hint only at L3+) BEFORE guardrail screening, so the guardrails scan
+    // exactly the surface the kid will actually see (single source of truth:
+    // gateReplyForLevel).
+    const gated = gateReplyForLevel(parsed, session.level);
+
     // Phase 6 guardrail layers 2-4. Deterministic shape/character/topic checks
     // run first (cheap, sync). Only if they pass do we spend on the Llama Guard
     // ML backstop -- and we run that guard call CONCURRENTLY with TTS synthesis
@@ -476,13 +632,34 @@ export async function onRequestPost(context) {
     // any audio is made, so on the rare ML flag we simply drop the synthesized
     // audio and fall to the redirect path -- safety is unchanged, latency drops
     // by ~min(guard, TTS) on every good turn.
-    const shapeCheck = validateReplyShape(parsed.reply_en);
-    const characterCheck = detectCharacterBreak(parsed.reply_en);
-    const topicCheck = scanBannedTopics(parsed.reply_en);
-    const deterministicFlag = shapeCheck.flagged || characterCheck.flagged || topicCheck.flagged;
+    //
+    // V1.1: the WHOLE kid-visible surface is screened, not just reply_en --
+    // every options[] string, every expected[] string, and the hint, too (a
+    // banned word could hide in any of them). expected[] is screened for two
+    // reasons: it rides in the turn response JSON (client-visible surface
+    // like options/hint), AND a repair/VN-nudge turn later SPEAKS
+    // last_expected[0] via TTS (repair_model/vn_nudge fill {model} from it)
+    // without ever re-screening it at that point -- so an unscreened banned
+    // word in expected[0] would reach the kid's ears on a later turn even if
+    // this turn's own reply_en/options were clean. The length check
+    // (validateReplyShape's over_long reason) stays on reply_en alone;
+    // options (<=30 chars), expected (<=40 chars), and hint (<=80 chars) are
+    // already far under that cap by construction, so scanning them
+    // individually only ever exercises the URL/email/phone/empty checks.
+    const surfaceExtras = [
+      ...(Array.isArray(gated.options) ? gated.options : []),
+      ...(Array.isArray(gated.expected) ? gated.expected : []),
+      ...(gated.hint ? [gated.hint] : []),
+    ];
+    const shapeCheck = validateReplyShape(gated.reply_en);
+    const extraShapeFlag = surfaceExtras.map((extra) => validateReplyShape(extra)).find((r) => r.flagged);
+    const surfaceText = [gated.reply_en, ...surfaceExtras].join('\n');
+    const characterCheck = detectCharacterBreak(surfaceText);
+    const topicCheck = scanBannedTopics(surfaceText);
+    const deterministicFlag = shapeCheck.flagged || Boolean(extraShapeFlag) || characterCheck.flagged || topicCheck.flagged;
 
     if (deterministicFlag) {
-      const category = shapeCheck.reason || characterCheck.marker || topicCheck.category;
+      const category = shapeCheck.reason || extraShapeFlag?.reason || characterCheck.marker || topicCheck.category;
       return handleGuardrailFlag(env, apiKey, session, sessionKey, accessCode, transcript, category, 'model', now);
     }
 
@@ -497,8 +674,8 @@ export async function onRequestPost(context) {
     const parStart = Date.now();
     let guardMs = 0;
     let ttsMs = null;
-    const ttsPromise = (async () => { const r = await synthesizeOrNull(env, apiKey, parsed.reply_en); ttsMs = Date.now() - parStart; return r; })();
-    const guardResult = await (async () => { const r = await screenWithLlamaGuard(env.AI, parsed.reply_en, transcript); guardMs = Date.now() - parStart; return r; })();
+    const ttsPromise = (async () => { const r = await synthesizeOrNull(env, apiKey, gated.reply_en); ttsMs = Date.now() - parStart; return r; })();
+    const guardResult = await (async () => { const r = await screenWithLlamaGuard(env.AI, gated.reply_en, transcript); guardMs = Date.now() - parStart; return r; })();
 
     if (guardResult.flagged) {
       // Rare: discard the just-synthesized audio and send a canned redirect.
@@ -520,11 +697,21 @@ export async function onRequestPost(context) {
     }
 
     // ── LLM success path ──
-    const updatedSession = nextSession(session, {
-      kid_transcript: transcript,
-      reply_en: parsed.reply_en,
-      mood: parsed.mood,
-    });
+    // Session history keeps recording reply_en/mood only (unchanged); the
+    // gated optional fields are tracked separately as last_options/
+    // last_expected/last_hint for the repair ladder's next-turn lookups.
+    // A successful (non-repair, non-flagged) turn resets the repair ladder.
+    const updatedSession = {
+      ...nextSession(session, {
+        kid_transcript: transcript,
+        reply_en: gated.reply_en,
+        mood: gated.mood,
+      }),
+      last_options: gated.options || null,
+      last_expected: gated.expected || null,
+      last_hint: gated.hint || null,
+      repair: { step: 0, active: false },
+    };
 
     try {
       await env.READ2LEAD_CODES.put(sessionKey, JSON.stringify(updatedSession), { expirationTtl: 600 });
@@ -584,8 +771,11 @@ export async function onRequestPost(context) {
     return json({
       ok: true,
       transcript,
-      reply_en: parsed.reply_en,
-      mood: parsed.mood,
+      reply_en: gated.reply_en,
+      mood: gated.mood,
+      ...(gated.options ? { options: gated.options } : {}),
+      ...(gated.expected ? { expected: gated.expected } : {}),
+      ...(gated.hint ? { hint: gated.hint } : {}),
       turns_left: turnsLeft,
       seconds_left: secondsLeft,
       timing,
@@ -608,7 +798,17 @@ export async function onRequestPost(context) {
     const redirectId = `redirect_${((session.turns || 0) % 6) + 1}`;
     const redirect = findPhrase(redirectId);
     const turnRecord = { kid_transcript: transcript, reply_en: redirect.text_en, mood: 'idle' };
-    const newSession = nextSession(session, turnRecord);
+    // Fix (Elon/Buffet review, 2026-07-11): this canned redirect also
+    // abandons whatever question was on the table and poses a new one --
+    // same stale-chips hazard as handleGuardrailFlag/repair_move_on, so the
+    // same three fields + repair state must be cleared here too.
+    const newSession = {
+      ...nextSession(session, turnRecord),
+      last_options: null,
+      last_expected: null,
+      last_hint: null,
+      repair: { step: 0, active: false },
+    };
 
     try {
       await env.READ2LEAD_CODES.put(sessionKey, JSON.stringify(newSession), { expirationTtl: 600 });

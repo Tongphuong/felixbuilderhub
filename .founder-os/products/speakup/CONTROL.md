@@ -89,6 +89,49 @@ assigns, commits, merges, deploys, or spends.
 
 ## Current task
 
+- Status: active
+- Task ID: speakup-v1-1-freetalk-brain
+- Owner: Elon (Claude Lead) authors all prompt/copy text verbatim
+  (safety-adjacent precedent); Mark (bg worker) builds endpoint glue +
+  tests in the `hub-main-speakup-merge` worktree on branch
+  `claude/speakup-v1-1`; Buffet (bg, read-only) reviews — author ≠
+  reviewer. Spec section: `_ops/specs/SPEC_SPEAKUP_V1.md` §V1.1
+  (acceptance criteria adopted verbatim). Gate: Wave 0 DONE 2026-07-11.
+- Lane: branch `claude/speakup-v1-1` (off main @ f11f005). Backend only —
+  no UI (V1.2), no homework/brief data in this endpoint.
+- Problem: every Free Talk turn must work for the kid's level — L1–L2
+  answerable (chips protocol: options[]+expected[], fuzzy match, repair
+  ladder) and L3–L5 topic-seeded production (hint field, L4–L5 game
+  protocols: build-a-story / debate-from-allowlist / would-you-rather).
+- Reuse survey: (1) existing `wordSimilarity`/`normalizeWord` utilities
+  (read2lead-speaking-check.js) — ADOPT for expected-answer fuzzy matching
+  (do not re-roll); (2) R2L `HUB_TOPICS` topic values (ho-so-topics.ts) —
+  ADOPT as the topic vocabulary (UI tiles come in V1.2); (3) TPRS/PPP
+  circling + expected-answer patterns (Buddy.ai/Amira, researched
+  2026-07-10) — ADOPT as prompt technique; external structured-output
+  libraries — REJECT (repo convention: raw fetch, no npm runtime deps).
+- Cost ceiling: Claude team (Max plan, not metered); runtime ≈ $0 (same
+  models, same call count; slightly longer prompts within 150-token replies).
+- Acceptance criteria: spec §V1.1 checklist verbatim (reply JSON extension
+  + level gating; start accepts topic/game with validation; L1–L2 fuzzy
+  match fixtures; deterministic repair ladder max 2, no guardrail strikes,
+  pre-written lines; debate allowlist test; VN heuristic before LLM spend;
+  offline eval ≥80% answerable + hints only in hint field + question-rate
+  40–60%; safety regression untouched; node --test green; founder gates).
+- Files owned (Mark): functions/api/_minny-convo.js,
+  functions/api/minny-conversation.js, functions/api/_minny-phrases.js,
+  functions/api/read2lead-speaking-check.js (PROTECTED — minimal optional
+  `prompt` param threading only, Buffet must trace),
+  tests/minny-conversation.test.mjs, tests/minny-guardrails.test.mjs (only
+  if assertions shift), scripts/eval-minny-freetalk-v11.mjs (new).
+- Stop condition: any diff touching caps semantics, guardrail order,
+  TTS chain internals, or homework scoring paths beyond the optional
+  STT prompt param — stop and escalate. No merge to main without
+  Phương's ack (per-phase merge cadence).
+- Started: 2026-07-11
+
+## Prior task (complete): speakup-wave0-merge-to-main
+
 - Status: complete
 - Task ID: speakup-wave0-merge-to-main
 - Owner: Elon (Claude Lead). Phương gave the explicit merge GO in-session
