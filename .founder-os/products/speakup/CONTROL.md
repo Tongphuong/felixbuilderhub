@@ -89,7 +89,7 @@ assigns, commits, merges, deploys, or spends.
 
 ## Current task
 
-- Status: active
+- Status: complete
 - Task ID: speakup-v1-2-packet1-chips-ui
 - Owner: Steve (bg worker, sole owner of speak-up.astro + speakup css +
   UI tests, worktree `hub-main-speakup-merge`, no commits) to the approved
@@ -113,8 +113,59 @@ assigns, commits, merges, deploys, or spends.
   indicator visible in-app; 44px targets; reduced-motion; iPad tap-to-play
   preserved; node --test green (baseline 1004).
 - Stop condition: any functions/ diff — stop; backend is frozen
-  post-review. No merge to main without Phương's ack.
+  post-review. (One authorized exception, Buffet-reviewed: the additive
+  `repair_step` response field the approved mock's states require.)
+  No merge to main without Phương's ack.
+- Acceptance criteria reconciliation (spec §V1.2 packet 1):
+  1. PASS — per approved Wave D Set 1 mock: chips (45px measured live),
+     dashed starter hint, sentence frame + gold blank + green mic-armed
+     line, repair-step tags with approved mock copy, oversized 56px
+     repair-choice buttons, visible hands-free toggle with track/thumb +
+     "Minny đang nghe…" indicator. Verified state-by-state on the
+     DEPLOYED preview at 390 (chips / frame / repair-rephrase /
+     repair-choices) + 1280.
+  2. PASS — chips render only from server-sent options (level-gating
+     asserted in tests AND behaviorally: a no-options turn cleared the
+     scaffold live).
+  3. PASS — tap reveals frame + arms mic, never submits (Buffet trace:
+     ftOnChipTap has no fetch); the one exception, repair_step==='choices',
+     tap-resolves via the guarded JSON turn path (verified live: tap →
+     request fired → reply rendered → scaffold cleared).
+  4. PASS — 44px targets (45/56px measured); reduced-motion per-selector
+     rules; iPad tap-to-play + two-phase audio poll untouched (Buffet).
+  5. PASS — 1028/1028 node --test; astro build clean; founder build gate
+     PASS on both commits.
+  6. DEVIATION (bounded, for Phương's ack) — at ≥1024px the scaffold sits
+     in the left Minny rail (usable, coherent) rather than the mock's
+     wider center-column demo frame; phone/tablet is the kids' primary
+     surface. Phương decides: keep, or a follow-up packet anchors it into
+     the transcript column.
+- Design self-verification: rule-20 render check on the DEPLOYED preview
+  (claude-speakup-v1-1.felixbuilderhub.pages.dev) via playwright with a
+  routed test harness (synthetic API responses through the page's real
+  code paths, fake mic; no real codes or sessions consumed). Screenshots
+  in _ops: speakup-v12-final-chips-390.png, -frame-390,
+  -repair-rephrase-390, -repair-choices-390, -repair-choices-1280, vs the
+  approved mock (rendered reference: speakup-v12-mock-reference.png).
+  Verdict: MATCH at 390 across all four states; desktop placement
+  deviation recorded above. **This check caught a real ship-blocker**:
+  Steve's CSS had been added to src/styles/speakup-free-talk.css — an
+  ORPHANED stylesheet imported nowhere (only speakup-app.css loads via
+  SpeakUpAppLayout) — so the first deploy rendered all new UI unstyled
+  while 1028 tests passed and two reviews approved. Fixed by moving both
+  hunks into speakup-app.css (9073aa7) and retargeting the CSS tests to
+  the live file.
+- Founder handoff: session report to Phương with the preview URL, the
+  screenshot set, and three bounded asks (V1 branch merge ack; tick
+  is_test on the test code; desktop-placement decision).
+- Verified commit: 9073aa7 (origin/claude/speakup-v1-1, deployed preview
+  re-verified serving the new CSS before the final screenshot set)
+- Actual cost: USD 0 runtime.
+- Review trail: Steve built (2 rounds), Elon line-by-line + integration +
+  CSS-orphan fix, Buffet adversarial review incl. XSS probes (SHIP).
 - Started: 2026-07-11
+- Completed: 2026-07-11 (pending Phương's merge ack + desktop-placement
+  decision)
 
 ## Prior task (complete): speakup-v1-1-freetalk-brain
 
