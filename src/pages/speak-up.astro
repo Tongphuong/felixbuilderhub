@@ -701,7 +701,11 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
 
     function wordChips(words, tone) {
       if (!Array.isArray(words) || !words.length) return '';
-      return words.map((w) => `<span class="minny-word minny-word--${tone}">${escapeHtml(w)}</span>`).join('');
+      // V1 word-level feedback (2026-07-12): real buttons (not spans) so a
+      // tap can trigger Minny reading the word aloud — see the delegated
+      // click handler below renderResult. All call sites (read step +
+      // frame's practiceWordsRow) inherit the tappable markup.
+      return words.map((w) => `<button type="button" class="minny-word minny-word--${tone}" data-word="${escapeHtml(w)}">${escapeHtml(w)}</button>`).join('');
     }
 
     // Homework mode accumulates each completed step's score for the
@@ -807,6 +811,18 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       `;
     }
 
+    // "Từ cần luyện:" chips (V1 word-level feedback, 2026-07-12): only
+    // rendered when the pronunciation block carries its optional words[]
+    // (accuracy<70, stopwords excluded, max 3 — see
+    // mapAzureFramePronunciation); absent/empty -> nothing, so the panel
+    // stays byte-identical without this data. Reuses the read step's exact
+    // wordChips(...,'miss') renderer (Lead-authored label verbatim).
+    function practiceWordsRow(pronunciation) {
+      const words = Array.isArray(pronunciation?.words) ? pronunciation.words : [];
+      if (!words.length) return '';
+      return `<p style="margin:10px 0 0;font-size:14px;color:var(--cream-muted)"><strong>Từ cần luyện:</strong> ${wordChips(words.map((w) => w.word), 'miss')}</p>`;
+    }
+
     function renderFrameResult(result) {
       const resultEl = document.getElementById('speaking-result');
       const actionsEl = document.getElementById('speaking-actions');
@@ -833,6 +849,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
         <div class="minny-frame-rubric-card">
           <p class="minny-frame-rubric-card__eyebrow">${celebrate ? 'Bảng đánh giá' : 'Cùng nhìn lại nào'}</p>
           ${rubricHtml}
+          ${practiceWordsRow(result.pronunciation)}
         </div>
         <div class="minny-frame-smile-chip">
           <span style="font-size:24px;line-height:1" aria-hidden="true">😄</span>
@@ -914,6 +931,37 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       finalizeHomeworkStep(result, isLast);
       logPractice(result);
     }
+
+    // V1 word-level feedback fix round (2026-07-12, Elon ruling): mirrors
+    // read2lead-speaking-check.js's normalizePracticeWord exactly, so a chip
+    // labeled with the original sentence's punctuation (e.g. "banana.")
+    // taps through to precisely the string the server flagged ("banana").
+    function normalizePracticeWord(raw) {
+      return String(raw || '').toLowerCase().replace(/[^a-z'-]/g, '');
+    }
+
+    // Tap-to-hear (V1 word-level feedback, 2026-07-12): one delegated
+    // handler on the results container covers BOTH the read step's chips
+    // ("Luyện thêm:"/"Gần đúng:") and the new frame "Từ cần luyện:" chips —
+    // every chip is rendered by the same wordChips() button markup. Reuses
+    // playMinnyVoice (the page's existing fetch-then-play helper) rather
+    // than a new Audio pattern; an empty fallback text means a 403/error
+    // stays a silent no-op (never an error popup for a kid tapping a word) —
+    // this also covers "Con nhắc tới:" (words_matched, tone 'good') chips,
+    // which are never in the flagged-words record, so those taps are
+    // expected to always 403 and silently no-op, by design.
+    document.getElementById('speaking-result')?.addEventListener('click', async (event) => {
+      const chip = event.target.closest('.minny-word');
+      if (!chip || chip.classList.contains('is-loading')) return;
+      const word = normalizePracticeWord(chip.dataset.word);
+      if (!word) return;
+      chip.classList.add('is-loading');
+      try {
+        await playMinnyVoice({ word }, '');
+      } finally {
+        chip.classList.remove('is-loading');
+      }
+    });
 
     async function logPractice(result, readyForClass = false) {
       const step = currentStep();

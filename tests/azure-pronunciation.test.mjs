@@ -432,3 +432,79 @@ test('mapAzureFramePronunciation includes prosody_percent when Azure returns it'
   const mapped = mapAzureFramePronunciation(withProsody, 30);
   assert.equal(mapped.prosody_percent, 78);
 });
+
+// ---------------------------------------------------------------------------
+// speakup-word-level-feedback (V1, 2026-07-12): mapAzureFramePronunciation's
+// new optional words[] — up to 3 lowest-accuracy practice words for the
+// presentation's "Từ cần luyện" chips.
+// ---------------------------------------------------------------------------
+
+const SKIP_WORDS_FIXTURE = new Set([
+  'a', 'an', 'the', 'is', 'are', 'was', 'were', 'to', 'of', 'in', 'on', 'at',
+]);
+
+const FRAME_WORDS_BEST = {
+  Display: 'The dog ran to the park and it was fun.',
+  PronScore: 60,
+  AccuracyScore: 60,
+  FluencyScore: 60,
+  Words: [
+    { Word: 'The', ErrorType: 'None', AccuracyScore: 95 }, // stopword + high accuracy
+    { Word: 'dog', ErrorType: 'Mispronunciation', AccuracyScore: 40 }, // candidate
+    { Word: 'ran', ErrorType: 'Mispronunciation', AccuracyScore: 55 }, // candidate
+    { Word: 'to', ErrorType: 'None', AccuracyScore: 20 }, // stopword + too short
+    { Word: 'the', ErrorType: 'None', AccuracyScore: 10 }, // stopword (lowest score of all)
+    { Word: 'park', ErrorType: 'Mispronunciation', AccuracyScore: 65 }, // candidate, 4th-lowest
+    { Word: 'and', ErrorType: 'None', AccuracyScore: 30 }, // NOT a stopword — candidate
+    { Word: 'um', ErrorType: 'Insertion', AccuracyScore: 5 }, // insertion — always excluded
+    { Word: 'it', ErrorType: 'None', AccuracyScore: 15 }, // too short (len 2)
+    { Word: 'fun', ErrorType: 'None', AccuracyScore: 90 }, // accuracy >= 70 — excluded
+  ],
+};
+
+test('mapAzureFramePronunciation words[]: without skipWords, excludes Insertion/length<3/accuracy>=70, sorts ascending, caps at 3', () => {
+  const mapped = mapAzureFramePronunciation(FRAME_WORDS_BEST, 20);
+  // No skipWords passed -> 'the' (accuracy 10) is eligible and is the lowest.
+  assert.deepEqual(mapped.words, [
+    { word: 'the', accuracy_percent: 10 },
+    { word: 'and', accuracy_percent: 30 },
+    { word: 'dog', accuracy_percent: 40 },
+  ]);
+  // Base fields untouched by the words[] addition.
+  assert.equal(mapped.accuracy_percent, 60);
+  assert.equal(mapped.fluency_percent, 60);
+  assert.equal(mapped.scorer, 'azure_pronunciation_unscripted');
+  assert.equal(mapped.sampled_seconds, 20);
+});
+
+test('mapAzureFramePronunciation words[]: skipWords (SKIP_WORDS) additionally excludes stopwords', () => {
+  const mapped = mapAzureFramePronunciation(FRAME_WORDS_BEST, 20, SKIP_WORDS_FIXTURE);
+  // 'the'/'to' dropped as stopwords; 'it' still dropped for length; 'fun'/'The'
+  // still dropped for accuracy >= 70; 'um' still dropped as an Insertion.
+  // Remaining candidates ascending: and(30), dog(40), ran(55), park(65) -> top 3.
+  assert.deepEqual(mapped.words, [
+    { word: 'and', accuracy_percent: 30 },
+    { word: 'dog', accuracy_percent: 40 },
+    { word: 'ran', accuracy_percent: 55 },
+  ]);
+});
+
+test('mapAzureFramePronunciation words[]: key entirely absent (not an empty array) when no candidate qualifies', () => {
+  const allClean = {
+    Display: 'I like apples.',
+    AccuracyScore: 95,
+    FluencyScore: 95,
+    Words: [
+      { Word: 'I', ErrorType: 'None', AccuracyScore: 95 },
+      { Word: 'like', ErrorType: 'None', AccuracyScore: 90 },
+      { Word: 'apples', ErrorType: 'None', AccuracyScore: 88 },
+    ],
+  };
+  const mapped = mapAzureFramePronunciation(allClean, 10, SKIP_WORDS_FIXTURE);
+  assert.equal('words' in mapped, false);
+});
+
+test('mapAzureFramePronunciation words[]: missing/non-array Words[] is safe (no words key, no throw)', () => {
+  const mapped = mapAzureFramePronunciation({ AccuracyScore: 50, FluencyScore: 50 }, 10, SKIP_WORDS_FIXTURE);
+  assert.equal('words' in mapped, false);
+});

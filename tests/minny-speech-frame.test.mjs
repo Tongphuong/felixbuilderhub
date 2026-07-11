@@ -330,12 +330,21 @@ function extractFunctionSrc(source, name) {
 }
 
 function loadPronunciationRow() {
-  const body = `${extractFunctionSrc(speakingPage, 'escapeHtml')}\n\n${extractFunctionSrc(speakingPage, 'pronunciationRow')}\n\nreturn { pronunciationRow };`;
+  // Also pulls in wordChips + practiceWordsRow (speakup-word-level-feedback,
+  // V1, 2026-07-12): practiceWordsRow calls wordChips, which calls
+  // escapeHtml, so all three travel together for the `new Function` eval.
+  const body = [
+    extractFunctionSrc(speakingPage, 'escapeHtml'),
+    extractFunctionSrc(speakingPage, 'wordChips'),
+    extractFunctionSrc(speakingPage, 'pronunciationRow'),
+    extractFunctionSrc(speakingPage, 'practiceWordsRow'),
+    'return { wordChips, pronunciationRow, practiceWordsRow };',
+  ].join('\n\n');
   // eslint-disable-next-line no-new-func -- see file header: pure, DOM-free source extracted from the page itself
   return new Function(body)();
 }
 
-const { pronunciationRow } = loadPronunciationRow();
+const { wordChips, pronunciationRow, practiceWordsRow } = loadPronunciationRow();
 
 test('pronunciationRow: absent block renders nothing (frame panel stays byte-identical to today)', () => {
   assert.equal(pronunciationRow(null), '');
@@ -368,4 +377,84 @@ test('client recorder condition: frame steps record WAV, alongside read and hw_p
     speakingPage,
     /recStep\.check_mode === 'read' \|\| recStep\.id === 'hw_photo_talk' \|\| recStep\.check_mode === 'frame'/,
   );
+});
+
+// ---------------------------------------------------------------------------
+// speakup-word-level-feedback (V1, 2026-07-12): per-word chips for
+// presentations ("Từ cần luyện:") + tap-to-hear-Minny on every word chip.
+// ---------------------------------------------------------------------------
+
+test('wordChips: renders real buttons (not spans) carrying the word in data-word, escaped', () => {
+  const html = wordChips(['dog', 'a "quoted" word'], 'miss');
+  assert.match(html, /<button type="button" class="minny-word minny-word--miss" data-word="dog">dog<\/button>/);
+  assert.match(html, /data-word="a &quot;quoted&quot; word"/, 'attribute value is HTML-escaped');
+});
+
+test('wordChips: absent/empty words -> empty string (unchanged)', () => {
+  assert.equal(wordChips(null, 'miss'), '');
+  assert.equal(wordChips([], 'miss'), '');
+});
+
+test('practiceWordsRow: absent/empty pronunciation.words -> nothing (frame panel stays byte-identical without this data)', () => {
+  assert.equal(practiceWordsRow(null), '');
+  assert.equal(practiceWordsRow(undefined), '');
+  assert.equal(practiceWordsRow({ accuracy_percent: 80 }), ''); // no words[] at all
+  assert.equal(practiceWordsRow({ words: [] }), '');
+});
+
+test('practiceWordsRow: renders the Lead-authored "Từ cần luyện:" label with the plain word strings via wordChips(...,\'miss\')', () => {
+  const html = practiceWordsRow({ words: [{ word: 'apples', accuracy_percent: 40 }, { word: 'run', accuracy_percent: 55 }] });
+  assert.match(html, /Từ cần luyện:/);
+  assert.match(html, /minny-word--miss/);
+  assert.match(html, /data-word="apples"/);
+  assert.match(html, /data-word="run"/);
+  // Maps to plain word strings first -- accuracy_percent must not leak into the chip markup.
+  assert.doesNotMatch(html, /40/);
+  assert.doesNotMatch(html, /55/);
+});
+
+test('renderFrameResult wires practiceWordsRow into the rubric card, right after pronunciationRow', () => {
+  const src = extractFunctionSrc(speakingPage, 'renderFrameResult');
+  assert.match(src, /pronunciationRow\(result\.pronunciation\)[\s\S]*practiceWordsRow\(result\.pronunciation\)/);
+});
+
+test('tap-to-hear: one delegated click handler on #speaking-result covers every .minny-word chip', () => {
+  const idx = speakingPage.indexOf("getElementById('speaking-result')?.addEventListener('click'");
+  assert.notEqual(idx, -1, 'delegated click handler registered on the results container');
+  const handlerSrc = speakingPage.slice(idx, speakingPage.indexOf('});', idx) + 3);
+  assert.match(handlerSrc, /closest\('\.minny-word'\)/, 'delegation targets any chip rendered by wordChips (read-step + frame)');
+  assert.match(handlerSrc, /normalizePracticeWord\(chip\.dataset\.word\)/, 'normalizes the chip word before sending -- must match what the server allowlisted');
+  assert.match(handlerSrc, /playMinnyVoice\(\{\s*word\s*\}\s*,\s*''\s*\)/, 'reuses the page\'s existing fetch-then-play helper, no new Audio pattern');
+  assert.doesNotMatch(handlerSrc, /new Audio\(/, 'must not add a second Audio-playing pattern');
+  assert.match(handlerSrc, /is-loading/, 'pressed/pulse state while the request is in flight');
+});
+
+test('tap-to-hear handler comment documents that "Con nhắc tới:" (words_matched) taps are expected to no-op (Elon ruling 2026-07-12, accepted as-built)', () => {
+  const idx = speakingPage.indexOf("getElementById('speaking-result')?.addEventListener('click'");
+  const commentStart = speakingPage.lastIndexOf('// Tap-to-hear', idx);
+  assert.notEqual(commentStart, -1);
+  const comment = speakingPage.slice(commentStart, idx);
+  assert.match(comment, /words_matched/);
+  assert.match(comment, /no-op/i);
+});
+
+test('normalizePracticeWord (client): mirrors the server\'s normalizePracticeWord exactly -- strips outside [a-z\'-] after lowercasing', () => {
+  const body = `${extractFunctionSrc(speakingPage, 'normalizePracticeWord')}\n\nreturn { normalizePracticeWord };`;
+  // eslint-disable-next-line no-new-func -- see file header: pure, DOM-free source extracted from the page itself
+  const { normalizePracticeWord } = new Function(body)();
+  assert.equal(normalizePracticeWord('banana.'), 'banana');
+  assert.equal(normalizePracticeWord('DOG!'), 'dog');
+  assert.equal(normalizePracticeWord("don't"), "don't");
+  assert.equal(normalizePracticeWord('...'), '', 'a chip that somehow normalizes to nothing never fires a request (early return on falsy word)');
+});
+
+test('playMinnyVoice posts { access_code, word } and falls back to a silent no-op (not speechSynthesis) on 403/error', () => {
+  const src = extractFunctionSrc(speakingPage, 'playMinnyVoice');
+  assert.match(src, /'\/api\/minny-voice'/);
+  assert.match(src, /\.\.\.payload/, 'spreads the caller\'s payload (word/text/phrase_id) alongside access_code');
+  // speakEnglish('') is a no-op (see its own guard: `if (!line ...) return;`),
+  // so passing an empty fallbackText for the word-chip call site is how tap-
+  // to-hear stays silent on failure without a second failure-handling path.
+  const speakEnglishSrc = extractFunctionSrc(speakingPage, 'speakEnglish');
+  assert.match(speakEnglishSrc, /if \(!line \|\| !window\.speechSynthesis\) return;/);
 });

@@ -940,19 +940,28 @@
   color: var(--gold);
 }
 
-/* Word chips (sentence results, 7a screen 4 legend) */
+/* Word chips (sentence results, 7a screen 4 legend) — real buttons, tap to
+   hear Minny say the word (V1 word-level feedback, 2026-07-12). */
 .minny-word {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
   margin: 2px 3px;
+  border: none;
   border-radius: 8px;
   padding: 4px 10px;
   font-size: 15px;
   font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
 }
 
 .minny-word--good { background: rgba(111, 207, 151, 0.18); color: #bbf7d0; }
 .minny-word--close { background: rgba(242, 204, 126, 0.18); color: var(--gold-light); }
 .minny-word--miss { background: rgba(170, 150, 115, 0.15); color: rgba(245, 230, 200, 0.7); }
+
+.minny-word.is-loading { animation: minny-listen-pulse 1s ease-in-out infinite; }
 
 .spk-actions {
   display: grid;
@@ -1477,6 +1486,8 @@
   .minny-handsfree__thumb {
     transition: none;
   }
+
+  .minny-word.is-loading { animation: none; opacity: 0.6; }
 }
 
 /* --- Homework photo (thumb in story card + lightbox) --- */

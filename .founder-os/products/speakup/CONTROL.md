@@ -89,6 +89,60 @@ assigns, commits, merges, deploys, or spends.
 
 ## Current task
 
+- Status: active
+- Task ID: speakup-word-level-feedback
+- Owner: Mark (bg worker, packet scratchpad/word-feedback-packet.md);
+  Elon review + integration; Buffet ADVERSARIAL review mandatory on the
+  minny-voice allowlist extension (new kid-adjacent TTS surface). Phương
+  approved the 3-step plan 2026-07-11 ("see the words → hear them → fix
+  them"); this task = steps 1–2, V1.4 fix-it round follows as its own
+  gated phase (pulled ahead of V1.3 per the approved plan's sequencing
+  note — deterministic, no LLM gate needed).
+- Lane: `claude/speakup-v1-1` → `main` after review.
+- Problem: kids see only a percentage — reading shows per-word chips but
+  presentations discard Azure's per-word data, and no chip is tappable to
+  hear the model. Big-app loop (ELSA/Speak): show words → hear model →
+  retry. Phoneme-level tips deliberately parked (not child-calibrated).
+- Reuse survey: N/A external — surfaces data already present in the paid
+  Azure responses + reuses the existing wordChips renderer, SKIP_WORDS
+  stopword set, Aura-2 TTS chain/KV cache, and the convo-audio ownership
+  pattern for the voice allowlist. No new capability class.
+- Cost ceiling: Claude team (Max plan, not metered); runtime $0 (word
+  data already in responses; tap-to-hear rides the cached TTS chain).
+- Acceptance criteria:
+  1. Presentations: pronunciation block gains words[] — lowest-accuracy
+     first, accuracy<70 only, stopwords excluded via SKIP_WORDS passed as
+     an argument (no circular import), max 3, {word, accuracy_percent}.
+  2. UI: "Từ cần luyện:" chips under the pronunciation row reusing the
+     read step's exact wordChips(…,'miss') renderer; absent → nothing.
+  3. Speaking-check endpoint writes an owner-stamped, short-TTL (1h) KV
+     record flagged-words:<code> after any result carrying practice
+     words (read words_missed/words_close + frame pronunciation words);
+     best-effort, never blocks the response; single write site in
+     onRequestPost (minimal PROTECTED diff).
+  4. minny-voice gains a `word` branch: single alpha token ≤30 chars,
+     lowercased, must be in the caller's own flagged-words record →
+     synthesize; anything else 403. Existing phrase/sentence branches
+     byte-identical. Adversarial fixtures: arbitrary word 403, other
+     code's flagged word 403, expired record 403, injection strings 403.
+  5. Tap-to-hear on BOTH read chips and new frame chips (one handler);
+     ≥44px targets; audio plays via the existing play path.
+  6. node --test green (baseline 1047 + new); astro build clean; founder
+     gates; live prod verify: frame check returns words[]; voice returns
+     audio for a flagged word and 403 for a non-flagged word.
+- Files owned (Mark): functions/api/_azure-pronunciation.js,
+  functions/api/read2lead-speaking-check.js (PROTECTED, minimal),
+  functions/api/minny-voice.js, src/pages/speak-up.astro,
+  tests/azure-pronunciation.test.mjs, tests/minny-speech-frame.test.mjs,
+  tests/minny-tts.test.mjs (voice endpoint tests live where they live —
+  Mark finds the right suite and reports).
+- Stop condition: any relaxation of minny-voice beyond the single-word
+  flagged-record branch (it must never become an open TTS proxy); any
+  change to scoring semantics — stop.
+- Started: 2026-07-12
+
+## Prior task (complete): speakup-azure-frame-grading
+
 - Status: complete
 - Task ID: speakup-azure-frame-grading
 - Owner: Mark (bg worker, packet scratchpad/azure-frame-packet.md) builds;
