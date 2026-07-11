@@ -5,12 +5,14 @@
 - Branch: `claude/speakup-v0` (off `main`)
 - Preview URL: `claude-speakup-v0.felixbuilderhub.pages.dev` (Cloudflare Pages auto-deploy per push, per `claude/<topic>` convention in `BRANCH_CONVENTIONS.md`)
 - Active workers: 0
-- Last updated: 2026-07-10 (V1 roadmap APPROVED — "Coach's Gym" niche +
-  2-pillar V1, `_ops/specs/SPEC_SPEAKUP_V1.md`; V1 phase tracker added
-  below; Wave D design mocks dispatched. V0 close-out: **red-team DONE
-  (Phương, 2026-07-10)**; key+password rotation is scheduled as the
-  pre-merge step, NOT an open nag item — do not re-ask; remaining before
-  merge: ear test, phrases sign-off, dry run, then rotate keys + merge)
+- Last updated: 2026-07-11 (**V0 MERGED TO MAIN + PRODUCTION LIVE** —
+  72e589b, prod smoke-verified; Wave 0 CLOSED, V1 code unblocked. Session
+  reconciliation: Phương opened a new-modes brainstorm pointing at the
+  07-07 research spec; resolved with him that SPEC_SPEAKUP_V1.md remains
+  the roadmap of record — decisions: follow the ratified roadmap, V1.2
+  chips packet first, merge now; picture-describe upgrade for HOMEWORK
+  mode logged in IDEAS (exam-style anchors + Minny follow-ups; many
+  students target Cambridge Starters/Movers/Flyers); video mode REJECTED.)
 
 ## Phase tracker (source of truth: `_ops/specs/SPEC_SPEAKUP_V0.md`)
 
@@ -73,7 +75,7 @@ assigns, commits, merges, deploys, or spends.
 
 | Wave/Phase | What | Owner | Status | Gate |
 |---|---|---|---|---|
-| Wave 0 | V0 close-out: ~~red-team~~ ~~ear test~~ ~~phrases sign-off~~ ~~dry run~~ ~~key rotation~~ **ALL DONE (Phương, reported 2026-07-11)** — sole remaining step: **merge `claude/speakup-v0` → main** (Phương's call), then pilot start | **Phương** | merge pending | hard blocker for all V1 code |
+| Wave 0 | V0 close-out: **DONE 2026-07-11** — all founder items done; Phương gave explicit merge GO in-session; `claude/speakup-v0` merged to `main` (72e589b, conflict-free, 950/950 tests) and production verified live (`/speak-up/` + context endpoint answering on felixbuilderhub.com). Pilot can start. | **Phương** + Elon | **DONE** | V1 code UNBLOCKED |
 | Wave D | Design mocks batch 1: choice-chip conversation view (L1–L2) + homework feedback panel v2 + fix-it round | Steve (delivered f141620) | **APPROVED (Phương, 2026-07-10)** — as-drawn; README open questions resolved to the mocks' defaults; Vietnamese copy tone pass rides the build phases | done |
 | Wave D2 | Design mocks batch 2: L3–L5 free talk — topic picker (R2L HUB_TOPICS/TopicTile reuse), 💡 hint-on-demand states, L4–L5 game cards (build-a-story / debate / would-you-rather) | Steve (delivered e903682) | **APPROVED (Phương, 2026-07-10)** — as-drawn, same terms; V1-D6 teacher-panel mock exemption stands (not vetoed) | done |
 | V1.1 | Free-talk brain (backend): L1–L2 chips protocol + expected-answer matching + repair ladder; L3–L5 topic-seeded prompt + hint field; L4–L5 game protocols (former V1.P, folded) | Elon (prompt) + Mark (glue) + Buffet (review) | not started | Wave 0 |
@@ -87,7 +89,7 @@ assigns, commits, merges, deploys, or spends.
 
 ## Current task
 
-- Status: active
+- Status: complete
 - Task ID: speakup-wave0-merge-to-main
 - Owner: Elon (Claude Lead). Phương gave the explicit merge GO in-session
   2026-07-11 (AskUserQuestion answer: "Yes — merge V0 now"), after Wave 0
@@ -97,15 +99,27 @@ assigns, commits, merges, deploys, or spends.
   phases + the Wave 0 fix round). Merge worktree `hub-main-speakup-merge`.
 - Reuse survey: N/A — release/merge task, builds no new capability.
 - Cost ceiling: Claude team (Max plan, not metered); runtime USD 0.
-- Acceptance criteria:
-  1. Merge of `origin/claude/speakup-v0` into `main` conflict-free (or
-     resolutions proven by both products' tests).
-  2. Full `node --test` green + `astro build` clean on the MERGED tree.
-  3. founder build gate PASS before push.
-  4. Production deploy serves the merged build; smoke test: `/speak-up`
-     loads and the speaking-context endpoint answers on production.
-  5. Wave 0 tracker row updated; AGENT_LOG START/DONE logged.
+- Acceptance criteria reconciliation:
+  1. PASS — merge conflict-free (main had 21 R2L commits, branch 119 SpeakUp
+     commits, zero overlapping hunks); merge commit ff5b1a3.
+  2. PASS — 950/950 `node --test` on the merged tree (V0's 903 + main's R2L
+     suites); `astro build` clean, 25 pages.
+  3. PASS — founder build gate PASS after opening this task (pre-push).
+  4. PASS — pushed f6d0cfa..72e589b to origin/main; Cloudflare production
+     verified live: `/speak-up/` serves the app (title "SpeakUp — Luyện nói
+     cùng Minny"), `/api/minny-speaking-context` answers correctly
+     (code_not_found for an invalid code), `deploy-marker.txt` 200 (file
+     exists only in the merged build — proves prod rebuilt from the merge).
+  5. PASS — Wave 0 tracker row DONE; AGENT_LOG START + DONE logged.
+- Design self-verification: N/A visual (release task, no UI change) —
+  behavioral verification is the production smoke test in criterion 4,
+  run against the live https://felixbuilderhub.com after the deploy.
+- Founder handoff: in-session plain-language report to Phương (V0 live,
+  pilot can start; V1.1 dispatch next per his three in-session decisions).
+- Verified commit: 72e589b (origin/main, production-verified live)
+- Actual cost: USD 0 runtime.
 - Started: 2026-07-11
+- Completed: 2026-07-11
 
 ## Prior task (complete): speakup-v0-test-code-cap-bypass
 
