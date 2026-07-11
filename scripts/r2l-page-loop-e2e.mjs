@@ -139,6 +139,22 @@ async function launch(micWav) {
 const shot = (page, name) => page.screenshot({ path: join(OUT, 'shots', `${name}.png`), fullPage: false }).catch(() => {});
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
+// The lesson's protected mic-check gate ("Kiểm tra micro", blockUntilPass)
+// must pass once per browser session before any recording. The fake capture
+// device is our speech WAV, so the check's non-silence probe passes as long
+// as we run it AFTER relaunching with real audio (never with the silent WAV).
+async function passMicCheck(page) {
+  const state = await page.evaluate(() => document.querySelector('[data-r2l-mic-check]')?.dataset?.state || 'missing');
+  if (state === 'passed' || state === 'missing') return state;
+  await page.locator('[data-mic-test]').first().click({ timeout: 5000 });
+  await page.waitForFunction(
+    () => document.querySelector('[data-r2l-mic-check]')?.dataset?.state === 'passed',
+    { timeout: 25000 },
+  );
+  report.micCheckPassed = true;
+  return 'passed';
+}
+
 async function visibleStage(page) {
   return page.evaluate(() => {
     const el = [...document.querySelectorAll('[data-book-stage-container]')].find((c) => !c.classList.contains('hidden'));
@@ -259,11 +275,21 @@ async function main() {
       await page.locator('#mic-prep-dismiss, [data-mic-prep-dismiss]').first().click({ timeout: 1500 }).catch(() => {});
       const st2 = await visibleStage(page);
       if (st2.stage !== 'shadow') { log(`resume landed on ${st2.stage}, looping`); continue; }
-      const rec = page.locator('[data-speak-record]');
+      await passMicCheck(page);
+      const rec = page.locator('#book-reader-shadow-body [data-speak-record]');
       await page.waitForFunction(() => {
-        const b = document.querySelector('[data-speak-record]');
+        const b = document.querySelector('#book-reader-shadow-body [data-speak-record]');
         return b && !b.disabled;
-      }, { timeout: 10000 });
+      }, { timeout: 15000 }).catch(async () => {
+        const diag = await page.evaluate(() => ({
+          disabled: document.querySelector('#book-reader-shadow-body [data-speak-record]')?.disabled,
+          heard: document.querySelector('#book-reader-shadow-body [data-speak-record]')?.dataset?.heard,
+          micState: document.querySelector('[data-r2l-mic-check]')?.dataset?.state,
+          micBlocked: document.querySelector('[data-r2l-mic-check]')?.dataset?.blocked,
+          hint: document.querySelector('[data-book-rec-hint]')?.textContent,
+        }));
+        throw new Error(`record button never enabled: ${JSON.stringify(diag)}`);
+      });
       report.micUnlockedWithoutSample = true;
       await rec.click();
       log(`recording ~${Math.ceil(mic.seconds)}s of real speech…`);

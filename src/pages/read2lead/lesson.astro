@@ -5464,18 +5464,21 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
     qs('#book-reader-listen-btn')?.addEventListener('click', bookPlayPageAudio);
     qs('#book-reader-story-next')?.addEventListener('click', bookGoToNextStoryPage);
     qs('#book-reader-next')?.addEventListener('click', () => {
-      const total = state.lesson.book_images.length;
       if (state.bookReader.stage !== 'next') return;
       stopLessonAudio();
-      if (state.bookReader.pageIndex >= total - 1) {
+      // Advance to the FIRST page with unfinished work, not blindly to
+      // pageIndex + 1 — after a trail revisit of a completed page, +1 would
+      // walk the kid through every already-done page one tap at a time
+      // (Buffet review finding, 2026-07-12). All pages done -> finish.
+      const firstIncomplete = state.bookReader.pages.findIndex((page) => !bookPageIsComplete(page));
+      if (firstIncomplete < 0) {
         bookFinishReader();
         return;
       }
       bookAnimatePageTurn(() => {
-        state.bookReader.pageIndex += 1;
-        state.bookReader.stage = bookPracticeStageForPage(bookPageState());
         state.bookReader.questionIndex = 0;
         state.bookReader.chunkIndex = 0;
+        bookResumeFrontier();
         bookShowPage();
         scheduleSaveLessonSession();
       });

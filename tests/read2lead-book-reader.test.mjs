@@ -18,6 +18,11 @@ test('book page audio must end before the page unlocks its own questions', () =>
   assert.match(body, /bookSetStage\(bookPracticeStageForPage\(page\)\)/);
   assert.match(lesson, /function bookGoToNextStoryPage/);
   assert.match(lesson, /function bookResumeFrontier/);
+  // Both advance paths route through the frontier: the reward panel's next
+  // button must never walk +1 through already-completed pages (Buffet
+  // finding 2026-07-12), and it finishes only when NO page has work left.
+  assert.match(lesson, /bookAnimatePageTurn\(\(\) => \{\s*state\.bookReader\.questionIndex = 0;\s*state\.bookReader\.chunkIndex = 0;\s*bookResumeFrontier\(\);/s);
+  assert.match(lesson, /if \(firstIncomplete < 0\) \{\s*bookFinishReader\(\);/s);
   assert.match(body, /addEventListener\('error', fail/);
   assert.match(body, /addEventListener\('r2l-play-error', fail/);
   assert.doesNotMatch(
