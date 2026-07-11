@@ -20,7 +20,11 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 
 const speakingPage = readFileSync('src/pages/speak-up.astro', 'utf-8');
-const freeTalkCss = readFileSync('src/styles/speakup-free-talk.css', 'utf-8');
+// The free-talk styles MUST live in speakup-app.css -- the only stylesheet
+// SpeakUpAppLayout imports. speakup-free-talk.css is an orphaned duplicate
+// (imported nowhere); styles added there never reach the page (rule-20
+// render check caught exactly this on 2026-07-11).
+const freeTalkCss = readFileSync('src/styles/speakup-app.css', 'utf-8');
 
 function extractFunctionSrc(source, name) {
   const marker = `function ${name}(`;
@@ -314,9 +318,9 @@ test('new tappable targets meet the 44px floor', () => {
 });
 
 test('reduced-motion disables the new listening-indicator pulse (this file\'s per-selector convention, not the mock\'s blanket *-rule)', () => {
-  const reducedMotionBlock = freeTalkCss.slice(
-    freeTalkCss.indexOf('@media (prefers-reduced-motion: reduce)'),
-    freeTalkCss.indexOf('@media (prefers-reduced-motion: reduce)') + freeTalkCss.slice(freeTalkCss.indexOf('@media (prefers-reduced-motion: reduce)')).indexOf('\n}\n') + 3,
-  );
-  assert.match(reducedMotionBlock, /\.minny-listening-indicator__dot\s*\{[^}]*animation:\s*none/s);
+  // speakup-app.css legitimately has more than one reduced-motion media
+  // block (the pre-existing one plus the V1.2 additions) -- assert the rule
+  // lives inside ANY of them, not just the first.
+  const rule = /@media \(prefers-reduced-motion: reduce\)[^@]*?\.minny-listening-indicator__dot\s*\{[^}]*animation:\s*none/s;
+  assert.match(freeTalkCss, rule);
 });
