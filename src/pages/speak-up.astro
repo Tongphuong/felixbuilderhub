@@ -144,6 +144,11 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
             <button id="speaking-retry" type="button" class="spk-btn spk-btn--ghost">Luyện lại</button>
             <button id="speaking-next" type="button" class="spk-btn spk-btn--green">Tiếp theo</button>
           </div>
+
+          <!-- V1.4 fix-it round (Wave D Set 2 screens 3-5): JS-rendered
+               invitation/rep/celebrate card, additive below the existing
+               result + actions above -- never replaces or hides them. -->
+          <div id="fixit-round" class="hidden"></div>
         </div>
 
         <!-- RIGHT: recorder panel (7a board values) -->
@@ -332,7 +337,19 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       micGateReady: false,
       homeworkResults: [],
       homeworkComplete: false,
+      fixit: null,
     };
+
+    // V1.4 fix-it round (Wave D Set 2 screens 3-5, design_handoff_speakup_v1
+    // /SpeakUp V1 Homework Feedback v2.dc.html): <=3 reps TOTAL per homework
+    // attempt (not per word) is the Azure cost fence -- see CONTROL.md's
+    // speakup-v1-4-fixit-round task. FIXIT_CELEBRATE_MIN mirrors
+    // renderFrameResult's existing celebrate cutoff (matchPct >= 70) so a
+    // single-word exact match (scoreTranscript gives 100/50/0 for one word)
+    // reads as celebrate, a close match reads as encourage.
+    const FIXIT_REP_CAP = 3;
+    const FIXIT_CELEBRATE_MIN = 70;
+    const FIXIT_MAX_SECONDS = 6;
 
     function escapeHtml(value) {
       return String(value || '')
@@ -692,6 +709,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       setMinnyMood('idle');
       document.getElementById('speaking-result').classList.add('hidden');
       document.getElementById('speaking-actions').classList.add('hidden');
+      fixitReset();
       document.getElementById('speaking-record').disabled = false;
       const isQuestion = step.kind === 'question';
       document.getElementById('speaking-status').textContent = isQuestion
@@ -871,6 +889,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
 
       finalizeHomeworkStep(result, isLast);
       logPractice({ ...result, score_percent: matchPct });
+      maybeShowFixitInvite(result);
     }
 
     function renderResult(result) {
@@ -930,6 +949,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
 
       finalizeHomeworkStep(result, isLast);
       logPractice(result);
+      maybeShowFixitInvite(result);
     }
 
     // V1 word-level feedback fix round (2026-07-12, Elon ruling): mirrors
@@ -938,6 +958,66 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
     // taps through to precisely the string the server flagged ("banana").
     function normalizePracticeWord(raw) {
       return String(raw || '').toLowerCase().replace(/[^a-z'-]/g, '');
+    }
+
+    // ===================== V1.4 fix-it round — pure helpers =================
+    // Pure, DOM-free (see tests/speakup-fixit-ui.test.mjs): plain data in,
+    // plain data out, so behavior is covered without a DOM.
+
+    // Rep-word derivation: read mode's words_close/words_missed (same order
+    // renderResult already shows them: close before missed) or frame mode's
+    // pronunciation.words[] (same order practiceWordsRow already shows),
+    // deduped by the shared normalizePracticeWord form, capped at 3. 'open'
+    // check_mode (words_matched only) never offers a fix-it round.
+    function fixitDeriveRepWords(result) {
+      if (!result || result.ok === false) return [];
+      let raw = [];
+      if (result.check_mode === 'frame') {
+        const words = Array.isArray(result.pronunciation?.words) ? result.pronunciation.words : [];
+        raw = words.map((w) => w?.word);
+      } else if (result.check_mode !== 'open') {
+        raw = [...(result.words_close || []), ...(result.words_missed || [])];
+      }
+      const seen = new Set();
+      const out = [];
+      for (const w of raw) {
+        const norm = normalizePracticeWord(w);
+        if (!norm || seen.has(norm)) continue;
+        seen.add(norm);
+        out.push(String(w));
+        if (out.length >= 3) break;
+      }
+      return out;
+    }
+
+    // A single-word read-check scores 100 (exact), 50 (close) or 0 (missed)
+    // per scoreTranscript's CLOSE_SCORE_WEIGHT -- any cutoff in (50,100]
+    // separates them identically; FIXIT_CELEBRATE_MIN reuses the frame
+    // panel's own celebrate cutoff rather than inventing a new number.
+    function fixitRepOutcome(scorePercent) {
+      const pct = Number(scorePercent);
+      return Number.isFinite(pct) && pct >= FIXIT_CELEBRATE_MIN ? 'celebrate' : 'encourage';
+    }
+
+    // The 3-rep hard cap is the Azure cost fence: it counts SUBMISSIONS
+    // total across the whole round, not per word, so it always increments
+    // regardless of outcome (including a client-side/network failure --
+    // conservative on purpose, since undercounting on failure would let a
+    // flaky connection loop past the fence). Once the cap is hit the round
+    // always finishes, even mid-celebrate or with words left unreached --
+    // per the mock's screen 4 note ("capped at <=3 total, not per word").
+    function fixitAfterRep(fixitState, outcome) {
+      const repsUsed = (fixitState?.repsUsed || 0) + 1;
+      const wordsLeft = (fixitState?.wordIndex ?? 0) < ((fixitState?.words?.length || 0) - 1);
+      if (repsUsed >= FIXIT_REP_CAP) return { action: 'finish', repsUsed };
+      if (outcome === 'celebrate') return { action: wordsLeft ? 'next-word' : 'finish', repsUsed };
+      return { action: 'retry-word', repsUsed };
+    }
+
+    // The one-word re-record request: the EXISTING /api/read2lead-speaking
+    // -check endpoint, read-mode single-word scoring (zero backend change).
+    function fixitReadCheckRequestFields(word) {
+      return { check_mode: 'read', expected_text: String(word || ''), practice_mode: '1' };
     }
 
     // Tap-to-hear (V1 word-level feedback, 2026-07-12): one delegated
@@ -962,6 +1042,270 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
         chip.classList.remove('is-loading');
       }
     });
+
+    // ===================== V1.4 fix-it round — DOM wiring ====================
+    // Appended BELOW the existing #speaking-actions (Luyện lại / Bước tiếp
+    // theo) rather than replacing the result panel -- per the handoff
+    // README's own framing ("no screen blocks the next step flow"), those
+    // buttons stay exactly as they are the whole time; the fix-it card is
+    // purely additive, same pattern as the (not-yet-built) feedback sandwich
+    // rendering directly under the existing score/rubric/smile-chip stack.
+
+    function fixitReset() {
+      const el = document.getElementById('fixit-round');
+      if (el) {
+        el.classList.add('hidden');
+        el.innerHTML = '';
+      }
+      if (state.fixit?.kidAudioUrl) URL.revokeObjectURL(state.fixit.kidAudioUrl);
+      state.fixit = null;
+    }
+
+    // Called after every scored result (read/open/frame). Populates the
+    // skippable invitation (mock screen 3) when there are practice words;
+    // otherwise leaves the panel hidden/empty, byte-identical to before this
+    // feature for a clean result.
+    function maybeShowFixitInvite(result) {
+      const el = document.getElementById('fixit-round');
+      if (!el) return;
+      const words = fixitDeriveRepWords(result);
+      if (!words.length) {
+        fixitReset();
+        return;
+      }
+      state.fixit = { words, wordIndex: 0, repsUsed: 0, kidAudioUrl: null, recording: null };
+      renderFixitInvite(words);
+    }
+
+    function fixitWordChip(word) {
+      return `<span class="minny-word minny-word--close minny-word--focus">${escapeHtml(word)}</span>`;
+    }
+
+    function renderFixitInvite(words) {
+      const el = document.getElementById('fixit-round');
+      if (!el) return;
+      el.innerHTML = `
+        <div class="minny-fixit-invite">
+          <div class="minny-fixit-invite__avatar" aria-hidden="true">🐨</div>
+          <p class="minny-fixit-invite__title">Mình luyện lại ${words.length} từ này nhé!</p>
+          <div class="minny-fixit-invite__words">${words.map(fixitWordChip).join('')}</div>
+          <div class="minny-fixit-invite__actions">
+            <button type="button" class="spk-btn spk-btn--gold" id="fixit-start-btn" style="width:100%">Bắt đầu luyện 🎯</button>
+            <button type="button" class="minny-fixit-invite__skip" id="fixit-skip-btn">Bỏ qua, làm sau</button>
+          </div>
+        </div>
+      `;
+      el.classList.remove('hidden');
+      document.getElementById('fixit-start-btn')?.addEventListener('click', fixitStart);
+      // Skip is a real, always-available exit: closes the card, no closing
+      // celebrate screen, never blocks the existing Bước tiếp theo flow.
+      document.getElementById('fixit-skip-btn')?.addEventListener('click', fixitReset);
+    }
+
+    function fixitStart() {
+      if (!state.fixit) return;
+      renderFixitRep();
+    }
+
+    function renderFixitRep() {
+      const el = document.getElementById('fixit-round');
+      const fx = state.fixit;
+      if (!el || !fx) return;
+      const word = fx.words[fx.wordIndex];
+      const hasKidAudio = Boolean(fx.kidAudioUrl);
+      el.innerHTML = `
+        <div class="minny-fixit-rep">
+          <p class="minny-fixit-rep__progress">Từ ${fx.wordIndex + 1} / ${fx.words.length}</p>
+          <p class="minny-fixit-rep__word">${escapeHtml(word)}</p>
+          <div class="minny-fixit-rep__compare">
+            <button type="button" class="minny-compare-btn minny-compare-btn--minny" id="fixit-hear-minny">🔊 Nghe Minny</button>
+            ${hasKidAudio ? '<button type="button" class="minny-compare-btn minny-compare-btn--kid" id="fixit-hear-kid">▶️ Nghe con nói</button>' : ''}
+          </div>
+          <button type="button" class="spk-rec-btn spk-rec-btn--sm" id="fixit-record-btn" aria-label="Nhấn để thu âm lại">
+            <span class="spk-rec-btn__icon" aria-hidden="true"></span>
+          </button>
+          <p class="minny-fixit-rep__rerecord-label" id="fixit-rerecord-label">Nhấn để thu âm lại</p>
+        </div>
+      `;
+      el.classList.remove('hidden');
+      // Hear Minny: reuses the shipped minny-voice word branch verbatim
+      // (same helper the read/frame chips already call).
+      document.getElementById('fixit-hear-minny')?.addEventListener('click', () => { playMinnyVoice({ word }, ''); });
+      // Hear yourself: plays back THIS rep's own last recording client-side --
+      // nothing uploaded, no button until a recording exists this rep (mock
+      // screen 4 note).
+      document.getElementById('fixit-hear-kid')?.addEventListener('click', () => {
+        if (!fx.kidAudioUrl) return;
+        stopPlayback();
+        const audio = new Audio(fx.kidAudioUrl);
+        state.activeAudio = audio;
+        audio.addEventListener('ended', () => { state.activeAudio = null; });
+        audio.play().catch(() => {});
+      });
+      document.getElementById('fixit-record-btn')?.addEventListener('click', fixitToggleRecord);
+    }
+
+    async function fixitToggleRecord() {
+      const fx = state.fixit;
+      if (!fx) return;
+      if (fx.recording) fixitStopRecording();
+      else await fixitStartRecording();
+    }
+
+    // Mirrors startRecording()'s R2LRecorder sequence (getStream -> wav
+    // engine -> startMonitor) but standalone from the main homework-step
+    // recorder/state.recording session -- a fix-it rep is not a homework
+    // step, so it must not touch currentStep()/finalizeHomeworkStep/
+    // logPractice bookkeeping. Short fixed cap (FIXIT_MAX_SECONDS) instead
+    // of the ring countdown UI -- a single word never needs 30s.
+    async function fixitStartRecording() {
+      const fx = state.fixit;
+      if (!fx || fx.recording) return;
+      const btn = document.getElementById('fixit-record-btn');
+      const session = { stream: null, recorder: null, monitor: null, timerId: null };
+      fx.recording = session;
+      btn?.classList.add('is-recording');
+      try {
+        const stream = window.R2LRecorder?.getStream
+          ? await window.R2LRecorder.getStream()
+          : await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true } });
+        if (fx.recording !== session) {
+          stream.getTracks().forEach((t) => t.stop());
+          return;
+        }
+        session.stream = stream;
+        const recorder = window.R2LRecorder?.createRecorder
+          ? window.R2LRecorder.createRecorder(stream, { engine: 'wav' })
+          : null;
+        if (!recorder) {
+          fx.recording = null;
+          btn?.classList.remove('is-recording');
+          stream.getTracks().forEach((t) => t.stop());
+          return;
+        }
+        session.recorder = recorder;
+        session.monitor = window.R2LRecorder?.startMonitor
+          ? await window.R2LRecorder.startMonitor(stream, {})
+          : { available: false, peak: () => -1, voiced: () => true, stop: () => {} };
+        if (fx.recording !== session) {
+          safeStopMonitor(session.monitor);
+          try { recorder.stop(); } catch { /* never started */ }
+          stream.getTracks().forEach((t) => t.stop());
+          return;
+        }
+        recorder.start();
+        session.timerId = window.setTimeout(() => fixitStopRecording(), FIXIT_MAX_SECONDS * 1000);
+      } catch {
+        fx.recording = null;
+        btn?.classList.remove('is-recording');
+      }
+    }
+
+    async function fixitStopRecording() {
+      const fx = state.fixit;
+      const session = fx?.recording;
+      if (!fx || !session) return;
+      fx.recording = null;
+      if (session.timerId) window.clearTimeout(session.timerId);
+      const btn = document.getElementById('fixit-record-btn');
+      btn?.classList.remove('is-recording');
+      if (btn) btn.disabled = true;
+      let blob = null;
+      try { blob = await session.recorder?.stop(); } catch { blob = null; }
+      safeStopMonitor(session.monitor);
+      session.stream?.getTracks().forEach((t) => t.stop());
+      if (!blob || blob.size === 0) {
+        if (btn) btn.disabled = false;
+        return;
+      }
+      await fixitSubmit(blob);
+      const btnAgain = document.getElementById('fixit-record-btn');
+      if (btnAgain) btnAgain.disabled = false;
+    }
+
+    // The one-word re-record + fresh score: the EXISTING
+    // /api/read2lead-speaking-check endpoint, read-mode single-word scoring
+    // (practice_mode '1', WAV engine) -- zero backend change, the same
+    // metered path every other read step already uses. A network/parse
+    // failure is treated as 'encourage' (never a scary error state, per the
+    // product's silent-degrade convention) and still consumes a rep, since
+    // the cap is a cost fence and must not be bypassable by retrying through
+    // failures.
+    async function fixitSubmit(blob) {
+      const fx = state.fixit;
+      if (!fx) return;
+      const word = fx.words[fx.wordIndex];
+      if (fx.kidAudioUrl) URL.revokeObjectURL(fx.kidAudioUrl);
+      fx.kidAudioUrl = URL.createObjectURL(blob);
+      const fields = fixitReadCheckRequestFields(word);
+      const formData = new FormData();
+      formData.append('access_code', state.accessCode);
+      formData.append('pack_id', state.packId || 'practice');
+      formData.append('expected_text', fields.expected_text);
+      formData.append('check_mode', fields.check_mode);
+      formData.append('practice_mode', fields.practice_mode);
+      formData.append('max_seconds', String(FIXIT_MAX_SECONDS));
+      formData.append('audio', blob, audioUploadFilename(blob));
+
+      let data = null;
+      try {
+        const res = await fetch('/api/read2lead-speaking-check', { method: 'POST', body: formData });
+        data = await res.json();
+      } catch {
+        data = null;
+      }
+
+      const outcome = data?.ok ? fixitRepOutcome(data.score_percent) : 'encourage';
+      // feedback_vi is the server's existing warm copy (feedbackVi()/
+      // feedbackOpenVi() — never negative even at 0%), reused verbatim
+      // rather than inventing new per-word copy the mock doesn't specify.
+      const feedback = data?.ok && data.feedback_vi
+        ? data.feedback_vi
+        : 'Không sao, mình thử lại nhé!';
+      const decision = fixitAfterRep(fx, outcome);
+      fx.repsUsed = decision.repsUsed;
+
+      setMinnyMood(outcome === 'celebrate' ? 'celebrate' : 'encourage');
+      hwSetMood(outcome === 'celebrate' ? 'celebrate' : 'encourage');
+      const label = document.getElementById('fixit-rerecord-label');
+      if (label) label.textContent = feedback;
+
+      window.setTimeout(() => {
+        if (decision.action === 'finish') {
+          renderFixitCelebrate();
+        } else if (decision.action === 'next-word') {
+          fx.wordIndex += 1;
+          if (fx.kidAudioUrl) { URL.revokeObjectURL(fx.kidAudioUrl); fx.kidAudioUrl = null; }
+          renderFixitRep();
+        } else {
+          renderFixitRep(); // retry-word: same word, kid's own recording now available
+        }
+      }, 1400);
+    }
+
+    function renderFixitCelebrate() {
+      const el = document.getElementById('fixit-round');
+      const fx = state.fixit;
+      if (!el) return;
+      if (fx?.kidAudioUrl) URL.revokeObjectURL(fx.kidAudioUrl);
+      const count = fx?.words?.length || 0;
+      el.innerHTML = `
+        <div class="minny-fixit-celebrate">
+          <div class="minny-fixit-celebrate__avatar" aria-hidden="true">🐨</div>
+          <p class="minny-fixit-celebrate__title">Tuyệt vời! Con đã luyện xong ${count} từ rồi 🎉</p>
+          <p class="minny-fixit-celebrate__sub">Thầy Phương sẽ thấy con tiến bộ nhiều lắm.</p>
+        </div>
+        <div class="spk-actions" style="margin-top:14px">
+          <button type="button" class="spk-btn spk-btn--ghost" id="fixit-home-btn">Về trang cá nhân</button>
+          <button type="button" class="spk-btn spk-btn--green" id="fixit-done-btn">Xong 🎯</button>
+        </div>
+      `;
+      el.classList.remove('hidden');
+      document.getElementById('fixit-home-btn')?.addEventListener('click', () => {
+        window.location.href = '/ho-so';
+      });
+      document.getElementById('fixit-done-btn')?.addEventListener('click', fixitReset);
+    }
 
     async function logPractice(result, readyForClass = false) {
       const step = currentStep();
@@ -1487,6 +1831,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       cleanupRecording();
       document.getElementById('speaking-result').classList.add('hidden');
       document.getElementById('speaking-actions').classList.add('hidden');
+      fixitReset();
       showModePicker();
     });
 

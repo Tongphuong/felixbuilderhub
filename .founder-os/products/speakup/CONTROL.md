@@ -89,6 +89,41 @@ assigns, commits, merges, deploys, or spends.
 
 ## Current task
 
+- Status: active
+- Task ID: speakup-v1-4-fixit-round
+- Owner: Steve (bg worker, packet scratchpad/fixit-steve-packet.md, sole
+  owner of speak-up.astro + speakup-app.css + UI tests); Elon review +
+  integration + rule-20 deployed-preview screenshots vs the approved
+  Set 2 mock; Buffet review. Step 3 of the founder-approved plan
+  (2026-07-11); V1.4 pulled ahead of V1.3 per that plan's sequencing
+  note (deterministic, no LLM gate).
+- Lane: `claude/speakup-v1-1` → `main` after review + rule-20.
+- Problem: kids now SEE weak words and can HEAR them — the loop needs the
+  third step: guided re-try with hear-Minny / hear-yourself compare and a
+  fresh score (the approved Wave D Set 2 mock's fix-it states).
+- Reuse survey: N/A external — UI-only phase over shipped machinery
+  (flagged words, minny-voice word branch, existing recorder, existing
+  read-mode single-word Azure scoring via practice_mode). Zero backend
+  change is an explicit constraint.
+- Cost ceiling: Claude team (Max plan, not metered); runtime = ≤3 short
+  scored reps per homework attempt through the existing metered Azure
+  path — the 3-rep hard cap is the fence (test-asserted), per V1.4's
+  spec acceptance.
+- Acceptance criteria: per spec §V1.4 + the approved mock — skippable
+  always, never blocks homework completion; ≤3 reps hard cap; hear-Minny
+  (word branch) + hear-yourself (client-side last-recording playback,
+  nothing uploaded); re-record scores via existing read-mode one-word
+  check; celebrate/encourage states per mock, never negative; rule-20
+  deployed-preview screenshots vs mock with SHA recorded; node --test
+  green (baseline 1083); astro build clean; founder gates.
+- Files owned (Steve): src/pages/speak-up.astro, src/styles/
+  speakup-app.css, tests/speakup-fixit-ui.test.mjs (+chips-ui if needed).
+- Stop condition: ANY functions/ diff — stop and report; any new
+  kid-facing copy not in the mock — TODO(elon).
+- Started: 2026-07-12
+
+## Prior task (complete): speakup-word-level-feedback
+
 - Status: complete
 - Task ID: speakup-word-level-feedback
 - Owner: Mark (bg worker, packet scratchpad/word-feedback-packet.md);
