@@ -89,7 +89,7 @@ assigns, commits, merges, deploys, or spends.
 
 ## Current task
 
-- Status: active
+- Status: complete
 - Task ID: speakup-v1-ladder-real-speech-wins
 - Owner: Elon (Claude Lead), Tier-1 direct (one-condition change on the
   live kid path, founder-directed same-turn; dispatch-guard justification:
@@ -120,7 +120,35 @@ assigns, commits, merges, deploys, or spends.
 - Files owned: functions/api/minny-conversation.js (trigger condition),
   tests/minny-conversation.test.mjs.
 - Stop condition: any diff beyond those two files — stop.
+- Acceptance criteria reconciliation:
+  1. PASS — trigger is isLowContent AND !matchesExpected with the founder
+     rule stated in the comment; Buffet confirmed the operator change is
+     the entire source diff.
+  2. PASS — both new endpoint tests pin the founder cases (fluent
+     off-list → LLM, short-correct "dog" → LLM); existing "um" stall
+     tests unchanged and green.
+  3. PASS — 1030/1030 node --test; astro build clean; founder build gate
+     PASS pre-push.
+  4. PASS — Buffet SHIP (safety-additive: more kid speech rides the fully
+     guardrail-screened LLM path; ladder never had safety duties). LIVE
+     production re-test (R2L-HENRY-TJRH, L0, 2nd daily session, efb76a6):
+     T2 "yes i love it so much thank you" after a chips turn → warm real
+     reply ("You're welcome! I love dogs and cats too!"), NO repair;
+     T4 short-correct "yes" → real reply, NO repair; OpenRouter answering
+     at 357–2258ms. The "um"-rescue path wasn't reproduced live in this
+     sequence (T2's reply carried no options, so no expected set was
+     pending — the ladder correctly stayed out and the LLM handled "um"
+     gracefully); the rescue-after-chips case is pinned by the unit suite
+     and was observed live pre-fix.
+- Design self-verification: N/A visual — behavioral evidence is the live
+  production transcript above plus the two new endpoint tests.
+- Founder handoff: before/after transcript in plain language, in-session.
+- Verified commit: efb76a6 (origin/main, production-verified live by the
+  re-test itself)
+- Actual cost: USD 0 runtime (1 daily session of the founder-designated
+  test student).
 - Started: 2026-07-11
+- Completed: 2026-07-11
 
 ## Prior task (complete): speakup-v1-merge-to-main
 
