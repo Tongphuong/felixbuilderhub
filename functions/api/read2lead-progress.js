@@ -105,6 +105,7 @@ function normalizeProgress(codeData) {
     last_level_recommendation: progress.last_level_recommendation || 'stay',
     current_pack: progress.current_pack || null,
     review_history: reviewHistory,
+    minny_practice: progress.minny_practice || null,
   };
 }
 
@@ -181,6 +182,7 @@ function publicProgress(progress) {
     last_activity_at: progress.last_activity_at || null,
     last_level_recommendation: progress.last_level_recommendation || 'stay',
     current_pack: publicPack(progress.current_pack),
+    minny_practice: publicMinnyPractice(progress.minny_practice),
   };
 }
 
@@ -194,6 +196,14 @@ function publicPack(pack) {
     level: pack.level,
     reviewed_at: pack.reviewed_at,
     web_lesson_steps: pack.web_lesson_steps || null,
+  };
+}
+
+export function publicMinnyPractice(minnyPractice) {
+  if (!minnyPractice) return null;
+  return {
+    last_at: minnyPractice.last_at || null,
+    history: (Array.isArray(minnyPractice.history) ? minnyPractice.history : []).slice(0, 5),
   };
 }
 

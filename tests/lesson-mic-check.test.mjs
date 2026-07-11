@@ -4,7 +4,7 @@ import { readFileSync } from 'node:fs';
 
 const micScript = readFileSync('public/scripts/r2l-mic-check.js', 'utf-8');
 const lessonPage = readFileSync('src/pages/read2lead/lesson.astro', 'utf-8');
-const speakingPage = readFileSync('src/pages/read2lead/speaking.astro', 'utf-8');
+const speakingPage = readFileSync('src/pages/speak-up.astro', 'utf-8');
 const listenSpeak = readFileSync('src/components/read2lead/v2/ListenAndSpeak.astro', 'utf-8');
 const micPanel = readFileSync('src/components/read2lead/v2/MicCheckPanel.astro', 'utf-8');
 

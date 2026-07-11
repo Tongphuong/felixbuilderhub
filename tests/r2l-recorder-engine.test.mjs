@@ -7,7 +7,7 @@ const engine = readFileSync('public/scripts/r2l-recorder.js', 'utf-8');
 const versionedRecorderSrc = r2lRecorderScriptSrc();
 const micScript = readFileSync('public/scripts/r2l-mic-check.js', 'utf-8');
 const lessonPage = readFileSync('src/pages/read2lead/lesson.astro', 'utf-8');
-const speakingPage = readFileSync('src/pages/read2lead/speaking.astro', 'utf-8');
+const speakingPage = readFileSync('src/pages/speak-up.astro', 'utf-8');
 const checkApi = readFileSync('functions/api/read2lead-speaking-check.js', 'utf-8');
 
 test('engine exposes the unified recording API', () => {
@@ -182,4 +182,50 @@ test('WAV uploads are accepted end-to-end', () => {
   // Client names the file audio.wav; the server filename inference handles wav.
   assert.match(lessonPage, /audio\.wav/);
   assert.match(checkApi, /audio\.wav/);
+});
+
+test('monitor supports reset() for conversation-scoped reuse (free talk)', () => {
+  const monitorStart = engine.indexOf('async function startMonitor');
+  const monitorEnd = engine.indexOf('/* ---------- mime selection');
+  const monitorBody = engine.slice(monitorStart, monitorEnd);
+  // Counters are monotonic; a conversation-long monitor must re-zero them per
+  // recording or the first voiced turn masks every later silent turn.
+  assert.match(monitorBody, /reset: \(\) => \{/);
+  assert.match(monitorBody, /peak = 0/);
+  assert.match(monitorBody, /voicedMs = 0/);
+  assert.match(monitorBody, /hinted = false/);
+  // Unavailable-monitor fallbacks expose a no-op reset so callers never branch.
+  assert.ok((monitorBody.match(/reset: \(\) => \{\}/g) || []).length >= 2, 'no-op reset on both fallbacks');
+});
+
+test('free talk uses a persistent conversation mic — no fixed 3s warmup', () => {
+  const ftStart = speakingPage.indexOf('async function ftStartRecording');
+  const ftEnd = speakingPage.indexOf('function ftStopRecording');
+  const ftBody = speakingPage.slice(ftStart, ftEnd);
+  // Warm path: reuse the conversation stream, monitor kept across turns,
+  // counters reset per turn; the 3s countdown only behind the escape hatch.
+  assert.match(ftBody, /ftAcquireMic\(\)/);
+  assert.match(ftBody, /monitor\.reset\?\.\(\)/);
+  assert.match(ftBody, /r2l_ft_warmup/);
+  const warmupIdx = ftBody.indexOf('runMicWarmupCountdown');
+  const hatchIdx = ftBody.indexOf('legacyWarmup');
+  assert.ok(warmupIdx > -1 && hatchIdx > -1 && hatchIdx < warmupIdx, 'warmup only behind legacy flag');
+  // Every conversation exit releases the mic (indicator must turn off).
+  assert.match(speakingPage, /function ftReleaseMic/);
+  const resetBody = speakingPage.slice(
+    speakingPage.indexOf('function ftReset'),
+    speakingPage.indexOf('function enterFreeTalking'),
+  );
+  assert.match(resetBody, /ftReleaseMic\(\)/);
+  const capBody = speakingPage.slice(
+    speakingPage.indexOf('function ftHandleCapReached'),
+    speakingPage.indexOf('function ftShowSummary'),
+  );
+  assert.match(capBody, /ftReleaseMic\(\)/);
+  // Homework keeps its per-turn acquire + 3s warmup (score-sensitive).
+  const hwStart = speakingPage.indexOf('async function startRecording');
+  const hwEnd = speakingPage.indexOf('function stopRecording');
+  const hwBody = speakingPage.slice(hwStart, hwEnd);
+  assert.match(hwBody, /runMicWarmupCountdown/);
+  assert.doesNotMatch(hwBody, /ftAcquireMic/);
 });

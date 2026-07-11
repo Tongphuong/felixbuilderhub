@@ -9,6 +9,14 @@ then reference in code.
 |---|---|---|
 | `READ2LEAD_CODES` | Single KV namespace storing per-student access codes + nested pack data (progress, current_pack, review_context). Acts as primary persistence for Read2Lead. | generate-read2lead-pack, check-generation-status, read2lead-lesson, read2lead-progress, read2lead-progress-update, read2lead-leaderboard, submit-read2lead-lesson, task-state, admin/codes (list + create), admin/codes/[code] (read + update + delete), admin/codes/[code]/set-level (test only) |
 | `READ2LEAD_PROGRESS` | V2 persistent kid state (level, XP, coins, streak, starter badges, forward-compatible avatar placeholders). Code falls back to `READ2LEAD_CODES` if this binding is not configured yet. | read2lead-progress, read2lead-progress-update, submit-read2lead-lesson, admin/codes/[code]/set-level |
+## R2 Buckets
+| Binding | Purpose | Used by |
+|---|---|---|
+| `R2L_MEDIA` | Binary media bucket: teacher-recorded portfolio videos (`portfolio/<CODE>/vp_*.{mp4,webm,mov}`) and SpeakUp homework photos (`homework/<class_id>/hp_*.{jpg,png,webp}`). Metadata/references live in KV; only the bytes live here. Objects are never public — every read is streamed through a code- or admin-authorized Function. | admin/portfolio/upload, admin/portfolio/[id], parent/video, admin/classes/[id]/homework-photo, speakup-homework-photo |
+
+(Documented 2026-07-07 while adding homework photos; this binding predates the
+entry — doc drift. `AI` (Workers AI), `DB`/`STUDENT_PROFILE_DB` (D1) and the
+Azure/OpenAI secrets are still undocumented here; see `grep -rohE "env\.[A-Z_]+" functions/` for the live list.)
 ## Secrets
 | Binding | Purpose | Used by | Source |
 |---|---|---|---|
@@ -17,6 +25,8 @@ then reference in code.
 | `ADMIN_PASSWORD` | Password for `/admin/*` routes. Validated by `functions/_middleware.js`. | _middleware | Manually set |
 | `TELEGRAM_BOT_TOKEN` | Bot token for the Felix lead-bot Telegram bot. Used to push lead notifications. | coaching-booking, msmw-lead, sharing-subscribe | https://t.me/BotFather |
 | `TELEGRAM_CHAT_ID` | Chat ID where bot messages land (Phương's chat). | Same as `TELEGRAM_BOT_TOKEN` consumers | Bot getUpdates response |
+| `OPENROUTER_API_KEY` | Bearer key for the Free Talking conversation brain (DeepSeek v4 Flash via OpenRouter). Missing key → llama-3.3 fallback → canned redirect. **Must be set on BOTH Preview and Production** (a Production-only key means preview Free Talk silently runs the fallback). | minny-conversation | OpenRouter dashboard (same key the retired Aider workers used, in `~/.config/aider/.env`) |
+| `DEBUG_SPEAKING_KEY` | Secret gate for the `/api/debug-speaking` and `/api/debug-convo-flags` diagnostic endpoints (they return 404 unless `?key=` matches). `debug:convo-flags` surfaces why each Free Talk turn was guardrail-flagged (`matched_rule`: `guard_error`/`guard_empty_response`/`sN`/`guard_degraded`/etc.). Optional — endpoints are simply invisible when unset. | debug-speaking, debug-convo-flags | Manually set (any random string; Phương-only diagnostic surface) |
 ## Variables (non-secret)
 | Variable | Purpose | Default |
 |---|---|---|

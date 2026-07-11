@@ -1,0 +1,133 @@
+//
+// Phase 6 guardrail layer -- pure functions only, no env/KV access. The
+// caller (minny-conversation.js) wires these in order: kid transcript
+// screen -> LLM call -> shape/deterministic checks -> Llama Guard -> TTS.
+// The DETERMINISTIC layers (scanBannedTopics/screenTranscript,
+// validateReplyShape, detectCharacterBreak) are the hard, always-on
+// fail-closed safety gate. The ML backstop (screenWithLlamaGuard) is a
+// resilient best-effort layer: it flags only a genuine "unsafe" verdict, and
+// DEGRADES gracefully (does not flag) when the model itself can't run
+// (missing binding / error / timeout / unparsable-empty response) -- because
+// blocking every reply on a guard outage bricked the whole feature (see the
+// 2026-07-09 preview incident). Approved posture: on guard infra-failure,
+// rely on the deterministic gate that already passed.
+
+import { BANNED_TOPICS } from './_minny-guardrail-wordlists.js';
+
+function escapeRegExp(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+// Word-boundary-aware match (Unicode-safe, so Vietnamese diacritic letters
+// count as word characters too) -- avoids the classic profanity-filter
+// false-positive problem where a short banned word is also a substring of
+// a completely innocent word (e.g. "ass" inside "class" or "assignment").
+function containsWordBoundaryMatch(text, phrase) {
+  const pattern = new RegExp(`(?<![\\p{L}\\p{N}])${escapeRegExp(phrase)}(?![\\p{L}\\p{N}])`, 'iu');
+  return pattern.test(text);
+}
+
+const URL_PATTERN = /(https?:\/\/|www\.)\S+/i;
+const EMAIL_PATTERN = /[\w.+-]+@[\w-]+\.[a-z]{2,}/i;
+const PHONE_PATTERN = /(\+?\d[\d\s\-().]{7,}\d)/;
+const MAX_REPLY_LENGTH = 220;
+
+const CHARACTER_BREAK_MARKERS = [
+  'as an ai', 'as a language model', 'i am an ai', "i'm an ai",
+  'i am a bot', "i'm a bot", 'i am a program', 'language model',
+  'openai', 'chatgpt', 'gpt-4', 'gpt-5', 'system prompt', 'my instructions',
+  'i cannot fulfill', 'as an assistant',
+];
+
+// Layer: scan any text (kid transcript or model reply) for banned-topic
+// substrings. Case-insensitive; returns the first category/word matched.
+export function scanBannedTopics(text) {
+  const normalized = typeof text === 'string' ? text.toLowerCase() : '';
+  if (!normalized) return { flagged: false, category: null, matched: null };
+  for (const [category, words] of Object.entries(BANNED_TOPICS)) {
+    for (const word of words) {
+      if (containsWordBoundaryMatch(normalized, word.toLowerCase())) {
+        return { flagged: true, category, matched: word };
+      }
+    }
+  }
+  return { flagged: false, category: null, matched: null };
+}
+
+// Layer: screen the kid's own transcript before it ever reaches the LLM.
+export function screenTranscript(text) {
+  return scanBannedTopics(text);
+}
+
+// Layer: deterministic shape checks on the model's reply -- over-long,
+// contains a URL/email/phone number. Independent of scanBannedTopics.
+export function validateReplyShape(reply) {
+  const text = typeof reply === 'string' ? reply : '';
+  if (!text) return { flagged: true, reason: 'empty_reply' };
+  if (text.length > MAX_REPLY_LENGTH) return { flagged: true, reason: 'over_long' };
+  if (URL_PATTERN.test(text)) return { flagged: true, reason: 'contains_url' };
+  if (EMAIL_PATTERN.test(text)) return { flagged: true, reason: 'contains_email' };
+  if (PHONE_PATTERN.test(text)) return { flagged: true, reason: 'contains_phone' };
+  return { flagged: false, reason: null };
+}
+
+// Layer: does the model's reply break character (reveal it's an AI/bot)?
+export function detectCharacterBreak(reply) {
+  const text = typeof reply === 'string' ? reply.toLowerCase() : '';
+  const matched = CHARACTER_BREAK_MARKERS.find((marker) => text.includes(marker));
+  return { flagged: Boolean(matched), marker: matched || null };
+}
+
+// Layer: ML backstop via Cloudflare Workers AI's Llama Guard model. Called
+// only on the model's own reply, after the deterministic layers pass.
+//
+// Returns { flagged, degraded, category, raw }:
+//   - flagged:true  -> a genuine, parseable "unsafe" verdict (redirect the kid).
+//   - degraded:true -> the guard could NOT produce a usable verdict (missing
+//     binding, error, timeout, empty/unparsable response). Per the approved
+//     "degrade gracefully" posture the caller then relies on the deterministic
+//     word-list gate (which already passed) and lets the reply through, rather
+//     than blocking every turn on a guard outage.
+//   - both false    -> a clean "safe" verdict.
+//
+// Llama Guard classifies a CONVERSATION, so we pass the kid's turn plus the
+// assistant reply being screened (not a lone assistant message).
+export async function screenWithLlamaGuard(ai, replyText, userText = '') {
+  if (!ai || typeof ai.run !== 'function') {
+    return { flagged: false, degraded: true, category: 'guard_unavailable', raw: null };
+  }
+  try {
+    const messages = [];
+    if (userText) messages.push({ role: 'user', content: String(userText) });
+    messages.push({ role: 'assistant', content: String(replyText || '') });
+    const result = await Promise.race([
+      ai.run('@cf/meta/llama-guard-3-8b', { messages }),
+      // 3.5s (was 6s, tuned 2026-07-10): the two-phase turn awaits ONLY the
+      // guard before showing the reply, so this timeout directly caps the
+      // kid's time-to-text. Guard p50 is 0.4-1.1s live; a verdict slower than
+      // 3.5s means Workers AI is degraded, and waiting the extra 2.5s buys the
+      // same outcome the timeout already gives: the degraded path (the
+      // deterministic gate already passed; degradation is logged to the flag
+      // ring). Safety order and flag semantics unchanged.
+      new Promise((_, reject) => setTimeout(() => reject(new Error('llama_guard_timeout')), 3500)),
+    ]);
+    const raw = typeof result === 'string' ? result : (result?.response ?? result?.text ?? '');
+    const normalized = String(raw ?? '').trim().toLowerCase();
+    if (!normalized) {
+      return { flagged: false, degraded: true, category: 'guard_empty_response', raw };
+    }
+    if (normalized.startsWith('safe')) {
+      return { flagged: false, degraded: false, category: null, raw };
+    }
+    // A genuine unsafe verdict: Llama Guard emits "unsafe" and/or an sN code.
+    const categoryMatch = normalized.match(/s\d+/);
+    if (normalized.includes('unsafe') || categoryMatch) {
+      return { flagged: true, degraded: false, category: categoryMatch ? categoryMatch[0] : 'unsafe', raw };
+    }
+    // Non-empty but neither a clear "safe" nor a clear "unsafe" verdict -- we
+    // can't trust it, so degrade to the deterministic gate rather than block.
+    return { flagged: false, degraded: true, category: 'guard_unparsed', raw };
+  } catch {
+    return { flagged: false, degraded: true, category: 'guard_error', raw: null };
+  }
+}

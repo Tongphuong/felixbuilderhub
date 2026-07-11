@@ -9,6 +9,20 @@ function weekKey(isoDate = new Date().toISOString()) {
   return monday.toISOString().slice(0, 10);
 }
 
+export function buildPracticeLogEntry(now, packId, promptId, scorePercent, readyForClass, summary) {
+  const entry = {
+    at: now,
+    pack_id: packId,
+    prompt_id: promptId,
+    score_percent: Number.isFinite(scorePercent) ? Math.round(scorePercent) : null,
+    ready_for_class: readyForClass,
+  };
+  if (summary && typeof summary === 'object' && !Array.isArray(summary)) {
+    entry.summary = summary;
+  }
+  return entry;
+}
+
 export async function onRequestPost(context) {
   const { request, env } = context;
   if (!env.READ2LEAD_CODES) {
@@ -31,6 +45,7 @@ export async function onRequestPost(context) {
   const scorePercent = Number(body?.score_percent);
   const promptId = String(body?.prompt_id || '').trim();
   const readyForClass = body?.ready_for_class === true;
+  const summary = body?.summary;
 
   if (!accessCode || !packId) {
     return json({ ok: false, error: 'missing_fields', message: 'Thiếu mã học sinh hoặc mã bài.' }, 400);
@@ -58,16 +73,10 @@ export async function onRequestPost(context) {
     ? numberOrZero(prev.sessions_this_week) + 1
     : 1;
 
-  const entry = {
-    at: now,
-    pack_id: packId,
-    prompt_id: promptId,
-    score_percent: Number.isFinite(scorePercent) ? Math.round(scorePercent) : null,
-    ready_for_class: readyForClass,
-  };
+  const entry = buildPracticeLogEntry(now, packId, promptId, scorePercent, readyForClass, summary);
 
   const nextPractice = {
-    schema_version: 1,
+    schema_version: 2,
     last_at: now,
     weekly_key: currentWeek,
     sessions_this_week: sessionsThisWeek,

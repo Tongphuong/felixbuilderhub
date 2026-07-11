@@ -80,6 +80,32 @@ function renderStories(data: ProgressPayload) {
   return `<div class="ho-so-card-head"><h3>Truyện đã đọc</h3><small>${Number(storyProgress.total_completed || 0)} bài</small></div>${body || `<div class="ho-so-empty">Chưa có truyện nào — bắt đầu bằng cách tạo bài đầu tiên.<div class="mt-3"><a class="fx-btn fx-btn--primary" href="/read2lead#form">Tạo bài đầu tiên →</a></div></div>`}`;
 }
 
+function renderMinnyPractice(data: ProgressPayload) {
+  const progress = (data.progress || {}) as Record<string, unknown>;
+  const minny = (progress as any)?.minny_practice;
+  const history = Array.isArray(minny?.history) ? minny.history.slice(0, 5) : [];
+  const MODE_LABEL_VI: Record<string, string> = {
+    homework: 'Bài tập',
+    free_talk: 'Trò chuyện tự do',
+    retell: 'Kể lại truyện',
+    questions: 'Trả lời câu hỏi',
+  };
+  const rows = history.map((entry: any) => {
+    const modeLabel = MODE_LABEL_VI[entry.summary?.mode] || MODE_LABEL_VI[entry.mode_id] || 'Luyện nói';
+    const statText = (() => {
+      const match = entry.summary?.match_percent;
+      if (typeof match === 'number' && Number.isFinite(match)) return `${Math.round(match)}%`;
+      const score = entry.score_percent;
+      if (typeof score === 'number' && Number.isFinite(score)) return `${Math.round(score)}%`;
+      return '—';
+    })();
+    const dateText = formatDate(entry.at);
+    return `<div class="ho-so-story"><span class="ho-so-story__icon" aria-hidden="true">🎤</span><span class="ho-so-story__copy"><strong>${escapeHtml(modeLabel)}</strong><small>${escapeHtml(dateText)}</small></span><span class="ho-so-story__score">${escapeHtml(statText)}</span></div>`;
+  }).join('');
+  const body = rows || `<div class="ho-so-empty">Con chưa luyện nói tuần này — <a class="fx-btn fx-btn--primary" href="/read2lead/speaking">mở Luyện nói với Minny nhé →</a></div>`;
+  return `<div class="ho-so-card-head"><h3>🎤 Luyện nói cùng Minny</h3></div>${body}`;
+}
+
 function renderTasks(tasks: ParentTask[], completed: Set<string>) {
   const done = tasks.filter((task) => completed.has(task.id)).length;
   return `<div class="ho-so-card-head"><h3>Việc tuần này</h3><span class="fx-badge fx-badge--gold" data-task-count>${done} / ${tasks.length}</span></div><div class="ho-so-task-list">${tasks.map((task) => { const checked = completed.has(task.id); return `<label class="ho-so-task" data-task-id="${task.id}" data-completed="${checked}"><input type="checkbox" ${checked ? 'checked' : ''}/><span class="ho-so-task__check">${checked ? '✓' : ''}</span><span class="ho-so-task__text">${escapeHtml(task.label)}</span></label>`; }).join('')}</div><p class="ho-so-chart-note hidden" data-task-status aria-live="polite"></p>`;
@@ -127,13 +153,14 @@ function renderAll(data: ProgressPayload, code: string, lesson: Lesson | null, p
   const state = (data.read2lead_state || {}) as Record<string, unknown>;
   const name = String(progress.student_name || state.student_name || 'Bé yêu');
   const growth = (data.weekly_growth || {}) as Record<string, unknown>;
-  const session = qs<HTMLElement>('#ho-so-parent-session'); const header = qs<HTMLElement>('#ho-so-parent-header'); const stats = qs<HTMLElement>('#ho-so-parent-stats'); const charts = qs<HTMLElement>('#ho-so-parent-charts'); const stories = qs<HTMLElement>('#ho-so-parent-stories'); const tasksHost = qs<HTMLElement>('#ho-so-parent-tasks'); const portfolioHost = qs<HTMLElement>('#ho-so-parent-portfolio');
-  if (!session || !header || !stats || !charts || !stories || !tasksHost || !portfolioHost) return;
+  const session = qs<HTMLElement>('#ho-so-parent-session'); const header = qs<HTMLElement>('#ho-so-parent-header'); const stats = qs<HTMLElement>('#ho-so-parent-stats'); const charts = qs<HTMLElement>('#ho-so-parent-charts'); const stories = qs<HTMLElement>('#ho-so-parent-stories'); const tasksHost = qs<HTMLElement>('#ho-so-parent-tasks'); const portfolioHost = qs<HTMLElement>('#ho-so-parent-portfolio'); const minnyHost = qs<HTMLElement>('#ho-so-parent-minny');
+  if (!session || !header || !stats || !charts || !stories || !tasksHost || !portfolioHost || !minnyHost) return;
   session.innerHTML = renderSession(name, code, state.last_activity_at || progress.last_activity_at);
   header.innerHTML = `<div><p class="fx-eyebrow ho-so-accent-eyebrow">Báo cáo tuần</p><h1>${escapeHtml(firstName(name))} ${Number(growth.this_week_packs || 0) ? 'đang giữ nhịp học đều trong tuần này.' : 'chưa học tuần này — bắt đầu lại bằng một buổi ngắn nhé.'}</h1>${lesson?.parent_note_vi ? `<p class="ho-so-chart-note">${escapeHtml(lesson.parent_note_vi)}</p>` : ''}</div><button class="fx-btn fx-btn--ghost" type="button" data-ho-so-print>Tải báo cáo PDF →</button>`;
   stats.innerHTML = renderStats(data);
   charts.innerHTML = renderGrowth(data) + renderQuality(data);
   stories.innerHTML = renderStories(data);
+  minnyHost.innerHTML = renderMinnyPractice(data);
   const taskRows = buildTasks(data, lesson); tasksHost.innerHTML = renderTasks(taskRows, taskState);
   portfolioHost.innerHTML = renderPortfolio(portfolio, failed);
   attachTaskInteractions(tasksHost, code, taskRows, taskState);

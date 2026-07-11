@@ -207,6 +207,7 @@
           available: false,
           peak: () => -1,
           voiced: () => true,
+          reset: () => {},
           stop: () => {},
         };
       }
@@ -242,6 +243,7 @@
         available: false,
         peak: () => -1,
         voiced: () => true,
+        reset: () => {},
         stop: () => {},
       };
     }
@@ -251,6 +253,15 @@
       peak: () => peak,
       voiced: () => peak >= SILENT_LEVEL,
       voicedMs: () => voicedMs,
+      // A conversation-scoped monitor spans many recordings; counters are
+      // monotonic, so each new recording must re-zero them or the first
+      // voiced turn makes every later silent turn look voiced.
+      reset: () => {
+        peak = 0;
+        voicedMs = 0;
+        startedAt = Date.now();
+        hinted = false;
+      },
       stop: () => {
         if (timer) global.clearInterval(timer);
         timer = null;

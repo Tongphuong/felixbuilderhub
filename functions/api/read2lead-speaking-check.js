@@ -1,5 +1,15 @@
 import { getClientIp, checkCodeRateLimit, recordCodeFailure, rateLimitedResponse } from './_rate-limit.js';
 import { canAccessPackForPractice } from './_read2lead-pack-access.js';
+import {
+  azureSpeechConfigured,
+  azureUnderFreeTier,
+  azureBumpUsage,
+  assessPronunciationWithAzure,
+  mapAzureReadResult,
+  mapAzureOpenResult,
+  AZURE_PA_EST_SECONDS_PER_CALL,
+  AZURE_PA_UNSCRIPTED_MAX_WAV_BYTES,
+} from './_azure-pronunciation.js';
 
 export const SKIP_WORDS = new Set([
   'a', 'an', 'the', 'is', 'are', 'was', 'were', 'to', 'of', 'in', 'on', 'at',
@@ -205,6 +215,78 @@ export function scoreOpenTranscript(transcript, storyContext) {
   };
 }
 
+/**
+ * Score a speech frame (presentation) against anchor-word stems.
+ *
+ * @param {string} transcript - ASR transcript
+ * @param {Array<{id:string, text_en:string, anchor_words:string[]}>} stems
+ * @param {number} durationTargetSec - target duration in seconds
+ * @param {object} telemetry - client telemetry (peak_level, duration_seconds, etc.)
+ * @returns {object} result shape described in SPEC_SPEAKUP_V0.md Phase 2
+ */
+export function scoreSpeechFrame(transcript, stems, durationTargetSec, telemetry = {}) {
+  const transcriptWords = tokenize(transcript)
+    .map((word) => normalizeWord(word))
+    .filter(Boolean);
+  const wordCount = transcriptWords.length;
+
+  const stemResults = stems.map((stem) => {
+    const anchorWords = Array.isArray(stem.anchor_words) ? stem.anchor_words : [];
+    if (anchorWords.length === 0) {
+      return { id: stem.id, text_en: stem.text_en, matched: true, coveragePct: 100 };
+    }
+    let matchedCount = 0;
+    for (const anchor of anchorWords) {
+      const normAnchor = normalizeWord(anchor);
+      const found = transcriptWords.some((tw) => wordSimilarity(tw, normAnchor) >= SIMILARITY_THRESHOLD);
+      if (found) matchedCount++;
+    }
+    const coveragePct = Math.round((matchedCount / anchorWords.length) * 100);
+    // A stem is considered matched when at least 50% of its anchor words appear in the transcript.
+    const matched = coveragePct >= 50;
+    return { id: stem.id, text_en: stem.text_en, matched, coveragePct };
+  });
+
+  const matchPct = stemResults.length
+    ? Math.round(stemResults.reduce((sum, s) => sum + s.coveragePct, 0) / stemResults.length)
+    : 0;
+
+  const spokeAllStems = stemResults.every(s => s.matched);
+
+  // Duration tolerance: +/-20% of target
+  let durationOnTarget = false;
+  let durationSec = 0;
+  if (typeof durationTargetSec === 'number' && durationTargetSec > 0) {
+    const actual = Number.isFinite(telemetry?.duration_seconds) ? telemetry.duration_seconds : 0;
+    durationSec = actual;
+    const lower = durationTargetSec * 0.8;
+    const upper = durationTargetSec * 1.2;
+    durationOnTarget = actual >= lower && actual <= upper;
+  }
+
+  // Soft spokeClearly signal derived from peak_level telemetry; never punitive.
+  let spokeClearly = true;
+  const peakRaw = telemetry?.peak_level;
+  if (peakRaw !== undefined && peakRaw !== null && peakRaw !== '') {
+    const peak = parseFloat(peakRaw);
+    if (!Number.isNaN(peak) && peak <= 0) {
+      spokeClearly = false;
+    }
+  }
+
+  return {
+    matchPct,
+    rubric: {
+      spokeAllStems,
+      durationOnTarget,
+      spokeClearly,
+    },
+    stems: stemResults,
+    wordCount,
+    durationSec,
+  };
+}
+
 export function inferAudioFilename(blob) {
   // MIME type wins over client filename — Safari records MP4 but some pages still name the file audio.webm.
   const type = String(blob?.type || '').toLowerCase();
@@ -320,6 +402,51 @@ export async function transcribeAudio(audioBlob, { ai = null, openaiApiKey = '',
   return transcribeWithOpenAI(audioBlob, openaiApiKey, fetchFn);
 }
 
+// Vietnamese-speech detection (spec's known weakness, line 277): Whisper is
+// pinned to language 'en', so a kid speaking Vietnamese gets a garbage
+// English transcript and a nonsense score. When a scored attempt lands very
+// low, re-transcribe once WITHOUT the language pin (auto-detect) and test for
+// Vietnamese diacritics — if found, return a warm retry message instead of a
+// garbage score. Costs ~$0.0005/audio-min and only fires on very low scores.
+export const VIETNAMESE_REDIRECT_THRESHOLD = 20;
+export const VIETNAMESE_DIACRITICS_RE = /[ăđơưạảấầẩẫậắằẳẵặẹẻẽếềểễệịỉọỏốồổỗộớờởỡợụủứừửữựỳỵỷỹ]/i;
+
+export async function detectVietnameseSpeech(audioBlob, ai) {
+  if (!ai) return false;
+  try {
+    const buffer = await audioBlob.arrayBuffer();
+    const result = await ai.run(WORKERS_AI_ASR_MODEL, {
+      audio: arrayBufferToBase64(buffer),
+      task: 'transcribe',
+    });
+    return VIETNAMESE_DIACRITICS_RE.test(String(result?.text || ''));
+  } catch {
+    return false;
+  }
+}
+
+export const VIETNAMESE_REDIRECT_VI = 'Minny nghe con nói tiếng Việt — mình thử lại bằng tiếng Anh nhé!';
+
+function vietnameseRedirectResult(checkMode) {
+  return {
+    ok: true,
+    vietnamese_detected: true,
+    score_percent: null,
+    transcript: '',
+    exact_count: 0,
+    close_count: 0,
+    correct_count: 0,
+    total_count: 0,
+    words_exact: [],
+    words_close: [],
+    words_missed: [],
+    words_matched: [],
+    word_feedback: [],
+    feedback_vi: VIETNAMESE_REDIRECT_VI,
+    check_mode: checkMode,
+  };
+}
+
 export async function runSpeakingCheck({
   audioBlob,
   expectedText,
@@ -327,7 +454,77 @@ export async function runSpeakingCheck({
   ai = null,
   openaiApiKey,
   fetchFn = fetch,
-}) {
+  stems,
+  durationTargetSec,
+  telemetry,
+  env = null,
+} = {}) {
+  // Homework reading: Azure Pronunciation Assessment first (purpose-built,
+  // per-word/phoneme scoring — rule 21 reuse). Requires the WAV recording the
+  // client sends for read steps; any failure, missing config, or exhausted
+  // free tier falls straight through to the local scorer below.
+  const isWav = Boolean(audioBlob && /wav/i.test(String(audioBlob.type || '')));
+  if (checkMode === 'read' && env && azureSpeechConfigured(env) && isWav) {
+    const kv = env.READ2LEAD_CODES;
+    if (await azureUnderFreeTier(kv)) {
+      try {
+        const best = await assessPronunciationWithAzure({
+          env,
+          audioBlob,
+          referenceText: expectedText,
+          fetchFn,
+        });
+        await azureBumpUsage(kv, AZURE_PA_EST_SECONDS_PER_CALL);
+        const mapped = mapAzureReadResult(best);
+        if (mapped.score_percent < VIETNAMESE_REDIRECT_THRESHOLD && (await detectVietnameseSpeech(audioBlob, ai))) {
+          return vietnameseRedirectResult('read');
+        }
+        return {
+          ok: true,
+          ...mapped,
+          feedback_vi: feedbackVi(mapped.score_percent),
+          check_mode: 'read',
+        };
+      } catch (err) {
+        console.error(`[read2lead-speaking-check] azure PA failed (${err?.message} ${err?.detail || ''}); using local scorer`);
+      }
+    }
+  }
+
+  // Photo-only homework ("photo_talk"): the photo carries the task, so
+  // there is no reference text — grade pronunciation-only via Azure's
+  // unscripted mode (REST caps at 30s of audio). Anything else — longer
+  // clips, Azure down/over tier, non-WAV — falls through to the normal
+  // transcribe + open scorer below. Scripted read grading is untouched.
+  if (
+    checkMode === 'open'
+    && expectedText === 'photo_talk'
+    && env && azureSpeechConfigured(env) && isWav
+    && audioBlob.size <= AZURE_PA_UNSCRIPTED_MAX_WAV_BYTES
+  ) {
+    const kv = env.READ2LEAD_CODES;
+    if (await azureUnderFreeTier(kv)) {
+      try {
+        const best = await assessPronunciationWithAzure({
+          env,
+          audioBlob,
+          referenceText: '',
+          fetchFn,
+        });
+        await azureBumpUsage(kv, AZURE_PA_EST_SECONDS_PER_CALL);
+        const mapped = mapAzureOpenResult(best);
+        return {
+          ok: true,
+          ...mapped,
+          feedback_vi: feedbackOpenVi(mapped.score_percent),
+          check_mode: 'open',
+        };
+      } catch (err) {
+        console.error(`[read2lead-speaking-check] azure unscripted PA failed (${err?.message} ${err?.detail || ''}); using open scorer`);
+      }
+    }
+  }
+
   const transcript = await transcribeAudio(audioBlob, { ai, openaiApiKey, fetchFn });
   if (!transcript) {
     const error = new Error('empty_transcript');
@@ -336,17 +533,33 @@ export async function runSpeakingCheck({
   }
 
   if (checkMode === 'open') {
+    const result = { ok: true, ...scoreOpenTranscript(transcript, expectedText) };
+    // Free Talking submits expected_text 'free_talking_no_score' and ignores
+    // the score (the conversation LLM handles Vietnamese there) — skip.
+    if (
+      expectedText !== 'free_talking_no_score'
+      && result.score_percent < VIETNAMESE_REDIRECT_THRESHOLD
+      && (await detectVietnameseSpeech(audioBlob, ai))
+    ) {
+      return vietnameseRedirectResult('open');
+    }
+    return result;
+  }
+
+  if (checkMode === 'frame') {
+    const result = scoreSpeechFrame(transcript, stems || [], durationTargetSec || 0, telemetry || {});
     return {
       ok: true,
-      ...scoreOpenTranscript(transcript, expectedText),
+      ...result,
+      check_mode: 'frame',
     };
   }
 
-  return {
-    ok: true,
-    ...scoreTranscript(expectedText, transcript),
-    check_mode: 'read',
-  };
+  const readResult = { ok: true, ...scoreTranscript(expectedText, transcript), check_mode: 'read' };
+  if (readResult.score_percent < VIETNAMESE_REDIRECT_THRESHOLD && (await detectVietnameseSpeech(audioBlob, ai))) {
+    return vietnameseRedirectResult('read');
+  }
+  return readResult;
 }
 
 export async function onRequestPost(context) {
@@ -397,7 +610,7 @@ export async function onRequestPost(context) {
 
   const reportSilent = String(formData.get('report_silent') || '').trim() === '1';
 
-  if (!accessCode || !packId || !expectedText || (!audio && !reportSilent)) {
+  if (!accessCode || !packId || (!expectedText && checkMode !== 'frame') || (!audio && !reportSilent)) {
     return json(
       { ok: false, error: 'missing_fields', message: 'Thieu ma hoc sinh, ma bai, noi dung hoac file thu am.' },
       400,
@@ -466,13 +679,35 @@ export async function onRequestPost(context) {
   const audioName = audio?.name || 'unknown';
   const audioType = audio?.type || 'unknown';
 
+  let stems = [];
+  let durationTargetSec = 0;
+  let durationSec = undefined;
+  if (checkMode === 'frame') {
+    const stemsRaw = formData.get('stems');
+    if (stemsRaw) {
+      try {
+        stems = JSON.parse(stemsRaw);
+      } catch {}
+    }
+    durationTargetSec = Number(formData.get('max_seconds') || 0);
+    const durRaw = formData.get('duration_seconds');
+    if (durRaw !== null && durRaw !== '') {
+      const parsed = parseFloat(durRaw);
+      if (Number.isFinite(parsed)) durationSec = parsed;
+    }
+  }
+
   try {
     const result = await runSpeakingCheck({
       audioBlob: audio,
       expectedText,
-      checkMode: checkMode === 'open' ? 'open' : 'read',
+      checkMode: checkMode === 'open' ? 'open' : (checkMode === 'frame' ? 'frame' : 'read'),
       ai: workersAi,
       openaiApiKey,
+      stems,
+      durationTargetSec,
+      telemetry: { ...clientTelemetry, duration_seconds: durationSec },
+      env,
     });
     return json(result);
   } catch (error) {
@@ -561,4 +796,3 @@ function json(body, status = 200) {
     headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' },
   });
 }
-

@@ -3,31 +3,29 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 
 import {
-  buildPracticePrompts,
   buildSpeakingModes,
-  pickPracticePack,
+  buildHomeworkSteps,
 } from '../functions/api/minny-speaking-context.js';
 import { canAccessPackForPractice } from '../functions/api/_read2lead-pack-access.js';
 
-const speakingPage = readFileSync('src/pages/read2lead/speaking.astro', 'utf-8');
+const speakingPage = readFileSync('src/pages/speak-up.astro', 'utf-8');
 const parentPortal = readFileSync('src/pages/ho-so/index.astro', 'utf-8') + '\n' + readFileSync('src/pages/ho-so/ho-so.ts', 'utf-8') + '\n' + readFileSync('src/pages/ho-so/ho-so-parent-view.ts', 'utf-8');
 
-test('speaking page exists with coaching-first copy and no AI marketing', () => {
-  assert.match(speakingPage, /Luyện nói với Minny/);
-  assert.match(speakingPage, /Felix Coaching/);
+test('speak-up app page exists with coaching-first copy and no AI marketing', () => {
+  assert.match(speakingPage, /SpeakUp/);
   assert.match(speakingPage, /minny-speaking-context/);
   assert.match(speakingPage, /read2lead-speaking-check/);
   assert.match(speakingPage, /practice_mode/);
   assert.match(speakingPage, /data\.modes/);
-  assert.match(speakingPage, /🎤 Con nói/);
   assert.doesNotMatch(speakingPage, /tăng cường bởi AI/i);
   assert.doesNotMatch(speakingPage, /\bAI\b/);
 });
 
-test('speaking page has kid-friendly mode cards and video fallback', () => {
-  assert.match(speakingPage, /minny-mode-card/);
+test('speak-up page has kid-friendly mode cards and video fallback', () => {
+  assert.match(speakingPage, /spk-mode-card/);
   assert.match(speakingPage, /mode-picker/);
   assert.match(speakingPage, /practice-screen/);
+  assert.match(speakingPage, /no-homework-note/);
   assert.match(speakingPage, /id="minny-video"/);
   assert.match(speakingPage, /id="minny-fallback"/);
   assert.match(speakingPage, /tryPlay\('mp4'\)/);
@@ -37,85 +35,210 @@ test('speaking page has kid-friendly mode cards and video fallback', () => {
   assert.match(speakingPage, /progress-dots/);
 });
 
+test('speak-up page carries no Read2Lead activity (products share codes, not activities)', () => {
+  assert.doesNotMatch(speakingPage, /Kể lại truyện/);
+  assert.doesNotMatch(speakingPage, /Minny hỏi — con trả lời/);
+});
+
+test('speak-up page wires hands-free turn-taking with escape hatch and safety rails', () => {
+  // Silence-pause auto-send + auto re-arm (Stage A). The VAD polls the
+  // conversation monitor's voicedMs() — no change to r2l-recorder.js.
+  assert.ok(speakingPage.includes('FT_VAD_PAUSE_MS'), 'VAD pause constant present');
+  assert.ok(speakingPage.includes('FT_VAD_MIN_VOICED_MS'), 'min-voiced guard present');
+  assert.ok(speakingPage.includes('FT_VAD_MAX_WAIT_MS'), 'silent auto-arm timeout present');
+  assert.ok(speakingPage.includes("localStorage.getItem('r2l_ft_handsfree')"), 'hands-free escape hatch present');
+  assert.ok(speakingPage.includes('ftMaybeAutoArm'), 'auto re-arm after Minny speaks');
+  assert.ok(speakingPage.includes('ftStartVad(session, monitor, finishRecording'), 'VAD armed on recording start');
+  // Auto re-arm must stay behind the gesture-created monitor and a live tab.
+  assert.ok(speakingPage.includes('ft.micMonitor?.available'), 'auto-arm requires the gesture-created monitor');
+  assert.ok(speakingPage.includes('ftCancelAutoArm();'), 'hidden tab cancels pending auto-arm');
+});
+
+test('speak-up page plays thinking filler and records turn latency', () => {
+  assert.ok(speakingPage.includes("['thinking_1', 'thinking_2']"), 'prefetches both filler phrases');
+  assert.ok(speakingPage.includes('FT_FILLER_DELAY_MS'), 'filler waits for a genuinely slow reply');
+  assert.ok(speakingPage.includes('latency_p50_ms'), 'session summary carries latency p50');
+  assert.ok(speakingPage.includes('stt_ms'), 'per-turn timing split captured');
+});
+
 test('unified profile renders parent view with portfolio and dashboard', () => {
   assert.match(parentPortal, /renderParentView/);
   assert.match(parentPortal, /renderAll/);
 });
 
-test('buildSpeakingModes returns output-focused retell and questions modes', () => {
-  const modes = buildSpeakingModes({
-    studentName: 'Linh',
-    storyTitle: 'The Puppy',
-    topic: 'animals',
-    v2Pack: {
-      story: {
-        title: 'The Puppy',
-        paragraphs_en: ['A small puppy plays in the park.'],
-      },
-      topic: 'animals',
-      activities: [
-        {
-          type: 'reading_comprehension',
-          questions: [
-            {
-              section: 'Open Question',
-              question_vi: 'Con thích nhân vật nào nhất?',
-              question_en: 'Which character did you like most?',
-            },
-          ],
-        },
-      ],
-    },
-  });
-
-  assert.equal(modes.length, 2);
-  assert.equal(modes[0].id, 'retell');
-  assert.equal(modes[1].id, 'questions');
-  assert.match(modes[0].title_vi, /Kể lại truyện/);
-  assert.match(modes[1].title_vi, /Minny hỏi/);
-  assert.equal(modes[0].steps[0].kind, 'retell');
-  assert.equal(modes[0].steps[0].check_mode, 'open');
-  assert.equal(modes[1].steps[0].kind, 'question');
-  assert.equal(modes[1].steps[0].check_mode, 'open');
-  assert.ok(modes[0].steps.length >= 2, 'retell mode includes say-more follow-up');
-});
-
-test('buildPracticePrompts flattens modes without sentence read-back', () => {
-  const prompts = buildPracticePrompts({
-    studentName: 'Linh',
-    storyTitle: 'The Puppy',
-    topic: 'animals',
-    v2Pack: {
-      story: {
-        title: 'The Puppy',
-        paragraphs_en: ['A small puppy plays in the park.'],
-      },
-      topic: 'animals',
-    },
-  });
-  assert.ok(prompts.length >= 2);
-  assert.ok(prompts.every((step) => step.check_mode === 'open'));
-  assert.ok(prompts.every((step) => step.kind !== 'repeat'));
-  assert.match(prompts[0].label_vi, /Kể lại truyện/);
-});
-
-test('pickPracticePack prefers current pack with story', () => {
-  const picked = pickPracticePack({
-    progress: {
-      current_pack: {
-        pack_id: 'pack_1',
-        status: 'reviewed_pass_web_v2',
-        story: { title: 'Story' },
-        schema_version: 2,
-        activities: [],
-      },
-      review_history: [{ pack_id: 'pack_1', title: 'Story' }],
-    },
-  });
-  assert.equal(picked.pack_id, 'pack_1');
-  assert.equal(picked.source, 'current_pack');
-});
-
 test('practice mode allows general pack without story history', () => {
   assert.equal(canAccessPackForPractice({ progress: {} }, 'general'), true);
+});
+
+test('buildHomeworkSteps returns null when no homework', () => {
+  assert.equal(buildHomeworkSteps({}), null);
+  assert.equal(buildHomeworkSteps({ homework: null }), null);
+});
+
+test('buildHomeworkSteps creates sentence steps and optional frame step', () => {
+  const codeData = {
+    homework: {
+      schema_version: 1,
+      updated_at: '2026-07-01T08:00:00.000Z',
+      note_vi: 'Luyện phát âm',
+      sentences: [
+        { id: 's1', text_en: 'I like apples.', hint_vi: null },
+        { id: 's2', text_en: 'She runs fast.', hint_vi: null },
+      ],
+      frame: {
+        stems: [
+          { id: 'f1', text_en: 'Last summer, I went to ___.', anchor_words: ['last','summer','i','went','to'] },
+          { id: 'f2', text_en: 'I saw ___.', anchor_words: ['i','saw'] },
+        ],
+        duration_s: 45,
+      },
+      history: [],
+    },
+  };
+  const mode = buildHomeworkSteps(codeData);
+  assert.ok(mode);
+  assert.equal(mode.id, 'homework');
+  assert.equal(mode.title_vi, 'Bài tập thầy giao');
+  assert.match(mode.subtitle_vi, /Thầy Phương nhắn: Luyện phát âm/);
+  assert.equal(mode.homework_note_vi, 'Luyện phát âm');
+  assert.equal(mode.homework_updated_at, '2026-07-01T08:00:00.000Z');
+  assert.equal(mode.steps.length, 3);
+  assert.equal(mode.steps[0].id, 'hw_s1');
+  assert.equal(mode.steps[0].kind, 'homework');
+  assert.equal(mode.steps[0].check_mode, 'read');
+  assert.equal(mode.steps[0].prompt_en, 'I like apples.');
+  assert.equal(mode.steps[1].id, 'hw_s2');
+  assert.equal(mode.steps[2].id, 'hw_frame');
+  assert.equal(mode.steps[2].kind, 'speech');
+  assert.equal(mode.steps[2].check_mode, 'frame');
+  assert.equal(mode.steps[2].max_seconds, 60); // 45 + 15
+  assert.deepEqual(mode.steps[2].stems, codeData.homework.frame.stems);
+});
+
+test('buildHomeworkSteps frame-only (no sentences)', () => {
+  const codeData = {
+    homework: {
+      updated_at: '2026-07-02T10:00:00.000Z',
+      sentences: [],
+      frame: {
+        stems: [{ id: 'f1', text_en: 'My trip', anchor_words: ['my','trip'] }],
+        duration_s: 30,
+      },
+    },
+  };
+  const mode = buildHomeworkSteps(codeData);
+  assert.ok(mode);
+  assert.equal(mode.steps.length, 1);
+  assert.equal(mode.steps[0].id, 'hw_frame');
+  assert.equal(mode.steps[0].max_seconds, 45);
+});
+
+test('buildHomeworkSteps sentences-only (no frame)', () => {
+  const codeData = {
+    homework: {
+      updated_at: '2026-07-03T12:00:00.000Z',
+      sentences: [{ id: 's1', text_en: 'Hello world.', hint_vi: null }],
+      frame: null,
+    },
+  };
+  const mode = buildHomeworkSteps(codeData);
+  assert.ok(mode);
+  assert.equal(mode.steps.length, 1);
+  assert.equal(mode.steps[0].id, 'hw_s1');
+  assert.equal(mode.steps[0].check_mode, 'read');
+});
+
+test('buildSpeakingModes: homework first, then free_talk, when homework present', () => {
+  const codeData = {
+    homework: {
+      updated_at: '2026-07-04T09:00:00.000Z',
+      sentences: [{ id: 's1', text_en: 'Test.', hint_vi: null }],
+    },
+  };
+  const modes = buildSpeakingModes(codeData);
+  assert.equal(modes.length, 2);
+  assert.equal(modes[0].id, 'homework');
+  assert.equal(modes[1].id, 'free_talk');
+  assert.equal(modes[1].steps.length, 0);
+});
+
+test('buildSpeakingModes: free_talk only, when no homework', () => {
+  const modes = buildSpeakingModes({});
+  assert.equal(modes.length, 1);
+  assert.equal(modes[0].id, 'free_talk');
+});
+
+test('buildSpeakingModes: free_talk for every code, regardless of is_test (Phase 8b)', () => {
+  for (const codeData of [{ is_test: true }, { is_test: false }, {}, undefined]) {
+    const modes = buildSpeakingModes(codeData);
+    assert.ok(modes.some((m) => m.id === 'free_talk'), `free_talk missing for ${JSON.stringify(codeData)}`);
+  }
+});
+
+test('buildSpeakingModes: no Read2Lead activity modes ever (product separation)', () => {
+  const modes = buildSpeakingModes({ is_test: true });
+  assert.ok(!modes.some((m) => m.id === 'retell' || m.id === 'questions'));
+});
+
+test('buildHomeworkSteps: v1 record (no photo field) yields photo:null and unchanged steps', () => {
+  const codeData = {
+    homework: {
+      schema_version: 1,
+      note_vi: '',
+      sentences: [{ id: 's1', text_en: 'I like cats.', hint_vi: null }],
+      frame: { stems: [{ id: 'f1', text_en: 'I went to ___.', anchor_words: ['i', 'went', 'to'] }], duration_s: 60 },
+      history: [],
+    },
+  };
+  const mode = buildHomeworkSteps(codeData);
+  assert.equal(mode.photo, null);
+  assert.equal(mode.steps.length, 2);
+  assert.equal(mode.steps[0].id, 'hw_s1');
+  assert.equal(mode.steps[0].check_mode, 'read');
+  assert.equal(mode.steps[1].id, 'hw_frame');
+  assert.equal(mode.steps[1].check_mode, 'frame');
+});
+
+test('buildHomeworkSteps: v2 record with photo exposes only the photo id', () => {
+  const codeData = {
+    homework: {
+      schema_version: 2,
+      note_vi: '',
+      sentences: [{ id: 's1', text_en: 'I like cats.', hint_vi: null }],
+      frame: null,
+      photo: { id: 'hp_abc123def456', r2_key: 'homework/class1/hp_abc123def456.jpg', content_type: 'image/jpeg', size: 250000 },
+      history: [],
+    },
+  };
+  const mode = buildHomeworkSteps(codeData);
+  assert.deepEqual(mode.photo, { id: 'hp_abc123def456' });
+  assert.equal(JSON.stringify(mode).includes('r2_key'), false, 'r2_key must never reach the client');
+});
+
+test('speak-up page has the homework photo thumb, lightbox, and authorized endpoint URL', () => {
+  assert.ok(speakingPage.includes('hw-photo-thumb-btn'), 'photo thumb button in story card');
+  assert.ok(speakingPage.includes('hw-photo-lightbox'), 'lightbox dialog present');
+  assert.ok(speakingPage.includes('/api/speakup-homework-photo?code='), 'photo fetched through the code-authorized endpoint');
+  assert.ok(speakingPage.includes('spk-mode-card__badge'), 'mode card attachment badge');
+});
+
+test('buildHomeworkSteps: photo-only record yields one open photo-talk step', () => {
+  const codeData = {
+    homework: {
+      schema_version: 2,
+      note_vi: '',
+      sentences: [],
+      frame: null,
+      photo: { id: 'hp_abc123def456', r2_key: 'homework/class1/hp_abc123def456.jpg', content_type: 'image/jpeg', size: 9 },
+      photo_talk: { duration_s: 90 },
+      history: [],
+    },
+  };
+  const mode = buildHomeworkSteps(codeData);
+  assert.equal(mode.steps.length, 1);
+  assert.equal(mode.steps[0].id, 'hw_photo_talk');
+  assert.equal(mode.steps[0].check_mode, 'open');
+  assert.equal(mode.steps[0].expected_text, 'photo_talk');
+  assert.equal(mode.steps[0].max_seconds, 105);
+  assert.deepEqual(mode.photo, { id: 'hp_abc123def456' });
 });
