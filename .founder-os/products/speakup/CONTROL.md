@@ -89,7 +89,7 @@ assigns, commits, merges, deploys, or spends.
 
 ## Current task
 
-- Status: active
+- Status: complete
 - Task ID: speakup-word-level-feedback
 - Owner: Mark (bg worker, packet scratchpad/word-feedback-packet.md);
   Elon review + integration; Buffet ADVERSARIAL review mandatory on the
@@ -139,7 +139,43 @@ assigns, commits, merges, deploys, or spends.
 - Stop condition: any relaxation of minny-voice beyond the single-word
   flagged-record branch (it must never become an open TTS proxy); any
   change to scoring semantics — stop.
+- Acceptance criteria reconciliation:
+  1. PASS — pronunciation block gains words[] (accuracy<70, SKIP_WORDS as
+     argument — no circular import, Insertion excluded, len≥3, ascending,
+     max 3, omitted when empty).
+  2. PASS — "Từ cần luyện:" chips reuse wordChips(…,'miss'); absent →
+     panel unchanged.
+  3. PASS — flagged-words:<code> KV record (TTL 1h) written best-effort at
+     the single response site for read AND frame words; punctuation-
+     normalized identically server & client (Elon ruling, "banana." round
+     trip fixture); Buffet forced a throwing KV — response unaffected.
+  4. PASS — minny-voice word branch: string-type guard (Buffet nit) +
+     strict regex + own-key flagged-record membership; Buffet adversarial
+     verdict verbatim: could NOT construct an input that makes Minny speak
+     arbitrary text (12 vectors: multi-word, unicode, homoglyph, branch
+     combos, cross-code, expired record, empty-normalize, length caps,
+     case, apostrophe abuse, coercion payloads, rate-limit-before-KV).
+     Phrase/text branches byte-identical.
+  5. PASS — one delegated tap handler for read + frame chips (matched-word
+     taps intentionally silent-403 by design); 44px buttons; reduced-
+     motion; 403/error = silent no-op (no popup, no browser-TTS leak).
+  6. PASS — 1083/1083 node --test; astro build clean; founder gates PASS.
+     LIVE on production (76d1ec7): real-speech frame check returned
+     words[] {together 48%, mini 66%}; voice returned real audio (7104
+     b64) for flagged "together" and 403 for non-flagged "bureaucracy".
+- Design self-verification: behavioral = the live production loop above;
+  visual = chips reuse the shipped wordChips look 1:1 (internal pattern-
+  copy, design-mock exempt, flagged for Phương's veto as before).
+- Founder handoff: plain-language report with the live numbers; Step 3
+  (V1.4 fix-it round, approved Set 2 mock) queued next per the approved
+  plan.
+- Verified commit: 76d1ec7 (origin/main, production-verified live)
+- Actual cost: USD 0 runtime (~7s Azure F0 for the verify; word audio
+  rides the cached TTS chain).
+- Review trail: Mark (2 rounds incl. punctuation ruling), Elon line-by-
+  line, Buffet adversarial SHIP (his hygiene guard applied).
 - Started: 2026-07-12
+- Completed: 2026-07-12
 
 ## Prior task (complete): speakup-azure-frame-grading
 
