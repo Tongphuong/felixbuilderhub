@@ -79,12 +79,21 @@ stale until 2026-07-05.
   (src/lib/lesson-juice.ts) already ship; (4) AJ Hoge mini-story questioning —
   adopted as a PATTERN (frequent easy questions), served from the existing
   generated pool.
-- Design self-verification: pending — screenshots of each per-page stage
-  (390px + 1280px) on the deployed preview vs SPEC_R2L_PAGE_LOOP.md §3 flow;
-  components are pattern-copies of existing approved lesson cards (flagged for
-  Phương's veto before merge).
-- Founder handoff: pending — preview URL + screenshots + plain-language summary;
-  Phương taps through one lesson before any merge to main.
+- Design self-verification: DONE 2026-07-12 — live e2e screenshots at 390px on
+  the deployed preview (listen/read/summary stages) vs SPEC_R2L_PAGE_LOOP.md §3;
+  all components are pattern-copies of existing approved lesson cards; summary
+  card + header XP movement verified rendered. Screenshots in session scratchpad
+  r2l-e2e/shots/. Flagged for Phương's visual veto before merge.
+- Verified commit: 5c56be5 (origin/claude/r2l-page-loop; preview
+  claude-r2l-page-loop.felixbuilderhub.pages.dev)
+- Founder handoff: preview URL + e2e results reported 2026-07-12; Phương taps
+  through one lesson before any merge to main. Acceptance evidence: live
+  real-speech e2e (R2L-PILOT-CYJS) — 8 pages, 32 questions, 9/9 page reads
+  Whisper-scored 81-95, submit passed grade S +25 coins/+20 XP (header
+  200→220 XP verified), mic unlocked without sample re-listen, mic-check
+  safety gate still blocks silent mics, est. kid session ~13 min (was 18-20);
+  1066/1066 tests; astro build clean; Buffet review: one Medium finding fixed
+  + regression-pinned, submit-path/validator/reward semantics verified clean.
 
 ## Previous task — R2L-BOOK-HEALTH-GATE
 
