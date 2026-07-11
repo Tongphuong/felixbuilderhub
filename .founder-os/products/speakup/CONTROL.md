@@ -89,7 +89,7 @@ assigns, commits, merges, deploys, or spends.
 
 ## Current task
 
-- Status: active
+- Status: complete
 - Task ID: speakup-v1-merge-to-main
 - Owner: Elon (Claude Lead). Phương explicit merge ack 2026-07-11 ("merge
   V1.1, then text end to end with this code R2L-PILOT-CYJS") — ack covers
@@ -113,7 +113,42 @@ assigns, commits, merges, deploys, or spends.
 - Stop condition: any source diff beyond CONTROL/AGENT_LOG — stop. If the
   E2E shows a kid-facing defect: report to Phương with the revert option
   (git revert -m on the merge), do not hot-fix unbidden.
+- Acceptance criteria reconciliation:
+  1. PASS — fast-forward f11f005..009912f; 1028/1028 node --test + astro
+     build clean on the exact pushed tree; founder build gate PASS.
+  2. PASS — production serves V1 (minny-option-chip in hashed CSS,
+     ft-handsfree-toggle markup on /speak-up/).
+  3. PASS (with one config finding) — live E2E on production,
+     R2L-PILOT-CYJS (level L4, so the correct surface is hints, not chips),
+     5 text turns, 1 daily session used: real warm LLM replies with a hint
+     on every turn and zero hint-leaks into reply_en; stall turn handled
+     warmly by the LLM (no ladder at L4 without expected — by design);
+     Vietnamese turn → vn_nudge canned line, repair_step field, model
+     filled from the last hint ("play"), subtitle_vi, no LLM spend;
+     two-phase audio proven (pending → fetched 29KB) + one inline cached
+     hit; caps decremented 12→7 sanely; zero guardrail flags. FINDING:
+     every LLM turn answered via llama_fallback (Workers AI) — OpenRouter
+     never responded; llm_ms 2.0–17.2s (worst turn = double 4s OpenRouter
+     timeout + fallback). Root-cause hypothesis: the 2026-07-11 key
+     rotation replaced OPENROUTER_API_KEY but Cloudflare env vars
+     (Production, likely Preview too) still hold the revoked key. Reply
+     QUALITY unaffected (fallback is the same Llama-3.3-70B family, by
+     design); latency is the casualty. Bounded founder ask: paste the new
+     OpenRouter key into Cloudflare Pages env (Production + Preview) and
+     redeploy. Chips protocol (L0–L2) not exercised on prod by this L4
+     code — covered by the rule-20 preview verification + unit/eval suite.
+  4. PASS — AGENT_LOG START/DONE; this reconciliation; founder report sent.
+- Design self-verification: N/A visual (release task); behavioral evidence
+  = the production E2E transcript above (5 live turns on the deployed
+  main build).
+- Founder handoff: turn-by-turn plain-language report + the one bounded
+  ask (update OPENROUTER_API_KEY in Cloudflare, then any next Free Talk
+  session should drop from ~4–17s brain time to ~1s).
+- Verified commit: 009912f (origin/main, production-verified live)
+- Actual cost: USD 0 runtime (1 pilot-code daily session used, ~5 LLM
+  fallback turns ≈ free on Workers AI).
 - Started: 2026-07-11
+- Completed: 2026-07-11
 
 ## Prior task (complete): speakup-v1-2-packet1-chips-ui
 
