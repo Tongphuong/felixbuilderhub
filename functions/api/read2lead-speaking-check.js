@@ -7,6 +7,8 @@ import {
   assessPronunciationWithAzure,
   mapAzureReadResult,
   mapAzureOpenResult,
+  mapAzureFramePronunciation,
+  trimWavToSeconds,
   AZURE_PA_EST_SECONDS_PER_CALL,
   AZURE_PA_UNSCRIPTED_MAX_WAV_BYTES,
 } from './_azure-pronunciation.js';
@@ -555,11 +557,42 @@ export async function runSpeakingCheck({
 
   if (checkMode === 'frame') {
     const result = scoreSpeechFrame(transcript, stems || [], durationTargetSec || 0, telemetry || {});
-    return {
+    const frameResult = {
       ok: true,
       ...result,
       check_mode: 'frame',
     };
+
+    // Azure pronunciation grading (V1, 2026-07-11), additive only: the
+    // deterministic scoreSpeechFrame result above is untouched and remains
+    // the source of truth. This only ever ADDS an optional `pronunciation`
+    // block on top — reuses the photo_talk unscripted Azure call verbatim,
+    // sampling the first 30s (Azure's short-audio REST cap). ANY failure or
+    // skip below must leave frameResult byte-identical to today.
+    if (env && azureSpeechConfigured(env) && isWav) {
+      try {
+        const wavBuffer = await audioBlob.arrayBuffer();
+        const trimmed = trimWavToSeconds(wavBuffer, 30);
+        if (trimmed) {
+          const kv = env.READ2LEAD_CODES;
+          const sampledSeconds = trimmed.sampledSeconds;
+          if (await azureUnderFreeTier(kv, sampledSeconds)) {
+            const best = await assessPronunciationWithAzure({
+              env,
+              audioBlob: trimmed.wav,
+              referenceText: '',
+              fetchFn,
+            });
+            await azureBumpUsage(kv, sampledSeconds);
+            frameResult.pronunciation = mapAzureFramePronunciation(best, sampledSeconds);
+          }
+        }
+      } catch (err) {
+        console.error(`[read2lead-speaking-check] azure frame PA failed (${err?.message} ${err?.detail || ''}); frame result unaffected`);
+      }
+    }
+
+    return frameResult;
   }
 
   const readResult = { ok: true, ...scoreTranscript(expectedText, transcript), check_mode: 'read' };

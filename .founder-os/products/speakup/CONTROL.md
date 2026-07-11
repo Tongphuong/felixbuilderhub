@@ -89,6 +89,58 @@ assigns, commits, merges, deploys, or spends.
 
 ## Current task
 
+- Status: active
+- Task ID: speakup-azure-frame-grading
+- Owner: Mark (bg worker, packet scratchpad/azure-frame-packet.md) builds;
+  Elon line-by-line review + integration; Buffet review (PROTECTED-file
+  diff must be traced). Phương decision 2026-07-11 (AskUserQuestion):
+  Azure grading for presentations FIRST, before V1.2 packet 2.
+- Lane: `claude/speakup-v1-1` → `main` after review (founder-directed).
+- Problem: presentations (frame steps — the founder's "45%" test) get only
+  deterministic anchor/rubric scoring; Azure Pronunciation Assessment
+  grades read steps (scripted) and photo_talk (unscripted) but never
+  frames, because frames record compressed audio (no WAV) and no frame
+  branch exists.
+- Fix shape: client records WAV for frame steps (one condition); server
+  samples the first 30s (pure WAV trim helper — Azure short-audio REST
+  cap) and runs the EXISTING unscripted Azure path additively; result
+  gains an optional pronunciation block; deterministic scoreSpeechFrame
+  untouched and still renders first; any Azure failure → byte-identical
+  to today. One warm pronunciation row in the shipped rubric panel
+  (design-mock exempt as internal pattern-copy — flagged for Phương's
+  veto). Free Talking stays ungraded (founder-aligned non-goal).
+- Reuse survey: N/A external — extends the already-adopted Azure PA
+  integration (vendor chosen in the 2026-07-06 reuse overhaul; Speechace
+  researched 2026-07-10 as the paid fallback) to one more exercise type;
+  no new capability class. Internal reuse: photo_talk unscripted branch +
+  mapAzureOpenResult + meter, reused not re-rolled.
+- Cost ceiling: Claude team (Max plan, not metered); runtime $0 by
+  construction (F0 free tier, KV-metered at 30s/attempt, silent fallback
+  when exhausted). Budget note for pilot review: at full usage frames
+  alone ≈ 10 audio-h/month vs the 5h free tier — paid rate ≈ $1/audio-h
+  (≈$5–15/mo) is Phương's later call with real meter data.
+- Acceptance criteria:
+  1. Frame steps upload WAV; read/photo behavior unchanged.
+  2. trimWavToSeconds pure + byte-exact tests; junk input → skip Azure.
+  3. Frame result gains optional pronunciation block only when Azure
+     succeeds under tier; ANY failure → result identical to today
+     (deep-equal test); meter bumped by sampled seconds.
+  4. PROTECTED file diff is the additive frame branch only (Buffet trace).
+  5. Rubric panel shows the warm pronunciation row only when data present
+     (Lead-authored copy verbatim; <50% shows encouragement, never a low
+     number).
+  6. node --test green (baseline 1030 + new); astro build clean; founder
+     gates PASS; live verify on prod with a test code frame homework.
+- Files owned (Mark): functions/api/_azure-pronunciation.js,
+  functions/api/read2lead-speaking-check.js (PROTECTED, minimal),
+  src/pages/speak-up.astro (recorder condition + results row),
+  tests/azure-pronunciation.test.mjs, tests/minny-speech-frame.test.mjs.
+- Stop condition: any change to scoreSpeechFrame semantics, read/photo
+  Azure paths, Free Talk grading, or files beyond the list — stop.
+- Started: 2026-07-11
+
+## Prior task (complete): speakup-v1-ladder-real-speech-wins
+
 - Status: complete
 - Task ID: speakup-v1-ladder-real-speech-wins
 - Owner: Elon (Claude Lead), Tier-1 direct (one-condition change on the

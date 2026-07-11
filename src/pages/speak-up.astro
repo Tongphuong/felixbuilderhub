@@ -785,6 +785,28 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       `;
     }
 
+    // Warm pronunciation row (V1, speakup-azure-frame-grading): only rendered
+    // when the server attached the optional `pronunciation` block (Azure
+    // configured + WAV + under free tier) — absent block renders nothing,
+    // so the frame panel is byte-identical to before this feature when Azure
+    // grading didn't run. Always the "is-ok" (green) mark — never red/miss
+    // styling, per the founder's kid-safe framing rule for this row.
+    function pronunciationRow(pronunciation) {
+      if (!pronunciation) return '';
+      const accuracy = Number(pronunciation.accuracy_percent);
+      // No finite accuracy -> no row at all: a kid must never see "NaN%".
+      if (!Number.isFinite(accuracy)) return '';
+      const valueText = accuracy < 50
+        ? 'Con nói to rõ hơn nhé! 💪'
+        : `${Math.round(accuracy)}% 🌟`;
+      return `
+        <div class="minny-frame-rubric-row">
+          <span class="minny-frame-rubric-row__mark is-ok">✓</span>
+          <span style="font-size:14.5px;color:var(--cream)">Phát âm rõ ràng: ${escapeHtml(valueText)}</span>
+        </div>
+      `;
+    }
+
     function renderFrameResult(result) {
       const resultEl = document.getElementById('speaking-result');
       const actionsEl = document.getElementById('speaking-actions');
@@ -798,6 +820,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
         rubricRow(!!rubric.spokeAllStems, 'Nói đủ các câu trong khung'),
         rubricRow(!!rubric.durationOnTarget, 'Đủ thời gian', 'Kể chậm lại một chút, hít thở giữa các câu.'),
         rubricRow(!!rubric.spokeClearly, 'Nói to, rõ ràng', 'Nói to hơn một xíu, như đang kể cho bạn nghe.'),
+        pronunciationRow(result.pronunciation),
       ].join('');
 
       resultEl.classList.remove('hidden');
@@ -1168,10 +1191,11 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
           return;
         }
 
-        // Homework read steps record raw WAV 16k (the engine's existing WAV
-        // path) — required by Azure Pronunciation Assessment's REST endpoint.
+        // Homework read steps, photo_talk, and frame (presentation) steps all
+        // record raw WAV 16k (the engine's existing WAV path) — required by
+        // Azure Pronunciation Assessment's REST endpoint.
         const recStep = currentStep();
-        const recorderOptions = recStep && (recStep.check_mode === 'read' || recStep.id === 'hw_photo_talk')
+        const recorderOptions = recStep && (recStep.check_mode === 'read' || recStep.id === 'hw_photo_talk' || recStep.check_mode === 'frame')
           ? { engine: 'wav' }
           : {};
         const recorder = window.R2LRecorder?.createRecorder

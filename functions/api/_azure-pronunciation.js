@@ -191,3 +191,84 @@ export function mapAzureOpenResult(best) {
     words_matched: [],
   };
 }
+
+// Maps Azure's unscripted assessment onto the frame homework's NEW optional
+// `pronunciation` block (V1: Azure grading added additively alongside the
+// deterministic scoreSpeechFrame result in read2lead-speaking-check.js).
+// A thin sibling of mapAzureOpenResult, not a change to it — that mapper's
+// existing contract (used by the photo_talk 'open' path) is untouched.
+export function mapAzureFramePronunciation(best, sampledSeconds) {
+  const round = (v) => (Number.isFinite(Number(v)) ? Math.round(Number(v)) : null);
+  const prosodyPercent = round(best.ProsodyScore);
+  return {
+    accuracy_percent: round(best.AccuracyScore),
+    fluency_percent: round(best.FluencyScore),
+    ...(prosodyPercent !== null ? { prosody_percent: prosodyPercent } : {}),
+    scorer: 'azure_pronunciation_unscripted',
+    sampled_seconds: sampledSeconds,
+  };
+}
+
+// Reads a 4-byte ASCII chunk tag at the given offset (WAV chunk IDs are
+// always 4 ASCII bytes — RIFF/WAVE/'fmt '/data).
+function readAsciiTag(bytes, offset) {
+  return String.fromCharCode(bytes[offset], bytes[offset + 1], bytes[offset + 2], bytes[offset + 3]);
+}
+
+// Trims a canonical 44-byte-header PCM WAV recording down to at most
+// maxSeconds of audio, for the frame homework step's Azure pronunciation
+// grading (V1 speakup-azure-frame-grading): Azure's short-audio REST
+// endpoint (assessPronunciationWithAzure) caps at 30s, but a frame
+// presentation can run well past that, so the caller samples the first
+// slice instead of skipping Azure entirely.
+//
+// Pure and never throws: parses the exact header shape the recorder itself
+// emits (RIFF/WAVE/'fmt '/PCM/16-byte fmt chunk/'data' immediately after) —
+// anything nonstandard (truncated, non-PCM, extra chunks before 'data')
+// returns null so the caller skips Azure rather than send it garbage.
+//
+// Zero-copy when the input already fits (duration <= maxSeconds): the
+// returned `wav` IS the input (same reference), not a copy.
+export function trimWavToSeconds(arrayBufferOrUint8, maxSeconds) {
+  if (!arrayBufferOrUint8 || !Number.isFinite(maxSeconds) || maxSeconds <= 0) return null;
+  const bytes = arrayBufferOrUint8 instanceof Uint8Array
+    ? arrayBufferOrUint8
+    : new Uint8Array(arrayBufferOrUint8);
+  if (bytes.length < 44) return null;
+
+  if (readAsciiTag(bytes, 0) !== 'RIFF') return null;
+  if (readAsciiTag(bytes, 8) !== 'WAVE') return null;
+  if (readAsciiTag(bytes, 12) !== 'fmt ') return null;
+  if (readAsciiTag(bytes, 36) !== 'data') return null; // canonical header only — no extra chunks before data
+
+  const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
+  const fmtChunkSize = view.getUint32(16, true);
+  const audioFormat = view.getUint16(20, true);
+  const sampleRate = view.getUint32(24, true);
+  const blockAlign = view.getUint16(32, true);
+  const dataSize = view.getUint32(40, true);
+
+  if (fmtChunkSize !== 16 || audioFormat !== 1) return null; // PCM, canonical 16-byte fmt chunk only
+  if (!sampleRate || !blockAlign) return null;
+  if (44 + dataSize > bytes.length) return null; // header claims more data than the buffer has — do not trust it
+
+  if (dataSize === 0) return null; // header-only WAV: nothing to grade, skip Azure locally
+  const actualSeconds = dataSize / (sampleRate * blockAlign);
+  if (actualSeconds <= maxSeconds) {
+    return { wav: bytes, sampledSeconds: actualSeconds };
+  }
+
+  const rawMaxBytes = sampleRate * blockAlign * maxSeconds;
+  const maxBytes = Math.floor(rawMaxBytes / blockAlign) * blockAlign; // whole sample frames only
+  const trimmedDataSize = Math.min(dataSize, maxBytes);
+  const totalSize = 44 + trimmedDataSize;
+
+  const out = new Uint8Array(totalSize);
+  out.set(bytes.subarray(0, 44), 0);
+  out.set(bytes.subarray(44, 44 + trimmedDataSize), 44);
+  const outView = new DataView(out.buffer);
+  outView.setUint32(4, totalSize - 8, true); // RIFF chunk size
+  outView.setUint32(40, trimmedDataSize, true); // data chunk size
+
+  return { wav: out, sampledSeconds: trimmedDataSize / (sampleRate * blockAlign) };
+}
