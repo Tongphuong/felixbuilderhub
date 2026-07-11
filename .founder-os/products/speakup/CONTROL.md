@@ -89,6 +89,34 @@ assigns, commits, merges, deploys, or spends.
 
 ## Current task
 
+- Status: active
+- Task ID: speakup-v1-merge-to-main
+- Owner: Elon (Claude Lead). Phương explicit merge ack 2026-07-11 ("merge
+  V1.1, then text end to end with this code R2L-PILOT-CYJS") — ack covers
+  the handoff that named the desktop-placement deviation.
+- Lane: `main` (fast-forward of `claude/speakup-v1-1`: V1.1 brain 8b6995d +
+  V1.2p1 chips UI fdb6fe5 + CSS fix 9073aa7 + governance ae71e00).
+- Reuse survey: N/A — release/merge task, builds no new capability.
+- Cost ceiling: Claude team (Max plan, not metered); runtime USD 0.
+- Acceptance criteria:
+  1. Fast-forward merge to main; 1028/1028 `node --test` + `astro build`
+     clean on the merged tree; founder build gate PASS pre-push.
+  2. Production serves the V1 build (chips CSS in hashed stylesheet,
+     ft-handsfree-toggle markup on /speak-up/).
+  3. Live E2E on PRODUCTION with pilot code R2L-PILOT-CYJS (text path, one
+     session): real LLM reply with level-appropriate optional fields;
+     repair ladder on a stall (if beginner level); Vietnamese nudge;
+     caps decrement sane; two-phase audio proven if pending; zero
+     guardrail flags on benign turns.
+  4. AGENT_LOG START/DONE; reconciliation + complete gate; founder report.
+- Files owned: merge only — no source edits under this task.
+- Stop condition: any source diff beyond CONTROL/AGENT_LOG — stop. If the
+  E2E shows a kid-facing defect: report to Phương with the revert option
+  (git revert -m on the merge), do not hot-fix unbidden.
+- Started: 2026-07-11
+
+## Prior task (complete): speakup-v1-2-packet1-chips-ui
+
 - Status: complete
 - Task ID: speakup-v1-2-packet1-chips-ui
 - Owner: Steve (bg worker, sole owner of speak-up.astro + speakup css +
