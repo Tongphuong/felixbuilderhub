@@ -89,6 +89,41 @@ assigns, commits, merges, deploys, or spends.
 
 ## Current task
 
+- Status: active
+- Task ID: speakup-v1-ladder-real-speech-wins
+- Owner: Elon (Claude Lead), Tier-1 direct (one-condition change on the
+  live kid path, founder-directed same-turn; dispatch-guard justification:
+  founder ruling on live pilot behavior, hot path, smaller than a packet)
+  + mandatory Buffet bg review (author ≠ reviewer). Phương decision
+  2026-07-11 via AskUserQuestion: "Real speech always wins".
+- Lane: `claude/speakup-v1-1` → `main` (founder's direction to fix live
+  behavior = deploy ack).
+- Problem: live E2E (R2L-HENRY-TJRH, L0) showed a fluent off-list answer
+  gets the repair ladder ("let me ask again") instead of a real reply —
+  founder: "kids do not speak at all if this is the case." Reading the
+  trigger exposed a second case: a short but CORRECT answer ("dog",
+  matches expected, <6 chars) also laddered.
+- Fix: stall trigger becomes low-content AND unmatched (was OR) — the
+  ladder rescues only genuinely unusable input; fluent off-list and
+  short-correct answers go to the LLM. Vietnamese nudge, ladder state
+  machine, guardrails, caps: untouched.
+- Reuse survey: N/A — one boolean-condition change, no new capability.
+- Cost ceiling: Claude team (Max plan, not metered); runtime USD 0.
+- Acceptance criteria:
+  1. Trigger = isLowContent AND !matchesExpected; comment states the
+     founder rule.
+  2. NEW tests: fluent off-list answer → LLM (no repair); short matched
+     "dog" → LLM. Existing "um" stall tests unchanged and green.
+  3. Full node --test green; astro build clean; founder gates PASS.
+  4. Buffet review SHIP; live production re-test with R2L-HENRY-TJRH
+     reproducing the exact failing sequence, now warm-replied.
+- Files owned: functions/api/minny-conversation.js (trigger condition),
+  tests/minny-conversation.test.mjs.
+- Stop condition: any diff beyond those two files — stop.
+- Started: 2026-07-11
+
+## Prior task (complete): speakup-v1-merge-to-main
+
 - Status: complete
 - Task ID: speakup-v1-merge-to-main
 - Owner: Elon (Claude Lead). Phương explicit merge ack 2026-07-11 ("merge

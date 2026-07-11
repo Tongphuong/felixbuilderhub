@@ -477,9 +477,17 @@ export async function onRequestPost(context) {
   // calls the LLM; it replies with a pre-written, pre-cached canned phrase.
   const vietnameseTriggered = isVietnamese(transcript);
   const lastExpected = Array.isArray(session.last_expected) ? session.last_expected : [];
+  // "Real speech always wins" (Phương, 2026-07-11, live pilot finding): the
+  // ladder rescues only GENUINELY UNUSABLE input -- short AND unmatched
+  // ("um", one garbled word). A fluent off-list sentence goes to the LLM,
+  // which reacts warmly and models the target form; a short-but-CORRECT
+  // answer ("dog") fuzzy-matches and also goes to the LLM. A kid's real
+  // spoken attempt must never be answered with "let me ask again" -- chips
+  // are optional help, never a gate.
   const stallTriggered = isBeginnerLevel(session.level)
     && lastExpected.length > 0
-    && (isLowContent(transcript) || !matchesExpected(transcript, lastExpected, wordSimilarity));
+    && isLowContent(transcript)
+    && !matchesExpected(transcript, lastExpected, wordSimilarity);
 
   if (vietnameseTriggered || stallTriggered) {
     const step = nextRepairStep(session, session.level, { vietnamese: vietnameseTriggered });

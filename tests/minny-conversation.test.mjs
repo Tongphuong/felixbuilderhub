@@ -1410,6 +1410,73 @@ test('endpoint: a low-content reply after an options turn triggers the repair la
   }
 });
 
+// "Real speech always wins" (Phương, 2026-07-11): the ladder only rescues
+// input that is BOTH low-content AND unmatched. Any real spoken attempt --
+// a fluent off-list sentence, or a short-but-correct answer -- reaches the
+// LLM instead of being answered with a canned "let me ask again".
+test('endpoint: a fluent OFF-LIST answer after an options turn reaches the LLM, never the repair ladder', async () => {
+  const fakeKv = createFakeKv();
+  await seedCode(fakeKv, 'R2L-L2', 'L2');
+  let openRouterCalls = 0;
+  const env = { READ2LEAD_CODES: fakeKv, OPENROUTER_API_KEY: 'or-key', AI: { run: async (model) => (String(model).includes('llama-guard') ? 'safe' : 'audio') } };
+  const originalFetch = globalThis.fetch;
+  try {
+    globalThis.fetch = async (url) => {
+      if (String(url).includes('chat/completions')) {
+        openRouterCalls++;
+        return { ok: true, json: async () => ({ choices: [{ message: { content: JSON.stringify({ reply_en: 'Do you like dogs or cats?', mood: 'idle', options: ['Dogs!', 'Cats!'], expected: ['dog', 'dogs', 'cat', 'cats'] }) } }] }) };
+      }
+      return { ok: true, arrayBuffer: async () => new TextEncoder().encode('x').buffer };
+    };
+    const startResp = await onRequestPost({ request: new Request('http://x/api/minny-conversation', { method: 'POST', body: JSON.stringify({ action: 'start', access_code: 'R2L-L2' }) }), env });
+    const { session_id } = await startResp.json();
+
+    await onRequestPost({ request: new Request('http://x/api/minny-conversation', { method: 'POST', body: JSON.stringify({ action: 'turn', access_code: 'R2L-L2', session_id, transcript: 'hi' }) }), env });
+    assert.equal(openRouterCalls, 1);
+
+    // Fluent, real sentence that matches NOTHING in expected -- must be a
+    // normal LLM turn, not a repair turn.
+    const turn2 = await onRequestPost({ request: new Request('http://x/api/minny-conversation', { method: 'POST', body: JSON.stringify({ action: 'turn', access_code: 'R2L-L2', session_id, transcript: 'yes i love it so much thank you' }) }), env });
+    const data2 = await turn2.json();
+    assert.equal(openRouterCalls, 2, 'the fluent off-list answer goes to the LLM');
+    assert.equal(data2.repair, undefined, 'no repair flag on a real spoken attempt');
+    assert.equal(data2.repair_step, undefined);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test('endpoint: a short but CORRECT answer ("dog") after an options turn reaches the LLM, never the repair ladder', async () => {
+  const fakeKv = createFakeKv();
+  await seedCode(fakeKv, 'R2L-L2', 'L2');
+  let openRouterCalls = 0;
+  const env = { READ2LEAD_CODES: fakeKv, OPENROUTER_API_KEY: 'or-key', AI: { run: async (model) => (String(model).includes('llama-guard') ? 'safe' : 'audio') } };
+  const originalFetch = globalThis.fetch;
+  try {
+    globalThis.fetch = async (url) => {
+      if (String(url).includes('chat/completions')) {
+        openRouterCalls++;
+        return { ok: true, json: async () => ({ choices: [{ message: { content: JSON.stringify({ reply_en: 'Do you like dogs or cats?', mood: 'idle', options: ['Dogs!', 'Cats!'], expected: ['dog', 'dogs', 'cat', 'cats'] }) } }] }) };
+      }
+      return { ok: true, arrayBuffer: async () => new TextEncoder().encode('x').buffer };
+    };
+    const startResp = await onRequestPost({ request: new Request('http://x/api/minny-conversation', { method: 'POST', body: JSON.stringify({ action: 'start', access_code: 'R2L-L2' }) }), env });
+    const { session_id } = await startResp.json();
+
+    await onRequestPost({ request: new Request('http://x/api/minny-conversation', { method: 'POST', body: JSON.stringify({ action: 'turn', access_code: 'R2L-L2', session_id, transcript: 'hi' }) }), env });
+    assert.equal(openRouterCalls, 1);
+
+    // One word, 3 chars -- low-content by length, but it MATCHES the
+    // expected set: the kid answered the question. Must reach the LLM.
+    const turn2 = await onRequestPost({ request: new Request('http://x/api/minny-conversation', { method: 'POST', body: JSON.stringify({ action: 'turn', access_code: 'R2L-L2', session_id, transcript: 'dog' }) }), env });
+    const data2 = await turn2.json();
+    assert.equal(openRouterCalls, 2, 'the short correct answer goes to the LLM');
+    assert.equal(data2.repair, undefined, 'no repair flag on a correct answer');
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
 test('endpoint: repair ladder progresses step1 -> step2 -> move_on across three consecutive stalls, then a normal LLM turn resumes', async () => {
   const fakeKv = createFakeKv();
   await seedCode(fakeKv, 'R2L-L2', 'L2');
