@@ -89,7 +89,7 @@ assigns, commits, merges, deploys, or spends.
 
 ## Current task
 
-- Status: active
+- Status: complete
 - Task ID: speakup-azure-frame-grading
 - Owner: Mark (bg worker, packet scratchpad/azure-frame-packet.md) builds;
   Elon line-by-line review + integration; Buffet review (PROTECTED-file
@@ -137,7 +137,52 @@ assigns, commits, merges, deploys, or spends.
   tests/azure-pronunciation.test.mjs, tests/minny-speech-frame.test.mjs.
 - Stop condition: any change to scoreSpeechFrame semantics, read/photo
   Azure paths, Free Talk grading, or files beyond the list — stop.
+- Acceptance criteria reconciliation:
+  1. PASS — frame steps record WAV (recorder condition + comment); read/
+     photo recording unchanged; frame uploads confirmed on the 10MB LONG
+     cap (max_seconds 75 ≥ 60 → LONG, pre-existing, no change needed).
+  2. PASS — trimWavToSeconds pure, byte-exact tests; Buffet probed
+     blockAlign 0 / lying sizes / extra chunks / boundary cases — all
+     null-skip, no bad slice can reach Azure; Elon polish: header-only
+     WAV short-circuits locally.
+  3. PASS — pronunciation block only on Azure success under tier; ANY
+     failure → deep-equal identical result; meter untouched on failure
+     (Buffet probe + new explicit assertion); meter charged with measured
+     sampled seconds (20s→20, 75s→30 tests).
+  4. PASS — PROTECTED diff traced by Buffet: two imports + the additive
+     try/catch frame branch only; scoreSpeechFrame byte-identical.
+  5. PASS — warm row renders only with a finite accuracy (Elon NaN-guard:
+     a kid can never see "NaN%"); <50% shows the encouragement line
+     verbatim; always green mark; absent block → panel byte-identical.
+  6. PASS — 1047/1047 node --test; astro build clean; founder gates PASS;
+     LIVE on production (45ad174): real speech (Minny's own greeting via
+     minny-voice, transcoded to canonical WAV) through check_mode=frame
+     with practice_mode returned BOTH the deterministic rubric (75%
+     coverage, 3 rubric rows) AND pronunciation { accuracy 78, fluency
+     96, sampled_seconds 3.288 — measured, not the 30s cap }. Control
+     probe: read-mode on prod scorer=azure_pronunciation 96% (new Azure
+     key healthy post-rotation). Test-artifact note: an ffmpeg WAV with a
+     LIST chunk was correctly null-skipped by the validator (working as
+     designed); the app's own recorder (public/scripts/r2l-recorder.js
+     line 335+) writes exactly the canonical 44-byte header, verified,
+     so real kid recordings pass.
+- Design self-verification: behavioral = the live production frame check
+  above. Visual: the pronunciation row is one pattern-copy rubric row in
+  the shipped Phase 7a panel (design-mock exempt as internal row
+  addition, flagged for Phương's veto per V1-D6 precedent); its render
+  logic is pure-function tested (absent/≥50/<50/NaN) in the page's own
+  extracted-function test style.
+- Founder handoff: plain-language report with the live result numbers +
+  the budget watch note (F0 5h/month vs ~10h at full-class usage; paid
+  ≈$1/audio-h is Phương's later call with meter data).
+- Verified commit: 45ad174 (origin/main, production-verified live)
+- Actual cost: USD 0 runtime (~33s of Azure F0 free tier consumed by the
+  live verification).
+- Review trail: Mark built (packet), Elon line-by-line (NaN-guard) +
+  Buffet adversarial SHIP (probed trim + failure isolation; 2 nits
+  folded: meter assertion, empty-WAV short-circuit).
 - Started: 2026-07-11
+- Completed: 2026-07-11
 
 ## Prior task (complete): speakup-v1-ladder-real-speech-wins
 
