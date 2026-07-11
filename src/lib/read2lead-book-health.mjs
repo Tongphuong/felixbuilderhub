@@ -17,7 +17,7 @@
 //   - HARD  = genuinely unfinishable -> must skip this book.
 //   - SOFT  = cosmetic (typos / HTML artifacts) -> deprioritize, but may serve
 //             as a last resort rather than leaving the child with nothing.
-import { selectBookQuestions, buildBookShadowChunks } from './read2lead-book-flow.mjs';
+import { selectBookQuestions, buildBookPageReads, BOOK_QUESTION_LIMIT_V3 } from './read2lead-book-flow.mjs';
 
 // Mirror of lesson.astro `normalizeOrderSentence` (~7727) — the RUNTIME check
 // `isOrderAnswerCorrect` uses, so it is authoritative for whether a child can
@@ -138,11 +138,16 @@ function checkListenAndOrder(pack, reasons) {
 }
 
 // HARD (narrow) — book-flow consistency. The client and server both derive pages
-// from the SAME pure helpers (selectBookQuestions / buildBookShadowChunks), so a
+// from the SAME pure helpers (selectBookQuestions / buildBookPageReads), so a
 // well-formed pack is self-consistent by construction; the real risk is data that
 // makes those helpers throw or that references a non-existent page. Empty
-// `sentences` is VALID (read_aloud books legitimately ship with no shadow flow),
-// so we deliberately do NOT require >= 1 chunk per page.
+// `sentences` is VALID (read_aloud books legitimately ship with no page-read
+// flow), so we deliberately do NOT require >= 1 page read per page.
+//
+// Pinned to book flow v3 (R2L-PAGE-LOOP, 2026-07-11): assignment-time health
+// must mirror what the NEW client requires (BOOK_QUESTION_LIMIT_V3, page reads
+// instead of shadow chunks) so "gate pass" keeps meaning "validateBookFlowSubmission
+// pass" under the rules actually in force. See specs/SPEC_R2L_PAGE_LOOP.md.
 function checkBookFlow(pack, reasons) {
   const paragraphs = Array.isArray(pack?.story?.paragraphs_en) ? pack.story.paragraphs_en : [];
   const sentences = Array.isArray(pack?.story?.sentences) ? pack.story.sentences : [];
@@ -158,8 +163,8 @@ function checkBookFlow(pack, reasons) {
   // client could never render a submittable page.
   try {
     for (let pageIndex = 0; pageIndex < paragraphs.length; pageIndex += 1) {
-      selectBookQuestions(pack?.guided_listening, sentences, pageIndex);
-      buildBookShadowChunks(sentences, pageIndex);
+      selectBookQuestions(pack?.guided_listening, sentences, pageIndex, BOOK_QUESTION_LIMIT_V3);
+      buildBookPageReads(sentences, pageIndex);
     }
   } catch (err) {
     reasons.push({ level: 'hard', code: 'book_flow_throws', detail: `page derivation failed: ${err?.message || err}` });

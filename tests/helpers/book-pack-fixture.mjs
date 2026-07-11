@@ -8,6 +8,8 @@
 import {
   selectBookQuestions,
   buildBookShadowChunks,
+  buildBookPageReads,
+  BOOK_QUESTION_LIMIT_V3,
 } from '../../src/lib/read2lead-book-flow.mjs';
 
 // Build a valid book-pack lesson: `pages` pages, `sentencesPerPage` sentences
@@ -141,13 +143,38 @@ export function makeBrokenBookPack(kind, slug = 'book_broken', opts = {}) {
 }
 
 // Build a completed book_reader state for `lesson`: every page heard, its
-// selected questions answered in order, and every shadow chunk passed. Uses the
-// real selectBookQuestions / buildBookShadowChunks so the result validates.
-export function makeBookReaderState(lesson) {
+// selected questions answered in order, and every read unit passed. Uses the
+// real selectBookQuestions / buildBookShadowChunks / buildBookPageReads so the
+// result validates against validateBookFlowSubmission.
+//
+// `version` defaults to 2 (shadow_chunks, question limit 2) for
+// byte-compatibility with existing callers that predate book flow v3 — same
+// default-is-legacy rationale as validateBookFlowSubmission's own `options`
+// (src/lib/read2lead-book-flow.mjs). Pass `{ version: 3 }` for a page-reads
+// state (question limit BOOK_QUESTION_LIMIT_V3) built with the same real
+// production functions the v3 client and validator use.
+export function makeBookReaderState(lesson, { version = 2 } = {}) {
   const sentences = lesson.story.sentences;
   const pageCount = lesson.story.paragraphs_en.length;
   const pages = [];
   for (let p = 0; p < pageCount; p += 1) {
+    if (version === 3) {
+      const selected = selectBookQuestions(lesson.guided_listening, sentences, p, BOOK_QUESTION_LIMIT_V3);
+      const page_reads = buildBookPageReads(sentences, p).map((read) => ({
+        ...read,
+        status: 'passed',
+        score_percent: 90,
+        attempts: 1,
+      }));
+      pages.push({
+        page_index: p,
+        audio_completed: true,
+        selected_questions: selected,
+        question_results: selected.map((question) => ({ question_id: question.id, correct: true })),
+        page_reads,
+      });
+      continue;
+    }
     const selected = selectBookQuestions(lesson.guided_listening, sentences, p);
     const shadow_chunks = buildBookShadowChunks(sentences, p).map((chunk) => ({
       ...chunk,
@@ -164,7 +191,7 @@ export function makeBookReaderState(lesson) {
     });
   }
   return {
-    flowVersion: 2,
+    flowVersion: version,
     story_completed: true,
     pageIndex: Math.max(0, pageCount - 1),
     stage: 'summary',

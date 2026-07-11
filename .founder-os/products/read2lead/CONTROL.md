@@ -1,10 +1,10 @@
 # Control — Read2Lead
 
 - Product: Read2Lead
-- Current goal: A hard finishability gate on book-pack assignment — every book is checked it can actually be completed before it reaches a child; broken books are skipped, quarantined, and logged, and a child is never stranded (fixes founder-reported "some story packs are impossible to finish")
-- Latest staging URL: production (Cloudflare Pages auto-deploys from main); no new UI — a backend gate on the existing assignment endpoint
-- Active workers: 0
-- Last updated: 2026-07-09 (R2L-BOOK-HEALTH-GATE)
+- Current goal: Page-by-page lesson loop (book flow v3) — listen → 4 quick questions → read the page aloud, page by page, replacing the exhausting listen-everything-then-practice flow (e2e 2026-07-11 showed ~18-20 min sessions, 31+ speaking chunks, questions minutes after content). Spec: `_ops/specs/SPEC_R2L_PAGE_LOOP.md` (Phương-approved 2026-07-11).
+- Latest staging URL: preview branch `claude/r2l-page-loop` (Cloudflare Pages branch deploy) — pending first push
+- Active workers: 1 (Mark, background, book-flow/submit/health packet)
+- Last updated: 2026-07-11 (R2L-PAGE-LOOP)
 
 ## Operating team
 
@@ -21,6 +21,72 @@ Codex and Cline are retired org-wide (see `_ops/AGENTS.md`) — this table was
 stale until 2026-07-05.
 
 ## Current task
+
+- Status: active
+- Started: 2026-07-11
+- Task ID: R2L-PAGE-LOOP
+- Owner: Claude Lead (Elon) — lesson.astro direct (guard-protected, spec-covered);
+  Mark (background worker) owns src/lib/read2lead-book-flow.mjs,
+  functions/api/submit-read2lead-lesson.js, src/lib/read2lead-book-health.mjs +
+  their tests; Buffet reviews the combined diff and runs the real-speech e2e.
+  Author≠reviewer preserved: Elon reviews Mark line by line; Buffet reviews
+  Elon's lesson.astro changes.
+- Lane: product (kid-facing lesson flow restructure per approved spec;
+  scoring/reward/gate SEMANTICS unchanged by founder decision — only the
+  speaking unit changes from sentence-chunks to page reads)
+- Problem: e2e 2026-07-11 (R2L-PILOT-CYJS) — 6.5 min passive listening before
+  any interaction, questions batched minutes after content, options reshuffled
+  on retry, 31+ shadow chunks, 18-20 min sessions; exhausting for the 6-12 age
+  group (PRODUCT_CONTEXT: "attention span short — activities must be snappy").
+- Approach: book flow v3 per SPEC_R2L_PAGE_LOOP.md — per-page
+  story→questions(4, AJ Hoge style, stable option order)→page read-aloud(1-2
+  units, word cap 60, mic unlocked after the page listen)→advance; version-gated
+  validateBookFlowSubmission (v2 accepted indefinitely — pending-submit replay
+  is the 2026-06-27 P0 shape); server counts page reads under the existing
+  summary keys; checkpoint resume self-heals by id re-derivation.
+- Acceptance criteria: per-page loop works end-to-end on the deployed preview
+  with code R2L-PILOT-CYJS INCLUDING real-speech recording (record → Whisper →
+  score ≥50 → submit → real XP/rank movement); 4 questions/page from the
+  existing pool with graceful degradation; option order stable across retries;
+  mic unlocks without the sample-listen lock; a v2-shaped payload still submits
+  successfully; standard-pack path byte-identical (finalizeWithoutReward
+  regression pin); old checkpoints resume without loss of required progress;
+  node --test green; astro build clean; session-time estimate ≤15 min verified
+  in e2e timing.
+- Files owned: src/pages/read2lead/lesson.astro (Elon),
+  src/lib/read2lead-book-flow.mjs, functions/api/submit-read2lead-lesson.js,
+  src/lib/read2lead-book-health.mjs (Mark), tests/read2lead-book-flow.test.mjs,
+  tests/read2lead-book-health.test.mjs, tests/read2lead-book-reader-behaviour.test.mjs,
+  tests/helpers/book-pack-fixture.mjs, new test files (Mark),
+  .founder-os/products/read2lead/CONTROL.md + EVIDENCE.md (this entry).
+  No overlap with the concurrent SpeakUp session's active set (verified in
+  claude-bg-worker-active.json).
+- Non-goals: reward/gate semantics (completed_without_reward, pass ≥50,
+  3 attempts, S/A/B/F) — UNCHANGED per founder; XP economy rebalance; Hoge-style
+  question regeneration in the Python backend (follow-up); mid-book rest stop;
+  recorder pipeline files (untouched).
+- Stop condition: acceptance criteria pass on the deployed preview + Buffet
+  SHIP + founder build/complete gates PASS, then STOP — merge to main only on
+  Phương's explicit approval after she taps through the preview.
+- Cost ceiling: Claude team (Max plan, not metered); Whisper/TTS e2e usage on
+  existing Cloudflare/OpenAI plumbing, one pilot code's sessions.
+- Reuse survey: (1) in-repo versioned-rules in `read2lead-book-flow.mjs`
+  (shared client+server via ?raw + server import) — ADOPTED for v2/v3 gating,
+  same single-source pattern the health gate already trusts; (2) `xstate` for
+  the lesson state machine — REJECTED: the inline ?raw script can't take a
+  bundled dependency and the string-stage machine is small; (3) `canvas-confetti`
+  for page-complete moments — REJECTED: `fireStreakConfetti`/`__r2lJuice`
+  (src/lib/lesson-juice.ts) already ship; (4) AJ Hoge mini-story questioning —
+  adopted as a PATTERN (frequent easy questions), served from the existing
+  generated pool.
+- Design self-verification: pending — screenshots of each per-page stage
+  (390px + 1280px) on the deployed preview vs SPEC_R2L_PAGE_LOOP.md §3 flow;
+  components are pattern-copies of existing approved lesson cards (flagged for
+  Phương's veto before merge).
+- Founder handoff: pending — preview URL + screenshots + plain-language summary;
+  Phương taps through one lesson before any merge to main.
+
+## Previous task — R2L-BOOK-HEALTH-GATE
 
 - Status: complete
 - Started: 2026-07-09

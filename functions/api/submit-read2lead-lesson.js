@@ -217,14 +217,15 @@ export async function submitV2Lesson({
   const isBookFlowV2 = isBookLessonContext(lessonContext);
   let bookFlowValidation = null;
   if (isBookFlowV2) {
-    if (Number(submittedAnswers.book_flow_version) !== 2) {
+    const bookFlowVersion = Number(submittedAnswers.book_flow_version);
+    if (bookFlowVersion !== 2 && bookFlowVersion !== 3) {
       return json({
         ok: false,
         error: 'invalid_book_flow',
         message: 'Bai doc sach can du lieu tien do moi. Con tai lai bai nhe.',
       }, 400);
     }
-    bookFlowValidation = validateBookFlowSubmission(submittedAnswers.book_reader, lessonContext);
+    bookFlowValidation = validateBookFlowSubmission(submittedAnswers.book_reader, lessonContext, { version: bookFlowVersion });
     if (!bookFlowValidation.ok) {
       return json({
         ok: false,
@@ -296,7 +297,7 @@ export async function submitV2Lesson({
     total_count: totalCount,
     activity_results: activityResults,
     ...(isBookFlowV2 ? {
-      book_flow_version: 2,
+      book_flow_version: Number(submittedAnswers.book_flow_version),
       book_reader: submittedAnswers.book_reader,
       book_summary: bookFlowValidation.summary,
     } : {}),

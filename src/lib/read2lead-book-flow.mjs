@@ -2,6 +2,14 @@ const BOOK_QUESTION_LIMIT = 2;
 const BOOK_CHUNK_SENTENCE_LIMIT = 3;
 const BOOK_CHUNK_WORD_LIMIT = 24;
 
+// book flow v3 (R2L-PAGE-LOOP, 2026-07-11): one read-aloud unit per story page
+// (two only when the page exceeds the word cap) replaces v2's 3-9 shadow
+// chunks per page; 4 comprehension questions per page (AJ Hoge style) replace
+// v2's 2. See specs/SPEC_R2L_PAGE_LOOP.md.
+export const BOOK_FLOW_VERSION = 3;
+export const BOOK_QUESTION_LIMIT_V3 = 4;
+export const BOOK_PAGE_READ_WORD_CAP = 60;
+
 function wordsIn(text) {
   return String(text || '').trim().split(/\s+/).filter(Boolean).length;
 }
@@ -88,6 +96,53 @@ export function selectBookQuestions(guidedListening, sentences, pageIndex, limit
   return selected.concat(remaining.slice(0, Math.max(0, limit - selected.length)));
 }
 
+// One read-aloud unit per page (two only when the page exceeds `wordCap`),
+// replacing v2's 3-9 shadow chunks per page. Fields mirror buildBookShadowChunks
+// (sentence_indexes/text_en/audio_urls/word_count, minus chunk_id) so the card
+// renderer and recorder pipeline are reused untouched. 0 sentences -> [] (an
+// image-only page has no read unit). A single source sentence never splits —
+// same sentence-integrity principle as buildBookShadowChunks' soft word-limit
+// comment below.
+export function buildBookPageReads(sentences, pageIndex, wordCap = BOOK_PAGE_READ_WORD_CAP) {
+  const entries = sentenceEntriesForPage(sentences, pageIndex);
+  if (!entries.length) return [];
+
+  const textOf = (entry) => String(entry.sentence?.text_en || entry.sentence?.text || '').trim();
+  const words = entries.map((entry) => wordsIn(textOf(entry)));
+  const totalWords = words.reduce((total, count) => total + count, 0);
+
+  const buildUnit = (unitEntries, readIndex) => ({
+    read_id: `p${pageIndex}_r${readIndex}`,
+    sentence_indexes: unitEntries.map((entry) => entry.sentenceIndex),
+    text_en: unitEntries.map((entry) => textOf(entry)).join(' '),
+    audio_urls: unitEntries.map((entry) => String(entry.sentence?.audio_url || '')),
+    word_count: unitEntries.reduce((total, entry) => total + wordsIn(textOf(entry)), 0),
+  });
+
+  if (entries.length < 2 || totalWords <= wordCap) {
+    return [buildUnit(entries, 0)];
+  }
+
+  // Split at the sentence boundary where cumulative words first reach half the
+  // total. Bounded to [0, entries.length - 2] so both units keep >= 1 sentence
+  // even when one sentence dominates the page's word count.
+  const half = totalWords / 2;
+  let cumulative = 0;
+  let splitAt = entries.length - 2;
+  for (let index = 0; index <= entries.length - 2; index += 1) {
+    cumulative += words[index];
+    if (cumulative >= half) {
+      splitAt = index;
+      break;
+    }
+  }
+
+  return [
+    buildUnit(entries.slice(0, splitAt + 1), 0),
+    buildUnit(entries.slice(splitAt + 1), 1),
+  ];
+}
+
 export function buildBookShadowChunks(
   sentences,
   pageIndex,
@@ -125,13 +180,20 @@ export function buildBookShadowChunks(
   return chunks;
 }
 
+// Each page contributes from `page.page_reads` (v3) when that array is
+// present, else from `page.shadow_chunks` (v2 snapshots) — so a checkpoint
+// resumed mid-migration and a mixed v2/v3 book reader still summarize
+// correctly. Output keys are unchanged: page reads count under the same
+// `chunks_*` names the server and client summary UI already key off.
 export function summarizeBookFlow(bookReader) {
   const pages = Array.isArray(bookReader?.pages) ? bookReader.pages : [];
-  const chunks = pages.flatMap((page) => (
-    Array.isArray(page?.shadow_chunks) ? page.shadow_chunks : []
+  const units = pages.flatMap((page) => (
+    Array.isArray(page?.page_reads)
+      ? page.page_reads
+      : (Array.isArray(page?.shadow_chunks) ? page.shadow_chunks : [])
   ));
-  const scores = chunks
-    .map((chunk) => Number(chunk?.score_percent))
+  const scores = units
+    .map((unit) => Number(unit?.score_percent))
     .filter(Number.isFinite);
   return {
     pages_heard: pages.filter((page) => page?.audio_completed === true).length,
@@ -139,15 +201,15 @@ export function summarizeBookFlow(bookReader) {
       (total, page) => total + (Array.isArray(page?.question_results) ? page.question_results.length : 0),
       0,
     ),
-    chunks_passed: chunks.filter((chunk) => chunk?.status === 'passed').length,
-    chunks_skipped: chunks.filter((chunk) => chunk?.status === 'skipped').length,
+    chunks_passed: units.filter((unit) => unit?.status === 'passed').length,
+    chunks_skipped: units.filter((unit) => unit?.status === 'skipped').length,
     average_pronunciation_score: scores.length
       ? Math.round(scores.reduce((total, score) => total + score, 0) / scores.length)
       : 0,
   };
 }
 
-export function validateBookFlowSubmission(bookReader, lessonContext) {
+function validateBookFlowV2(bookReader, lessonContext) {
   const errors = [];
   const paragraphs = Array.isArray(lessonContext?.story?.paragraphs_en)
     ? lessonContext.story.paragraphs_en
@@ -224,6 +286,110 @@ export function validateBookFlowSubmission(bookReader, lessonContext) {
   return {
     ok: errors.length === 0,
     errors,
+    summary,
+    skipped: summary.chunks_skipped > 0,
+  };
+}
+
+// v3 (R2L-PAGE-LOOP): page reads (buildBookPageReads) replace shadow chunks,
+// question limit rises to BOOK_QUESTION_LIMIT_V3. Settle rules (pass >= 50 /
+// skip after 3 attempts or a technical skip with >= 2 failures) are identical
+// in shape to v2 — only the per-page unit being settled changes.
+function validateBookFlowV3(bookReader, lessonContext) {
+  const errors = [];
+  const paragraphs = Array.isArray(lessonContext?.story?.paragraphs_en)
+    ? lessonContext.story.paragraphs_en
+    : [];
+  const sentences = Array.isArray(lessonContext?.story?.sentences)
+    ? lessonContext.story.sentences
+    : [];
+  const pages = Array.isArray(bookReader?.pages) ? bookReader.pages : [];
+  if (pages.length !== paragraphs.length) {
+    errors.push(`book_reader.pages must contain ${paragraphs.length} pages`);
+  }
+
+  paragraphs.forEach((_, pageIndex) => {
+    const page = pages[pageIndex];
+    if (!page || Number(page.page_index) !== pageIndex) {
+      errors.push(`book_reader.pages[${pageIndex}].page_index must be ${pageIndex}`);
+      return;
+    }
+    if (page.audio_completed !== true) {
+      errors.push(`book_reader.pages[${pageIndex}] audio is incomplete`);
+    }
+
+    const expectedQuestions = selectBookQuestions(
+      lessonContext?.guided_listening,
+      sentences,
+      pageIndex,
+      BOOK_QUESTION_LIMIT_V3,
+    );
+    const questionResults = Array.isArray(page.question_results) ? page.question_results : [];
+    const expectedQuestionIds = expectedQuestions.map((question) => question.id);
+    const submittedQuestionIds = questionResults.map((result) => String(result?.question_id || ''));
+    if (
+      questionResults.length !== expectedQuestions.length
+      || expectedQuestionIds.some((id, index) => submittedQuestionIds[index] !== id)
+    ) {
+      errors.push(`book_reader.pages[${pageIndex}] must answer ${expectedQuestions.length} selected questions in order`);
+    }
+
+    const expectedReads = buildBookPageReads(sentences, pageIndex);
+    const submittedReads = Array.isArray(page.page_reads) ? page.page_reads : [];
+    if (submittedReads.length !== expectedReads.length) {
+      errors.push(`book_reader.pages[${pageIndex}] must contain ${expectedReads.length} page reads`);
+    }
+    expectedReads.forEach((expected, readIndex) => {
+      const submitted = submittedReads[readIndex];
+      if (
+        !submitted
+        || submitted.read_id !== expected.read_id
+        || JSON.stringify(submitted.sentence_indexes) !== JSON.stringify(expected.sentence_indexes)
+      ) {
+        errors.push(`book_reader.pages[${pageIndex}].page_reads[${readIndex}] does not match the expected read`);
+        return;
+      }
+      const attempts = Math.max(0, Math.floor(Number(submitted.attempts) || 0));
+      const score = Number(submitted.score_percent);
+      if (submitted.status === 'passed') {
+        if (!Number.isFinite(score) || score < 50) {
+          errors.push(`book_reader.pages[${pageIndex}].page_reads[${readIndex}] passed below 50 percent`);
+        }
+      } else if (submitted.status === 'skipped') {
+        const technicalSkip = submitted.technical_skip === true
+          && Number(submitted.technical_failures) >= 2;
+        if (attempts < 3 && !technicalSkip) {
+          errors.push(`book_reader.pages[${pageIndex}].page_reads[${readIndex}] was skipped too early`);
+        }
+      } else {
+        errors.push(`book_reader.pages[${pageIndex}].page_reads[${readIndex}] is not settled`);
+      }
+    });
+  });
+
+  const summary = summarizeBookFlow(bookReader);
+  return {
+    ok: errors.length === 0,
+    errors,
+    summary,
+    skipped: summary.chunks_skipped > 0,
+  };
+}
+
+// `options.version` defaults to 2 for byte-compatibility with existing 2-arg
+// callers (tests and any future caller that omits it) — NOT because v2 is the
+// intended path going forward. Production callers (the submit endpoint and the
+// book-health gate) always pass the payload's actual version explicitly, so
+// this default is a test-surface convenience only; a caller that silently
+// relies on it would validate under the OLD rules without meaning to.
+export function validateBookFlowSubmission(bookReader, lessonContext, options = {}) {
+  const version = options.version === undefined ? 2 : options.version;
+  if (version === 2) return validateBookFlowV2(bookReader, lessonContext);
+  if (version === 3) return validateBookFlowV3(bookReader, lessonContext);
+  const summary = summarizeBookFlow(bookReader);
+  return {
+    ok: false,
+    errors: ['unsupported book_flow_version'],
     summary,
     skipped: summary.chunks_skipped > 0,
   };

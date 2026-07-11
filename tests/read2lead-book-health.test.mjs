@@ -5,9 +5,11 @@ import {
   assessBookHealth,
   normalizeForReconstruction,
 } from '../src/lib/read2lead-book-health.mjs';
+import { validateBookFlowSubmission } from '../src/lib/read2lead-book-flow.mjs';
 import {
   makeStoredBookPack,
   makeBrokenBookPack,
+  makeBookReaderState,
 } from './helpers/book-pack-fixture.mjs';
 
 function codesOf(result) {
@@ -80,6 +82,21 @@ test('normalizeForReconstruction mirrors the runtime normalizeOrderSentence', ()
   assert.equal(normalizeForReconstruction('Hello!'), 'hello');
   assert.equal(normalizeForReconstruction('  spaced   out  '), 'spaced out');
   assert.notEqual(normalizeForReconstruction('the cat sat'), normalizeForReconstruction('the cat sat down'));
+});
+
+// Pinned contract, book flow v3 (R2L-PAGE-LOOP): "gate pass" must keep meaning
+// "validateBookFlowSubmission pass" now that assignment-time health mirrors
+// the v3 rules (BOOK_QUESTION_LIMIT_V3, buildBookPageReads). The same pack
+// object doubles as both the health-gate input and the validator's
+// lessonContext, exactly like the v2 parity pin in
+// read2lead-book-payload-completion.test.mjs.
+test('a pack that passes the health gate is runtime-finishable under version 3', () => {
+  const pack = makeStoredBookPack('book_1', { pages: 3, sentencesPerPage: 2, questionsPerPage: 2 });
+  const health = assessBookHealth(pack);
+  assert.equal(health.ok, true, JSON.stringify(health.reasons));
+  const reader = makeBookReaderState(pack, { version: 3 });
+  const result = validateBookFlowSubmission(reader, pack, { version: 3 });
+  assert.equal(result.ok, true, JSON.stringify(result.errors));
 });
 
 test('a legitimately hard but correct order sentence still passes (no false positive)', () => {

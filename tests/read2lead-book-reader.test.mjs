@@ -4,19 +4,20 @@ import { readFileSync } from 'node:fs';
 
 const lesson = readFileSync('src/pages/read2lead/lesson.astro', 'utf8');
 
-test('book page audio must end before story navigation unlocks practice', () => {
+test('book page audio must end before the page unlocks its own questions', () => {
   assert.match(lesson, /state\.lesson\.book_page_audio\[pageIndex\]/);
   const playStart = lesson.indexOf('function bookPlayPageAudio');
-  const playEnd = lesson.indexOf('function bookRenderQuestion', playStart);
+  const playEnd = lesson.indexOf('function bookStableOptionOrder', playStart);
   const body = lesson.slice(playStart, playEnd);
   const ended = body.indexOf("audio.addEventListener('ended'");
   const unlock = body.indexOf('audio_completed = true');
   assert.ok(ended > -1 && unlock > ended);
-  assert.match(body, /state\.bookReader\.stage === 'story'/);
-  assert.match(body, /bookSetStage\('story'\)/);
+  // v3 page loop: 'ended' transitions the SAME page into its practice stage
+  // (questions first) after a short beat, guarded against page/stage races.
+  assert.match(body, /state\.bookReader\.stage !== 'story'/);
+  assert.match(body, /bookSetStage\(bookPracticeStageForPage\(page\)\)/);
   assert.match(lesson, /function bookGoToNextStoryPage/);
-  assert.match(lesson, /state\.bookReader\.story_completed = true/);
-  assert.match(lesson, /bookPracticeStageForPage\(bookPageState\(0\)\)/);
+  assert.match(lesson, /function bookResumeFrontier/);
   assert.match(body, /addEventListener\('error', fail/);
   assert.match(body, /addEventListener\('r2l-play-error', fail/);
   assert.doesNotMatch(
@@ -46,8 +47,10 @@ test('book reader exposes semantic story, questions, shadow, and next stages', (
   }
   assert.doesNotMatch(lesson, /data-book-stage-container="listen"/);
   assert.match(lesson, /stage: 'story'/);
-  assert.match(lesson, /if \(!state\.bookReader\.story_completed\)/);
-  assert.match(lesson, /bookSetStage\('questions'\)/);
+  // v3 page loop: the stage for a page derives from that page's own work
+  // (unheard -> story), not from a global story-first phase.
+  assert.match(lesson, /if \(!page\.audio_completed\) return 'story'/);
+  assert.match(lesson, /stage === 'questions'/);
   assert.match(lesson, /bookSetStage\('shadow'\)/);
   assert.match(lesson, /bookSetStage\('next'\)/);
   assert.match(
@@ -98,15 +101,16 @@ test('book questions reuse old reward and wrong-answer SFX hooks', () => {
   assert.match(body, /onBookReaderWrong\(questionId\)/);
 });
 
-test('shadow chunks play sentence audio in order before unlocking the shared recorder', () => {
-  assert.match(lesson, /buildBookShadowChunks\(/);
+test('page reads arm the recorder immediately and keep replay optional', () => {
+  assert.match(lesson, /buildBookPageReads\(/);
+  // v3: the mic is armed at render (the page listen already earned it) — no
+  // per-unit sample gate; the "listen again" replay path still exists.
+  assert.match(lesson, /if \(recordButton\) recordButton\.dataset\.heard = 'true'/);
   const start = lesson.indexOf('async function bookPlayShadowChunk');
   const end = lesson.indexOf('function bookChunkFromCard', start);
   const body = lesson.slice(start, end);
   assert.match(body, /for \(const sentenceIndex of chunk\.sentence_indexes\)/);
   assert.match(body, /await new Promise/);
-  assert.match(body, /chunk\.playback_completed = true/);
-  assert.match(body, /recordButton\.dataset\.heard = 'true'/);
   assert.match(lesson, /_r2lStartRecording\(itemKey, card\)/);
   assert.match(lesson, /bookHandleShadowScore\(cardEl, payload\)/);
 });
@@ -119,14 +123,14 @@ test('pronunciation feedback stays visible and chunk advance is manual', () => {
   assert.match(lesson, /data-book-shadow-continue/);
   assert.match(lesson, /continueButton\.classList\.remove\('hidden'\)/);
   assert.doesNotMatch(lesson, /setTimeout\(\(\) => bookCompleteShadowChunk/);
-  assert.match(lesson, /bookCompleteShadowChunk\(chunk\.chunk_id\)/);
+  assert.match(lesson, /bookCompleteShadowChunk\(chunk\.read_id\)/);
 });
 
 test('shadow reading pass and pronunciation fail reuse old celebration and wrong SFX hooks', () => {
   const start = lesson.indexOf('function bookHandleShadowScore');
   const end = lesson.indexOf('function bookHandleShadowTechnicalFailure', start);
   const body = lesson.slice(start, end);
-  assert.match(body, /const questionId = `book-shadow:\$\{chunk\.chunk_id\}`/);
+  assert.match(body, /const questionId = `book-shadow:\$\{chunk\.read_id\}`/);
   assert.match(body, /clearWrongStreak\(questionId\)/);
   assert.match(body, /onBookReaderCorrect\(\{ coinTone: true \}\)/);
   assert.match(body, /onBookReaderWrong\(questionId\)/);
@@ -145,13 +149,13 @@ test('technical failures still use separate counters and explicit no-reward skip
   assert.doesNotMatch(body, /onBookReaderCorrect|onBookReaderWrong|showReward|playSfx/);
 });
 
-test('book submission sends explicit v2 pages while legacy activity routing remains available', () => {
-  assert.match(lesson, /book_flow_version: 2/);
+test('book submission sends explicit v3 pages while legacy activity routing remains available', () => {
+  assert.match(lesson, /book_flow_version: 3/);
   assert.match(lesson, /book_reader: bookSubmissionState\(\)/);
   assert.match(lesson, /page_index: page\.page_index/);
   assert.match(lesson, /question_results: page\.question_results/);
-  assert.match(lesson, /sentence_indexes: chunk\.sentence_indexes/);
-  assert.match(lesson, /status: chunk\.status/);
+  assert.match(lesson, /sentence_indexes: read\.sentence_indexes/);
+  assert.match(lesson, /status: read\.status/);
   assert.match(lesson, /function w1EnterActivitiesPhase/);
   assert.match(lesson, /function w1InitGuidedListeningPhase/);
 });
@@ -194,19 +198,20 @@ test('audio event exposes idle playing paused and done states with karaoke timin
   assert.match(lesson, /prefers-reduced-motion: reduce/);
 });
 
-test('progress trail uses full page completion during practice and remains data driven', () => {
+test('progress trail uses full page completion and remains data driven', () => {
   const start = lesson.indexOf('function bookPageIsComplete');
   const end = lesson.indexOf('function bookFormatTime', start);
   const completion = lesson.slice(start, end);
   assert.match(completion, /page\?\.audio_completed/);
   assert.match(completion, /question_results/);
-  assert.match(completion, /shadow_chunks/);
-  assert.match(completion, /status === 'passed' \|\| chunk\.status === 'skipped'/);
+  assert.match(completion, /page_reads/);
+  assert.match(completion, /status === 'passed' \|\| read\.status === 'skipped'/);
   const trailStart = lesson.indexOf('function bookRenderTrail');
   const trailEnd = lesson.indexOf('function bookSetStage', trailStart);
   const trail = lesson.slice(trailStart, trailEnd);
   assert.match(trail, /state\.lesson\.book_images\.length/);
-  assert.match(trail, /practiceStarted \? bookPageIsComplete\(pageState\) : pageState\.audio_completed === true/);
+  // v3 page loop: one completion notion everywhere — the fully-finished page.
+  assert.match(trail, /const isCompleted = bookPageIsComplete\(pageState\)/);
   assert.match(trail, /bookPageLabel\(i\)/);
   assert.match(trail, /Phần thưởng/);
   assert.match(trail, /svg.*viewBox.*rect.*path/s);
