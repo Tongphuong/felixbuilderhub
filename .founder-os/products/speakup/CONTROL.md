@@ -89,7 +89,7 @@ assigns, commits, merges, deploys, or spends.
 
 ## Current task
 
-- Status: active
+- Status: complete
 - Task ID: speakup-v1-3-feedback-sandwich
 - Owner: Elon authors the feedback prompt verbatim (safety-adjacent);
   Mark (bg, packet scratchpad/v13-mark-packet.md) builds the module +
@@ -125,7 +125,53 @@ assigns, commits, merges, deploys, or spends.
 - Stop condition: feedback replacing/altering any deterministic field;
   any second LLM call per result; any path where LLM failure surfaces to
   the kid — stop.
+- Acceptance criteria reconciliation (spec §V1.3):
+  1. PASS — feedback JSON per spec; strict parse (empty recast_en treated
+     as absent — JSON-mode reality); Elon-authored prompt with teacher
+     register ("con") + exact-quote-or-no-quote rule.
+  2. PASS — grounding validator, red-teamed TWICE by Buffet: his 3
+     original bypasses (dangling-quote skip, ASCII-only digit filter vs
+     "một trăm phần trăm"/unicode digits, ungrounded recast) + 1 relocated
+     instance (quote fence on tiny_challenge_vi) all fixed with his exact
+     payloads as permanent fixtures; focus_word from validated allowed
+     set only; recast requires ≥half content-word overlap with the
+     transcript.
+  3. PASS — output guardrail-screened per string + Llama Guard; ANY
+     failure = silent omission (deep-equal); plain R2L traffic can never
+     trigger a call (fetch-never-made test); one LLM call, 4s, no retry.
+  4. PASS — high-scorer path fixed (the founder's original complaint):
+     fallback pool bug found via REAL-model sampling (nonexistent
+     word_feedback field on Azure-scored reads → empty pool → parse
+     reject); now reads both scorer shapes + the homework block. Real-
+     model samples verified for weak AND perfect readings (transcripts in
+     AGENT_LOG/report).
+  5. PASS — UI sandwich per approved Set 2 mock, every string escaped
+     (hostile payloads tested), renders scores → coach → fix-it order;
+     absent coach = byte-identical panel; focus_word tap-to-hear works
+     incl. the fallback path (KV merge). Rule-20: rendered live on
+     DEPLOYED PRODUCTION 6d92a13 via routed harness — screenshot
+     _ops/speakup-v13-final-sandwich-390.png, MATCH.
+  6. PASS — 1239/1239 (incl. merged R2L work from the concurrent
+     session); astro build clean; founder gates.
+  7. PARTIAL (honest, bounded) — full live-LLM-on-production coach not
+     yet observed end-to-end: the founder-supplied test codes have no
+     homework assigned (Henry's code was deleted; PILOT has no homework
+     block — the eligibility guard correctly refuses to spend, verified
+     live). Evidence stack: real-model samples through the exact prod
+     prompt+validator, the live guard verification, and the full mocked
+     endpoint suite. Lights up with the first real homework attempt;
+     founder can accelerate by assigning homework to any test code.
+- Design self-verification: rule-20 evidence in criterion 5.
+- Founder handoff: report with the two real model samples + the
+  homework-assignment ask.
+- Verified commit: 6d92a13 (origin/main, deployed, sandwich render
+  verified live)
+- Actual cost: ≈US$0.01 model sampling; runtime ≤$0.002/homework set.
+- Review trail: Mark (2 rounds), Steve (UI), Elon (prompt + 3 polish
+  fixes via real-model sampling), Buffet red-team ×2 (REQUEST CHANGES →
+  prescriptions applied verbatim, payloads fixture-locked).
 - Started: 2026-07-12
+- Completed: 2026-07-12
 
 ## Prior task (complete): speakup-pilot-start
 
