@@ -106,8 +106,8 @@ export async function onRequestPost(context) {
 
   const interests = (data.interests || '').toString().trim().slice(0, 120);
   const topic = (data.topic || '').toString().trim().slice(0, 60);
-  const levelForPack = progress.current_level || 'L1';
-  const useBookPool = (await loadBookLevels(env)).has(levelForPack);
+  const levelForPack = normalizeKidLevel(progress.current_level);
+  const useBookPool = (await loadBookLevels(env)).has(bandForLevel(levelForPack));
   const backendUrl = env.READ2LEAD_BACKEND_URL;
   const backendSecret = env.READ2LEAD_BACKEND_SECRET;
   if (!useBookPool && !backendUrl) {
@@ -320,6 +320,37 @@ export async function loadBookLevels(env) {
   return parseBookLevels(Array.isArray(stored) ? stored.join(',') : stored);
 }
 
+// R2L-PAGE-BANDS: kids are served books by PAGE COUNT band, not StoryWeaver
+// text level (SPEC_R2L_PAGE_BANDS.md). The five book_index:<L> lists hold
+// page-count bands; this maps a kid's learning level onto a shelf. Normalizes
+// untrusted level values (admin-typed profiles) so a kid can never fall off
+// the shelf map: unknown -> L1's band, L5 -> the longest band.
+const BOOK_BAND_LEVELS = new Set(['L0', 'L1', 'L2', 'L3', 'L4']);
+const KID_LEVELS = new Set(['L0', 'L1', 'L2', 'L3', 'L4', 'L5']);
+
+// Kid levels come from admin-typed profiles — nothing upstream validates
+// them, and a lowercase 'l2' used to 503 deep in the pack path. Normalize
+// once at entry; unknown values fall back to L1.
+export function normalizeKidLevel(level) {
+  const normalized = String(level || '').trim().toUpperCase();
+  return KID_LEVELS.has(normalized) ? normalized : 'L1';
+}
+
+export function bandForLevel(level) {
+  const normalized = String(level || '').trim().toUpperCase();
+  if (normalized === 'L5') return 'L4';
+  return BOOK_BAND_LEVELS.has(normalized) ? normalized : 'L1';
+}
+
+// Expected page range per band — used only for the drift alarm below.
+const BAND_PAGE_RANGES = {
+  L0: [1, 6],
+  L1: [7, 9],
+  L2: [10, 12],
+  L3: [13, 15],
+  L4: [16, Infinity],
+};
+
 export function selectUnreadBook(
   rawIndex,
   completedBooks = [],
@@ -407,7 +438,8 @@ async function assignBookPack({
   levelForPack,
   previousPack,
 }) {
-  const rawIndex = await env.READ2LEAD_CODES.get('book_index:' + levelForPack, { type: 'json' });
+  const band = bandForLevel(levelForPack);
+  const rawIndex = await env.READ2LEAD_CODES.get('book_index:' + band, { type: 'json' });
   if (!Array.isArray(rawIndex)) {
     throw new BookPoolError(
       'book_pool_unavailable',
@@ -417,7 +449,7 @@ async function assignBookPack({
   const rng = typeof env.RNG === 'function' ? env.RNG : Math.random;
   const previousSlug = bookSlugFromPack(previousPack);
   const now = new Date().toISOString();
-  const quarantined = await loadQuarantine(env, levelForPack);
+  const quarantined = await loadQuarantine(env, band);
   const excluded = new Set();
   let chosen = null;          // { slug, pack } — a fully healthy book
   let softFallback = null;    // { slug, pack, reasons } — finishable but cosmetically flawed
@@ -437,6 +469,13 @@ async function assignBookPack({
     const candidatePack = await env.READ2LEAD_CODES.get('book:' + slug, { type: 'json' });
     const health = assessBookHealth(candidatePack, { now, expectedSlug: slug });
     if (health.ok) {
+      // Drift alarm (never blocks the kid): a drawn book outside the kid's
+      // page band means the shelf data has drifted — surface it in logs.
+      const drawnPages = (candidatePack?.book_images || []).length;
+      const [minPages, maxPages] = BAND_PAGE_RANGES[band] || [0, Infinity];
+      if (drawnPages < minPages || drawnPages > maxPages) {
+        console.warn('book_band_mismatch', JSON.stringify({ slug, band, pages: drawnPages }));
+      }
       chosen = { slug, pack: candidatePack };
       break;
     }
@@ -446,7 +485,7 @@ async function assignBookPack({
       if (!softFallback) softFallback = { slug, pack: candidatePack, reasons: health.reasons };
     } else {
       // Genuinely unfinishable — quarantine so we skip it cheaply next time.
-      await quarantineBook(env, levelForPack, slug, health.reasons, now);
+      await quarantineBook(env, band, slug, health.reasons, now);
     }
   }
 
@@ -585,7 +624,7 @@ function normalizeProgress(codeData, progressState = null) {
     student_name: profile.student_name || progressState?.student_name || progress.student_name || '',
     age: Number.isFinite(profile.age) ? profile.age : (Number.isFinite(progress.age) ? progress.age : null),
     child_gender: profile.child_gender || progress.child_gender || '',
-    current_level: progressState?.current_level || earnedCurrentLevel(progress, reviewHistory),
+    current_level: normalizeKidLevel(progressState?.current_level || earnedCurrentLevel(progress, reviewHistory)),
     packs_created: progress.packs_created || 0,
     completed_packs: progress.completed_packs || reviewHistory.length || 0,
     weekly_completed_count: progress.weekly_completed_count || 0,
