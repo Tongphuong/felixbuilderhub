@@ -1,7 +1,7 @@
 # Control — SpeakUp
 
 - Product: SpeakUp
-- Current goal: Build all 8 phases of `_ops/specs/SPEC_SPEAKUP_V0.md` on branch `claude/speakup-v0`, QA the full pilot on preview, THEN merge to main. No phase merges to main individually.
+- Current goal: PILOT RUNNING (started 2026-07-12, Phương's order). Watch week-one signals (chips vs freeze, question-rate ~61%, hint taps, repair-ladder frequency, Azure F0 meter, debug:convo-flags ring); V1.3 awaits its own founder gate; V1.5–V1.7 held for pilot evidence.
 - Branch: `claude/speakup-v0` (off `main`)
 - Preview URL: `claude-speakup-v0.felixbuilderhub.pages.dev` (Cloudflare Pages auto-deploy per push, per `claude/<topic>` convention in `BRANCH_CONVENTIONS.md`)
 - Active workers: 0
@@ -88,6 +88,27 @@ assigns, commits, merges, deploys, or spends.
 | S2S spike | Speech-to-speech cost comparison (already approved) | own session | queued | own gate; recommended after V1.1 |
 
 ## Current task
+
+- Status: complete
+- Task ID: speakup-pilot-start
+- Owner: Elon (docs-only; the decision is Phương's, recorded verbatim).
+- Lane: main (no code).
+- Reuse survey: N/A — governance record, builds nothing.
+- Cost ceiling: Claude team (Max plan, not metered); runtime USD 0.
+- Acceptance criteria reconciliation:
+  1. PASS — branch and main verified identical (0/0 divergence); production
+     bundle verified serving the latest build (games markers present).
+  2. PASS — PRODUCT.md Status: pilot + Founder approved recorded with
+     Phương's dated in-session quote; EVIDENCE.md Decision: pilot with the
+     production SHA; CONTROL goal updated; AGENT_LOG entry.
+- Design self-verification: N/A — docs only.
+- Founder handoff: pilot-start report with his hand-out checklist.
+- Verified commit: (this commit, origin/main)
+- Actual cost: USD 0.
+- Started: 2026-07-12
+- Completed: 2026-07-12
+
+## Prior task (complete): speakup-v1-2-packet2-games-ui
 
 - Status: complete
 - Task ID: speakup-v1-2-packet2-games-ui
