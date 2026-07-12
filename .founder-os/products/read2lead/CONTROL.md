@@ -2,9 +2,9 @@
 
 - Product: Read2Lead
 - Current goal: Page-by-page lesson loop (book flow v3) — listen → 4 quick questions → read the page aloud, page by page, replacing the exhausting listen-everything-then-practice flow (e2e 2026-07-11 showed ~18-20 min sessions, 31+ speaking chunks, questions minutes after content). Spec: `_ops/specs/SPEC_R2L_PAGE_LOOP.md` (Phương-approved 2026-07-11).
-- Latest staging URL: preview branch `claude/r2l-page-loop` (Cloudflare Pages branch deploy) — pending first push
-- Active workers: 1 (Mark, background, book-flow/submit/health packet)
-- Last updated: 2026-07-11 (R2L-PAGE-LOOP)
+- Latest staging URL: PRODUCTION (merged to main 2026-07-12, commit 73c4d25)
+- Active workers: 0
+- Last updated: 2026-07-12 (R2L-PAGE-LOOP shipped)
 
 ## Operating team
 
@@ -22,8 +22,12 @@ stale until 2026-07-05.
 
 ## Current task
 
-- Status: active
+- Status: complete
 - Started: 2026-07-11
+- Completed: 2026-07-12 — merged to main 73c4d25 (Phương GO after preview
+  verification), production smoke PASS (fresh pack: v3 client live, 12/12
+  text_vi, 11 vocabulary entries in payload, 24/24 questions page-aligned)
+- Verified commit: 73c4d25 (origin/main)
 - Task ID: R2L-PAGE-LOOP
 - Owner: Claude Lead (Elon) — lesson.astro direct (guard-protected, spec-covered);
   Mark (background worker) owns src/lib/read2lead-book-flow.mjs,
