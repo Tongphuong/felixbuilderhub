@@ -19,6 +19,9 @@
  * Without --apply it is a dry run (prints the plan, writes nothing).
  */
 import { readFileSync, writeFileSync } from 'node:fs';
+// Single source of truth for the page→band boundaries — shared with the
+// publish endpoint so the table can never drift between the two.
+import { bandForPageCount } from '../functions/api/publish-read2lead-book.js';
 
 const BASE = (process.env.READ2LEAD_PUBLISH_URL || '').replace(/\/$/, '');
 const SECRET = process.env.READ2LEAD_BACKEND_SECRET || '';
@@ -30,15 +33,6 @@ const LEVELS = ['L0', 'L1', 'L2', 'L3', 'L4'];
 if (!BASE || !SECRET) {
   console.error('need READ2LEAD_PUBLISH_URL and READ2LEAD_BACKEND_SECRET');
   process.exit(1);
-}
-
-export function bandForPageCount(pages) {
-  if (!Number.isFinite(pages) || pages < 1) return null;
-  if (pages <= 6) return 'L0';
-  if (pages <= 9) return 'L1';
-  if (pages <= 12) return 'L2';
-  if (pages <= 15) return 'L3';
-  return 'L4';
 }
 
 const HEADERS = { 'X-Read2Lead-Secret': SECRET, 'User-Agent': 'r2l-reindex/1.0' };
