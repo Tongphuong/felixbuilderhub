@@ -170,6 +170,21 @@ assigns, commits, merges, deploys, or spends.
 - Review trail: Mark (2 rounds), Steve (UI), Elon (prompt + 3 polish
   fixes via real-model sampling), Buffet red-team ×2 (REQUEST CHANGES →
   prescriptions applied verbatim, payloads fixture-locked).
+- ADDENDUM 2026-07-12 — criterion 7 now PASS: live-LLM-on-production coach
+  VERIFIED end-to-end with a homework-assigned code (R2L-HUY-26B7, frame/
+  presentation homework — the original "45% only" case). Two live prod
+  submissions to /api/read2lead-speaking-check both returned `coach`
+  beside the deterministic matchPct/rubric/Azure block:
+  {praise_vi:"Con nói rõ ràng", focus_word:"together", model_sentence_en:
+  "We play together", tiny_challenge_vi:"Con hãy nói to hơn ở cuối câu"}.
+  Grounding verified live: focus_word ∈ the Azure weak-word set both runs;
+  "con" register; no fabricated quote (empty-transcript frame path
+  correctly declines to quote — fails safe); no numbers; reproducible.
+  Caveat: the test WAV (Minny greeting) didn't match the "my friend"
+  homework, so praise is generic; a real matched presentation yields more
+  specific praise, but the live coach PATH is proven on prod. Follow-up
+  (Mark TODO): thread the frame transcript into the coach context so
+  frame praise can quote the kid's real words (additive, fails-closed today).
 - Started: 2026-07-12
 - Completed: 2026-07-12
 
