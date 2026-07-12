@@ -1,7 +1,7 @@
 # Control — SpeakUp
 
 - Product: SpeakUp
-- Current goal: Build all 8 phases of `_ops/specs/SPEC_SPEAKUP_V0.md` on branch `claude/speakup-v0`, QA the full pilot on preview, THEN merge to main. No phase merges to main individually.
+- Current goal: PILOT RUNNING (started 2026-07-12, Phương's order). Watch week-one signals (chips vs freeze, question-rate ~61%, hint taps, repair-ladder frequency, Azure F0 meter, debug:convo-flags ring); V1.3 awaits its own founder gate; V1.5–V1.7 held for pilot evidence.
 - Branch: `claude/speakup-v0` (off `main`)
 - Preview URL: `claude-speakup-v0.felixbuilderhub.pages.dev` (Cloudflare Pages auto-deploy per push, per `claude/<topic>` convention in `BRANCH_CONVENTIONS.md`)
 - Active workers: 0
@@ -88,6 +88,259 @@ assigns, commits, merges, deploys, or spends.
 | S2S spike | Speech-to-speech cost comparison (already approved) | own session | queued | own gate; recommended after V1.1 |
 
 ## Current task
+
+- Status: complete
+- Task ID: speakup-pilot-start
+- Owner: Elon (docs-only; the decision is Phương's, recorded verbatim).
+- Lane: main (no code).
+- Reuse survey: N/A — governance record, builds nothing.
+- Cost ceiling: Claude team (Max plan, not metered); runtime USD 0.
+- Acceptance criteria reconciliation:
+  1. PASS — branch and main verified identical (0/0 divergence); production
+     bundle verified serving the latest build (games markers present).
+  2. PASS — PRODUCT.md Status: pilot + Founder approved recorded with
+     Phương's dated in-session quote; EVIDENCE.md Decision: pilot with the
+     production SHA; CONTROL goal updated; AGENT_LOG entry.
+- Design self-verification: N/A — docs only.
+- Founder handoff: pilot-start report with his hand-out checklist.
+- Verified commit: (this commit, origin/main)
+- Actual cost: USD 0.
+- Started: 2026-07-12
+- Completed: 2026-07-12
+
+## Prior task (complete): speakup-v1-2-packet2-games-ui
+
+- Status: complete
+- Task ID: speakup-v1-2-packet2-games-ui
+- Owner: Steve (bg worker, packet scratchpad/games-steve-packet.md, sole
+  owner of speak-up.astro + speakup-app.css + new UI tests); Elon review
+  + rule-20 on deployed prod; Buffet scoped review (level gating + no new
+  network patterns + Elon's context-level micro-diff). Phương approved
+  the plan 2026-07-12 (plan-mode).
+- Lane: `claude/speakup-v1-1` → `main` per phase cadence.
+- Problem: L3–L5 kids see plain conversation — the approved Wave D2
+  screens (topic picker + Minny chọn 🎲, L4–L5 game cards, 💡 hint
+  states, game framing) are the last approved-but-unbuilt piece; the
+  V1.1 backend contract they consume is already live.
+- Pre-step (Elon micro-diff, done): minny-speaking-context.js response
+  gains `level` (same lookup as minny-conversation) + test — the picker
+  gates on level BEFORE start.
+- Reuse survey: N/A external — approved internal mock + HUB_TOPICS
+  values + live V1.1 API; no new capability class.
+- Cost ceiling: Claude team (Max plan, not metered); runtime $0.
+- Acceptance criteria: spec §V1.2 packet 2 + the approved Wave D2 mock —
+  picker only at L3+ (context-level keyed, tested); game cards only
+  L4–L5; start carries topic/game; hint renders only from the server
+  hint field, one word EN+VN card, re-hides next turn, proactive offer
+  on stall; game framing over unchanged ft-* chrome; Minny red-robot
+  assets (mock koalas are placeholders — standing rule); styles in
+  speakup-app.css ONLY (orphan-stylesheet trap); 44px; reduced-motion;
+  baseline 1114 tests none dropped; rule-20 screenshots on deployed prod
+  vs the rendered mock with SHA recorded.
+- Files owned (Steve): src/pages/speak-up.astro, src/styles/
+  speakup-app.css, tests/speakup-games-ui.test.mjs.
+- Stop condition: ANY functions/ diff beyond Elon's pre-step — stop; new
+  kid-facing copy not in the mock — TODO(elon).
+- Acceptance criteria reconciliation:
+  1. PASS — picker only at L3+ (context `level` keyed, tested); game
+     cards L4–L5 only; L0–L2 flow byte-identical.
+  2. PASS — start carries topic/game; minny_choice tile; debate banner
+     text ONLY from the server-echoed debate_topic (Elon micro-diff +
+     allowlist test), escaped (Buffet-traced).
+  3. PASS — hint idle/offered-on-stall/revealed states; renders only from
+     the server hint field (never client level inference); re-hides per
+     turn; reuses the existing VAD stall signal (no new timer).
+  4. PASS — chips/fix-it/two-phase audio untouched (Buffet structural
+     grep); no new network patterns; styles in speakup-app.css only;
+     robot assets; 44px; reduced-motion.
+  5. PASS — 1149/1149 node --test; astro build clean; founder gates;
+     Buffet SHIP no findings (incl. both Elon micro-diffs, author ≠
+     reviewer).
+  6. PASS (rule 20) — verified on DEPLOYED PRODUCTION a1240f2 via the
+     routed harness: picker A2 state (12 tiles + 🎲 + 3 game cards +
+     start CTA), debate banner live ("MINNY NGHĨ — Cats are better than
+     dogs" from the server field), hint reveal ("MINNY GỢI Ý — whiskers",
+     dismissable). Screenshots _ops/speakup-v12p2-final-picker-390.png,
+     -debate-hint-390.png vs the approved Wave D2 mock: MATCH for A1/A2/
+     B1–B3/C1/C2.
+  7. MOCK DEVIATIONS recorded for Phương (approved-as-drawn mock, so his
+     eye is owed): C3 would-you-rather option cards DEFERRED (the game
+     works conversationally; structured turn field needed — backlog);
+     hint card EN-only (server hint is EN by V1.1 design; VN gloss
+     deferred); picker desktop single-column simplification; new
+     .minny-game-card.is-selected state (mock drew none).
+- Design self-verification: rule-20 evidence above.
+- Founder handoff: final report incl. the four mock deviations for his
+  ack/veto.
+- Verified commit: a1240f2 (origin/main, production-verified live)
+- Actual cost: USD 0 runtime.
+- Review trail: Steve (2 rounds), Elon micro-diffs + review, Buffet SHIP.
+- Started: 2026-07-12
+- Completed: 2026-07-12
+
+## Prior task (complete): speakup-v1-4-fixit-round
+
+- Status: complete
+- Task ID: speakup-v1-4-fixit-round
+- Owner: Steve (bg worker, packet scratchpad/fixit-steve-packet.md, sole
+  owner of speak-up.astro + speakup-app.css + UI tests); Elon review +
+  integration + rule-20 deployed-preview screenshots vs the approved
+  Set 2 mock; Buffet review. Step 3 of the founder-approved plan
+  (2026-07-11); V1.4 pulled ahead of V1.3 per that plan's sequencing
+  note (deterministic, no LLM gate).
+- Lane: `claude/speakup-v1-1` → `main` after review + rule-20.
+- Problem: kids now SEE weak words and can HEAR them — the loop needs the
+  third step: guided re-try with hear-Minny / hear-yourself compare and a
+  fresh score (the approved Wave D Set 2 mock's fix-it states).
+- Reuse survey: N/A external — UI-only phase over shipped machinery
+  (flagged words, minny-voice word branch, existing recorder, existing
+  read-mode single-word Azure scoring via practice_mode). Zero backend
+  change is an explicit constraint.
+- Cost ceiling: Claude team (Max plan, not metered); runtime = ≤3 short
+  scored reps per homework attempt through the existing metered Azure
+  path — the 3-rep hard cap is the fence (test-asserted), per V1.4's
+  spec acceptance.
+- Acceptance criteria: per spec §V1.4 + the approved mock — skippable
+  always, never blocks homework completion; ≤3 reps hard cap; hear-Minny
+  (word branch) + hear-yourself (client-side last-recording playback,
+  nothing uploaded); re-record scores via existing read-mode one-word
+  check; celebrate/encourage states per mock, never negative; rule-20
+  deployed-preview screenshots vs mock with SHA recorded; node --test
+  green (baseline 1083); astro build clean; founder gates.
+- Files owned (Steve): src/pages/speak-up.astro, src/styles/
+  speakup-app.css, tests/speakup-fixit-ui.test.mjs (+chips-ui if needed).
+- Stop condition: ANY functions/ diff — stop and report; any new
+  kid-facing copy not in the mock — TODO(elon).
+- Acceptance criteria reconciliation:
+  1. PASS — skippable invitation, never blocks the step flow (test line
+     211 + Buffet structural trace: fix-it card never touches
+     #speaking-result/#speaking-actions visibility).
+  2. PASS — 3-rep hard cap unbypassable; failed submissions count toward
+     it (Buffet-traced: repsUsed increments before outcome evaluation;
+     catch path still calls fixitAfterRep).
+  3. PASS — reps score through the existing read-mode one-word Azure path
+     (check_mode read / expected_text word / practice_mode 1 / WAV); zero
+     functions/ diff (git-verified). Hear-yourself = local blob only.
+  4. PASS — mock states 3/4/5 implemented with verbatim copy; sandwich
+     screens 1-2 correctly deferred to V1.3; celebrate cutoff reuses the
+     shipped ≥70 convention.
+  5. PASS — 1113/1113 node --test; astro build clean; founder gates.
+  6. PASS (rule 20) — verified on DEPLOYED PRODUCTION d2a10a1 via the
+     routed-harness flow (stubbed context/check responses through the
+     real page code, fake mic): invitation state (3 words, Bắt đầu luyện
+     🎯 / Bỏ qua) and rep state (TỪ 1/3, big word, Nghe Minny, small
+     re-record) match the approved Set 2 mock; screenshots
+     _ops/speakup-v14-final-invite-390.png / -rep-390.png. CAUGHT by this
+     check: the mock's 🐨 koala placeholder had been copied verbatim —
+     replaced with the Minny red-robot assets per the standing founder
+     rule (d2a10a1), tests updated N/A (none asserted the emoji).
+  7. Post-mortem note: a false "Cloudflare stopped deploying" alarm was
+     raised (founder pulled the build log — build had succeeded). Root
+     cause: the deploy probe grepped a JS function name, which minification
+     renames; string-literal/class-name probes are the correct method
+     (used successfully all prior deploys). Logged for the reflection.
+- Design self-verification: rule-20 screenshots above vs the approved
+  mock; verdict MATCH (with the koala→robot correction applied).
+- Founder handoff: full plain-language report incl. the false-alarm
+  correction; nit backlog: 1400ms re-tap debounce (Buffet, cosmetic).
+- Verified commit: d2a10a1 (origin/main, production-verified live)
+- Actual cost: USD 0 runtime.
+- Review trail: Steve built (resumed across a rate-limit cut); Elon
+  review + koala fix; Buffet scoped SHIP.
+- Started: 2026-07-12
+- Completed: 2026-07-12
+
+## Prior task (complete): speakup-word-level-feedback
+
+- Status: complete
+- Task ID: speakup-word-level-feedback
+- Owner: Mark (bg worker, packet scratchpad/word-feedback-packet.md);
+  Elon review + integration; Buffet ADVERSARIAL review mandatory on the
+  minny-voice allowlist extension (new kid-adjacent TTS surface). Phương
+  approved the 3-step plan 2026-07-11 ("see the words → hear them → fix
+  them"); this task = steps 1–2, V1.4 fix-it round follows as its own
+  gated phase (pulled ahead of V1.3 per the approved plan's sequencing
+  note — deterministic, no LLM gate needed).
+- Lane: `claude/speakup-v1-1` → `main` after review.
+- Problem: kids see only a percentage — reading shows per-word chips but
+  presentations discard Azure's per-word data, and no chip is tappable to
+  hear the model. Big-app loop (ELSA/Speak): show words → hear model →
+  retry. Phoneme-level tips deliberately parked (not child-calibrated).
+- Reuse survey: N/A external — surfaces data already present in the paid
+  Azure responses + reuses the existing wordChips renderer, SKIP_WORDS
+  stopword set, Aura-2 TTS chain/KV cache, and the convo-audio ownership
+  pattern for the voice allowlist. No new capability class.
+- Cost ceiling: Claude team (Max plan, not metered); runtime $0 (word
+  data already in responses; tap-to-hear rides the cached TTS chain).
+- Acceptance criteria:
+  1. Presentations: pronunciation block gains words[] — lowest-accuracy
+     first, accuracy<70 only, stopwords excluded via SKIP_WORDS passed as
+     an argument (no circular import), max 3, {word, accuracy_percent}.
+  2. UI: "Từ cần luyện:" chips under the pronunciation row reusing the
+     read step's exact wordChips(…,'miss') renderer; absent → nothing.
+  3. Speaking-check endpoint writes an owner-stamped, short-TTL (1h) KV
+     record flagged-words:<code> after any result carrying practice
+     words (read words_missed/words_close + frame pronunciation words);
+     best-effort, never blocks the response; single write site in
+     onRequestPost (minimal PROTECTED diff).
+  4. minny-voice gains a `word` branch: single alpha token ≤30 chars,
+     lowercased, must be in the caller's own flagged-words record →
+     synthesize; anything else 403. Existing phrase/sentence branches
+     byte-identical. Adversarial fixtures: arbitrary word 403, other
+     code's flagged word 403, expired record 403, injection strings 403.
+  5. Tap-to-hear on BOTH read chips and new frame chips (one handler);
+     ≥44px targets; audio plays via the existing play path.
+  6. node --test green (baseline 1047 + new); astro build clean; founder
+     gates; live prod verify: frame check returns words[]; voice returns
+     audio for a flagged word and 403 for a non-flagged word.
+- Files owned (Mark): functions/api/_azure-pronunciation.js,
+  functions/api/read2lead-speaking-check.js (PROTECTED, minimal),
+  functions/api/minny-voice.js, src/pages/speak-up.astro,
+  tests/azure-pronunciation.test.mjs, tests/minny-speech-frame.test.mjs,
+  tests/minny-tts.test.mjs (voice endpoint tests live where they live —
+  Mark finds the right suite and reports).
+- Stop condition: any relaxation of minny-voice beyond the single-word
+  flagged-record branch (it must never become an open TTS proxy); any
+  change to scoring semantics — stop.
+- Acceptance criteria reconciliation:
+  1. PASS — pronunciation block gains words[] (accuracy<70, SKIP_WORDS as
+     argument — no circular import, Insertion excluded, len≥3, ascending,
+     max 3, omitted when empty).
+  2. PASS — "Từ cần luyện:" chips reuse wordChips(…,'miss'); absent →
+     panel unchanged.
+  3. PASS — flagged-words:<code> KV record (TTL 1h) written best-effort at
+     the single response site for read AND frame words; punctuation-
+     normalized identically server & client (Elon ruling, "banana." round
+     trip fixture); Buffet forced a throwing KV — response unaffected.
+  4. PASS — minny-voice word branch: string-type guard (Buffet nit) +
+     strict regex + own-key flagged-record membership; Buffet adversarial
+     verdict verbatim: could NOT construct an input that makes Minny speak
+     arbitrary text (12 vectors: multi-word, unicode, homoglyph, branch
+     combos, cross-code, expired record, empty-normalize, length caps,
+     case, apostrophe abuse, coercion payloads, rate-limit-before-KV).
+     Phrase/text branches byte-identical.
+  5. PASS — one delegated tap handler for read + frame chips (matched-word
+     taps intentionally silent-403 by design); 44px buttons; reduced-
+     motion; 403/error = silent no-op (no popup, no browser-TTS leak).
+  6. PASS — 1083/1083 node --test; astro build clean; founder gates PASS.
+     LIVE on production (76d1ec7): real-speech frame check returned
+     words[] {together 48%, mini 66%}; voice returned real audio (7104
+     b64) for flagged "together" and 403 for non-flagged "bureaucracy".
+- Design self-verification: behavioral = the live production loop above;
+  visual = chips reuse the shipped wordChips look 1:1 (internal pattern-
+  copy, design-mock exempt, flagged for Phương's veto as before).
+- Founder handoff: plain-language report with the live numbers; Step 3
+  (V1.4 fix-it round, approved Set 2 mock) queued next per the approved
+  plan.
+- Verified commit: 76d1ec7 (origin/main, production-verified live)
+- Actual cost: USD 0 runtime (~7s Azure F0 for the verify; word audio
+  rides the cached TTS chain).
+- Review trail: Mark (2 rounds incl. punctuation ruling), Elon line-by-
+  line, Buffet adversarial SHIP (his hygiene guard applied).
+- Started: 2026-07-12
+- Completed: 2026-07-12
+
+## Prior task (complete): speakup-azure-frame-grading
 
 - Status: complete
 - Task ID: speakup-azure-frame-grading

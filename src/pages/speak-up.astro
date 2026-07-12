@@ -13,6 +13,8 @@
  */
 import SpeakUpAppLayout from '../layouts/SpeakUpAppLayout.astro';
 import MicCheckPanel from '../components/read2lead/v2/MicCheckPanel.astro';
+import TopicTile from '../components/ui/TopicTile.astro';
+import { HUB_TOPICS } from './ho-so/ho-so-topics.ts';
 import { r2lRecorderScriptSrc } from '../scripts/r2l-recorder-script.mjs';
 
 const r2lRecorderSrc = r2lRecorderScriptSrc();
@@ -144,6 +146,11 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
             <button id="speaking-retry" type="button" class="spk-btn spk-btn--ghost">Luyện lại</button>
             <button id="speaking-next" type="button" class="spk-btn spk-btn--green">Tiếp theo</button>
           </div>
+
+          <!-- V1.4 fix-it round (Wave D Set 2 screens 3-5): JS-rendered
+               invitation/rep/celebrate card, additive below the existing
+               result + actions above -- never replaces or hides them. -->
+          <div id="fixit-round" class="hidden"></div>
         </div>
 
         <!-- RIGHT: recorder panel (7a board values) -->
@@ -195,6 +202,13 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
             </div>
           </div>
 
+          <!-- V1.2 packet 2 (Wave D2 §C): game framing chrome, layered over
+               the unchanged ft-* conversation chrome above/below. Populated
+               by ftApplyGameFraming per turn; only build_a_story is wired
+               today (see the TODO(elon) beside ftGameFramingClass) -- empty
+               and hidden for every other case, including no game at all. -->
+          <div id="ft-game-framing" class="hidden" aria-live="polite"></div>
+
           <div class="ft-hero">
             <div class="ft-hero__avatar">
               <video
@@ -213,6 +227,11 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
                    and inert unless the turn response carries `options`
                    (server-gated to L1-L2, never a client-side level check). -->
               <div id="ft-scaffold" class="ft-scaffold"></div>
+              <!-- V1.2 packet 2 (Wave D2 §B3): hint reveal card -- keyed on
+                   the CURRENT turn's `hint` field (never a client-side level
+                   lookup, same principle as ft-scaffold above). Filled by
+                   ftRenderHintCard; empty/hidden otherwise. -->
+              <div id="ft-hint-card" class="minny-hint-card hidden" aria-live="polite"></div>
               <div id="free-talk-thinking-dots" class="minny-bubble--thinking"><span></span><span></span><span></span></div>
               <button id="free-talk-play-chip" type="button" class="minny-play-chip" aria-label="Nghe Minny nói">🔊 Nghe Minny</button>
               <p class="ft-hero__mood-cap"><span id="ft-mood">Đợi con nói</span></p>
@@ -230,6 +249,15 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
 
           <div class="ft-recorder">
             <p class="ft-section-label">Ghi âm</p>
+            <!-- V1.2 packet 2 (Wave D2 §B): 💡 hint button, L3+ only --
+                 keyed on the per-turn `hint` field via ftApplyHint, hidden
+                 whenever L0-L2 sends no such field. The row itself hides
+                 while the reveal card (#ft-hint-card above) is open (B3),
+                 per the mock -- see ftRevealHint/ftDismissHint. -->
+            <div id="ft-hint-row" class="minny-hint-row hidden">
+              <span id="ft-hint-affordance" class="minny-hint-affordance hidden">Cần gợi ý không?</span>
+              <button id="ft-hint-btn" type="button" class="minny-hint-btn">💡 Gợi ý</button>
+            </div>
             <!-- V1.2 packet 1: hands-free is a visible, always-present,
                  kid/parent-settable control (IDEAS.md 2026-07-10: "never a
                  hidden flag again") -- wired to the existing
@@ -250,6 +278,63 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
               <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
             </div>
             <MicCheckPanel />
+          </div>
+        </div>
+
+        <!-- V1.2 packet 2 (Wave D2 §A): L3-L5 topic-pick session start,
+             shown BEFORE the existing start flow -- gated on the level
+             fetched via minny-speaking-context (ftIsPickerLevel), never a
+             guess. L0-L2 never sees this at all (existing flow, untouched);
+             see enterFreeTalking. Game cards (A2) are the same markup as A1
+             plus two extra blocks, toggled by ftIsGameLevel -- kept as one
+             screen rather than two templates. -->
+        <div id="ft-topic-picker" class="hidden">
+          <div class="spk-topbar">
+            <button id="ft-picker-back" type="button" class="spk-back">← Chọn cách luyện</button>
+          </div>
+          <div class="ft-hero">
+            <div class="ft-hero__avatar">
+              <img src="/assets/minny/minny_idle.png" alt="Minny" width="64" height="64" />
+            </div>
+            <div class="ft-hero__body">
+              <p class="ft-hero__eyebrow">Minny</p>
+              <p class="ft-hero__line">Hôm nay con muốn nói về gì?</p>
+            </div>
+          </div>
+          <div class="minny-topic-picker">
+            <p id="ft-picker-games-label" class="minny-topic-picker__section-label hidden">🎮 Hoạt động hôm nay (không bắt buộc)</p>
+            <div id="ft-picker-game-cards" class="minny-game-cards hidden">
+              <button type="button" class="minny-game-card" data-game="build_a_story" aria-pressed="false">
+                <span class="minny-game-card__emoji" aria-hidden="true">📖</span>
+                <span class="minny-game-card__body">
+                  <p class="minny-game-card__title">Kể chuyện cùng Minny</p>
+                  <p class="minny-game-card__desc">Minny kể một câu, con kể tiếp câu sau nhé!</p>
+                </span>
+              </button>
+              <button type="button" class="minny-game-card" data-game="debate" aria-pressed="false">
+                <span class="minny-game-card__emoji" aria-hidden="true">⚖️</span>
+                <span class="minny-game-card__body">
+                  <p class="minny-game-card__title">Tranh luận vui</p>
+                  <p class="minny-game-card__desc">Minny nói một ý ngộ nghĩnh, con thử phản biện xem!</p>
+                </span>
+              </button>
+              <button type="button" class="minny-game-card" data-game="would_you_rather" aria-pressed="false">
+                <span class="minny-game-card__emoji" aria-hidden="true">🤔</span>
+                <span class="minny-game-card__body">
+                  <p class="minny-game-card__title">Con chọn gì?</p>
+                  <p class="minny-game-card__desc">Minny đưa 2 lựa chọn, con chọn và nói lý do nhé!</p>
+                </span>
+              </button>
+            </div>
+
+            <p id="ft-picker-topics-label" class="minny-topic-picker__section-label hidden">Hoặc chọn một chủ đề tự do</p>
+            <div id="ft-picker-topic-grid" class="fx-topic-grid">
+              {HUB_TOPICS.map(([value, label, emoji]) => (
+                <TopicTile emoji={emoji} label={label} data-topic={value} />
+              ))}
+              <TopicTile emoji="🎲" label="Minny chọn" data-topic="minny_choice" class="fx-topic--random" />
+            </div>
+            <button id="ft-picker-start" type="button" class="spk-btn spk-btn--gold" disabled>Bắt đầu nói chuyện 🚀</button>
           </div>
         </div>
 
@@ -316,6 +401,9 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
 
     const state = {
       accessCode: '',
+      // V1.2 packet 2: level fetched via minny-speaking-context, used ONLY
+      // to gate the topic picker before any turn response exists.
+      level: '',
       packId: '',
       studentName: '',
       modes: [],
@@ -332,7 +420,19 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       micGateReady: false,
       homeworkResults: [],
       homeworkComplete: false,
+      fixit: null,
     };
+
+    // V1.4 fix-it round (Wave D Set 2 screens 3-5, design_handoff_speakup_v1
+    // /SpeakUp V1 Homework Feedback v2.dc.html): <=3 reps TOTAL per homework
+    // attempt (not per word) is the Azure cost fence -- see CONTROL.md's
+    // speakup-v1-4-fixit-round task. FIXIT_CELEBRATE_MIN mirrors
+    // renderFrameResult's existing celebrate cutoff (matchPct >= 70) so a
+    // single-word exact match (scoreTranscript gives 100/50/0 for one word)
+    // reads as celebrate, a close match reads as encourage.
+    const FIXIT_REP_CAP = 3;
+    const FIXIT_CELEBRATE_MIN = 70;
+    const FIXIT_MAX_SECONDS = 6;
 
     function escapeHtml(value) {
       return String(value || '')
@@ -692,6 +792,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       setMinnyMood('idle');
       document.getElementById('speaking-result').classList.add('hidden');
       document.getElementById('speaking-actions').classList.add('hidden');
+      fixitReset();
       document.getElementById('speaking-record').disabled = false;
       const isQuestion = step.kind === 'question';
       document.getElementById('speaking-status').textContent = isQuestion
@@ -701,7 +802,11 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
 
     function wordChips(words, tone) {
       if (!Array.isArray(words) || !words.length) return '';
-      return words.map((w) => `<span class="minny-word minny-word--${tone}">${escapeHtml(w)}</span>`).join('');
+      // V1 word-level feedback (2026-07-12): real buttons (not spans) so a
+      // tap can trigger Minny reading the word aloud — see the delegated
+      // click handler below renderResult. All call sites (read step +
+      // frame's practiceWordsRow) inherit the tappable markup.
+      return words.map((w) => `<button type="button" class="minny-word minny-word--${tone}" data-word="${escapeHtml(w)}">${escapeHtml(w)}</button>`).join('');
     }
 
     // Homework mode accumulates each completed step's score for the
@@ -807,6 +912,18 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       `;
     }
 
+    // "Từ cần luyện:" chips (V1 word-level feedback, 2026-07-12): only
+    // rendered when the pronunciation block carries its optional words[]
+    // (accuracy<70, stopwords excluded, max 3 — see
+    // mapAzureFramePronunciation); absent/empty -> nothing, so the panel
+    // stays byte-identical without this data. Reuses the read step's exact
+    // wordChips(...,'miss') renderer (Lead-authored label verbatim).
+    function practiceWordsRow(pronunciation) {
+      const words = Array.isArray(pronunciation?.words) ? pronunciation.words : [];
+      if (!words.length) return '';
+      return `<p style="margin:10px 0 0;font-size:14px;color:var(--cream-muted)"><strong>Từ cần luyện:</strong> ${wordChips(words.map((w) => w.word), 'miss')}</p>`;
+    }
+
     function renderFrameResult(result) {
       const resultEl = document.getElementById('speaking-result');
       const actionsEl = document.getElementById('speaking-actions');
@@ -833,6 +950,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
         <div class="minny-frame-rubric-card">
           <p class="minny-frame-rubric-card__eyebrow">${celebrate ? 'Bảng đánh giá' : 'Cùng nhìn lại nào'}</p>
           ${rubricHtml}
+          ${practiceWordsRow(result.pronunciation)}
         </div>
         <div class="minny-frame-smile-chip">
           <span style="font-size:24px;line-height:1" aria-hidden="true">😄</span>
@@ -854,6 +972,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
 
       finalizeHomeworkStep(result, isLast);
       logPractice({ ...result, score_percent: matchPct });
+      maybeShowFixitInvite(result);
     }
 
     function renderResult(result) {
@@ -913,6 +1032,362 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
 
       finalizeHomeworkStep(result, isLast);
       logPractice(result);
+      maybeShowFixitInvite(result);
+    }
+
+    // V1 word-level feedback fix round (2026-07-12, Elon ruling): mirrors
+    // read2lead-speaking-check.js's normalizePracticeWord exactly, so a chip
+    // labeled with the original sentence's punctuation (e.g. "banana.")
+    // taps through to precisely the string the server flagged ("banana").
+    function normalizePracticeWord(raw) {
+      return String(raw || '').toLowerCase().replace(/[^a-z'-]/g, '');
+    }
+
+    // ===================== V1.4 fix-it round — pure helpers =================
+    // Pure, DOM-free (see tests/speakup-fixit-ui.test.mjs): plain data in,
+    // plain data out, so behavior is covered without a DOM.
+
+    // Rep-word derivation: read mode's words_close/words_missed (same order
+    // renderResult already shows them: close before missed) or frame mode's
+    // pronunciation.words[] (same order practiceWordsRow already shows),
+    // deduped by the shared normalizePracticeWord form, capped at 3. 'open'
+    // check_mode (words_matched only) never offers a fix-it round.
+    function fixitDeriveRepWords(result) {
+      if (!result || result.ok === false) return [];
+      let raw = [];
+      if (result.check_mode === 'frame') {
+        const words = Array.isArray(result.pronunciation?.words) ? result.pronunciation.words : [];
+        raw = words.map((w) => w?.word);
+      } else if (result.check_mode !== 'open') {
+        raw = [...(result.words_close || []), ...(result.words_missed || [])];
+      }
+      const seen = new Set();
+      const out = [];
+      for (const w of raw) {
+        const norm = normalizePracticeWord(w);
+        if (!norm || seen.has(norm)) continue;
+        seen.add(norm);
+        out.push(String(w));
+        if (out.length >= 3) break;
+      }
+      return out;
+    }
+
+    // A single-word read-check scores 100 (exact), 50 (close) or 0 (missed)
+    // per scoreTranscript's CLOSE_SCORE_WEIGHT -- any cutoff in (50,100]
+    // separates them identically; FIXIT_CELEBRATE_MIN reuses the frame
+    // panel's own celebrate cutoff rather than inventing a new number.
+    function fixitRepOutcome(scorePercent) {
+      const pct = Number(scorePercent);
+      return Number.isFinite(pct) && pct >= FIXIT_CELEBRATE_MIN ? 'celebrate' : 'encourage';
+    }
+
+    // The 3-rep hard cap is the Azure cost fence: it counts SUBMISSIONS
+    // total across the whole round, not per word, so it always increments
+    // regardless of outcome (including a client-side/network failure --
+    // conservative on purpose, since undercounting on failure would let a
+    // flaky connection loop past the fence). Once the cap is hit the round
+    // always finishes, even mid-celebrate or with words left unreached --
+    // per the mock's screen 4 note ("capped at <=3 total, not per word").
+    function fixitAfterRep(fixitState, outcome) {
+      const repsUsed = (fixitState?.repsUsed || 0) + 1;
+      const wordsLeft = (fixitState?.wordIndex ?? 0) < ((fixitState?.words?.length || 0) - 1);
+      if (repsUsed >= FIXIT_REP_CAP) return { action: 'finish', repsUsed };
+      if (outcome === 'celebrate') return { action: wordsLeft ? 'next-word' : 'finish', repsUsed };
+      return { action: 'retry-word', repsUsed };
+    }
+
+    // The one-word re-record request: the EXISTING /api/read2lead-speaking
+    // -check endpoint, read-mode single-word scoring (zero backend change).
+    function fixitReadCheckRequestFields(word) {
+      return { check_mode: 'read', expected_text: String(word || ''), practice_mode: '1' };
+    }
+
+    // Tap-to-hear (V1 word-level feedback, 2026-07-12): one delegated
+    // handler on the results container covers BOTH the read step's chips
+    // ("Luyện thêm:"/"Gần đúng:") and the new frame "Từ cần luyện:" chips —
+    // every chip is rendered by the same wordChips() button markup. Reuses
+    // playMinnyVoice (the page's existing fetch-then-play helper) rather
+    // than a new Audio pattern; an empty fallback text means a 403/error
+    // stays a silent no-op (never an error popup for a kid tapping a word) —
+    // this also covers "Con nhắc tới:" (words_matched, tone 'good') chips,
+    // which are never in the flagged-words record, so those taps are
+    // expected to always 403 and silently no-op, by design.
+    document.getElementById('speaking-result')?.addEventListener('click', async (event) => {
+      const chip = event.target.closest('.minny-word');
+      if (!chip || chip.classList.contains('is-loading')) return;
+      const word = normalizePracticeWord(chip.dataset.word);
+      if (!word) return;
+      chip.classList.add('is-loading');
+      try {
+        await playMinnyVoice({ word }, '');
+      } finally {
+        chip.classList.remove('is-loading');
+      }
+    });
+
+    // ===================== V1.4 fix-it round — DOM wiring ====================
+    // Appended BELOW the existing #speaking-actions (Luyện lại / Bước tiếp
+    // theo) rather than replacing the result panel -- per the handoff
+    // README's own framing ("no screen blocks the next step flow"), those
+    // buttons stay exactly as they are the whole time; the fix-it card is
+    // purely additive, same pattern as the (not-yet-built) feedback sandwich
+    // rendering directly under the existing score/rubric/smile-chip stack.
+
+    function fixitReset() {
+      const el = document.getElementById('fixit-round');
+      if (el) {
+        el.classList.add('hidden');
+        el.innerHTML = '';
+      }
+      if (state.fixit?.kidAudioUrl) URL.revokeObjectURL(state.fixit.kidAudioUrl);
+      state.fixit = null;
+    }
+
+    // Called after every scored result (read/open/frame). Populates the
+    // skippable invitation (mock screen 3) when there are practice words;
+    // otherwise leaves the panel hidden/empty, byte-identical to before this
+    // feature for a clean result.
+    function maybeShowFixitInvite(result) {
+      const el = document.getElementById('fixit-round');
+      if (!el) return;
+      const words = fixitDeriveRepWords(result);
+      if (!words.length) {
+        fixitReset();
+        return;
+      }
+      state.fixit = { words, wordIndex: 0, repsUsed: 0, kidAudioUrl: null, recording: null };
+      renderFixitInvite(words);
+    }
+
+    function fixitWordChip(word) {
+      return `<span class="minny-word minny-word--close minny-word--focus">${escapeHtml(word)}</span>`;
+    }
+
+    function renderFixitInvite(words) {
+      const el = document.getElementById('fixit-round');
+      if (!el) return;
+      el.innerHTML = `
+        <div class="minny-fixit-invite">
+          <div class="minny-fixit-invite__avatar" aria-hidden="true"><img src="/assets/minny/minny_idle.png" alt="" width="64" height="64" style="width:64px;height:64px;object-fit:contain"/></div>
+          <p class="minny-fixit-invite__title">Mình luyện lại ${words.length} từ này nhé!</p>
+          <div class="minny-fixit-invite__words">${words.map(fixitWordChip).join('')}</div>
+          <div class="minny-fixit-invite__actions">
+            <button type="button" class="spk-btn spk-btn--gold" id="fixit-start-btn" style="width:100%">Bắt đầu luyện 🎯</button>
+            <button type="button" class="minny-fixit-invite__skip" id="fixit-skip-btn">Bỏ qua, làm sau</button>
+          </div>
+        </div>
+      `;
+      el.classList.remove('hidden');
+      document.getElementById('fixit-start-btn')?.addEventListener('click', fixitStart);
+      // Skip is a real, always-available exit: closes the card, no closing
+      // celebrate screen, never blocks the existing Bước tiếp theo flow.
+      document.getElementById('fixit-skip-btn')?.addEventListener('click', fixitReset);
+    }
+
+    function fixitStart() {
+      if (!state.fixit) return;
+      renderFixitRep();
+    }
+
+    function renderFixitRep() {
+      const el = document.getElementById('fixit-round');
+      const fx = state.fixit;
+      if (!el || !fx) return;
+      const word = fx.words[fx.wordIndex];
+      const hasKidAudio = Boolean(fx.kidAudioUrl);
+      el.innerHTML = `
+        <div class="minny-fixit-rep">
+          <p class="minny-fixit-rep__progress">Từ ${fx.wordIndex + 1} / ${fx.words.length}</p>
+          <p class="minny-fixit-rep__word">${escapeHtml(word)}</p>
+          <div class="minny-fixit-rep__compare">
+            <button type="button" class="minny-compare-btn minny-compare-btn--minny" id="fixit-hear-minny">🔊 Nghe Minny</button>
+            ${hasKidAudio ? '<button type="button" class="minny-compare-btn minny-compare-btn--kid" id="fixit-hear-kid">▶️ Nghe con nói</button>' : ''}
+          </div>
+          <button type="button" class="spk-rec-btn spk-rec-btn--sm" id="fixit-record-btn" aria-label="Nhấn để thu âm lại">
+            <span class="spk-rec-btn__icon" aria-hidden="true"></span>
+          </button>
+          <p class="minny-fixit-rep__rerecord-label" id="fixit-rerecord-label">Nhấn để thu âm lại</p>
+        </div>
+      `;
+      el.classList.remove('hidden');
+      // Hear Minny: reuses the shipped minny-voice word branch verbatim
+      // (same helper the read/frame chips already call).
+      document.getElementById('fixit-hear-minny')?.addEventListener('click', () => { playMinnyVoice({ word }, ''); });
+      // Hear yourself: plays back THIS rep's own last recording client-side --
+      // nothing uploaded, no button until a recording exists this rep (mock
+      // screen 4 note).
+      document.getElementById('fixit-hear-kid')?.addEventListener('click', () => {
+        if (!fx.kidAudioUrl) return;
+        stopPlayback();
+        const audio = new Audio(fx.kidAudioUrl);
+        state.activeAudio = audio;
+        audio.addEventListener('ended', () => { state.activeAudio = null; });
+        audio.play().catch(() => {});
+      });
+      document.getElementById('fixit-record-btn')?.addEventListener('click', fixitToggleRecord);
+    }
+
+    async function fixitToggleRecord() {
+      const fx = state.fixit;
+      if (!fx) return;
+      if (fx.recording) fixitStopRecording();
+      else await fixitStartRecording();
+    }
+
+    // Mirrors startRecording()'s R2LRecorder sequence (getStream -> wav
+    // engine -> startMonitor) but standalone from the main homework-step
+    // recorder/state.recording session -- a fix-it rep is not a homework
+    // step, so it must not touch currentStep()/finalizeHomeworkStep/
+    // logPractice bookkeeping. Short fixed cap (FIXIT_MAX_SECONDS) instead
+    // of the ring countdown UI -- a single word never needs 30s.
+    async function fixitStartRecording() {
+      const fx = state.fixit;
+      if (!fx || fx.recording) return;
+      const btn = document.getElementById('fixit-record-btn');
+      const session = { stream: null, recorder: null, monitor: null, timerId: null };
+      fx.recording = session;
+      btn?.classList.add('is-recording');
+      try {
+        const stream = window.R2LRecorder?.getStream
+          ? await window.R2LRecorder.getStream()
+          : await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true } });
+        if (fx.recording !== session) {
+          stream.getTracks().forEach((t) => t.stop());
+          return;
+        }
+        session.stream = stream;
+        const recorder = window.R2LRecorder?.createRecorder
+          ? window.R2LRecorder.createRecorder(stream, { engine: 'wav' })
+          : null;
+        if (!recorder) {
+          fx.recording = null;
+          btn?.classList.remove('is-recording');
+          stream.getTracks().forEach((t) => t.stop());
+          return;
+        }
+        session.recorder = recorder;
+        session.monitor = window.R2LRecorder?.startMonitor
+          ? await window.R2LRecorder.startMonitor(stream, {})
+          : { available: false, peak: () => -1, voiced: () => true, stop: () => {} };
+        if (fx.recording !== session) {
+          safeStopMonitor(session.monitor);
+          try { recorder.stop(); } catch { /* never started */ }
+          stream.getTracks().forEach((t) => t.stop());
+          return;
+        }
+        recorder.start();
+        session.timerId = window.setTimeout(() => fixitStopRecording(), FIXIT_MAX_SECONDS * 1000);
+      } catch {
+        fx.recording = null;
+        btn?.classList.remove('is-recording');
+      }
+    }
+
+    async function fixitStopRecording() {
+      const fx = state.fixit;
+      const session = fx?.recording;
+      if (!fx || !session) return;
+      fx.recording = null;
+      if (session.timerId) window.clearTimeout(session.timerId);
+      const btn = document.getElementById('fixit-record-btn');
+      btn?.classList.remove('is-recording');
+      if (btn) btn.disabled = true;
+      let blob = null;
+      try { blob = await session.recorder?.stop(); } catch { blob = null; }
+      safeStopMonitor(session.monitor);
+      session.stream?.getTracks().forEach((t) => t.stop());
+      if (!blob || blob.size === 0) {
+        if (btn) btn.disabled = false;
+        return;
+      }
+      await fixitSubmit(blob);
+      const btnAgain = document.getElementById('fixit-record-btn');
+      if (btnAgain) btnAgain.disabled = false;
+    }
+
+    // The one-word re-record + fresh score: the EXISTING
+    // /api/read2lead-speaking-check endpoint, read-mode single-word scoring
+    // (practice_mode '1', WAV engine) -- zero backend change, the same
+    // metered path every other read step already uses. A network/parse
+    // failure is treated as 'encourage' (never a scary error state, per the
+    // product's silent-degrade convention) and still consumes a rep, since
+    // the cap is a cost fence and must not be bypassable by retrying through
+    // failures.
+    async function fixitSubmit(blob) {
+      const fx = state.fixit;
+      if (!fx) return;
+      const word = fx.words[fx.wordIndex];
+      if (fx.kidAudioUrl) URL.revokeObjectURL(fx.kidAudioUrl);
+      fx.kidAudioUrl = URL.createObjectURL(blob);
+      const fields = fixitReadCheckRequestFields(word);
+      const formData = new FormData();
+      formData.append('access_code', state.accessCode);
+      formData.append('pack_id', state.packId || 'practice');
+      formData.append('expected_text', fields.expected_text);
+      formData.append('check_mode', fields.check_mode);
+      formData.append('practice_mode', fields.practice_mode);
+      formData.append('max_seconds', String(FIXIT_MAX_SECONDS));
+      formData.append('audio', blob, audioUploadFilename(blob));
+
+      let data = null;
+      try {
+        const res = await fetch('/api/read2lead-speaking-check', { method: 'POST', body: formData });
+        data = await res.json();
+      } catch {
+        data = null;
+      }
+
+      const outcome = data?.ok ? fixitRepOutcome(data.score_percent) : 'encourage';
+      // feedback_vi is the server's existing warm copy (feedbackVi()/
+      // feedbackOpenVi() — never negative even at 0%), reused verbatim
+      // rather than inventing new per-word copy the mock doesn't specify.
+      const feedback = data?.ok && data.feedback_vi
+        ? data.feedback_vi
+        : 'Không sao, mình thử lại nhé!';
+      const decision = fixitAfterRep(fx, outcome);
+      fx.repsUsed = decision.repsUsed;
+
+      setMinnyMood(outcome === 'celebrate' ? 'celebrate' : 'encourage');
+      hwSetMood(outcome === 'celebrate' ? 'celebrate' : 'encourage');
+      const label = document.getElementById('fixit-rerecord-label');
+      if (label) label.textContent = feedback;
+
+      window.setTimeout(() => {
+        if (decision.action === 'finish') {
+          renderFixitCelebrate();
+        } else if (decision.action === 'next-word') {
+          fx.wordIndex += 1;
+          if (fx.kidAudioUrl) { URL.revokeObjectURL(fx.kidAudioUrl); fx.kidAudioUrl = null; }
+          renderFixitRep();
+        } else {
+          renderFixitRep(); // retry-word: same word, kid's own recording now available
+        }
+      }, 1400);
+    }
+
+    function renderFixitCelebrate() {
+      const el = document.getElementById('fixit-round');
+      const fx = state.fixit;
+      if (!el) return;
+      if (fx?.kidAudioUrl) URL.revokeObjectURL(fx.kidAudioUrl);
+      const count = fx?.words?.length || 0;
+      el.innerHTML = `
+        <div class="minny-fixit-celebrate">
+          <div class="minny-fixit-celebrate__avatar" aria-hidden="true"><img src="/assets/minny/minny_celebrate.png" alt="" width="64" height="64" style="width:64px;height:64px;object-fit:contain"/></div>
+          <p class="minny-fixit-celebrate__title">Tuyệt vời! Con đã luyện xong ${count} từ rồi 🎉</p>
+          <p class="minny-fixit-celebrate__sub">Thầy Phương sẽ thấy con tiến bộ nhiều lắm.</p>
+        </div>
+        <div class="spk-actions" style="margin-top:14px">
+          <button type="button" class="spk-btn spk-btn--ghost" id="fixit-home-btn">Về trang cá nhân</button>
+          <button type="button" class="spk-btn spk-btn--green" id="fixit-done-btn">Xong 🎯</button>
+        </div>
+      `;
+      el.classList.remove('hidden');
+      document.getElementById('fixit-home-btn')?.addEventListener('click', () => {
+        window.location.href = '/ho-so';
+      });
+      document.getElementById('fixit-done-btn')?.addEventListener('click', fixitReset);
     }
 
     async function logPractice(result, readyForClass = false) {
@@ -1346,6 +1821,11 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
         }
 
         state.accessCode = code;
+        // V1.2 packet 2: the ONE legitimate client-side level read in this
+        // page -- the topic picker must gate BEFORE any turn response
+        // exists to key off (unlike chips/hint, which key on the response
+        // shape). See ftIsPickerLevel/ftIsGameLevel.
+        state.level = data.level || 'L1';
         state.packId = data.pack_id || 'practice';
         state.studentName = data.student_name || '';
         state.modes = Array.isArray(data.modes) ? data.modes : [];
@@ -1439,6 +1919,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       cleanupRecording();
       document.getElementById('speaking-result').classList.add('hidden');
       document.getElementById('speaking-actions').classList.add('hidden');
+      fixitReset();
       showModePicker();
     });
 
@@ -1485,6 +1966,19 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       // Two-phase audio: token guards the background poll for a reply's voice
       // so a stale poll can never play audio over a newer turn or session.
       audioPollToken: 0,
+      // V1.2 packet 2 (Wave D2): topic-pick + hint + game framing state.
+      // pickerTopic/pickerGame hold the in-progress tile/card selection
+      // (before "Bắt đầu nói chuyện 🚀" is tapped); game/storyLines/
+      // currentHint/hintRevealed hold the LIVE session's state once started.
+      pickerTopic: null,
+      pickerGame: null,
+      game: null,
+      storyLines: [],
+      // Micro-round (Elon, 2026-07-12): server-picked debate position,
+      // echoed on the start response -- set once at start, never per-turn.
+      debateTopic: null,
+      currentHint: null,
+      hintRevealed: false,
     };
 
     // Hands-free tuning. A pause this long after real speech sends the turn;
@@ -1497,6 +1991,12 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
     const FT_VAD_MIN_VOICED_MS = 400;
     const FT_VAD_MAX_WAIT_MS = 12000; // auto-armed mic heard nothing → settle to idle
     const FT_FILLER_DELAY_MS = 1200; // thinking gap before the filler line plays
+    // V1.2 packet 2 (Wave D2 §B2): proactive hint-offer stall threshold --
+    // reuses the SAME VAD interval below (no second timer, per the packet)
+    // rather than a fresh setInterval. Shorter than FT_VAD_MAX_WAIT_MS so the
+    // nudge appears while the mic is still very much listening, well before
+    // that hands-free give-up point.
+    const FT_HINT_STALL_MS = 5000;
 
     function ftHandsFreeOn() {
       try {
@@ -1613,12 +2113,75 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       return { mode: 'none', tag };
     }
 
+    // ============================================================
+    // V1.2 packet 2 (Wave D2 mock) -- L3-L5 topic-pick session start, hint
+    // on-demand states, game framing. Pure decision helpers live here (no
+    // DOM access), unit-tested via source extraction in
+    // tests/speakup-games-ui.test.mjs, same convention as the packet 1
+    // block above.
+    // ============================================================
+
+    // The topic picker is the ONE place a client-side level value legitimately
+    // gates UI (unlike ftHasChips/hint below): it must decide what to show
+    // BEFORE any turn response exists to key off. Mirrors the server's L3-L5
+    // split (_minny-convo.js isBeginnerLevel), with L0/unknown defensively
+    // falling to "no picker" rather than guessing.
+    function ftIsPickerLevel(level) {
+      return level === 'L3' || level === 'L4' || level === 'L5';
+    }
+
+    function ftIsGameLevel(level) {
+      return level === 'L4' || level === 'L5';
+    }
+
+    // Single source of truth for "does this turn carry a hint to offer" --
+    // keyed ONLY on the server sending `hint` (gateReplyForLevel restricts
+    // that field to L3+), never a client-side level lookup -- same
+    // principle as ftHasChips above.
+    function ftHintAvailable(data) {
+      return Boolean(data) && typeof data.hint === 'string' && data.hint.length > 0;
+    }
+
+    // The server sends one un-typed string (either a topic word or a short
+    // nudge question) -- the mock's card swaps layout (word-row vs a plain
+    // question line) based on shape, so this is a presentation-only
+    // classification, not new content. A hint containing "?" or more than a
+    // few words reads as a question; anything else renders as a single word.
+    function ftHintType(hint) {
+      const text = String(hint || '').trim();
+      if (text.includes('?')) return 'question';
+      return text.split(/\s+/).filter(Boolean).length > 2 ? 'question' : 'word';
+    }
+
+    // Game framing chrome is keyed on client state (which game was picked at
+    // session start), never a new server field beyond what start already
+    // echoes. build_a_story (Minny's own reply_en lines, already tracked for
+    // the transcript) and debate (start's echoed `debate_topic`, Elon's
+    // micro-diff -- the server picks it, the client only displays it) are
+    // both wired in ftApplyGameFraming. C3 cards deferred -- needs
+    // structured WYR turn field (TODO backlog): the two would-you-rather
+    // option strings + VN glosses aren't in the turn response, and Elon
+    // ruled the change isn't worth it this round (flagged to Phương as a
+    // mock deviation) -- this function still reports its class (so "game
+    // framing class per selected game" is real, tested behavior) but
+    // ftApplyGameFraming never populates content for it.
+    function ftGameFramingClass(game) {
+      if (game === 'build_a_story') return 'minny-story-strip';
+      if (game === 'debate') return 'minny-debate-banner';
+      if (game === 'would_you_rather') return 'minny-wyr-cards';
+      return null;
+    }
+
     function ftStopVad() {
       if (ft.vadTimerId) {
         clearInterval(ft.vadTimerId);
         ft.vadTimerId = null;
       }
       ftHideListening();
+      // Every VAD-stop path (turn sent, cap reached, tab hidden, hands-free
+      // off) also returns a still-offered hint to plain idle (B1) -- a new
+      // recording attempt starts its own fresh stall clock.
+      ftHintOfferedSet(false);
     }
 
     function ftCancelAutoArm() {
@@ -1642,6 +2205,9 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       let lastVoicedMs = monitor.voicedMs();
       let lastVoiceAt = Date.now();
       const armedAt = Date.now();
+      // V1.2 packet 2: fires at most once per recording attempt (mock B2 --
+      // one nudge, not a repeated pulse-restart every tick).
+      let hintOfferFired = false;
       ft.vadTimerId = window.setInterval(() => {
         if (ft.recording !== session || session.status !== 'recording') {
           ftStopVad();
@@ -1653,6 +2219,15 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
           lastVoicedMs = voicedMs;
           lastVoiceAt = now;
           return;
+        }
+        // V1.2 packet 2 (Wave D2 §B2): kid stalled -- no real speech yet this
+        // recording attempt, and a hint exists for this turn. Offers
+        // regardless of hands-free auto-arm (unlike the give-up branch
+        // below), since the mock's B2 boards show the same nudge whether the
+        // kid tapped manually or the mic auto-armed.
+        if (!hintOfferFired && ft.currentHint && voicedMs < FT_VAD_MIN_VOICED_MS && now - armedAt >= FT_HINT_STALL_MS) {
+          hintOfferFired = true;
+          ftHintOfferedSet(true);
         }
         if (voicedMs >= FT_VAD_MIN_VOICED_MS) {
           if (now - lastVoiceAt >= FT_VAD_PAUSE_MS) {
@@ -1947,6 +2522,127 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       scaffold.appendChild(frameEl);
     }
 
+    // ---- V1.2 packet 2: DOM-writing side of the hint on-demand states ----
+    // (Wave D2 §B). ft.currentHint/ft.hintRevealed hold the state; every
+    // branching decision (is there a hint this turn? word or question?)
+    // already happened in ftHintAvailable/ftHintType above.
+
+    function ftHintRowEl() {
+      return document.getElementById('ft-hint-row');
+    }
+
+    function ftHintOfferedSet(offered) {
+      document.getElementById('ft-hint-btn')?.classList.toggle('is-pulsing', offered);
+      document.getElementById('ft-hint-affordance')?.classList.toggle('hidden', !offered);
+    }
+
+    // Called once per turn (ftHandleTurnResponse) with the fresh response --
+    // re-hides any still-open card from the PREVIOUS turn (mock: "re-hides
+    // on the next turn") and shows/hides the idle button purely on whether
+    // THIS turn carries a hint, never a client-side level check.
+    function ftApplyHint(data) {
+      ft.currentHint = ftHintAvailable(data) ? data.hint : null;
+      ft.hintRevealed = false;
+      ftHintOfferedSet(false);
+      ftRenderHintCard();
+      ftHintRowEl()?.classList.toggle('hidden', !ft.currentHint);
+    }
+
+    // Tapping the idle OR pulsing button reveals the card (B3); the row
+    // itself hides while the card is open, per the mock (B3 boards show no
+    // hint button at all -- button and card are mutually exclusive).
+    function ftRevealHint() {
+      if (!ft.currentHint) return;
+      ft.hintRevealed = true;
+      ftHintOfferedSet(false);
+      ftHintRowEl()?.classList.add('hidden');
+      ftRenderHintCard();
+    }
+
+    // The ladder's one exception is chips (ftOnChipTap); a hint reveal has
+    // its own single exception -- dismissing (or, above, revealing) both
+    // return the screen to B1 idle, per the mock, never a lingering pulse.
+    function ftDismissHint() {
+      ft.hintRevealed = false;
+      ftHintOfferedSet(false);
+      ftRenderHintCard();
+      ftHintRowEl()?.classList.toggle('hidden', !ft.currentHint);
+    }
+
+    function ftRenderHintCard() {
+      const card = document.getElementById('ft-hint-card');
+      if (!card) return;
+      if (!ft.hintRevealed || !ft.currentHint) {
+        card.classList.add('hidden');
+        card.innerHTML = '';
+        return;
+      }
+      const type = ftHintType(ft.currentHint);
+      const escaped = escapeHtml(ft.currentHint);
+      // TODO(elon): the mock's word variant (B3) also shows a VN gloss
+      // (.minny-hint-card__word-vi) and a "🔊 Nghe từ này" minny-play-chip --
+      // the server's `hint` field is EN-only (no translation, no audio), so
+      // per the packet's own instruction this ships EN-only rather than
+      // inventing a translation, until a translation/audio source exists.
+      const body = type === 'question'
+        ? `<p class="minny-hint-card__question">${escaped}</p>`
+        : `<div class="minny-hint-card__word-row"><span class="minny-hint-card__word-en">${escaped}</span></div>`;
+      card.innerHTML = `
+        <button type="button" class="minny-hint-card__dismiss" aria-label="Đóng gợi ý">×</button>
+        <p class="minny-hint-card__eyebrow">💡 Minny gợi ý</p>
+        ${body}
+      `;
+      card.classList.remove('hidden');
+      card.querySelector('.minny-hint-card__dismiss')?.addEventListener('click', ftDismissHint);
+    }
+
+    // ---- V1.2 packet 2: DOM-writing side of game framing (Wave D2 §C) ----
+    // build_a_story and debate are populated with real content;
+    // would_you_rather (C3) is deferred -- needs structured WYR turn field
+    // (TODO backlog), see the comment beside ftGameFramingClass.
+
+    function ftClearGameFraming() {
+      const el = document.getElementById('ft-game-framing');
+      if (!el) return;
+      el.innerHTML = '';
+      el.className = 'hidden';
+    }
+
+    function ftApplyGameFraming(data) {
+      const el = document.getElementById('ft-game-framing');
+      if (!el) return;
+      if (ft.game === 'build_a_story' && data?.reply_en) {
+        ft.storyLines.push(data.reply_en);
+        ft.storyLines = ft.storyLines.slice(-2);
+        const lines = ft.storyLines
+          .map((line, i) => {
+            const isLast = i === ft.storyLines.length - 1;
+            const cls = isLast ? 'minny-story-strip__line minny-story-strip__line--minny-last' : 'minny-story-strip__line';
+            return `<p class="${cls}">${escapeHtml(line)}</p>`;
+          })
+          .join('');
+        el.innerHTML = `<p class="minny-story-strip__eyebrow">📖 Câu chuyện của chúng ta</p>${lines}`;
+        el.className = ftGameFramingClass('build_a_story');
+        return;
+      }
+      // Micro-round (Elon, 2026-07-12): start now echoes the server-picked
+      // `debate_topic` (never client-invented) -- persists for the whole
+      // debate game per the mock, not just one turn, so this renders off
+      // ft.debateTopic (set once at start) rather than anything per-turn.
+      if (ft.game === 'debate' && ft.debateTopic) {
+        el.innerHTML = `
+          <span class="minny-debate-banner__emoji">⚖️</span>
+          <div>
+            <p class="minny-debate-banner__eyebrow">Minny nghĩ</p>
+            <p class="minny-debate-banner__text">${escapeHtml(ft.debateTopic)}</p>
+          </div>
+        `;
+        el.className = ftGameFramingClass('debate');
+        return;
+      }
+      ftClearGameFraming();
+    }
+
     // subtitle_vi renders under the English line whenever the turn carries
     // it (repair/vn-nudge lines only -- normal LLM turns never send it).
     function ftRenderSubtitle(text) {
@@ -2082,6 +2778,18 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       ft.chipTurnsSeen = 0;
       ftClearScaffold();
       ftHideListening();
+      // V1.2 packet 2: clear picker selection + hint + game-framing state
+      // and UI so a new free-talk entry never carries over a stale session.
+      ft.pickerTopic = null;
+      ft.pickerGame = null;
+      ft.game = null;
+      ft.storyLines = [];
+      ft.debateTopic = null;
+      ft.currentHint = null;
+      ft.hintRevealed = false;
+      ftApplyHint(null);
+      ftClearGameFraming();
+      document.getElementById('ft-topic-picker')?.classList.add('hidden');
       ft.turnTimings = [];
       ft.fillerClips = [];
       ft.audioPollToken += 1;
@@ -2113,7 +2821,37 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       ftRenderDots();
       ftUpdateTimerDisplay();
       ftUpdateHandsFreeToggle();
-      startFreeTalkSession();
+      // V1.2 packet 2 (Wave D2 §A): L3-L5 sees the topic picker BEFORE
+      // start; L0-L2 is exactly today's flow, untouched.
+      if (ftIsPickerLevel(state.level)) {
+        ftShowTopicPicker();
+      } else {
+        startFreeTalkSession();
+      }
+    }
+
+    // V1.2 packet 2: renders + shows the topic-pick session start (mock A1
+    // L3 / A2 L4-L5), resetting any stale selection from a previous entry.
+    function ftShowTopicPicker() {
+      document.getElementById('ft-conversation')?.classList.add('hidden');
+      const picker = document.getElementById('ft-topic-picker');
+      picker?.classList.remove('hidden');
+      ft.pickerTopic = null;
+      ft.pickerGame = null;
+      const showGames = ftIsGameLevel(state.level);
+      document.getElementById('ft-picker-games-label')?.classList.toggle('hidden', !showGames);
+      document.getElementById('ft-picker-game-cards')?.classList.toggle('hidden', !showGames);
+      document.getElementById('ft-picker-topics-label')?.classList.toggle('hidden', !showGames);
+      picker?.querySelectorAll('.fx-topic').forEach((btn) => {
+        btn.classList.remove('fx-topic--selected');
+        btn.setAttribute('aria-pressed', 'false');
+      });
+      picker?.querySelectorAll('.minny-game-card').forEach((btn) => {
+        btn.classList.remove('is-selected');
+        btn.setAttribute('aria-pressed', 'false');
+      });
+      const startBtn = document.getElementById('ft-picker-start');
+      if (startBtn) startBtn.disabled = true;
     }
 
     function ftExitToModes() {
@@ -2137,14 +2875,27 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       document.getElementById('free-talk-wrapup')?.classList.remove('hidden');
     }
 
-    async function startFreeTalkSession() {
+    // V1.2 packet 2: opts = { topic, game } from the topic-picker CTA (L3+
+    // only); L0-L2 calls this with no opts at all, exactly as before.
+    async function startFreeTalkSession(opts) {
       const recordBtn = document.getElementById('free-talk-record');
       if (recordBtn) recordBtn.disabled = true;
+      // ft.game drives the game-framing chrome (Wave D2 §C); storyLines
+      // starts empty every session -- the canned greeting below is never
+      // part of the story.
+      ft.game = opts?.game || null;
+      ft.storyLines = [];
+      ftClearGameFraming();
       try {
         const res = await fetch('/api/minny-conversation', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ access_code: state.accessCode, action: 'start' }),
+          body: JSON.stringify({
+            access_code: state.accessCode,
+            action: 'start',
+            ...(opts?.topic ? { topic: opts.topic } : {}),
+            ...(opts?.game ? { game: opts.game } : {}),
+          }),
         });
         const data = await res.json();
         if (!res.ok || !data.ok) {
@@ -2167,6 +2918,12 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
         ft.sessionId = data.session_id;
         ft.turnsLeft = data.turns_left ?? 12;
         ft.secondsLeft = data.seconds_left ?? 300;
+        // Micro-round (Elon, 2026-07-12): start echoes the server-picked
+        // debate_topic (never client-invented); the banner persists for the
+        // whole game (mock), so it renders once here rather than waiting
+        // for the first turn.
+        ft.debateTopic = data.debate_topic || null;
+        ftApplyGameFraming(null);
         ftRenderDots();
         ftUpdateTimerDisplay();
         ftStartCountdown();
@@ -2525,6 +3282,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       if (data.ended) {
         ftAppendReplyBubble(data.reply_en, data.mood || 'celebrate');
         ftApplyScaffold({ mode: 'none' });
+        ftApplyHint(null);
         ftRenderSubtitle(data.subtitle_vi);
         playConversationAudio(data.audio_b64, data.content_type, data.reply_en);
         if (data.flagged) ft.flaggedSession = true;
@@ -2538,6 +3296,11 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       // client-side level lookup (see V1.2 packet 1 acceptance criteria).
       if (ftHasChips(data) && data.repair !== true) ft.chipTurnsSeen += 1;
       ftApplyScaffold(ftPlanScaffold(data, ft.chipTurnsSeen));
+      // V1.2 packet 2: hint keyed on data.hint (never level, same principle
+      // as chips above); game framing keyed on ft.game (client state from
+      // the topic-picker CTA).
+      ftApplyHint(data);
+      ftApplyGameFraming(data);
       ftRenderSubtitle(data.subtitle_vi);
       if (!data.audio_b64 && data.audio_pending) {
         ftFetchPendingAudio(data.audio_turn, data.reply_en);
@@ -2715,6 +3478,59 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       }
     });
     ftUpdateHandsFreeToggle();
+
+    // V1.2 packet 2: 💡 hint button -- tap reveals the card (works for both
+    // the idle B1 and pulsing/offered B2 button, mock: same button).
+    document.getElementById('ft-hint-btn')?.addEventListener('click', ftRevealHint);
+
+    // V1.2 packet 2 (Wave D2 §A): topic-picker interactions. Tapping a tile
+    // or game card only SELECTS it (mock: a separate "Bắt đầu nói chuyện 🚀"
+    // CTA confirms) -- never fires the start request by itself.
+    document.getElementById('ft-picker-topic-grid')?.addEventListener('click', (event) => {
+      const btn = event.target.closest('.fx-topic');
+      const grid = document.getElementById('ft-picker-topic-grid');
+      if (!btn || !grid?.contains(btn)) return;
+      grid.querySelectorAll('.fx-topic').forEach((el) => {
+        const isTarget = el === btn;
+        el.classList.toggle('fx-topic--selected', isTarget);
+        el.setAttribute('aria-pressed', String(isTarget));
+      });
+      ft.pickerTopic = btn.dataset.topic || null;
+      const startBtn = document.getElementById('ft-picker-start');
+      if (startBtn) startBtn.disabled = !ft.pickerTopic;
+    });
+
+    // Games are optional and single-select; tapping the already-selected
+    // card deselects it (mock: "không bắt buộc" -- picking a topic is the
+    // only required step, per the README's game/topic interaction note).
+    document.getElementById('ft-picker-game-cards')?.addEventListener('click', (event) => {
+      const btn = event.target.closest('.minny-game-card');
+      const cards = document.getElementById('ft-picker-game-cards');
+      if (!btn || !cards?.contains(btn)) return;
+      const alreadySelected = btn.classList.contains('is-selected');
+      cards.querySelectorAll('.minny-game-card').forEach((el) => {
+        el.classList.remove('is-selected');
+        el.setAttribute('aria-pressed', 'false');
+      });
+      if (alreadySelected) {
+        ft.pickerGame = null;
+      } else {
+        btn.classList.add('is-selected');
+        btn.setAttribute('aria-pressed', 'true');
+        ft.pickerGame = btn.dataset.game || null;
+      }
+    });
+
+    document.getElementById('ft-picker-start')?.addEventListener('click', () => {
+      if (!ft.pickerTopic) return;
+      const topic = ft.pickerTopic;
+      const game = ft.pickerGame;
+      document.getElementById('ft-topic-picker')?.classList.add('hidden');
+      document.getElementById('ft-conversation')?.classList.remove('hidden');
+      startFreeTalkSession({ topic, game });
+    });
+
+    document.getElementById('ft-picker-back')?.addEventListener('click', ftExitToModes);
 
     document.getElementById('free-talk-end')?.addEventListener('click', () => {
       ft.ended = true;

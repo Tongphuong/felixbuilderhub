@@ -1,9 +1,17 @@
 # Evidence — SpeakUp
 
-- Decision: build
-- Last reviewed: 2026-07-04
+- Decision: pilot
+- Last reviewed: 2026-07-12
 - 2026-07-04 update: V0 scope widened to 20 students and two modes (homework practice + time-restricted free talking), per Phuong's direct decision. See PRODUCT.md and IDEAS.md for detail.
 - 2026-07-04 update 2: Phuong approved the 8-phase architecture roadmap from Fable 5, `_ops/specs/SPEC_SPEAKUP_V0.md`. Decision moved from "prototype" to "build" — this is now a committed engineering build against an approved spec, not an open-ended validation experiment.
+
+- 2026-07-12 update: PILOT STARTED on Phương's explicit order ("Start the pilot
+  now, merge to production"). Production = main @ c888313: V0 complete + V1.1
+  brain + V1.2 both packets + V1.4 fix-it + word-level feedback + Azure grading
+  on all homework types. Branch and main verified identical; production bundle
+  verified serving the latest build. Success metric per PRODUCT.md: pilot
+  completes without safety incidents or cost overrun, with repeat use and
+  observable improvement; public-release evidence gate stays ≥100 sessions.
 
 ## User reports
 

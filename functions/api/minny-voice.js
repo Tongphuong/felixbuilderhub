@@ -32,6 +32,10 @@ export async function onRequestPost(context) {
 
   const phraseId = String(body.phrase_id || '').trim();
   const rawText = String(body.text || '').trim();
+  // Buffet hygiene nit (2026-07-12): only a real JSON string may enter the
+  // word branch — String() would otherwise coerce e.g. ["banana"] via
+  // Array.prototype.toString (analyzed non-exploitable, guarded anyway).
+  const rawWord = typeof body.word === 'string' ? body.word.trim().toLowerCase() : '';
   let textToSynthesize = null;
 
   if (phraseId) {
@@ -47,6 +51,20 @@ export async function onRequestPost(context) {
       return json({ ok: false, error: 'not_allowed', message: 'Nội dung không hợp lệ.' }, 403);
     }
     textToSynthesize = match.text_en;
+  } else if (rawWord) {
+    // V1 word-level feedback (2026-07-12): tap-a-chip-to-hear-Minny. A single
+    // word is only ever synthesized when it is in THIS code's own
+    // flagged-words record (written by read2lead-speaking-check.js after a
+    // scored attempt) — never an open TTS proxy for arbitrary text.
+    if (!/^[a-z''-]{1,30}$/.test(rawWord) || /\s/.test(rawWord)) {
+      return json({ ok: false, error: 'not_allowed', message: 'Nội dung không hợp lệ.' }, 403);
+    }
+    const flagged = await env.READ2LEAD_CODES.get(`flagged-words:${accessCode}`, { type: 'json' });
+    const flaggedWords = Array.isArray(flagged?.words) ? flagged.words : [];
+    if (!flaggedWords.includes(rawWord)) {
+      return json({ ok: false, error: 'not_allowed', message: 'Nội dung không hợp lệ.' }, 403);
+    }
+    textToSynthesize = rawWord;
   } else {
     return json({ ok: false, error: 'text_missing', message: 'Thiếu nội dung cần đọc.' }, 400);
   }

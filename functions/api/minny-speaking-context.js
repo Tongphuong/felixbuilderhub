@@ -129,6 +129,10 @@ export async function onRequestGet(context) {
   return json({
     ok: true,
     student_name: studentName,
+    // V1.2 packet 2 (2026-07-12): the client needs the level BEFORE calling
+    // start — the topic picker renders only at L3+ (same lookup
+    // minny-conversation.js uses for the session level).
+    level: codeData?.progress?.current_level || codeData?.student_profile?.level || 'L1',
     has_story: false,
     pack_id: 'general',
     story_title: '',

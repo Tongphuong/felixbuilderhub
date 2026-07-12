@@ -317,6 +317,18 @@ test('new tappable targets meet the 44px floor', () => {
   assert.match(freeTalkCss, /\.minny-repair-choice-btn\s*\{[^}]*min-height:\s*56px/s, 'well over the 44px floor, per the mock\'s own note');
 });
 
+// speakup-word-level-feedback (V1, 2026-07-12): word chips upgraded from
+// spans to real buttons so they meet the same 44px floor.
+test('.minny-word chip buttons meet the 44px floor and reuse an existing pulse animation for the tap-to-hear loading state', () => {
+  assert.match(freeTalkCss, /\.minny-word\s*\{[^}]*min-height:\s*44px/s);
+  assert.match(freeTalkCss, /\.minny-word\.is-loading\s*\{[^}]*animation:\s*minny-listen-pulse/s, 'reuses the listening-indicator pulse keyframe rather than defining a new one');
+});
+
+test('reduced-motion disables the .minny-word loading pulse', () => {
+  const rule = /@media \(prefers-reduced-motion: reduce\)[^@]*?\.minny-word\.is-loading\s*\{[^}]*animation:\s*none/s;
+  assert.match(freeTalkCss, rule);
+});
+
 test('reduced-motion disables the new listening-indicator pulse (this file\'s per-selector convention, not the mock\'s blanket *-rule)', () => {
   // speakup-app.css legitimately has more than one reduced-motion media
   // block (the pre-existing one plus the V1.2 additions) -- assert the rule

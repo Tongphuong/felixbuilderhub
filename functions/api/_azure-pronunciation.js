@@ -197,16 +197,41 @@ export function mapAzureOpenResult(best) {
 // deterministic scoreSpeechFrame result in read2lead-speaking-check.js).
 // A thin sibling of mapAzureOpenResult, not a change to it — that mapper's
 // existing contract (used by the photo_talk 'open' path) is untouched.
-export function mapAzureFramePronunciation(best, sampledSeconds) {
+//
+// V1 word-level feedback (2026-07-12): also surfaces up to 3 lowest-accuracy
+// practice words from Azure's per-word `Words[]` — the same data source
+// mapAzureReadResult already reads for read steps — so presentations get the
+// same "Từ cần luyện" treatment reading already has. `skipWords` (a Set) is
+// passed in by the caller rather than imported from
+// read2lead-speaking-check.js, which would create a circular import between
+// the two files.
+export function mapAzureFramePronunciation(best, sampledSeconds, skipWords) {
   const round = (v) => (Number.isFinite(Number(v)) ? Math.round(Number(v)) : null);
   const prosodyPercent = round(best.ProsodyScore);
-  return {
+  const result = {
     accuracy_percent: round(best.AccuracyScore),
     fluency_percent: round(best.FluencyScore),
     ...(prosodyPercent !== null ? { prosody_percent: prosodyPercent } : {}),
     scorer: 'azure_pronunciation_unscripted',
     sampled_seconds: sampledSeconds,
   };
+
+  const rawWords = Array.isArray(best.Words) ? best.Words : [];
+  const candidates = [];
+  for (const w of rawWords) {
+    if (String(w.ErrorType || 'None') === 'Insertion') continue;
+    const word = String(w.Word || '').toLowerCase();
+    if (word.length < 3) continue;
+    if (skipWords instanceof Set && skipWords.has(word)) continue;
+    const accuracy = Number(w.AccuracyScore);
+    if (!Number.isFinite(accuracy) || accuracy >= 70) continue;
+    candidates.push({ word, accuracy });
+  }
+  candidates.sort((a, b) => a.accuracy - b.accuracy);
+  const words = candidates.slice(0, 3).map((c) => ({ word: c.word, accuracy_percent: Math.round(c.accuracy) }));
+  if (words.length > 0) result.words = words;
+
+  return result;
 }
 
 // Reads a 4-byte ASCII chunk tag at the given offset (WAV chunk IDs are

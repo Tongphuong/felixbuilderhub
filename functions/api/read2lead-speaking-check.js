@@ -584,7 +584,7 @@ export async function runSpeakingCheck({
               fetchFn,
             });
             await azureBumpUsage(kv, sampledSeconds);
-            frameResult.pronunciation = mapAzureFramePronunciation(best, sampledSeconds);
+            frameResult.pronunciation = mapAzureFramePronunciation(best, sampledSeconds, SKIP_WORDS);
           }
         }
       } catch (err) {
@@ -749,6 +749,24 @@ export async function onRequestPost(context) {
       telemetry: { ...clientTelemetry, duration_seconds: durationSec },
       env,
     });
+
+    // V1 word-level feedback (2026-07-12): best-effort, short-TTL record of
+    // this attempt's practice words so minny-voice's `word` branch can allow
+    // a tap-to-hear request for exactly these words and nothing else. Never
+    // blocks the response — a KV hiccup here must not fail a scored attempt.
+    try {
+      const flaggedWords = collectFlaggedWords(result);
+      if (flaggedWords.length) {
+        await env.READ2LEAD_CODES.put(
+          `flagged-words:${accessCode}`,
+          JSON.stringify({ words: flaggedWords, at: Date.now() }),
+          { expirationTtl: 3600 },
+        );
+      }
+    } catch {
+      /* best-effort; must never block the response */
+    }
+
     return json(result);
   } catch (error) {
     console.error(`[read2lead-speaking-check] ${error?.message} | file=${audioName} type=${audioType} size=${audioSize}`, error?.detail || '');
@@ -815,6 +833,43 @@ export async function onRequestPost(context) {
       500,
     );
   }
+}
+
+// V1 word-level feedback fix round (2026-07-12, Elon ruling): strips
+// anything outside minny-voice's own allowlisted character class ([a-z'-])
+// after lowercasing, so a word carrying the original sentence's punctuation
+// (e.g. scoreTranscript's raw "banana.") still lands in the flagged-words
+// record as exactly the string minny-voice's `/^[a-z''-]{1,30}$/` regex will
+// accept ("banana") — speak-up.astro's tap handler applies this identical
+// normalization to a chip's word before tapping it, so what a kid taps is
+// exactly what the server allowlisted. Returns '' (dropped by the caller)
+// for anything that becomes empty or exceeds minny-voice's 30-char cap once
+// stripped (e.g. an ASR artifact like "...").
+export function normalizePracticeWord(raw) {
+  const cleaned = String(raw || '').toLowerCase().replace(/[^a-z'-]/g, '');
+  return cleaned.length >= 1 && cleaned.length <= 30 ? cleaned : '';
+}
+
+// Collects practice words from whichever shape the speaking-check result
+// carries (V1 word-level feedback, 2026-07-12): read mode's
+// words_missed/words_close (scoreTranscript's raw-case strings, or Azure's
+// already-lowercase mapAzureReadResult strings) and frame mode's optional
+// Azure pronunciation.words[] ({word, accuracy_percent} objects). Pure and
+// defensive — normalizes either shape via normalizePracticeWord, never throws.
+export function collectFlaggedWords(result) {
+  const words = new Set();
+  const addAll = (list) => {
+    if (!Array.isArray(list)) return;
+    for (const entry of list) {
+      const raw = entry && typeof entry === 'object' ? entry.word : entry;
+      const normalized = normalizePracticeWord(raw);
+      if (normalized) words.add(normalized);
+    }
+  };
+  addAll(result?.words_missed);
+  addAll(result?.words_close);
+  addAll(result?.pronunciation?.words);
+  return [...words];
 }
 
 async function recordSpeakingError(env, record) {
