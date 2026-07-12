@@ -2,6 +2,32 @@ import { isValidBookPack } from './read2lead-lesson.js';
 
 const VALID_LEVELS = new Set(['L0', 'L1', 'L2', 'L3', 'L4']);
 
+// Read side of the same machine-secret contract: lets the enrichment batch
+// (process_books.py --enrich-published) load published packs and slug indexes
+// without direct KV credentials. ?index=L1 -> slug list; ?slug=book_123 -> pack.
+export async function onRequestGet({ request, env }) {
+  const providedSecret = request.headers.get('X-Read2Lead-Secret') || '';
+  const expectedSecret = env.READ2LEAD_BACKEND_SECRET || '';
+  if (!expectedSecret || providedSecret !== expectedSecret) {
+    return json({ ok: false, error: 'unauthorized' }, 401);
+  }
+  if (!env.READ2LEAD_CODES) {
+    return json({ ok: false, error: 'config_error' }, 500);
+  }
+  const url = new URL(request.url);
+  const level = String(url.searchParams.get('index') || '').toUpperCase();
+  if (level) {
+    if (!VALID_LEVELS.has(level)) return json({ ok: false, error: 'invalid_level' }, 400);
+    const slugs = await env.READ2LEAD_CODES.get(`book_index:${level}`, { type: 'json' });
+    return json({ ok: true, level, slugs: Array.isArray(slugs) ? slugs : [] });
+  }
+  const slug = String(url.searchParams.get('slug') || '').trim();
+  if (!/^book_[0-9]+$/.test(slug)) return json({ ok: false, error: 'invalid_slug' }, 400);
+  const pack = await env.READ2LEAD_CODES.get(`book:${slug}`, { type: 'json' });
+  if (!pack) return json({ ok: false, error: 'not_found' }, 404);
+  return json({ ok: true, slug, pack });
+}
+
 export async function onRequestPost({ request, env }) {
   const providedSecret = request.headers.get('X-Read2Lead-Secret') || '';
   const expectedSecret = env.READ2LEAD_BACKEND_SECRET || '';

@@ -5195,10 +5195,10 @@ const bookFlowHelperInline = stripInlineExports(bookFlowHelperSrc);
       const contextSentence = sentences.find(s =>
         (s.text_en || '').toLowerCase().includes(word.toLowerCase())
       );
-      return `<div class=”r2l-vocab-card”>
-        <strong class=”r2l-vocab-word”>${escapeHtml(word)}</strong>
-        ${contextSentence ? `<p class=”r2l-vocab-context”>”${escapeHtml(contextSentence.text_en)}”</p>` : ''}
-        ${vi ? `<p class=”r2l-vocab-vi”>${escapeHtml(vi)}</p>` : ''}
+      return `<div class="r2l-vocab-card">
+        <strong class="r2l-vocab-word">${escapeHtml(word)}</strong>
+        ${contextSentence ? `<p class="r2l-vocab-context">“${escapeHtml(contextSentence.text_en)}”</p>` : ''}
+        ${vi ? `<p class="r2l-vocab-vi">${escapeHtml(vi)}</p>` : ''}
       </div>`;
     }).join('');
   }
