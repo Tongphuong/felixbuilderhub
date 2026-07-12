@@ -242,3 +242,19 @@ test('buildHomeworkSteps: photo-only record yields one open photo-talk step', ()
   assert.equal(mode.steps[0].max_seconds, 105);
   assert.deepEqual(mode.photo, { id: 'hp_abc123def456' });
 });
+
+test('minny-speaking-context response carries the code level (V1.2 packet 2: topic picker gates on it pre-start)', async () => {
+  const { onRequestGet } = await import('../functions/api/minny-speaking-context.js');
+  const kv = {
+    async get(key, opts) {
+      if (key === 'R2L-LVL-TEST') return { student_name: 'Lvl', progress: { current_level: 'L4' } };
+      return null;
+    },
+    async put() {},
+  };
+  const request = new Request('http://x/api/minny-speaking-context?code=R2L-LVL-TEST');
+  const res = await onRequestGet({ request, env: { READ2LEAD_CODES: kv } });
+  const data = await res.json();
+  assert.equal(data.ok, true);
+  assert.equal(data.level, 'L4');
+});

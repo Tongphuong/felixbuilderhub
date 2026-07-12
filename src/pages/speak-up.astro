@@ -13,6 +13,8 @@
  */
 import SpeakUpAppLayout from '../layouts/SpeakUpAppLayout.astro';
 import MicCheckPanel from '../components/read2lead/v2/MicCheckPanel.astro';
+import TopicTile from '../components/ui/TopicTile.astro';
+import { HUB_TOPICS } from './ho-so/ho-so-topics.ts';
 import { r2lRecorderScriptSrc } from '../scripts/r2l-recorder-script.mjs';
 
 const r2lRecorderSrc = r2lRecorderScriptSrc();
@@ -200,6 +202,13 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
             </div>
           </div>
 
+          <!-- V1.2 packet 2 (Wave D2 §C): game framing chrome, layered over
+               the unchanged ft-* conversation chrome above/below. Populated
+               by ftApplyGameFraming per turn; only build_a_story is wired
+               today (see the TODO(elon) beside ftGameFramingClass) -- empty
+               and hidden for every other case, including no game at all. -->
+          <div id="ft-game-framing" class="hidden" aria-live="polite"></div>
+
           <div class="ft-hero">
             <div class="ft-hero__avatar">
               <video
@@ -218,6 +227,11 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
                    and inert unless the turn response carries `options`
                    (server-gated to L1-L2, never a client-side level check). -->
               <div id="ft-scaffold" class="ft-scaffold"></div>
+              <!-- V1.2 packet 2 (Wave D2 §B3): hint reveal card -- keyed on
+                   the CURRENT turn's `hint` field (never a client-side level
+                   lookup, same principle as ft-scaffold above). Filled by
+                   ftRenderHintCard; empty/hidden otherwise. -->
+              <div id="ft-hint-card" class="minny-hint-card hidden" aria-live="polite"></div>
               <div id="free-talk-thinking-dots" class="minny-bubble--thinking"><span></span><span></span><span></span></div>
               <button id="free-talk-play-chip" type="button" class="minny-play-chip" aria-label="Nghe Minny nói">🔊 Nghe Minny</button>
               <p class="ft-hero__mood-cap"><span id="ft-mood">Đợi con nói</span></p>
@@ -235,6 +249,15 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
 
           <div class="ft-recorder">
             <p class="ft-section-label">Ghi âm</p>
+            <!-- V1.2 packet 2 (Wave D2 §B): 💡 hint button, L3+ only --
+                 keyed on the per-turn `hint` field via ftApplyHint, hidden
+                 whenever L0-L2 sends no such field. The row itself hides
+                 while the reveal card (#ft-hint-card above) is open (B3),
+                 per the mock -- see ftRevealHint/ftDismissHint. -->
+            <div id="ft-hint-row" class="minny-hint-row hidden">
+              <span id="ft-hint-affordance" class="minny-hint-affordance hidden">Cần gợi ý không?</span>
+              <button id="ft-hint-btn" type="button" class="minny-hint-btn">💡 Gợi ý</button>
+            </div>
             <!-- V1.2 packet 1: hands-free is a visible, always-present,
                  kid/parent-settable control (IDEAS.md 2026-07-10: "never a
                  hidden flag again") -- wired to the existing
@@ -255,6 +278,63 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
               <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
             </div>
             <MicCheckPanel />
+          </div>
+        </div>
+
+        <!-- V1.2 packet 2 (Wave D2 §A): L3-L5 topic-pick session start,
+             shown BEFORE the existing start flow -- gated on the level
+             fetched via minny-speaking-context (ftIsPickerLevel), never a
+             guess. L0-L2 never sees this at all (existing flow, untouched);
+             see enterFreeTalking. Game cards (A2) are the same markup as A1
+             plus two extra blocks, toggled by ftIsGameLevel -- kept as one
+             screen rather than two templates. -->
+        <div id="ft-topic-picker" class="hidden">
+          <div class="spk-topbar">
+            <button id="ft-picker-back" type="button" class="spk-back">← Chọn cách luyện</button>
+          </div>
+          <div class="ft-hero">
+            <div class="ft-hero__avatar">
+              <img src="/assets/minny/minny_idle.png" alt="Minny" width="64" height="64" />
+            </div>
+            <div class="ft-hero__body">
+              <p class="ft-hero__eyebrow">Minny</p>
+              <p class="ft-hero__line">Hôm nay con muốn nói về gì?</p>
+            </div>
+          </div>
+          <div class="minny-topic-picker">
+            <p id="ft-picker-games-label" class="minny-topic-picker__section-label hidden">🎮 Hoạt động hôm nay (không bắt buộc)</p>
+            <div id="ft-picker-game-cards" class="minny-game-cards hidden">
+              <button type="button" class="minny-game-card" data-game="build_a_story" aria-pressed="false">
+                <span class="minny-game-card__emoji" aria-hidden="true">📖</span>
+                <span class="minny-game-card__body">
+                  <p class="minny-game-card__title">Kể chuyện cùng Minny</p>
+                  <p class="minny-game-card__desc">Minny kể một câu, con kể tiếp câu sau nhé!</p>
+                </span>
+              </button>
+              <button type="button" class="minny-game-card" data-game="debate" aria-pressed="false">
+                <span class="minny-game-card__emoji" aria-hidden="true">⚖️</span>
+                <span class="minny-game-card__body">
+                  <p class="minny-game-card__title">Tranh luận vui</p>
+                  <p class="minny-game-card__desc">Minny nói một ý ngộ nghĩnh, con thử phản biện xem!</p>
+                </span>
+              </button>
+              <button type="button" class="minny-game-card" data-game="would_you_rather" aria-pressed="false">
+                <span class="minny-game-card__emoji" aria-hidden="true">🤔</span>
+                <span class="minny-game-card__body">
+                  <p class="minny-game-card__title">Con chọn gì?</p>
+                  <p class="minny-game-card__desc">Minny đưa 2 lựa chọn, con chọn và nói lý do nhé!</p>
+                </span>
+              </button>
+            </div>
+
+            <p id="ft-picker-topics-label" class="minny-topic-picker__section-label hidden">Hoặc chọn một chủ đề tự do</p>
+            <div id="ft-picker-topic-grid" class="fx-topic-grid">
+              {HUB_TOPICS.map(([value, label, emoji]) => (
+                <TopicTile emoji={emoji} label={label} data-topic={value} />
+              ))}
+              <TopicTile emoji="🎲" label="Minny chọn" data-topic="minny_choice" class="fx-topic--random" />
+            </div>
+            <button id="ft-picker-start" type="button" class="spk-btn spk-btn--gold" disabled>Bắt đầu nói chuyện 🚀</button>
           </div>
         </div>
 
@@ -321,6 +401,9 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
 
     const state = {
       accessCode: '',
+      // V1.2 packet 2: level fetched via minny-speaking-context, used ONLY
+      // to gate the topic picker before any turn response exists.
+      level: '',
       packId: '',
       studentName: '',
       modes: [],
@@ -1738,6 +1821,11 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
         }
 
         state.accessCode = code;
+        // V1.2 packet 2: the ONE legitimate client-side level read in this
+        // page -- the topic picker must gate BEFORE any turn response
+        // exists to key off (unlike chips/hint, which key on the response
+        // shape). See ftIsPickerLevel/ftIsGameLevel.
+        state.level = data.level || 'L1';
         state.packId = data.pack_id || 'practice';
         state.studentName = data.student_name || '';
         state.modes = Array.isArray(data.modes) ? data.modes : [];
@@ -1878,6 +1966,19 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       // Two-phase audio: token guards the background poll for a reply's voice
       // so a stale poll can never play audio over a newer turn or session.
       audioPollToken: 0,
+      // V1.2 packet 2 (Wave D2): topic-pick + hint + game framing state.
+      // pickerTopic/pickerGame hold the in-progress tile/card selection
+      // (before "Bắt đầu nói chuyện 🚀" is tapped); game/storyLines/
+      // currentHint/hintRevealed hold the LIVE session's state once started.
+      pickerTopic: null,
+      pickerGame: null,
+      game: null,
+      storyLines: [],
+      // Micro-round (Elon, 2026-07-12): server-picked debate position,
+      // echoed on the start response -- set once at start, never per-turn.
+      debateTopic: null,
+      currentHint: null,
+      hintRevealed: false,
     };
 
     // Hands-free tuning. A pause this long after real speech sends the turn;
@@ -1890,6 +1991,12 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
     const FT_VAD_MIN_VOICED_MS = 400;
     const FT_VAD_MAX_WAIT_MS = 12000; // auto-armed mic heard nothing → settle to idle
     const FT_FILLER_DELAY_MS = 1200; // thinking gap before the filler line plays
+    // V1.2 packet 2 (Wave D2 §B2): proactive hint-offer stall threshold --
+    // reuses the SAME VAD interval below (no second timer, per the packet)
+    // rather than a fresh setInterval. Shorter than FT_VAD_MAX_WAIT_MS so the
+    // nudge appears while the mic is still very much listening, well before
+    // that hands-free give-up point.
+    const FT_HINT_STALL_MS = 5000;
 
     function ftHandsFreeOn() {
       try {
@@ -2006,12 +2113,75 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       return { mode: 'none', tag };
     }
 
+    // ============================================================
+    // V1.2 packet 2 (Wave D2 mock) -- L3-L5 topic-pick session start, hint
+    // on-demand states, game framing. Pure decision helpers live here (no
+    // DOM access), unit-tested via source extraction in
+    // tests/speakup-games-ui.test.mjs, same convention as the packet 1
+    // block above.
+    // ============================================================
+
+    // The topic picker is the ONE place a client-side level value legitimately
+    // gates UI (unlike ftHasChips/hint below): it must decide what to show
+    // BEFORE any turn response exists to key off. Mirrors the server's L3-L5
+    // split (_minny-convo.js isBeginnerLevel), with L0/unknown defensively
+    // falling to "no picker" rather than guessing.
+    function ftIsPickerLevel(level) {
+      return level === 'L3' || level === 'L4' || level === 'L5';
+    }
+
+    function ftIsGameLevel(level) {
+      return level === 'L4' || level === 'L5';
+    }
+
+    // Single source of truth for "does this turn carry a hint to offer" --
+    // keyed ONLY on the server sending `hint` (gateReplyForLevel restricts
+    // that field to L3+), never a client-side level lookup -- same
+    // principle as ftHasChips above.
+    function ftHintAvailable(data) {
+      return Boolean(data) && typeof data.hint === 'string' && data.hint.length > 0;
+    }
+
+    // The server sends one un-typed string (either a topic word or a short
+    // nudge question) -- the mock's card swaps layout (word-row vs a plain
+    // question line) based on shape, so this is a presentation-only
+    // classification, not new content. A hint containing "?" or more than a
+    // few words reads as a question; anything else renders as a single word.
+    function ftHintType(hint) {
+      const text = String(hint || '').trim();
+      if (text.includes('?')) return 'question';
+      return text.split(/\s+/).filter(Boolean).length > 2 ? 'question' : 'word';
+    }
+
+    // Game framing chrome is keyed on client state (which game was picked at
+    // session start), never a new server field beyond what start already
+    // echoes. build_a_story (Minny's own reply_en lines, already tracked for
+    // the transcript) and debate (start's echoed `debate_topic`, Elon's
+    // micro-diff -- the server picks it, the client only displays it) are
+    // both wired in ftApplyGameFraming. C3 cards deferred -- needs
+    // structured WYR turn field (TODO backlog): the two would-you-rather
+    // option strings + VN glosses aren't in the turn response, and Elon
+    // ruled the change isn't worth it this round (flagged to Phương as a
+    // mock deviation) -- this function still reports its class (so "game
+    // framing class per selected game" is real, tested behavior) but
+    // ftApplyGameFraming never populates content for it.
+    function ftGameFramingClass(game) {
+      if (game === 'build_a_story') return 'minny-story-strip';
+      if (game === 'debate') return 'minny-debate-banner';
+      if (game === 'would_you_rather') return 'minny-wyr-cards';
+      return null;
+    }
+
     function ftStopVad() {
       if (ft.vadTimerId) {
         clearInterval(ft.vadTimerId);
         ft.vadTimerId = null;
       }
       ftHideListening();
+      // Every VAD-stop path (turn sent, cap reached, tab hidden, hands-free
+      // off) also returns a still-offered hint to plain idle (B1) -- a new
+      // recording attempt starts its own fresh stall clock.
+      ftHintOfferedSet(false);
     }
 
     function ftCancelAutoArm() {
@@ -2035,6 +2205,9 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       let lastVoicedMs = monitor.voicedMs();
       let lastVoiceAt = Date.now();
       const armedAt = Date.now();
+      // V1.2 packet 2: fires at most once per recording attempt (mock B2 --
+      // one nudge, not a repeated pulse-restart every tick).
+      let hintOfferFired = false;
       ft.vadTimerId = window.setInterval(() => {
         if (ft.recording !== session || session.status !== 'recording') {
           ftStopVad();
@@ -2046,6 +2219,15 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
           lastVoicedMs = voicedMs;
           lastVoiceAt = now;
           return;
+        }
+        // V1.2 packet 2 (Wave D2 §B2): kid stalled -- no real speech yet this
+        // recording attempt, and a hint exists for this turn. Offers
+        // regardless of hands-free auto-arm (unlike the give-up branch
+        // below), since the mock's B2 boards show the same nudge whether the
+        // kid tapped manually or the mic auto-armed.
+        if (!hintOfferFired && ft.currentHint && voicedMs < FT_VAD_MIN_VOICED_MS && now - armedAt >= FT_HINT_STALL_MS) {
+          hintOfferFired = true;
+          ftHintOfferedSet(true);
         }
         if (voicedMs >= FT_VAD_MIN_VOICED_MS) {
           if (now - lastVoiceAt >= FT_VAD_PAUSE_MS) {
@@ -2340,6 +2522,127 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       scaffold.appendChild(frameEl);
     }
 
+    // ---- V1.2 packet 2: DOM-writing side of the hint on-demand states ----
+    // (Wave D2 §B). ft.currentHint/ft.hintRevealed hold the state; every
+    // branching decision (is there a hint this turn? word or question?)
+    // already happened in ftHintAvailable/ftHintType above.
+
+    function ftHintRowEl() {
+      return document.getElementById('ft-hint-row');
+    }
+
+    function ftHintOfferedSet(offered) {
+      document.getElementById('ft-hint-btn')?.classList.toggle('is-pulsing', offered);
+      document.getElementById('ft-hint-affordance')?.classList.toggle('hidden', !offered);
+    }
+
+    // Called once per turn (ftHandleTurnResponse) with the fresh response --
+    // re-hides any still-open card from the PREVIOUS turn (mock: "re-hides
+    // on the next turn") and shows/hides the idle button purely on whether
+    // THIS turn carries a hint, never a client-side level check.
+    function ftApplyHint(data) {
+      ft.currentHint = ftHintAvailable(data) ? data.hint : null;
+      ft.hintRevealed = false;
+      ftHintOfferedSet(false);
+      ftRenderHintCard();
+      ftHintRowEl()?.classList.toggle('hidden', !ft.currentHint);
+    }
+
+    // Tapping the idle OR pulsing button reveals the card (B3); the row
+    // itself hides while the card is open, per the mock (B3 boards show no
+    // hint button at all -- button and card are mutually exclusive).
+    function ftRevealHint() {
+      if (!ft.currentHint) return;
+      ft.hintRevealed = true;
+      ftHintOfferedSet(false);
+      ftHintRowEl()?.classList.add('hidden');
+      ftRenderHintCard();
+    }
+
+    // The ladder's one exception is chips (ftOnChipTap); a hint reveal has
+    // its own single exception -- dismissing (or, above, revealing) both
+    // return the screen to B1 idle, per the mock, never a lingering pulse.
+    function ftDismissHint() {
+      ft.hintRevealed = false;
+      ftHintOfferedSet(false);
+      ftRenderHintCard();
+      ftHintRowEl()?.classList.toggle('hidden', !ft.currentHint);
+    }
+
+    function ftRenderHintCard() {
+      const card = document.getElementById('ft-hint-card');
+      if (!card) return;
+      if (!ft.hintRevealed || !ft.currentHint) {
+        card.classList.add('hidden');
+        card.innerHTML = '';
+        return;
+      }
+      const type = ftHintType(ft.currentHint);
+      const escaped = escapeHtml(ft.currentHint);
+      // TODO(elon): the mock's word variant (B3) also shows a VN gloss
+      // (.minny-hint-card__word-vi) and a "🔊 Nghe từ này" minny-play-chip --
+      // the server's `hint` field is EN-only (no translation, no audio), so
+      // per the packet's own instruction this ships EN-only rather than
+      // inventing a translation, until a translation/audio source exists.
+      const body = type === 'question'
+        ? `<p class="minny-hint-card__question">${escaped}</p>`
+        : `<div class="minny-hint-card__word-row"><span class="minny-hint-card__word-en">${escaped}</span></div>`;
+      card.innerHTML = `
+        <button type="button" class="minny-hint-card__dismiss" aria-label="Đóng gợi ý">×</button>
+        <p class="minny-hint-card__eyebrow">💡 Minny gợi ý</p>
+        ${body}
+      `;
+      card.classList.remove('hidden');
+      card.querySelector('.minny-hint-card__dismiss')?.addEventListener('click', ftDismissHint);
+    }
+
+    // ---- V1.2 packet 2: DOM-writing side of game framing (Wave D2 §C) ----
+    // build_a_story and debate are populated with real content;
+    // would_you_rather (C3) is deferred -- needs structured WYR turn field
+    // (TODO backlog), see the comment beside ftGameFramingClass.
+
+    function ftClearGameFraming() {
+      const el = document.getElementById('ft-game-framing');
+      if (!el) return;
+      el.innerHTML = '';
+      el.className = 'hidden';
+    }
+
+    function ftApplyGameFraming(data) {
+      const el = document.getElementById('ft-game-framing');
+      if (!el) return;
+      if (ft.game === 'build_a_story' && data?.reply_en) {
+        ft.storyLines.push(data.reply_en);
+        ft.storyLines = ft.storyLines.slice(-2);
+        const lines = ft.storyLines
+          .map((line, i) => {
+            const isLast = i === ft.storyLines.length - 1;
+            const cls = isLast ? 'minny-story-strip__line minny-story-strip__line--minny-last' : 'minny-story-strip__line';
+            return `<p class="${cls}">${escapeHtml(line)}</p>`;
+          })
+          .join('');
+        el.innerHTML = `<p class="minny-story-strip__eyebrow">📖 Câu chuyện của chúng ta</p>${lines}`;
+        el.className = ftGameFramingClass('build_a_story');
+        return;
+      }
+      // Micro-round (Elon, 2026-07-12): start now echoes the server-picked
+      // `debate_topic` (never client-invented) -- persists for the whole
+      // debate game per the mock, not just one turn, so this renders off
+      // ft.debateTopic (set once at start) rather than anything per-turn.
+      if (ft.game === 'debate' && ft.debateTopic) {
+        el.innerHTML = `
+          <span class="minny-debate-banner__emoji">⚖️</span>
+          <div>
+            <p class="minny-debate-banner__eyebrow">Minny nghĩ</p>
+            <p class="minny-debate-banner__text">${escapeHtml(ft.debateTopic)}</p>
+          </div>
+        `;
+        el.className = ftGameFramingClass('debate');
+        return;
+      }
+      ftClearGameFraming();
+    }
+
     // subtitle_vi renders under the English line whenever the turn carries
     // it (repair/vn-nudge lines only -- normal LLM turns never send it).
     function ftRenderSubtitle(text) {
@@ -2475,6 +2778,18 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       ft.chipTurnsSeen = 0;
       ftClearScaffold();
       ftHideListening();
+      // V1.2 packet 2: clear picker selection + hint + game-framing state
+      // and UI so a new free-talk entry never carries over a stale session.
+      ft.pickerTopic = null;
+      ft.pickerGame = null;
+      ft.game = null;
+      ft.storyLines = [];
+      ft.debateTopic = null;
+      ft.currentHint = null;
+      ft.hintRevealed = false;
+      ftApplyHint(null);
+      ftClearGameFraming();
+      document.getElementById('ft-topic-picker')?.classList.add('hidden');
       ft.turnTimings = [];
       ft.fillerClips = [];
       ft.audioPollToken += 1;
@@ -2506,7 +2821,37 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       ftRenderDots();
       ftUpdateTimerDisplay();
       ftUpdateHandsFreeToggle();
-      startFreeTalkSession();
+      // V1.2 packet 2 (Wave D2 §A): L3-L5 sees the topic picker BEFORE
+      // start; L0-L2 is exactly today's flow, untouched.
+      if (ftIsPickerLevel(state.level)) {
+        ftShowTopicPicker();
+      } else {
+        startFreeTalkSession();
+      }
+    }
+
+    // V1.2 packet 2: renders + shows the topic-pick session start (mock A1
+    // L3 / A2 L4-L5), resetting any stale selection from a previous entry.
+    function ftShowTopicPicker() {
+      document.getElementById('ft-conversation')?.classList.add('hidden');
+      const picker = document.getElementById('ft-topic-picker');
+      picker?.classList.remove('hidden');
+      ft.pickerTopic = null;
+      ft.pickerGame = null;
+      const showGames = ftIsGameLevel(state.level);
+      document.getElementById('ft-picker-games-label')?.classList.toggle('hidden', !showGames);
+      document.getElementById('ft-picker-game-cards')?.classList.toggle('hidden', !showGames);
+      document.getElementById('ft-picker-topics-label')?.classList.toggle('hidden', !showGames);
+      picker?.querySelectorAll('.fx-topic').forEach((btn) => {
+        btn.classList.remove('fx-topic--selected');
+        btn.setAttribute('aria-pressed', 'false');
+      });
+      picker?.querySelectorAll('.minny-game-card').forEach((btn) => {
+        btn.classList.remove('is-selected');
+        btn.setAttribute('aria-pressed', 'false');
+      });
+      const startBtn = document.getElementById('ft-picker-start');
+      if (startBtn) startBtn.disabled = true;
     }
 
     function ftExitToModes() {
@@ -2530,14 +2875,27 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       document.getElementById('free-talk-wrapup')?.classList.remove('hidden');
     }
 
-    async function startFreeTalkSession() {
+    // V1.2 packet 2: opts = { topic, game } from the topic-picker CTA (L3+
+    // only); L0-L2 calls this with no opts at all, exactly as before.
+    async function startFreeTalkSession(opts) {
       const recordBtn = document.getElementById('free-talk-record');
       if (recordBtn) recordBtn.disabled = true;
+      // ft.game drives the game-framing chrome (Wave D2 §C); storyLines
+      // starts empty every session -- the canned greeting below is never
+      // part of the story.
+      ft.game = opts?.game || null;
+      ft.storyLines = [];
+      ftClearGameFraming();
       try {
         const res = await fetch('/api/minny-conversation', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ access_code: state.accessCode, action: 'start' }),
+          body: JSON.stringify({
+            access_code: state.accessCode,
+            action: 'start',
+            ...(opts?.topic ? { topic: opts.topic } : {}),
+            ...(opts?.game ? { game: opts.game } : {}),
+          }),
         });
         const data = await res.json();
         if (!res.ok || !data.ok) {
@@ -2560,6 +2918,12 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
         ft.sessionId = data.session_id;
         ft.turnsLeft = data.turns_left ?? 12;
         ft.secondsLeft = data.seconds_left ?? 300;
+        // Micro-round (Elon, 2026-07-12): start echoes the server-picked
+        // debate_topic (never client-invented); the banner persists for the
+        // whole game (mock), so it renders once here rather than waiting
+        // for the first turn.
+        ft.debateTopic = data.debate_topic || null;
+        ftApplyGameFraming(null);
         ftRenderDots();
         ftUpdateTimerDisplay();
         ftStartCountdown();
@@ -2918,6 +3282,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       if (data.ended) {
         ftAppendReplyBubble(data.reply_en, data.mood || 'celebrate');
         ftApplyScaffold({ mode: 'none' });
+        ftApplyHint(null);
         ftRenderSubtitle(data.subtitle_vi);
         playConversationAudio(data.audio_b64, data.content_type, data.reply_en);
         if (data.flagged) ft.flaggedSession = true;
@@ -2931,6 +3296,11 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       // client-side level lookup (see V1.2 packet 1 acceptance criteria).
       if (ftHasChips(data) && data.repair !== true) ft.chipTurnsSeen += 1;
       ftApplyScaffold(ftPlanScaffold(data, ft.chipTurnsSeen));
+      // V1.2 packet 2: hint keyed on data.hint (never level, same principle
+      // as chips above); game framing keyed on ft.game (client state from
+      // the topic-picker CTA).
+      ftApplyHint(data);
+      ftApplyGameFraming(data);
       ftRenderSubtitle(data.subtitle_vi);
       if (!data.audio_b64 && data.audio_pending) {
         ftFetchPendingAudio(data.audio_turn, data.reply_en);
@@ -3108,6 +3478,59 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       }
     });
     ftUpdateHandsFreeToggle();
+
+    // V1.2 packet 2: 💡 hint button -- tap reveals the card (works for both
+    // the idle B1 and pulsing/offered B2 button, mock: same button).
+    document.getElementById('ft-hint-btn')?.addEventListener('click', ftRevealHint);
+
+    // V1.2 packet 2 (Wave D2 §A): topic-picker interactions. Tapping a tile
+    // or game card only SELECTS it (mock: a separate "Bắt đầu nói chuyện 🚀"
+    // CTA confirms) -- never fires the start request by itself.
+    document.getElementById('ft-picker-topic-grid')?.addEventListener('click', (event) => {
+      const btn = event.target.closest('.fx-topic');
+      const grid = document.getElementById('ft-picker-topic-grid');
+      if (!btn || !grid?.contains(btn)) return;
+      grid.querySelectorAll('.fx-topic').forEach((el) => {
+        const isTarget = el === btn;
+        el.classList.toggle('fx-topic--selected', isTarget);
+        el.setAttribute('aria-pressed', String(isTarget));
+      });
+      ft.pickerTopic = btn.dataset.topic || null;
+      const startBtn = document.getElementById('ft-picker-start');
+      if (startBtn) startBtn.disabled = !ft.pickerTopic;
+    });
+
+    // Games are optional and single-select; tapping the already-selected
+    // card deselects it (mock: "không bắt buộc" -- picking a topic is the
+    // only required step, per the README's game/topic interaction note).
+    document.getElementById('ft-picker-game-cards')?.addEventListener('click', (event) => {
+      const btn = event.target.closest('.minny-game-card');
+      const cards = document.getElementById('ft-picker-game-cards');
+      if (!btn || !cards?.contains(btn)) return;
+      const alreadySelected = btn.classList.contains('is-selected');
+      cards.querySelectorAll('.minny-game-card').forEach((el) => {
+        el.classList.remove('is-selected');
+        el.setAttribute('aria-pressed', 'false');
+      });
+      if (alreadySelected) {
+        ft.pickerGame = null;
+      } else {
+        btn.classList.add('is-selected');
+        btn.setAttribute('aria-pressed', 'true');
+        ft.pickerGame = btn.dataset.game || null;
+      }
+    });
+
+    document.getElementById('ft-picker-start')?.addEventListener('click', () => {
+      if (!ft.pickerTopic) return;
+      const topic = ft.pickerTopic;
+      const game = ft.pickerGame;
+      document.getElementById('ft-topic-picker')?.classList.add('hidden');
+      document.getElementById('ft-conversation')?.classList.remove('hidden');
+      startFreeTalkSession({ topic, game });
+    });
+
+    document.getElementById('ft-picker-back')?.addEventListener('click', ftExitToModes);
 
     document.getElementById('free-talk-end')?.addEventListener('click', () => {
       ft.ended = true;

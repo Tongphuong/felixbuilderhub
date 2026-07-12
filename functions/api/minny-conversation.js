@@ -390,6 +390,10 @@ export async function onRequestPost(context) {
       ok: true,
       session_id: sessionId,
       level,
+      // V1.2 packet 2 (2026-07-12): the debate banner (approved Wave D2 C2
+      // state) shows Minny's playful position — server-picked from the
+      // allowlist, echoed here so the client never invents it.
+      ...(debateTopic ? { debate_topic: debateTopic } : {}),
       greeting: {
         text_en: greeting.text_en,
         subtitle_vi: greeting.subtitle_vi,

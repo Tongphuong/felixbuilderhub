@@ -1262,6 +1262,9 @@ test('start: game "debate" at L4/L5 always assigns a debate_topic from the allow
     const stored = await fakeKv.get(`convo-session:${body.session_id}`, { type: 'json' });
     assert.equal(stored.game, 'debate');
     assert.ok(DEBATE_TOPICS.includes(stored.debate_topic));
+    // V1.2 packet 2: the start response echoes the server-picked topic so
+    // the client's debate banner never invents Minny's position.
+    assert.equal(body.debate_topic, stored.debate_topic);
     seen.add(stored.debate_topic);
   }
   assert.ok(seen.size > 1, 'debate topic actually varies across many draws');

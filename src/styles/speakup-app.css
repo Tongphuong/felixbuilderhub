@@ -981,7 +981,13 @@
   display: grid;
   gap: 12px;
   grid-template-columns: 1fr;
-  grid-template-areas: "topbar" "hero" "transcript" "recorder";
+  /* "framing" (V1.2 packet 2, Wave D2 §C: story-strip / debate-banner / wyr-
+     cards) collapses to 0 height whenever #ft-game-framing is .hidden --
+     an auto row with a display:none-only child takes no space, so this row
+     is a no-op for every L0-L2 session and every L3-L5 session without a
+     game (or with debate/would_you_rather, still dormant -- see the
+     TODO(elon) beside ftGameFramingClass in speak-up.astro). */
+  grid-template-areas: "topbar" "framing" "hero" "transcript" "recorder";
 }
 
 @media (min-width: 768px) {
@@ -989,6 +995,7 @@
     grid-template-columns: minmax(0, 1fr) 280px;
     grid-template-areas:
       "topbar     topbar"
+      "framing    framing"
       "hero       hero"
       "transcript recorder";
     gap: 20px;
@@ -1000,9 +1007,10 @@
   .ft-conversation:not(.hidden) {
     grid-template-columns: 320px minmax(0, 1fr) 320px;
     grid-template-areas:
-      "topbar topbar     topbar"
-      "hero   transcript recorder";
-    grid-template-rows: auto 1fr;
+      "topbar   topbar     topbar"
+      "framing  framing    framing"
+      "hero     transcript recorder";
+    grid-template-rows: auto auto 1fr;
     gap: 20px;
     /* Fill the viewport below the app bar so the rail/recorder panels run
        tall like the boards, instead of huddling at the top. */
@@ -1885,5 +1893,240 @@
 @media (prefers-reduced-motion: reduce) {
   .spk-rec-btn--sm.is-recording { animation: none; box-shadow: 0 12px 32px -8px rgba(248, 113, 113, 0.55), 0 0 0 8px rgba(248, 113, 113, 0.25); }
   .spk-rec-btn--sm.is-recording .spk-rec-btn__icon { animation: none; }
+}
+
+/* ============================================================================
+   V1.2 packet 2 (Wave D2 mock) — L3-L5 topic-pick session start, hint
+   on-demand states, game framing. Values copied verbatim from the approved
+   mock's <style> block (design_handoff_speakup_v1_d2/SpeakUp V1 Free Talking
+   Topic Spark (L3-L5).dc.html) -- the existing --gold/--cream/--navy/
+   --success tokens already match (same 7a/7b/Wave D token sheet), so no new
+   custom properties are introduced here. `.fx-topic`/`__emoji`/`__label`/
+   `--selected` are the EXISTING design-system.css tile (unmodified, reused
+   via TopicTile.astro) -- only the NEW classes below are added here.
+   ========================================================================== */
+
+/* ---- §A: topic-pick session start ---- */
+#ft-topic-picker {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 640px;
+  margin: 0 auto;
+  width: 100%;
+}
+#ft-topic-picker.hidden { display: none; }
+
+.minny-topic-picker { display: flex; flex-direction: column; gap: 14px; }
+.minny-topic-picker__prompt { margin: 0; }
+
+.minny-topic-picker__section-label {
+  font-family: 'Manrope', 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--cream-dim);
+  margin: 2px 0 0;
+}
+.minny-topic-picker__section-label.hidden { display: none; }
+
+.fx-topic-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+
+.fx-topic--random {
+  grid-column: 1 / -1;
+  flex-direction: row;
+  gap: 10px;
+  min-height: 56px;
+  border-style: dashed;
+  border-color: rgba(200, 143, 56, 0.5);
+  background: rgba(200, 143, 56, 0.07);
+}
+.fx-topic--random .fx-topic__emoji { font-size: 1.3rem; }
+.fx-topic--random .fx-topic__label { font-size: 13px; font-weight: 700; color: var(--gold-light); }
+
+.minny-game-cards { display: flex; flex-direction: column; gap: 10px; }
+.minny-game-cards.hidden { display: none; }
+
+.minny-game-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  border-radius: 18px;
+  border: 1px solid rgba(200, 143, 56, 0.4);
+  background: linear-gradient(135deg, rgba(200, 143, 56, 0.16), rgba(23, 53, 74, 0.5));
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+  min-height: 44px;
+}
+
+/* Not drawn in the mock (no interaction state shown for game cards) -- a
+   minimal, same-family addition so a kid gets visual confirmation a game
+   was picked, matching the existing .fx-topic--selected ring treatment. */
+.minny-game-card.is-selected {
+  border-color: var(--gold-light);
+  box-shadow: 0 0 0 3px rgba(200, 143, 56, 0.25);
+}
+
+.minny-game-card__emoji {
+  font-size: 28px;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: rgba(200, 143, 56, 0.18);
+}
+.minny-game-card__body { min-width: 0; }
+.minny-game-card__title { margin: 0; font-family: 'Manrope', 'Inter', sans-serif; font-weight: 800; font-size: 14.5px; color: var(--cream); }
+.minny-game-card__desc { margin: 3px 0 0; font-size: 12.5px; color: var(--cream-muted); line-height: 1.4; }
+
+/* ---- §B: in-conversation hint states ---- */
+.minny-hint-row { display: flex; align-items: center; gap: 10px; position: relative; }
+.minny-hint-row.hidden { display: none; }
+
+.minny-hint-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 0 16px;
+  border-radius: 999px;
+  border: 1px solid var(--border-subtle);
+  background: rgba(23, 53, 74, 0.6);
+  color: var(--cream-muted);
+  font-size: 13.5px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.minny-hint-btn.is-pulsing {
+  border-color: var(--gold);
+  color: var(--gold-light);
+  background: rgba(200, 143, 56, 0.14);
+  animation: minny-hint-pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes minny-hint-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(200, 143, 56, 0.35); }
+  50% { box-shadow: 0 0 0 8px rgba(200, 143, 56, 0); }
+}
+
+.minny-hint-affordance {
+  font-size: 12.5px;
+  color: var(--gold-light);
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(200, 143, 56, 0.1);
+  border: 1px dashed rgba(200, 143, 56, 0.4);
+}
+.minny-hint-affordance.hidden { display: none; }
+
+.minny-hint-card {
+  margin-top: 2px;
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(200, 143, 56, 0.18), rgba(200, 143, 56, 0.05));
+  border: 1px solid rgba(200, 143, 56, 0.4);
+  position: relative;
+}
+.minny-hint-card.hidden { display: none; }
+
+.minny-hint-card__eyebrow { margin: 0 0 8px; font-family: 'Manrope', 'Inter', sans-serif; font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold-light); }
+.minny-hint-card__word-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.minny-hint-card__word-en { font-family: 'Manrope', 'Inter', sans-serif; font-weight: 800; font-size: 20px; color: var(--cream); }
+.minny-hint-card__word-vi { font-size: 13.5px; color: var(--cream-dim); }
+.minny-hint-card__question { margin: 0; font-size: 15px; color: var(--cream); line-height: 1.5; }
+
+.minny-hint-card__dismiss {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--border-subtle);
+  background: rgba(10, 22, 34, 0.4);
+  color: var(--cream-dim);
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* README open question #1: the mock draws a 28px visual circle but flags it
+   needs a padded 44px hit area (same technique as the fix-it skip link) --
+   an 8px inset on every side turns the 28px box into a 44px tap target
+   without growing the visible "small, unobtrusive ×" the mock calls for. */
+.minny-hint-card__dismiss::before {
+  content: '';
+  position: absolute;
+  inset: -8px;
+}
+
+/* ---- §C: game in-conversation framing ---- */
+#ft-game-framing.hidden { display: none; }
+
+.minny-story-strip {
+  grid-area: framing;
+  background: rgba(200, 143, 56, 0.08);
+  border: 1px solid rgba(200, 143, 56, 0.3);
+  border-radius: 16px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.minny-story-strip__eyebrow { margin: 0; font-family: 'Manrope', 'Inter', sans-serif; font-size: 10.5px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold-light); }
+.minny-story-strip__line { margin: 0; font-size: 13.5px; line-height: 1.5; color: var(--cream-muted); }
+.minny-story-strip__line--minny-last { color: var(--cream); font-weight: 700; }
+
+/* Wired (micro-round, Elon 2026-07-12): start now echoes the server-picked
+   debate_topic -- ftApplyGameFraming renders this from ft.debateTopic. */
+.minny-debate-banner {
+  grid-area: framing;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(200, 143, 56, 0.2), rgba(23, 53, 74, 0.4));
+  border: 1px solid rgba(200, 143, 56, 0.4);
+}
+.minny-debate-banner__emoji { font-size: 22px; flex-shrink: 0; }
+.minny-debate-banner__eyebrow { margin: 0; font-family: 'Manrope', 'Inter', sans-serif; font-size: 10.5px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold-light); }
+.minny-debate-banner__text { margin: 2px 0 0; font-size: 14.5px; color: var(--cream); line-height: 1.4; }
+
+/* C3 cards deferred -- needs structured WYR turn field (TODO backlog):
+   Elon's ruling, 2026-07-12 (flagged to Phương as a mock deviation). The
+   game still works conversationally (Minny poses the either-or in speech);
+   ftApplyGameFraming never applies this class. */
+.minny-wyr-cards { grid-area: framing; display: flex; gap: 10px; }
+.minny-wyr-card {
+  flex: 1;
+  padding: 14px 10px;
+  border-radius: 16px;
+  border: 1px solid var(--border-subtle);
+  background: rgba(23, 53, 74, 0.6);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.minny-wyr-card__emoji { font-size: 26px; }
+.minny-wyr-card__en { font-family: 'Manrope', 'Inter', sans-serif; font-weight: 800; font-size: 13.5px; color: var(--cream); }
+.minny-wyr-card__vi { font-size: 11.5px; color: var(--cream-dim); }
+.minny-wyr-or { align-self: center; font-family: 'Manrope', 'Inter', sans-serif; font-weight: 800; font-size: 12px; color: var(--gold-light); }
+
+@media (prefers-reduced-motion: reduce) {
+  .minny-hint-btn.is-pulsing { animation: none; box-shadow: 0 0 0 4px rgba(200, 143, 56, 0.2); }
 }
 

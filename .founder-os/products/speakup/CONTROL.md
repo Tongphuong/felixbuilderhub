@@ -89,6 +89,41 @@ assigns, commits, merges, deploys, or spends.
 
 ## Current task
 
+- Status: active
+- Task ID: speakup-v1-2-packet2-games-ui
+- Owner: Steve (bg worker, packet scratchpad/games-steve-packet.md, sole
+  owner of speak-up.astro + speakup-app.css + new UI tests); Elon review
+  + rule-20 on deployed prod; Buffet scoped review (level gating + no new
+  network patterns + Elon's context-level micro-diff). Phương approved
+  the plan 2026-07-12 (plan-mode).
+- Lane: `claude/speakup-v1-1` → `main` per phase cadence.
+- Problem: L3–L5 kids see plain conversation — the approved Wave D2
+  screens (topic picker + Minny chọn 🎲, L4–L5 game cards, 💡 hint
+  states, game framing) are the last approved-but-unbuilt piece; the
+  V1.1 backend contract they consume is already live.
+- Pre-step (Elon micro-diff, done): minny-speaking-context.js response
+  gains `level` (same lookup as minny-conversation) + test — the picker
+  gates on level BEFORE start.
+- Reuse survey: N/A external — approved internal mock + HUB_TOPICS
+  values + live V1.1 API; no new capability class.
+- Cost ceiling: Claude team (Max plan, not metered); runtime $0.
+- Acceptance criteria: spec §V1.2 packet 2 + the approved Wave D2 mock —
+  picker only at L3+ (context-level keyed, tested); game cards only
+  L4–L5; start carries topic/game; hint renders only from the server
+  hint field, one word EN+VN card, re-hides next turn, proactive offer
+  on stall; game framing over unchanged ft-* chrome; Minny red-robot
+  assets (mock koalas are placeholders — standing rule); styles in
+  speakup-app.css ONLY (orphan-stylesheet trap); 44px; reduced-motion;
+  baseline 1114 tests none dropped; rule-20 screenshots on deployed prod
+  vs the rendered mock with SHA recorded.
+- Files owned (Steve): src/pages/speak-up.astro, src/styles/
+  speakup-app.css, tests/speakup-games-ui.test.mjs.
+- Stop condition: ANY functions/ diff beyond Elon's pre-step — stop; new
+  kid-facing copy not in the mock — TODO(elon).
+- Started: 2026-07-12
+
+## Prior task (complete): speakup-v1-4-fixit-round
+
 - Status: complete
 - Task ID: speakup-v1-4-fixit-round
 - Owner: Steve (bg worker, packet scratchpad/fixit-steve-packet.md, sole
