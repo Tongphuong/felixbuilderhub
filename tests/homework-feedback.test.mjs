@@ -682,3 +682,26 @@ test('validateFeedbackGrounding: a fabricated quote in tiny_challenge_vi rejects
     false,
   );
 });
+
+test('buildFeedbackContext: perfect read (nothing missed) still yields allowed_focus_words from the real result words[] + homework block (regression: word_feedback field never existed)', () => {
+  const context = buildFeedbackContext({
+    checkMode: 'read',
+    result: { check_mode: 'read', score_percent: 97, words_missed: [], words_close: [], words: [{ word: 'Hello', status: 'ok' }, { word: 'together', status: 'ok' }] },
+    transcript: 'hello we play together',
+    homework: { note_vi: 'x', sentences: [{ id: 's1', text_en: 'We play together in the garden' }] },
+    azure: null,
+    skipWords: new Set(['we', 'in', 'the']),
+  });
+  assert.ok(context.allowed_focus_words.length >= 3, 'fallback pool is populated');
+  assert.ok(context.allowed_focus_words.includes('together'));
+  assert.ok(context.allowed_focus_words.includes('garden'));
+});
+
+test('parseFeedback: recast_en as an EMPTY string is treated as absent, not a rejection (JSON-mode models emit "" instead of omitting)', () => {
+  const parsed = parseFeedback(JSON.stringify({
+    praise_vi: 'Con đọc rất tốt!', focus_word: 'dog', model_sentence_en: 'I have a dog.',
+    tiny_challenge_vi: 'Con thử nói to hơn nhé', recast_en: '',
+  }));
+  assert.ok(parsed, 'parses successfully');
+  assert.equal('recast_en' in parsed, false, 'empty recast dropped, not kept');
+});

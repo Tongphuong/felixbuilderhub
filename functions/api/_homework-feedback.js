@@ -51,12 +51,32 @@ export function buildFeedbackContext({ checkMode, result, transcript, homework, 
   // words in order for read steps; stems carry the exact text_en for frame
   // steps) rather than re-deriving it from the homework block, so it always
   // matches what was actually scored.
-  let homeworkText = '';
+  // (Fix, Elon review 2026-07-12: the read path referenced a field name that
+  // doesn't exist on real results — `word_feedback`; real read results carry
+  // `words: [{word,status}]`. That left homeworkText empty on every perfect
+  // read, so allowed_focus_words fell back to [] and the model emitted an
+  // empty focus_word → parse-reject → the high scorer got no coach at all,
+  // the founder's original complaint. Derive from the result where present
+  // AND always union in the homework block's own texts.)
+  const homeworkParts = [];
   if (mode === 'frame' && Array.isArray(result?.stems)) {
-    homeworkText = result.stems.map((s) => (typeof s?.text_en === 'string' ? s.text_en : '')).filter(Boolean).join(' ');
-  } else if (mode === 'read' && Array.isArray(result?.word_feedback)) {
-    homeworkText = result.word_feedback.map((w) => (typeof w?.expected === 'string' ? w.expected : '')).filter(Boolean).join(' ');
+    for (const st of result.stems) if (typeof st?.text_en === 'string') homeworkParts.push(st.text_en);
   }
+  if (mode === 'read' && Array.isArray(result?.word_feedback)) {
+    // local scorer shape (scoreTranscript)
+    for (const w of result.word_feedback) if (typeof w?.expected === 'string') homeworkParts.push(w.expected);
+  }
+  if (mode === 'read' && Array.isArray(result?.words)) {
+    // Azure scorer shape (mapAzureReadResult)
+    for (const w of result.words) if (typeof w?.word === 'string') homeworkParts.push(w.word);
+  }
+  if (Array.isArray(homework?.sentences)) {
+    for (const it of homework.sentences) if (typeof it?.text_en === 'string') homeworkParts.push(it.text_en);
+  }
+  if (Array.isArray(homework?.frame?.stems)) {
+    for (const st of homework.frame.stems) if (typeof st?.text_en === 'string') homeworkParts.push(st.text_en);
+  }
+  const homeworkText = homeworkParts.join(' ');
 
   const wordsMissed = Array.isArray(result?.words_missed) ? result.words_missed : [];
   const wordsClose = Array.isArray(result?.words_close) ? result.words_close : [];
@@ -137,7 +157,8 @@ Respond with strict JSON only, no other text, no markdown:
 {"praise_vi": "...", "focus_word": "...", "model_sentence_en": "...", "tiny_challenge_vi": "...", "recast_en": "..."}
 
 Rules:
-- praise_vi (Vietnamese, max 140 chars): praise ONE specific thing the child actually did — a real word or phrase they said, their completeness, their fluency. If you quote their words, quote EXACTLY as in the transcript, inside double quotes, at most 4 words. Never invent something they did not say. Never mention numbers or percentages.
+- Address the child as "con" — a teacher speaking warmly to a young child. Never "bạn", "em", or any other form of address.
+- praise_vi (Vietnamese, max 140 chars): praise ONE specific thing the child actually did — a real word or phrase they said, their completeness, their fluency. If you quote their words, copy them EXACTLY as written in the transcript (even if the spelling looks odd), inside double quotes, at most 4 words. If you are not sure of the exact words, do not quote at all. Never invent something they did not say. Never mention numbers or percentages.
 - focus_word: EXACTLY ONE word chosen from allowed_focus_words. Never any other word.
 - model_sentence_en (English, max 60 chars): one short, natural sentence using focus_word, close to the exercise content. Simple words a child can repeat.
 - tiny_challenge_vi (Vietnamese, max 140 chars): one tiny, concrete thing to try next time (speak louder at the end, pause between sentences, try the focus word in a new sentence). Never negative, never a number, never more than one thing.
@@ -188,8 +209,13 @@ export function parseFeedback(raw) {
 
   if (Object.prototype.hasOwnProperty.call(parsed, 'recast_en')) {
     const recast_en = str(parsed.recast_en);
-    if (!recast_en || recast_en.length > MAX_RECAST_EN) return null;
-    result.recast_en = recast_en;
+    // JSON-mode models routinely emit "" instead of omitting an optional key
+    // (Elon fix, 2026-07-12: this null-rejected every otherwise-valid
+    // feedback whose model chose not to recast) — treat empty as absent.
+    if (recast_en) {
+      if (recast_en.length > MAX_RECAST_EN) return null;
+      result.recast_en = recast_en;
+    }
   }
 
   return result;
