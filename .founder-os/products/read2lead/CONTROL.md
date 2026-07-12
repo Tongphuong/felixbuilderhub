@@ -95,6 +95,33 @@ stale until 2026-07-05.
   1066/1066 tests; astro build clean; Buffet review: one Medium finding fixed
   + regression-pinned, submit-path/validator/reward semantics verified clean.
 
+## Acceptance criteria reconciliation (R2L-PAGE-LOOP)
+
+- Per-page loop end-to-end on deployed preview with real-speech recording:
+  PASS — live e2e (R2L-PILOT-CYJS): 8 pages, 32 questions, 9/9 page reads
+  Whisper-scored 81-95, submit 200 passed grade S, +25 coins/+20 XP, header
+  XP 200→220 on-screen.
+- 4 questions/page from the existing pool with graceful degradation: PASS —
+  selection tests (limit-4, top-up, thin pages) + live packs (10/page pools,
+  4 selected).
+- Option order stable across retries: PASS — deterministic seeded order,
+  unit-pinned; verified in e2e retry path.
+- Mic unlocks without sample-listen lock: PASS — e2e `micUnlockedWithoutSample`
+  flag true on every read; mic-check safety gate still blocks silent mics
+  (verified by the harness's own first failed run).
+- v2-shaped payload still submits: PASS — version-matrix unit tests +
+  submit-endpoint v2 end-to-end test.
+- Standard-pack path byte-identical: PASS — `finalizeWithoutReward`
+  regression pin + Buffet trace of `isBookFlowV2` fencing.
+- Old checkpoints resume without loss of required progress: PASS —
+  re-derivation merge tests; e2e relaunch-per-read resumed via checkpoint 10x.
+- node --test green: PASS — 1172/1172 on the merged tree (incl. SpeakUp).
+- astro build clean: PASS — 25 pages, zero leaked inline exports.
+- Session-time ≤15 min: PASS — e2e estimate ~13 min (was 18-20).
+- Fix round 2 (founder findings): PASS — Dịch/Từ khó live-verified by Phương
+  on preview; 429/430 servable books enriched (text_vi + vocabulary +
+  page-answerable questions); next-page-question guard unit-pinned.
+
 ## Previous task — R2L-BOOK-HEALTH-GATE
 
 - Status: complete
