@@ -89,7 +89,7 @@ assigns, commits, merges, deploys, or spends.
 
 ## Current task
 
-- Status: active
+- Status: complete
 - Task ID: speakup-v1-2-packet2-games-ui
 - Owner: Steve (bg worker, packet scratchpad/games-steve-packet.md, sole
   owner of speak-up.astro + speakup-app.css + new UI tests); Elon review
@@ -120,7 +120,42 @@ assigns, commits, merges, deploys, or spends.
   speakup-app.css, tests/speakup-games-ui.test.mjs.
 - Stop condition: ANY functions/ diff beyond Elon's pre-step — stop; new
   kid-facing copy not in the mock — TODO(elon).
+- Acceptance criteria reconciliation:
+  1. PASS — picker only at L3+ (context `level` keyed, tested); game
+     cards L4–L5 only; L0–L2 flow byte-identical.
+  2. PASS — start carries topic/game; minny_choice tile; debate banner
+     text ONLY from the server-echoed debate_topic (Elon micro-diff +
+     allowlist test), escaped (Buffet-traced).
+  3. PASS — hint idle/offered-on-stall/revealed states; renders only from
+     the server hint field (never client level inference); re-hides per
+     turn; reuses the existing VAD stall signal (no new timer).
+  4. PASS — chips/fix-it/two-phase audio untouched (Buffet structural
+     grep); no new network patterns; styles in speakup-app.css only;
+     robot assets; 44px; reduced-motion.
+  5. PASS — 1149/1149 node --test; astro build clean; founder gates;
+     Buffet SHIP no findings (incl. both Elon micro-diffs, author ≠
+     reviewer).
+  6. PASS (rule 20) — verified on DEPLOYED PRODUCTION a1240f2 via the
+     routed harness: picker A2 state (12 tiles + 🎲 + 3 game cards +
+     start CTA), debate banner live ("MINNY NGHĨ — Cats are better than
+     dogs" from the server field), hint reveal ("MINNY GỢI Ý — whiskers",
+     dismissable). Screenshots _ops/speakup-v12p2-final-picker-390.png,
+     -debate-hint-390.png vs the approved Wave D2 mock: MATCH for A1/A2/
+     B1–B3/C1/C2.
+  7. MOCK DEVIATIONS recorded for Phương (approved-as-drawn mock, so his
+     eye is owed): C3 would-you-rather option cards DEFERRED (the game
+     works conversationally; structured turn field needed — backlog);
+     hint card EN-only (server hint is EN by V1.1 design; VN gloss
+     deferred); picker desktop single-column simplification; new
+     .minny-game-card.is-selected state (mock drew none).
+- Design self-verification: rule-20 evidence above.
+- Founder handoff: final report incl. the four mock deviations for his
+  ack/veto.
+- Verified commit: a1240f2 (origin/main, production-verified live)
+- Actual cost: USD 0 runtime.
+- Review trail: Steve (2 rounds), Elon micro-diffs + review, Buffet SHIP.
 - Started: 2026-07-12
+- Completed: 2026-07-12
 
 ## Prior task (complete): speakup-v1-4-fixit-round
 
