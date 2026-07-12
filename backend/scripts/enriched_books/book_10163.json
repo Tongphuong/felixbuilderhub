@@ -1,0 +1,1117 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L1",
+  "level_label": "Cấp 1",
+  "topic": "Rainy evening",
+  "slug": "book_10163",
+  "audio_filename": "book_10163.mp3",
+  "book_slug": "book_10163",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_10163/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_10163/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_10163/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_10163/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_10163/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_10163/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_10163/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_10163/page_09.jpg",
+    "https://audio.felixbuilderhub.com/books/book_10163/page_10.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_10163/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_10163/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_10163/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_10163/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_10163/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_10163/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_10163/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_10163/page_09.mp3",
+    "https://audio.felixbuilderhub.com/books/book_10163/page_10.mp3"
+  ],
+  "book_attribution": {
+    "title": "Rainy evening",
+    "creators": [
+      "Sheetal Kumaresh",
+      "Ajit Narayan",
+      "Archana Sreenivasan",
+      "Divya Anand",
+      "Kaveri Gopalakrishnan",
+      "Suvidha Mistry",
+      "Swati Priyanka"
+    ],
+    "publisher": "StoryWeaver Community",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: Rainy evening is written by Sheetal Kumaresh . © Sheetal Kumaresh , 2016. Some rights reserved. Released under CC BY 4.0 license. Images Attributions: Cover page: Falling rain , by Ajit Narayan © Pratham Books, 2007. Some rights reserved. Released under CC BY 4.0 license. Page 2: Boys waving to the cloud in the sky , by Ajit Narayan © Pratham Books, 2007. Some rights reserved. Released under CC BY 4.0 license. Page 3: Falling rain , by Ajit Narayan © Pratham Books, 2007. Some rights reserved. Released under CC BY 4.0 license. Page 4: An old woman waving from the window of a large, green house , by Kaveri Gopalakrishnan © StoryWeaver Team, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 5: Boys playing in the rain , by Ajit Narayan © Pratham Books, 2007. Some rights reserved. Released under CC BY 4.0 license. Page 6: Rainy Day - Key , by Divya Anand © Divya Anand, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 7: SonuGettingReady , by Swati Priyanka © Swati Priyanka, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 8: Woman holding a black and yellow sweater, boy grinning , by Suvidha Mistry © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 9: Red chilli, jackfruit and coffee , by Archana Sreenivasan © StoryWeaver Team, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 10: Mother hugging her son , by Suvidha Mistry © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/10163-rainy-evening",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "Boys waving to the cloud in the sky , by Ajit Narayan © Pratham Books, 2007. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "Falling rain , by Ajit Narayan © Pratham Books, 2007. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "An old woman waving from the window of a large, green house , by Kaveri Gopalakrishnan © StoryWeaver Team, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "Boys playing in the rain , by Ajit Narayan © Pratham Books, 2007. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "Rainy Day - Key , by Divya Anand © Divya Anand, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "SonuGettingReady , by Swati Priyanka © Swati Priyanka, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "Woman holding a black and yellow sweater, boy grinning , by Suvidha Mistry © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "Red chilli, jackfruit and coffee , by Archana Sreenivasan © StoryWeaver Team, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 8,
+        "credit_text": "Mother hugging her son , by Suvidha Mistry © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "Rainy evening",
+    "paragraphs_en": [
+      "Raju and his friends went out to play. They saw thick, dark clouds floating in the sky. It was suppose to rain heavily.",
+      "Soon it started raining. Showers were heavy with wild winds.",
+      "Raju's grandma called him back home. But Raju neglected her.",
+      "They started playing happily in rain. They danced in rain. They made paper boats and watched them float.",
+      "While returning home, they noticed people walking with umbrellas and raincoats. Everyone was protecting themself from rain.",
+      "When he returned home , mother asked Raju why didnot return when grand ma called. Raju said he wanted to play in rain, as it was really fun.",
+      "Mother wiped Raju and changed his cloths.She made him wear warm clothes.She told him it's not good to play in rain, as he may catch cold and fall sick. If he falls sick then he will miss so many things,",
+      "like playing with his friends in the evening, eating whatever he wishes. Moreover it will be uncomfortable also for him. She prepared hot soup for Raju.",
+      "Raju realized his mistake. He apologized mother for not listening to grand ma's calling. He hugged mother and said, he will never do it again."
+    ],
+    "sentences": [
+      {
+        "text_en": "Raju and his friends went out to play.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_10163/s_000.mp3",
+        "text_vi": "Raju và các bạn đi ra ngoài chơi."
+      },
+      {
+        "text_en": "They saw thick, dark clouds floating in the sky.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_10163/s_001.mp3",
+        "text_vi": "Chúng thấy những đám mây dày, đen kịt đang trôi trên bầu trời."
+      },
+      {
+        "text_en": "It was suppose to rain heavily.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_10163/s_002.mp3",
+        "text_vi": "Trời có vẻ sắp mưa rất to."
+      },
+      {
+        "text_en": "Soon it started raining.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_10163/s_003.mp3",
+        "text_vi": "Chẳng mấy chốc trời bắt đầu mưa."
+      },
+      {
+        "text_en": "Showers were heavy with wild winds.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_10163/s_004.mp3",
+        "text_vi": "Mưa rất to kèm theo gió mạnh."
+      },
+      {
+        "text_en": "Raju's grandma called him back home.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_10163/s_005.mp3",
+        "text_vi": "Bà của Raju gọi cậu về nhà."
+      },
+      {
+        "text_en": "But Raju neglected her.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_10163/s_006.mp3",
+        "text_vi": "Nhưng Raju đã không nghe lời bà."
+      },
+      {
+        "text_en": "They started playing happily in rain.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_10163/s_007.mp3",
+        "text_vi": "Chúng bắt đầu chơi vui vẻ dưới mưa."
+      },
+      {
+        "text_en": "They danced in rain.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_10163/s_008.mp3",
+        "text_vi": "Chúng nhảy múa dưới mưa."
+      },
+      {
+        "text_en": "They made paper boats and watched them float.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_10163/s_009.mp3",
+        "text_vi": "Chúng làm thuyền giấy và nhìn chúng trôi."
+      },
+      {
+        "text_en": "While returning home, they noticed people walking with umbrellas and raincoats.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_10163/s_010.mp3",
+        "text_vi": "Khi đang về nhà, chúng thấy mọi người đi bộ với ô và áo mưa."
+      },
+      {
+        "text_en": "Everyone was protecting themself from rain.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_10163/s_011.mp3",
+        "text_vi": "Ai cũng đang tự bảo vệ mình khỏi mưa."
+      },
+      {
+        "text_en": "When he returned home , mother asked Raju why didnot return when grand ma called.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_10163/s_012.mp3",
+        "text_vi": "Khi về đến nhà, mẹ hỏi Raju tại sao không về khi bà gọi."
+      },
+      {
+        "text_en": "Raju said he wanted to play in rain, as it was really fun.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_10163/s_013.mp3",
+        "text_vi": "Raju nói cậu muốn chơi dưới mưa vì nó rất vui."
+      },
+      {
+        "text_en": "Mother wiped Raju and changed his cloths.She made him wear warm clothes.She told him it's not good to play in rain, as he may catch cold and fall sick.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_10163/s_014.mp3",
+        "text_vi": "Mẹ lau khô cho Raju và thay quần áo cho cậu. Mẹ mặc cho cậu quần áo ấm. Mẹ nói với cậu rằng chơi dưới mưa không tốt đâu, vì cậu có thể bị cảm lạnh và ốm."
+      },
+      {
+        "text_en": "If he falls sick then he will miss so many things,",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_10163/s_015.mp3",
+        "text_vi": "Nếu cậu bị ốm thì cậu sẽ bỏ lỡ rất nhiều thứ,"
+      },
+      {
+        "text_en": "like playing with his friends in the evening, eating whatever he wishes.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_10163/s_016.mp3",
+        "text_vi": "như chơi với bạn bè vào buổi tối, ăn bất cứ thứ gì cậu muốn."
+      },
+      {
+        "text_en": "Moreover it will be uncomfortable also for him.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_10163/s_017.mp3",
+        "text_vi": "Hơn nữa, cậu cũng sẽ cảm thấy không thoải mái."
+      },
+      {
+        "text_en": "She prepared hot soup for Raju.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_10163/s_018.mp3",
+        "text_vi": "Mẹ chuẩn bị súp nóng cho Raju."
+      },
+      {
+        "text_en": "Raju realized his mistake.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_10163/s_019.mp3",
+        "text_vi": "Raju nhận ra lỗi của mình."
+      },
+      {
+        "text_en": "He apologized mother for not listening to grand ma's calling.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_10163/s_020.mp3",
+        "text_vi": "Cậu xin lỗi mẹ vì đã không nghe lời bà gọi."
+      },
+      {
+        "text_en": "He hugged mother and said, he will never do it again.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_10163/s_021.mp3",
+        "text_vi": "Cậu ôm mẹ và nói, cậu sẽ không bao giờ làm vậy nữa."
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "Raju and his friends went out to play.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_10163/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "They saw thick, dark clouds floating in the sky.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_10163/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "It was suppose to rain heavily.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_10163/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "Soon it started raining.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_10163/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "Showers were heavy with wild winds.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_10163/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "Raju's grandma called him back home.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_10163/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "But Raju neglected her.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_10163/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "They started playing happily in rain.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_10163/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "They danced in rain.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_10163/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "They made paper boats and watched them float.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_10163/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "While returning home, they noticed people walking with umbrellas and raincoats.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_10163/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "Everyone was protecting themself from rain.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_10163/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "When he returned home , mother asked Raju why didnot return when grand ma called.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_10163/s_012.mp3"
+        },
+        {
+          "id": "ra_13",
+          "text_en": "Raju said he wanted to play in rain, as it was really fun.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_10163/s_013.mp3"
+        },
+        {
+          "id": "ra_14",
+          "text_en": "Mother wiped Raju and changed his cloths.She made him wear warm clothes.She told him it's not good to play in rain, as he may catch cold and fall sick.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_10163/s_014.mp3"
+        },
+        {
+          "id": "ra_15",
+          "text_en": "If he falls sick then he will miss so many things,",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_10163/s_015.mp3"
+        },
+        {
+          "id": "ra_16",
+          "text_en": "like playing with his friends in the evening, eating whatever he wishes.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_10163/s_016.mp3"
+        },
+        {
+          "id": "ra_17",
+          "text_en": "Moreover it will be uncomfortable also for him.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_10163/s_017.mp3"
+        },
+        {
+          "id": "ra_18",
+          "text_en": "She prepared hot soup for Raju.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_10163/s_018.mp3"
+        },
+        {
+          "id": "ra_19",
+          "text_en": "Raju realized his mistake.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_10163/s_019.mp3"
+        },
+        {
+          "id": "ra_20",
+          "text_en": "He apologized mother for not listening to grand ma's calling.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_10163/s_020.mp3"
+        },
+        {
+          "id": "ra_21",
+          "text_en": "He hugged mother and said, he will never do it again.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_10163/s_021.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "Who went out to play?",
+          "options_en": [
+            "Raju and his friends",
+            "Raju's grandma",
+            "Raju's mother"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "What did Raju and his friends go out to do?",
+          "options_en": [
+            "To play",
+            "To return home",
+            "To make paper boats"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s1_q1",
+          "type": "choice",
+          "question_en": "What did they see floating in the sky?",
+          "options_en": [
+            "Thick, dark clouds",
+            "People walking with umbrellas",
+            "Paper boats"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s1_q2",
+          "type": "choice",
+          "question_en": "Where were the clouds floating?",
+          "options_en": [
+            "In the sky",
+            "Floating on water",
+            "Over people with umbrellas"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s2_q1",
+          "type": "choice",
+          "question_en": "What was supposed to happen?",
+          "options_en": [
+            "It was supposed to rain heavily",
+            "They were supposed to make paper boats",
+            "Grandma was supposed to call him back home"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s2_q2",
+          "type": "choice",
+          "question_en": "How was the rain expected to be?",
+          "options_en": [
+            "Heavily",
+            "With wild winds",
+            "With umbrellas"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "When did it start raining?",
+          "options_en": [
+            "Soon",
+            "When grandma called him back",
+            "After they made paper boats"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "What happened soon?",
+          "options_en": [
+            "It started raining",
+            "They danced in rain",
+            "They went out to play"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p1_s1_q1",
+          "type": "choice",
+          "question_en": "How were the showers?",
+          "options_en": [
+            "Heavy with wild winds",
+            "Light and gentle like a drizzle",
+            "People were walking with umbrellas"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p1_s1_q2",
+          "type": "choice",
+          "question_en": "What came with the showers?",
+          "options_en": [
+            "Wild winds",
+            "Paper boats",
+            "Hot soup"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "Who called Raju back home?",
+          "options_en": [
+            "Raju's grandma",
+            "His mother",
+            "His friends"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "Where did she call him back to?",
+          "options_en": [
+            "Home",
+            "To play in the rain",
+            "To join his friends"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p2_s1_q1",
+          "type": "choice",
+          "question_en": "What did Raju do to his grandma?",
+          "options_en": [
+            "He neglected her",
+            "He listened to her",
+            "He hugged her"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p2_s1_q2",
+          "type": "choice",
+          "question_en": "Who did Raju neglect?",
+          "options_en": [
+            "His grandma",
+            "His friends",
+            "His mother"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "What did they start doing?",
+          "options_en": [
+            "Playing happily in rain",
+            "Calling Raju's grandma",
+            "Walking with umbrellas"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "Where did they start playing?",
+          "options_en": [
+            "In the rain",
+            "At home",
+            "In the evening"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p3_s1_q1",
+          "type": "choice",
+          "question_en": "What did they do in the rain?",
+          "options_en": [
+            "They danced",
+            "They made paper boats",
+            "They put on raincoats"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p3_s1_q2",
+          "type": "choice",
+          "question_en": "When did they dance?",
+          "options_en": [
+            "In the rain",
+            "After returning home",
+            "Before the rain started"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p3_s2_q1",
+          "type": "choice",
+          "question_en": "What did they make?",
+          "options_en": [
+            "Paper boats",
+            "Umbrellas",
+            "Warm clothes"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p3_s2_q2",
+          "type": "choice",
+          "question_en": "What did they do with the boats?",
+          "options_en": [
+            "Watched them float",
+            "Wore them as hats",
+            "Ate them with soup"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "What did they notice?",
+          "options_en": [
+            "People walking with umbrellas and raincoats",
+            "Thick, dark clouds floating in the sky",
+            "Paper boats floating"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "When did they notice people walking with umbrellas and raincoats?",
+          "options_en": [
+            "While returning home",
+            "When grandma called",
+            "When they were playing"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p4_s1_q1",
+          "type": "choice",
+          "question_en": "Why was everyone protecting themself?",
+          "options_en": [
+            "From rain",
+            "From cold",
+            "From wild winds"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p4_s1_q2",
+          "type": "choice",
+          "question_en": "How was everyone protecting themself?",
+          "options_en": [
+            "With umbrellas and raincoats",
+            "By dancing in the rain",
+            "By wearing warm clothes"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "Who asked Raju why he did not return when grandma called?",
+          "options_en": [
+            "Mother",
+            "Grandma",
+            "His friends"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "Why did mother ask Raju that question?",
+          "options_en": [
+            "Because he did not return when grandma called",
+            "Because he was playing in the rain",
+            "Because he was making paper boats"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p5_s1_q1",
+          "type": "choice",
+          "question_en": "What did Raju say he wanted to do?",
+          "options_en": [
+            "Play in rain",
+            "Make paper boats",
+            "Dance inside the house"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p5_s1_q2",
+          "type": "choice",
+          "question_en": "Why did Raju say he wanted to play in the rain?",
+          "options_en": [
+            "Because it was really fun",
+            "Because he would catch cold",
+            "Because he had to go home"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "Who wiped Raju?",
+          "options_en": [
+            "Mother",
+            "Grandma",
+            "His friend"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "Why did she say it's not good to play in rain?",
+          "options_en": [
+            "Because he may catch cold and fall sick",
+            "Because grandma had called him back",
+            "Because people were walking with umbrellas"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p6_s1_q1",
+          "type": "choice",
+          "question_en": "What will happen if he falls sick?",
+          "options_en": [
+            "He will miss so many things",
+            "He will make paper boats",
+            "He will dance in the rain"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p6_s1_q2",
+          "type": "choice",
+          "question_en": "How many things will he miss if he falls sick?",
+          "options_en": [
+            "So many things",
+            "Only a few things",
+            "Nothing at all"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "What is one thing he would miss?",
+          "options_en": [
+            "playing with his friends in the evening",
+            "making paper boats",
+            "walking with umbrellas"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "When would he play with his friends?",
+          "options_en": [
+            "in the evening",
+            "in the rain",
+            "at home"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p7_s1_q1",
+          "type": "choice",
+          "question_en": "How would it be for him?",
+          "options_en": [
+            "uncomfortable",
+            "fun",
+            "warm"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p7_s1_q2",
+          "type": "choice",
+          "question_en": "What will it be for him?",
+          "options_en": [
+            "uncomfortable",
+            "enjoyable",
+            "protective"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p7_s2_q1",
+          "type": "choice",
+          "question_en": "What did she prepare for Raju?",
+          "options_en": [
+            "hot soup",
+            "warm clothes",
+            "paper boats"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p7_s2_q2",
+          "type": "choice",
+          "question_en": "Who prepared hot soup for Raju?",
+          "options_en": [
+            "She",
+            "Grandma",
+            "Mother"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        }
+      ]
+    },
+    {
+      "paragraph_index": 8,
+      "questions": [
+        {
+          "id": "gl_p8_s0_q1",
+          "type": "choice",
+          "question_en": "Who realized his mistake?",
+          "options_en": [
+            "Raju",
+            "His grandma",
+            "One of his friends"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p8_s0_q2",
+          "type": "choice",
+          "question_en": "What did Raju realize?",
+          "options_en": [
+            "His mistake",
+            "It would rain heavily",
+            "That he made paper boats"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p8_s1_q1",
+          "type": "choice",
+          "question_en": "Who did he apologize to?",
+          "options_en": [
+            "Mother",
+            "Grandma",
+            "His friends"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p8_s1_q2",
+          "type": "choice",
+          "question_en": "Why did he apologize?",
+          "options_en": [
+            "For not listening to grandma's calling",
+            "For getting wet in the rain",
+            "For making paper boats"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p8_s2_q1",
+          "type": "choice",
+          "question_en": "Who did he hug?",
+          "options_en": [
+            "Mother",
+            "Grandma",
+            "One of his friends"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p8_s2_q2",
+          "type": "choice",
+          "question_en": "What did he promise when he hugged his mother?",
+          "options_en": [
+            "He will never do it again",
+            "He will go out to play every day",
+            "He will make more paper boats"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'Rainy evening'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "thick",
+      "meaning_vi": "dày (dày dặn, to)",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "dark",
+      "meaning_vi": "tối, đen (màu đen, tối tăm)",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "floating",
+      "meaning_vi": "trôi (trôi nổi trên mặt nước hoặc không khí)",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "heavily",
+      "meaning_vi": "rất to (mưa rất to, nặng hạt)",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "soon",
+      "meaning_vi": "chẳng mấy chốc, sớm (trong thời gian ngắn)",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "started",
+      "meaning_vi": "bắt đầu (khởi đầu một việc gì đó)",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "showers",
+      "meaning_vi": "những cơn mưa (mưa rào)",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "wild",
+      "meaning_vi": "dữ dội, mạnh (gió mạnh, không kiểm soát)",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "grandma",
+      "meaning_vi": "bà (bà nội, bà ngoại)",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "called",
+      "meaning_vi": "gọi (gọi ai đó)",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "neglected",
+      "meaning_vi": "bỏ qua, không để ý (không quan tâm, không nghe lời)",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "happily",
+      "meaning_vi": "vui vẻ (một cách vui sướng)",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "danced",
+      "meaning_vi": "nhảy múa (nhảy theo nhạc)",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "paper",
+      "meaning_vi": "giấy (vật liệu làm từ gỗ)",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "watched",
+      "meaning_vi": "đã xem, đã nhìn (nhìn một cái gì đó)",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "returning",
+      "meaning_vi": "đang trở về (đang quay lại)",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "noticed",
+      "meaning_vi": "đã nhận ra, đã thấy (đã nhìn thấy, để ý)",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "umbrellas",
+      "meaning_vi": "ô, dù (vật che mưa, che nắng)",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "protecting",
+      "meaning_vi": "đang bảo vệ (đang che chở, giữ an toàn)",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "returned",
+      "meaning_vi": "đã trở về (đã quay lại)",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "asked",
+      "meaning_vi": "đã hỏi (đã đặt câu hỏi)",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "wanted",
+      "meaning_vi": "đã muốn (đã có mong muốn)",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "fun",
+      "meaning_vi": "vui (niềm vui, sự thích thú)",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "wiped",
+      "meaning_vi": "đã lau (lau sạch)",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "changed",
+      "meaning_vi": "đã thay (thay đổi, đổi mới)",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "catch cold",
+      "meaning_vi": "bị cảm lạnh (bị ốm nhẹ)",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "fall sick",
+      "meaning_vi": "bị ốm (bị bệnh)",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "evening",
+      "meaning_vi": "buổi tối (thời gian cuối ngày)",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "wishes",
+      "meaning_vi": "mong muốn (điều muốn có)",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "uncomfortable",
+      "meaning_vi": "không thoải mái (cảm thấy khó chịu)",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "prepared",
+      "meaning_vi": "đã chuẩn bị (đã sắp xếp sẵn)",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "realized",
+      "meaning_vi": "đã nhận ra (đã hiểu ra)",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "mistake",
+      "meaning_vi": "lỗi lầm (điều sai)",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "apologized",
+      "meaning_vi": "đã xin lỗi (đã nói lời xin lỗi)",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "never",
+      "meaning_vi": "không bao giờ (không một lần nào)",
+      "paragraph_index": 8
+    }
+  ]
+}

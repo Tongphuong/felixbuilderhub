@@ -1,0 +1,1466 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L2",
+  "level_label": "Cấp 2",
+  "topic": "Cookie learns to share",
+  "slug": "book_153971",
+  "audio_filename": "book_153971.mp3",
+  "book_slug": "book_153971",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_153971/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_153971/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_153971/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_153971/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_153971/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_153971/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_153971/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_153971/page_09.jpg",
+    "https://audio.felixbuilderhub.com/books/book_153971/page_10.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_153971/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_153971/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_153971/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_153971/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_153971/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_153971/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_153971/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_153971/page_09.mp3",
+    "https://audio.felixbuilderhub.com/books/book_153971/page_10.mp3"
+  ],
+  "book_attribution": {
+    "title": "Cookie learns to share",
+    "creators": [
+      "Chaya Sheela Ubhayakar"
+    ],
+    "publisher": "StoryWeaver Community",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: Cookie learns to share is written by Chaya Sheela Ubhayakar . © Chaya Sheela Ubhayakar , 2020. Some rights reserved. Released under CC BY 4.0 license. Images Attributions: Cover page: front cover , by Chaya Sheela Ubhayakar © Chaya Sheela Ubhayakar, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 2: cover 2 , by Chaya Sheela Ubhayakar © Chaya Sheela Ubhayakar, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 3: share final , by Chaya Sheela Ubhayakar © Chaya Sheela Ubhayakar, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 4: page 2 , by Chaya Sheela Ubhayakar © Chaya Sheela Ubhayakar, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 5: c meets t 3 , by Chaya Sheela Ubhayakar © Chaya Sheela Ubhayakar, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 6: c meets t 7 , by Chaya Sheela Ubhayakar © Chaya Sheela Ubhayakar, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 7: story page 7 , by Chaya Sheela Ubhayakar © Chaya Sheela Ubhayakar, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 8: cover 4 , by Chaya Sheela Ubhayakar © Chaya Sheela Ubhayakar, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 9: sharing 1 , by Chaya Sheela Ubhayakar © Chaya Sheela Ubhayakar, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 10: last page , by Chaya Sheela Ubhayakar © Chaya Sheela Ubhayakar, 2026. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/153971-cookie-learns-to-share",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "cover 2 , by Chaya Sheela Ubhayakar © Chaya Sheela Ubhayakar, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "share final , by Chaya Sheela Ubhayakar © Chaya Sheela Ubhayakar, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "page 2 , by Chaya Sheela Ubhayakar © Chaya Sheela Ubhayakar, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "c meets t 3 , by Chaya Sheela Ubhayakar © Chaya Sheela Ubhayakar, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "c meets t 7 , by Chaya Sheela Ubhayakar © Chaya Sheela Ubhayakar, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "story page 7 , by Chaya Sheela Ubhayakar © Chaya Sheela Ubhayakar, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "cover 4 , by Chaya Sheela Ubhayakar © Chaya Sheela Ubhayakar, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "sharing 1 , by Chaya Sheela Ubhayakar © Chaya Sheela Ubhayakar, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 8,
+        "credit_text": "last page , by Chaya Sheela Ubhayakar © Chaya Sheela Ubhayakar, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "Cookie learns to share",
+    "paragraphs_en": [
+      "Cookie the dog lives with Sahana, Priya, Mom and Dad. Cookie loves Sahana and Priya, and they love her too. They take good care of Cookie and enjoy playing with her. Sahana is Priya's older sister. She likes sharing her things with Priya.",
+      "Cookie is confused this morning. She notices that something is different. Everyone at home looks very excited. Sahana and Priya whisper every time Cookie comes close to them.",
+      "Cookie wants to ask Mom what is going on? But, Mom and Sahana say, “Bye Cookie, we will be back soon.” And, they drive off. Dad is making snacks for Priya and Cookie so, they wait by the window.",
+      "Cookie dashes to the front door when she hears it open. She stops halfway and sniffs. Is it a treat for me?” “Look Cookie, we have a friend for you. Her name is Tootsie. Do you like her?” Asks Priya showing Tootsie to Cookie.",
+      "Cookie sniffs, gently touches Toostsie, turns away and says. “I like her. But, is she going to live with us forever? I hope not.”",
+      "After a few days Cookie knows that Tootsie is going to stay. Tootsie says, \"Please play with me Cookie.\" But, Cookie doesn’t want to play or share any toys or treats. She is used to playing and sharing with just Sahana and Priya.",
+      "Cookie wonders, \"Will Sahana and Priya love Tootsie more than they love me?” She thinks, \"Do I have to share my toys and share Sahana and Priya with Tootsie?\"",
+      "After a while, Cookie begins to play with Tootsie. Cookie realizes that Sahana and Priya will always love her. They have enough love to give to Tootsie too. Very slowly, Cookie learns to care for Tootsie and share some of her treats and favorite toys.",
+      "Tootsie asks Cookie, \" Can we be friends?\" \"We are more than friends,\" says Cookie. \"We are a family, and I will share my things with you just like Sahana shares with Priya. Now I know that sharing is caring.\""
+    ],
+    "sentences": [
+      {
+        "text_en": "Cookie the dog lives with Sahana, Priya, Mom and Dad.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_153971/s_000.mp3",
+        "text_vi": "Chú chó Cookie sống cùng Sahana, Priya, mẹ và bố."
+      },
+      {
+        "text_en": "Cookie loves Sahana and Priya, and they love her too.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_153971/s_001.mp3",
+        "text_vi": "Cookie yêu Sahana và Priya, và các bạn ấy cũng yêu Cookie."
+      },
+      {
+        "text_en": "They take good care of Cookie and enjoy playing with her.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_153971/s_002.mp3",
+        "text_vi": "Họ chăm sóc Cookie rất tốt và thích chơi đùa cùng Cookie."
+      },
+      {
+        "text_en": "Sahana is Priya's older sister.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_153971/s_003.mp3",
+        "text_vi": "Sahana là chị gái của Priya."
+      },
+      {
+        "text_en": "She likes sharing her things with Priya.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_153971/s_004.mp3",
+        "text_vi": "Chị ấy thích chia sẻ đồ của mình với Priya."
+      },
+      {
+        "text_en": "Cookie is confused this morning.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_153971/s_005.mp3",
+        "text_vi": "Sáng nay Cookie thấy bối rối."
+      },
+      {
+        "text_en": "She notices that something is different.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_153971/s_006.mp3",
+        "text_vi": "Cookie nhận ra có điều gì đó khác lạ."
+      },
+      {
+        "text_en": "Everyone at home looks very excited.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_153971/s_007.mp3",
+        "text_vi": "Mọi người trong nhà trông rất hào hứng."
+      },
+      {
+        "text_en": "Sahana and Priya whisper every time Cookie comes close to them.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_153971/s_008.mp3",
+        "text_vi": "Sahana và Priya thì thầm mỗi khi Cookie đến gần."
+      },
+      {
+        "text_en": "Cookie wants to ask Mom what is going on?",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_153971/s_009.mp3",
+        "text_vi": "Cookie muốn hỏi mẹ xem chuyện gì đang xảy ra?"
+      },
+      {
+        "text_en": "But, Mom and Sahana say, “Bye Cookie, we will be back soon.” And, they drive off.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_153971/s_010.mp3",
+        "text_vi": "Nhưng mẹ và Sahana nói: “Tạm biệt Cookie, bọn mẹ sẽ về sớm thôi.” Rồi họ lái xe đi."
+      },
+      {
+        "text_en": "Dad is making snacks for Priya and Cookie so, they wait by the window.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_153971/s_011.mp3",
+        "text_vi": "Bố đang làm đồ ăn vặt cho Priya và Cookie nên hai bạn ấy đợi ở cửa sổ."
+      },
+      {
+        "text_en": "Cookie dashes to the front door when she hears it open.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_153971/s_012.mp3",
+        "text_vi": "Cookie lao nhanh ra cửa trước khi nghe thấy tiếng cửa mở."
+      },
+      {
+        "text_en": "She stops halfway and sniffs.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_153971/s_013.mp3",
+        "text_vi": "Cookie dừng lại giữa chừng và đánh hơi."
+      },
+      {
+        "text_en": "Is it a treat for me?” “Look Cookie, we have a friend for you.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_153971/s_014.mp3",
+        "text_vi": "Đây có phải là phần thưởng cho mình không?” “Nhìn này Cookie, chúng ta có một người bạn mới cho con đấy."
+      },
+      {
+        "text_en": "Her name is Tootsie.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_153971/s_015.mp3",
+        "text_vi": "Tên bạn ấy là Tootsie."
+      },
+      {
+        "text_en": "Do you like her?” Asks Priya showing Tootsie to Cookie.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_153971/s_016.mp3",
+        "text_vi": "Con có thích bạn ấy không?” Priya hỏi, vừa nói vừa cho Cookie xem Tootsie."
+      },
+      {
+        "text_en": "Cookie sniffs, gently touches Toostsie, turns away and says.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_153971/s_017.mp3",
+        "text_vi": "Cookie đánh hơi, nhẹ nhàng chạm vào Tootsie, rồi quay đi và nói."
+      },
+      {
+        "text_en": "“I like her.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_153971/s_018.mp3",
+        "text_vi": "Mình thích bạn ấy."
+      },
+      {
+        "text_en": "But, is she going to live with us forever?",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_153971/s_019.mp3",
+        "text_vi": "Nhưng bạn ấy có ở với chúng ta mãi mãi không?"
+      },
+      {
+        "text_en": "I hope not.”",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_153971/s_020.mp3",
+        "text_vi": "Mình mong là không."
+      },
+      {
+        "text_en": "After a few days Cookie knows that Tootsie is going to stay.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_153971/s_021.mp3",
+        "text_vi": "Sau vài ngày, Cookie biết rằng Tootsie sẽ ở lại."
+      },
+      {
+        "text_en": "Tootsie says, \"Please play with me Cookie.\" But, Cookie doesn’t want to play or share any toys or treats.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_153971/s_022.mp3",
+        "text_vi": "Tootsie nói: \"Cookie ơi, chơi với mình đi.\" Nhưng Cookie không muốn chơi hay chia sẻ đồ chơi hoặc đồ ăn vặt nào cả."
+      },
+      {
+        "text_en": "She is used to playing and sharing with just Sahana and Priya.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_153971/s_023.mp3",
+        "text_vi": "Cookie đã quen chơi và chia sẻ chỉ với Sahana và Priya thôi."
+      },
+      {
+        "text_en": "Cookie wonders, \"Will Sahana and Priya love Tootsie more than they love me?” She thinks, \"Do I have to share my toys and share Sahana and Priya with Tootsie?\"",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_153971/s_024.mp3",
+        "text_vi": "Cookie tự hỏi: \"Liệu Sahana và Priya có yêu Tootsie nhiều hơn yêu mình không?\" Cookie nghĩ: \"Mình có phải chia sẻ đồ chơi và chia sẻ Sahana, Priya với Tootsie không?\""
+      },
+      {
+        "text_en": "After a while, Cookie begins to play with Tootsie.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_153971/s_025.mp3",
+        "text_vi": "Sau một lúc, Cookie bắt đầu chơi với Tootsie."
+      },
+      {
+        "text_en": "Cookie realizes that Sahana and Priya will always love her.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_153971/s_026.mp3",
+        "text_vi": "Cookie nhận ra rằng Sahana và Priya sẽ luôn yêu thương mình."
+      },
+      {
+        "text_en": "They have enough love to give to Tootsie too.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_153971/s_027.mp3",
+        "text_vi": "Họ có đủ tình yêu để dành cho cả Tootsie nữa."
+      },
+      {
+        "text_en": "Very slowly, Cookie learns to care for Tootsie and share some of her treats and favorite toys.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_153971/s_028.mp3",
+        "text_vi": "Rất từ từ, Cookie học cách quan tâm Tootsie và chia sẻ một vài món ăn vặt cùng đồ chơi yêu thích của mình."
+      },
+      {
+        "text_en": "Tootsie asks Cookie, \" Can we be friends?\" \"We are more than friends,\" says Cookie.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_153971/s_029.mp3",
+        "text_vi": "Tootsie hỏi Cookie: \"Chúng mình làm bạn nhé?\" Cookie nói: \"Chúng mình còn hơn cả bạn bè nữa.\""
+      },
+      {
+        "text_en": "\"We are a family, and I will share my things with you just like Sahana shares with Priya.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_153971/s_030.mp3",
+        "text_vi": "Chúng mình là một gia đình, và mình sẽ chia sẻ đồ của mình với bạn giống như Sahana chia sẻ với Priya vậy."
+      },
+      {
+        "text_en": "Now I know that sharing is caring.\"",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_153971/s_031.mp3",
+        "text_vi": "Bây giờ mình biết rằng chia sẻ là quan tâm."
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "Cookie the dog lives with Sahana, Priya, Mom and Dad.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_153971/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "Cookie loves Sahana and Priya, and they love her too.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_153971/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "They take good care of Cookie and enjoy playing with her.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_153971/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "Sahana is Priya's older sister.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_153971/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "She likes sharing her things with Priya.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_153971/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "Cookie is confused this morning.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_153971/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "She notices that something is different.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_153971/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "Everyone at home looks very excited.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_153971/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "Sahana and Priya whisper every time Cookie comes close to them.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_153971/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "Cookie wants to ask Mom what is going on?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_153971/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "But, Mom and Sahana say, “Bye Cookie, we will be back soon.” And, they drive off.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_153971/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "Dad is making snacks for Priya and Cookie so, they wait by the window.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_153971/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "Cookie dashes to the front door when she hears it open.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_153971/s_012.mp3"
+        },
+        {
+          "id": "ra_13",
+          "text_en": "She stops halfway and sniffs.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_153971/s_013.mp3"
+        },
+        {
+          "id": "ra_14",
+          "text_en": "Is it a treat for me?” “Look Cookie, we have a friend for you.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_153971/s_014.mp3"
+        },
+        {
+          "id": "ra_15",
+          "text_en": "Her name is Tootsie.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_153971/s_015.mp3"
+        },
+        {
+          "id": "ra_16",
+          "text_en": "Do you like her?” Asks Priya showing Tootsie to Cookie.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_153971/s_016.mp3"
+        },
+        {
+          "id": "ra_17",
+          "text_en": "Cookie sniffs, gently touches Toostsie, turns away and says.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_153971/s_017.mp3"
+        },
+        {
+          "id": "ra_18",
+          "text_en": "“I like her.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_153971/s_018.mp3"
+        },
+        {
+          "id": "ra_19",
+          "text_en": "But, is she going to live with us forever?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_153971/s_019.mp3"
+        },
+        {
+          "id": "ra_20",
+          "text_en": "I hope not.”",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_153971/s_020.mp3"
+        },
+        {
+          "id": "ra_21",
+          "text_en": "After a few days Cookie knows that Tootsie is going to stay.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_153971/s_021.mp3"
+        },
+        {
+          "id": "ra_22",
+          "text_en": "Tootsie says, \"Please play with me Cookie.\" But, Cookie doesn’t want to play or share any toys or treats.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_153971/s_022.mp3"
+        },
+        {
+          "id": "ra_23",
+          "text_en": "She is used to playing and sharing with just Sahana and Priya.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_153971/s_023.mp3"
+        },
+        {
+          "id": "ra_24",
+          "text_en": "Cookie wonders, \"Will Sahana and Priya love Tootsie more than they love me?” She thinks, \"Do I have to share my toys and share Sahana and Priya with Tootsie?\"",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_153971/s_024.mp3"
+        },
+        {
+          "id": "ra_25",
+          "text_en": "After a while, Cookie begins to play with Tootsie.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_153971/s_025.mp3"
+        },
+        {
+          "id": "ra_26",
+          "text_en": "Cookie realizes that Sahana and Priya will always love her.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_153971/s_026.mp3"
+        },
+        {
+          "id": "ra_27",
+          "text_en": "They have enough love to give to Tootsie too.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_153971/s_027.mp3"
+        },
+        {
+          "id": "ra_28",
+          "text_en": "Very slowly, Cookie learns to care for Tootsie and share some of her treats and favorite toys.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_153971/s_028.mp3"
+        },
+        {
+          "id": "ra_29",
+          "text_en": "Tootsie asks Cookie, \" Can we be friends?\" \"We are more than friends,\" says Cookie.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_153971/s_029.mp3"
+        },
+        {
+          "id": "ra_30",
+          "text_en": "\"We are a family, and I will share my things with you just like Sahana shares with Priya.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_153971/s_030.mp3"
+        },
+        {
+          "id": "ra_31",
+          "text_en": "Now I know that sharing is caring.\"",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_153971/s_031.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "Who lives with Sahana, Priya, Mom and Dad?",
+          "options_en": [
+            "Cookie the dog",
+            "Tootsie",
+            "Dad"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "Where does Cookie live?",
+          "options_en": [
+            "With Sahana, Priya, Mom and Dad",
+            "With Sahana and Priya only",
+            "With Mom and Dad only"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s1_q1",
+          "type": "choice",
+          "question_en": "Who does Cookie love?",
+          "options_en": [
+            "Sahana and Priya",
+            "Tootsie",
+            "Mom and Dad"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s1_q2",
+          "type": "choice",
+          "question_en": "How do Sahana and Priya feel about Cookie?",
+          "options_en": [
+            "They love her too",
+            "They whisper when she comes close",
+            "They are excited"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s2_q1",
+          "type": "choice",
+          "question_en": "What do they take good care of?",
+          "options_en": [
+            "Cookie",
+            "Tootsie",
+            "Cookie's toys"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s2_q2",
+          "type": "choice",
+          "question_en": "What do they enjoy doing with Cookie?",
+          "options_en": [
+            "Playing with her",
+            "Whispering when she comes close",
+            "Making snacks for her"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s3_q1",
+          "type": "choice",
+          "question_en": "Who is Priya's older sister?",
+          "options_en": [
+            "Sahana",
+            "Cookie",
+            "Mom"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p0_s3_q2",
+          "type": "choice",
+          "question_en": "How is Sahana related to Priya?",
+          "options_en": [
+            "She is Priya's older sister",
+            "She is Priya's friend",
+            "She is Priya's mom"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p0_s4_q1",
+          "type": "choice",
+          "question_en": "Who likes sharing her things with Priya?",
+          "options_en": [
+            "Sahana",
+            "Cookie",
+            "Mom"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p0_s4_q2",
+          "type": "choice",
+          "question_en": "What does she like doing with Priya?",
+          "options_en": [
+            "Sharing her things with Priya",
+            "Playing with Tootsie",
+            "Sharing treats with Cookie"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "Who is confused this morning?",
+          "options_en": [
+            "Cookie",
+            "Sahana",
+            "Priya"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "When is Cookie confused?",
+          "options_en": [
+            "this morning",
+            "after a few days",
+            "when they drive off"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p1_s1_q1",
+          "type": "choice",
+          "question_en": "Who notices that something is different?",
+          "options_en": [
+            "She (Cookie)",
+            "Sahana",
+            "Mom"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p1_s1_q2",
+          "type": "choice",
+          "question_en": "What does she notice?",
+          "options_en": [
+            "something is different",
+            "a friend for her",
+            "snacks for Priya and Cookie"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p1_s2_q1",
+          "type": "choice",
+          "question_en": "Who looks very excited?",
+          "options_en": [
+            "Everyone at home",
+            "Sahana and Priya",
+            "Dad"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p1_s2_q2",
+          "type": "choice",
+          "question_en": "How does everyone at home look?",
+          "options_en": [
+            "very excited",
+            "confused",
+            "sad"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p1_s3_q1",
+          "type": "choice",
+          "question_en": "Who whisper every time Cookie comes close to them?",
+          "options_en": [
+            "Sahana and Priya",
+            "Mom and Dad",
+            "Cookie and Tootsie"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p1_s3_q2",
+          "type": "choice",
+          "question_en": "When do Sahana and Priya whisper?",
+          "options_en": [
+            "every time Cookie comes close to them",
+            "when they drive off",
+            "after a few days"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "Who wants to ask Mom what is going on?",
+          "options_en": [
+            "Cookie",
+            "Sahana",
+            "Priya"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "What does Cookie want to ask Mom?",
+          "options_en": [
+            "What is going on?",
+            "To play with her",
+            "To share a toy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p2_s1_q1",
+          "type": "choice",
+          "question_en": "Who says, “Bye Cookie, we will be back soon.”?",
+          "options_en": [
+            "Mom and Sahana",
+            "Dad",
+            "Priya"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p2_s1_q2",
+          "type": "choice",
+          "question_en": "What do Mom and Sahana do after they say goodbye?",
+          "options_en": [
+            "They drive off",
+            "They stay at home",
+            "They bring a new dog"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p2_s2_q1",
+          "type": "choice",
+          "question_en": "Who is making snacks for Priya and Cookie?",
+          "options_en": [
+            "Dad",
+            "Mom",
+            "Sahana"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p2_s2_q2",
+          "type": "choice",
+          "question_en": "Where do Priya and Cookie wait while snacks are being made?",
+          "options_en": [
+            "By the window",
+            "At the front door",
+            "In their room"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "Who dashes to the front door?",
+          "options_en": [
+            "Cookie",
+            "Sahana",
+            "Priya"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "Where does Cookie dash when she hears it open?",
+          "options_en": [
+            "To the front door",
+            "To the window",
+            "To the kitchen"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p3_s1_q1",
+          "type": "choice",
+          "question_en": "Who stops halfway and sniffs?",
+          "options_en": [
+            "Cookie",
+            "Tootsie",
+            "Sahana"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p3_s1_q2",
+          "type": "choice",
+          "question_en": "What does she do when she stops halfway?",
+          "options_en": [
+            "She sniffs",
+            "She waits by the window",
+            "She plays with toys"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p3_s2_q1",
+          "type": "choice",
+          "question_en": "What does Cookie wonder when the door opens?",
+          "options_en": [
+            "If it is a treat for her",
+            "If Sahana is home",
+            "If Dad made snacks"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p3_s2_q2",
+          "type": "choice",
+          "question_en": "Who says, \"Look Cookie, we have a friend for you\"?",
+          "options_en": [
+            "Priya",
+            "Mom",
+            "Sahana"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p3_s3_q1",
+          "type": "choice",
+          "question_en": "What is the new friend's name?",
+          "options_en": [
+            "Tootsie",
+            "Cookie",
+            "Sahana"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p3_s3_q2",
+          "type": "choice",
+          "question_en": "Who is being named in the sentence?",
+          "options_en": [
+            "The friend",
+            "A treat",
+            "A toy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p3_s4_q1",
+          "type": "choice",
+          "question_en": "Who asks Cookie if she likes the new friend?",
+          "options_en": [
+            "Priya",
+            "Mom",
+            "Sahana"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p3_s4_q2",
+          "type": "choice",
+          "question_en": "What does Priya show to Cookie?",
+          "options_en": [
+            "Tootsie",
+            "A treat",
+            "A toy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "Who does Cookie gently touch?",
+          "options_en": [
+            "Tootsie",
+            "Sahana",
+            "Priya"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "What does Cookie do before she turns away?",
+          "options_en": [
+            "Gently touches Tootsie",
+            "Dashes to the front door",
+            "Waits by the window"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p4_s1_q1",
+          "type": "choice",
+          "question_en": "Who says \"I like her\"?",
+          "options_en": [
+            "Cookie",
+            "Priya",
+            "Sahana"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p4_s1_q2",
+          "type": "choice",
+          "question_en": "What does the speaker say about the new friend?",
+          "options_en": [
+            "I like her",
+            "Please play with me",
+            "We are a family"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p4_s2_q1",
+          "type": "choice",
+          "question_en": "Who is the speaker asking about living with them forever?",
+          "options_en": [
+            "Tootsie",
+            "Cookie",
+            "Sahana"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p4_s2_q2",
+          "type": "choice",
+          "question_en": "What is the speaker wondering?",
+          "options_en": [
+            "If she is going to live with us forever",
+            "If she will share toys",
+            "If she will play with Cookie"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p4_s3_q1",
+          "type": "choice",
+          "question_en": "What does the speaker hope?",
+          "options_en": [
+            "That she will not live with them forever",
+            "That they will play together",
+            "That Sahana will share with Priya"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p4_s3_q2",
+          "type": "choice",
+          "question_en": "How does the speaker feel about the idea of her staying forever?",
+          "options_en": [
+            "They hope she will not stay forever",
+            "They are happy she will stay",
+            "They plan to share everything"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "Who knows that Tootsie is going to stay?",
+          "options_en": [
+            "Cookie",
+            "Sahana",
+            "Mom"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "When does Cookie know that Tootsie is going to stay?",
+          "options_en": [
+            "After a few days",
+            "This morning",
+            "When they drive off"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p5_s1_q1",
+          "type": "choice",
+          "question_en": "Who asks Cookie to play?",
+          "options_en": [
+            "Tootsie",
+            "Priya",
+            "Dad"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p5_s1_q2",
+          "type": "choice",
+          "question_en": "What does Cookie not want to do?",
+          "options_en": [
+            "Play or share any toys or treats",
+            "Drive off with Mom",
+            "Make snacks for Priya"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p5_s2_q1",
+          "type": "choice",
+          "question_en": "What is the correct answer to this question: With whom is she used to playing and sharing?",
+          "options_en": [
+            "Sahana and Priya",
+            "Mom and Dad",
+            "Tootsie"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p5_s2_q2",
+          "type": "choice",
+          "question_en": "How many people is she used to playing and sharing with?",
+          "options_en": [
+            "Just Sahana and Priya",
+            "Mom and Dad",
+            "Sahana, Priya, and Tootsie"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "Who does Cookie wonder might love Tootsie more than her?",
+          "options_en": [
+            "Sahana and Priya",
+            "Mom and Dad",
+            "Tootsie"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "What does Cookie think she might have to share with Tootsie?",
+          "options_en": [
+            "Her toys and Sahana and Priya",
+            "Her treats and snacks",
+            "Her bed and blanket"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "Who begins to play with Tootsie?",
+          "options_en": [
+            "Cookie",
+            "Priya",
+            "Sahana"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "When does Cookie begin to play with Tootsie?",
+          "options_en": [
+            "After a while",
+            "This morning",
+            "When they arrive"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p7_s1_q1",
+          "type": "choice",
+          "question_en": "Who realizes that Sahana and Priya will always love her?",
+          "options_en": [
+            "Cookie",
+            "Mom",
+            "Tootsie"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p7_s1_q2",
+          "type": "choice",
+          "question_en": "Who will always love her?",
+          "options_en": [
+            "Sahana and Priya",
+            "Mom and Dad",
+            "Sahana and Mom"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p7_s2_q1",
+          "type": "choice",
+          "question_en": "Who have enough love to give to Tootsie too?",
+          "options_en": [
+            "Sahana and Priya",
+            "Mom and Dad",
+            "Cookie and Tootsie"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        },
+        {
+          "id": "gl_p7_s2_q2",
+          "type": "choice",
+          "question_en": "What do they have enough of to give to Tootsie too?",
+          "options_en": [
+            "Love",
+            "Treats",
+            "Toys"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        },
+        {
+          "id": "gl_p7_s3_q1",
+          "type": "choice",
+          "question_en": "What does Cookie learn to do very slowly?",
+          "options_en": [
+            "Care for Tootsie and share some of her treats and favorite toys",
+            "Run to the front door",
+            "Play only with Sahana and Priya"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        },
+        {
+          "id": "gl_p7_s3_q2",
+          "type": "choice",
+          "question_en": "What does Cookie share?",
+          "options_en": [
+            "Some of her treats and favorite toys",
+            "Sahana and Priya",
+            "The snacks Dad made"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        }
+      ]
+    },
+    {
+      "paragraph_index": 8,
+      "questions": [
+        {
+          "id": "gl_p8_s0_q1",
+          "type": "choice",
+          "question_en": "Who asks Cookie if they can be friends?",
+          "options_en": [
+            "Tootsie",
+            "Cookie",
+            "Sahana"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p8_s0_q2",
+          "type": "choice",
+          "question_en": "What does Cookie say they are?",
+          "options_en": [
+            "We are more than friends",
+            "We are a family",
+            "We are just friends"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p8_s1_q1",
+          "type": "choice",
+          "question_en": "Who says they will share their things?",
+          "options_en": [
+            "Cookie",
+            "Sahana",
+            "Priya"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        },
+        {
+          "id": "gl_p8_s1_q2",
+          "type": "choice",
+          "question_en": "How will the speaker share their things?",
+          "options_en": [
+            "Just like Sahana shares with Priya",
+            "Only with Sahana",
+            "Not at all"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        },
+        {
+          "id": "gl_p8_s2_q1",
+          "type": "choice",
+          "question_en": "What does the speaker know now?",
+          "options_en": [
+            "Sharing is caring",
+            "Cookie is confused",
+            "Tootsie will leave"
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        },
+        {
+          "id": "gl_p8_s2_q2",
+          "type": "choice",
+          "question_en": "Why does the speaker say 'sharing is caring'?",
+          "options_en": [
+            "Because they will share their things with the other",
+            "Because Mom and Dad drove off",
+            "Because Cookie is dashing to the door"
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'Cookie learns to share'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "lives",
+      "meaning_vi": "sống (ở một nơi nào đó)",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "care",
+      "meaning_vi": "chăm sóc",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "enjoy",
+      "meaning_vi": "thích thú, vui vẻ",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "sharing",
+      "meaning_vi": "chia sẻ",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "confused",
+      "meaning_vi": "bối rối, không hiểu chuyện gì",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "notices",
+      "meaning_vi": "nhận ra, để ý thấy",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "different",
+      "meaning_vi": "khác biệt, không giống bình thường",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "whisper",
+      "meaning_vi": "nói nhỏ, thì thầm",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "going on",
+      "meaning_vi": "đang xảy ra",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "soon",
+      "meaning_vi": "chẳng mấy chốc, nhanh thôi",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "drive off",
+      "meaning_vi": "lái xe rời đi",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "snacks",
+      "meaning_vi": "đồ ăn vặt",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "dashes",
+      "meaning_vi": "lao nhanh, chạy vội",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "halfway",
+      "meaning_vi": "nửa đường, ở giữa",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "sniffs",
+      "meaning_vi": "đánh hơi",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "treat",
+      "meaning_vi": "phần thưởng, món ngon",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "gently",
+      "meaning_vi": "nhẹ nhàng",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "touches",
+      "meaning_vi": "chạm vào",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "forever",
+      "meaning_vi": "mãi mãi, vĩnh viễn",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "hope",
+      "meaning_vi": "hy vọng, mong muốn",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "stay",
+      "meaning_vi": "ở lại",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "toys",
+      "meaning_vi": "đồ chơi",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "treats",
+      "meaning_vi": "món ngon, đồ ăn vặt",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "used to",
+      "meaning_vi": "đã quen với",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "wonders",
+      "meaning_vi": "tự hỏi, thắc mắc",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "more than",
+      "meaning_vi": "nhiều hơn",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "have to",
+      "meaning_vi": "phải (làm gì đó)",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "share",
+      "meaning_vi": "chia sẻ",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "realizes",
+      "meaning_vi": "nhận ra",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "always",
+      "meaning_vi": "luôn luôn",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "enough",
+      "meaning_vi": "đủ",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "care for",
+      "meaning_vi": "quan tâm, chăm sóc",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "more than",
+      "meaning_vi": "hơn cả",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "family",
+      "meaning_vi": "gia đình",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "just like",
+      "meaning_vi": "giống như",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "caring",
+      "meaning_vi": "quan tâm, chăm sóc",
+      "paragraph_index": 8
+    }
+  ]
+}

@@ -1,0 +1,1224 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L2",
+  "level_label": "Cấp 2",
+  "topic": "A Tale of Two Mice",
+  "slug": "book_116663",
+  "audio_filename": "book_116663.mp3",
+  "book_slug": "book_116663",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_116663/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_116663/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_116663/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_116663/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_116663/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_116663/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_116663/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_116663/page_09.jpg",
+    "https://audio.felixbuilderhub.com/books/book_116663/page_10.jpg",
+    "https://audio.felixbuilderhub.com/books/book_116663/page_11.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_116663/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_116663/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_116663/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_116663/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_116663/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_116663/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_116663/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_116663/page_09.mp3",
+    "https://audio.felixbuilderhub.com/books/book_116663/page_10.mp3",
+    "https://audio.felixbuilderhub.com/books/book_116663/page_11.mp3"
+  ],
+  "book_attribution": {
+    "title": "A Tale of Two Mice",
+    "creators": [
+      "Carrie Man",
+      "Aruna Keerthi Gamage"
+    ],
+    "publisher": "StoryWeaver Community",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: A Tale of Two Mice is written by Carrie Man . © Carrie Man , 2020. Some rights reserved. Released under CC BY 4.0 license. Images Attributions: Cover page: A mouse hugs a computer mouse , by Aruna Keerthi Gamage © Room to Read, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 2: A mouse looks into a room with a computer , by Aruna Keerthi Gamage © Room to Read, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 3: A mouse talks to a computer mouse , by Aruna Keerthi Gamage © Room to Read, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 4: A mouse chews on a pencil , by Aruna Keerthi Gamage © Room to Read, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 5: A mouse looks at a picture of a cake on a computer , by Aruna Keerthi Gamage © Room to Read, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 6: A mouse holds a piece of food , by Aruna Keerthi Gamage © Room to Read, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 7: A cat chases a mouse , by Aruna Keerthi Gamage © Room to Read, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 8: A cat is afraid of a dog on a computer , by Aruna Keerthi Gamage © Room to Read, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 9: A mouse chews on a computer wire , by Aruna Keerthi Gamage © Room to Read, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 10: A mouse laughs , by Aruna Keerthi Gamage © Room to Read, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 11: A mouse hugs a computer mouse , by Aruna Keerthi Gamage © Room to Read, 2016. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/116663-a-tale-of-two-mice",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "A mouse looks into a room with a computer , by Aruna Keerthi Gamage © Room to Read, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "A mouse talks to a computer mouse , by Aruna Keerthi Gamage © Room to Read, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "A mouse chews on a pencil , by Aruna Keerthi Gamage © Room to Read, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "A mouse looks at a picture of a cake on a computer , by Aruna Keerthi Gamage © Room to Read, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "A mouse holds a piece of food , by Aruna Keerthi Gamage © Room to Read, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "A cat chases a mouse , by Aruna Keerthi Gamage © Room to Read, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "A cat is afraid of a dog on a computer , by Aruna Keerthi Gamage © Room to Read, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "A mouse chews on a computer wire , by Aruna Keerthi Gamage © Room to Read, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 8,
+        "credit_text": "A mouse laughs , by Aruna Keerthi Gamage © Room to Read, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 9,
+        "credit_text": "A mouse hugs a computer mouse , by Aruna Keerthi Gamage © Room to Read, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "A Tale of Two Mice",
+    "paragraphs_en": [
+      "One day, Hank the Mouse sneaked into a room with a computer. He was very hungry.",
+      "He tiptoed slowly to the computer and saw a little computer mouse. \"What are you doing here?\" asked Computer Mouse. \" \"I'm trying to find something to eat,\" answered Hank.",
+      "He saw a yellow pencil and thought to himself, \"Hmmm, is this a cheese stick?\" He quickly took a bite. ''Yuck!''",
+      "Computer Mouse showed Hank a picture of a large tray of cake in the kitchen. Hank's mouth watered and he felt even hungrier. He crept to the kitchen, where Lucy the Cat was asleep.",
+      "Hank brought the cake to the room and shared it with Computer Mouse. They both liked its sweet taste. \"Yum!\"cried Hank and Computer Mouse. They especially loved the icing on top.",
+      "While they were enjoying the cake, Lucy the Cat woke up, ran out of the kitchen and appeared in front of the computer.",
+      "\"It's the cat! It's the cat!\" Hank cried. He ran this way and that, willy-nilly, round and back. Computer Mouse quickly showed a picture of a dog and Lucy the Cat ran away.",
+      "Hank was about to leave. \"Wait!\" cried Computer Mouse, \"Don't just leave me here. Please break the wire with your teeth.\"",
+      "Finally, Computer Mouse was free. They planned to move to a bigger house with more cake and no cats. And they lived happily ever after.",
+      "The End"
+    ],
+    "sentences": [
+      {
+        "text_en": "One day, Hank the Mouse sneaked into a room with a computer.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_116663/s_000.mp3",
+        "text_vi": "Một ngày nọ, chuột Hank lẻn vào một căn phòng có máy tính."
+      },
+      {
+        "text_en": "He was very hungry.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_116663/s_001.mp3",
+        "text_vi": "Cậu ấy đói bụng lắm."
+      },
+      {
+        "text_en": "He tiptoed slowly to the computer and saw a little computer mouse.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_116663/s_002.mp3",
+        "text_vi": "Cậu ấy rón rén đi chậm đến máy tính và thấy một chú chuột máy tính nhỏ."
+      },
+      {
+        "text_en": "\"What are you doing here?\" asked Computer Mouse.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_116663/s_003.mp3",
+        "text_vi": "\"Bạn làm gì ở đây vậy?\" Chuột Máy Tính hỏi."
+      },
+      {
+        "text_en": "\" \"I'm trying to find something to eat,\" answered Hank.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_116663/s_004.mp3",
+        "text_vi": "\"Mình đang cố tìm gì đó để ăn,\" Hank trả lời."
+      },
+      {
+        "text_en": "He saw a yellow pencil and thought to himself, \"Hmmm, is this a cheese stick?\" He quickly took a bite. ''Yuck!''",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_116663/s_005.mp3",
+        "text_vi": "Cậu ấy thấy một cây bút chì màu vàng và tự nghĩ, \"Ưm, đây có phải là que phô mai không nhỉ?\" Cậu ấy nhanh chóng cắn một miếng. \"Eo ôi!\""
+      },
+      {
+        "text_en": "Computer Mouse showed Hank a picture of a large tray of cake in the kitchen.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_116663/s_006.mp3",
+        "text_vi": "Chuột Máy Tính cho Hank xem hình một khay bánh lớn trong bếp."
+      },
+      {
+        "text_en": "Hank's mouth watered and he felt even hungrier.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_116663/s_007.mp3",
+        "text_vi": "Hank chảy nước miếng và cảm thấy đói hơn nữa."
+      },
+      {
+        "text_en": "He crept to the kitchen, where Lucy the Cat was asleep.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_116663/s_008.mp3",
+        "text_vi": "Cậu ấy rón rén vào bếp, nơi mèo Lucy đang ngủ."
+      },
+      {
+        "text_en": "Hank brought the cake to the room and shared it with Computer Mouse.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_116663/s_009.mp3",
+        "text_vi": "Hank mang bánh về phòng và chia sẻ với Chuột Máy Tính."
+      },
+      {
+        "text_en": "They both liked its sweet taste.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_116663/s_010.mp3",
+        "text_vi": "Cả hai đều thích vị ngọt của bánh."
+      },
+      {
+        "text_en": "\"Yum!\"cried Hank and Computer Mouse.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_116663/s_011.mp3",
+        "text_vi": "\"Ngon quá!\" Hank và Chuột Máy Tính kêu lên."
+      },
+      {
+        "text_en": "They especially loved the icing on top.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_116663/s_012.mp3",
+        "text_vi": "Họ đặc biệt thích lớp kem phủ bên trên."
+      },
+      {
+        "text_en": "While they were enjoying the cake, Lucy the Cat woke up, ran out of the kitchen and appeared in front of the computer.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_116663/s_013.mp3",
+        "text_vi": "Khi cả hai đang ăn bánh, mèo Lucy thức dậy, chạy ra khỏi bếp và xuất hiện trước máy tính."
+      },
+      {
+        "text_en": "\"It's the cat!",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_116663/s_014.mp3",
+        "text_vi": "\"Mèo kìa!"
+      },
+      {
+        "text_en": "It's the cat!\" Hank cried.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_116663/s_015.mp3",
+        "text_vi": "Mèo kìa!\" Hank kêu lên."
+      },
+      {
+        "text_en": "He ran this way and that, willy-nilly, round and back.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_116663/s_016.mp3",
+        "text_vi": "Cậu ấy chạy lung tung, vòng tới vòng lui."
+      },
+      {
+        "text_en": "Computer Mouse quickly showed a picture of a dog and Lucy the Cat ran away.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_116663/s_017.mp3",
+        "text_vi": "Chuột Máy Tính nhanh chóng cho xem hình một con chó và mèo Lucy chạy mất."
+      },
+      {
+        "text_en": "Hank was about to leave.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_116663/s_018.mp3",
+        "text_vi": "Hank sắp sửa rời đi."
+      },
+      {
+        "text_en": "\"Wait!\" cried Computer Mouse, \"Don't just leave me here.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_116663/s_019.mp3",
+        "text_vi": "\"Khoan đã!\" Chuột Máy Tính kêu lên, \"Đừng bỏ mình ở đây chứ."
+      },
+      {
+        "text_en": "Please break the wire with your teeth.\"",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_116663/s_020.mp3",
+        "text_vi": "Làm ơn cắn đứt sợi dây này bằng răng của bạn đi.\""
+      },
+      {
+        "text_en": "Finally, Computer Mouse was free.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_116663/s_021.mp3",
+        "text_vi": "Cuối cùng, Chuột Máy Tính đã được tự do."
+      },
+      {
+        "text_en": "They planned to move to a bigger house with more cake and no cats.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_116663/s_022.mp3",
+        "text_vi": "Họ dự định chuyển đến một ngôi nhà lớn hơn, có nhiều bánh hơn và không có mèo."
+      },
+      {
+        "text_en": "And they lived happily ever after.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_116663/s_023.mp3",
+        "text_vi": "Và họ sống hạnh phúc mãi mãi về sau."
+      },
+      {
+        "text_en": "The End",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_116663/s_024.mp3",
+        "text_vi": "Hết truyện."
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "One day, Hank the Mouse sneaked into a room with a computer.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_116663/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "He was very hungry.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_116663/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "He tiptoed slowly to the computer and saw a little computer mouse.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_116663/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "\"What are you doing here?\" asked Computer Mouse.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_116663/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "\" \"I'm trying to find something to eat,\" answered Hank.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_116663/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "He saw a yellow pencil and thought to himself, \"Hmmm, is this a cheese stick?\" He quickly took a bite. ''Yuck!''",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_116663/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "Computer Mouse showed Hank a picture of a large tray of cake in the kitchen.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_116663/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "Hank's mouth watered and he felt even hungrier.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_116663/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "He crept to the kitchen, where Lucy the Cat was asleep.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_116663/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "Hank brought the cake to the room and shared it with Computer Mouse.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_116663/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "They both liked its sweet taste.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_116663/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "\"Yum!\"cried Hank and Computer Mouse.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_116663/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "They especially loved the icing on top.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_116663/s_012.mp3"
+        },
+        {
+          "id": "ra_13",
+          "text_en": "While they were enjoying the cake, Lucy the Cat woke up, ran out of the kitchen and appeared in front of the computer.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_116663/s_013.mp3"
+        },
+        {
+          "id": "ra_14",
+          "text_en": "\"It's the cat!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_116663/s_014.mp3"
+        },
+        {
+          "id": "ra_15",
+          "text_en": "It's the cat!\" Hank cried.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_116663/s_015.mp3"
+        },
+        {
+          "id": "ra_16",
+          "text_en": "He ran this way and that, willy-nilly, round and back.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_116663/s_016.mp3"
+        },
+        {
+          "id": "ra_17",
+          "text_en": "Computer Mouse quickly showed a picture of a dog and Lucy the Cat ran away.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_116663/s_017.mp3"
+        },
+        {
+          "id": "ra_18",
+          "text_en": "Hank was about to leave.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_116663/s_018.mp3"
+        },
+        {
+          "id": "ra_19",
+          "text_en": "\"Wait!\" cried Computer Mouse, \"Don't just leave me here.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_116663/s_019.mp3"
+        },
+        {
+          "id": "ra_20",
+          "text_en": "Please break the wire with your teeth.\"",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_116663/s_020.mp3"
+        },
+        {
+          "id": "ra_21",
+          "text_en": "Finally, Computer Mouse was free.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_116663/s_021.mp3"
+        },
+        {
+          "id": "ra_22",
+          "text_en": "They planned to move to a bigger house with more cake and no cats.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_116663/s_022.mp3"
+        },
+        {
+          "id": "ra_23",
+          "text_en": "And they lived happily ever after.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_116663/s_023.mp3"
+        },
+        {
+          "id": "ra_24",
+          "text_en": "The End",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_116663/s_024.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "Who sneaked into a room with a computer?",
+          "options_en": [
+            "Hank the Mouse",
+            "Computer Mouse",
+            "Lucy the Cat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "Where did Hank sneak?",
+          "options_en": [
+            "Into a room with a computer",
+            "Into the kitchen",
+            "To a bigger house"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s1_q1",
+          "type": "choice",
+          "question_en": "Who was very hungry?",
+          "options_en": [
+            "Hank the Mouse",
+            "Computer Mouse",
+            "Lucy the Cat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s1_q2",
+          "type": "choice",
+          "question_en": "How was he?",
+          "options_en": [
+            "Very hungry",
+            "Asleep",
+            "Happy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "Who tiptoed slowly to the computer?",
+          "options_en": [
+            "Hank",
+            "Computer Mouse",
+            "Lucy the Cat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "What did he see at the computer?",
+          "options_en": [
+            "a little computer mouse",
+            "a yellow pencil",
+            "a large tray of cake"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p1_s1_q1",
+          "type": "choice",
+          "question_en": "Who asked, \"What are you doing here?\"",
+          "options_en": [
+            "Computer Mouse",
+            "Hank",
+            "Lucy the Cat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p1_s1_q2",
+          "type": "choice",
+          "question_en": "What did Computer Mouse ask?",
+          "options_en": [
+            "\"What are you doing here?\"",
+            "\"Are you hungry?\"",
+            "\"Where is the cat?\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p1_s2_q1",
+          "type": "choice",
+          "question_en": "Who answered, \"I'm trying to find something to eat\"?",
+          "options_en": [
+            "Hank",
+            "Computer Mouse",
+            "Lucy the Cat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p1_s2_q2",
+          "type": "choice",
+          "question_en": "What was Hank trying to find?",
+          "options_en": [
+            "something to eat",
+            "a yellow pencil",
+            "a picture of a large tray of cake"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "What did he see?",
+          "options_en": [
+            "A yellow pencil",
+            "A tray of cake",
+            "A computer mouse"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "Why did he take a bite?",
+          "options_en": [
+            "He thought it was a cheese stick",
+            "He wanted some cake",
+            "He wanted to break a wire"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "Who showed Hank a picture?",
+          "options_en": [
+            "Computer Mouse",
+            "Hank",
+            "Lucy the Cat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "What did Computer Mouse show Hank a picture of?",
+          "options_en": [
+            "A large tray of cake in the kitchen",
+            "A dog",
+            "A yellow pencil"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p3_s1_q1",
+          "type": "choice",
+          "question_en": "How did Hank feel after seeing the picture?",
+          "options_en": [
+            "Even hungrier",
+            "Happy",
+            "Sleepy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p3_s1_q2",
+          "type": "choice",
+          "question_en": "Why did Hank's mouth water?",
+          "options_en": [
+            "Because he saw a picture of cake",
+            "Because he bit a yellow pencil",
+            "Because Lucy the Cat was asleep"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p3_s2_q1",
+          "type": "choice",
+          "question_en": "Where did he creep to?",
+          "options_en": [
+            "The kitchen",
+            "The room with the computer",
+            "A bigger house"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p3_s2_q2",
+          "type": "choice",
+          "question_en": "Who was asleep in the kitchen?",
+          "options_en": [
+            "Lucy the Cat",
+            "Computer Mouse",
+            "Hank"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "Who brought the cake to the room?",
+          "options_en": [
+            "Hank",
+            "Computer Mouse",
+            "Lucy the Cat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "What is the correct answer to this question: With whom did Hank share the cake?",
+          "options_en": [
+            "Computer Mouse",
+            "Lucy the Cat",
+            "the yellow pencil"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p4_s1_q1",
+          "type": "choice",
+          "question_en": "What did they both like?",
+          "options_en": [
+            "its sweet taste",
+            "a yucky taste",
+            "a cheese-stick taste"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p4_s1_q2",
+          "type": "choice",
+          "question_en": "How did the cake taste to them?",
+          "options_en": [
+            "Sweet",
+            "Yucky",
+            "Like a pencil"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p4_s2_q1",
+          "type": "choice",
+          "question_en": "Who cried \"Yum!\"?",
+          "options_en": [
+            "Hank and Computer Mouse",
+            "Lucy the Cat",
+            "Hank alone"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p4_s2_q2",
+          "type": "choice",
+          "question_en": "What did Hank and Computer Mouse cry?",
+          "options_en": [
+            "\"Yum!\"",
+            "\"Yuck!\"",
+            "\"Don't just leave me here.\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p4_s3_q1",
+          "type": "choice",
+          "question_en": "What did they especially love on the cake?",
+          "options_en": [
+            "the icing on top",
+            "the yellow pencil",
+            "the wire"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p4_s3_q2",
+          "type": "choice",
+          "question_en": "Which part of the cake did they love?",
+          "options_en": [
+            "the icing on top",
+            "the tray of cake",
+            "the sweet taste"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "Who woke up?",
+          "options_en": [
+            "Lucy the Cat",
+            "Hank the Mouse",
+            "Computer Mouse"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "Where did Lucy appear?",
+          "options_en": [
+            "In front of the computer",
+            "In the kitchen",
+            "By the cake"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "What is said in this sentence?",
+          "options_en": [
+            "\"It's the cat!\"",
+            "\"It's a mouse!\"",
+            "\"It's a dog!\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "Which animal is mentioned in this sentence?",
+          "options_en": [
+            "the cat",
+            "the mouse",
+            "the dog"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p6_s1_q1",
+          "type": "choice",
+          "question_en": "Who cried?",
+          "options_en": [
+            "Hank",
+            "Computer Mouse",
+            "Lucy the Cat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p6_s1_q2",
+          "type": "choice",
+          "question_en": "What did Hank say?",
+          "options_en": [
+            "\"It's the cat!\"",
+            "\"I'm trying to find something to eat,\"",
+            "\"Don't just leave me here.\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p6_s2_q1",
+          "type": "choice",
+          "question_en": "How did he run?",
+          "options_en": [
+            "Willy-nilly, round and back",
+            "Tiptoed slowly to the computer",
+            "Quickly showed a picture of a dog"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p6_s2_q2",
+          "type": "choice",
+          "question_en": "What is the correct answer to this question: In which manner did he move this way and that?",
+          "options_en": [
+            "Willy-nilly, round and back",
+            "Slowly and quietly",
+            "Carefully with his teeth"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p6_s3_q1",
+          "type": "choice",
+          "question_en": "Who showed a picture of a dog?",
+          "options_en": [
+            "Computer Mouse",
+            "Hank",
+            "Lucy the Cat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p6_s3_q2",
+          "type": "choice",
+          "question_en": "What did Lucy the Cat do after the picture was shown?",
+          "options_en": [
+            "She ran away",
+            "She slept",
+            "She shared cake"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "Who was about to leave?",
+          "options_en": [
+            "Hank",
+            "Computer Mouse",
+            "Lucy the Cat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "What was Hank about to do?",
+          "options_en": [
+            "Leave",
+            "Eat cake",
+            "Break the wire"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p7_s1_q1",
+          "type": "choice",
+          "question_en": "Who cried \"Wait!\"?",
+          "options_en": [
+            "Computer Mouse",
+            "Hank",
+            "Lucy the Cat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p7_s1_q2",
+          "type": "choice",
+          "question_en": "Why did the character cry \"Wait!\"?",
+          "options_en": [
+            "Because they didn't want to be left there",
+            "Because they wanted more cake",
+            "Because the cat woke up"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p7_s2_q1",
+          "type": "choice",
+          "question_en": "What did the speaker ask to be broken?",
+          "options_en": [
+            "The wire",
+            "The pencil",
+            "The cake"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p7_s2_q2",
+          "type": "choice",
+          "question_en": "How did the speaker ask the wire to be broken?",
+          "options_en": [
+            "With your teeth",
+            "With a picture",
+            "With a bite"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        }
+      ]
+    },
+    {
+      "paragraph_index": 8,
+      "questions": [
+        {
+          "id": "gl_p8_s0_q1",
+          "type": "choice",
+          "question_en": "Who was free?",
+          "options_en": [
+            "Computer Mouse",
+            "Hank the Mouse",
+            "Lucy the Cat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p8_s0_q2",
+          "type": "choice",
+          "question_en": "What happened finally?",
+          "options_en": [
+            "Computer Mouse was free",
+            "They ate more cake",
+            "Lucy the Cat woke up"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p8_s1_q1",
+          "type": "choice",
+          "question_en": "Where did they plan to move?",
+          "options_en": [
+            "To a bigger house",
+            "To the kitchen",
+            "To the computer room"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p8_s1_q2",
+          "type": "choice",
+          "question_en": "What did they want the new house to have?",
+          "options_en": [
+            "More cake and no cats",
+            "A sleeping cat",
+            "A yellow pencil"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p8_s2_q1",
+          "type": "choice",
+          "question_en": "How did they live?",
+          "options_en": [
+            "Happily ever after",
+            "Hungry and scared",
+            "With Lucy the Cat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p8_s2_q2",
+          "type": "choice",
+          "question_en": "When did they live happily?",
+          "options_en": [
+            "Ever after",
+            "While Lucy was asleep",
+            "Before finding the cake"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        }
+      ]
+    },
+    {
+      "paragraph_index": 9,
+      "questions": [
+        {
+          "id": "gl_p9_s0_q1",
+          "type": "choice",
+          "question_en": "What does the sentence say?",
+          "options_en": [
+            "The End",
+            "Hank the Mouse",
+            "Lucy the Cat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p9_s0_q2",
+          "type": "choice",
+          "question_en": "Which words appear in the sentence?",
+          "options_en": [
+            "The End",
+            "They lived happily ever after",
+            "Yum!"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'A Tale of Two Mice'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "sneaked",
+      "meaning_vi": "lẻn vào (đi vào một cách lén lút, không muốn ai biết)",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "room",
+      "meaning_vi": "căn phòng (một không gian có tường bao quanh)",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "computer",
+      "meaning_vi": "máy tính (một cỗ máy giúp làm việc, học tập, chơi game)",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "hungry",
+      "meaning_vi": "đói bụng (cảm giác muốn ăn)",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "tiptoed",
+      "meaning_vi": "rón rén (đi nhẹ nhàng bằng đầu ngón chân)",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "slowly",
+      "meaning_vi": "chậm rãi (không nhanh)",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "trying",
+      "meaning_vi": "cố gắng (làm hết sức để đạt được điều gì đó)",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "find",
+      "meaning_vi": "tìm (kiếm cái gì đó)",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "pencil",
+      "meaning_vi": "bút chì (dụng cụ để viết hoặc vẽ)",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "thought",
+      "meaning_vi": "nghĩ (suy nghĩ trong đầu)",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "quickly",
+      "meaning_vi": "nhanh chóng (làm gì đó rất nhanh)",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "bite",
+      "meaning_vi": "cắn (dùng răng cắn vào cái gì đó)",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "showed",
+      "meaning_vi": "cho xem (đưa cái gì đó ra để người khác nhìn)",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "large",
+      "meaning_vi": "lớn (kích thước to)",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "mouth watered",
+      "meaning_vi": "chảy nước miếng (cảm giác thèm ăn đến mức nước miếng tiết ra)",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "crept",
+      "meaning_vi": "rón rén (đi nhẹ nhàng, lén lút)",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "brought",
+      "meaning_vi": "mang (đem cái gì đó đến)",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "shared",
+      "meaning_vi": "chia sẻ (cho người khác một phần của mình)",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "sweet",
+      "meaning_vi": "ngọt (có vị đường)",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "icing",
+      "meaning_vi": "lớp kem phủ (lớp kem trang trí trên bánh)",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "enjoying",
+      "meaning_vi": "đang thưởng thức (đang vui vẻ làm gì đó)",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "woke up",
+      "meaning_vi": "thức dậy (tỉnh giấc sau khi ngủ)",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "appeared",
+      "meaning_vi": "xuất hiện (hiện ra, có mặt)",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "cried",
+      "meaning_vi": "kêu lên (nói to, hét lên vì sợ)",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "willy-nilly",
+      "meaning_vi": "lung tung (không theo thứ tự, không có kế hoạch)",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "ran away",
+      "meaning_vi": "chạy mất (chạy đi khỏi một nơi nào đó)",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "about to leave",
+      "meaning_vi": "sắp sửa rời đi (chuẩn bị đi khỏi)",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "leave",
+      "meaning_vi": "bỏ lại (đi khỏi và để lại ai đó/cái gì đó)",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "break",
+      "meaning_vi": "cắn đứt (làm cho cái gì đó bị đứt ra)",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "wire",
+      "meaning_vi": "sợi dây (một sợi kim loại mỏng)",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "finally",
+      "meaning_vi": "cuối cùng (sau một thời gian dài)",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "free",
+      "meaning_vi": "tự do (không bị giam giữ hay ràng buộc)",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "planned",
+      "meaning_vi": "dự định (lên kế hoạch làm gì đó)",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "happily ever after",
+      "meaning_vi": "hạnh phúc mãi mãi về sau (sống vui vẻ mãi mãi)",
+      "paragraph_index": 8
+    }
+  ]
+}

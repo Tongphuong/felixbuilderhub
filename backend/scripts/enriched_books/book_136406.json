@@ -1,0 +1,2433 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L3",
+  "level_label": "Cấp 3",
+  "topic": "Papa Knows a Lot, but Mamma Knows Everything",
+  "slug": "book_136406",
+  "audio_filename": "book_136406.mp3",
+  "book_slug": "book_136406",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_136406/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_136406/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_136406/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_136406/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_136406/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_136406/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_136406/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_136406/page_09.jpg",
+    "https://audio.felixbuilderhub.com/books/book_136406/page_10.jpg",
+    "https://audio.felixbuilderhub.com/books/book_136406/page_11.jpg",
+    "https://audio.felixbuilderhub.com/books/book_136406/page_12.jpg",
+    "https://audio.felixbuilderhub.com/books/book_136406/page_13.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_136406/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_136406/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_136406/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_136406/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_136406/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_136406/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_136406/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_136406/page_09.mp3",
+    "https://audio.felixbuilderhub.com/books/book_136406/page_10.mp3",
+    "https://audio.felixbuilderhub.com/books/book_136406/page_11.mp3",
+    "https://audio.felixbuilderhub.com/books/book_136406/page_12.mp3",
+    "https://audio.felixbuilderhub.com/books/book_136406/page_13.mp3"
+  ],
+  "book_attribution": {
+    "title": "Papa Knows a Lot, but Mamma Knows Everything",
+    "creators": [
+      "Disha Kumar",
+      "Drishti Chaudhary"
+    ],
+    "publisher": "StoryWeaver Community",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: Papa Knows a Lot, but Mamma Knows Everything is written by Disha Kumar . © Disha Kumar , 2020. Some rights reserved. Released under CC BY 4.0 license. Images Attributions: Cover page: scarecrow , by Drishti Chaudhary © Drishti Chaudhary, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 2: in the village , by Drishti Chaudhary © Drishti Chaudhary, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 3: Sound Big , by Disha Kumar © Disha Kumar , 2026. Some rights reserved. Released under CC BY 4.0 license. Page 4: hand shooing away crow , by Disha Kumar © Disha Kumar , 2026. Some rights reserved. Released under CC BY 4.0 license. Page 5: tripping , by Drishti Chaudhary © Drishti Chaudhary, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 6: granny , by Drishti Chaudhary © Drishti Chaudhary, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 7: Aunty with belan , by Disha Kumar © Disha Kumar , 2026. Some rights reserved. Released under CC BY 4.0 license. Page 8: Police and crow , by Disha Kumar © Disha Kumar , 2026. Some rights reserved. Released under CC BY 4.0 license. Page 9: scarecrow , by Drishti Chaudhary © Drishti Chaudhary, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 10: google , by Drishti Chaudhary © Drishti Chaudhary, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 11: in the end , by Drishti Chaudhary © Drishti Chaudhary, 2026. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/136406-papa-knows-a-lot-but-mamma-knows-everything",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "in the village , by Drishti Chaudhary © Drishti Chaudhary, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "Sound Big , by Disha Kumar © Disha Kumar , 2026. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "hand shooing away crow , by Disha Kumar © Disha Kumar , 2026. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "tripping , by Drishti Chaudhary © Drishti Chaudhary, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "granny , by Drishti Chaudhary © Drishti Chaudhary, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "Aunty with belan , by Disha Kumar © Disha Kumar , 2026. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "Police and crow , by Disha Kumar © Disha Kumar , 2026. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "scarecrow , by Drishti Chaudhary © Drishti Chaudhary, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 8,
+        "credit_text": "google , by Drishti Chaudhary © Drishti Chaudhary, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 9,
+        "credit_text": "in the end , by Drishti Chaudhary © Drishti Chaudhary, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 10,
+        "credit_text": "Illustration by Disha Kumar, Drishti Chaudhary."
+      },
+      {
+        "page_index": 11,
+        "credit_text": "Illustration by Disha Kumar, Drishti Chaudhary."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "Papa Knows a Lot, but Mamma Knows Everything",
+    "paragraphs_en": [
+      "“Wake up! Deepu, wake up!” yelled Deepika’s mother. “It’s a Sunday morning and I have to rush to the weekly village market to fetch the fresh vegetables and fruits.” Deepika woke up, rubbing her eyes and bid goodbye to her mother.",
+      "Just then, Deepika heard a loud sound coming from their backyard, “Ouch!! Shoo shoo!” She rushed to see what was going on. Her father was screaming at someone.",
+      "\"Go away, why’re you after my life, you black crow? For God's sake, let me fill some water from the well! I don't know from where out of the blue this annoying creature came and started pecking me hard on my head. Ouch ouch!!!\" bawled Deepika's father. Shoo!! Stop! Shoo!",
+      "“Ugh! Ouch!” screamed Deepika, “You stupid cro…ouch! It’s hitting me too!\" Hearing all the clutter, their neighbour, Lakshmi came out with her greedy dog, Lalu. “What’s the noise all abou… ouch! Stop you crow! Oh..so this is the root cause of the problem!” realized Lakshmi. “The crow is thirsty. I'll get a bucket of water.” But the crow didn’t care. Rather, Deepika tripped over the bucket and converted the backyard into a small pond! Ouch! Ouch! Dharaam!!!",
+      "“Go and bring your dadi, Deepu!” said Deepika’s father. Soon Deepika got her granny on her wheelchair. She looked at the crow suspiciously and said, “Hmm…I get that now…The crow is none other than my great grandfather, Alokanand. He’s hungry! We must give him his favourite dish, jaggery payasam (an Indian dessert made of milk, rice, and nuts).” She then made a yummy payasam, and placed a huge pot full of it near the well. But the crow didn't even look at it.",
+      "H earing the chaos, Bindiya mausi (aunty), who was making rotis (bread) in the kitchen, came with a long and sturdy belan (the bread roller). “What's this noise all abou… ouch! Get away you cruel cro..ouch! Wait… ouch!” she screamed in a shrilled voice, trying to hit the crow with her belan. But the crow escaped.",
+      "Deepika’s father then got an idea, “Let me call Bulchul Pandey, my inspector friend.” Bulchul Pandey rushed to rescue them, “What’s the thing my frien…ouch! So this is the thing. Wait… I’ll shoot it with my gun.” But he missed the shot.",
+      "“We can scare it b y the scarecrow, which my farmer friend, Ram Khilawan has,” said Deepika’s father. Soon Ram Khilawan came with his scary-looking scarecrow and positioned it near the well. But the crow didn’t even give a damn. It instead chased Ram Khilawan and shooed him away. Hmm! Chala aya mujhey daraane!!!",
+      "“Let's feed it with corn. I am sure it will be satisfied then!\" claimed Bhulwa, the techie of the village. But that didn’t work too. They were all frustrated by now. Gargle says, \"Crows love to eat corn.\"",
+      "Right then, “Deepu..arrey oh Deepu…open the door! Look what I got for you.” called out Deepika’s mother. “Oh..mamma..she came back...I am sure she will solve this problem.” exclaimed Deepika with relief. Then they all told her the entire story before Deepika’s mother could utter a word. “Oh… show me the crow,” appealed Deepika’s mother.",
+      "Off they went to see the crow. “Oh… ouch! So this is the… ouch! Wait a minute…She looks worried,” explained Deepika’s mother. She took Deepika's binoculars and looked carefully to see what was there on the roof of their storeroom, next to the well. “It’s a nest! The mother crow is trying to protect its eggs.” she whispered. “And so it’s hitting everyone thinking that we could harm them. We need to just leave them alone for a few days, and things will be fine.”",
+      "And Deepika’s mother was right! Deepika remarked with glee, “Papa knows a lot, but mamma knows everything!”"
+    ],
+    "sentences": [
+      {
+        "text_en": "“Wake up! Deepu, wake up!” yelled Deepika’s mother.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_000.mp3",
+        "text_vi": "“Dậy đi! Deepu, dậy đi!” mẹ của Deepika hét lên."
+      },
+      {
+        "text_en": "“It’s a Sunday morning and I have to rush to the weekly village market to fetch the fresh vegetables and fruits.” Deepika woke up, rubbing her eyes and bid goodbye to her mother.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_001.mp3",
+        "text_vi": "“Sáng Chủ Nhật rồi, mẹ phải vội ra chợ làng hàng tuần để mua rau củ quả tươi.” Deepika thức dậy, dụi mắt và chào tạm biệt mẹ."
+      },
+      {
+        "text_en": "Just then, Deepika heard a loud sound coming from their backyard, “Ouch!!",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_002.mp3",
+        "text_vi": "Ngay lúc đó, Deepika nghe thấy một tiếng động lớn phát ra từ sân sau, “Ối!!"
+      },
+      {
+        "text_en": "Shoo shoo!” She rushed to see what was going on.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_003.mp3",
+        "text_vi": "Cút đi! Cút đi!” Cô bé vội chạy ra xem chuyện gì đang xảy ra."
+      },
+      {
+        "text_en": "Her father was screaming at someone.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_004.mp3",
+        "text_vi": "Bố cô bé đang la mắng ai đó."
+      },
+      {
+        "text_en": "\"Go away, why’re you after my life, you black crow?",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_005.mp3",
+        "text_vi": "“Đi đi, sao mày cứ bám theo tao vậy, con quạ đen kia?"
+      },
+      {
+        "text_en": "For God's sake, let me fill some water from the well!",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_006.mp3",
+        "text_vi": "Trời ơi, để tao múc ít nước từ giếng cái đã!"
+      },
+      {
+        "text_en": "I don't know from where out of the blue this annoying creature came and started pecking me hard on my head.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_007.mp3",
+        "text_vi": "Tao không biết từ đâu con vật phiền phức này tự nhiên xuất hiện và mổ mạnh vào đầu tao."
+      },
+      {
+        "text_en": "Ouch ouch!!!\" bawled Deepika's father.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_008.mp3",
+        "text_vi": "Ối ối!!!” bố của Deepika gào lên."
+      },
+      {
+        "text_en": "Shoo!! Stop! Shoo!",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_009.mp3",
+        "text_vi": "Cút đi! Dừng lại! Cút đi!"
+      },
+      {
+        "text_en": "“Ugh! Ouch!” screamed Deepika, “You stupid cro…ouch!",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_010.mp3",
+        "text_vi": "“Ối! Đau quá!” Deepika hét lên, “Con quạ ngốc nghếch kia… ối!"
+      },
+      {
+        "text_en": "It’s hitting me too!\" Hearing all the clutter, their neighbour, Lakshmi came out with her greedy dog, Lalu.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_011.mp3",
+        "text_vi": "Nó đánh con nữa!” Nghe thấy tiếng ồn ào, hàng xóm của họ, Lakshmi, đi ra cùng với chú chó tham ăn của mình, Lalu."
+      },
+      {
+        "text_en": "“What’s the noise all abou… ouch!",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_012.mp3",
+        "text_vi": "“Tiếng ồn gì vậy… ối!"
+      },
+      {
+        "text_en": "Stop you crow!",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_013.mp3",
+        "text_vi": "Dừng lại đi con quạ!"
+      },
+      {
+        "text_en": "Oh..so this is the root cause of the problem!” realized Lakshmi.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_014.mp3",
+        "text_vi": "Ồ… vậy ra đây là nguyên nhân của vấn đề!” Lakshmi nhận ra."
+      },
+      {
+        "text_en": "“The crow is thirsty.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_015.mp3",
+        "text_vi": "“Con quạ khát nước."
+      },
+      {
+        "text_en": "I'll get a bucket of water.” But the crow didn’t care.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_016.mp3",
+        "text_vi": "Tôi sẽ lấy một xô nước.” Nhưng con quạ không quan tâm."
+      },
+      {
+        "text_en": "Rather, Deepika tripped over the bucket and converted the backyard into a small pond!",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_017.mp3",
+        "text_vi": "Thay vào đó, Deepika vấp phải cái xô và biến sân sau thành một cái ao nhỏ!"
+      },
+      {
+        "text_en": "Ouch! Ouch! Dharaam!!!",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_018.mp3",
+        "text_vi": "Ối! Ối! Dharaam!!!"
+      },
+      {
+        "text_en": "“Go and bring your dadi, Deepu!” said Deepika’s father.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_019.mp3",
+        "text_vi": "“Đi gọi bà nội con ra đây, Deepu!” bố của Deepika nói."
+      },
+      {
+        "text_en": "Soon Deepika got her granny on her wheelchair.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_020.mp3",
+        "text_vi": "Chẳng mấy chốc, Deepika đưa bà nội của mình ra bằng xe lăn."
+      },
+      {
+        "text_en": "She looked at the crow suspiciously and said, “Hmm…I get that now…The crow is none other than my great grandfather, Alokanand.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_021.mp3",
+        "text_vi": "Bà nhìn con quạ một cách nghi ngờ và nói, “Hmm… Bà hiểu rồi… Con quạ này không ai khác chính là ông cố của bà, Alokanand."
+      },
+      {
+        "text_en": "He’s hungry! We must give him his favourite dish, jaggery payasam (an Indian dessert made of milk, rice, and nuts).” She then made a yummy payasam, and placed a huge pot full of it near the well.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_022.mp3",
+        "text_vi": "Ông ấy đói rồi! Chúng ta phải cho ông ấy món ăn yêu thích của ông, jaggery payasam (một món tráng miệng của Ấn Độ làm từ sữa, gạo và các loại hạt).” Sau đó, bà làm một món payasam ngon tuyệt, và đặt một nồi lớn đầy món đó gần giếng."
+      },
+      {
+        "text_en": "But the crow didn't even look at it.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_023.mp3",
+        "text_vi": "Nhưng con quạ thậm chí còn không thèm nhìn tới."
+      },
+      {
+        "text_en": "H earing the chaos, Bindiya mausi (aunty), who was making rotis (bread) in the kitchen, came with a long and sturdy belan (the bread roller).",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_024.mp3",
+        "text_vi": "Nghe thấy sự hỗn loạn, dì Bindiya (cô, dì), người đang làm bánh mì (rotis) trong bếp, đi ra với một cây cán bột (belan) dài và chắc chắn."
+      },
+      {
+        "text_en": "“What's this noise all abou… ouch!",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_025.mp3",
+        "text_vi": "“Tiếng ồn gì vậy… ối!"
+      },
+      {
+        "text_en": "Get away you cruel cro..ouch!",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_026.mp3",
+        "text_vi": "Tránh ra đi con quạ độc ác kia… ối!"
+      },
+      {
+        "text_en": "Wait… ouch!” she screamed in a shrilled voice, trying to hit the crow with her belan.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_027.mp3",
+        "text_vi": "Đợi đã… ối!” cô ấy hét lên bằng giọng the thé, cố gắng đánh con quạ bằng cây cán bột của mình."
+      },
+      {
+        "text_en": "But the crow escaped.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_028.mp3",
+        "text_vi": "Nhưng con quạ đã thoát được."
+      },
+      {
+        "text_en": "Deepika’s father then got an idea, “Let me call Bulchul Pandey, my inspector friend.” Bulchul Pandey rushed to rescue them, “What’s the thing my frien…ouch!",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_029.mp3",
+        "text_vi": "Bố của Deepika sau đó nảy ra một ý, “Để bố gọi Bulchul Pandey, bạn thanh tra của bố.” Bulchul Pandey vội vã đến cứu họ, “Chuyện gì vậy bạn tôi… ối!"
+      },
+      {
+        "text_en": "So this is the thing.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_030.mp3",
+        "text_vi": "Ra là chuyện này."
+      },
+      {
+        "text_en": "Wait… I’ll shoot it with my gun.” But he missed the shot.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_031.mp3",
+        "text_vi": "Đợi đã… Tôi sẽ bắn nó bằng súng của tôi.” Nhưng anh ấy đã bắn trượt."
+      },
+      {
+        "text_en": "“We can scare it b y the scarecrow, which my farmer friend, Ram Khilawan has,” said Deepika’s father.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_032.mp3",
+        "text_vi": "“Chúng ta có thể dọa nó bằng con bù nhìn mà bạn nông dân của bố, Ram Khilawan, có,” bố của Deepika nói."
+      },
+      {
+        "text_en": "Soon Ram Khilawan came with his scary-looking scarecrow and positioned it near the well.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_033.mp3",
+        "text_vi": "Chẳng mấy chốc, Ram Khilawan đến với con bù nhìn trông đáng sợ của mình và đặt nó gần giếng."
+      },
+      {
+        "text_en": "But the crow didn’t even give a damn.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_034.mp3",
+        "text_vi": "Nhưng con quạ thậm chí còn không thèm quan tâm."
+      },
+      {
+        "text_en": "It instead chased Ram Khilawan and shooed him away.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_035.mp3",
+        "text_vi": "Thay vào đó, nó đuổi theo Ram Khilawan và xua anh ấy đi."
+      },
+      {
+        "text_en": "Hmm! Chala aya mujhey daraane!!!",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_036.mp3",
+        "text_vi": "Hừm! Đến đây dọa ta à!!!"
+      },
+      {
+        "text_en": "“Let's feed it with corn.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_037.mp3",
+        "text_vi": "“Hãy cho nó ăn ngô đi."
+      },
+      {
+        "text_en": "I am sure it will be satisfied then!\" claimed Bhulwa, the techie of the village.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_038.mp3",
+        "text_vi": "Tôi chắc chắn nó sẽ hài lòng thôi!” Bhulwa, chuyên gia công nghệ của làng, tuyên bố."
+      },
+      {
+        "text_en": "But that didn’t work too.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_039.mp3",
+        "text_vi": "Nhưng cách đó cũng không hiệu quả."
+      },
+      {
+        "text_en": "They were all frustrated by now.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_040.mp3",
+        "text_vi": "Đến lúc này thì tất cả đều cảm thấy thất vọng."
+      },
+      {
+        "text_en": "Gargle says, \"Crows love to eat corn.\"",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_041.mp3",
+        "text_vi": "Gargle nói, “Quạ thích ăn ngô.”"
+      },
+      {
+        "text_en": "Right then, “Deepu..arrey oh Deepu…open the door!",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_042.mp3",
+        "text_vi": "Ngay lúc đó, “Deepu… ôi Deepu… mở cửa đi!"
+      },
+      {
+        "text_en": "Look what I got for you.” called out Deepika’s mother.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_043.mp3",
+        "text_vi": "Nhìn xem mẹ có gì cho con này.” mẹ của Deepika gọi."
+      },
+      {
+        "text_en": "“Oh..mamma..she came back...I am sure she will solve this problem.” exclaimed Deepika with relief.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_044.mp3",
+        "text_vi": "“Ôi… mẹ… mẹ về rồi… Con chắc chắn mẹ sẽ giải quyết được vấn đề này.” Deepika reo lên với vẻ nhẹ nhõm."
+      },
+      {
+        "text_en": "Then they all told her the entire story before Deepika’s mother could utter a word.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_045.mp3",
+        "text_vi": "Sau đó, tất cả kể cho mẹ nghe toàn bộ câu chuyện trước khi mẹ của Deepika kịp nói một lời nào."
+      },
+      {
+        "text_en": "“Oh… show me the crow,” appealed Deepika’s mother.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_046.mp3",
+        "text_vi": "“Ồ… cho mẹ xem con quạ nào,” mẹ của Deepika đề nghị."
+      },
+      {
+        "text_en": "Off they went to see the crow.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_047.mp3",
+        "text_vi": "Họ đi xem con quạ."
+      },
+      {
+        "text_en": "“Oh… ouch! So this is the… ouch!",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_048.mp3",
+        "text_vi": "“Ôi… ối! Vậy ra đây là… ối!"
+      },
+      {
+        "text_en": "Wait a minute…She looks worried,” explained Deepika’s mother.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_049.mp3",
+        "text_vi": "Đợi một chút… Con quạ trông có vẻ lo lắng,” mẹ của Deepika giải thích."
+      },
+      {
+        "text_en": "She took Deepika's binoculars and looked carefully to see what was there on the roof of their storeroom, next to the well.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_050.mp3",
+        "text_vi": "Bà lấy ống nhòm của Deepika và nhìn kỹ xem có gì trên mái nhà kho của họ, cạnh cái giếng."
+      },
+      {
+        "text_en": "“It’s a nest!",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_051.mp3",
+        "text_vi": "“Đó là một cái tổ!"
+      },
+      {
+        "text_en": "The mother crow is trying to protect its eggs.” she whispered.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_052.mp3",
+        "text_vi": "Con quạ mẹ đang cố gắng bảo vệ trứng của nó,” bà thì thầm."
+      },
+      {
+        "text_en": "“And so it’s hitting everyone thinking that we could harm them.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_053.mp3",
+        "text_vi": "“Và vì vậy nó tấn công mọi người vì nghĩ rằng chúng ta có thể làm hại chúng."
+      },
+      {
+        "text_en": "We need to just leave them alone for a few days, and things will be fine.”",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_054.mp3",
+        "text_vi": "Chúng ta chỉ cần để chúng yên trong vài ngày, mọi chuyện sẽ ổn thôi.”"
+      },
+      {
+        "text_en": "And Deepika’s mother was right!",
+        "paragraph_index": 11,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_055.mp3",
+        "text_vi": "Và mẹ của Deepika đã đúng!"
+      },
+      {
+        "text_en": "Deepika remarked with glee, “Papa knows a lot, but mamma knows everything!”",
+        "paragraph_index": 11,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_056.mp3",
+        "text_vi": "Deepika vui vẻ nói, “Bố biết nhiều, nhưng mẹ biết tất cả mọi thứ!”"
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "“Wake up! Deepu, wake up!” yelled Deepika’s mother.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "“It’s a Sunday morning and I have to rush to the weekly village market to fetch the fresh vegetables and fruits.” Deepika woke up, rubbing her eyes and bid goodbye to her mother.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "Just then, Deepika heard a loud sound coming from their backyard, “Ouch!!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "Shoo shoo!” She rushed to see what was going on.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "Her father was screaming at someone.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "\"Go away, why’re you after my life, you black crow?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "For God's sake, let me fill some water from the well!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "I don't know from where out of the blue this annoying creature came and started pecking me hard on my head.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "Ouch ouch!!!\" bawled Deepika's father.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "Shoo!! Stop! Shoo!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "“Ugh! Ouch!” screamed Deepika, “You stupid cro…ouch!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "It’s hitting me too!\" Hearing all the clutter, their neighbour, Lakshmi came out with her greedy dog, Lalu.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "“What’s the noise all abou… ouch!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_012.mp3"
+        },
+        {
+          "id": "ra_13",
+          "text_en": "Stop you crow!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_013.mp3"
+        },
+        {
+          "id": "ra_14",
+          "text_en": "Oh..so this is the root cause of the problem!” realized Lakshmi.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_014.mp3"
+        },
+        {
+          "id": "ra_15",
+          "text_en": "“The crow is thirsty.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_015.mp3"
+        },
+        {
+          "id": "ra_16",
+          "text_en": "I'll get a bucket of water.” But the crow didn’t care.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_016.mp3"
+        },
+        {
+          "id": "ra_17",
+          "text_en": "Rather, Deepika tripped over the bucket and converted the backyard into a small pond!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_017.mp3"
+        },
+        {
+          "id": "ra_18",
+          "text_en": "Ouch! Ouch! Dharaam!!!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_018.mp3"
+        },
+        {
+          "id": "ra_19",
+          "text_en": "“Go and bring your dadi, Deepu!” said Deepika’s father.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_019.mp3"
+        },
+        {
+          "id": "ra_20",
+          "text_en": "Soon Deepika got her granny on her wheelchair.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_020.mp3"
+        },
+        {
+          "id": "ra_21",
+          "text_en": "She looked at the crow suspiciously and said, “Hmm…I get that now…The crow is none other than my great grandfather, Alokanand.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_021.mp3"
+        },
+        {
+          "id": "ra_22",
+          "text_en": "He’s hungry! We must give him his favourite dish, jaggery payasam (an Indian dessert made of milk, rice, and nuts).” She then made a yummy payasam, and placed a huge pot full of it near the well.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_022.mp3"
+        },
+        {
+          "id": "ra_23",
+          "text_en": "But the crow didn't even look at it.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_023.mp3"
+        },
+        {
+          "id": "ra_24",
+          "text_en": "H earing the chaos, Bindiya mausi (aunty), who was making rotis (bread) in the kitchen, came with a long and sturdy belan (the bread roller).",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_024.mp3"
+        },
+        {
+          "id": "ra_25",
+          "text_en": "“What's this noise all abou… ouch!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_025.mp3"
+        },
+        {
+          "id": "ra_26",
+          "text_en": "Get away you cruel cro..ouch!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_026.mp3"
+        },
+        {
+          "id": "ra_27",
+          "text_en": "Wait… ouch!” she screamed in a shrilled voice, trying to hit the crow with her belan.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_027.mp3"
+        },
+        {
+          "id": "ra_28",
+          "text_en": "But the crow escaped.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_028.mp3"
+        },
+        {
+          "id": "ra_29",
+          "text_en": "Deepika’s father then got an idea, “Let me call Bulchul Pandey, my inspector friend.” Bulchul Pandey rushed to rescue them, “What’s the thing my frien…ouch!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_029.mp3"
+        },
+        {
+          "id": "ra_30",
+          "text_en": "So this is the thing.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_030.mp3"
+        },
+        {
+          "id": "ra_31",
+          "text_en": "Wait… I’ll shoot it with my gun.” But he missed the shot.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_031.mp3"
+        },
+        {
+          "id": "ra_32",
+          "text_en": "“We can scare it b y the scarecrow, which my farmer friend, Ram Khilawan has,” said Deepika’s father.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_032.mp3"
+        },
+        {
+          "id": "ra_33",
+          "text_en": "Soon Ram Khilawan came with his scary-looking scarecrow and positioned it near the well.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_033.mp3"
+        },
+        {
+          "id": "ra_34",
+          "text_en": "But the crow didn’t even give a damn.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_034.mp3"
+        },
+        {
+          "id": "ra_35",
+          "text_en": "It instead chased Ram Khilawan and shooed him away.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_035.mp3"
+        },
+        {
+          "id": "ra_36",
+          "text_en": "Hmm! Chala aya mujhey daraane!!!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_036.mp3"
+        },
+        {
+          "id": "ra_37",
+          "text_en": "“Let's feed it with corn.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_037.mp3"
+        },
+        {
+          "id": "ra_38",
+          "text_en": "I am sure it will be satisfied then!\" claimed Bhulwa, the techie of the village.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_038.mp3"
+        },
+        {
+          "id": "ra_39",
+          "text_en": "But that didn’t work too.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_039.mp3"
+        },
+        {
+          "id": "ra_40",
+          "text_en": "They were all frustrated by now.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_040.mp3"
+        },
+        {
+          "id": "ra_41",
+          "text_en": "Gargle says, \"Crows love to eat corn.\"",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_041.mp3"
+        },
+        {
+          "id": "ra_42",
+          "text_en": "Right then, “Deepu..arrey oh Deepu…open the door!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_042.mp3"
+        },
+        {
+          "id": "ra_43",
+          "text_en": "Look what I got for you.” called out Deepika’s mother.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_043.mp3"
+        },
+        {
+          "id": "ra_44",
+          "text_en": "“Oh..mamma..she came back...I am sure she will solve this problem.” exclaimed Deepika with relief.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_044.mp3"
+        },
+        {
+          "id": "ra_45",
+          "text_en": "Then they all told her the entire story before Deepika’s mother could utter a word.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_045.mp3"
+        },
+        {
+          "id": "ra_46",
+          "text_en": "“Oh… show me the crow,” appealed Deepika’s mother.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_046.mp3"
+        },
+        {
+          "id": "ra_47",
+          "text_en": "Off they went to see the crow.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_047.mp3"
+        },
+        {
+          "id": "ra_48",
+          "text_en": "“Oh… ouch! So this is the… ouch!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_048.mp3"
+        },
+        {
+          "id": "ra_49",
+          "text_en": "Wait a minute…She looks worried,” explained Deepika’s mother.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_049.mp3"
+        },
+        {
+          "id": "ra_50",
+          "text_en": "She took Deepika's binoculars and looked carefully to see what was there on the roof of their storeroom, next to the well.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_050.mp3"
+        },
+        {
+          "id": "ra_51",
+          "text_en": "“It’s a nest!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_051.mp3"
+        },
+        {
+          "id": "ra_52",
+          "text_en": "The mother crow is trying to protect its eggs.” she whispered.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_052.mp3"
+        },
+        {
+          "id": "ra_53",
+          "text_en": "“And so it’s hitting everyone thinking that we could harm them.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_053.mp3"
+        },
+        {
+          "id": "ra_54",
+          "text_en": "We need to just leave them alone for a few days, and things will be fine.”",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_054.mp3"
+        },
+        {
+          "id": "ra_55",
+          "text_en": "And Deepika’s mother was right!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_055.mp3"
+        },
+        {
+          "id": "ra_56",
+          "text_en": "Deepika remarked with glee, “Papa knows a lot, but mamma knows everything!”",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136406/s_056.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "Who yelled \"Wake up! Deepu, wake up!\"?",
+          "options_en": [
+            "Deepika’s mother",
+            "Deepika",
+            "Deepika’s father"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "What did Deepika’s mother say to Deepu?",
+          "options_en": [
+            "\"Wake up! Deepu, wake up!\"",
+            "\"Go and bring your dadi, Deepu!\"",
+            "\"I’ll shoot it with my gun.\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s1_q1",
+          "type": "choice",
+          "question_en": "Where did Deepika’s mother say she had to rush to?",
+          "options_en": [
+            "The weekly village market",
+            "The backyard",
+            "The well"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s1_q2",
+          "type": "choice",
+          "question_en": "What did Deepika do after waking up?",
+          "options_en": [
+            "She rubbed her eyes and bid goodbye to her mother",
+            "She rushed to fetch vegetables",
+            "She tripped over a bucket"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "Who heard a loud sound?",
+          "options_en": [
+            "Deepika",
+            "Deepika's mother",
+            "Deepika's father"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "Where did the loud sound come from?",
+          "options_en": [
+            "Their backyard",
+            "The kitchen",
+            "The roof"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p1_s1_q1",
+          "type": "choice",
+          "question_en": "Who rushed to see what was going on?",
+          "options_en": [
+            "Deepika",
+            "Her father",
+            "Their neighbour Lakshmi"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p1_s1_q2",
+          "type": "choice",
+          "question_en": "Why did she rush?",
+          "options_en": [
+            "To see what was going on",
+            "To fetch vegetables from the market",
+            "To get a bucket of water"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p1_s2_q1",
+          "type": "choice",
+          "question_en": "Who was screaming?",
+          "options_en": [
+            "Her father",
+            "Bindiya mausi",
+            "Bulchul Pandey"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p1_s2_q2",
+          "type": "choice",
+          "question_en": "What was her father doing?",
+          "options_en": [
+            "Screaming at someone",
+            "Making payasam",
+            "Calling his inspector friend"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "Who is being told to go away?",
+          "options_en": [
+            "the black crow",
+            "Lakshmi",
+            "the greedy dog Lalu"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "What does the speaker call the creature?",
+          "options_en": [
+            "a black crow",
+            "a scarecrow",
+            "a hungry crow"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p2_s1_q1",
+          "type": "choice",
+          "question_en": "Where does the speaker want to fill water from?",
+          "options_en": [
+            "the well",
+            "the bucket",
+            "the backyard pond"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p2_s1_q2",
+          "type": "choice",
+          "question_en": "Why does the speaker ask to be allowed to fill water?",
+          "options_en": [
+            "to fill some water",
+            "to feed the crow",
+            "to wash the roof"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p2_s2_q1",
+          "type": "choice",
+          "question_en": "What happened to the speaker's head?",
+          "options_en": [
+            "it was pecked hard",
+            "it was hit by a belan",
+            "it was splashed with water"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p2_s2_q2",
+          "type": "choice",
+          "question_en": "How did the annoying creature arrive according to the speaker?",
+          "options_en": [
+            "out of the blue",
+            "with the neighbour Lakshmi",
+            "on the scarecrow"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p2_s3_q1",
+          "type": "choice",
+          "question_en": "Who is the one bawling in this sentence?",
+          "options_en": [
+            "Deepika's father",
+            "Deepika",
+            "Deepika's mother"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p2_s3_q2",
+          "type": "choice",
+          "question_en": "How does the speaker express his pain in this sentence?",
+          "options_en": [
+            "by bawling \"Ouch ouch!!!\"",
+            "by laughing loudly",
+            "by whispering softly"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p2_s4_q1",
+          "type": "choice",
+          "question_en": "What words does the speaker use to try to drive the creature away?",
+          "options_en": [
+            "Shoo!! Stop! Shoo!",
+            "Get out now!",
+            "Please be quiet!"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p2_s4_q2",
+          "type": "choice",
+          "question_en": "How many different shooing commands are given in the sentence?",
+          "options_en": [
+            "three (Shoo!! Stop! Shoo!)",
+            "one (Shoo!)",
+            "two (Stop! Shoo!)"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "Who screamed?",
+          "options_en": [
+            "Deepika",
+            "Lakshmi",
+            "Deepika's father"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "What did Deepika exclaim?",
+          "options_en": [
+            "\"Ugh! Ouch!\"",
+            "\"Stop you crow!\"",
+            "\"I'll get a bucket of water.\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p3_s1_q1",
+          "type": "choice",
+          "question_en": "Who came out when they heard the clutter?",
+          "options_en": [
+            "Lakshmi",
+            "Bulchul Pandey",
+            "Deepika's mother"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p3_s1_q2",
+          "type": "choice",
+          "question_en": "Whose greedy dog came out with the neighbour?",
+          "options_en": [
+            "Lalu",
+            "Ram Khilawan's dog",
+            "Deepika's father's dog"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p3_s2_q1",
+          "type": "choice",
+          "question_en": "Who asked, \"What’s the noise all abou…\"?",
+          "options_en": [
+            "Lakshmi",
+            "Deepika",
+            "Bindiya mausi"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p3_s2_q2",
+          "type": "choice",
+          "question_en": "What did the speaker ask about?",
+          "options_en": [
+            "The noise",
+            "The bucket",
+            "The well"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p3_s3_q1",
+          "type": "choice",
+          "question_en": "What did the speaker say to the crow?",
+          "options_en": [
+            "Stop you crow!",
+            "I'll get a bucket of water.",
+            "I'll call Bulchul Pandey."
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p3_s3_q2",
+          "type": "choice",
+          "question_en": "Who was being told to stop?",
+          "options_en": [
+            "The crow",
+            "Lalu the dog",
+            "The scarecrow"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p3_s4_q1",
+          "type": "choice",
+          "question_en": "Who realized the root cause of the problem?",
+          "options_en": [
+            "Lakshmi",
+            "Deepika",
+            "Deepika's father"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p3_s4_q2",
+          "type": "choice",
+          "question_en": "What did Lakshmi realize?",
+          "options_en": [
+            "This is the root cause of the problem",
+            "The crow wanted corn",
+            "They should call the inspector"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p3_s5_q1",
+          "type": "choice",
+          "question_en": "What did the speaker say about the crow?",
+          "options_en": [
+            "The crow is thirsty",
+            "The crow is hungry",
+            "The crow is dangerous"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p3_s5_q2",
+          "type": "choice",
+          "question_en": "Which bird was described as thirsty?",
+          "options_en": [
+            "The crow",
+            "A sparrow",
+            "The scarecrow"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p3_s6_q1",
+          "type": "choice",
+          "question_en": "What did the speaker offer to get?",
+          "options_en": [
+            "A bucket of water",
+            "Jaggery payasam",
+            "A belan"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p3_s6_q2",
+          "type": "choice",
+          "question_en": "How did the crow react to the offer?",
+          "options_en": [
+            "It didn’t care",
+            "It drank the water",
+            "It ate the payasam"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p3_s7_q1",
+          "type": "choice",
+          "question_en": "Who tripped over the bucket?",
+          "options_en": [
+            "Deepika",
+            "Lakshmi",
+            "Deepika's father"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p3_s7_q2",
+          "type": "choice",
+          "question_en": "What did Deepika's trip create in the backyard?",
+          "options_en": [
+            "A small pond",
+            "A scarecrow nearby",
+            "A pile of corn"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p3_s8_q1",
+          "type": "choice",
+          "question_en": "What exclamations are heard in this sentence?",
+          "options_en": [
+            "\"Ouch! Ouch! Dharaam!!!\"",
+            "\"Stop you crow!\"",
+            "\"The crow is thirsty\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p3_s8_q2",
+          "type": "choice",
+          "question_en": "How many times is \"Ouch!\" shouted in this sentence?",
+          "options_en": [
+            "Two",
+            "Three",
+            "One"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "Who was told to bring the dadi?",
+          "options_en": [
+            "Deepu",
+            "Deepika",
+            "Deepika’s mother"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "Who said, “Go and bring your dadi, Deepu!”?",
+          "options_en": [
+            "Deepika’s father",
+            "Deepika’s mother",
+            "Deepika"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p4_s1_q1",
+          "type": "choice",
+          "question_en": "Who got her granny on the wheelchair?",
+          "options_en": [
+            "Deepika",
+            "Deepika’s father",
+            "Lakshmi"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p4_s1_q2",
+          "type": "choice",
+          "question_en": "What did Deepika put her granny on?",
+          "options_en": [
+            "A wheelchair",
+            "A bucket",
+            "A chair"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p4_s2_q1",
+          "type": "choice",
+          "question_en": "Who did she say the crow was?",
+          "options_en": [
+            "Her great grandfather, Alokanand",
+            "Bulchul Pandey",
+            "Ram Khilawan"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p4_s2_q2",
+          "type": "choice",
+          "question_en": "How did she look at the crow?",
+          "options_en": [
+            "Suspiciously",
+            "Angrily",
+            "Worriedly"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p4_s3_q1",
+          "type": "choice",
+          "question_en": "What did she make for the crow?",
+          "options_en": [
+            "Jaggery payasam",
+            "Corn",
+            "Rotis"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p4_s3_q2",
+          "type": "choice",
+          "question_en": "Where did she place the huge pot of payasam?",
+          "options_en": [
+            "Near the well",
+            "On the roof",
+            "In the kitchen"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p4_s4_q1",
+          "type": "choice",
+          "question_en": "What did the crow not do?",
+          "options_en": [
+            "It didn't even look at it",
+            "It ate the payasam",
+            "It flew away"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p4_s4_q2",
+          "type": "choice",
+          "question_en": "How did the crow respond to the pot of payasam?",
+          "options_en": [
+            "It didn't even look at it",
+            "It pecked people",
+            "It chased Ram Khilawan"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "Who came when they heard the chaos?",
+          "options_en": [
+            "Bindiya mausi (aunty)",
+            "Deepika's mother",
+            "Lakshmi"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "What was she making in the kitchen?",
+          "options_en": [
+            "Rotis (bread)",
+            "Jaggery payasam",
+            "Corn"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p5_s1_q1",
+          "type": "choice",
+          "question_en": "Who said \"What's this noise all abou… ouch!\"?",
+          "options_en": [
+            "Bindiya mausi (aunty)",
+            "Deepika's father",
+            "Lakshmi"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p5_s1_q2",
+          "type": "choice",
+          "question_en": "What did the speaker ask in the sentence?",
+          "options_en": [
+            "What's this noise all about… ouch!",
+            "Get away you cruel crow…ouch!",
+            "Wait… ouch!"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p5_s2_q1",
+          "type": "choice",
+          "question_en": "Who was being told to 'Get away'?",
+          "options_en": [
+            "The crow",
+            "The greedy dog Lalu",
+            "Deepika"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p5_s2_q2",
+          "type": "choice",
+          "question_en": "Which adjective is used to describe the crow in this line?",
+          "options_en": [
+            "Cruel",
+            "Sturdy",
+            "Greedy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p5_s3_q1",
+          "type": "choice",
+          "question_en": "How did she scream while trying to hit the crow?",
+          "options_en": [
+            "In a shrilled voice",
+            "Screaming loudly",
+            "Whispering"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        },
+        {
+          "id": "gl_p5_s3_q2",
+          "type": "choice",
+          "question_en": "What was she trying to hit the crow with?",
+          "options_en": [
+            "Her belan (bread roller)",
+            "A bucket of water",
+            "A gun"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        },
+        {
+          "id": "gl_p5_s4_q1",
+          "type": "choice",
+          "question_en": "What happened to the crow?",
+          "options_en": [
+            "It escaped",
+            "It was hit",
+            "It was caught"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        },
+        {
+          "id": "gl_p5_s4_q2",
+          "type": "choice",
+          "question_en": "Who escaped in the sentence?",
+          "options_en": [
+            "The crow",
+            "Bindiya mausi",
+            "Deepika's father"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "Who did Deepika’s father decide to call?",
+          "options_en": [
+            "Bulchul Pandey, his inspector friend",
+            "Ram Khilawan, his farmer friend",
+            "Bhulwa, the techie of the village"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "What did Bulchul Pandey do after being called?",
+          "options_en": [
+            "He rushed to rescue them",
+            "He brought a scarecrow",
+            "He gave them corn"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p6_s1_q1",
+          "type": "choice",
+          "question_en": "What does the speaker say in this sentence?",
+          "options_en": [
+            "So this is the thing.",
+            "Let me call Bulchul Pandey, my inspector friend.",
+            "I'll shoot it with my gun."
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        },
+        {
+          "id": "gl_p6_s1_q2",
+          "type": "choice",
+          "question_en": "Which short phrase shows recognition in the sentence?",
+          "options_en": [
+            "So this is the thing.",
+            "Go away, why’re you after my life",
+            "The crow is none other than my great grandfather"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        },
+        {
+          "id": "gl_p6_s2_q1",
+          "type": "choice",
+          "question_en": "Who said, “Wait… I’ll shoot it with my gun.”?",
+          "options_en": [
+            "Bulchul Pandey",
+            "Deepika’s father",
+            "Ram Khilawan"
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        },
+        {
+          "id": "gl_p6_s2_q2",
+          "type": "choice",
+          "question_en": "What happened when he tried to shoot?",
+          "options_en": [
+            "He missed the shot",
+            "He hit the crow",
+            "The gun wouldn't fire"
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "Who said they could scare it with the scarecrow?",
+          "options_en": [
+            "Deepika’s father",
+            "Ram Khilawan",
+            "Deepika’s mother"
+          ],
+          "correct_index": 0,
+          "sentence_index": 32
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "Whose scarecrow did Deepika’s father mention?",
+          "options_en": [
+            "Ram Khilawan's",
+            "Bhulwa the techie's",
+            "Bulchul Pandey's"
+          ],
+          "correct_index": 0,
+          "sentence_index": 32
+        },
+        {
+          "id": "gl_p7_s1_q1",
+          "type": "choice",
+          "question_en": "Who came with the scary-looking scarecrow?",
+          "options_en": [
+            "Ram Khilawan",
+            "Deepika’s father",
+            "Bindiya mausi"
+          ],
+          "correct_index": 0,
+          "sentence_index": 33
+        },
+        {
+          "id": "gl_p7_s1_q2",
+          "type": "choice",
+          "question_en": "Where did Ram Khilawan position the scarecrow?",
+          "options_en": [
+            "Near the well",
+            "On the roof of the storeroom",
+            "In the backyard"
+          ],
+          "correct_index": 0,
+          "sentence_index": 33
+        },
+        {
+          "id": "gl_p7_s2_q1",
+          "type": "choice",
+          "question_en": "How did the crow react in this sentence?",
+          "options_en": [
+            "It didn't care",
+            "It chased Ram Khilawan",
+            "It ate jaggery payasam"
+          ],
+          "correct_index": 0,
+          "sentence_index": 34
+        },
+        {
+          "id": "gl_p7_s2_q2",
+          "type": "choice",
+          "question_en": "Which description fits the crow's attitude here?",
+          "options_en": [
+            "Unbothered",
+            "Hungry for payasam",
+            "Thirsty for water"
+          ],
+          "correct_index": 0,
+          "sentence_index": 34
+        },
+        {
+          "id": "gl_p7_s3_q1",
+          "type": "choice",
+          "question_en": "Who did the crow chase and shoo away?",
+          "options_en": [
+            "Ram Khilawan",
+            "Deepika",
+            "Deepika’s father"
+          ],
+          "correct_index": 0,
+          "sentence_index": 35
+        },
+        {
+          "id": "gl_p7_s3_q2",
+          "type": "choice",
+          "question_en": "What did the crow do to Ram Khilawan?",
+          "options_en": [
+            "Shooed him away",
+            "Placed a pot of payasam",
+            "Called Bulchul Pandey"
+          ],
+          "correct_index": 0,
+          "sentence_index": 35
+        },
+        {
+          "id": "gl_p7_s4_q1",
+          "type": "choice",
+          "question_en": "How is the line \"Hmm! Chala aya mujhey daraane!!!\" expressed?",
+          "options_en": [
+            "As an exclamation",
+            "As a calm explanation",
+            "As a question"
+          ],
+          "correct_index": 0,
+          "sentence_index": 36
+        },
+        {
+          "id": "gl_p7_s4_q2",
+          "type": "choice",
+          "question_en": "What does the speaker's exclamation most likely show?",
+          "options_en": [
+            "The speaker feels scared or alarmed",
+            "The speaker is making rotis",
+            "The speaker called for Deepu to open the door"
+          ],
+          "correct_index": 0,
+          "sentence_index": 36
+        }
+      ]
+    },
+    {
+      "paragraph_index": 8,
+      "questions": [
+        {
+          "id": "gl_p8_s0_q1",
+          "type": "choice",
+          "question_en": "What do they suggest feeding it with?",
+          "options_en": [
+            "Corn",
+            "Jaggery payasam",
+            "A bucket of water"
+          ],
+          "correct_index": 0,
+          "sentence_index": 37
+        },
+        {
+          "id": "gl_p8_s0_q2",
+          "type": "choice",
+          "question_en": "How do they propose to help it?",
+          "options_en": [
+            "By feeding it with corn",
+            "By using a scarecrow",
+            "By hitting it with a belan"
+          ],
+          "correct_index": 0,
+          "sentence_index": 37
+        },
+        {
+          "id": "gl_p8_s1_q1",
+          "type": "choice",
+          "question_en": "Who claimed it would be satisfied then?",
+          "options_en": [
+            "Bhulwa, the techie of the village",
+            "Deepika's father",
+            "Deepika's mother"
+          ],
+          "correct_index": 0,
+          "sentence_index": 38
+        },
+        {
+          "id": "gl_p8_s1_q2",
+          "type": "choice",
+          "question_en": "What did Bhulwa say would happen?",
+          "options_en": [
+            "It will be satisfied then",
+            "It will fly away",
+            "It will attack everyone"
+          ],
+          "correct_index": 0,
+          "sentence_index": 38
+        },
+        {
+          "id": "gl_p8_s2_q1",
+          "type": "choice",
+          "question_en": "What was the result of their attempt?",
+          "options_en": [
+            "That didn’t work",
+            "It worked and the crow left",
+            "The crow ate the food happily"
+          ],
+          "correct_index": 0,
+          "sentence_index": 39
+        },
+        {
+          "id": "gl_p8_s2_q2",
+          "type": "choice",
+          "question_en": "How did their plan turn out?",
+          "options_en": [
+            "It did not work",
+            "It was very successful",
+            "It scared the crow away"
+          ],
+          "correct_index": 0,
+          "sentence_index": 39
+        },
+        {
+          "id": "gl_p8_s3_q1",
+          "type": "choice",
+          "question_en": "Who were all frustrated by now?",
+          "options_en": [
+            "They (everyone involved)",
+            "Only Deepika's father",
+            "Only the crow"
+          ],
+          "correct_index": 0,
+          "sentence_index": 40
+        },
+        {
+          "id": "gl_p8_s3_q2",
+          "type": "choice",
+          "question_en": "When were they all frustrated?",
+          "options_en": [
+            "By now",
+            "In the morning when the market opened",
+            "After a week"
+          ],
+          "correct_index": 0,
+          "sentence_index": 40
+        },
+        {
+          "id": "gl_p8_s4_q1",
+          "type": "choice",
+          "question_en": "Who says that crows love to eat corn?",
+          "options_en": [
+            "Gargle",
+            "Bhulwa",
+            "Deepika's mother"
+          ],
+          "correct_index": 0,
+          "sentence_index": 41
+        },
+        {
+          "id": "gl_p8_s4_q2",
+          "type": "choice",
+          "question_en": "What did Gargle say crows love to eat?",
+          "options_en": [
+            "Corn",
+            "Jaggery payasam",
+            "Water"
+          ],
+          "correct_index": 0,
+          "sentence_index": 41
+        }
+      ]
+    },
+    {
+      "paragraph_index": 9,
+      "questions": [
+        {
+          "id": "gl_p9_s0_q1",
+          "type": "choice",
+          "question_en": "Who is being called to open the door?",
+          "options_en": [
+            "Deepu",
+            "Deepika",
+            "Deepika's mother"
+          ],
+          "correct_index": 0,
+          "sentence_index": 42
+        },
+        {
+          "id": "gl_p9_s0_q2",
+          "type": "choice",
+          "question_en": "Where is Deepu asked to go in the call?",
+          "options_en": [
+            "Open the door",
+            "Go to the market",
+            "Come to the kitchen"
+          ],
+          "correct_index": 0,
+          "sentence_index": 42
+        },
+        {
+          "id": "gl_p9_s1_q1",
+          "type": "choice",
+          "question_en": "Who said, \"Look what I got for you.\"?",
+          "options_en": [
+            "Deepika's mother",
+            "Deepika",
+            "Deepika's father"
+          ],
+          "correct_index": 0,
+          "sentence_index": 43
+        },
+        {
+          "id": "gl_p9_s1_q2",
+          "type": "choice",
+          "question_en": "What did Deepika's mother call out to Deepu?",
+          "options_en": [
+            "\"Look what I got for you.\"",
+            "\"Wake up!\"",
+            "\"Go away crow!\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 43
+        },
+        {
+          "id": "gl_p9_s2_q1",
+          "type": "choice",
+          "question_en": "Who exclaimed with relief?",
+          "options_en": [
+            "Deepika",
+            "Deepika's mother",
+            "Deepika's father"
+          ],
+          "correct_index": 0,
+          "sentence_index": 44
+        },
+        {
+          "id": "gl_p9_s2_q2",
+          "type": "choice",
+          "question_en": "What did Deepika believe the returned person would do?",
+          "options_en": [
+            "Solve this problem",
+            "Cook payasam",
+            "Call the inspector"
+          ],
+          "correct_index": 0,
+          "sentence_index": 44
+        },
+        {
+          "id": "gl_p9_s3_q1",
+          "type": "choice",
+          "question_en": "What did they tell Deepika's mother?",
+          "options_en": [
+            "The entire story",
+            "A recipe",
+            "A joke"
+          ],
+          "correct_index": 0,
+          "sentence_index": 45
+        },
+        {
+          "id": "gl_p9_s3_q2",
+          "type": "choice",
+          "question_en": "When did they tell her the story?",
+          "options_en": [
+            "Before Deepika's mother could utter a word",
+            "During dinner",
+            "After she left"
+          ],
+          "correct_index": 0,
+          "sentence_index": 45
+        },
+        {
+          "id": "gl_p9_s4_q1",
+          "type": "choice",
+          "question_en": "What did Deepika's mother ask to be shown?",
+          "options_en": [
+            "The crow",
+            "The nest",
+            "The payasam"
+          ],
+          "correct_index": 0,
+          "sentence_index": 46
+        },
+        {
+          "id": "gl_p9_s4_q2",
+          "type": "choice",
+          "question_en": "How did Deepika's mother make the request to see the crow?",
+          "options_en": [
+            "She appealed",
+            "She shouted loudly",
+            "She whispered"
+          ],
+          "correct_index": 0,
+          "sentence_index": 46
+        }
+      ]
+    },
+    {
+      "paragraph_index": 10,
+      "questions": [
+        {
+          "id": "gl_p10_s0_q1",
+          "type": "choice",
+          "question_en": "What did they go to see?",
+          "options_en": [
+            "The crow",
+            "The well",
+            "The neighbour's dog"
+          ],
+          "correct_index": 0,
+          "sentence_index": 47
+        },
+        {
+          "id": "gl_p10_s0_q2",
+          "type": "choice",
+          "question_en": "Why did they go off?",
+          "options_en": [
+            "To see the crow",
+            "To fetch vegetables",
+            "To get a bucket of water"
+          ],
+          "correct_index": 0,
+          "sentence_index": 47
+        },
+        {
+          "id": "gl_p10_s1_q1",
+          "type": "choice",
+          "question_en": "How does the speaker react in this line?",
+          "options_en": [
+            "With surprise and pain (saying 'ouch')",
+            "By singing happily",
+            "By quietly whispering"
+          ],
+          "correct_index": 0,
+          "sentence_index": 48
+        },
+        {
+          "id": "gl_p10_s1_q2",
+          "type": "choice",
+          "question_en": "What word does the speaker repeat in pain?",
+          "options_en": [
+            "Ouch",
+            "Shoo",
+            "Stop"
+          ],
+          "correct_index": 0,
+          "sentence_index": 48
+        },
+        {
+          "id": "gl_p10_s2_q1",
+          "type": "choice",
+          "question_en": "Who explained that someone looks worried?",
+          "options_en": [
+            "Deepika's mother",
+            "Deepika's father",
+            "Their neighbour Lakshmi"
+          ],
+          "correct_index": 0,
+          "sentence_index": 49
+        },
+        {
+          "id": "gl_p10_s2_q2",
+          "type": "choice",
+          "question_en": "Who does the speaker say looks worried?",
+          "options_en": [
+            "She (the crow)",
+            "Deepika",
+            "The neighbour's dog"
+          ],
+          "correct_index": 0,
+          "sentence_index": 49
+        },
+        {
+          "id": "gl_p10_s3_q1",
+          "type": "choice",
+          "question_en": "What did she take before looking carefully?",
+          "options_en": [
+            "Deepika's binoculars",
+            "A bucket of water",
+            "A belan (bread roller)"
+          ],
+          "correct_index": 0,
+          "sentence_index": 50
+        },
+        {
+          "id": "gl_p10_s3_q2",
+          "type": "choice",
+          "question_en": "Where did she look carefully to see what was there?",
+          "options_en": [
+            "On the roof of their storeroom next to the well",
+            "Inside the kitchen",
+            "Under the scarecrow"
+          ],
+          "correct_index": 0,
+          "sentence_index": 50
+        },
+        {
+          "id": "gl_p10_s4_q1",
+          "type": "choice",
+          "question_en": "What did she say it was?",
+          "options_en": [
+            "A nest",
+            "A bucket",
+            "A pot of payasam"
+          ],
+          "correct_index": 0,
+          "sentence_index": 51
+        },
+        {
+          "id": "gl_p10_s4_q2",
+          "type": "choice",
+          "question_en": "Who identified the object as a nest?",
+          "options_en": [
+            "Deepika's mother",
+            "Bulchul Pandey",
+            "Ram Khilawan"
+          ],
+          "correct_index": 0,
+          "sentence_index": 51
+        },
+        {
+          "id": "gl_p10_s5_q1",
+          "type": "choice",
+          "question_en": "What is the mother crow trying to protect?",
+          "options_en": [
+            "Its eggs",
+            "A pot of payasam",
+            "The well"
+          ],
+          "correct_index": 0,
+          "sentence_index": 52
+        },
+        {
+          "id": "gl_p10_s5_q2",
+          "type": "choice",
+          "question_en": "How did she say this information?",
+          "options_en": [
+            "She whispered",
+            "She shouted",
+            "She sang"
+          ],
+          "correct_index": 0,
+          "sentence_index": 52
+        },
+        {
+          "id": "gl_p10_s6_q1",
+          "type": "choice",
+          "question_en": "Why is the crow hitting everyone?",
+          "options_en": [
+            "Because it thinks they could harm the eggs",
+            "Because it is thirsty",
+            "Because it wants payasam"
+          ],
+          "correct_index": 0,
+          "sentence_index": 53
+        },
+        {
+          "id": "gl_p10_s6_q2",
+          "type": "choice",
+          "question_en": "Who is the crow hitting according to the sentence?",
+          "options_en": [
+            "Everyone",
+            "Only Deepika",
+            "Only the neighbour Lakshmi"
+          ],
+          "correct_index": 0,
+          "sentence_index": 53
+        },
+        {
+          "id": "gl_p10_s7_q1",
+          "type": "choice",
+          "question_en": "What do they need to do for things to be fine?",
+          "options_en": [
+            "Leave them alone for a few days",
+            "Feed the crow corn",
+            "Call Bulchul Pandey"
+          ],
+          "correct_index": 0,
+          "sentence_index": 54
+        },
+        {
+          "id": "gl_p10_s7_q2",
+          "type": "choice",
+          "question_en": "How long should they leave them alone?",
+          "options_en": [
+            "A few days",
+            "All day",
+            "One hour"
+          ],
+          "correct_index": 0,
+          "sentence_index": 54
+        }
+      ]
+    },
+    {
+      "paragraph_index": 11,
+      "questions": [
+        {
+          "id": "gl_p11_s0_q1",
+          "type": "choice",
+          "question_en": "Who was right?",
+          "options_en": [
+            "Deepika’s mother",
+            "Deepika",
+            "Deepika’s father"
+          ],
+          "correct_index": 0,
+          "sentence_index": 55
+        },
+        {
+          "id": "gl_p11_s0_q2",
+          "type": "choice",
+          "question_en": "How was Deepika’s mother described?",
+          "options_en": [
+            "Right",
+            "Angry",
+            "Greedy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 55
+        },
+        {
+          "id": "gl_p11_s1_q1",
+          "type": "choice",
+          "question_en": "Who remarked with glee?",
+          "options_en": [
+            "Deepika",
+            "Deepika’s mother",
+            "Deepika’s father"
+          ],
+          "correct_index": 0,
+          "sentence_index": 56
+        },
+        {
+          "id": "gl_p11_s1_q2",
+          "type": "choice",
+          "question_en": "What did Deepika say about mamma?",
+          "options_en": [
+            "Mamma knows everything",
+            "Papa knows everything",
+            "Mamma knows a lot"
+          ],
+          "correct_index": 0,
+          "sentence_index": 56
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'Papa Knows a Lot, but Mamma Knows Everything'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "yelled",
+      "meaning_vi": "hét lên",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "rush",
+      "meaning_vi": "vội vàng",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "weekly",
+      "meaning_vi": "hàng tuần",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "fetch",
+      "meaning_vi": "đi lấy",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "backyard",
+      "meaning_vi": "sân sau",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "rushed",
+      "meaning_vi": "vội vàng chạy",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "screaming",
+      "meaning_vi": "la hét",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "well",
+      "meaning_vi": "cái giếng",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "out of the blue",
+      "meaning_vi": "tự nhiên, bất ngờ",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "pecking",
+      "meaning_vi": "mổ",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "bawled",
+      "meaning_vi": "gào lên",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "clutter",
+      "meaning_vi": "tiếng ồn ào",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "neighbour",
+      "meaning_vi": "hàng xóm",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "greedy",
+      "meaning_vi": "tham ăn",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "root cause",
+      "meaning_vi": "nguyên nhân chính",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "wheelchair",
+      "meaning_vi": "xe lăn",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "suspiciously",
+      "meaning_vi": "nghi ngờ",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "great grandfather",
+      "meaning_vi": "ông cố",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "favourite dish",
+      "meaning_vi": "món ăn yêu thích",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "chaos",
+      "meaning_vi": "sự hỗn loạn",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "sturdy",
+      "meaning_vi": "chắc chắn",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "cruel",
+      "meaning_vi": "độc ác",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "escaped",
+      "meaning_vi": "thoát được",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "inspector",
+      "meaning_vi": "thanh tra",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "rescue",
+      "meaning_vi": "cứu",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "shoot",
+      "meaning_vi": "bắn",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "missed the shot",
+      "meaning_vi": "bắn trượt",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "scarecrow",
+      "meaning_vi": "bù nhìn",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "farmer",
+      "meaning_vi": "nông dân",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "scary-looking",
+      "meaning_vi": "trông đáng sợ",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "chased",
+      "meaning_vi": "đuổi theo",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "satisfied",
+      "meaning_vi": "hài lòng",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "claimed",
+      "meaning_vi": "tuyên bố",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "techie",
+      "meaning_vi": "chuyên gia công nghệ",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "frustrated",
+      "meaning_vi": "thất vọng",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "solve",
+      "meaning_vi": "giải quyết",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "exclaimed",
+      "meaning_vi": "reo lên",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "relief",
+      "meaning_vi": "sự nhẹ nhõm",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "appealed",
+      "meaning_vi": "đề nghị",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "worried",
+      "meaning_vi": "lo lắng",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "binoculars",
+      "meaning_vi": "ống nhòm",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "storeroom",
+      "meaning_vi": "nhà kho",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "protect",
+      "meaning_vi": "bảo vệ",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "remarked",
+      "meaning_vi": "nói, nhận xét",
+      "paragraph_index": 11
+    },
+    {
+      "word_en": "glee",
+      "meaning_vi": "sự vui vẻ",
+      "paragraph_index": 11
+    },
+    {
+      "word_en": "knows a lot",
+      "meaning_vi": "biết nhiều",
+      "paragraph_index": 11
+    },
+    {
+      "word_en": "knows everything",
+      "meaning_vi": "biết tất cả mọi thứ",
+      "paragraph_index": 11
+    }
+  ]
+}

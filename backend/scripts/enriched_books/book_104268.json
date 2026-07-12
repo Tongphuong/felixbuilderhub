@@ -1,0 +1,701 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L1",
+  "level_label": "Cấp 1",
+  "topic": "When will the bell ring?",
+  "slug": "book_104268",
+  "audio_filename": "book_104268.mp3",
+  "book_slug": "book_104268",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_104268/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_104268/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_104268/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_104268/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_104268/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_104268/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_104268/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_104268/page_09.jpg",
+    "https://audio.felixbuilderhub.com/books/book_104268/page_10.jpg",
+    "https://audio.felixbuilderhub.com/books/book_104268/page_11.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_104268/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_104268/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_104268/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_104268/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_104268/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_104268/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_104268/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_104268/page_09.mp3",
+    "https://audio.felixbuilderhub.com/books/book_104268/page_10.mp3",
+    "https://audio.felixbuilderhub.com/books/book_104268/page_11.mp3"
+  ],
+  "book_attribution": {
+    "title": "When will the bell ring?",
+    "creators": [
+      "Beth Kavya",
+      "Abin Shrestha",
+      "Bindia Thapar",
+      "Jacob Kono",
+      "Karmacharya K.K",
+      "Nicci Nathanson",
+      "Radhika Tipnis",
+      "Suvidha Mistry",
+      "김민정"
+    ],
+    "publisher": "StoryWeaver Community",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: When will the bell ring? is written by Beth Kavya . © Beth Kavya , 2019. Some rights reserved. Released under CC BY 4.0 license. Images Attributions: Cover page: Boy looking out of a classroom window , by Suvidha Mistry © Pratham Books, 2009. Some rights reserved. Released under CC BY 4.0 license. Page 2: Teacher in class , by Karmacharya K.K © Room to Read, 2003. Some rights reserved. Released under CC BY 4.0 license. Page 3: Rain in the forest , by Jacob Kono © African Storybook Initiative, 2017. Some rights reserved. Released under CC BY 4.0 license. Page 4: Two girls shake in the cold , by Abin Shrestha © Room to Read, 2007. Some rights reserved. Released under CC BY 4.0 license. Page 5: Girl crying in class , by Karmacharya K.K © Room to Read, 2003. Some rights reserved. Released under CC BY 4.0 license. Page 6: Boy looking out of a classroom window , by Suvidha Mistry © Pratham Books, 2009. Some rights reserved. Released under CC BY 4.0 license. Page 7: Teacher and student in class , by Bindia Thapar © Pratham Books, 2008. Some rights reserved. Released under CC BY 4.0 license. Page 8: Girl walks into class , by Karmacharya K.K © Room to Read, 2003. Some rights reserved. Released under CC BY 4.0 license. Page 9: thunder , by 김민정 © 김민정, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 10: The bell ringing by itself, a surprised man , by Radhika Tipnis © Pratham Books, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 11: Happy girl , by Nicci Nathanson © Book Dash, 2017. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/104268-when-will-the-bell-ring",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "Teacher in class , by Karmacharya K.K © Room to Read, 2003. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "Rain in the forest , by Jacob Kono © African Storybook Initiative, 2017. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "Two girls shake in the cold , by Abin Shrestha © Room to Read, 2007. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "Girl crying in class , by Karmacharya K.K © Room to Read, 2003. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "Boy looking out of a classroom window , by Suvidha Mistry © Pratham Books, 2009. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "Teacher and student in class , by Bindia Thapar © Pratham Books, 2008. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "Girl walks into class , by Karmacharya K.K © Room to Read, 2003. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "thunder , by 김민정 © 김민정, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 8,
+        "credit_text": "The bell ringing by itself, a surprised man , by Radhika Tipnis © Pratham Books, 2018. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 9,
+        "credit_text": "Happy girl , by Nicci Nathanson © Book Dash, 2017. Some rights reserved. Released under CC BY 4.0 license."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "When will the bell ring?",
+    "paragraphs_en": [
+      "I am sitting in class.",
+      "It is raining outside.",
+      "I am feeling cold. Brrrr!",
+      "I need to go to the restroom. But I cannot go during class!",
+      "When will the bell ring? Will it ring after this class?",
+      "Will it ring after Maths class?",
+      "Will it ring after the test?",
+      "When will the bell ring?",
+      "Ring! Ring! Ring!",
+      "Yay! That's the bell!"
+    ],
+    "sentences": [
+      {
+        "text_en": "I am sitting in class.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104268/s_000.mp3",
+        "text_vi": "Con đang ngồi trong lớp học."
+      },
+      {
+        "text_en": "It is raining outside.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104268/s_001.mp3",
+        "text_vi": "Ngoài trời đang mưa."
+      },
+      {
+        "text_en": "I am feeling cold. Brrrr!",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104268/s_002.mp3",
+        "text_vi": "Con đang thấy lạnh. Brrrr!"
+      },
+      {
+        "text_en": "I need to go to the restroom.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104268/s_003.mp3",
+        "text_vi": "Con cần đi vệ sinh."
+      },
+      {
+        "text_en": "But I cannot go during class!",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104268/s_004.mp3",
+        "text_vi": "Nhưng con không thể đi trong giờ học!"
+      },
+      {
+        "text_en": "When will the bell ring?",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104268/s_005.mp3",
+        "text_vi": "Khi nào chuông reo?"
+      },
+      {
+        "text_en": "Will it ring after this class?",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104268/s_006.mp3",
+        "text_vi": "Chuông sẽ reo sau giờ học này chứ?"
+      },
+      {
+        "text_en": "Will it ring after Maths class?",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104268/s_007.mp3",
+        "text_vi": "Chuông sẽ reo sau giờ học Toán chứ?"
+      },
+      {
+        "text_en": "Will it ring after the test?",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104268/s_008.mp3",
+        "text_vi": "Chuông sẽ reo sau bài kiểm tra chứ?"
+      },
+      {
+        "text_en": "When will the bell ring?",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104268/s_009.mp3",
+        "text_vi": "Khi nào chuông reo?"
+      },
+      {
+        "text_en": "Ring! Ring! Ring!",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104268/s_010.mp3",
+        "text_vi": "Reng! Reng! Reng!"
+      },
+      {
+        "text_en": "Yay! That's the bell!",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104268/s_011.mp3",
+        "text_vi": "Hoan hô! Chuông reo rồi!"
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "I am sitting in class.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104268/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "It is raining outside.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104268/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "I am feeling cold. Brrrr!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104268/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "I need to go to the restroom.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104268/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "But I cannot go during class!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104268/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "When will the bell ring?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104268/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "Will it ring after this class?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104268/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "Will it ring after Maths class?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104268/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "Will it ring after the test?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104268/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "When will the bell ring?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104268/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "Ring! Ring! Ring!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104268/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "Yay! That's the bell!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104268/s_011.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "Where am I sitting?",
+          "options_en": [
+            "In class",
+            "Outside in the rain",
+            "In the restroom"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "What am I doing?",
+          "options_en": [
+            "Sitting in class",
+            "Feeling cold",
+            "Needing to go to the restroom"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "What is the weather like?",
+          "options_en": [
+            "It is raining",
+            "I am feeling cold",
+            "The bell is ringing"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "Where is it raining?",
+          "options_en": [
+            "Outside",
+            "In class",
+            "In the restroom"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "How is the speaker feeling?",
+          "options_en": [
+            "Cold",
+            "Sitting in class",
+            "Raining"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "What sound does the speaker make?",
+          "options_en": [
+            "Brrrr!",
+            "Ring! Ring!",
+            "Yay!"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "What does the speaker need to do?",
+          "options_en": [
+            "Go to the restroom",
+            "Sit in class",
+            "Feel cold"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "Where does the speaker need to go?",
+          "options_en": [
+            "To the restroom",
+            "To Maths class",
+            "To the bell"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p3_s1_q1",
+          "type": "choice",
+          "question_en": "When can't the speaker go?",
+          "options_en": [
+            "During class",
+            "After the test",
+            "When the bell rings"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p3_s1_q2",
+          "type": "choice",
+          "question_en": "Why can't the speaker go?",
+          "options_en": [
+            "Because it's during class",
+            "Because it is raining outside",
+            "Because they are feeling cold"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "What is the question asking about?",
+          "options_en": [
+            "When the bell will ring",
+            "When the test will end",
+            "When the student can go to the restroom"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "Which thing's timing is being asked?",
+          "options_en": [
+            "The bell",
+            "Maths class",
+            "The rain"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p4_s1_q1",
+          "type": "choice",
+          "question_en": "What is being asked about happening after this class?",
+          "options_en": [
+            "Whether the bell will ring",
+            "Whether the student can go to the restroom",
+            "Whether it is raining"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p4_s1_q2",
+          "type": "choice",
+          "question_en": "When is it asked if the bell will ring?",
+          "options_en": [
+            "After this class",
+            "After the test",
+            "After Maths class"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "When will it ring?",
+          "options_en": [
+            "After Maths class",
+            "After the test",
+            "During class"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "What class is mentioned?",
+          "options_en": [
+            "Maths class",
+            "The test",
+            "The restroom"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "When will it ring?",
+          "options_en": [
+            "After the test",
+            "During class",
+            "After Maths class"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "Which event is mentioned?",
+          "options_en": [
+            "The test",
+            "Maths class",
+            "This class"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "What is the question asking about?",
+          "options_en": [
+            "When the bell will ring",
+            "When the test will end",
+            "When Maths class will end"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "Which event is mentioned in the question?",
+          "options_en": [
+            "The bell ringing",
+            "Going to the restroom",
+            "It raining outside"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        }
+      ]
+    },
+    {
+      "paragraph_index": 8,
+      "questions": [
+        {
+          "id": "gl_p8_s0_q1",
+          "type": "choice",
+          "question_en": "What sound is heard?",
+          "options_en": [
+            "Ring! Ring! Ring!",
+            "It is raining",
+            "Brrrr!"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p8_s0_q2",
+          "type": "choice",
+          "question_en": "How many times is the sound repeated?",
+          "options_en": [
+            "Three times",
+            "After this class",
+            "After the test"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        }
+      ]
+    },
+    {
+      "paragraph_index": 9,
+      "questions": [
+        {
+          "id": "gl_p9_s0_q1",
+          "type": "choice",
+          "question_en": "What do they hear?",
+          "options_en": [
+            "The bell",
+            "The rain",
+            "The test"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p9_s0_q2",
+          "type": "choice",
+          "question_en": "How do they react to the sound?",
+          "options_en": [
+            "They are happy",
+            "They are cold",
+            "They need to go to the restroom"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'When will the bell ring?'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "sitting",
+      "meaning_vi": "ngồi (ở tư thế thân trên thẳng, mông chạm ghế/sàn)",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "class",
+      "meaning_vi": "lớp học (nơi các bạn học bài cùng nhau)",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "raining",
+      "meaning_vi": "đang mưa (nước từ trời rơi xuống)",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "outside",
+      "meaning_vi": "bên ngoài (ở phía không phải bên trong)",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "feeling",
+      "meaning_vi": "cảm thấy (biết được mình đang như thế nào)",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "cold",
+      "meaning_vi": "lạnh (cảm giác không ấm, muốn co ro lại)",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "need",
+      "meaning_vi": "cần (muốn có hoặc phải làm gì đó)",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "restroom",
+      "meaning_vi": "nhà vệ sinh (nơi đi tiểu, đi đại tiện)",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "cannot",
+      "meaning_vi": "không thể (không làm được)",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "during",
+      "meaning_vi": "trong lúc (trong khoảng thời gian nào đó)",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "when",
+      "meaning_vi": "khi nào (hỏi về thời gian)",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "bell",
+      "meaning_vi": "chuông (vật phát ra tiếng kêu reng reng)",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "ring",
+      "meaning_vi": "reo (tiếng kêu của chuông)",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "after",
+      "meaning_vi": "sau (tiếp theo một cái gì đó)",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "Maths",
+      "meaning_vi": "môn Toán (môn học về số và tính toán)",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "class",
+      "meaning_vi": "giờ học (thời gian học một môn nào đó)",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "test",
+      "meaning_vi": "bài kiểm tra (bài làm để xem mình học được gì)",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "Yay",
+      "meaning_vi": "hoan hô (tiếng reo vui mừng)",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "that's",
+      "meaning_vi": "đó là (viết tắt của 'that is', nghĩa là 'đó là')",
+      "paragraph_index": 9
+    }
+  ]
+}

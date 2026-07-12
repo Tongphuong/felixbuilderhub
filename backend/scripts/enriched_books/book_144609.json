@@ -1,0 +1,924 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L3",
+  "level_label": "Cấp 3",
+  "topic": "Sizing Things Up",
+  "slug": "book_144609",
+  "audio_filename": "book_144609.mp3",
+  "book_slug": "book_144609",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_144609/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_144609/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_144609/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_144609/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_144609/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_144609/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_144609/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_144609/page_09.jpg",
+    "https://audio.felixbuilderhub.com/books/book_144609/page_10.jpg",
+    "https://audio.felixbuilderhub.com/books/book_144609/page_11.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_144609/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_144609/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_144609/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_144609/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_144609/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_144609/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_144609/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_144609/page_09.mp3",
+    "https://audio.felixbuilderhub.com/books/book_144609/page_10.mp3",
+    "https://audio.felixbuilderhub.com/books/book_144609/page_11.mp3"
+  ],
+  "book_attribution": {
+    "title": "Sizing Things Up",
+    "creators": [
+      "Aparna Kapur",
+      "Debjyoti Saha"
+    ],
+    "publisher": "Pratham Books",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: Sizing Things Up is written by Aparna Kapur . © Pratham Books , 2020. Some rights reserved. Released under CC BY 4.0 license. Other Credits: ‘Sizing Things Up’ has been published on StoryWeaver by Pratham Books. The development of this book has been supported by Oracle. www.prathambooks.org. Images Attributions: Cover page: Boy walking through large trees , by Debjyoti Saha © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 2: Half view of the planet , by Debjyoti Saha © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 3: Second half view of the planet , by Debjyoti Saha © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 4: Big things on Earth , by Debjyoti Saha © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 5: Small things on Earth , by Debjyoti Saha © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 6: Boy playing with toys , by Debjyoti Saha © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 7: Parents picking up child , by Debjyoti Saha © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 8: Gharials in the river , by Debjyoti Saha © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 9: Seed growing into forest , by Debjyoti Saha © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 10: Bricks used to build cities , by Debjyoti Saha © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 11: Children planting a sapling in the park , by Debjyoti Saha © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/ The development of this book has been supported by Oracle.",
+    "source_url": "https://storyweaver.org.in/stories/144609-sizing-things-up",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "Half view of the planet , by Debjyoti Saha © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "Second half view of the planet , by Debjyoti Saha © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "Big things on Earth , by Debjyoti Saha © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "Small things on Earth , by Debjyoti Saha © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "Boy playing with toys , by Debjyoti Saha © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "Parents picking up child , by Debjyoti Saha © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "Gharials in the river , by Debjyoti Saha © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "Seed growing into forest , by Debjyoti Saha © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 8,
+        "credit_text": "Bricks used to build cities , by Debjyoti Saha © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 9,
+        "credit_text": "Children planting a sapling in the park , by Debjyoti Saha © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "Sizing Things Up",
+    "paragraphs_en": [
+      "The world is full of creatures and things.",
+      "Some are big. Some are small. Most are somewhere in the middle.",
+      "These are some of the biggest things we know.",
+      "These are some of the smallest things we know.",
+      "Some things look big because they’re surrounded by smaller things.",
+      "The same things may look small when they’re surrounded by bigger things.",
+      "What looks big from close by, may look small from far away.",
+      "Things make bigger things. Bigger things make huge ones. Huge things make ginormous ones. Ginormous things make super-duper-mega-jumbo ones.",
+      "Things are made of small things. Small things are made of smaller ones. Smaller things are made of tiny ones, which are made of eeny-teeny-weeny things.",
+      "But even the eeny-teeny-weeny can make a super-duper-mega-jumbo difference in this big-small world."
+    ],
+    "sentences": [
+      {
+        "text_en": "The world is full of creatures and things.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_144609/s_000.mp3",
+        "text_vi": "Thế giới này có rất nhiều sinh vật và đồ vật."
+      },
+      {
+        "text_en": "Some are big.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_144609/s_001.mp3",
+        "text_vi": "Một số thì lớn."
+      },
+      {
+        "text_en": "Some are small.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_144609/s_002.mp3",
+        "text_vi": "Một số thì nhỏ."
+      },
+      {
+        "text_en": "Most are somewhere in the middle.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_144609/s_003.mp3",
+        "text_vi": "Phần lớn thì ở cỡ vừa."
+      },
+      {
+        "text_en": "These are some of the biggest things we know.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_144609/s_004.mp3",
+        "text_vi": "Đây là một vài thứ lớn nhất mà chúng ta biết."
+      },
+      {
+        "text_en": "These are some of the smallest things we know.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_144609/s_005.mp3",
+        "text_vi": "Đây là một vài thứ nhỏ nhất mà chúng ta biết."
+      },
+      {
+        "text_en": "Some things look big because they’re surrounded by smaller things.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_144609/s_006.mp3",
+        "text_vi": "Một số thứ trông lớn vì chúng được bao quanh bởi những thứ nhỏ hơn."
+      },
+      {
+        "text_en": "The same things may look small when they’re surrounded by bigger things.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_144609/s_007.mp3",
+        "text_vi": "Những thứ đó có thể trông nhỏ khi chúng được bao quanh bởi những thứ lớn hơn."
+      },
+      {
+        "text_en": "What looks big from close by, may look small from far away.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_144609/s_008.mp3",
+        "text_vi": "Thứ gì trông lớn khi ở gần, có thể trông nhỏ khi ở xa."
+      },
+      {
+        "text_en": "Things make bigger things.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_144609/s_009.mp3",
+        "text_vi": "Những thứ nhỏ tạo ra những thứ lớn hơn."
+      },
+      {
+        "text_en": "Bigger things make huge ones.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_144609/s_010.mp3",
+        "text_vi": "Những thứ lớn hơn tạo ra những thứ khổng lồ."
+      },
+      {
+        "text_en": "Huge things make ginormous ones.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_144609/s_011.mp3",
+        "text_vi": "Những thứ khổng lồ tạo ra những thứ cực lớn."
+      },
+      {
+        "text_en": "Ginormous things make super-duper-mega-jumbo ones.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_144609/s_012.mp3",
+        "text_vi": "Những thứ cực lớn tạo ra những thứ siêu to khổng lồ."
+      },
+      {
+        "text_en": "Things are made of small things.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_144609/s_013.mp3",
+        "text_vi": "Mọi thứ được tạo thành từ những thứ nhỏ."
+      },
+      {
+        "text_en": "Small things are made of smaller ones.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_144609/s_014.mp3",
+        "text_vi": "Những thứ nhỏ được tạo thành từ những thứ nhỏ hơn."
+      },
+      {
+        "text_en": "Smaller things are made of tiny ones, which are made of eeny-teeny-weeny things.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_144609/s_015.mp3",
+        "text_vi": "Những thứ nhỏ hơn được tạo thành từ những thứ bé tí, mà những thứ bé tí lại được tạo thành từ những thứ li ti."
+      },
+      {
+        "text_en": "But even the eeny-teeny-weeny can make a super-duper-mega-jumbo difference in this big-small world.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_144609/s_016.mp3",
+        "text_vi": "Nhưng ngay cả những thứ li ti cũng có thể tạo ra một sự khác biệt siêu to khổng lồ trong thế giới lớn-nhỏ này."
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "The world is full of creatures and things.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_144609/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "Some are big.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_144609/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "Some are small.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_144609/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "Most are somewhere in the middle.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_144609/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "These are some of the biggest things we know.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_144609/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "These are some of the smallest things we know.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_144609/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "Some things look big because they’re surrounded by smaller things.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_144609/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "The same things may look small when they’re surrounded by bigger things.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_144609/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "What looks big from close by, may look small from far away.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_144609/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "Things make bigger things.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_144609/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "Bigger things make huge ones.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_144609/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "Huge things make ginormous ones.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_144609/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "Ginormous things make super-duper-mega-jumbo ones.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_144609/s_012.mp3"
+        },
+        {
+          "id": "ra_13",
+          "text_en": "Things are made of small things.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_144609/s_013.mp3"
+        },
+        {
+          "id": "ra_14",
+          "text_en": "Small things are made of smaller ones.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_144609/s_014.mp3"
+        },
+        {
+          "id": "ra_15",
+          "text_en": "Smaller things are made of tiny ones, which are made of eeny-teeny-weeny things.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_144609/s_015.mp3"
+        },
+        {
+          "id": "ra_16",
+          "text_en": "But even the eeny-teeny-weeny can make a super-duper-mega-jumbo difference in this big-small world.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_144609/s_016.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "What is the world full of?",
+          "options_en": [
+            "creatures and things",
+            "big things",
+            "tiny ones"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "What is full of creatures and things?",
+          "options_en": [
+            "The world",
+            "Some are big",
+            "eeny-teeny-weeny things"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "How are some?",
+          "options_en": [
+            "Big",
+            "Small",
+            "Somewhere in the middle"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "What are some?",
+          "options_en": [
+            "Big",
+            "Small",
+            "Somewhere in the middle"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p1_s1_q1",
+          "type": "choice",
+          "question_en": "How are some?",
+          "options_en": [
+            "Small",
+            "Big",
+            "Somewhere in the middle"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p1_s1_q2",
+          "type": "choice",
+          "question_en": "What are some?",
+          "options_en": [
+            "Small",
+            "Big",
+            "Somewhere in the middle"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p1_s2_q1",
+          "type": "choice",
+          "question_en": "Where are most?",
+          "options_en": [
+            "Somewhere in the middle",
+            "Big",
+            "Small"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p1_s2_q2",
+          "type": "choice",
+          "question_en": "How are most?",
+          "options_en": [
+            "Somewhere in the middle",
+            "Small",
+            "Big"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "What are these?",
+          "options_en": [
+            "Some of the biggest things we know",
+            "Some of the smallest things we know",
+            "Some creatures and things"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "Which things does the sentence say are shown?",
+          "options_en": [
+            "The biggest things we know",
+            "Things made of small things",
+            "What looks big from close by"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "What are these?",
+          "options_en": [
+            "Some of the smallest things we know.",
+            "Some of the biggest things we know.",
+            "Things are made of small things."
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "Which things does the sentence mention?",
+          "options_en": [
+            "Some of the smallest things we know.",
+            "Ginormous things.",
+            "Huge ones."
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "Why do some things look big?",
+          "options_en": [
+            "Because they're surrounded by smaller things.",
+            "Because they're made of tiny ones.",
+            "Because they're surrounded by bigger things."
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "How can things appear large?",
+          "options_en": [
+            "By being surrounded by smaller things.",
+            "By being far away.",
+            "By being made of small things."
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "When do the same things look small?",
+          "options_en": [
+            "When they're surrounded by bigger things",
+            "When they're surrounded by smaller things",
+            "When they are far away"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "Why may the same things look small?",
+          "options_en": [
+            "Because they're surrounded by bigger things",
+            "Because they are made of small things",
+            "Because they are seen from close by"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "What may look small from far away?",
+          "options_en": [
+            "What looks big from close by",
+            "Some of the biggest things we know",
+            "Some of the smallest things we know"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "Where may something that looks big appear small?",
+          "options_en": [
+            "From far away",
+            "From close by",
+            "When surrounded by smaller things"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "What makes bigger things?",
+          "options_en": [
+            "Things",
+            "Small things",
+            "Huge things"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "How are bigger things made?",
+          "options_en": [
+            "Things make them",
+            "Eeny-teeny-weeny things make them",
+            "Ginormous things make them"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p7_s1_q1",
+          "type": "choice",
+          "question_en": "What do bigger things make?",
+          "options_en": [
+            "Huge ones",
+            "Super-duper-mega-jumbo ones",
+            "Tiny ones"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p7_s1_q2",
+          "type": "choice",
+          "question_en": "Who makes huge ones?",
+          "options_en": [
+            "Bigger things",
+            "Things",
+            "Ginormous things"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p7_s2_q1",
+          "type": "choice",
+          "question_en": "What do huge things make?",
+          "options_en": [
+            "Ginormous ones",
+            "Huge ones",
+            "Small things"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p7_s2_q2",
+          "type": "choice",
+          "question_en": "Who makes ginormous ones?",
+          "options_en": [
+            "Huge things",
+            "Bigger things",
+            "Eeny-teeny-weeny things"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p7_s3_q1",
+          "type": "choice",
+          "question_en": "What do ginormous things make?",
+          "options_en": [
+            "Super-duper-mega-jumbo ones",
+            "Ginormous ones",
+            "Small things"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p7_s3_q2",
+          "type": "choice",
+          "question_en": "Who makes super-duper-mega-jumbo ones?",
+          "options_en": [
+            "Ginormous things",
+            "Things",
+            "Tiny ones"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        }
+      ]
+    },
+    {
+      "paragraph_index": 8,
+      "questions": [
+        {
+          "id": "gl_p8_s0_q1",
+          "type": "choice",
+          "question_en": "What are things made of?",
+          "options_en": [
+            "small things",
+            "big things",
+            "ginormous ones"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p8_s0_q2",
+          "type": "choice",
+          "question_en": "How are things described as being built?",
+          "options_en": [
+            "They are made of small things",
+            "They are made of huge ones",
+            "They are made of super-duper-mega-jumbo ones"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p8_s1_q1",
+          "type": "choice",
+          "question_en": "What are small things made of?",
+          "options_en": [
+            "smaller ones",
+            "tiny ones",
+            "things"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p8_s1_q2",
+          "type": "choice",
+          "question_en": "Which items are said to be made of smaller ones?",
+          "options_en": [
+            "Small things",
+            "Bigger things",
+            "Ginormous things"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p8_s2_q1",
+          "type": "choice",
+          "question_en": "What are smaller things made of?",
+          "options_en": [
+            "tiny ones",
+            "small things",
+            "super-duper-mega-jumbo ones"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p8_s2_q2",
+          "type": "choice",
+          "question_en": "What are tiny ones made of?",
+          "options_en": [
+            "eeny-teeny-weeny things",
+            "bigger things",
+            "creatures"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        }
+      ]
+    },
+    {
+      "paragraph_index": 9,
+      "questions": [
+        {
+          "id": "gl_p9_s0_q1",
+          "type": "choice",
+          "question_en": "What can make a super-duper-mega-jumbo difference?",
+          "options_en": [
+            "the eeny-teeny-weeny",
+            "some of the biggest things",
+            "tiny ones"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p9_s0_q2",
+          "type": "choice",
+          "question_en": "How big a difference can the eeny-teeny-weeny make?",
+          "options_en": [
+            "a super-duper-mega-jumbo difference",
+            "a small difference",
+            "a ginormous difference"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'Sizing Things Up'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "world",
+      "meaning_vi": "thế giới (Trái Đất, nơi chúng ta sống)",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "full",
+      "meaning_vi": "đầy (có rất nhiều, không còn chỗ trống)",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "creatures",
+      "meaning_vi": "sinh vật (những con vật, cây cối, con người)",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "things",
+      "meaning_vi": "đồ vật (những vật không sống, không phải sinh vật)",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "big",
+      "meaning_vi": "lớn/to (kích thước lớn)",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "small",
+      "meaning_vi": "nhỏ (kích thước nhỏ)",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "most",
+      "meaning_vi": "phần lớn/đa số (hầu hết, nhiều nhất)",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "middle",
+      "meaning_vi": "ở giữa/cỡ vừa (ở khoảng giữa, không lớn không nhỏ)",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "biggest",
+      "meaning_vi": "lớn nhất (rất lớn, không có cái nào lớn hơn)",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "know",
+      "meaning_vi": "biết (có thông tin về điều gì đó)",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "smallest",
+      "meaning_vi": "nhỏ nhất (rất nhỏ, không có cái nào nhỏ hơn)",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "look",
+      "meaning_vi": "trông/nhìn (có vẻ như, xuất hiện)",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "surrounded",
+      "meaning_vi": "bao quanh (ở xung quanh, ở mọi phía)",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "because",
+      "meaning_vi": "bởi vì (lý do cho điều gì đó)",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "same",
+      "meaning_vi": "giống nhau (không khác biệt)",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "may",
+      "meaning_vi": "có thể (có khả năng xảy ra)",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "when",
+      "meaning_vi": "khi (vào thời điểm nào đó)",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "close by",
+      "meaning_vi": "ở gần (khoảng cách ngắn)",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "far away",
+      "meaning_vi": "ở xa (khoảng cách dài)",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "make",
+      "meaning_vi": "tạo ra/làm ra (làm cho cái gì đó tồn tại)",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "huge",
+      "meaning_vi": "khổng lồ (rất rất lớn)",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "ginormous",
+      "meaning_vi": "cực lớn (còn lớn hơn cả khổng lồ)",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "super-duper-mega-jumbo",
+      "meaning_vi": "siêu to khổng lồ (rất rất rất lớn, dùng để nhấn mạnh)",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "made of",
+      "meaning_vi": "được làm từ/tạo thành từ (nguyên liệu cấu tạo nên)",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "tiny",
+      "meaning_vi": "bé tí (rất nhỏ)",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "eeny-teeny-weeny",
+      "meaning_vi": "li ti (cực kỳ nhỏ, gần như không thấy)",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "which",
+      "meaning_vi": "cái mà/mà (dùng để giới thiệu thêm thông tin)",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "even",
+      "meaning_vi": "ngay cả (thậm chí, dùng để nhấn mạnh)",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "can",
+      "meaning_vi": "có thể (có khả năng làm gì đó)",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "difference",
+      "meaning_vi": "sự khác biệt (điều làm cho hai thứ không giống nhau)",
+      "paragraph_index": 9
+    }
+  ]
+}

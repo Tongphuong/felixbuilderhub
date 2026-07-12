@@ -1,0 +1,1791 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L3",
+  "level_label": "Cấp 3",
+  "topic": "RIA Sorts It Out",
+  "slug": "book_113926",
+  "audio_filename": "book_113926.mp3",
+  "book_slug": "book_113926",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_113926/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_113926/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_113926/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_113926/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_113926/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_113926/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_113926/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_113926/page_09.jpg",
+    "https://audio.felixbuilderhub.com/books/book_113926/page_10.jpg",
+    "https://audio.felixbuilderhub.com/books/book_113926/page_11.jpg",
+    "https://audio.felixbuilderhub.com/books/book_113926/page_12.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_113926/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_113926/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_113926/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_113926/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_113926/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_113926/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_113926/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_113926/page_09.mp3",
+    "https://audio.felixbuilderhub.com/books/book_113926/page_10.mp3",
+    "https://audio.felixbuilderhub.com/books/book_113926/page_11.mp3",
+    "https://audio.felixbuilderhub.com/books/book_113926/page_12.mp3"
+  ],
+  "book_attribution": {
+    "title": "RIA Sorts It Out",
+    "creators": [
+      "Sonal Sher",
+      "Balaram J"
+    ],
+    "publisher": "Pratham Books",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: RIA Sorts It Out is written by Sonal Sher . © Pratham Books , 2020. Some rights reserved. Released under CC BY 4.0 license. Other Credits: 'RIA Sorts It Out' has been published on StoryWeaver by Pratham Books. The development of this book has been supported by CISCO. www.prathambooks.org. Guest Art Director: Shreyas R Krishnan. Images Attributions: Cover page: A robot sorts out the mail , by Balaram J © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 2: A boy is drawing fish on a paper. , by Balaram J © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 3: A boy writes the address, his mother puts the stamp and he puts the letter in the postbox. , by Balaram J © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 4: A boy is angrily stomping his feet, his mother looks confused. , by Balaram J © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 5: A boy and his mother go to the post office. , by Balaram J © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 6: A mailman shows the boy a robot. , by Balaram J © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 7: A boy looks at the mailman. , by Balaram J © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 8: A boy and his mother look at the letter while the mailman thinks. , by Balaram J © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 9: A boy and his mother look at the mailman while he explains. , by Balaram J © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 10: A boy, a mailman and a robot look happy. , by Balaram J © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 11: A boy speaks to his grandmother on the phone. , by Balaram J © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/ The development of this book has been supported by CISCO. www.prathambooks.org",
+    "source_url": "https://storyweaver.org.in/stories/113926-ria-sorts-it-out",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "A boy is drawing fish on a paper. , by Balaram J © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "A boy writes the address, his mother puts the stamp and he puts the letter in the postbox. , by Balaram J © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "A boy is angrily stomping his feet, his mother looks confused. , by Balaram J © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "A boy and his mother go to the post office. , by Balaram J © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "A mailman shows the boy a robot. , by Balaram J © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "A boy looks at the mailman. , by Balaram J © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "A boy and his mother look at the letter while the mailman thinks. , by Balaram J © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "A boy and his mother look at the mailman while he explains. , by Balaram J © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 8,
+        "credit_text": "A boy, a mailman and a robot look happy. , by Balaram J © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 9,
+        "credit_text": "A boy speaks to his grandmother on the phone. , by Balaram J © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 10,
+        "credit_text": "Illustration by Balaram J."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "RIA Sorts It Out",
+    "paragraphs_en": [
+      "Every winter break, Abel posts a card to his Ammachi. And it usually reaches her on New Year’s Day.",
+      "Today, Amma asks Abel to write the address on the card himself. He has learnt to write numbers and the alphabet at school. Abel writes the address nervously. Amma sticks a stamp on the envelope. Abel runs to the post box and drops it in.",
+      "It’s Christmas Eve. Amma is cooking payasam, Abel’s favourite sweet dish. But Abel is stomping his feet angrily. “Abel! What happened?” asks Amma. “The postmaster won’t understand my handwriting. Ammachi will never get my card,” he wails.",
+      "So Amma takes Abel to meet Postmaster Wilson. “Wilson Uncle!” Abel cries, “What if Ammachi doesn’t get my card, because of my handwriting?”",
+      "“Don’t worry,” Postmaster Wilson says. “All the letters are sorted by our robot RIA.” RIA reads the address, identifies the postal code and sorts each postal code into the correct pile.",
+      "But Abel is still worried. “Uncle, please see if RIA has sorted my card correctly.” Postmaster Wilson looks for the letter and finds it in the right box.",
+      "Amma looks at the card. Abel’s 7 looks like a 1. “Then how did it land in the right box?” Abel is surprised.",
+      "“RIA sorted your card correctly because it learned by looking at the handwriting of millions of people,” says Postmaster Wilson. “That is why it could understand your 7 even though it looked like a 1.” “RIA is so smart!” says Abel.",
+      "“It’s because RIA keeps learning from numerous examples every day. This is called Machine Learning,” the Postmaster says. “So will Ammachi get her card?” “Don’t worry, Abel. She will get her card by New Year’s Eve,” Postmaster Wilson replies.",
+      "Postmaster Wilson is right! Ammachi gets the card on New Year’s Day. When she calls Abel, he tells her all about their adventures with the amazing robot at the post office.",
+      "What is Machine Learning? When we are born, there are very few things we know how to do. As we grow up, we learn new things. Like us, computers can learn through experience, and learn to do a task without being told how to do it. For example, if we want a computer to tell the difference between a cow and a cat, it needs to be shown thousands of pictures of cats and cows. The computer will study the pictures and soon work out for itself that cats are small and cows are large, or that cats have shorter noses than cows. The more pictures of cows and cats a computer studies, the fewer mistakes it makes telling them apart. This book is a work of fiction. Though the technology depicted in the book exists, the characters, situations, and events are entirely made up."
+    ],
+    "sentences": [
+      {
+        "text_en": "Every winter break, Abel posts a card to his Ammachi.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_000.mp3",
+        "text_vi": "Mỗi kỳ nghỉ đông, Abel lại gửi một tấm thiệp cho bà Ammachi của mình."
+      },
+      {
+        "text_en": "And it usually reaches her on New Year’s Day.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_001.mp3",
+        "text_vi": "Và nó thường đến tay bà vào ngày đầu năm mới."
+      },
+      {
+        "text_en": "Today, Amma asks Abel to write the address on the card himself.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_002.mp3",
+        "text_vi": "Hôm nay, mẹ Amma bảo Abel tự viết địa chỉ lên tấm thiệp."
+      },
+      {
+        "text_en": "He has learnt to write numbers and the alphabet at school.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_003.mp3",
+        "text_vi": "Cậu bé đã học viết số và bảng chữ cái ở trường rồi."
+      },
+      {
+        "text_en": "Abel writes the address nervously.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_004.mp3",
+        "text_vi": "Abel viết địa chỉ một cách lo lắng."
+      },
+      {
+        "text_en": "Amma sticks a stamp on the envelope.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_005.mp3",
+        "text_vi": "Mẹ Amma dán một con tem lên phong bì."
+      },
+      {
+        "text_en": "Abel runs to the post box and drops it in.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_006.mp3",
+        "text_vi": "Abel chạy đến hòm thư và thả tấm thiệp vào."
+      },
+      {
+        "text_en": "It’s Christmas Eve.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_007.mp3",
+        "text_vi": "Là đêm Giáng sinh."
+      },
+      {
+        "text_en": "Amma is cooking payasam, Abel’s favourite sweet dish.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_008.mp3",
+        "text_vi": "Mẹ Amma đang nấu món payasam, món tráng miệng ngọt yêu thích của Abel."
+      },
+      {
+        "text_en": "But Abel is stomping his feet angrily.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_009.mp3",
+        "text_vi": "Nhưng Abel đang dậm chân giận dữ."
+      },
+      {
+        "text_en": "“Abel! What happened?” asks Amma.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_010.mp3",
+        "text_vi": "\"Abel! Chuyện gì vậy con?\" mẹ Amma hỏi."
+      },
+      {
+        "text_en": "“The postmaster won’t understand my handwriting.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_011.mp3",
+        "text_vi": "\"Bác trưởng bưu điện sẽ không hiểu chữ viết của con đâu."
+      },
+      {
+        "text_en": "Ammachi will never get my card,” he wails.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_012.mp3",
+        "text_vi": "Bà Ammachi sẽ không bao giờ nhận được thiệp của con mất,\" cậu bé khóc than."
+      },
+      {
+        "text_en": "So Amma takes Abel to meet Postmaster Wilson.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_013.mp3",
+        "text_vi": "Thế là mẹ Amma đưa Abel đi gặp bác trưởng bưu điện Wilson."
+      },
+      {
+        "text_en": "“Wilson Uncle!” Abel cries, “What if Ammachi doesn’t get my card, because of my handwriting?”",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_014.mp3",
+        "text_vi": "\"Bác Wilson ơi!\" Abel kêu lên, \"Nếu bà Ammachi không nhận được thiệp của cháu vì chữ viết của cháu thì sao ạ?\""
+      },
+      {
+        "text_en": "“Don’t worry,” Postmaster Wilson says.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_015.mp3",
+        "text_vi": "\"Đừng lo lắng,\" bác trưởng bưu điện Wilson nói."
+      },
+      {
+        "text_en": "“All the letters are sorted by our robot RIA.” RIA reads the address, identifies the postal code and sorts each postal code into the correct pile.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_016.mp3",
+        "text_vi": "\"Tất cả thư đều được phân loại bởi robot RIA của chúng ta.\" RIA đọc địa chỉ, nhận diện mã bưu chính và phân loại từng mã bưu chính vào đúng chồng thư."
+      },
+      {
+        "text_en": "But Abel is still worried.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_017.mp3",
+        "text_vi": "Nhưng Abel vẫn còn lo lắng."
+      },
+      {
+        "text_en": "“Uncle, please see if RIA has sorted my card correctly.” Postmaster Wilson looks for the letter and finds it in the right box.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_018.mp3",
+        "text_vi": "\"Bác ơi, làm ơn xem thử xem RIA đã phân loại thiệp của cháu đúng chưa ạ.\" Bác trưởng bưu điện Wilson tìm lá thư và thấy nó nằm trong đúng hộp."
+      },
+      {
+        "text_en": "Amma looks at the card.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_019.mp3",
+        "text_vi": "Mẹ Amma nhìn tấm thiệp."
+      },
+      {
+        "text_en": "Abel’s 7 looks like a 1.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_020.mp3",
+        "text_vi": "Số 7 của Abel trông giống số 1."
+      },
+      {
+        "text_en": "“Then how did it land in the right box?” Abel is surprised.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_021.mp3",
+        "text_vi": "\"Vậy thì làm sao nó lại vào đúng hộp được ạ?\" Abel ngạc nhiên."
+      },
+      {
+        "text_en": "“RIA sorted your card correctly because it learned by looking at the handwriting of millions of people,” says Postmaster Wilson.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_022.mp3",
+        "text_vi": "\"RIA đã phân loại thiệp của cháu đúng vì nó học bằng cách nhìn chữ viết tay của hàng triệu người,\" bác trưởng bưu điện Wilson nói."
+      },
+      {
+        "text_en": "“That is why it could understand your 7 even though it looked like a 1.” “RIA is so smart!” says Abel.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_023.mp3",
+        "text_vi": "\"Đó là lý do tại sao nó có thể hiểu số 7 của cháu dù nó trông giống số 1.\" \"RIA thông minh quá!\" Abel nói."
+      },
+      {
+        "text_en": "“It’s because RIA keeps learning from numerous examples every day.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_024.mp3",
+        "text_vi": "\"Đó là vì RIA liên tục học hỏi từ rất nhiều ví dụ mỗi ngày."
+      },
+      {
+        "text_en": "This is called Machine Learning,” the Postmaster says.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_025.mp3",
+        "text_vi": "Điều này được gọi là Học máy (Machine Learning),\" bác trưởng bưu điện nói."
+      },
+      {
+        "text_en": "“So will Ammachi get her card?” “Don’t worry, Abel.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_026.mp3",
+        "text_vi": "\"Vậy bà Ammachi có nhận được thiệp của cháu không ạ?\" \"Đừng lo, Abel."
+      },
+      {
+        "text_en": "She will get her card by New Year’s Eve,” Postmaster Wilson replies.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_027.mp3",
+        "text_vi": "Bà sẽ nhận được thiệp trước đêm Giao thừa,\" bác trưởng bưu điện Wilson trả lời."
+      },
+      {
+        "text_en": "Postmaster Wilson is right!",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_028.mp3",
+        "text_vi": "Bác trưởng bưu điện Wilson nói đúng!"
+      },
+      {
+        "text_en": "Ammachi gets the card on New Year’s Day.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_029.mp3",
+        "text_vi": "Bà Ammachi nhận được tấm thiệp vào ngày đầu năm mới."
+      },
+      {
+        "text_en": "When she calls Abel, he tells her all about their adventures with the amazing robot at the post office.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_030.mp3",
+        "text_vi": "Khi bà gọi điện cho Abel, cậu bé kể cho bà nghe tất cả về những cuộc phiêu lưu của họ với con robot tuyệt vời ở bưu điện."
+      },
+      {
+        "text_en": "What is Machine Learning?",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_031.mp3",
+        "text_vi": "Học máy (Machine Learning) là gì?"
+      },
+      {
+        "text_en": "When we are born, there are very few things we know how to do.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_032.mp3",
+        "text_vi": "Khi chúng ta sinh ra, có rất ít điều chúng ta biết cách làm."
+      },
+      {
+        "text_en": "As we grow up, we learn new things.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_033.mp3",
+        "text_vi": "Khi lớn lên, chúng ta học được những điều mới."
+      },
+      {
+        "text_en": "Like us, computers can learn through experience, and learn to do a task without being told how to do it.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_034.mp3",
+        "text_vi": "Giống như chúng ta, máy tính có thể học hỏi qua kinh nghiệm, và học cách thực hiện một nhiệm vụ mà không cần được chỉ dẫn."
+      },
+      {
+        "text_en": "For example, if we want a computer to tell the difference between a cow and a cat, it needs to be shown thousands of pictures of cats and cows.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_035.mp3",
+        "text_vi": "Ví dụ, nếu chúng ta muốn máy tính phân biệt giữa một con bò và một con mèo, nó cần được cho xem hàng ngàn bức ảnh mèo và bò."
+      },
+      {
+        "text_en": "The computer will study the pictures and soon work out for itself that cats are small and cows are large, or that cats have shorter noses than cows.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_036.mp3",
+        "text_vi": "Máy tính sẽ nghiên cứu các bức ảnh và sớm tự mình nhận ra rằng mèo thì nhỏ và bò thì lớn, hoặc mèo có mũi ngắn hơn bò."
+      },
+      {
+        "text_en": "The more pictures of cows and cats a computer studies, the fewer mistakes it makes telling them apart.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_037.mp3",
+        "text_vi": "Máy tính càng nghiên cứu nhiều ảnh bò và mèo, nó càng ít mắc lỗi khi phân biệt chúng."
+      },
+      {
+        "text_en": "This book is a work of fiction.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_038.mp3",
+        "text_vi": "Cuốn sách này là một tác phẩm hư cấu."
+      },
+      {
+        "text_en": "Though the technology depicted in the book exists, the characters, situations, and events are entirely made up.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_039.mp3",
+        "text_vi": "Mặc dù công nghệ được mô tả trong sách có tồn tại, nhưng các nhân vật, tình huống và sự kiện hoàn toàn là hư cấu."
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "Every winter break, Abel posts a card to his Ammachi.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "And it usually reaches her on New Year’s Day.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "Today, Amma asks Abel to write the address on the card himself.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "He has learnt to write numbers and the alphabet at school.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "Abel writes the address nervously.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "Amma sticks a stamp on the envelope.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "Abel runs to the post box and drops it in.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "It’s Christmas Eve.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "Amma is cooking payasam, Abel’s favourite sweet dish.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "But Abel is stomping his feet angrily.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "“Abel! What happened?” asks Amma.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "“The postmaster won’t understand my handwriting.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "Ammachi will never get my card,” he wails.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_012.mp3"
+        },
+        {
+          "id": "ra_13",
+          "text_en": "So Amma takes Abel to meet Postmaster Wilson.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_013.mp3"
+        },
+        {
+          "id": "ra_14",
+          "text_en": "“Wilson Uncle!” Abel cries, “What if Ammachi doesn’t get my card, because of my handwriting?”",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_014.mp3"
+        },
+        {
+          "id": "ra_15",
+          "text_en": "“Don’t worry,” Postmaster Wilson says.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_015.mp3"
+        },
+        {
+          "id": "ra_16",
+          "text_en": "“All the letters are sorted by our robot RIA.” RIA reads the address, identifies the postal code and sorts each postal code into the correct pile.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_016.mp3"
+        },
+        {
+          "id": "ra_17",
+          "text_en": "But Abel is still worried.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_017.mp3"
+        },
+        {
+          "id": "ra_18",
+          "text_en": "“Uncle, please see if RIA has sorted my card correctly.” Postmaster Wilson looks for the letter and finds it in the right box.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_018.mp3"
+        },
+        {
+          "id": "ra_19",
+          "text_en": "Amma looks at the card.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_019.mp3"
+        },
+        {
+          "id": "ra_20",
+          "text_en": "Abel’s 7 looks like a 1.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_020.mp3"
+        },
+        {
+          "id": "ra_21",
+          "text_en": "“Then how did it land in the right box?” Abel is surprised.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_021.mp3"
+        },
+        {
+          "id": "ra_22",
+          "text_en": "“RIA sorted your card correctly because it learned by looking at the handwriting of millions of people,” says Postmaster Wilson.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_022.mp3"
+        },
+        {
+          "id": "ra_23",
+          "text_en": "“That is why it could understand your 7 even though it looked like a 1.” “RIA is so smart!” says Abel.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_023.mp3"
+        },
+        {
+          "id": "ra_24",
+          "text_en": "“It’s because RIA keeps learning from numerous examples every day.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_024.mp3"
+        },
+        {
+          "id": "ra_25",
+          "text_en": "This is called Machine Learning,” the Postmaster says.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_025.mp3"
+        },
+        {
+          "id": "ra_26",
+          "text_en": "“So will Ammachi get her card?” “Don’t worry, Abel.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_026.mp3"
+        },
+        {
+          "id": "ra_27",
+          "text_en": "She will get her card by New Year’s Eve,” Postmaster Wilson replies.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_027.mp3"
+        },
+        {
+          "id": "ra_28",
+          "text_en": "Postmaster Wilson is right!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_028.mp3"
+        },
+        {
+          "id": "ra_29",
+          "text_en": "Ammachi gets the card on New Year’s Day.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_029.mp3"
+        },
+        {
+          "id": "ra_30",
+          "text_en": "When she calls Abel, he tells her all about their adventures with the amazing robot at the post office.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_030.mp3"
+        },
+        {
+          "id": "ra_31",
+          "text_en": "What is Machine Learning?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_031.mp3"
+        },
+        {
+          "id": "ra_32",
+          "text_en": "When we are born, there are very few things we know how to do.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_032.mp3"
+        },
+        {
+          "id": "ra_33",
+          "text_en": "As we grow up, we learn new things.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_033.mp3"
+        },
+        {
+          "id": "ra_34",
+          "text_en": "Like us, computers can learn through experience, and learn to do a task without being told how to do it.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_034.mp3"
+        },
+        {
+          "id": "ra_35",
+          "text_en": "For example, if we want a computer to tell the difference between a cow and a cat, it needs to be shown thousands of pictures of cats and cows.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_035.mp3"
+        },
+        {
+          "id": "ra_36",
+          "text_en": "The computer will study the pictures and soon work out for itself that cats are small and cows are large, or that cats have shorter noses than cows.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_036.mp3"
+        },
+        {
+          "id": "ra_37",
+          "text_en": "The more pictures of cows and cats a computer studies, the fewer mistakes it makes telling them apart.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_037.mp3"
+        },
+        {
+          "id": "ra_38",
+          "text_en": "This book is a work of fiction.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_038.mp3"
+        },
+        {
+          "id": "ra_39",
+          "text_en": "Though the technology depicted in the book exists, the characters, situations, and events are entirely made up.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113926/s_039.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "Who posts a card to Ammachi?",
+          "options_en": [
+            "Abel",
+            "Amma",
+            "Postmaster Wilson"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "When does Abel post a card to his Ammachi?",
+          "options_en": [
+            "Every winter break",
+            "On Christmas Eve",
+            "On New Year’s Day"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s1_q1",
+          "type": "choice",
+          "question_en": "What usually reaches Ammachi on New Year’s Day?",
+          "options_en": [
+            "The card",
+            "Amma's payasam",
+            "The letter sorted by RIA"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s1_q2",
+          "type": "choice",
+          "question_en": "When does it usually reach her?",
+          "options_en": [
+            "On New Year’s Day",
+            "On Christmas Eve",
+            "During winter break"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "Who asks Abel to write the address on the card?",
+          "options_en": [
+            "Amma",
+            "Postmaster Wilson",
+            "Ammachi"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "What does Amma ask Abel to write on the card?",
+          "options_en": [
+            "The address",
+            "A letter",
+            "A recipe for payasam"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p1_s1_q1",
+          "type": "choice",
+          "question_en": "What has he learned to write at school?",
+          "options_en": [
+            "Numbers and the alphabet",
+            "The postal code",
+            "Recipes"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p1_s1_q2",
+          "type": "choice",
+          "question_en": "Where did he learn to write numbers and the alphabet?",
+          "options_en": [
+            "At school",
+            "At the post office",
+            "In the kitchen"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p1_s2_q1",
+          "type": "choice",
+          "question_en": "What does Abel write nervously?",
+          "options_en": [
+            "The address",
+            "The card",
+            "The postal code"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p1_s2_q2",
+          "type": "choice",
+          "question_en": "How does Abel write the address?",
+          "options_en": [
+            "Nervously",
+            "Angrily",
+            "Carefully"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p1_s3_q1",
+          "type": "choice",
+          "question_en": "What does Amma stick on the envelope?",
+          "options_en": [
+            "A stamp",
+            "Payasam",
+            "The address"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p1_s3_q2",
+          "type": "choice",
+          "question_en": "Where does Amma stick the stamp?",
+          "options_en": [
+            "On the envelope",
+            "On the card",
+            "On the post box"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p1_s4_q1",
+          "type": "choice",
+          "question_en": "Where does Abel run to before dropping the card in?",
+          "options_en": [
+            "The post box",
+            "The post office",
+            "The kitchen"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p1_s4_q2",
+          "type": "choice",
+          "question_en": "What does Abel do with the card at the post box?",
+          "options_en": [
+            "Drops it in",
+            "Gives it to Amma",
+            "Keeps it"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "When is it?",
+          "options_en": [
+            "Christmas Eve",
+            "New Year’s Day",
+            "Winter break"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "Which day is mentioned in the sentence?",
+          "options_en": [
+            "Christmas Eve",
+            "A day in winter",
+            "New Year's Eve"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p2_s1_q1",
+          "type": "choice",
+          "question_en": "Who is cooking payasam?",
+          "options_en": [
+            "Amma",
+            "Abel",
+            "Ammachi"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p2_s1_q2",
+          "type": "choice",
+          "question_en": "What is Amma cooking?",
+          "options_en": [
+            "Payasam",
+            "A card",
+            "Abel’s handwriting"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p2_s2_q1",
+          "type": "choice",
+          "question_en": "Who is stomping his feet angrily?",
+          "options_en": [
+            "Abel",
+            "Postmaster Wilson",
+            "RIA"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p2_s2_q2",
+          "type": "choice",
+          "question_en": "How is Abel stomping his feet?",
+          "options_en": [
+            "Angrily",
+            "Happily",
+            "Nervously"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p2_s3_q1",
+          "type": "choice",
+          "question_en": "Who asks, \"What happened?\"",
+          "options_en": [
+            "Amma",
+            "Abel",
+            "Postmaster Wilson"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p2_s3_q2",
+          "type": "choice",
+          "question_en": "What does Amma ask Abel?",
+          "options_en": [
+            "What happened?",
+            "Where is the card?",
+            "When will it arrive?"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p2_s4_q1",
+          "type": "choice",
+          "question_en": "Who does Abel say won't understand his handwriting?",
+          "options_en": [
+            "The postmaster",
+            "RIA",
+            "Amma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p2_s4_q2",
+          "type": "choice",
+          "question_en": "Whose handwriting does Abel worry about?",
+          "options_en": [
+            "His (Abel's) handwriting",
+            "Amma's handwriting",
+            "Ammachi's handwriting"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p2_s5_q1",
+          "type": "choice",
+          "question_en": "Who does Abel say will never get his card?",
+          "options_en": [
+            "Ammachi",
+            "Amma",
+            "Postmaster Wilson"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p2_s5_q2",
+          "type": "choice",
+          "question_en": "What does Abel say Ammachi will never get?",
+          "options_en": [
+            "His card",
+            "Payasam",
+            "A letter from the postmaster"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "Who takes Abel to meet Postmaster Wilson?",
+          "options_en": [
+            "Amma",
+            "Postmaster Wilson",
+            "Ammachi"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "Where does Amma take Abel?",
+          "options_en": [
+            "To meet Postmaster Wilson",
+            "To the post box",
+            "To school"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p3_s1_q1",
+          "type": "choice",
+          "question_en": "Who does Abel call out to?",
+          "options_en": [
+            "Wilson Uncle",
+            "Amma",
+            "Ammachi"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p3_s1_q2",
+          "type": "choice",
+          "question_en": "What is Abel worried might happen because of his handwriting?",
+          "options_en": [
+            "Ammachi might not get his card",
+            "RIA might sort the card incorrectly",
+            "He might forget to put a stamp"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "Who says \"Don't worry\"?",
+          "options_en": [
+            "Postmaster Wilson",
+            "Amma",
+            "Abel"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "What does Postmaster Wilson say?",
+          "options_en": [
+            "\"Don't worry\"",
+            "\"All the letters are sorted by our robot RIA.\"",
+            "\"She will get her card by New Year's Eve.\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p4_s1_q1",
+          "type": "choice",
+          "question_en": "What does RIA read?",
+          "options_en": [
+            "The address",
+            "The stamp",
+            "The card"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p4_s1_q2",
+          "type": "choice",
+          "question_en": "How are the letters sorted by RIA?",
+          "options_en": [
+            "By postal code",
+            "By reading handwriting examples",
+            "With Amma's help"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "Who is still worried?",
+          "options_en": [
+            "Abel",
+            "Amma",
+            "Postmaster Wilson"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "How is Abel feeling?",
+          "options_en": [
+            "Worried",
+            "Happy",
+            "Excited"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p5_s1_q1",
+          "type": "choice",
+          "question_en": "Who asks Uncle to see if RIA sorted the card correctly?",
+          "options_en": [
+            "Abel",
+            "Amma",
+            "Ammachi"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p5_s1_q2",
+          "type": "choice",
+          "question_en": "Where does Postmaster Wilson find the letter?",
+          "options_en": [
+            "In the right box",
+            "In the wrong pile",
+            "In the post box"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "Who looks at the card?",
+          "options_en": [
+            "Amma",
+            "Abel",
+            "Postmaster Wilson"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "What does Amma look at?",
+          "options_en": [
+            "The card",
+            "The stamp",
+            "The envelope"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p6_s1_q1",
+          "type": "choice",
+          "question_en": "Whose 7 looks like a 1?",
+          "options_en": [
+            "Abel's",
+            "Amma's",
+            "Ammachi's"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p6_s1_q2",
+          "type": "choice",
+          "question_en": "Which digit looks like a 1?",
+          "options_en": [
+            "7",
+            "5",
+            "3"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p6_s2_q1",
+          "type": "choice",
+          "question_en": "Who is surprised?",
+          "options_en": [
+            "Abel",
+            "Amma",
+            "Postmaster Wilson"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p6_s2_q2",
+          "type": "choice",
+          "question_en": "What does Abel ask?",
+          "options_en": [
+            "How did it land in the right box?",
+            "Will Ammachi get her card?",
+            "What is Machine Learning?"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "Who says RIA sorted your card correctly?",
+          "options_en": [
+            "Postmaster Wilson",
+            "Abel",
+            "Amma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "Why did RIA sort the card correctly?",
+          "options_en": [
+            "Because it learned by looking at the handwriting of millions of people",
+            "Because Abel ran to the post box",
+            "Because Amma stuck a stamp on the envelope"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p7_s1_q1",
+          "type": "choice",
+          "question_en": "What could RIA understand even though it looked like a 1?",
+          "options_en": [
+            "Your 7",
+            "The stamp",
+            "The address"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p7_s1_q2",
+          "type": "choice",
+          "question_en": "Who says \"RIA is so smart!\"?",
+          "options_en": [
+            "Abel",
+            "Postmaster Wilson",
+            "Amma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        }
+      ]
+    },
+    {
+      "paragraph_index": 8,
+      "questions": [
+        {
+          "id": "gl_p8_s0_q1",
+          "type": "choice",
+          "question_en": "Why does RIA keep improving?",
+          "options_en": [
+            "Because it keeps learning from numerous examples every day",
+            "Because Amma cooks payasam",
+            "Because Abel posts a card"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p8_s0_q2",
+          "type": "choice",
+          "question_en": "How does RIA learn?",
+          "options_en": [
+            "By learning from numerous examples every day",
+            "By sorting letters into boxes",
+            "By looking at stamps"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p8_s1_q1",
+          "type": "choice",
+          "question_en": "What is called Machine Learning?",
+          "options_en": [
+            "RIA learning from numerous examples every day",
+            "Sorting letters into the correct pile",
+            "Writing the address on the card"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p8_s1_q2",
+          "type": "choice",
+          "question_en": "Who says \"This is called Machine Learning\"?",
+          "options_en": [
+            "The Postmaster",
+            "Amma",
+            "Abel"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p8_s2_q1",
+          "type": "choice",
+          "question_en": "Who asks if Ammachi will get her card?",
+          "options_en": [
+            "Abel",
+            "Amma",
+            "Postmaster Wilson"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p8_s2_q2",
+          "type": "choice",
+          "question_en": "Who is told \"Don't worry\"?",
+          "options_en": [
+            "Abel",
+            "Ammachi",
+            "RIA"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p8_s3_q1",
+          "type": "choice",
+          "question_en": "When will Ammachi get her card?",
+          "options_en": [
+            "By New Year's Eve",
+            "On New Year's Day",
+            "On Christmas Eve"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        },
+        {
+          "id": "gl_p8_s3_q2",
+          "type": "choice",
+          "question_en": "Who replies that she will get her card by New Year's Eve?",
+          "options_en": [
+            "Postmaster Wilson",
+            "Amma",
+            "Abel"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        }
+      ]
+    },
+    {
+      "paragraph_index": 9,
+      "questions": [
+        {
+          "id": "gl_p9_s0_q1",
+          "type": "choice",
+          "question_en": "Who is right?",
+          "options_en": [
+            "Postmaster Wilson",
+            "Abel",
+            "Amma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        },
+        {
+          "id": "gl_p9_s0_q2",
+          "type": "choice",
+          "question_en": "What is said about Postmaster Wilson?",
+          "options_en": [
+            "He is right",
+            "He is wrong",
+            "He is busy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        },
+        {
+          "id": "gl_p9_s1_q1",
+          "type": "choice",
+          "question_en": "Who gets the card on New Year’s Day?",
+          "options_en": [
+            "Ammachi",
+            "Abel",
+            "Amma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p9_s1_q2",
+          "type": "choice",
+          "question_en": "When does Ammachi get the card?",
+          "options_en": [
+            "On New Year’s Day",
+            "On Christmas Eve",
+            "On New Year’s Eve"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p9_s2_q1",
+          "type": "choice",
+          "question_en": "Who does she call?",
+          "options_en": [
+            "Abel",
+            "Postmaster Wilson",
+            "Amma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        },
+        {
+          "id": "gl_p9_s2_q2",
+          "type": "choice",
+          "question_en": "What does Abel tell her about?",
+          "options_en": [
+            "Their adventures with the amazing robot at the post office",
+            "How to write the address",
+            "That the card was lost"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        }
+      ]
+    },
+    {
+      "paragraph_index": 10,
+      "questions": [
+        {
+          "id": "gl_p10_s0_q1",
+          "type": "choice",
+          "question_en": "What is the question asking about?",
+          "options_en": [
+            "Machine Learning",
+            "Abel's card",
+            "Postmaster Wilson"
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        },
+        {
+          "id": "gl_p10_s0_q2",
+          "type": "choice",
+          "question_en": "Which topic does the sentence mention?",
+          "options_en": [
+            "Machine Learning",
+            "Ammachi's address",
+            "RIA the robot"
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        },
+        {
+          "id": "gl_p10_s1_q1",
+          "type": "choice",
+          "question_en": "When are there very few things we know how to do?",
+          "options_en": [
+            "When we are born",
+            "On New Year's Day",
+            "At the post office"
+          ],
+          "correct_index": 0,
+          "sentence_index": 32
+        },
+        {
+          "id": "gl_p10_s1_q2",
+          "type": "choice",
+          "question_en": "What is limited when we are born?",
+          "options_en": [
+            "The things we know how to do",
+            "The number of cards mailed",
+            "The robot's learning"
+          ],
+          "correct_index": 0,
+          "sentence_index": 32
+        },
+        {
+          "id": "gl_p10_s2_q1",
+          "type": "choice",
+          "question_en": "When do we learn new things?",
+          "options_en": [
+            "As we grow up",
+            "When we mail a card",
+            "On Christmas Eve"
+          ],
+          "correct_index": 0,
+          "sentence_index": 33
+        },
+        {
+          "id": "gl_p10_s2_q2",
+          "type": "choice",
+          "question_en": "What do we do as we grow up?",
+          "options_en": [
+            "Learn new things",
+            "Write addresses",
+            "Sort letters"
+          ],
+          "correct_index": 0,
+          "sentence_index": 33
+        },
+        {
+          "id": "gl_p10_s3_q1",
+          "type": "choice",
+          "question_en": "What can computers do like us?",
+          "options_en": [
+            "Learn through experience",
+            "Cook payasam",
+            "Deliver cards"
+          ],
+          "correct_index": 0,
+          "sentence_index": 34
+        },
+        {
+          "id": "gl_p10_s3_q2",
+          "type": "choice",
+          "question_en": "How can computers learn to do a task according to the sentence?",
+          "options_en": [
+            "Through experience without being told how",
+            "By RIA reading addresses",
+            "By writing numbers at school"
+          ],
+          "correct_index": 0,
+          "sentence_index": 34
+        },
+        {
+          "id": "gl_p10_s4_q1",
+          "type": "choice",
+          "question_en": "What must be shown to a computer to tell the difference between a cow and a cat?",
+          "options_en": [
+            "Thousands of pictures of cats and cows",
+            "A stamped envelope",
+            "Abel's handwriting"
+          ],
+          "correct_index": 0,
+          "sentence_index": 35
+        },
+        {
+          "id": "gl_p10_s4_q2",
+          "type": "choice",
+          "question_en": "Why should the computer be shown many pictures of cats and cows?",
+          "options_en": [
+            "So it can tell the difference between a cow and a cat",
+            "So it can sort letters at the post office",
+            "So it can cook payasam"
+          ],
+          "correct_index": 0,
+          "sentence_index": 35
+        },
+        {
+          "id": "gl_p10_s5_q1",
+          "type": "choice",
+          "question_en": "What will the computer work out for itself after studying pictures?",
+          "options_en": [
+            "That cats are small and cows are large or cats have shorter noses than cows",
+            "That Abel's 7 looks like a 1",
+            "That the card is in the right box"
+          ],
+          "correct_index": 0,
+          "sentence_index": 36
+        },
+        {
+          "id": "gl_p10_s5_q2",
+          "type": "choice",
+          "question_en": "How will the computer learn the differences between cats and cows?",
+          "options_en": [
+            "By studying the pictures",
+            "By meeting Postmaster Wilson",
+            "By writing the address"
+          ],
+          "correct_index": 0,
+          "sentence_index": 36
+        },
+        {
+          "id": "gl_p10_s6_q1",
+          "type": "choice",
+          "question_en": "What happens when the computer studies more pictures of cows and cats?",
+          "options_en": [
+            "It makes fewer mistakes telling them apart",
+            "Ammachi gets the card",
+            "RIA sorts more letters"
+          ],
+          "correct_index": 0,
+          "sentence_index": 37
+        },
+        {
+          "id": "gl_p10_s6_q2",
+          "type": "choice",
+          "question_en": "What does the computer make fewer of as it studies more pictures?",
+          "options_en": [
+            "Mistakes telling cows and cats apart",
+            "Postage stamps",
+            "Payasam servings"
+          ],
+          "correct_index": 0,
+          "sentence_index": 37
+        },
+        {
+          "id": "gl_p10_s7_q1",
+          "type": "choice",
+          "question_en": "What is said about the book?",
+          "options_en": [
+            "This book is a work of fiction",
+            "The card reached Ammachi on New Year's Day",
+            "Postmaster Wilson uses a robot"
+          ],
+          "correct_index": 0,
+          "sentence_index": 38
+        },
+        {
+          "id": "gl_p10_s7_q2",
+          "type": "choice",
+          "question_en": "Which statement describes the book?",
+          "options_en": [
+            "It is a work of fiction",
+            "It is a collection of addresses",
+            "It is a manual for RIA"
+          ],
+          "correct_index": 0,
+          "sentence_index": 38
+        },
+        {
+          "id": "gl_p10_s8_q1",
+          "type": "choice",
+          "question_en": "What does the sentence say exists?",
+          "options_en": [
+            "The technology depicted in the book",
+            "A stamped envelope",
+            "Abel's handwriting"
+          ],
+          "correct_index": 0,
+          "sentence_index": 39
+        },
+        {
+          "id": "gl_p10_s8_q2",
+          "type": "choice",
+          "question_en": "What are said to be entirely made up?",
+          "options_en": [
+            "The characters, situations, and events",
+            "The postal codes",
+            "The robot's parts"
+          ],
+          "correct_index": 0,
+          "sentence_index": 39
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'RIA Sorts It Out'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "winter break",
+      "meaning_vi": "kỳ nghỉ đông",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "posts",
+      "meaning_vi": "gửi (thư, thiệp)",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "usually",
+      "meaning_vi": "thường thì",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "reaches",
+      "meaning_vi": "đến nơi",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "address",
+      "meaning_vi": "địa chỉ",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "alphabet",
+      "meaning_vi": "bảng chữ cái",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "nervously",
+      "meaning_vi": "một cách lo lắng",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "envelope",
+      "meaning_vi": "phong bì",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "Christmas Eve",
+      "meaning_vi": "đêm Giáng sinh",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "stomping",
+      "meaning_vi": "dậm chân",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "handwriting",
+      "meaning_vi": "chữ viết tay",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "wails",
+      "meaning_vi": "khóc than",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "postmaster",
+      "meaning_vi": "trưởng bưu điện",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "cries",
+      "meaning_vi": "kêu lên (trong ngữ cảnh này)",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "because of",
+      "meaning_vi": "vì (lý do)",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "sorted",
+      "meaning_vi": "được phân loại",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "robot",
+      "meaning_vi": "rô-bốt (người máy)",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "identifies",
+      "meaning_vi": "nhận diện",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "postal code",
+      "meaning_vi": "mã bưu chính",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "worried",
+      "meaning_vi": "lo lắng",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "correctly",
+      "meaning_vi": "một cách chính xác",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "finds",
+      "meaning_vi": "tìm thấy",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "looks like",
+      "meaning_vi": "trông giống",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "land",
+      "meaning_vi": "rơi vào, đến được",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "surprised",
+      "meaning_vi": "ngạc nhiên",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "millions",
+      "meaning_vi": "hàng triệu",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "even though",
+      "meaning_vi": "mặc dù, dù cho",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "smart",
+      "meaning_vi": "thông minh",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "numerous",
+      "meaning_vi": "rất nhiều",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "examples",
+      "meaning_vi": "ví dụ",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "Machine Learning",
+      "meaning_vi": "Học máy",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "replies",
+      "meaning_vi": "trả lời",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "right",
+      "meaning_vi": "đúng (không phải bên phải)",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "adventures",
+      "meaning_vi": "cuộc phiêu lưu",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "amazing",
+      "meaning_vi": "tuyệt vời",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "post office",
+      "meaning_vi": "bưu điện",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "experience",
+      "meaning_vi": "kinh nghiệm",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "task",
+      "meaning_vi": "nhiệm vụ",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "difference",
+      "meaning_vi": "sự khác biệt",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "mistakes",
+      "meaning_vi": "lỗi sai",
+      "paragraph_index": 10
+    }
+  ]
+}

@@ -1,0 +1,2203 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L2",
+  "level_label": "Cấp 2",
+  "topic": "The Elephant in the Room",
+  "slug": "book_13963",
+  "audio_filename": "book_13963.mp3",
+  "book_slug": "book_13963",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_13963/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_13963/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_13963/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_13963/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_13963/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_13963/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_13963/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_13963/page_09.jpg",
+    "https://audio.felixbuilderhub.com/books/book_13963/page_10.jpg",
+    "https://audio.felixbuilderhub.com/books/book_13963/page_11.jpg",
+    "https://audio.felixbuilderhub.com/books/book_13963/page_12.jpg",
+    "https://audio.felixbuilderhub.com/books/book_13963/page_13.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_13963/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_13963/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_13963/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_13963/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_13963/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_13963/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_13963/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_13963/page_09.mp3",
+    "https://audio.felixbuilderhub.com/books/book_13963/page_10.mp3",
+    "https://audio.felixbuilderhub.com/books/book_13963/page_11.mp3",
+    "https://audio.felixbuilderhub.com/books/book_13963/page_12.mp3",
+    "https://audio.felixbuilderhub.com/books/book_13963/page_13.mp3"
+  ],
+  "book_attribution": {
+    "title": "The Elephant in the Room",
+    "creators": [
+      "Sam Wilson",
+      "Michael Tymbios"
+    ],
+    "publisher": "Book Dash",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: The Elephant in the Room is written by Sam Wilson . © Book Dash , 2014. Some rights reserved. Released under CC BY 4.0 license. Other Credits: This book has been originally published by Book Dash. It was created at Book Dash Cape Town, 28 June 2014 by Michael Tymbios (illustrator) and Sam Wilson (writer). Images Attributions: Cover page: An elephant , by Michael Tymbios © Michael Tymbios, 2014. Some rights reserved. Released under CC BY 4.0 license. Page 2: Elephant in a room , by Michael Tymbios © Michael Tymbios, 2014. Some rights reserved. Released under CC BY 4.0 license. Page 3: Breakfast and a vase kept on a table , by Michael Tymbios © Michael Tymbios, 2014. Some rights reserved. Released under CC BY 4.0 license. Page 4: An elephant in front of three children in a class room , by Michael Tymbios © Michael Tymbios, 2014. Some rights reserved. Released under CC BY 4.0 license. Page 5: A girl standing with a school bag, and an elephant's back in view , by Michael Tymbios © Michael Tymbios, 2014. Some rights reserved. Released under CC BY 4.0 license. Page 6: A girl standing on a mound looking through her binoculars , by Michael Tymbios © Michael Tymbios, 2014. Some rights reserved. Released under CC BY 4.0 license. Page 7: A girl sitting on the steps of her home , by Michael Tymbios © Michael Tymbios, 2014. Some rights reserved. Released under CC BY 4.0 license. Page 8: A shape in the middle of a path with greenery all around , by Michael Tymbios © Michael Tymbios, 2014. Some rights reserved. Released under CC BY 4.0 license. Page 9: A girl and an elephant together , by Michael Tymbios © Michael Tymbios, 2014. Some rights reserved. Released under CC BY 4.0 license. Page 10: A girl riding on an elephant , by Michael Tymbios © Michael Tymbios, 2014. Some rights reserved. Released under CC BY 4.0 license. Page 11: A girl drowning in water , by Michael Tymbios © Michael Tymbios, 2014. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/13963-the-elephant-in-the-room",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "Elephant in a room , by Michael Tymbios © Michael Tymbios, 2014. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "Breakfast and a vase kept on a table , by Michael Tymbios © Michael Tymbios, 2014. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "An elephant in front of three children in a class room , by Michael Tymbios © Michael Tymbios, 2014. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "A girl standing with a school bag, and an elephant's back in view , by Michael Tymbios © Michael Tymbios, 2014. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "A girl standing on a mound looking through her binoculars , by Michael Tymbios © Michael Tymbios, 2014. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "A girl sitting on the steps of her home , by Michael Tymbios © Michael Tymbios, 2014. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "A shape in the middle of a path with greenery all around , by Michael Tymbios © Michael Tymbios, 2014. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "A girl and an elephant together , by Michael Tymbios © Michael Tymbios, 2014. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 8,
+        "credit_text": "A girl riding on an elephant , by Michael Tymbios © Michael Tymbios, 2014. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 9,
+        "credit_text": "A girl drowning in water , by Michael Tymbios © Michael Tymbios, 2014. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 10,
+        "credit_text": "Illustration by Michael Tymbios."
+      },
+      {
+        "page_index": 11,
+        "credit_text": "Illustration by Michael Tymbios."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "The Elephant in the Room",
+    "paragraphs_en": [
+      "One morning, Lindi found an elephant in her room. “Look!” she called. “There’s an elephant in my room!” “No there isn’t,” her mother called back. “Elephants don’t live in houses. Everybody knows that.” The elephant yawned.",
+      "At breakfast, Lindi’s dad asked her to pass the milk. “I can’t,” said Lindi. “The elephant drank it all.” “There isn’t an elephant,” said her dad. “Elephants don’t live in the city. Everybody knows that.” The elephant burped.",
+      "At school, the teacher grumbled, “What’s wrong with this chalkboard? It’s all wrinkly!” “That’s not the chalkboard. That’s my elephant!” said Lindi. “There are no elephants at school,” said the teacher. “Everybody knows that.” The elephant ate the teacher’s sandwiches.",
+      "At break-time, the elephant followed Lindi to the playground. He knocked over the swings by mistake. “Go away!” said Lindi. “You’re not real and you shouldn’t be here! Everybody knows that!” The elephant drooped. He walked away, wiping his eyes with his trunk.",
+      "After school, Lindi couldn’t see the elephant anywhere. “Elephant!” she called. “Where are you?”",
+      "Lindi went home without him. She felt lonely. So she went outside, and sat on the steps, and waited. And waited. And waited.",
+      "And then … She saw a trunk. And tusks. And ears. The elephant was coming down the road!",
+      "She ran up and hugged him. “I’m sorry,” she said. “I didn’t mean it! I know you’re real. You’re my elephant.” The elephant lifted her up and put her on his back, and she rode down the street.",
+      "She waved to her neighbours. “Hello, Mr Green! Hello, Mrs Green!” “Look at Lindi!” said Mr Green. “How did she get up there? Maybe she grew!” “Don’t be silly,” said Mrs Green. “Little girls don’t grow that high. Everybody knows that.”",
+      "The elephant took Lindi to the lake, and she slid down his trunk like it was a slide. “Wheeeee!” she shrieked. They played all afternoon, laughing and splashing and spraying each other with water.",
+      "That night, the elephant tucked her into bed. “Good night, Elephant,” said Lindi. “Thank you for a lovely day.” He patted her head, and curled up to sleep outside her window.",
+      "“Elephants are the best friends in the world,” Lindi said to herself. “Nobody knows that, except for me and my elephant.”"
+    ],
+    "sentences": [
+      {
+        "text_en": "One morning, Lindi found an elephant in her room.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_000.mp3",
+        "text_vi": "Một buổi sáng, Lindi tìm thấy một con voi trong phòng mình."
+      },
+      {
+        "text_en": "“Look!” she called.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_001.mp3",
+        "text_vi": "\"Nhìn kìa!\" cô bé gọi."
+      },
+      {
+        "text_en": "“There’s an elephant in my room!” “No there isn’t,” her mother called back.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_002.mp3",
+        "text_vi": "\"Có một con voi trong phòng con!\" \"Không có đâu con,\" mẹ cô bé gọi lại."
+      },
+      {
+        "text_en": "“Elephants don’t live in houses.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_003.mp3",
+        "text_vi": "\"Voi không sống trong nhà."
+      },
+      {
+        "text_en": "Everybody knows that.” The elephant yawned.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_004.mp3",
+        "text_vi": "Ai cũng biết điều đó mà.\" Con voi ngáp."
+      },
+      {
+        "text_en": "At breakfast, Lindi’s dad asked her to pass the milk.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_005.mp3",
+        "text_vi": "Lúc ăn sáng, bố của Lindi bảo cô bé đưa sữa."
+      },
+      {
+        "text_en": "“I can’t,” said Lindi.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_006.mp3",
+        "text_vi": "\"Con không thể,\" Lindi nói."
+      },
+      {
+        "text_en": "“The elephant drank it all.” “There isn’t an elephant,” said her dad.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_007.mp3",
+        "text_vi": "\"Con voi đã uống hết rồi.\" \"Không có con voi nào cả,\" bố cô bé nói."
+      },
+      {
+        "text_en": "“Elephants don’t live in the city.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_008.mp3",
+        "text_vi": "\"Voi không sống trong thành phố."
+      },
+      {
+        "text_en": "Everybody knows that.” The elephant burped.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_009.mp3",
+        "text_vi": "Ai cũng biết điều đó mà.\" Con voi ợ hơi."
+      },
+      {
+        "text_en": "At school, the teacher grumbled, “What’s wrong with this chalkboard?",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_010.mp3",
+        "text_vi": "Ở trường, cô giáo càu nhàu, \"Cái bảng này bị làm sao thế?"
+      },
+      {
+        "text_en": "It’s all wrinkly!” “That’s not the chalkboard.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_011.mp3",
+        "text_vi": "Nó nhăn nheo hết cả rồi!\" \"Đó không phải cái bảng đâu ạ."
+      },
+      {
+        "text_en": "That’s my elephant!” said Lindi.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_012.mp3",
+        "text_vi": "Đó là con voi của con!\" Lindi nói."
+      },
+      {
+        "text_en": "“There are no elephants at school,” said the teacher.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_013.mp3",
+        "text_vi": "\"Không có voi ở trường học đâu,\" cô giáo nói."
+      },
+      {
+        "text_en": "“Everybody knows that.” The elephant ate the teacher’s sandwiches.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_014.mp3",
+        "text_vi": "Ai cũng biết điều đó mà.\" Con voi ăn bánh mì kẹp của cô giáo."
+      },
+      {
+        "text_en": "At break-time, the elephant followed Lindi to the playground.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_015.mp3",
+        "text_vi": "Giờ giải lao, con voi đi theo Lindi ra sân chơi."
+      },
+      {
+        "text_en": "He knocked over the swings by mistake.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_016.mp3",
+        "text_vi": "Nó lỡ làm đổ xích đu."
+      },
+      {
+        "text_en": "“Go away!” said Lindi.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_017.mp3",
+        "text_vi": "\"Đi đi!\" Lindi nói."
+      },
+      {
+        "text_en": "“You’re not real and you shouldn’t be here!",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_018.mp3",
+        "text_vi": "\"Mày không có thật và mày không nên ở đây!"
+      },
+      {
+        "text_en": "Everybody knows that!” The elephant drooped.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_019.mp3",
+        "text_vi": "Ai cũng biết điều đó mà!\" Con voi buồn bã."
+      },
+      {
+        "text_en": "He walked away, wiping his eyes with his trunk.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_020.mp3",
+        "text_vi": "Nó bỏ đi, dùng vòi lau mắt."
+      },
+      {
+        "text_en": "After school, Lindi couldn’t see the elephant anywhere.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_021.mp3",
+        "text_vi": "Sau giờ học, Lindi không thấy con voi ở đâu cả."
+      },
+      {
+        "text_en": "“Elephant!” she called.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_022.mp3",
+        "text_vi": "\"Voi ơi!\" cô bé gọi."
+      },
+      {
+        "text_en": "“Where are you?”",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_023.mp3",
+        "text_vi": "\"Mày ở đâu?\""
+      },
+      {
+        "text_en": "Lindi went home without him.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_024.mp3",
+        "text_vi": "Lindi về nhà mà không có nó."
+      },
+      {
+        "text_en": "She felt lonely.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_025.mp3",
+        "text_vi": "Cô bé cảm thấy cô đơn."
+      },
+      {
+        "text_en": "So she went outside, and sat on the steps, and waited.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_026.mp3",
+        "text_vi": "Thế là cô bé ra ngoài, ngồi trên bậc thềm, và chờ đợi."
+      },
+      {
+        "text_en": "And waited. And waited.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_027.mp3",
+        "text_vi": "Và chờ đợi. Và chờ đợi."
+      },
+      {
+        "text_en": "And then … She saw a trunk.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_028.mp3",
+        "text_vi": "Và rồi… Cô bé thấy một cái vòi."
+      },
+      {
+        "text_en": "And tusks. And ears.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_029.mp3",
+        "text_vi": "Và ngà. Và tai."
+      },
+      {
+        "text_en": "The elephant was coming down the road!",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_030.mp3",
+        "text_vi": "Con voi đang đi xuống đường!"
+      },
+      {
+        "text_en": "She ran up and hugged him.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_031.mp3",
+        "text_vi": "Cô bé chạy đến và ôm chầm lấy nó."
+      },
+      {
+        "text_en": "“I’m sorry,” she said.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_032.mp3",
+        "text_vi": "\"Con xin lỗi,\" cô bé nói."
+      },
+      {
+        "text_en": "“I didn’t mean it!",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_033.mp3",
+        "text_vi": "\"Con không cố ý đâu!"
+      },
+      {
+        "text_en": "I know you’re real.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_034.mp3",
+        "text_vi": "Con biết mày có thật."
+      },
+      {
+        "text_en": "You’re my elephant.” The elephant lifted her up and put her on his back, and she rode down the street.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_035.mp3",
+        "text_vi": "Mày là con voi của con.\" Con voi nhấc cô bé lên và đặt lên lưng nó, rồi cô bé cưỡi nó đi xuống phố."
+      },
+      {
+        "text_en": "She waved to her neighbours.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_036.mp3",
+        "text_vi": "Cô bé vẫy tay chào hàng xóm."
+      },
+      {
+        "text_en": "“Hello, Mr Green!",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_037.mp3",
+        "text_vi": "\"Chào ông Green!"
+      },
+      {
+        "text_en": "Hello, Mrs Green!” “Look at Lindi!” said Mr Green.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_038.mp3",
+        "text_vi": "Chào bà Green!\" \"Nhìn Lindi kìa!\" ông Green nói."
+      },
+      {
+        "text_en": "“How did she get up there?",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_039.mp3",
+        "text_vi": "\"Làm sao con bé lên được đó vậy?"
+      },
+      {
+        "text_en": "Maybe she grew!” “Don’t be silly,” said Mrs Green.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_040.mp3",
+        "text_vi": "Chắc nó lớn rồi!\" \"Đừng ngốc nghếch thế,\" bà Green nói."
+      },
+      {
+        "text_en": "“Little girls don’t grow that high.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_041.mp3",
+        "text_vi": "\"Các cô bé không lớn cao như vậy đâu."
+      },
+      {
+        "text_en": "Everybody knows that.”",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_042.mp3",
+        "text_vi": "Ai cũng biết điều đó mà.\""
+      },
+      {
+        "text_en": "The elephant took Lindi to the lake, and she slid down his trunk like it was a slide.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_043.mp3",
+        "text_vi": "Con voi đưa Lindi đến hồ, và cô bé trượt xuống vòi của nó như thể đó là một cái cầu trượt."
+      },
+      {
+        "text_en": "“Wheeeee!” she shrieked.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_044.mp3",
+        "text_vi": "\"Wheeeee!\" cô bé hét lên."
+      },
+      {
+        "text_en": "They played all afternoon, laughing and splashing and spraying each other with water.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_045.mp3",
+        "text_vi": "Chúng chơi cả buổi chiều, cười đùa, té nước và phun nước vào nhau."
+      },
+      {
+        "text_en": "That night, the elephant tucked her into bed.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_046.mp3",
+        "text_vi": "Đêm đó, con voi đắp chăn cho cô bé đi ngủ."
+      },
+      {
+        "text_en": "“Good night, Elephant,” said Lindi.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_047.mp3",
+        "text_vi": "\"Chúc ngủ ngon, Voi,\" Lindi nói."
+      },
+      {
+        "text_en": "“Thank you for a lovely day.” He patted her head, and curled up to sleep outside her window.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_048.mp3",
+        "text_vi": "\"Cảm ơn vì một ngày thật đáng yêu.\" Nó vỗ đầu cô bé, rồi cuộn mình ngủ bên ngoài cửa sổ."
+      },
+      {
+        "text_en": "“Elephants are the best friends in the world,” Lindi said to herself.",
+        "paragraph_index": 11,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_049.mp3",
+        "text_vi": "\"Voi là những người bạn tốt nhất trên thế giới,\" Lindi tự nhủ."
+      },
+      {
+        "text_en": "“Nobody knows that, except for me and my elephant.”",
+        "paragraph_index": 11,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_050.mp3",
+        "text_vi": "\"Không ai biết điều đó, trừ con và con voi của con.\""
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "One morning, Lindi found an elephant in her room.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "“Look!” she called.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "“There’s an elephant in my room!” “No there isn’t,” her mother called back.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "“Elephants don’t live in houses.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "Everybody knows that.” The elephant yawned.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "At breakfast, Lindi’s dad asked her to pass the milk.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "“I can’t,” said Lindi.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "“The elephant drank it all.” “There isn’t an elephant,” said her dad.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "“Elephants don’t live in the city.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "Everybody knows that.” The elephant burped.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "At school, the teacher grumbled, “What’s wrong with this chalkboard?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "It’s all wrinkly!” “That’s not the chalkboard.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "That’s my elephant!” said Lindi.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_012.mp3"
+        },
+        {
+          "id": "ra_13",
+          "text_en": "“There are no elephants at school,” said the teacher.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_013.mp3"
+        },
+        {
+          "id": "ra_14",
+          "text_en": "“Everybody knows that.” The elephant ate the teacher’s sandwiches.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_014.mp3"
+        },
+        {
+          "id": "ra_15",
+          "text_en": "At break-time, the elephant followed Lindi to the playground.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_015.mp3"
+        },
+        {
+          "id": "ra_16",
+          "text_en": "He knocked over the swings by mistake.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_016.mp3"
+        },
+        {
+          "id": "ra_17",
+          "text_en": "“Go away!” said Lindi.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_017.mp3"
+        },
+        {
+          "id": "ra_18",
+          "text_en": "“You’re not real and you shouldn’t be here!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_018.mp3"
+        },
+        {
+          "id": "ra_19",
+          "text_en": "Everybody knows that!” The elephant drooped.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_019.mp3"
+        },
+        {
+          "id": "ra_20",
+          "text_en": "He walked away, wiping his eyes with his trunk.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_020.mp3"
+        },
+        {
+          "id": "ra_21",
+          "text_en": "After school, Lindi couldn’t see the elephant anywhere.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_021.mp3"
+        },
+        {
+          "id": "ra_22",
+          "text_en": "“Elephant!” she called.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_022.mp3"
+        },
+        {
+          "id": "ra_23",
+          "text_en": "“Where are you?”",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_023.mp3"
+        },
+        {
+          "id": "ra_24",
+          "text_en": "Lindi went home without him.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_024.mp3"
+        },
+        {
+          "id": "ra_25",
+          "text_en": "She felt lonely.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_025.mp3"
+        },
+        {
+          "id": "ra_26",
+          "text_en": "So she went outside, and sat on the steps, and waited.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_026.mp3"
+        },
+        {
+          "id": "ra_27",
+          "text_en": "And waited. And waited.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_027.mp3"
+        },
+        {
+          "id": "ra_28",
+          "text_en": "And then … She saw a trunk.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_028.mp3"
+        },
+        {
+          "id": "ra_29",
+          "text_en": "And tusks. And ears.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_029.mp3"
+        },
+        {
+          "id": "ra_30",
+          "text_en": "The elephant was coming down the road!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_030.mp3"
+        },
+        {
+          "id": "ra_31",
+          "text_en": "She ran up and hugged him.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_031.mp3"
+        },
+        {
+          "id": "ra_32",
+          "text_en": "“I’m sorry,” she said.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_032.mp3"
+        },
+        {
+          "id": "ra_33",
+          "text_en": "“I didn’t mean it!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_033.mp3"
+        },
+        {
+          "id": "ra_34",
+          "text_en": "I know you’re real.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_034.mp3"
+        },
+        {
+          "id": "ra_35",
+          "text_en": "You’re my elephant.” The elephant lifted her up and put her on his back, and she rode down the street.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_035.mp3"
+        },
+        {
+          "id": "ra_36",
+          "text_en": "She waved to her neighbours.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_036.mp3"
+        },
+        {
+          "id": "ra_37",
+          "text_en": "“Hello, Mr Green!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_037.mp3"
+        },
+        {
+          "id": "ra_38",
+          "text_en": "Hello, Mrs Green!” “Look at Lindi!” said Mr Green.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_038.mp3"
+        },
+        {
+          "id": "ra_39",
+          "text_en": "“How did she get up there?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_039.mp3"
+        },
+        {
+          "id": "ra_40",
+          "text_en": "Maybe she grew!” “Don’t be silly,” said Mrs Green.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_040.mp3"
+        },
+        {
+          "id": "ra_41",
+          "text_en": "“Little girls don’t grow that high.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_041.mp3"
+        },
+        {
+          "id": "ra_42",
+          "text_en": "Everybody knows that.”",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_042.mp3"
+        },
+        {
+          "id": "ra_43",
+          "text_en": "The elephant took Lindi to the lake, and she slid down his trunk like it was a slide.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_043.mp3"
+        },
+        {
+          "id": "ra_44",
+          "text_en": "“Wheeeee!” she shrieked.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_044.mp3"
+        },
+        {
+          "id": "ra_45",
+          "text_en": "They played all afternoon, laughing and splashing and spraying each other with water.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_045.mp3"
+        },
+        {
+          "id": "ra_46",
+          "text_en": "That night, the elephant tucked her into bed.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_046.mp3"
+        },
+        {
+          "id": "ra_47",
+          "text_en": "“Good night, Elephant,” said Lindi.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_047.mp3"
+        },
+        {
+          "id": "ra_48",
+          "text_en": "“Thank you for a lovely day.” He patted her head, and curled up to sleep outside her window.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_048.mp3"
+        },
+        {
+          "id": "ra_49",
+          "text_en": "“Elephants are the best friends in the world,” Lindi said to herself.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_049.mp3"
+        },
+        {
+          "id": "ra_50",
+          "text_en": "“Nobody knows that, except for me and my elephant.”",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13963/s_050.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "Who found an elephant in her room?",
+          "options_en": [
+            "Lindi",
+            "Her dad",
+            "Her mother"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "Where did Lindi find the elephant?",
+          "options_en": [
+            "In her room",
+            "At the playground",
+            "At the lake"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s1_q1",
+          "type": "choice",
+          "question_en": "Who called 'Look!'?",
+          "options_en": [
+            "Lindi",
+            "Her mother",
+            "Her teacher"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s1_q2",
+          "type": "choice",
+          "question_en": "What did she do when she saw the elephant?",
+          "options_en": [
+            "She called out",
+            "She waved",
+            "She waited"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s2_q1",
+          "type": "choice",
+          "question_en": "Who said 'No there isn't'?",
+          "options_en": [
+            "Her mother",
+            "Lindi",
+            "Her dad"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s2_q2",
+          "type": "choice",
+          "question_en": "What did Lindi say in that sentence?",
+          "options_en": [
+            "There’s an elephant in my room!",
+            "Pass the milk",
+            "Go away!"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s3_q1",
+          "type": "choice",
+          "question_en": "What don't live in houses, according to the sentence?",
+          "options_en": [
+            "Elephants",
+            "Teachers",
+            "Neighbours"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p0_s3_q2",
+          "type": "choice",
+          "question_en": "What is the correct answer to this question: Where, according to the sentence, don't elephants live?",
+          "options_en": [
+            "In houses",
+            "At school",
+            "In the city"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p0_s4_q1",
+          "type": "choice",
+          "question_en": "What did the elephant do?",
+          "options_en": [
+            "He yawned",
+            "He burped",
+            "He ate"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p0_s4_q2",
+          "type": "choice",
+          "question_en": "Who yawned?",
+          "options_en": [
+            "The elephant",
+            "Lindi",
+            "Her mother"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "Who asked Lindi to pass the milk?",
+          "options_en": [
+            "Lindi’s dad",
+            "Her mother",
+            "Her teacher"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "When did he ask her to pass the milk?",
+          "options_en": [
+            "At breakfast",
+            "At school",
+            "At bedtime"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p1_s1_q1",
+          "type": "choice",
+          "question_en": "Who said \"I can't\"?",
+          "options_en": [
+            "Lindi",
+            "Her dad",
+            "The elephant"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p1_s1_q2",
+          "type": "choice",
+          "question_en": "What did Lindi say?",
+          "options_en": [
+            "\"I can't,\"",
+            "\"Look!\"",
+            "\"Good night, Elephant\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p1_s2_q1",
+          "type": "choice",
+          "question_en": "What did Lindi say had drunk it all?",
+          "options_en": [
+            "The elephant",
+            "The teacher",
+            "Mr Green"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p1_s2_q2",
+          "type": "choice",
+          "question_en": "Who said \"There isn't an elephant\"?",
+          "options_en": [
+            "Her dad",
+            "Her mother",
+            "The teacher"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p1_s3_q1",
+          "type": "choice",
+          "question_en": "What don't elephants do according to the sentence?",
+          "options_en": [
+            "Live in the city",
+            "Live in houses",
+            "Eat sandwiches"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p1_s3_q2",
+          "type": "choice",
+          "question_en": "Where did the sentence say elephants don't live?",
+          "options_en": [
+            "In the city",
+            "In houses",
+            "At school"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p1_s4_q1",
+          "type": "choice",
+          "question_en": "Who burped?",
+          "options_en": [
+            "The elephant",
+            "Lindi",
+            "Her dad"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p1_s4_q2",
+          "type": "choice",
+          "question_en": "What did the elephant do in this sentence?",
+          "options_en": [
+            "Burped",
+            "Yawned",
+            "Ate the teacher's sandwiches"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "Where did the teacher grumble?",
+          "options_en": [
+            "At school",
+            "At home",
+            "At the playground"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "Who grumbled?",
+          "options_en": [
+            "The teacher",
+            "Lindi",
+            "The elephant"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p2_s1_q1",
+          "type": "choice",
+          "question_en": "What did the speaker say was all wrinkly?",
+          "options_en": [
+            "The chalkboard",
+            "Lindi's elephant",
+            "The sandwiches"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p2_s1_q2",
+          "type": "choice",
+          "question_en": "What did the speaker say about it?",
+          "options_en": [
+            "It’s all wrinkly",
+            "The elephant drank the milk",
+            "He knocked over the swings"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p2_s2_q1",
+          "type": "choice",
+          "question_en": "Whose elephant did someone claim it was?",
+          "options_en": [
+            "Lindi's",
+            "Her mother's",
+            "Mr Green's"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p2_s2_q2",
+          "type": "choice",
+          "question_en": "Who said \"That’s my elephant!\"?",
+          "options_en": [
+            "Lindi",
+            "The teacher",
+            "The elephant"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p2_s3_q1",
+          "type": "choice",
+          "question_en": "What did the teacher say about elephants at school?",
+          "options_en": [
+            "There are no elephants at school",
+            "Elephants live in houses",
+            "Elephants like sandwiches"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p2_s3_q2",
+          "type": "choice",
+          "question_en": "Who said there are no elephants at school?",
+          "options_en": [
+            "The teacher",
+            "Lindi",
+            "Her dad"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p2_s4_q1",
+          "type": "choice",
+          "question_en": "Who ate the teacher’s sandwiches?",
+          "options_en": [
+            "The elephant",
+            "Lindi",
+            "Mr Green"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p2_s4_q2",
+          "type": "choice",
+          "question_en": "Who knows that, according to the sentence?",
+          "options_en": [
+            "Everybody",
+            "Only Lindi",
+            "Only the teacher"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "Who followed Lindi to the playground?",
+          "options_en": [
+            "The elephant",
+            "Her dad",
+            "The teacher"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "When did the elephant follow Lindi to the playground?",
+          "options_en": [
+            "At break-time",
+            "At breakfast",
+            "After school"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p3_s1_q1",
+          "type": "choice",
+          "question_en": "What did he knock over by mistake?",
+          "options_en": [
+            "The swings",
+            "The chalkboard",
+            "The sandwiches"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p3_s1_q2",
+          "type": "choice",
+          "question_en": "How did he knock the swings over?",
+          "options_en": [
+            "By mistake",
+            "On purpose",
+            "To get attention"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p3_s2_q1",
+          "type": "choice",
+          "question_en": "Who said \"Go away!\"?",
+          "options_en": [
+            "Lindi",
+            "Her mother",
+            "Mr Green"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p3_s2_q2",
+          "type": "choice",
+          "question_en": "Why did Lindi say \"Go away!\"?",
+          "options_en": [
+            "Because she told the elephant he wasn't real",
+            "Because he drank all the milk",
+            "Because he waved to the neighbours"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p3_s3_q1",
+          "type": "choice",
+          "question_en": "What did Lindi say the elephant was?",
+          "options_en": [
+            "Not real and shouldn't be here",
+            "Her best friend",
+            "Very funny"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p3_s3_q2",
+          "type": "choice",
+          "question_en": "Who did Lindi say shouldn't be here?",
+          "options_en": [
+            "The elephant",
+            "The teacher",
+            "Mrs Green"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p3_s4_q1",
+          "type": "choice",
+          "question_en": "Who drooped after Lindi spoke?",
+          "options_en": [
+            "The elephant",
+            "Lindi",
+            "The teacher"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p3_s4_q2",
+          "type": "choice",
+          "question_en": "What did everyone \"know\" according to Lindi's words?",
+          "options_en": [
+            "That the elephant wasn't real and shouldn't be here",
+            "That elephants don't live in houses",
+            "That little girls don't grow that high"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p3_s5_q1",
+          "type": "choice",
+          "question_en": "Where did he walk after drooping?",
+          "options_en": [
+            "Away",
+            "To the lake",
+            "Back to Lindi's room"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p3_s5_q2",
+          "type": "choice",
+          "question_en": "How did he wipe his eyes as he walked away?",
+          "options_en": [
+            "With his trunk",
+            "With a towel",
+            "With his hands"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "When couldn’t Lindi see the elephant?",
+          "options_en": [
+            "After school",
+            "At breakfast",
+            "At break-time"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "Who couldn’t see the elephant anywhere?",
+          "options_en": [
+            "Lindi",
+            "Her mother",
+            "Her teacher"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p4_s1_q1",
+          "type": "choice",
+          "question_en": "What did she call?",
+          "options_en": [
+            "\"Elephant!\"",
+            "\"Mom!\"",
+            "\"Teacher!\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p4_s1_q2",
+          "type": "choice",
+          "question_en": "How did she call out?",
+          "options_en": [
+            "She called \"Elephant!\"",
+            "She whispered to her mother",
+            "She laughed at the teacher"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p4_s2_q1",
+          "type": "choice",
+          "question_en": "What question did she ask next?",
+          "options_en": [
+            "\"Where are you?\"",
+            "\"Are you real?\"",
+            "\"Why did you leave?\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p4_s2_q2",
+          "type": "choice",
+          "question_en": "Who was she calling out to when she said, \"Where are you?\"",
+          "options_en": [
+            "The elephant",
+            "Her mother",
+            "Her teacher"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "Who went home?",
+          "options_en": [
+            "Lindi",
+            "Her dad",
+            "The elephant"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "Who did she go home without?",
+          "options_en": [
+            "Him (the elephant)",
+            "Her mother",
+            "Her teacher"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p5_s1_q1",
+          "type": "choice",
+          "question_en": "How did she feel?",
+          "options_en": [
+            "Lonely",
+            "Happy",
+            "Surprised"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p5_s1_q2",
+          "type": "choice",
+          "question_en": "What was her feeling?",
+          "options_en": [
+            "Lonely",
+            "Excited",
+            "Angry"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p5_s2_q1",
+          "type": "choice",
+          "question_en": "Where did she go after going outside?",
+          "options_en": [
+            "She sat on the steps",
+            "She went to the lake",
+            "She went to school"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p5_s2_q2",
+          "type": "choice",
+          "question_en": "What did she do on the steps?",
+          "options_en": [
+            "She waited",
+            "She rode the elephant",
+            "She ate breakfast"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p5_s3_q1",
+          "type": "choice",
+          "question_en": "What did she do again and again?",
+          "options_en": [
+            "She waited",
+            "She waved to neighbours",
+            "She slid down the trunk"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        },
+        {
+          "id": "gl_p5_s3_q2",
+          "type": "choice",
+          "question_en": "How did she spend her time in the sentence?",
+          "options_en": [
+            "Waiting",
+            "Playing",
+            "Sleeping"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "Who saw a trunk?",
+          "options_en": [
+            "Lindi",
+            "Her mother",
+            "The elephant"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "What did she see?",
+          "options_en": [
+            "A trunk",
+            "The milk",
+            "The swings"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        },
+        {
+          "id": "gl_p6_s1_q1",
+          "type": "choice",
+          "question_en": "What parts did she notice?",
+          "options_en": [
+            "Tusks and ears",
+            "A trunk",
+            "The teacher's sandwiches"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p6_s1_q2",
+          "type": "choice",
+          "question_en": "Which of these is mentioned?",
+          "options_en": [
+            "Tusks",
+            "The chalkboard",
+            "The lake"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p6_s2_q1",
+          "type": "choice",
+          "question_en": "Where was the elephant coming?",
+          "options_en": [
+            "Down the road",
+            "To the playground",
+            "Into her room"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        },
+        {
+          "id": "gl_p6_s2_q2",
+          "type": "choice",
+          "question_en": "How was the elephant moving?",
+          "options_en": [
+            "Coming down the road",
+            "Sleeping outside the window",
+            "Drinking the milk"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "Who ran up and hugged him?",
+          "options_en": [
+            "She",
+            "The elephant",
+            "Mr Green"
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "What did she do when she reached him?",
+          "options_en": [
+            "She hugged him",
+            "She waved",
+            "She walked away"
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        },
+        {
+          "id": "gl_p7_s1_q1",
+          "type": "choice",
+          "question_en": "What did she say?",
+          "options_en": [
+            "\"I'm sorry,\"",
+            "\"Hello,\"",
+            "\"Go away!\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 32
+        },
+        {
+          "id": "gl_p7_s1_q2",
+          "type": "choice",
+          "question_en": "Who said \"I'm sorry\"?",
+          "options_en": [
+            "She",
+            "Her teacher",
+            "Mrs Green"
+          ],
+          "correct_index": 0,
+          "sentence_index": 32
+        },
+        {
+          "id": "gl_p7_s2_q1",
+          "type": "choice",
+          "question_en": "What did she say in the next line?",
+          "options_en": [
+            "\"I didn't mean it!\"",
+            "\"I love you!\"",
+            "\"Good night!\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 33
+        },
+        {
+          "id": "gl_p7_s2_q2",
+          "type": "choice",
+          "question_en": "Who said \"I didn't mean it!\"?",
+          "options_en": [
+            "She",
+            "Her dad",
+            "The teacher"
+          ],
+          "correct_index": 0,
+          "sentence_index": 33
+        },
+        {
+          "id": "gl_p7_s3_q1",
+          "type": "choice",
+          "question_en": "What did she say she knew?",
+          "options_en": [
+            "That he was real",
+            "That he was imaginary",
+            "That he was hungry"
+          ],
+          "correct_index": 0,
+          "sentence_index": 34
+        },
+        {
+          "id": "gl_p7_s3_q2",
+          "type": "choice",
+          "question_en": "Who did she say was real?",
+          "options_en": [
+            "You (the elephant)",
+            "Her neighbour",
+            "The chalkboard"
+          ],
+          "correct_index": 0,
+          "sentence_index": 34
+        },
+        {
+          "id": "gl_p7_s4_q1",
+          "type": "choice",
+          "question_en": "What did the elephant do after she called him her elephant?",
+          "options_en": [
+            "Lifted her up and put her on his back",
+            "Ate her sandwich",
+            "Went back into the house"
+          ],
+          "correct_index": 0,
+          "sentence_index": 35
+        },
+        {
+          "id": "gl_p7_s4_q2",
+          "type": "choice",
+          "question_en": "Where did she ride after the elephant put her on his back?",
+          "options_en": [
+            "Down the street",
+            "To the lake",
+            "To school"
+          ],
+          "correct_index": 0,
+          "sentence_index": 35
+        }
+      ]
+    },
+    {
+      "paragraph_index": 8,
+      "questions": [
+        {
+          "id": "gl_p8_s0_q1",
+          "type": "choice",
+          "question_en": "Who did she wave to?",
+          "options_en": [
+            "Her neighbours",
+            "The elephant",
+            "Her teacher"
+          ],
+          "correct_index": 0,
+          "sentence_index": 36
+        },
+        {
+          "id": "gl_p8_s0_q2",
+          "type": "choice",
+          "question_en": "What did she do to her neighbours?",
+          "options_en": [
+            "Waved to them",
+            "Hugged them",
+            "Called them over"
+          ],
+          "correct_index": 0,
+          "sentence_index": 36
+        },
+        {
+          "id": "gl_p8_s1_q1",
+          "type": "choice",
+          "question_en": "Who did she say hello to?",
+          "options_en": [
+            "Mr Green",
+            "Mrs Green",
+            "Her dad"
+          ],
+          "correct_index": 0,
+          "sentence_index": 37
+        },
+        {
+          "id": "gl_p8_s1_q2",
+          "type": "choice",
+          "question_en": "What did she say to Mr Green?",
+          "options_en": [
+            "\"Hello, Mr Green!\"",
+            "\"Go away!\"",
+            "\"Good night, Elephant\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 37
+        },
+        {
+          "id": "gl_p8_s2_q1",
+          "type": "choice",
+          "question_en": "Who said, \"Look at Lindi!\"?",
+          "options_en": [
+            "Mr Green",
+            "Mrs Green",
+            "Lindi"
+          ],
+          "correct_index": 0,
+          "sentence_index": 38
+        },
+        {
+          "id": "gl_p8_s2_q2",
+          "type": "choice",
+          "question_en": "What did Mr Green say to point out Lindi?",
+          "options_en": [
+            "\"Look at Lindi!\"",
+            "\"Don't be silly,\"",
+            "\"There's an elephant in my room!\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 38
+        },
+        {
+          "id": "gl_p8_s3_q1",
+          "type": "choice",
+          "question_en": "What question did Mr Green ask about Lindi?",
+          "options_en": [
+            "\"How did she get up there?\"",
+            "\"Maybe she grew!\"",
+            "\"Where is the elephant?\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 39
+        },
+        {
+          "id": "gl_p8_s3_q2",
+          "type": "choice",
+          "question_en": "Who asked, \"How did she get up there?\"",
+          "options_en": [
+            "Mr Green",
+            "Mrs Green",
+            "Lindi"
+          ],
+          "correct_index": 0,
+          "sentence_index": 39
+        },
+        {
+          "id": "gl_p8_s4_q1",
+          "type": "choice",
+          "question_en": "What suggestion was made about why Lindi was up there?",
+          "options_en": [
+            "Maybe she grew",
+            "She rode an elephant",
+            "She climbed a ladder"
+          ],
+          "correct_index": 0,
+          "sentence_index": 40
+        },
+        {
+          "id": "gl_p8_s4_q2",
+          "type": "choice",
+          "question_en": "Who said, \"Don't be silly,\"?",
+          "options_en": [
+            "Mrs Green",
+            "Mr Green",
+            "Lindi"
+          ],
+          "correct_index": 0,
+          "sentence_index": 40
+        },
+        {
+          "id": "gl_p8_s5_q1",
+          "type": "choice",
+          "question_en": "What did Mrs Green say about little girls?",
+          "options_en": [
+            "They don't grow that high",
+            "They are the best friends",
+            "They live in the house"
+          ],
+          "correct_index": 0,
+          "sentence_index": 41
+        },
+        {
+          "id": "gl_p8_s5_q2",
+          "type": "choice",
+          "question_en": "Who said that little girls don't grow that high?",
+          "options_en": [
+            "Mrs Green",
+            "Mr Green",
+            "Lindi"
+          ],
+          "correct_index": 0,
+          "sentence_index": 41
+        },
+        {
+          "id": "gl_p8_s6_q1",
+          "type": "choice",
+          "question_en": "What did the speaker say everybody knows?",
+          "options_en": [
+            "That little girls don't grow that high",
+            "That elephants are the best friends",
+            "That elephants don't live in houses"
+          ],
+          "correct_index": 0,
+          "sentence_index": 42
+        },
+        {
+          "id": "gl_p8_s6_q2",
+          "type": "choice",
+          "question_en": "Who said, \"Everybody knows that\" in this paragraph?",
+          "options_en": [
+            "Mrs Green",
+            "Mr Green",
+            "Lindi"
+          ],
+          "correct_index": 0,
+          "sentence_index": 42
+        }
+      ]
+    },
+    {
+      "paragraph_index": 9,
+      "questions": [
+        {
+          "id": "gl_p9_s0_q1",
+          "type": "choice",
+          "question_en": "Who took Lindi to the lake?",
+          "options_en": [
+            "The elephant",
+            "Her dad",
+            "Mr Green"
+          ],
+          "correct_index": 0,
+          "sentence_index": 43
+        },
+        {
+          "id": "gl_p9_s0_q2",
+          "type": "choice",
+          "question_en": "Where did the elephant take Lindi?",
+          "options_en": [
+            "To the lake",
+            "To school",
+            "To the playground"
+          ],
+          "correct_index": 0,
+          "sentence_index": 43
+        },
+        {
+          "id": "gl_p9_s1_q1",
+          "type": "choice",
+          "question_en": "What did she shriek?",
+          "options_en": [
+            "\"Wheeeee!\"",
+            "\"Go away!\"",
+            "\"Good night, Elephant.\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 44
+        },
+        {
+          "id": "gl_p9_s1_q2",
+          "type": "choice",
+          "question_en": "What did she do in that moment?",
+          "options_en": [
+            "She shrieked",
+            "She wiped her eyes",
+            "She tucked someone into bed"
+          ],
+          "correct_index": 0,
+          "sentence_index": 44
+        },
+        {
+          "id": "gl_p9_s2_q1",
+          "type": "choice",
+          "question_en": "What did they do all afternoon?",
+          "options_en": [
+            "They played",
+            "They ate sandwiches",
+            "They passed the milk"
+          ],
+          "correct_index": 0,
+          "sentence_index": 45
+        },
+        {
+          "id": "gl_p9_s2_q2",
+          "type": "choice",
+          "question_en": "How did they play together?",
+          "options_en": [
+            "Laughing and splashing and spraying each other with water",
+            "Knocking over the swings",
+            "Riding down the street"
+          ],
+          "correct_index": 0,
+          "sentence_index": 45
+        }
+      ]
+    },
+    {
+      "paragraph_index": 10,
+      "questions": [
+        {
+          "id": "gl_p10_s0_q1",
+          "type": "choice",
+          "question_en": "When did the elephant tuck her into bed?",
+          "options_en": [
+            "That night",
+            "At breakfast",
+            "After school"
+          ],
+          "correct_index": 0,
+          "sentence_index": 46
+        },
+        {
+          "id": "gl_p10_s0_q2",
+          "type": "choice",
+          "question_en": "Who tucked her into bed?",
+          "options_en": [
+            "The elephant",
+            "Her mother",
+            "Her teacher"
+          ],
+          "correct_index": 0,
+          "sentence_index": 46
+        },
+        {
+          "id": "gl_p10_s1_q1",
+          "type": "choice",
+          "question_en": "Who said, “Good night, Elephant”?",
+          "options_en": [
+            "Lindi",
+            "Mr Green",
+            "Her dad"
+          ],
+          "correct_index": 0,
+          "sentence_index": 47
+        },
+        {
+          "id": "gl_p10_s1_q2",
+          "type": "choice",
+          "question_en": "What did Lindi say to the elephant?",
+          "options_en": [
+            "“Good night, Elephant.”",
+            "“There’s an elephant in my room!”",
+            "“Look at Lindi!”"
+          ],
+          "correct_index": 0,
+          "sentence_index": 47
+        },
+        {
+          "id": "gl_p10_s2_q1",
+          "type": "choice",
+          "question_en": "What did he do to her head?",
+          "options_en": [
+            "He patted her head",
+            "He wiped it with his trunk",
+            "He put her on his back"
+          ],
+          "correct_index": 0,
+          "sentence_index": 48
+        },
+        {
+          "id": "gl_p10_s2_q2",
+          "type": "choice",
+          "question_en": "Where did he curl up to sleep?",
+          "options_en": [
+            "Outside her window",
+            "On her bed",
+            "By the lake"
+          ],
+          "correct_index": 0,
+          "sentence_index": 48
+        }
+      ]
+    },
+    {
+      "paragraph_index": 11,
+      "questions": [
+        {
+          "id": "gl_p11_s0_q1",
+          "type": "choice",
+          "question_en": "Who said that elephants are the best friends in the world?",
+          "options_en": [
+            "Lindi",
+            "Her mother",
+            "The teacher"
+          ],
+          "correct_index": 0,
+          "sentence_index": 49
+        },
+        {
+          "id": "gl_p11_s0_q2",
+          "type": "choice",
+          "question_en": "Who did Lindi say this to?",
+          "options_en": [
+            "Herself",
+            "Her elephant",
+            "Her dad"
+          ],
+          "correct_index": 0,
+          "sentence_index": 49
+        },
+        {
+          "id": "gl_p11_s1_q1",
+          "type": "choice",
+          "question_en": "Who knows that elephants are the best friends, according to the sentence?",
+          "options_en": [
+            "Me and my elephant",
+            "Her parents",
+            "The neighbours"
+          ],
+          "correct_index": 0,
+          "sentence_index": 50
+        },
+        {
+          "id": "gl_p11_s1_q2",
+          "type": "choice",
+          "question_en": "Whose knowledge is the sentence saying is the exception?",
+          "options_en": [
+            "Lindi and her elephant",
+            "Mr Green and Mrs Green",
+            "The teacher and classmates"
+          ],
+          "correct_index": 0,
+          "sentence_index": 50
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'The Elephant in the Room'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "found",
+      "meaning_vi": "tìm thấy",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "elephant",
+      "meaning_vi": "con voi",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "room",
+      "meaning_vi": "phòng",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "yawned",
+      "meaning_vi": "ngáp",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "breakfast",
+      "meaning_vi": "bữa sáng",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "pass",
+      "meaning_vi": "đưa, chuyền",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "drank",
+      "meaning_vi": "đã uống",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "burped",
+      "meaning_vi": "ợ hơi",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "grumbled",
+      "meaning_vi": "càu nhàu",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "chalkboard",
+      "meaning_vi": "bảng đen",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "wrinkly",
+      "meaning_vi": "nhăn nheo",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "sandwiches",
+      "meaning_vi": "bánh mì kẹp",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "playground",
+      "meaning_vi": "sân chơi",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "knocked over",
+      "meaning_vi": "làm đổ",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "by mistake",
+      "meaning_vi": "do nhầm lẫn",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "trunk",
+      "meaning_vi": "vòi (voi)",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "anywhere",
+      "meaning_vi": "bất cứ đâu",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "without",
+      "meaning_vi": "mà không có",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "lonely",
+      "meaning_vi": "cô đơn",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "steps",
+      "meaning_vi": "bậc thềm",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "trunk",
+      "meaning_vi": "vòi (voi)",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "tusks",
+      "meaning_vi": "ngà",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "ears",
+      "meaning_vi": "tai",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "hugged",
+      "meaning_vi": "ôm chầm",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "mean it",
+      "meaning_vi": "cố ý",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "lifted",
+      "meaning_vi": "nhấc lên",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "rode",
+      "meaning_vi": "đã cưỡi",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "waved",
+      "meaning_vi": "vẫy tay",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "neighbours",
+      "meaning_vi": "hàng xóm",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "grew",
+      "meaning_vi": "đã lớn",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "silly",
+      "meaning_vi": "ngốc nghếch",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "lake",
+      "meaning_vi": "hồ",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "slid",
+      "meaning_vi": "đã trượt",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "shrieked",
+      "meaning_vi": "hét lên",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "splashing",
+      "meaning_vi": "té nước",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "tucked",
+      "meaning_vi": "đắp chăn, nhét",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "lovely",
+      "meaning_vi": "đáng yêu",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "patted",
+      "meaning_vi": "vỗ nhẹ",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "curled up",
+      "meaning_vi": "cuộn mình",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "best",
+      "meaning_vi": "tốt nhất",
+      "paragraph_index": 11
+    },
+    {
+      "word_en": "world",
+      "meaning_vi": "thế giới",
+      "paragraph_index": 11
+    },
+    {
+      "word_en": "nobody",
+      "meaning_vi": "không ai",
+      "paragraph_index": 11
+    },
+    {
+      "word_en": "except for",
+      "meaning_vi": "ngoại trừ",
+      "paragraph_index": 11
+    }
+  ]
+}

@@ -1,0 +1,539 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L3",
+  "level_label": "Cấp 3",
+  "topic": "The Good Unicorn",
+  "slug": "book_133208",
+  "audio_filename": "book_133208.mp3",
+  "book_slug": "book_133208",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_133208/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_133208/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_133208/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_133208/page_06.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_133208/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_133208/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_133208/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_133208/page_06.mp3"
+  ],
+  "book_attribution": {
+    "title": "The Good Unicorn",
+    "creators": [
+      "Anvita Nair",
+      "Meera Satheesh Kumar",
+      "Musonda Kabwe",
+      "usha aswath iyer"
+    ],
+    "publisher": "StoryWeaver Community",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: The Good Unicorn is written by Anvita Nair . © Anvita Nair , 2022. Some rights reserved. Released under CC BY 4.0 license. Images Attributions: Cover page: Rainbow Unicorn , by Anvita Nair © Anvita Nair, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 3: Rainbow Unicorn , by Anvita Nair © Anvita Nair, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 4: Two suns , by Musonda Kabwe © Book Dash, 2017. Some rights reserved. Released under CC BY 4.0 license. Page 5: Unicorn , by Meera Satheesh Kumar © Meera Satheesh Kumar, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 6: Unicorn , by usha aswath iyer © usha aswath iyer, 2026. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/133208-the-good-unicorn",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "Rainbow Unicorn , by Anvita Nair © Anvita Nair, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "Two suns , by Musonda Kabwe © Book Dash, 2017. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "Unicorn , by Meera Satheesh Kumar © Meera Satheesh Kumar, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "Unicorn , by usha aswath iyer © usha aswath iyer, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "The Good Unicorn",
+    "paragraphs_en": [
+      "Once in the land of unicorns, there was a unicorn who was very good. She loved to go to the magical unicorn park. She liked playing there.",
+      "One day with a happy mood as usual she went to the park. To her horror, the toys from the park were missing. She used her magic power to find out what had happened.",
+      "She found out that a naughty unicorn had stolen them. She went to him then advised him and made him understand that stealing is not good at all .",
+      "He repented his act and apologised to her . They both became good friends."
+    ],
+    "sentences": [
+      {
+        "text_en": "Once in the land of unicorns, there was a unicorn who was very good.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_133208/s_000.mp3",
+        "text_vi": "Ngày xưa, ở xứ sở kỳ lân, có một chú kỳ lân rất tốt."
+      },
+      {
+        "text_en": "She loved to go to the magical unicorn park.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_133208/s_001.mp3",
+        "text_vi": "Cô ấy rất thích đến công viên kỳ lân thần kỳ."
+      },
+      {
+        "text_en": "She liked playing there.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_133208/s_002.mp3",
+        "text_vi": "Cô ấy thích chơi ở đó."
+      },
+      {
+        "text_en": "One day with a happy mood as usual she went to the park.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_133208/s_003.mp3",
+        "text_vi": "Một ngày nọ, cô ấy vui vẻ như mọi khi và đi đến công viên."
+      },
+      {
+        "text_en": "To her horror, the toys from the park were missing.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_133208/s_004.mp3",
+        "text_vi": "Cô ấy rất sợ hãi, vì đồ chơi trong công viên đã biến mất."
+      },
+      {
+        "text_en": "She used her magic power to find out what had happened.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_133208/s_005.mp3",
+        "text_vi": "Cô ấy dùng sức mạnh phép thuật của mình để tìm hiểu chuyện gì đã xảy ra."
+      },
+      {
+        "text_en": "She found out that a naughty unicorn had stolen them.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_133208/s_006.mp3",
+        "text_vi": "Cô ấy phát hiện ra một chú kỳ lân nghịch ngợm đã lấy trộm chúng."
+      },
+      {
+        "text_en": "She went to him then advised him and made him understand that stealing is not good at all .",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_133208/s_007.mp3",
+        "text_vi": "Cô ấy đến gặp chú ta, khuyên nhủ và giúp chú ta hiểu rằng trộm cắp là không tốt chút nào."
+      },
+      {
+        "text_en": "He repented his act and apologised to her .",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_133208/s_008.mp3",
+        "text_vi": "Chú ta hối hận về hành động của mình và xin lỗi cô ấy."
+      },
+      {
+        "text_en": "They both became good friends.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_133208/s_009.mp3",
+        "text_vi": "Cả hai sau đó trở thành bạn tốt của nhau."
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "Once in the land of unicorns, there was a unicorn who was very good.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_133208/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "She loved to go to the magical unicorn park.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_133208/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "She liked playing there.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_133208/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "One day with a happy mood as usual she went to the park.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_133208/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "To her horror, the toys from the park were missing.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_133208/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "She used her magic power to find out what had happened.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_133208/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "She found out that a naughty unicorn had stolen them.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_133208/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "She went to him then advised him and made him understand that stealing is not good at all .",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_133208/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "He repented his act and apologised to her .",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_133208/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "They both became good friends.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_133208/s_009.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "Who was very good?",
+          "options_en": [
+            "a unicorn",
+            "a naughty unicorn",
+            "the toys from the park"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "Where did this story take place?",
+          "options_en": [
+            "in the land of unicorns",
+            "at the magical unicorn park",
+            "in a toy shop"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s1_q1",
+          "type": "choice",
+          "question_en": "Where did she love to go?",
+          "options_en": [
+            "the magical unicorn park",
+            "to find the missing toys",
+            "to see the naughty unicorn"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s1_q2",
+          "type": "choice",
+          "question_en": "What did she love to do?",
+          "options_en": [
+            "go to the magical unicorn park",
+            "steal toys",
+            "use her magic power"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s2_q1",
+          "type": "choice",
+          "question_en": "What did she like doing there?",
+          "options_en": [
+            "playing",
+            "looking for missing toys",
+            "advising the naughty unicorn"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s2_q2",
+          "type": "choice",
+          "question_en": "Where did she like playing?",
+          "options_en": [
+            "the magical unicorn park",
+            "in the land of unicorns",
+            "at the place where the toys were hidden"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "Who went to the park?",
+          "options_en": [
+            "She",
+            "A naughty unicorn",
+            "Her friend"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "When did she go to the park?",
+          "options_en": [
+            "One day",
+            "As usual",
+            "Every night"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p1_s1_q1",
+          "type": "choice",
+          "question_en": "What was missing from the park?",
+          "options_en": [
+            "The toys",
+            "The magic power",
+            "Her happy mood"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p1_s1_q2",
+          "type": "choice",
+          "question_en": "How did she feel about the toys being missing?",
+          "options_en": [
+            "Horror",
+            "Happy",
+            "Good"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p1_s2_q1",
+          "type": "choice",
+          "question_en": "What did she use to find out what had happened?",
+          "options_en": [
+            "Her magic power",
+            "Advice",
+            "Friendship"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p1_s2_q2",
+          "type": "choice",
+          "question_en": "Why did she use her magic power?",
+          "options_en": [
+            "To find out what had happened",
+            "To play in the park",
+            "To make friends"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "Who had stolen them?",
+          "options_en": [
+            "A naughty unicorn",
+            "A very good unicorn",
+            "A unicorn who loved the park"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "What did she find out?",
+          "options_en": [
+            "That a naughty unicorn had stolen them",
+            "That the toys were missing",
+            "That he had apologized"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p2_s1_q1",
+          "type": "choice",
+          "question_en": "Who did she go to?",
+          "options_en": [
+            "The naughty unicorn",
+            "The very good unicorn",
+            "Her friend"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p2_s1_q2",
+          "type": "choice",
+          "question_en": "What did she make him understand?",
+          "options_en": [
+            "That stealing is not good at all",
+            "That playing is fun",
+            "That magic is powerful"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "Who apologised to her?",
+          "options_en": [
+            "He (the naughty unicorn)",
+            "She (the good unicorn)",
+            "The toys in the park"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "Why did he apologise?",
+          "options_en": [
+            "Because he repented his act",
+            "Because she forgave him",
+            "Because he found the missing toys"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p3_s1_q1",
+          "type": "choice",
+          "question_en": "Who became good friends?",
+          "options_en": [
+            "They both (he and she)",
+            "The unicorn and the park",
+            "The unicorn and the toys"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p3_s1_q2",
+          "type": "choice",
+          "question_en": "How did their relationship change?",
+          "options_en": [
+            "They became good friends",
+            "They played in the magical park together",
+            "They went to find the missing toys"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'The Good Unicorn'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "Once",
+      "meaning_vi": "Ngày xưa",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "land",
+      "meaning_vi": "xứ sở",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "magical",
+      "meaning_vi": "thần kỳ",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "park",
+      "meaning_vi": "công viên",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "mood",
+      "meaning_vi": "tâm trạng",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "as usual",
+      "meaning_vi": "như mọi khi",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "horror",
+      "meaning_vi": "sợ hãi",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "missing",
+      "meaning_vi": "biến mất",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "naughty",
+      "meaning_vi": "nghịch ngợm",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "stolen",
+      "meaning_vi": "đã lấy trộm",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "advised",
+      "meaning_vi": "khuyên nhủ",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "stealing",
+      "meaning_vi": "việc trộm cắp",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "repented",
+      "meaning_vi": "hối hận",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "act",
+      "meaning_vi": "hành động",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "apologised",
+      "meaning_vi": "xin lỗi",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "became",
+      "meaning_vi": "đã trở thành",
+      "paragraph_index": 3
+    }
+  ]
+}

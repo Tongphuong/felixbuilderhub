@@ -1,0 +1,1843 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L3",
+  "level_label": "Cấp 3",
+  "topic": "Friendship",
+  "slug": "book_130101",
+  "audio_filename": "book_130101.mp3",
+  "book_slug": "book_130101",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_130101/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_130101/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_130101/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_130101/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_130101/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_130101/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_130101/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_130101/page_09.jpg",
+    "https://audio.felixbuilderhub.com/books/book_130101/page_10.jpg",
+    "https://audio.felixbuilderhub.com/books/book_130101/page_11.jpg",
+    "https://audio.felixbuilderhub.com/books/book_130101/page_12.jpg",
+    "https://audio.felixbuilderhub.com/books/book_130101/page_13.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_130101/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_130101/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_130101/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_130101/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_130101/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_130101/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_130101/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_130101/page_09.mp3",
+    "https://audio.felixbuilderhub.com/books/book_130101/page_10.mp3",
+    "https://audio.felixbuilderhub.com/books/book_130101/page_11.mp3",
+    "https://audio.felixbuilderhub.com/books/book_130101/page_12.mp3",
+    "https://audio.felixbuilderhub.com/books/book_130101/page_13.mp3"
+  ],
+  "book_attribution": {
+    "title": "Friendship",
+    "creators": [
+      "Rita Bansal",
+      "Prashant Soni"
+    ],
+    "publisher": "StoryWeaver Community",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: Friendship is translated by Rita Bansal . The © for this translation lies with Rita Bansal , 2020. Some rights reserved. Released under CC BY 4.0 license. Based on Original story: ' दोस्ती काम आई ' , by Omprakash Kshatriya 'prakash' ओमप्रकाश क्षत्रिय 'प्रकाश' . © Omprakash Kshatriya 'prakash' ओमप्रकाश क्षत्रिय 'प्रकाश' , 2019. Some rights reserved. Released under CC BY 4.0 license. Images Attributions: Cover page: An owl traps a squirrel , by Prashant Soni © Room to Read, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 2: A squirrel quarrels with an ant , by Prashant Soni © Room to Read, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 3: A squirrel agruing with an ant , by Prashant Soni © Room to Read, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 4: An owl and squirrel fight with each other , by Prashant Soni © Room to Read, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 5: An owl argues with a squirrel , by Prashant Soni © Room to Read, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 6: A squirrel rides on an owl's back , by Prashant Soni © Room to Read, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 7: An owl catches a squirrel , by Prashant Soni © Room to Read, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 8: An owl laughs after trapping a squirrel , by Prashant Soni © Room to Read, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 9: An owl traps a squirrel , by Prashant Soni © Room to Read, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 10: An owl traps a squirrel , by Prashant Soni © Room to Read, 2016. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/130101-friendship",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "A squirrel quarrels with an ant , by Prashant Soni © Room to Read, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "A squirrel agruing with an ant , by Prashant Soni © Room to Read, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "An owl and squirrel fight with each other , by Prashant Soni © Room to Read, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "An owl argues with a squirrel , by Prashant Soni © Room to Read, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "A squirrel rides on an owl's back , by Prashant Soni © Room to Read, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "An owl catches a squirrel , by Prashant Soni © Room to Read, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "An owl laughs after trapping a squirrel , by Prashant Soni © Room to Read, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "An owl traps a squirrel , by Prashant Soni © Room to Read, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 8,
+        "credit_text": "An owl traps a squirrel , by Prashant Soni © Room to Read, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 9,
+        "credit_text": "Illustration by Prashant Soni."
+      },
+      {
+        "page_index": 10,
+        "credit_text": "Illustration by Prashant Soni."
+      },
+      {
+        "page_index": 11,
+        "credit_text": "Illustration by Prashant Soni."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "Friendship",
+    "paragraphs_en": [
+      "Children story-----Friendship wins! Om parkash Kshatriya 'Parkash There lived a Gilloo squirrel. Chinoo ant also lived there. Both were fast friends.",
+      "On seeing Gilloo, ollo owl came near her.",
+      "\" Will you like to roam around sky?\", Ollo said to Gilloo.",
+      "Gilloo never roamed around the sky. She said, 'I do not know how to fly? How can i roam around?'",
+      "\" It is very easy.\" Ollo said.?\" You just sit on my back. I will fly around .\" \" Yes! It will be alright.\" Gilloo said. Gilloo sat on the back of Ollo.",
+      "Ollo flew high in the sky. Ollo clenched tightly Gilloo in his paws. \" Arre!What are you doing?, Gilloo said, \" I will die if I get loosened from your paws\".",
+      "Ollo at once landed on the tree and said, \" You have to die otherwise too. I brought you here only to kill\". Saying this, Ollo laughed loudly.",
+      "At that very moment, Chinoo came. He gave a severe bite at Ollo paws. Ollo got hurt. He screamed at once. His grip got loose. Gilloo set free. She ran fast. But Ollo caught her by its tail.",
+      "\" Where do you run like this?\", thundered Ollo. Chinnoo at once gave another bite to his paws. Gilloo set free and fell down on earth. Chinnoo too jumped down.",
+      "Gilloo got up hurriedly. She shaked her body and ran fast. Chinnoo climbed on her back. Gilloo said,\" How could you reach on the tree?Ollo would have killed me if you were not on time\".",
+      "Chinnoo told, \" When you sat on the back of Ollo, I was also tempted to roam around the sky. I too clinged myself on its tail\" \"Oh! That is why you were also on the tree. \" Gilloo was happy. She said, \" You saved my life\".",
+      "Chinnoo said with proud, \" At last, A friend in need is a friend indeed.\" Both went towards their homes."
+    ],
+    "sentences": [
+      {
+        "text_en": "Children story-----Friendship wins!",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_000.mp3",
+        "text_vi": "Truyện thiếu nhi-----Tình bạn chiến thắng!"
+      },
+      {
+        "text_en": "Om parkash Kshatriya 'Parkash There lived a Gilloo squirrel.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_001.mp3",
+        "text_vi": "Có một chú sóc tên là Gilloo sống ở đó."
+      },
+      {
+        "text_en": "Chinoo ant also lived there.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_002.mp3",
+        "text_vi": "Chú kiến Chinoo cũng sống ở đó."
+      },
+      {
+        "text_en": "Both were fast friends.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_003.mp3",
+        "text_vi": "Cả hai là bạn thân của nhau."
+      },
+      {
+        "text_en": "On seeing Gilloo, ollo owl came near her.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_004.mp3",
+        "text_vi": "Thấy Gilloo, cú Ollo bay đến gần cô bé."
+      },
+      {
+        "text_en": "\" Will you like to roam around sky?\", Ollo said to Gilloo.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_005.mp3",
+        "text_vi": "\"Bạn có muốn bay lượn trên bầu trời không?\", Ollo hỏi Gilloo."
+      },
+      {
+        "text_en": "Gilloo never roamed around the sky.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_006.mp3",
+        "text_vi": "Gilloo chưa bao giờ bay lượn trên bầu trời cả."
+      },
+      {
+        "text_en": "She said, 'I do not know how to fly?",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_007.mp3",
+        "text_vi": "Cô bé nói, 'Mình không biết bay.'"
+      },
+      {
+        "text_en": "How can i roam around?'",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_008.mp3",
+        "text_vi": "'Làm sao mình có thể bay lượn được?'"
+      },
+      {
+        "text_en": "\" It is very easy.\" Ollo said.?\" You just sit on my back.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_009.mp3",
+        "text_vi": "\"Dễ lắm.\", Ollo nói. \"Bạn cứ ngồi lên lưng mình đi.\""
+      },
+      {
+        "text_en": "I will fly around .\" \" Yes!",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_010.mp3",
+        "text_vi": "Mình sẽ bay vòng quanh.\" \"Vâng!\""
+      },
+      {
+        "text_en": "It will be alright.\" Gilloo said.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_011.mp3",
+        "text_vi": "\"Sẽ ổn thôi.\", Gilloo nói."
+      },
+      {
+        "text_en": "Gilloo sat on the back of Ollo.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_012.mp3",
+        "text_vi": "Gilloo ngồi lên lưng Ollo."
+      },
+      {
+        "text_en": "Ollo flew high in the sky.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_013.mp3",
+        "text_vi": "Ollo bay vút lên cao trên bầu trời."
+      },
+      {
+        "text_en": "Ollo clenched tightly Gilloo in his paws.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_014.mp3",
+        "text_vi": "Ollo siết chặt Gilloo trong móng vuốt của mình."
+      },
+      {
+        "text_en": "\" Arre!What are you doing?, Gilloo said, \" I will die if I get loosened from your paws\".",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_015.mp3",
+        "text_vi": "\"Ôi! Bạn đang làm gì vậy?\", Gilloo nói, \"Mình sẽ chết mất nếu bị tuột khỏi móng vuốt của bạn!\""
+      },
+      {
+        "text_en": "Ollo at once landed on the tree and said, \" You have to die otherwise too.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_016.mp3",
+        "text_vi": "Ollo lập tức đáp xuống cây và nói, \"Dù sao thì ngươi cũng phải chết thôi."
+      },
+      {
+        "text_en": "I brought you here only to kill\".",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_017.mp3",
+        "text_vi": "Ta đưa ngươi đến đây chỉ để giết ngươi.\""
+      },
+      {
+        "text_en": "Saying this, Ollo laughed loudly.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_018.mp3",
+        "text_vi": "Nói xong, Ollo cười phá lên."
+      },
+      {
+        "text_en": "At that very moment, Chinoo came.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_019.mp3",
+        "text_vi": "Ngay lúc đó, Chinoo đến."
+      },
+      {
+        "text_en": "He gave a severe bite at Ollo paws.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_020.mp3",
+        "text_vi": "Chú kiến cắn mạnh vào móng vuốt của Ollo."
+      },
+      {
+        "text_en": "Ollo got hurt.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_021.mp3",
+        "text_vi": "Ollo bị đau."
+      },
+      {
+        "text_en": "He screamed at once.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_022.mp3",
+        "text_vi": "Nó kêu lên một tiếng."
+      },
+      {
+        "text_en": "His grip got loose.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_023.mp3",
+        "text_vi": "Móng vuốt của nó lỏng ra."
+      },
+      {
+        "text_en": "Gilloo set free.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_024.mp3",
+        "text_vi": "Gilloo được tự do."
+      },
+      {
+        "text_en": "She ran fast.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_025.mp3",
+        "text_vi": "Cô bé chạy nhanh."
+      },
+      {
+        "text_en": "But Ollo caught her by its tail.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_026.mp3",
+        "text_vi": "Nhưng Ollo đã tóm lấy đuôi cô bé."
+      },
+      {
+        "text_en": "\" Where do you run like this?\", thundered Ollo.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_027.mp3",
+        "text_vi": "\"Ngươi chạy đi đâu thế này?\", Ollo gầm lên."
+      },
+      {
+        "text_en": "Chinnoo at once gave another bite to his paws.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_028.mp3",
+        "text_vi": "Chinoo lập tức cắn thêm một nhát vào móng vuốt của nó."
+      },
+      {
+        "text_en": "Gilloo set free and fell down on earth.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_029.mp3",
+        "text_vi": "Gilloo được tự do và rơi xuống đất."
+      },
+      {
+        "text_en": "Chinnoo too jumped down.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_030.mp3",
+        "text_vi": "Chinoo cũng nhảy xuống."
+      },
+      {
+        "text_en": "Gilloo got up hurriedly.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_031.mp3",
+        "text_vi": "Gilloo vội vàng đứng dậy."
+      },
+      {
+        "text_en": "She shaked her body and ran fast.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_032.mp3",
+        "text_vi": "Cô bé lắc mình và chạy thật nhanh."
+      },
+      {
+        "text_en": "Chinnoo climbed on her back.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_033.mp3",
+        "text_vi": "Chinoo trèo lên lưng cô bé."
+      },
+      {
+        "text_en": "Gilloo said,\" How could you reach on the tree?Ollo would have killed me if you were not on time\".",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_034.mp3",
+        "text_vi": "Gilloo nói, \"Làm sao bạn lên được cây vậy? Ollo đã giết mình rồi nếu bạn không đến kịp lúc.\""
+      },
+      {
+        "text_en": "Chinnoo told, \" When you sat on the back of Ollo, I was also tempted to roam around the sky.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_035.mp3",
+        "text_vi": "Chinoo kể, \"Khi bạn ngồi lên lưng Ollo, mình cũng muốn bay lượn trên bầu trời."
+      },
+      {
+        "text_en": "I too clinged myself on its tail\" \"Oh!",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_036.mp3",
+        "text_vi": "Mình cũng bám chặt vào đuôi nó.\" \"Ồ!\""
+      },
+      {
+        "text_en": "That is why you were also on the tree.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_037.mp3",
+        "text_vi": "Thì ra là vậy, bạn cũng ở trên cây."
+      },
+      {
+        "text_en": "\" Gilloo was happy.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_038.mp3",
+        "text_vi": "Gilloo rất vui."
+      },
+      {
+        "text_en": "She said, \" You saved my life\".",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_039.mp3",
+        "text_vi": "Cô bé nói, \"Bạn đã cứu mạng mình.\""
+      },
+      {
+        "text_en": "Chinnoo said with proud, \" At last, A friend in need is a friend indeed.\" Both went towards their homes.",
+        "paragraph_index": 11,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_040.mp3",
+        "text_vi": "Chinoo tự hào nói, \"Cuối cùng thì, một người bạn lúc hoạn nạn mới là bạn thật sự.\" Cả hai cùng về nhà."
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "Children story-----Friendship wins!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "Om parkash Kshatriya 'Parkash There lived a Gilloo squirrel.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "Chinoo ant also lived there.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "Both were fast friends.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "On seeing Gilloo, ollo owl came near her.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "\" Will you like to roam around sky?\", Ollo said to Gilloo.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "Gilloo never roamed around the sky.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "She said, 'I do not know how to fly?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "How can i roam around?'",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "\" It is very easy.\" Ollo said.?\" You just sit on my back.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "I will fly around .\" \" Yes!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "It will be alright.\" Gilloo said.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "Gilloo sat on the back of Ollo.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_012.mp3"
+        },
+        {
+          "id": "ra_13",
+          "text_en": "Ollo flew high in the sky.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_013.mp3"
+        },
+        {
+          "id": "ra_14",
+          "text_en": "Ollo clenched tightly Gilloo in his paws.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_014.mp3"
+        },
+        {
+          "id": "ra_15",
+          "text_en": "\" Arre!What are you doing?, Gilloo said, \" I will die if I get loosened from your paws\".",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_015.mp3"
+        },
+        {
+          "id": "ra_16",
+          "text_en": "Ollo at once landed on the tree and said, \" You have to die otherwise too.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_016.mp3"
+        },
+        {
+          "id": "ra_17",
+          "text_en": "I brought you here only to kill\".",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_017.mp3"
+        },
+        {
+          "id": "ra_18",
+          "text_en": "Saying this, Ollo laughed loudly.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_018.mp3"
+        },
+        {
+          "id": "ra_19",
+          "text_en": "At that very moment, Chinoo came.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_019.mp3"
+        },
+        {
+          "id": "ra_20",
+          "text_en": "He gave a severe bite at Ollo paws.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_020.mp3"
+        },
+        {
+          "id": "ra_21",
+          "text_en": "Ollo got hurt.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_021.mp3"
+        },
+        {
+          "id": "ra_22",
+          "text_en": "He screamed at once.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_022.mp3"
+        },
+        {
+          "id": "ra_23",
+          "text_en": "His grip got loose.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_023.mp3"
+        },
+        {
+          "id": "ra_24",
+          "text_en": "Gilloo set free.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_024.mp3"
+        },
+        {
+          "id": "ra_25",
+          "text_en": "She ran fast.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_025.mp3"
+        },
+        {
+          "id": "ra_26",
+          "text_en": "But Ollo caught her by its tail.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_026.mp3"
+        },
+        {
+          "id": "ra_27",
+          "text_en": "\" Where do you run like this?\", thundered Ollo.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_027.mp3"
+        },
+        {
+          "id": "ra_28",
+          "text_en": "Chinnoo at once gave another bite to his paws.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_028.mp3"
+        },
+        {
+          "id": "ra_29",
+          "text_en": "Gilloo set free and fell down on earth.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_029.mp3"
+        },
+        {
+          "id": "ra_30",
+          "text_en": "Chinnoo too jumped down.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_030.mp3"
+        },
+        {
+          "id": "ra_31",
+          "text_en": "Gilloo got up hurriedly.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_031.mp3"
+        },
+        {
+          "id": "ra_32",
+          "text_en": "She shaked her body and ran fast.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_032.mp3"
+        },
+        {
+          "id": "ra_33",
+          "text_en": "Chinnoo climbed on her back.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_033.mp3"
+        },
+        {
+          "id": "ra_34",
+          "text_en": "Gilloo said,\" How could you reach on the tree?Ollo would have killed me if you were not on time\".",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_034.mp3"
+        },
+        {
+          "id": "ra_35",
+          "text_en": "Chinnoo told, \" When you sat on the back of Ollo, I was also tempted to roam around the sky.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_035.mp3"
+        },
+        {
+          "id": "ra_36",
+          "text_en": "I too clinged myself on its tail\" \"Oh!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_036.mp3"
+        },
+        {
+          "id": "ra_37",
+          "text_en": "That is why you were also on the tree.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_037.mp3"
+        },
+        {
+          "id": "ra_38",
+          "text_en": "\" Gilloo was happy.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_038.mp3"
+        },
+        {
+          "id": "ra_39",
+          "text_en": "She said, \" You saved my life\".",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_039.mp3"
+        },
+        {
+          "id": "ra_40",
+          "text_en": "Chinnoo said with proud, \" At last, A friend in need is a friend indeed.\" Both went towards their homes.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_130101/s_040.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "What wins?",
+          "options_en": [
+            "Friendship",
+            "Gilloo's life",
+            "Ollo's plan"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "What kind of story is this?",
+          "options_en": [
+            "Children story",
+            "A tale about an owl",
+            "A grown-ups' story"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s1_q1",
+          "type": "choice",
+          "question_en": "Who lived there?",
+          "options_en": [
+            "A Gilloo squirrel",
+            "Chinoo ant",
+            "Ollo owl"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s1_q2",
+          "type": "choice",
+          "question_en": "What kind of animal lived there?",
+          "options_en": [
+            "A squirrel",
+            "An ant",
+            "An owl"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s2_q1",
+          "type": "choice",
+          "question_en": "Who also lived there?",
+          "options_en": [
+            "Chinoo ant",
+            "Gilloo squirrel",
+            "Ollo owl"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s2_q2",
+          "type": "choice",
+          "question_en": "What was Chinoo?",
+          "options_en": [
+            "An ant",
+            "A squirrel",
+            "An owl"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s3_q1",
+          "type": "choice",
+          "question_en": "Who were fast friends?",
+          "options_en": [
+            "Gilloo and Chinoo",
+            "Ollo and Gilloo",
+            "Ollo and Chinoo"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p0_s3_q2",
+          "type": "choice",
+          "question_en": "How were they described as friends?",
+          "options_en": [
+            "Fast friends",
+            "Friends in need",
+            "Enemies"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "Who came near her?",
+          "options_en": [
+            "ollo owl",
+            "Gilloo squirrel",
+            "Chinoo ant"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "What did Ollo owl do on seeing Gilloo?",
+          "options_en": [
+            "Came near her",
+            "Flew high in the sky",
+            "Caught her by the tail"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "Who asked Gilloo if she would like to roam around the sky?",
+          "options_en": [
+            "Ollo",
+            "Chinoo",
+            "Gilloo"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "What did Ollo ask Gilloo?",
+          "options_en": [
+            "If she would like to roam around the sky",
+            "If she knew how to fly",
+            "To sit on his back"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "Who never roamed around the sky?",
+          "options_en": [
+            "Gilloo",
+            "Chinoo",
+            "Ollo"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "Where did Gilloo never roam?",
+          "options_en": [
+            "Around the sky",
+            "On the tree",
+            "On Ollo's back"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p3_s1_q1",
+          "type": "choice",
+          "question_en": "Who said, 'I do not know how to fly?'",
+          "options_en": [
+            "Gilloo",
+            "Chinoo",
+            "Ollo"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p3_s1_q2",
+          "type": "choice",
+          "question_en": "What did she say she did not know how to do?",
+          "options_en": [
+            "How to fly",
+            "How to climb",
+            "How to run fast"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p3_s2_q1",
+          "type": "choice",
+          "question_en": "What question did she ask about roaming?",
+          "options_en": [
+            "How can I roam around?",
+            "Will you like to roam around sky?",
+            "Can I sit on your back?"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p3_s2_q2",
+          "type": "choice",
+          "question_en": "Who asked, 'How can I roam around?'",
+          "options_en": [
+            "Gilloo",
+            "Chinoo",
+            "Ollo"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "Who said \"It is very easy\"?",
+          "options_en": [
+            "Ollo",
+            "Gilloo",
+            "Chinoo"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "What does Ollo tell the other character to do?",
+          "options_en": [
+            "Sit on my back",
+            "Cling to its tail",
+            "Run fast"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p4_s1_q1",
+          "type": "choice",
+          "question_en": "Who says \"I will fly around\"?",
+          "options_en": [
+            "Ollo",
+            "Gilloo",
+            "Chinoo"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p4_s1_q2",
+          "type": "choice",
+          "question_en": "How does the other character respond after \"I will fly around\"?",
+          "options_en": [
+            "Yes!",
+            "I do not know how to fly",
+            "I will die if I get loosened"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p4_s2_q1",
+          "type": "choice",
+          "question_en": "Who said \"It will be alright\"?",
+          "options_en": [
+            "Gilloo",
+            "Ollo",
+            "Chinoo"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p4_s2_q2",
+          "type": "choice",
+          "question_en": "What does Gilloo say about how things will be?",
+          "options_en": [
+            "It will be alright",
+            "I do not know how to fly",
+            "You have to die otherwise too"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p4_s3_q1",
+          "type": "choice",
+          "question_en": "Who sat on the back of Ollo?",
+          "options_en": [
+            "Gilloo",
+            "Chinoo",
+            "Ollo"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p4_s3_q2",
+          "type": "choice",
+          "question_en": "Where did Gilloo sit?",
+          "options_en": [
+            "On the back of Ollo",
+            "On the tree",
+            "On the ground"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "Who flew high in the sky?",
+          "options_en": [
+            "Ollo",
+            "Gilloo",
+            "Chinoo"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "Where did Ollo fly?",
+          "options_en": [
+            "High in the sky",
+            "To the tree",
+            "On the ground"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p5_s1_q1",
+          "type": "choice",
+          "question_en": "Who clenched Gilloo in his paws?",
+          "options_en": [
+            "Ollo",
+            "Chinoo",
+            "Gilloo"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p5_s1_q2",
+          "type": "choice",
+          "question_en": "What did Ollo do to Gilloo?",
+          "options_en": [
+            "Clenched her tightly in his paws",
+            "Set her free",
+            "Laid her on a branch"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p5_s2_q1",
+          "type": "choice",
+          "question_en": "Who said, \"I will die if I get loosened from your paws\"?",
+          "options_en": [
+            "Gilloo",
+            "Ollo",
+            "Chinoo"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p5_s2_q2",
+          "type": "choice",
+          "question_en": "What did Gilloo say would happen if she got loosened from Ollo's paws?",
+          "options_en": [
+            "She would die",
+            "She would laugh",
+            "She would fly higher"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "Who landed on the tree?",
+          "options_en": [
+            "Ollo",
+            "Gilloo",
+            "Chinoo"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "What did Ollo say when he landed on the tree?",
+          "options_en": [
+            "\"You have to die otherwise too.\"",
+            "\"I brought you here only to kill.\"",
+            "\"Will you like to roam around sky?\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p6_s1_q1",
+          "type": "choice",
+          "question_en": "Who said, \"I brought you here only to kill\"?",
+          "options_en": [
+            "Ollo",
+            "Gilloo",
+            "Chinoo"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p6_s1_q2",
+          "type": "choice",
+          "question_en": "Why did the speaker say they had brought the other here?",
+          "options_en": [
+            "To kill",
+            "To roam around the sky",
+            "To save her"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p6_s2_q1",
+          "type": "choice",
+          "question_en": "Who laughed loudly?",
+          "options_en": [
+            "Ollo",
+            "Gilloo",
+            "Chinoo"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p6_s2_q2",
+          "type": "choice",
+          "question_en": "How did Ollo laugh after saying that?",
+          "options_en": [
+            "Loudly",
+            "Screamed",
+            "Thundered"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "Who came?",
+          "options_en": [
+            "Chinoo",
+            "Ollo",
+            "Gilloo"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "When did Chinoo come?",
+          "options_en": [
+            "At that very moment",
+            "After Gilloo ran",
+            "When Ollo landed"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p7_s1_q1",
+          "type": "choice",
+          "question_en": "Who gave a severe bite at Ollo's paws?",
+          "options_en": [
+            "He (Chinoo)",
+            "Ollo",
+            "Gilloo"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p7_s1_q2",
+          "type": "choice",
+          "question_en": "What did he bite?",
+          "options_en": [
+            "Ollo's paws",
+            "Ollo's tail",
+            "Gilloo's back"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p7_s2_q1",
+          "type": "choice",
+          "question_en": "Who got hurt?",
+          "options_en": [
+            "Ollo",
+            "Gilloo",
+            "Chinoo"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p7_s2_q2",
+          "type": "choice",
+          "question_en": "What happened to Ollo?",
+          "options_en": [
+            "He got hurt",
+            "He laughed loudly",
+            "He flew high"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p7_s3_q1",
+          "type": "choice",
+          "question_en": "Who screamed at once?",
+          "options_en": [
+            "He (Ollo)",
+            "Chinoo",
+            "Gilloo"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p7_s3_q2",
+          "type": "choice",
+          "question_en": "When did he scream?",
+          "options_en": [
+            "At once",
+            "When he landed",
+            "After Gilloo ran"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p7_s4_q1",
+          "type": "choice",
+          "question_en": "Whose grip got loose?",
+          "options_en": [
+            "His (Ollo's)",
+            "Chinoo's",
+            "Gilloo's"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p7_s4_q2",
+          "type": "choice",
+          "question_en": "What happened to his grip?",
+          "options_en": [
+            "It got loose",
+            "It got tighter",
+            "He held Gilloo more"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p7_s5_q1",
+          "type": "choice",
+          "question_en": "Who was set free?",
+          "options_en": [
+            "Gilloo",
+            "Ollo",
+            "Chinoo"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p7_s5_q2",
+          "type": "choice",
+          "question_en": "How did Gilloo become free?",
+          "options_en": [
+            "Because his grip got loose",
+            "Because she flew away",
+            "Because Chinoo pushed her"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p7_s6_q1",
+          "type": "choice",
+          "question_en": "Who ran fast?",
+          "options_en": [
+            "She (Gilloo)",
+            "Chinoo",
+            "Ollo"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p7_s6_q2",
+          "type": "choice",
+          "question_en": "How did she run?",
+          "options_en": [
+            "Fast",
+            "Slowly",
+            "Up the tree"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p7_s7_q1",
+          "type": "choice",
+          "question_en": "Who caught her by its tail?",
+          "options_en": [
+            "Ollo",
+            "Chinoo",
+            "Gilloo"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p7_s7_q2",
+          "type": "choice",
+          "question_en": "What did Ollo catch her by?",
+          "options_en": [
+            "Its tail",
+            "Her paw",
+            "Her back"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        }
+      ]
+    },
+    {
+      "paragraph_index": 8,
+      "questions": [
+        {
+          "id": "gl_p8_s0_q1",
+          "type": "choice",
+          "question_en": "Who thundered, \"Where do you run like this?\"?",
+          "options_en": [
+            "Ollo",
+            "Gilloo",
+            "Chinnoo"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        },
+        {
+          "id": "gl_p8_s0_q2",
+          "type": "choice",
+          "question_en": "What did Ollo say in the sentence?",
+          "options_en": [
+            "\"Where do you run like this?\"",
+            "\"You saved my life\"",
+            "\"Will you like to roam around sky?\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        },
+        {
+          "id": "gl_p8_s1_q1",
+          "type": "choice",
+          "question_en": "Who gave another bite to his paws?",
+          "options_en": [
+            "Chinnoo",
+            "Gilloo",
+            "Ollo"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        },
+        {
+          "id": "gl_p8_s1_q2",
+          "type": "choice",
+          "question_en": "What did Chinnoo bite in the sentence?",
+          "options_en": [
+            "his paws",
+            "Gilloo's tail",
+            "a tree branch"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        },
+        {
+          "id": "gl_p8_s2_q1",
+          "type": "choice",
+          "question_en": "Who was set free and fell down on earth?",
+          "options_en": [
+            "Gilloo",
+            "Chinnoo",
+            "Ollo"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p8_s2_q2",
+          "type": "choice",
+          "question_en": "Where did the character fall after being set free?",
+          "options_en": [
+            "On earth",
+            "Into the sky",
+            "Onto the tree"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p8_s3_q1",
+          "type": "choice",
+          "question_en": "Who too jumped down?",
+          "options_en": [
+            "Chinnoo",
+            "Gilloo",
+            "Ollo"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        },
+        {
+          "id": "gl_p8_s3_q2",
+          "type": "choice",
+          "question_en": "How did Chinnoo move in this sentence?",
+          "options_en": [
+            "He jumped down",
+            "He climbed up",
+            "He flew away"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        }
+      ]
+    },
+    {
+      "paragraph_index": 9,
+      "questions": [
+        {
+          "id": "gl_p9_s0_q1",
+          "type": "choice",
+          "question_en": "Who got up hurriedly?",
+          "options_en": [
+            "Gilloo",
+            "Chinnoo",
+            "Ollo"
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        },
+        {
+          "id": "gl_p9_s0_q2",
+          "type": "choice",
+          "question_en": "How did Gilloo get up?",
+          "options_en": [
+            "hurriedly",
+            "fast",
+            "at once"
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        },
+        {
+          "id": "gl_p9_s1_q1",
+          "type": "choice",
+          "question_en": "What did she do to her body before running?",
+          "options_en": [
+            "She shaked her body",
+            "She clenched tightly",
+            "She sat on a back"
+          ],
+          "correct_index": 0,
+          "sentence_index": 32
+        },
+        {
+          "id": "gl_p9_s1_q2",
+          "type": "choice",
+          "question_en": "How did she run?",
+          "options_en": [
+            "ran fast",
+            "to the tree",
+            "to the sky"
+          ],
+          "correct_index": 0,
+          "sentence_index": 32
+        },
+        {
+          "id": "gl_p9_s2_q1",
+          "type": "choice",
+          "question_en": "Who climbed on her back?",
+          "options_en": [
+            "Chinnoo",
+            "Ollo",
+            "Gilloo"
+          ],
+          "correct_index": 0,
+          "sentence_index": 33
+        },
+        {
+          "id": "gl_p9_s2_q2",
+          "type": "choice",
+          "question_en": "Where did Chinnoo climb?",
+          "options_en": [
+            "on her back",
+            "on the tree",
+            "on Ollo's back"
+          ],
+          "correct_index": 0,
+          "sentence_index": 33
+        },
+        {
+          "id": "gl_p9_s3_q1",
+          "type": "choice",
+          "question_en": "What did Gilloo say Ollo would have done if Chinnoo had not been on time?",
+          "options_en": [
+            "killed her",
+            "flown with her",
+            "bit Chinnoo"
+          ],
+          "correct_index": 0,
+          "sentence_index": 34
+        },
+        {
+          "id": "gl_p9_s3_q2",
+          "type": "choice",
+          "question_en": "Why did Gilloo say this to Chinnoo?",
+          "options_en": [
+            "because Chinnoo was on time",
+            "because Ollo flew high",
+            "because she could roam the sky"
+          ],
+          "correct_index": 0,
+          "sentence_index": 34
+        }
+      ]
+    },
+    {
+      "paragraph_index": 10,
+      "questions": [
+        {
+          "id": "gl_p10_s0_q1",
+          "type": "choice",
+          "question_en": "Who told this?",
+          "options_en": [
+            "Chinnoo",
+            "Gilloo",
+            "Ollo"
+          ],
+          "correct_index": 0,
+          "sentence_index": 35
+        },
+        {
+          "id": "gl_p10_s0_q2",
+          "type": "choice",
+          "question_en": "What was Chinnoo tempted to do?",
+          "options_en": [
+            "Roam around the sky",
+            "Climb the tree",
+            "Run fast"
+          ],
+          "correct_index": 0,
+          "sentence_index": 35
+        },
+        {
+          "id": "gl_p10_s1_q1",
+          "type": "choice",
+          "question_en": "What did the speaker cling to?",
+          "options_en": [
+            "Its tail",
+            "Ollo's back",
+            "A tree branch"
+          ],
+          "correct_index": 0,
+          "sentence_index": 36
+        },
+        {
+          "id": "gl_p10_s1_q2",
+          "type": "choice",
+          "question_en": "Which interjection appears in the sentence?",
+          "options_en": [
+            "Oh!",
+            "Arre!",
+            "At last,"
+          ],
+          "correct_index": 0,
+          "sentence_index": 36
+        },
+        {
+          "id": "gl_p10_s2_q1",
+          "type": "choice",
+          "question_en": "Who was also on the tree?",
+          "options_en": [
+            "Gilloo",
+            "Chinnoo",
+            "Ollo"
+          ],
+          "correct_index": 0,
+          "sentence_index": 37
+        },
+        {
+          "id": "gl_p10_s2_q2",
+          "type": "choice",
+          "question_en": "Where were you also?",
+          "options_en": [
+            "On the tree",
+            "On Ollo's back",
+            "On the earth"
+          ],
+          "correct_index": 0,
+          "sentence_index": 37
+        },
+        {
+          "id": "gl_p10_s3_q1",
+          "type": "choice",
+          "question_en": "Who was happy?",
+          "options_en": [
+            "Gilloo",
+            "Chinnoo",
+            "Ollo"
+          ],
+          "correct_index": 0,
+          "sentence_index": 38
+        },
+        {
+          "id": "gl_p10_s3_q2",
+          "type": "choice",
+          "question_en": "How did Gilloo feel?",
+          "options_en": [
+            "Happy",
+            "Scared",
+            "Angry"
+          ],
+          "correct_index": 0,
+          "sentence_index": 38
+        },
+        {
+          "id": "gl_p10_s4_q1",
+          "type": "choice",
+          "question_en": "Who said, \"You saved my life\"?",
+          "options_en": [
+            "Gilloo",
+            "Chinnoo",
+            "Ollo"
+          ],
+          "correct_index": 0,
+          "sentence_index": 39
+        },
+        {
+          "id": "gl_p10_s4_q2",
+          "type": "choice",
+          "question_en": "What did she say to the rescuer?",
+          "options_en": [
+            "You saved my life",
+            "I will die",
+            "I was tempted"
+          ],
+          "correct_index": 0,
+          "sentence_index": 39
+        }
+      ]
+    },
+    {
+      "paragraph_index": 11,
+      "questions": [
+        {
+          "id": "gl_p11_s0_q1",
+          "type": "choice",
+          "question_en": "Who said, \"At last, A friend in need is a friend indeed\"?",
+          "options_en": [
+            "Chinnoo",
+            "Gilloo",
+            "Ollo"
+          ],
+          "correct_index": 0,
+          "sentence_index": 40
+        },
+        {
+          "id": "gl_p11_s0_q2",
+          "type": "choice",
+          "question_en": "Where did both go after Chinnoo spoke?",
+          "options_en": [
+            "Towards their homes",
+            "Back to the tree",
+            "Up into the sky"
+          ],
+          "correct_index": 0,
+          "sentence_index": 40
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'Friendship'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "Friendship",
+      "meaning_vi": "Tình bạn",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "wins",
+      "meaning_vi": "chiến thắng",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "squirrel",
+      "meaning_vi": "con sóc",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "ant",
+      "meaning_vi": "con kiến",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "owl",
+      "meaning_vi": "con cú",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "near",
+      "meaning_vi": "gần",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "roam around",
+      "meaning_vi": "bay lượn",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "sky",
+      "meaning_vi": "bầu trời",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "never",
+      "meaning_vi": "không bao giờ",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "fly",
+      "meaning_vi": "bay",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "easy",
+      "meaning_vi": "dễ",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "back",
+      "meaning_vi": "lưng",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "alright",
+      "meaning_vi": "ổn",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "clenched",
+      "meaning_vi": "siết chặt",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "tightly",
+      "meaning_vi": "chặt",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "paws",
+      "meaning_vi": "móng vuốt",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "loosened",
+      "meaning_vi": "tuột ra",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "landed",
+      "meaning_vi": "đáp xuống",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "otherwise",
+      "meaning_vi": "nếu không thì",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "kill",
+      "meaning_vi": "giết",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "loudly",
+      "meaning_vi": "lớn tiếng",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "severe",
+      "meaning_vi": "mạnh",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "screamed",
+      "meaning_vi": "kêu lên",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "grip",
+      "meaning_vi": "sự nắm giữ",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "caught",
+      "meaning_vi": "tóm lấy",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "thundered",
+      "meaning_vi": "gầm lên",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "another",
+      "meaning_vi": "thêm một",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "fell down",
+      "meaning_vi": "rơi xuống",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "earth",
+      "meaning_vi": "mặt đất",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "hurriedly",
+      "meaning_vi": "vội vàng",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "shaked",
+      "meaning_vi": "lắc",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "climbed",
+      "meaning_vi": "trèo",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "on time",
+      "meaning_vi": "kịp lúc",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "tempted",
+      "meaning_vi": "muốn",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "clinged",
+      "meaning_vi": "bám chặt",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "saved",
+      "meaning_vi": "cứu",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "life",
+      "meaning_vi": "mạng sống",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "proud",
+      "meaning_vi": "tự hào",
+      "paragraph_index": 11
+    },
+    {
+      "word_en": "at last",
+      "meaning_vi": "cuối cùng thì",
+      "paragraph_index": 11
+    },
+    {
+      "word_en": "indeed",
+      "meaning_vi": "thật sự",
+      "paragraph_index": 11
+    },
+    {
+      "word_en": "towards",
+      "meaning_vi": "về phía",
+      "paragraph_index": 11
+    }
+  ]
+}

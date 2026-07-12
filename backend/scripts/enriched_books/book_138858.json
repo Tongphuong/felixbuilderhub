@@ -1,0 +1,1448 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L4",
+  "level_label": "Cấp 4",
+  "topic": "the dark",
+  "slug": "book_138858",
+  "audio_filename": "book_138858.mp3",
+  "book_slug": "book_138858",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_138858/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_138858/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_138858/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_138858/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_138858/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_138858/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_138858/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_138858/page_09.jpg",
+    "https://audio.felixbuilderhub.com/books/book_138858/page_10.jpg",
+    "https://audio.felixbuilderhub.com/books/book_138858/page_11.jpg",
+    "https://audio.felixbuilderhub.com/books/book_138858/page_12.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_138858/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_138858/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_138858/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_138858/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_138858/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_138858/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_138858/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_138858/page_09.mp3",
+    "https://audio.felixbuilderhub.com/books/book_138858/page_10.mp3",
+    "https://audio.felixbuilderhub.com/books/book_138858/page_11.mp3",
+    "https://audio.felixbuilderhub.com/books/book_138858/page_12.mp3"
+  ],
+  "book_attribution": {
+    "title": "the dark",
+    "creators": [
+      "Ayla Ip",
+      "Naina Bhardwaj",
+      "Priya Kuriyan",
+      "Radha Rangarajan"
+    ],
+    "publisher": "StoryWeaver Community",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: the dark is written by Ayla Ip . © Ayla Ip , 2020. Some rights reserved. Released under CC BY 4.0 license. Images Attributions: Cover page: The dark , by Ayla Ip © Ayla Ip, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 2: dark room , by Naina Bhardwaj © Naina Bhardwaj, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 3: Going up , by Ayla Ip © Ayla Ip, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 4: octopus made out out of vegetable , by Priya Kuriyan , Radha Rangarajan © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 5: walking , by Ayla Ip © Ayla Ip, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 6: dark classroom , by Ayla Ip © Ayla Ip, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 7: dark classroom , by Ayla Ip © Ayla Ip, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 8: school at night , by Ayla Ip © Ayla Ip, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 9: fence , by Ayla Ip © Ayla Ip, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 10: greenhouse , by Ayla Ip © Ayla Ip, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 11: gasping , by Ayla Ip © Ayla Ip, 2026. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/138858-the-dark",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "dark room , by Naina Bhardwaj © Naina Bhardwaj, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "Going up , by Ayla Ip © Ayla Ip, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "octopus made out out of vegetable , by Priya Kuriyan , Radha Rangarajan © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "walking , by Ayla Ip © Ayla Ip, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "dark classroom , by Ayla Ip © Ayla Ip, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "dark classroom , by Ayla Ip © Ayla Ip, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "school at night , by Ayla Ip © Ayla Ip, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "fence , by Ayla Ip © Ayla Ip, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 8,
+        "credit_text": "greenhouse , by Ayla Ip © Ayla Ip, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 9,
+        "credit_text": "gasping , by Ayla Ip © Ayla Ip, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 10,
+        "credit_text": "Illustration by Ayla Ip, Naina Bhardwaj, Priya Kuriyan, Radha Rangarajan."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "the dark",
+    "paragraphs_en": [
+      "One dark night ,Nicole was sitting in her grandma's favorite chair .Looking to the dark,blue sky.the moon shone bright, filling the room with dim light. The house was very old . Wind blew inside as the windows were open. the trees danced at night . Nicole wished her grandma was still alive sitting next to her reading mystery books to her.",
+      "Suddenly,the doors creaked open behind her.\"Go to sleep,Nicole.\"her mom said \"okay,mom\"Nicole replied. Nicole felt scared ,as it was past midnight and little light was coming through the windows.But she went upstairs to her room and settled in her comfy bed.",
+      "When morning came Nicole woke up to the sound of chirping birds.\"A perfect start to my day.\"she said . And headed down to breakfast.\"Hey Nicole,sleep well?\" mom said.\"yeah\"said Nicole. As her mom cooked breakfast for her ,Nicole started to read her favorite mystery book, \"the book scavenger\". After breakfast, Nicole called her best friend, Roma.",
+      "\"hey, whats up\"says Roma.\"nothing much just finished breakfast.\"\"okay then im gonna be waiting for you at school.\"so Nicole took her back pack and headed out the door.Nicole slowly walked to school,knowing she was to early anyways.",
+      "When she was at school, lights were all out and only all the students were there no one knew what had happened.\"this is a mystery .we must solve this\"says Nicole.\"how do you know this is mystery?\"Roma asked her.\"because i read a lot of mysterys and they all start like this. and this is what happenes.",
+      "So they started interviewing everyone they can find and not even one person witnessed anything.\"okay if no one knows anything then we start looking for clues\"says Nicole. \"how do you know if thats a clue or not ?\"asked Roma.\"its a clue if you see something that belongs to the teachers.\"replies Nicole. \"okay ill start looking\"Roma said.",
+      "\"I found mr. ken's favorite pencil!and there are also a trail of pencils leading this way.\"Roma reported. \"what are you waiting for ?lets follow it!\"Nicole said. Very soon nighttime came and the room was pitch black.the trail of pencils still steatched along the school,Nicole and Roma walked,backpacks heaving on there sholders.",
+      "when they reached the end of the trail,Nicole saw a person guarding the fence to the greenhouse .she thought\"is the garden were the teachers are trapped?\"she said to Roma,lets go ask that person guarding the fence!\"\"what if hes enemy?\"Roma objected \"okay then we sneak past.\"\"okay.\"",
+      "so they tiptoed past the person and reached the end of the fence.\"Oh no! We forgot to take the keys from Mrs Chun!\"Nicole said.\"Don't worry I got it, \"Roma said pulling out the keys.\"I slipped it in my pocket when we where looking for clues.\" They turned the key around the lock and went to the greenhouse.",
+      "Nicole gasped in a circle, saw the headmaster and all the other teachers.and guarding them was the pencil company.Roma said okay. lets do this or they will know we are here.",
+      "They quickly untied the teachers and let them go back to their homes. \"I love solving mystery's.\"said Roma.\"Me too,\"says Nicole \"Acually Roma asked,miss couter,who tied you up with the teachers?\"\"I.. I don't know . he was masked.\"miss couter replied.\"Its okay,he will show himself sooner or later\"Nicole and Roma said mischivingly."
+    ],
+    "sentences": [
+      {
+        "text_en": "One dark night ,Nicole was sitting in her grandma's favorite chair .Looking to the dark,blue sky.the moon shone bright, filling the room with dim light.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138858/s_000.mp3",
+        "text_vi": "Một đêm tối, Nicole đang ngồi trên chiếc ghế yêu thích của bà. Nhìn lên bầu trời xanh sẫm, mặt trăng sáng rực, chiếu ánh sáng mờ ảo khắp phòng."
+      },
+      {
+        "text_en": "The house was very old .",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138858/s_001.mp3",
+        "text_vi": "Ngôi nhà rất cũ."
+      },
+      {
+        "text_en": "Wind blew inside as the windows were open.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138858/s_002.mp3",
+        "text_vi": "Gió thổi vào trong vì các cửa sổ đang mở."
+      },
+      {
+        "text_en": "the trees danced at night .",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138858/s_003.mp3",
+        "text_vi": "Những cái cây nhảy múa trong đêm."
+      },
+      {
+        "text_en": "Nicole wished her grandma was still alive sitting next to her reading mystery books to her.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138858/s_004.mp3",
+        "text_vi": "Nicole ước bà mình vẫn còn sống, ngồi cạnh cô bé và đọc sách trinh thám cho cô bé nghe."
+      },
+      {
+        "text_en": "Suddenly,the doors creaked open behind her.\"Go to sleep,Nicole.\"her mom said \"okay,mom\"Nicole replied.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138858/s_005.mp3",
+        "text_vi": "Bỗng nhiên, cánh cửa phía sau cô bé kẽo kẹt mở ra. \"Đi ngủ đi, Nicole,\" mẹ cô bé nói. \"Vâng, mẹ,\" Nicole đáp."
+      },
+      {
+        "text_en": "Nicole felt scared ,as it was past midnight and little light was coming through the windows.But she went upstairs to her room and settled in her comfy bed.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138858/s_006.mp3",
+        "text_vi": "Nicole cảm thấy sợ hãi, vì đã quá nửa đêm và rất ít ánh sáng lọt qua cửa sổ. Nhưng cô bé vẫn lên lầu vào phòng mình và nằm gọn trong chiếc giường êm ái."
+      },
+      {
+        "text_en": "When morning came Nicole woke up to the sound of chirping birds.\"A perfect start to my day.\"she said .",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138858/s_007.mp3",
+        "text_vi": "Khi buổi sáng đến, Nicole thức dậy với tiếng chim hót líu lo. \"Một khởi đầu hoàn hảo cho ngày mới của mình,\" cô bé nói."
+      },
+      {
+        "text_en": "And headed down to breakfast.\"Hey Nicole,sleep well?\" mom said.\"yeah\"said Nicole.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138858/s_008.mp3",
+        "text_vi": "Rồi cô bé đi xuống ăn sáng. \"Chào Nicole, ngủ ngon không con?\" mẹ nói. \"Dạ, ngon ạ,\" Nicole đáp."
+      },
+      {
+        "text_en": "As her mom cooked breakfast for her ,Nicole started to read her favorite mystery book, \"the book scavenger\".",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138858/s_009.mp3",
+        "text_vi": "Trong khi mẹ nấu bữa sáng cho mình, Nicole bắt đầu đọc cuốn sách trinh thám yêu thích của cô bé, \"Người nhặt sách\"."
+      },
+      {
+        "text_en": "After breakfast, Nicole called her best friend, Roma.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138858/s_010.mp3",
+        "text_vi": "Sau bữa sáng, Nicole gọi điện cho người bạn thân nhất của mình, Roma."
+      },
+      {
+        "text_en": "\"hey, whats up\"says Roma.\"nothing much just finished breakfast.\"\"okay then im gonna be waiting for you at school.\"so Nicole took her back pack and headed out the door.Nicole slowly walked to school,knowing she was to early anyways.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138858/s_011.mp3",
+        "text_vi": "\"Chào, có gì không?\" Roma nói. \"Không có gì nhiều, tớ vừa ăn sáng xong.\" \"Được rồi, vậy tớ sẽ đợi cậu ở trường.\" Thế là Nicole lấy ba lô và đi ra cửa. Nicole chậm rãi đi bộ đến trường, biết rằng dù sao thì cô bé cũng đến quá sớm."
+      },
+      {
+        "text_en": "When she was at school, lights were all out and only all the students were there no one knew what had happened.\"this is a mystery .we must solve this\"says Nicole.\"how do you know this is mystery?\"Roma asked her.\"because i read a lot of mysterys and they all start like this.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138858/s_012.mp3",
+        "text_vi": "Khi cô bé đến trường, tất cả đèn đều tắt và chỉ có tất cả học sinh ở đó, không ai biết chuyện gì đã xảy ra. \"Đây là một bí ẩn. Chúng ta phải giải quyết nó,\" Nicole nói. \"Làm sao cậu biết đây là bí ẩn?\" Roma hỏi cô bé. \"Bởi vì tớ đọc rất nhiều truyện trinh thám và chúng đều bắt đầu như thế này."
+      },
+      {
+        "text_en": "and this is what happenes.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138858/s_013.mp3",
+        "text_vi": "Và đây là những gì xảy ra."
+      },
+      {
+        "text_en": "So they started interviewing everyone they can find and not even one person witnessed anything.\"okay if no one knows anything then we start looking for clues\"says Nicole.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138858/s_014.mp3",
+        "text_vi": "Thế là họ bắt đầu phỏng vấn tất cả mọi người mà họ tìm thấy và không một ai chứng kiến bất cứ điều gì. \"Được rồi, nếu không ai biết gì thì chúng ta bắt đầu tìm kiếm manh mối,\" Nicole nói."
+      },
+      {
+        "text_en": "\"how do you know if thats a clue or not ?\"asked Roma.\"its a clue if you see something that belongs to the teachers.\"replies Nicole.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138858/s_015.mp3",
+        "text_vi": "\"Làm sao cậu biết đó có phải là manh mối hay không?\" Roma hỏi. \"Đó là manh mối nếu cậu thấy thứ gì đó thuộc về các thầy cô giáo,\" Nicole đáp."
+      },
+      {
+        "text_en": "\"okay ill start looking\"Roma said.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138858/s_016.mp3",
+        "text_vi": "\"Được rồi, tớ sẽ bắt đầu tìm kiếm,\" Roma nói."
+      },
+      {
+        "text_en": "\"I found mr.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138858/s_017.mp3",
+        "text_vi": "\"Tớ tìm thấy bút chì yêu thích của thầy Ken!"
+      },
+      {
+        "text_en": "ken's favorite pencil!and there are also a trail of pencils leading this way.\"Roma reported.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138858/s_018.mp3",
+        "text_vi": "Và còn có một vệt bút chì dẫn lối này nữa,\" Roma báo cáo."
+      },
+      {
+        "text_en": "\"what are you waiting for ?lets follow it!\"Nicole said.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138858/s_019.mp3",
+        "text_vi": "\"Cậu còn chờ gì nữa? Chúng ta hãy đi theo nó!\" Nicole nói."
+      },
+      {
+        "text_en": "Very soon nighttime came and the room was pitch black.the trail of pencils still steatched along the school,Nicole and Roma walked,backpacks heaving on there sholders.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138858/s_020.mp3",
+        "text_vi": "Rất nhanh sau đó màn đêm buông xuống và căn phòng tối đen như mực. Vệt bút chì vẫn trải dài dọc theo trường học, Nicole và Roma đi bộ, ba lô nặng trịch trên vai."
+      },
+      {
+        "text_en": "when they reached the end of the trail,Nicole saw a person guarding the fence to the greenhouse .she thought\"is the garden were the teachers are trapped?\"she said to Roma,lets go ask that person guarding the fence!\"\"what if hes enemy?\"Roma objected \"okay then we sneak past.\"\"okay.\"",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138858/s_021.mp3",
+        "text_vi": "Khi họ đến cuối vệt dấu, Nicole thấy một người đang canh gác hàng rào dẫn vào nhà kính. Cô bé nghĩ \"Có phải khu vườn là nơi các thầy cô bị mắc kẹt không?\" Cô bé nói với Roma, \"Chúng ta hãy đến hỏi người đang canh gác hàng rào đó!\" \"Nếu anh ta là kẻ thù thì sao?\" Roma phản đối. \"Được rồi, vậy chúng ta sẽ lẻn qua.\" \"Được.\""
+      },
+      {
+        "text_en": "so they tiptoed past the person and reached the end of the fence.\"Oh no!",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138858/s_022.mp3",
+        "text_vi": "Thế là họ rón rén đi qua người đó và đến cuối hàng rào. \"Ôi không!"
+      },
+      {
+        "text_en": "We forgot to take the keys from Mrs Chun!\"Nicole said.\"Don't worry I got it, \"Roma said pulling out the keys.\"I slipped it in my pocket when we where looking for clues.\" They turned the key around the lock and went to the greenhouse.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138858/s_023.mp3",
+        "text_vi": "Chúng ta quên lấy chìa khóa của cô Chun rồi!\" Nicole nói. \"Đừng lo, tớ có rồi,\" Roma nói, rút chìa khóa ra. \"Tớ đã bỏ nó vào túi khi chúng ta đang tìm manh mối.\" Họ xoay chìa khóa vào ổ và đi vào nhà kính."
+      },
+      {
+        "text_en": "Nicole gasped in a circle, saw the headmaster and all the other teachers.and guarding them was the pencil company.Roma said okay.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138858/s_024.mp3",
+        "text_vi": "Nicole há hốc mồm, nhìn thấy thầy hiệu trưởng và tất cả các giáo viên khác. Và canh gác họ là công ty bút chì. Roma nói, \"Được rồi."
+      },
+      {
+        "text_en": "lets do this or they will know we are here.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138858/s_025.mp3",
+        "text_vi": "Chúng ta hãy làm điều này nếu không họ sẽ biết chúng ta ở đây.\""
+      },
+      {
+        "text_en": "They quickly untied the teachers and let them go back to their homes.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138858/s_026.mp3",
+        "text_vi": "Họ nhanh chóng cởi trói cho các thầy cô và để họ về nhà."
+      },
+      {
+        "text_en": "\"I love solving mystery's.\"said Roma.\"Me too,\"says Nicole \"Acually Roma asked,miss couter,who tied you up with the teachers?\"\"I..",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138858/s_027.mp3",
+        "text_vi": "\"Tớ thích giải quyết các bí ẩn,\" Roma nói. \"Tớ cũng vậy,\" Nicole nói. \"Thực ra, Roma hỏi, cô Couter, ai đã trói cô với các thầy cô giáo vậy?\" \"Tôi..."
+      },
+      {
+        "text_en": "I don't know .",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138858/s_028.mp3",
+        "text_vi": "Tôi không biết."
+      },
+      {
+        "text_en": "he was masked.\"miss couter replied.\"Its okay,he will show himself sooner or later\"Nicole and Roma said mischivingly.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138858/s_029.mp3",
+        "text_vi": "Anh ta đeo mặt nạ,\" cô Couter đáp. \"Không sao đâu, anh ta sẽ tự lộ diện sớm hay muộn thôi,\" Nicole và Roma nói một cách tinh nghịch."
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "One dark night ,Nicole was sitting in her grandma's favorite chair .Looking to the dark,blue sky.the moon shone bright, filling the room with dim light.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138858/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "The house was very old .",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138858/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "Wind blew inside as the windows were open.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138858/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "the trees danced at night .",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138858/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "Nicole wished her grandma was still alive sitting next to her reading mystery books to her.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138858/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "Suddenly,the doors creaked open behind her.\"Go to sleep,Nicole.\"her mom said \"okay,mom\"Nicole replied.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138858/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "Nicole felt scared ,as it was past midnight and little light was coming through the windows.But she went upstairs to her room and settled in her comfy bed.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138858/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "When morning came Nicole woke up to the sound of chirping birds.\"A perfect start to my day.\"she said .",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138858/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "And headed down to breakfast.\"Hey Nicole,sleep well?\" mom said.\"yeah\"said Nicole.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138858/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "As her mom cooked breakfast for her ,Nicole started to read her favorite mystery book, \"the book scavenger\".",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138858/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "After breakfast, Nicole called her best friend, Roma.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138858/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "\"hey, whats up\"says Roma.\"nothing much just finished breakfast.\"\"okay then im gonna be waiting for you at school.\"so Nicole took her back pack and headed out the door.Nicole slowly walked to school,knowing she was to early anyways.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138858/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "When she was at school, lights were all out and only all the students were there no one knew what had happened.\"this is a mystery .we must solve this\"says Nicole.\"how do you know this is mystery?\"Roma asked her.\"because i read a lot of mysterys and they all start like this.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138858/s_012.mp3"
+        },
+        {
+          "id": "ra_13",
+          "text_en": "and this is what happenes.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138858/s_013.mp3"
+        },
+        {
+          "id": "ra_14",
+          "text_en": "So they started interviewing everyone they can find and not even one person witnessed anything.\"okay if no one knows anything then we start looking for clues\"says Nicole.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138858/s_014.mp3"
+        },
+        {
+          "id": "ra_15",
+          "text_en": "\"how do you know if thats a clue or not ?\"asked Roma.\"its a clue if you see something that belongs to the teachers.\"replies Nicole.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138858/s_015.mp3"
+        },
+        {
+          "id": "ra_16",
+          "text_en": "\"okay ill start looking\"Roma said.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138858/s_016.mp3"
+        },
+        {
+          "id": "ra_17",
+          "text_en": "\"I found mr.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138858/s_017.mp3"
+        },
+        {
+          "id": "ra_18",
+          "text_en": "ken's favorite pencil!and there are also a trail of pencils leading this way.\"Roma reported.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138858/s_018.mp3"
+        },
+        {
+          "id": "ra_19",
+          "text_en": "\"what are you waiting for ?lets follow it!\"Nicole said.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138858/s_019.mp3"
+        },
+        {
+          "id": "ra_20",
+          "text_en": "Very soon nighttime came and the room was pitch black.the trail of pencils still steatched along the school,Nicole and Roma walked,backpacks heaving on there sholders.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138858/s_020.mp3"
+        },
+        {
+          "id": "ra_21",
+          "text_en": "when they reached the end of the trail,Nicole saw a person guarding the fence to the greenhouse .she thought\"is the garden were the teachers are trapped?\"she said to Roma,lets go ask that person guarding the fence!\"\"what if hes enemy?\"Roma objected \"okay then we sneak past.\"\"okay.\"",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138858/s_021.mp3"
+        },
+        {
+          "id": "ra_22",
+          "text_en": "so they tiptoed past the person and reached the end of the fence.\"Oh no!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138858/s_022.mp3"
+        },
+        {
+          "id": "ra_23",
+          "text_en": "We forgot to take the keys from Mrs Chun!\"Nicole said.\"Don't worry I got it, \"Roma said pulling out the keys.\"I slipped it in my pocket when we where looking for clues.\" They turned the key around the lock and went to the greenhouse.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138858/s_023.mp3"
+        },
+        {
+          "id": "ra_24",
+          "text_en": "Nicole gasped in a circle, saw the headmaster and all the other teachers.and guarding them was the pencil company.Roma said okay.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138858/s_024.mp3"
+        },
+        {
+          "id": "ra_25",
+          "text_en": "lets do this or they will know we are here.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138858/s_025.mp3"
+        },
+        {
+          "id": "ra_26",
+          "text_en": "They quickly untied the teachers and let them go back to their homes.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138858/s_026.mp3"
+        },
+        {
+          "id": "ra_27",
+          "text_en": "\"I love solving mystery's.\"said Roma.\"Me too,\"says Nicole \"Acually Roma asked,miss couter,who tied you up with the teachers?\"\"I..",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138858/s_027.mp3"
+        },
+        {
+          "id": "ra_28",
+          "text_en": "I don't know .",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138858/s_028.mp3"
+        },
+        {
+          "id": "ra_29",
+          "text_en": "he was masked.\"miss couter replied.\"Its okay,he will show himself sooner or later\"Nicole and Roma said mischivingly.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138858/s_029.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "Who was sitting in her grandma's favorite chair?",
+          "options_en": [
+            "Nicole",
+            "Roma",
+            "Mom"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "What filled the room with dim light?",
+          "options_en": [
+            "The moon",
+            "The lights",
+            "Wind"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s1_q1",
+          "type": "choice",
+          "question_en": "What was the house like?",
+          "options_en": [
+            "Very old",
+            "Very dark",
+            "Very bright"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s1_q2",
+          "type": "choice",
+          "question_en": "Which word describes the house?",
+          "options_en": [
+            "Old",
+            "School",
+            "Greenhouse"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s2_q1",
+          "type": "choice",
+          "question_en": "What blew inside the house?",
+          "options_en": [
+            "Wind",
+            "Moonlight",
+            "Pencils"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s2_q2",
+          "type": "choice",
+          "question_en": "Why did wind blow inside?",
+          "options_en": [
+            "Because the windows were open",
+            "Because the moon was bright",
+            "Because it was past midnight"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s3_q1",
+          "type": "choice",
+          "question_en": "What danced at night?",
+          "options_en": [
+            "The trees",
+            "The teachers",
+            "The pencils"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p0_s3_q2",
+          "type": "choice",
+          "question_en": "When did the trees dance?",
+          "options_en": [
+            "At night",
+            "In the morning",
+            "At school"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p0_s4_q1",
+          "type": "choice",
+          "question_en": "Who did Nicole wish was still alive?",
+          "options_en": [
+            "Her grandma",
+            "Her mom",
+            "Miss Couter"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p0_s4_q2",
+          "type": "choice",
+          "question_en": "What did Nicole wish her grandma would be doing next to her?",
+          "options_en": [
+            "Reading mystery books to her",
+            "Reading The Book Scavenger",
+            "Cooking breakfast for her"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "Who told Nicole to go to sleep?",
+          "options_en": [
+            "her mom",
+            "her grandma",
+            "Roma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "Where did the doors creak open?",
+          "options_en": [
+            "behind her",
+            "upstairs",
+            "at the school"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p1_s1_q1",
+          "type": "choice",
+          "question_en": "Why did Nicole feel scared?",
+          "options_en": [
+            "Because it was past midnight and little light was coming through the windows",
+            "Because the teachers were missing",
+            "Because the house had a greenhouse"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p1_s1_q2",
+          "type": "choice",
+          "question_en": "Where did Nicole go after feeling scared?",
+          "options_en": [
+            "Upstairs to her room",
+            "To the greenhouse",
+            "Downstairs to breakfast"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "When did Nicole wake up?",
+          "options_en": [
+            "When morning came",
+            "One dark night",
+            "After breakfast"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "What did Nicole hear when she woke up?",
+          "options_en": [
+            "The sound of chirping birds",
+            "Doors creaking open",
+            "Teachers shouting"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p2_s1_q1",
+          "type": "choice",
+          "question_en": "Where did Nicole go after waking up?",
+          "options_en": [
+            "Down to breakfast",
+            "To school",
+            "Upstairs to her room"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p2_s1_q2",
+          "type": "choice",
+          "question_en": "Who asked Nicole if she slept well?",
+          "options_en": [
+            "Her mom",
+            "Roma",
+            "Her grandma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p2_s2_q1",
+          "type": "choice",
+          "question_en": "What did Nicole start to read while her mom cooked breakfast?",
+          "options_en": [
+            "\"The Book Scavenger\"",
+            "Her grandma's favorite book",
+            "A pencil company catalog"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p2_s2_q2",
+          "type": "choice",
+          "question_en": "Who cooked breakfast for Nicole?",
+          "options_en": [
+            "Her mom",
+            "Mrs Chun",
+            "Roma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p2_s3_q1",
+          "type": "choice",
+          "question_en": "Who did Nicole call after breakfast?",
+          "options_en": [
+            "Roma",
+            "Her mom",
+            "Miss Couter"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p2_s3_q2",
+          "type": "choice",
+          "question_en": "When did Nicole call her best friend Roma?",
+          "options_en": [
+            "After breakfast",
+            "When morning came",
+            "At night"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "Who says \"hey, whats up\"?",
+          "options_en": [
+            "Roma",
+            "Nicole",
+            "Mom"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "What did Nicole take before she headed out the door?",
+          "options_en": [
+            "Her back pack",
+            "Her mystery book",
+            "The keys"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "Where was she when the lights were all out?",
+          "options_en": [
+            "At school",
+            "In her grandma's favorite chair",
+            "At the greenhouse"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "Who says \"this is a mystery. we must solve this\"?",
+          "options_en": [
+            "Nicole",
+            "Roma",
+            "Mom"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p4_s1_q1",
+          "type": "choice",
+          "question_en": "What does the sentence \"and this is what happenes.\" indicate will be told?",
+          "options_en": [
+            "What happens",
+            "The description of the moon",
+            "Where the keys are"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p4_s1_q2",
+          "type": "choice",
+          "question_en": "Why is the phrase \"and this is what happenes.\" used in the story?",
+          "options_en": [
+            "To introduce what happens next",
+            "To describe the old house",
+            "To explain who tied up the teachers"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "Who says they should start looking for clues?",
+          "options_en": [
+            "Nicole",
+            "Roma",
+            "Mrs. Chun"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "What did they start doing first?",
+          "options_en": [
+            "Interviewing everyone they can find",
+            "Reading mystery books",
+            "Searching the greenhouse"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p5_s1_q1",
+          "type": "choice",
+          "question_en": "Who asked how to know if something is a clue or not?",
+          "options_en": [
+            "Roma",
+            "Nicole",
+            "Mr. Ken"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p5_s1_q2",
+          "type": "choice",
+          "question_en": "What does Nicole say makes something a clue?",
+          "options_en": [
+            "If you see something that belongs to the teachers",
+            "If there is a trail of pencils",
+            "If the doors creak at night"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p5_s2_q1",
+          "type": "choice",
+          "question_en": "Who says they will start looking?",
+          "options_en": [
+            "Roma",
+            "Nicole",
+            "The headmaster"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p5_s2_q2",
+          "type": "choice",
+          "question_en": "How does Roma respond in this sentence?",
+          "options_en": [
+            "She says she'll start looking",
+            "She says they should stop",
+            "She says they found the keys"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "Who said \"I found mr. ken's favorite pencil!\"?",
+          "options_en": [
+            "Roma",
+            "Nicole",
+            "Mrs Chun"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "What did the speaker say they found?",
+          "options_en": [
+            "Mr. Ken's favorite pencil",
+            "A set of keys",
+            "A mystery book"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p6_s1_q1",
+          "type": "choice",
+          "question_en": "What else did Roma report besides finding the pencil?",
+          "options_en": [
+            "A trail of pencils leading this way",
+            "That the teachers were in the greenhouse",
+            "That someone was guarding the fence"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p6_s1_q2",
+          "type": "choice",
+          "question_en": "Whose favorite pencil was mentioned?",
+          "options_en": [
+            "Mr. Ken's",
+            "Mrs Chun's",
+            "Nicole's"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p6_s2_q1",
+          "type": "choice",
+          "question_en": "What does Nicole tell them to do?",
+          "options_en": [
+            "Let's follow it",
+            "Let's go home",
+            "Let's call for help"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p6_s2_q2",
+          "type": "choice",
+          "question_en": "Who said \"what are you waiting for? lets follow it!\"?",
+          "options_en": [
+            "Nicole",
+            "Roma",
+            "The headmaster"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p6_s3_q1",
+          "type": "choice",
+          "question_en": "When did the room become pitch black?",
+          "options_en": [
+            "Very soon nighttime came",
+            "When morning came",
+            "In the afternoon"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p6_s3_q2",
+          "type": "choice",
+          "question_en": "What were Nicole and Roma carrying as they walked?",
+          "options_en": [
+            "Backpacks heaving on their shoulders",
+            "A bunch of pencils",
+            "A set of keys"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "Who did Nicole speak to when she saw the person guarding the fence?",
+          "options_en": [
+            "Roma",
+            "Mrs Chun",
+            "her mom"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "What did Nicole and Roma decide to do about the person guarding the fence?",
+          "options_en": [
+            "Sneak past",
+            "Ask the person guarding the fence",
+            "Follow the trail of pencils"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        }
+      ]
+    },
+    {
+      "paragraph_index": 8,
+      "questions": [
+        {
+          "id": "gl_p8_s0_q1",
+          "type": "choice",
+          "question_en": "Who tiptoed past the person?",
+          "options_en": [
+            "They (Nicole and Roma)",
+            "Mrs Chun",
+            "Mr. Ken"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p8_s0_q2",
+          "type": "choice",
+          "question_en": "Where did they reach after tiptoeing past the person?",
+          "options_en": [
+            "The end of the fence",
+            "The greenhouse",
+            "The classroom"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p8_s1_q1",
+          "type": "choice",
+          "question_en": "Whose keys did they realize they forgot?",
+          "options_en": [
+            "Mrs Chun's keys",
+            "Mr. Ken's pencil case",
+            "The headmaster's watch"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p8_s1_q2",
+          "type": "choice",
+          "question_en": "Where did they go after turning the key in the lock?",
+          "options_en": [
+            "The greenhouse",
+            "Back to the school hall",
+            "To Nicole's grandma's house"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        }
+      ]
+    },
+    {
+      "paragraph_index": 9,
+      "questions": [
+        {
+          "id": "gl_p9_s0_q1",
+          "type": "choice",
+          "question_en": "Who did Nicole see?",
+          "options_en": [
+            "The headmaster and all the other teachers",
+            "Mr. Ken",
+            "Her grandma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p9_s0_q2",
+          "type": "choice",
+          "question_en": "Who was guarding the headmaster and the other teachers?",
+          "options_en": [
+            "The pencil company",
+            "A masked man",
+            "Mrs Chun"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p9_s1_q1",
+          "type": "choice",
+          "question_en": "Why do they need to \"do this\"?",
+          "options_en": [
+            "Or they will know we are here",
+            "So they can find clues",
+            "To go home earlier"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p9_s1_q2",
+          "type": "choice",
+          "question_en": "What will happen if they do not \"do this\"?",
+          "options_en": [
+            "They will know we are here",
+            "The teachers will be untied",
+            "The trail of pencils will disappear"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        }
+      ]
+    },
+    {
+      "paragraph_index": 10,
+      "questions": [
+        {
+          "id": "gl_p10_s0_q1",
+          "type": "choice",
+          "question_en": "Who quickly untied the teachers?",
+          "options_en": [
+            "They",
+            "Nicole and Roma",
+            "The pencil company"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p10_s0_q2",
+          "type": "choice",
+          "question_en": "Where did the teachers go after being untied?",
+          "options_en": [
+            "Back to their homes",
+            "To the greenhouse",
+            "To school"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p10_s1_q1",
+          "type": "choice",
+          "question_en": "Who said \"I love solving mystery's.\"?",
+          "options_en": [
+            "Roma",
+            "Nicole",
+            "Miss Couter"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        },
+        {
+          "id": "gl_p10_s1_q2",
+          "type": "choice",
+          "question_en": "What did Roma ask Miss Couter?",
+          "options_en": [
+            "Who tied you up with the teachers?",
+            "Where are the keys?",
+            "Why did the trees dance?"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        },
+        {
+          "id": "gl_p10_s2_q1",
+          "type": "choice",
+          "question_en": "Who said \"I don't know.\"?",
+          "options_en": [
+            "Miss Couter",
+            "Roma",
+            "Nicole"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        },
+        {
+          "id": "gl_p10_s2_q2",
+          "type": "choice",
+          "question_en": "What did Miss Couter say when asked who tied them up?",
+          "options_en": [
+            "I don't know.",
+            "He was masked.",
+            "Its okay, he will show himself sooner or later."
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        },
+        {
+          "id": "gl_p10_s3_q1",
+          "type": "choice",
+          "question_en": "Who did Miss Couter say was masked?",
+          "options_en": [
+            "He",
+            "Mr. Ken",
+            "The pencil company"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p10_s3_q2",
+          "type": "choice",
+          "question_en": "What did Nicole and Roma say about the masked person?",
+          "options_en": [
+            "Its okay, he will show himself sooner or later",
+            "We found Mr. Ken's pencil",
+            "Let's sneak past the guard"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'the dark'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "favorite",
+      "meaning_vi": "yêu thích",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "shone",
+      "meaning_vi": "chiếu sáng",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "dim",
+      "meaning_vi": "mờ ảo",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "mystery",
+      "meaning_vi": "bí ẩn",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "Suddenly",
+      "meaning_vi": "đột nhiên",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "creaked",
+      "meaning_vi": "kẽo kẹt",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "scared",
+      "meaning_vi": "sợ hãi",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "comfy",
+      "meaning_vi": "êm ái",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "chirping",
+      "meaning_vi": "hót líu lo",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "perfect",
+      "meaning_vi": "hoàn hảo",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "headed down",
+      "meaning_vi": "đi xuống",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "scavenger",
+      "meaning_vi": "người nhặt nhạnh",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "backpack",
+      "meaning_vi": "ba lô",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "slowly",
+      "meaning_vi": "chậm rãi",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "anyways",
+      "meaning_vi": "dù sao đi nữa",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "mystery",
+      "meaning_vi": "bí ẩn",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "solve",
+      "meaning_vi": "giải quyết",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "happened",
+      "meaning_vi": "đã xảy ra",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "interviewing",
+      "meaning_vi": "phỏng vấn",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "witnessed",
+      "meaning_vi": "chứng kiến",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "clues",
+      "meaning_vi": "manh mối",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "belongs",
+      "meaning_vi": "thuộc về",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "trail",
+      "meaning_vi": "vệt, dấu vết",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "reported",
+      "meaning_vi": "báo cáo",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "pitch black",
+      "meaning_vi": "tối đen như mực",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "heaving",
+      "meaning_vi": "nặng trĩu",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "guarding",
+      "meaning_vi": "canh gác",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "greenhouse",
+      "meaning_vi": "nhà kính",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "trapped",
+      "meaning_vi": "bị mắc kẹt",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "sneak past",
+      "meaning_vi": "lẻn qua",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "tiptoed",
+      "meaning_vi": "rón rén",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "forgot",
+      "meaning_vi": "quên",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "slipped",
+      "meaning_vi": "bỏ vào",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "lock",
+      "meaning_vi": "ổ khóa",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "gasped",
+      "meaning_vi": "há hốc mồm",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "headmaster",
+      "meaning_vi": "hiệu trưởng",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "company",
+      "meaning_vi": "công ty",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "untied",
+      "meaning_vi": "cởi trói",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "solving",
+      "meaning_vi": "giải quyết",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "masked",
+      "meaning_vi": "đeo mặt nạ",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "mischievingly",
+      "meaning_vi": "tinh nghịch",
+      "paragraph_index": 10
+    }
+  ]
+}

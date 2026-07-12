@@ -1,0 +1,3864 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L4",
+  "level_label": "Cấp 4",
+  "topic": "Ira Investigates the Invisible",
+  "slug": "book_123858",
+  "audio_filename": "book_123858.mp3",
+  "book_slug": "book_123858",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_123858/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_123858/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_123858/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_123858/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_123858/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_123858/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_123858/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_123858/page_09.jpg",
+    "https://audio.felixbuilderhub.com/books/book_123858/page_10.jpg",
+    "https://audio.felixbuilderhub.com/books/book_123858/page_11.jpg",
+    "https://audio.felixbuilderhub.com/books/book_123858/page_12.jpg",
+    "https://audio.felixbuilderhub.com/books/book_123858/page_13.jpg",
+    "https://audio.felixbuilderhub.com/books/book_123858/page_14.jpg",
+    "https://audio.felixbuilderhub.com/books/book_123858/page_15.jpg",
+    "https://audio.felixbuilderhub.com/books/book_123858/page_16.jpg",
+    "https://audio.felixbuilderhub.com/books/book_123858/page_17.jpg",
+    "https://audio.felixbuilderhub.com/books/book_123858/page_18.jpg",
+    "https://audio.felixbuilderhub.com/books/book_123858/page_19.jpg",
+    "https://audio.felixbuilderhub.com/books/book_123858/page_20.jpg",
+    "https://audio.felixbuilderhub.com/books/book_123858/page_21.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_123858/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_123858/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_123858/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_123858/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_123858/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_123858/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_123858/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_123858/page_09.mp3",
+    "https://audio.felixbuilderhub.com/books/book_123858/page_10.mp3",
+    "https://audio.felixbuilderhub.com/books/book_123858/page_11.mp3",
+    "https://audio.felixbuilderhub.com/books/book_123858/page_12.mp3",
+    "https://audio.felixbuilderhub.com/books/book_123858/page_13.mp3",
+    "https://audio.felixbuilderhub.com/books/book_123858/page_14.mp3",
+    "https://audio.felixbuilderhub.com/books/book_123858/page_15.mp3",
+    "https://audio.felixbuilderhub.com/books/book_123858/page_16.mp3",
+    "https://audio.felixbuilderhub.com/books/book_123858/page_17.mp3",
+    "https://audio.felixbuilderhub.com/books/book_123858/page_18.mp3",
+    "https://audio.felixbuilderhub.com/books/book_123858/page_19.mp3",
+    "https://audio.felixbuilderhub.com/books/book_123858/page_20.mp3",
+    "https://audio.felixbuilderhub.com/books/book_123858/page_21.mp3"
+  ],
+  "book_attribution": {
+    "title": "Ira Investigates the Invisible",
+    "creators": [
+      "Menaka Raman",
+      "Anjora Noronha"
+    ],
+    "publisher": "Pratham Books",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: Ira Investigates the Invisible is written by Menaka Raman . © Pratham Books , 2020. Some rights reserved. Released under CC BY 4.0 license. Other Credits: ‘Ira Investigates the Invisible’ has been published on StoryWeaver by Pratham Books. The development of this book has been supported by Oracle. www.prathambooks.org. Our thanks to microbiologist Dr Savita Chib, for sharing her work and inspiring personal journey in scientific research with us, helping shape this book. Special thanks to Dr. Ipsa Jain for her insights during the making of this book. Guest Editor: Yamini Vijayan, Guest Art Director: Snigdha Rao Images Attributions: Cover page: Ira Investigates the Invisible Cover , by Anjora Noronha © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 2: Microbiologist looking through the fridge , by Anjora Noronha © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 3: Girl in the Lab , by Anjora Noronha © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 4: Microbiologist looking through a petri dish , by Anjora Noronha © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 5: Microbiologist thinking of microbes , by Anjora Noronha © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 6: Explaining types of Microbes , by Anjora Noronha © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 7: Microbiologist smells an Orange , by Anjora Noronha © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 8: Cross section of an orange , by Anjora Noronha © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 9: Lab equipment microscope, petri dish , by Anjora Noronha © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 10: Lab equipment pipette, autoclave , by Anjora Noronha © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 11: Microbiologists in a lab , by Anjora Noronha © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/ The development of this book has been supported by Oracle.",
+    "source_url": "https://storyweaver.org.in/stories/123858-ira-investigates-the-invisible",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "Microbiologist looking through the fridge , by Anjora Noronha © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "Girl in the Lab , by Anjora Noronha © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "Microbiologist looking through a petri dish , by Anjora Noronha © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "Microbiologist thinking of microbes , by Anjora Noronha © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "Explaining types of Microbes , by Anjora Noronha © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "Microbiologist smells an Orange , by Anjora Noronha © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "Cross section of an orange , by Anjora Noronha © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "Lab equipment microscope, petri dish , by Anjora Noronha © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 8,
+        "credit_text": "Lab equipment pipette, autoclave , by Anjora Noronha © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 9,
+        "credit_text": "Microbiologists in a lab , by Anjora Noronha © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 10,
+        "credit_text": "Illustration by Anjora Noronha."
+      },
+      {
+        "page_index": 11,
+        "credit_text": "Illustration by Anjora Noronha."
+      },
+      {
+        "page_index": 12,
+        "credit_text": "Illustration by Anjora Noronha."
+      },
+      {
+        "page_index": 13,
+        "credit_text": "Illustration by Anjora Noronha."
+      },
+      {
+        "page_index": 14,
+        "credit_text": "Illustration by Anjora Noronha."
+      },
+      {
+        "page_index": 15,
+        "credit_text": "Illustration by Anjora Noronha."
+      },
+      {
+        "page_index": 16,
+        "credit_text": "Illustration by Anjora Noronha."
+      },
+      {
+        "page_index": 17,
+        "credit_text": "Illustration by Anjora Noronha."
+      },
+      {
+        "page_index": 18,
+        "credit_text": "Illustration by Anjora Noronha."
+      },
+      {
+        "page_index": 19,
+        "credit_text": "Illustration by Anjora Noronha."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "Ira Investigates the Invisible",
+    "paragraphs_en": [
+      "Where did I put that petri dish?",
+      "Oh, hello! Have you seen a small glass dish with a lid? It’s for an important experiment I’m doing. I’ve put about a billion cells inside it. I know what you’re thinking: How can you fit one billion of anything inside a small dish?",
+      "My name is Dr. Ira and I’m a microbiologist. I’m not the kind of doctor you see when you have a fever or an earache. I’m a doctor that studies invisible things. I know that sounds ridiculous but let me explain.",
+      "What if I told you that all around us in the air, soil, water, and even inside us—in our stomachs, noses and ears— are thousands, no, millions, no... TRILLIONS of tiny living creatures called microbes? Ewww! YUCK! Cheee?",
+      "There are around one trillion kinds of microbes on our planet. While each of these microbes looks different and lives in a different habitat, most microbes can broadly be divided into Bacteria Algae Fungi Protozoa Viruses As a microbiologist, I spend my time studying bacteria. Would you like to see where I work?",
+      "Welcome to my lab! Yuck! What’s that smell? Ugh! This orange has been sitting on my friend Tashi’s desk for a week now. See how it’s covered in green fuzz? That’s fungus. Shall we take a closer look? Let’s use a microscope. It helps us see things that our eyes aren’t powerful enough to see on their own.",
+      "I know they look scary but some microbes can be very helpful. For instance, this fungus tells us that the orange is spoiled and that we shouldn’t eat it. Did you know that there are microbes that can eat plastic? They could help solve plastic pollution!",
+      "Not all microbes are friendly though. Some types of the bacteria E.coli can cause tummy aches. But if we get to know them better and understand why they make us sick, we can try to prevent illnesses. That’s why I study how E.coli cells react to changes in their environment. I use some very cool tools to do this. Microscope: an instrument which makes really small objects look bigger by magnifying them. Petri Dish: a circular, transparent dish with a flat lid used to maintain microbes in certain conditions.",
+      "Pipette: a slender tube with a bulb at one end used for transferring or measuring small quantities of liquid. Autoclave: a strong heated container that uses high pressure and temperature for chemical reactions and other processes.",
+      "Let’s ask Tashi if he’s seen my petri dish. And tell him to throw away that orange! Hi Tashi!",
+      "Tashi was my first friend at university. When I first came here to study, I felt lost. I didn’t speak much English and all my classes were hard. Plus, everyone else seemed so smart and I just couldn’t keep up. I wanted to give up so many times and just go home, but how could I?",
+      "I'm the first woman in my family to go to college and they supported me every step of the way. I didn’t want to let them or myself down. Besides, I loved exploring this invisible world around me. So I kept trying. Learning to not give up is important, especially when you’re a microbiologist.",
+      "Because a lot of the experiments I do fail. What keeps me going is when things work. It’s so exciting when you’ve learned something that no one else knows yet! But even when things don’t work out, it’s alright. It helps me ask the next question.",
+      "Like, ‘Where is my petri dish?’ Tashi hasn’t seen it either. I need to do the experiment again. Will you keep me company? I’m going to take some E.coli, grow it in a conical flask and see what happens when I don’t give it enough to eat. I’ll take another E.coli sample in a second flask and give it food.",
+      "Then I’ll wait and see what happens to the number of E.coli in both these flasks. This is called making an observation. After the experiment is completed, I’ll compare the E.coli growth in both the flasks and write down my observations. These are the results of my experiment. It will help me answer the question: Does the amount of food affect the growth of E.coli? What I learn from the results is called an inference. A typical E.coli growth experiment takes 10 to 12 hours to complete.",
+      "Since I don’t need to sit here and watch the cells the entire time, I read about new discoveries, attend meetings and talk to other scientists about their work. This is important because I learn exciting new things from them and often get ideas for my own work. Sometimes, we also just sit around, have tea and chat!",
+      "Scientists may seem very serious, but really, we’re just like you and your friends. We like to play hockey, sing in the shower and read scary stories!",
+      "We are also curious about the world around us. We like to ask questions constantly: We’re like detectives who look for clues that help answer all these fascinating questions. Even if they’re inside your stomach. Speaking of which, I’m hungry. Let’s eat! Why? Why not? How? What if?",
+      "Tashi!",
+      "Grow your own mould! The fungus that grows on old food is called mould. To grow your own mould, take a piece of leftover roti or a slice of stale bread, sprinkle it with water, place it on a plate and cover it with a clear glass bowl. Keep at room temperature and out of direct sunlight for two days. Check the food and see if white, blue, green or gray fuzz has appeared on it. Leave it alone for 2 more days and then check on it. How does the mould look now? Make a note. Repeat this every 2 days until day 10. What do you think will happen? The water and room temperature create the perfect conditions for growing mould! The mould will look different on different items of food. That is because different kinds of mould spores like some foods better than others. At the end of 10 days, carefully dispose of the mouldy food with the help of your teacher. Maybe you could add it to a compost pit!"
+    ],
+    "sentences": [
+      {
+        "text_en": "Where did I put that petri dish?",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_000.mp3",
+        "text_vi": "Tôi để cái đĩa petri đó ở đâu rồi ta?"
+      },
+      {
+        "text_en": "Oh, hello! Have you seen a small glass dish with a lid?",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_001.mp3",
+        "text_vi": "Ôi, chào bạn! Bạn có thấy một cái đĩa thủy tinh nhỏ có nắp không?"
+      },
+      {
+        "text_en": "It’s for an important experiment I’m doing.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_002.mp3",
+        "text_vi": "Nó dùng cho một thí nghiệm quan trọng mà tôi đang làm đó."
+      },
+      {
+        "text_en": "I’ve put about a billion cells inside it.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_003.mp3",
+        "text_vi": "Tôi đã cho khoảng một tỉ tế bào vào trong đó rồi."
+      },
+      {
+        "text_en": "I know what you’re thinking: How can you fit one billion of anything inside a small dish?",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_004.mp3",
+        "text_vi": "Tôi biết bạn đang nghĩ gì: Làm sao mà nhét một tỉ thứ vào trong một cái đĩa nhỏ xíu được chứ?"
+      },
+      {
+        "text_en": "My name is Dr.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_005.mp3",
+        "text_vi": "Tôi tên là Bác sĩ Ira."
+      },
+      {
+        "text_en": "Ira and I’m a microbiologist.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_006.mp3",
+        "text_vi": "Và tôi là một nhà vi sinh vật học."
+      },
+      {
+        "text_en": "I’m not the kind of doctor you see when you have a fever or an earache.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_007.mp3",
+        "text_vi": "Tôi không phải là loại bác sĩ bạn gặp khi bị sốt hay đau tai đâu."
+      },
+      {
+        "text_en": "I’m a doctor that studies invisible things.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_008.mp3",
+        "text_vi": "Tôi là một bác sĩ chuyên nghiên cứu những thứ vô hình."
+      },
+      {
+        "text_en": "I know that sounds ridiculous but let me explain.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_009.mp3",
+        "text_vi": "Tôi biết điều đó nghe có vẻ buồn cười, nhưng để tôi giải thích nhé."
+      },
+      {
+        "text_en": "What if I told you that all around us in the air, soil, water, and even inside us—in our stomachs, noses and ears— are thousands, no, millions, no...",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_010.mp3",
+        "text_vi": "Nếu tôi nói với bạn rằng xung quanh chúng ta, trong không khí, đất, nước, và thậm chí cả bên trong chúng ta—trong dạ dày, mũi và tai—có hàng ngàn, không, hàng triệu, không..."
+      },
+      {
+        "text_en": "TRILLIONS of tiny living creatures called microbes?",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_011.mp3",
+        "text_vi": "HÀNG NGHÌN TỈ sinh vật nhỏ bé gọi là vi khuẩn thì sao?"
+      },
+      {
+        "text_en": "Ewww! YUCK! Cheee?",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_012.mp3",
+        "text_vi": "Eo ôi! Gớm quá! Ghê vậy?"
+      },
+      {
+        "text_en": "There are around one trillion kinds of microbes on our planet.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_013.mp3",
+        "text_vi": "Có khoảng một nghìn tỉ loại vi khuẩn trên hành tinh của chúng ta."
+      },
+      {
+        "text_en": "While each of these microbes looks different and lives in a different habitat, most microbes can broadly be divided into Bacteria Algae Fungi Protozoa Viruses As a microbiologist, I spend my time studying bacteria.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_014.mp3",
+        "text_vi": "Mặc dù mỗi loại vi khuẩn này trông khác nhau và sống ở một môi trường khác nhau, nhưng hầu hết vi khuẩn có thể được chia thành Vi khuẩn, Tảo, Nấm, Động vật nguyên sinh, Vi rút. Là một nhà vi sinh vật học, tôi dành thời gian của mình để nghiên cứu vi khuẩn."
+      },
+      {
+        "text_en": "Would you like to see where I work?",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_015.mp3",
+        "text_vi": "Bạn có muốn xem nơi tôi làm việc không?"
+      },
+      {
+        "text_en": "Welcome to my lab!",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_016.mp3",
+        "text_vi": "Chào mừng đến phòng thí nghiệm của tôi!"
+      },
+      {
+        "text_en": "Yuck! What’s that smell?",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_017.mp3",
+        "text_vi": "Eo ôi! Mùi gì thế này?"
+      },
+      {
+        "text_en": "Ugh! This orange has been sitting on my friend Tashi’s desk for a week now.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_018.mp3",
+        "text_vi": "Ôi! Quả cam này đã nằm trên bàn của bạn Tashi tôi cả tuần rồi."
+      },
+      {
+        "text_en": "See how it’s covered in green fuzz?",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_019.mp3",
+        "text_vi": "Bạn thấy nó bị phủ một lớp lông tơ màu xanh lá cây không?"
+      },
+      {
+        "text_en": "That’s fungus. Shall we take a closer look?",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_020.mp3",
+        "text_vi": "Đó là nấm mốc đó. Chúng ta hãy nhìn kỹ hơn nhé?"
+      },
+      {
+        "text_en": "Let’s use a microscope.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_021.mp3",
+        "text_vi": "Chúng ta hãy dùng kính hiển vi."
+      },
+      {
+        "text_en": "It helps us see things that our eyes aren’t powerful enough to see on their own.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_022.mp3",
+        "text_vi": "Nó giúp chúng ta nhìn thấy những thứ mà mắt thường của chúng ta không đủ mạnh để tự nhìn thấy được."
+      },
+      {
+        "text_en": "I know they look scary but some microbes can be very helpful.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_023.mp3",
+        "text_vi": "Tôi biết chúng trông đáng sợ nhưng một số vi khuẩn có thể rất hữu ích đó."
+      },
+      {
+        "text_en": "For instance, this fungus tells us that the orange is spoiled and that we shouldn’t eat it.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_024.mp3",
+        "text_vi": "Ví dụ, loại nấm mốc này cho chúng ta biết quả cam đã bị hỏng và chúng ta không nên ăn nó."
+      },
+      {
+        "text_en": "Did you know that there are microbes that can eat plastic?",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_025.mp3",
+        "text_vi": "Bạn có biết có những vi khuẩn có thể ăn nhựa không?"
+      },
+      {
+        "text_en": "They could help solve plastic pollution!",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_026.mp3",
+        "text_vi": "Chúng có thể giúp giải quyết vấn đề ô nhiễm nhựa đó!"
+      },
+      {
+        "text_en": "Not all microbes are friendly though.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_027.mp3",
+        "text_vi": "Tuy nhiên, không phải tất cả vi khuẩn đều thân thiện đâu."
+      },
+      {
+        "text_en": "Some types of the bacteria E.coli can cause tummy aches.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_028.mp3",
+        "text_vi": "Một số loại vi khuẩn E.coli có thể gây đau bụng."
+      },
+      {
+        "text_en": "But if we get to know them better and understand why they make us sick, we can try to prevent illnesses.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_029.mp3",
+        "text_vi": "Nhưng nếu chúng ta tìm hiểu chúng kỹ hơn và hiểu tại sao chúng làm chúng ta bị bệnh, chúng ta có thể cố gắng ngăn ngừa bệnh tật."
+      },
+      {
+        "text_en": "That’s why I study how E.coli cells react to changes in their environment.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_030.mp3",
+        "text_vi": "Đó là lý do tại sao tôi nghiên cứu cách các tế bào E.coli phản ứng với những thay đổi trong môi trường của chúng."
+      },
+      {
+        "text_en": "I use some very cool tools to do this.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_031.mp3",
+        "text_vi": "Tôi dùng một số công cụ rất hay ho để làm việc này."
+      },
+      {
+        "text_en": "Microscope: an instrument which makes really small objects look bigger by magnifying them.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_032.mp3",
+        "text_vi": "Kính hiển vi: một dụng cụ làm cho các vật thể rất nhỏ trông lớn hơn bằng cách phóng đại chúng."
+      },
+      {
+        "text_en": "Petri Dish: a circular, transparent dish with a flat lid used to maintain microbes in certain conditions.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_033.mp3",
+        "text_vi": "Đĩa Petri: một cái đĩa tròn, trong suốt có nắp phẳng dùng để nuôi vi khuẩn trong những điều kiện nhất định."
+      },
+      {
+        "text_en": "Pipette: a slender tube with a bulb at one end used for transferring or measuring small quantities of liquid.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_034.mp3",
+        "text_vi": "Ống hút nhỏ giọt (Pipette): một ống nhỏ, mảnh có một bầu ở một đầu, dùng để chuyển hoặc đo lượng chất lỏng nhỏ."
+      },
+      {
+        "text_en": "Autoclave: a strong heated container that uses high pressure and temperature for chemical reactions and other processes.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_035.mp3",
+        "text_vi": "Nồi hấp tiệt trùng (Autoclave): một thùng chứa chắc chắn được làm nóng, sử dụng áp suất và nhiệt độ cao cho các phản ứng hóa học và các quá trình khác."
+      },
+      {
+        "text_en": "Let’s ask Tashi if he’s seen my petri dish.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_036.mp3",
+        "text_vi": "Chúng ta hãy hỏi Tashi xem cậu ấy có thấy cái đĩa petri của tôi không."
+      },
+      {
+        "text_en": "And tell him to throw away that orange! Hi Tashi!",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_037.mp3",
+        "text_vi": "Và bảo cậu ấy vứt quả cam đó đi! Chào Tashi!"
+      },
+      {
+        "text_en": "Tashi was my first friend at university.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_038.mp3",
+        "text_vi": "Tashi là người bạn đầu tiên của tôi ở trường đại học."
+      },
+      {
+        "text_en": "When I first came here to study, I felt lost.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_039.mp3",
+        "text_vi": "Khi tôi mới đến đây để học, tôi cảm thấy lạc lõng."
+      },
+      {
+        "text_en": "I didn’t speak much English and all my classes were hard.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_040.mp3",
+        "text_vi": "Tôi không nói được nhiều tiếng Anh và tất cả các lớp học của tôi đều khó."
+      },
+      {
+        "text_en": "Plus, everyone else seemed so smart and I just couldn’t keep up.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_041.mp3",
+        "text_vi": "Hơn nữa, mọi người khác dường như rất thông minh và tôi không thể theo kịp."
+      },
+      {
+        "text_en": "I wanted to give up so many times and just go home, but how could I?",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_042.mp3",
+        "text_vi": "Tôi đã muốn bỏ cuộc rất nhiều lần và chỉ muốn về nhà, nhưng làm sao tôi có thể?"
+      },
+      {
+        "text_en": "I'm the first woman in my family to go to college and they supported me every step of the way.",
+        "paragraph_index": 11,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_043.mp3",
+        "text_vi": "Tôi là người phụ nữ đầu tiên trong gia đình đi học đại học và họ đã ủng hộ tôi từng bước một."
+      },
+      {
+        "text_en": "I didn’t want to let them or myself down.",
+        "paragraph_index": 11,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_044.mp3",
+        "text_vi": "Tôi không muốn làm họ hay chính bản thân mình thất vọng."
+      },
+      {
+        "text_en": "Besides, I loved exploring this invisible world around me.",
+        "paragraph_index": 11,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_045.mp3",
+        "text_vi": "Hơn nữa, tôi rất thích khám phá thế giới vô hình xung quanh mình."
+      },
+      {
+        "text_en": "So I kept trying.",
+        "paragraph_index": 11,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_046.mp3",
+        "text_vi": "Vì vậy, tôi cứ tiếp tục cố gắng."
+      },
+      {
+        "text_en": "Learning to not give up is important, especially when you’re a microbiologist.",
+        "paragraph_index": 11,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_047.mp3",
+        "text_vi": "Học cách không bỏ cuộc là rất quan trọng, đặc biệt khi bạn là một nhà vi sinh vật học."
+      },
+      {
+        "text_en": "Because a lot of the experiments I do fail.",
+        "paragraph_index": 12,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_048.mp3",
+        "text_vi": "Bởi vì rất nhiều thí nghiệm tôi làm đều thất bại."
+      },
+      {
+        "text_en": "What keeps me going is when things work.",
+        "paragraph_index": 12,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_049.mp3",
+        "text_vi": "Điều khiến tôi tiếp tục là khi mọi thứ thành công."
+      },
+      {
+        "text_en": "It’s so exciting when you’ve learned something that no one else knows yet!",
+        "paragraph_index": 12,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_050.mp3",
+        "text_vi": "Thật là thú vị khi bạn học được điều gì đó mà chưa ai khác biết!"
+      },
+      {
+        "text_en": "But even when things don’t work out, it’s alright.",
+        "paragraph_index": 12,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_051.mp3",
+        "text_vi": "Nhưng ngay cả khi mọi thứ không thành công, cũng không sao cả."
+      },
+      {
+        "text_en": "It helps me ask the next question.",
+        "paragraph_index": 12,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_052.mp3",
+        "text_vi": "Nó giúp tôi đặt ra câu hỏi tiếp theo."
+      },
+      {
+        "text_en": "Like, ‘Where is my petri dish?’ Tashi hasn’t seen it either.",
+        "paragraph_index": 13,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_053.mp3",
+        "text_vi": "Giống như, 'Đĩa petri của tôi đâu rồi?' Tashi cũng chưa thấy nó."
+      },
+      {
+        "text_en": "I need to do the experiment again.",
+        "paragraph_index": 13,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_054.mp3",
+        "text_vi": "Tôi cần làm lại thí nghiệm."
+      },
+      {
+        "text_en": "Will you keep me company?",
+        "paragraph_index": 13,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_055.mp3",
+        "text_vi": "Bạn sẽ ở lại làm bạn với tôi chứ?"
+      },
+      {
+        "text_en": "I’m going to take some E.coli, grow it in a conical flask and see what happens when I don’t give it enough to eat.",
+        "paragraph_index": 13,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_056.mp3",
+        "text_vi": "Tôi sẽ lấy một ít E.coli, nuôi nó trong một bình tam giác và xem điều gì xảy ra khi tôi không cho nó đủ thức ăn."
+      },
+      {
+        "text_en": "I’ll take another E.coli sample in a second flask and give it food.",
+        "paragraph_index": 13,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_057.mp3",
+        "text_vi": "Tôi sẽ lấy một mẫu E.coli khác vào một bình thứ hai và cho nó thức ăn."
+      },
+      {
+        "text_en": "Then I’ll wait and see what happens to the number of E.coli in both these flasks.",
+        "paragraph_index": 14,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_058.mp3",
+        "text_vi": "Sau đó tôi sẽ đợi và xem điều gì xảy ra với số lượng E.coli trong cả hai bình này."
+      },
+      {
+        "text_en": "This is called making an observation.",
+        "paragraph_index": 14,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_059.mp3",
+        "text_vi": "Việc này được gọi là thực hiện một quan sát."
+      },
+      {
+        "text_en": "After the experiment is completed, I’ll compare the E.coli growth in both the flasks and write down my observations.",
+        "paragraph_index": 14,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_060.mp3",
+        "text_vi": "Sau khi thí nghiệm hoàn thành, tôi sẽ so sánh sự phát triển của E.coli trong cả hai bình và ghi lại những quan sát của mình."
+      },
+      {
+        "text_en": "These are the results of my experiment.",
+        "paragraph_index": 14,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_061.mp3",
+        "text_vi": "Đây là kết quả của thí nghiệm của tôi."
+      },
+      {
+        "text_en": "It will help me answer the question: Does the amount of food affect the growth of E.coli?",
+        "paragraph_index": 14,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_062.mp3",
+        "text_vi": "Nó sẽ giúp tôi trả lời câu hỏi: Lượng thức ăn có ảnh hưởng đến sự phát triển của E.coli không?"
+      },
+      {
+        "text_en": "What I learn from the results is called an inference.",
+        "paragraph_index": 14,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_063.mp3",
+        "text_vi": "Những gì tôi học được từ kết quả được gọi là một suy luận."
+      },
+      {
+        "text_en": "A typical E.coli growth experiment takes 10 to 12 hours to complete.",
+        "paragraph_index": 14,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_064.mp3",
+        "text_vi": "Một thí nghiệm nuôi cấy E.coli điển hình mất 10 đến 12 giờ để hoàn thành."
+      },
+      {
+        "text_en": "Since I don’t need to sit here and watch the cells the entire time, I read about new discoveries, attend meetings and talk to other scientists about their work.",
+        "paragraph_index": 15,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_065.mp3",
+        "text_vi": "Vì tôi không cần phải ngồi đây và theo dõi các tế bào suốt thời gian, tôi đọc về những khám phá mới, tham dự các cuộc họp và nói chuyện với các nhà khoa học khác về công việc của họ."
+      },
+      {
+        "text_en": "This is important because I learn exciting new things from them and often get ideas for my own work.",
+        "paragraph_index": 15,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_066.mp3",
+        "text_vi": "Điều này quan trọng vì tôi học được những điều mới mẻ thú vị từ họ và thường có ý tưởng cho công việc của riêng mình."
+      },
+      {
+        "text_en": "Sometimes, we also just sit around, have tea and chat!",
+        "paragraph_index": 15,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_067.mp3",
+        "text_vi": "Đôi khi, chúng tôi cũng chỉ ngồi chơi, uống trà và trò chuyện!"
+      },
+      {
+        "text_en": "Scientists may seem very serious, but really, we’re just like you and your friends.",
+        "paragraph_index": 16,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_068.mp3",
+        "text_vi": "Các nhà khoa học có vẻ rất nghiêm túc, nhưng thực ra, chúng tôi cũng giống như bạn và bạn bè của bạn thôi."
+      },
+      {
+        "text_en": "We like to play hockey, sing in the shower and read scary stories!",
+        "paragraph_index": 16,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_069.mp3",
+        "text_vi": "Chúng tôi thích chơi khúc côn cầu, hát trong phòng tắm và đọc truyện ma!"
+      },
+      {
+        "text_en": "We are also curious about the world around us.",
+        "paragraph_index": 17,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_070.mp3",
+        "text_vi": "Chúng tôi cũng tò mò về thế giới xung quanh mình."
+      },
+      {
+        "text_en": "We like to ask questions constantly: We’re like detectives who look for clues that help answer all these fascinating questions.",
+        "paragraph_index": 17,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_071.mp3",
+        "text_vi": "Chúng tôi thích hỏi liên tục: Chúng tôi giống như những thám tử tìm kiếm manh mối giúp trả lời tất cả những câu hỏi thú vị này."
+      },
+      {
+        "text_en": "Even if they’re inside your stomach.",
+        "paragraph_index": 17,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_072.mp3",
+        "text_vi": "Ngay cả khi chúng ở trong dạ dày của bạn."
+      },
+      {
+        "text_en": "Speaking of which, I’m hungry.",
+        "paragraph_index": 17,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_073.mp3",
+        "text_vi": "Nhân tiện nói đến, tôi đói rồi."
+      },
+      {
+        "text_en": "Let’s eat! Why?",
+        "paragraph_index": 17,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_074.mp3",
+        "text_vi": "Chúng ta đi ăn thôi! Tại sao?"
+      },
+      {
+        "text_en": "Why not? How? What if?",
+        "paragraph_index": 17,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_075.mp3",
+        "text_vi": "Tại sao không? Làm thế nào? Nếu như?"
+      },
+      {
+        "text_en": "Tashi!",
+        "paragraph_index": 18,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_076.mp3",
+        "text_vi": "Tashi!"
+      },
+      {
+        "text_en": "Grow your own mould!",
+        "paragraph_index": 19,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_077.mp3",
+        "text_vi": "Tự trồng nấm mốc của bạn!"
+      },
+      {
+        "text_en": "The fungus that grows on old food is called mould.",
+        "paragraph_index": 19,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_078.mp3",
+        "text_vi": "Loại nấm mọc trên thức ăn cũ được gọi là nấm mốc."
+      },
+      {
+        "text_en": "To grow your own mould, take a piece of leftover roti or a slice of stale bread, sprinkle it with water, place it on a plate and cover it with a clear glass bowl.",
+        "paragraph_index": 19,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_079.mp3",
+        "text_vi": "Để tự trồng nấm mốc, hãy lấy một miếng bánh roti còn thừa hoặc một lát bánh mì cũ, rắc nước lên, đặt lên đĩa và đậy bằng một cái bát thủy tinh trong suốt."
+      },
+      {
+        "text_en": "Keep at room temperature and out of direct sunlight for two days.",
+        "paragraph_index": 19,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_080.mp3",
+        "text_vi": "Giữ ở nhiệt độ phòng và tránh ánh nắng trực tiếp trong hai ngày."
+      },
+      {
+        "text_en": "Check the food and see if white, blue, green or gray fuzz has appeared on it.",
+        "paragraph_index": 19,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_081.mp3",
+        "text_vi": "Kiểm tra thức ăn và xem có lớp lông tơ màu trắng, xanh dương, xanh lá cây hoặc xám xuất hiện trên đó không."
+      },
+      {
+        "text_en": "Leave it alone for 2 more days and then check on it.",
+        "paragraph_index": 19,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_082.mp3",
+        "text_vi": "Để yên nó thêm 2 ngày nữa rồi kiểm tra lại."
+      },
+      {
+        "text_en": "How does the mould look now?",
+        "paragraph_index": 19,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_083.mp3",
+        "text_vi": "Nấm mốc trông như thế nào bây giờ?"
+      },
+      {
+        "text_en": "Make a note.",
+        "paragraph_index": 19,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_084.mp3",
+        "text_vi": "Ghi chú lại."
+      },
+      {
+        "text_en": "Repeat this every 2 days until day 10.",
+        "paragraph_index": 19,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_085.mp3",
+        "text_vi": "Lặp lại việc này cứ sau 2 ngày cho đến ngày thứ 10."
+      },
+      {
+        "text_en": "What do you think will happen?",
+        "paragraph_index": 19,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_086.mp3",
+        "text_vi": "Bạn nghĩ điều gì sẽ xảy ra?"
+      },
+      {
+        "text_en": "The water and room temperature create the perfect conditions for growing mould!",
+        "paragraph_index": 19,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_087.mp3",
+        "text_vi": "Nước và nhiệt độ phòng tạo ra điều kiện hoàn hảo để nấm mốc phát triển!"
+      },
+      {
+        "text_en": "The mould will look different on different items of food.",
+        "paragraph_index": 19,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_088.mp3",
+        "text_vi": "Nấm mốc sẽ trông khác nhau trên các loại thức ăn khác nhau."
+      },
+      {
+        "text_en": "That is because different kinds of mould spores like some foods better than others.",
+        "paragraph_index": 19,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_089.mp3",
+        "text_vi": "Đó là vì các loại bào tử nấm mốc khác nhau thích một số loại thức ăn hơn những loại khác."
+      },
+      {
+        "text_en": "At the end of 10 days, carefully dispose of the mouldy food with the help of your teacher.",
+        "paragraph_index": 19,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_090.mp3",
+        "text_vi": "Vào cuối 10 ngày, hãy cẩn thận vứt bỏ thức ăn bị mốc với sự giúp đỡ của giáo viên của bạn."
+      },
+      {
+        "text_en": "Maybe you could add it to a compost pit!",
+        "paragraph_index": 19,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_091.mp3",
+        "text_vi": "Có thể bạn có thể thêm nó vào hố ủ phân!"
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "Where did I put that petri dish?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "Oh, hello! Have you seen a small glass dish with a lid?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "It’s for an important experiment I’m doing.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "I’ve put about a billion cells inside it.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "I know what you’re thinking: How can you fit one billion of anything inside a small dish?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "My name is Dr.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "Ira and I’m a microbiologist.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "I’m not the kind of doctor you see when you have a fever or an earache.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "I’m a doctor that studies invisible things.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "I know that sounds ridiculous but let me explain.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "What if I told you that all around us in the air, soil, water, and even inside us—in our stomachs, noses and ears— are thousands, no, millions, no...",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "TRILLIONS of tiny living creatures called microbes?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "Ewww! YUCK! Cheee?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_012.mp3"
+        },
+        {
+          "id": "ra_13",
+          "text_en": "There are around one trillion kinds of microbes on our planet.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_013.mp3"
+        },
+        {
+          "id": "ra_14",
+          "text_en": "While each of these microbes looks different and lives in a different habitat, most microbes can broadly be divided into Bacteria Algae Fungi Protozoa Viruses As a microbiologist, I spend my time studying bacteria.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_014.mp3"
+        },
+        {
+          "id": "ra_15",
+          "text_en": "Would you like to see where I work?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_015.mp3"
+        },
+        {
+          "id": "ra_16",
+          "text_en": "Welcome to my lab!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_016.mp3"
+        },
+        {
+          "id": "ra_17",
+          "text_en": "Yuck! What’s that smell?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_017.mp3"
+        },
+        {
+          "id": "ra_18",
+          "text_en": "Ugh! This orange has been sitting on my friend Tashi’s desk for a week now.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_018.mp3"
+        },
+        {
+          "id": "ra_19",
+          "text_en": "See how it’s covered in green fuzz?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_019.mp3"
+        },
+        {
+          "id": "ra_20",
+          "text_en": "That’s fungus. Shall we take a closer look?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_020.mp3"
+        },
+        {
+          "id": "ra_21",
+          "text_en": "Let’s use a microscope.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_021.mp3"
+        },
+        {
+          "id": "ra_22",
+          "text_en": "It helps us see things that our eyes aren’t powerful enough to see on their own.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_022.mp3"
+        },
+        {
+          "id": "ra_23",
+          "text_en": "I know they look scary but some microbes can be very helpful.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_023.mp3"
+        },
+        {
+          "id": "ra_24",
+          "text_en": "For instance, this fungus tells us that the orange is spoiled and that we shouldn’t eat it.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_024.mp3"
+        },
+        {
+          "id": "ra_25",
+          "text_en": "Did you know that there are microbes that can eat plastic?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_025.mp3"
+        },
+        {
+          "id": "ra_26",
+          "text_en": "They could help solve plastic pollution!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_026.mp3"
+        },
+        {
+          "id": "ra_27",
+          "text_en": "Not all microbes are friendly though.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_027.mp3"
+        },
+        {
+          "id": "ra_28",
+          "text_en": "Some types of the bacteria E.coli can cause tummy aches.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_028.mp3"
+        },
+        {
+          "id": "ra_29",
+          "text_en": "But if we get to know them better and understand why they make us sick, we can try to prevent illnesses.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_029.mp3"
+        },
+        {
+          "id": "ra_30",
+          "text_en": "That’s why I study how E.coli cells react to changes in their environment.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_030.mp3"
+        },
+        {
+          "id": "ra_31",
+          "text_en": "I use some very cool tools to do this.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_031.mp3"
+        },
+        {
+          "id": "ra_32",
+          "text_en": "Microscope: an instrument which makes really small objects look bigger by magnifying them.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_032.mp3"
+        },
+        {
+          "id": "ra_33",
+          "text_en": "Petri Dish: a circular, transparent dish with a flat lid used to maintain microbes in certain conditions.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_033.mp3"
+        },
+        {
+          "id": "ra_34",
+          "text_en": "Pipette: a slender tube with a bulb at one end used for transferring or measuring small quantities of liquid.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_034.mp3"
+        },
+        {
+          "id": "ra_35",
+          "text_en": "Autoclave: a strong heated container that uses high pressure and temperature for chemical reactions and other processes.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_035.mp3"
+        },
+        {
+          "id": "ra_36",
+          "text_en": "Let’s ask Tashi if he’s seen my petri dish.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_036.mp3"
+        },
+        {
+          "id": "ra_37",
+          "text_en": "And tell him to throw away that orange! Hi Tashi!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_037.mp3"
+        },
+        {
+          "id": "ra_38",
+          "text_en": "Tashi was my first friend at university.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_038.mp3"
+        },
+        {
+          "id": "ra_39",
+          "text_en": "When I first came here to study, I felt lost.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_039.mp3"
+        },
+        {
+          "id": "ra_40",
+          "text_en": "I didn’t speak much English and all my classes were hard.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_040.mp3"
+        },
+        {
+          "id": "ra_41",
+          "text_en": "Plus, everyone else seemed so smart and I just couldn’t keep up.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_041.mp3"
+        },
+        {
+          "id": "ra_42",
+          "text_en": "I wanted to give up so many times and just go home, but how could I?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_042.mp3"
+        },
+        {
+          "id": "ra_43",
+          "text_en": "I'm the first woman in my family to go to college and they supported me every step of the way.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_043.mp3"
+        },
+        {
+          "id": "ra_44",
+          "text_en": "I didn’t want to let them or myself down.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_044.mp3"
+        },
+        {
+          "id": "ra_45",
+          "text_en": "Besides, I loved exploring this invisible world around me.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_045.mp3"
+        },
+        {
+          "id": "ra_46",
+          "text_en": "So I kept trying.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_046.mp3"
+        },
+        {
+          "id": "ra_47",
+          "text_en": "Learning to not give up is important, especially when you’re a microbiologist.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_047.mp3"
+        },
+        {
+          "id": "ra_48",
+          "text_en": "Because a lot of the experiments I do fail.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_048.mp3"
+        },
+        {
+          "id": "ra_49",
+          "text_en": "What keeps me going is when things work.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_049.mp3"
+        },
+        {
+          "id": "ra_50",
+          "text_en": "It’s so exciting when you’ve learned something that no one else knows yet!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_050.mp3"
+        },
+        {
+          "id": "ra_51",
+          "text_en": "But even when things don’t work out, it’s alright.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_051.mp3"
+        },
+        {
+          "id": "ra_52",
+          "text_en": "It helps me ask the next question.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_052.mp3"
+        },
+        {
+          "id": "ra_53",
+          "text_en": "Like, ‘Where is my petri dish?’ Tashi hasn’t seen it either.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_053.mp3"
+        },
+        {
+          "id": "ra_54",
+          "text_en": "I need to do the experiment again.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_054.mp3"
+        },
+        {
+          "id": "ra_55",
+          "text_en": "Will you keep me company?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_055.mp3"
+        },
+        {
+          "id": "ra_56",
+          "text_en": "I’m going to take some E.coli, grow it in a conical flask and see what happens when I don’t give it enough to eat.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_056.mp3"
+        },
+        {
+          "id": "ra_57",
+          "text_en": "I’ll take another E.coli sample in a second flask and give it food.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_057.mp3"
+        },
+        {
+          "id": "ra_58",
+          "text_en": "Then I’ll wait and see what happens to the number of E.coli in both these flasks.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_058.mp3"
+        },
+        {
+          "id": "ra_59",
+          "text_en": "This is called making an observation.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_059.mp3"
+        },
+        {
+          "id": "ra_60",
+          "text_en": "After the experiment is completed, I’ll compare the E.coli growth in both the flasks and write down my observations.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_060.mp3"
+        },
+        {
+          "id": "ra_61",
+          "text_en": "These are the results of my experiment.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_061.mp3"
+        },
+        {
+          "id": "ra_62",
+          "text_en": "It will help me answer the question: Does the amount of food affect the growth of E.coli?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_062.mp3"
+        },
+        {
+          "id": "ra_63",
+          "text_en": "What I learn from the results is called an inference.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_063.mp3"
+        },
+        {
+          "id": "ra_64",
+          "text_en": "A typical E.coli growth experiment takes 10 to 12 hours to complete.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_064.mp3"
+        },
+        {
+          "id": "ra_65",
+          "text_en": "Since I don’t need to sit here and watch the cells the entire time, I read about new discoveries, attend meetings and talk to other scientists about their work.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_065.mp3"
+        },
+        {
+          "id": "ra_66",
+          "text_en": "This is important because I learn exciting new things from them and often get ideas for my own work.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_066.mp3"
+        },
+        {
+          "id": "ra_67",
+          "text_en": "Sometimes, we also just sit around, have tea and chat!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_067.mp3"
+        },
+        {
+          "id": "ra_68",
+          "text_en": "Scientists may seem very serious, but really, we’re just like you and your friends.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_068.mp3"
+        },
+        {
+          "id": "ra_69",
+          "text_en": "We like to play hockey, sing in the shower and read scary stories!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_069.mp3"
+        },
+        {
+          "id": "ra_70",
+          "text_en": "We are also curious about the world around us.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_070.mp3"
+        },
+        {
+          "id": "ra_71",
+          "text_en": "We like to ask questions constantly: We’re like detectives who look for clues that help answer all these fascinating questions.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_071.mp3"
+        },
+        {
+          "id": "ra_72",
+          "text_en": "Even if they’re inside your stomach.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_072.mp3"
+        },
+        {
+          "id": "ra_73",
+          "text_en": "Speaking of which, I’m hungry.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_073.mp3"
+        },
+        {
+          "id": "ra_74",
+          "text_en": "Let’s eat! Why?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_074.mp3"
+        },
+        {
+          "id": "ra_75",
+          "text_en": "Why not? How? What if?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_075.mp3"
+        },
+        {
+          "id": "ra_76",
+          "text_en": "Tashi!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_076.mp3"
+        },
+        {
+          "id": "ra_77",
+          "text_en": "Grow your own mould!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_077.mp3"
+        },
+        {
+          "id": "ra_78",
+          "text_en": "The fungus that grows on old food is called mould.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_078.mp3"
+        },
+        {
+          "id": "ra_79",
+          "text_en": "To grow your own mould, take a piece of leftover roti or a slice of stale bread, sprinkle it with water, place it on a plate and cover it with a clear glass bowl.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_079.mp3"
+        },
+        {
+          "id": "ra_80",
+          "text_en": "Keep at room temperature and out of direct sunlight for two days.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_080.mp3"
+        },
+        {
+          "id": "ra_81",
+          "text_en": "Check the food and see if white, blue, green or gray fuzz has appeared on it.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_081.mp3"
+        },
+        {
+          "id": "ra_82",
+          "text_en": "Leave it alone for 2 more days and then check on it.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_082.mp3"
+        },
+        {
+          "id": "ra_83",
+          "text_en": "How does the mould look now?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_083.mp3"
+        },
+        {
+          "id": "ra_84",
+          "text_en": "Make a note.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_084.mp3"
+        },
+        {
+          "id": "ra_85",
+          "text_en": "Repeat this every 2 days until day 10.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_085.mp3"
+        },
+        {
+          "id": "ra_86",
+          "text_en": "What do you think will happen?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_086.mp3"
+        },
+        {
+          "id": "ra_87",
+          "text_en": "The water and room temperature create the perfect conditions for growing mould!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_087.mp3"
+        },
+        {
+          "id": "ra_88",
+          "text_en": "The mould will look different on different items of food.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_088.mp3"
+        },
+        {
+          "id": "ra_89",
+          "text_en": "That is because different kinds of mould spores like some foods better than others.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_089.mp3"
+        },
+        {
+          "id": "ra_90",
+          "text_en": "At the end of 10 days, carefully dispose of the mouldy food with the help of your teacher.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_090.mp3"
+        },
+        {
+          "id": "ra_91",
+          "text_en": "Maybe you could add it to a compost pit!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123858/s_091.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "What did the speaker misplace?",
+          "options_en": [
+            "a petri dish",
+            "an orange",
+            "a microscope"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "Which item is the speaker looking for?",
+          "options_en": [
+            "petri dish",
+            "pipette",
+            "conical flask"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "Who is the speaker greeting?",
+          "options_en": [
+            "You",
+            "Tashi",
+            "Dr. Ira"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "What object does the speaker ask about?",
+          "options_en": [
+            "A small glass dish with a lid",
+            "An orange",
+            "A microscope"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p1_s1_q1",
+          "type": "choice",
+          "question_en": "What is the small glass dish for?",
+          "options_en": [
+            "An important experiment",
+            "Eating",
+            "Playing hockey"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p1_s1_q2",
+          "type": "choice",
+          "question_en": "Who is doing the experiment?",
+          "options_en": [
+            "I",
+            "Tashi",
+            "Other scientists"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p1_s2_q1",
+          "type": "choice",
+          "question_en": "How many cells did the speaker put inside the dish?",
+          "options_en": [
+            "About a billion cells",
+            "Trillions of microbes",
+            "A few E.coli"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p1_s2_q2",
+          "type": "choice",
+          "question_en": "Where did the speaker put the cells?",
+          "options_en": [
+            "Inside it",
+            "In a conical flask",
+            "On the orange"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p1_s3_q1",
+          "type": "choice",
+          "question_en": "What does the speaker say the listener is thinking?",
+          "options_en": [
+            "How can you fit one billion of anything inside a small dish?",
+            "Where is the petri dish?",
+            "Why did the orange spoil?"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p1_s3_q2",
+          "type": "choice",
+          "question_en": "Which object is described as small in the question the speaker mentions?",
+          "options_en": [
+            "A small dish",
+            "A microscope",
+            "A petri dish"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "What title does the speaker give in this sentence?",
+          "options_en": [
+            "Dr.",
+            "Microbiologist",
+            "Tashi"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "What does the sentence tell us about the speaker?",
+          "options_en": [
+            "They use the title Dr.",
+            "They study E.coli",
+            "They lost a petri dish"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p2_s1_q1",
+          "type": "choice",
+          "question_en": "What is the speaker's name?",
+          "options_en": [
+            "Ira",
+            "Tashi",
+            "Dr."
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p2_s1_q2",
+          "type": "choice",
+          "question_en": "What job does the speaker say they have?",
+          "options_en": [
+            "Microbiologist",
+            "Student",
+            "Orange seller"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p2_s2_q1",
+          "type": "choice",
+          "question_en": "What kind of doctor is the speaker NOT?",
+          "options_en": [
+            "The kind you see when you have a fever or an earache",
+            "A microbiologist",
+            "Tashi's friend"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p2_s2_q2",
+          "type": "choice",
+          "question_en": "When would you see the kind of doctor mentioned in this sentence?",
+          "options_en": [
+            "When you have a fever or an earache",
+            "When you study microbes",
+            "When you grow mould"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p2_s3_q1",
+          "type": "choice",
+          "question_en": "What does this doctor study?",
+          "options_en": [
+            "Invisible things",
+            "An orange",
+            "A petri dish"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p2_s3_q2",
+          "type": "choice",
+          "question_en": "Who is described as a doctor that studies invisible things?",
+          "options_en": [
+            "The speaker (I)",
+            "Tashi",
+            "E.coli"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p2_s4_q1",
+          "type": "choice",
+          "question_en": "How does the speaker say this idea sounds?",
+          "options_en": [
+            "Ridiculous",
+            "Exciting",
+            "Yuck"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p2_s4_q2",
+          "type": "choice",
+          "question_en": "What does the speaker ask to do next?",
+          "options_en": [
+            "Let me explain",
+            "Throw away the orange",
+            "Grow mould"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "Where does the sentence say tiny creatures are found?",
+          "options_en": [
+            "In the air, soil, water, and inside us",
+            "In Dr. Ira's petri dish",
+            "In the orange on Tashi's desk"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "Which body parts inside us are mentioned?",
+          "options_en": [
+            "Stomachs, noses and ears",
+            "Eyes and ears",
+            "Hands and feet"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p3_s1_q1",
+          "type": "choice",
+          "question_en": "How many tiny living creatures does the sentence say there are?",
+          "options_en": [
+            "TRILLIONS",
+            "A billion",
+            "Millions"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p3_s1_q2",
+          "type": "choice",
+          "question_en": "What are the tiny living creatures called?",
+          "options_en": [
+            "Microbes",
+            "E.coli",
+            "Fungus"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p3_s2_q1",
+          "type": "choice",
+          "question_en": "How does the line express people's reaction to microbes?",
+          "options_en": [
+            "Ewww! YUCK! Cheee?",
+            "By using a microscope",
+            "By writing observations"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p3_s2_q2",
+          "type": "choice",
+          "question_en": "What feeling do the words 'Ewww! YUCK! Cheee?' show?",
+          "options_en": [
+            "Disgust",
+            "Excitement about experiments",
+            "Hunger"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "How many kinds of microbes are on our planet?",
+          "options_en": [
+            "Around one trillion",
+            "About a billion cells in a petri dish",
+            "A few kinds like E.coli"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "Where are around one trillion kinds of microbes found?",
+          "options_en": [
+            "On our planet",
+            "In a petri dish",
+            "Inside an orange"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p4_s1_q1",
+          "type": "choice",
+          "question_en": "Which groups are most microbes broadly divided into?",
+          "options_en": [
+            "Bacteria, Algae, Fungi, Protozoa, Viruses",
+            "Petri dishes, microscopes, pipettes",
+            "E.coli, mould, plastic-eating microbes"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p4_s1_q2",
+          "type": "choice",
+          "question_en": "What does the microbiologist spend their time studying?",
+          "options_en": [
+            "Bacteria",
+            "Tashi's orange",
+            "A conical flask"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p4_s2_q1",
+          "type": "choice",
+          "question_en": "Who is asking if you would like to see where they work?",
+          "options_en": [
+            "The speaker (the microbiologist)",
+            "Tashi",
+            "A teacher"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p4_s2_q2",
+          "type": "choice",
+          "question_en": "What is being offered to see?",
+          "options_en": [
+            "Where the speaker works",
+            "How to grow mould",
+            "The petri dish"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "Where are you welcomed?",
+          "options_en": [
+            "my lab",
+            "the university",
+            "the petri dish"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "What place is being introduced?",
+          "options_en": [
+            "my lab",
+            "the microscope",
+            "Tashi's desk"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p5_s1_q1",
+          "type": "choice",
+          "question_en": "What does the speaker ask about?",
+          "options_en": [
+            "that smell",
+            "the orange",
+            "the petri dish"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p5_s1_q2",
+          "type": "choice",
+          "question_en": "How does the speaker react to the smell?",
+          "options_en": [
+            "with disgust (Yuck/Ugh)",
+            "with excitement",
+            "with surprise"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p5_s2_q1",
+          "type": "choice",
+          "question_en": "Whose desk has the orange been on?",
+          "options_en": [
+            "Tashi's desk",
+            "Dr. Ira's desk",
+            "the teacher's desk"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p5_s2_q2",
+          "type": "choice",
+          "question_en": "How long has the orange been sitting there?",
+          "options_en": [
+            "for a week",
+            "for two days",
+            "for ten days"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p5_s3_q1",
+          "type": "choice",
+          "question_en": "What is the orange covered in?",
+          "options_en": [
+            "green fuzz",
+            "white fuzz",
+            "mould"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p5_s3_q2",
+          "type": "choice",
+          "question_en": "What does the speaker ask you to do about the orange?",
+          "options_en": [
+            "see how it's covered in green fuzz",
+            "throw it away",
+            "use a petri dish"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p5_s4_q1",
+          "type": "choice",
+          "question_en": "What does the speaker say the green fuzz is?",
+          "options_en": [
+            "fungus",
+            "bacteria",
+            "mould"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p5_s4_q2",
+          "type": "choice",
+          "question_en": "What does the speaker suggest doing next?",
+          "options_en": [
+            "take a closer look",
+            "eat the orange",
+            "throw the orange away"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p5_s5_q1",
+          "type": "choice",
+          "question_en": "Which tool does the speaker want to use?",
+          "options_en": [
+            "a microscope",
+            "a petri dish",
+            "a pipette"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p5_s5_q2",
+          "type": "choice",
+          "question_en": "What do they plan to use to look more closely?",
+          "options_en": [
+            "microscope",
+            "autoclave",
+            "conical flask"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p5_s6_q1",
+          "type": "choice",
+          "question_en": "What can the microscope help us see?",
+          "options_en": [
+            "things our eyes aren't powerful enough to see",
+            "the smell of the orange",
+            "how long the orange sat on the desk"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p5_s6_q2",
+          "type": "choice",
+          "question_en": "Why do they use the microscope?",
+          "options_en": [
+            "because our eyes aren't powerful enough to see those things",
+            "because the orange smells bad",
+            "to grow mould"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "What can be very helpful?",
+          "options_en": [
+            "Some microbes",
+            "E.coli",
+            "Fungus"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "How do they look, according to the speaker?",
+          "options_en": [
+            "Scary",
+            "Invisible",
+            "Green and fuzzy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p6_s1_q1",
+          "type": "choice",
+          "question_en": "What does this fungus tell us about the orange?",
+          "options_en": [
+            "The orange is spoiled",
+            "The orange is for an experiment",
+            "The orange smells good"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p6_s1_q2",
+          "type": "choice",
+          "question_en": "Why shouldn’t we eat the orange?",
+          "options_en": [
+            "Because it is spoiled",
+            "Because it is in a petri dish",
+            "Because it is needed for a lab"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p6_s2_q1",
+          "type": "choice",
+          "question_en": "What can some microbes eat?",
+          "options_en": [
+            "Plastic",
+            "Stale bread",
+            "Oranges"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p6_s2_q2",
+          "type": "choice",
+          "question_en": "Which surprising ability is mentioned about some microbes?",
+          "options_en": [
+            "They can eat plastic",
+            "They can grow in a conical flask",
+            "They can make us sick"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p6_s3_q1",
+          "type": "choice",
+          "question_en": "What could microbes help solve?",
+          "options_en": [
+            "Plastic pollution",
+            "Tummy aches",
+            "Missing petri dishes"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p6_s3_q2",
+          "type": "choice",
+          "question_en": "How could microbes be useful, according to the paragraph?",
+          "options_en": [
+            "By helping solve plastic pollution",
+            "By making microscopes work better",
+            "By keeping food fresh"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "Who are not always friendly?",
+          "options_en": [
+            "Microbes",
+            "Tashi",
+            "The orange"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "Which group is said to include unfriendly members?",
+          "options_en": [
+            "Microbes",
+            "Scientists",
+            "Fungi on the orange"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        },
+        {
+          "id": "gl_p7_s1_q1",
+          "type": "choice",
+          "question_en": "What can some types of E.coli cause?",
+          "options_en": [
+            "Tummy aches",
+            "Green fuzz on an orange",
+            "Plastic pollution"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        },
+        {
+          "id": "gl_p7_s1_q2",
+          "type": "choice",
+          "question_en": "Which bacteria are mentioned as sometimes making people unwell?",
+          "options_en": [
+            "E.coli",
+            "Mould spores",
+            "Algae"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        },
+        {
+          "id": "gl_p7_s2_q1",
+          "type": "choice",
+          "question_en": "Why can we try to prevent illnesses according to the sentence?",
+          "options_en": [
+            "Because we get to know microbes better and understand why they make us sick",
+            "Because we throw away mouldy food",
+            "Because we grow E.coli in flasks"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p7_s2_q2",
+          "type": "choice",
+          "question_en": "How can illnesses be prevented as suggested here?",
+          "options_en": [
+            "By getting to know microbes better and understanding why they make us sick",
+            "By using an autoclave",
+            "By keeping food in a petri dish"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p7_s3_q1",
+          "type": "choice",
+          "question_en": "Why does the speaker study how E.coli cells react to changes?",
+          "options_en": [
+            "To understand them better so we can try to prevent illnesses",
+            "To make tea with colleagues",
+            "To grow mould on bread"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        },
+        {
+          "id": "gl_p7_s3_q2",
+          "type": "choice",
+          "question_en": "What does the speaker study about E.coli cells?",
+          "options_en": [
+            "How they react to changes in their environment",
+            "How they make orange fruit spoil",
+            "How to play hockey"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        },
+        {
+          "id": "gl_p7_s4_q1",
+          "type": "choice",
+          "question_en": "What does the speaker use to study E.coli?",
+          "options_en": [
+            "Some very cool tools",
+            "An old orange",
+            "A hockey stick"
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        },
+        {
+          "id": "gl_p7_s4_q2",
+          "type": "choice",
+          "question_en": "How does the speaker carry out the study?",
+          "options_en": [
+            "By using some very cool tools",
+            "By throwing away mouldy food",
+            "By reading scary stories"
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        },
+        {
+          "id": "gl_p7_s5_q1",
+          "type": "choice",
+          "question_en": "What does a microscope do according to the sentence?",
+          "options_en": [
+            "Makes really small objects look bigger by magnifying them",
+            "Keeps microbes in certain conditions",
+            "Transfers small quantities of liquid"
+          ],
+          "correct_index": 0,
+          "sentence_index": 32
+        },
+        {
+          "id": "gl_p7_s5_q2",
+          "type": "choice",
+          "question_en": "How does a microscope help us see tiny things?",
+          "options_en": [
+            "By magnifying them",
+            "By using high pressure and temperature",
+            "By covering them with a lid"
+          ],
+          "correct_index": 0,
+          "sentence_index": 32
+        },
+        {
+          "id": "gl_p7_s6_q1",
+          "type": "choice",
+          "question_en": "What is a Petri Dish used for in the sentence?",
+          "options_en": [
+            "To maintain microbes in certain conditions",
+            "To grow mould on bread",
+            "To measure small quantities of liquid"
+          ],
+          "correct_index": 0,
+          "sentence_index": 33
+        },
+        {
+          "id": "gl_p7_s6_q2",
+          "type": "choice",
+          "question_en": "Which description fits a Petri Dish?",
+          "options_en": [
+            "A circular, transparent dish with a flat lid",
+            "A slender tube with a bulb at one end",
+            "A strong heated container with high pressure"
+          ],
+          "correct_index": 0,
+          "sentence_index": 33
+        }
+      ]
+    },
+    {
+      "paragraph_index": 8,
+      "questions": [
+        {
+          "id": "gl_p8_s0_q1",
+          "type": "choice",
+          "question_en": "What does a pipette have at one end?",
+          "options_en": [
+            "A bulb",
+            "A petri dish",
+            "A microscope"
+          ],
+          "correct_index": 0,
+          "sentence_index": 34
+        },
+        {
+          "id": "gl_p8_s0_q2",
+          "type": "choice",
+          "question_en": "What is a pipette used for?",
+          "options_en": [
+            "Transferring or measuring small quantities of liquid",
+            "Growing mould on food",
+            "Sterilizing equipment"
+          ],
+          "correct_index": 0,
+          "sentence_index": 34
+        },
+        {
+          "id": "gl_p8_s1_q1",
+          "type": "choice",
+          "question_en": "What does an autoclave use?",
+          "options_en": [
+            "High pressure and temperature",
+            "A conical flask",
+            "A pipette"
+          ],
+          "correct_index": 0,
+          "sentence_index": 35
+        },
+        {
+          "id": "gl_p8_s1_q2",
+          "type": "choice",
+          "question_en": "Why is an autoclave strong and heated?",
+          "options_en": [
+            "For chemical reactions and other processes",
+            "To magnify very small objects",
+            "To transfer small liquids"
+          ],
+          "correct_index": 0,
+          "sentence_index": 35
+        }
+      ]
+    },
+    {
+      "paragraph_index": 9,
+      "questions": [
+        {
+          "id": "gl_p9_s0_q1",
+          "type": "choice",
+          "question_en": "Who should we ask if he’s seen the petri dish?",
+          "options_en": [
+            "Tashi",
+            "Dr. Ira",
+            "the teacher"
+          ],
+          "correct_index": 0,
+          "sentence_index": 36
+        },
+        {
+          "id": "gl_p9_s0_q2",
+          "type": "choice",
+          "question_en": "What are we asking about?",
+          "options_en": [
+            "my petri dish",
+            "the orange",
+            "the microscope"
+          ],
+          "correct_index": 0,
+          "sentence_index": 36
+        },
+        {
+          "id": "gl_p9_s1_q1",
+          "type": "choice",
+          "question_en": "Who should be told to throw away the orange?",
+          "options_en": [
+            "him (Tashi)",
+            "Dr. Ira",
+            "the teacher"
+          ],
+          "correct_index": 0,
+          "sentence_index": 37
+        },
+        {
+          "id": "gl_p9_s1_q2",
+          "type": "choice",
+          "question_en": "What should he throw away?",
+          "options_en": [
+            "that orange",
+            "the petri dish",
+            "the mould"
+          ],
+          "correct_index": 0,
+          "sentence_index": 37
+        }
+      ]
+    },
+    {
+      "paragraph_index": 10,
+      "questions": [
+        {
+          "id": "gl_p10_s0_q1",
+          "type": "choice",
+          "question_en": "Who was my first friend at university?",
+          "options_en": [
+            "Tashi",
+            "Dr. Ira",
+            "my family"
+          ],
+          "correct_index": 0,
+          "sentence_index": 38
+        },
+        {
+          "id": "gl_p10_s0_q2",
+          "type": "choice",
+          "question_en": "Where was Tashi my first friend?",
+          "options_en": [
+            "At university",
+            "In my lab",
+            "At my family home"
+          ],
+          "correct_index": 0,
+          "sentence_index": 38
+        },
+        {
+          "id": "gl_p10_s1_q1",
+          "type": "choice",
+          "question_en": "When did I feel lost?",
+          "options_en": [
+            "When I first came here to study",
+            "When my orange spoiled",
+            "When I did an experiment"
+          ],
+          "correct_index": 0,
+          "sentence_index": 39
+        },
+        {
+          "id": "gl_p10_s1_q2",
+          "type": "choice",
+          "question_en": "How did I feel when I first came here to study?",
+          "options_en": [
+            "Lost",
+            "Excited",
+            "Hungry"
+          ],
+          "correct_index": 0,
+          "sentence_index": 39
+        },
+        {
+          "id": "gl_p10_s2_q1",
+          "type": "choice",
+          "question_en": "What language did I say I didn’t speak much?",
+          "options_en": [
+            "English",
+            "Microbiology",
+            "E.coli"
+          ],
+          "correct_index": 0,
+          "sentence_index": 40
+        },
+        {
+          "id": "gl_p10_s2_q2",
+          "type": "choice",
+          "question_en": "How were all my classes described?",
+          "options_en": [
+            "Hard",
+            "Exciting",
+            "Easy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 40
+        },
+        {
+          "id": "gl_p10_s3_q1",
+          "type": "choice",
+          "question_en": "Who seemed so smart, according to the sentence?",
+          "options_en": [
+            "Everyone else",
+            "Tashi",
+            "Dr. Ira"
+          ],
+          "correct_index": 0,
+          "sentence_index": 41
+        },
+        {
+          "id": "gl_p10_s3_q2",
+          "type": "choice",
+          "question_en": "What could I not do?",
+          "options_en": [
+            "Keep up",
+            "Give up",
+            "Attend meetings"
+          ],
+          "correct_index": 0,
+          "sentence_index": 41
+        },
+        {
+          "id": "gl_p10_s4_q1",
+          "type": "choice",
+          "question_en": "What did I want to do so many times?",
+          "options_en": [
+            "Give up",
+            "Throw away the orange",
+            "Grow mould"
+          ],
+          "correct_index": 0,
+          "sentence_index": 42
+        },
+        {
+          "id": "gl_p10_s4_q2",
+          "type": "choice",
+          "question_en": "Where did I want to go instead of staying?",
+          "options_en": [
+            "Home",
+            "To the lab",
+            "To my family's home"
+          ],
+          "correct_index": 0,
+          "sentence_index": 42
+        }
+      ]
+    },
+    {
+      "paragraph_index": 11,
+      "questions": [
+        {
+          "id": "gl_p11_s0_q1",
+          "type": "choice",
+          "question_en": "Who is the first woman in her family to go to college?",
+          "options_en": [
+            "The speaker (I)",
+            "Tashi",
+            "Dr. Ira's lab partner"
+          ],
+          "correct_index": 0,
+          "sentence_index": 43
+        },
+        {
+          "id": "gl_p11_s0_q2",
+          "type": "choice",
+          "question_en": "Who supported her every step of the way?",
+          "options_en": [
+            "Her family (they)",
+            "Her professor",
+            "Her microscope"
+          ],
+          "correct_index": 0,
+          "sentence_index": 43
+        },
+        {
+          "id": "gl_p11_s1_q1",
+          "type": "choice",
+          "question_en": "Who did she not want to let down?",
+          "options_en": [
+            "Them and herself",
+            "The orange",
+            "The petri dish"
+          ],
+          "correct_index": 0,
+          "sentence_index": 44
+        },
+        {
+          "id": "gl_p11_s1_q2",
+          "type": "choice",
+          "question_en": "What did she not want to do?",
+          "options_en": [
+            "Let them or herself down",
+            "Eat the mouldy orange",
+            "Throw away the petri dish"
+          ],
+          "correct_index": 0,
+          "sentence_index": 44
+        },
+        {
+          "id": "gl_p11_s2_q1",
+          "type": "choice",
+          "question_en": "What did she love exploring?",
+          "options_en": [
+            "The invisible world around her",
+            "The orange on Tashi's desk",
+            "The microscope"
+          ],
+          "correct_index": 0,
+          "sentence_index": 45
+        },
+        {
+          "id": "gl_p11_s2_q2",
+          "type": "choice",
+          "question_en": "How did she feel about exploring this invisible world?",
+          "options_en": [
+            "She loved it",
+            "She was scared of it",
+            "She ignored it"
+          ],
+          "correct_index": 0,
+          "sentence_index": 45
+        },
+        {
+          "id": "gl_p11_s3_q1",
+          "type": "choice",
+          "question_en": "What did she do?",
+          "options_en": [
+            "Kept trying",
+            "Stopped studying",
+            "Threw away the orange"
+          ],
+          "correct_index": 0,
+          "sentence_index": 46
+        },
+        {
+          "id": "gl_p11_s3_q2",
+          "type": "choice",
+          "question_en": "Why did she keep trying?",
+          "options_en": [
+            "Because she loved exploring the invisible world",
+            "Because she wanted to throw away the orange",
+            "Because she lost her petri dish"
+          ],
+          "correct_index": 0,
+          "sentence_index": 46
+        },
+        {
+          "id": "gl_p11_s4_q1",
+          "type": "choice",
+          "question_en": "Who especially needs to learn to not give up?",
+          "options_en": [
+            "Microbiologists",
+            "Tashi",
+            "Her family"
+          ],
+          "correct_index": 0,
+          "sentence_index": 47
+        },
+        {
+          "id": "gl_p11_s4_q2",
+          "type": "choice",
+          "question_en": "What is important?",
+          "options_en": [
+            "Learning to not give up",
+            "Finding the petri dish",
+            "Growing mould"
+          ],
+          "correct_index": 0,
+          "sentence_index": 47
+        }
+      ]
+    },
+    {
+      "paragraph_index": 12,
+      "questions": [
+        {
+          "id": "gl_p12_s0_q1",
+          "type": "choice",
+          "question_en": "What happens to a lot of the experiments the speaker does?",
+          "options_en": [
+            "They fail",
+            "They grow mould",
+            "They find a petri dish"
+          ],
+          "correct_index": 0,
+          "sentence_index": 48
+        },
+        {
+          "id": "gl_p12_s0_q2",
+          "type": "choice",
+          "question_en": "Why does the speaker say this sentence begins with 'Because'?",
+          "options_en": [
+            "A lot of the experiments they do fail",
+            "They need to throw away an orange",
+            "They are looking for a petri dish"
+          ],
+          "correct_index": 0,
+          "sentence_index": 48
+        },
+        {
+          "id": "gl_p12_s1_q1",
+          "type": "choice",
+          "question_en": "What keeps the speaker going?",
+          "options_en": [
+            "When things work",
+            "When they find a petri dish",
+            "When they have tea with colleagues"
+          ],
+          "correct_index": 0,
+          "sentence_index": 49
+        },
+        {
+          "id": "gl_p12_s1_q2",
+          "type": "choice",
+          "question_en": "When does the speaker feel motivated?",
+          "options_en": [
+            "When things work",
+            "When the orange is thrown away",
+            "When they grow mould"
+          ],
+          "correct_index": 0,
+          "sentence_index": 49
+        },
+        {
+          "id": "gl_p12_s2_q1",
+          "type": "choice",
+          "question_en": "How does the speaker feel when they've learned something no one else knows yet?",
+          "options_en": [
+            "So excited",
+            "Hungry",
+            "Lost"
+          ],
+          "correct_index": 0,
+          "sentence_index": 50
+        },
+        {
+          "id": "gl_p12_s2_q2",
+          "type": "choice",
+          "question_en": "What is exciting for the speaker?",
+          "options_en": [
+            "Learning something that no one else knows yet",
+            "Finding a petri dish",
+            "Growing mould on food"
+          ],
+          "correct_index": 0,
+          "sentence_index": 50
+        },
+        {
+          "id": "gl_p12_s3_q1",
+          "type": "choice",
+          "question_en": "How does the speaker say it is when things don't work out?",
+          "options_en": [
+            "It's alright",
+            "They throw the orange away",
+            "They stop being a scientist"
+          ],
+          "correct_index": 0,
+          "sentence_index": 51
+        },
+        {
+          "id": "gl_p12_s3_q2",
+          "type": "choice",
+          "question_en": "What remains true even when experiments don't work out?",
+          "options_en": [
+            "It's alright",
+            "They always find the petri dish",
+            "They immediately get results"
+          ],
+          "correct_index": 0,
+          "sentence_index": 51
+        },
+        {
+          "id": "gl_p12_s4_q1",
+          "type": "choice",
+          "question_en": "What does it (things not working out) help the speaker do?",
+          "options_en": [
+            "Ask the next question",
+            "Grow mould",
+            "Eat an orange"
+          ],
+          "correct_index": 0,
+          "sentence_index": 52
+        },
+        {
+          "id": "gl_p12_s4_q2",
+          "type": "choice",
+          "question_en": "Why does the speaker say failures are useful?",
+          "options_en": [
+            "They help ask the next question",
+            "They help find a petri dish",
+            "They help make tea with friends"
+          ],
+          "correct_index": 0,
+          "sentence_index": 52
+        }
+      ]
+    },
+    {
+      "paragraph_index": 13,
+      "questions": [
+        {
+          "id": "gl_p13_s0_q1",
+          "type": "choice",
+          "question_en": "Who hasn't seen the petri dish either?",
+          "options_en": [
+            "Tashi",
+            "Dr. Ira",
+            "a microscope"
+          ],
+          "correct_index": 0,
+          "sentence_index": 53
+        },
+        {
+          "id": "gl_p13_s0_q2",
+          "type": "choice",
+          "question_en": "What is the speaker looking for?",
+          "options_en": [
+            "A petri dish",
+            "A conical flask",
+            "A pipette"
+          ],
+          "correct_index": 0,
+          "sentence_index": 53
+        },
+        {
+          "id": "gl_p13_s1_q1",
+          "type": "choice",
+          "question_en": "What does the speaker need to do again?",
+          "options_en": [
+            "Do the experiment",
+            "Throw away the orange",
+            "Read about discoveries"
+          ],
+          "correct_index": 0,
+          "sentence_index": 54
+        },
+        {
+          "id": "gl_p13_s1_q2",
+          "type": "choice",
+          "question_en": "Who says they need to do the experiment again?",
+          "options_en": [
+            "I (the speaker)",
+            "Tashi",
+            "Dr. Ira"
+          ],
+          "correct_index": 0,
+          "sentence_index": 54
+        },
+        {
+          "id": "gl_p13_s2_q1",
+          "type": "choice",
+          "question_en": "What does the speaker ask someone to do?",
+          "options_en": [
+            "Keep them company",
+            "Look through a microscope",
+            "Throw away the orange"
+          ],
+          "correct_index": 0,
+          "sentence_index": 55
+        },
+        {
+          "id": "gl_p13_s2_q2",
+          "type": "choice",
+          "question_en": "Who is being asked to keep the speaker company?",
+          "options_en": [
+            "You",
+            "Tashi",
+            "A scientist"
+          ],
+          "correct_index": 0,
+          "sentence_index": 55
+        },
+        {
+          "id": "gl_p13_s3_q1",
+          "type": "choice",
+          "question_en": "What will the speaker grow the E.coli in?",
+          "options_en": [
+            "A conical flask",
+            "A petri dish",
+            "A pipette"
+          ],
+          "correct_index": 0,
+          "sentence_index": 56
+        },
+        {
+          "id": "gl_p13_s3_q2",
+          "type": "choice",
+          "question_en": "When will the speaker see what happens to the E.coli?",
+          "options_en": [
+            "When they don't give it enough to eat",
+            "When they give it food",
+            "After 10 to 12 hours"
+          ],
+          "correct_index": 0,
+          "sentence_index": 56
+        },
+        {
+          "id": "gl_p13_s4_q1",
+          "type": "choice",
+          "question_en": "What will the speaker do to the second E.coli sample?",
+          "options_en": [
+            "Give it food",
+            "Keep it without food",
+            "Cover it with a lid"
+          ],
+          "correct_index": 0,
+          "sentence_index": 57
+        },
+        {
+          "id": "gl_p13_s4_q2",
+          "type": "choice",
+          "question_en": "Where will the second E.coli sample be placed?",
+          "options_en": [
+            "In a second flask",
+            "On a petri dish",
+            "Under a microscope"
+          ],
+          "correct_index": 0,
+          "sentence_index": 57
+        }
+      ]
+    },
+    {
+      "paragraph_index": 14,
+      "questions": [
+        {
+          "id": "gl_p14_s0_q1",
+          "type": "choice",
+          "question_en": "What will the speaker wait to see?",
+          "options_en": [
+            "What happens to the number of E.coli in both flasks",
+            "Where Tashi put the petri dish",
+            "How the orange looks with mould"
+          ],
+          "correct_index": 0,
+          "sentence_index": 58
+        },
+        {
+          "id": "gl_p14_s0_q2",
+          "type": "choice",
+          "question_en": "Where will the speaker watch the E.coli?",
+          "options_en": [
+            "In both these flasks",
+            "Under the microscope",
+            "In a petri dish"
+          ],
+          "correct_index": 0,
+          "sentence_index": 58
+        },
+        {
+          "id": "gl_p14_s1_q1",
+          "type": "choice",
+          "question_en": "What is this action called?",
+          "options_en": [
+            "Making an observation",
+            "Throwing away the orange",
+            "Growing mould"
+          ],
+          "correct_index": 0,
+          "sentence_index": 59
+        },
+        {
+          "id": "gl_p14_s1_q2",
+          "type": "choice",
+          "question_en": "How does the speaker describe waiting and watching the flasks?",
+          "options_en": [
+            "As making an observation",
+            "As reading about discoveries",
+            "As autoclaving"
+          ],
+          "correct_index": 0,
+          "sentence_index": 59
+        },
+        {
+          "id": "gl_p14_s2_q1",
+          "type": "choice",
+          "question_en": "What will the speaker compare after the experiment is completed?",
+          "options_en": [
+            "The E.coli growth in both the flasks",
+            "The mould on the orange",
+            "The number of microbes in the petri dish"
+          ],
+          "correct_index": 0,
+          "sentence_index": 60
+        },
+        {
+          "id": "gl_p14_s2_q2",
+          "type": "choice",
+          "question_en": "What will the speaker do after comparing the E.coli growth?",
+          "options_en": [
+            "Write down the observations",
+            "Throw away the mouldy food",
+            "Eat some food"
+          ],
+          "correct_index": 0,
+          "sentence_index": 60
+        },
+        {
+          "id": "gl_p14_s3_q1",
+          "type": "choice",
+          "question_en": "What does the speaker call these observations?",
+          "options_en": [
+            "The results of my experiment",
+            "A microscope image",
+            "A compost"
+          ],
+          "correct_index": 0,
+          "sentence_index": 61
+        },
+        {
+          "id": "gl_p14_s3_q2",
+          "type": "choice",
+          "question_en": "Which phrase refers to the outcome of the experiment?",
+          "options_en": [
+            "These are the results of my experiment",
+            "Grow your own mould",
+            "Where is my petri dish?"
+          ],
+          "correct_index": 0,
+          "sentence_index": 61
+        },
+        {
+          "id": "gl_p14_s4_q1",
+          "type": "choice",
+          "question_en": "What question will the results help answer?",
+          "options_en": [
+            "Does the amount of food affect the growth of E.coli?",
+            "Where did I put the petri dish?",
+            "How do you make mould grow?"
+          ],
+          "correct_index": 0,
+          "sentence_index": 62
+        },
+        {
+          "id": "gl_p14_s4_q2",
+          "type": "choice",
+          "question_en": "What factor is being tested in the experiment?",
+          "options_en": [
+            "The amount of food",
+            "Room temperature",
+            "The type of microscope"
+          ],
+          "correct_index": 0,
+          "sentence_index": 62
+        },
+        {
+          "id": "gl_p14_s5_q1",
+          "type": "choice",
+          "question_en": "What is what the speaker learns from the results called?",
+          "options_en": [
+            "An inference",
+            "A petri dish",
+            "A pipette"
+          ],
+          "correct_index": 0,
+          "sentence_index": 63
+        },
+        {
+          "id": "gl_p14_s5_q2",
+          "type": "choice",
+          "question_en": "How does the speaker label the learning from the results?",
+          "options_en": [
+            "Called an inference",
+            "Called a hypothesis",
+            "Called a recipe"
+          ],
+          "correct_index": 0,
+          "sentence_index": 63
+        },
+        {
+          "id": "gl_p14_s6_q1",
+          "type": "choice",
+          "question_en": "How long does a typical E.coli growth experiment take?",
+          "options_en": [
+            "10 to 12 hours",
+            "2 days",
+            "10 days"
+          ],
+          "correct_index": 0,
+          "sentence_index": 64
+        },
+        {
+          "id": "gl_p14_s6_q2",
+          "type": "choice",
+          "question_en": "When will the E.coli growth experiment be complete?",
+          "options_en": [
+            "After 10 to 12 hours",
+            "After 2 days",
+            "After 10 days"
+          ],
+          "correct_index": 0,
+          "sentence_index": 64
+        }
+      ]
+    },
+    {
+      "paragraph_index": 15,
+      "questions": [
+        {
+          "id": "gl_p15_s0_q1",
+          "type": "choice",
+          "question_en": "What does the speaker do instead of watching the cells the entire time?",
+          "options_en": [
+            "Read about new discoveries",
+            "Throw away an old orange",
+            "Grow mould on bread"
+          ],
+          "correct_index": 0,
+          "sentence_index": 65
+        },
+        {
+          "id": "gl_p15_s0_q2",
+          "type": "choice",
+          "question_en": "Who does the speaker talk to about their work?",
+          "options_en": [
+            "Other scientists",
+            "Tashi",
+            "The microbes"
+          ],
+          "correct_index": 0,
+          "sentence_index": 65
+        },
+        {
+          "id": "gl_p15_s1_q1",
+          "type": "choice",
+          "question_en": "Why is reading and talking to others important?",
+          "options_en": [
+            "Because the speaker learns exciting new things from them",
+            "Because it helps find a missing petri dish",
+            "Because it helps grow mould faster"
+          ],
+          "correct_index": 0,
+          "sentence_index": 66
+        },
+        {
+          "id": "gl_p15_s1_q2",
+          "type": "choice",
+          "question_en": "What does the speaker often get from learning new things from others?",
+          "options_en": [
+            "Ideas for their own work",
+            "A new microscope",
+            "An orange"
+          ],
+          "correct_index": 0,
+          "sentence_index": 66
+        },
+        {
+          "id": "gl_p15_s2_q1",
+          "type": "choice",
+          "question_en": "What do they sometimes do while sitting around?",
+          "options_en": [
+            "Have tea and chat",
+            "Throw away mouldy food",
+            "Run an experiment"
+          ],
+          "correct_index": 0,
+          "sentence_index": 67
+        },
+        {
+          "id": "gl_p15_s2_q2",
+          "type": "choice",
+          "question_en": "How do they spend time together sometimes?",
+          "options_en": [
+            "Sitting around, having tea and chatting",
+            "Looking through a microscope at cells",
+            "Cooking with the orange"
+          ],
+          "correct_index": 0,
+          "sentence_index": 67
+        }
+      ]
+    },
+    {
+      "paragraph_index": 16,
+      "questions": [
+        {
+          "id": "gl_p16_s0_q1",
+          "type": "choice",
+          "question_en": "Who may seem very serious?",
+          "options_en": [
+            "Scientists",
+            "Dr. Ira",
+            "Tashi"
+          ],
+          "correct_index": 0,
+          "sentence_index": 68
+        },
+        {
+          "id": "gl_p16_s0_q2",
+          "type": "choice",
+          "question_en": "Who are scientists said to be like?",
+          "options_en": [
+            "you and your friends",
+            "E.coli",
+            "Dr. Ira"
+          ],
+          "correct_index": 0,
+          "sentence_index": 68
+        },
+        {
+          "id": "gl_p16_s1_q1",
+          "type": "choice",
+          "question_en": "What do they like to play?",
+          "options_en": [
+            "hockey",
+            "with a microscope",
+            "tea"
+          ],
+          "correct_index": 0,
+          "sentence_index": 69
+        },
+        {
+          "id": "gl_p16_s1_q2",
+          "type": "choice",
+          "question_en": "Where do they like to sing?",
+          "options_en": [
+            "in the lab",
+            "in the shower",
+            "while eating"
+          ],
+          "correct_index": 1,
+          "sentence_index": 69
+        }
+      ]
+    },
+    {
+      "paragraph_index": 17,
+      "questions": [
+        {
+          "id": "gl_p17_s0_q1",
+          "type": "choice",
+          "question_en": "Who is curious about the world around us?",
+          "options_en": [
+            "We",
+            "Tashi",
+            "The orange"
+          ],
+          "correct_index": 0,
+          "sentence_index": 70
+        },
+        {
+          "id": "gl_p17_s0_q2",
+          "type": "choice",
+          "question_en": "What are we curious about?",
+          "options_en": [
+            "The world around us",
+            "A petri dish",
+            "E.coli cells"
+          ],
+          "correct_index": 0,
+          "sentence_index": 70
+        },
+        {
+          "id": "gl_p17_s1_q1",
+          "type": "choice",
+          "question_en": "What do we like to do constantly?",
+          "options_en": [
+            "Ask questions",
+            "Throw away the orange",
+            "Grow mould"
+          ],
+          "correct_index": 0,
+          "sentence_index": 71
+        },
+        {
+          "id": "gl_p17_s1_q2",
+          "type": "choice",
+          "question_en": "What are we compared to in this sentence?",
+          "options_en": [
+            "Detectives",
+            "Microbiologists",
+            "E.coli"
+          ],
+          "correct_index": 0,
+          "sentence_index": 71
+        },
+        {
+          "id": "gl_p17_s2_q1",
+          "type": "choice",
+          "question_en": "Where might they be, according to the sentence?",
+          "options_en": [
+            "Inside your stomach",
+            "In a petri dish",
+            "On the orange"
+          ],
+          "correct_index": 0,
+          "sentence_index": 72
+        },
+        {
+          "id": "gl_p17_s2_q2",
+          "type": "choice",
+          "question_en": "Which body part is mentioned in the sentence?",
+          "options_en": [
+            "Stomach",
+            "Nose",
+            "Ear"
+          ],
+          "correct_index": 0,
+          "sentence_index": 72
+        },
+        {
+          "id": "gl_p17_s3_q1",
+          "type": "choice",
+          "question_en": "Who says they are hungry?",
+          "options_en": [
+            "I",
+            "Tashi",
+            "The orange"
+          ],
+          "correct_index": 0,
+          "sentence_index": 73
+        },
+        {
+          "id": "gl_p17_s3_q2",
+          "type": "choice",
+          "question_en": "What does the speaker say in this sentence?",
+          "options_en": [
+            "I'm hungry",
+            "Where is my petri dish?",
+            "Let's grow mould"
+          ],
+          "correct_index": 0,
+          "sentence_index": 73
+        },
+        {
+          "id": "gl_p17_s4_q1",
+          "type": "choice",
+          "question_en": "What does the speaker suggest doing?",
+          "options_en": [
+            "Let's eat",
+            "Throw away the orange",
+            "Check the microscope"
+          ],
+          "correct_index": 0,
+          "sentence_index": 74
+        },
+        {
+          "id": "gl_p17_s4_q2",
+          "type": "choice",
+          "question_en": "Which question word follows the suggestion?",
+          "options_en": [
+            "Why",
+            "How",
+            "What if"
+          ],
+          "correct_index": 0,
+          "sentence_index": 74
+        },
+        {
+          "id": "gl_p17_s5_q1",
+          "type": "choice",
+          "question_en": "Which of these question phrases is asked in the sentence?",
+          "options_en": [
+            "What if?",
+            "Where is my petri dish?",
+            "Grow your own mould"
+          ],
+          "correct_index": 0,
+          "sentence_index": 75
+        },
+        {
+          "id": "gl_p17_s5_q2",
+          "type": "choice",
+          "question_en": "Which question is included in the sentence?",
+          "options_en": [
+            "Why not?",
+            "How can you fit one billion of anything inside a small dish?",
+            "Will you keep me company?"
+          ],
+          "correct_index": 0,
+          "sentence_index": 75
+        }
+      ]
+    },
+    {
+      "paragraph_index": 18,
+      "questions": [
+        {
+          "id": "gl_p18_s0_q1",
+          "type": "choice",
+          "question_en": "Who is being called?",
+          "options_en": [
+            "Tashi",
+            "Dr. Ira",
+            "the orange"
+          ],
+          "correct_index": 0,
+          "sentence_index": 76
+        },
+        {
+          "id": "gl_p18_s0_q2",
+          "type": "choice",
+          "question_en": "What name is said?",
+          "options_en": [
+            "Tashi",
+            "Ira",
+            "E.coli"
+          ],
+          "correct_index": 0,
+          "sentence_index": 76
+        }
+      ]
+    },
+    {
+      "paragraph_index": 19,
+      "questions": [
+        {
+          "id": "gl_p19_s0_q1",
+          "type": "choice",
+          "question_en": "What does the sentence tell you to grow?",
+          "options_en": [
+            "mould",
+            "a plant",
+            "a pet"
+          ],
+          "correct_index": 0,
+          "sentence_index": 77
+        },
+        {
+          "id": "gl_p19_s0_q2",
+          "type": "choice",
+          "question_en": "Who is being invited by the sentence to do an activity?",
+          "options_en": [
+            "You",
+            "Dr. Ira",
+            "Tashi"
+          ],
+          "correct_index": 0,
+          "sentence_index": 77
+        },
+        {
+          "id": "gl_p19_s1_q1",
+          "type": "choice",
+          "question_en": "What is the fungus that grows on old food called?",
+          "options_en": [
+            "mould",
+            "bacteria",
+            "virus"
+          ],
+          "correct_index": 0,
+          "sentence_index": 78
+        },
+        {
+          "id": "gl_p19_s1_q2",
+          "type": "choice",
+          "question_en": "Where does this fungus grow according to the sentence?",
+          "options_en": [
+            "on old food",
+            "in a lab",
+            "on metal"
+          ],
+          "correct_index": 0,
+          "sentence_index": 78
+        },
+        {
+          "id": "gl_p19_s2_q1",
+          "type": "choice",
+          "question_en": "What are you told to take to grow mould?",
+          "options_en": [
+            "a piece of leftover roti or a slice of stale bread",
+            "a fresh orange",
+            "a petri dish with E.coli"
+          ],
+          "correct_index": 0,
+          "sentence_index": 79
+        },
+        {
+          "id": "gl_p19_s2_q2",
+          "type": "choice",
+          "question_en": "How should you prepare the food before covering it?",
+          "options_en": [
+            "sprinkle it with water",
+            "freeze it",
+            "cook it"
+          ],
+          "correct_index": 0,
+          "sentence_index": 79
+        },
+        {
+          "id": "gl_p19_s3_q1",
+          "type": "choice",
+          "question_en": "Where should you keep the covered food?",
+          "options_en": [
+            "at room temperature and out of direct sunlight",
+            "inside the freezer",
+            "in a bright sunny window"
+          ],
+          "correct_index": 0,
+          "sentence_index": 80
+        },
+        {
+          "id": "gl_p19_s3_q2",
+          "type": "choice",
+          "question_en": "What is the correct answer to this question: For how long should you keep it under those conditions first?",
+          "options_en": [
+            "two days",
+            "ten hours",
+            "one week"
+          ],
+          "correct_index": 0,
+          "sentence_index": 80
+        },
+        {
+          "id": "gl_p19_s4_q1",
+          "type": "choice",
+          "question_en": "What should you check the food for after two days?",
+          "options_en": [
+            "white, blue, green or gray fuzz",
+            "a change in taste",
+            "a metallic smell"
+          ],
+          "correct_index": 0,
+          "sentence_index": 81
+        },
+        {
+          "id": "gl_p19_s4_q2",
+          "type": "choice",
+          "question_en": "Which of these is listed as a colour of the fuzz to look for?",
+          "options_en": [
+            "green",
+            "red",
+            "pink"
+          ],
+          "correct_index": 0,
+          "sentence_index": 81
+        },
+        {
+          "id": "gl_p19_s5_q1",
+          "type": "choice",
+          "question_en": "What are you instructed to do after checking the food the first time?",
+          "options_en": [
+            "Leave it alone for 2 more days and then check on it",
+            "Throw it away immediately",
+            "Put it in sunlight"
+          ],
+          "correct_index": 0,
+          "sentence_index": 82
+        },
+        {
+          "id": "gl_p19_s5_q2",
+          "type": "choice",
+          "question_en": "When should you check the food again according to the sentence?",
+          "options_en": [
+            "after 2 more days",
+            "after 12 hours",
+            "after a month"
+          ],
+          "correct_index": 0,
+          "sentence_index": 82
+        },
+        {
+          "id": "gl_p19_s6_q1",
+          "type": "choice",
+          "question_en": "What are you asked to observe about the mould in this question sentence?",
+          "options_en": [
+            "How the mould looks now",
+            "How much it weighs",
+            "What it smells like"
+          ],
+          "correct_index": 0,
+          "sentence_index": 83
+        },
+        {
+          "id": "gl_p19_s6_q2",
+          "type": "choice",
+          "question_en": "How should you respond to the question in the sentence?",
+          "options_en": [
+            "Make a note",
+            "Throw it away",
+            "Taste it"
+          ],
+          "correct_index": 0,
+          "sentence_index": 83
+        },
+        {
+          "id": "gl_p19_s7_q1",
+          "type": "choice",
+          "question_en": "What does the sentence instruct you to do after observing the mould?",
+          "options_en": [
+            "Make a note",
+            "Call a friend",
+            "Heat the food"
+          ],
+          "correct_index": 0,
+          "sentence_index": 84
+        },
+        {
+          "id": "gl_p19_s7_q2",
+          "type": "choice",
+          "question_en": "Why would you make a note as the sentence suggests?",
+          "options_en": [
+            "to record how the mould looks",
+            "to serve the food",
+            "to cook it later"
+          ],
+          "correct_index": 0,
+          "sentence_index": 84
+        },
+        {
+          "id": "gl_p19_s8_q1",
+          "type": "choice",
+          "question_en": "How often should you repeat the checking according to the sentence?",
+          "options_en": [
+            "every 2 days",
+            "every hour",
+            "only once"
+          ],
+          "correct_index": 0,
+          "sentence_index": 85
+        },
+        {
+          "id": "gl_p19_s8_q2",
+          "type": "choice",
+          "question_en": "What is the correct answer to this question: Until which day should you continue the repeats?",
+          "options_en": [
+            "day 10",
+            "day 5",
+            "day 30"
+          ],
+          "correct_index": 0,
+          "sentence_index": 85
+        },
+        {
+          "id": "gl_p19_s9_q1",
+          "type": "choice",
+          "question_en": "What does the sentence ask you to think about?",
+          "options_en": [
+            "What do you think will happen?",
+            "Where to buy bread",
+            "How to cook roti"
+          ],
+          "correct_index": 0,
+          "sentence_index": 86
+        },
+        {
+          "id": "gl_p19_s9_q2",
+          "type": "choice",
+          "question_en": "Which mental action does the sentence encourage?",
+          "options_en": [
+            "predicting the outcome",
+            "measuring temperature",
+            "calling the teacher"
+          ],
+          "correct_index": 0,
+          "sentence_index": 86
+        },
+        {
+          "id": "gl_p19_s10_q1",
+          "type": "choice",
+          "question_en": "What do the water and room temperature create according to the sentence?",
+          "options_en": [
+            "the perfect conditions for growing mould",
+            "a clean surface",
+            "a cold environment"
+          ],
+          "correct_index": 0,
+          "sentence_index": 87
+        },
+        {
+          "id": "gl_p19_s10_q2",
+          "type": "choice",
+          "question_en": "Why will mould grow according to the sentence?",
+          "options_en": [
+            "because water and room temperature create perfect conditions",
+            "because of direct sunlight",
+            "because the food is cooked"
+          ],
+          "correct_index": 0,
+          "sentence_index": 87
+        },
+        {
+          "id": "gl_p19_s11_q1",
+          "type": "choice",
+          "question_en": "How will the mould appear on different items of food?",
+          "options_en": [
+            "it will look different",
+            "it will always look the same",
+            "it will disappear"
+          ],
+          "correct_index": 0,
+          "sentence_index": 88
+        },
+        {
+          "id": "gl_p19_s11_q2",
+          "type": "choice",
+          "question_en": "What does the sentence say about mould appearance?",
+          "options_en": [
+            "The mould will look different on different items of food",
+            "The mould will taste different",
+            "The mould will sound different"
+          ],
+          "correct_index": 0,
+          "sentence_index": 88
+        },
+        {
+          "id": "gl_p19_s12_q1",
+          "type": "choice",
+          "question_en": "Why will mould look different on different foods according to the sentence?",
+          "options_en": [
+            "different kinds of mould spores like some foods better than others",
+            "because the plate is different",
+            "because of direct sunlight"
+          ],
+          "correct_index": 0,
+          "sentence_index": 89
+        },
+        {
+          "id": "gl_p19_s12_q2",
+          "type": "choice",
+          "question_en": "Which reason is given for differences in mould growth?",
+          "options_en": [
+            "different kinds of mould spores prefer different foods",
+            "the teacher changes the food",
+            "the bowl is not clear"
+          ],
+          "correct_index": 0,
+          "sentence_index": 89
+        },
+        {
+          "id": "gl_p19_s13_q1",
+          "type": "choice",
+          "question_en": "What should you do at the end of 10 days with the mouldy food?",
+          "options_en": [
+            "carefully dispose of the mouldy food with the help of your teacher",
+            "eat the food",
+            "put it in the microwave"
+          ],
+          "correct_index": 0,
+          "sentence_index": 90
+        },
+        {
+          "id": "gl_p19_s13_q2",
+          "type": "choice",
+          "question_en": "Who should help you dispose of the mouldy food?",
+          "options_en": [
+            "your teacher",
+            "Dr. Ira",
+            "Tashi"
+          ],
+          "correct_index": 0,
+          "sentence_index": 90
+        },
+        {
+          "id": "gl_p19_s14_q1",
+          "type": "choice",
+          "question_en": "What is one suggested place to put the mouldy food after disposal?",
+          "options_en": [
+            "a compost pit",
+            "a freezer",
+            "a petri dish"
+          ],
+          "correct_index": 0,
+          "sentence_index": 91
+        },
+        {
+          "id": "gl_p19_s14_q2",
+          "type": "choice",
+          "question_en": "How is the suggestion about the mouldy food phrased in the sentence?",
+          "options_en": [
+            "Maybe you could add it to a compost pit",
+            "You must burn it",
+            "You should feed it to pets"
+          ],
+          "correct_index": 0,
+          "sentence_index": 91
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'Ira Investigates the Invisible'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "petri dish",
+      "meaning_vi": "đĩa petri (một loại đĩa dùng trong phòng thí nghiệm)",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "lid",
+      "meaning_vi": "nắp đậy",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "experiment",
+      "meaning_vi": "thí nghiệm",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "billion",
+      "meaning_vi": "một tỉ (số rất lớn)",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "cells",
+      "meaning_vi": "tế bào (những phần rất nhỏ tạo nên cơ thể sống)",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "microbiologist",
+      "meaning_vi": "nhà vi sinh vật học (người nghiên cứu những sinh vật rất nhỏ)",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "earache",
+      "meaning_vi": "đau tai",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "invisible",
+      "meaning_vi": "vô hình (không nhìn thấy được)",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "ridiculous",
+      "meaning_vi": "buồn cười, ngớ ngẩn",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "soil",
+      "meaning_vi": "đất",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "trillions",
+      "meaning_vi": "hàng nghìn tỉ (số rất lớn)",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "creatures",
+      "meaning_vi": "sinh vật",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "microbes",
+      "meaning_vi": "vi khuẩn (sinh vật rất nhỏ)",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "planet",
+      "meaning_vi": "hành tinh",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "habitat",
+      "meaning_vi": "môi trường sống",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "bacteria",
+      "meaning_vi": "vi khuẩn",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "viruses",
+      "meaning_vi": "vi rút",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "lab",
+      "meaning_vi": "phòng thí nghiệm",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "fuzz",
+      "meaning_vi": "lông tơ, lớp mốc",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "fungus",
+      "meaning_vi": "nấm mốc",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "microscope",
+      "meaning_vi": "kính hiển vi (dụng cụ phóng to vật nhỏ)",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "scary",
+      "meaning_vi": "đáng sợ",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "helpful",
+      "meaning_vi": "hữu ích",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "spoiled",
+      "meaning_vi": "bị hỏng, bị ôi",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "pollution",
+      "meaning_vi": "ô nhiễm",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "prevent",
+      "meaning_vi": "ngăn ngừa",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "illnesses",
+      "meaning_vi": "bệnh tật",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "magnifying",
+      "meaning_vi": "phóng đại (làm cho vật trông lớn hơn)",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "transparent",
+      "meaning_vi": "trong suốt",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "pipette",
+      "meaning_vi": "ống hút nhỏ giọt (dụng cụ phòng thí nghiệm)",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "quantities",
+      "meaning_vi": "số lượng",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "autoclave",
+      "meaning_vi": "nồi hấp tiệt trùng (máy dùng để khử trùng bằng nhiệt và áp suất cao)",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "pressure",
+      "meaning_vi": "áp suất",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "university",
+      "meaning_vi": "trường đại học",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "lost",
+      "meaning_vi": "lạc lõng, bối rối",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "keep up",
+      "meaning_vi": "theo kịp",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "give up",
+      "meaning_vi": "bỏ cuộc",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "college",
+      "meaning_vi": "trường đại học, cao đẳng",
+      "paragraph_index": 11
+    },
+    {
+      "word_en": "supported",
+      "meaning_vi": "ủng hộ, giúp đỡ",
+      "paragraph_index": 11
+    },
+    {
+      "word_en": "exploring",
+      "meaning_vi": "khám phá",
+      "paragraph_index": 11
+    },
+    {
+      "word_en": "especially",
+      "meaning_vi": "đặc biệt là",
+      "paragraph_index": 11
+    },
+    {
+      "word_en": "fail",
+      "meaning_vi": "thất bại",
+      "paragraph_index": 12
+    },
+    {
+      "word_en": "exciting",
+      "meaning_vi": "thú vị, hào hứng",
+      "paragraph_index": 12
+    },
+    {
+      "word_en": "work out",
+      "meaning_vi": "thành công, ổn thỏa",
+      "paragraph_index": 12
+    },
+    {
+      "word_en": "question",
+      "meaning_vi": "câu hỏi",
+      "paragraph_index": 12
+    },
+    {
+      "word_en": "company",
+      "meaning_vi": "bầu bạn, ở cùng",
+      "paragraph_index": 13
+    },
+    {
+      "word_en": "conical flask",
+      "meaning_vi": "bình tam giác (dụng cụ phòng thí nghiệm)",
+      "paragraph_index": 13
+    },
+    {
+      "word_en": "sample",
+      "meaning_vi": "mẫu (một phần nhỏ để thử nghiệm)",
+      "paragraph_index": 13
+    },
+    {
+      "word_en": "enough",
+      "meaning_vi": "đủ",
+      "paragraph_index": 13
+    },
+    {
+      "word_en": "observation",
+      "meaning_vi": "quan sát",
+      "paragraph_index": 14
+    },
+    {
+      "word_en": "compare",
+      "meaning_vi": "so sánh",
+      "paragraph_index": 14
+    },
+    {
+      "word_en": "affect",
+      "meaning_vi": "ảnh hưởng",
+      "paragraph_index": 14
+    },
+    {
+      "word_en": "inference",
+      "meaning_vi": "suy luận (kết luận từ những gì đã quan sát)",
+      "paragraph_index": 14
+    },
+    {
+      "word_en": "discoveries",
+      "meaning_vi": "khám phá (những điều mới được tìm ra)",
+      "paragraph_index": 15
+    },
+    {
+      "word_en": "attend",
+      "meaning_vi": "tham dự",
+      "paragraph_index": 15
+    },
+    {
+      "word_en": "meetings",
+      "meaning_vi": "cuộc họp",
+      "paragraph_index": 15
+    },
+    {
+      "word_en": "scientists",
+      "meaning_vi": "nhà khoa học",
+      "paragraph_index": 15
+    },
+    {
+      "word_en": "serious",
+      "meaning_vi": "nghiêm túc",
+      "paragraph_index": 16
+    },
+    {
+      "word_en": "hockey",
+      "meaning_vi": "khúc côn cầu (một môn thể thao)",
+      "paragraph_index": 16
+    },
+    {
+      "word_en": "shower",
+      "meaning_vi": "phòng tắm",
+      "paragraph_index": 16
+    },
+    {
+      "word_en": "scary",
+      "meaning_vi": "đáng sợ",
+      "paragraph_index": 16
+    },
+    {
+      "word_en": "curious",
+      "meaning_vi": "tò mò",
+      "paragraph_index": 17
+    },
+    {
+      "word_en": "constantly",
+      "meaning_vi": "liên tục, không ngừng",
+      "paragraph_index": 17
+    },
+    {
+      "word_en": "detectives",
+      "meaning_vi": "thám tử",
+      "paragraph_index": 17
+    },
+    {
+      "word_en": "clues",
+      "meaning_vi": "manh mối",
+      "paragraph_index": 17
+    },
+    {
+      "word_en": "mould",
+      "meaning_vi": "nấm mốc",
+      "paragraph_index": 19
+    },
+    {
+      "word_en": "stale",
+      "meaning_vi": "cũ, ôi (thức ăn)",
+      "paragraph_index": 19
+    },
+    {
+      "word_en": "sprinkle",
+      "meaning_vi": "rắc",
+      "paragraph_index": 19
+    },
+    {
+      "word_en": "spores",
+      "meaning_vi": "bào tử (hạt rất nhỏ của nấm)",
+      "paragraph_index": 19
+    }
+  ]
+}

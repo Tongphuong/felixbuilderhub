@@ -1,0 +1,2698 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L4",
+  "level_label": "Cấp 4",
+  "topic": "The Firefly",
+  "slug": "book_151121",
+  "audio_filename": "book_151121.mp3",
+  "book_slug": "book_151121",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_151121/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_151121/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_151121/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_151121/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_151121/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_151121/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_151121/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_151121/page_09.jpg",
+    "https://audio.felixbuilderhub.com/books/book_151121/page_10.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_151121/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_151121/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_151121/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_151121/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_151121/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_151121/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_151121/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_151121/page_09.mp3",
+    "https://audio.felixbuilderhub.com/books/book_151121/page_10.mp3"
+  ],
+  "book_attribution": {
+    "title": "The Firefly",
+    "creators": [
+      "Kamla Ramamurti",
+      "Jano Strydom",
+      "Mahbubur Rahman",
+      "Measa Sovonnarea",
+      "Partho Sengupta",
+      "Rohit Kelkar",
+      "Sou Kimsan",
+      "Thea Nicole de Klerk"
+    ],
+    "publisher": "StoryWeaver Community",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: The Firefly is written by Kamla Ramamurti . © Kamla Ramamurti , 2020. Some rights reserved. Released under CC BY 4.0 license. Images Attributions: Cover page: Fireflies , by Jano Strydom © Book Dash, 2014. Some rights reserved. Released under CC BY 4.0 license. Page 2: Firefly in the darkness , by Measa Sovonnarea © The Asia Foundation, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 3: Five bees in a garden , by Sou Kimsan © Let's Read, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 4: A blue insect looks around questioningly , by Mahbubur Rahman © Room to Read, 2013. Some rights reserved. Released under CC BY 4.0 license. Page 5: Three bees flying with buckets , by Mahbubur Rahman © Room to Read, 2013. Some rights reserved. Released under CC BY 4.0 license. Page 6: A bird resting in its nest , by Partho Sengupta © Room to Read, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 7: Stars in the night , by Thea Nicole de Klerk © Thea Nicole de Klerk, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 8: Boy in a forest , by Rohit Kelkar © Pratham Books, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 9: A firefly glowing in the dark , by Mahbubur Rahman © Room to Read, 2013. Some rights reserved. Released under CC BY 4.0 license. Page 10: A firefly glowing in the dark , by Mahbubur Rahman © Room to Read, 2013. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/151121-the-firefly",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "Firefly in the darkness , by Measa Sovonnarea © The Asia Foundation, 2018. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "Five bees in a garden , by Sou Kimsan © Let's Read, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "A blue insect looks around questioningly , by Mahbubur Rahman © Room to Read, 2013. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "Three bees flying with buckets , by Mahbubur Rahman © Room to Read, 2013. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "A bird resting in its nest , by Partho Sengupta © Room to Read, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "Stars in the night , by Thea Nicole de Klerk © Thea Nicole de Klerk, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "Boy in a forest , by Rohit Kelkar © Pratham Books, 2018. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "A firefly glowing in the dark , by Mahbubur Rahman © Room to Read, 2013. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 8,
+        "credit_text": "A firefly glowing in the dark , by Mahbubur Rahman © Room to Read, 2013. Some rights reserved. Released under CC BY 4.0 license."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "The Firefly",
+    "paragraphs_en": [
+      "This is the story of a small bug. But a bug who dreamt big. Not only did he dream big he also made them come true by his determination. He was born on the big neem tree in Rahail’s garden. When he came out of his egg and looked at the bright daylight, his eyes cringe in disgust.He did not like the brightness around him. He noticed, the world was getting noisier and noisier all around him. He hated it all the more.",
+      "When all other creatures got busy searching for feed and doing their normal chores. This one hid in a small hole and refused to step out. He lazed around in the hole saw the world whizzing around him.T he bees buzzing, the birds chirping..children hopping around the flower beds, the butterflies flitting from flower to flower. But he just sat there and sulked all day. Pintu titli saw him and was a little upset. She loved to see happy and gay folks all around her . So she flew up to his hole and asked him \"Why was he sulking all day?\"Jugnu the bug was angry he said-”Leave me alone I do not want to talk to anyone”",
+      "But sweet as she was, Pintu would not stop at that. She collected sweet nectar from the rose plant and visited him the next morning”Hey!! come on have a sip and see what I got for you. Am sure you will love this refreshing drink.\"Jugnu was angry again. But he was hungry too. So he stuck out his head and took a sip..Hmmm it sure was divine. jugnu loved it. Pintu titli sat down on the nearest neem flower and said “Jugnu, have you ever tasted the juice of the neem flower? Am sure you have not.It is bitter . You would not like to be like this flower would you? But when you sulk and not eat ,you will soon turn bitter Think about this.\" said Pinto as she flew away promising to come back to him the next morning.",
+      "God , who makes all creatures big and small also saw what was happening to Jugnu .So he went down to the tiny wormy and said \"Jugnu,I like to see all my children happyand gay, But I find you are upset.Well ,what do you want ? Ask and I shall grant it to you.But you must make your decision by tonight.”God said this and vanished. Jugnu got worried. Oh he did not want to be bitter at all!! he just wanted to be different- he did not want to be colorful like the butterfly . He did not like the busy bees and their angry drones...he just did not like the chirpy birds too!! What did he want then?What was it he pined for?",
+      "As he was looking at all these creatures..it became evening .The birds settled in their nests, kids ran away home, the bugs and bees went into deep slumber. The birds in the nests were still restless and chatting up about the events of the day.No one bothered to turn around and find out what his problem was. Jugnu felt lost and lonely. He had waited all day for Pintu the butterfly. But today she was not there to give him a sweet drink. He was sad. He sulked and withdrew into the hole. And got to think. He saw life slowly grind to a standstill and the garden engulfed in darkness.",
+      "When all seemed still, life started ticking once more Jugnu noticed there was a new awakening! The owl fly out of his hole. Jugnu was fascinated, He climbed the highest branch of the neem tree just to see where Mr.Owl went when all was dark. But alas!! in the darkness,Jugnu could see nothing. As he sat engulfed in the beauty of the night.The soft glow of the moon and the twinkling stars blinking and winking at him made him happy and calm. Jugnu sat still and heard the crickets creaking The sounds of the night engulfed Jungu in its mysterious world.He was bewildered. He had found an answer for God's question after all.",
+      "“Yes!! I want to be like these creatures of the night.I want a less noisy world, a world full of mystery and adventure. I want to go deep into the dark woods and fly around. I want to explore! This is what I want. But I cannot fly like the butterfly nor can I see in the dark like the wise owl.\"He sighed. He waited for God to come back to him. God came and said, ”Well Jugnu your time is up!! tell me what you wish to be?” Jugnu looked up into God's eyes and said “Please give me the power to fly and see through the darkness of the night. I love the world when it is dark and cool and full of mystery .”",
+      "God was happy and He said-”Jugnu I give you small wings to fly and I also give you the strength to your legs, because what I did to your eyes I cannot undo. From today, if you rub your feet you shall have a torch that will guide you through the darkness and help you take a new adventure trip each night” Before Jugnu could say anything, God was gone. Jugnu rubbed his legs and loo!!It glowed all around him like a candle in the darkness. When he flapped his new found wings!!He could really fly!! Jugnu swerved and took a dive like an airplane. He flew all around the garden enjoying his new found freedom!",
+      "All the creatures of the day slept..but Pintu alone was awake..she saw the glow worm and she knew it was Jugnu. No one else could be so beautiful and happy so late in the night. Pintu smiled as she closed her eyes in slumber She knew Jugnu had found a way to be happy and unique as he always wished to be. She was happy for him."
+    ],
+    "sentences": [
+      {
+        "text_en": "This is the story of a small bug.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_000.mp3",
+        "text_vi": "Đây là câu chuyện về một chú bọ nhỏ."
+      },
+      {
+        "text_en": "But a bug who dreamt big.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_001.mp3",
+        "text_vi": "Nhưng chú bọ này lại mơ những điều lớn lao."
+      },
+      {
+        "text_en": "Not only did he dream big he also made them come true by his determination.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_002.mp3",
+        "text_vi": "Chú không chỉ mơ lớn mà còn biến ước mơ thành sự thật nhờ sự quyết tâm của mình."
+      },
+      {
+        "text_en": "He was born on the big neem tree in Rahail’s garden.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_003.mp3",
+        "text_vi": "Chú sinh ra trên cây sầu đâu lớn trong vườn của Rahail."
+      },
+      {
+        "text_en": "When he came out of his egg and looked at the bright daylight, his eyes cringe in disgust.He did not like the brightness around him.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_004.mp3",
+        "text_vi": "Khi chú chui ra khỏi trứng và nhìn ánh sáng ban ngày chói chang, mắt chú nhăn lại vì ghét. Chú không thích sự sáng chói xung quanh mình."
+      },
+      {
+        "text_en": "He noticed, the world was getting noisier and noisier all around him.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_005.mp3",
+        "text_vi": "Chú nhận thấy thế giới xung quanh ngày càng ồn ào hơn."
+      },
+      {
+        "text_en": "He hated it all the more.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_006.mp3",
+        "text_vi": "Chú càng ghét nó hơn nữa."
+      },
+      {
+        "text_en": "When all other creatures got busy searching for feed and doing their normal chores.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_007.mp3",
+        "text_vi": "Trong khi tất cả các sinh vật khác bận rộn tìm thức ăn và làm công việc thường ngày của chúng."
+      },
+      {
+        "text_en": "This one hid in a small hole and refused to step out.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_008.mp3",
+        "text_vi": "Chú bọ này thì trốn trong một cái lỗ nhỏ và không chịu bước ra ngoài."
+      },
+      {
+        "text_en": "He lazed around in the hole saw the world whizzing around him.T he bees buzzing, the birds chirping..children hopping around the flower beds, the butterflies flitting from flower to flower.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_009.mp3",
+        "text_vi": "Chú nằm ườn trong lỗ, nhìn thế giới quay cuồng xung quanh: ong vo ve, chim hót líu lo, trẻ con nhảy nhót quanh luống hoa, bướm bay lượn từ bông hoa này sang bông hoa khác."
+      },
+      {
+        "text_en": "But he just sat there and sulked all day.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_010.mp3",
+        "text_vi": "Nhưng chú chỉ ngồi đó và hờn dỗi cả ngày."
+      },
+      {
+        "text_en": "Pintu titli saw him and was a little upset.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_011.mp3",
+        "text_vi": "Pintu titli nhìn thấy chú và hơi buồn một chút."
+      },
+      {
+        "text_en": "She loved to see happy and gay folks all around her .",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_012.mp3",
+        "text_vi": "Cô ấy thích nhìn thấy mọi người vui vẻ và hạnh phúc xung quanh mình."
+      },
+      {
+        "text_en": "So she flew up to his hole and asked him \"Why was he sulking all day?\"Jugnu the bug was angry he said-”Leave me alone I do not want to talk to anyone”",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_013.mp3",
+        "text_vi": "Thế là cô bay đến cái lỗ của chú và hỏi: \"Sao chú lại hờn dỗi cả ngày vậy?\" Chú bọ Jugnu tức giận nói: \"Để tôi yên! Tôi không muốn nói chuyện với ai cả.\""
+      },
+      {
+        "text_en": "But sweet as she was, Pintu would not stop at that.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_014.mp3",
+        "text_vi": "Nhưng Pintu rất tốt bụng, cô ấy sẽ không bỏ cuộc dễ dàng như vậy."
+      },
+      {
+        "text_en": "She collected sweet nectar from the rose plant and visited him the next morning”Hey!!",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_015.mp3",
+        "text_vi": "Cô ấy thu thập mật ngọt từ cây hoa hồng và đến thăm chú vào sáng hôm sau: \"Này!!"
+      },
+      {
+        "text_en": "come on have a sip and see what I got for you.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_016.mp3",
+        "text_vi": "Lại đây uống một ngụm xem tớ mang gì cho cậu này."
+      },
+      {
+        "text_en": "Am sure you will love this refreshing drink.\"Jugnu was angry again.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_017.mp3",
+        "text_vi": "Tớ chắc chắn cậu sẽ thích thức uống sảng khoái này.\" Jugnu lại tức giận."
+      },
+      {
+        "text_en": "But he was hungry too.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_018.mp3",
+        "text_vi": "Nhưng chú cũng đói."
+      },
+      {
+        "text_en": "So he stuck out his head and took a sip..Hmmm it sure was divine.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_019.mp3",
+        "text_vi": "Thế là chú thò đầu ra và uống một ngụm... Hừm, đúng là ngon tuyệt."
+      },
+      {
+        "text_en": "jugnu loved it.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_020.mp3",
+        "text_vi": "Jugnu rất thích nó."
+      },
+      {
+        "text_en": "Pintu titli sat down on the nearest neem flower and said “Jugnu, have you ever tasted the juice of the neem flower?",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_021.mp3",
+        "text_vi": "Pintu titli đậu xuống bông hoa sầu đâu gần nhất và nói: \"Jugnu, cậu đã bao giờ nếm thử nước ép hoa sầu đâu chưa?"
+      },
+      {
+        "text_en": "Am sure you have not.It is bitter .",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_022.mp3",
+        "text_vi": "Tớ chắc là chưa đâu. Nó đắng lắm."
+      },
+      {
+        "text_en": "You would not like to be like this flower would you?",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_023.mp3",
+        "text_vi": "Cậu sẽ không muốn trở nên giống bông hoa này đâu, phải không?"
+      },
+      {
+        "text_en": "But when you sulk and not eat ,you will soon turn bitter Think about this.\" said Pinto as she flew away promising to come back to him the next morning.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_024.mp3",
+        "text_vi": "Nhưng khi cậu hờn dỗi và không ăn, cậu sẽ sớm trở nên đắng chát đấy. Hãy nghĩ về điều này nhé.\" Pintu nói rồi bay đi, hứa sẽ quay lại thăm chú vào sáng hôm sau."
+      },
+      {
+        "text_en": "God , who makes all creatures big and small also saw what was happening to Jugnu .So he went down to the tiny wormy and said \"Jugnu,I like to see all my children happyand gay, But I find you are upset.Well ,what do you want ?",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_025.mp3",
+        "text_vi": "Chúa, người tạo ra mọi sinh vật lớn nhỏ, cũng nhìn thấy chuyện gì đang xảy ra với Jugnu. Thế là Ngài đi xuống chỗ chú sâu nhỏ và nói: \"Jugnu, Ta thích nhìn thấy tất cả các con của Ta vui vẻ và hạnh phúc, nhưng Ta thấy con đang buồn. Vậy, con muốn gì?"
+      },
+      {
+        "text_en": "Ask and I shall grant it to you.But you must make your decision by tonight.”God said this and vanished.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_026.mp3",
+        "text_vi": "Hãy hỏi đi và Ta sẽ ban cho con. Nhưng con phải đưa ra quyết định của mình trước tối nay.\" Chúa nói xong và biến mất."
+      },
+      {
+        "text_en": "Jugnu got worried.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_027.mp3",
+        "text_vi": "Jugnu bắt đầu lo lắng."
+      },
+      {
+        "text_en": "Oh he did not want to be bitter at all!!",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_028.mp3",
+        "text_vi": "Ồ, chú không muốn trở nên đắng chát chút nào cả!!"
+      },
+      {
+        "text_en": "he just wanted to be different- he did not want to be colorful like the butterfly .",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_029.mp3",
+        "text_vi": "Chú chỉ muốn khác biệt – chú không muốn sặc sỡ như bướm."
+      },
+      {
+        "text_en": "He did not like the busy bees and their angry drones...he just did not like the chirpy birds too!!",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_030.mp3",
+        "text_vi": "Chú không thích những con ong bận rộn và tiếng vo ve giận dữ của chúng... chú cũng không thích những chú chim hót líu lo!!"
+      },
+      {
+        "text_en": "What did he want then?What was it he pined for?",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_031.mp3",
+        "text_vi": "Vậy chú muốn gì? Chú khao khát điều gì?"
+      },
+      {
+        "text_en": "As he was looking at all these creatures..it became evening .The birds settled in their nests, kids ran away home, the bugs and bees went into deep slumber.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_032.mp3",
+        "text_vi": "Khi chú đang nhìn ngắm tất cả các sinh vật này... trời đã tối. Chim chóc về tổ, trẻ con chạy về nhà, bọ và ong chìm vào giấc ngủ sâu."
+      },
+      {
+        "text_en": "The birds in the nests were still restless and chatting up about the events of the day.No one bothered to turn around and find out what his problem was.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_033.mp3",
+        "text_vi": "Những chú chim trong tổ vẫn còn bồn chồn và trò chuyện về những sự kiện trong ngày. Không ai bận tâm quay lại tìm hiểu vấn đề của chú là gì."
+      },
+      {
+        "text_en": "Jugnu felt lost and lonely.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_034.mp3",
+        "text_vi": "Jugnu cảm thấy lạc lõng và cô đơn."
+      },
+      {
+        "text_en": "He had waited all day for Pintu the butterfly.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_035.mp3",
+        "text_vi": "Chú đã đợi Pintu bướm cả ngày."
+      },
+      {
+        "text_en": "But today she was not there to give him a sweet drink.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_036.mp3",
+        "text_vi": "Nhưng hôm nay cô ấy không ở đó để cho chú một thức uống ngọt ngào."
+      },
+      {
+        "text_en": "He was sad.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_037.mp3",
+        "text_vi": "Chú buồn."
+      },
+      {
+        "text_en": "He sulked and withdrew into the hole.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_038.mp3",
+        "text_vi": "Chú hờn dỗi và rút vào trong lỗ."
+      },
+      {
+        "text_en": "And got to think.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_039.mp3",
+        "text_vi": "Và bắt đầu suy nghĩ."
+      },
+      {
+        "text_en": "He saw life slowly grind to a standstill and the garden engulfed in darkness.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_040.mp3",
+        "text_vi": "Chú thấy cuộc sống dần chậm lại đến mức dừng hẳn và khu vườn chìm trong bóng tối."
+      },
+      {
+        "text_en": "When all seemed still, life started ticking once more Jugnu noticed there was a new awakening!",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_041.mp3",
+        "text_vi": "Khi mọi thứ dường như tĩnh lặng, cuộc sống lại bắt đầu chuyển động một lần nữa. Jugnu nhận thấy có một sự thức tỉnh mới!"
+      },
+      {
+        "text_en": "The owl fly out of his hole.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_042.mp3",
+        "text_vi": "Con cú bay ra khỏi hang của nó."
+      },
+      {
+        "text_en": "Jugnu was fascinated, He climbed the highest branch of the neem tree just to see where Mr.Owl went when all was dark.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_043.mp3",
+        "text_vi": "Jugnu bị cuốn hút, chú trèo lên cành cao nhất của cây sầu đâu chỉ để xem ông Cú đi đâu khi trời tối."
+      },
+      {
+        "text_en": "But alas!! in the darkness,Jugnu could see nothing.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_044.mp3",
+        "text_vi": "Nhưng than ôi!! Trong bóng tối, Jugnu không thể nhìn thấy gì cả."
+      },
+      {
+        "text_en": "As he sat engulfed in the beauty of the night.The soft glow of the moon and the twinkling stars blinking and winking at him made him happy and calm.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_045.mp3",
+        "text_vi": "Khi chú ngồi chìm đắm trong vẻ đẹp của màn đêm. Ánh sáng dịu nhẹ của mặt trăng và những ngôi sao lấp lánh nhấp nháy, nháy mắt với chú khiến chú vui vẻ và bình tĩnh."
+      },
+      {
+        "text_en": "Jugnu sat still and heard the crickets creaking The sounds of the night engulfed Jungu in its mysterious world.He was bewildered.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_046.mp3",
+        "text_vi": "Jugnu ngồi yên và nghe tiếng dế kêu. Âm thanh của màn đêm bao trùm Jugnu trong thế giới bí ẩn của nó. Chú bối rối."
+      },
+      {
+        "text_en": "He had found an answer for God's question after all.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_047.mp3",
+        "text_vi": "Cuối cùng thì chú cũng đã tìm thấy câu trả lời cho câu hỏi của Chúa."
+      },
+      {
+        "text_en": "“Yes!! I want to be like these creatures of the night.I want a less noisy world, a world full of mystery and adventure.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_048.mp3",
+        "text_vi": "\"Vâng!! Con muốn được như những sinh vật của màn đêm này. Con muốn một thế giới ít ồn ào hơn, một thế giới đầy bí ẩn và phiêu lưu."
+      },
+      {
+        "text_en": "I want to go deep into the dark woods and fly around.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_049.mp3",
+        "text_vi": "Con muốn đi sâu vào rừng tối và bay lượn khắp nơi."
+      },
+      {
+        "text_en": "I want to explore!",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_050.mp3",
+        "text_vi": "Con muốn khám phá!"
+      },
+      {
+        "text_en": "This is what I want.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_051.mp3",
+        "text_vi": "Đây là điều con muốn."
+      },
+      {
+        "text_en": "But I cannot fly like the butterfly nor can I see in the dark like the wise owl.\"He sighed.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_052.mp3",
+        "text_vi": "Nhưng con không thể bay như bướm mà cũng không thể nhìn trong bóng tối như cú khôn ngoan.\" Chú thở dài."
+      },
+      {
+        "text_en": "He waited for God to come back to him.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_053.mp3",
+        "text_vi": "Chú đợi Chúa quay lại với mình."
+      },
+      {
+        "text_en": "God came and said, ”Well Jugnu your time is up!!",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_054.mp3",
+        "text_vi": "Chúa đến và nói: \"À Jugnu, thời gian của con đã hết rồi!!"
+      },
+      {
+        "text_en": "tell me what you wish to be?” Jugnu looked up into God's eyes and said “Please give me the power to fly and see through the darkness of the night.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_055.mp3",
+        "text_vi": "Hãy nói cho Ta biết con muốn trở thành gì?\" Jugnu nhìn vào mắt Chúa và nói: \"Xin hãy ban cho con sức mạnh để bay và nhìn xuyên qua bóng tối của màn đêm."
+      },
+      {
+        "text_en": "I love the world when it is dark and cool and full of mystery .”",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_056.mp3",
+        "text_vi": "Con yêu thế giới khi nó tối tăm, mát mẻ và đầy bí ẩn.\""
+      },
+      {
+        "text_en": "God was happy and He said-”Jugnu I give you small wings to fly and I also give you the strength to your legs, because what I did to your eyes I cannot undo.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_057.mp3",
+        "text_vi": "Chúa rất vui và Ngài nói: \"Jugnu, Ta ban cho con đôi cánh nhỏ để bay và Ta cũng ban cho con sức mạnh ở đôi chân, vì những gì Ta đã làm với đôi mắt của con thì Ta không thể thay đổi được."
+      },
+      {
+        "text_en": "From today, if you rub your feet you shall have a torch that will guide you through the darkness and help you take a new adventure trip each night” Before Jugnu could say anything, God was gone.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_058.mp3",
+        "text_vi": "Từ hôm nay, nếu con xoa chân, con sẽ có một ngọn đuốc dẫn đường cho con xuyên qua bóng tối và giúp con thực hiện một chuyến phiêu lưu mới mỗi đêm.\" Trước khi Jugnu kịp nói gì, Chúa đã biến mất."
+      },
+      {
+        "text_en": "Jugnu rubbed his legs and loo!!It glowed all around him like a candle in the darkness.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_059.mp3",
+        "text_vi": "Jugnu xoa chân và nhìn kìa!! Nó phát sáng xung quanh chú như một ngọn nến trong bóng tối."
+      },
+      {
+        "text_en": "When he flapped his new found wings!!He could really fly!!",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_060.mp3",
+        "text_vi": "Khi chú vỗ đôi cánh mới của mình!! Chú thực sự có thể bay!!"
+      },
+      {
+        "text_en": "Jugnu swerved and took a dive like an airplane.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_061.mp3",
+        "text_vi": "Jugnu lượn và lao xuống như một chiếc máy bay."
+      },
+      {
+        "text_en": "He flew all around the garden enjoying his new found freedom!",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_062.mp3",
+        "text_vi": "Chú bay khắp khu vườn, tận hưởng sự tự do mới tìm thấy của mình!"
+      },
+      {
+        "text_en": "All the creatures of the day slept..but Pintu alone was awake..she saw the glow worm and she knew it was Jugnu.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_063.mp3",
+        "text_vi": "Tất cả các sinh vật ban ngày đều ngủ... nhưng chỉ có Pintu là thức. Cô ấy nhìn thấy con đom đóm phát sáng và biết đó là Jugnu."
+      },
+      {
+        "text_en": "No one else could be so beautiful and happy so late in the night.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_064.mp3",
+        "text_vi": "Không ai khác có thể đẹp và hạnh phúc đến vậy vào đêm khuya."
+      },
+      {
+        "text_en": "Pintu smiled as she closed her eyes in slumber She knew Jugnu had found a way to be happy and unique as he always wished to be.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_065.mp3",
+        "text_vi": "Pintu mỉm cười khi nhắm mắt chìm vào giấc ngủ. Cô ấy biết Jugnu đã tìm thấy cách để hạnh phúc và độc đáo như chú hằng mong muốn."
+      },
+      {
+        "text_en": "She was happy for him.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_066.mp3",
+        "text_vi": "Cô ấy mừng cho chú."
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "This is the story of a small bug.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "But a bug who dreamt big.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "Not only did he dream big he also made them come true by his determination.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "He was born on the big neem tree in Rahail’s garden.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "When he came out of his egg and looked at the bright daylight, his eyes cringe in disgust.He did not like the brightness around him.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "He noticed, the world was getting noisier and noisier all around him.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "He hated it all the more.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "When all other creatures got busy searching for feed and doing their normal chores.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "This one hid in a small hole and refused to step out.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "He lazed around in the hole saw the world whizzing around him.T he bees buzzing, the birds chirping..children hopping around the flower beds, the butterflies flitting from flower to flower.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "But he just sat there and sulked all day.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "Pintu titli saw him and was a little upset.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "She loved to see happy and gay folks all around her .",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_012.mp3"
+        },
+        {
+          "id": "ra_13",
+          "text_en": "So she flew up to his hole and asked him \"Why was he sulking all day?\"Jugnu the bug was angry he said-”Leave me alone I do not want to talk to anyone”",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_013.mp3"
+        },
+        {
+          "id": "ra_14",
+          "text_en": "But sweet as she was, Pintu would not stop at that.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_014.mp3"
+        },
+        {
+          "id": "ra_15",
+          "text_en": "She collected sweet nectar from the rose plant and visited him the next morning”Hey!!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_015.mp3"
+        },
+        {
+          "id": "ra_16",
+          "text_en": "come on have a sip and see what I got for you.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_016.mp3"
+        },
+        {
+          "id": "ra_17",
+          "text_en": "Am sure you will love this refreshing drink.\"Jugnu was angry again.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_017.mp3"
+        },
+        {
+          "id": "ra_18",
+          "text_en": "But he was hungry too.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_018.mp3"
+        },
+        {
+          "id": "ra_19",
+          "text_en": "So he stuck out his head and took a sip..Hmmm it sure was divine.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_019.mp3"
+        },
+        {
+          "id": "ra_20",
+          "text_en": "jugnu loved it.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_020.mp3"
+        },
+        {
+          "id": "ra_21",
+          "text_en": "Pintu titli sat down on the nearest neem flower and said “Jugnu, have you ever tasted the juice of the neem flower?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_021.mp3"
+        },
+        {
+          "id": "ra_22",
+          "text_en": "Am sure you have not.It is bitter .",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_022.mp3"
+        },
+        {
+          "id": "ra_23",
+          "text_en": "You would not like to be like this flower would you?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_023.mp3"
+        },
+        {
+          "id": "ra_24",
+          "text_en": "But when you sulk and not eat ,you will soon turn bitter Think about this.\" said Pinto as she flew away promising to come back to him the next morning.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_024.mp3"
+        },
+        {
+          "id": "ra_25",
+          "text_en": "God , who makes all creatures big and small also saw what was happening to Jugnu .So he went down to the tiny wormy and said \"Jugnu,I like to see all my children happyand gay, But I find you are upset.Well ,what do you want ?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_025.mp3"
+        },
+        {
+          "id": "ra_26",
+          "text_en": "Ask and I shall grant it to you.But you must make your decision by tonight.”God said this and vanished.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_026.mp3"
+        },
+        {
+          "id": "ra_27",
+          "text_en": "Jugnu got worried.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_027.mp3"
+        },
+        {
+          "id": "ra_28",
+          "text_en": "Oh he did not want to be bitter at all!!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_028.mp3"
+        },
+        {
+          "id": "ra_29",
+          "text_en": "he just wanted to be different- he did not want to be colorful like the butterfly .",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_029.mp3"
+        },
+        {
+          "id": "ra_30",
+          "text_en": "He did not like the busy bees and their angry drones...he just did not like the chirpy birds too!!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_030.mp3"
+        },
+        {
+          "id": "ra_31",
+          "text_en": "What did he want then?What was it he pined for?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_031.mp3"
+        },
+        {
+          "id": "ra_32",
+          "text_en": "As he was looking at all these creatures..it became evening .The birds settled in their nests, kids ran away home, the bugs and bees went into deep slumber.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_032.mp3"
+        },
+        {
+          "id": "ra_33",
+          "text_en": "The birds in the nests were still restless and chatting up about the events of the day.No one bothered to turn around and find out what his problem was.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_033.mp3"
+        },
+        {
+          "id": "ra_34",
+          "text_en": "Jugnu felt lost and lonely.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_034.mp3"
+        },
+        {
+          "id": "ra_35",
+          "text_en": "He had waited all day for Pintu the butterfly.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_035.mp3"
+        },
+        {
+          "id": "ra_36",
+          "text_en": "But today she was not there to give him a sweet drink.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_036.mp3"
+        },
+        {
+          "id": "ra_37",
+          "text_en": "He was sad.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_037.mp3"
+        },
+        {
+          "id": "ra_38",
+          "text_en": "He sulked and withdrew into the hole.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_038.mp3"
+        },
+        {
+          "id": "ra_39",
+          "text_en": "And got to think.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_039.mp3"
+        },
+        {
+          "id": "ra_40",
+          "text_en": "He saw life slowly grind to a standstill and the garden engulfed in darkness.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_040.mp3"
+        },
+        {
+          "id": "ra_41",
+          "text_en": "When all seemed still, life started ticking once more Jugnu noticed there was a new awakening!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_041.mp3"
+        },
+        {
+          "id": "ra_42",
+          "text_en": "The owl fly out of his hole.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_042.mp3"
+        },
+        {
+          "id": "ra_43",
+          "text_en": "Jugnu was fascinated, He climbed the highest branch of the neem tree just to see where Mr.Owl went when all was dark.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_043.mp3"
+        },
+        {
+          "id": "ra_44",
+          "text_en": "But alas!! in the darkness,Jugnu could see nothing.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_044.mp3"
+        },
+        {
+          "id": "ra_45",
+          "text_en": "As he sat engulfed in the beauty of the night.The soft glow of the moon and the twinkling stars blinking and winking at him made him happy and calm.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_045.mp3"
+        },
+        {
+          "id": "ra_46",
+          "text_en": "Jugnu sat still and heard the crickets creaking The sounds of the night engulfed Jungu in its mysterious world.He was bewildered.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_046.mp3"
+        },
+        {
+          "id": "ra_47",
+          "text_en": "He had found an answer for God's question after all.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_047.mp3"
+        },
+        {
+          "id": "ra_48",
+          "text_en": "“Yes!! I want to be like these creatures of the night.I want a less noisy world, a world full of mystery and adventure.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_048.mp3"
+        },
+        {
+          "id": "ra_49",
+          "text_en": "I want to go deep into the dark woods and fly around.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_049.mp3"
+        },
+        {
+          "id": "ra_50",
+          "text_en": "I want to explore!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_050.mp3"
+        },
+        {
+          "id": "ra_51",
+          "text_en": "This is what I want.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_051.mp3"
+        },
+        {
+          "id": "ra_52",
+          "text_en": "But I cannot fly like the butterfly nor can I see in the dark like the wise owl.\"He sighed.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_052.mp3"
+        },
+        {
+          "id": "ra_53",
+          "text_en": "He waited for God to come back to him.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_053.mp3"
+        },
+        {
+          "id": "ra_54",
+          "text_en": "God came and said, ”Well Jugnu your time is up!!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_054.mp3"
+        },
+        {
+          "id": "ra_55",
+          "text_en": "tell me what you wish to be?” Jugnu looked up into God's eyes and said “Please give me the power to fly and see through the darkness of the night.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_055.mp3"
+        },
+        {
+          "id": "ra_56",
+          "text_en": "I love the world when it is dark and cool and full of mystery .”",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_056.mp3"
+        },
+        {
+          "id": "ra_57",
+          "text_en": "God was happy and He said-”Jugnu I give you small wings to fly and I also give you the strength to your legs, because what I did to your eyes I cannot undo.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_057.mp3"
+        },
+        {
+          "id": "ra_58",
+          "text_en": "From today, if you rub your feet you shall have a torch that will guide you through the darkness and help you take a new adventure trip each night” Before Jugnu could say anything, God was gone.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_058.mp3"
+        },
+        {
+          "id": "ra_59",
+          "text_en": "Jugnu rubbed his legs and loo!!It glowed all around him like a candle in the darkness.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_059.mp3"
+        },
+        {
+          "id": "ra_60",
+          "text_en": "When he flapped his new found wings!!He could really fly!!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_060.mp3"
+        },
+        {
+          "id": "ra_61",
+          "text_en": "Jugnu swerved and took a dive like an airplane.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_061.mp3"
+        },
+        {
+          "id": "ra_62",
+          "text_en": "He flew all around the garden enjoying his new found freedom!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_062.mp3"
+        },
+        {
+          "id": "ra_63",
+          "text_en": "All the creatures of the day slept..but Pintu alone was awake..she saw the glow worm and she knew it was Jugnu.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_063.mp3"
+        },
+        {
+          "id": "ra_64",
+          "text_en": "No one else could be so beautiful and happy so late in the night.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_064.mp3"
+        },
+        {
+          "id": "ra_65",
+          "text_en": "Pintu smiled as she closed her eyes in slumber She knew Jugnu had found a way to be happy and unique as he always wished to be.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_065.mp3"
+        },
+        {
+          "id": "ra_66",
+          "text_en": "She was happy for him.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_151121/s_066.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "What is this story about?",
+          "options_en": [
+            "A small bug",
+            "A big neem tree",
+            "Rahail"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "Who is the story of?",
+          "options_en": [
+            "A small bug",
+            "Pintu titli",
+            "The owl"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s1_q1",
+          "type": "choice",
+          "question_en": "What kind of bug is mentioned?",
+          "options_en": [
+            "A bug who dreamt big",
+            "A sleepy bug",
+            "A noisy bug"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s1_q2",
+          "type": "choice",
+          "question_en": "What did the bug do?",
+          "options_en": [
+            "Dreamt big",
+            "Collected nectar",
+            "Slept all day"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s2_q1",
+          "type": "choice",
+          "question_en": "How did he make his dreams come true?",
+          "options_en": [
+            "By his determination",
+            "With Pintu's help",
+            "By staying in a hole"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s2_q2",
+          "type": "choice",
+          "question_en": "What else did he do besides dream?",
+          "options_en": [
+            "Made them come true",
+            "Flew at night",
+            "Ate neem flowers"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s3_q1",
+          "type": "choice",
+          "question_en": "Where was he born?",
+          "options_en": [
+            "On the big neem tree in Rahail’s garden",
+            "In a small hole",
+            "On a rose plant"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p0_s3_q2",
+          "type": "choice",
+          "question_en": "Whose garden had the neem tree where he was born?",
+          "options_en": [
+            "Rahail’s garden",
+            "Jugnu's garden",
+            "Pintu's garden"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p0_s4_q1",
+          "type": "choice",
+          "question_en": "When did his eyes cringe in disgust?",
+          "options_en": [
+            "When he came out of his egg and looked at the bright daylight",
+            "When he met Pintu",
+            "When he first flew at night"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p0_s4_q2",
+          "type": "choice",
+          "question_en": "Why did he cringe at the daylight?",
+          "options_en": [
+            "He did not like the brightness around him",
+            "He was hungry",
+            "He was cold"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p0_s5_q1",
+          "type": "choice",
+          "question_en": "What did he notice about the world?",
+          "options_en": [
+            "It was getting noisier and noisier",
+            "It was growing darker",
+            "It was getting quieter"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p0_s5_q2",
+          "type": "choice",
+          "question_en": "How was the noise changing around him?",
+          "options_en": [
+            "Getting noisier and noisier",
+            "Staying the same",
+            "Disappearing"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p0_s6_q1",
+          "type": "choice",
+          "question_en": "How did he feel about the increasing noise?",
+          "options_en": [
+            "He hated it all the more",
+            "He loved it more",
+            "He was curious"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p0_s6_q2",
+          "type": "choice",
+          "question_en": "What emotion did he have toward the noise?",
+          "options_en": [
+            "Hatred",
+            "Happiness",
+            "Indifference"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "Who got busy searching for feed and doing their normal chores?",
+          "options_en": [
+            "All other creatures",
+            "Jugnu the bug",
+            "Pintu titli"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "What were the other creatures doing?",
+          "options_en": [
+            "Searching for feed and doing their normal chores",
+            "Hiding in a small hole",
+            "Flying only at night"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p1_s1_q1",
+          "type": "choice",
+          "question_en": "What did this one do instead of joining the others?",
+          "options_en": [
+            "Hid in a small hole and refused to step out",
+            "Collected nectar from a rose",
+            "Flew around the garden at night"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p1_s1_q2",
+          "type": "choice",
+          "question_en": "Where did this one hide?",
+          "options_en": [
+            "In a small hole",
+            "On a neem flower",
+            "In the rose plant"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p1_s2_q1",
+          "type": "choice",
+          "question_en": "What did he see while lazing around in the hole?",
+          "options_en": [
+            "The world whizzing around him",
+            "The garden darkening at night",
+            "The owl flying out of its hole"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p1_s2_q2",
+          "type": "choice",
+          "question_en": "Which insect is mentioned as buzzing in this sentence?",
+          "options_en": [
+            "Bees",
+            "Owl",
+            "Crickets"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p1_s3_q1",
+          "type": "choice",
+          "question_en": "What did he do all day?",
+          "options_en": [
+            "Sat there and sulked",
+            "Flew around happily",
+            "Collected sweet nectar"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p1_s3_q2",
+          "type": "choice",
+          "question_en": "When did he sulk according to the sentence?",
+          "options_en": [
+            "All day",
+            "Only at night",
+            "Only in the morning"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p1_s4_q1",
+          "type": "choice",
+          "question_en": "Who saw him and felt a little upset?",
+          "options_en": [
+            "Pintu titli",
+            "Jugnu the bug",
+            "The owl"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p1_s4_q2",
+          "type": "choice",
+          "question_en": "How did Pintu titli feel when she saw him?",
+          "options_en": [
+            "A little upset",
+            "Very happy",
+            "Sleepy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p1_s5_q1",
+          "type": "choice",
+          "question_en": "What did she love to see around her?",
+          "options_en": [
+            "Happy and gay folks all around her",
+            "Dark and mysterious nights",
+            "Only the neem flowers"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p1_s5_q2",
+          "type": "choice",
+          "question_en": "What is the correct answer to this question: Whom did she like to see according to the sentence?",
+          "options_en": [
+            "Happy and gay folks",
+            "The wise owl",
+            "Jugnu sulking"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p1_s6_q1",
+          "type": "choice",
+          "question_en": "What did she do after seeing him sulk?",
+          "options_en": [
+            "Flew up to his hole and asked him why he was sulking",
+            "Ignored him and flew away",
+            "Collected nectar from the rose and left"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p1_s6_q2",
+          "type": "choice",
+          "question_en": "What did Jugnu say when asked about sulking?",
+          "options_en": [
+            "\"Leave me alone I do not want to talk to anyone\"",
+            "He asked for a sweet drink",
+            "He invited Pintu to play"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "Who is described as sweet?",
+          "options_en": [
+            "Pintu",
+            "Jugnu",
+            "God"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "What would Pintu not do?",
+          "options_en": [
+            "Stop at that",
+            "Fly away at once",
+            "Go to sleep"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p2_s1_q1",
+          "type": "choice",
+          "question_en": "What did she collect from the rose plant?",
+          "options_en": [
+            "Sweet nectar",
+            "Neem juice",
+            "Seeds"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p2_s1_q2",
+          "type": "choice",
+          "question_en": "When did she visit him?",
+          "options_en": [
+            "The next morning",
+            "That night",
+            "Immediately"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p2_s2_q1",
+          "type": "choice",
+          "question_en": "What does she invite him to do?",
+          "options_en": [
+            "Have a sip",
+            "Smell the flower",
+            "Run outside"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p2_s2_q2",
+          "type": "choice",
+          "question_en": "What does she say she got for him?",
+          "options_en": [
+            "A refreshing drink",
+            "A neem flower",
+            "A new wing"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p2_s3_q1",
+          "type": "choice",
+          "question_en": "Who was angry again?",
+          "options_en": [
+            "Jugnu",
+            "Pintu",
+            "The owl"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p2_s3_q2",
+          "type": "choice",
+          "question_en": "What did she think he would love?",
+          "options_en": [
+            "This refreshing drink",
+            "The night",
+            "The neem leaf"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p2_s4_q1",
+          "type": "choice",
+          "question_en": "Who was hungry too?",
+          "options_en": [
+            "He (Jugnu)",
+            "Pintu",
+            "The owl"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p2_s4_q2",
+          "type": "choice",
+          "question_en": "How was he feeling besides being angry?",
+          "options_en": [
+            "Hungry",
+            "Sleepy",
+            "Happy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p2_s5_q1",
+          "type": "choice",
+          "question_en": "What did he do with his head?",
+          "options_en": [
+            "Stuck out his head",
+            "Hid his head",
+            "Closed his eyes"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p2_s5_q2",
+          "type": "choice",
+          "question_en": "How did the drink taste to him?",
+          "options_en": [
+            "Divine",
+            "Bitter",
+            "Sour"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p2_s6_q1",
+          "type": "choice",
+          "question_en": "Who loved it?",
+          "options_en": [
+            "Jugnu",
+            "Pintu",
+            "The child"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p2_s6_q2",
+          "type": "choice",
+          "question_en": "What did Jugnu love?",
+          "options_en": [
+            "The drink",
+            "The neem flower",
+            "The moonlight"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p2_s7_q1",
+          "type": "choice",
+          "question_en": "Where did Pintu sit?",
+          "options_en": [
+            "On the nearest neem flower",
+            "On the rose plant",
+            "Inside Jugnu's hole"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p2_s7_q2",
+          "type": "choice",
+          "question_en": "What did Pintu ask Jugnu?",
+          "options_en": [
+            "Have you ever tasted the juice of the neem flower?",
+            "Do you want to fly at night?",
+            "Will you come out to play?"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p2_s8_q1",
+          "type": "choice",
+          "question_en": "What is she sure of about his experience?",
+          "options_en": [
+            "He has not tasted it",
+            "He has tasted it before",
+            "He grows it himself"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p2_s8_q2",
+          "type": "choice",
+          "question_en": "How does she describe it?",
+          "options_en": [
+            "Bitter",
+            "Sweet",
+            "Divine"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p2_s9_q1",
+          "type": "choice",
+          "question_en": "Who would not like to be like this flower?",
+          "options_en": [
+            "You (Jugnu)",
+            "Pintu",
+            "God"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p2_s9_q2",
+          "type": "choice",
+          "question_en": "What does she ask about being like the flower?",
+          "options_en": [
+            "Would you like to be like this flower?",
+            "Will you fly like the owl?",
+            "Do you want to sleep now?"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p2_s10_q1",
+          "type": "choice",
+          "question_en": "What did Pintu warn would happen if he sulks and not eat?",
+          "options_en": [
+            "He will soon turn bitter",
+            "He will grow wings",
+            "He will see in the dark"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p2_s10_q2",
+          "type": "choice",
+          "question_en": "When did she promise to come back to him?",
+          "options_en": [
+            "The next morning",
+            "That night",
+            "In a week"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "Who saw what was happening to Jugnu?",
+          "options_en": [
+            "God",
+            "Pintu the butterfly",
+            "The birds"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "Who did God go down to and speak with?",
+          "options_en": [
+            "The tiny wormy (Jugnu)",
+            "Pintu the butterfly",
+            "Mr. Owl"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p3_s1_q1",
+          "type": "choice",
+          "question_en": "What does God say he will do if Jugnu asks?",
+          "options_en": [
+            "Grant it",
+            "Ignore him",
+            "Give him nectar"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p3_s1_q2",
+          "type": "choice",
+          "question_en": "When must Jugnu make his decision?",
+          "options_en": [
+            "By tonight",
+            "By morning",
+            "By noon"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p3_s2_q1",
+          "type": "choice",
+          "question_en": "Who got worried?",
+          "options_en": [
+            "Jugnu",
+            "Pintu",
+            "God"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        },
+        {
+          "id": "gl_p3_s2_q2",
+          "type": "choice",
+          "question_en": "What happened to Jugnu?",
+          "options_en": [
+            "He got worried",
+            "He flew away",
+            "He vanished"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        },
+        {
+          "id": "gl_p3_s3_q1",
+          "type": "choice",
+          "question_en": "What did he not want to be?",
+          "options_en": [
+            "Bitter",
+            "Colorful",
+            "Noisy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        },
+        {
+          "id": "gl_p3_s3_q2",
+          "type": "choice",
+          "question_en": "How did he feel about being bitter?",
+          "options_en": [
+            "He did not want to be bitter",
+            "He wanted to be bitter",
+            "He was already bitter"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        },
+        {
+          "id": "gl_p3_s4_q1",
+          "type": "choice",
+          "question_en": "What did he want to be?",
+          "options_en": [
+            "Different",
+            "Colorful like the butterfly",
+            "Busy like the bees"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p3_s4_q2",
+          "type": "choice",
+          "question_en": "Which creature is mentioned as being colorful?",
+          "options_en": [
+            "The butterfly",
+            "The bees",
+            "The owl"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p3_s5_q1",
+          "type": "choice",
+          "question_en": "Which creatures did he not like?",
+          "options_en": [
+            "The busy bees and their angry drones",
+            "The butterflies",
+            "Mr. Owl"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        },
+        {
+          "id": "gl_p3_s5_q2",
+          "type": "choice",
+          "question_en": "What other creatures did he not like?",
+          "options_en": [
+            "The chirpy birds",
+            "The children",
+            "The neem tree"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        },
+        {
+          "id": "gl_p3_s6_q1",
+          "type": "choice",
+          "question_en": "What question is asked about Jugnu in these lines?",
+          "options_en": [
+            "What did he want?",
+            "Where did he go?",
+            "When did he sleep?"
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        },
+        {
+          "id": "gl_p3_s6_q2",
+          "type": "choice",
+          "question_en": "Which aspect of Jugnu is being asked about here?",
+          "options_en": [
+            "What he pined for",
+            "Where he lived",
+            "How old he was"
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "When did it become?",
+          "options_en": [
+            "Evening",
+            "Morning",
+            "Night"
+          ],
+          "correct_index": 0,
+          "sentence_index": 32
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "Which creatures went into deep slumber?",
+          "options_en": [
+            "The bugs and bees",
+            "The birds in the nests",
+            "The butterflies"
+          ],
+          "correct_index": 0,
+          "sentence_index": 32
+        },
+        {
+          "id": "gl_p4_s1_q1",
+          "type": "choice",
+          "question_en": "What were the birds in the nests doing?",
+          "options_en": [
+            "They were restless and chatting about the events of the day",
+            "They were fast asleep",
+            "They were flying around the garden"
+          ],
+          "correct_index": 0,
+          "sentence_index": 33
+        },
+        {
+          "id": "gl_p4_s1_q2",
+          "type": "choice",
+          "question_en": "Who did not bother to turn around to find out his problem?",
+          "options_en": [
+            "No one",
+            "The birds",
+            "Pintu the butterfly"
+          ],
+          "correct_index": 0,
+          "sentence_index": 33
+        },
+        {
+          "id": "gl_p4_s2_q1",
+          "type": "choice",
+          "question_en": "How did Jugnu feel?",
+          "options_en": [
+            "Lost and lonely",
+            "Excited and joyful",
+            "Angry and noisy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 34
+        },
+        {
+          "id": "gl_p4_s2_q2",
+          "type": "choice",
+          "question_en": "Who felt lost and lonely?",
+          "options_en": [
+            "Jugnu",
+            "Pintu the butterfly",
+            "The owl"
+          ],
+          "correct_index": 0,
+          "sentence_index": 34
+        },
+        {
+          "id": "gl_p4_s3_q1",
+          "type": "choice",
+          "question_en": "Who had he waited all day for?",
+          "options_en": [
+            "Pintu the butterfly",
+            "The bees",
+            "The wise owl"
+          ],
+          "correct_index": 0,
+          "sentence_index": 35
+        },
+        {
+          "id": "gl_p4_s3_q2",
+          "type": "choice",
+          "question_en": "When had he waited for Pintu?",
+          "options_en": [
+            "All day",
+            "All night",
+            "In the morning"
+          ],
+          "correct_index": 0,
+          "sentence_index": 35
+        },
+        {
+          "id": "gl_p4_s4_q1",
+          "type": "choice",
+          "question_en": "Who was not there to give him a sweet drink?",
+          "options_en": [
+            "Pintu the butterfly",
+            "Jugnu",
+            "God"
+          ],
+          "correct_index": 0,
+          "sentence_index": 36
+        },
+        {
+          "id": "gl_p4_s4_q2",
+          "type": "choice",
+          "question_en": "What was she not there to give him?",
+          "options_en": [
+            "A sweet drink",
+            "Wings to fly",
+            "A neem flower"
+          ],
+          "correct_index": 0,
+          "sentence_index": 36
+        },
+        {
+          "id": "gl_p4_s5_q1",
+          "type": "choice",
+          "question_en": "What was his emotional state in this sentence?",
+          "options_en": [
+            "He was sad",
+            "He was joyful",
+            "He was surprised"
+          ],
+          "correct_index": 0,
+          "sentence_index": 37
+        },
+        {
+          "id": "gl_p4_s5_q2",
+          "type": "choice",
+          "question_en": "Which feeling is described about him in this sentence?",
+          "options_en": [
+            "Sad",
+            "Happy",
+            "Angry"
+          ],
+          "correct_index": 0,
+          "sentence_index": 37
+        },
+        {
+          "id": "gl_p4_s6_q1",
+          "type": "choice",
+          "question_en": "What did he do after feeling sad?",
+          "options_en": [
+            "He sulked and withdrew into the hole",
+            "He flew around the garden",
+            "He chatted with the birds"
+          ],
+          "correct_index": 0,
+          "sentence_index": 38
+        },
+        {
+          "id": "gl_p4_s6_q2",
+          "type": "choice",
+          "question_en": "Where did he withdraw to?",
+          "options_en": [
+            "Into the hole",
+            "Onto a flower",
+            "Into a bird's nest"
+          ],
+          "correct_index": 0,
+          "sentence_index": 38
+        },
+        {
+          "id": "gl_p4_s7_q1",
+          "type": "choice",
+          "question_en": "What did he get to do after withdrawing?",
+          "options_en": [
+            "He got to think",
+            "He fell asleep",
+            "He drank nectar"
+          ],
+          "correct_index": 0,
+          "sentence_index": 39
+        },
+        {
+          "id": "gl_p4_s7_q2",
+          "type": "choice",
+          "question_en": "How did he spend his time according to the sentence?",
+          "options_en": [
+            "Thinking",
+            "Flying",
+            "Singing"
+          ],
+          "correct_index": 0,
+          "sentence_index": 39
+        },
+        {
+          "id": "gl_p4_s8_q1",
+          "type": "choice",
+          "question_en": "What did he see happen to life?",
+          "options_en": [
+            "It slowly ground to a standstill",
+            "It became louder and busier",
+            "It burst into colour"
+          ],
+          "correct_index": 0,
+          "sentence_index": 40
+        },
+        {
+          "id": "gl_p4_s8_q2",
+          "type": "choice",
+          "question_en": "What engulfed the garden?",
+          "options_en": [
+            "Darkness",
+            "Sunlight",
+            "Rain"
+          ],
+          "correct_index": 0,
+          "sentence_index": 40
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "Who noticed there was a new awakening?",
+          "options_en": [
+            "Jugnu",
+            "Pintu titli",
+            "Mr.Owl"
+          ],
+          "correct_index": 0,
+          "sentence_index": 41
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "What did Jugnu notice when life started ticking once more?",
+          "options_en": [
+            "A new awakening",
+            "The neem flowers opening",
+            "Children returning home"
+          ],
+          "correct_index": 0,
+          "sentence_index": 41
+        },
+        {
+          "id": "gl_p5_s1_q1",
+          "type": "choice",
+          "question_en": "What flew out of his hole?",
+          "options_en": [
+            "The owl",
+            "A bee",
+            "The butterfly"
+          ],
+          "correct_index": 0,
+          "sentence_index": 42
+        },
+        {
+          "id": "gl_p5_s1_q2",
+          "type": "choice",
+          "question_en": "Where did the owl fly out of?",
+          "options_en": [
+            "His hole",
+            "A neem flower",
+            "A bird's nest"
+          ],
+          "correct_index": 0,
+          "sentence_index": 42
+        },
+        {
+          "id": "gl_p5_s2_q1",
+          "type": "choice",
+          "question_en": "Who climbed the highest branch of the neem tree?",
+          "options_en": [
+            "Jugnu",
+            "Pintu titli",
+            "Mr.Owl"
+          ],
+          "correct_index": 0,
+          "sentence_index": 43
+        },
+        {
+          "id": "gl_p5_s2_q2",
+          "type": "choice",
+          "question_en": "Why did Jugnu climb the highest branch?",
+          "options_en": [
+            "To see where Mr.Owl went when all was dark",
+            "To taste neem flower nectar",
+            "To hide from the bees"
+          ],
+          "correct_index": 0,
+          "sentence_index": 43
+        },
+        {
+          "id": "gl_p5_s3_q1",
+          "type": "choice",
+          "question_en": "What could Jugnu see in the darkness?",
+          "options_en": [
+            "Nothing",
+            "Mr.Owl flying",
+            "The twinkling stars"
+          ],
+          "correct_index": 0,
+          "sentence_index": 44
+        },
+        {
+          "id": "gl_p5_s3_q2",
+          "type": "choice",
+          "question_en": "When could Jugnu see nothing?",
+          "options_en": [
+            "In the darkness",
+            "In the bright daylight",
+            "While drinking nectar"
+          ],
+          "correct_index": 0,
+          "sentence_index": 44
+        },
+        {
+          "id": "gl_p5_s4_q1",
+          "type": "choice",
+          "question_en": "What made Jugnu happy and calm as he sat?",
+          "options_en": [
+            "The soft glow of the moon and the twinkling stars",
+            "The sweet nectar from the rose",
+            "The busy bees buzzing"
+          ],
+          "correct_index": 0,
+          "sentence_index": 45
+        },
+        {
+          "id": "gl_p5_s4_q2",
+          "type": "choice",
+          "question_en": "How did the stars appear to Jugnu?",
+          "options_en": [
+            "Blinking and winking at him",
+            "Loud and noisy",
+            "Bitter like a neem flower"
+          ],
+          "correct_index": 0,
+          "sentence_index": 45
+        },
+        {
+          "id": "gl_p5_s5_q1",
+          "type": "choice",
+          "question_en": "What sound did Jugnu hear as he sat still?",
+          "options_en": [
+            "The crickets creaking",
+            "Bees buzzing",
+            "Children hopping"
+          ],
+          "correct_index": 0,
+          "sentence_index": 46
+        },
+        {
+          "id": "gl_p5_s5_q2",
+          "type": "choice",
+          "question_en": "How did the sounds of the night affect Jugnu?",
+          "options_en": [
+            "They engulfed him in its mysterious world",
+            "They made him angry at the birds",
+            "They made him go and drink nectar"
+          ],
+          "correct_index": 0,
+          "sentence_index": 46
+        },
+        {
+          "id": "gl_p5_s6_q1",
+          "type": "choice",
+          "question_en": "What had he found after all?",
+          "options_en": [
+            "An answer for God's question",
+            "A way to taste neem nectar",
+            "A hiding place in a hole"
+          ],
+          "correct_index": 0,
+          "sentence_index": 47
+        },
+        {
+          "id": "gl_p5_s6_q2",
+          "type": "choice",
+          "question_en": "Whose question had he found an answer for?",
+          "options_en": [
+            "God's question",
+            "Pintu's question",
+            "Mr.Owl's question"
+          ],
+          "correct_index": 0,
+          "sentence_index": 47
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "Who does the speaker want to be like?",
+          "options_en": [
+            "These creatures of the night",
+            "The busy bees",
+            "The chirpy birds"
+          ],
+          "correct_index": 0,
+          "sentence_index": 48
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "What kind of world does the speaker want?",
+          "options_en": [
+            "A less noisy world",
+            "A bright sunny world",
+            "A colorful world"
+          ],
+          "correct_index": 0,
+          "sentence_index": 48
+        },
+        {
+          "id": "gl_p6_s1_q1",
+          "type": "choice",
+          "question_en": "Where does the speaker want to go?",
+          "options_en": [
+            "Deep into the dark woods",
+            "To the flower beds",
+            "To the neem tree"
+          ],
+          "correct_index": 0,
+          "sentence_index": 49
+        },
+        {
+          "id": "gl_p6_s1_q2",
+          "type": "choice",
+          "question_en": "What does the speaker want to do there?",
+          "options_en": [
+            "Fly around",
+            "Search for nectar",
+            "Sing with birds"
+          ],
+          "correct_index": 0,
+          "sentence_index": 49
+        },
+        {
+          "id": "gl_p6_s2_q1",
+          "type": "choice",
+          "question_en": "What does the speaker say they want to do?",
+          "options_en": [
+            "Explore",
+            "Sleep",
+            "Eat nectar"
+          ],
+          "correct_index": 0,
+          "sentence_index": 50
+        },
+        {
+          "id": "gl_p6_s2_q2",
+          "type": "choice",
+          "question_en": "How does the speaker express their desire in this sentence?",
+          "options_en": [
+            "I want to explore!",
+            "I want to sleep",
+            "I want to hide"
+          ],
+          "correct_index": 0,
+          "sentence_index": 50
+        },
+        {
+          "id": "gl_p6_s3_q1",
+          "type": "choice",
+          "question_en": "What does the speaker declare in this sentence?",
+          "options_en": [
+            "This is what I want.",
+            "I do not want anything.",
+            "I will change my mind."
+          ],
+          "correct_index": 0,
+          "sentence_index": 51
+        },
+        {
+          "id": "gl_p6_s3_q2",
+          "type": "choice",
+          "question_en": "How does the speaker summarize their wish?",
+          "options_en": [
+            "This is what I want.",
+            "I am uncertain.",
+            "I will wait."
+          ],
+          "correct_index": 0,
+          "sentence_index": 51
+        },
+        {
+          "id": "gl_p6_s4_q1",
+          "type": "choice",
+          "question_en": "What two abilities does the speaker say they cannot do?",
+          "options_en": [
+            "Fly like the butterfly and see in the dark like the wise owl",
+            "Sing like the birds and collect nectar like bees",
+            "Climb the neem tree and hop like children"
+          ],
+          "correct_index": 0,
+          "sentence_index": 52
+        },
+        {
+          "id": "gl_p6_s4_q2",
+          "type": "choice",
+          "question_en": "How does the speaker react after saying they cannot do those things?",
+          "options_en": [
+            "He sighed",
+            "He laughed",
+            "He jumped with joy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 52
+        },
+        {
+          "id": "gl_p6_s5_q1",
+          "type": "choice",
+          "question_en": "Who did he wait for?",
+          "options_en": [
+            "God",
+            "Pintu the butterfly",
+            "The wise owl"
+          ],
+          "correct_index": 0,
+          "sentence_index": 53
+        },
+        {
+          "id": "gl_p6_s5_q2",
+          "type": "choice",
+          "question_en": "What did he do according to the sentence?",
+          "options_en": [
+            "He waited for God to come back to him",
+            "He flew away",
+            "He drank nectar"
+          ],
+          "correct_index": 0,
+          "sentence_index": 53
+        },
+        {
+          "id": "gl_p6_s6_q1",
+          "type": "choice",
+          "question_en": "Who came in this sentence?",
+          "options_en": [
+            "God",
+            "Pintu",
+            "The owl"
+          ],
+          "correct_index": 0,
+          "sentence_index": 54
+        },
+        {
+          "id": "gl_p6_s6_q2",
+          "type": "choice",
+          "question_en": "What did God say about Jugnu's time?",
+          "options_en": [
+            "Your time is up",
+            "Your time is beginning",
+            "You must sleep"
+          ],
+          "correct_index": 0,
+          "sentence_index": 54
+        },
+        {
+          "id": "gl_p6_s7_q1",
+          "type": "choice",
+          "question_en": "What did God ask Jugnu to tell him?",
+          "options_en": [
+            "What you wish to be",
+            "Why you are sad",
+            "Where you live"
+          ],
+          "correct_index": 0,
+          "sentence_index": 55
+        },
+        {
+          "id": "gl_p6_s7_q2",
+          "type": "choice",
+          "question_en": "What did Jugnu ask God for in this sentence?",
+          "options_en": [
+            "The power to fly and see through the darkness of the night",
+            "To be colorful like a butterfly",
+            "A sweet nectar"
+          ],
+          "correct_index": 0,
+          "sentence_index": 55
+        },
+        {
+          "id": "gl_p6_s8_q1",
+          "type": "choice",
+          "question_en": "When does the speaker say they love the world?",
+          "options_en": [
+            "When it is dark and cool and full of mystery",
+            "When it is bright and noisy",
+            "When children play"
+          ],
+          "correct_index": 0,
+          "sentence_index": 56
+        },
+        {
+          "id": "gl_p6_s8_q2",
+          "type": "choice",
+          "question_en": "How does the speaker describe the world they love?",
+          "options_en": [
+            "Dark, cool, and full of mystery",
+            "Bright, loud, and busy",
+            "Colorful, sunny, and warm"
+          ],
+          "correct_index": 0,
+          "sentence_index": 56
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "Who spoke to Jugnu and promised him wings?",
+          "options_en": [
+            "God",
+            "Pintu the butterfly",
+            "The wise owl"
+          ],
+          "correct_index": 0,
+          "sentence_index": 57
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "What else did the speaker give Jugnu besides small wings?",
+          "options_en": [
+            "Strength to his legs",
+            "A bright torch",
+            "The gift of sight"
+          ],
+          "correct_index": 0,
+          "sentence_index": 57
+        },
+        {
+          "id": "gl_p7_s1_q1",
+          "type": "choice",
+          "question_en": "What will happen if Jugnu rubs his feet from today?",
+          "options_en": [
+            "He shall have a torch to guide him",
+            "He will turn into a butterfly",
+            "He will see in the daylight"
+          ],
+          "correct_index": 0,
+          "sentence_index": 58
+        },
+        {
+          "id": "gl_p7_s1_q2",
+          "type": "choice",
+          "question_en": "What happened before Jugnu could say anything?",
+          "options_en": [
+            "God was gone",
+            "Pintu arrived",
+            "The owl hooted"
+          ],
+          "correct_index": 0,
+          "sentence_index": 58
+        },
+        {
+          "id": "gl_p7_s2_q1",
+          "type": "choice",
+          "question_en": "What did Jugnu rub in the sentence?",
+          "options_en": [
+            "His legs",
+            "His wings",
+            "The neem leaf"
+          ],
+          "correct_index": 0,
+          "sentence_index": 59
+        },
+        {
+          "id": "gl_p7_s2_q2",
+          "type": "choice",
+          "question_en": "How did the rubbing make him appear?",
+          "options_en": [
+            "It glowed all around him like a candle",
+            "He became colorful like a butterfly",
+            "He began to sing like the birds"
+          ],
+          "correct_index": 0,
+          "sentence_index": 59
+        },
+        {
+          "id": "gl_p7_s3_q1",
+          "type": "choice",
+          "question_en": "What did Jugnu do with his new found wings?",
+          "options_en": [
+            "He flapped them and could really fly",
+            "He folded them and hid in a hole",
+            "He used them to scare the bees"
+          ],
+          "correct_index": 0,
+          "sentence_index": 60
+        },
+        {
+          "id": "gl_p7_s3_q2",
+          "type": "choice",
+          "question_en": "How did the sentence describe Jugnu's flying ability?",
+          "options_en": [
+            "He could really fly",
+            "He could only glide slowly",
+            "He could hop like a cricket"
+          ],
+          "correct_index": 0,
+          "sentence_index": 60
+        },
+        {
+          "id": "gl_p7_s4_q1",
+          "type": "choice",
+          "question_en": "How did Jugnu move through the air in this sentence?",
+          "options_en": [
+            "He swerved and took a dive like an airplane",
+            "He floated gently like a leaf",
+            "He hopped from flower to flower"
+          ],
+          "correct_index": 0,
+          "sentence_index": 61
+        },
+        {
+          "id": "gl_p7_s4_q2",
+          "type": "choice",
+          "question_en": "What simile is used to describe Jugnu's dive?",
+          "options_en": [
+            "Like an airplane",
+            "Like a bird",
+            "Like a bee"
+          ],
+          "correct_index": 0,
+          "sentence_index": 61
+        },
+        {
+          "id": "gl_p7_s5_q1",
+          "type": "choice",
+          "question_en": "Where did Jugnu fly according to the sentence?",
+          "options_en": [
+            "All around the garden",
+            "To the top of the neem tree",
+            "Into the deep woods"
+          ],
+          "correct_index": 0,
+          "sentence_index": 62
+        },
+        {
+          "id": "gl_p7_s5_q2",
+          "type": "choice",
+          "question_en": "Why was Jugnu happy while flying in this sentence?",
+          "options_en": [
+            "He was enjoying his new found freedom",
+            "He wanted to find Pintu",
+            "He was looking for nectar"
+          ],
+          "correct_index": 0,
+          "sentence_index": 62
+        }
+      ]
+    },
+    {
+      "paragraph_index": 8,
+      "questions": [
+        {
+          "id": "gl_p8_s0_q1",
+          "type": "choice",
+          "question_en": "Who was awake when all the creatures of the day slept?",
+          "options_en": [
+            "Pintu",
+            "Jugnu",
+            "The owl"
+          ],
+          "correct_index": 0,
+          "sentence_index": 63
+        },
+        {
+          "id": "gl_p8_s0_q2",
+          "type": "choice",
+          "question_en": "Who did Pintu see and recognise as Jugnu?",
+          "options_en": [
+            "The glow worm",
+            "A butterfly",
+            "A bee"
+          ],
+          "correct_index": 0,
+          "sentence_index": 63
+        },
+        {
+          "id": "gl_p8_s1_q1",
+          "type": "choice",
+          "question_en": "When could no one else be so beautiful and happy?",
+          "options_en": [
+            "So late in the night",
+            "In the bright daylight",
+            "Early in the morning"
+          ],
+          "correct_index": 0,
+          "sentence_index": 64
+        },
+        {
+          "id": "gl_p8_s1_q2",
+          "type": "choice",
+          "question_en": "What could no one else be, according to the sentence?",
+          "options_en": [
+            "So beautiful and happy",
+            "Loud and busy",
+            "Restless and chatting"
+          ],
+          "correct_index": 0,
+          "sentence_index": 64
+        },
+        {
+          "id": "gl_p8_s2_q1",
+          "type": "choice",
+          "question_en": "What did Pintu do as she closed her eyes in slumber?",
+          "options_en": [
+            "She smiled",
+            "She flew away",
+            "She drank nectar"
+          ],
+          "correct_index": 0,
+          "sentence_index": 65
+        },
+        {
+          "id": "gl_p8_s2_q2",
+          "type": "choice",
+          "question_en": "What did Pintu know about Jugnu?",
+          "options_en": [
+            "He had found a way to be happy and unique",
+            "He wanted to be a colorful butterfly",
+            "He hated the brightness"
+          ],
+          "correct_index": 0,
+          "sentence_index": 65
+        },
+        {
+          "id": "gl_p8_s3_q1",
+          "type": "choice",
+          "question_en": "Who was happy for him?",
+          "options_en": [
+            "She (Pintu)",
+            "The children",
+            "The bees"
+          ],
+          "correct_index": 0,
+          "sentence_index": 66
+        },
+        {
+          "id": "gl_p8_s3_q2",
+          "type": "choice",
+          "question_en": "Why was she happy for him?",
+          "options_en": [
+            "Because Jugnu had found a way to be happy and unique",
+            "Because he drank nectar from a rose",
+            "Because the birds were still chatting"
+          ],
+          "correct_index": 0,
+          "sentence_index": 66
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'The Firefly'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "bug",
+      "meaning_vi": "con bọ",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "dreamt",
+      "meaning_vi": "đã mơ",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "determination",
+      "meaning_vi": "sự quyết tâm",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "disgust",
+      "meaning_vi": "sự ghét bỏ",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "creatures",
+      "meaning_vi": "sinh vật",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "chores",
+      "meaning_vi": "công việc vặt",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "lazed around",
+      "meaning_vi": "nằm ườn ra",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "sulked",
+      "meaning_vi": "hờn dỗi",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "nectar",
+      "meaning_vi": "mật hoa",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "refreshing",
+      "meaning_vi": "sảng khoái",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "divine",
+      "meaning_vi": "ngon tuyệt",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "bitter",
+      "meaning_vi": "đắng",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "grant",
+      "meaning_vi": "ban cho",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "vanished",
+      "meaning_vi": "biến mất",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "colorful",
+      "meaning_vi": "sặc sỡ",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "pined for",
+      "meaning_vi": "khao khát",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "slumber",
+      "meaning_vi": "giấc ngủ sâu",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "restless",
+      "meaning_vi": "bồn chồn",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "withdrew",
+      "meaning_vi": "rút vào",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "engulfed",
+      "meaning_vi": "bao trùm",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "awakening",
+      "meaning_vi": "sự thức tỉnh",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "fascinated",
+      "meaning_vi": "bị cuốn hút",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "alas",
+      "meaning_vi": "than ôi",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "bewildered",
+      "meaning_vi": "bối rối",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "mystery",
+      "meaning_vi": "bí ẩn",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "adventure",
+      "meaning_vi": "phiêu lưu",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "explore",
+      "meaning_vi": "khám phá",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "wise",
+      "meaning_vi": "khôn ngoan",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "strength",
+      "meaning_vi": "sức mạnh",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "undo",
+      "meaning_vi": "thay đổi",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "torch",
+      "meaning_vi": "ngọn đuốc",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "freedom",
+      "meaning_vi": "tự do",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "awake",
+      "meaning_vi": "thức",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "glow worm",
+      "meaning_vi": "đom đóm",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "unique",
+      "meaning_vi": "độc đáo",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "wished",
+      "meaning_vi": "mong muốn",
+      "paragraph_index": 8
+    }
+  ]
+}

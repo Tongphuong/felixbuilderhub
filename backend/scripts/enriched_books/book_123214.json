@@ -1,0 +1,802 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L1",
+  "level_label": "Cấp 1",
+  "topic": "It's All the Cat's Fault",
+  "slug": "book_123214",
+  "audio_filename": "book_123214.mp3",
+  "book_slug": "book_123214",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_123214/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_123214/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_123214/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_123214/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_123214/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_123214/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_123214/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_123214/page_09.jpg",
+    "https://audio.felixbuilderhub.com/books/book_123214/page_10.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_123214/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_123214/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_123214/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_123214/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_123214/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_123214/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_123214/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_123214/page_09.mp3",
+    "https://audio.felixbuilderhub.com/books/book_123214/page_10.mp3"
+  ],
+  "book_attribution": {
+    "title": "It's All the Cat's Fault",
+    "creators": [
+      "Lea Shaver",
+      "Priya Kuriyan"
+    ],
+    "publisher": "StoryWeaver Community",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: It's All the Cat's Fault is re-levelled by Lea Shaver . The © for this re-level lies with Lea Shaver , 2020. Some rights reserved. Released under CC BY 4.0 license. Based on Original story: ' It's All the Cat's Fault! ' , by Anushka Ravishankar . © StoryWeaver , 2015. Some rights reserved. Released under CC BY 4.0 license. Images Attributions: Cover page: Cat stuck on a tree , by Priya Kuriyan © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 2: Teacher and boy in the class , by Priya Kuriyan © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 3: Cat on a tree, boy moving a ladder , by Priya Kuriyan © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 4: Boy repairing a ladder, baby crying in the house , by Priya Kuriyan © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 5: Monkey in the kitchen, woman running towards crying baby , by Priya Kuriyan © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 6: Monkey eating food from a kitchen , by Priya Kuriyan © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 7: Scene at a tea shop, dog chasing a man , by Priya Kuriyan © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 8: Dog chewing on a boy's red book , by Priya Kuriyan © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 9: Teacher scolding a student , by Priya Kuriyan © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 10: Cat stuck on a tree , by Priya Kuriyan © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/123214-it-s-all-the-cat-s-fault",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "Teacher and boy in the class , by Priya Kuriyan © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "Cat on a tree, boy moving a ladder , by Priya Kuriyan © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "Boy repairing a ladder, baby crying in the house , by Priya Kuriyan © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "Monkey in the kitchen, woman running towards crying baby , by Priya Kuriyan © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "Monkey eating food from a kitchen , by Priya Kuriyan © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "Scene at a tea shop, dog chasing a man , by Priya Kuriyan © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "Dog chewing on a boy's red book , by Priya Kuriyan © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "Teacher scolding a student , by Priya Kuriyan © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 8,
+        "credit_text": "Cat stuck on a tree , by Priya Kuriyan © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "It's All the Cat's Fault",
+    "paragraphs_en": [
+      "You did not do your work! Miss, it's all the cat's fault!",
+      "The cat went up the tree. So I needed to help.",
+      "I fixed the ladder. But I woke up the baby.",
+      "Mama ran to the baby. And a monkey got in!",
+      "The monkey made a big mess! So we had to buy new food.",
+      "My papa went to get the food. A dog wanted the food!",
+      "The dog ate my workbook!",
+      "So, you tell me a dog is to blame?",
+      "No, Miss. It's all the cat's fault!"
+    ],
+    "sentences": [
+      {
+        "text_en": "You did not do your work!",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123214/s_000.mp3",
+        "text_vi": "Con chưa làm bài tập!"
+      },
+      {
+        "text_en": "Miss, it's all the cat's fault!",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123214/s_001.mp3",
+        "text_vi": "Cô ơi, tất cả là lỗi của con mèo!"
+      },
+      {
+        "text_en": "The cat went up the tree.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123214/s_002.mp3",
+        "text_vi": "Con mèo trèo lên cây."
+      },
+      {
+        "text_en": "So I needed to help.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123214/s_003.mp3",
+        "text_vi": "Thế là con phải giúp."
+      },
+      {
+        "text_en": "I fixed the ladder.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123214/s_004.mp3",
+        "text_vi": "Con sửa cái thang."
+      },
+      {
+        "text_en": "But I woke up the baby.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123214/s_005.mp3",
+        "text_vi": "Nhưng con lại làm em bé thức giấc."
+      },
+      {
+        "text_en": "Mama ran to the baby.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123214/s_006.mp3",
+        "text_vi": "Mẹ chạy đến chỗ em bé."
+      },
+      {
+        "text_en": "And a monkey got in!",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123214/s_007.mp3",
+        "text_vi": "Và một con khỉ đã vào nhà!"
+      },
+      {
+        "text_en": "The monkey made a big mess!",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123214/s_008.mp3",
+        "text_vi": "Con khỉ làm bừa bộn hết cả!"
+      },
+      {
+        "text_en": "So we had to buy new food.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123214/s_009.mp3",
+        "text_vi": "Nên chúng con phải mua đồ ăn mới."
+      },
+      {
+        "text_en": "My papa went to get the food.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123214/s_010.mp3",
+        "text_vi": "Bố con đi lấy đồ ăn."
+      },
+      {
+        "text_en": "A dog wanted the food!",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123214/s_011.mp3",
+        "text_vi": "Một con chó muốn đồ ăn!"
+      },
+      {
+        "text_en": "The dog ate my workbook!",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123214/s_012.mp3",
+        "text_vi": "Con chó ăn mất quyển vở bài tập của con!"
+      },
+      {
+        "text_en": "So, you tell me a dog is to blame?",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123214/s_013.mp3",
+        "text_vi": "Vậy con nói là lỗi của con chó à?"
+      },
+      {
+        "text_en": "No, Miss. It's all the cat's fault!",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123214/s_014.mp3",
+        "text_vi": "Không ạ, thưa cô. Tất cả là lỗi của con mèo!"
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "You did not do your work!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123214/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "Miss, it's all the cat's fault!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123214/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "The cat went up the tree.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123214/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "So I needed to help.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123214/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "I fixed the ladder.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123214/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "But I woke up the baby.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123214/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "Mama ran to the baby.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123214/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "And a monkey got in!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123214/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "The monkey made a big mess!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123214/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "So we had to buy new food.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123214/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "My papa went to get the food.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123214/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "A dog wanted the food!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123214/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "The dog ate my workbook!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123214/s_012.mp3"
+        },
+        {
+          "id": "ra_13",
+          "text_en": "So, you tell me a dog is to blame?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123214/s_013.mp3"
+        },
+        {
+          "id": "ra_14",
+          "text_en": "No, Miss. It's all the cat's fault!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123214/s_014.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "Who did not do their work?",
+          "options_en": [
+            "You",
+            "The cat",
+            "My papa"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "What did the person not do?",
+          "options_en": [
+            "Do their work",
+            "Fix the ladder",
+            "Buy new food"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s1_q1",
+          "type": "choice",
+          "question_en": "Who is blamed?",
+          "options_en": [
+            "The cat",
+            "The dog",
+            "A monkey"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s1_q2",
+          "type": "choice",
+          "question_en": "Who is being spoken to?",
+          "options_en": [
+            "Miss",
+            "Mama",
+            "My papa"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "Who went up the tree?",
+          "options_en": [
+            "The cat",
+            "The monkey",
+            "The dog"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "Where did the cat go?",
+          "options_en": [
+            "Up the tree",
+            "Into the house",
+            "To get the food"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p1_s1_q1",
+          "type": "choice",
+          "question_en": "Who needed to help?",
+          "options_en": [
+            "I",
+            "Mama",
+            "My papa"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p1_s1_q2",
+          "type": "choice",
+          "question_en": "Why did I need to help?",
+          "options_en": [
+            "Because the cat went up the tree",
+            "Because the dog ate the workbook",
+            "Because the monkey made a big mess"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "Who fixed the ladder?",
+          "options_en": [
+            "I",
+            "The cat",
+            "My papa"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "What did I fix?",
+          "options_en": [
+            "The ladder",
+            "The tree",
+            "The workbook"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p2_s1_q1",
+          "type": "choice",
+          "question_en": "Who woke up the baby?",
+          "options_en": [
+            "I",
+            "Mama",
+            "A monkey"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p2_s1_q2",
+          "type": "choice",
+          "question_en": "What happened to the baby?",
+          "options_en": [
+            "The baby was woken",
+            "Mama ran to the baby",
+            "A monkey got in"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "Who ran to the baby?",
+          "options_en": [
+            "Mama",
+            "Papa",
+            "The cat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "Where did Mama run?",
+          "options_en": [
+            "To the baby",
+            "Up the tree",
+            "To get food"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p3_s1_q1",
+          "type": "choice",
+          "question_en": "What got in?",
+          "options_en": [
+            "A monkey",
+            "A dog",
+            "The cat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p3_s1_q2",
+          "type": "choice",
+          "question_en": "Who got in?",
+          "options_en": [
+            "A monkey",
+            "A dog",
+            "The cat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "Who made a big mess?",
+          "options_en": [
+            "The monkey",
+            "The cat",
+            "The dog"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "What did the monkey do?",
+          "options_en": [
+            "Made a big mess",
+            "Ate the workbook",
+            "Went up the tree"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p4_s1_q1",
+          "type": "choice",
+          "question_en": "Why did we have to buy new food?",
+          "options_en": [
+            "Because the monkey made a big mess",
+            "Because the cat went up the tree",
+            "Because the dog ate the workbook"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p4_s1_q2",
+          "type": "choice",
+          "question_en": "What did we have to buy?",
+          "options_en": [
+            "New food",
+            "A ladder",
+            "The workbook"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "Who went to get the food?",
+          "options_en": [
+            "My papa",
+            "Mama",
+            "The cat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "What did my papa go to get?",
+          "options_en": [
+            "The food",
+            "The ladder",
+            "New food"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p5_s1_q1",
+          "type": "choice",
+          "question_en": "Who wanted the food?",
+          "options_en": [
+            "A dog",
+            "The monkey",
+            "The cat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p5_s1_q2",
+          "type": "choice",
+          "question_en": "What did the dog want?",
+          "options_en": [
+            "The food",
+            "My workbook",
+            "The ladder"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "Who ate the workbook?",
+          "options_en": [
+            "The dog",
+            "The cat",
+            "The monkey"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "Whose workbook was eaten?",
+          "options_en": [
+            "My workbook",
+            "My papa's workbook",
+            "The baby's workbook"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "Who is to blame?",
+          "options_en": [
+            "a dog",
+            "the cat",
+            "the monkey"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "What does the speaker ask about?",
+          "options_en": [
+            "whether a dog is to blame",
+            "whether the cat went up the tree",
+            "whether the monkey made a mess"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        }
+      ]
+    },
+    {
+      "paragraph_index": 8,
+      "questions": [
+        {
+          "id": "gl_p8_s0_q1",
+          "type": "choice",
+          "question_en": "Who is the speaker talking to?",
+          "options_en": [
+            "Miss",
+            "Mama",
+            "Papa"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p8_s0_q2",
+          "type": "choice",
+          "question_en": "What does the speaker say is to blame?",
+          "options_en": [
+            "The cat",
+            "The dog",
+            "The monkey"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'It's All the Cat's Fault'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "work",
+      "meaning_vi": "bài tập",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "fault",
+      "meaning_vi": "lỗi",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "went up",
+      "meaning_vi": "trèo lên",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "needed",
+      "meaning_vi": "cần",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "help",
+      "meaning_vi": "giúp",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "fixed",
+      "meaning_vi": "sửa",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "ladder",
+      "meaning_vi": "cái thang",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "woke up",
+      "meaning_vi": "làm thức giấc",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "ran",
+      "meaning_vi": "chạy",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "monkey",
+      "meaning_vi": "con khỉ",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "got in",
+      "meaning_vi": "vào",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "made a mess",
+      "meaning_vi": "làm bừa bộn",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "buy",
+      "meaning_vi": "mua",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "new",
+      "meaning_vi": "mới",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "went to get",
+      "meaning_vi": "đi lấy",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "wanted",
+      "meaning_vi": "muốn",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "ate",
+      "meaning_vi": "đã ăn",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "workbook",
+      "meaning_vi": "vở bài tập",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "blame",
+      "meaning_vi": "lỗi / chịu trách nhiệm",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "tell",
+      "meaning_vi": "nói",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "fault",
+      "meaning_vi": "lỗi",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "all",
+      "meaning_vi": "tất cả",
+      "paragraph_index": 8
+    }
+  ]
+}

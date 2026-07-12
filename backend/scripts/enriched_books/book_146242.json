@@ -1,0 +1,579 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L0",
+  "level_label": "Cấp 0",
+  "topic": "Body",
+  "slug": "book_146242",
+  "audio_filename": "book_146242.mp3",
+  "book_slug": "book_146242",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_146242/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_146242/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_146242/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_146242/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_146242/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_146242/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_146242/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_146242/page_09.jpg",
+    "https://audio.felixbuilderhub.com/books/book_146242/page_10.jpg",
+    "https://audio.felixbuilderhub.com/books/book_146242/page_11.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_146242/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_146242/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_146242/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_146242/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_146242/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_146242/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_146242/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_146242/page_09.mp3",
+    "https://audio.felixbuilderhub.com/books/book_146242/page_10.mp3",
+    "https://audio.felixbuilderhub.com/books/book_146242/page_11.mp3"
+  ],
+  "book_attribution": {
+    "title": "Body",
+    "creators": [
+      "Little Zebra Books",
+      "Sue Beattie"
+    ],
+    "publisher": "African Storybook Initiative",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: Body is written by Little Zebra Books . © African Storybook Initiative , 2018. Some rights reserved. Released under CC BY 4.0 license. Other Credits: This story 'Body' has been published on StoryWeaver by African Storybook Initiative. Images Attributions: Cover page: Boy and girl , by Sue Beattie © African Storybook Initiative, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 2: Man with sunglasses , by Sue Beattie © African Storybook Initiative, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 3: Boy playing football , by Sue Beattie © African Storybook Initiative, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 4: Boy , by Sue Beattie © African Storybook Initiative, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 5: Girl standing , by Sue Beattie © African Storybook Initiative, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 6: Girl pointing at stomach , by Sue Beattie © African Storybook Initiative, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 7: Boy standing , by Sue Beattie © African Storybook Initiative, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 8: Boy standing , by Sue Beattie © African Storybook Initiative, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 9: Girl in wheelchair , by Sue Beattie © African Storybook Initiative, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 10: Girl standing , by Sue Beattie © African Storybook Initiative, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 11: Girl shuffling her hair , by Sue Beattie © African Storybook Initiative, 2018. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/146242-body",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "Man with sunglasses , by Sue Beattie © African Storybook Initiative, 2018. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "Boy playing football , by Sue Beattie © African Storybook Initiative, 2018. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "Boy , by Sue Beattie © African Storybook Initiative, 2018. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "Girl standing , by Sue Beattie © African Storybook Initiative, 2018. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "Girl pointing at stomach , by Sue Beattie © African Storybook Initiative, 2018. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "Boy standing , by Sue Beattie © African Storybook Initiative, 2018. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "Boy standing , by Sue Beattie © African Storybook Initiative, 2018. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "Girl in wheelchair , by Sue Beattie © African Storybook Initiative, 2018. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 8,
+        "credit_text": "Girl standing , by Sue Beattie © African Storybook Initiative, 2018. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 9,
+        "credit_text": "Girl shuffling her hair , by Sue Beattie © African Storybook Initiative, 2018. Some rights reserved. Released under CC BY 4.0 license."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "Body",
+    "paragraphs_en": [
+      "Feet",
+      "Legs",
+      "Knees",
+      "Waist",
+      "Belly",
+      "Chest",
+      "Hands",
+      "Arms",
+      "Elbows",
+      "Head"
+    ],
+    "sentences": [
+      {
+        "text_en": "Feet",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_146242/s_000.mp3",
+        "text_vi": "Bàn chân"
+      },
+      {
+        "text_en": "Legs",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_146242/s_001.mp3",
+        "text_vi": "Đôi chân"
+      },
+      {
+        "text_en": "Knees",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_146242/s_002.mp3",
+        "text_vi": "Đầu gối"
+      },
+      {
+        "text_en": "Waist",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_146242/s_003.mp3",
+        "text_vi": "Eo"
+      },
+      {
+        "text_en": "Belly",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_146242/s_004.mp3",
+        "text_vi": "Bụng"
+      },
+      {
+        "text_en": "Chest",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_146242/s_005.mp3",
+        "text_vi": "Ngực"
+      },
+      {
+        "text_en": "Hands",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_146242/s_006.mp3",
+        "text_vi": "Đôi tay"
+      },
+      {
+        "text_en": "Arms",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_146242/s_007.mp3",
+        "text_vi": "Cánh tay"
+      },
+      {
+        "text_en": "Elbows",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_146242/s_008.mp3",
+        "text_vi": "Khuỷu tay"
+      },
+      {
+        "text_en": "Head",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_146242/s_009.mp3",
+        "text_vi": "Đầu"
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "Feet",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_146242/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "Legs",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_146242/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "Knees",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_146242/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "Waist",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_146242/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "Belly",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_146242/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "Chest",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_146242/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "Hands",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_146242/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "Arms",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_146242/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "Elbows",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_146242/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "Head",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_146242/s_009.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "What is mentioned in the sentence?",
+          "options_en": [
+            "Feet",
+            "Legs",
+            "Hands"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "Which body part appears in the sentence?",
+          "options_en": [
+            "Feet",
+            "Chest",
+            "Head"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "What body part is mentioned?",
+          "options_en": [
+            "Legs",
+            "Arms",
+            "Head"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "Which body part does the sentence refer to?",
+          "options_en": [
+            "Legs",
+            "Feet",
+            "Chest"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "What body part is mentioned in the sentence?",
+          "options_en": [
+            "Knees",
+            "Feet",
+            "Head"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "Which part of the body does the sentence name?",
+          "options_en": [
+            "Knees",
+            "Arms",
+            "Belly"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "Which body part is mentioned in the sentence?",
+          "options_en": [
+            "Waist",
+            "Feet",
+            "Head"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "What body part does the sentence show?",
+          "options_en": [
+            "Waist",
+            "Hands",
+            "Legs"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "What body part is mentioned?",
+          "options_en": [
+            "Belly",
+            "Chest",
+            "Head"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "Which body part appears in the sentence?",
+          "options_en": [
+            "Belly",
+            "Waist",
+            "Arms"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "Which body part is mentioned?",
+          "options_en": [
+            "Chest",
+            "Feet",
+            "Hands"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "What body part does the sentence name?",
+          "options_en": [
+            "Chest",
+            "Legs",
+            "Head"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "Which body part is named in the sentence?",
+          "options_en": [
+            "Hands",
+            "Feet",
+            "Head"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "What is mentioned in the sentence?",
+          "options_en": [
+            "Hands",
+            "Arms",
+            "Knees"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "Which body part is mentioned?",
+          "options_en": [
+            "Arms",
+            "Legs",
+            "Head"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "What body part is named in the sentence?",
+          "options_en": [
+            "Arms",
+            "Hands",
+            "Feet"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        }
+      ]
+    },
+    {
+      "paragraph_index": 8,
+      "questions": [
+        {
+          "id": "gl_p8_s0_q1",
+          "type": "choice",
+          "question_en": "What body part is mentioned?",
+          "options_en": [
+            "Elbows",
+            "Knees",
+            "Arms"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p8_s0_q2",
+          "type": "choice",
+          "question_en": "Which body part does the sentence name?",
+          "options_en": [
+            "Elbows",
+            "Head",
+            "Hands"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        }
+      ]
+    },
+    {
+      "paragraph_index": 9,
+      "questions": [
+        {
+          "id": "gl_p9_s0_q1",
+          "type": "choice",
+          "question_en": "What body part is in the sentence?",
+          "options_en": [
+            "Head",
+            "Feet",
+            "Legs"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p9_s0_q2",
+          "type": "choice",
+          "question_en": "Which part is named in the sentence?",
+          "options_en": [
+            "Head",
+            "Hands",
+            "Chest"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'Body'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "Feet",
+      "meaning_vi": "Bộ phận dưới cùng của chân, dùng để đi.",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "Legs",
+      "meaning_vi": "Bộ phận cơ thể từ hông xuống bàn chân, dùng để đi.",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "Knees",
+      "meaning_vi": "Khớp nối giữa phần trên và phần dưới của chân.",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "Waist",
+      "meaning_vi": "Phần giữa cơ thể, trên hông và dưới ngực.",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "Belly",
+      "meaning_vi": "Phần phía trước của cơ thể, nơi chứa dạ dày.",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "Chest",
+      "meaning_vi": "Phần phía trước của cơ thể, giữa cổ và bụng.",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "Hands",
+      "meaning_vi": "Bộ phận ở cuối cánh tay, dùng để cầm nắm.",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "Arms",
+      "meaning_vi": "Bộ phận cơ thể từ vai đến bàn tay.",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "Elbows",
+      "meaning_vi": "Khớp nối giữa phần trên và phần dưới của cánh tay.",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "Head",
+      "meaning_vi": "Phần trên cùng của cơ thể, nơi có mắt, mũi, miệng và tai.",
+      "paragraph_index": 9
+    }
+  ]
+}

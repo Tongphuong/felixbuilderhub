@@ -1,0 +1,670 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L2",
+  "level_label": "Cấp 2",
+  "topic": "How to Catch the Wind",
+  "slug": "book_122938",
+  "audio_filename": "book_122938.mp3",
+  "book_slug": "book_122938",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_122938/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_122938/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_122938/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_122938/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_122938/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_122938/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_122938/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_122938/page_09.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_122938/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_122938/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_122938/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_122938/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_122938/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_122938/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_122938/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_122938/page_09.mp3"
+  ],
+  "book_attribution": {
+    "title": "How to Catch the Wind",
+    "creators": [
+      "Anjali Vaidya",
+      "Ivette Salom"
+    ],
+    "publisher": "Pratham Books",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: How to Catch the Wind is written by Anjali Vaidya . © Pratham Books , 2020. Some rights reserved. Released under CC BY 4.0 license. Other Credits: 'How to Catch the Wind' has been published on StoryWeaver by Pratham Books. The development of this book has been supported by CISCO. www.prathambooks.org. Images Attributions: Cover page: Wind swirls around a windmill holding a kite , by Ivette Salom © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 2: A girl is flying a kite , by Ivette Salom © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 3: Wind steals a kite and a girl, dog and bird chase after it , by Ivette Salom © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 4: A kite gets stuck in a tree while the wind tries to pull it out , by Ivette Salom © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 5: Wind blows the kite out of the tree, the bird and dog fall and the girl runs to save them , by Ivette Salom © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 6: A bird tries to steal the kite from the wind while the wind heads towards a spinning windmill , by Ivette Salom © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 7: The wind breaks down because of the spinning windmills , by Ivette Salom © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 8: The windmill converts the wind into electrical energy which turns on a street light , by Ivette Salom © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 9: A girl and her dog look at the wind energy being converted into electrical energy powering up street lights and sprinklers , by Ivette Salom © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/ The development of this book has been supported by CISCO. www.prathambooks.org",
+    "source_url": "https://storyweaver.org.in/stories/122938-how-to-catch-the-wind",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "A girl is flying a kite , by Ivette Salom © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "Wind steals a kite and a girl, dog and bird chase after it , by Ivette Salom © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "A kite gets stuck in a tree while the wind tries to pull it out , by Ivette Salom © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "Wind blows the kite out of the tree, the bird and dog fall and the girl runs to save them , by Ivette Salom © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "A bird tries to steal the kite from the wind while the wind heads towards a spinning windmill , by Ivette Salom © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "The wind breaks down because of the spinning windmills , by Ivette Salom © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "The windmill converts the wind into electrical energy which turns on a street light , by Ivette Salom © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "A girl and her dog look at the wind energy being converted into electrical energy powering up street lights and sprinklers , by Ivette Salom © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "How to Catch the Wind",
+    "paragraphs_en": [
+      "Air is always around us. Moving air is called wind. When wind blows, it carries energy.",
+      "The wind’s energy can lift kites into the sky.",
+      "When something resists the wind’s movement, its energy can build up...",
+      "before releasing in a violent burst.",
+      "But we can also capture the wind’s energy and change it into energy that we can use.",
+      "Turbines help us transform wind energy into electrical energy. The energy of moving air makes the blades of a wind turbine spin.",
+      "And the spinning blades change wind energy into electricity.",
+      "We can use this electricity long after the wind stops blowing."
+    ],
+    "sentences": [
+      {
+        "text_en": "Air is always around us.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_122938/s_000.mp3",
+        "text_vi": "Không khí luôn ở quanh chúng ta."
+      },
+      {
+        "text_en": "Moving air is called wind.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_122938/s_001.mp3",
+        "text_vi": "Không khí chuyển động được gọi là gió."
+      },
+      {
+        "text_en": "When wind blows, it carries energy.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_122938/s_002.mp3",
+        "text_vi": "Khi gió thổi, nó mang theo năng lượng."
+      },
+      {
+        "text_en": "The wind’s energy can lift kites into the sky.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_122938/s_003.mp3",
+        "text_vi": "Năng lượng của gió có thể nâng diều bay lên trời."
+      },
+      {
+        "text_en": "When something resists the wind’s movement, its energy can build up...",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_122938/s_004.mp3",
+        "text_vi": "Khi có vật cản lại chuyển động của gió, năng lượng của gió có thể tích tụ lại..."
+      },
+      {
+        "text_en": "before releasing in a violent burst.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_122938/s_005.mp3",
+        "text_vi": "...trước khi giải phóng ra thành một luồng mạnh mẽ."
+      },
+      {
+        "text_en": "But we can also capture the wind’s energy and change it into energy that we can use.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_122938/s_006.mp3",
+        "text_vi": "Nhưng chúng ta cũng có thể thu giữ năng lượng của gió và biến nó thành năng lượng mà chúng ta có thể dùng."
+      },
+      {
+        "text_en": "Turbines help us transform wind energy into electrical energy.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_122938/s_007.mp3",
+        "text_vi": "Tua-bin giúp chúng ta biến năng lượng gió thành năng lượng điện."
+      },
+      {
+        "text_en": "The energy of moving air makes the blades of a wind turbine spin.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_122938/s_008.mp3",
+        "text_vi": "Năng lượng của không khí chuyển động làm cho cánh của tua-bin gió quay."
+      },
+      {
+        "text_en": "And the spinning blades change wind energy into electricity.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_122938/s_009.mp3",
+        "text_vi": "Và những cánh quạt quay đó biến năng lượng gió thành điện."
+      },
+      {
+        "text_en": "We can use this electricity long after the wind stops blowing.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_122938/s_010.mp3",
+        "text_vi": "Chúng ta có thể dùng điện này rất lâu sau khi gió ngừng thổi."
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "Air is always around us.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_122938/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "Moving air is called wind.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_122938/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "When wind blows, it carries energy.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_122938/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "The wind’s energy can lift kites into the sky.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_122938/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "When something resists the wind’s movement, its energy can build up...",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_122938/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "before releasing in a violent burst.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_122938/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "But we can also capture the wind’s energy and change it into energy that we can use.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_122938/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "Turbines help us transform wind energy into electrical energy.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_122938/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "The energy of moving air makes the blades of a wind turbine spin.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_122938/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "And the spinning blades change wind energy into electricity.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_122938/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "We can use this electricity long after the wind stops blowing.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_122938/s_010.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "What is always around us?",
+          "options_en": [
+            "Air",
+            "Wind",
+            "Kites"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "Where is air?",
+          "options_en": [
+            "Around us",
+            "In the sky",
+            "In turbines"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s1_q1",
+          "type": "choice",
+          "question_en": "What is moving air called?",
+          "options_en": [
+            "Wind",
+            "Turbines",
+            "Electricity"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s1_q2",
+          "type": "choice",
+          "question_en": "How is air described in this sentence?",
+          "options_en": [
+            "Moving",
+            "Spinning",
+            "Captured by turbines"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s2_q1",
+          "type": "choice",
+          "question_en": "What does wind carry when it blows?",
+          "options_en": [
+            "Energy",
+            "Kites",
+            "Blades"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s2_q2",
+          "type": "choice",
+          "question_en": "When does wind carry energy?",
+          "options_en": [
+            "When it blows",
+            "When turbines spin",
+            "When kites fly"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "What can the wind’s energy lift into the sky?",
+          "options_en": [
+            "Kites",
+            "The blades of a wind turbine",
+            "Turbines"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "How can kites be lifted into the sky?",
+          "options_en": [
+            "By the wind’s energy",
+            "By turbines",
+            "By electrical energy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "What can build up when something resists the wind’s movement?",
+          "options_en": [
+            "Its energy",
+            "The blades of a wind turbine",
+            "Electrical energy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "When can energy build up?",
+          "options_en": [
+            "When something resists the wind’s movement",
+            "When the wind blows",
+            "When turbines spin"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "What happens?",
+          "options_en": [
+            "It releases in a violent burst.",
+            "It lifts kites into the sky.",
+            "The blades spin."
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "How does it release?",
+          "options_en": [
+            "In a violent burst.",
+            "Into electrical energy.",
+            "By making the blades spin."
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "What can we capture?",
+          "options_en": [
+            "the wind’s energy",
+            "kites into the sky",
+            "the blades of a turbine"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "What can we change the wind’s energy into?",
+          "options_en": [
+            "energy that we can use",
+            "electrical energy",
+            "a violent burst"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "What do turbines help us transform?",
+          "options_en": [
+            "wind energy into electrical energy",
+            "lift kites into the sky",
+            "energy build up before releasing"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "How do turbines help us?",
+          "options_en": [
+            "They transform wind energy into electrical energy",
+            "They make kites go into the sky",
+            "They cause violent bursts of energy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p5_s1_q1",
+          "type": "choice",
+          "question_en": "What makes the blades of a wind turbine spin?",
+          "options_en": [
+            "The energy of moving air",
+            "Turbines transforming energy",
+            "Kites lifted into the sky"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p5_s1_q2",
+          "type": "choice",
+          "question_en": "What spins on a wind turbine when air moves?",
+          "options_en": [
+            "The blades",
+            "Kites",
+            "A violent burst of energy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "What do the spinning blades change wind energy into?",
+          "options_en": [
+            "electricity",
+            "kites",
+            "moving air"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "How do the spinning blades change wind energy?",
+          "options_en": [
+            "By spinning",
+            "By lifting kites",
+            "By resisting the wind's movement"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "What can we use long after the wind stops blowing?",
+          "options_en": [
+            "This electricity",
+            "The wind's energy",
+            "Kites"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "When can we use this electricity?",
+          "options_en": [
+            "Long after the wind stops blowing",
+            "While the blades spin",
+            "When the wind blows"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'How to Catch the Wind'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "always",
+      "meaning_vi": "luôn luôn, lúc nào cũng",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "around",
+      "meaning_vi": "xung quanh, quanh",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "moving",
+      "meaning_vi": "chuyển động, di chuyển",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "carries",
+      "meaning_vi": "mang theo, chở",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "energy",
+      "meaning_vi": "năng lượng",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "lift",
+      "meaning_vi": "nâng lên, nhấc lên",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "kites",
+      "meaning_vi": "diều",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "sky",
+      "meaning_vi": "bầu trời",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "resists",
+      "meaning_vi": "cản lại, chống lại",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "movement",
+      "meaning_vi": "chuyển động, sự di chuyển",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "build up",
+      "meaning_vi": "tích tụ, dồn lại",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "releasing",
+      "meaning_vi": "giải phóng, thoát ra",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "violent",
+      "meaning_vi": "mạnh mẽ, dữ dội",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "burst",
+      "meaning_vi": "luồng, vụ nổ",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "capture",
+      "meaning_vi": "thu giữ, bắt lấy",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "change",
+      "meaning_vi": "thay đổi, biến đổi",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "use",
+      "meaning_vi": "sử dụng, dùng",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "Turbines",
+      "meaning_vi": "tua-bin",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "transform",
+      "meaning_vi": "biến đổi, chuyển đổi",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "electrical",
+      "meaning_vi": "thuộc về điện, điện",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "blades",
+      "meaning_vi": "cánh (của quạt, tua-bin)",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "spinning",
+      "meaning_vi": "đang quay",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "electricity",
+      "meaning_vi": "điện, điện năng",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "long after",
+      "meaning_vi": "rất lâu sau",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "stops",
+      "meaning_vi": "ngừng, dừng lại",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "blowing",
+      "meaning_vi": "thổi",
+      "paragraph_index": 7
+    }
+  ]
+}

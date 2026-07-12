@@ -1,0 +1,733 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L1",
+  "level_label": "Cấp 1",
+  "topic": "Playground",
+  "slug": "book_103026",
+  "audio_filename": "book_103026.mp3",
+  "book_slug": "book_103026",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_103026/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103026/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103026/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103026/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103026/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103026/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103026/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103026/page_09.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103026/page_10.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103026/page_11.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103026/page_12.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103026/page_13.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_103026/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103026/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103026/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103026/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103026/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103026/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103026/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103026/page_09.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103026/page_10.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103026/page_11.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103026/page_12.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103026/page_13.mp3"
+  ],
+  "book_attribution": {
+    "title": "Playground",
+    "creators": [
+      "All Children Reading Cambodia",
+      "Choeurn Brus"
+    ],
+    "publisher": "The Asia Foundation",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: Playground is written by All Children Reading Cambodia . © Let's Read , 2019. Some rights reserved. Released under CC BY 4.0 license. Other Credits: This story 'Playground' has been published on StoryWeaver by The Asia Foundation. Images Attributions: Cover page: The dog and the pig hanging out , by Choeurn Brus © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 2: The map , by Choeurn Brus © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 3: Dog and pig in deep contemplation , by Choeurn Brus © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 4: Cycling the way up , by Choeurn Brus © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 5: A scooter ride , by Choeurn Brus © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 6: A tricycle rickshaw ride , by Choeurn Brus © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 7: Horse-cart ride for dog and pig , by Choeurn Brus © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 8: Ox-drawn cart ride , by Choeurn Brus © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 9: The scared car ride , by Choeurn Brus © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 10: The blue bus ride , by Choeurn Brus © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 11: The boat ride , by Choeurn Brus © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/103026-playground",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "The map , by Choeurn Brus © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "Dog and pig in deep contemplation , by Choeurn Brus © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "Cycling the way up , by Choeurn Brus © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "A scooter ride , by Choeurn Brus © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "A tricycle rickshaw ride , by Choeurn Brus © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "Horse-cart ride for dog and pig , by Choeurn Brus © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "Ox-drawn cart ride , by Choeurn Brus © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "The scared car ride , by Choeurn Brus © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 8,
+        "credit_text": "The blue bus ride , by Choeurn Brus © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 9,
+        "credit_text": "The boat ride , by Choeurn Brus © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 10,
+        "credit_text": "Illustration by Choeurn Brus."
+      },
+      {
+        "page_index": 11,
+        "credit_text": "Illustration by Choeurn Brus."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "Playground",
+    "paragraphs_en": [
+      "We want to go to the playground.",
+      "How do we get there?",
+      "We could ride a bicycle.",
+      "We could ride a motorbike.",
+      "We could ride a tricycle taxi.",
+      "We could ride in a horse-drawn cart.",
+      "We could ride in an ox-cart.",
+      "We could drive a race car.",
+      "We can drive a big car.",
+      "We could row a boat.",
+      "We could ride an elephant.",
+      "No! We should walk."
+    ],
+    "sentences": [
+      {
+        "text_en": "We want to go to the playground.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103026/s_000.mp3",
+        "text_vi": "Chúng mình muốn đi sân chơi."
+      },
+      {
+        "text_en": "How do we get there?",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103026/s_001.mp3",
+        "text_vi": "Làm sao để đến đó nhỉ?"
+      },
+      {
+        "text_en": "We could ride a bicycle.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103026/s_002.mp3",
+        "text_vi": "Chúng mình có thể đi xe đạp."
+      },
+      {
+        "text_en": "We could ride a motorbike.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103026/s_003.mp3",
+        "text_vi": "Chúng mình có thể đi xe máy."
+      },
+      {
+        "text_en": "We could ride a tricycle taxi.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103026/s_004.mp3",
+        "text_vi": "Chúng mình có thể đi xe ba bánh."
+      },
+      {
+        "text_en": "We could ride in a horse-drawn cart.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103026/s_005.mp3",
+        "text_vi": "Chúng mình có thể đi xe ngựa kéo."
+      },
+      {
+        "text_en": "We could ride in an ox-cart.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103026/s_006.mp3",
+        "text_vi": "Chúng mình có thể đi xe bò kéo."
+      },
+      {
+        "text_en": "We could drive a race car.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103026/s_007.mp3",
+        "text_vi": "Chúng mình có thể lái xe đua."
+      },
+      {
+        "text_en": "We can drive a big car.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103026/s_008.mp3",
+        "text_vi": "Chúng mình có thể lái một chiếc xe to."
+      },
+      {
+        "text_en": "We could row a boat.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103026/s_009.mp3",
+        "text_vi": "Chúng mình có thể chèo thuyền."
+      },
+      {
+        "text_en": "We could ride an elephant.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103026/s_010.mp3",
+        "text_vi": "Chúng mình có thể cưỡi voi."
+      },
+      {
+        "text_en": "No! We should walk.",
+        "paragraph_index": 11,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103026/s_011.mp3",
+        "text_vi": "Không! Chúng mình nên đi bộ."
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "We want to go to the playground.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103026/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "How do we get there?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103026/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "We could ride a bicycle.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103026/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "We could ride a motorbike.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103026/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "We could ride a tricycle taxi.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103026/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "We could ride in a horse-drawn cart.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103026/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "We could ride in an ox-cart.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103026/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "We could drive a race car.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103026/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "We can drive a big car.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103026/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "We could row a boat.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103026/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "We could ride an elephant.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103026/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "No! We should walk.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103026/s_011.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "Who wants to go to the playground?",
+          "options_en": [
+            "We",
+            "a bicycle",
+            "an elephant"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "Where do we want to go?",
+          "options_en": [
+            "To the playground",
+            "On a bicycle",
+            "In a horse-drawn cart"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "What is the sentence asking?",
+          "options_en": [
+            "How to get there",
+            "We could ride a bicycle",
+            "We could ride an elephant"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "What does the question ask about?",
+          "options_en": [
+            "The way to get there",
+            "Riding an ox-cart",
+            "Riding in a horse-drawn cart"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "What could we ride?",
+          "options_en": [
+            "a bicycle",
+            "a motorbike",
+            "a tricycle taxi"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "Which vehicle could we ride?",
+          "options_en": [
+            "a bicycle",
+            "an elephant",
+            "a race car"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "What could we ride?",
+          "options_en": [
+            "A motorbike",
+            "A bicycle",
+            "A tricycle taxi"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "How could we go?",
+          "options_en": [
+            "By riding a bicycle",
+            "By riding a motorbike",
+            "By walking"
+          ],
+          "correct_index": 1,
+          "sentence_index": 3
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "What could we ride?",
+          "options_en": [
+            "a tricycle taxi",
+            "a bicycle",
+            "a motorbike"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "Which vehicle could we ride?",
+          "options_en": [
+            "a horse-drawn cart",
+            "a tricycle taxi",
+            "an ox-cart"
+          ],
+          "correct_index": 1,
+          "sentence_index": 4
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "How could we travel?",
+          "options_en": [
+            "In a horse-drawn cart",
+            "By bicycle",
+            "By motorbike"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "What could we ride in?",
+          "options_en": [
+            "A horse-drawn cart",
+            "An ox-cart",
+            "An elephant"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "What could we ride in?",
+          "options_en": [
+            "an ox-cart",
+            "a bicycle",
+            "a motorbike"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "How could we travel?",
+          "options_en": [
+            "in an ox-cart",
+            "in a horse-drawn cart",
+            "in a boat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "What could we drive?",
+          "options_en": [
+            "a race car",
+            "a bicycle",
+            "a motorbike"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "Which vehicle could we drive?",
+          "options_en": [
+            "a race car",
+            "a tricycle taxi",
+            "a horse-drawn cart"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        }
+      ]
+    },
+    {
+      "paragraph_index": 8,
+      "questions": [
+        {
+          "id": "gl_p8_s0_q1",
+          "type": "choice",
+          "question_en": "Who can drive a big car?",
+          "options_en": [
+            "We",
+            "We could ride a bicycle",
+            "We could ride a motorbike"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p8_s0_q2",
+          "type": "choice",
+          "question_en": "What can we drive?",
+          "options_en": [
+            "A big car",
+            "A race car",
+            "A bicycle"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        }
+      ]
+    },
+    {
+      "paragraph_index": 9,
+      "questions": [
+        {
+          "id": "gl_p9_s0_q1",
+          "type": "choice",
+          "question_en": "What could we do?",
+          "options_en": [
+            "row a boat",
+            "ride a bicycle",
+            "walk"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p9_s0_q2",
+          "type": "choice",
+          "question_en": "How could we travel?",
+          "options_en": [
+            "row a boat",
+            "ride a motorbike",
+            "ride an elephant"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        }
+      ]
+    },
+    {
+      "paragraph_index": 10,
+      "questions": [
+        {
+          "id": "gl_p10_s0_q1",
+          "type": "choice",
+          "question_en": "What could we ride?",
+          "options_en": [
+            "an elephant",
+            "a bicycle",
+            "a motorbike"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p10_s0_q2",
+          "type": "choice",
+          "question_en": "Which animal could we ride?",
+          "options_en": [
+            "an elephant",
+            "a horse",
+            "an ox"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        }
+      ]
+    },
+    {
+      "paragraph_index": 11,
+      "questions": [
+        {
+          "id": "gl_p11_s0_q1",
+          "type": "choice",
+          "question_en": "What should we do?",
+          "options_en": [
+            "Walk",
+            "Ride a bicycle",
+            "Drive a race car"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p11_s0_q2",
+          "type": "choice",
+          "question_en": "How should we go?",
+          "options_en": [
+            "By walking",
+            "By riding a tricycle taxi",
+            "By riding an elephant"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'Playground'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "want",
+      "meaning_vi": "muốn",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "playground",
+      "meaning_vi": "sân chơi",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "how",
+      "meaning_vi": "làm sao",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "get there",
+      "meaning_vi": "đến đó",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "could",
+      "meaning_vi": "có thể",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "ride",
+      "meaning_vi": "đi (xe)",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "bicycle",
+      "meaning_vi": "xe đạp",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "motorbike",
+      "meaning_vi": "xe máy",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "tricycle",
+      "meaning_vi": "xe ba bánh",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "taxi",
+      "meaning_vi": "xe khách, xe taxi",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "horse-drawn",
+      "meaning_vi": "ngựa kéo",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "cart",
+      "meaning_vi": "xe (kéo)",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "ox-cart",
+      "meaning_vi": "xe bò kéo",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "drive",
+      "meaning_vi": "lái (xe)",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "race car",
+      "meaning_vi": "xe đua",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "can",
+      "meaning_vi": "có thể",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "big",
+      "meaning_vi": "to, lớn",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "row",
+      "meaning_vi": "chèo (thuyền)",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "boat",
+      "meaning_vi": "thuyền",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "elephant",
+      "meaning_vi": "con voi",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "should",
+      "meaning_vi": "nên",
+      "paragraph_index": 11
+    },
+    {
+      "word_en": "walk",
+      "meaning_vi": "đi bộ",
+      "paragraph_index": 11
+    }
+  ]
+}

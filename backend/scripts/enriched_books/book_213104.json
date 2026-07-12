@@ -1,0 +1,570 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L0",
+  "level_label": "Cấp 0",
+  "topic": "Should I eat it!! Or take It?",
+  "slug": "book_213104",
+  "audio_filename": "book_213104.mp3",
+  "book_slug": "book_213104",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_213104/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_213104/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_213104/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_213104/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_213104/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_213104/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_213104/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_213104/page_09.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_213104/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_213104/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_213104/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_213104/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_213104/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_213104/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_213104/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_213104/page_09.mp3"
+  ],
+  "book_attribution": {
+    "title": "Should I eat it!! Or take It?",
+    "creators": [
+      "Ashwini Joshi",
+      "Herminder Ohri"
+    ],
+    "publisher": "Pratham Education Foundation",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: Should I eat it!! Or take It? is translated by Ashwini Joshi . The © for this translation lies with Pratham Education Foundation , 2020. Some rights reserved. Released under CC BY 4.0 license. Based on Original story: ' खाऊँ!! या ले जाऊँ? ' , by Dropti Sharma . © Pratham Education Foundation , 2020. Some rights reserved. Released under CC BY 4.0 license. Other Credits: 'Should I eat!! Or take It?' has been published on StoryWeaver by Pratham Education Foundation. www.pratham.org Images Attributions: Cover page: A confused mouse looking seriously , by Herminder Ohri © Pratham Education Foundation, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 2: A bread , by Herminder Ohri © Pratham Education Foundation, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 3: A mouse finds a bread on the floor , by Herminder Ohri © Pratham Education Foundation, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 4: A think for eat bread , by Herminder Ohri © Pratham Education Foundation, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 5: A mouse pushing a bread , by Herminder Ohri © Pratham Education Foundation, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 6: A mouse ties a rope thread around a bread , by Herminder Ohri © Pratham Education Foundation, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 7: A mouse eats some bites from a bread , by Herminder Ohri © Pratham Education Foundation, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 8: A mouse eats some more bread , by Herminder Ohri © Pratham Education Foundation, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 9: A mouse ate lots , by Herminder Ohri © Pratham Education Foundation, 2020. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/213104-should-i-eat-it-or-take-it",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "A bread , by Herminder Ohri © Pratham Education Foundation, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "A mouse finds a bread on the floor , by Herminder Ohri © Pratham Education Foundation, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "A think for eat bread , by Herminder Ohri © Pratham Education Foundation, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "A mouse pushing a bread , by Herminder Ohri © Pratham Education Foundation, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "A mouse ties a rope thread around a bread , by Herminder Ohri © Pratham Education Foundation, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "A mouse eats some bites from a bread , by Herminder Ohri © Pratham Education Foundation, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "A mouse eats some more bread , by Herminder Ohri © Pratham Education Foundation, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "A mouse ate lots , by Herminder Ohri © Pratham Education Foundation, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "Should I eat it!! Or take It?",
+    "paragraphs_en": [
+      "One chapati.",
+      "The rat saw the chapati.",
+      "He then thought, should I eat it?",
+      "Or should I take it home?",
+      "The rat tied it with a rope and pulled. The chapati did not move.",
+      "The rat ate some and liked it.",
+      "Then the rat ate some more.",
+      "Little by little the rat ate so much that its stomach…"
+    ],
+    "sentences": [
+      {
+        "text_en": "One chapati.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_213104/s_000.mp3",
+        "text_vi": "Một cái bánh chapati."
+      },
+      {
+        "text_en": "The rat saw the chapati.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_213104/s_001.mp3",
+        "text_vi": "Con chuột nhìn thấy cái bánh chapati."
+      },
+      {
+        "text_en": "He then thought, should I eat it?",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_213104/s_002.mp3",
+        "text_vi": "Nó liền nghĩ, mình có nên ăn nó không nhỉ?"
+      },
+      {
+        "text_en": "Or should I take it home?",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_213104/s_003.mp3",
+        "text_vi": "Hay là mình nên mang nó về nhà?"
+      },
+      {
+        "text_en": "The rat tied it with a rope and pulled.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_213104/s_004.mp3",
+        "text_vi": "Con chuột dùng dây buộc nó lại rồi kéo."
+      },
+      {
+        "text_en": "The chapati did not move.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_213104/s_005.mp3",
+        "text_vi": "Cái bánh chapati không nhúc nhích."
+      },
+      {
+        "text_en": "The rat ate some and liked it.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_213104/s_006.mp3",
+        "text_vi": "Con chuột ăn một ít và thấy ngon."
+      },
+      {
+        "text_en": "Then the rat ate some more.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_213104/s_007.mp3",
+        "text_vi": "Sau đó, con chuột lại ăn thêm một ít nữa."
+      },
+      {
+        "text_en": "Little by little the rat ate so much that its stomach…",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_213104/s_008.mp3",
+        "text_vi": "Dần dần, con chuột ăn nhiều đến nỗi bụng nó…"
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "One chapati.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_213104/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "The rat saw the chapati.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_213104/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "He then thought, should I eat it?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_213104/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "Or should I take it home?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_213104/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "The rat tied it with a rope and pulled.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_213104/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "The chapati did not move.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_213104/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "The rat ate some and liked it.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_213104/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "Then the rat ate some more.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_213104/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "Little by little the rat ate so much that its stomach…",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_213104/s_008.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "What is there?",
+          "options_en": [
+            "One chapati",
+            "A rope",
+            "The rat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "Which food is mentioned?",
+          "options_en": [
+            "Chapati",
+            "Rope",
+            "Rat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "Who saw the chapati?",
+          "options_en": [
+            "The rat",
+            "He tied it with a rope",
+            "The rat ate some"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "What did the rat see?",
+          "options_en": [
+            "The chapati",
+            "A rope",
+            "His home"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "Who then thought?",
+          "options_en": [
+            "He",
+            "The rat",
+            "The chapati"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "What did he think?",
+          "options_en": [
+            "Should I eat it?",
+            "Should I take it home?",
+            "Should I tie it with a rope?"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "What is the speaker deciding?",
+          "options_en": [
+            "Whether to take it home",
+            "Whether to eat it",
+            "Whether to tie it with a rope"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "Which place does the speaker mention taking it to?",
+          "options_en": [
+            "Home",
+            "Its stomach",
+            "Tied it with a rope"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "Who tied it with a rope and pulled?",
+          "options_en": [
+            "The rat",
+            "The chapati",
+            "He thought about eating it"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "How did he try to move it?",
+          "options_en": [
+            "By tying it with a rope and pulling",
+            "By eating some of it",
+            "By taking it home"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p4_s1_q1",
+          "type": "choice",
+          "question_en": "What did not move?",
+          "options_en": [
+            "The chapati",
+            "The rat",
+            "The rope"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p4_s1_q2",
+          "type": "choice",
+          "question_en": "How did the chapati respond when pulled?",
+          "options_en": [
+            "It did not move",
+            "It was eaten",
+            "It was tied with a rope"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "Who ate some and liked it?",
+          "options_en": [
+            "The rat",
+            "The chapati",
+            "He"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "What did the rat do?",
+          "options_en": [
+            "Ate some and liked it",
+            "Tied it with a rope",
+            "Pulled it"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "Who ate some more?",
+          "options_en": [
+            "The rat",
+            "The chapati",
+            "One chapati"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "What did the rat do?",
+          "options_en": [
+            "Ate some more",
+            "Tied it with a rope",
+            "Pulled"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "Who ate so much?",
+          "options_en": [
+            "The rat",
+            "The chapati",
+            "He"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "What happened little by little?",
+          "options_en": [
+            "It ate so much",
+            "It tied the chapati with a rope",
+            "It pulled the chapati"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'Should I eat it!! Or take It?'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "one",
+      "meaning_vi": "một (số đếm)",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "chapati",
+      "meaning_vi": "một loại bánh dẹt",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "rat",
+      "meaning_vi": "chuột",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "saw",
+      "meaning_vi": "đã nhìn thấy",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "thought",
+      "meaning_vi": "đã nghĩ",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "should",
+      "meaning_vi": "nên",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "eat",
+      "meaning_vi": "ăn",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "take",
+      "meaning_vi": "mang đi",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "home",
+      "meaning_vi": "nhà",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "tied",
+      "meaning_vi": "buộc, cột",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "rope",
+      "meaning_vi": "dây thừng",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "pulled",
+      "meaning_vi": "đã kéo",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "move",
+      "meaning_vi": "di chuyển, nhúc nhích",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "some",
+      "meaning_vi": "một ít",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "liked",
+      "meaning_vi": "thích, thấy ngon",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "then",
+      "meaning_vi": "sau đó, lúc đó",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "more",
+      "meaning_vi": "thêm nữa",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "little by little",
+      "meaning_vi": "dần dần, từ từ",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "so much",
+      "meaning_vi": "nhiều đến nỗi",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "stomach",
+      "meaning_vi": "bụng",
+      "paragraph_index": 7
+    }
+  ]
+}

@@ -1,0 +1,500 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L0",
+  "level_label": "Cấp 0",
+  "topic": "Turtle Dove",
+  "slug": "book_103254",
+  "audio_filename": "book_103254.mp3",
+  "book_slug": "book_103254",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_103254/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103254/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103254/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103254/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103254/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103254/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103254/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103254/page_09.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_103254/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103254/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103254/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103254/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103254/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103254/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103254/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103254/page_09.mp3"
+  ],
+  "book_attribution": {
+    "title": "Turtle Dove",
+    "creators": [
+      "All Children Reading Cambodia",
+      "Choeurn Brus"
+    ],
+    "publisher": "The Asia Foundation",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: Turtle Dove is written by All Children Reading Cambodia . © Let's Read , 2019. Some rights reserved. Released under CC BY 4.0 license. Other Credits: This story 'Turtle Dove' has been published on StoryWeaver by The Asia Foundation. Images Attributions: Cover page: Turtle dove reading books , by Choeurn Brus © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 2: Turtle dove and ducks , by Choeurn Brus © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 3: Turtle dove in thought , by Choeurn Brus © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 4: Turtle dove and apple , by Choeurn Brus © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 5: Turtle dove, mouse and corn , by Choeurn Brus © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 6: Walking turtle dove , by Choeurn Brus © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 7: Crawling turtle dove , by Choeurn Brus © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 8: Turtle dove looking at swinging monkey , by Choeurn Brus © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 9: Turtle dove trying to swing , by Choeurn Brus © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 10: Miniature animals , by Choeurn Brus © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/103254-turtle-dove",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "Turtle dove and ducks , by Choeurn Brus © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "Turtle dove in thought , by Choeurn Brus © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "Turtle dove and apple , by Choeurn Brus © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "Turtle dove, mouse and corn , by Choeurn Brus © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "Walking turtle dove , by Choeurn Brus © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "Crawling turtle dove , by Choeurn Brus © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "Turtle dove looking at swinging monkey , by Choeurn Brus © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "Turtle dove trying to swing , by Choeurn Brus © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "Turtle Dove",
+    "paragraphs_en": [
+      "Turtle Dove can fly.",
+      "Turtle Dove cannot swim.",
+      "Turtle Dove can eat food.",
+      "Turtle Dove cannot chew the food.",
+      "Turtle Dove can walk.",
+      "Turtle Dove cannot crawl.",
+      "Turtle Dove can sit on tree branch.",
+      "Turtle Dove cannot hold on to tree branch."
+    ],
+    "sentences": [
+      {
+        "text_en": "Turtle Dove can fly.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103254/s_000.mp3",
+        "text_vi": "Chim Cu Gáy có thể bay."
+      },
+      {
+        "text_en": "Turtle Dove cannot swim.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103254/s_001.mp3",
+        "text_vi": "Chim Cu Gáy không thể bơi."
+      },
+      {
+        "text_en": "Turtle Dove can eat food.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103254/s_002.mp3",
+        "text_vi": "Chim Cu Gáy có thể ăn thức ăn."
+      },
+      {
+        "text_en": "Turtle Dove cannot chew the food.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103254/s_003.mp3",
+        "text_vi": "Chim Cu Gáy không thể nhai thức ăn."
+      },
+      {
+        "text_en": "Turtle Dove can walk.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103254/s_004.mp3",
+        "text_vi": "Chim Cu Gáy có thể đi bộ."
+      },
+      {
+        "text_en": "Turtle Dove cannot crawl.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103254/s_005.mp3",
+        "text_vi": "Chim Cu Gáy không thể bò."
+      },
+      {
+        "text_en": "Turtle Dove can sit on tree branch.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103254/s_006.mp3",
+        "text_vi": "Chim Cu Gáy có thể đậu trên cành cây."
+      },
+      {
+        "text_en": "Turtle Dove cannot hold on to tree branch.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103254/s_007.mp3",
+        "text_vi": "Chim Cu Gáy không thể bám vào cành cây."
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "Turtle Dove can fly.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103254/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "Turtle Dove cannot swim.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103254/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "Turtle Dove can eat food.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103254/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "Turtle Dove cannot chew the food.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103254/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "Turtle Dove can walk.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103254/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "Turtle Dove cannot crawl.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103254/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "Turtle Dove can sit on tree branch.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103254/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "Turtle Dove cannot hold on to tree branch.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103254/s_007.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "Who can fly?",
+          "options_en": [
+            "Turtle Dove",
+            "Turtle Dove can walk",
+            "Turtle Dove cannot swim"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "What can Turtle Dove do?",
+          "options_en": [
+            "Fly",
+            "Swim",
+            "Chew the food"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "What can't Turtle Dove do?",
+          "options_en": [
+            "swim",
+            "fly",
+            "chew the food"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "Who cannot swim?",
+          "options_en": [
+            "Turtle Dove",
+            "Turtle Dove can fly",
+            "Turtle Dove can walk"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "What can Turtle Dove do?",
+          "options_en": [
+            "Eat food",
+            "Fly",
+            "Swim"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "What can Turtle Dove eat?",
+          "options_en": [
+            "Food",
+            "Tree branch",
+            "It cannot chew the food"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "Who cannot chew the food?",
+          "options_en": [
+            "Turtle Dove",
+            "It can fly",
+            "It can eat food"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "What cannot Turtle Dove do with the food?",
+          "options_en": [
+            "Chew the food",
+            "Swim",
+            "Hold on to the tree branch"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "What can Turtle Dove do?",
+          "options_en": [
+            "walk",
+            "fly",
+            "eat food"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "How does Turtle Dove move?",
+          "options_en": [
+            "by walking",
+            "by flying",
+            "by crawling"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "What cannot Turtle Dove do?",
+          "options_en": [
+            "crawl",
+            "swim",
+            "chew the food"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "Who cannot crawl?",
+          "options_en": [
+            "Turtle Dove",
+            "Turtle Dove can fly",
+            "Turtle Dove can walk"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "What can Turtle Dove sit on?",
+          "options_en": [
+            "a tree branch",
+            "water",
+            "the ground"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "Where can Turtle Dove sit?",
+          "options_en": [
+            "on a tree branch",
+            "in water",
+            "on the ground"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "What can't Turtle Dove do?",
+          "options_en": [
+            "Hold on to tree branch",
+            "Swim",
+            "Chew the food"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "Which of these can Turtle Dove not do?",
+          "options_en": [
+            "Hold on to tree branch",
+            "Fly",
+            "Walk"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'Turtle Dove'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "Turtle Dove",
+      "meaning_vi": "Một loài chim nhỏ, thường có màu xám hoặc nâu, tiếng kêu gù gù.",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "fly",
+      "meaning_vi": "di chuyển trong không khí bằng cánh",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "cannot",
+      "meaning_vi": "không thể (không làm được điều gì đó)",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "swim",
+      "meaning_vi": "di chuyển trong nước bằng cách dùng tay, chân hoặc vây",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "eat",
+      "meaning_vi": "đưa thức ăn vào miệng và nuốt",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "food",
+      "meaning_vi": "những thứ để ăn cho no bụng và có sức khỏe",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "chew",
+      "meaning_vi": "dùng răng nghiền nát thức ăn trong miệng trước khi nuốt",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "walk",
+      "meaning_vi": "di chuyển bằng chân, từng bước một",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "crawl",
+      "meaning_vi": "di chuyển bằng tay và đầu gối, hoặc bụng sát đất",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "sit",
+      "meaning_vi": "đặt mông xuống một chỗ",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "tree",
+      "meaning_vi": "một loại thực vật lớn có thân gỗ và cành lá",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "branch",
+      "meaning_vi": "phần mọc ra từ thân cây, có lá",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "hold on to",
+      "meaning_vi": "giữ chặt lấy cái gì đó để không bị rơi hoặc di chuyển",
+      "paragraph_index": 7
+    }
+  ]
+}

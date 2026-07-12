@@ -1,0 +1,1524 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L2",
+  "level_label": "Cấp 2",
+  "topic": "Croak",
+  "slug": "book_114469",
+  "audio_filename": "book_114469.mp3",
+  "book_slug": "book_114469",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_114469/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_114469/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_114469/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_114469/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_114469/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_114469/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_114469/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_114469/page_09.jpg",
+    "https://audio.felixbuilderhub.com/books/book_114469/page_10.jpg",
+    "https://audio.felixbuilderhub.com/books/book_114469/page_11.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_114469/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_114469/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_114469/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_114469/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_114469/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_114469/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_114469/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_114469/page_09.mp3",
+    "https://audio.felixbuilderhub.com/books/book_114469/page_10.mp3",
+    "https://audio.felixbuilderhub.com/books/book_114469/page_11.mp3"
+  ],
+  "book_attribution": {
+    "title": "Croak",
+    "creators": [
+      "Kavitha Punniyamurthi",
+      "Ekta Bharti"
+    ],
+    "publisher": "Pratham Books",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: Croak is written by Kavitha Punniyamurthi . © Pratham Books , 2020. Some rights reserved. Released under CC BY 4.0 license. Other Credits: ‘Croak’ has been published on StoryWeaver by Pratham Books. The development of this book has been supported by Oracle. www.prathambooks.org. Images Attributions: Cover page: big frog leaps out , by Ekta Bharti © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 2: A classroom full of screaming children , by Ekta Bharti © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 3: teacher standing with a piece of chalk and eyes closed , by Ekta Bharti © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 4: Children looking very alarmed and pointing , by Ekta Bharti © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 5: Teacher teaching from a book , by Ekta Bharti © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 6: A frog sitting upside down , by Ekta Bharti © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 7: Students screaming and pointing and frog hanging from the fan , by Ekta Bharti © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 8: frog eating parathas from a lunch box , by Ekta Bharti © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 9: Children playing in the field , by Ekta Bharti © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 10: Children running behind their teacher , by Ekta Bharti © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 11: man riding a cycle with a frog holding on behind , by Ekta Bharti © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/ The development of this book has been supported by Oracle.",
+    "source_url": "https://storyweaver.org.in/stories/114469-croak",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "A classroom full of screaming children , by Ekta Bharti © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "teacher standing with a piece of chalk and eyes closed , by Ekta Bharti © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "Children looking very alarmed and pointing , by Ekta Bharti © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "Teacher teaching from a book , by Ekta Bharti © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "A frog sitting upside down , by Ekta Bharti © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "Students screaming and pointing and frog hanging from the fan , by Ekta Bharti © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "frog eating parathas from a lunch box , by Ekta Bharti © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "Children playing in the field , by Ekta Bharti © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 8,
+        "credit_text": "Children running behind their teacher , by Ekta Bharti © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 9,
+        "credit_text": "man riding a cycle with a frog holding on behind , by Ekta Bharti © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "Croak",
+    "paragraphs_en": [
+      "PLIP PLOP PLIP! PLIP PLOP PLIP! PLIP PLOP PLIP! Raindrops plipped and plopped on the roof of the school. “Namaste, Masterji!” sang the children.",
+      "Masterji beamed. “Namaste, Namaste, Namaste!” When Masterji turned to the blackboard— CROAK! Someone hopped in through the window.",
+      "The children squealed. “Look behind you, Masterji,” they said. “There’s a frog in the room!” “Oh, really?” Masterji said, pretending to be surprised. “And what does your frog look like?” “It’s BIG and PODGY,” said Akif. “It’s GREEN and SPOTTY,” said Rani. “It’s WET and SLIMY,” said Munni. CROAK!",
+      "In English class, Masterji said, “Turn to page 13.” “Look behind you, Masterji,” said Farah. “The frog is sitting on your chair!” “Great! I hope she likes it here.” CROAK!",
+      "“Now where did I keep my glasses?” asked Masterji during Maths class. “Look behind you, Masterji,” said Bishal. “The frog is wearing your glasses!” “Never mind, I can see just as well without them.” CROAK!",
+      "When it was time for Science, Masterji said, “Here’s a bat hanging upside down from a tree.” “Look above you, Masterji,” said Akif. “The frog is hanging upside down from the fan!” “A frog that thinks she’s a bat, eh?” CROAK!",
+      "At lunch, Masterji asked, “Where are my aloo parathas? I’m sure I packed three more.” “Look behind you, Masterji,” said Munni. “The frog is munching on your aloo parathas.” “Well, at least someone loves my cooking.” CROAK!",
+      "When it was time for Games, Masterji said, “Where’s the football?” “Look behind you, Masterji,” said Rani. “The frog just scored a goal.” “Fantastic! She must join our team.” CROAK!",
+      "The last bell rang. Masterji waved cheerily to the children as he cycled away. “Look behind you, Masterji,” the children squealed. “The frog is sitting on your bag!” “Good! I could use the company.”",
+      "“I didn’t fall for any silly prank today!” CROAK!"
+    ],
+    "sentences": [
+      {
+        "text_en": "PLIP PLOP PLIP!",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_114469/s_000.mp3",
+        "text_vi": "PLIP PLOP PLIP!"
+      },
+      {
+        "text_en": "PLIP PLOP PLIP!",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_114469/s_001.mp3",
+        "text_vi": "PLIP PLOP PLIP!"
+      },
+      {
+        "text_en": "PLIP PLOP PLIP!",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_114469/s_002.mp3",
+        "text_vi": "PLIP PLOP PLIP!"
+      },
+      {
+        "text_en": "Raindrops plipped and plopped on the roof of the school.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_114469/s_003.mp3",
+        "text_vi": "Những hạt mưa rơi lộp bộp trên mái trường."
+      },
+      {
+        "text_en": "“Namaste, Masterji!” sang the children.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_114469/s_004.mp3",
+        "text_vi": "“Chào thầy Masterji!” các bạn nhỏ hát."
+      },
+      {
+        "text_en": "Masterji beamed. “Namaste, Namaste, Namaste!” When Masterji turned to the blackboard— CROAK!",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_114469/s_005.mp3",
+        "text_vi": "Thầy Masterji mỉm cười rạng rỡ. “Chào các con, chào các con, chào các con!” Khi thầy Masterji quay lại bảng đen— ỘP!"
+      },
+      {
+        "text_en": "Someone hopped in through the window.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_114469/s_006.mp3",
+        "text_vi": "Ai đó nhảy vào qua cửa sổ."
+      },
+      {
+        "text_en": "The children squealed.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_114469/s_007.mp3",
+        "text_vi": "Các bạn nhỏ kêu ré lên."
+      },
+      {
+        "text_en": "“Look behind you, Masterji,” they said.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_114469/s_008.mp3",
+        "text_vi": "“Thầy Masterji ơi, nhìn đằng sau thầy kìa,” các bạn nói."
+      },
+      {
+        "text_en": "“There’s a frog in the room!” “Oh, really?” Masterji said, pretending to be surprised.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_114469/s_009.mp3",
+        "text_vi": "“Có một con ếch trong phòng!” “Ồ, thật sao?” Thầy Masterji nói, giả vờ ngạc nhiên."
+      },
+      {
+        "text_en": "“And what does your frog look like?” “It’s BIG and PODGY,” said Akif.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_114469/s_010.mp3",
+        "text_vi": "“Và con ếch của các con trông như thế nào?” “Nó TO và MẬP Ù,” Akif nói."
+      },
+      {
+        "text_en": "“It’s GREEN and SPOTTY,” said Rani.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_114469/s_011.mp3",
+        "text_vi": "“Nó MÀU XANH và CÓ ĐỐM,” Rani nói."
+      },
+      {
+        "text_en": "“It’s WET and SLIMY,” said Munni. CROAK!",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_114469/s_012.mp3",
+        "text_vi": "“Nó ƯỚT và NHỚT NHÁT,” Munni nói. ỘP!"
+      },
+      {
+        "text_en": "In English class, Masterji said, “Turn to page 13.” “Look behind you, Masterji,” said Farah.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_114469/s_013.mp3",
+        "text_vi": "Trong giờ học tiếng Anh, thầy Masterji nói, “Mở trang 13.” “Thầy Masterji ơi, nhìn đằng sau thầy kìa,” Farah nói."
+      },
+      {
+        "text_en": "“The frog is sitting on your chair!” “Great!",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_114469/s_014.mp3",
+        "text_vi": "“Con ếch đang ngồi trên ghế của thầy!” “Tuyệt vời!"
+      },
+      {
+        "text_en": "I hope she likes it here.” CROAK!",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_114469/s_015.mp3",
+        "text_vi": "Thầy hy vọng nó thích ở đây.” ỘP!"
+      },
+      {
+        "text_en": "“Now where did I keep my glasses?” asked Masterji during Maths class.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_114469/s_016.mp3",
+        "text_vi": "“Giờ thì thầy để kính ở đâu nhỉ?” thầy Masterji hỏi trong giờ học Toán."
+      },
+      {
+        "text_en": "“Look behind you, Masterji,” said Bishal.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_114469/s_017.mp3",
+        "text_vi": "“Thầy Masterji ơi, nhìn đằng sau thầy kìa,” Bishal nói."
+      },
+      {
+        "text_en": "“The frog is wearing your glasses!” “Never mind, I can see just as well without them.” CROAK!",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_114469/s_018.mp3",
+        "text_vi": "“Con ếch đang đeo kính của thầy!” “Không sao đâu, thầy vẫn nhìn rõ mà không cần chúng.” ỘP!"
+      },
+      {
+        "text_en": "When it was time for Science, Masterji said, “Here’s a bat hanging upside down from a tree.” “Look above you, Masterji,” said Akif.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_114469/s_019.mp3",
+        "text_vi": "Khi đến giờ Khoa học, thầy Masterji nói, “Đây là một con dơi đang treo ngược trên cây.” “Thầy Masterji ơi, nhìn lên trên thầy kìa,” Akif nói."
+      },
+      {
+        "text_en": "“The frog is hanging upside down from the fan!” “A frog that thinks she’s a bat, eh?” CROAK!",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_114469/s_020.mp3",
+        "text_vi": "“Con ếch đang treo ngược trên quạt!” “Một con ếch nghĩ mình là dơi, phải không?” ỘP!"
+      },
+      {
+        "text_en": "At lunch, Masterji asked, “Where are my aloo parathas?",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_114469/s_021.mp3",
+        "text_vi": "Đến giờ ăn trưa, thầy Masterji hỏi, “Món aloo parathas của thầy đâu rồi?"
+      },
+      {
+        "text_en": "I’m sure I packed three more.” “Look behind you, Masterji,” said Munni.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_114469/s_022.mp3",
+        "text_vi": "Thầy chắc là thầy đã gói thêm ba cái nữa.” “Thầy Masterji ơi, nhìn đằng sau thầy kìa,” Munni nói."
+      },
+      {
+        "text_en": "“The frog is munching on your aloo parathas.” “Well, at least someone loves my cooking.” CROAK!",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_114469/s_023.mp3",
+        "text_vi": "“Con ếch đang nhấm nháp món aloo parathas của thầy.” “Chà, ít nhất cũng có ai đó thích món ăn của thầy.” ỘP!"
+      },
+      {
+        "text_en": "When it was time for Games, Masterji said, “Where’s the football?” “Look behind you, Masterji,” said Rani.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_114469/s_024.mp3",
+        "text_vi": "Khi đến giờ Thể dục, thầy Masterji nói, “Quả bóng đá đâu rồi?” “Thầy Masterji ơi, nhìn đằng sau thầy kìa,” Rani nói."
+      },
+      {
+        "text_en": "“The frog just scored a goal.” “Fantastic!",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_114469/s_025.mp3",
+        "text_vi": "“Con ếch vừa ghi bàn đấy.” “Tuyệt vời!"
+      },
+      {
+        "text_en": "She must join our team.” CROAK!",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_114469/s_026.mp3",
+        "text_vi": "Nó phải tham gia đội của chúng ta.” ỘP!"
+      },
+      {
+        "text_en": "The last bell rang.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_114469/s_027.mp3",
+        "text_vi": "Chuông cuối cùng reo lên."
+      },
+      {
+        "text_en": "Masterji waved cheerily to the children as he cycled away.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_114469/s_028.mp3",
+        "text_vi": "Thầy Masterji vẫy tay chào các bạn nhỏ một cách vui vẻ khi thầy đạp xe đi."
+      },
+      {
+        "text_en": "“Look behind you, Masterji,” the children squealed.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_114469/s_029.mp3",
+        "text_vi": "“Thầy Masterji ơi, nhìn đằng sau thầy kìa,” các bạn nhỏ kêu ré lên."
+      },
+      {
+        "text_en": "“The frog is sitting on your bag!” “Good!",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_114469/s_030.mp3",
+        "text_vi": "“Con ếch đang ngồi trên cặp của thầy!” “Tốt!"
+      },
+      {
+        "text_en": "I could use the company.”",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_114469/s_031.mp3",
+        "text_vi": "Thầy cũng cần có bạn đồng hành.”"
+      },
+      {
+        "text_en": "“I didn’t fall for any silly prank today!” CROAK!",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_114469/s_032.mp3",
+        "text_vi": "“Hôm nay thầy không bị mắc lừa trò đùa ngớ ngẩn nào cả!” ỘP!"
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "PLIP PLOP PLIP!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_114469/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "PLIP PLOP PLIP!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_114469/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "PLIP PLOP PLIP!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_114469/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "Raindrops plipped and plopped on the roof of the school.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_114469/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "“Namaste, Masterji!” sang the children.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_114469/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "Masterji beamed. “Namaste, Namaste, Namaste!” When Masterji turned to the blackboard— CROAK!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_114469/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "Someone hopped in through the window.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_114469/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "The children squealed.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_114469/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "“Look behind you, Masterji,” they said.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_114469/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "“There’s a frog in the room!” “Oh, really?” Masterji said, pretending to be surprised.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_114469/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "“And what does your frog look like?” “It’s BIG and PODGY,” said Akif.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_114469/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "“It’s GREEN and SPOTTY,” said Rani.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_114469/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "“It’s WET and SLIMY,” said Munni. CROAK!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_114469/s_012.mp3"
+        },
+        {
+          "id": "ra_13",
+          "text_en": "In English class, Masterji said, “Turn to page 13.” “Look behind you, Masterji,” said Farah.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_114469/s_013.mp3"
+        },
+        {
+          "id": "ra_14",
+          "text_en": "“The frog is sitting on your chair!” “Great!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_114469/s_014.mp3"
+        },
+        {
+          "id": "ra_15",
+          "text_en": "I hope she likes it here.” CROAK!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_114469/s_015.mp3"
+        },
+        {
+          "id": "ra_16",
+          "text_en": "“Now where did I keep my glasses?” asked Masterji during Maths class.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_114469/s_016.mp3"
+        },
+        {
+          "id": "ra_17",
+          "text_en": "“Look behind you, Masterji,” said Bishal.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_114469/s_017.mp3"
+        },
+        {
+          "id": "ra_18",
+          "text_en": "“The frog is wearing your glasses!” “Never mind, I can see just as well without them.” CROAK!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_114469/s_018.mp3"
+        },
+        {
+          "id": "ra_19",
+          "text_en": "When it was time for Science, Masterji said, “Here’s a bat hanging upside down from a tree.” “Look above you, Masterji,” said Akif.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_114469/s_019.mp3"
+        },
+        {
+          "id": "ra_20",
+          "text_en": "“The frog is hanging upside down from the fan!” “A frog that thinks she’s a bat, eh?” CROAK!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_114469/s_020.mp3"
+        },
+        {
+          "id": "ra_21",
+          "text_en": "At lunch, Masterji asked, “Where are my aloo parathas?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_114469/s_021.mp3"
+        },
+        {
+          "id": "ra_22",
+          "text_en": "I’m sure I packed three more.” “Look behind you, Masterji,” said Munni.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_114469/s_022.mp3"
+        },
+        {
+          "id": "ra_23",
+          "text_en": "“The frog is munching on your aloo parathas.” “Well, at least someone loves my cooking.” CROAK!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_114469/s_023.mp3"
+        },
+        {
+          "id": "ra_24",
+          "text_en": "When it was time for Games, Masterji said, “Where’s the football?” “Look behind you, Masterji,” said Rani.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_114469/s_024.mp3"
+        },
+        {
+          "id": "ra_25",
+          "text_en": "“The frog just scored a goal.” “Fantastic!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_114469/s_025.mp3"
+        },
+        {
+          "id": "ra_26",
+          "text_en": "She must join our team.” CROAK!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_114469/s_026.mp3"
+        },
+        {
+          "id": "ra_27",
+          "text_en": "The last bell rang.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_114469/s_027.mp3"
+        },
+        {
+          "id": "ra_28",
+          "text_en": "Masterji waved cheerily to the children as he cycled away.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_114469/s_028.mp3"
+        },
+        {
+          "id": "ra_29",
+          "text_en": "“Look behind you, Masterji,” the children squealed.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_114469/s_029.mp3"
+        },
+        {
+          "id": "ra_30",
+          "text_en": "“The frog is sitting on your bag!” “Good!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_114469/s_030.mp3"
+        },
+        {
+          "id": "ra_31",
+          "text_en": "I could use the company.”",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_114469/s_031.mp3"
+        },
+        {
+          "id": "ra_32",
+          "text_en": "“I didn’t fall for any silly prank today!” CROAK!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_114469/s_032.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "What sound is written in the sentence?",
+          "options_en": [
+            "PLIP PLOP PLIP!",
+            "CROAK!",
+            "Namaste, Masterji!"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "Which word appears more than once in the sentence?",
+          "options_en": [
+            "PLIP",
+            "CROAK!",
+            "Namaste, Masterji!"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s1_q1",
+          "type": "choice",
+          "question_en": "What sound is written in this sentence?",
+          "options_en": [
+            "PLIP PLOP PLIP!",
+            "CROAK!",
+            "Look behind you, Masterji"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s1_q2",
+          "type": "choice",
+          "question_en": "Which syllables make up the sound in the sentence?",
+          "options_en": [
+            "PLIP and PLOP",
+            "CROAK and RIBBIT",
+            "Namaste and Masterji"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s2_q1",
+          "type": "choice",
+          "question_en": "What is the repeated sound shown here?",
+          "options_en": [
+            "PLIP PLOP PLIP!",
+            "CROAK!",
+            "The frog is sitting on your bag"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s2_q2",
+          "type": "choice",
+          "question_en": "Which sound word appears at the start and end of the sentence?",
+          "options_en": [
+            "PLIP",
+            "CROAK!",
+            "Aloo parathas"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s3_q1",
+          "type": "choice",
+          "question_en": "What fell on the roof of the school?",
+          "options_en": [
+            "Raindrops",
+            "A frog",
+            "Aloo parathas"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p0_s3_q2",
+          "type": "choice",
+          "question_en": "Where did the raindrops plip and plop?",
+          "options_en": [
+            "On the roof of the school",
+            "On your chair",
+            "On the bag"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p0_s4_q1",
+          "type": "choice",
+          "question_en": "Who sang \"Namaste, Masterji!\"?",
+          "options_en": [
+            "The children",
+            "Masterji",
+            "The frog"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p0_s4_q2",
+          "type": "choice",
+          "question_en": "What did the children say to Masterji?",
+          "options_en": [
+            "\"Namaste, Masterji!\"",
+            "PLIP PLOP PLIP!",
+            "CROAK!"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "What did Masterji say?",
+          "options_en": [
+            "“Namaste, Namaste, Namaste!”",
+            "“Namaste, Masterji!”",
+            "“Look behind you, Masterji”"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "What sound interrupted when Masterji turned to the blackboard?",
+          "options_en": [
+            "CROAK!",
+            "PLIP PLOP",
+            "The children squealed"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p1_s1_q1",
+          "type": "choice",
+          "question_en": "Who hopped in through the window?",
+          "options_en": [
+            "Someone",
+            "The frog",
+            "Masterji"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p1_s1_q2",
+          "type": "choice",
+          "question_en": "Where did someone hop in through?",
+          "options_en": [
+            "Through the window",
+            "Onto the roof of the school",
+            "Onto Masterji's chair"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "Who squealed?",
+          "options_en": [
+            "The children",
+            "Masterji",
+            "The frog"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "How did the children react?",
+          "options_en": [
+            "They squealed",
+            "They waved",
+            "They sang"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p2_s1_q1",
+          "type": "choice",
+          "question_en": "Who did they tell to look behind?",
+          "options_en": [
+            "Masterji",
+            "Akif",
+            "The frog"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p2_s1_q2",
+          "type": "choice",
+          "question_en": "What did they say to Masterji?",
+          "options_en": [
+            "\"Look behind you, Masterji\"",
+            "\"Turn to page 13\"",
+            "\"The frog is sitting on your chair!\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p2_s2_q1",
+          "type": "choice",
+          "question_en": "What did someone say was in the room?",
+          "options_en": [
+            "A frog",
+            "A bat",
+            "A football"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p2_s2_q2",
+          "type": "choice",
+          "question_en": "How did Masterji respond?",
+          "options_en": [
+            "He pretended to be surprised",
+            "He waved cheerily",
+            "He said he could see without glasses"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p2_s3_q1",
+          "type": "choice",
+          "question_en": "Who said the frog is big and podgy?",
+          "options_en": [
+            "Akif",
+            "Rani",
+            "Munni"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p2_s3_q2",
+          "type": "choice",
+          "question_en": "What did Akif say about the frog?",
+          "options_en": [
+            "It's BIG and PODGY",
+            "It's GREEN and SPOTTY",
+            "It's WET and SLIMY"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p2_s4_q1",
+          "type": "choice",
+          "question_en": "Who described the frog as green and spotty?",
+          "options_en": [
+            "Rani",
+            "Akif",
+            "Masterji"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p2_s4_q2",
+          "type": "choice",
+          "question_en": "What did Rani say about the frog's appearance?",
+          "options_en": [
+            "It's GREEN and SPOTTY",
+            "It's BIG and PODGY",
+            "The frog is wearing your glasses"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p2_s5_q1",
+          "type": "choice",
+          "question_en": "Who said the frog is wet and slimy?",
+          "options_en": [
+            "Munni",
+            "Rani",
+            "Akif"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p2_s5_q2",
+          "type": "choice",
+          "question_en": "What sound is heard after Munni speaks?",
+          "options_en": [
+            "CROAK!",
+            "PLIP PLOP PLIP!",
+            "Namaste"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "Who said, \"Look behind you, Masterji\"?",
+          "options_en": [
+            "Farah",
+            "Akif",
+            "Rani"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "Where are they when Masterji says, \"Turn to page 13\"?",
+          "options_en": [
+            "In English class",
+            "In Maths class",
+            "In Science class"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p3_s1_q1",
+          "type": "choice",
+          "question_en": "What is sitting on Masterji's chair?",
+          "options_en": [
+            "The frog",
+            "A bat",
+            "The frog wearing glasses"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p3_s1_q2",
+          "type": "choice",
+          "question_en": "How does Masterji respond to hearing about the frog on his chair?",
+          "options_en": [
+            "He says, \"Great!\"",
+            "He says, \"Oh, really?\"",
+            "He says, \"Never mind, I can see just as well without them.\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p3_s2_q1",
+          "type": "choice",
+          "question_en": "Who does Masterji hope will like it here?",
+          "options_en": [
+            "The frog",
+            "The bat",
+            "The children"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p3_s2_q2",
+          "type": "choice",
+          "question_en": "What sound appears at the end of the paragraph?",
+          "options_en": [
+            "CROAK!",
+            "Squeal",
+            "PLIP PLOP PLIP!"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "Who asked, “Now where did I keep my glasses?”",
+          "options_en": [
+            "Masterji",
+            "Bishal",
+            "Akif"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "When did Masterji ask about his glasses?",
+          "options_en": [
+            "During Maths class",
+            "In English class",
+            "At lunch"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p4_s1_q1",
+          "type": "choice",
+          "question_en": "Who said, “Look behind you, Masterji,”?",
+          "options_en": [
+            "Bishal",
+            "Munni",
+            "Rani"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p4_s1_q2",
+          "type": "choice",
+          "question_en": "What is the correct answer to this question: To whom did Bishal say, “Look behind you, Masterji”?",
+          "options_en": [
+            "Masterji",
+            "The children",
+            "The frog"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p4_s2_q1",
+          "type": "choice",
+          "question_en": "What is the frog wearing?",
+          "options_en": [
+            "Your glasses",
+            "Your aloo parathas",
+            "Your bag"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p4_s2_q2",
+          "type": "choice",
+          "question_en": "How did Masterji reply about his glasses?",
+          "options_en": [
+            "I can see just as well without them.",
+            "I hope she likes it here.",
+            "Well, at least someone loves my cooking."
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "When was it time?",
+          "options_en": [
+            "Science",
+            "English",
+            "Games"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "Who said, \"Look above you, Masterji\"?",
+          "options_en": [
+            "Akif",
+            "Farah",
+            "Bishal"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p5_s1_q1",
+          "type": "choice",
+          "question_en": "Where is the frog hanging upside down?",
+          "options_en": [
+            "From the fan",
+            "From a tree",
+            "On a chair"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p5_s1_q2",
+          "type": "choice",
+          "question_en": "Who croaks?",
+          "options_en": [
+            "The frog",
+            "The children",
+            "Masterji"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "Who asked this question at lunch?",
+          "options_en": [
+            "Masterji",
+            "Munni",
+            "Akif"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "What did Masterji ask about?",
+          "options_en": [
+            "His aloo parathas",
+            "His glasses",
+            "The football"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p6_s1_q1",
+          "type": "choice",
+          "question_en": "Who said, “Look behind you, Masterji”?",
+          "options_en": [
+            "Munni",
+            "Rani",
+            "Farah"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p6_s1_q2",
+          "type": "choice",
+          "question_en": "Who said, “I’m sure I packed three more.”?",
+          "options_en": [
+            "Masterji",
+            "Munni",
+            "Bishal"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p6_s2_q1",
+          "type": "choice",
+          "question_en": "What is the frog doing in this sentence?",
+          "options_en": [
+            "Munching on the aloo parathas",
+            "Wearing Masterji's glasses",
+            "Sitting on Masterji's chair"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p6_s2_q2",
+          "type": "choice",
+          "question_en": "What sound appears at the end of the sentence?",
+          "options_en": [
+            "CROAK!",
+            "PLIP PLOP",
+            "Namaste"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "When was Masterji asking about the football?",
+          "options_en": [
+            "When it was time for Games",
+            "During Maths class",
+            "At lunch"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "Who told Masterji to look behind him?",
+          "options_en": [
+            "Rani",
+            "Bishal",
+            "Munni"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p7_s1_q1",
+          "type": "choice",
+          "question_en": "Who just scored a goal?",
+          "options_en": [
+            "The frog",
+            "Masterji",
+            "Akif"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p7_s1_q2",
+          "type": "choice",
+          "question_en": "What happened in the sentence?",
+          "options_en": [
+            "Someone scored a goal",
+            "Someone found glasses",
+            "Someone hung from the fan"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p7_s2_q1",
+          "type": "choice",
+          "question_en": "Who must join the team?",
+          "options_en": [
+            "She (the frog)",
+            "Masterji",
+            "Rani"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p7_s2_q2",
+          "type": "choice",
+          "question_en": "What sound follows the sentence?",
+          "options_en": [
+            "CROAK!",
+            "PLIP PLOP",
+            "Namaste"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        }
+      ]
+    },
+    {
+      "paragraph_index": 8,
+      "questions": [
+        {
+          "id": "gl_p8_s0_q1",
+          "type": "choice",
+          "question_en": "When did the bell ring?",
+          "options_en": [
+            "At the end of the school day",
+            "During English class",
+            "At lunch time"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        },
+        {
+          "id": "gl_p8_s0_q2",
+          "type": "choice",
+          "question_en": "What happened?",
+          "options_en": [
+            "The last bell rang",
+            "Masterji waved cheerily",
+            "A frog croaked"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        },
+        {
+          "id": "gl_p8_s1_q1",
+          "type": "choice",
+          "question_en": "Who waved cheerily to the children?",
+          "options_en": [
+            "Masterji",
+            "The frog",
+            "The children"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        },
+        {
+          "id": "gl_p8_s1_q2",
+          "type": "choice",
+          "question_en": "How did Masterji move away?",
+          "options_en": [
+            "He cycled away",
+            "He waved cheerily",
+            "He smiled"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        },
+        {
+          "id": "gl_p8_s2_q1",
+          "type": "choice",
+          "question_en": "Who said, \"Look behind you, Masterji\"?",
+          "options_en": [
+            "The children",
+            "Masterji",
+            "The frog"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p8_s2_q2",
+          "type": "choice",
+          "question_en": "What did the children do when they spoke?",
+          "options_en": [
+            "They squealed",
+            "They sang \"Namaste\"",
+            "They scored a goal"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p8_s3_q1",
+          "type": "choice",
+          "question_en": "What is sitting on your bag?",
+          "options_en": [
+            "A frog",
+            "A bat",
+            "A frog wearing glasses"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        },
+        {
+          "id": "gl_p8_s3_q2",
+          "type": "choice",
+          "question_en": "How did the speaker react after hearing about the bag?",
+          "options_en": [
+            "They said \"Good!\"",
+            "They pretended to be surprised",
+            "They hoped she liked it here"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        },
+        {
+          "id": "gl_p8_s4_q1",
+          "type": "choice",
+          "question_en": "Who said, \"I could use the company\"?",
+          "options_en": [
+            "Masterji",
+            "The children",
+            "The frog"
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        },
+        {
+          "id": "gl_p8_s4_q2",
+          "type": "choice",
+          "question_en": "What did the speaker say they could use?",
+          "options_en": [
+            "The company",
+            "A bat",
+            "A football"
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        }
+      ]
+    },
+    {
+      "paragraph_index": 9,
+      "questions": [
+        {
+          "id": "gl_p9_s0_q1",
+          "type": "choice",
+          "question_en": "What did the speaker say they didn't fall for today?",
+          "options_en": [
+            "any silly prank",
+            "the frog is sitting on your bag",
+            "the frog just scored a goal"
+          ],
+          "correct_index": 0,
+          "sentence_index": 32
+        },
+        {
+          "id": "gl_p9_s0_q2",
+          "type": "choice",
+          "question_en": "What sound appears right after the sentence?",
+          "options_en": [
+            "CROAK!",
+            "PLIP PLOP PLIP!",
+            "Namaste, Masterji!"
+          ],
+          "correct_index": 0,
+          "sentence_index": 32
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'Croak'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "Raindrops",
+      "meaning_vi": "Hạt mưa",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "Roof",
+      "meaning_vi": "Mái nhà",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "Sang",
+      "meaning_vi": "Đã hát",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "Beamed",
+      "meaning_vi": "Mỉm cười rạng rỡ",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "Blackboard",
+      "meaning_vi": "Bảng đen",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "Hopped",
+      "meaning_vi": "Nhảy vào",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "Window",
+      "meaning_vi": "Cửa sổ",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "Squealed",
+      "meaning_vi": "Kêu ré lên",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "Pretending",
+      "meaning_vi": "Giả vờ",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "Podgy",
+      "meaning_vi": "Mập ù",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "Slimy",
+      "meaning_vi": "Nhớt nhát",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "Class",
+      "meaning_vi": "Lớp học",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "Page",
+      "meaning_vi": "Trang (sách)",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "Chair",
+      "meaning_vi": "Ghế",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "Hope",
+      "meaning_vi": "Hy vọng",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "Glasses",
+      "meaning_vi": "Kính mắt",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "During",
+      "meaning_vi": "Trong (lúc)",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "Wearing",
+      "meaning_vi": "Đang đeo",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "Without",
+      "meaning_vi": "Mà không",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "Science",
+      "meaning_vi": "Khoa học",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "Bat",
+      "meaning_vi": "Con dơi",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "Upside down",
+      "meaning_vi": "Treo ngược",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "Fan",
+      "meaning_vi": "Cái quạt",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "Lunch",
+      "meaning_vi": "Bữa trưa",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "Packed",
+      "meaning_vi": "Đã gói",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "Munching",
+      "meaning_vi": "Nhấm nháp",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "Cooking",
+      "meaning_vi": "Món ăn",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "Games",
+      "meaning_vi": "Giờ thể dục",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "Football",
+      "meaning_vi": "Bóng đá",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "Scored",
+      "meaning_vi": "Ghi (bàn)",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "Team",
+      "meaning_vi": "Đội",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "Bell",
+      "meaning_vi": "Chuông",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "Waved",
+      "meaning_vi": "Vẫy tay",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "Cycled away",
+      "meaning_vi": "Đạp xe đi",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "Company",
+      "meaning_vi": "Bạn đồng hành",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "Fall for",
+      "meaning_vi": "Mắc lừa",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "Silly",
+      "meaning_vi": "Ngớ ngẩn",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "Prank",
+      "meaning_vi": "Trò đùa",
+      "paragraph_index": 9
+    }
+  ]
+}

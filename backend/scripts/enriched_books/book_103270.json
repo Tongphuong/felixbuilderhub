@@ -1,0 +1,753 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L0",
+  "level_label": "Cấp 0",
+  "topic": "Everyone Eats",
+  "slug": "book_103270",
+  "audio_filename": "book_103270.mp3",
+  "book_slug": "book_103270",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_103270/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103270/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103270/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103270/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103270/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103270/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103270/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103270/page_09.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103270/page_10.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103270/page_11.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103270/page_12.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103270/page_13.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_103270/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103270/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103270/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103270/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103270/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103270/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103270/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103270/page_09.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103270/page_10.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103270/page_11.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103270/page_12.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103270/page_13.mp3"
+  ],
+  "book_attribution": {
+    "title": "Everyone Eats",
+    "creators": [
+      "All Children Reading Cambodia",
+      "Chhoun Sambath"
+    ],
+    "publisher": "The Asia Foundation",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: Everyone Eats is written by All Children Reading Cambodia . © Let's Read , 2018. Some rights reserved. Released under CC BY 4.0 license. Other Credits: This story 'Everyone Eats' has been published on StoryWeaver by Asia Foundation. Images Attributions: Cover page: Animals around a tent , by Chhoun Sambath © The Asia Foundation, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 2: Cow in the field , by Chhoun Sambath © The Asia Foundation, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 3: Cow chewing on hay , by Chhoun Sambath © The Asia Foundation, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 4: Rooster in the field , by Chhoun Sambath © The Asia Foundation, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 5: Rooster eating corn , by Chhoun Sambath © The Asia Foundation, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 6: Horse behind the fence , by Chhoun Sambath © The Asia Foundation, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 7: Horse eating banana stem , by Chhoun Sambath © The Asia Foundation, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 8: Elephant in the field , by Chhoun Sambath © The Asia Foundation, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 9: Elephant eating sugarcane , by Chhoun Sambath © The Asia Foundation, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 10: Lion sitting on grass , by Chhoun Sambath © The Asia Foundation, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 11: Lion eating meat , by Chhoun Sambath © The Asia Foundation, 2018. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/103270-everyone-eats",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "Cow in the field , by Chhoun Sambath © The Asia Foundation, 2018. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "Cow chewing on hay , by Chhoun Sambath © The Asia Foundation, 2018. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "Rooster in the field , by Chhoun Sambath © The Asia Foundation, 2018. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "Rooster eating corn , by Chhoun Sambath © The Asia Foundation, 2018. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "Horse behind the fence , by Chhoun Sambath © The Asia Foundation, 2018. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "Horse eating banana stem , by Chhoun Sambath © The Asia Foundation, 2018. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "Elephant in the field , by Chhoun Sambath © The Asia Foundation, 2018. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "Elephant eating sugarcane , by Chhoun Sambath © The Asia Foundation, 2018. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 8,
+        "credit_text": "Lion sitting on grass , by Chhoun Sambath © The Asia Foundation, 2018. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 9,
+        "credit_text": "Lion eating meat , by Chhoun Sambath © The Asia Foundation, 2018. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 10,
+        "credit_text": "Illustration by Chhoun Sambath."
+      },
+      {
+        "page_index": 11,
+        "credit_text": "Illustration by Chhoun Sambath."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "Everyone Eats",
+    "paragraphs_en": [
+      "This is Cow.",
+      "Cow eats grass.",
+      "This is Chicken.",
+      "Chicken eats corn.",
+      "This is Horse.",
+      "Horse eats a banana tree.",
+      "This is Elephant.",
+      "Elephant eats sugarcane.",
+      "This is Lion.",
+      "Lion eats raw meat.",
+      "They all live by eating food.",
+      "But Lion’s food is different. Lion eats meat while the other animals eat plants."
+    ],
+    "sentences": [
+      {
+        "text_en": "This is Cow.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103270/s_000.mp3",
+        "text_vi": "Đây là Bò."
+      },
+      {
+        "text_en": "Cow eats grass.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103270/s_001.mp3",
+        "text_vi": "Bò ăn cỏ."
+      },
+      {
+        "text_en": "This is Chicken.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103270/s_002.mp3",
+        "text_vi": "Đây là Gà."
+      },
+      {
+        "text_en": "Chicken eats corn.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103270/s_003.mp3",
+        "text_vi": "Gà ăn ngô."
+      },
+      {
+        "text_en": "This is Horse.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103270/s_004.mp3",
+        "text_vi": "Đây là Ngựa."
+      },
+      {
+        "text_en": "Horse eats a banana tree.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103270/s_005.mp3",
+        "text_vi": "Ngựa ăn cây chuối."
+      },
+      {
+        "text_en": "This is Elephant.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103270/s_006.mp3",
+        "text_vi": "Đây là Voi."
+      },
+      {
+        "text_en": "Elephant eats sugarcane.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103270/s_007.mp3",
+        "text_vi": "Voi ăn mía."
+      },
+      {
+        "text_en": "This is Lion.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103270/s_008.mp3",
+        "text_vi": "Đây là Sư tử."
+      },
+      {
+        "text_en": "Lion eats raw meat.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103270/s_009.mp3",
+        "text_vi": "Sư tử ăn thịt sống."
+      },
+      {
+        "text_en": "They all live by eating food.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103270/s_010.mp3",
+        "text_vi": "Tất cả chúng đều sống nhờ ăn thức ăn."
+      },
+      {
+        "text_en": "But Lion’s food is different.",
+        "paragraph_index": 11,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103270/s_011.mp3",
+        "text_vi": "Nhưng thức ăn của Sư tử thì khác."
+      },
+      {
+        "text_en": "Lion eats meat while the other animals eat plants.",
+        "paragraph_index": 11,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103270/s_012.mp3",
+        "text_vi": "Sư tử ăn thịt, còn các con vật khác thì ăn thực vật."
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "This is Cow.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103270/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "Cow eats grass.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103270/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "This is Chicken.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103270/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "Chicken eats corn.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103270/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "This is Horse.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103270/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "Horse eats a banana tree.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103270/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "This is Elephant.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103270/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "Elephant eats sugarcane.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103270/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "This is Lion.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103270/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "Lion eats raw meat.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103270/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "They all live by eating food.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103270/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "But Lion’s food is different.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103270/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "Lion eats meat while the other animals eat plants.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103270/s_012.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "Who is this?",
+          "options_en": [
+            "Cow",
+            "Chicken",
+            "Lion"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "What is this?",
+          "options_en": [
+            "Cow",
+            "Horse",
+            "Elephant"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "Who eats grass?",
+          "options_en": [
+            "Cow",
+            "Chicken",
+            "Horse"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "What does the cow eat?",
+          "options_en": [
+            "grass",
+            "corn",
+            "raw meat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "What is this?",
+          "options_en": [
+            "Chicken",
+            "Cow",
+            "Horse"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "Which animal is this?",
+          "options_en": [
+            "Chicken",
+            "Elephant",
+            "Lion"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "Who eats corn?",
+          "options_en": [
+            "Chicken",
+            "Cow",
+            "Lion"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "What does Chicken eat?",
+          "options_en": [
+            "corn",
+            "grass",
+            "raw meat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "What is this?",
+          "options_en": [
+            "Horse",
+            "Cow",
+            "Chicken"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "Which animal is this?",
+          "options_en": [
+            "Horse",
+            "Elephant",
+            "Lion"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "Who eats a banana tree?",
+          "options_en": [
+            "Horse",
+            "Cow",
+            "Chicken"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "What does Horse eat?",
+          "options_en": [
+            "a banana tree",
+            "grass",
+            "corn"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "Who is this?",
+          "options_en": [
+            "Elephant",
+            "Cow",
+            "Chicken"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "What is this?",
+          "options_en": [
+            "Elephant",
+            "Horse",
+            "Lion"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "Who eats sugarcane?",
+          "options_en": [
+            "Elephant",
+            "Cow",
+            "Chicken"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "What does the Elephant eat?",
+          "options_en": [
+            "Sugarcane",
+            "Grass",
+            "Raw meat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        }
+      ]
+    },
+    {
+      "paragraph_index": 8,
+      "questions": [
+        {
+          "id": "gl_p8_s0_q1",
+          "type": "choice",
+          "question_en": "Who is this?",
+          "options_en": [
+            "Lion",
+            "Cow",
+            "Elephant"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p8_s0_q2",
+          "type": "choice",
+          "question_en": "Which animal is this?",
+          "options_en": [
+            "Lion",
+            "Chicken",
+            "Horse"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        }
+      ]
+    },
+    {
+      "paragraph_index": 9,
+      "questions": [
+        {
+          "id": "gl_p9_s0_q1",
+          "type": "choice",
+          "question_en": "Who eats raw meat?",
+          "options_en": [
+            "Lion",
+            "Cow",
+            "Chicken"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p9_s0_q2",
+          "type": "choice",
+          "question_en": "What does the Lion eat?",
+          "options_en": [
+            "Raw meat",
+            "Grass",
+            "Corn"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        }
+      ]
+    },
+    {
+      "paragraph_index": 10,
+      "questions": [
+        {
+          "id": "gl_p10_s0_q1",
+          "type": "choice",
+          "question_en": "How do they all live?",
+          "options_en": [
+            "By eating food",
+            "By eating grass",
+            "By eating meat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p10_s0_q2",
+          "type": "choice",
+          "question_en": "What do they live by eating?",
+          "options_en": [
+            "Food",
+            "Grass",
+            "Meat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        }
+      ]
+    },
+    {
+      "paragraph_index": 11,
+      "questions": [
+        {
+          "id": "gl_p11_s0_q1",
+          "type": "choice",
+          "question_en": "Whose food is different?",
+          "options_en": [
+            "Lion",
+            "Cow",
+            "Chicken"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p11_s0_q2",
+          "type": "choice",
+          "question_en": "Which animal's food is different?",
+          "options_en": [
+            "Lion",
+            "Cow",
+            "Elephant"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p11_s1_q1",
+          "type": "choice",
+          "question_en": "What does Lion eat?",
+          "options_en": [
+            "Meat",
+            "Grass",
+            "Corn"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p11_s1_q2",
+          "type": "choice",
+          "question_en": "What do the other animals eat?",
+          "options_en": [
+            "Plants",
+            "Raw meat",
+            "Sugarcane"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'Everyone Eats'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "eats",
+      "meaning_vi": "ăn",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "grass",
+      "meaning_vi": "cỏ",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "eats",
+      "meaning_vi": "ăn",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "corn",
+      "meaning_vi": "ngô",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "eats",
+      "meaning_vi": "ăn",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "banana",
+      "meaning_vi": "chuối",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "tree",
+      "meaning_vi": "cây",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "eats",
+      "meaning_vi": "ăn",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "sugarcane",
+      "meaning_vi": "mía",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "eats",
+      "meaning_vi": "ăn",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "raw",
+      "meaning_vi": "sống",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "meat",
+      "meaning_vi": "thịt",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "all",
+      "meaning_vi": "tất cả",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "live",
+      "meaning_vi": "sống",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "food",
+      "meaning_vi": "thức ăn",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "different",
+      "meaning_vi": "khác",
+      "paragraph_index": 11
+    },
+    {
+      "word_en": "while",
+      "meaning_vi": "còn",
+      "paragraph_index": 11
+    },
+    {
+      "word_en": "animals",
+      "meaning_vi": "con vật",
+      "paragraph_index": 11
+    },
+    {
+      "word_en": "plants",
+      "meaning_vi": "thực vật",
+      "paragraph_index": 11
+    }
+  ]
+}

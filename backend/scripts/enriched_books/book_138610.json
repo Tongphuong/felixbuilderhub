@@ -1,0 +1,2162 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L3",
+  "level_label": "Cấp 3",
+  "topic": "Swara and The Caged Parrot",
+  "slug": "book_138610",
+  "audio_filename": "book_138610.mp3",
+  "book_slug": "book_138610",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_138610/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_138610/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_138610/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_138610/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_138610/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_138610/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_138610/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_138610/page_09.jpg",
+    "https://audio.felixbuilderhub.com/books/book_138610/page_10.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_138610/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_138610/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_138610/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_138610/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_138610/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_138610/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_138610/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_138610/page_09.mp3",
+    "https://audio.felixbuilderhub.com/books/book_138610/page_10.mp3"
+  ],
+  "book_attribution": {
+    "title": "Swara and The Caged Parrot",
+    "creators": [
+      "Saranya Iyer",
+      "Soumya Menon"
+    ],
+    "publisher": "StoryWeaver Community",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: Swara and The Caged Parrot is written by Saranya Iyer . © Saranya Iyer , 2020. Some rights reserved. Released under CC BY 4.0 license. Images Attributions: Cover page: Girl approaching parrot by the window , by Soumya Menon © StoryWeaver Team, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 2: Children playing under trees , by Soumya Menon © StoryWeaver Team, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 3: Girl releases parrot from the cage , by Soumya Menon © StoryWeaver Team, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 4: Girl approaching parrot by the window , by Soumya Menon © StoryWeaver Team, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 5: Girl and sad parrot , by Soumya Menon © StoryWeaver Team, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 6: Girl and sad parrot , by Soumya Menon © StoryWeaver Team, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 7: Parrots flying into the sky , by Soumya Menon © StoryWeaver Team, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 8: Children playing under trees , by Soumya Menon © StoryWeaver Team, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 9: Parrots flying into the sky , by Soumya Menon © StoryWeaver Team, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 10: Parrots flying into the sky , by Soumya Menon © StoryWeaver Team, 2016. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/138610-swara-and-the-caged-parrot",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "Children playing under trees , by Soumya Menon © StoryWeaver Team, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "Girl releases parrot from the cage , by Soumya Menon © StoryWeaver Team, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "Girl approaching parrot by the window , by Soumya Menon © StoryWeaver Team, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "Girl and sad parrot , by Soumya Menon © StoryWeaver Team, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "Girl and sad parrot , by Soumya Menon © StoryWeaver Team, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "Parrots flying into the sky , by Soumya Menon © StoryWeaver Team, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "Children playing under trees , by Soumya Menon © StoryWeaver Team, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "Parrots flying into the sky , by Soumya Menon © StoryWeaver Team, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 8,
+        "credit_text": "Parrots flying into the sky , by Soumya Menon © StoryWeaver Team, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "Swara and The Caged Parrot",
+    "paragraphs_en": [
+      "Once upon a time, there lived a girl named Swara. She lived on the other side of Mangiri hills. In the evenings, she loved playing on the hills with her friends. The road which leads to the hill was a tree- lined road. It was winter time and the hills received chilly winds in the evenings. Swara and friends saw a tiny parrot on their path one evening. Swara's joy knew no bounds.",
+      "Swara chased down the parrot and caught it at once. The terrified parrot looked at her helplessly but Swara did not leave her. She bought a cage for the parrot and put her inside the cage. The parrot shrieked loudly \"Tain, Tain\", yet Swara tuned deaf ear to her wild screams. The parrot uttered a yelp as if hurt to seek attention of Swara but failed to get any.",
+      "She brought the parrot home. Placing it on a window sill, she admired the beauty of the parrot. She offered some nuts. The parrot ate them but never stopped her scream. Swara's mother entered the scene. Jumping with joy, Swara motioned her mother to speak to the parrot. Her mother spoke to the parrot softly but the parrot turned its head to the other side.",
+      "Swara asked her mother why the parrot looked weak and uninterested. Her mother knew the real reason. She said, \" Swara, birds are beautiful and it is natural to bring them home and admire them. They are a miracle of nature just like you. But remember, we should not cage them. They love being in their own surroundings. You live in a house and they live with the nature, trees and in the fields. If you are seperated from us and this place, would you feel comfortable?\"",
+      "\"No Mumma, No.\", cried Swara hugging her mother. \"Then let's open the cage and get her out. Let her fly to its own surrounding. Even if we put her in golden cage or offer her fresh fruits and nuts, that will never bring her real joy. Her real joy is living in nature and with her friends\", said her mother warmly.",
+      "Opening the cage, Swara and her mother let the parrot out. As soon as the cage was opened, the parrot squealed in delight. The dull face of her was completely gone. Wearing the natural enthusiasm, she circled the house twice and flew far away. Swara was happy to see the parrot's squawk. It was surely a blissful sight to see her wings flapping. As she reached some distance, all her friends accompanied her and welcomed her warmly to her home.",
+      "The following day, Swara was back in the garden with her friends. They jumped, ran and skipped. Near the meadows and around the trees, they saw few birds which chirped gleefully and there on a tall tree, was a parrot looking at her. Swara winked at the parrot and the parrot squeaked in response. Happy was how everything looked.",
+      "\"Empathy is putting yourself in one's shoes. Empathy is feeling others pain.\"",
+      "Name the characters in the story. Name at least one setting (place) from the story. What did you learn from the story? Adjectives are describing words. Can you name 3 adjectives in the story? Parents - Read aloud to your children and help them understand the difficult words."
+    ],
+    "sentences": [
+      {
+        "text_en": "Once upon a time, there lived a girl named Swara.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_000.mp3",
+        "text_vi": "Ngày xửa ngày xưa, có một cô bé tên là Swara."
+      },
+      {
+        "text_en": "She lived on the other side of Mangiri hills.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_001.mp3",
+        "text_vi": "Cô bé sống ở phía bên kia đồi Mangiri."
+      },
+      {
+        "text_en": "In the evenings, she loved playing on the hills with her friends.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_002.mp3",
+        "text_vi": "Vào các buổi tối, cô bé rất thích chơi trên đồi với bạn bè."
+      },
+      {
+        "text_en": "The road which leads to the hill was a tree- lined road.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_003.mp3",
+        "text_vi": "Con đường dẫn lên đồi là một con đường có hàng cây xanh hai bên."
+      },
+      {
+        "text_en": "It was winter time and the hills received chilly winds in the evenings.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_004.mp3",
+        "text_vi": "Lúc đó là mùa đông, và vào các buổi tối, những ngọn đồi đón những cơn gió lạnh buốt."
+      },
+      {
+        "text_en": "Swara and friends saw a tiny parrot on their path one evening.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_005.mp3",
+        "text_vi": "Một buổi tối nọ, Swara và các bạn thấy một chú vẹt bé xíu trên đường đi của họ."
+      },
+      {
+        "text_en": "Swara's joy knew no bounds.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_006.mp3",
+        "text_vi": "Swara vui sướng vô cùng."
+      },
+      {
+        "text_en": "Swara chased down the parrot and caught it at once.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_007.mp3",
+        "text_vi": "Swara đuổi theo chú vẹt và bắt được nó ngay lập tức."
+      },
+      {
+        "text_en": "The terrified parrot looked at her helplessly but Swara did not leave her.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_008.mp3",
+        "text_vi": "Chú vẹt sợ hãi nhìn cô bé một cách bất lực, nhưng Swara không thả nó ra."
+      },
+      {
+        "text_en": "She bought a cage for the parrot and put her inside the cage.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_009.mp3",
+        "text_vi": "Cô bé mua một cái lồng cho chú vẹt và nhốt nó vào trong."
+      },
+      {
+        "text_en": "The parrot shrieked loudly \"Tain, Tain\", yet Swara tuned deaf ear to her wild screams.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_010.mp3",
+        "text_vi": "Chú vẹt kêu toáng lên \"Tain, Tain\", nhưng Swara vẫn giả vờ không nghe những tiếng kêu hoảng loạn của nó."
+      },
+      {
+        "text_en": "The parrot uttered a yelp as if hurt to seek attention of Swara but failed to get any.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_011.mp3",
+        "text_vi": "Chú vẹt rên lên một tiếng như thể bị đau để Swara chú ý, nhưng không được."
+      },
+      {
+        "text_en": "She brought the parrot home.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_012.mp3",
+        "text_vi": "Cô bé mang chú vẹt về nhà."
+      },
+      {
+        "text_en": "Placing it on a window sill, she admired the beauty of the parrot.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_013.mp3",
+        "text_vi": "Đặt nó lên bệ cửa sổ, cô bé ngắm nhìn vẻ đẹp của chú vẹt."
+      },
+      {
+        "text_en": "She offered some nuts.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_014.mp3",
+        "text_vi": "Cô bé đưa cho nó một ít hạt."
+      },
+      {
+        "text_en": "The parrot ate them but never stopped her scream.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_015.mp3",
+        "text_vi": "Chú vẹt ăn hạt nhưng không ngừng kêu."
+      },
+      {
+        "text_en": "Swara's mother entered the scene.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_016.mp3",
+        "text_vi": "Mẹ của Swara bước vào."
+      },
+      {
+        "text_en": "Jumping with joy, Swara motioned her mother to speak to the parrot.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_017.mp3",
+        "text_vi": "Nhảy cẫng lên vì vui sướng, Swara ra hiệu cho mẹ nói chuyện với chú vẹt."
+      },
+      {
+        "text_en": "Her mother spoke to the parrot softly but the parrot turned its head to the other side.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_018.mp3",
+        "text_vi": "Mẹ cô bé nói chuyện với chú vẹt thật nhẹ nhàng, nhưng chú vẹt quay đầu đi chỗ khác."
+      },
+      {
+        "text_en": "Swara asked her mother why the parrot looked weak and uninterested.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_019.mp3",
+        "text_vi": "Swara hỏi mẹ tại sao chú vẹt trông yếu ớt và không quan tâm đến gì cả."
+      },
+      {
+        "text_en": "Her mother knew the real reason.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_020.mp3",
+        "text_vi": "Mẹ cô bé biết lý do thật sự."
+      },
+      {
+        "text_en": "She said, \" Swara, birds are beautiful and it is natural to bring them home and admire them.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_021.mp3",
+        "text_vi": "Mẹ nói: \"Swara à, chim chóc rất đẹp và việc mang chúng về nhà ngắm nhìn là điều tự nhiên."
+      },
+      {
+        "text_en": "They are a miracle of nature just like you.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_022.mp3",
+        "text_vi": "Chúng là một điều kỳ diệu của tự nhiên, giống như con vậy."
+      },
+      {
+        "text_en": "But remember, we should not cage them.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_023.mp3",
+        "text_vi": "Nhưng con nhớ nhé, chúng ta không nên nhốt chúng vào lồng."
+      },
+      {
+        "text_en": "They love being in their own surroundings.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_024.mp3",
+        "text_vi": "Chúng thích được sống trong môi trường tự nhiên của mình."
+      },
+      {
+        "text_en": "You live in a house and they live with the nature, trees and in the fields.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_025.mp3",
+        "text_vi": "Con sống trong nhà, còn chúng sống với thiên nhiên, cây cối và trên cánh đồng."
+      },
+      {
+        "text_en": "If you are seperated from us and this place, would you feel comfortable?\"",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_026.mp3",
+        "text_vi": "Nếu con bị tách rời khỏi chúng ta và nơi này, con có cảm thấy thoải mái không?\""
+      },
+      {
+        "text_en": "\"No Mumma, No.\", cried Swara hugging her mother.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_027.mp3",
+        "text_vi": "\"Không mẹ ơi, không ạ!\", Swara vừa khóc vừa ôm mẹ."
+      },
+      {
+        "text_en": "\"Then let's open the cage and get her out.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_028.mp3",
+        "text_vi": "\"Vậy thì chúng ta hãy mở lồng và thả nó ra đi con."
+      },
+      {
+        "text_en": "Let her fly to its own surrounding.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_029.mp3",
+        "text_vi": "Hãy để nó bay về môi trường tự nhiên của mình."
+      },
+      {
+        "text_en": "Even if we put her in golden cage or offer her fresh fruits and nuts, that will never bring her real joy.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_030.mp3",
+        "text_vi": "Dù chúng ta có nhốt nó vào lồng vàng hay cho nó ăn trái cây và hạt tươi, điều đó cũng sẽ không bao giờ mang lại niềm vui thật sự cho nó."
+      },
+      {
+        "text_en": "Her real joy is living in nature and with her friends\", said her mother warmly.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_031.mp3",
+        "text_vi": "Niềm vui thật sự của nó là được sống trong thiên nhiên và với bạn bè của nó\", mẹ cô bé nói một cách trìu mến."
+      },
+      {
+        "text_en": "Opening the cage, Swara and her mother let the parrot out.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_032.mp3",
+        "text_vi": "Mở lồng, Swara và mẹ thả chú vẹt ra."
+      },
+      {
+        "text_en": "As soon as the cage was opened, the parrot squealed in delight.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_033.mp3",
+        "text_vi": "Ngay khi lồng được mở, chú vẹt kêu lên sung sướng."
+      },
+      {
+        "text_en": "The dull face of her was completely gone.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_034.mp3",
+        "text_vi": "Vẻ mặt ủ rũ của nó đã biến mất hoàn toàn."
+      },
+      {
+        "text_en": "Wearing the natural enthusiasm, she circled the house twice and flew far away.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_035.mp3",
+        "text_vi": "Mang theo sự hăng hái tự nhiên, nó bay vòng quanh nhà hai lần rồi bay đi thật xa."
+      },
+      {
+        "text_en": "Swara was happy to see the parrot's squawk.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_036.mp3",
+        "text_vi": "Swara vui mừng khi nghe tiếng kêu của chú vẹt."
+      },
+      {
+        "text_en": "It was surely a blissful sight to see her wings flapping.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_037.mp3",
+        "text_vi": "Thật là một cảnh tượng hạnh phúc khi thấy đôi cánh của nó vỗ."
+      },
+      {
+        "text_en": "As she reached some distance, all her friends accompanied her and welcomed her warmly to her home.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_038.mp3",
+        "text_vi": "Khi nó bay được một quãng, tất cả bạn bè của nó đã đi cùng và chào đón nó trở về nhà một cách nồng nhiệt."
+      },
+      {
+        "text_en": "The following day, Swara was back in the garden with her friends.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_039.mp3",
+        "text_vi": "Ngày hôm sau, Swara lại ra vườn chơi với bạn bè."
+      },
+      {
+        "text_en": "They jumped, ran and skipped.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_040.mp3",
+        "text_vi": "Chúng nhảy, chạy và nhảy chân sáo."
+      },
+      {
+        "text_en": "Near the meadows and around the trees, they saw few birds which chirped gleefully and there on a tall tree, was a parrot looking at her.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_041.mp3",
+        "text_vi": "Gần đồng cỏ và quanh những hàng cây, chúng thấy vài chú chim hót líu lo vui vẻ, và trên một cái cây cao, có một chú vẹt đang nhìn cô bé."
+      },
+      {
+        "text_en": "Swara winked at the parrot and the parrot squeaked in response.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_042.mp3",
+        "text_vi": "Swara nháy mắt với chú vẹt và chú vẹt kêu lên đáp lại."
+      },
+      {
+        "text_en": "Happy was how everything looked.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_043.mp3",
+        "text_vi": "Mọi thứ trông thật hạnh phúc."
+      },
+      {
+        "text_en": "\"Empathy is putting yourself in one's shoes.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_044.mp3",
+        "text_vi": "Đồng cảm là đặt mình vào vị trí của người khác."
+      },
+      {
+        "text_en": "Empathy is feeling others pain.\"",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_045.mp3",
+        "text_vi": "Đồng cảm là cảm nhận được nỗi đau của người khác."
+      },
+      {
+        "text_en": "Name the characters in the story.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_046.mp3",
+        "text_vi": "Kể tên các nhân vật trong câu chuyện."
+      },
+      {
+        "text_en": "Name at least one setting (place) from the story.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_047.mp3",
+        "text_vi": "Kể tên ít nhất một bối cảnh (địa điểm) trong câu chuyện."
+      },
+      {
+        "text_en": "What did you learn from the story?",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_048.mp3",
+        "text_vi": "Con học được gì từ câu chuyện này?"
+      },
+      {
+        "text_en": "Adjectives are describing words.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_049.mp3",
+        "text_vi": "Tính từ là những từ dùng để miêu tả."
+      },
+      {
+        "text_en": "Can you name 3 adjectives in the story?",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_050.mp3",
+        "text_vi": "Con có thể kể tên 3 tính từ trong câu chuyện không?"
+      },
+      {
+        "text_en": "Parents - Read aloud to your children and help them understand the difficult words.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_051.mp3",
+        "text_vi": "Cha mẹ - Hãy đọc to cho con nghe và giúp con hiểu những từ khó."
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "Once upon a time, there lived a girl named Swara.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "She lived on the other side of Mangiri hills.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "In the evenings, she loved playing on the hills with her friends.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "The road which leads to the hill was a tree- lined road.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "It was winter time and the hills received chilly winds in the evenings.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "Swara and friends saw a tiny parrot on their path one evening.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "Swara's joy knew no bounds.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "Swara chased down the parrot and caught it at once.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "The terrified parrot looked at her helplessly but Swara did not leave her.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "She bought a cage for the parrot and put her inside the cage.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "The parrot shrieked loudly \"Tain, Tain\", yet Swara tuned deaf ear to her wild screams.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "The parrot uttered a yelp as if hurt to seek attention of Swara but failed to get any.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "She brought the parrot home.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_012.mp3"
+        },
+        {
+          "id": "ra_13",
+          "text_en": "Placing it on a window sill, she admired the beauty of the parrot.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_013.mp3"
+        },
+        {
+          "id": "ra_14",
+          "text_en": "She offered some nuts.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_014.mp3"
+        },
+        {
+          "id": "ra_15",
+          "text_en": "The parrot ate them but never stopped her scream.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_015.mp3"
+        },
+        {
+          "id": "ra_16",
+          "text_en": "Swara's mother entered the scene.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_016.mp3"
+        },
+        {
+          "id": "ra_17",
+          "text_en": "Jumping with joy, Swara motioned her mother to speak to the parrot.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_017.mp3"
+        },
+        {
+          "id": "ra_18",
+          "text_en": "Her mother spoke to the parrot softly but the parrot turned its head to the other side.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_018.mp3"
+        },
+        {
+          "id": "ra_19",
+          "text_en": "Swara asked her mother why the parrot looked weak and uninterested.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_019.mp3"
+        },
+        {
+          "id": "ra_20",
+          "text_en": "Her mother knew the real reason.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_020.mp3"
+        },
+        {
+          "id": "ra_21",
+          "text_en": "She said, \" Swara, birds are beautiful and it is natural to bring them home and admire them.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_021.mp3"
+        },
+        {
+          "id": "ra_22",
+          "text_en": "They are a miracle of nature just like you.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_022.mp3"
+        },
+        {
+          "id": "ra_23",
+          "text_en": "But remember, we should not cage them.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_023.mp3"
+        },
+        {
+          "id": "ra_24",
+          "text_en": "They love being in their own surroundings.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_024.mp3"
+        },
+        {
+          "id": "ra_25",
+          "text_en": "You live in a house and they live with the nature, trees and in the fields.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_025.mp3"
+        },
+        {
+          "id": "ra_26",
+          "text_en": "If you are seperated from us and this place, would you feel comfortable?\"",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_026.mp3"
+        },
+        {
+          "id": "ra_27",
+          "text_en": "\"No Mumma, No.\", cried Swara hugging her mother.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_027.mp3"
+        },
+        {
+          "id": "ra_28",
+          "text_en": "\"Then let's open the cage and get her out.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_028.mp3"
+        },
+        {
+          "id": "ra_29",
+          "text_en": "Let her fly to its own surrounding.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_029.mp3"
+        },
+        {
+          "id": "ra_30",
+          "text_en": "Even if we put her in golden cage or offer her fresh fruits and nuts, that will never bring her real joy.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_030.mp3"
+        },
+        {
+          "id": "ra_31",
+          "text_en": "Her real joy is living in nature and with her friends\", said her mother warmly.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_031.mp3"
+        },
+        {
+          "id": "ra_32",
+          "text_en": "Opening the cage, Swara and her mother let the parrot out.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_032.mp3"
+        },
+        {
+          "id": "ra_33",
+          "text_en": "As soon as the cage was opened, the parrot squealed in delight.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_033.mp3"
+        },
+        {
+          "id": "ra_34",
+          "text_en": "The dull face of her was completely gone.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_034.mp3"
+        },
+        {
+          "id": "ra_35",
+          "text_en": "Wearing the natural enthusiasm, she circled the house twice and flew far away.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_035.mp3"
+        },
+        {
+          "id": "ra_36",
+          "text_en": "Swara was happy to see the parrot's squawk.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_036.mp3"
+        },
+        {
+          "id": "ra_37",
+          "text_en": "It was surely a blissful sight to see her wings flapping.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_037.mp3"
+        },
+        {
+          "id": "ra_38",
+          "text_en": "As she reached some distance, all her friends accompanied her and welcomed her warmly to her home.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_038.mp3"
+        },
+        {
+          "id": "ra_39",
+          "text_en": "The following day, Swara was back in the garden with her friends.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_039.mp3"
+        },
+        {
+          "id": "ra_40",
+          "text_en": "They jumped, ran and skipped.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_040.mp3"
+        },
+        {
+          "id": "ra_41",
+          "text_en": "Near the meadows and around the trees, they saw few birds which chirped gleefully and there on a tall tree, was a parrot looking at her.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_041.mp3"
+        },
+        {
+          "id": "ra_42",
+          "text_en": "Swara winked at the parrot and the parrot squeaked in response.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_042.mp3"
+        },
+        {
+          "id": "ra_43",
+          "text_en": "Happy was how everything looked.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_043.mp3"
+        },
+        {
+          "id": "ra_44",
+          "text_en": "\"Empathy is putting yourself in one's shoes.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_044.mp3"
+        },
+        {
+          "id": "ra_45",
+          "text_en": "Empathy is feeling others pain.\"",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_045.mp3"
+        },
+        {
+          "id": "ra_46",
+          "text_en": "Name the characters in the story.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_046.mp3"
+        },
+        {
+          "id": "ra_47",
+          "text_en": "Name at least one setting (place) from the story.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_047.mp3"
+        },
+        {
+          "id": "ra_48",
+          "text_en": "What did you learn from the story?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_048.mp3"
+        },
+        {
+          "id": "ra_49",
+          "text_en": "Adjectives are describing words.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_049.mp3"
+        },
+        {
+          "id": "ra_50",
+          "text_en": "Can you name 3 adjectives in the story?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_050.mp3"
+        },
+        {
+          "id": "ra_51",
+          "text_en": "Parents - Read aloud to your children and help them understand the difficult words.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_138610/s_051.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "Who lived once upon a time?",
+          "options_en": [
+            "Swara",
+            "A tiny parrot",
+            "Her mother"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "What was the name of the girl who lived there?",
+          "options_en": [
+            "Swara",
+            "Mangiri",
+            "A friend"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s1_q1",
+          "type": "choice",
+          "question_en": "Where did she live?",
+          "options_en": [
+            "On the other side of Mangiri hills",
+            "In the garden",
+            "In a cage"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s1_q2",
+          "type": "choice",
+          "question_en": "Which hills are mentioned?",
+          "options_en": [
+            "Mangiri hills",
+            "The meadows",
+            "The mountains"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s2_q1",
+          "type": "choice",
+          "question_en": "When did she love playing on the hills?",
+          "options_en": [
+            "In the evenings",
+            "In the mornings",
+            "At night"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s2_q2",
+          "type": "choice",
+          "question_en": "Who did she play with on the hills?",
+          "options_en": [
+            "Her friends",
+            "Her mother",
+            "The parrot"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s3_q1",
+          "type": "choice",
+          "question_en": "What was the road that led to the hill like?",
+          "options_en": [
+            "A tree-lined road",
+            "A road near the meadows",
+            "A road by the house"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p0_s3_q2",
+          "type": "choice",
+          "question_en": "Which road led to the hill?",
+          "options_en": [
+            "The tree-lined road",
+            "The paved road",
+            "The narrow path"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p0_s4_q1",
+          "type": "choice",
+          "question_en": "When did the hills receive chilly winds?",
+          "options_en": [
+            "In the evenings",
+            "In the mornings",
+            "At noon"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p0_s4_q2",
+          "type": "choice",
+          "question_en": "What season was it?",
+          "options_en": [
+            "Winter time",
+            "Summer",
+            "Spring"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p0_s5_q1",
+          "type": "choice",
+          "question_en": "What did Swara and friends see on their path?",
+          "options_en": [
+            "A tiny parrot",
+            "A big tree",
+            "A cage"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p0_s5_q2",
+          "type": "choice",
+          "question_en": "When did they see the tiny parrot?",
+          "options_en": [
+            "One evening",
+            "In the morning",
+            "At night"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p0_s6_q1",
+          "type": "choice",
+          "question_en": "Whose joy knew no bounds?",
+          "options_en": [
+            "Swara's joy",
+            "The parrot's joy",
+            "Her mother's joy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p0_s6_q2",
+          "type": "choice",
+          "question_en": "How did Swara feel?",
+          "options_en": [
+            "Very joyful",
+            "Tired",
+            "Scared"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "Who chased down the parrot?",
+          "options_en": [
+            "Swara",
+            "Her friends",
+            "Her mother"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "What did Swara catch at once?",
+          "options_en": [
+            "The parrot",
+            "A cage",
+            "A nut"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p1_s1_q1",
+          "type": "choice",
+          "question_en": "How did the parrot look at her?",
+          "options_en": [
+            "Helplessly",
+            "Happily",
+            "Angrily"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p1_s1_q2",
+          "type": "choice",
+          "question_en": "What did Swara do toward the parrot in this sentence?",
+          "options_en": [
+            "She did not leave her",
+            "She put her in a cage",
+            "She brought her home"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p1_s2_q1",
+          "type": "choice",
+          "question_en": "What did she buy for the parrot?",
+          "options_en": [
+            "A cage",
+            "Nuts",
+            "A window sill"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p1_s2_q2",
+          "type": "choice",
+          "question_en": "Where did she put the parrot?",
+          "options_en": [
+            "Inside the cage",
+            "On the window sill",
+            "In the garden"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p1_s3_q1",
+          "type": "choice",
+          "question_en": "What did the parrot shriek loudly?",
+          "options_en": [
+            "\"Tain, Tain\"",
+            "A chirp",
+            "A squeal of delight"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p1_s3_q2",
+          "type": "choice",
+          "question_en": "How did Swara respond to the parrot's wild screams?",
+          "options_en": [
+            "She tuned a deaf ear",
+            "She called her mother",
+            "She opened the cage"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p1_s4_q1",
+          "type": "choice",
+          "question_en": "Why did the parrot utter a yelp?",
+          "options_en": [
+            "As if hurt to seek Swara's attention",
+            "Because it was happy",
+            "Because it wanted nuts"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p1_s4_q2",
+          "type": "choice",
+          "question_en": "What happened after the parrot uttered the yelp?",
+          "options_en": [
+            "It failed to get any attention",
+            "Swara opened the cage",
+            "Swara gave it nuts"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "Who brought the parrot home?",
+          "options_en": [
+            "She",
+            "Her mother",
+            "Her friend"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "Where did she bring the parrot?",
+          "options_en": [
+            "Home",
+            "To the hills",
+            "To the window sill"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p2_s1_q1",
+          "type": "choice",
+          "question_en": "Where did she place the parrot?",
+          "options_en": [
+            "On a window sill",
+            "In a cage",
+            "On a tree"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p2_s1_q2",
+          "type": "choice",
+          "question_en": "What did she admire about the parrot?",
+          "options_en": [
+            "Its beauty",
+            "Its scream",
+            "Its cage"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p2_s2_q1",
+          "type": "choice",
+          "question_en": "What did she offer?",
+          "options_en": [
+            "Some nuts",
+            "Fresh fruits",
+            "A cage"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p2_s2_q2",
+          "type": "choice",
+          "question_en": "What is the correct answer to this question: To whom did she offer the nuts?",
+          "options_en": [
+            "The parrot",
+            "Her mother",
+            "Her friends"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p2_s3_q1",
+          "type": "choice",
+          "question_en": "What did the parrot eat?",
+          "options_en": [
+            "The nuts",
+            "The fruits",
+            "Some seeds"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p2_s3_q2",
+          "type": "choice",
+          "question_en": "What did the parrot never stop doing?",
+          "options_en": [
+            "Screaming",
+            "Flying",
+            "Sleeping"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p2_s4_q1",
+          "type": "choice",
+          "question_en": "Who entered the scene?",
+          "options_en": [
+            "Swara's mother",
+            "Swara",
+            "The parrot"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p2_s4_q2",
+          "type": "choice",
+          "question_en": "Whose mother entered the scene?",
+          "options_en": [
+            "Swara's",
+            "The parrot's",
+            "Her friend's"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p2_s5_q1",
+          "type": "choice",
+          "question_en": "Why did Swara motion her mother?",
+          "options_en": [
+            "To speak to the parrot",
+            "To open the cage",
+            "To give nuts"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p2_s5_q2",
+          "type": "choice",
+          "question_en": "How was Swara when she motioned her mother?",
+          "options_en": [
+            "Jumping with joy",
+            "Looking sad",
+            "Standing still"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p2_s6_q1",
+          "type": "choice",
+          "question_en": "How did her mother speak to the parrot?",
+          "options_en": [
+            "Softly",
+            "Loudly",
+            "Harshly"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p2_s6_q2",
+          "type": "choice",
+          "question_en": "What did the parrot do when her mother spoke?",
+          "options_en": [
+            "Turned its head to the other side",
+            "Ate the nuts",
+            "Screamed louder"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "Who asked her mother why the parrot looked weak and uninterested?",
+          "options_en": [
+            "Swara",
+            "Her mother",
+            "Her friend"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "Why did Swara ask her mother a question?",
+          "options_en": [
+            "To know why the parrot looked weak and uninterested",
+            "To find the parrot's name",
+            "To ask about the hills"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p3_s1_q1",
+          "type": "choice",
+          "question_en": "Who knew the real reason?",
+          "options_en": [
+            "Her mother",
+            "Swara",
+            "The parrot"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p3_s1_q2",
+          "type": "choice",
+          "question_en": "What did her mother know?",
+          "options_en": [
+            "The real reason",
+            "How to buy a cage",
+            "Where the parrot came from"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p3_s2_q1",
+          "type": "choice",
+          "question_en": "Who did she speak to when she said those words?",
+          "options_en": [
+            "Swara",
+            "The parrot",
+            "Her friend"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p3_s2_q2",
+          "type": "choice",
+          "question_en": "What did she say about birds?",
+          "options_en": [
+            "They are beautiful and it is natural to bring them home and admire them",
+            "They are noisy and should be caged",
+            "They live only on the hills"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p3_s3_q1",
+          "type": "choice",
+          "question_en": "What did she call birds in that sentence?",
+          "options_en": [
+            "A miracle of nature",
+            "A noisy pet",
+            "A wild animal"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p3_s3_q2",
+          "type": "choice",
+          "question_en": "Who did she compare the birds to when she said \"just like you\"?",
+          "options_en": [
+            "Swara",
+            "Her mother",
+            "The parrot"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p3_s4_q1",
+          "type": "choice",
+          "question_en": "What did she say we should not do to birds?",
+          "options_en": [
+            "Cage them",
+            "Ignore them",
+            "Feed them nuts"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p3_s4_q2",
+          "type": "choice",
+          "question_en": "Who reminded not to cage the birds?",
+          "options_en": [
+            "Her mother",
+            "Swara",
+            "The parrot"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p3_s5_q1",
+          "type": "choice",
+          "question_en": "What do they love being in?",
+          "options_en": [
+            "Their own surroundings",
+            "A golden cage",
+            "On the hills"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p3_s5_q2",
+          "type": "choice",
+          "question_en": "Who loves being in their own surroundings?",
+          "options_en": [
+            "They (the birds)",
+            "Swara",
+            "Her mother"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p3_s6_q1",
+          "type": "choice",
+          "question_en": "Where do you live according to the sentence?",
+          "options_en": [
+            "In a house",
+            "In the fields",
+            "On the hills"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p3_s6_q2",
+          "type": "choice",
+          "question_en": "Where do they live as stated in the sentence?",
+          "options_en": [
+            "With nature, trees and in the fields",
+            "In a cage at the window sill",
+            "In Swara's house"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p3_s7_q1",
+          "type": "choice",
+          "question_en": "What question is being asked about being separated from us and this place?",
+          "options_en": [
+            "Would you feel comfortable?",
+            "Should we open the cage?",
+            "Will the parrot sing?"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p3_s7_q2",
+          "type": "choice",
+          "question_en": "Who is being addressed by the question about being separated from us and this place?",
+          "options_en": [
+            "You (Swara)",
+            "The parrot",
+            "The friends on the hills"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "Who cried?",
+          "options_en": [
+            "Swara",
+            "Her mother",
+            "The parrot"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "What is the correct answer to this question: Whom did Swara hug?",
+          "options_en": [
+            "Her mother",
+            "Her friend",
+            "The parrot"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        },
+        {
+          "id": "gl_p4_s1_q1",
+          "type": "choice",
+          "question_en": "What did they suggest doing?",
+          "options_en": [
+            "Opening the cage",
+            "Offering fresh fruits",
+            "Keeping her inside"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        },
+        {
+          "id": "gl_p4_s1_q2",
+          "type": "choice",
+          "question_en": "Why did they want to open the cage?",
+          "options_en": [
+            "To get her out",
+            "To clean the cage",
+            "To feed her there"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        },
+        {
+          "id": "gl_p4_s2_q1",
+          "type": "choice",
+          "question_en": "Where should they let her fly?",
+          "options_en": [
+            "To its own surrounding",
+            "To the house",
+            "To the garden"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p4_s2_q2",
+          "type": "choice",
+          "question_en": "What should they let her do?",
+          "options_en": [
+            "Fly to its own surrounding",
+            "Sit on the window sill",
+            "Eat nuts"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p4_s3_q1",
+          "type": "choice",
+          "question_en": "What do they mention they might put her in?",
+          "options_en": [
+            "A golden cage",
+            "On the window sill",
+            "In the garden"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        },
+        {
+          "id": "gl_p4_s3_q2",
+          "type": "choice",
+          "question_en": "What will offering fresh fruits and nuts not bring her?",
+          "options_en": [
+            "Real joy",
+            "Food",
+            "A place to sleep"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        },
+        {
+          "id": "gl_p4_s4_q1",
+          "type": "choice",
+          "question_en": "What is described as her real joy?",
+          "options_en": [
+            "Living in nature and with her friends",
+            "Living in the house",
+            "Staying in a cage"
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        },
+        {
+          "id": "gl_p4_s4_q2",
+          "type": "choice",
+          "question_en": "Who said that warmly?",
+          "options_en": [
+            "Her mother",
+            "Swara",
+            "The parrot"
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "Who let the parrot out?",
+          "options_en": [
+            "Swara and her mother",
+            "Swara alone",
+            "Her friends"
+          ],
+          "correct_index": 0,
+          "sentence_index": 32
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "What did Swara and her mother open?",
+          "options_en": [
+            "The cage",
+            "The door",
+            "The window"
+          ],
+          "correct_index": 0,
+          "sentence_index": 32
+        },
+        {
+          "id": "gl_p5_s1_q1",
+          "type": "choice",
+          "question_en": "What did the parrot do as soon as the cage was opened?",
+          "options_en": [
+            "Squealed in delight",
+            "Ate nuts",
+            "Turned its head"
+          ],
+          "correct_index": 0,
+          "sentence_index": 33
+        },
+        {
+          "id": "gl_p5_s1_q2",
+          "type": "choice",
+          "question_en": "When did the parrot squeal?",
+          "options_en": [
+            "As soon as the cage was opened",
+            "After it ate",
+            "When it was caught"
+          ],
+          "correct_index": 0,
+          "sentence_index": 33
+        },
+        {
+          "id": "gl_p5_s2_q1",
+          "type": "choice",
+          "question_en": "Whose dull face was completely gone?",
+          "options_en": [
+            "The parrot's",
+            "Swara's",
+            "Her mother's"
+          ],
+          "correct_index": 0,
+          "sentence_index": 34
+        },
+        {
+          "id": "gl_p5_s2_q2",
+          "type": "choice",
+          "question_en": "What was completely gone?",
+          "options_en": [
+            "The dull face",
+            "The cage",
+            "The nuts"
+          ],
+          "correct_index": 0,
+          "sentence_index": 34
+        },
+        {
+          "id": "gl_p5_s3_q1",
+          "type": "choice",
+          "question_en": "How many times did she circle the house?",
+          "options_en": [
+            "Twice",
+            "Once",
+            "Three times"
+          ],
+          "correct_index": 0,
+          "sentence_index": 35
+        },
+        {
+          "id": "gl_p5_s3_q2",
+          "type": "choice",
+          "question_en": "Where did she fly after circling the house?",
+          "options_en": [
+            "Far away",
+            "To the tree",
+            "To Swara's home"
+          ],
+          "correct_index": 0,
+          "sentence_index": 35
+        },
+        {
+          "id": "gl_p5_s4_q1",
+          "type": "choice",
+          "question_en": "Who was happy to see the parrot's squawk?",
+          "options_en": [
+            "Swara",
+            "Her mother",
+            "Her friends"
+          ],
+          "correct_index": 0,
+          "sentence_index": 36
+        },
+        {
+          "id": "gl_p5_s4_q2",
+          "type": "choice",
+          "question_en": "What did Swara see?",
+          "options_en": [
+            "The parrot's squawk",
+            "The cage opening",
+            "The nuts being eaten"
+          ],
+          "correct_index": 0,
+          "sentence_index": 36
+        },
+        {
+          "id": "gl_p5_s5_q1",
+          "type": "choice",
+          "question_en": "What was described as a blissful sight?",
+          "options_en": [
+            "Her wings flapping",
+            "The cage being opened",
+            "The parrot eating nuts"
+          ],
+          "correct_index": 0,
+          "sentence_index": 37
+        },
+        {
+          "id": "gl_p5_s5_q2",
+          "type": "choice",
+          "question_en": "Whose wings were flapping?",
+          "options_en": [
+            "The parrot's",
+            "Swara's",
+            "Her mother's"
+          ],
+          "correct_index": 0,
+          "sentence_index": 37
+        },
+        {
+          "id": "gl_p5_s6_q1",
+          "type": "choice",
+          "question_en": "Who accompanied her as she reached some distance?",
+          "options_en": [
+            "All her friends",
+            "Swara and her mother",
+            "The neighbors"
+          ],
+          "correct_index": 0,
+          "sentence_index": 38
+        },
+        {
+          "id": "gl_p5_s6_q2",
+          "type": "choice",
+          "question_en": "Where did they welcome her warmly to?",
+          "options_en": [
+            "Her home",
+            "The cage",
+            "The garden"
+          ],
+          "correct_index": 0,
+          "sentence_index": 38
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "Who was back in the garden?",
+          "options_en": [
+            "Swara",
+            "Her mother",
+            "The parrot"
+          ],
+          "correct_index": 0,
+          "sentence_index": 39
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "Where was Swara?",
+          "options_en": [
+            "In the garden",
+            "On the hill",
+            "In a cage"
+          ],
+          "correct_index": 0,
+          "sentence_index": 39
+        },
+        {
+          "id": "gl_p6_s1_q1",
+          "type": "choice",
+          "question_en": "What did they do?",
+          "options_en": [
+            "They jumped, ran and skipped",
+            "They sat quietly",
+            "They ate nuts"
+          ],
+          "correct_index": 0,
+          "sentence_index": 40
+        },
+        {
+          "id": "gl_p6_s1_q2",
+          "type": "choice",
+          "question_en": "How did they move?",
+          "options_en": [
+            "They jumped, ran and skipped",
+            "They walked slowly",
+            "They flew"
+          ],
+          "correct_index": 0,
+          "sentence_index": 40
+        },
+        {
+          "id": "gl_p6_s2_q1",
+          "type": "choice",
+          "question_en": "Where did they see the birds?",
+          "options_en": [
+            "Near the meadows and around the trees",
+            "In the cage",
+            "On the road to the hill"
+          ],
+          "correct_index": 0,
+          "sentence_index": 41
+        },
+        {
+          "id": "gl_p6_s2_q2",
+          "type": "choice",
+          "question_en": "Which bird was looking at her on the tall tree?",
+          "options_en": [
+            "A parrot",
+            "The few birds that chirped",
+            "A tiny parrot from before"
+          ],
+          "correct_index": 0,
+          "sentence_index": 41
+        },
+        {
+          "id": "gl_p6_s3_q1",
+          "type": "choice",
+          "question_en": "Who winked at the parrot?",
+          "options_en": [
+            "Swara",
+            "Her mother",
+            "Her friend"
+          ],
+          "correct_index": 0,
+          "sentence_index": 42
+        },
+        {
+          "id": "gl_p6_s3_q2",
+          "type": "choice",
+          "question_en": "What did the parrot do in response to the wink?",
+          "options_en": [
+            "It squeaked",
+            "It flew away",
+            "It remained silent"
+          ],
+          "correct_index": 0,
+          "sentence_index": 42
+        },
+        {
+          "id": "gl_p6_s4_q1",
+          "type": "choice",
+          "question_en": "How did everything look?",
+          "options_en": [
+            "Happy",
+            "Sad",
+            "Scared"
+          ],
+          "correct_index": 0,
+          "sentence_index": 43
+        },
+        {
+          "id": "gl_p6_s4_q2",
+          "type": "choice",
+          "question_en": "Which word describes how everything looked?",
+          "options_en": [
+            "Happy",
+            "Gleeful",
+            "Dull"
+          ],
+          "correct_index": 0,
+          "sentence_index": 43
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "What is empathy?",
+          "options_en": [
+            "putting yourself in one's shoes",
+            "feeling others pain",
+            "living in nature"
+          ],
+          "correct_index": 0,
+          "sentence_index": 44
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "How is empathy described?",
+          "options_en": [
+            "putting yourself in one's shoes",
+            "catching a parrot",
+            "keeping a cage closed"
+          ],
+          "correct_index": 0,
+          "sentence_index": 44
+        },
+        {
+          "id": "gl_p7_s1_q1",
+          "type": "choice",
+          "question_en": "What is empathy?",
+          "options_en": [
+            "feeling others pain",
+            "putting yourself in one's shoes",
+            "playing with friends on the hills"
+          ],
+          "correct_index": 0,
+          "sentence_index": 45
+        },
+        {
+          "id": "gl_p7_s1_q2",
+          "type": "choice",
+          "question_en": "Which phrase explains empathy?",
+          "options_en": [
+            "feeling others pain",
+            "buying a cage for a parrot",
+            "offering nuts to the parrot"
+          ],
+          "correct_index": 0,
+          "sentence_index": 45
+        }
+      ]
+    },
+    {
+      "paragraph_index": 8,
+      "questions": [
+        {
+          "id": "gl_p8_s0_q1",
+          "type": "choice",
+          "question_en": "What does this sentence ask you to name?",
+          "options_en": [
+            "Characters in the story",
+            "A setting (place) from the story",
+            "The parrot"
+          ],
+          "correct_index": 0,
+          "sentence_index": 46
+        },
+        {
+          "id": "gl_p8_s0_q2",
+          "type": "choice",
+          "question_en": "Who are you asked to name by this sentence?",
+          "options_en": [
+            "The characters",
+            "The hills",
+            "Swara"
+          ],
+          "correct_index": 0,
+          "sentence_index": 46
+        },
+        {
+          "id": "gl_p8_s1_q1",
+          "type": "choice",
+          "question_en": "What does this sentence ask you to name?",
+          "options_en": [
+            "At least one setting (place) from the story",
+            "The parrot's cage",
+            "Swara's friends"
+          ],
+          "correct_index": 0,
+          "sentence_index": 47
+        },
+        {
+          "id": "gl_p8_s1_q2",
+          "type": "choice",
+          "question_en": "Which type of thing does the sentence ask you to identify?",
+          "options_en": [
+            "A place from the story",
+            "A character from the story",
+            "A nut offered to the parrot"
+          ],
+          "correct_index": 0,
+          "sentence_index": 47
+        },
+        {
+          "id": "gl_p8_s2_q1",
+          "type": "choice",
+          "question_en": "What is this sentence asking you to describe?",
+          "options_en": [
+            "What you learned from the story",
+            "Who caught the parrot",
+            "Where Swara lived"
+          ],
+          "correct_index": 0,
+          "sentence_index": 48
+        },
+        {
+          "id": "gl_p8_s2_q2",
+          "type": "choice",
+          "question_en": "Why would you answer this sentence?",
+          "options_en": [
+            "To state what you learned from the story",
+            "To name the parrot's cage",
+            "To list the friends on the hills"
+          ],
+          "correct_index": 0,
+          "sentence_index": 48
+        },
+        {
+          "id": "gl_p8_s3_q1",
+          "type": "choice",
+          "question_en": "What is the correct answer to this question: According to this sentence, what are adjectives?",
+          "options_en": [
+            "Describing words",
+            "Names of people",
+            "Places in the story"
+          ],
+          "correct_index": 0,
+          "sentence_index": 49
+        },
+        {
+          "id": "gl_p8_s3_q2",
+          "type": "choice",
+          "question_en": "How does the sentence define adjectives?",
+          "options_en": [
+            "As describing words",
+            "As the hills where Swara played",
+            "As the parrot's sounds"
+          ],
+          "correct_index": 0,
+          "sentence_index": 49
+        },
+        {
+          "id": "gl_p8_s4_q1",
+          "type": "choice",
+          "question_en": "What does this sentence ask you to name from the story?",
+          "options_en": [
+            "Three adjectives",
+            "Three characters",
+            "Three settings"
+          ],
+          "correct_index": 0,
+          "sentence_index": 50
+        },
+        {
+          "id": "gl_p8_s4_q2",
+          "type": "choice",
+          "question_en": "How many adjectives does the sentence ask you to name?",
+          "options_en": [
+            "Three",
+            "One",
+            "Five"
+          ],
+          "correct_index": 0,
+          "sentence_index": 50
+        },
+        {
+          "id": "gl_p8_s5_q1",
+          "type": "choice",
+          "question_en": "Who is this sentence addressing?",
+          "options_en": [
+            "Parents",
+            "Swara",
+            "The parrot"
+          ],
+          "correct_index": 0,
+          "sentence_index": 51
+        },
+        {
+          "id": "gl_p8_s5_q2",
+          "type": "choice",
+          "question_en": "What are parents asked to do in this sentence?",
+          "options_en": [
+            "Read aloud to their children and help them understand difficult words",
+            "Catch the parrot and put it in a cage",
+            "Take the children to the Mangiri hills"
+          ],
+          "correct_index": 0,
+          "sentence_index": 51
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'Swara and The Caged Parrot'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "Once upon a time",
+      "meaning_vi": "Ngày xửa ngày xưa",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "chilly winds",
+      "meaning_vi": "gió lạnh buốt",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "tiny",
+      "meaning_vi": "bé xíu",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "knew no bounds",
+      "meaning_vi": "không giới hạn, vô cùng",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "chased down",
+      "meaning_vi": "đuổi theo",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "terrified",
+      "meaning_vi": "rất sợ hãi",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "helplessly",
+      "meaning_vi": "bất lực, không làm gì được",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "tuned deaf ear",
+      "meaning_vi": "giả vờ không nghe, làm ngơ",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "window sill",
+      "meaning_vi": "bệ cửa sổ",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "admired",
+      "meaning_vi": "ngắm nhìn",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "motioned",
+      "meaning_vi": "ra hiệu",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "softly",
+      "meaning_vi": "nhẹ nhàng",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "uninterested",
+      "meaning_vi": "không quan tâm, thờ ơ",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "miracle of nature",
+      "meaning_vi": "điều kỳ diệu của tự nhiên",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "surroundings",
+      "meaning_vi": "môi trường xung quanh",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "separated",
+      "meaning_vi": "bị tách rời",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "hugging",
+      "meaning_vi": "ôm",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "golden cage",
+      "meaning_vi": "lồng vàng",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "real joy",
+      "meaning_vi": "niềm vui thật sự",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "warmly",
+      "meaning_vi": "trìu mến",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "squealed in delight",
+      "meaning_vi": "kêu lên sung sướng",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "dull face",
+      "meaning_vi": "vẻ mặt ủ rũ",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "enthusiasm",
+      "meaning_vi": "sự hăng hái, nhiệt tình",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "blissful sight",
+      "meaning_vi": "cảnh tượng hạnh phúc, tuyệt vời",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "skipped",
+      "meaning_vi": "nhảy chân sáo",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "meadows",
+      "meaning_vi": "đồng cỏ",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "chirped gleefully",
+      "meaning_vi": "hót líu lo vui vẻ",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "winked",
+      "meaning_vi": "nháy mắt",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "Empathy",
+      "meaning_vi": "sự đồng cảm",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "putting yourself in one's shoes",
+      "meaning_vi": "đặt mình vào vị trí của người khác",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "pain",
+      "meaning_vi": "nỗi đau",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "characters",
+      "meaning_vi": "nhân vật",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "setting",
+      "meaning_vi": "bối cảnh, địa điểm",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "adjectives",
+      "meaning_vi": "tính từ",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "difficult words",
+      "meaning_vi": "từ khó",
+      "paragraph_index": 8
+    }
+  ]
+}

@@ -1,0 +1,1381 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L3",
+  "level_label": "Cấp 3",
+  "topic": "Rainbow Boys",
+  "slug": "book_111756",
+  "audio_filename": "book_111756.mp3",
+  "book_slug": "book_111756",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_111756/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_111756/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_111756/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_111756/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_111756/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_111756/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_111756/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_111756/page_09.jpg",
+    "https://audio.felixbuilderhub.com/books/book_111756/page_10.jpg",
+    "https://audio.felixbuilderhub.com/books/book_111756/page_11.jpg",
+    "https://audio.felixbuilderhub.com/books/book_111756/page_12.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_111756/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_111756/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_111756/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_111756/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_111756/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_111756/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_111756/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_111756/page_09.mp3",
+    "https://audio.felixbuilderhub.com/books/book_111756/page_10.mp3",
+    "https://audio.felixbuilderhub.com/books/book_111756/page_11.mp3",
+    "https://audio.felixbuilderhub.com/books/book_111756/page_12.mp3"
+  ],
+  "book_attribution": {
+    "title": "Rainbow Boys",
+    "creators": [
+      "Kamla Bhasin",
+      "Priya Kuriyan"
+    ],
+    "publisher": "Pratham Books",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: Rainbow Boys is translated by Kamla Bhasin . The © for this translation lies with Pratham Books , 2019. Some rights reserved. Released under CC BY 4.0 license. Based on Original story: ' सतरंगी लड़के ' , by Kamla Bhasin . © Pratham Books , 2019. Some rights reserved. Released under CC BY 4.0 license. Other Credits: 'Rainbow Boys' has been published by Pratham Books. The development of this book has been supported by Parag, an initiative of Tata Trusts and EdelGive Foundation. www.prathambooks.org Images Attributions: Cover page: Boys running and playing , by Priya Kuriyan © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 2: A man in a dress and a boy with a bag , by Priya Kuriyan © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 3: A boy skating and another holding dolls , by Priya Kuriyan © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 4: Many boys , by Priya Kuriyan © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 5: Six boys standing , by Priya Kuriyan © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 6: A man with crutches and another with a guitar , by Priya Kuriyan © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 7: One boy shouting , by Priya Kuriyan © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 8: A boy stitching and another knitting , by Priya Kuriyan © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 9: A biy studying and another playing football , by Priya Kuriyan © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 10: Two women and a man , by Priya Kuriyan © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/111756-rainbow-boys",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "A man in a dress and a boy with a bag , by Priya Kuriyan © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "A boy skating and another holding dolls , by Priya Kuriyan © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "Many boys , by Priya Kuriyan © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "Six boys standing , by Priya Kuriyan © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "A man with crutches and another with a guitar , by Priya Kuriyan © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "One boy shouting , by Priya Kuriyan © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "A boy stitching and another knitting , by Priya Kuriyan © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "A biy studying and another playing football , by Priya Kuriyan © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 8,
+        "credit_text": "Two women and a man , by Priya Kuriyan © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 9,
+        "credit_text": "Illustration by Priya Kuriyan."
+      },
+      {
+        "page_index": 10,
+        "credit_text": "Illustration by Priya Kuriyan."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "Rainbow Boys",
+    "paragraphs_en": [
+      "“Arrey! Are you crying? A boy crying!” “What are you wearing?”",
+      "“Are you playing with a doll?” “Why do you have long hair?”",
+      "Who says all boys should be the same? They are not photocopies of one another. They are individuals.",
+      "He is tall. He is slightly fat. He is short. He is neither tall nor short. He is thin. He is neither fat nor thin.",
+      "He lost his leg in an accident. That hasn’t stopped him. He goes everywhere. He is sightless since childhood. He can do everything.",
+      "Some boys like to shout and bully their friends. Some are gentle. They don’t pick fights and lend a helping hand to all.",
+      "Some love to sew and knit and are very good at it.",
+      "Some love to study and have no interest in games. Some love to play and if they had their way, they would play the whole day.",
+      "He loves colourful, frilly clothes. Sometimes he wears Didi’s dresses. Ma says no, but he says, “Ma, if Didi can wear it, why can’t I?”",
+      "He loves trees. He has planted many trees and takes care of them.",
+      "All children should be what they want to be Because they are all individuals"
+    ],
+    "sentences": [
+      {
+        "text_en": "“Arrey! Are you crying?",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_111756/s_000.mp3",
+        "text_vi": "Này! Con đang khóc à?"
+      },
+      {
+        "text_en": "A boy crying!” “What are you wearing?”",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_111756/s_001.mp3",
+        "text_vi": "Con trai mà khóc à! Con đang mặc gì thế?"
+      },
+      {
+        "text_en": "“Are you playing with a doll?” “Why do you have long hair?”",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_111756/s_002.mp3",
+        "text_vi": "Con đang chơi búp bê à? Sao con lại để tóc dài thế?"
+      },
+      {
+        "text_en": "Who says all boys should be the same?",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_111756/s_003.mp3",
+        "text_vi": "Ai nói tất cả các bạn trai phải giống nhau?"
+      },
+      {
+        "text_en": "They are not photocopies of one another.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_111756/s_004.mp3",
+        "text_vi": "Các bạn ấy không phải là bản sao của nhau."
+      },
+      {
+        "text_en": "They are individuals.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_111756/s_005.mp3",
+        "text_vi": "Mỗi bạn là một người riêng biệt."
+      },
+      {
+        "text_en": "He is tall.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_111756/s_006.mp3",
+        "text_vi": "Bạn ấy cao."
+      },
+      {
+        "text_en": "He is slightly fat.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_111756/s_007.mp3",
+        "text_vi": "Bạn ấy hơi mập một chút."
+      },
+      {
+        "text_en": "He is short.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_111756/s_008.mp3",
+        "text_vi": "Bạn ấy thấp."
+      },
+      {
+        "text_en": "He is neither tall nor short.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_111756/s_009.mp3",
+        "text_vi": "Bạn ấy không cao cũng không thấp."
+      },
+      {
+        "text_en": "He is thin.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_111756/s_010.mp3",
+        "text_vi": "Bạn ấy gầy."
+      },
+      {
+        "text_en": "He is neither fat nor thin.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_111756/s_011.mp3",
+        "text_vi": "Bạn ấy không mập cũng không gầy."
+      },
+      {
+        "text_en": "He lost his leg in an accident.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_111756/s_012.mp3",
+        "text_vi": "Bạn ấy bị mất một chân trong một tai nạn."
+      },
+      {
+        "text_en": "That hasn’t stopped him.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_111756/s_013.mp3",
+        "text_vi": "Điều đó không ngăn cản được bạn ấy."
+      },
+      {
+        "text_en": "He goes everywhere.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_111756/s_014.mp3",
+        "text_vi": "Bạn ấy đi khắp mọi nơi."
+      },
+      {
+        "text_en": "He is sightless since childhood.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_111756/s_015.mp3",
+        "text_vi": "Bạn ấy bị mù từ nhỏ."
+      },
+      {
+        "text_en": "He can do everything.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_111756/s_016.mp3",
+        "text_vi": "Bạn ấy có thể làm mọi thứ."
+      },
+      {
+        "text_en": "Some boys like to shout and bully their friends.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_111756/s_017.mp3",
+        "text_vi": "Một số bạn trai thích la hét và bắt nạt bạn bè."
+      },
+      {
+        "text_en": "Some are gentle.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_111756/s_018.mp3",
+        "text_vi": "Một số bạn thì hiền lành."
+      },
+      {
+        "text_en": "They don’t pick fights and lend a helping hand to all.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_111756/s_019.mp3",
+        "text_vi": "Các bạn ấy không gây gổ và luôn giúp đỡ mọi người."
+      },
+      {
+        "text_en": "Some love to sew and knit and are very good at it.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_111756/s_020.mp3",
+        "text_vi": "Một số bạn thích may vá, đan lát và làm rất giỏi."
+      },
+      {
+        "text_en": "Some love to study and have no interest in games.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_111756/s_021.mp3",
+        "text_vi": "Một số bạn thích học và không thích chơi game."
+      },
+      {
+        "text_en": "Some love to play and if they had their way, they would play the whole day.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_111756/s_022.mp3",
+        "text_vi": "Một số bạn thích chơi và nếu được, các bạn ấy sẽ chơi cả ngày."
+      },
+      {
+        "text_en": "He loves colourful, frilly clothes.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_111756/s_023.mp3",
+        "text_vi": "Bạn ấy thích quần áo sặc sỡ, có bèo nhún."
+      },
+      {
+        "text_en": "Sometimes he wears Didi’s dresses.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_111756/s_024.mp3",
+        "text_vi": "Đôi khi bạn ấy mặc váy của chị Didi."
+      },
+      {
+        "text_en": "Ma says no, but he says, “Ma, if Didi can wear it, why can’t I?”",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_111756/s_025.mp3",
+        "text_vi": "Mẹ nói không được, nhưng bạn ấy nói: \"Mẹ ơi, nếu chị Didi mặc được thì sao con lại không được?\""
+      },
+      {
+        "text_en": "He loves trees.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_111756/s_026.mp3",
+        "text_vi": "Bạn ấy yêu cây cối."
+      },
+      {
+        "text_en": "He has planted many trees and takes care of them.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_111756/s_027.mp3",
+        "text_vi": "Bạn ấy đã trồng nhiều cây và chăm sóc chúng."
+      },
+      {
+        "text_en": "All children should be what they want to be Because they are all individuals",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_111756/s_028.mp3",
+        "text_vi": "Tất cả trẻ em nên được là chính mình, bởi vì mỗi bạn là một cá nhân riêng biệt."
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "“Arrey! Are you crying?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_111756/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "A boy crying!” “What are you wearing?”",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_111756/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "“Are you playing with a doll?” “Why do you have long hair?”",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_111756/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "Who says all boys should be the same?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_111756/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "They are not photocopies of one another.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_111756/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "They are individuals.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_111756/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "He is tall.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_111756/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "He is slightly fat.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_111756/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "He is short.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_111756/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "He is neither tall nor short.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_111756/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "He is thin.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_111756/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "He is neither fat nor thin.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_111756/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "He lost his leg in an accident.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_111756/s_012.mp3"
+        },
+        {
+          "id": "ra_13",
+          "text_en": "That hasn’t stopped him.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_111756/s_013.mp3"
+        },
+        {
+          "id": "ra_14",
+          "text_en": "He goes everywhere.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_111756/s_014.mp3"
+        },
+        {
+          "id": "ra_15",
+          "text_en": "He is sightless since childhood.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_111756/s_015.mp3"
+        },
+        {
+          "id": "ra_16",
+          "text_en": "He can do everything.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_111756/s_016.mp3"
+        },
+        {
+          "id": "ra_17",
+          "text_en": "Some boys like to shout and bully their friends.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_111756/s_017.mp3"
+        },
+        {
+          "id": "ra_18",
+          "text_en": "Some are gentle.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_111756/s_018.mp3"
+        },
+        {
+          "id": "ra_19",
+          "text_en": "They don’t pick fights and lend a helping hand to all.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_111756/s_019.mp3"
+        },
+        {
+          "id": "ra_20",
+          "text_en": "Some love to sew and knit and are very good at it.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_111756/s_020.mp3"
+        },
+        {
+          "id": "ra_21",
+          "text_en": "Some love to study and have no interest in games.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_111756/s_021.mp3"
+        },
+        {
+          "id": "ra_22",
+          "text_en": "Some love to play and if they had their way, they would play the whole day.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_111756/s_022.mp3"
+        },
+        {
+          "id": "ra_23",
+          "text_en": "He loves colourful, frilly clothes.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_111756/s_023.mp3"
+        },
+        {
+          "id": "ra_24",
+          "text_en": "Sometimes he wears Didi’s dresses.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_111756/s_024.mp3"
+        },
+        {
+          "id": "ra_25",
+          "text_en": "Ma says no, but he says, “Ma, if Didi can wear it, why can’t I?”",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_111756/s_025.mp3"
+        },
+        {
+          "id": "ra_26",
+          "text_en": "He loves trees.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_111756/s_026.mp3"
+        },
+        {
+          "id": "ra_27",
+          "text_en": "He has planted many trees and takes care of them.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_111756/s_027.mp3"
+        },
+        {
+          "id": "ra_28",
+          "text_en": "All children should be what they want to be Because they are all individuals",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_111756/s_028.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "Who is being asked if they are crying?",
+          "options_en": [
+            "a boy",
+            "Didi",
+            "Some boys"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "What does the speaker ask in this sentence?",
+          "options_en": [
+            "Are you crying?",
+            "Why do you have long hair?",
+            "Are you playing with a doll?"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s1_q1",
+          "type": "choice",
+          "question_en": "Who is said to be crying in this sentence?",
+          "options_en": [
+            "A boy",
+            "Some boys",
+            "He"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s1_q2",
+          "type": "choice",
+          "question_en": "What question does the speaker ask about clothing?",
+          "options_en": [
+            "What are you wearing?",
+            "Why do you have long hair?",
+            "Are you playing with a doll?"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "What is the speaker asking if the person is playing with?",
+          "options_en": [
+            "a doll",
+            "trees",
+            "Didi's dresses"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "What does the speaker ask about the person's hair?",
+          "options_en": [
+            "why they have long hair",
+            "what games they like",
+            "why he lost his leg"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "What question is asked in the sentence?",
+          "options_en": [
+            "Who says all boys should be the same?",
+            "Are you crying? A boy crying!",
+            "Why do you have long hair?"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "Who does the sentence ask about?",
+          "options_en": [
+            "Who says all boys should be the same?",
+            "Are you playing with a doll?",
+            "What are you wearing?"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p2_s1_q1",
+          "type": "choice",
+          "question_en": "What does the sentence say boys are not?",
+          "options_en": [
+            "Photocopies of one another",
+            "Didi's dresses",
+            "Trees"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p2_s1_q2",
+          "type": "choice",
+          "question_en": "How does the sentence describe boys?",
+          "options_en": [
+            "Not photocopies of one another",
+            "He loves colourful, frilly clothes",
+            "He has planted many trees"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p2_s2_q1",
+          "type": "choice",
+          "question_en": "What does the sentence say boys are?",
+          "options_en": [
+            "Individuals",
+            "Gentle",
+            "Sightless since childhood"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p2_s2_q2",
+          "type": "choice",
+          "question_en": "What is the correct answer to this question: Why, according to the sentence, are boys different?",
+          "options_en": [
+            "Because they are individuals",
+            "Because he loves to play",
+            "Because he lost his leg in an accident"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "Who is tall?",
+          "options_en": [
+            "He",
+            "Some boys",
+            "Didi"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "How is he described?",
+          "options_en": [
+            "Tall",
+            "Sightless",
+            "Gentle"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p3_s1_q1",
+          "type": "choice",
+          "question_en": "Who is slightly fat?",
+          "options_en": [
+            "He",
+            "Ma",
+            "A boy who lost his leg"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p3_s1_q2",
+          "type": "choice",
+          "question_en": "How is he described in this sentence?",
+          "options_en": [
+            "Slightly fat",
+            "Thin",
+            "Tall"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p3_s2_q1",
+          "type": "choice",
+          "question_en": "Who is short?",
+          "options_en": [
+            "He",
+            "Some boys",
+            "Ma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p3_s2_q2",
+          "type": "choice",
+          "question_en": "How is the person described in this sentence?",
+          "options_en": [
+            "Short",
+            "Sightless",
+            "Loves to play"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p3_s3_q1",
+          "type": "choice",
+          "question_en": "Who is neither tall nor short?",
+          "options_en": [
+            "He",
+            "Didi",
+            "Some boys"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p3_s3_q2",
+          "type": "choice",
+          "question_en": "How is he described in this sentence?",
+          "options_en": [
+            "Neither tall nor short",
+            "Slightly fat",
+            "Loves colourful clothes"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p3_s4_q1",
+          "type": "choice",
+          "question_en": "Who is thin?",
+          "options_en": [
+            "He",
+            "A boy who loves to play",
+            "Ma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p3_s4_q2",
+          "type": "choice",
+          "question_en": "How is he described here?",
+          "options_en": [
+            "Thin",
+            "Neither fat nor thin",
+            "Gentle"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p3_s5_q1",
+          "type": "choice",
+          "question_en": "Who is neither fat nor thin?",
+          "options_en": [
+            "He",
+            "Didi",
+            "Some boys"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p3_s5_q2",
+          "type": "choice",
+          "question_en": "How is the person described in this sentence?",
+          "options_en": [
+            "Neither fat nor thin",
+            "Slightly fat",
+            "Short"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "What happened to him?",
+          "options_en": [
+            "He lost his leg in an accident.",
+            "He wears Didi's dresses.",
+            "He planted many trees."
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "How did he lose his leg?",
+          "options_en": [
+            "In an accident",
+            "While planting trees",
+            "While playing all day"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p4_s1_q1",
+          "type": "choice",
+          "question_en": "What does the sentence say about him?",
+          "options_en": [
+            "That losing his leg hasn’t stopped him",
+            "That he is very tall",
+            "That he loves to play all day"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p4_s1_q2",
+          "type": "choice",
+          "question_en": "Why is he described this way?",
+          "options_en": [
+            "Because the accident did not stop him",
+            "Because he wears colourful clothes",
+            "Because he shouts and bullies"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p4_s2_q1",
+          "type": "choice",
+          "question_en": "Where does he go?",
+          "options_en": [
+            "Everywhere",
+            "To school",
+            "To the market"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p4_s2_q2",
+          "type": "choice",
+          "question_en": "What does he do?",
+          "options_en": [
+            "He goes everywhere",
+            "He sews and knits",
+            "He plays all day"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p4_s3_q1",
+          "type": "choice",
+          "question_en": "What is the correct answer to this question: Since when is he sightless?",
+          "options_en": [
+            "Since childhood",
+            "Since he lost his leg",
+            "Since yesterday"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p4_s3_q2",
+          "type": "choice",
+          "question_en": "What is his condition?",
+          "options_en": [
+            "He is sightless",
+            "He is tall",
+            "He is thin"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p4_s4_q1",
+          "type": "choice",
+          "question_en": "What can he do?",
+          "options_en": [
+            "Everything",
+            "Sew and knit",
+            "Play all day"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p4_s4_q2",
+          "type": "choice",
+          "question_en": "How much is he able to do?",
+          "options_en": [
+            "He can do everything",
+            "Only some things like sewing",
+            "Only playing"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "Who likes to shout and bully their friends?",
+          "options_en": [
+            "Some boys",
+            "He loves to sew and knit",
+            "He is sightless since childhood"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "What do some boys like to do?",
+          "options_en": [
+            "Shout and bully their friends",
+            "Plant many trees",
+            "Some love to study"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p5_s1_q1",
+          "type": "choice",
+          "question_en": "Who are gentle?",
+          "options_en": [
+            "Some boys",
+            "He lost his leg in an accident",
+            "He loves colourful, frilly clothes"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p5_s1_q2",
+          "type": "choice",
+          "question_en": "How are some boys described?",
+          "options_en": [
+            "Gentle",
+            "Sightless since childhood",
+            "They would play the whole day"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p5_s2_q1",
+          "type": "choice",
+          "question_en": "What don't they do?",
+          "options_en": [
+            "Pick fights",
+            "Wear Didi's dresses",
+            "Lose his leg in an accident"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p5_s2_q2",
+          "type": "choice",
+          "question_en": "How do they treat others?",
+          "options_en": [
+            "Lend a helping hand to all",
+            "Plant many trees",
+            "Shout and bully their friends"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "Who are very good at sewing and knitting?",
+          "options_en": [
+            "Some",
+            "Some love to study and have no interest in games",
+            "Some love to play and would play the whole day"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "What do some people love to do?",
+          "options_en": [
+            "Sew and knit",
+            "Play the whole day",
+            "Plant many trees"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "What do some love to do?",
+          "options_en": [
+            "Study",
+            "Play",
+            "Sew and knit"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "How much interest in games do some have?",
+          "options_en": [
+            "No interest",
+            "They would play the whole day",
+            "They lend a helping hand"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p7_s1_q1",
+          "type": "choice",
+          "question_en": "What do some love to do?",
+          "options_en": [
+            "Play",
+            "Study",
+            "Wear colourful, frilly clothes"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p7_s1_q2",
+          "type": "choice",
+          "question_en": "What is the correct answer to this question: If they had their way, how long would they play?",
+          "options_en": [
+            "The whole day",
+            "They would study all day",
+            "They would plant many trees"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        }
+      ]
+    },
+    {
+      "paragraph_index": 8,
+      "questions": [
+        {
+          "id": "gl_p8_s0_q1",
+          "type": "choice",
+          "question_en": "Who loves colourful, frilly clothes?",
+          "options_en": [
+            "He",
+            "Some boys",
+            "Didi"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p8_s0_q2",
+          "type": "choice",
+          "question_en": "What does he love?",
+          "options_en": [
+            "Colourful, frilly clothes",
+            "To play all day",
+            "To plant trees"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p8_s1_q1",
+          "type": "choice",
+          "question_en": "What does he sometimes wear?",
+          "options_en": [
+            "Didi’s dresses",
+            "Colourful, frilly clothes",
+            "The trees he planted"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p8_s1_q2",
+          "type": "choice",
+          "question_en": "Whose dresses does he wear sometimes?",
+          "options_en": [
+            "Didi's",
+            "Ma's",
+            "Some boys'"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p8_s2_q1",
+          "type": "choice",
+          "question_en": "What does Ma say?",
+          "options_en": [
+            "No",
+            "Yes",
+            "“Are you crying? A boy crying!”"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p8_s2_q2",
+          "type": "choice",
+          "question_en": "Why does he ask, \"Ma, if Didi can wear it, why can’t I?\"?",
+          "options_en": [
+            "Because Didi can wear it",
+            "Because he lost his leg",
+            "Because he loves trees"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        }
+      ]
+    },
+    {
+      "paragraph_index": 9,
+      "questions": [
+        {
+          "id": "gl_p9_s0_q1",
+          "type": "choice",
+          "question_en": "What does he love?",
+          "options_en": [
+            "Trees",
+            "Sewing and knitting",
+            "Playing all day"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p9_s0_q2",
+          "type": "choice",
+          "question_en": "Who loves trees?",
+          "options_en": [
+            "He",
+            "Some boys",
+            "Didi"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p9_s1_q1",
+          "type": "choice",
+          "question_en": "What has he planted?",
+          "options_en": [
+            "Many trees",
+            "Colourful, frilly clothes",
+            "Dresses"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        },
+        {
+          "id": "gl_p9_s1_q2",
+          "type": "choice",
+          "question_en": "How does he care for the trees?",
+          "options_en": [
+            "He takes care of them",
+            "He plays with them",
+            "He sews for them"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        }
+      ]
+    },
+    {
+      "paragraph_index": 10,
+      "questions": [
+        {
+          "id": "gl_p10_s0_q1",
+          "type": "choice",
+          "question_en": "Who should be what they want to be?",
+          "options_en": [
+            "All children",
+            "Some boys",
+            "He"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        },
+        {
+          "id": "gl_p10_s0_q2",
+          "type": "choice",
+          "question_en": "Why should all children be what they want to be?",
+          "options_en": [
+            "Because they are all individuals",
+            "Because he loves trees",
+            "Because they would play the whole day"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'Rainbow Boys'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "crying",
+      "meaning_vi": "khóc",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "wearing",
+      "meaning_vi": "mặc (quần áo)",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "playing",
+      "meaning_vi": "chơi",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "doll",
+      "meaning_vi": "búp bê",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "long hair",
+      "meaning_vi": "tóc dài",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "same",
+      "meaning_vi": "giống nhau",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "photocopies",
+      "meaning_vi": "bản sao",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "individuals",
+      "meaning_vi": "cá nhân, người riêng biệt",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "tall",
+      "meaning_vi": "cao",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "fat",
+      "meaning_vi": "mập",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "short",
+      "meaning_vi": "thấp",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "thin",
+      "meaning_vi": "gầy",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "accident",
+      "meaning_vi": "tai nạn",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "stopped",
+      "meaning_vi": "ngăn cản",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "sightless",
+      "meaning_vi": "mù",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "everywhere",
+      "meaning_vi": "khắp mọi nơi",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "bully",
+      "meaning_vi": "bắt nạt",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "gentle",
+      "meaning_vi": "hiền lành",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "pick fights",
+      "meaning_vi": "gây gổ",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "helping hand",
+      "meaning_vi": "giúp đỡ",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "sew",
+      "meaning_vi": "may vá",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "knit",
+      "meaning_vi": "đan lát",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "good at it",
+      "meaning_vi": "giỏi",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "study",
+      "meaning_vi": "học",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "interest",
+      "meaning_vi": "hứng thú",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "games",
+      "meaning_vi": "trò chơi",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "colourful",
+      "meaning_vi": "sặc sỡ",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "frilly",
+      "meaning_vi": "có bèo nhún",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "clothes",
+      "meaning_vi": "quần áo",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "sometimes",
+      "meaning_vi": "đôi khi",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "trees",
+      "meaning_vi": "cây cối",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "planted",
+      "meaning_vi": "trồng",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "takes care of",
+      "meaning_vi": "chăm sóc",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "should be",
+      "meaning_vi": "nên là",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "individuals",
+      "meaning_vi": "cá nhân riêng biệt",
+      "paragraph_index": 10
+    }
+  ]
+}

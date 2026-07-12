@@ -1,0 +1,910 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L2",
+  "level_label": "Cấp 2",
+  "topic": "I am a Puppet",
+  "slug": "book_104690",
+  "audio_filename": "book_104690.mp3",
+  "book_slug": "book_104690",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_104690/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_104690/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_104690/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_104690/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_104690/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_104690/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_104690/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_104690/page_09.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_104690/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_104690/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_104690/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_104690/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_104690/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_104690/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_104690/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_104690/page_09.mp3"
+  ],
+  "book_attribution": {
+    "title": "I am a Puppet",
+    "creators": [
+      "Anurupa Roy",
+      "Adrija Ghosh"
+    ],
+    "publisher": "Pratham Books",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: I am a Puppet is written by Anurupa Roy . © Pratham Books , 2019. Some rights reserved. Released under CC BY 4.0 license. Other Credits: 'I am a Puppet' has been published by Pratham Books. The development of this book has been supported by Parag, an initiative of Tata Trusts and EdelGive Foundation. www.prathambooks.org Images Attributions: Cover page: A string puppet on stage , by Adrija Ghosh © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 2: A boy with big eyes , by Adrija Ghosh © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 3: A boy floating in space , by Adrija Ghosh © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 4: cave painting , by Adrija Ghosh © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 5: A group of puppets , by Adrija Ghosh © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 6: A group of string puppets , by Adrija Ghosh © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 7: Puppets , by Adrija Ghosh © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 8: Various puppets , by Adrija Ghosh © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 9: A boy with many photographs , by Adrija Ghosh © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/104690-i-am-a-puppet",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "A boy with big eyes , by Adrija Ghosh © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "A boy floating in space , by Adrija Ghosh © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "cave painting , by Adrija Ghosh © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "A group of puppets , by Adrija Ghosh © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "A group of string puppets , by Adrija Ghosh © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "Puppets , by Adrija Ghosh © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "Various puppets , by Adrija Ghosh © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "A boy with many photographs , by Adrija Ghosh © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "I am a Puppet",
+    "paragraphs_en": [
+      "Where do I come from?",
+      "Outer space?",
+      "Cave paintings?",
+      "I am a puppet. From left to right: •Karagoz: shadow puppet from Turkey •Bangarakkha: leather shadow puppet clown from Karnataka •Pulcinella: glove puppet from Italy •Mr Punch: puppet from England",
+      "I have many brothers and sisters. From left to right: •Kalasutri Bahuliye: string puppet from Maharashtra •Opera dei Pupi: string puppet from Italy •Yakshagana Gombeyatta: string puppet from Karnataka •Tarer Putul: string puppet from West Bengal",
+      "I have cousins too! Shadow puppets, glove puppets, rod puppets. From left to right: •Wayang Kulit: shadow puppet from Indonesia •Pavakathakali: glove puppets from Kerala •Bunraku: rod puppets from Japan",
+      "And I have friends all over the world. Some are fat. Some are tall. Some are round. Some are small. And they are purple, blue, orange, and black. From left to right: •Magarina: muppet from Delhi •Tarer Putul: string puppet from West Bengal •Petroushka: clown puppet from Russia •String puppet from Rajasthan •Life-size puppet from Delhi",
+      "Wouldn't you like to have family and friends like mine?"
+    ],
+    "sentences": [
+      {
+        "text_en": "Where do I come from?",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104690/s_000.mp3",
+        "text_vi": "Tôi đến từ đâu?"
+      },
+      {
+        "text_en": "Outer space?",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104690/s_001.mp3",
+        "text_vi": "Ngoài vũ trụ à?"
+      },
+      {
+        "text_en": "Cave paintings?",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104690/s_002.mp3",
+        "text_vi": "Những bức tranh trong hang động à?"
+      },
+      {
+        "text_en": "I am a puppet.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104690/s_003.mp3",
+        "text_vi": "Tôi là một con rối."
+      },
+      {
+        "text_en": "From left to right: •Karagoz: shadow puppet from Turkey •Bangarakkha: leather shadow puppet clown from Karnataka •Pulcinella: glove puppet from Italy •Mr Punch: puppet from England",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104690/s_004.mp3",
+        "text_vi": "Từ trái sang phải: •Karagoz: rối bóng từ Thổ Nhĩ Kỳ •Bangarakkha: rối bóng da chú hề từ Karnataka •Pulcinella: rối tay từ Ý •Mr Punch: rối từ Anh"
+      },
+      {
+        "text_en": "I have many brothers and sisters.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104690/s_005.mp3",
+        "text_vi": "Tôi có rất nhiều anh chị em."
+      },
+      {
+        "text_en": "From left to right: •Kalasutri Bahuliye: string puppet from Maharashtra •Opera dei Pupi: string puppet from Italy •Yakshagana Gombeyatta: string puppet from Karnataka •Tarer Putul: string puppet from West Bengal",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104690/s_006.mp3",
+        "text_vi": "Từ trái sang phải: •Kalasutri Bahuliye: rối dây từ Maharashtra •Opera dei Pupi: rối dây từ Ý •Yakshagana Gombeyatta: rối dây từ Karnataka •Tarer Putul: rối dây từ Tây Bengal"
+      },
+      {
+        "text_en": "I have cousins too!",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104690/s_007.mp3",
+        "text_vi": "Tôi cũng có cả anh chị em họ nữa!"
+      },
+      {
+        "text_en": "Shadow puppets, glove puppets, rod puppets.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104690/s_008.mp3",
+        "text_vi": "Rối bóng, rối tay, rối que."
+      },
+      {
+        "text_en": "From left to right: •Wayang Kulit: shadow puppet from Indonesia •Pavakathakali: glove puppets from Kerala •Bunraku: rod puppets from Japan",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104690/s_009.mp3",
+        "text_vi": "Từ trái sang phải: •Wayang Kulit: rối bóng từ Indonesia •Pavakathakali: rối tay từ Kerala •Bunraku: rối que từ Nhật Bản"
+      },
+      {
+        "text_en": "And I have friends all over the world.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104690/s_010.mp3",
+        "text_vi": "Và tôi có bạn bè khắp nơi trên thế giới."
+      },
+      {
+        "text_en": "Some are fat.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104690/s_011.mp3",
+        "text_vi": "Một số thì béo."
+      },
+      {
+        "text_en": "Some are tall.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104690/s_012.mp3",
+        "text_vi": "Một số thì cao."
+      },
+      {
+        "text_en": "Some are round.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104690/s_013.mp3",
+        "text_vi": "Một số thì tròn."
+      },
+      {
+        "text_en": "Some are small.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104690/s_014.mp3",
+        "text_vi": "Một số thì nhỏ."
+      },
+      {
+        "text_en": "And they are purple, blue, orange, and black.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104690/s_015.mp3",
+        "text_vi": "Và chúng có màu tím, xanh dương, cam và đen."
+      },
+      {
+        "text_en": "From left to right: •Magarina: muppet from Delhi •Tarer Putul: string puppet from West Bengal •Petroushka: clown puppet from Russia •String puppet from Rajasthan •Life-size puppet from Delhi",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104690/s_016.mp3",
+        "text_vi": "Từ trái sang phải: •Magarina: rối muppet từ Delhi •Tarer Putul: rối dây từ Tây Bengal •Petroushka: rối hề từ Nga •Rối dây từ Rajasthan •Rối kích thước thật từ Delhi"
+      },
+      {
+        "text_en": "Wouldn't you like to have family and friends like mine?",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104690/s_017.mp3",
+        "text_vi": "Bạn có muốn có gia đình và bạn bè giống như của tôi không?"
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "Where do I come from?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104690/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "Outer space?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104690/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "Cave paintings?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104690/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "I am a puppet.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104690/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "From left to right: •Karagoz: shadow puppet from Turkey •Bangarakkha: leather shadow puppet clown from Karnataka •Pulcinella: glove puppet from Italy •Mr Punch: puppet from England",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104690/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "I have many brothers and sisters.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104690/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "From left to right: •Kalasutri Bahuliye: string puppet from Maharashtra •Opera dei Pupi: string puppet from Italy •Yakshagana Gombeyatta: string puppet from Karnataka •Tarer Putul: string puppet from West Bengal",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104690/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "I have cousins too!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104690/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "Shadow puppets, glove puppets, rod puppets.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104690/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "From left to right: •Wayang Kulit: shadow puppet from Indonesia •Pavakathakali: glove puppets from Kerala •Bunraku: rod puppets from Japan",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104690/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "And I have friends all over the world.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104690/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "Some are fat.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104690/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "Some are tall.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104690/s_012.mp3"
+        },
+        {
+          "id": "ra_13",
+          "text_en": "Some are round.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104690/s_013.mp3"
+        },
+        {
+          "id": "ra_14",
+          "text_en": "Some are small.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104690/s_014.mp3"
+        },
+        {
+          "id": "ra_15",
+          "text_en": "And they are purple, blue, orange, and black.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104690/s_015.mp3"
+        },
+        {
+          "id": "ra_16",
+          "text_en": "From left to right: •Magarina: muppet from Delhi •Tarer Putul: string puppet from West Bengal •Petroushka: clown puppet from Russia •String puppet from Rajasthan •Life-size puppet from Delhi",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104690/s_016.mp3"
+        },
+        {
+          "id": "ra_17",
+          "text_en": "Wouldn't you like to have family and friends like mine?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104690/s_017.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "What is the speaker asking?",
+          "options_en": [
+            "Where do I come from?",
+            "Karagoz",
+            "Wayang Kulit"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "Why does the speaker ask this question?",
+          "options_en": [
+            "To ask where they come from",
+            "To talk about Pulcinella",
+            "To describe Bunraku"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "What is being asked?",
+          "options_en": [
+            "Outer space",
+            "Karagoz",
+            "Wayang Kulit"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "Where might the speaker be from?",
+          "options_en": [
+            "Outer space",
+            "Turkey",
+            "Karnataka"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "What is being asked about?",
+          "options_en": [
+            "Cave paintings",
+            "Karagoz",
+            "Bunraku"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "Which of these is mentioned in the sentence?",
+          "options_en": [
+            "Cave paintings",
+            "Pulcinella",
+            "Magarina"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "What am I?",
+          "options_en": [
+            "a puppet",
+            "a muppet",
+            "a string puppet"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "How does the speaker identify themself?",
+          "options_en": [
+            "I am a puppet",
+            "From outer space",
+            "A muppet"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p3_s1_q1",
+          "type": "choice",
+          "question_en": "Which puppet is a shadow puppet from Turkey?",
+          "options_en": [
+            "Karagoz",
+            "Pulcinella",
+            "Mr Punch"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p3_s1_q2",
+          "type": "choice",
+          "question_en": "Where is Pulcinella from?",
+          "options_en": [
+            "Italy",
+            "Karnataka",
+            "England"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "Who has many brothers and sisters?",
+          "options_en": [
+            "I",
+            "Karagoz",
+            "Pulcinella"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "What does the speaker say they have?",
+          "options_en": [
+            "many brothers and sisters",
+            "cousins too",
+            "friends all over the world"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p4_s1_q1",
+          "type": "choice",
+          "question_en": "Which puppet listed is from Maharashtra?",
+          "options_en": [
+            "Kalasutri Bahuliye",
+            "Opera dei Pupi",
+            "Yakshagana Gombeyatta"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p4_s1_q2",
+          "type": "choice",
+          "question_en": "Where is Tarer Putul from?",
+          "options_en": [
+            "West Bengal",
+            "Italy",
+            "Karnataka"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "Who says they have cousins?",
+          "options_en": [
+            "I",
+            "Mr Punch",
+            "Magarina"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "What does the speaker say they have?",
+          "options_en": [
+            "Cousins",
+            "Brothers and sisters",
+            "Friends all over the world"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p5_s1_q1",
+          "type": "choice",
+          "question_en": "Which type of puppet is mentioned?",
+          "options_en": [
+            "Shadow puppets",
+            "String puppets",
+            "Muppet"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p5_s1_q2",
+          "type": "choice",
+          "question_en": "What three kinds of puppets are listed?",
+          "options_en": [
+            "Shadow puppets, glove puppets, rod puppets",
+            "String puppets, muppet, life-size puppet",
+            "Shadow puppets, string puppets, rod puppets"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p5_s2_q1",
+          "type": "choice",
+          "question_en": "Where is Wayang Kulit from?",
+          "options_en": [
+            "Indonesia",
+            "Turkey",
+            "Kerala"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p5_s2_q2",
+          "type": "choice",
+          "question_en": "Which puppet is from Japan?",
+          "options_en": [
+            "Bunraku",
+            "Pulcinella",
+            "Karagoz"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "Who does the narrator say they have all over the world?",
+          "options_en": [
+            "friends",
+            "brothers and sisters",
+            "cousins"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "Where does the narrator have friends?",
+          "options_en": [
+            "all over the world",
+            "in Delhi",
+            "in Turkey"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p6_s1_q1",
+          "type": "choice",
+          "question_en": "What are some of the narrator's friends described as?",
+          "options_en": [
+            "fat",
+            "tall",
+            "round"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p6_s1_q2",
+          "type": "choice",
+          "question_en": "Which adjective from the paragraph describes some friends?",
+          "options_en": [
+            "fat",
+            "small",
+            "blue"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p6_s2_q1",
+          "type": "choice",
+          "question_en": "What is said about some of the friends in sentence 2?",
+          "options_en": [
+            "they are tall",
+            "they are from West Bengal",
+            "they are glove puppets"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p6_s2_q2",
+          "type": "choice",
+          "question_en": "Which word describes some friends in this sentence?",
+          "options_en": [
+            "tall",
+            "fat",
+            "round"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p6_s3_q1",
+          "type": "choice",
+          "question_en": "How are some of the narrator's friends described in sentence 3?",
+          "options_en": [
+            "round",
+            "orange",
+            "life-size"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p6_s3_q2",
+          "type": "choice",
+          "question_en": "Which description appears in the paragraph about some friends?",
+          "options_en": [
+            "round",
+            "shadow",
+            "leather"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p6_s4_q1",
+          "type": "choice",
+          "question_en": "What size are some of the friends according to sentence 4?",
+          "options_en": [
+            "small",
+            "fat",
+            "tall"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p6_s4_q2",
+          "type": "choice",
+          "question_en": "Which of these is used to describe some friends in this sentence?",
+          "options_en": [
+            "small",
+            "Karagoz",
+            "Pulcinella"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p6_s5_q1",
+          "type": "choice",
+          "question_en": "What colors are mentioned for the friends?",
+          "options_en": [
+            "purple, blue, orange, and black",
+            "red and green",
+            "yellow and white"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p6_s5_q2",
+          "type": "choice",
+          "question_en": "Which color is listed as one of the friends' colors?",
+          "options_en": [
+            "purple",
+            "Bangarakkha",
+            "Wayang Kulit"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p6_s6_q1",
+          "type": "choice",
+          "question_en": "Which puppet from Russia is named in the list?",
+          "options_en": [
+            "Petroushka",
+            "Magarina",
+            "Tarer Putul"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p6_s6_q2",
+          "type": "choice",
+          "question_en": "Where is Magarina said to be from in the list?",
+          "options_en": [
+            "Delhi",
+            "Karnataka",
+            "Italy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "What does the speaker ask if the listener would like to have?",
+          "options_en": [
+            "family and friends",
+            "shadow puppets",
+            "string puppets"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "Whose family and friends does the speaker mention?",
+          "options_en": [
+            "mine",
+            "Magarina",
+            "Pulcinella"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'I am a Puppet'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "Where",
+      "meaning_vi": "Ở đâu",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "come from",
+      "meaning_vi": "đến từ",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "Outer",
+      "meaning_vi": "Bên ngoài",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "space",
+      "meaning_vi": "Vũ trụ",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "Cave",
+      "meaning_vi": "Hang động",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "paintings",
+      "meaning_vi": "Những bức tranh",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "puppet",
+      "meaning_vi": "Con rối",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "shadow",
+      "meaning_vi": "Bóng",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "leather",
+      "meaning_vi": "Da",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "glove",
+      "meaning_vi": "Găng tay",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "many",
+      "meaning_vi": "Nhiều",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "brothers",
+      "meaning_vi": "Anh em trai",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "sisters",
+      "meaning_vi": "Chị em gái",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "string",
+      "meaning_vi": "Dây",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "cousins",
+      "meaning_vi": "Anh chị em họ",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "rod",
+      "meaning_vi": "Que",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "shadow",
+      "meaning_vi": "Bóng",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "glove",
+      "meaning_vi": "Găng tay",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "world",
+      "meaning_vi": "Thế giới",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "fat",
+      "meaning_vi": "Béo",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "tall",
+      "meaning_vi": "Cao",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "round",
+      "meaning_vi": "Tròn",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "family",
+      "meaning_vi": "Gia đình",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "friends",
+      "meaning_vi": "Bạn bè",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "like",
+      "meaning_vi": "Giống như",
+      "paragraph_index": 7
+    }
+  ]
+}

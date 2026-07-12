@@ -1,0 +1,4798 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L3",
+  "level_label": "Cấp 3",
+  "topic": "The Elephant Bird",
+  "slug": "book_1101",
+  "audio_filename": "book_1101.mp3",
+  "book_slug": "book_1101",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_1101/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_1101/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_1101/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_1101/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_1101/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_1101/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_1101/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_1101/page_09.jpg",
+    "https://audio.felixbuilderhub.com/books/book_1101/page_10.jpg",
+    "https://audio.felixbuilderhub.com/books/book_1101/page_11.jpg",
+    "https://audio.felixbuilderhub.com/books/book_1101/page_12.jpg",
+    "https://audio.felixbuilderhub.com/books/book_1101/page_13.jpg",
+    "https://audio.felixbuilderhub.com/books/book_1101/page_14.jpg",
+    "https://audio.felixbuilderhub.com/books/book_1101/page_15.jpg",
+    "https://audio.felixbuilderhub.com/books/book_1101/page_16.jpg",
+    "https://audio.felixbuilderhub.com/books/book_1101/page_17.jpg",
+    "https://audio.felixbuilderhub.com/books/book_1101/page_18.jpg",
+    "https://audio.felixbuilderhub.com/books/book_1101/page_19.jpg",
+    "https://audio.felixbuilderhub.com/books/book_1101/page_20.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_1101/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_1101/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_1101/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_1101/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_1101/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_1101/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_1101/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_1101/page_09.mp3",
+    "https://audio.felixbuilderhub.com/books/book_1101/page_10.mp3",
+    "https://audio.felixbuilderhub.com/books/book_1101/page_11.mp3",
+    "https://audio.felixbuilderhub.com/books/book_1101/page_12.mp3",
+    "https://audio.felixbuilderhub.com/books/book_1101/page_13.mp3",
+    "https://audio.felixbuilderhub.com/books/book_1101/page_14.mp3",
+    "https://audio.felixbuilderhub.com/books/book_1101/page_15.mp3",
+    "https://audio.felixbuilderhub.com/books/book_1101/page_16.mp3",
+    "https://audio.felixbuilderhub.com/books/book_1101/page_17.mp3",
+    "https://audio.felixbuilderhub.com/books/book_1101/page_18.mp3",
+    "https://audio.felixbuilderhub.com/books/book_1101/page_19.mp3",
+    "https://audio.felixbuilderhub.com/books/book_1101/page_20.mp3"
+  ],
+  "book_attribution": {
+    "title": "The Elephant Bird",
+    "creators": [
+      "Arefa Tehsin",
+      "Sonal Goyal",
+      "Sumit Sakhuja"
+    ],
+    "publisher": "Pratham Books",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: The Elephant Bird is written by Arefa Tehsin . © Pratham Books , 2014. Some rights reserved. Released under CC BY 4.0 license. Other Credits: This book has been published on StoryWeaver by Pratham Books. The development of the print version of this book has been supported by Parag (Promoting Innovative Publishing in Education), a Sir Ratan Tata Trust Initiative. www.prathambooks.org Images Attributions: Cover page: Girl and the elephant bird in a forest , by Sonal Goyal , Sumit Sakhuja © Pratham Books, 2014. Some rights reserved. Released under CC BY 4.0 license. Page 2: Girl from a scenic village , by Sonal Goyal , Sumit Sakhuja © Pratham Books, 2014. Some rights reserved. Released under CC BY 4.0 license. Page 3: Girl and the elephant bird in a forest , by Sonal Goyal , Sumit Sakhuja © Pratham Books, 2014. Some rights reserved. Released under CC BY 4.0 license. Page 4: Elephant bird bathing in the sun and eating berries from a tree , by Sonal Goyal , Sumit Sakhuja © Pratham Books, 2014. Some rights reserved. Released under CC BY 4.0 license. Page 5: Girl calling out to the elephant bird which is splashing about in the sea , by Sonal Goyal , Sumit Sakhuja © Pratham Books, 2014. Some rights reserved. Released under CC BY 4.0 license. Page 6: Girl and her mother who is cooking rotis , by Sonal Goyal , Sumit Sakhuja © Pratham Books, 2014. Some rights reserved. Released under CC BY 4.0 license. Page 7: Girl jumping into the water as the magical bird watches , by Sonal Goyal , Sumit Sakhuja © Pratham Books, 2014. Some rights reserved. Released under CC BY 4.0 license. Page 8: Angry girl and the elephant bird , by Sonal Goyal , Sumit Sakhuja © Pratham Books, 2014. Some rights reserved. Released under CC BY 4.0 license. Page 9: A group of villagers sitting under a banyan tree , by Sonal Goyal , Sumit Sakhuja © Pratham Books, 2014. Some rights reserved. Released under CC BY 4.0 license. Page 10: A group of people meet under a banyan tree , by Sonal Goyal , Sumit Sakhuja © Pratham Books, 2014. Some rights reserved. Released under CC BY 4.0 license. Page 11: A scared girl being scolded by others in her village , by Sonal Goyal , Sumit Sakhuja © Pratham Books, 2014. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/ The development of the print version of this book has been supported by Parag (Promoting Innovative Publishing in Education), a Sir Ratan Tata Trust Initiative.",
+    "source_url": "https://storyweaver.org.in/stories/1101-the-elephant-bird",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "Girl from a scenic village , by Sonal Goyal , Sumit Sakhuja © Pratham Books, 2014. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "Girl and the elephant bird in a forest , by Sonal Goyal , Sumit Sakhuja © Pratham Books, 2014. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "Elephant bird bathing in the sun and eating berries from a tree , by Sonal Goyal , Sumit Sakhuja © Pratham Books, 2014. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "Girl calling out to the elephant bird which is splashing about in the sea , by Sonal Goyal , Sumit Sakhuja © Pratham Books, 2014. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "Girl and her mother who is cooking rotis , by Sonal Goyal , Sumit Sakhuja © Pratham Books, 2014. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "Girl jumping into the water as the magical bird watches , by Sonal Goyal , Sumit Sakhuja © Pratham Books, 2014. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "Angry girl and the elephant bird , by Sonal Goyal , Sumit Sakhuja © Pratham Books, 2014. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "A group of villagers sitting under a banyan tree , by Sonal Goyal , Sumit Sakhuja © Pratham Books, 2014. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 8,
+        "credit_text": "A group of people meet under a banyan tree , by Sonal Goyal , Sumit Sakhuja © Pratham Books, 2014. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 9,
+        "credit_text": "A scared girl being scolded by others in her village , by Sonal Goyal , Sumit Sakhuja © Pratham Books, 2014. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 10,
+        "credit_text": "Illustration by Sonal Goyal, Sumit Sakhuja."
+      },
+      {
+        "page_index": 11,
+        "credit_text": "Illustration by Sonal Goyal, Sumit Sakhuja."
+      },
+      {
+        "page_index": 12,
+        "credit_text": "Illustration by Sonal Goyal, Sumit Sakhuja."
+      },
+      {
+        "page_index": 13,
+        "credit_text": "Illustration by Sonal Goyal, Sumit Sakhuja."
+      },
+      {
+        "page_index": 14,
+        "credit_text": "Illustration by Sonal Goyal, Sumit Sakhuja."
+      },
+      {
+        "page_index": 15,
+        "credit_text": "Illustration by Sonal Goyal, Sumit Sakhuja."
+      },
+      {
+        "page_index": 16,
+        "credit_text": "Illustration by Sonal Goyal, Sumit Sakhuja."
+      },
+      {
+        "page_index": 17,
+        "credit_text": "Illustration by Sonal Goyal, Sumit Sakhuja."
+      },
+      {
+        "page_index": 18,
+        "credit_text": "Illustration by Sonal Goyal, Sumit Sakhuja."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "The Elephant Bird",
+    "paragraphs_en": [
+      "Munia knew that the giant, one-feathered elephant bird had not swallowed the horse. Yes, he was big enough to swallow a horse, but that didn't mean he had! The village of Adhania had only one horse-cart pulled by the two horses Vayu and Drut. And Vayu had gone missing near the lake in the jungle where the bird lived. The villagers had known about the elephant bird for generations.",
+      "He was the last of his race, which was considered extinct for hundreds of years. The world did not know that the living relic of that race, who had lost all his feathers but one, still roamed the jungles of Adhania. The bird and the villagers kept a safe distance from each other. But not Munia. Although she walked with a limp, she was brave of heart. She often slipped into the jungle to watch the elephant bird.",
+      "The elephant bird came near the lake in the daytime to bask in the sun or play in the lake alone splashing water. Sometimes he sat half-submerged in water. At other times there was no trace of him. Perhaps he just rested in some corner of the dense jungle. He stood as tall as a tree. He had a long strong neck, huge legs with claws and a heavy spear-like head. His long talons and nails looked scary.",
+      "But Munia soon realised he was a shy herbivorous bird. He just munched on leaves by the lakeside. Munia felt she had something in common with him. The elephant bird could not fly and Munia could not run! Other village children mocked her limp and did not include her in their games. That was why she liked staying alone.",
+      "Every morning Munia helped fetch three pitchers of water from the village well, and collected wood so that Amma could light the stove. And then she would be out for a long time. Amma believed she went out to play with the kids. Little did she know that Munia went into the jungle to the lake where the elephant bird lived.",
+      "One day, gathering courage, Munia stepped in the open near the lake. Without turning his head the elephant bird rolled his eyes towards Munia and then closed them, uninterested by her advance. Getting no more attention than the flies buzzing over his head, Munia stomped her feet. Suddenly the elephant bird lifted one of his claws. Munia cried and fell headlong into the shallow waters of the lake. She came out drenched to see him shaking all over. He was laughing!",
+      "“That’s funny, huh?” she asked angrily and turned to leave. Before Munia had walked away from the clearing, something hit her feet. It was a fruit that the elephant bird had thrown at her. The elephant bird wanted to play! Hesitantly, Munia threw it at him. He trotted sideways and caught the fruit in his beak. Thus, Munia’s friendship with the elephant bird had begun. And just when she had finally found a friend, Vayu had gone missing! And everyone’s suspicion had turned towards the elephant bird.",
+      "After searching for Vayu high and low, the villagers gathered under the old banyan tree. Everyone agreed that there could be no thief in Adhania. They all trusted one another. The milkman swore that he had seen Vayu gallop away towards the lake. “There is no sign of Vayu anywhere. It must be something in the jungle that got him,” a villager addressed the headman. “Who else can it be but the giant one-feathered elephant bird? He must be destroyed!” said the milkman. “For years he has been lying silent, hatching his evil plans!”",
+      "The crowd agreed. Munia watched the proceedings quietly. She wanted to speak, but was scared of being punished for speaking up. Even if she spoke, who would believe her? “Yes, all these years of aimless living has made the giant dangerous,” said Munia’s father. “Today it is a horse, tomorrow it may be our children…” The headman spoke over the villagers’ angry shouts, “Brothers, even though we are facing a giant, we have the strength of numbers. So let us go out and finish him!”",
+      "A cheer of approval went up. “The elephant bird did not eat the horse,” Munia said softly but firmly, limping forward. “I was with him when Vayu went missing!” A heavy silence fell on the gathering. “What does this mean?” roared the headman. “That the elephant bird is my friend, and he has not done this!” “This girl has lost her mind!” shouted someone from the back. The other children laughed. “He only eats leaves! How can he eat Vayu?” Munia shouted, not moving from her place.",
+      "“You can’t even plait your hair and you are giving us advice?” Munia’s father fumed and came towards her. “Go play with your friends!” “This elephant bird is the only friend I have,” said Munia. Her father glared at her. But she didn’t cry and stood there facing the villagers. “Forget about the girl, we will get the elephant bird in the morning,” said the headman and the gathering dispersed.",
+      "Munia had only one night to prove the elephant bird’s innocence. “Think, Munia, think!” she whispered to herself. “The milkman saw Vayu gallop away on the road that goes to the lake. But the road takes a turn before it reaches the lake and goes towards Chandesara. What if Vayu had gone that way?” Munia’s parents were angry with her and sent her to bed without speaking a word. Once they were asleep, she got out of bed, took the hanging lamp and stepped out of the house.",
+      "She crossed Adhania, and came to the jungle path leading to Chandesara, the neighbouring village. Whoooo... rang the call of an owl in the jungle air. A jackal howled from a distance. The shadows of trees moved like long dark fingers. She hesitated for a moment but then thought of the elephant bird sleeping peacefully in the jungle. If she didn't do something to solve the mystery, the elephant bird may not be alive to see the next night. She took a deep breath and limped alone on the jungle path in the dead of the night.",
+      "The next morning the villagers gathered near the lake with sticks, sharp stones and long kitchen knives. The elephant bird was resting when the crowd approached him. The sun shone on his featherless back. He got up slowly and stared at the crowd. Looking at his size, the villagers stopped at some distance. After a moment’s hesitation the headman cried, “Be ready!” The mob roared, firming the grip on the weapons, ready to run down the giant one-feathered elephant bird.",
+      "“Stop!” Munia’s thin voice cut through the din. She limped between the mob and the giant. “Munia! Come back at once!” her father ordered. “Grab her!” cried someone else. Munia’s father and another villager rushed towards her. The elephant bird advanced a couple of steps and they stopped. “Okay… if this is how you want it, we’ll tackle both of you together!” yelled a man, holding a spear.",
+      "“What’s going on?” someone shouted from behind the crowd. A slightly hunched man with a long beard came in holding a horse’s reins. The headman asked with a surprised look, “Saarthi, what are you doing here? And why is Vayu with you?”",
+      "“Oh, as you know, I had sold Vayu to you some years back. Yesterday I was passing by your village early in the morning in my buggy pulled by Jhabru and Ghabru – Vayu’s brothers. I don’t know how Vayu got loose and followed us back to Chandesara! I couldn’t recognize him and didn’t know what to do with him until this morning when I saw this little girl going from hut to hut, asking about a lost horse. But what is going on?” he asked again.",
+      "The villagers did not answer Saarthi. They hung their heads in shame. Munia’s father went to her, lifted her in his arms and took her back to the village. Since that day, no child laughed at Munia’s limp. They all wanted to be friends with her. And they all wanted to be friends with the elephant bird. Munia’s tale reached many villages and the villagers in faraway hamlets whispered to each other, “Munia knew that the giant one-feathered elephant bird had not swallowed the horse!”",
+      "This story is inspired by the real Elephant Bird (scientific name: Aepyornis maximus), the biggest bird that walked our planet. It inhabited the island of Madagascar. With more and more settlements on the island, and more forests ruined, the species became extinct around 1700 CE."
+    ],
+    "sentences": [
+      {
+        "text_en": "Munia knew that the giant, one-feathered elephant bird had not swallowed the horse.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_000.mp3",
+        "text_vi": "Munia biết rằng con chim voi khổng lồ, chỉ có một chiếc lông vũ, đã không nuốt con ngựa."
+      },
+      {
+        "text_en": "Yes, he was big enough to swallow a horse, but that didn't mean he had!",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_001.mp3",
+        "text_vi": "Đúng vậy, nó đủ lớn để nuốt một con ngựa, nhưng điều đó không có nghĩa là nó đã làm thế!"
+      },
+      {
+        "text_en": "The village of Adhania had only one horse-cart pulled by the two horses Vayu and Drut.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_002.mp3",
+        "text_vi": "Làng Adhania chỉ có một chiếc xe ngựa kéo bởi hai con ngựa Vayu và Drut."
+      },
+      {
+        "text_en": "And Vayu had gone missing near the lake in the jungle where the bird lived.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_003.mp3",
+        "text_vi": "Và Vayu đã biến mất gần hồ trong rừng nơi con chim sống."
+      },
+      {
+        "text_en": "The villagers had known about the elephant bird for generations.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_004.mp3",
+        "text_vi": "Dân làng đã biết về con chim voi này từ nhiều đời rồi."
+      },
+      {
+        "text_en": "He was the last of his race, which was considered extinct for hundreds of years.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_005.mp3",
+        "text_vi": "Nó là con cuối cùng của loài mình, loài này đã được cho là tuyệt chủng hàng trăm năm rồi."
+      },
+      {
+        "text_en": "The world did not know that the living relic of that race, who had lost all his feathers but one, still roamed the jungles of Adhania.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_006.mp3",
+        "text_vi": "Thế giới không biết rằng một con vật còn sống sót của loài đó, đã mất hết lông trừ một cái, vẫn lang thang trong rừng Adhania."
+      },
+      {
+        "text_en": "The bird and the villagers kept a safe distance from each other.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_007.mp3",
+        "text_vi": "Con chim và dân làng giữ khoảng cách an toàn với nhau."
+      },
+      {
+        "text_en": "But not Munia.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_008.mp3",
+        "text_vi": "Nhưng Munia thì không."
+      },
+      {
+        "text_en": "Although she walked with a limp, she was brave of heart.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_009.mp3",
+        "text_vi": "Dù cô bé đi khập khiễng, nhưng trái tim cô bé rất dũng cảm."
+      },
+      {
+        "text_en": "She often slipped into the jungle to watch the elephant bird.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_010.mp3",
+        "text_vi": "Cô bé thường lẻn vào rừng để xem con chim voi."
+      },
+      {
+        "text_en": "The elephant bird came near the lake in the daytime to bask in the sun or play in the lake alone splashing water.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_011.mp3",
+        "text_vi": "Con chim voi đến gần hồ vào ban ngày để tắm nắng hoặc chơi một mình trong hồ, văng nước tung tóe."
+      },
+      {
+        "text_en": "Sometimes he sat half-submerged in water.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_012.mp3",
+        "text_vi": "Đôi khi nó ngồi nửa chìm trong nước."
+      },
+      {
+        "text_en": "At other times there was no trace of him.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_013.mp3",
+        "text_vi": "Những lúc khác thì không thấy dấu vết của nó đâu cả."
+      },
+      {
+        "text_en": "Perhaps he just rested in some corner of the dense jungle.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_014.mp3",
+        "text_vi": "Có lẽ nó chỉ nghỉ ngơi ở một góc nào đó trong khu rừng rậm."
+      },
+      {
+        "text_en": "He stood as tall as a tree.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_015.mp3",
+        "text_vi": "Nó cao như một cái cây."
+      },
+      {
+        "text_en": "He had a long strong neck, huge legs with claws and a heavy spear-like head.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_016.mp3",
+        "text_vi": "Nó có cái cổ dài khỏe, đôi chân to lớn có móng vuốt và cái đầu nặng như ngọn giáo."
+      },
+      {
+        "text_en": "His long talons and nails looked scary.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_017.mp3",
+        "text_vi": "Móng vuốt và móng chân dài của nó trông thật đáng sợ."
+      },
+      {
+        "text_en": "But Munia soon realised he was a shy herbivorous bird.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_018.mp3",
+        "text_vi": "Nhưng Munia sớm nhận ra nó là một con chim ăn cỏ nhút nhát."
+      },
+      {
+        "text_en": "He just munched on leaves by the lakeside.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_019.mp3",
+        "text_vi": "Nó chỉ nhấm nháp lá cây bên bờ hồ."
+      },
+      {
+        "text_en": "Munia felt she had something in common with him.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_020.mp3",
+        "text_vi": "Munia cảm thấy cô bé có điểm chung với nó."
+      },
+      {
+        "text_en": "The elephant bird could not fly and Munia could not run!",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_021.mp3",
+        "text_vi": "Con chim voi không thể bay và Munia không thể chạy!"
+      },
+      {
+        "text_en": "Other village children mocked her limp and did not include her in their games.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_022.mp3",
+        "text_vi": "Những đứa trẻ khác trong làng chế giễu dáng đi khập khiễng của cô bé và không cho cô bé chơi cùng."
+      },
+      {
+        "text_en": "That was why she liked staying alone.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_023.mp3",
+        "text_vi": "Đó là lý do tại sao cô bé thích ở một mình."
+      },
+      {
+        "text_en": "Every morning Munia helped fetch three pitchers of water from the village well, and collected wood so that Amma could light the stove.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_024.mp3",
+        "text_vi": "Mỗi sáng, Munia giúp lấy ba bình nước từ giếng làng và nhặt củi để Amma có thể nhóm bếp."
+      },
+      {
+        "text_en": "And then she would be out for a long time.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_025.mp3",
+        "text_vi": "Và sau đó cô bé sẽ ra ngoài rất lâu."
+      },
+      {
+        "text_en": "Amma believed she went out to play with the kids.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_026.mp3",
+        "text_vi": "Amma tin rằng cô bé đi chơi với lũ trẻ."
+      },
+      {
+        "text_en": "Little did she know that Munia went into the jungle to the lake where the elephant bird lived.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_027.mp3",
+        "text_vi": "Bà không hề biết rằng Munia đã đi vào rừng đến hồ nơi con chim voi sống."
+      },
+      {
+        "text_en": "One day, gathering courage, Munia stepped in the open near the lake.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_028.mp3",
+        "text_vi": "Một ngày nọ, lấy hết can đảm, Munia bước ra chỗ trống gần hồ."
+      },
+      {
+        "text_en": "Without turning his head the elephant bird rolled his eyes towards Munia and then closed them, uninterested by her advance.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_029.mp3",
+        "text_vi": "Không quay đầu lại, con chim voi đảo mắt nhìn Munia rồi nhắm mắt lại, không quan tâm đến việc cô bé đến gần."
+      },
+      {
+        "text_en": "Getting no more attention than the flies buzzing over his head, Munia stomped her feet.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_030.mp3",
+        "text_vi": "Không được chú ý hơn lũ ruồi bay vo ve trên đầu, Munia dậm chân."
+      },
+      {
+        "text_en": "Suddenly the elephant bird lifted one of his claws.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_031.mp3",
+        "text_vi": "Bất ngờ, con chim voi nhấc một trong những móng vuốt của nó lên."
+      },
+      {
+        "text_en": "Munia cried and fell headlong into the shallow waters of the lake.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_032.mp3",
+        "text_vi": "Munia kêu lên và ngã nhào xuống vùng nước nông của hồ."
+      },
+      {
+        "text_en": "She came out drenched to see him shaking all over.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_033.mp3",
+        "text_vi": "Cô bé bước ra ướt sũng và thấy nó đang run rẩy khắp người."
+      },
+      {
+        "text_en": "He was laughing!",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_034.mp3",
+        "text_vi": "Nó đang cười!"
+      },
+      {
+        "text_en": "“That’s funny, huh?” she asked angrily and turned to leave.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_035.mp3",
+        "text_vi": "“Buồn cười lắm hả?” cô bé hỏi một cách giận dữ rồi quay người bỏ đi."
+      },
+      {
+        "text_en": "Before Munia had walked away from the clearing, something hit her feet.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_036.mp3",
+        "text_vi": "Trước khi Munia đi khỏi khoảng đất trống, có thứ gì đó đập vào chân cô bé."
+      },
+      {
+        "text_en": "It was a fruit that the elephant bird had thrown at her.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_037.mp3",
+        "text_vi": "Đó là một quả trái cây mà con chim voi đã ném vào cô bé."
+      },
+      {
+        "text_en": "The elephant bird wanted to play!",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_038.mp3",
+        "text_vi": "Con chim voi muốn chơi!"
+      },
+      {
+        "text_en": "Hesitantly, Munia threw it at him.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_039.mp3",
+        "text_vi": "Do dự, Munia ném quả đó lại cho nó."
+      },
+      {
+        "text_en": "He trotted sideways and caught the fruit in his beak.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_040.mp3",
+        "text_vi": "Nó chạy lạch bạch sang một bên và bắt lấy quả trái cây bằng mỏ của mình."
+      },
+      {
+        "text_en": "Thus, Munia’s friendship with the elephant bird had begun.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_041.mp3",
+        "text_vi": "Cứ thế, tình bạn của Munia với con chim voi đã bắt đầu."
+      },
+      {
+        "text_en": "And just when she had finally found a friend, Vayu had gone missing!",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_042.mp3",
+        "text_vi": "Và đúng lúc cô bé vừa tìm được một người bạn, thì Vayu lại biến mất!"
+      },
+      {
+        "text_en": "And everyone’s suspicion had turned towards the elephant bird.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_043.mp3",
+        "text_vi": "Và mọi nghi ngờ đều đổ dồn về phía con chim voi."
+      },
+      {
+        "text_en": "After searching for Vayu high and low, the villagers gathered under the old banyan tree.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_044.mp3",
+        "text_vi": "Sau khi tìm kiếm Vayu khắp nơi, dân làng tụ tập dưới gốc cây đa cổ thụ."
+      },
+      {
+        "text_en": "Everyone agreed that there could be no thief in Adhania.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_045.mp3",
+        "text_vi": "Mọi người đều đồng ý rằng không thể có kẻ trộm nào ở Adhania."
+      },
+      {
+        "text_en": "They all trusted one another.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_046.mp3",
+        "text_vi": "Họ đều tin tưởng lẫn nhau."
+      },
+      {
+        "text_en": "The milkman swore that he had seen Vayu gallop away towards the lake.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_047.mp3",
+        "text_vi": "Người bán sữa thề rằng anh ta đã thấy Vayu phi nước đại về phía hồ."
+      },
+      {
+        "text_en": "“There is no sign of Vayu anywhere.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_048.mp3",
+        "text_vi": "“Không có dấu hiệu nào của Vayu ở bất cứ đâu."
+      },
+      {
+        "text_en": "It must be something in the jungle that got him,” a villager addressed the headman.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_049.mp3",
+        "text_vi": "Chắc chắn là có thứ gì đó trong rừng đã bắt nó,” một dân làng nói với trưởng làng."
+      },
+      {
+        "text_en": "“Who else can it be but the giant one-feathered elephant bird?",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_050.mp3",
+        "text_vi": "“Còn ai khác có thể làm điều đó ngoài con chim voi khổng lồ một lông vũ kia chứ?"
+      },
+      {
+        "text_en": "He must be destroyed!” said the milkman.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_051.mp3",
+        "text_vi": "Nó phải bị tiêu diệt!” người bán sữa nói."
+      },
+      {
+        "text_en": "“For years he has been lying silent, hatching his evil plans!”",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_052.mp3",
+        "text_vi": "“Nó đã nằm im lặng hàng năm trời, ấp ủ những kế hoạch độc ác của mình!”"
+      },
+      {
+        "text_en": "The crowd agreed.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_053.mp3",
+        "text_vi": "Đám đông đồng ý."
+      },
+      {
+        "text_en": "Munia watched the proceedings quietly.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_054.mp3",
+        "text_vi": "Munia lặng lẽ theo dõi sự việc."
+      },
+      {
+        "text_en": "She wanted to speak, but was scared of being punished for speaking up.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_055.mp3",
+        "text_vi": "Cô bé muốn nói, nhưng sợ bị phạt vì dám lên tiếng."
+      },
+      {
+        "text_en": "Even if she spoke, who would believe her?",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_056.mp3",
+        "text_vi": "Ngay cả khi cô bé nói, ai sẽ tin cô bé chứ?"
+      },
+      {
+        "text_en": "“Yes, all these years of aimless living has made the giant dangerous,” said Munia’s father.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_057.mp3",
+        "text_vi": "“Đúng vậy, bao nhiêu năm sống vô định đã khiến con vật khổng lồ này trở nên nguy hiểm,” cha của Munia nói."
+      },
+      {
+        "text_en": "“Today it is a horse, tomorrow it may be our children…” The headman spoke over the villagers’ angry shouts, “Brothers, even though we are facing a giant, we have the strength of numbers.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_058.mp3",
+        "text_vi": "“Hôm nay là một con ngựa, ngày mai có thể là con cái của chúng ta…” Trưởng làng nói át tiếng la hét giận dữ của dân làng, “Anh em ơi, dù chúng ta đang đối mặt với một con vật khổng lồ, chúng ta có sức mạnh của số đông."
+      },
+      {
+        "text_en": "So let us go out and finish him!”",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_059.mp3",
+        "text_vi": "Vậy hãy ra ngoài và kết liễu nó!”"
+      },
+      {
+        "text_en": "A cheer of approval went up.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_060.mp3",
+        "text_vi": "Một tiếng reo hò tán thành vang lên."
+      },
+      {
+        "text_en": "“The elephant bird did not eat the horse,” Munia said softly but firmly, limping forward.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_061.mp3",
+        "text_vi": "“Con chim voi không ăn thịt ngựa,” Munia nói nhỏ nhẹ nhưng kiên quyết, vừa đi khập khiễng về phía trước."
+      },
+      {
+        "text_en": "“I was with him when Vayu went missing!” A heavy silence fell on the gathering.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_062.mp3",
+        "text_vi": "“Cháu đã ở cùng nó khi Vayu biến mất!” Một sự im lặng nặng nề bao trùm đám đông."
+      },
+      {
+        "text_en": "“What does this mean?” roared the headman.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_063.mp3",
+        "text_vi": "“Điều này có nghĩa là gì?” trưởng làng gầm lên."
+      },
+      {
+        "text_en": "“That the elephant bird is my friend, and he has not done this!” “This girl has lost her mind!” shouted someone from the back.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_064.mp3",
+        "text_vi": "“Nghĩa là con chim voi là bạn của cháu, và nó không làm điều này!” “Con bé này bị điên rồi!” ai đó từ phía sau hét lên."
+      },
+      {
+        "text_en": "The other children laughed.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_065.mp3",
+        "text_vi": "Những đứa trẻ khác cười phá lên."
+      },
+      {
+        "text_en": "“He only eats leaves!",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_066.mp3",
+        "text_vi": "“Nó chỉ ăn lá cây thôi!"
+      },
+      {
+        "text_en": "How can he eat Vayu?” Munia shouted, not moving from her place.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_067.mp3",
+        "text_vi": "Làm sao nó có thể ăn Vayu được?” Munia hét lên, không nhúc nhích khỏi chỗ của mình."
+      },
+      {
+        "text_en": "“You can’t even plait your hair and you are giving us advice?” Munia’s father fumed and came towards her.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_068.mp3",
+        "text_vi": "“Con còn chưa biết tết tóc mà đã dám khuyên bảo chúng ta à?” Cha của Munia giận dữ nói và bước về phía cô bé."
+      },
+      {
+        "text_en": "“Go play with your friends!” “This elephant bird is the only friend I have,” said Munia.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_069.mp3",
+        "text_vi": "“Đi chơi với bạn bè của con đi!” “Con chim voi này là người bạn duy nhất của cháu,” Munia nói."
+      },
+      {
+        "text_en": "Her father glared at her.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_070.mp3",
+        "text_vi": "Cha cô bé trừng mắt nhìn cô bé."
+      },
+      {
+        "text_en": "But she didn’t cry and stood there facing the villagers.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_071.mp3",
+        "text_vi": "Nhưng cô bé không khóc và đứng đó đối mặt với dân làng."
+      },
+      {
+        "text_en": "“Forget about the girl, we will get the elephant bird in the morning,” said the headman and the gathering dispersed.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_072.mp3",
+        "text_vi": "“Quên con bé đi, sáng mai chúng ta sẽ bắt con chim voi,” trưởng làng nói và đám đông giải tán."
+      },
+      {
+        "text_en": "Munia had only one night to prove the elephant bird’s innocence.",
+        "paragraph_index": 11,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_073.mp3",
+        "text_vi": "Munia chỉ có một đêm để chứng minh sự vô tội của con chim voi."
+      },
+      {
+        "text_en": "“Think, Munia, think!” she whispered to herself.",
+        "paragraph_index": 11,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_074.mp3",
+        "text_vi": "“Nghĩ đi, Munia, nghĩ đi!” cô bé thì thầm với chính mình."
+      },
+      {
+        "text_en": "“The milkman saw Vayu gallop away on the road that goes to the lake.",
+        "paragraph_index": 11,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_075.mp3",
+        "text_vi": "“Người bán sữa thấy Vayu phi nước đại trên con đường dẫn đến hồ."
+      },
+      {
+        "text_en": "But the road takes a turn before it reaches the lake and goes towards Chandesara.",
+        "paragraph_index": 11,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_076.mp3",
+        "text_vi": "Nhưng con đường rẽ một lối trước khi đến hồ và đi về phía Chandesara."
+      },
+      {
+        "text_en": "What if Vayu had gone that way?” Munia’s parents were angry with her and sent her to bed without speaking a word.",
+        "paragraph_index": 11,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_077.mp3",
+        "text_vi": "Điều gì sẽ xảy ra nếu Vayu đã đi lối đó?” Cha mẹ Munia giận cô bé và bắt cô bé đi ngủ mà không nói một lời nào."
+      },
+      {
+        "text_en": "Once they were asleep, she got out of bed, took the hanging lamp and stepped out of the house.",
+        "paragraph_index": 11,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_078.mp3",
+        "text_vi": "Khi họ đã ngủ, cô bé ra khỏi giường, lấy chiếc đèn treo và bước ra khỏi nhà."
+      },
+      {
+        "text_en": "She crossed Adhania, and came to the jungle path leading to Chandesara, the neighbouring village.",
+        "paragraph_index": 12,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_079.mp3",
+        "text_vi": "Cô bé băng qua Adhania, và đến con đường rừng dẫn đến Chandesara, ngôi làng lân cận."
+      },
+      {
+        "text_en": "Whoooo... rang the call of an owl in the jungle air.",
+        "paragraph_index": 12,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_080.mp3",
+        "text_vi": "Hú... tiếng cú kêu vang trong không khí rừng."
+      },
+      {
+        "text_en": "A jackal howled from a distance.",
+        "paragraph_index": 12,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_081.mp3",
+        "text_vi": "Một con chó rừng hú từ xa."
+      },
+      {
+        "text_en": "The shadows of trees moved like long dark fingers.",
+        "paragraph_index": 12,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_082.mp3",
+        "text_vi": "Bóng cây di chuyển như những ngón tay dài đen tối."
+      },
+      {
+        "text_en": "She hesitated for a moment but then thought of the elephant bird sleeping peacefully in the jungle.",
+        "paragraph_index": 12,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_083.mp3",
+        "text_vi": "Cô bé do dự một lúc nhưng rồi nghĩ đến con chim voi đang ngủ yên bình trong rừng."
+      },
+      {
+        "text_en": "If she didn't do something to solve the mystery, the elephant bird may not be alive to see the next night.",
+        "paragraph_index": 12,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_084.mp3",
+        "text_vi": "Nếu cô bé không làm gì đó để giải quyết bí ẩn, con chim voi có thể sẽ không sống sót để thấy đêm tiếp theo."
+      },
+      {
+        "text_en": "She took a deep breath and limped alone on the jungle path in the dead of the night.",
+        "paragraph_index": 12,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_085.mp3",
+        "text_vi": "Cô bé hít một hơi thật sâu và một mình đi khập khiễng trên con đường rừng vào giữa đêm khuya."
+      },
+      {
+        "text_en": "The next morning the villagers gathered near the lake with sticks, sharp stones and long kitchen knives.",
+        "paragraph_index": 13,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_086.mp3",
+        "text_vi": "Sáng hôm sau, dân làng tụ tập gần hồ với gậy gộc, đá sắc và dao bếp dài."
+      },
+      {
+        "text_en": "The elephant bird was resting when the crowd approached him.",
+        "paragraph_index": 13,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_087.mp3",
+        "text_vi": "Con chim voi đang nghỉ ngơi khi đám đông tiến đến gần nó."
+      },
+      {
+        "text_en": "The sun shone on his featherless back.",
+        "paragraph_index": 13,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_088.mp3",
+        "text_vi": "Mặt trời chiếu sáng trên lưng không lông của nó."
+      },
+      {
+        "text_en": "He got up slowly and stared at the crowd.",
+        "paragraph_index": 13,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_089.mp3",
+        "text_vi": "Nó từ từ đứng dậy và nhìn chằm chằm vào đám đông."
+      },
+      {
+        "text_en": "Looking at his size, the villagers stopped at some distance.",
+        "paragraph_index": 13,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_090.mp3",
+        "text_vi": "Nhìn thấy kích thước của nó, dân làng dừng lại ở một khoảng cách."
+      },
+      {
+        "text_en": "After a moment’s hesitation the headman cried, “Be ready!” The mob roared, firming the grip on the weapons, ready to run down the giant one-feathered elephant bird.",
+        "paragraph_index": 13,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_091.mp3",
+        "text_vi": "Sau một thoáng do dự, trưởng làng hô lên, “Hãy sẵn sàng!” Đám đông gầm lên, siết chặt vũ khí, sẵn sàng xông vào con chim voi khổng lồ một lông vũ."
+      },
+      {
+        "text_en": "“Stop!” Munia’s thin voice cut through the din.",
+        "paragraph_index": 14,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_092.mp3",
+        "text_vi": "“Dừng lại!” Giọng nói yếu ớt của Munia xuyên qua tiếng ồn ào."
+      },
+      {
+        "text_en": "She limped between the mob and the giant.",
+        "paragraph_index": 14,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_093.mp3",
+        "text_vi": "Cô bé đi khập khiễng giữa đám đông và con vật khổng lồ."
+      },
+      {
+        "text_en": "“Munia! Come back at once!” her father ordered.",
+        "paragraph_index": 14,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_094.mp3",
+        "text_vi": "“Munia! Quay lại ngay!” cha cô bé ra lệnh."
+      },
+      {
+        "text_en": "“Grab her!” cried someone else.",
+        "paragraph_index": 14,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_095.mp3",
+        "text_vi": "“Bắt lấy con bé!” ai đó khác hét lên."
+      },
+      {
+        "text_en": "Munia’s father and another villager rushed towards her.",
+        "paragraph_index": 14,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_096.mp3",
+        "text_vi": "Cha của Munia và một dân làng khác lao về phía cô bé."
+      },
+      {
+        "text_en": "The elephant bird advanced a couple of steps and they stopped.",
+        "paragraph_index": 14,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_097.mp3",
+        "text_vi": "Con chim voi tiến lên vài bước và họ dừng lại."
+      },
+      {
+        "text_en": "“Okay… if this is how you want it, we’ll tackle both of you together!” yelled a man, holding a spear.",
+        "paragraph_index": 14,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_098.mp3",
+        "text_vi": "“Được rồi… nếu các ngươi muốn vậy, chúng ta sẽ xử lý cả hai ngươi cùng lúc!” một người đàn ông cầm giáo hét lên."
+      },
+      {
+        "text_en": "“What’s going on?” someone shouted from behind the crowd.",
+        "paragraph_index": 15,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_099.mp3",
+        "text_vi": "“Chuyện gì đang xảy ra vậy?” ai đó hét lên từ phía sau đám đông."
+      },
+      {
+        "text_en": "A slightly hunched man with a long beard came in holding a horse’s reins.",
+        "paragraph_index": 15,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_100.mp3",
+        "text_vi": "Một người đàn ông hơi gù lưng với bộ râu dài bước vào, tay cầm dây cương ngựa."
+      },
+      {
+        "text_en": "The headman asked with a surprised look, “Saarthi, what are you doing here?",
+        "paragraph_index": 15,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_101.mp3",
+        "text_vi": "Trưởng làng hỏi với vẻ ngạc nhiên, “Saarthi, ông làm gì ở đây?"
+      },
+      {
+        "text_en": "And why is Vayu with you?”",
+        "paragraph_index": 15,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_102.mp3",
+        "text_vi": "Và tại sao Vayu lại ở với ông?”"
+      },
+      {
+        "text_en": "“Oh, as you know, I had sold Vayu to you some years back.",
+        "paragraph_index": 16,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_103.mp3",
+        "text_vi": "“Ồ, như các ông biết đấy, tôi đã bán Vayu cho các ông vài năm trước."
+      },
+      {
+        "text_en": "Yesterday I was passing by your village early in the morning in my buggy pulled by Jhabru and Ghabru – Vayu’s brothers.",
+        "paragraph_index": 16,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_104.mp3",
+        "text_vi": "Hôm qua tôi đi ngang qua làng các ông vào sáng sớm trên chiếc xe ngựa của mình kéo bởi Jhabru và Ghabru – anh em của Vayu."
+      },
+      {
+        "text_en": "I don’t know how Vayu got loose and followed us back to Chandesara!",
+        "paragraph_index": 16,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_105.mp3",
+        "text_vi": "Tôi không biết làm thế nào Vayu lại thoát ra và đi theo chúng tôi về Chandesara!"
+      },
+      {
+        "text_en": "I couldn’t recognize him and didn’t know what to do with him until this morning when I saw this little girl going from hut to hut, asking about a lost horse.",
+        "paragraph_index": 16,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_106.mp3",
+        "text_vi": "Tôi không thể nhận ra nó và không biết phải làm gì với nó cho đến sáng nay khi tôi thấy cô bé này đi từ nhà này sang nhà khác, hỏi về một con ngựa bị mất."
+      },
+      {
+        "text_en": "But what is going on?” he asked again.",
+        "paragraph_index": 16,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_107.mp3",
+        "text_vi": "Nhưng chuyện gì đang xảy ra vậy?” ông ta hỏi lại."
+      },
+      {
+        "text_en": "The villagers did not answer Saarthi.",
+        "paragraph_index": 17,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_108.mp3",
+        "text_vi": "Dân làng không trả lời Saarthi."
+      },
+      {
+        "text_en": "They hung their heads in shame.",
+        "paragraph_index": 17,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_109.mp3",
+        "text_vi": "Họ cúi đầu xấu hổ."
+      },
+      {
+        "text_en": "Munia’s father went to her, lifted her in his arms and took her back to the village.",
+        "paragraph_index": 17,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_110.mp3",
+        "text_vi": "Cha của Munia đến bên cô bé, bế cô bé lên tay và đưa cô bé về làng."
+      },
+      {
+        "text_en": "Since that day, no child laughed at Munia’s limp.",
+        "paragraph_index": 17,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_111.mp3",
+        "text_vi": "Kể từ ngày đó, không đứa trẻ nào cười nhạo dáng đi khập khiễng của Munia nữa."
+      },
+      {
+        "text_en": "They all wanted to be friends with her.",
+        "paragraph_index": 17,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_112.mp3",
+        "text_vi": "Tất cả chúng đều muốn làm bạn với cô bé."
+      },
+      {
+        "text_en": "And they all wanted to be friends with the elephant bird.",
+        "paragraph_index": 17,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_113.mp3",
+        "text_vi": "Và tất cả chúng đều muốn làm bạn với con chim voi."
+      },
+      {
+        "text_en": "Munia’s tale reached many villages and the villagers in faraway hamlets whispered to each other, “Munia knew that the giant one-feathered elephant bird had not swallowed the horse!”",
+        "paragraph_index": 17,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_114.mp3",
+        "text_vi": "Câu chuyện của Munia lan truyền đến nhiều làng và dân làng ở những xóm xa xôi thì thầm với nhau, “Munia biết rằng con chim voi khổng lồ một lông vũ đã không nuốt con ngựa!”"
+      },
+      {
+        "text_en": "This story is inspired by the real Elephant Bird (scientific name: Aepyornis maximus), the biggest bird that walked our planet.",
+        "paragraph_index": 18,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_115.mp3",
+        "text_vi": "Câu chuyện này được lấy cảm hứng từ loài Chim Voi có thật (tên khoa học: Aepyornis maximus), loài chim lớn nhất từng đi trên hành tinh của chúng ta."
+      },
+      {
+        "text_en": "It inhabited the island of Madagascar.",
+        "paragraph_index": 18,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_116.mp3",
+        "text_vi": "Nó sinh sống trên đảo Madagascar."
+      },
+      {
+        "text_en": "With more and more settlements on the island, and more forests ruined, the species became extinct around 1700 CE.",
+        "paragraph_index": 18,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_117.mp3",
+        "text_vi": "Với ngày càng nhiều khu định cư trên đảo, và ngày càng nhiều rừng bị phá hủy, loài này đã tuyệt chủng vào khoảng năm 1700 sau Công nguyên."
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "Munia knew that the giant, one-feathered elephant bird had not swallowed the horse.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "Yes, he was big enough to swallow a horse, but that didn't mean he had!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "The village of Adhania had only one horse-cart pulled by the two horses Vayu and Drut.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "And Vayu had gone missing near the lake in the jungle where the bird lived.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "The villagers had known about the elephant bird for generations.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "He was the last of his race, which was considered extinct for hundreds of years.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "The world did not know that the living relic of that race, who had lost all his feathers but one, still roamed the jungles of Adhania.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "The bird and the villagers kept a safe distance from each other.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "But not Munia.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "Although she walked with a limp, she was brave of heart.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "She often slipped into the jungle to watch the elephant bird.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "The elephant bird came near the lake in the daytime to bask in the sun or play in the lake alone splashing water.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "Sometimes he sat half-submerged in water.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_012.mp3"
+        },
+        {
+          "id": "ra_13",
+          "text_en": "At other times there was no trace of him.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_013.mp3"
+        },
+        {
+          "id": "ra_14",
+          "text_en": "Perhaps he just rested in some corner of the dense jungle.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_014.mp3"
+        },
+        {
+          "id": "ra_15",
+          "text_en": "He stood as tall as a tree.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_015.mp3"
+        },
+        {
+          "id": "ra_16",
+          "text_en": "He had a long strong neck, huge legs with claws and a heavy spear-like head.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_016.mp3"
+        },
+        {
+          "id": "ra_17",
+          "text_en": "His long talons and nails looked scary.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_017.mp3"
+        },
+        {
+          "id": "ra_18",
+          "text_en": "But Munia soon realised he was a shy herbivorous bird.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_018.mp3"
+        },
+        {
+          "id": "ra_19",
+          "text_en": "He just munched on leaves by the lakeside.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_019.mp3"
+        },
+        {
+          "id": "ra_20",
+          "text_en": "Munia felt she had something in common with him.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_020.mp3"
+        },
+        {
+          "id": "ra_21",
+          "text_en": "The elephant bird could not fly and Munia could not run!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_021.mp3"
+        },
+        {
+          "id": "ra_22",
+          "text_en": "Other village children mocked her limp and did not include her in their games.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_022.mp3"
+        },
+        {
+          "id": "ra_23",
+          "text_en": "That was why she liked staying alone.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_023.mp3"
+        },
+        {
+          "id": "ra_24",
+          "text_en": "Every morning Munia helped fetch three pitchers of water from the village well, and collected wood so that Amma could light the stove.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_024.mp3"
+        },
+        {
+          "id": "ra_25",
+          "text_en": "And then she would be out for a long time.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_025.mp3"
+        },
+        {
+          "id": "ra_26",
+          "text_en": "Amma believed she went out to play with the kids.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_026.mp3"
+        },
+        {
+          "id": "ra_27",
+          "text_en": "Little did she know that Munia went into the jungle to the lake where the elephant bird lived.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_027.mp3"
+        },
+        {
+          "id": "ra_28",
+          "text_en": "One day, gathering courage, Munia stepped in the open near the lake.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_028.mp3"
+        },
+        {
+          "id": "ra_29",
+          "text_en": "Without turning his head the elephant bird rolled his eyes towards Munia and then closed them, uninterested by her advance.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_029.mp3"
+        },
+        {
+          "id": "ra_30",
+          "text_en": "Getting no more attention than the flies buzzing over his head, Munia stomped her feet.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_030.mp3"
+        },
+        {
+          "id": "ra_31",
+          "text_en": "Suddenly the elephant bird lifted one of his claws.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_031.mp3"
+        },
+        {
+          "id": "ra_32",
+          "text_en": "Munia cried and fell headlong into the shallow waters of the lake.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_032.mp3"
+        },
+        {
+          "id": "ra_33",
+          "text_en": "She came out drenched to see him shaking all over.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_033.mp3"
+        },
+        {
+          "id": "ra_34",
+          "text_en": "He was laughing!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_034.mp3"
+        },
+        {
+          "id": "ra_35",
+          "text_en": "“That’s funny, huh?” she asked angrily and turned to leave.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_035.mp3"
+        },
+        {
+          "id": "ra_36",
+          "text_en": "Before Munia had walked away from the clearing, something hit her feet.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_036.mp3"
+        },
+        {
+          "id": "ra_37",
+          "text_en": "It was a fruit that the elephant bird had thrown at her.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_037.mp3"
+        },
+        {
+          "id": "ra_38",
+          "text_en": "The elephant bird wanted to play!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_038.mp3"
+        },
+        {
+          "id": "ra_39",
+          "text_en": "Hesitantly, Munia threw it at him.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_039.mp3"
+        },
+        {
+          "id": "ra_40",
+          "text_en": "He trotted sideways and caught the fruit in his beak.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_040.mp3"
+        },
+        {
+          "id": "ra_41",
+          "text_en": "Thus, Munia’s friendship with the elephant bird had begun.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_041.mp3"
+        },
+        {
+          "id": "ra_42",
+          "text_en": "And just when she had finally found a friend, Vayu had gone missing!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_042.mp3"
+        },
+        {
+          "id": "ra_43",
+          "text_en": "And everyone’s suspicion had turned towards the elephant bird.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_043.mp3"
+        },
+        {
+          "id": "ra_44",
+          "text_en": "After searching for Vayu high and low, the villagers gathered under the old banyan tree.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_044.mp3"
+        },
+        {
+          "id": "ra_45",
+          "text_en": "Everyone agreed that there could be no thief in Adhania.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_045.mp3"
+        },
+        {
+          "id": "ra_46",
+          "text_en": "They all trusted one another.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_046.mp3"
+        },
+        {
+          "id": "ra_47",
+          "text_en": "The milkman swore that he had seen Vayu gallop away towards the lake.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_047.mp3"
+        },
+        {
+          "id": "ra_48",
+          "text_en": "“There is no sign of Vayu anywhere.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_048.mp3"
+        },
+        {
+          "id": "ra_49",
+          "text_en": "It must be something in the jungle that got him,” a villager addressed the headman.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_049.mp3"
+        },
+        {
+          "id": "ra_50",
+          "text_en": "“Who else can it be but the giant one-feathered elephant bird?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_050.mp3"
+        },
+        {
+          "id": "ra_51",
+          "text_en": "He must be destroyed!” said the milkman.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_051.mp3"
+        },
+        {
+          "id": "ra_52",
+          "text_en": "“For years he has been lying silent, hatching his evil plans!”",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_052.mp3"
+        },
+        {
+          "id": "ra_53",
+          "text_en": "The crowd agreed.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_053.mp3"
+        },
+        {
+          "id": "ra_54",
+          "text_en": "Munia watched the proceedings quietly.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_054.mp3"
+        },
+        {
+          "id": "ra_55",
+          "text_en": "She wanted to speak, but was scared of being punished for speaking up.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_055.mp3"
+        },
+        {
+          "id": "ra_56",
+          "text_en": "Even if she spoke, who would believe her?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_056.mp3"
+        },
+        {
+          "id": "ra_57",
+          "text_en": "“Yes, all these years of aimless living has made the giant dangerous,” said Munia’s father.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_057.mp3"
+        },
+        {
+          "id": "ra_58",
+          "text_en": "“Today it is a horse, tomorrow it may be our children…” The headman spoke over the villagers’ angry shouts, “Brothers, even though we are facing a giant, we have the strength of numbers.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_058.mp3"
+        },
+        {
+          "id": "ra_59",
+          "text_en": "So let us go out and finish him!”",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_059.mp3"
+        },
+        {
+          "id": "ra_60",
+          "text_en": "A cheer of approval went up.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_060.mp3"
+        },
+        {
+          "id": "ra_61",
+          "text_en": "“The elephant bird did not eat the horse,” Munia said softly but firmly, limping forward.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_061.mp3"
+        },
+        {
+          "id": "ra_62",
+          "text_en": "“I was with him when Vayu went missing!” A heavy silence fell on the gathering.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_062.mp3"
+        },
+        {
+          "id": "ra_63",
+          "text_en": "“What does this mean?” roared the headman.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_063.mp3"
+        },
+        {
+          "id": "ra_64",
+          "text_en": "“That the elephant bird is my friend, and he has not done this!” “This girl has lost her mind!” shouted someone from the back.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_064.mp3"
+        },
+        {
+          "id": "ra_65",
+          "text_en": "The other children laughed.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_065.mp3"
+        },
+        {
+          "id": "ra_66",
+          "text_en": "“He only eats leaves!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_066.mp3"
+        },
+        {
+          "id": "ra_67",
+          "text_en": "How can he eat Vayu?” Munia shouted, not moving from her place.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_067.mp3"
+        },
+        {
+          "id": "ra_68",
+          "text_en": "“You can’t even plait your hair and you are giving us advice?” Munia’s father fumed and came towards her.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_068.mp3"
+        },
+        {
+          "id": "ra_69",
+          "text_en": "“Go play with your friends!” “This elephant bird is the only friend I have,” said Munia.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_069.mp3"
+        },
+        {
+          "id": "ra_70",
+          "text_en": "Her father glared at her.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_070.mp3"
+        },
+        {
+          "id": "ra_71",
+          "text_en": "But she didn’t cry and stood there facing the villagers.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_071.mp3"
+        },
+        {
+          "id": "ra_72",
+          "text_en": "“Forget about the girl, we will get the elephant bird in the morning,” said the headman and the gathering dispersed.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_072.mp3"
+        },
+        {
+          "id": "ra_73",
+          "text_en": "Munia had only one night to prove the elephant bird’s innocence.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_073.mp3"
+        },
+        {
+          "id": "ra_74",
+          "text_en": "“Think, Munia, think!” she whispered to herself.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_074.mp3"
+        },
+        {
+          "id": "ra_75",
+          "text_en": "“The milkman saw Vayu gallop away on the road that goes to the lake.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_075.mp3"
+        },
+        {
+          "id": "ra_76",
+          "text_en": "But the road takes a turn before it reaches the lake and goes towards Chandesara.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_076.mp3"
+        },
+        {
+          "id": "ra_77",
+          "text_en": "What if Vayu had gone that way?” Munia’s parents were angry with her and sent her to bed without speaking a word.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_077.mp3"
+        },
+        {
+          "id": "ra_78",
+          "text_en": "Once they were asleep, she got out of bed, took the hanging lamp and stepped out of the house.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_078.mp3"
+        },
+        {
+          "id": "ra_79",
+          "text_en": "She crossed Adhania, and came to the jungle path leading to Chandesara, the neighbouring village.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_079.mp3"
+        },
+        {
+          "id": "ra_80",
+          "text_en": "Whoooo... rang the call of an owl in the jungle air.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_080.mp3"
+        },
+        {
+          "id": "ra_81",
+          "text_en": "A jackal howled from a distance.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_081.mp3"
+        },
+        {
+          "id": "ra_82",
+          "text_en": "The shadows of trees moved like long dark fingers.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_082.mp3"
+        },
+        {
+          "id": "ra_83",
+          "text_en": "She hesitated for a moment but then thought of the elephant bird sleeping peacefully in the jungle.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_083.mp3"
+        },
+        {
+          "id": "ra_84",
+          "text_en": "If she didn't do something to solve the mystery, the elephant bird may not be alive to see the next night.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_084.mp3"
+        },
+        {
+          "id": "ra_85",
+          "text_en": "She took a deep breath and limped alone on the jungle path in the dead of the night.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_085.mp3"
+        },
+        {
+          "id": "ra_86",
+          "text_en": "The next morning the villagers gathered near the lake with sticks, sharp stones and long kitchen knives.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_086.mp3"
+        },
+        {
+          "id": "ra_87",
+          "text_en": "The elephant bird was resting when the crowd approached him.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_087.mp3"
+        },
+        {
+          "id": "ra_88",
+          "text_en": "The sun shone on his featherless back.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_088.mp3"
+        },
+        {
+          "id": "ra_89",
+          "text_en": "He got up slowly and stared at the crowd.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_089.mp3"
+        },
+        {
+          "id": "ra_90",
+          "text_en": "Looking at his size, the villagers stopped at some distance.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_090.mp3"
+        },
+        {
+          "id": "ra_91",
+          "text_en": "After a moment’s hesitation the headman cried, “Be ready!” The mob roared, firming the grip on the weapons, ready to run down the giant one-feathered elephant bird.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_091.mp3"
+        },
+        {
+          "id": "ra_92",
+          "text_en": "“Stop!” Munia’s thin voice cut through the din.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_092.mp3"
+        },
+        {
+          "id": "ra_93",
+          "text_en": "She limped between the mob and the giant.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_093.mp3"
+        },
+        {
+          "id": "ra_94",
+          "text_en": "“Munia! Come back at once!” her father ordered.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_094.mp3"
+        },
+        {
+          "id": "ra_95",
+          "text_en": "“Grab her!” cried someone else.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_095.mp3"
+        },
+        {
+          "id": "ra_96",
+          "text_en": "Munia’s father and another villager rushed towards her.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_096.mp3"
+        },
+        {
+          "id": "ra_97",
+          "text_en": "The elephant bird advanced a couple of steps and they stopped.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_097.mp3"
+        },
+        {
+          "id": "ra_98",
+          "text_en": "“Okay… if this is how you want it, we’ll tackle both of you together!” yelled a man, holding a spear.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_098.mp3"
+        },
+        {
+          "id": "ra_99",
+          "text_en": "“What’s going on?” someone shouted from behind the crowd.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_099.mp3"
+        },
+        {
+          "id": "ra_100",
+          "text_en": "A slightly hunched man with a long beard came in holding a horse’s reins.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_100.mp3"
+        },
+        {
+          "id": "ra_101",
+          "text_en": "The headman asked with a surprised look, “Saarthi, what are you doing here?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_101.mp3"
+        },
+        {
+          "id": "ra_102",
+          "text_en": "And why is Vayu with you?”",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_102.mp3"
+        },
+        {
+          "id": "ra_103",
+          "text_en": "“Oh, as you know, I had sold Vayu to you some years back.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_103.mp3"
+        },
+        {
+          "id": "ra_104",
+          "text_en": "Yesterday I was passing by your village early in the morning in my buggy pulled by Jhabru and Ghabru – Vayu’s brothers.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_104.mp3"
+        },
+        {
+          "id": "ra_105",
+          "text_en": "I don’t know how Vayu got loose and followed us back to Chandesara!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_105.mp3"
+        },
+        {
+          "id": "ra_106",
+          "text_en": "I couldn’t recognize him and didn’t know what to do with him until this morning when I saw this little girl going from hut to hut, asking about a lost horse.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_106.mp3"
+        },
+        {
+          "id": "ra_107",
+          "text_en": "But what is going on?” he asked again.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_107.mp3"
+        },
+        {
+          "id": "ra_108",
+          "text_en": "The villagers did not answer Saarthi.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_108.mp3"
+        },
+        {
+          "id": "ra_109",
+          "text_en": "They hung their heads in shame.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_109.mp3"
+        },
+        {
+          "id": "ra_110",
+          "text_en": "Munia’s father went to her, lifted her in his arms and took her back to the village.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_110.mp3"
+        },
+        {
+          "id": "ra_111",
+          "text_en": "Since that day, no child laughed at Munia’s limp.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_111.mp3"
+        },
+        {
+          "id": "ra_112",
+          "text_en": "They all wanted to be friends with her.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_112.mp3"
+        },
+        {
+          "id": "ra_113",
+          "text_en": "And they all wanted to be friends with the elephant bird.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_113.mp3"
+        },
+        {
+          "id": "ra_114",
+          "text_en": "Munia’s tale reached many villages and the villagers in faraway hamlets whispered to each other, “Munia knew that the giant one-feathered elephant bird had not swallowed the horse!”",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_114.mp3"
+        },
+        {
+          "id": "ra_115",
+          "text_en": "This story is inspired by the real Elephant Bird (scientific name: Aepyornis maximus), the biggest bird that walked our planet.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_115.mp3"
+        },
+        {
+          "id": "ra_116",
+          "text_en": "It inhabited the island of Madagascar.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_116.mp3"
+        },
+        {
+          "id": "ra_117",
+          "text_en": "With more and more settlements on the island, and more forests ruined, the species became extinct around 1700 CE.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1101/s_117.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "Who knew that the giant, one-feathered elephant bird had not swallowed the horse?",
+          "options_en": [
+            "Munia",
+            "The villagers",
+            "The headman"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "What did Munia know the giant, one-feathered elephant bird had not done?",
+          "options_en": [
+            "Swallowed the horse",
+            "Munched on leaves",
+            "Lived in the jungle"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s1_q1",
+          "type": "choice",
+          "question_en": "What was the bird said to be big enough to do?",
+          "options_en": [
+            "Swallow a horse",
+            "Sit by the lake",
+            "Pull a horse-cart"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s1_q2",
+          "type": "choice",
+          "question_en": "Why did the sentence say 'that didn't mean he had'?",
+          "options_en": [
+            "Because being big did not prove he had swallowed the horse",
+            "Because he was dangerous to the villagers",
+            "Because he lived near the lake"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s2_q1",
+          "type": "choice",
+          "question_en": "Which village had only one horse-cart?",
+          "options_en": [
+            "Adhania",
+            "Chandesara",
+            "A faraway hamlet"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s2_q2",
+          "type": "choice",
+          "question_en": "What pulled the village's only horse-cart?",
+          "options_en": [
+            "The two horses Vayu and Drut",
+            "Jhabru and Ghabru",
+            "The elephant bird"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s3_q1",
+          "type": "choice",
+          "question_en": "Who had gone missing near the lake in the jungle?",
+          "options_en": [
+            "Vayu",
+            "Drut",
+            "Munia"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p0_s3_q2",
+          "type": "choice",
+          "question_en": "Where had Vayu gone missing?",
+          "options_en": [
+            "Near the lake in the jungle where the bird lived",
+            "On the road to Chandesara",
+            "In the village of Adhania"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p0_s4_q1",
+          "type": "choice",
+          "question_en": "Who had known about the elephant bird for generations?",
+          "options_en": [
+            "The villagers",
+            "Munia",
+            "The milkman"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p0_s4_q2",
+          "type": "choice",
+          "question_en": "How long had the villagers known about the elephant bird?",
+          "options_en": [
+            "For generations",
+            "For years",
+            "Since yesterday"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "Who was the last of his race?",
+          "options_en": [
+            "the elephant bird",
+            "Munia",
+            "Vayu the horse"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "How long was his race considered extinct?",
+          "options_en": [
+            "for hundreds of years",
+            "for a single generation",
+            "since the next morning"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p1_s1_q1",
+          "type": "choice",
+          "question_en": "Where did the living relic still roam?",
+          "options_en": [
+            "the jungles of Adhania",
+            "near the village well",
+            "towards Chandesara"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p1_s1_q2",
+          "type": "choice",
+          "question_en": "What had the living relic lost except one?",
+          "options_en": [
+            "his feathers",
+            "his horse",
+            "his voice"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p1_s2_q1",
+          "type": "choice",
+          "question_en": "Who kept a safe distance from each other?",
+          "options_en": [
+            "the bird and the villagers",
+            "Munia and the children",
+            "Vayu and the milkman"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p1_s2_q2",
+          "type": "choice",
+          "question_en": "What did the bird and the villagers keep from each other?",
+          "options_en": [
+            "a safe distance",
+            "a friendly game",
+            "a shared meal"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p1_s3_q1",
+          "type": "choice",
+          "question_en": "Who did not keep a safe distance?",
+          "options_en": [
+            "Munia",
+            "the headman",
+            "the milkman"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p1_s3_q2",
+          "type": "choice",
+          "question_en": "What did Munia not do?",
+          "options_en": [
+            "keep a safe distance",
+            "watch the bird",
+            "fetch water"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p1_s4_q1",
+          "type": "choice",
+          "question_en": "How did she walk?",
+          "options_en": [
+            "with a limp",
+            "very fast",
+            "without a stick"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p1_s4_q2",
+          "type": "choice",
+          "question_en": "What was she despite her limp?",
+          "options_en": [
+            "brave of heart",
+            "shy and quiet",
+            "afraid of the jungle"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p1_s5_q1",
+          "type": "choice",
+          "question_en": "Where did she often slip into?",
+          "options_en": [
+            "the jungle",
+            "the marketplace",
+            "the neighbouring village"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p1_s5_q2",
+          "type": "choice",
+          "question_en": "What did she go to the jungle to do?",
+          "options_en": [
+            "watch the elephant bird",
+            "fetch three pitchers of water",
+            "visit Chandesara"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "Who came near the lake in the daytime?",
+          "options_en": [
+            "The elephant bird",
+            "Munia",
+            "Vayu"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "Why did he come near the lake in the daytime?",
+          "options_en": [
+            "To bask in the sun or play in the lake",
+            "To steal the horse",
+            "To sleep in the villagers' huts"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p2_s1_q1",
+          "type": "choice",
+          "question_en": "What did he sometimes do in the water?",
+          "options_en": [
+            "Sat half-submerged in water",
+            "Munched on leaves",
+            "Played with Munia"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p2_s1_q2",
+          "type": "choice",
+          "question_en": "Where did he sit sometimes?",
+          "options_en": [
+            "Half-submerged in water",
+            "By the village well",
+            "Under the old banyan tree"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p2_s2_q1",
+          "type": "choice",
+          "question_en": "What was true at other times?",
+          "options_en": [
+            "There was no trace of him",
+            "He played with Munia",
+            "He munched leaves by the lakeside"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p2_s2_q2",
+          "type": "choice",
+          "question_en": "When was there no trace of him?",
+          "options_en": [
+            "At other times",
+            "Every morning",
+            "In the daytime"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p2_s3_q1",
+          "type": "choice",
+          "question_en": "Where did he perhaps rest?",
+          "options_en": [
+            "In some corner of the dense jungle",
+            "By the village well",
+            "Under the banyan tree"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p2_s3_q2",
+          "type": "choice",
+          "question_en": "Why was there perhaps no trace of him?",
+          "options_en": [
+            "Because he just rested in some corner of the dense jungle",
+            "Because he was hiding from the villagers",
+            "Because he had gone to Chandesara"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p2_s4_q1",
+          "type": "choice",
+          "question_en": "How tall was he?",
+          "options_en": [
+            "As tall as a tree",
+            "As tall as Munia",
+            "As tall as a horse"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p2_s4_q2",
+          "type": "choice",
+          "question_en": "What did he stand as?",
+          "options_en": [
+            "As tall as a tree",
+            "As quiet as a mouse",
+            "As fast as Vayu"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p2_s5_q1",
+          "type": "choice",
+          "question_en": "What did he have on his body?",
+          "options_en": [
+            "A long strong neck, huge legs with claws and a heavy spear-like head",
+            "Only one feather",
+            "A limp like Munia"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p2_s5_q2",
+          "type": "choice",
+          "question_en": "Which features did the sentence mention about him?",
+          "options_en": [
+            "Long strong neck, huge legs with claws, and a heavy spear-like head",
+            "Long talons and nails",
+            "Three pitchers of water"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p2_s6_q1",
+          "type": "choice",
+          "question_en": "What looked scary?",
+          "options_en": [
+            "His long talons and nails",
+            "His heavy spear-like head",
+            "The leaves he munched"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p2_s6_q2",
+          "type": "choice",
+          "question_en": "Whose talons and nails looked scary?",
+          "options_en": [
+            "The elephant bird's",
+            "Munia's",
+            "Vayu's"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "Who did Munia realise was a shy herbivorous bird?",
+          "options_en": [
+            "the elephant bird",
+            "Vayu the horse",
+            "Amma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "What kind of bird did Munia realise he was?",
+          "options_en": [
+            "a shy herbivorous bird",
+            "a giant one-feathered bird",
+            "a fierce carnivorous bird"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p3_s1_q1",
+          "type": "choice",
+          "question_en": "What did he just munch on?",
+          "options_en": [
+            "leaves",
+            "fruit",
+            "meat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p3_s1_q2",
+          "type": "choice",
+          "question_en": "Where did he munch on leaves?",
+          "options_en": [
+            "by the lakeside",
+            "in the jungle path",
+            "near the village well"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p3_s2_q1",
+          "type": "choice",
+          "question_en": "Who did Munia feel she had something in common with?",
+          "options_en": [
+            "the elephant bird",
+            "the milkman",
+            "the headman"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p3_s2_q2",
+          "type": "choice",
+          "question_en": "What did Munia feel about her relation to him?",
+          "options_en": [
+            "she had something in common with him",
+            "she wanted to leave him",
+            "she was afraid of him"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p3_s3_q1",
+          "type": "choice",
+          "question_en": "What could the elephant bird not do?",
+          "options_en": [
+            "fly",
+            "run",
+            "splash in the lake"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p3_s3_q2",
+          "type": "choice",
+          "question_en": "What could Munia not do?",
+          "options_en": [
+            "run",
+            "fly",
+            "fish"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p3_s4_q1",
+          "type": "choice",
+          "question_en": "Who mocked her limp?",
+          "options_en": [
+            "other village children",
+            "the villagers",
+            "the elephant bird"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p3_s4_q2",
+          "type": "choice",
+          "question_en": "What did they not include her in?",
+          "options_en": [
+            "their games",
+            "the search for Vayu",
+            "village meetings"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p3_s5_q1",
+          "type": "choice",
+          "question_en": "Why did she like staying alone?",
+          "options_en": [
+            "because she was mocked and excluded",
+            "because she wanted to find Vayu",
+            "because she loved the jungle"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p3_s5_q2",
+          "type": "choice",
+          "question_en": "How did she like staying?",
+          "options_en": [
+            "alone",
+            "with friends",
+            "with her family"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "Who helped fetch three pitchers of water every morning?",
+          "options_en": [
+            "Munia",
+            "Amma",
+            "The milkman"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "Why did she collect wood every morning?",
+          "options_en": [
+            "So that Amma could light the stove",
+            "To build a fire for the elephant bird",
+            "To play with the other children"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p4_s1_q1",
+          "type": "choice",
+          "question_en": "How long would she be out?",
+          "options_en": [
+            "For a long time",
+            "Only for a few minutes",
+            "Until sunset"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p4_s1_q2",
+          "type": "choice",
+          "question_en": "What did she do after finishing her chores?",
+          "options_en": [
+            "She would be out for a long time",
+            "She stayed at the well",
+            "She immediately went to sleep"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p4_s2_q1",
+          "type": "choice",
+          "question_en": "Who believed Munia went out to play with the kids?",
+          "options_en": [
+            "Amma",
+            "Munia's father",
+            "The headman"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p4_s2_q2",
+          "type": "choice",
+          "question_en": "What did Amma believe Munia did when she went out?",
+          "options_en": [
+            "She went out to play with the kids",
+            "She went to the lake",
+            "She went to sell the horse"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p4_s3_q1",
+          "type": "choice",
+          "question_en": "Where did Munia go that Amma did not know about?",
+          "options_en": [
+            "Into the jungle to the lake where the elephant bird lived",
+            "To the village well",
+            "To the headman's house"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        },
+        {
+          "id": "gl_p4_s3_q2",
+          "type": "choice",
+          "question_en": "Who did not know that Munia went into the jungle to the lake?",
+          "options_en": [
+            "Amma",
+            "The milkman",
+            "Munia's friend"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "Who stepped in the open near the lake?",
+          "options_en": [
+            "Munia",
+            "The elephant bird",
+            "Vayu"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "When did Munia step in the open near the lake?",
+          "options_en": [
+            "One day",
+            "Every morning",
+            "At night"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        },
+        {
+          "id": "gl_p5_s1_q1",
+          "type": "choice",
+          "question_en": "Who rolled his eyes towards Munia?",
+          "options_en": [
+            "The elephant bird",
+            "The milkman",
+            "Saarthi"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p5_s1_q2",
+          "type": "choice",
+          "question_en": "Why did he close his eyes after rolling them towards Munia?",
+          "options_en": [
+            "He was uninterested by her advance",
+            "He was sleepy",
+            "He wanted to play"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p5_s2_q1",
+          "type": "choice",
+          "question_en": "What did Munia do when she got no more attention than the flies?",
+          "options_en": [
+            "Stomped her feet",
+            "Threw a fruit",
+            "Cried loudly"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        },
+        {
+          "id": "gl_p5_s2_q2",
+          "type": "choice",
+          "question_en": "What was buzzing over his head?",
+          "options_en": [
+            "Flies",
+            "Children",
+            "Jackals"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        },
+        {
+          "id": "gl_p5_s3_q1",
+          "type": "choice",
+          "question_en": "What did the elephant bird lift suddenly?",
+          "options_en": [
+            "One of his claws",
+            "A fruit",
+            "His head"
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        },
+        {
+          "id": "gl_p5_s3_q2",
+          "type": "choice",
+          "question_en": "When did the elephant bird lift one of his claws?",
+          "options_en": [
+            "Suddenly",
+            "In the morning",
+            "At night"
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        },
+        {
+          "id": "gl_p5_s4_q1",
+          "type": "choice",
+          "question_en": "What did Munia do after the bird lifted his claw?",
+          "options_en": [
+            "Cried and fell headlong into the shallow waters of the lake",
+            "Stepped away from the lake",
+            "Shouted to the villagers"
+          ],
+          "correct_index": 0,
+          "sentence_index": 32
+        },
+        {
+          "id": "gl_p5_s4_q2",
+          "type": "choice",
+          "question_en": "Where did Munia fall?",
+          "options_en": [
+            "Into the shallow waters of the lake",
+            "Into the jungle",
+            "Into the village well"
+          ],
+          "correct_index": 0,
+          "sentence_index": 32
+        },
+        {
+          "id": "gl_p5_s5_q1",
+          "type": "choice",
+          "question_en": "How did she come out of the water?",
+          "options_en": [
+            "Drenched",
+            "Laughing",
+            "Limping"
+          ],
+          "correct_index": 0,
+          "sentence_index": 33
+        },
+        {
+          "id": "gl_p5_s5_q2",
+          "type": "choice",
+          "question_en": "What did she see him doing when she came out drenched?",
+          "options_en": [
+            "Shaking all over",
+            "Munching leaves",
+            "Sitting half-submerged"
+          ],
+          "correct_index": 0,
+          "sentence_index": 33
+        },
+        {
+          "id": "gl_p5_s6_q1",
+          "type": "choice",
+          "question_en": "Who was laughing?",
+          "options_en": [
+            "He (the elephant bird)",
+            "Munia",
+            "The milkman"
+          ],
+          "correct_index": 0,
+          "sentence_index": 34
+        },
+        {
+          "id": "gl_p5_s6_q2",
+          "type": "choice",
+          "question_en": "How was he?",
+          "options_en": [
+            "Laughing",
+            "Crying",
+            "Sleeping"
+          ],
+          "correct_index": 0,
+          "sentence_index": 34
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "Who asked angrily?",
+          "options_en": [
+            "Munia",
+            "The milkman",
+            "Amma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 35
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "What did she do after asking angrily?",
+          "options_en": [
+            "Turned to leave",
+            "Sat down by the lake",
+            "Ran after the elephant bird"
+          ],
+          "correct_index": 0,
+          "sentence_index": 35
+        },
+        {
+          "id": "gl_p6_s1_q1",
+          "type": "choice",
+          "question_en": "What happened before Munia walked away from the clearing?",
+          "options_en": [
+            "Something hit her feet",
+            "She saw Vayu gallop away",
+            "She heard the villagers shout"
+          ],
+          "correct_index": 0,
+          "sentence_index": 36
+        },
+        {
+          "id": "gl_p6_s1_q2",
+          "type": "choice",
+          "question_en": "Where had Munia been about to walk away from?",
+          "options_en": [
+            "The clearing",
+            "The village well",
+            "The old banyan tree"
+          ],
+          "correct_index": 0,
+          "sentence_index": 36
+        },
+        {
+          "id": "gl_p6_s2_q1",
+          "type": "choice",
+          "question_en": "What was it that hit Munia's feet?",
+          "options_en": [
+            "A fruit",
+            "A sharp stone",
+            "A leaf"
+          ],
+          "correct_index": 0,
+          "sentence_index": 37
+        },
+        {
+          "id": "gl_p6_s2_q2",
+          "type": "choice",
+          "question_en": "Who had thrown the fruit at her?",
+          "options_en": [
+            "The elephant bird",
+            "The milkman",
+            "Munia"
+          ],
+          "correct_index": 0,
+          "sentence_index": 37
+        },
+        {
+          "id": "gl_p6_s3_q1",
+          "type": "choice",
+          "question_en": "What did the elephant bird want to do?",
+          "options_en": [
+            "Play",
+            "Eat the horse",
+            "Hide in the jungle"
+          ],
+          "correct_index": 0,
+          "sentence_index": 38
+        },
+        {
+          "id": "gl_p6_s3_q2",
+          "type": "choice",
+          "question_en": "Why did the elephant bird throw the fruit at Munia?",
+          "options_en": [
+            "Because he wanted to play",
+            "Because he wanted to scare the villagers",
+            "Because he wanted to eat Vayu"
+          ],
+          "correct_index": 0,
+          "sentence_index": 38
+        },
+        {
+          "id": "gl_p6_s4_q1",
+          "type": "choice",
+          "question_en": "Who threw the fruit back at the elephant bird?",
+          "options_en": [
+            "Munia",
+            "The headman",
+            "Vayu"
+          ],
+          "correct_index": 0,
+          "sentence_index": 39
+        },
+        {
+          "id": "gl_p6_s4_q2",
+          "type": "choice",
+          "question_en": "How did Munia throw the fruit?",
+          "options_en": [
+            "Hesitantly",
+            "Quickly",
+            "Angrily"
+          ],
+          "correct_index": 0,
+          "sentence_index": 39
+        },
+        {
+          "id": "gl_p6_s5_q1",
+          "type": "choice",
+          "question_en": "How did the elephant bird move as he took the fruit?",
+          "options_en": [
+            "He trotted sideways",
+            "He flew up",
+            "He stomped forward"
+          ],
+          "correct_index": 0,
+          "sentence_index": 40
+        },
+        {
+          "id": "gl_p6_s5_q2",
+          "type": "choice",
+          "question_en": "Where did the elephant bird catch the fruit?",
+          "options_en": [
+            "In his beak",
+            "On the ground",
+            "In his claws"
+          ],
+          "correct_index": 0,
+          "sentence_index": 40
+        },
+        {
+          "id": "gl_p6_s6_q1",
+          "type": "choice",
+          "question_en": "What had begun between Munia and the elephant bird?",
+          "options_en": [
+            "Their friendship",
+            "A hunt for Vayu",
+            "A fight with the villagers"
+          ],
+          "correct_index": 0,
+          "sentence_index": 41
+        },
+        {
+          "id": "gl_p6_s6_q2",
+          "type": "choice",
+          "question_en": "Who became friends according to the sentence?",
+          "options_en": [
+            "Munia and the elephant bird",
+            "Munia and Vayu",
+            "The villagers and the elephant bird"
+          ],
+          "correct_index": 0,
+          "sentence_index": 41
+        },
+        {
+          "id": "gl_p6_s7_q1",
+          "type": "choice",
+          "question_en": "Who had gone missing?",
+          "options_en": [
+            "Vayu",
+            "Drut",
+            "Jhabru"
+          ],
+          "correct_index": 0,
+          "sentence_index": 42
+        },
+        {
+          "id": "gl_p6_s7_q2",
+          "type": "choice",
+          "question_en": "When did Vayu go missing according to the sentence?",
+          "options_en": [
+            "Just when she had finally found a friend",
+            "Before Munia met the bird",
+            "After the villagers gathered under the banyan tree"
+          ],
+          "correct_index": 0,
+          "sentence_index": 42
+        },
+        {
+          "id": "gl_p6_s8_q1",
+          "type": "choice",
+          "question_en": "Whose suspicion had turned towards the elephant bird?",
+          "options_en": [
+            "Everyone's",
+            "Munia's alone",
+            "Only the headman's"
+          ],
+          "correct_index": 0,
+          "sentence_index": 43
+        },
+        {
+          "id": "gl_p6_s8_q2",
+          "type": "choice",
+          "question_en": "What is the correct answer to this question: Towards whom had suspicion turned?",
+          "options_en": [
+            "The elephant bird",
+            "Munia",
+            "The milkman"
+          ],
+          "correct_index": 0,
+          "sentence_index": 43
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "Where did the villagers gather after searching for Vayu?",
+          "options_en": [
+            "Under the old banyan tree",
+            "By the lake",
+            "At Munia's house"
+          ],
+          "correct_index": 0,
+          "sentence_index": 44
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "Who gathered under the old banyan tree?",
+          "options_en": [
+            "The villagers",
+            "The elephant bird",
+            "The milkman alone"
+          ],
+          "correct_index": 0,
+          "sentence_index": 44
+        },
+        {
+          "id": "gl_p7_s1_q1",
+          "type": "choice",
+          "question_en": "What did everyone agree about in Adhania?",
+          "options_en": [
+            "There could be no thief in Adhania",
+            "The elephant bird was dangerous",
+            "Vayu had been sold"
+          ],
+          "correct_index": 0,
+          "sentence_index": 45
+        },
+        {
+          "id": "gl_p7_s1_q2",
+          "type": "choice",
+          "question_en": "Why did the villagers think there was no thief in Adhania?",
+          "options_en": [
+            "They trusted one another",
+            "They had seen the thief leave",
+            "They had called the headman"
+          ],
+          "correct_index": 0,
+          "sentence_index": 45
+        },
+        {
+          "id": "gl_p7_s2_q1",
+          "type": "choice",
+          "question_en": "What did the villagers say about their relationships?",
+          "options_en": [
+            "They all trusted one another",
+            "They were afraid of the jungle",
+            "They wanted to leave Adhania"
+          ],
+          "correct_index": 0,
+          "sentence_index": 46
+        },
+        {
+          "id": "gl_p7_s2_q2",
+          "type": "choice",
+          "question_en": "Who is included in the statement 'They all trusted one another'?",
+          "options_en": [
+            "The villagers",
+            "The elephant bird",
+            "Saarthi"
+          ],
+          "correct_index": 0,
+          "sentence_index": 46
+        },
+        {
+          "id": "gl_p7_s3_q1",
+          "type": "choice",
+          "question_en": "Who swore he had seen Vayu gallop away towards the lake?",
+          "options_en": [
+            "The milkman",
+            "Munia",
+            "The headman"
+          ],
+          "correct_index": 0,
+          "sentence_index": 47
+        },
+        {
+          "id": "gl_p7_s3_q2",
+          "type": "choice",
+          "question_en": "Where did the milkman say Vayu galloped towards?",
+          "options_en": [
+            "The lake",
+            "Chandesara",
+            "The banyan tree"
+          ],
+          "correct_index": 0,
+          "sentence_index": 47
+        },
+        {
+          "id": "gl_p7_s4_q1",
+          "type": "choice",
+          "question_en": "What did someone say about Vayu's condition in that sentence?",
+          "options_en": [
+            "There is no sign of Vayu anywhere",
+            "Vayu was found at Chandesara",
+            "Vayu was with Saarthi"
+          ],
+          "correct_index": 0,
+          "sentence_index": 48
+        },
+        {
+          "id": "gl_p7_s4_q2",
+          "type": "choice",
+          "question_en": "How did the speaker describe Vayu's whereabouts?",
+          "options_en": [
+            "There was no sign of Vayu anywhere",
+            "Vayu was resting by the lake",
+            "Vayu had been sold years ago"
+          ],
+          "correct_index": 0,
+          "sentence_index": 48
+        },
+        {
+          "id": "gl_p7_s5_q1",
+          "type": "choice",
+          "question_en": "Who did the villager address when saying something must have gotten Vayu in the jungle?",
+          "options_en": [
+            "The headman",
+            "Munia",
+            "The milkman"
+          ],
+          "correct_index": 0,
+          "sentence_index": 49
+        },
+        {
+          "id": "gl_p7_s5_q2",
+          "type": "choice",
+          "question_en": "What did the villager suggest had happened to Vayu?",
+          "options_en": [
+            "Something in the jungle got him",
+            "He escaped to Chandesara",
+            "He was sold to Saarthi"
+          ],
+          "correct_index": 0,
+          "sentence_index": 49
+        },
+        {
+          "id": "gl_p7_s6_q1",
+          "type": "choice",
+          "question_en": "Who did someone ask could be responsible for Vayu's disappearance?",
+          "options_en": [
+            "The giant one-feathered elephant bird",
+            "Munia",
+            "The headman"
+          ],
+          "correct_index": 0,
+          "sentence_index": 50
+        },
+        {
+          "id": "gl_p7_s6_q2",
+          "type": "choice",
+          "question_en": "What phrase did the speaker use to refer to the suspected creature?",
+          "options_en": [
+            "The giant one-feathered elephant bird",
+            "The jackal in the night",
+            "The horse’s brother"
+          ],
+          "correct_index": 0,
+          "sentence_index": 50
+        },
+        {
+          "id": "gl_p7_s7_q1",
+          "type": "choice",
+          "question_en": "What did the milkman say should be done to the elephant bird?",
+          "options_en": [
+            "He must be destroyed",
+            "He must be fed",
+            "He must be captured alive"
+          ],
+          "correct_index": 0,
+          "sentence_index": 51
+        },
+        {
+          "id": "gl_p7_s7_q2",
+          "type": "choice",
+          "question_en": "Who spoke the line about destroying the elephant bird?",
+          "options_en": [
+            "The milkman",
+            "Munia's father",
+            "The headman"
+          ],
+          "correct_index": 0,
+          "sentence_index": 51
+        },
+        {
+          "id": "gl_p7_s8_q1",
+          "type": "choice",
+          "question_en": "What did the milkman claim the elephant bird had been doing for years?",
+          "options_en": [
+            "Lying silent, hatching his evil plans",
+            "Eating leaves by the lake",
+            "Helping the villagers"
+          ],
+          "correct_index": 0,
+          "sentence_index": 52
+        },
+        {
+          "id": "gl_p7_s8_q2",
+          "type": "choice",
+          "question_en": "Why did the milkman think the elephant bird was dangerous?",
+          "options_en": [
+            "Because he had been lying silent, hatching evil plans",
+            "Because he was friends with Munia",
+            "Because he fetched water for Amma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 52
+        }
+      ]
+    },
+    {
+      "paragraph_index": 8,
+      "questions": [
+        {
+          "id": "gl_p8_s0_q1",
+          "type": "choice",
+          "question_en": "Who agreed?",
+          "options_en": [
+            "The crowd",
+            "Munia",
+            "The headman"
+          ],
+          "correct_index": 0,
+          "sentence_index": 53
+        },
+        {
+          "id": "gl_p8_s0_q2",
+          "type": "choice",
+          "question_en": "What did the crowd do?",
+          "options_en": [
+            "They agreed",
+            "They shouted angrily",
+            "They left the gathering"
+          ],
+          "correct_index": 0,
+          "sentence_index": 53
+        },
+        {
+          "id": "gl_p8_s1_q1",
+          "type": "choice",
+          "question_en": "Who watched the proceedings quietly?",
+          "options_en": [
+            "Munia",
+            "Munia's father",
+            "The milkman"
+          ],
+          "correct_index": 0,
+          "sentence_index": 54
+        },
+        {
+          "id": "gl_p8_s1_q2",
+          "type": "choice",
+          "question_en": "How did Munia watch the proceedings?",
+          "options_en": [
+            "Quietly",
+            "Angrily",
+            "Excitedly"
+          ],
+          "correct_index": 0,
+          "sentence_index": 54
+        },
+        {
+          "id": "gl_p8_s2_q1",
+          "type": "choice",
+          "question_en": "Why did she not speak up?",
+          "options_en": [
+            "She was scared of being punished for speaking up",
+            "She had a limp",
+            "She wanted to fetch water"
+          ],
+          "correct_index": 0,
+          "sentence_index": 55
+        },
+        {
+          "id": "gl_p8_s2_q2",
+          "type": "choice",
+          "question_en": "What did she want to do but was afraid to?",
+          "options_en": [
+            "Speak",
+            "Go to the jungle",
+            "Call the milkman"
+          ],
+          "correct_index": 0,
+          "sentence_index": 55
+        },
+        {
+          "id": "gl_p8_s3_q1",
+          "type": "choice",
+          "question_en": "What worried her even if she spoke?",
+          "options_en": [
+            "Who would believe her",
+            "That the horse was gone",
+            "That the headman would agree"
+          ],
+          "correct_index": 0,
+          "sentence_index": 56
+        },
+        {
+          "id": "gl_p8_s3_q2",
+          "type": "choice",
+          "question_en": "Who did she think would not believe her?",
+          "options_en": [
+            "No one",
+            "The elephant bird",
+            "The milkman"
+          ],
+          "correct_index": 0,
+          "sentence_index": 56
+        },
+        {
+          "id": "gl_p8_s4_q1",
+          "type": "choice",
+          "question_en": "Who said the giant had become dangerous?",
+          "options_en": [
+            "Munia's father",
+            "The headman",
+            "The milkman"
+          ],
+          "correct_index": 0,
+          "sentence_index": 57
+        },
+        {
+          "id": "gl_p8_s4_q2",
+          "type": "choice",
+          "question_en": "Why did Munia's father say the giant was dangerous?",
+          "options_en": [
+            "Because all these years of aimless living has made the giant dangerous",
+            "Because the giant had eaten the horse",
+            "Because the giant had stolen wood"
+          ],
+          "correct_index": 0,
+          "sentence_index": 57
+        },
+        {
+          "id": "gl_p8_s5_q1",
+          "type": "choice",
+          "question_en": "Who spoke over the villagers' angry shouts?",
+          "options_en": [
+            "The headman",
+            "Munia's father",
+            "Munia"
+          ],
+          "correct_index": 0,
+          "sentence_index": 58
+        },
+        {
+          "id": "gl_p8_s5_q2",
+          "type": "choice",
+          "question_en": "What did the headman say they had despite facing a giant?",
+          "options_en": [
+            "The strength of numbers",
+            "Only one horse",
+            "A long list of weapons"
+          ],
+          "correct_index": 0,
+          "sentence_index": 58
+        },
+        {
+          "id": "gl_p8_s6_q1",
+          "type": "choice",
+          "question_en": "What did the headman urge them to do?",
+          "options_en": [
+            "Go out and finish him",
+            "Wait until morning",
+            "Apologize to the giant"
+          ],
+          "correct_index": 0,
+          "sentence_index": 59
+        },
+        {
+          "id": "gl_p8_s6_q2",
+          "type": "choice",
+          "question_en": "Who did the headman want them to finish?",
+          "options_en": [
+            "The giant",
+            "Vayu the horse",
+            "Munia"
+          ],
+          "correct_index": 0,
+          "sentence_index": 59
+        }
+      ]
+    },
+    {
+      "paragraph_index": 9,
+      "questions": [
+        {
+          "id": "gl_p9_s0_q1",
+          "type": "choice",
+          "question_en": "What went up?",
+          "options_en": [
+            "A cheer of approval",
+            "A cheer of anger",
+            "A cheer of surprise"
+          ],
+          "correct_index": 0,
+          "sentence_index": 60
+        },
+        {
+          "id": "gl_p9_s0_q2",
+          "type": "choice",
+          "question_en": "What kind of cheer went up?",
+          "options_en": [
+            "A cheer of approval",
+            "A cheer for the elephant bird",
+            "A cheer for Vayu"
+          ],
+          "correct_index": 0,
+          "sentence_index": 60
+        },
+        {
+          "id": "gl_p9_s1_q1",
+          "type": "choice",
+          "question_en": "Who said, “The elephant bird did not eat the horse”?",
+          "options_en": [
+            "Munia",
+            "The headman",
+            "The milkman"
+          ],
+          "correct_index": 0,
+          "sentence_index": 61
+        },
+        {
+          "id": "gl_p9_s1_q2",
+          "type": "choice",
+          "question_en": "How did Munia speak when she said the elephant bird did not eat the horse?",
+          "options_en": [
+            "Softly but firmly",
+            "Loudly and angrily",
+            "Quietly and tearfully"
+          ],
+          "correct_index": 0,
+          "sentence_index": 61
+        },
+        {
+          "id": "gl_p9_s2_q1",
+          "type": "choice",
+          "question_en": "Who said they were with him when Vayu went missing?",
+          "options_en": [
+            "Munia",
+            "The headman",
+            "Someone from the back"
+          ],
+          "correct_index": 0,
+          "sentence_index": 62
+        },
+        {
+          "id": "gl_p9_s2_q2",
+          "type": "choice",
+          "question_en": "What fell on the gathering after that statement?",
+          "options_en": [
+            "A heavy silence",
+            "A cheer of approval",
+            "Laughter"
+          ],
+          "correct_index": 0,
+          "sentence_index": 62
+        },
+        {
+          "id": "gl_p9_s3_q1",
+          "type": "choice",
+          "question_en": "Who roared, “What does this mean?”",
+          "options_en": [
+            "The headman",
+            "Munia",
+            "The milkman"
+          ],
+          "correct_index": 0,
+          "sentence_index": 63
+        },
+        {
+          "id": "gl_p9_s3_q2",
+          "type": "choice",
+          "question_en": "What did the headman ask?",
+          "options_en": [
+            "What does this mean?",
+            "Where is Vayu?",
+            "Who will go to the jungle?"
+          ],
+          "correct_index": 0,
+          "sentence_index": 63
+        },
+        {
+          "id": "gl_p9_s4_q1",
+          "type": "choice",
+          "question_en": "What did the speaker claim about the elephant bird?",
+          "options_en": [
+            "That the elephant bird is my friend, and he has not done this",
+            "That the elephant bird had eaten Vayu",
+            "That the elephant bird must be destroyed"
+          ],
+          "correct_index": 0,
+          "sentence_index": 64
+        },
+        {
+          "id": "gl_p9_s4_q2",
+          "type": "choice",
+          "question_en": "Who shouted, “This girl has lost her mind!”?",
+          "options_en": [
+            "Someone from the back",
+            "The headman",
+            "Munia's father"
+          ],
+          "correct_index": 0,
+          "sentence_index": 64
+        },
+        {
+          "id": "gl_p9_s5_q1",
+          "type": "choice",
+          "question_en": "Who laughed?",
+          "options_en": [
+            "The other children",
+            "The headman",
+            "Munia"
+          ],
+          "correct_index": 0,
+          "sentence_index": 65
+        },
+        {
+          "id": "gl_p9_s5_q2",
+          "type": "choice",
+          "question_en": "How did the other children react?",
+          "options_en": [
+            "They laughed",
+            "They fell silent",
+            "They cheered"
+          ],
+          "correct_index": 0,
+          "sentence_index": 65
+        },
+        {
+          "id": "gl_p9_s6_q1",
+          "type": "choice",
+          "question_en": "Who only eats leaves?",
+          "options_en": [
+            "He (the elephant bird)",
+            "Vayu",
+            "Munia"
+          ],
+          "correct_index": 0,
+          "sentence_index": 66
+        },
+        {
+          "id": "gl_p9_s6_q2",
+          "type": "choice",
+          "question_en": "What does he eat?",
+          "options_en": [
+            "Leaves",
+            "Meat",
+            "Fruit"
+          ],
+          "correct_index": 0,
+          "sentence_index": 66
+        },
+        {
+          "id": "gl_p9_s7_q1",
+          "type": "choice",
+          "question_en": "Who shouted, “How can he eat Vayu?”",
+          "options_en": [
+            "Munia",
+            "The headman",
+            "Someone from the back"
+          ],
+          "correct_index": 0,
+          "sentence_index": 67
+        },
+        {
+          "id": "gl_p9_s7_q2",
+          "type": "choice",
+          "question_en": "How was Munia positioned when she shouted that question?",
+          "options_en": [
+            "Not moving from her place",
+            "Limping forward",
+            "Sitting down"
+          ],
+          "correct_index": 0,
+          "sentence_index": 67
+        }
+      ]
+    },
+    {
+      "paragraph_index": 10,
+      "questions": [
+        {
+          "id": "gl_p10_s0_q1",
+          "type": "choice",
+          "question_en": "Who fumed and came towards her?",
+          "options_en": [
+            "Munia’s father",
+            "The headman",
+            "The milkman"
+          ],
+          "correct_index": 0,
+          "sentence_index": 68
+        },
+        {
+          "id": "gl_p10_s0_q2",
+          "type": "choice",
+          "question_en": "What did he say to Munia?",
+          "options_en": [
+            "“You can’t even plait your hair and you are giving us advice?”",
+            "“Forget about the girl, we will get the elephant bird in the morning.”",
+            "“Go play with your friends!”"
+          ],
+          "correct_index": 0,
+          "sentence_index": 68
+        },
+        {
+          "id": "gl_p10_s1_q1",
+          "type": "choice",
+          "question_en": "What did someone tell Munia to do?",
+          "options_en": [
+            "Go play with your friends!",
+            "Fetch water from the well",
+            "Stay inside the house"
+          ],
+          "correct_index": 0,
+          "sentence_index": 69
+        },
+        {
+          "id": "gl_p10_s1_q2",
+          "type": "choice",
+          "question_en": "Who said the elephant bird is the only friend she has?",
+          "options_en": [
+            "Munia",
+            "Her father",
+            "The headman"
+          ],
+          "correct_index": 0,
+          "sentence_index": 69
+        },
+        {
+          "id": "gl_p10_s2_q1",
+          "type": "choice",
+          "question_en": "Who glared at her?",
+          "options_en": [
+            "Her father",
+            "The headman",
+            "A villager"
+          ],
+          "correct_index": 0,
+          "sentence_index": 70
+        },
+        {
+          "id": "gl_p10_s2_q2",
+          "type": "choice",
+          "question_en": "How did her father react in that moment?",
+          "options_en": [
+            "He glared at her",
+            "He laughed",
+            "He hugged her"
+          ],
+          "correct_index": 0,
+          "sentence_index": 70
+        },
+        {
+          "id": "gl_p10_s3_q1",
+          "type": "choice",
+          "question_en": "What did Munia do instead of crying?",
+          "options_en": [
+            "She didn’t cry and stood there facing the villagers",
+            "She ran away into the jungle",
+            "She sat down on the ground"
+          ],
+          "correct_index": 0,
+          "sentence_index": 71
+        },
+        {
+          "id": "gl_p10_s3_q2",
+          "type": "choice",
+          "question_en": "What is the correct answer to this question: Whom was Munia standing and facing?",
+          "options_en": [
+            "The villagers",
+            "The elephant bird",
+            "Her mother"
+          ],
+          "correct_index": 0,
+          "sentence_index": 71
+        },
+        {
+          "id": "gl_p10_s4_q1",
+          "type": "choice",
+          "question_en": "Who said they would get the elephant bird in the morning?",
+          "options_en": [
+            "The headman",
+            "The milkman",
+            "Munia’s father"
+          ],
+          "correct_index": 0,
+          "sentence_index": 72
+        },
+        {
+          "id": "gl_p10_s4_q2",
+          "type": "choice",
+          "question_en": "When did the speaker say they would get the elephant bird?",
+          "options_en": [
+            "In the morning",
+            "At night",
+            "Immediately"
+          ],
+          "correct_index": 0,
+          "sentence_index": 72
+        }
+      ]
+    },
+    {
+      "paragraph_index": 11,
+      "questions": [
+        {
+          "id": "gl_p11_s0_q1",
+          "type": "choice",
+          "question_en": "Who had only one night to prove the elephant bird’s innocence?",
+          "options_en": [
+            "Munia",
+            "The milkman",
+            "The headman"
+          ],
+          "correct_index": 0,
+          "sentence_index": 73
+        },
+        {
+          "id": "gl_p11_s0_q2",
+          "type": "choice",
+          "question_en": "What did Munia have to prove in one night?",
+          "options_en": [
+            "The elephant bird’s innocence",
+            "That Vayu was lost",
+            "That she was brave"
+          ],
+          "correct_index": 0,
+          "sentence_index": 73
+        },
+        {
+          "id": "gl_p11_s1_q1",
+          "type": "choice",
+          "question_en": "Who whispered \"Think, Munia, think!\" to herself?",
+          "options_en": [
+            "Munia",
+            "Her father",
+            "The milkman"
+          ],
+          "correct_index": 0,
+          "sentence_index": 74
+        },
+        {
+          "id": "gl_p11_s1_q2",
+          "type": "choice",
+          "question_en": "What did she whisper to herself?",
+          "options_en": [
+            "\"Think, Munia, think!\"",
+            "\"Stop!\"",
+            "\"Come back!\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 74
+        },
+        {
+          "id": "gl_p11_s2_q1",
+          "type": "choice",
+          "question_en": "Who saw Vayu gallop away?",
+          "options_en": [
+            "The milkman",
+            "Munia",
+            "Saarthi"
+          ],
+          "correct_index": 0,
+          "sentence_index": 75
+        },
+        {
+          "id": "gl_p11_s2_q2",
+          "type": "choice",
+          "question_en": "Where did the milkman see Vayu gallop towards?",
+          "options_en": [
+            "The lake",
+            "Chandesara",
+            "The jungle"
+          ],
+          "correct_index": 0,
+          "sentence_index": 75
+        },
+        {
+          "id": "gl_p11_s3_q1",
+          "type": "choice",
+          "question_en": "Where does the road turn towards after taking a turn?",
+          "options_en": [
+            "Chandesara",
+            "The lake",
+            "The village"
+          ],
+          "correct_index": 0,
+          "sentence_index": 76
+        },
+        {
+          "id": "gl_p11_s3_q2",
+          "type": "choice",
+          "question_en": "What does the road do before it reaches the lake?",
+          "options_en": [
+            "It takes a turn",
+            "It becomes flooded",
+            "It becomes narrow"
+          ],
+          "correct_index": 0,
+          "sentence_index": 76
+        },
+        {
+          "id": "gl_p11_s4_q1",
+          "type": "choice",
+          "question_en": "Who were angry with her and sent her to bed?",
+          "options_en": [
+            "Her parents",
+            "The villagers",
+            "The headman"
+          ],
+          "correct_index": 0,
+          "sentence_index": 77
+        },
+        {
+          "id": "gl_p11_s4_q2",
+          "type": "choice",
+          "question_en": "What did Munia’s parents do when they were angry with her?",
+          "options_en": [
+            "Sent her to bed without speaking a word",
+            "Called the headman",
+            "Joined the villagers"
+          ],
+          "correct_index": 0,
+          "sentence_index": 77
+        },
+        {
+          "id": "gl_p11_s5_q1",
+          "type": "choice",
+          "question_en": "When did she get out of bed?",
+          "options_en": [
+            "Once they were asleep",
+            "In the morning",
+            "When the elephant bird slept"
+          ],
+          "correct_index": 0,
+          "sentence_index": 78
+        },
+        {
+          "id": "gl_p11_s5_q2",
+          "type": "choice",
+          "question_en": "What did she take when she stepped out of the house?",
+          "options_en": [
+            "The hanging lamp",
+            "A spear",
+            "A pitcher"
+          ],
+          "correct_index": 0,
+          "sentence_index": 78
+        }
+      ]
+    },
+    {
+      "paragraph_index": 12,
+      "questions": [
+        {
+          "id": "gl_p12_s0_q1",
+          "type": "choice",
+          "question_en": "Who crossed Adhania?",
+          "options_en": [
+            "She (Munia)",
+            "Her father",
+            "The milkman"
+          ],
+          "correct_index": 0,
+          "sentence_index": 79
+        },
+        {
+          "id": "gl_p12_s0_q2",
+          "type": "choice",
+          "question_en": "Where did she come to?",
+          "options_en": [
+            "The jungle path leading to Chandesara",
+            "The village well",
+            "The lake"
+          ],
+          "correct_index": 0,
+          "sentence_index": 79
+        },
+        {
+          "id": "gl_p12_s1_q1",
+          "type": "choice",
+          "question_en": "What rang in the jungle air?",
+          "options_en": [
+            "The call of an owl",
+            "A jackal's howl",
+            "A horse's neigh"
+          ],
+          "correct_index": 0,
+          "sentence_index": 80
+        },
+        {
+          "id": "gl_p12_s1_q2",
+          "type": "choice",
+          "question_en": "Where did the owl's call ring?",
+          "options_en": [
+            "In the jungle air",
+            "Near the lake",
+            "In the village"
+          ],
+          "correct_index": 0,
+          "sentence_index": 80
+        },
+        {
+          "id": "gl_p12_s2_q1",
+          "type": "choice",
+          "question_en": "What sounded from a distance?",
+          "options_en": [
+            "A jackal howled",
+            "The elephant bird trumpeted",
+            "A horse galloped"
+          ],
+          "correct_index": 0,
+          "sentence_index": 81
+        },
+        {
+          "id": "gl_p12_s2_q2",
+          "type": "choice",
+          "question_en": "How did the jackal make itself heard?",
+          "options_en": [
+            "It howled from a distance",
+            "It called like an owl",
+            "It trotted by her side"
+          ],
+          "correct_index": 0,
+          "sentence_index": 81
+        },
+        {
+          "id": "gl_p12_s3_q1",
+          "type": "choice",
+          "question_en": "What moved like long dark fingers?",
+          "options_en": [
+            "The shadows of trees",
+            "The elephant bird's talons",
+            "The villagers' arms"
+          ],
+          "correct_index": 0,
+          "sentence_index": 82
+        },
+        {
+          "id": "gl_p12_s3_q2",
+          "type": "choice",
+          "question_en": "How did the shadows of trees appear?",
+          "options_en": [
+            "Like long dark fingers",
+            "Like a shining path",
+            "Like splashing water"
+          ],
+          "correct_index": 0,
+          "sentence_index": 82
+        },
+        {
+          "id": "gl_p12_s4_q1",
+          "type": "choice",
+          "question_en": "Why did she overcome her hesitation?",
+          "options_en": [
+            "She thought of the elephant bird sleeping peacefully",
+            "She heard the headman shouting",
+            "She remembered fetching water"
+          ],
+          "correct_index": 0,
+          "sentence_index": 83
+        },
+        {
+          "id": "gl_p12_s4_q2",
+          "type": "choice",
+          "question_en": "What was the elephant bird doing in the jungle?",
+          "options_en": [
+            "Sleeping peacefully",
+            "Eating leaves by the lake",
+            "Playing in the lake"
+          ],
+          "correct_index": 0,
+          "sentence_index": 83
+        },
+        {
+          "id": "gl_p12_s5_q1",
+          "type": "choice",
+          "question_en": "What might happen if she didn't solve the mystery?",
+          "options_en": [
+            "The elephant bird may not be alive to see the next night",
+            "The villagers would forgive the bird",
+            "Vayu would be found"
+          ],
+          "correct_index": 0,
+          "sentence_index": 84
+        },
+        {
+          "id": "gl_p12_s5_q2",
+          "type": "choice",
+          "question_en": "Whose life was said to be in danger if she failed?",
+          "options_en": [
+            "The elephant bird's",
+            "Munia's",
+            "The milkman's"
+          ],
+          "correct_index": 0,
+          "sentence_index": 84
+        },
+        {
+          "id": "gl_p12_s6_q1",
+          "type": "choice",
+          "question_en": "How did she move along the jungle path?",
+          "options_en": [
+            "She limped alone",
+            "She ran quickly with others",
+            "She rode a horse"
+          ],
+          "correct_index": 0,
+          "sentence_index": 85
+        },
+        {
+          "id": "gl_p12_s6_q2",
+          "type": "choice",
+          "question_en": "When did she walk on the jungle path?",
+          "options_en": [
+            "In the dead of the night",
+            "In the morning",
+            "At noon"
+          ],
+          "correct_index": 0,
+          "sentence_index": 85
+        }
+      ]
+    },
+    {
+      "paragraph_index": 13,
+      "questions": [
+        {
+          "id": "gl_p13_s0_q1",
+          "type": "choice",
+          "question_en": "Who gathered near the lake with sticks, sharp stones and long kitchen knives?",
+          "options_en": [
+            "The villagers",
+            "Munia",
+            "The milkman"
+          ],
+          "correct_index": 0,
+          "sentence_index": 86
+        },
+        {
+          "id": "gl_p13_s0_q2",
+          "type": "choice",
+          "question_en": "Where did the villagers gather the next morning?",
+          "options_en": [
+            "Near the lake",
+            "Under the old banyan tree",
+            "At the village well"
+          ],
+          "correct_index": 0,
+          "sentence_index": 86
+        },
+        {
+          "id": "gl_p13_s1_q1",
+          "type": "choice",
+          "question_en": "What was the elephant bird doing when the crowd approached him?",
+          "options_en": [
+            "Resting",
+            "Playing in the lake",
+            "Eating leaves"
+          ],
+          "correct_index": 0,
+          "sentence_index": 87
+        },
+        {
+          "id": "gl_p13_s1_q2",
+          "type": "choice",
+          "question_en": "Who approached the elephant bird while he was resting?",
+          "options_en": [
+            "The crowd",
+            "Munia",
+            "The headman alone"
+          ],
+          "correct_index": 0,
+          "sentence_index": 87
+        },
+        {
+          "id": "gl_p13_s2_q1",
+          "type": "choice",
+          "question_en": "What shone on his back?",
+          "options_en": [
+            "The sun",
+            "The moon",
+            "A hanging lamp"
+          ],
+          "correct_index": 0,
+          "sentence_index": 88
+        },
+        {
+          "id": "gl_p13_s2_q2",
+          "type": "choice",
+          "question_en": "How was his back described?",
+          "options_en": [
+            "Featherless",
+            "Covered in feathers",
+            "Drenched with water"
+          ],
+          "correct_index": 0,
+          "sentence_index": 88
+        },
+        {
+          "id": "gl_p13_s3_q1",
+          "type": "choice",
+          "question_en": "What did he do as the crowd approached?",
+          "options_en": [
+            "He got up slowly",
+            "He ran away",
+            "He went back to sleep"
+          ],
+          "correct_index": 0,
+          "sentence_index": 89
+        },
+        {
+          "id": "gl_p13_s3_q2",
+          "type": "choice",
+          "question_en": "What is the correct answer to this question: Whom did he stare at after getting up?",
+          "options_en": [
+            "The crowd",
+            "Munia",
+            "The headman"
+          ],
+          "correct_index": 0,
+          "sentence_index": 89
+        },
+        {
+          "id": "gl_p13_s4_q1",
+          "type": "choice",
+          "question_en": "Why did the villagers stop at some distance?",
+          "options_en": [
+            "Because of his size",
+            "Because Munia told them to",
+            "Because it started raining"
+          ],
+          "correct_index": 0,
+          "sentence_index": 90
+        },
+        {
+          "id": "gl_p13_s4_q2",
+          "type": "choice",
+          "question_en": "How did the villagers position themselves when they saw him?",
+          "options_en": [
+            "They stopped at some distance",
+            "They surrounded him closely",
+            "They climbed the trees"
+          ],
+          "correct_index": 0,
+          "sentence_index": 90
+        },
+        {
+          "id": "gl_p13_s5_q1",
+          "type": "choice",
+          "question_en": "Who cried, \"Be ready!\" after a moment's hesitation?",
+          "options_en": [
+            "The headman",
+            "Munia's father",
+            "The milkman"
+          ],
+          "correct_index": 0,
+          "sentence_index": 91
+        },
+        {
+          "id": "gl_p13_s5_q2",
+          "type": "choice",
+          "question_en": "What did the mob do after the headman cried, \"Be ready!\"",
+          "options_en": [
+            "They roared and firmed their grip on the weapons",
+            "They laughed and left",
+            "They sat down quietly"
+          ],
+          "correct_index": 0,
+          "sentence_index": 91
+        }
+      ]
+    },
+    {
+      "paragraph_index": 14,
+      "questions": [
+        {
+          "id": "gl_p14_s0_q1",
+          "type": "choice",
+          "question_en": "Who said \"Stop!\"?",
+          "options_en": [
+            "Munia",
+            "The headman",
+            "The milkman"
+          ],
+          "correct_index": 0,
+          "sentence_index": 92
+        },
+        {
+          "id": "gl_p14_s0_q2",
+          "type": "choice",
+          "question_en": "How did Munia's voice cut through the din?",
+          "options_en": [
+            "With a thin voice",
+            "With a loud shout",
+            "With a calm tone"
+          ],
+          "correct_index": 0,
+          "sentence_index": 92
+        },
+        {
+          "id": "gl_p14_s1_q1",
+          "type": "choice",
+          "question_en": "Who limped between the mob and the giant?",
+          "options_en": [
+            "She (Munia)",
+            "A villager",
+            "The elephant bird"
+          ],
+          "correct_index": 0,
+          "sentence_index": 93
+        },
+        {
+          "id": "gl_p14_s1_q2",
+          "type": "choice",
+          "question_en": "Where did she limp?",
+          "options_en": [
+            "Between the mob and the giant",
+            "To the lake",
+            "Into the village"
+          ],
+          "correct_index": 0,
+          "sentence_index": 93
+        },
+        {
+          "id": "gl_p14_s2_q1",
+          "type": "choice",
+          "question_en": "Who ordered \"Munia! Come back at once!\"?",
+          "options_en": [
+            "Her father",
+            "The headman",
+            "A man with a spear"
+          ],
+          "correct_index": 0,
+          "sentence_index": 94
+        },
+        {
+          "id": "gl_p14_s2_q2",
+          "type": "choice",
+          "question_en": "What did her father tell Munia to do?",
+          "options_en": [
+            "Come back at once",
+            "Stand still",
+            "Go to the lake"
+          ],
+          "correct_index": 0,
+          "sentence_index": 94
+        },
+        {
+          "id": "gl_p14_s3_q1",
+          "type": "choice",
+          "question_en": "What did someone else cry?",
+          "options_en": [
+            "\"Grab her!\"",
+            "\"Let her go!\"",
+            "\"Stop the bird!\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 95
+        },
+        {
+          "id": "gl_p14_s3_q2",
+          "type": "choice",
+          "question_en": "Who cried \"Grab her!\" according to the sentence?",
+          "options_en": [
+            "Someone else",
+            "Munia's father",
+            "The headman"
+          ],
+          "correct_index": 0,
+          "sentence_index": 95
+        },
+        {
+          "id": "gl_p14_s4_q1",
+          "type": "choice",
+          "question_en": "Who rushed towards her?",
+          "options_en": [
+            "Munia's father and another villager",
+            "The headman and the milkman",
+            "A man with a spear and the elephant bird"
+          ],
+          "correct_index": 0,
+          "sentence_index": 96
+        },
+        {
+          "id": "gl_p14_s4_q2",
+          "type": "choice",
+          "question_en": "How did Munia's father and the other villager move towards her?",
+          "options_en": [
+            "They rushed towards her",
+            "They walked slowly",
+            "They stood still"
+          ],
+          "correct_index": 0,
+          "sentence_index": 96
+        },
+        {
+          "id": "gl_p14_s5_q1",
+          "type": "choice",
+          "question_en": "What did the elephant bird do?",
+          "options_en": [
+            "Advanced a couple of steps",
+            "Sat down by the lake",
+            "Flew away"
+          ],
+          "correct_index": 0,
+          "sentence_index": 97
+        },
+        {
+          "id": "gl_p14_s5_q2",
+          "type": "choice",
+          "question_en": "What happened after the elephant bird advanced a couple of steps?",
+          "options_en": [
+            "They stopped",
+            "They attacked him",
+            "They cheered"
+          ],
+          "correct_index": 0,
+          "sentence_index": 97
+        },
+        {
+          "id": "gl_p14_s6_q1",
+          "type": "choice",
+          "question_en": "Who yelled about tackling both of them together?",
+          "options_en": [
+            "A man holding a spear",
+            "The headman",
+            "Munia's father"
+          ],
+          "correct_index": 0,
+          "sentence_index": 98
+        },
+        {
+          "id": "gl_p14_s6_q2",
+          "type": "choice",
+          "question_en": "What did the man holding a spear say they would do?",
+          "options_en": [
+            "Tackle both of you together",
+            "Capture the horse",
+            "Let the bird go"
+          ],
+          "correct_index": 0,
+          "sentence_index": 98
+        }
+      ]
+    },
+    {
+      "paragraph_index": 15,
+      "questions": [
+        {
+          "id": "gl_p15_s0_q1",
+          "type": "choice",
+          "question_en": "Who shouted from behind the crowd?",
+          "options_en": [
+            "someone",
+            "Munia",
+            "the headman"
+          ],
+          "correct_index": 0,
+          "sentence_index": 99
+        },
+        {
+          "id": "gl_p15_s0_q2",
+          "type": "choice",
+          "question_en": "Where was the person when they shouted?",
+          "options_en": [
+            "behind the crowd",
+            "near the lake",
+            "in the jungle"
+          ],
+          "correct_index": 0,
+          "sentence_index": 99
+        },
+        {
+          "id": "gl_p15_s1_q1",
+          "type": "choice",
+          "question_en": "Who came in holding a horse's reins?",
+          "options_en": [
+            "a slightly hunched man with a long beard",
+            "Munia",
+            "the headman"
+          ],
+          "correct_index": 0,
+          "sentence_index": 100
+        },
+        {
+          "id": "gl_p15_s1_q2",
+          "type": "choice",
+          "question_en": "What was the man holding as he came in?",
+          "options_en": [
+            "a horse's reins",
+            "a hanging lamp",
+            "a spear"
+          ],
+          "correct_index": 0,
+          "sentence_index": 100
+        },
+        {
+          "id": "gl_p15_s2_q1",
+          "type": "choice",
+          "question_en": "Who asked with a surprised look?",
+          "options_en": [
+            "the headman",
+            "Munia's father",
+            "the milkman"
+          ],
+          "correct_index": 0,
+          "sentence_index": 101
+        },
+        {
+          "id": "gl_p15_s2_q2",
+          "type": "choice",
+          "question_en": "What is the correct answer to this question: Whom did the headman address when he spoke with surprise?",
+          "options_en": [
+            "Saarthi",
+            "Vayu",
+            "the elephant bird"
+          ],
+          "correct_index": 0,
+          "sentence_index": 101
+        },
+        {
+          "id": "gl_p15_s3_q1",
+          "type": "choice",
+          "question_en": "Who was the headman asking about being with Saarthi?",
+          "options_en": [
+            "Vayu",
+            "Jhabru",
+            "Drut"
+          ],
+          "correct_index": 0,
+          "sentence_index": 102
+        },
+        {
+          "id": "gl_p15_s3_q2",
+          "type": "choice",
+          "question_en": "What did the headman ask Saarthi in the question that followed?",
+          "options_en": [
+            "why Vayu was with him",
+            "where the lake was",
+            "whether the elephant bird was dangerous"
+          ],
+          "correct_index": 0,
+          "sentence_index": 102
+        }
+      ]
+    },
+    {
+      "paragraph_index": 16,
+      "questions": [
+        {
+          "id": "gl_p16_s0_q1",
+          "type": "choice",
+          "question_en": "Who says they had sold Vayu to you some years back?",
+          "options_en": [
+            "The speaker (I)",
+            "Munia",
+            "The headman"
+          ],
+          "correct_index": 0,
+          "sentence_index": 103
+        },
+        {
+          "id": "gl_p16_s0_q2",
+          "type": "choice",
+          "question_en": "When did the speaker say they had sold Vayu?",
+          "options_en": [
+            "Some years back",
+            "Yesterday",
+            "This morning"
+          ],
+          "correct_index": 0,
+          "sentence_index": 103
+        },
+        {
+          "id": "gl_p16_s1_q1",
+          "type": "choice",
+          "question_en": "When was the speaker passing by the village in the buggy?",
+          "options_en": [
+            "Yesterday early in the morning",
+            "In the dead of the night",
+            "The next morning"
+          ],
+          "correct_index": 0,
+          "sentence_index": 104
+        },
+        {
+          "id": "gl_p16_s1_q2",
+          "type": "choice",
+          "question_en": "Which animals pulled the speaker's buggy?",
+          "options_en": [
+            "Jhabru and Ghabru",
+            "Vayu and Drut",
+            "The elephant bird"
+          ],
+          "correct_index": 0,
+          "sentence_index": 104
+        },
+        {
+          "id": "gl_p16_s2_q1",
+          "type": "choice",
+          "question_en": "What does the speaker say happened to Vayu?",
+          "options_en": [
+            "He got loose and followed them back to Chandesara",
+            "He ran to the lake",
+            "He was swallowed by the elephant bird"
+          ],
+          "correct_index": 0,
+          "sentence_index": 105
+        },
+        {
+          "id": "gl_p16_s2_q2",
+          "type": "choice",
+          "question_en": "Where did Vayu follow them back to, according to the speaker?",
+          "options_en": [
+            "Chandesara",
+            "Adhania",
+            "The jungle lake"
+          ],
+          "correct_index": 0,
+          "sentence_index": 105
+        },
+        {
+          "id": "gl_p16_s3_q1",
+          "type": "choice",
+          "question_en": "Who was going from hut to hut asking about a lost horse?",
+          "options_en": [
+            "This little girl",
+            "Saarthi",
+            "The milkman"
+          ],
+          "correct_index": 0,
+          "sentence_index": 106
+        },
+        {
+          "id": "gl_p16_s3_q2",
+          "type": "choice",
+          "question_en": "What was the little girl doing that helped the speaker know what to do with Vayu?",
+          "options_en": [
+            "Going from hut to hut asking about a lost horse",
+            "Playing by the lake with the elephant bird",
+            "Fetching water from the village well"
+          ],
+          "correct_index": 0,
+          "sentence_index": 106
+        },
+        {
+          "id": "gl_p16_s4_q1",
+          "type": "choice",
+          "question_en": "What did he ask again?",
+          "options_en": [
+            "But what is going on?",
+            "Where is Vayu?",
+            "Who took the horse?"
+          ],
+          "correct_index": 0,
+          "sentence_index": 107
+        },
+        {
+          "id": "gl_p16_s4_q2",
+          "type": "choice",
+          "question_en": "How did he ask the question at the end of the paragraph?",
+          "options_en": [
+            "He asked again",
+            "He shouted angrily",
+            "He whispered"
+          ],
+          "correct_index": 0,
+          "sentence_index": 107
+        }
+      ]
+    },
+    {
+      "paragraph_index": 17,
+      "questions": [
+        {
+          "id": "gl_p17_s0_q1",
+          "type": "choice",
+          "question_en": "Who did not answer Saarthi?",
+          "options_en": [
+            "The villagers",
+            "Munia",
+            "The headman"
+          ],
+          "correct_index": 0,
+          "sentence_index": 108
+        },
+        {
+          "id": "gl_p17_s0_q2",
+          "type": "choice",
+          "question_en": "What did the villagers not do to Saarthi?",
+          "options_en": [
+            "Answer him",
+            "Invite him in",
+            "Give him the horse"
+          ],
+          "correct_index": 0,
+          "sentence_index": 108
+        },
+        {
+          "id": "gl_p17_s1_q1",
+          "type": "choice",
+          "question_en": "What did they hang?",
+          "options_en": [
+            "Their heads",
+            "Their hats",
+            "A banner"
+          ],
+          "correct_index": 0,
+          "sentence_index": 109
+        },
+        {
+          "id": "gl_p17_s1_q2",
+          "type": "choice",
+          "question_en": "Why did they hang their heads?",
+          "options_en": [
+            "In shame",
+            "Because they were angry",
+            "Because they had found Vayu"
+          ],
+          "correct_index": 0,
+          "sentence_index": 109
+        },
+        {
+          "id": "gl_p17_s2_q1",
+          "type": "choice",
+          "question_en": "Who went to Munia and lifted her in his arms?",
+          "options_en": [
+            "Munia’s father",
+            "The headman",
+            "Saarthi"
+          ],
+          "correct_index": 0,
+          "sentence_index": 110
+        },
+        {
+          "id": "gl_p17_s2_q2",
+          "type": "choice",
+          "question_en": "Where did he take her?",
+          "options_en": [
+            "Back to the village",
+            "To the lake",
+            "To Chandesara"
+          ],
+          "correct_index": 0,
+          "sentence_index": 110
+        },
+        {
+          "id": "gl_p17_s3_q1",
+          "type": "choice",
+          "question_en": "What is the correct answer to this question: Since when did no child laugh at Munia’s limp?",
+          "options_en": [
+            "Since that day",
+            "Since the elephant bird arrived",
+            "Since Vayu went missing"
+          ],
+          "correct_index": 0,
+          "sentence_index": 111
+        },
+        {
+          "id": "gl_p17_s3_q2",
+          "type": "choice",
+          "question_en": "What did no child laugh at?",
+          "options_en": [
+            "Munia’s limp",
+            "The elephant bird",
+            "Munia’s water pitchers"
+          ],
+          "correct_index": 0,
+          "sentence_index": 111
+        },
+        {
+          "id": "gl_p17_s4_q1",
+          "type": "choice",
+          "question_en": "Who wanted to be friends with her?",
+          "options_en": [
+            "They (the children/villagers)",
+            "Munia's parents",
+            "The milkman"
+          ],
+          "correct_index": 0,
+          "sentence_index": 112
+        },
+        {
+          "id": "gl_p17_s4_q2",
+          "type": "choice",
+          "question_en": "What did they want to be with her?",
+          "options_en": [
+            "Friends with her",
+            "Enemies of the elephant bird",
+            "Caretakers of Vayu"
+          ],
+          "correct_index": 0,
+          "sentence_index": 112
+        },
+        {
+          "id": "gl_p17_s5_q1",
+          "type": "choice",
+          "question_en": "Who wanted to be friends with the elephant bird?",
+          "options_en": [
+            "They all",
+            "Munia only",
+            "Saarthi"
+          ],
+          "correct_index": 0,
+          "sentence_index": 113
+        },
+        {
+          "id": "gl_p17_s5_q2",
+          "type": "choice",
+          "question_en": "What is the correct answer to this question: With whom did they want to be friends?",
+          "options_en": [
+            "The elephant bird",
+            "Vayu",
+            "The headman"
+          ],
+          "correct_index": 0,
+          "sentence_index": 113
+        },
+        {
+          "id": "gl_p17_s6_q1",
+          "type": "choice",
+          "question_en": "Where did Munia’s tale reach?",
+          "options_en": [
+            "Many villages",
+            "The lake",
+            "Chandesara"
+          ],
+          "correct_index": 0,
+          "sentence_index": 114
+        },
+        {
+          "id": "gl_p17_s6_q2",
+          "type": "choice",
+          "question_en": "What did the villagers in faraway hamlets whisper to each other?",
+          "options_en": [
+            "That Munia knew the giant one-feathered elephant bird had not swallowed the horse",
+            "That the elephant bird had eaten Vayu",
+            "That Munia was to blame"
+          ],
+          "correct_index": 0,
+          "sentence_index": 114
+        }
+      ]
+    },
+    {
+      "paragraph_index": 18,
+      "questions": [
+        {
+          "id": "gl_p18_s0_q1",
+          "type": "choice",
+          "question_en": "What is this story inspired by?",
+          "options_en": [
+            "The real Elephant Bird (Aepyornis maximus)",
+            "Munia’s friendship with the elephant bird",
+            "The village of Adhania"
+          ],
+          "correct_index": 0,
+          "sentence_index": 115
+        },
+        {
+          "id": "gl_p18_s0_q2",
+          "type": "choice",
+          "question_en": "Which bird is described as the biggest bird that walked our planet?",
+          "options_en": [
+            "The Elephant Bird (Aepyornis maximus)",
+            "Vayu the horse",
+            "Jhabru and Ghabru"
+          ],
+          "correct_index": 0,
+          "sentence_index": 115
+        },
+        {
+          "id": "gl_p18_s1_q1",
+          "type": "choice",
+          "question_en": "Where did it inhabit?",
+          "options_en": [
+            "The island of Madagascar",
+            "The jungle of Adhania",
+            "The lakeside near the village"
+          ],
+          "correct_index": 0,
+          "sentence_index": 116
+        },
+        {
+          "id": "gl_p18_s1_q2",
+          "type": "choice",
+          "question_en": "What inhabited the island of Madagascar?",
+          "options_en": [
+            "The Elephant Bird",
+            "Munia",
+            "The horse Vayu"
+          ],
+          "correct_index": 0,
+          "sentence_index": 116
+        },
+        {
+          "id": "gl_p18_s2_q1",
+          "type": "choice",
+          "question_en": "Why did the species become extinct around 1700 CE?",
+          "options_en": [
+            "Because more settlements were built and forests were ruined",
+            "Because Munia accused the elephant bird",
+            "Because Vayu went missing"
+          ],
+          "correct_index": 0,
+          "sentence_index": 117
+        },
+        {
+          "id": "gl_p18_s2_q2",
+          "type": "choice",
+          "question_en": "When did the species become extinct?",
+          "options_en": [
+            "Around 1700 CE",
+            "When the villagers gathered under the banyan tree",
+            "The morning the horse was found"
+          ],
+          "correct_index": 0,
+          "sentence_index": 117
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'The Elephant Bird'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "giant",
+      "meaning_vi": "khổng lồ, rất lớn",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "swallowed",
+      "meaning_vi": "nuốt chửng",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "missing",
+      "meaning_vi": "bị mất, biến mất",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "generations",
+      "meaning_vi": "nhiều đời, nhiều thế hệ",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "extinct",
+      "meaning_vi": "tuyệt chủng, không còn sống",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "relic",
+      "meaning_vi": "vật còn sót lại",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "limp",
+      "meaning_vi": "đi khập khiễng",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "brave",
+      "meaning_vi": "dũng cảm",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "bask",
+      "meaning_vi": "tắm nắng",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "submerged",
+      "meaning_vi": "chìm dưới nước",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "dense",
+      "meaning_vi": "rậm rạp, dày đặc",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "claws",
+      "meaning_vi": "móng vuốt",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "realised",
+      "meaning_vi": "nhận ra",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "herbivorous",
+      "meaning_vi": "ăn cỏ",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "munched",
+      "meaning_vi": "nhấm nháp, nhai",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "mocked",
+      "meaning_vi": "chế giễu, trêu chọc",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "fetch",
+      "meaning_vi": "lấy về, mang về",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "pitchers",
+      "meaning_vi": "bình nước, vò nước",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "collected",
+      "meaning_vi": "nhặt, thu thập",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "believed",
+      "meaning_vi": "tin rằng",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "courage",
+      "meaning_vi": "can đảm, dũng khí",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "uninterested",
+      "meaning_vi": "không quan tâm",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "stomped",
+      "meaning_vi": "dậm chân",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "drenched",
+      "meaning_vi": "ướt sũng",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "angrily",
+      "meaning_vi": "một cách giận dữ",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "hesitantly",
+      "meaning_vi": "do dự, ngập ngừng",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "beak",
+      "meaning_vi": "mỏ (chim)",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "suspicion",
+      "meaning_vi": "sự nghi ngờ",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "gallop",
+      "meaning_vi": "phi nước đại (của ngựa)",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "headman",
+      "meaning_vi": "trưởng làng",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "destroyed",
+      "meaning_vi": "bị tiêu diệt",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "hatching",
+      "meaning_vi": "ấp ủ (kế hoạch)",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "proceedings",
+      "meaning_vi": "sự việc, diễn biến",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "punished",
+      "meaning_vi": "bị phạt",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "aimless",
+      "meaning_vi": "vô định, không mục đích",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "strength of numbers",
+      "meaning_vi": "sức mạnh của số đông",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "approval",
+      "meaning_vi": "sự tán thành",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "firmly",
+      "meaning_vi": "kiên quyết",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "roared",
+      "meaning_vi": "gầm lên",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "lost her mind",
+      "meaning_vi": "mất trí, điên",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "plait",
+      "meaning_vi": "tết (tóc)",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "advice",
+      "meaning_vi": "lời khuyên",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "glared",
+      "meaning_vi": "trừng mắt nhìn",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "dispersed",
+      "meaning_vi": "giải tán, tản ra",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "prove",
+      "meaning_vi": "chứng minh",
+      "paragraph_index": 11
+    },
+    {
+      "word_en": "innocence",
+      "meaning_vi": "sự vô tội",
+      "paragraph_index": 11
+    },
+    {
+      "word_en": "whispered",
+      "meaning_vi": "thì thầm",
+      "paragraph_index": 11
+    },
+    {
+      "word_en": "hanging lamp",
+      "meaning_vi": "đèn treo",
+      "paragraph_index": 11
+    },
+    {
+      "word_en": "neighbouring",
+      "meaning_vi": "lân cận",
+      "paragraph_index": 12
+    },
+    {
+      "word_en": "jackal",
+      "meaning_vi": "chó rừng",
+      "paragraph_index": 12
+    },
+    {
+      "word_en": "hesitated",
+      "meaning_vi": "do dự, ngập ngừng",
+      "paragraph_index": 12
+    },
+    {
+      "word_en": "mystery",
+      "meaning_vi": "bí ẩn",
+      "paragraph_index": 12
+    },
+    {
+      "word_en": "approached",
+      "meaning_vi": "tiến đến gần",
+      "paragraph_index": 13
+    },
+    {
+      "word_en": "featherless",
+      "meaning_vi": "không lông vũ",
+      "paragraph_index": 13
+    },
+    {
+      "word_en": "hesitation",
+      "meaning_vi": "sự do dự",
+      "paragraph_index": 13
+    },
+    {
+      "word_en": "weapons",
+      "meaning_vi": "vũ khí",
+      "paragraph_index": 13
+    },
+    {
+      "word_en": "din",
+      "meaning_vi": "tiếng ồn ào",
+      "paragraph_index": 14
+    },
+    {
+      "word_en": "ordered",
+      "meaning_vi": "ra lệnh",
+      "paragraph_index": 14
+    },
+    {
+      "word_en": "advanced",
+      "meaning_vi": "tiến lên",
+      "paragraph_index": 14
+    },
+    {
+      "word_en": "spear",
+      "meaning_vi": "ngọn giáo",
+      "paragraph_index": 14
+    },
+    {
+      "word_en": "hunched",
+      "meaning_vi": "gù lưng",
+      "paragraph_index": 15
+    },
+    {
+      "word_en": "beard",
+      "meaning_vi": "râu",
+      "paragraph_index": 15
+    },
+    {
+      "word_en": "reins",
+      "meaning_vi": "dây cương (ngựa)",
+      "paragraph_index": 15
+    },
+    {
+      "word_en": "surprised",
+      "meaning_vi": "ngạc nhiên",
+      "paragraph_index": 15
+    },
+    {
+      "word_en": "buggy",
+      "meaning_vi": "xe ngựa nhỏ",
+      "paragraph_index": 16
+    },
+    {
+      "word_en": "got loose",
+      "meaning_vi": "thoát ra, sổng chuồng",
+      "paragraph_index": 16
+    },
+    {
+      "word_en": "recognize",
+      "meaning_vi": "nhận ra",
+      "paragraph_index": 16
+    },
+    {
+      "word_en": "hut to hut",
+      "meaning_vi": "từ nhà này sang nhà khác",
+      "paragraph_index": 16
+    },
+    {
+      "word_en": "shame",
+      "meaning_vi": "sự xấu hổ",
+      "paragraph_index": 17
+    },
+    {
+      "word_en": "limp",
+      "meaning_vi": "dáng đi khập khiễng",
+      "paragraph_index": 17
+    },
+    {
+      "word_en": "tale",
+      "meaning_vi": "câu chuyện",
+      "paragraph_index": 17
+    },
+    {
+      "word_en": "hamlets",
+      "meaning_vi": "xóm nhỏ, thôn xóm",
+      "paragraph_index": 17
+    },
+    {
+      "word_en": "inspired by",
+      "meaning_vi": "lấy cảm hứng từ",
+      "paragraph_index": 18
+    },
+    {
+      "word_en": "inhabited",
+      "meaning_vi": "sinh sống, cư trú",
+      "paragraph_index": 18
+    },
+    {
+      "word_en": "settlements",
+      "meaning_vi": "khu định cư",
+      "paragraph_index": 18
+    },
+    {
+      "word_en": "extinct",
+      "meaning_vi": "tuyệt chủng",
+      "paragraph_index": 18
+    }
+  ]
+}

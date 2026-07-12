@@ -1,0 +1,3328 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L4",
+  "level_label": "Cấp 4",
+  "topic": "A Fish and a Gift",
+  "slug": "book_104873",
+  "audio_filename": "book_104873.mp3",
+  "book_slug": "book_104873",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_104873/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_104873/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_104873/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_104873/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_104873/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_104873/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_104873/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_104873/page_09.jpg",
+    "https://audio.felixbuilderhub.com/books/book_104873/page_10.jpg",
+    "https://audio.felixbuilderhub.com/books/book_104873/page_11.jpg",
+    "https://audio.felixbuilderhub.com/books/book_104873/page_12.jpg",
+    "https://audio.felixbuilderhub.com/books/book_104873/page_13.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_104873/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_104873/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_104873/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_104873/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_104873/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_104873/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_104873/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_104873/page_09.mp3",
+    "https://audio.felixbuilderhub.com/books/book_104873/page_10.mp3",
+    "https://audio.felixbuilderhub.com/books/book_104873/page_11.mp3",
+    "https://audio.felixbuilderhub.com/books/book_104873/page_12.mp3",
+    "https://audio.felixbuilderhub.com/books/book_104873/page_13.mp3"
+  ],
+  "book_attribution": {
+    "title": "A Fish and a Gift",
+    "creators": [
+      "Liesl Jobson",
+      "Jesse Breytenbach"
+    ],
+    "publisher": "Book Dash",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: A Fish and a Gift is written by Liesl Jobson . © Book Dash , 2014. Some rights reserved. Released under CC BY 4.0 license. Other Credits: This story 'A Fish and a Gift' has been published on StoryWeaver by BookDash. Images Attributions: Cover page: Boy by the ocean , by Jesse Breytenbach © Book Dash, 2014. Some rights reserved. Released under CC BY 4.0 license. Page 2: Boy and man having a happy conversation , by Jesse Breytenbach © Book Dash, 2014. Some rights reserved. Released under CC BY 4.0 license. Page 3: Man cycling downhill , by Jesse Breytenbach © Book Dash, 2014. Some rights reserved. Released under CC BY 4.0 license. Page 4: Man hollering to boatmen , by Jesse Breytenbach © Book Dash, 2014. Some rights reserved. Released under CC BY 4.0 license. Page 5: Men in the ocean , by Jesse Breytenbach © Book Dash, 2014. Some rights reserved. Released under CC BY 4.0 license. Page 6: Boy with his collectibles , by Jesse Breytenbach © Book Dash, 2014. Some rights reserved. Released under CC BY 4.0 license. Page 7: Turtles by the sea with man , by Jesse Breytenbach © Book Dash, 2014. Some rights reserved. Released under CC BY 4.0 license. Page 8: Birds and men on the beach , by Jesse Breytenbach © Book Dash, 2014. Some rights reserved. Released under CC BY 4.0 license. Page 9: Walking hand in hand in the neighbourhood , by Jesse Breytenbach © Book Dash, 2014. Some rights reserved. Released under CC BY 4.0 license. Page 10: Men with surfing board , by Jesse Breytenbach © Book Dash, 2014. Some rights reserved. Released under CC BY 4.0 license. Page 11: Woman and boy on the beach , by Jesse Breytenbach © Book Dash, 2014. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/104873-a-fish-and-a-gift",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "Boy and man having a happy conversation , by Jesse Breytenbach © Book Dash, 2014. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "Man cycling downhill , by Jesse Breytenbach © Book Dash, 2014. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "Man hollering to boatmen , by Jesse Breytenbach © Book Dash, 2014. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "Men in the ocean , by Jesse Breytenbach © Book Dash, 2014. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "Boy with his collectibles , by Jesse Breytenbach © Book Dash, 2014. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "Turtles by the sea with man , by Jesse Breytenbach © Book Dash, 2014. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "Birds and men on the beach , by Jesse Breytenbach © Book Dash, 2014. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "Walking hand in hand in the neighbourhood , by Jesse Breytenbach © Book Dash, 2014. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 8,
+        "credit_text": "Men with surfing board , by Jesse Breytenbach © Book Dash, 2014. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 9,
+        "credit_text": "Woman and boy on the beach , by Jesse Breytenbach © Book Dash, 2014. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 10,
+        "credit_text": "Illustration by Jesse Breytenbach."
+      },
+      {
+        "page_index": 11,
+        "credit_text": "Illustration by Jesse Breytenbach."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "A Fish and a Gift",
+    "paragraphs_en": [
+      "One special Friday Yusuf ’s father gets dressed before a flicker of light brightens the sky. He pulls on his heavy weather-proof jacket and the green woollen cap that covers his ears. He waves his boy goodbye. Yusuf ’s eyes brighten when Papa says, “Today is the day I will catch a fish and bring a gift home for you.”",
+      "A fish and a gift? Oh, what will it be? Papa cycles down to Muizenberg Beach. Squeak squeak go the wheels all the way to Surfer’s Corner. Gulls circle the sky. “Whaaat? Whaaat? Whaaat?” they cry. “What will you bring back for Yusuf?” Papa rings his bell. “Wait and see what it will be!”",
+      "The fishermen watch the sun rise. They check their nets. They check their oars. They listen to the wind. They drag their boats down to the water. Yusuf ’s grandfather, Oupa Salie was a treknet fisherman. Before him his father, Oupagrootjie Ridwaan, knew the sea too.",
+      "The boat rides into the waves. Papa’s arms stretch to the oar. His leg braces against the side. His neck strains, his back muscles ripple. Papa sings as he works: “Drop and swish. Find a fish. Pull and plop. Don’t you stop.”",
+      "All day long Yusuf looks at the sky. It is bright and clear and windless. A fish and a gift! What will Papa bring home from the sea? Sometimes he brings a beautiful shell. Sometimes he brings a jewel green bottle rinsed by the waves.",
+      "Some days Yusuf ’s father brings a story. Like the time they found sea turtles on the sand, hundreds washed up in a storm. “Whaaat? Whaaat? Whaaat?” cried the gulls. “What will you do to help the turtles?” Papa said, “We saved those turtles, I tell you straight. We sent them back to the ocean, every last one.”",
+      "Always Papa brings a song. He sings the song while he pulls the oars. He sings the song while he pulls the nets. He sings the song as he winds the ropes. He sings the song as he cycles home. “Drop and swish. Find a fish. Pull and plop. Don’t you stop.”",
+      "Ouma Safiya wants a nice fat yellowtail for her supper. Mother wants a new dress. “Don’t be silly,” says Ouma. “You’ll be lucky if they catch even a tiny crab. More likely it will be fish tail Friday. There’s not so many fish left in the sea.” Yusuf holds Ouma’s hand. They cross the road at the bathing cabins. “Whaaat? Whaaat? Whaaat?” cry the gulls perched on the bright rooftops. “What is for supper?”",
+      "Last year the fishermen fought with the surfers. Angry fists and shouting words. “Whaaat? Whaaat? Whaaat?” cried the gulls. “There’s enough sea for everybody,” said Yusuf ’s father. He showed them the fishing licence that had been Oupa Salie’s. “Waves for all. Water for free.”",
+      "Ouma Safiya watches through her binoculars, her fingers curled in curiosity. The shark siren sounds. Swimmers run back to the sand and grab their towels. Surfers rush to the shore, carrying their boards under their arms. Under the showers they strip off their wetsuits. “Whaaat? Whaaat? Whaaat?” cry the gulls. “What will Yusuf ’s father bring from the ocean?”",
+      "Yusuf’s father and uncle and cousins heave and pull. A little shark has been caught. It twists and thrashes in the waves. Yusuf’s father untangles the nets, singing to the shark: “Drop and swish. Find a fish. Pull and plop. Don’t you stop.” When the shark at last is free it streaks back into the waves, leaving only one fat yellowtail in the net. Ouma Safiya will be pleased.",
+      "The men pull the boat in and coil up the cables. A hard white triangle catches Papa’s finger. “Whaaat? Whaaat? Whaaat?” cry the gulls. “What did you bring back for Yusuf?” As the sun goes down, Papa answers the gulls. “A lucky shark tooth for my boy.” At home Yusuf holds his gift up to the stars."
+    ],
+    "sentences": [
+      {
+        "text_en": "One special Friday Yusuf ’s father gets dressed before a flicker of light brightens the sky.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_000.mp3",
+        "text_vi": "Một ngày thứ Sáu đặc biệt, bố của Yusuf mặc quần áo trước khi một tia sáng nhỏ làm bầu trời bừng sáng."
+      },
+      {
+        "text_en": "He pulls on his heavy weather-proof jacket and the green woollen cap that covers his ears.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_001.mp3",
+        "text_vi": "Ông mặc chiếc áo khoác dày chống thấm nước và chiếc mũ len xanh che kín tai."
+      },
+      {
+        "text_en": "He waves his boy goodbye.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_002.mp3",
+        "text_vi": "Ông vẫy tay chào tạm biệt cậu bé."
+      },
+      {
+        "text_en": "Yusuf ’s eyes brighten when Papa says, “Today is the day I will catch a fish and bring a gift home for you.”",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_003.mp3",
+        "text_vi": "Mắt Yusuf sáng bừng khi bố nói: “Hôm nay là ngày bố sẽ bắt cá và mang một món quà về nhà cho con.”"
+      },
+      {
+        "text_en": "A fish and a gift?",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_004.mp3",
+        "text_vi": "Một con cá và một món quà ư?"
+      },
+      {
+        "text_en": "Oh, what will it be?",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_005.mp3",
+        "text_vi": "Ồ, đó sẽ là gì nhỉ?"
+      },
+      {
+        "text_en": "Papa cycles down to Muizenberg Beach.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_006.mp3",
+        "text_vi": "Bố đạp xe xuống Bãi biển Muizenberg."
+      },
+      {
+        "text_en": "Squeak squeak go the wheels all the way to Surfer’s Corner.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_007.mp3",
+        "text_vi": "Tiếng \"két két\" của bánh xe vang lên suốt đường đến Góc Lướt sóng."
+      },
+      {
+        "text_en": "Gulls circle the sky.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_008.mp3",
+        "text_vi": "Hải âu bay lượn trên bầu trời."
+      },
+      {
+        "text_en": "“Whaaat? Whaaat? Whaaat?” they cry.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_009.mp3",
+        "text_vi": "“Cáiiiii gì? Cáiiiii gì? Cáiiiii gì?” chúng kêu."
+      },
+      {
+        "text_en": "“What will you bring back for Yusuf?” Papa rings his bell.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_010.mp3",
+        "text_vi": "“Ông sẽ mang gì về cho Yusuf?” Bố rung chuông."
+      },
+      {
+        "text_en": "“Wait and see what it will be!”",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_011.mp3",
+        "text_vi": "“Hãy đợi xem đó là gì nhé!”"
+      },
+      {
+        "text_en": "The fishermen watch the sun rise.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_012.mp3",
+        "text_vi": "Các ngư dân ngắm mặt trời mọc."
+      },
+      {
+        "text_en": "They check their nets.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_013.mp3",
+        "text_vi": "Họ kiểm tra lưới của mình."
+      },
+      {
+        "text_en": "They check their oars.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_014.mp3",
+        "text_vi": "Họ kiểm tra mái chèo."
+      },
+      {
+        "text_en": "They listen to the wind.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_015.mp3",
+        "text_vi": "Họ lắng nghe tiếng gió."
+      },
+      {
+        "text_en": "They drag their boats down to the water.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_016.mp3",
+        "text_vi": "Họ kéo thuyền xuống nước."
+      },
+      {
+        "text_en": "Yusuf ’s grandfather, Oupa Salie was a treknet fisherman.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_017.mp3",
+        "text_vi": "Ông nội của Yusuf, Oupa Salie, là một ngư dân kéo lưới."
+      },
+      {
+        "text_en": "Before him his father, Oupagrootjie Ridwaan, knew the sea too.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_018.mp3",
+        "text_vi": "Trước ông, cụ cố của Yusuf, Oupagrootjie Ridwaan, cũng rất hiểu biển."
+      },
+      {
+        "text_en": "The boat rides into the waves.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_019.mp3",
+        "text_vi": "Chiếc thuyền lướt vào những con sóng."
+      },
+      {
+        "text_en": "Papa’s arms stretch to the oar.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_020.mp3",
+        "text_vi": "Tay bố vươn tới mái chèo."
+      },
+      {
+        "text_en": "His leg braces against the side.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_021.mp3",
+        "text_vi": "Chân ông tì chặt vào mạn thuyền."
+      },
+      {
+        "text_en": "His neck strains, his back muscles ripple.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_022.mp3",
+        "text_vi": "Cổ ông căng ra, các cơ lưng cuồn cuộn."
+      },
+      {
+        "text_en": "Papa sings as he works: “Drop and swish.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_023.mp3",
+        "text_vi": "Bố hát khi làm việc: “Thả xuống và quẫy."
+      },
+      {
+        "text_en": "Find a fish.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_024.mp3",
+        "text_vi": "Tìm một con cá."
+      },
+      {
+        "text_en": "Pull and plop.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_025.mp3",
+        "text_vi": "Kéo lên và thả."
+      },
+      {
+        "text_en": "Don’t you stop.”",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_026.mp3",
+        "text_vi": "Đừng dừng lại.”"
+      },
+      {
+        "text_en": "All day long Yusuf looks at the sky.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_027.mp3",
+        "text_vi": "Suốt cả ngày, Yusuf nhìn lên bầu trời."
+      },
+      {
+        "text_en": "It is bright and clear and windless.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_028.mp3",
+        "text_vi": "Trời sáng, trong xanh và không có gió."
+      },
+      {
+        "text_en": "A fish and a gift!",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_029.mp3",
+        "text_vi": "Một con cá và một món quà!"
+      },
+      {
+        "text_en": "What will Papa bring home from the sea?",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_030.mp3",
+        "text_vi": "Bố sẽ mang gì về nhà từ biển nhỉ?"
+      },
+      {
+        "text_en": "Sometimes he brings a beautiful shell.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_031.mp3",
+        "text_vi": "Đôi khi ông mang về một vỏ sò đẹp."
+      },
+      {
+        "text_en": "Sometimes he brings a jewel green bottle rinsed by the waves.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_032.mp3",
+        "text_vi": "Đôi khi ông mang về một cái chai màu xanh ngọc được sóng biển rửa sạch."
+      },
+      {
+        "text_en": "Some days Yusuf ’s father brings a story.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_033.mp3",
+        "text_vi": "Có những ngày bố của Yusuf kể một câu chuyện."
+      },
+      {
+        "text_en": "Like the time they found sea turtles on the sand, hundreds washed up in a storm.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_034.mp3",
+        "text_vi": "Như lần họ tìm thấy hàng trăm con rùa biển trên cát, bị sóng đánh dạt vào bờ trong một cơn bão."
+      },
+      {
+        "text_en": "“Whaaat? Whaaat? Whaaat?” cried the gulls.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_035.mp3",
+        "text_vi": "“Cáiiiii gì? Cáiiiii gì? Cáiiiii gì?” lũ hải âu kêu."
+      },
+      {
+        "text_en": "“What will you do to help the turtles?” Papa said, “We saved those turtles, I tell you straight.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_036.mp3",
+        "text_vi": "“Ông sẽ làm gì để giúp rùa?” Bố nói: “Chúng ta đã cứu những con rùa đó, bố nói thật đấy."
+      },
+      {
+        "text_en": "We sent them back to the ocean, every last one.”",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_037.mp3",
+        "text_vi": "Chúng ta đã đưa chúng trở lại đại dương, không sót một con nào.”"
+      },
+      {
+        "text_en": "Always Papa brings a song.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_038.mp3",
+        "text_vi": "Bố luôn mang về một bài hát."
+      },
+      {
+        "text_en": "He sings the song while he pulls the oars.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_039.mp3",
+        "text_vi": "Ông hát bài hát khi ông kéo mái chèo."
+      },
+      {
+        "text_en": "He sings the song while he pulls the nets.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_040.mp3",
+        "text_vi": "Ông hát bài hát khi ông kéo lưới."
+      },
+      {
+        "text_en": "He sings the song as he winds the ropes.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_041.mp3",
+        "text_vi": "Ông hát bài hát khi ông cuộn dây thừng."
+      },
+      {
+        "text_en": "He sings the song as he cycles home.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_042.mp3",
+        "text_vi": "Ông hát bài hát khi ông đạp xe về nhà."
+      },
+      {
+        "text_en": "“Drop and swish.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_043.mp3",
+        "text_vi": "“Thả xuống và quẫy."
+      },
+      {
+        "text_en": "Find a fish.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_044.mp3",
+        "text_vi": "Tìm một con cá."
+      },
+      {
+        "text_en": "Pull and plop.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_045.mp3",
+        "text_vi": "Kéo lên và thả."
+      },
+      {
+        "text_en": "Don’t you stop.”",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_046.mp3",
+        "text_vi": "Đừng dừng lại.”"
+      },
+      {
+        "text_en": "Ouma Safiya wants a nice fat yellowtail for her supper.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_047.mp3",
+        "text_vi": "Bà Safiya muốn một con cá cam béo ngon cho bữa tối của bà."
+      },
+      {
+        "text_en": "Mother wants a new dress.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_048.mp3",
+        "text_vi": "Mẹ muốn một chiếc váy mới."
+      },
+      {
+        "text_en": "“Don’t be silly,” says Ouma.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_049.mp3",
+        "text_vi": "“Đừng ngớ ngẩn,” bà nói."
+      },
+      {
+        "text_en": "“You’ll be lucky if they catch even a tiny crab.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_050.mp3",
+        "text_vi": "“Con sẽ may mắn lắm nếu họ bắt được dù chỉ một con cua nhỏ xíu."
+      },
+      {
+        "text_en": "More likely it will be fish tail Friday.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_051.mp3",
+        "text_vi": "Nhiều khả năng sẽ là ngày thứ Sáu chỉ có đuôi cá thôi."
+      },
+      {
+        "text_en": "There’s not so many fish left in the sea.” Yusuf holds Ouma’s hand.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_052.mp3",
+        "text_vi": "Không còn nhiều cá trong biển nữa đâu.” Yusuf nắm tay bà."
+      },
+      {
+        "text_en": "They cross the road at the bathing cabins.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_053.mp3",
+        "text_vi": "Họ băng qua đường ở khu nhà tắm."
+      },
+      {
+        "text_en": "“Whaaat? Whaaat? Whaaat?” cry the gulls perched on the bright rooftops.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_054.mp3",
+        "text_vi": "“Cáiiiii gì? Cáiiiii gì? Cáiiiii gì?” lũ hải âu đậu trên những mái nhà sáng kêu."
+      },
+      {
+        "text_en": "“What is for supper?”",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_055.mp3",
+        "text_vi": "“Có gì cho bữa tối?”"
+      },
+      {
+        "text_en": "Last year the fishermen fought with the surfers.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_056.mp3",
+        "text_vi": "Năm ngoái, các ngư dân đã cãi nhau với những người lướt sóng."
+      },
+      {
+        "text_en": "Angry fists and shouting words.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_057.mp3",
+        "text_vi": "Những nắm đấm giận dữ và những lời la hét."
+      },
+      {
+        "text_en": "“Whaaat? Whaaat? Whaaat?” cried the gulls.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_058.mp3",
+        "text_vi": "“Cáiiiii gì? Cáiiiii gì? Cáiiiii gì?” lũ hải âu kêu."
+      },
+      {
+        "text_en": "“There’s enough sea for everybody,” said Yusuf ’s father.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_059.mp3",
+        "text_vi": "“Biển đủ rộng cho tất cả mọi người,” bố của Yusuf nói."
+      },
+      {
+        "text_en": "He showed them the fishing licence that had been Oupa Salie’s.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_060.mp3",
+        "text_vi": "Ông cho họ xem giấy phép đánh cá mà trước đây là của ông nội Salie."
+      },
+      {
+        "text_en": "“Waves for all.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_061.mp3",
+        "text_vi": "“Sóng cho tất cả."
+      },
+      {
+        "text_en": "Water for free.”",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_062.mp3",
+        "text_vi": "Nước miễn phí.”"
+      },
+      {
+        "text_en": "Ouma Safiya watches through her binoculars, her fingers curled in curiosity.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_063.mp3",
+        "text_vi": "Bà Safiya nhìn qua ống nhòm, các ngón tay bà cuộn lại vì tò mò."
+      },
+      {
+        "text_en": "The shark siren sounds.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_064.mp3",
+        "text_vi": "Còi báo cá mập vang lên."
+      },
+      {
+        "text_en": "Swimmers run back to the sand and grab their towels.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_065.mp3",
+        "text_vi": "Những người bơi lội chạy trở lại bãi cát và vồ lấy khăn tắm của họ."
+      },
+      {
+        "text_en": "Surfers rush to the shore, carrying their boards under their arms.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_066.mp3",
+        "text_vi": "Những người lướt sóng vội vã chạy vào bờ, mang ván lướt sóng dưới cánh tay."
+      },
+      {
+        "text_en": "Under the showers they strip off their wetsuits.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_067.mp3",
+        "text_vi": "Dưới vòi sen, họ cởi bỏ bộ đồ lặn."
+      },
+      {
+        "text_en": "“Whaaat? Whaaat? Whaaat?” cry the gulls.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_068.mp3",
+        "text_vi": "“Cáiiiii gì? Cáiiiii gì? Cáiiiii gì?” lũ hải âu kêu."
+      },
+      {
+        "text_en": "“What will Yusuf ’s father bring from the ocean?”",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_069.mp3",
+        "text_vi": "“Bố của Yusuf sẽ mang gì từ đại dương về?”"
+      },
+      {
+        "text_en": "Yusuf’s father and uncle and cousins heave and pull.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_070.mp3",
+        "text_vi": "Bố, chú và các anh họ của Yusuf cùng nhau kéo và giật."
+      },
+      {
+        "text_en": "A little shark has been caught.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_071.mp3",
+        "text_vi": "Một con cá mập nhỏ đã bị mắc lưới."
+      },
+      {
+        "text_en": "It twists and thrashes in the waves.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_072.mp3",
+        "text_vi": "Nó quằn quại và vùng vẫy trong sóng."
+      },
+      {
+        "text_en": "Yusuf’s father untangles the nets, singing to the shark: “Drop and swish.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_073.mp3",
+        "text_vi": "Bố của Yusuf gỡ lưới, hát cho cá mập nghe: “Thả xuống và quẫy."
+      },
+      {
+        "text_en": "Find a fish.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_074.mp3",
+        "text_vi": "Tìm một con cá."
+      },
+      {
+        "text_en": "Pull and plop.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_075.mp3",
+        "text_vi": "Kéo lên và thả."
+      },
+      {
+        "text_en": "Don’t you stop.” When the shark at last is free it streaks back into the waves, leaving only one fat yellowtail in the net.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_076.mp3",
+        "text_vi": "Đừng dừng lại.” Khi con cá mập cuối cùng được tự do, nó lao nhanh trở lại sóng, chỉ để lại một con cá cam béo trong lưới."
+      },
+      {
+        "text_en": "Ouma Safiya will be pleased.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_077.mp3",
+        "text_vi": "Bà Safiya sẽ rất vui."
+      },
+      {
+        "text_en": "The men pull the boat in and coil up the cables.",
+        "paragraph_index": 11,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_078.mp3",
+        "text_vi": "Những người đàn ông kéo thuyền vào và cuộn dây cáp lại."
+      },
+      {
+        "text_en": "A hard white triangle catches Papa’s finger.",
+        "paragraph_index": 11,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_079.mp3",
+        "text_vi": "Một vật hình tam giác cứng màu trắng mắc vào ngón tay bố."
+      },
+      {
+        "text_en": "“Whaaat? Whaaat? Whaaat?” cry the gulls.",
+        "paragraph_index": 11,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_080.mp3",
+        "text_vi": "“Cáiiiii gì? Cáiiiii gì? Cáiiiii gì?” lũ hải âu kêu."
+      },
+      {
+        "text_en": "“What did you bring back for Yusuf?” As the sun goes down, Papa answers the gulls.",
+        "paragraph_index": 11,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_081.mp3",
+        "text_vi": "“Ông đã mang gì về cho Yusuf?” Khi mặt trời lặn, bố trả lời lũ hải âu."
+      },
+      {
+        "text_en": "“A lucky shark tooth for my boy.” At home Yusuf holds his gift up to the stars.",
+        "paragraph_index": 11,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_082.mp3",
+        "text_vi": "“Một chiếc răng cá mập may mắn cho con trai của bố.” Ở nhà, Yusuf giơ món quà của mình lên ngắm dưới những vì sao."
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "One special Friday Yusuf ’s father gets dressed before a flicker of light brightens the sky.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "He pulls on his heavy weather-proof jacket and the green woollen cap that covers his ears.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "He waves his boy goodbye.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "Yusuf ’s eyes brighten when Papa says, “Today is the day I will catch a fish and bring a gift home for you.”",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "A fish and a gift?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "Oh, what will it be?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "Papa cycles down to Muizenberg Beach.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "Squeak squeak go the wheels all the way to Surfer’s Corner.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "Gulls circle the sky.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "“Whaaat? Whaaat? Whaaat?” they cry.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "“What will you bring back for Yusuf?” Papa rings his bell.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "“Wait and see what it will be!”",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "The fishermen watch the sun rise.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_012.mp3"
+        },
+        {
+          "id": "ra_13",
+          "text_en": "They check their nets.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_013.mp3"
+        },
+        {
+          "id": "ra_14",
+          "text_en": "They check their oars.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_014.mp3"
+        },
+        {
+          "id": "ra_15",
+          "text_en": "They listen to the wind.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_015.mp3"
+        },
+        {
+          "id": "ra_16",
+          "text_en": "They drag their boats down to the water.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_016.mp3"
+        },
+        {
+          "id": "ra_17",
+          "text_en": "Yusuf ’s grandfather, Oupa Salie was a treknet fisherman.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_017.mp3"
+        },
+        {
+          "id": "ra_18",
+          "text_en": "Before him his father, Oupagrootjie Ridwaan, knew the sea too.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_018.mp3"
+        },
+        {
+          "id": "ra_19",
+          "text_en": "The boat rides into the waves.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_019.mp3"
+        },
+        {
+          "id": "ra_20",
+          "text_en": "Papa’s arms stretch to the oar.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_020.mp3"
+        },
+        {
+          "id": "ra_21",
+          "text_en": "His leg braces against the side.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_021.mp3"
+        },
+        {
+          "id": "ra_22",
+          "text_en": "His neck strains, his back muscles ripple.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_022.mp3"
+        },
+        {
+          "id": "ra_23",
+          "text_en": "Papa sings as he works: “Drop and swish.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_023.mp3"
+        },
+        {
+          "id": "ra_24",
+          "text_en": "Find a fish.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_024.mp3"
+        },
+        {
+          "id": "ra_25",
+          "text_en": "Pull and plop.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_025.mp3"
+        },
+        {
+          "id": "ra_26",
+          "text_en": "Don’t you stop.”",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_026.mp3"
+        },
+        {
+          "id": "ra_27",
+          "text_en": "All day long Yusuf looks at the sky.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_027.mp3"
+        },
+        {
+          "id": "ra_28",
+          "text_en": "It is bright and clear and windless.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_028.mp3"
+        },
+        {
+          "id": "ra_29",
+          "text_en": "A fish and a gift!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_029.mp3"
+        },
+        {
+          "id": "ra_30",
+          "text_en": "What will Papa bring home from the sea?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_030.mp3"
+        },
+        {
+          "id": "ra_31",
+          "text_en": "Sometimes he brings a beautiful shell.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_031.mp3"
+        },
+        {
+          "id": "ra_32",
+          "text_en": "Sometimes he brings a jewel green bottle rinsed by the waves.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_032.mp3"
+        },
+        {
+          "id": "ra_33",
+          "text_en": "Some days Yusuf ’s father brings a story.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_033.mp3"
+        },
+        {
+          "id": "ra_34",
+          "text_en": "Like the time they found sea turtles on the sand, hundreds washed up in a storm.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_034.mp3"
+        },
+        {
+          "id": "ra_35",
+          "text_en": "“Whaaat? Whaaat? Whaaat?” cried the gulls.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_035.mp3"
+        },
+        {
+          "id": "ra_36",
+          "text_en": "“What will you do to help the turtles?” Papa said, “We saved those turtles, I tell you straight.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_036.mp3"
+        },
+        {
+          "id": "ra_37",
+          "text_en": "We sent them back to the ocean, every last one.”",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_037.mp3"
+        },
+        {
+          "id": "ra_38",
+          "text_en": "Always Papa brings a song.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_038.mp3"
+        },
+        {
+          "id": "ra_39",
+          "text_en": "He sings the song while he pulls the oars.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_039.mp3"
+        },
+        {
+          "id": "ra_40",
+          "text_en": "He sings the song while he pulls the nets.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_040.mp3"
+        },
+        {
+          "id": "ra_41",
+          "text_en": "He sings the song as he winds the ropes.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_041.mp3"
+        },
+        {
+          "id": "ra_42",
+          "text_en": "He sings the song as he cycles home.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_042.mp3"
+        },
+        {
+          "id": "ra_43",
+          "text_en": "“Drop and swish.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_043.mp3"
+        },
+        {
+          "id": "ra_44",
+          "text_en": "Find a fish.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_044.mp3"
+        },
+        {
+          "id": "ra_45",
+          "text_en": "Pull and plop.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_045.mp3"
+        },
+        {
+          "id": "ra_46",
+          "text_en": "Don’t you stop.”",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_046.mp3"
+        },
+        {
+          "id": "ra_47",
+          "text_en": "Ouma Safiya wants a nice fat yellowtail for her supper.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_047.mp3"
+        },
+        {
+          "id": "ra_48",
+          "text_en": "Mother wants a new dress.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_048.mp3"
+        },
+        {
+          "id": "ra_49",
+          "text_en": "“Don’t be silly,” says Ouma.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_049.mp3"
+        },
+        {
+          "id": "ra_50",
+          "text_en": "“You’ll be lucky if they catch even a tiny crab.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_050.mp3"
+        },
+        {
+          "id": "ra_51",
+          "text_en": "More likely it will be fish tail Friday.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_051.mp3"
+        },
+        {
+          "id": "ra_52",
+          "text_en": "There’s not so many fish left in the sea.” Yusuf holds Ouma’s hand.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_052.mp3"
+        },
+        {
+          "id": "ra_53",
+          "text_en": "They cross the road at the bathing cabins.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_053.mp3"
+        },
+        {
+          "id": "ra_54",
+          "text_en": "“Whaaat? Whaaat? Whaaat?” cry the gulls perched on the bright rooftops.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_054.mp3"
+        },
+        {
+          "id": "ra_55",
+          "text_en": "“What is for supper?”",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_055.mp3"
+        },
+        {
+          "id": "ra_56",
+          "text_en": "Last year the fishermen fought with the surfers.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_056.mp3"
+        },
+        {
+          "id": "ra_57",
+          "text_en": "Angry fists and shouting words.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_057.mp3"
+        },
+        {
+          "id": "ra_58",
+          "text_en": "“Whaaat? Whaaat? Whaaat?” cried the gulls.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_058.mp3"
+        },
+        {
+          "id": "ra_59",
+          "text_en": "“There’s enough sea for everybody,” said Yusuf ’s father.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_059.mp3"
+        },
+        {
+          "id": "ra_60",
+          "text_en": "He showed them the fishing licence that had been Oupa Salie’s.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_060.mp3"
+        },
+        {
+          "id": "ra_61",
+          "text_en": "“Waves for all.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_061.mp3"
+        },
+        {
+          "id": "ra_62",
+          "text_en": "Water for free.”",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_062.mp3"
+        },
+        {
+          "id": "ra_63",
+          "text_en": "Ouma Safiya watches through her binoculars, her fingers curled in curiosity.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_063.mp3"
+        },
+        {
+          "id": "ra_64",
+          "text_en": "The shark siren sounds.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_064.mp3"
+        },
+        {
+          "id": "ra_65",
+          "text_en": "Swimmers run back to the sand and grab their towels.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_065.mp3"
+        },
+        {
+          "id": "ra_66",
+          "text_en": "Surfers rush to the shore, carrying their boards under their arms.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_066.mp3"
+        },
+        {
+          "id": "ra_67",
+          "text_en": "Under the showers they strip off their wetsuits.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_067.mp3"
+        },
+        {
+          "id": "ra_68",
+          "text_en": "“Whaaat? Whaaat? Whaaat?” cry the gulls.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_068.mp3"
+        },
+        {
+          "id": "ra_69",
+          "text_en": "“What will Yusuf ’s father bring from the ocean?”",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_069.mp3"
+        },
+        {
+          "id": "ra_70",
+          "text_en": "Yusuf’s father and uncle and cousins heave and pull.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_070.mp3"
+        },
+        {
+          "id": "ra_71",
+          "text_en": "A little shark has been caught.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_071.mp3"
+        },
+        {
+          "id": "ra_72",
+          "text_en": "It twists and thrashes in the waves.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_072.mp3"
+        },
+        {
+          "id": "ra_73",
+          "text_en": "Yusuf’s father untangles the nets, singing to the shark: “Drop and swish.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_073.mp3"
+        },
+        {
+          "id": "ra_74",
+          "text_en": "Find a fish.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_074.mp3"
+        },
+        {
+          "id": "ra_75",
+          "text_en": "Pull and plop.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_075.mp3"
+        },
+        {
+          "id": "ra_76",
+          "text_en": "Don’t you stop.” When the shark at last is free it streaks back into the waves, leaving only one fat yellowtail in the net.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_076.mp3"
+        },
+        {
+          "id": "ra_77",
+          "text_en": "Ouma Safiya will be pleased.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_077.mp3"
+        },
+        {
+          "id": "ra_78",
+          "text_en": "The men pull the boat in and coil up the cables.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_078.mp3"
+        },
+        {
+          "id": "ra_79",
+          "text_en": "A hard white triangle catches Papa’s finger.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_079.mp3"
+        },
+        {
+          "id": "ra_80",
+          "text_en": "“Whaaat? Whaaat? Whaaat?” cry the gulls.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_080.mp3"
+        },
+        {
+          "id": "ra_81",
+          "text_en": "“What did you bring back for Yusuf?” As the sun goes down, Papa answers the gulls.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_081.mp3"
+        },
+        {
+          "id": "ra_82",
+          "text_en": "“A lucky shark tooth for my boy.” At home Yusuf holds his gift up to the stars.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104873/s_082.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "When does Yusuf's father get dressed?",
+          "options_en": [
+            "One special Friday",
+            "All day long",
+            "Last year"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "Who gets dressed before a flicker of light brightens the sky?",
+          "options_en": [
+            "Yusuf's father",
+            "Yusuf",
+            "Ouma Safiya"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s1_q1",
+          "type": "choice",
+          "question_en": "Which cap does he pull on?",
+          "options_en": [
+            "The green woollen cap that covers his ears",
+            "A wetsuit hood",
+            "The fishing licence"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s1_q2",
+          "type": "choice",
+          "question_en": "What does the green woollen cap cover?",
+          "options_en": [
+            "His ears",
+            "His fingers",
+            "His neck"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s2_q1",
+          "type": "choice",
+          "question_en": "Who does he wave goodbye to?",
+          "options_en": [
+            "His boy",
+            "Ouma Safiya",
+            "Yusuf's grandfather"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s2_q2",
+          "type": "choice",
+          "question_en": "What action does he do to his boy?",
+          "options_en": [
+            "Waves him goodbye",
+            "Cycles to the beach",
+            "Pulls on his jacket"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s3_q1",
+          "type": "choice",
+          "question_en": "Why do Yusuf's eyes brighten?",
+          "options_en": [
+            "Because Papa says he will catch a fish and bring a gift",
+            "Because he finds a beautiful shell",
+            "Because the gulls cry loudly"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p0_s3_q2",
+          "type": "choice",
+          "question_en": "What does Papa say he will bring home for Yusuf?",
+          "options_en": [
+            "A fish and a gift",
+            "A lucky shark tooth",
+            "A fat yellowtail"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "What two things are mentioned in the question?",
+          "options_en": [
+            "A fish and a gift",
+            "A shell and a bottle",
+            "A shark and a net"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "Which pair is being wondered about?",
+          "options_en": [
+            "A fish and a gift",
+            "A new dress and supper",
+            "Oars and nets"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p1_s1_q1",
+          "type": "choice",
+          "question_en": "What is the speaker asking about?",
+          "options_en": [
+            "What it will be",
+            "Where Papa will go",
+            "When they will eat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p1_s1_q2",
+          "type": "choice",
+          "question_en": "How does the speaker show curiosity?",
+          "options_en": [
+            "They say, 'Oh, what will it be?'",
+            "They ring a bell",
+            "They sing a song"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p1_s2_q1",
+          "type": "choice",
+          "question_en": "Who cycles down to Muizenberg Beach?",
+          "options_en": [
+            "Papa",
+            "Yusuf",
+            "Ouma Safiya"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p1_s2_q2",
+          "type": "choice",
+          "question_en": "Where does Papa cycle to?",
+          "options_en": [
+            "Muizenberg Beach",
+            "Surfer’s Corner",
+            "The bathing cabins"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p1_s3_q1",
+          "type": "choice",
+          "question_en": "What sound do the wheels make?",
+          "options_en": [
+            "Squeak squeak",
+            "Whaaat? Whaaat?",
+            "Drop and swish"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p1_s3_q2",
+          "type": "choice",
+          "question_en": "Where do the wheels go to?",
+          "options_en": [
+            "Surfer’s Corner",
+            "Muizenberg Beach",
+            "The sand"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p1_s4_q1",
+          "type": "choice",
+          "question_en": "What circles the sky?",
+          "options_en": [
+            "Gulls",
+            "Boats",
+            "Surfers"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p1_s4_q2",
+          "type": "choice",
+          "question_en": "Where do the gulls circle?",
+          "options_en": [
+            "The sky",
+            "The beach",
+            "Surfer’s Corner"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p1_s5_q1",
+          "type": "choice",
+          "question_en": "What do they cry?",
+          "options_en": [
+            "“Whaaat? Whaaat? Whaaat?”",
+            "“Drop and swish”",
+            "“Squeak squeak”"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p1_s5_q2",
+          "type": "choice",
+          "question_en": "Who cries “Whaaat? Whaaat? Whaaat?”?",
+          "options_en": [
+            "The gulls",
+            "Papa",
+            "The fishermen"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p1_s6_q1",
+          "type": "choice",
+          "question_en": "What is the correct answer to this question: For whom does the question ask what will be brought back?",
+          "options_en": [
+            "Yusuf",
+            "Ouma Safiya",
+            "Surfers"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p1_s6_q2",
+          "type": "choice",
+          "question_en": "What does Papa do after the question is asked?",
+          "options_en": [
+            "He rings his bell",
+            "He sings a song",
+            "He pulls an oar"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p1_s7_q1",
+          "type": "choice",
+          "question_en": "What does the speaker tell others to do?",
+          "options_en": [
+            "Wait and see what it will be",
+            "Catch a fish now",
+            "Go home"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p1_s7_q2",
+          "type": "choice",
+          "question_en": "How does the speaker respond to the question?",
+          "options_en": [
+            "By saying, 'Wait and see what it will be!'",
+            "By singing loudly",
+            "By running to the beach"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "Who watches the sun rise?",
+          "options_en": [
+            "The fishermen",
+            "Yusuf's father",
+            "The gulls"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "What do the fishermen watch?",
+          "options_en": [
+            "The sun rise",
+            "The boats",
+            "The sea"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p2_s1_q1",
+          "type": "choice",
+          "question_en": "What do they check?",
+          "options_en": [
+            "Their nets",
+            "Their oars",
+            "Their ropes"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p2_s1_q2",
+          "type": "choice",
+          "question_en": "Who checks their nets?",
+          "options_en": [
+            "They (the fishermen)",
+            "Yusuf",
+            "The gulls"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p2_s2_q1",
+          "type": "choice",
+          "question_en": "What do they check?",
+          "options_en": [
+            "Their oars",
+            "Their nets",
+            "Their boats"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p2_s2_q2",
+          "type": "choice",
+          "question_en": "Who checks their oars?",
+          "options_en": [
+            "They (the fishermen)",
+            "Ouma Safiya",
+            "Yusuf"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p2_s3_q1",
+          "type": "choice",
+          "question_en": "What do they listen to?",
+          "options_en": [
+            "The wind",
+            "The gulls",
+            "The song"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p2_s3_q2",
+          "type": "choice",
+          "question_en": "Who listens to the wind?",
+          "options_en": [
+            "They (the fishermen)",
+            "Surfers",
+            "Ouma Safiya"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p2_s4_q1",
+          "type": "choice",
+          "question_en": "What do they drag down to the water?",
+          "options_en": [
+            "Their boats",
+            "Their nets",
+            "Their oars"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p2_s4_q2",
+          "type": "choice",
+          "question_en": "Where do they drag their boats?",
+          "options_en": [
+            "Down to the water",
+            "To Muizenberg Beach",
+            "To the bathing cabins"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p2_s5_q1",
+          "type": "choice",
+          "question_en": "Who was a treknet fisherman?",
+          "options_en": [
+            "Oupa Salie",
+            "Yusuf's father",
+            "Oupagrootjie Ridwaan"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p2_s5_q2",
+          "type": "choice",
+          "question_en": "Whose grandfather was Oupa Salie?",
+          "options_en": [
+            "Yusuf's",
+            "Papa's",
+            "Ouma Safiya's"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p2_s6_q1",
+          "type": "choice",
+          "question_en": "Who knew the sea before him?",
+          "options_en": [
+            "Oupagrootjie Ridwaan",
+            "Yusuf",
+            "Ouma Safiya"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p2_s6_q2",
+          "type": "choice",
+          "question_en": "Whose father was Oupagrootjie Ridwaan?",
+          "options_en": [
+            "Oupa Salie's",
+            "Yusuf's",
+            "Papa's"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "What rides into the waves?",
+          "options_en": [
+            "The boat",
+            "Papa's bicycle",
+            "The gulls"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "Where does the boat ride?",
+          "options_en": [
+            "Into the waves",
+            "Along the road to Surfer's Corner",
+            "Across the sand"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p3_s1_q1",
+          "type": "choice",
+          "question_en": "Whose arms stretch to the oar?",
+          "options_en": [
+            "Papa's",
+            "Ouma Safiya's",
+            "Yusuf's"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p3_s1_q2",
+          "type": "choice",
+          "question_en": "What does Papa stretch to reach?",
+          "options_en": [
+            "The oar",
+            "The fishing net",
+            "His woollen cap"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p3_s2_q1",
+          "type": "choice",
+          "question_en": "What braces against the side?",
+          "options_en": [
+            "His leg",
+            "The fishing net",
+            "The shark tooth"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p3_s2_q2",
+          "type": "choice",
+          "question_en": "Why does his leg brace against the side?",
+          "options_en": [
+            "To give him support while rowing",
+            "To check the nets",
+            "To hold a shell"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p3_s3_q1",
+          "type": "choice",
+          "question_en": "What strains and whose back muscles ripple?",
+          "options_en": [
+            "His neck strains and his back muscles ripple",
+            "The boat strains and the gulls ripple",
+            "Ouma's neck strains and the sea ripples"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p3_s3_q2",
+          "type": "choice",
+          "question_en": "How are his back muscles described?",
+          "options_en": [
+            "They ripple",
+            "They are tired",
+            "They are covered in sand"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p3_s4_q1",
+          "type": "choice",
+          "question_en": "What does Papa do as he works?",
+          "options_en": [
+            "He sings",
+            "He watches the gulls",
+            "He fixes his cap"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p3_s4_q2",
+          "type": "choice",
+          "question_en": "What are the first words of the song Papa sings?",
+          "options_en": [
+            "\"Drop and swish.\"",
+            "\"Waves for all.\"",
+            "\"Whaaat? Whaaat?\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p3_s5_q1",
+          "type": "choice",
+          "question_en": "What does the song tell them to find?",
+          "options_en": [
+            "A fish",
+            "A jewel green bottle",
+            "A shell"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p3_s5_q2",
+          "type": "choice",
+          "question_en": "Which line follows \"Drop and swish\" in the song?",
+          "options_en": [
+            "Find a fish.",
+            "Pull and plop.",
+            "Don't you stop."
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p3_s6_q1",
+          "type": "choice",
+          "question_en": "What action comes after finding a fish in the song?",
+          "options_en": [
+            "Pull and plop.",
+            "Drop and swish.",
+            "Sing and smile."
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p3_s6_q2",
+          "type": "choice",
+          "question_en": "How is the action of pulling described in the song?",
+          "options_en": [
+            "Pull and plop.",
+            "Pull and shine.",
+            "Pull and hum."
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p3_s7_q1",
+          "type": "choice",
+          "question_en": "What does the song tell them not to do?",
+          "options_en": [
+            "Don't you stop.",
+            "Don't feed the gulls.",
+            "Don't go to shore."
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p3_s7_q2",
+          "type": "choice",
+          "question_en": "Why might the song say \"Don't you stop\"?",
+          "options_en": [
+            "To keep working until they catch fish",
+            "To tell the gulls to be quiet",
+            "To remind Yusuf about supper"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "Who looks at the sky all day long?",
+          "options_en": [
+            "Yusuf",
+            "Papa",
+            "Ouma Safiya"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "When does Yusuf look at the sky?",
+          "options_en": [
+            "All day long",
+            "Before sunrise",
+            "At night"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        },
+        {
+          "id": "gl_p4_s1_q1",
+          "type": "choice",
+          "question_en": "How is the sky described?",
+          "options_en": [
+            "Bright and clear and windless",
+            "Stormy and windy",
+            "Dark and cloudy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        },
+        {
+          "id": "gl_p4_s1_q2",
+          "type": "choice",
+          "question_en": "What is the weather like in the sentence?",
+          "options_en": [
+            "Bright, clear and windless",
+            "Windy with high waves",
+            "Foggy and rainy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        },
+        {
+          "id": "gl_p4_s2_q1",
+          "type": "choice",
+          "question_en": "What two things are mentioned together?",
+          "options_en": [
+            "A fish and a gift",
+            "A shell and a bottle",
+            "A song and a net"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p4_s2_q2",
+          "type": "choice",
+          "question_en": "What is exclaimed in the sentence?",
+          "options_en": [
+            "A fish and a gift!",
+            "Drop and swish",
+            "Whaaat? Whaaat?"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p4_s3_q1",
+          "type": "choice",
+          "question_en": "Who is expected to bring something home from the sea?",
+          "options_en": [
+            "Papa",
+            "Yusuf",
+            "Ouma Safiya"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        },
+        {
+          "id": "gl_p4_s3_q2",
+          "type": "choice",
+          "question_en": "Where is Papa expected to bring something from?",
+          "options_en": [
+            "The sea",
+            "The market",
+            "The beach"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        },
+        {
+          "id": "gl_p4_s4_q1",
+          "type": "choice",
+          "question_en": "Who sometimes brings a beautiful shell?",
+          "options_en": [
+            "He (Papa)",
+            "Yusuf",
+            "Oupa Salie"
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        },
+        {
+          "id": "gl_p4_s4_q2",
+          "type": "choice",
+          "question_en": "What does he sometimes bring?",
+          "options_en": [
+            "A beautiful shell",
+            "A jewel green bottle",
+            "A lucky shark tooth"
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        },
+        {
+          "id": "gl_p4_s5_q1",
+          "type": "choice",
+          "question_en": "What does he sometimes bring rinsed by the waves?",
+          "options_en": [
+            "A jewel green bottle",
+            "A beautiful shell",
+            "A fat yellowtail"
+          ],
+          "correct_index": 0,
+          "sentence_index": 32
+        },
+        {
+          "id": "gl_p4_s5_q2",
+          "type": "choice",
+          "question_en": "How is the bottle described?",
+          "options_en": [
+            "Jewel green",
+            "Lucky",
+            "Beautiful"
+          ],
+          "correct_index": 0,
+          "sentence_index": 32
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "Who brings a story some days?",
+          "options_en": [
+            "Yusuf's father",
+            "Yusuf",
+            "Ouma Safiya"
+          ],
+          "correct_index": 0,
+          "sentence_index": 33
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "What does Yusuf's father bring some days?",
+          "options_en": [
+            "A story",
+            "A fish",
+            "A shell"
+          ],
+          "correct_index": 0,
+          "sentence_index": 33
+        },
+        {
+          "id": "gl_p5_s1_q1",
+          "type": "choice",
+          "question_en": "What did they find on the sand?",
+          "options_en": [
+            "Sea turtles",
+            "A jewel green bottle",
+            "A fat yellowtail"
+          ],
+          "correct_index": 0,
+          "sentence_index": 34
+        },
+        {
+          "id": "gl_p5_s1_q2",
+          "type": "choice",
+          "question_en": "When did hundreds wash up?",
+          "options_en": [
+            "In a storm",
+            "Last year",
+            "On a bright clear day"
+          ],
+          "correct_index": 0,
+          "sentence_index": 34
+        },
+        {
+          "id": "gl_p5_s2_q1",
+          "type": "choice",
+          "question_en": "Who cried \"Whaaat? Whaaat? Whaaat?\"",
+          "options_en": [
+            "The gulls",
+            "Yusuf's father",
+            "The fishermen"
+          ],
+          "correct_index": 0,
+          "sentence_index": 35
+        },
+        {
+          "id": "gl_p5_s2_q2",
+          "type": "choice",
+          "question_en": "What did the gulls cry?",
+          "options_en": [
+            "\"Whaaat? Whaaat? Whaaat?\"",
+            "\"Drop and swish. Find a fish.\"",
+            "\"There's enough sea for everybody.\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 35
+        },
+        {
+          "id": "gl_p5_s3_q1",
+          "type": "choice",
+          "question_en": "Who said, \"We saved those turtles, I tell you straight.\"?",
+          "options_en": [
+            "Papa",
+            "Ouma Safiya",
+            "Yusuf"
+          ],
+          "correct_index": 0,
+          "sentence_index": 36
+        },
+        {
+          "id": "gl_p5_s3_q2",
+          "type": "choice",
+          "question_en": "What question was asked about the turtles?",
+          "options_en": [
+            "\"What will you do to help the turtles?\"",
+            "\"What will you bring back for Yusuf?\"",
+            "\"Where will you go?\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 36
+        },
+        {
+          "id": "gl_p5_s4_q1",
+          "type": "choice",
+          "question_en": "What did they do with the turtles?",
+          "options_en": [
+            "Sent them back to the ocean",
+            "Kept them as gifts",
+            "Gave a lucky shark tooth"
+          ],
+          "correct_index": 0,
+          "sentence_index": 37
+        },
+        {
+          "id": "gl_p5_s4_q2",
+          "type": "choice",
+          "question_en": "How many did they send back?",
+          "options_en": [
+            "Every last one",
+            "One fat yellowtail",
+            "Only a few"
+          ],
+          "correct_index": 0,
+          "sentence_index": 37
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "Who always brings a song?",
+          "options_en": [
+            "Papa",
+            "Yusuf",
+            "Ouma Safiya"
+          ],
+          "correct_index": 0,
+          "sentence_index": 38
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "What does Papa bring?",
+          "options_en": [
+            "A song",
+            "A fish",
+            "A lucky shark tooth"
+          ],
+          "correct_index": 0,
+          "sentence_index": 38
+        },
+        {
+          "id": "gl_p6_s1_q1",
+          "type": "choice",
+          "question_en": "When does he sing the song in this sentence?",
+          "options_en": [
+            "While he pulls the oars",
+            "While he checks the nets",
+            "When he cycles home"
+          ],
+          "correct_index": 0,
+          "sentence_index": 39
+        },
+        {
+          "id": "gl_p6_s1_q2",
+          "type": "choice",
+          "question_en": "What action is Papa doing while he sings here?",
+          "options_en": [
+            "Pulling the oars",
+            "Winding the ropes",
+            "Pulling the nets"
+          ],
+          "correct_index": 0,
+          "sentence_index": 39
+        },
+        {
+          "id": "gl_p6_s2_q1",
+          "type": "choice",
+          "question_en": "What does Papa sing while he pulls in this sentence?",
+          "options_en": [
+            "The song while he pulls the nets",
+            "A song about turtles",
+            "A song while he cycles"
+          ],
+          "correct_index": 0,
+          "sentence_index": 40
+        },
+        {
+          "id": "gl_p6_s2_q2",
+          "type": "choice",
+          "question_en": "Which task is mentioned as Papa sings in this sentence?",
+          "options_en": [
+            "Pulling the nets",
+            "Checking the oars",
+            "Coiling the cables"
+          ],
+          "correct_index": 0,
+          "sentence_index": 40
+        },
+        {
+          "id": "gl_p6_s3_q1",
+          "type": "choice",
+          "question_en": "What does Papa do as he sings in this sentence?",
+          "options_en": [
+            "Winds the ropes",
+            "Catches a fish",
+            "Watches the gulls"
+          ],
+          "correct_index": 0,
+          "sentence_index": 41
+        },
+        {
+          "id": "gl_p6_s3_q2",
+          "type": "choice",
+          "question_en": "Which other action from the story is NOT the one named in this sentence?",
+          "options_en": [
+            "Catching a fish",
+            "Winding the ropes",
+            "Pulling the nets"
+          ],
+          "correct_index": 0,
+          "sentence_index": 41
+        },
+        {
+          "id": "gl_p6_s4_q1",
+          "type": "choice",
+          "question_en": "How does Papa return while singing in this sentence?",
+          "options_en": [
+            "He cycles home",
+            "He walks home",
+            "He rows the boat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 42
+        },
+        {
+          "id": "gl_p6_s4_q2",
+          "type": "choice",
+          "question_en": "When does Papa sing according to this sentence?",
+          "options_en": [
+            "As he cycles home",
+            "When he checks his nets",
+            "While he cooks supper"
+          ],
+          "correct_index": 0,
+          "sentence_index": 42
+        },
+        {
+          "id": "gl_p6_s5_q1",
+          "type": "choice",
+          "question_en": "What is the first line of the song?",
+          "options_en": [
+            "Drop and swish",
+            "Find a fish",
+            "Pull and plop"
+          ],
+          "correct_index": 0,
+          "sentence_index": 43
+        },
+        {
+          "id": "gl_p6_s5_q2",
+          "type": "choice",
+          "question_en": "How many words are there in this sentence of the song?",
+          "options_en": [
+            "Two (Drop and swish)",
+            "Three (Find a fish)",
+            "Four (Pull and plop now)"
+          ],
+          "correct_index": 0,
+          "sentence_index": 43
+        },
+        {
+          "id": "gl_p6_s6_q1",
+          "type": "choice",
+          "question_en": "What does the song tell them to find?",
+          "options_en": [
+            "A fish",
+            "A shell",
+            "A bottle"
+          ],
+          "correct_index": 0,
+          "sentence_index": 44
+        },
+        {
+          "id": "gl_p6_s6_q2",
+          "type": "choice",
+          "question_en": "Which part of the song is this sentence?",
+          "options_en": [
+            "Find a fish",
+            "Drop and swish",
+            "Pull and plop"
+          ],
+          "correct_index": 0,
+          "sentence_index": 44
+        },
+        {
+          "id": "gl_p6_s7_q1",
+          "type": "choice",
+          "question_en": "What action does the song say to do after pulling?",
+          "options_en": [
+            "Pull and plop",
+            "Drop and swish",
+            "Find a fish"
+          ],
+          "correct_index": 0,
+          "sentence_index": 45
+        },
+        {
+          "id": "gl_p6_s7_q2",
+          "type": "choice",
+          "question_en": "Which phrase is paired together in this line of the song?",
+          "options_en": [
+            "Pull and plop",
+            "Drop and swish",
+            "Find and keep"
+          ],
+          "correct_index": 0,
+          "sentence_index": 45
+        },
+        {
+          "id": "gl_p6_s8_q1",
+          "type": "choice",
+          "question_en": "What does the song tell someone not to do?",
+          "options_en": [
+            "Don’t you stop",
+            "Don’t drop the nets",
+            "Don’t forget Yusuf"
+          ],
+          "correct_index": 0,
+          "sentence_index": 46
+        },
+        {
+          "id": "gl_p6_s8_q2",
+          "type": "choice",
+          "question_en": "How does the song encourage the listener in this sentence?",
+          "options_en": [
+            "By telling them not to stop",
+            "By telling them to bring a gift",
+            "By telling them to watch the gulls"
+          ],
+          "correct_index": 0,
+          "sentence_index": 46
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "What does Ouma Safiya want for her supper?",
+          "options_en": [
+            "A nice fat yellowtail",
+            "A lucky shark tooth",
+            "A new dress"
+          ],
+          "correct_index": 0,
+          "sentence_index": 47
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "Who is hoping for the yellowtail?",
+          "options_en": [
+            "Ouma Safiya",
+            "Yusuf",
+            "Yusuf's father"
+          ],
+          "correct_index": 0,
+          "sentence_index": 47
+        },
+        {
+          "id": "gl_p7_s1_q1",
+          "type": "choice",
+          "question_en": "What does Mother want?",
+          "options_en": [
+            "A new dress",
+            "A fat yellowtail",
+            "A lucky shark tooth"
+          ],
+          "correct_index": 0,
+          "sentence_index": 48
+        },
+        {
+          "id": "gl_p7_s1_q2",
+          "type": "choice",
+          "question_en": "Who wants a new dress?",
+          "options_en": [
+            "Mother",
+            "Ouma Safiya",
+            "Yusuf's father"
+          ],
+          "correct_index": 0,
+          "sentence_index": 48
+        },
+        {
+          "id": "gl_p7_s2_q1",
+          "type": "choice",
+          "question_en": "Who says \"Don't be silly\"?",
+          "options_en": [
+            "Ouma",
+            "Mother",
+            "Yusuf"
+          ],
+          "correct_index": 0,
+          "sentence_index": 49
+        },
+        {
+          "id": "gl_p7_s2_q2",
+          "type": "choice",
+          "question_en": "What is Ouma's reaction?",
+          "options_en": [
+            "She says \"Don't be silly.\"",
+            "She sings a song",
+            "She looks through binoculars"
+          ],
+          "correct_index": 0,
+          "sentence_index": 49
+        },
+        {
+          "id": "gl_p7_s3_q1",
+          "type": "choice",
+          "question_en": "What does Ouma say they will be lucky to catch?",
+          "options_en": [
+            "Even a tiny crab",
+            "A fat yellowtail",
+            "A lucky shark tooth"
+          ],
+          "correct_index": 0,
+          "sentence_index": 50
+        },
+        {
+          "id": "gl_p7_s3_q2",
+          "type": "choice",
+          "question_en": "Why does Ouma say not to expect much?",
+          "options_en": [
+            "They might catch only a tiny crab",
+            "They will find sea turtles",
+            "They will bring back a jewel green bottle"
+          ],
+          "correct_index": 0,
+          "sentence_index": 50
+        },
+        {
+          "id": "gl_p7_s4_q1",
+          "type": "choice",
+          "question_en": "What does Ouma say is more likely for supper?",
+          "options_en": [
+            "Fish tail Friday",
+            "A nice fat yellowtail",
+            "A lucky shark tooth"
+          ],
+          "correct_index": 0,
+          "sentence_index": 51
+        },
+        {
+          "id": "gl_p7_s4_q2",
+          "type": "choice",
+          "question_en": "Why does she say that fish are scarce?",
+          "options_en": [
+            "There’s not so many fish left in the sea",
+            "The fishermen fought with the surfers",
+            "A little shark was caught"
+          ],
+          "correct_index": 0,
+          "sentence_index": 51
+        },
+        {
+          "id": "gl_p7_s5_q1",
+          "type": "choice",
+          "question_en": "What does the sentence say about the number of fish?",
+          "options_en": [
+            "There’s not so many fish left in the sea",
+            "There are plenty of fish in the sea",
+            "The fishermen will catch many fish"
+          ],
+          "correct_index": 0,
+          "sentence_index": 52
+        },
+        {
+          "id": "gl_p7_s5_q2",
+          "type": "choice",
+          "question_en": "Who holds Ouma's hand?",
+          "options_en": [
+            "Yusuf",
+            "Yusuf's father",
+            "Ouma Safiya"
+          ],
+          "correct_index": 0,
+          "sentence_index": 52
+        },
+        {
+          "id": "gl_p7_s6_q1",
+          "type": "choice",
+          "question_en": "Where do they cross the road?",
+          "options_en": [
+            "At the bathing cabins",
+            "At Surfer's Corner",
+            "At the docks"
+          ],
+          "correct_index": 0,
+          "sentence_index": 53
+        },
+        {
+          "id": "gl_p7_s6_q2",
+          "type": "choice",
+          "question_en": "Who crosses the road?",
+          "options_en": [
+            "Yusuf and Ouma",
+            "Yusuf's father and uncle",
+            "The fishermen"
+          ],
+          "correct_index": 0,
+          "sentence_index": 53
+        },
+        {
+          "id": "gl_p7_s7_q1",
+          "type": "choice",
+          "question_en": "Who cries \"Whaaat? Whaaat? Whaaat?\"?",
+          "options_en": [
+            "The gulls",
+            "The fishermen",
+            "The surfers"
+          ],
+          "correct_index": 0,
+          "sentence_index": 54
+        },
+        {
+          "id": "gl_p7_s7_q2",
+          "type": "choice",
+          "question_en": "Where are the gulls perched?",
+          "options_en": [
+            "On the bright rooftops",
+            "On the bathing cabins",
+            "On the fishing boats"
+          ],
+          "correct_index": 0,
+          "sentence_index": 54
+        },
+        {
+          "id": "gl_p7_s8_q1",
+          "type": "choice",
+          "question_en": "What question do the gulls ask?",
+          "options_en": [
+            "What is for supper?",
+            "What will you bring back for Yusuf?",
+            "What will you do to help the turtles?"
+          ],
+          "correct_index": 0,
+          "sentence_index": 55
+        },
+        {
+          "id": "gl_p7_s8_q2",
+          "type": "choice",
+          "question_en": "Why are the gulls crying out?",
+          "options_en": [
+            "They are asking what is for supper",
+            "They are warning of a shark",
+            "They are circling the sky"
+          ],
+          "correct_index": 0,
+          "sentence_index": 55
+        }
+      ]
+    },
+    {
+      "paragraph_index": 8,
+      "questions": [
+        {
+          "id": "gl_p8_s0_q1",
+          "type": "choice",
+          "question_en": "Who fought with the surfers?",
+          "options_en": [
+            "the fishermen",
+            "Yusuf's father",
+            "the gulls"
+          ],
+          "correct_index": 0,
+          "sentence_index": 56
+        },
+        {
+          "id": "gl_p8_s0_q2",
+          "type": "choice",
+          "question_en": "When did the fishermen fight with the surfers?",
+          "options_en": [
+            "Last year",
+            "One special Friday",
+            "As the sun rose"
+          ],
+          "correct_index": 0,
+          "sentence_index": 56
+        },
+        {
+          "id": "gl_p8_s1_q1",
+          "type": "choice",
+          "question_en": "What accompanied the fighting?",
+          "options_en": [
+            "Angry fists and shouting words",
+            "A fishing licence",
+            "A lucky shark tooth"
+          ],
+          "correct_index": 0,
+          "sentence_index": 57
+        },
+        {
+          "id": "gl_p8_s1_q2",
+          "type": "choice",
+          "question_en": "How did people show their anger in that scene?",
+          "options_en": [
+            "With angry fists and shouting words",
+            "By singing a song",
+            "By waving goodbye"
+          ],
+          "correct_index": 0,
+          "sentence_index": 57
+        },
+        {
+          "id": "gl_p8_s2_q1",
+          "type": "choice",
+          "question_en": "Who cried \"Whaaat? Whaaat? Whaaat?\"?",
+          "options_en": [
+            "The gulls",
+            "The surfers",
+            "Yusuf"
+          ],
+          "correct_index": 0,
+          "sentence_index": 58
+        },
+        {
+          "id": "gl_p8_s2_q2",
+          "type": "choice",
+          "question_en": "What did the gulls cry?",
+          "options_en": [
+            "\"Whaaat? Whaaat? Whaaat?\"",
+            "\"Drop and swish. Find a fish.\"",
+            "\"Waves for all.\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 58
+        },
+        {
+          "id": "gl_p8_s3_q1",
+          "type": "choice",
+          "question_en": "Who said \"There’s enough sea for everybody\"?",
+          "options_en": [
+            "Yusuf's father",
+            "Ouma Safiya",
+            "the gulls"
+          ],
+          "correct_index": 0,
+          "sentence_index": 59
+        },
+        {
+          "id": "gl_p8_s3_q2",
+          "type": "choice",
+          "question_en": "What did Yusuf's father say about the sea?",
+          "options_en": [
+            "There’s enough sea for everybody",
+            "We saved those turtles",
+            "Drop and swish. Find a fish."
+          ],
+          "correct_index": 0,
+          "sentence_index": 59
+        },
+        {
+          "id": "gl_p8_s4_q1",
+          "type": "choice",
+          "question_en": "What did he show them?",
+          "options_en": [
+            "The fishing licence that had been Oupa Salie's",
+            "A green woollen cap",
+            "A lucky shark tooth"
+          ],
+          "correct_index": 0,
+          "sentence_index": 60
+        },
+        {
+          "id": "gl_p8_s4_q2",
+          "type": "choice",
+          "question_en": "Whose fishing licence was it?",
+          "options_en": [
+            "Oupa Salie's",
+            "Yusuf's father's",
+            "Ouma Safiya's"
+          ],
+          "correct_index": 0,
+          "sentence_index": 60
+        },
+        {
+          "id": "gl_p8_s5_q1",
+          "type": "choice",
+          "question_en": "What short phrase appears in sentence 5?",
+          "options_en": [
+            "\"Waves for all.\"",
+            "\"Water for free.\"",
+            "\"Whaaat? Whaaat? Whaaat?\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 61
+        },
+        {
+          "id": "gl_p8_s5_q2",
+          "type": "choice",
+          "question_en": "Who spoke the words \"Waves for all\" in the paragraph?",
+          "options_en": [
+            "Yusuf's father",
+            "The gulls",
+            "Oupa Salie"
+          ],
+          "correct_index": 0,
+          "sentence_index": 61
+        },
+        {
+          "id": "gl_p8_s6_q1",
+          "type": "choice",
+          "question_en": "What is the complete sentence in sentence 6?",
+          "options_en": [
+            "\"Water for free.\"",
+            "\"There’s enough sea for everybody.\"",
+            "\"Drop and swish. Find a fish.\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 62
+        },
+        {
+          "id": "gl_p8_s6_q2",
+          "type": "choice",
+          "question_en": "Who is claiming \"Water for free\" in the paragraph?",
+          "options_en": [
+            "Yusuf's father",
+            "The surfers",
+            "The gulls"
+          ],
+          "correct_index": 0,
+          "sentence_index": 62
+        }
+      ]
+    },
+    {
+      "paragraph_index": 9,
+      "questions": [
+        {
+          "id": "gl_p9_s0_q1",
+          "type": "choice",
+          "question_en": "Who watches through her binoculars?",
+          "options_en": [
+            "Ouma Safiya",
+            "Yusuf",
+            "Mother"
+          ],
+          "correct_index": 0,
+          "sentence_index": 63
+        },
+        {
+          "id": "gl_p9_s0_q2",
+          "type": "choice",
+          "question_en": "How are her fingers held?",
+          "options_en": [
+            "curled in curiosity",
+            "holding Yusuf's hand",
+            "grabbing a towel"
+          ],
+          "correct_index": 0,
+          "sentence_index": 63
+        },
+        {
+          "id": "gl_p9_s1_q1",
+          "type": "choice",
+          "question_en": "What sounds?",
+          "options_en": [
+            "the shark siren",
+            "the gulls crying",
+            "Papa singing"
+          ],
+          "correct_index": 0,
+          "sentence_index": 64
+        },
+        {
+          "id": "gl_p9_s1_q2",
+          "type": "choice",
+          "question_en": "Which siren sounds?",
+          "options_en": [
+            "the shark siren",
+            "the boat siren",
+            "the fishing siren"
+          ],
+          "correct_index": 0,
+          "sentence_index": 64
+        },
+        {
+          "id": "gl_p9_s2_q1",
+          "type": "choice",
+          "question_en": "Who run back to the sand?",
+          "options_en": [
+            "Swimmers",
+            "Surfers",
+            "Fishermen"
+          ],
+          "correct_index": 0,
+          "sentence_index": 65
+        },
+        {
+          "id": "gl_p9_s2_q2",
+          "type": "choice",
+          "question_en": "What do they grab when they reach the sand?",
+          "options_en": [
+            "their towels",
+            "their wetsuits",
+            "their nets"
+          ],
+          "correct_index": 0,
+          "sentence_index": 65
+        },
+        {
+          "id": "gl_p9_s3_q1",
+          "type": "choice",
+          "question_en": "Who rush to the shore?",
+          "options_en": [
+            "Surfers",
+            "Swimmers",
+            "Gulls"
+          ],
+          "correct_index": 0,
+          "sentence_index": 66
+        },
+        {
+          "id": "gl_p9_s3_q2",
+          "type": "choice",
+          "question_en": "What are they carrying under their arms?",
+          "options_en": [
+            "their boards",
+            "their towels",
+            "their nets"
+          ],
+          "correct_index": 0,
+          "sentence_index": 66
+        },
+        {
+          "id": "gl_p9_s4_q1",
+          "type": "choice",
+          "question_en": "Where do they strip off their wetsuits?",
+          "options_en": [
+            "Under the showers",
+            "On the sand",
+            "In the boat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 67
+        },
+        {
+          "id": "gl_p9_s4_q2",
+          "type": "choice",
+          "question_en": "What do they strip off?",
+          "options_en": [
+            "their wetsuits",
+            "their jackets",
+            "their nets"
+          ],
+          "correct_index": 0,
+          "sentence_index": 67
+        },
+        {
+          "id": "gl_p9_s5_q1",
+          "type": "choice",
+          "question_en": "Who cry \"Whaaat? Whaaat? Whaaat?\"?",
+          "options_en": [
+            "the gulls",
+            "the fishermen",
+            "the surfers"
+          ],
+          "correct_index": 0,
+          "sentence_index": 68
+        },
+        {
+          "id": "gl_p9_s5_q2",
+          "type": "choice",
+          "question_en": "What do the gulls cry?",
+          "options_en": [
+            "\"Whaaat? Whaaat? Whaaat?\"",
+            "\"Drop and swish. Find a fish.\"",
+            "\"What will you bring back for Yusuf?\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 68
+        },
+        {
+          "id": "gl_p9_s6_q1",
+          "type": "choice",
+          "question_en": "What are they asking about?",
+          "options_en": [
+            "what Yusuf's father will bring from the ocean",
+            "what Yusuf will bring",
+            "what Ouma Safiya wants for supper"
+          ],
+          "correct_index": 0,
+          "sentence_index": 69
+        },
+        {
+          "id": "gl_p9_s6_q2",
+          "type": "choice",
+          "question_en": "Who is the question about?",
+          "options_en": [
+            "Yusuf's father",
+            "Yusuf",
+            "Ouma Safiya"
+          ],
+          "correct_index": 0,
+          "sentence_index": 69
+        }
+      ]
+    },
+    {
+      "paragraph_index": 10,
+      "questions": [
+        {
+          "id": "gl_p10_s0_q1",
+          "type": "choice",
+          "question_en": "Who heave and pull?",
+          "options_en": [
+            "Yusuf’s father and uncle and cousins",
+            "The gulls on the rooftops",
+            "The swimmers on the sand"
+          ],
+          "correct_index": 0,
+          "sentence_index": 70
+        },
+        {
+          "id": "gl_p10_s0_q2",
+          "type": "choice",
+          "question_en": "What are Yusuf’s father and his relatives doing?",
+          "options_en": [
+            "Heave and pull",
+            "Checking their oars",
+            "Watching the gulls"
+          ],
+          "correct_index": 0,
+          "sentence_index": 70
+        },
+        {
+          "id": "gl_p10_s1_q1",
+          "type": "choice",
+          "question_en": "What has been caught?",
+          "options_en": [
+            "A little shark",
+            "A fat yellowtail",
+            "A tiny crab"
+          ],
+          "correct_index": 0,
+          "sentence_index": 71
+        },
+        {
+          "id": "gl_p10_s1_q2",
+          "type": "choice",
+          "question_en": "Which creature is mentioned as caught?",
+          "options_en": [
+            "A little shark",
+            "Sea turtles",
+            "A jewel green bottle"
+          ],
+          "correct_index": 0,
+          "sentence_index": 71
+        },
+        {
+          "id": "gl_p10_s2_q1",
+          "type": "choice",
+          "question_en": "What does it do in the waves?",
+          "options_en": [
+            "Twists and thrashes",
+            "Sings the song",
+            "Coils up the cables"
+          ],
+          "correct_index": 0,
+          "sentence_index": 72
+        },
+        {
+          "id": "gl_p10_s2_q2",
+          "type": "choice",
+          "question_en": "Where does it twist and thrash?",
+          "options_en": [
+            "In the waves",
+            "On the sand",
+            "On the boat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 72
+        },
+        {
+          "id": "gl_p10_s3_q1",
+          "type": "choice",
+          "question_en": "Who untangles the nets?",
+          "options_en": [
+            "Yusuf’s father",
+            "Ouma Safiya",
+            "Yusuf"
+          ],
+          "correct_index": 0,
+          "sentence_index": 73
+        },
+        {
+          "id": "gl_p10_s3_q2",
+          "type": "choice",
+          "question_en": "How does Yusuf’s father address the shark while untangling the nets?",
+          "options_en": [
+            "He sings to the shark",
+            "He watches the gulls",
+            "He reads a licence"
+          ],
+          "correct_index": 0,
+          "sentence_index": 73
+        },
+        {
+          "id": "gl_p10_s4_q1",
+          "type": "choice",
+          "question_en": "What does this line of the song ask?",
+          "options_en": [
+            "Find a fish",
+            "Pull and plop",
+            "Drop and swish"
+          ],
+          "correct_index": 0,
+          "sentence_index": 74
+        },
+        {
+          "id": "gl_p10_s4_q2",
+          "type": "choice",
+          "question_en": "Which phrase from the song asks to find something?",
+          "options_en": [
+            "Find a fish",
+            "Don’t you stop",
+            "A lucky shark tooth"
+          ],
+          "correct_index": 0,
+          "sentence_index": 74
+        },
+        {
+          "id": "gl_p10_s5_q1",
+          "type": "choice",
+          "question_en": "What are the words in this part of the song?",
+          "options_en": [
+            "Pull and plop",
+            "Find a fish",
+            "Waves for all"
+          ],
+          "correct_index": 0,
+          "sentence_index": 75
+        },
+        {
+          "id": "gl_p10_s5_q2",
+          "type": "choice",
+          "question_en": "Which song phrase appears in this sentence?",
+          "options_en": [
+            "Pull and plop",
+            "Drop and swish",
+            "What will it be"
+          ],
+          "correct_index": 0,
+          "sentence_index": 75
+        },
+        {
+          "id": "gl_p10_s6_q1",
+          "type": "choice",
+          "question_en": "Who streaks back into the waves?",
+          "options_en": [
+            "The shark",
+            "Yusuf’s father",
+            "Ouma Safiya"
+          ],
+          "correct_index": 0,
+          "sentence_index": 76
+        },
+        {
+          "id": "gl_p10_s6_q2",
+          "type": "choice",
+          "question_en": "What is left in the net after the shark is free?",
+          "options_en": [
+            "One fat yellowtail",
+            "A jewel green bottle",
+            "A lucky shark tooth"
+          ],
+          "correct_index": 0,
+          "sentence_index": 76
+        },
+        {
+          "id": "gl_p10_s7_q1",
+          "type": "choice",
+          "question_en": "Who will be pleased?",
+          "options_en": [
+            "Ouma Safiya",
+            "Yusuf’s mother",
+            "The gulls"
+          ],
+          "correct_index": 0,
+          "sentence_index": 77
+        },
+        {
+          "id": "gl_p10_s7_q2",
+          "type": "choice",
+          "question_en": "Why will Ouma Safiya be pleased (based on the paragraph)?",
+          "options_en": [
+            "Because there is one fat yellowtail in the net",
+            "Because the surfers caught many fish",
+            "Because the gulls flew away"
+          ],
+          "correct_index": 0,
+          "sentence_index": 77
+        }
+      ]
+    },
+    {
+      "paragraph_index": 11,
+      "questions": [
+        {
+          "id": "gl_p11_s0_q1",
+          "type": "choice",
+          "question_en": "Who pulls the boat in?",
+          "options_en": [
+            "The men",
+            "Papa",
+            "Yusuf"
+          ],
+          "correct_index": 0,
+          "sentence_index": 78
+        },
+        {
+          "id": "gl_p11_s0_q2",
+          "type": "choice",
+          "question_en": "What do they coil up?",
+          "options_en": [
+            "The cables",
+            "The nets",
+            "The ropes"
+          ],
+          "correct_index": 0,
+          "sentence_index": 78
+        },
+        {
+          "id": "gl_p11_s1_q1",
+          "type": "choice",
+          "question_en": "What catches Papa’s finger?",
+          "options_en": [
+            "A hard white triangle",
+            "A shark tooth",
+            "A fat yellowtail"
+          ],
+          "correct_index": 0,
+          "sentence_index": 79
+        },
+        {
+          "id": "gl_p11_s1_q2",
+          "type": "choice",
+          "question_en": "What colour is the triangle that catches Papa’s finger?",
+          "options_en": [
+            "White",
+            "Green",
+            "Yellow"
+          ],
+          "correct_index": 0,
+          "sentence_index": 79
+        },
+        {
+          "id": "gl_p11_s2_q1",
+          "type": "choice",
+          "question_en": "Who cries \"Whaaat? Whaaat? Whaaat?\"?",
+          "options_en": [
+            "The gulls",
+            "The fishermen",
+            "The surfers"
+          ],
+          "correct_index": 0,
+          "sentence_index": 80
+        },
+        {
+          "id": "gl_p11_s2_q2",
+          "type": "choice",
+          "question_en": "What do the gulls cry?",
+          "options_en": [
+            "\"Whaaat? Whaaat? Whaaat?\"",
+            "\"What did you bring back for Yusuf?\"",
+            "\"Drop and swish. Find a fish.\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 80
+        },
+        {
+          "id": "gl_p11_s3_q1",
+          "type": "choice",
+          "question_en": "Who answers the gulls?",
+          "options_en": [
+            "Papa",
+            "Yusuf",
+            "Ouma Safiya"
+          ],
+          "correct_index": 0,
+          "sentence_index": 81
+        },
+        {
+          "id": "gl_p11_s3_q2",
+          "type": "choice",
+          "question_en": "When does Papa answer the gulls?",
+          "options_en": [
+            "As the sun goes down",
+            "In the morning",
+            "At sunrise"
+          ],
+          "correct_index": 0,
+          "sentence_index": 81
+        },
+        {
+          "id": "gl_p11_s4_q1",
+          "type": "choice",
+          "question_en": "What did Papa say he brought for his boy?",
+          "options_en": [
+            "A lucky shark tooth",
+            "A fat yellowtail",
+            "A jewel green bottle"
+          ],
+          "correct_index": 0,
+          "sentence_index": 82
+        },
+        {
+          "id": "gl_p11_s4_q2",
+          "type": "choice",
+          "question_en": "Where is Yusuf when he holds his gift up to the stars?",
+          "options_en": [
+            "At home",
+            "At the beach",
+            "On the boat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 82
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'A Fish and a Gift'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "flicker",
+      "meaning_vi": "tia sáng nhỏ, chớp nhoáng",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "brightens",
+      "meaning_vi": "làm sáng bừng lên",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "weather-proof",
+      "meaning_vi": "chống thấm nước",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "woollen",
+      "meaning_vi": "bằng len",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "cycles",
+      "meaning_vi": "đạp xe",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "squeak",
+      "meaning_vi": "tiếng kêu két két",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "gulls",
+      "meaning_vi": "chim hải âu",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "fishermen",
+      "meaning_vi": "ngư dân",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "nets",
+      "meaning_vi": "lưới (đánh cá)",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "oars",
+      "meaning_vi": "mái chèo",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "drag",
+      "meaning_vi": "kéo lê",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "stretch",
+      "meaning_vi": "vươn ra",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "braces",
+      "meaning_vi": "tì chặt",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "strains",
+      "meaning_vi": "căng ra",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "ripple",
+      "meaning_vi": "cuồn cuộn",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "windless",
+      "meaning_vi": "không có gió",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "shell",
+      "meaning_vi": "vỏ sò",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "rinsed",
+      "meaning_vi": "rửa sạch",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "sea turtles",
+      "meaning_vi": "rùa biển",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "washed up",
+      "meaning_vi": "bị sóng đánh dạt vào bờ",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "storm",
+      "meaning_vi": "cơn bão",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "always",
+      "meaning_vi": "luôn luôn",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "pulls",
+      "meaning_vi": "kéo",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "winds",
+      "meaning_vi": "cuộn",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "yellowtail",
+      "meaning_vi": "cá cam",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "silly",
+      "meaning_vi": "ngớ ngẩn",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "tiny",
+      "meaning_vi": "nhỏ xíu",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "perched",
+      "meaning_vi": "đậu (trên)",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "fought",
+      "meaning_vi": "đã cãi nhau",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "surfers",
+      "meaning_vi": "người lướt sóng",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "angry",
+      "meaning_vi": "giận dữ",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "licence",
+      "meaning_vi": "giấy phép",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "binoculars",
+      "meaning_vi": "ống nhòm",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "curiosity",
+      "meaning_vi": "sự tò mò",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "siren",
+      "meaning_vi": "còi báo động",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "wetsuits",
+      "meaning_vi": "bộ đồ lặn",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "heave",
+      "meaning_vi": "kéo mạnh",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "twists",
+      "meaning_vi": "quằn quại",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "thrashes",
+      "meaning_vi": "vùng vẫy",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "untangles",
+      "meaning_vi": "gỡ rối",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "coil up",
+      "meaning_vi": "cuộn lại",
+      "paragraph_index": 11
+    },
+    {
+      "word_en": "cables",
+      "meaning_vi": "dây cáp",
+      "paragraph_index": 11
+    },
+    {
+      "word_en": "triangle",
+      "meaning_vi": "hình tam giác",
+      "paragraph_index": 11
+    },
+    {
+      "word_en": "shark tooth",
+      "meaning_vi": "răng cá mập",
+      "paragraph_index": 11
+    }
+  ]
+}

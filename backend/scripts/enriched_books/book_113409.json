@@ -1,0 +1,2411 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L2",
+  "level_label": "Cấp 2",
+  "topic": "Who's That in the Mirror?",
+  "slug": "book_113409",
+  "audio_filename": "book_113409.mp3",
+  "book_slug": "book_113409",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_113409/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_113409/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_113409/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_113409/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_113409/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_113409/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_113409/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_113409/page_09.jpg",
+    "https://audio.felixbuilderhub.com/books/book_113409/page_10.jpg",
+    "https://audio.felixbuilderhub.com/books/book_113409/page_11.jpg",
+    "https://audio.felixbuilderhub.com/books/book_113409/page_12.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_113409/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_113409/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_113409/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_113409/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_113409/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_113409/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_113409/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_113409/page_09.mp3",
+    "https://audio.felixbuilderhub.com/books/book_113409/page_10.mp3",
+    "https://audio.felixbuilderhub.com/books/book_113409/page_11.mp3",
+    "https://audio.felixbuilderhub.com/books/book_113409/page_12.mp3"
+  ],
+  "book_attribution": {
+    "title": "Who's That in the Mirror?",
+    "creators": [
+      "Shalini Srinivasan",
+      "Pia Alizé Hazarika"
+    ],
+    "publisher": "Pratham Books",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: Who's That in the Mirror? is written by Shalini Srinivasan . © Pratham Books , 2019. Some rights reserved. Released under CC BY 4.0 license. Other Credits: ‘Who's That in the Mirror?’ has been published on StoryWeaver by Pratham Books. The development of this book has been supported by Oracle. www.prathambooks.org Images Attributions: Cover page: girl and boy looking at a mirror curiously , by Pia Alizé Hazarika © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 2: a girl looking at her mother , by Pia Alizé Hazarika © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 3: girl looking at herself in the mirror , by Pia Alizé Hazarika © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 4: girl checking the wall , by Pia Alizé Hazarika © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 5: girl and boy checking behind the mirror , by Pia Alizé Hazarika © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 6: girl and boy peeking into the mirror , by Pia Alizé Hazarika © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 7: girl kicking the mirror , by Pia Alizé Hazarika © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 8: girl throwing a bat at the mirror , by Pia Alizé Hazarika © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 9: a mother carrying girl and boy away , by Pia Alizé Hazarika © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 10: mother and girl talking in bed , by Pia Alizé Hazarika © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 11: a mother explaining to her daughter , by Pia Alizé Hazarika © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/ The development of this book has been supported by Oracle.",
+    "source_url": "https://storyweaver.org.in/stories/113409-who-s-that-in-the-mirror",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "a girl looking at her mother , by Pia Alizé Hazarika © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "girl looking at herself in the mirror , by Pia Alizé Hazarika © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "girl checking the wall , by Pia Alizé Hazarika © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "girl and boy checking behind the mirror , by Pia Alizé Hazarika © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "girl and boy peeking into the mirror , by Pia Alizé Hazarika © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "girl kicking the mirror , by Pia Alizé Hazarika © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "girl throwing a bat at the mirror , by Pia Alizé Hazarika © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "a mother carrying girl and boy away , by Pia Alizé Hazarika © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 8,
+        "credit_text": "mother and girl talking in bed , by Pia Alizé Hazarika © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 9,
+        "credit_text": "a mother explaining to her daughter , by Pia Alizé Hazarika © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 10,
+        "credit_text": "Illustration by Pia Alizé Hazarika."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "Who's That in the Mirror?",
+    "paragraphs_en": [
+      "Amma had a new mirror. It wasn’t small like the bathroom mirror that Manasa was too short to see. This mirror was as tall as Amma. When Amma stood in front of it, another Amma looked back. “Who is THAT?” Manasa shouted.",
+      "“Come and see yourself, Manasa,” Amma said. Manasa moved in front of Amma, chomping a biscuit. In the mirror, another Manasa’s mouth opened and closed.",
+      "Manasa went around the house to the back of the mirror wall. She hit it. THUMP! No extra Manasas there. “Hi Manasa,” Titus came running from his house.",
+      "Titus followed Manasa back to the mirror. Manasa was getting angry now. She took the mirror off the wall and peered at the back. It was just wood. No people hiding there.",
+      "Manasa walked around the mirror and peeked. Maybe it wouldn’t see her. But no. There was Mirror Manasa, looking sneaky.",
+      "﻿ Manasa stomped towards Mirror Manasa and lifted her leg high. ﻿ “HAI YA!” ﻿ Mirror Manasa did the same thing. She didn’t look scared at all. ﻿ “I don’t like them,” Titus whined.",
+      "Manasa swung a cricket bat. It slipped from her hand and flew KRACK into Mirror Manasa’s face. CLINK! CLANK! CRASH! Bits of mirror flew everywhere, glass flashing. Titus began to cry.",
+      "“Manasa!” Amma came running. “Don’t move! Don’t touch the glass. It’s dangerous!” She picked Manasa up, and then Titus. She carried them away from the broken mirror. Then Amma carefully swept the glass up.",
+      "“I was so angry,” Manasa told Amma in bed that night. “I don’t understand where Mirror Manasa came from!” Amma drew a mirror. “See, it’s just glass. The shiny layer at the back? It turns light back to you. BOUNCE! ” “You stand in front and the mirror will BOUNCE you back as a picture. ”",
+      "Manasa looked at the picture. Manasa in, Manasa out. “Like a ball!” Manasa said. “BOUNCE!” “Yes,” Amma nodded. “You show the mirror your face and the mirror bounces it back.” “But no sound,” Manasa said. “Mirror Manasa didn’t speak.” “No sound,” Amma said. “The shiny bit only bounces light, not sound or taste or smell.” Shiny Layer Light Manasa Mirror Manasa looked at the picture. Manasa in, Manasa out. “Like a ball!” Manasa said. “BOUNCE!” “Yes,” Amma nodded. “You show the mirror your face and the mirror bounces it back.” “But no sound,” Manasa said. “Mirror Manasa didn’t speak.” “No sound,” Amma said. “The shiny bit only bounces light, not sound or taste or smell.”",
+      "“So Mirror Manasa won’t be there in the dark?” Manasa asked. “The mirror needs light to see, same as you,” Amma yawned. “Aha!” Manasa was pleased. “That’s what Mirror Manasa is. Light bouncing.” “Mmmm,” Amma said and fell asleep."
+    ],
+    "sentences": [
+      {
+        "text_en": "Amma had a new mirror.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_000.mp3",
+        "text_vi": "Amma có một cái gương mới."
+      },
+      {
+        "text_en": "It wasn’t small like the bathroom mirror that Manasa was too short to see.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_001.mp3",
+        "text_vi": "Nó không nhỏ như cái gương trong phòng tắm mà Manasa không đủ cao để nhìn."
+      },
+      {
+        "text_en": "This mirror was as tall as Amma.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_002.mp3",
+        "text_vi": "Cái gương này cao bằng Amma."
+      },
+      {
+        "text_en": "When Amma stood in front of it, another Amma looked back.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_003.mp3",
+        "text_vi": "Khi Amma đứng trước nó, một Amma khác nhìn lại."
+      },
+      {
+        "text_en": "“Who is THAT?” Manasa shouted.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_004.mp3",
+        "text_vi": "“Ai kia?” Manasa hét lên."
+      },
+      {
+        "text_en": "“Come and see yourself, Manasa,” Amma said.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_005.mp3",
+        "text_vi": "“Lại đây nhìn mình đi, Manasa,” Amma nói."
+      },
+      {
+        "text_en": "Manasa moved in front of Amma, chomping a biscuit.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_006.mp3",
+        "text_vi": "Manasa di chuyển đến trước mặt Amma, vừa nhai bánh quy."
+      },
+      {
+        "text_en": "In the mirror, another Manasa’s mouth opened and closed.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_007.mp3",
+        "text_vi": "Trong gương, miệng của một Manasa khác cũng há ra rồi ngậm lại."
+      },
+      {
+        "text_en": "Manasa went around the house to the back of the mirror wall.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_008.mp3",
+        "text_vi": "Manasa đi vòng quanh nhà ra phía sau bức tường có gương."
+      },
+      {
+        "text_en": "She hit it.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_009.mp3",
+        "text_vi": "Cô bé đập vào nó."
+      },
+      {
+        "text_en": "THUMP! No extra Manasas there.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_010.mp3",
+        "text_vi": "THÙM! Không có Manasa nào khác ở đó cả."
+      },
+      {
+        "text_en": "“Hi Manasa,” Titus came running from his house.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_011.mp3",
+        "text_vi": "“Chào Manasa,” Titus chạy từ nhà cậu bé sang."
+      },
+      {
+        "text_en": "Titus followed Manasa back to the mirror.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_012.mp3",
+        "text_vi": "Titus đi theo Manasa trở lại chỗ cái gương."
+      },
+      {
+        "text_en": "Manasa was getting angry now.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_013.mp3",
+        "text_vi": "Manasa bắt đầu tức giận."
+      },
+      {
+        "text_en": "She took the mirror off the wall and peered at the back.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_014.mp3",
+        "text_vi": "Cô bé tháo cái gương khỏi tường và nhìn kỹ vào mặt sau."
+      },
+      {
+        "text_en": "It was just wood.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_015.mp3",
+        "text_vi": "Nó chỉ là gỗ thôi."
+      },
+      {
+        "text_en": "No people hiding there.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_016.mp3",
+        "text_vi": "Không có ai trốn ở đó cả."
+      },
+      {
+        "text_en": "Manasa walked around the mirror and peeked.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_017.mp3",
+        "text_vi": "Manasa đi vòng quanh cái gương và lén nhìn."
+      },
+      {
+        "text_en": "Maybe it wouldn’t see her.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_018.mp3",
+        "text_vi": "Có lẽ nó sẽ không nhìn thấy cô bé."
+      },
+      {
+        "text_en": "But no. There was Mirror Manasa, looking sneaky.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_019.mp3",
+        "text_vi": "Nhưng không. Vẫn có Manasa Gương, trông rất lén lút."
+      },
+      {
+        "text_en": "﻿ Manasa stomped towards Mirror Manasa and lifted her leg high.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_020.mp3",
+        "text_vi": "Manasa dậm chân đi về phía Manasa Gương và nhấc chân lên cao."
+      },
+      {
+        "text_en": "﻿ “HAI YA!” ﻿ Mirror Manasa did the same thing.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_021.mp3",
+        "text_vi": "“HAI YA!” Manasa Gương cũng làm y hệt."
+      },
+      {
+        "text_en": "She didn’t look scared at all.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_022.mp3",
+        "text_vi": "Cô bé không hề trông có vẻ sợ hãi chút nào."
+      },
+      {
+        "text_en": "﻿ “I don’t like them,” Titus whined.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_023.mp3",
+        "text_vi": "“Con không thích chúng,” Titus rên rỉ."
+      },
+      {
+        "text_en": "Manasa swung a cricket bat.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_024.mp3",
+        "text_vi": "Manasa vung một cây gậy bóng chày."
+      },
+      {
+        "text_en": "It slipped from her hand and flew KRACK into Mirror Manasa’s face.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_025.mp3",
+        "text_vi": "Nó tuột khỏi tay cô bé và bay KRẮC vào mặt Manasa Gương."
+      },
+      {
+        "text_en": "CLINK! CLANK! CRASH!",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_026.mp3",
+        "text_vi": "KENG! LOẢNG XOẢNG! RẦM!"
+      },
+      {
+        "text_en": "Bits of mirror flew everywhere, glass flashing.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_027.mp3",
+        "text_vi": "Những mảnh gương bay khắp nơi, kính lấp lánh."
+      },
+      {
+        "text_en": "Titus began to cry.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_028.mp3",
+        "text_vi": "Titus bắt đầu khóc."
+      },
+      {
+        "text_en": "“Manasa!” Amma came running.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_029.mp3",
+        "text_vi": "“Manasa!” Amma chạy đến."
+      },
+      {
+        "text_en": "“Don’t move! Don’t touch the glass.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_030.mp3",
+        "text_vi": "“Đừng nhúc nhích! Đừng chạm vào kính."
+      },
+      {
+        "text_en": "It’s dangerous!” She picked Manasa up, and then Titus.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_031.mp3",
+        "text_vi": "Nguy hiểm lắm!” Bà bế Manasa lên, rồi bế Titus."
+      },
+      {
+        "text_en": "She carried them away from the broken mirror.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_032.mp3",
+        "text_vi": "Bà đưa chúng ra xa khỏi cái gương vỡ."
+      },
+      {
+        "text_en": "Then Amma carefully swept the glass up.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_033.mp3",
+        "text_vi": "Sau đó Amma cẩn thận quét dọn những mảnh kính."
+      },
+      {
+        "text_en": "“I was so angry,” Manasa told Amma in bed that night.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_034.mp3",
+        "text_vi": "“Con đã rất tức giận,” Manasa nói với Amma trên giường tối hôm đó."
+      },
+      {
+        "text_en": "“I don’t understand where Mirror Manasa came from!” Amma drew a mirror.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_035.mp3",
+        "text_vi": "“Con không hiểu Manasa Gương từ đâu ra!” Amma vẽ một cái gương."
+      },
+      {
+        "text_en": "“See, it’s just glass.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_036.mp3",
+        "text_vi": "“Con xem, nó chỉ là kính thôi."
+      },
+      {
+        "text_en": "The shiny layer at the back?",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_037.mp3",
+        "text_vi": "Lớp sáng bóng ở mặt sau ấy hả?"
+      },
+      {
+        "text_en": "It turns light back to you.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_038.mp3",
+        "text_vi": "Nó phản chiếu ánh sáng trở lại con."
+      },
+      {
+        "text_en": "BOUNCE! ” “You stand in front and the mirror will BOUNCE you back as a picture. ”",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_039.mp3",
+        "text_vi": "BẬT LẠI! ” “Con đứng phía trước và cái gương sẽ BẬT LẠI con thành một bức hình. ”"
+      },
+      {
+        "text_en": "Manasa looked at the picture.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_040.mp3",
+        "text_vi": "Manasa nhìn vào bức hình."
+      },
+      {
+        "text_en": "Manasa in, Manasa out.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_041.mp3",
+        "text_vi": "Manasa vào, Manasa ra."
+      },
+      {
+        "text_en": "“Like a ball!” Manasa said.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_042.mp3",
+        "text_vi": "“Giống như một quả bóng!” Manasa nói."
+      },
+      {
+        "text_en": "“BOUNCE!” “Yes,” Amma nodded.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_043.mp3",
+        "text_vi": "“BẬT LẠI!” “Đúng vậy,” Amma gật đầu."
+      },
+      {
+        "text_en": "“You show the mirror your face and the mirror bounces it back.” “But no sound,” Manasa said.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_044.mp3",
+        "text_vi": "“Con đưa mặt con ra trước gương và cái gương sẽ bật lại nó.” “Nhưng không có tiếng động,” Manasa nói."
+      },
+      {
+        "text_en": "“Mirror Manasa didn’t speak.” “No sound,” Amma said.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_045.mp3",
+        "text_vi": "“Manasa Gương không nói chuyện.” “Không có tiếng động,” Amma nói."
+      },
+      {
+        "text_en": "“The shiny bit only bounces light, not sound or taste or smell.” Shiny Layer Light Manasa Mirror Manasa looked at the picture.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_046.mp3",
+        "text_vi": "“Phần sáng bóng chỉ bật lại ánh sáng, không phải âm thanh hay vị giác hay khứu giác.”"
+      },
+      {
+        "text_en": "Manasa in, Manasa out.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_047.mp3",
+        "text_vi": "Manasa nhìn vào bức hình."
+      },
+      {
+        "text_en": "“Like a ball!” Manasa said.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_048.mp3",
+        "text_vi": "Manasa vào, Manasa ra."
+      },
+      {
+        "text_en": "“BOUNCE!” “Yes,” Amma nodded.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_049.mp3",
+        "text_vi": "“Giống như một quả bóng!” Manasa nói."
+      },
+      {
+        "text_en": "“You show the mirror your face and the mirror bounces it back.” “But no sound,” Manasa said.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_050.mp3",
+        "text_vi": "“BẬT LẠI!” “Đúng vậy,” Amma gật đầu."
+      },
+      {
+        "text_en": "“Mirror Manasa didn’t speak.” “No sound,” Amma said.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_051.mp3",
+        "text_vi": "“Con đưa mặt con ra trước gương và cái gương sẽ bật lại nó.” “Nhưng không có tiếng động,” Manasa nói."
+      },
+      {
+        "text_en": "“The shiny bit only bounces light, not sound or taste or smell.”",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_052.mp3",
+        "text_vi": "“Manasa Gương không nói chuyện.” “Không có tiếng động,” Amma nói."
+      },
+      {
+        "text_en": "“So Mirror Manasa won’t be there in the dark?” Manasa asked.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_053.mp3",
+        "text_vi": "“Vậy Manasa Gương sẽ không ở đó trong bóng tối sao?” Manasa hỏi."
+      },
+      {
+        "text_en": "“The mirror needs light to see, same as you,” Amma yawned.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_054.mp3",
+        "text_vi": "“Cái gương cần ánh sáng để nhìn, giống như con vậy,” Amma ngáp."
+      },
+      {
+        "text_en": "“Aha!” Manasa was pleased.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_055.mp3",
+        "text_vi": "“À ha!” Manasa rất vui."
+      },
+      {
+        "text_en": "“That’s what Mirror Manasa is.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_056.mp3",
+        "text_vi": "“Đó chính là Manasa Gương."
+      },
+      {
+        "text_en": "Light bouncing.” “Mmmm,” Amma said and fell asleep.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_057.mp3",
+        "text_vi": "Ánh sáng bật lại.” “Mmmm,” Amma nói rồi ngủ thiếp đi."
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "Amma had a new mirror.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "It wasn’t small like the bathroom mirror that Manasa was too short to see.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "This mirror was as tall as Amma.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "When Amma stood in front of it, another Amma looked back.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "“Who is THAT?” Manasa shouted.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "“Come and see yourself, Manasa,” Amma said.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "Manasa moved in front of Amma, chomping a biscuit.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "In the mirror, another Manasa’s mouth opened and closed.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "Manasa went around the house to the back of the mirror wall.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "She hit it.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "THUMP! No extra Manasas there.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "“Hi Manasa,” Titus came running from his house.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "Titus followed Manasa back to the mirror.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_012.mp3"
+        },
+        {
+          "id": "ra_13",
+          "text_en": "Manasa was getting angry now.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_013.mp3"
+        },
+        {
+          "id": "ra_14",
+          "text_en": "She took the mirror off the wall and peered at the back.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_014.mp3"
+        },
+        {
+          "id": "ra_15",
+          "text_en": "It was just wood.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_015.mp3"
+        },
+        {
+          "id": "ra_16",
+          "text_en": "No people hiding there.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_016.mp3"
+        },
+        {
+          "id": "ra_17",
+          "text_en": "Manasa walked around the mirror and peeked.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_017.mp3"
+        },
+        {
+          "id": "ra_18",
+          "text_en": "Maybe it wouldn’t see her.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_018.mp3"
+        },
+        {
+          "id": "ra_19",
+          "text_en": "But no. There was Mirror Manasa, looking sneaky.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_019.mp3"
+        },
+        {
+          "id": "ra_20",
+          "text_en": "﻿ Manasa stomped towards Mirror Manasa and lifted her leg high.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_020.mp3"
+        },
+        {
+          "id": "ra_21",
+          "text_en": "﻿ “HAI YA!” ﻿ Mirror Manasa did the same thing.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_021.mp3"
+        },
+        {
+          "id": "ra_22",
+          "text_en": "She didn’t look scared at all.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_022.mp3"
+        },
+        {
+          "id": "ra_23",
+          "text_en": "﻿ “I don’t like them,” Titus whined.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_023.mp3"
+        },
+        {
+          "id": "ra_24",
+          "text_en": "Manasa swung a cricket bat.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_024.mp3"
+        },
+        {
+          "id": "ra_25",
+          "text_en": "It slipped from her hand and flew KRACK into Mirror Manasa’s face.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_025.mp3"
+        },
+        {
+          "id": "ra_26",
+          "text_en": "CLINK! CLANK! CRASH!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_026.mp3"
+        },
+        {
+          "id": "ra_27",
+          "text_en": "Bits of mirror flew everywhere, glass flashing.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_027.mp3"
+        },
+        {
+          "id": "ra_28",
+          "text_en": "Titus began to cry.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_028.mp3"
+        },
+        {
+          "id": "ra_29",
+          "text_en": "“Manasa!” Amma came running.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_029.mp3"
+        },
+        {
+          "id": "ra_30",
+          "text_en": "“Don’t move! Don’t touch the glass.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_030.mp3"
+        },
+        {
+          "id": "ra_31",
+          "text_en": "It’s dangerous!” She picked Manasa up, and then Titus.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_031.mp3"
+        },
+        {
+          "id": "ra_32",
+          "text_en": "She carried them away from the broken mirror.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_032.mp3"
+        },
+        {
+          "id": "ra_33",
+          "text_en": "Then Amma carefully swept the glass up.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_033.mp3"
+        },
+        {
+          "id": "ra_34",
+          "text_en": "“I was so angry,” Manasa told Amma in bed that night.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_034.mp3"
+        },
+        {
+          "id": "ra_35",
+          "text_en": "“I don’t understand where Mirror Manasa came from!” Amma drew a mirror.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_035.mp3"
+        },
+        {
+          "id": "ra_36",
+          "text_en": "“See, it’s just glass.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_036.mp3"
+        },
+        {
+          "id": "ra_37",
+          "text_en": "The shiny layer at the back?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_037.mp3"
+        },
+        {
+          "id": "ra_38",
+          "text_en": "It turns light back to you.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_038.mp3"
+        },
+        {
+          "id": "ra_39",
+          "text_en": "BOUNCE! ” “You stand in front and the mirror will BOUNCE you back as a picture. ”",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_039.mp3"
+        },
+        {
+          "id": "ra_40",
+          "text_en": "Manasa looked at the picture.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_040.mp3"
+        },
+        {
+          "id": "ra_41",
+          "text_en": "Manasa in, Manasa out.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_041.mp3"
+        },
+        {
+          "id": "ra_42",
+          "text_en": "“Like a ball!” Manasa said.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_042.mp3"
+        },
+        {
+          "id": "ra_43",
+          "text_en": "“BOUNCE!” “Yes,” Amma nodded.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_043.mp3"
+        },
+        {
+          "id": "ra_44",
+          "text_en": "“You show the mirror your face and the mirror bounces it back.” “But no sound,” Manasa said.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_044.mp3"
+        },
+        {
+          "id": "ra_45",
+          "text_en": "“Mirror Manasa didn’t speak.” “No sound,” Amma said.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_045.mp3"
+        },
+        {
+          "id": "ra_46",
+          "text_en": "“The shiny bit only bounces light, not sound or taste or smell.” Shiny Layer Light Manasa Mirror Manasa looked at the picture.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_046.mp3"
+        },
+        {
+          "id": "ra_47",
+          "text_en": "Manasa in, Manasa out.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_047.mp3"
+        },
+        {
+          "id": "ra_48",
+          "text_en": "“Like a ball!” Manasa said.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_048.mp3"
+        },
+        {
+          "id": "ra_49",
+          "text_en": "“BOUNCE!” “Yes,” Amma nodded.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_049.mp3"
+        },
+        {
+          "id": "ra_50",
+          "text_en": "“You show the mirror your face and the mirror bounces it back.” “But no sound,” Manasa said.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_050.mp3"
+        },
+        {
+          "id": "ra_51",
+          "text_en": "“Mirror Manasa didn’t speak.” “No sound,” Amma said.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_051.mp3"
+        },
+        {
+          "id": "ra_52",
+          "text_en": "“The shiny bit only bounces light, not sound or taste or smell.”",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_052.mp3"
+        },
+        {
+          "id": "ra_53",
+          "text_en": "“So Mirror Manasa won’t be there in the dark?” Manasa asked.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_053.mp3"
+        },
+        {
+          "id": "ra_54",
+          "text_en": "“The mirror needs light to see, same as you,” Amma yawned.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_054.mp3"
+        },
+        {
+          "id": "ra_55",
+          "text_en": "“Aha!” Manasa was pleased.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_055.mp3"
+        },
+        {
+          "id": "ra_56",
+          "text_en": "“That’s what Mirror Manasa is.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_056.mp3"
+        },
+        {
+          "id": "ra_57",
+          "text_en": "Light bouncing.” “Mmmm,” Amma said and fell asleep.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113409/s_057.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "Who had a new mirror?",
+          "options_en": [
+            "Amma",
+            "Manasa",
+            "Titus"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "What did Amma have?",
+          "options_en": [
+            "A new mirror",
+            "A biscuit",
+            "A cricket bat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s1_q1",
+          "type": "choice",
+          "question_en": "What wasn’t small like the bathroom mirror?",
+          "options_en": [
+            "The new mirror",
+            "The bathroom mirror",
+            "Amma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s1_q2",
+          "type": "choice",
+          "question_en": "Why was Manasa too short to see the bathroom mirror?",
+          "options_en": [
+            "She was too short to see it",
+            "It was broken",
+            "It was far away"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s2_q1",
+          "type": "choice",
+          "question_en": "How tall was this mirror?",
+          "options_en": [
+            "As tall as Amma",
+            "Taller than Amma",
+            "Shorter than Amma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s2_q2",
+          "type": "choice",
+          "question_en": "What was as tall as Amma?",
+          "options_en": [
+            "This mirror",
+            "The bathroom mirror",
+            "Manasa"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s3_q1",
+          "type": "choice",
+          "question_en": "What looked back when Amma stood in front of it?",
+          "options_en": [
+            "Another Amma",
+            "Mirror Manasa",
+            "Titus"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p0_s3_q2",
+          "type": "choice",
+          "question_en": "Who looked back when Amma stood in front of the mirror?",
+          "options_en": [
+            "Another Amma",
+            "Manasa",
+            "Mirror Manasa"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p0_s4_q1",
+          "type": "choice",
+          "question_en": "Who shouted \"Who is THAT?\"",
+          "options_en": [
+            "Manasa",
+            "Amma",
+            "Titus"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p0_s4_q2",
+          "type": "choice",
+          "question_en": "What did Manasa shout?",
+          "options_en": [
+            "\"Who is THAT?\"",
+            "\"Come and see yourself\"",
+            "\"Don't touch the glass\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "Who said, \"Come and see yourself, Manasa\"?",
+          "options_en": [
+            "Amma",
+            "Manasa",
+            "Titus"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "What did Amma tell Manasa to do?",
+          "options_en": [
+            "Come and see yourself",
+            "Look at the mirror",
+            "Go outside"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p1_s1_q1",
+          "type": "choice",
+          "question_en": "Who moved in front of Amma?",
+          "options_en": [
+            "Manasa",
+            "Amma",
+            "Titus"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p1_s1_q2",
+          "type": "choice",
+          "question_en": "What was Manasa doing while she moved in front of Amma?",
+          "options_en": [
+            "Chomping a biscuit",
+            "Looking at the mirror",
+            "Hitting the mirror"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p1_s2_q1",
+          "type": "choice",
+          "question_en": "Where did another Manasa’s mouth open and close?",
+          "options_en": [
+            "In the mirror",
+            "Behind the mirror",
+            "On the wall"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p1_s2_q2",
+          "type": "choice",
+          "question_en": "What did the other Manasa’s mouth do in the mirror?",
+          "options_en": [
+            "Opened and closed",
+            "Smiled",
+            "Spoke"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "Who went around the house to the back of the mirror wall?",
+          "options_en": [
+            "Manasa",
+            "Amma",
+            "Titus"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "Where did Manasa go?",
+          "options_en": [
+            "To the back of the mirror wall",
+            "To Amma's house",
+            "To the front of the mirror"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p2_s1_q1",
+          "type": "choice",
+          "question_en": "Who hit it?",
+          "options_en": [
+            "She (Manasa)",
+            "Amma",
+            "Titus"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p2_s1_q2",
+          "type": "choice",
+          "question_en": "What did she do to it?",
+          "options_en": [
+            "She hit it",
+            "She picked it up",
+            "She smiled at it"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p2_s2_q1",
+          "type": "choice",
+          "question_en": "What sound is shown in the sentence?",
+          "options_en": [
+            "THUMP",
+            "CRASH",
+            "CLINK"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p2_s2_q2",
+          "type": "choice",
+          "question_en": "What was not there?",
+          "options_en": [
+            "Extra Manasas",
+            "A broken mirror",
+            "Titus"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p2_s3_q1",
+          "type": "choice",
+          "question_en": "Who came running and said \"Hi Manasa\"?",
+          "options_en": [
+            "Titus",
+            "Amma",
+            "Mirror Manasa"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p2_s3_q2",
+          "type": "choice",
+          "question_en": "Where did Titus come from?",
+          "options_en": [
+            "From his house",
+            "From the mirror",
+            "From Amma's house"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "Who followed Manasa back to the mirror?",
+          "options_en": [
+            "Titus",
+            "Amma",
+            "Mirror Manasa"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "Where did Titus follow Manasa?",
+          "options_en": [
+            "Back to the mirror",
+            "To the house",
+            "To the back of the mirror wall"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p3_s1_q1",
+          "type": "choice",
+          "question_en": "What was Manasa feeling now?",
+          "options_en": [
+            "Angry",
+            "Pleased",
+            "Sleepy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p3_s1_q2",
+          "type": "choice",
+          "question_en": "When was Manasa getting angry?",
+          "options_en": [
+            "Now",
+            "Earlier",
+            "Later"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p3_s2_q1",
+          "type": "choice",
+          "question_en": "What did she take off the wall?",
+          "options_en": [
+            "The mirror",
+            "A cricket bat",
+            "The glass"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p3_s2_q2",
+          "type": "choice",
+          "question_en": "What did she do after taking the mirror off the wall?",
+          "options_en": [
+            "Peered at the back",
+            "Swung the bat",
+            "Hit the mirror wall"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p3_s3_q1",
+          "type": "choice",
+          "question_en": "What was the back of the mirror made of?",
+          "options_en": [
+            "Wood",
+            "Glass",
+            "Shiny layer"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p3_s3_q2",
+          "type": "choice",
+          "question_en": "Which material was mentioned as the mirror's back?",
+          "options_en": [
+            "Wood",
+            "Metal",
+            "Glass"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p3_s4_q1",
+          "type": "choice",
+          "question_en": "What is the correct answer to this question: Were any people hiding there?",
+          "options_en": [
+            "No people",
+            "Mirror Manasa",
+            "Amma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p3_s4_q2",
+          "type": "choice",
+          "question_en": "Who was not hiding there?",
+          "options_en": [
+            "People",
+            "Titus",
+            "Mirror Manasa"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "Who walked around the mirror and peeked?",
+          "options_en": [
+            "Manasa",
+            "Titus",
+            "Amma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "What did Manasa do at the mirror?",
+          "options_en": [
+            "Walked around it and peeked",
+            "Took the mirror off the wall",
+            "Hit the mirror"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p4_s1_q1",
+          "type": "choice",
+          "question_en": "What did Manasa think might happen?",
+          "options_en": [
+            "Maybe it wouldn’t see her",
+            "Mirror Manasa would speak",
+            "There were people behind the mirror"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p4_s1_q2",
+          "type": "choice",
+          "question_en": "Why did Manasa move quietly toward the mirror?",
+          "options_en": [
+            "She thought maybe it wouldn’t see her",
+            "She wanted to break the mirror",
+            "She was called by Amma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p4_s2_q1",
+          "type": "choice",
+          "question_en": "Who was there when she looked?",
+          "options_en": [
+            "Mirror Manasa",
+            "Titus",
+            "Amma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p4_s2_q2",
+          "type": "choice",
+          "question_en": "How did Mirror Manasa look?",
+          "options_en": [
+            "Sneaky",
+            "Scared",
+            "Like Amma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "Who stomped towards Mirror Manasa?",
+          "options_en": [
+            "Manasa",
+            "Titus",
+            "Amma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "What did Manasa do with her leg?",
+          "options_en": [
+            "She lifted her leg high",
+            "She swung a cricket bat",
+            "She walked away"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p5_s1_q1",
+          "type": "choice",
+          "question_en": "Who did the same thing?",
+          "options_en": [
+            "Mirror Manasa",
+            "Amma",
+            "Titus"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p5_s1_q2",
+          "type": "choice",
+          "question_en": "What did Mirror Manasa do?",
+          "options_en": [
+            "She did the same thing as Manasa",
+            "She hid behind the mirror",
+            "She spoke to Amma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p5_s2_q1",
+          "type": "choice",
+          "question_en": "Who didn’t look scared at all?",
+          "options_en": [
+            "She (Mirror Manasa)",
+            "Manasa",
+            "Amma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p5_s2_q2",
+          "type": "choice",
+          "question_en": "How did she look?",
+          "options_en": [
+            "She didn’t look scared at all",
+            "She looked angry",
+            "She looked surprised"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p5_s3_q1",
+          "type": "choice",
+          "question_en": "Who said, \"I don’t like them\"?",
+          "options_en": [
+            "Titus",
+            "Manasa",
+            "Amma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p5_s3_q2",
+          "type": "choice",
+          "question_en": "How did Titus speak when he said it?",
+          "options_en": [
+            "He whined",
+            "He shouted",
+            "He laughed"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "Who swung a cricket bat?",
+          "options_en": [
+            "Manasa",
+            "Titus",
+            "Amma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "What did Manasa swing?",
+          "options_en": [
+            "A cricket bat",
+            "A mirror",
+            "A biscuit"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p6_s1_q1",
+          "type": "choice",
+          "question_en": "What slipped from her hand?",
+          "options_en": [
+            "The bat",
+            "The mirror",
+            "The biscuit"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p6_s1_q2",
+          "type": "choice",
+          "question_en": "Where did it fly into?",
+          "options_en": [
+            "Mirror Manasa's face",
+            "The mirror wall",
+            "Amma's face"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p6_s2_q1",
+          "type": "choice",
+          "question_en": "What sounds were heard?",
+          "options_en": [
+            "CLINK! CLANK! CRASH!",
+            "THUMP!",
+            "BOUNCE!"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p6_s2_q2",
+          "type": "choice",
+          "question_en": "Which words show loud noises?",
+          "options_en": [
+            "CLINK! CLANK! CRASH!",
+            "THUMP!",
+            "BOUNCE!"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p6_s3_q1",
+          "type": "choice",
+          "question_en": "What flew everywhere?",
+          "options_en": [
+            "Bits of mirror",
+            "Biscuits",
+            "Pieces of wood"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        },
+        {
+          "id": "gl_p6_s3_q2",
+          "type": "choice",
+          "question_en": "What was flashing?",
+          "options_en": [
+            "Glass",
+            "The shiny layer",
+            "Mirror"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        },
+        {
+          "id": "gl_p6_s4_q1",
+          "type": "choice",
+          "question_en": "Who began to cry?",
+          "options_en": [
+            "Titus",
+            "Manasa",
+            "Amma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        },
+        {
+          "id": "gl_p6_s4_q2",
+          "type": "choice",
+          "question_en": "How did Titus react?",
+          "options_en": [
+            "He began to cry",
+            "He laughed",
+            "He ran away"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "Who called \"Manasa!\" and came running?",
+          "options_en": [
+            "Amma",
+            "Manasa",
+            "Titus"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "How did Amma come when she called \"Manasa!\"?",
+          "options_en": [
+            "Running",
+            "Carrying them",
+            "Carefully"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p7_s1_q1",
+          "type": "choice",
+          "question_en": "What did Amma tell them not to do?",
+          "options_en": [
+            "Move",
+            "Eat the biscuit",
+            "Play with the bat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        },
+        {
+          "id": "gl_p7_s1_q2",
+          "type": "choice",
+          "question_en": "What did Amma tell them not to touch?",
+          "options_en": [
+            "The glass",
+            "The biscuit",
+            "The cricket bat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        },
+        {
+          "id": "gl_p7_s2_q1",
+          "type": "choice",
+          "question_en": "What did Amma do after saying \"It's dangerous!\"?",
+          "options_en": [
+            "She picked Manasa up",
+            "She swept the glass",
+            "She drew a mirror"
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        },
+        {
+          "id": "gl_p7_s2_q2",
+          "type": "choice",
+          "question_en": "Who did Amma pick up after Manasa?",
+          "options_en": [
+            "Titus",
+            "Mirror Manasa",
+            "The cricket bat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        },
+        {
+          "id": "gl_p7_s3_q1",
+          "type": "choice",
+          "question_en": "Where did Amma carry them away from?",
+          "options_en": [
+            "The broken mirror",
+            "The back of the mirror",
+            "The house"
+          ],
+          "correct_index": 0,
+          "sentence_index": 32
+        },
+        {
+          "id": "gl_p7_s3_q2",
+          "type": "choice",
+          "question_en": "What is the correct answer to this question: Whom did Amma carry away?",
+          "options_en": [
+            "Manasa and Titus",
+            "Mirror Manasa",
+            "Amma herself"
+          ],
+          "correct_index": 0,
+          "sentence_index": 32
+        },
+        {
+          "id": "gl_p7_s4_q1",
+          "type": "choice",
+          "question_en": "What did Amma do with the glass?",
+          "options_en": [
+            "She swept the glass up",
+            "She picked the glass up",
+            "She carried the glass away"
+          ],
+          "correct_index": 0,
+          "sentence_index": 33
+        },
+        {
+          "id": "gl_p7_s4_q2",
+          "type": "choice",
+          "question_en": "How did Amma sweep the glass up?",
+          "options_en": [
+            "Carefully",
+            "Angrily",
+            "Quickly"
+          ],
+          "correct_index": 0,
+          "sentence_index": 33
+        }
+      ]
+    },
+    {
+      "paragraph_index": 8,
+      "questions": [
+        {
+          "id": "gl_p8_s0_q1",
+          "type": "choice",
+          "question_en": "Who told Amma she was angry?",
+          "options_en": [
+            "Manasa",
+            "Amma",
+            "Titus"
+          ],
+          "correct_index": 0,
+          "sentence_index": 34
+        },
+        {
+          "id": "gl_p8_s0_q2",
+          "type": "choice",
+          "question_en": "Where did Manasa tell Amma she was angry?",
+          "options_en": [
+            "In bed that night",
+            "In front of the mirror",
+            "In the kitchen"
+          ],
+          "correct_index": 0,
+          "sentence_index": 34
+        },
+        {
+          "id": "gl_p8_s1_q1",
+          "type": "choice",
+          "question_en": "Who drew a mirror?",
+          "options_en": [
+            "Amma",
+            "Manasa",
+            "Titus"
+          ],
+          "correct_index": 0,
+          "sentence_index": 35
+        },
+        {
+          "id": "gl_p8_s1_q2",
+          "type": "choice",
+          "question_en": "What did Amma draw?",
+          "options_en": [
+            "A mirror",
+            "A picture",
+            "A ball"
+          ],
+          "correct_index": 0,
+          "sentence_index": 35
+        },
+        {
+          "id": "gl_p8_s2_q1",
+          "type": "choice",
+          "question_en": "What did Amma say the mirror was made of?",
+          "options_en": [
+            "Glass",
+            "Wood",
+            "Metal"
+          ],
+          "correct_index": 0,
+          "sentence_index": 36
+        },
+        {
+          "id": "gl_p8_s2_q2",
+          "type": "choice",
+          "question_en": "How did Amma describe the mirror?",
+          "options_en": [
+            "Just glass",
+            "Very big",
+            "Very loud"
+          ],
+          "correct_index": 0,
+          "sentence_index": 36
+        },
+        {
+          "id": "gl_p8_s3_q1",
+          "type": "choice",
+          "question_en": "What did Amma mention was at the back?",
+          "options_en": [
+            "The shiny layer",
+            "A wooden back",
+            "A picture"
+          ],
+          "correct_index": 0,
+          "sentence_index": 37
+        },
+        {
+          "id": "gl_p8_s3_q2",
+          "type": "choice",
+          "question_en": "Where is the shiny layer located?",
+          "options_en": [
+            "At the back",
+            "On the front",
+            "On the floor"
+          ],
+          "correct_index": 0,
+          "sentence_index": 37
+        },
+        {
+          "id": "gl_p8_s4_q1",
+          "type": "choice",
+          "question_en": "What does the shiny layer turn back to you?",
+          "options_en": [
+            "Light",
+            "Sound",
+            "Taste"
+          ],
+          "correct_index": 0,
+          "sentence_index": 38
+        },
+        {
+          "id": "gl_p8_s4_q2",
+          "type": "choice",
+          "question_en": "What does the shiny layer do?",
+          "options_en": [
+            "Turns light back to you",
+            "Makes sound",
+            "Catches smells"
+          ],
+          "correct_index": 0,
+          "sentence_index": 38
+        },
+        {
+          "id": "gl_p8_s5_q1",
+          "type": "choice",
+          "question_en": "What will the mirror bounce you back as?",
+          "options_en": [
+            "A picture",
+            "A sound",
+            "A taste"
+          ],
+          "correct_index": 0,
+          "sentence_index": 39
+        },
+        {
+          "id": "gl_p8_s5_q2",
+          "type": "choice",
+          "question_en": "Where do you stand for the mirror to bounce you back?",
+          "options_en": [
+            "In front",
+            "Behind it",
+            "Next to Titus"
+          ],
+          "correct_index": 0,
+          "sentence_index": 39
+        }
+      ]
+    },
+    {
+      "paragraph_index": 9,
+      "questions": [
+        {
+          "id": "gl_p9_s0_q1",
+          "type": "choice",
+          "question_en": "Who looked at the picture?",
+          "options_en": [
+            "Manasa",
+            "Amma",
+            "Titus"
+          ],
+          "correct_index": 0,
+          "sentence_index": 40
+        },
+        {
+          "id": "gl_p9_s0_q2",
+          "type": "choice",
+          "question_en": "What did Manasa look at?",
+          "options_en": [
+            "A picture",
+            "A mirror",
+            "A biscuit"
+          ],
+          "correct_index": 0,
+          "sentence_index": 40
+        },
+        {
+          "id": "gl_p9_s1_q1",
+          "type": "choice",
+          "question_en": "What movement is described in the sentence?",
+          "options_en": [
+            "Manasa in, Manasa out",
+            "Manasa running away",
+            "Manasa sleeping"
+          ],
+          "correct_index": 0,
+          "sentence_index": 41
+        },
+        {
+          "id": "gl_p9_s1_q2",
+          "type": "choice",
+          "question_en": "Which words show repetition of action?",
+          "options_en": [
+            "Manasa in, Manasa out",
+            "BOUNCE!",
+            "Like a ball!"
+          ],
+          "correct_index": 0,
+          "sentence_index": 41
+        },
+        {
+          "id": "gl_p9_s2_q1",
+          "type": "choice",
+          "question_en": "Who said 'Like a ball!'?",
+          "options_en": [
+            "Manasa",
+            "Amma",
+            "Titus"
+          ],
+          "correct_index": 0,
+          "sentence_index": 42
+        },
+        {
+          "id": "gl_p9_s2_q2",
+          "type": "choice",
+          "question_en": "What did Manasa compare something to?",
+          "options_en": [
+            "A ball",
+            "A picture",
+            "A biscuit"
+          ],
+          "correct_index": 0,
+          "sentence_index": 42
+        },
+        {
+          "id": "gl_p9_s3_q1",
+          "type": "choice",
+          "question_en": "What exclamation appears in the sentence?",
+          "options_en": [
+            "BOUNCE!",
+            "HAI YA!",
+            "THUMP!"
+          ],
+          "correct_index": 0,
+          "sentence_index": 43
+        },
+        {
+          "id": "gl_p9_s3_q2",
+          "type": "choice",
+          "question_en": "Who nodded in agreement?",
+          "options_en": [
+            "Amma",
+            "Manasa",
+            "Titus"
+          ],
+          "correct_index": 0,
+          "sentence_index": 43
+        },
+        {
+          "id": "gl_p9_s4_q1",
+          "type": "choice",
+          "question_en": "What does the mirror do to your face according to the sentence?",
+          "options_en": [
+            "Bounces it back",
+            "Covers it",
+            "Hides it"
+          ],
+          "correct_index": 0,
+          "sentence_index": 44
+        },
+        {
+          "id": "gl_p9_s4_q2",
+          "type": "choice",
+          "question_en": "Who asked about sound?",
+          "options_en": [
+            "Manasa",
+            "Amma",
+            "Titus"
+          ],
+          "correct_index": 0,
+          "sentence_index": 44
+        },
+        {
+          "id": "gl_p9_s5_q1",
+          "type": "choice",
+          "question_en": "Who didn't speak according to the sentence?",
+          "options_en": [
+            "Mirror Manasa",
+            "Amma",
+            "Titus"
+          ],
+          "correct_index": 0,
+          "sentence_index": 45
+        },
+        {
+          "id": "gl_p9_s5_q2",
+          "type": "choice",
+          "question_en": "What did Amma say about sound?",
+          "options_en": [
+            "No sound",
+            "Lots of sound",
+            "A faint sound"
+          ],
+          "correct_index": 0,
+          "sentence_index": 45
+        },
+        {
+          "id": "gl_p9_s6_q1",
+          "type": "choice",
+          "question_en": "What does the shiny bit only bounce?",
+          "options_en": [
+            "Light",
+            "Sound",
+            "Taste"
+          ],
+          "correct_index": 0,
+          "sentence_index": 46
+        },
+        {
+          "id": "gl_p9_s6_q2",
+          "type": "choice",
+          "question_en": "Which senses did the sentence say the shiny bit does not bounce?",
+          "options_en": [
+            "Sound or taste or smell",
+            "Sight or touch or hearing",
+            "Hunger or sleep or play"
+          ],
+          "correct_index": 0,
+          "sentence_index": 46
+        },
+        {
+          "id": "gl_p9_s7_q1",
+          "type": "choice",
+          "question_en": "Who looked at the picture again?",
+          "options_en": [
+            "Manasa",
+            "Amma",
+            "Titus"
+          ],
+          "correct_index": 0,
+          "sentence_index": 47
+        },
+        {
+          "id": "gl_p9_s7_q2",
+          "type": "choice",
+          "question_en": "What phrase repeats the in-and-out idea?",
+          "options_en": [
+            "Manasa in, Manasa out",
+            "Like a ball!",
+            "BOUNCE!"
+          ],
+          "correct_index": 0,
+          "sentence_index": 47
+        },
+        {
+          "id": "gl_p9_s8_q1",
+          "type": "choice",
+          "question_en": "Who said 'Like a ball!' in this sentence?",
+          "options_en": [
+            "Manasa",
+            "Amma",
+            "Titus"
+          ],
+          "correct_index": 0,
+          "sentence_index": 48
+        },
+        {
+          "id": "gl_p9_s8_q2",
+          "type": "choice",
+          "question_en": "What was Manasa describing as like a ball?",
+          "options_en": [
+            "The mirror picture bounce",
+            "A biscuit",
+            "The cricket bat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 48
+        },
+        {
+          "id": "gl_p9_s9_q1",
+          "type": "choice",
+          "question_en": "What exclamation appears in this sentence?",
+          "options_en": [
+            "BOUNCE!",
+            "THUMP!",
+            "KRACK!"
+          ],
+          "correct_index": 0,
+          "sentence_index": 49
+        },
+        {
+          "id": "gl_p9_s9_q2",
+          "type": "choice",
+          "question_en": "Who nodded in this line?",
+          "options_en": [
+            "Amma",
+            "Manasa",
+            "Titus"
+          ],
+          "correct_index": 0,
+          "sentence_index": 49
+        },
+        {
+          "id": "gl_p9_s10_q1",
+          "type": "choice",
+          "question_en": "What does showing the mirror your face cause?",
+          "options_en": [
+            "The mirror bounces it back",
+            "The mirror hides it",
+            "The mirror eats it"
+          ],
+          "correct_index": 0,
+          "sentence_index": 50
+        },
+        {
+          "id": "gl_p9_s10_q2",
+          "type": "choice",
+          "question_en": "Who asked about the mirror making sound in this sentence?",
+          "options_en": [
+            "Manasa",
+            "Amma",
+            "Titus"
+          ],
+          "correct_index": 0,
+          "sentence_index": 50
+        },
+        {
+          "id": "gl_p9_s11_q1",
+          "type": "choice",
+          "question_en": "Who is said not to speak in this sentence?",
+          "options_en": [
+            "Mirror Manasa",
+            "Amma",
+            "Titus"
+          ],
+          "correct_index": 0,
+          "sentence_index": 51
+        },
+        {
+          "id": "gl_p9_s11_q2",
+          "type": "choice",
+          "question_en": "What did Amma say about sound here?",
+          "options_en": [
+            "No sound",
+            "Loud sound",
+            "Music"
+          ],
+          "correct_index": 0,
+          "sentence_index": 51
+        },
+        {
+          "id": "gl_p9_s12_q1",
+          "type": "choice",
+          "question_en": "What does the shiny bit not bounce according to this sentence?",
+          "options_en": [
+            "Sound, taste, or smell",
+            "Light",
+            "Pictures"
+          ],
+          "correct_index": 0,
+          "sentence_index": 52
+        },
+        {
+          "id": "gl_p9_s12_q2",
+          "type": "choice",
+          "question_en": "Which of these is the shiny layer said to bounce?",
+          "options_en": [
+            "Light",
+            "Smell",
+            "Taste"
+          ],
+          "correct_index": 0,
+          "sentence_index": 52
+        }
+      ]
+    },
+    {
+      "paragraph_index": 10,
+      "questions": [
+        {
+          "id": "gl_p10_s0_q1",
+          "type": "choice",
+          "question_en": "Who asked about Mirror Manasa being there in the dark?",
+          "options_en": [
+            "Manasa",
+            "Amma",
+            "Titus"
+          ],
+          "correct_index": 0,
+          "sentence_index": 53
+        },
+        {
+          "id": "gl_p10_s0_q2",
+          "type": "choice",
+          "question_en": "What did Manasa ask about Mirror Manasa?",
+          "options_en": [
+            "If Mirror Manasa will be there in the dark",
+            "If Mirror Manasa speaks",
+            "If Mirror Manasa is broken"
+          ],
+          "correct_index": 0,
+          "sentence_index": 53
+        },
+        {
+          "id": "gl_p10_s1_q1",
+          "type": "choice",
+          "question_en": "Who said the mirror needs light to see?",
+          "options_en": [
+            "Amma",
+            "Manasa",
+            "Titus"
+          ],
+          "correct_index": 0,
+          "sentence_index": 54
+        },
+        {
+          "id": "gl_p10_s1_q2",
+          "type": "choice",
+          "question_en": "What does the mirror need to see, according to Amma?",
+          "options_en": [
+            "Light",
+            "Glass",
+            "Sound"
+          ],
+          "correct_index": 0,
+          "sentence_index": 54
+        },
+        {
+          "id": "gl_p10_s2_q1",
+          "type": "choice",
+          "question_en": "Who was pleased and said \"Aha!\"?",
+          "options_en": [
+            "Manasa",
+            "Amma",
+            "Mirror Manasa"
+          ],
+          "correct_index": 0,
+          "sentence_index": 55
+        },
+        {
+          "id": "gl_p10_s2_q2",
+          "type": "choice",
+          "question_en": "What did Manasa say when she was pleased?",
+          "options_en": [
+            "\"Aha!\"",
+            "\"BOUNCE!\"",
+            "\"HAI YA!\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 55
+        },
+        {
+          "id": "gl_p10_s3_q1",
+          "type": "choice",
+          "question_en": "Who said \"That's what Mirror Manasa is.\"?",
+          "options_en": [
+            "Manasa",
+            "Amma",
+            "Titus"
+          ],
+          "correct_index": 0,
+          "sentence_index": 56
+        },
+        {
+          "id": "gl_p10_s3_q2",
+          "type": "choice",
+          "question_en": "What did the speaker say Mirror Manasa is?",
+          "options_en": [
+            "Light bouncing",
+            "A picture",
+            "A person hiding"
+          ],
+          "correct_index": 0,
+          "sentence_index": 56
+        },
+        {
+          "id": "gl_p10_s4_q1",
+          "type": "choice",
+          "question_en": "How did the speaker describe Mirror Manasa in one phrase?",
+          "options_en": [
+            "Light bouncing",
+            "A ball",
+            "A shiny layer"
+          ],
+          "correct_index": 0,
+          "sentence_index": 57
+        },
+        {
+          "id": "gl_p10_s4_q2",
+          "type": "choice",
+          "question_en": "What did Amma do at the end of the paragraph?",
+          "options_en": [
+            "She fell asleep",
+            "She yawned",
+            "She picked Manasa up"
+          ],
+          "correct_index": 0,
+          "sentence_index": 57
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'Who's That in the Mirror?'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "mirror",
+      "meaning_vi": "gương",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "bathroom",
+      "meaning_vi": "phòng tắm",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "shouted",
+      "meaning_vi": "hét lên",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "yourself",
+      "meaning_vi": "chính mình",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "chomping",
+      "meaning_vi": "nhai",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "biscuit",
+      "meaning_vi": "bánh quy",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "around",
+      "meaning_vi": "vòng quanh",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "extra",
+      "meaning_vi": "thêm",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "running",
+      "meaning_vi": "chạy",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "followed",
+      "meaning_vi": "đi theo",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "angry",
+      "meaning_vi": "tức giận",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "peered",
+      "meaning_vi": "nhìn kỹ",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "peeked",
+      "meaning_vi": "lén nhìn",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "sneaky",
+      "meaning_vi": "lén lút",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "stomped",
+      "meaning_vi": "dậm chân",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "lifted",
+      "meaning_vi": "nhấc lên",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "scared",
+      "meaning_vi": "sợ hãi",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "whined",
+      "meaning_vi": "rên rỉ",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "swung",
+      "meaning_vi": "vung",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "slipped",
+      "meaning_vi": "tuột",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "bits",
+      "meaning_vi": "mảnh",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "flashing",
+      "meaning_vi": "lấp lánh",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "dangerous",
+      "meaning_vi": "nguy hiểm",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "broken",
+      "meaning_vi": "vỡ",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "carefully",
+      "meaning_vi": "cẩn thận",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "swept",
+      "meaning_vi": "quét",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "understand",
+      "meaning_vi": "hiểu",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "shiny",
+      "meaning_vi": "sáng bóng",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "layer",
+      "meaning_vi": "lớp",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "bounce",
+      "meaning_vi": "bật lại",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "nodded",
+      "meaning_vi": "gật đầu",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "sound",
+      "meaning_vi": "âm thanh",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "taste",
+      "meaning_vi": "vị giác",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "smell",
+      "meaning_vi": "khứu giác",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "dark",
+      "meaning_vi": "bóng tối",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "needs",
+      "meaning_vi": "cần",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "pleased",
+      "meaning_vi": "vui mừng",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "fell asleep",
+      "meaning_vi": "ngủ thiếp đi",
+      "paragraph_index": 10
+    }
+  ]
+}

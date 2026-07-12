@@ -1,0 +1,648 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L2",
+  "level_label": "Cấp 2",
+  "topic": "A Girl Called Cheeku",
+  "slug": "book_126876",
+  "audio_filename": "book_126876.mp3",
+  "book_slug": "book_126876",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_126876/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_126876/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_126876/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_126876/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_126876/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_126876/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_126876/page_09.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_126876/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_126876/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_126876/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_126876/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_126876/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_126876/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_126876/page_09.mp3"
+  ],
+  "book_attribution": {
+    "title": "A Girl Called Cheeku",
+    "creators": [
+      "Swagata Sen Pillai",
+      "Manasi Parikh"
+    ],
+    "publisher": "Pratham Books",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: A Girl Called Cheeku is translated by Swagata Sen Pillai . The © for this translation lies with Pratham Books , 2020. Some rights reserved. Released under CC BY 4.0 license. Based on Original story: ' चकाचक चीकू ' , by Lovleen Misra . © Pratham Books , 2019. Some rights reserved. Released under CC BY 4.0 license. Other Credits: 'A Girl Called Cheeku' has been originally published by Pratham Books. The development of this book has been supported by Parag, an initiative of Tata Trusts. www.prathambooks.org; Guest Art Director: Aditi Dilip. Images Attributions: Cover page: A girl tying her hair , by Manasi Parikh © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 2: Girl looking at a group of rabbits , by Manasi Parikh © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 3: Students walking to a school bus , by Manasi Parikh © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 4: Students inside a school bus , by Manasi Parikh © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 5: Girl reading under a tree , by Manasi Parikh © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 6: Very heavy rainfall , by Manasi Parikh © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 7: Students surrounded by scary monsters , by Manasi Parikh © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 8: A teacher standing around students , by Manasi Parikh © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 9: A girl making shadow puppets , by Manasi Parikh © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/ The development of this book has been supported by Parag, an initiative or Tata Trusts.",
+    "source_url": "https://storyweaver.org.in/stories/126876-a-girl-called-cheeku",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "Students walking to a school bus , by Manasi Parikh © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "Students inside a school bus , by Manasi Parikh © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "Girl reading under a tree , by Manasi Parikh © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "Very heavy rainfall , by Manasi Parikh © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "Students surrounded by scary monsters , by Manasi Parikh © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "A teacher standing around students , by Manasi Parikh © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "A girl making shadow puppets , by Manasi Parikh © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "A Girl Called Cheeku",
+    "paragraphs_en": [
+      "Cheeku is not too big Or too small. She's not too short Or too tall.",
+      "She doesn't talk a lot, Or play too long. But Cheeku always speaks up When she sees something wrong.",
+      "Cheeku won't be found Swimming in a pond, Or climbing a tree. If you go to a busy market, Cheeku won't be there On a spending spree.",
+      "One day there was a storm, And off went the light.",
+      "The darkness and shadows Gave everyone a fright.",
+      "Cheeku was brave, She didn't bawl. She quickly lit a lamp, And told stories to all.",
+      "With song and dance and stories, hooray, Cheeku drove the darkness away."
+    ],
+    "sentences": [
+      {
+        "text_en": "Cheeku is not too big Or too small.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_126876/s_000.mp3",
+        "text_vi": "Cheeku không quá lớn cũng không quá nhỏ."
+      },
+      {
+        "text_en": "She's not too short Or too tall.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_126876/s_001.mp3",
+        "text_vi": "Cô bé không quá lùn cũng không quá cao."
+      },
+      {
+        "text_en": "She doesn't talk a lot, Or play too long.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_126876/s_002.mp3",
+        "text_vi": "Cô bé không nói nhiều, cũng không chơi quá lâu."
+      },
+      {
+        "text_en": "But Cheeku always speaks up When she sees something wrong.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_126876/s_003.mp3",
+        "text_vi": "Nhưng Cheeku luôn lên tiếng khi thấy điều gì đó sai."
+      },
+      {
+        "text_en": "Cheeku won't be found Swimming in a pond, Or climbing a tree.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_126876/s_004.mp3",
+        "text_vi": "Bạn sẽ không tìm thấy Cheeku bơi trong ao, hay trèo cây đâu."
+      },
+      {
+        "text_en": "If you go to a busy market, Cheeku won't be there On a spending spree.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_126876/s_005.mp3",
+        "text_vi": "Nếu bạn đến một khu chợ đông đúc, Cheeku sẽ không ở đó để mua sắm đâu."
+      },
+      {
+        "text_en": "One day there was a storm, And off went the light.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_126876/s_006.mp3",
+        "text_vi": "Một ngày nọ có một cơn bão, và đèn tắt."
+      },
+      {
+        "text_en": "The darkness and shadows Gave everyone a fright.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_126876/s_007.mp3",
+        "text_vi": "Bóng tối và những cái bóng làm mọi người sợ hãi."
+      },
+      {
+        "text_en": "Cheeku was brave, She didn't bawl.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_126876/s_008.mp3",
+        "text_vi": "Cheeku rất dũng cảm, cô bé không khóc ầm ĩ."
+      },
+      {
+        "text_en": "She quickly lit a lamp, And told stories to all.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_126876/s_009.mp3",
+        "text_vi": "Cô bé nhanh chóng thắp một ngọn đèn, và kể chuyện cho mọi người nghe."
+      },
+      {
+        "text_en": "With song and dance and stories, hooray, Cheeku drove the darkness away.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_126876/s_010.mp3",
+        "text_vi": "Với bài hát, điệu nhảy và những câu chuyện, hoan hô, Cheeku đã xua tan bóng tối."
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "Cheeku is not too big Or too small.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_126876/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "She's not too short Or too tall.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_126876/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "She doesn't talk a lot, Or play too long.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_126876/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "But Cheeku always speaks up When she sees something wrong.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_126876/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "Cheeku won't be found Swimming in a pond, Or climbing a tree.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_126876/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "If you go to a busy market, Cheeku won't be there On a spending spree.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_126876/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "One day there was a storm, And off went the light.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_126876/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "The darkness and shadows Gave everyone a fright.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_126876/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "Cheeku was brave, She didn't bawl.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_126876/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "She quickly lit a lamp, And told stories to all.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_126876/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "With song and dance and stories, hooray, Cheeku drove the darkness away.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_126876/s_010.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "Who is not too big or too small?",
+          "options_en": [
+            "Cheeku",
+            "a lamp",
+            "the market"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "What is said about Cheeku's size?",
+          "options_en": [
+            "She is not too big or too small",
+            "She won't be found swimming in a pond",
+            "She quickly lit a lamp"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s1_q1",
+          "type": "choice",
+          "question_en": "Who is not too short or too tall?",
+          "options_en": [
+            "Cheeku",
+            "the darkness",
+            "a pond"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s1_q2",
+          "type": "choice",
+          "question_en": "How is she described in height?",
+          "options_en": [
+            "Not too short or too tall",
+            "Brave",
+            "Quickly lit a lamp"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "Who doesn't talk a lot?",
+          "options_en": [
+            "Cheeku",
+            "everyone",
+            "a lamp"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "How long does she play?",
+          "options_en": [
+            "Not too long",
+            "Swimming in a pond",
+            "On a spending spree"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p1_s1_q1",
+          "type": "choice",
+          "question_en": "When does Cheeku speak up?",
+          "options_en": [
+            "When she sees something wrong",
+            "During a storm",
+            "When she is swimming in a pond"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p1_s1_q2",
+          "type": "choice",
+          "question_en": "What does Cheeku do when she sees something wrong?",
+          "options_en": [
+            "Speaks up",
+            "Quickly lit a lamp",
+            "Told stories to all"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "Where won't Cheeku be found?",
+          "options_en": [
+            "Swimming in a pond",
+            "On a spending spree",
+            "Telling stories to all"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "What activity won't Cheeku be doing?",
+          "options_en": [
+            "Swimming in a pond",
+            "Speaking up when she sees something wrong",
+            "Lighting a lamp"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p2_s1_q1",
+          "type": "choice",
+          "question_en": "Where won't Cheeku be if you go to a busy market?",
+          "options_en": [
+            "On a spending spree",
+            "Swimming in a pond",
+            "Climbing a tree"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p2_s1_q2",
+          "type": "choice",
+          "question_en": "What won't Cheeku be doing at the busy market?",
+          "options_en": [
+            "On a spending spree",
+            "Lighting a lamp",
+            "Telling stories to all"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "When did the storm happen?",
+          "options_en": [
+            "One day",
+            "When Cheeku was swimming in a pond",
+            "When she was at a busy market"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "What happened to the light?",
+          "options_en": [
+            "It went off",
+            "Cheeku quickly lit a lamp",
+            "Cheeku drove the darkness away"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "What gave everyone a fright?",
+          "options_en": [
+            "The darkness and shadows",
+            "A storm",
+            "The light"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "Who was given a fright?",
+          "options_en": [
+            "Everyone",
+            "Cheeku",
+            "People in the market"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "Who was brave?",
+          "options_en": [
+            "Cheeku",
+            "Everyone",
+            "The darkness"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "How did she react when something happened?",
+          "options_en": [
+            "She didn't bawl",
+            "She spoke up",
+            "She went to the market"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p5_s1_q1",
+          "type": "choice",
+          "question_en": "What did she quickly light?",
+          "options_en": [
+            "A lamp",
+            "A tree",
+            "A pond"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p5_s1_q2",
+          "type": "choice",
+          "question_en": "Who did she tell stories to?",
+          "options_en": [
+            "Everyone",
+            "People at the market",
+            "The darkness"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "Who drove the darkness away?",
+          "options_en": [
+            "Cheeku",
+            "The storm",
+            "The shadows"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "How did Cheeku drive the darkness away?",
+          "options_en": [
+            "With song and dance and stories",
+            "By quickly lighting a lamp",
+            "By going to a busy market"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'A Girl Called Cheeku'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "big",
+      "meaning_vi": "lớn",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "small",
+      "meaning_vi": "nhỏ",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "short",
+      "meaning_vi": "thấp",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "tall",
+      "meaning_vi": "cao",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "talk",
+      "meaning_vi": "nói chuyện",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "play",
+      "meaning_vi": "chơi",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "speaks up",
+      "meaning_vi": "nói ra",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "wrong",
+      "meaning_vi": "sai",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "pond",
+      "meaning_vi": "ao",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "climbing",
+      "meaning_vi": "trèo",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "market",
+      "meaning_vi": "chợ",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "spending spree",
+      "meaning_vi": "mua sắm thả ga",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "storm",
+      "meaning_vi": "bão",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "light",
+      "meaning_vi": "đèn",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "darkness",
+      "meaning_vi": "bóng tối",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "shadows",
+      "meaning_vi": "cái bóng",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "fright",
+      "meaning_vi": "sợ hãi",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "brave",
+      "meaning_vi": "dũng cảm",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "bawl",
+      "meaning_vi": "khóc ầm ĩ",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "lamp",
+      "meaning_vi": "đèn",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "stories",
+      "meaning_vi": "câu chuyện",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "song",
+      "meaning_vi": "bài hát",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "dance",
+      "meaning_vi": "điệu nhảy",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "drove away",
+      "meaning_vi": "xua tan",
+      "paragraph_index": 6
+    }
+  ]
+}

@@ -1,0 +1,1284 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L1",
+  "level_label": "Cấp 1",
+  "topic": "Moutushi's Song",
+  "slug": "book_102786",
+  "audio_filename": "book_102786.mp3",
+  "book_slug": "book_102786",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_102786/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_102786/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_102786/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_102786/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_102786/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_102786/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_102786/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_102786/page_09.jpg",
+    "https://audio.felixbuilderhub.com/books/book_102786/page_10.jpg",
+    "https://audio.felixbuilderhub.com/books/book_102786/page_11.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_102786/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_102786/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_102786/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_102786/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_102786/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_102786/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_102786/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_102786/page_09.mp3",
+    "https://audio.felixbuilderhub.com/books/book_102786/page_10.mp3",
+    "https://audio.felixbuilderhub.com/books/book_102786/page_11.mp3"
+  ],
+  "book_attribution": {
+    "title": "Moutushi's Song",
+    "creators": [
+      "Sukanya Sinha",
+      "Supriya Tirkey"
+    ],
+    "publisher": "Pratham Books",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: Moutushi's Song is translated by Sukanya Sinha . The © for this translation lies with Pratham Books , 2019. Some rights reserved. Released under CC BY 4.0 license. Based on Original story: ' মৌটুসির গান ' , by Maitreyi Shome . © Pratham Books , 2019. Some rights reserved. Released under CC BY 4.0 license. Other Credits: 'Moutushi's Song' has been published on StoryWeaver by Pratham Books. www.prathambooks.org. Guest Art Director: Aindri C. Images Attributions: Cover page: A sunbird sucks on a flower , by Supriya Tirkey © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 2: a sunbird fluttering around a balcony , by Supriya Tirkey © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 3: Sunbird flying among the trees , by Supriya Tirkey © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 4: A sunbird looks up at a honeycomb , by Supriya Tirkey © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 5: sunbird on a branch of a tree , by Supriya Tirkey © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 6: An old woman sitting in the balcony , by Supriya Tirkey © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 7: A sunbird drinks nectar from a flower , by Supriya Tirkey © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 8: A sunbird sitting a on a branch , by Supriya Tirkey © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 9: Two mynah birds fighting , by Supriya Tirkey © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 10: A sunbird flies away , by Supriya Tirkey © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/102786-moutushi-s-song",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "a sunbird fluttering around a balcony , by Supriya Tirkey © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "Sunbird flying among the trees , by Supriya Tirkey © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "A sunbird looks up at a honeycomb , by Supriya Tirkey © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "sunbird on a branch of a tree , by Supriya Tirkey © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "An old woman sitting in the balcony , by Supriya Tirkey © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "A sunbird drinks nectar from a flower , by Supriya Tirkey © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "A sunbird sitting a on a branch , by Supriya Tirkey © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "Two mynah birds fighting , by Supriya Tirkey © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 8,
+        "credit_text": "A sunbird flies away , by Supriya Tirkey © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 9,
+        "credit_text": "Illustration by Supriya Tirkey."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "Moutushi's Song",
+    "paragraphs_en": [
+      "Little Moutushi is very busy today.",
+      "She flies from one branch to another on the big neem tree.",
+      "On the big neem tree is a big beehive. Bees buzz around, collecting nectar. “I want nectar too,” Moutushi says to herself.",
+      "“Let me look around and see if I can find some nectar,” Moutushi thinks.",
+      "It is a cold winter afternoon. In a big house by the neem tree, Didima is enjoying the afternoon sun. Flowers are blooming in the pots on the balcony.",
+      "Phat Phat Phat! Moutushi flies down to a pretty red flower. She drinks nectar with her needle-like beak.",
+      "“Aah, my tummy is full!” Moutushi is feeling sleepy. “I will rock myself to sleep on the branch of this tree.”",
+      "Two mynahs come flying to the balcony. They start fighting with each other.",
+      "Oh no, Moutushi’s sleep flies away. She hates fighting. Moutushi decides to fly away as well. Phat Phat Phat!",
+      "Before she goes, she sings a little song for Didima. “Didima calls, ‘Where are you?’ I am here. Tui, tui, tuu. Didima says, ‘Are you lost, are you?’ No, I am right here. Tui, tui, tuu. Didima asks, ‘Did you drink the nectar, did you?’ Yes, my tummy is full. Tui, tui, tuu.”"
+    ],
+    "sentences": [
+      {
+        "text_en": "Little Moutushi is very busy today.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_102786/s_000.mp3",
+        "text_vi": "Bé Moutushi hôm nay rất bận rộn."
+      },
+      {
+        "text_en": "She flies from one branch to another on the big neem tree.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_102786/s_001.mp3",
+        "text_vi": "Cô bé bay từ cành này sang cành khác trên cây sầu đâu to lớn."
+      },
+      {
+        "text_en": "On the big neem tree is a big beehive.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_102786/s_002.mp3",
+        "text_vi": "Trên cây sầu đâu to lớn có một tổ ong rất to."
+      },
+      {
+        "text_en": "Bees buzz around, collecting nectar.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_102786/s_003.mp3",
+        "text_vi": "Những chú ong bay vo ve, hút mật hoa."
+      },
+      {
+        "text_en": "“I want nectar too,” Moutushi says to herself.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_102786/s_004.mp3",
+        "text_vi": "“Mình cũng muốn mật hoa,” Moutushi tự nhủ."
+      },
+      {
+        "text_en": "“Let me look around and see if I can find some nectar,” Moutushi thinks.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_102786/s_005.mp3",
+        "text_vi": "“Để mình nhìn xung quanh xem có tìm được mật hoa nào không,” Moutushi nghĩ."
+      },
+      {
+        "text_en": "It is a cold winter afternoon.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_102786/s_006.mp3",
+        "text_vi": "Đó là một buổi chiều mùa đông lạnh giá."
+      },
+      {
+        "text_en": "In a big house by the neem tree, Didima is enjoying the afternoon sun.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_102786/s_007.mp3",
+        "text_vi": "Trong một ngôi nhà lớn cạnh cây sầu đâu, Didima đang tận hưởng nắng chiều."
+      },
+      {
+        "text_en": "Flowers are blooming in the pots on the balcony.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_102786/s_008.mp3",
+        "text_vi": "Những bông hoa đang nở rộ trong các chậu cây trên ban công."
+      },
+      {
+        "text_en": "Phat Phat Phat!",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_102786/s_009.mp3",
+        "text_vi": "Phành phạch phành phạch phành phạch!"
+      },
+      {
+        "text_en": "Moutushi flies down to a pretty red flower.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_102786/s_010.mp3",
+        "text_vi": "Moutushi bay xuống một bông hoa đỏ xinh xắn."
+      },
+      {
+        "text_en": "She drinks nectar with her needle-like beak.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_102786/s_011.mp3",
+        "text_vi": "Cô bé hút mật hoa bằng cái mỏ nhọn như kim của mình."
+      },
+      {
+        "text_en": "“Aah, my tummy is full!” Moutushi is feeling sleepy.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_102786/s_012.mp3",
+        "text_vi": "“Aah, bụng mình no căng rồi!” Moutushi cảm thấy buồn ngủ."
+      },
+      {
+        "text_en": "“I will rock myself to sleep on the branch of this tree.”",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_102786/s_013.mp3",
+        "text_vi": "“Mình sẽ đu đưa trên cành cây này để ngủ.”"
+      },
+      {
+        "text_en": "Two mynahs come flying to the balcony.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_102786/s_014.mp3",
+        "text_vi": "Hai con chim sáo bay đến ban công."
+      },
+      {
+        "text_en": "They start fighting with each other.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_102786/s_015.mp3",
+        "text_vi": "Chúng bắt đầu đánh nhau."
+      },
+      {
+        "text_en": "Oh no, Moutushi’s sleep flies away.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_102786/s_016.mp3",
+        "text_vi": "Ôi không, giấc ngủ của Moutushi bay biến mất rồi."
+      },
+      {
+        "text_en": "She hates fighting.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_102786/s_017.mp3",
+        "text_vi": "Cô bé ghét đánh nhau."
+      },
+      {
+        "text_en": "Moutushi decides to fly away as well.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_102786/s_018.mp3",
+        "text_vi": "Moutushi quyết định bay đi chỗ khác luôn."
+      },
+      {
+        "text_en": "Phat Phat Phat!",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_102786/s_019.mp3",
+        "text_vi": "Phành phạch phành phạch phành phạch!"
+      },
+      {
+        "text_en": "Before she goes, she sings a little song for Didima.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_102786/s_020.mp3",
+        "text_vi": "Trước khi đi, cô bé hát một bài hát nhỏ cho Didima."
+      },
+      {
+        "text_en": "“Didima calls, ‘Where are you?’ I am here.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_102786/s_021.mp3",
+        "text_vi": "“Didima gọi, ‘Con ở đâu?’ Con ở đây."
+      },
+      {
+        "text_en": "Tui, tui, tuu.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_102786/s_022.mp3",
+        "text_vi": "Tui, tui, tuu."
+      },
+      {
+        "text_en": "Didima says, ‘Are you lost, are you?’ No, I am right here.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_102786/s_023.mp3",
+        "text_vi": "Didima nói, ‘Con lạc rồi phải không?’ Không, con ở ngay đây."
+      },
+      {
+        "text_en": "Tui, tui, tuu.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_102786/s_024.mp3",
+        "text_vi": "Tui, tui, tuu."
+      },
+      {
+        "text_en": "Didima asks, ‘Did you drink the nectar, did you?’ Yes, my tummy is full.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_102786/s_025.mp3",
+        "text_vi": "Didima hỏi, ‘Con đã uống mật hoa chưa?’ Rồi, bụng con no rồi."
+      },
+      {
+        "text_en": "Tui, tui, tuu.”",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_102786/s_026.mp3",
+        "text_vi": "Tui, tui, tuu.”"
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "Little Moutushi is very busy today.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_102786/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "She flies from one branch to another on the big neem tree.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_102786/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "On the big neem tree is a big beehive.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_102786/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "Bees buzz around, collecting nectar.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_102786/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "“I want nectar too,” Moutushi says to herself.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_102786/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "“Let me look around and see if I can find some nectar,” Moutushi thinks.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_102786/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "It is a cold winter afternoon.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_102786/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "In a big house by the neem tree, Didima is enjoying the afternoon sun.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_102786/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "Flowers are blooming in the pots on the balcony.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_102786/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "Phat Phat Phat!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_102786/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "Moutushi flies down to a pretty red flower.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_102786/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "She drinks nectar with her needle-like beak.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_102786/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "“Aah, my tummy is full!” Moutushi is feeling sleepy.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_102786/s_012.mp3"
+        },
+        {
+          "id": "ra_13",
+          "text_en": "“I will rock myself to sleep on the branch of this tree.”",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_102786/s_013.mp3"
+        },
+        {
+          "id": "ra_14",
+          "text_en": "Two mynahs come flying to the balcony.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_102786/s_014.mp3"
+        },
+        {
+          "id": "ra_15",
+          "text_en": "They start fighting with each other.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_102786/s_015.mp3"
+        },
+        {
+          "id": "ra_16",
+          "text_en": "Oh no, Moutushi’s sleep flies away.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_102786/s_016.mp3"
+        },
+        {
+          "id": "ra_17",
+          "text_en": "She hates fighting.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_102786/s_017.mp3"
+        },
+        {
+          "id": "ra_18",
+          "text_en": "Moutushi decides to fly away as well.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_102786/s_018.mp3"
+        },
+        {
+          "id": "ra_19",
+          "text_en": "Phat Phat Phat!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_102786/s_019.mp3"
+        },
+        {
+          "id": "ra_20",
+          "text_en": "Before she goes, she sings a little song for Didima.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_102786/s_020.mp3"
+        },
+        {
+          "id": "ra_21",
+          "text_en": "“Didima calls, ‘Where are you?’ I am here.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_102786/s_021.mp3"
+        },
+        {
+          "id": "ra_22",
+          "text_en": "Tui, tui, tuu.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_102786/s_022.mp3"
+        },
+        {
+          "id": "ra_23",
+          "text_en": "Didima says, ‘Are you lost, are you?’ No, I am right here.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_102786/s_023.mp3"
+        },
+        {
+          "id": "ra_24",
+          "text_en": "Tui, tui, tuu.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_102786/s_024.mp3"
+        },
+        {
+          "id": "ra_25",
+          "text_en": "Didima asks, ‘Did you drink the nectar, did you?’ Yes, my tummy is full.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_102786/s_025.mp3"
+        },
+        {
+          "id": "ra_26",
+          "text_en": "Tui, tui, tuu.”",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_102786/s_026.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "Who is very busy today?",
+          "options_en": [
+            "Little Moutushi",
+            "Didima",
+            "Two mynahs"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "When is Little Moutushi very busy?",
+          "options_en": [
+            "Today",
+            "In a cold winter afternoon",
+            "On the big neem tree"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "Who flies from one branch to another?",
+          "options_en": [
+            "She",
+            "Bees",
+            "Mynahs"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "Where does she fly from one branch to another?",
+          "options_en": [
+            "On the big neem tree",
+            "To the balcony",
+            "In the big house"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "Where is the big beehive?",
+          "options_en": [
+            "On the big neem tree",
+            "In a big house",
+            "On the balcony pots"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "Which tree has a big beehive?",
+          "options_en": [
+            "The big neem tree",
+            "The branch tree",
+            "The red-flowered tree"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p2_s1_q1",
+          "type": "choice",
+          "question_en": "What are the bees doing?",
+          "options_en": [
+            "Buzzing around",
+            "Fighting with each other",
+            "Singing a little song"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p2_s1_q2",
+          "type": "choice",
+          "question_en": "What are the bees collecting?",
+          "options_en": [
+            "Nectar",
+            "Seeds from the pots",
+            "Sleep"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p2_s2_q1",
+          "type": "choice",
+          "question_en": "Who says, \"I want nectar too\"?",
+          "options_en": [
+            "Moutushi",
+            "Didima",
+            "A mynah"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p2_s2_q2",
+          "type": "choice",
+          "question_en": "What does Moutushi say she wants?",
+          "options_en": [
+            "Nectar too",
+            "To rock herself to sleep",
+            "To fight"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "Who thinks about looking around to find nectar?",
+          "options_en": [
+            "Moutushi",
+            "the bees",
+            "Didima"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "What does she want to find?",
+          "options_en": [
+            "nectar",
+            "flowers",
+            "a beehive"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "When is it?",
+          "options_en": [
+            "A cold winter afternoon",
+            "A sunny summer morning",
+            "A rainy evening"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "How is the afternoon described?",
+          "options_en": [
+            "Cold",
+            "Sunny and hot",
+            "Windy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p4_s1_q1",
+          "type": "choice",
+          "question_en": "Who is enjoying the afternoon sun?",
+          "options_en": [
+            "Didima",
+            "Moutushi",
+            "Two mynahs"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p4_s1_q2",
+          "type": "choice",
+          "question_en": "Where is Didima?",
+          "options_en": [
+            "In a big house by the neem tree",
+            "On the branch of the neem tree",
+            "On the balcony pots"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p4_s2_q1",
+          "type": "choice",
+          "question_en": "What is blooming in the pots?",
+          "options_en": [
+            "Flowers",
+            "Bees",
+            "Nectar"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p4_s2_q2",
+          "type": "choice",
+          "question_en": "Where are the flowers blooming?",
+          "options_en": [
+            "On the balcony",
+            "In the beehive",
+            "On the neem tree branch"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "What word is repeated in the sentence?",
+          "options_en": [
+            "Phat",
+            "Tui",
+            "Buzz"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "How many times is the sound said?",
+          "options_en": [
+            "Three times",
+            "Two times",
+            "Once"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p5_s1_q1",
+          "type": "choice",
+          "question_en": "Who flies down to a pretty red flower?",
+          "options_en": [
+            "Moutushi",
+            "Two mynahs",
+            "Bees"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p5_s1_q2",
+          "type": "choice",
+          "question_en": "Where does Moutushi fly down to?",
+          "options_en": [
+            "A pretty red flower",
+            "The balcony",
+            "The beehive"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p5_s2_q1",
+          "type": "choice",
+          "question_en": "What does she drink?",
+          "options_en": [
+            "Nectar",
+            "Sunlight",
+            "Honey"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p5_s2_q2",
+          "type": "choice",
+          "question_en": "How does she drink the nectar?",
+          "options_en": [
+            "With her needle-like beak",
+            "With her wings",
+            "With her feet"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "Who is feeling sleepy?",
+          "options_en": [
+            "Moutushi",
+            "Didima",
+            "Two mynahs"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "Why is she feeling sleepy?",
+          "options_en": [
+            "Her tummy is full",
+            "Bees were buzzing",
+            "It is a cold afternoon"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p6_s1_q1",
+          "type": "choice",
+          "question_en": "Where will she rock herself to sleep?",
+          "options_en": [
+            "On the branch of this tree",
+            "On the balcony",
+            "In the big house"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p6_s1_q2",
+          "type": "choice",
+          "question_en": "How will she go to sleep?",
+          "options_en": [
+            "She will rock herself to sleep",
+            "She will sing a song",
+            "She will fly away"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "Who comes flying to the balcony?",
+          "options_en": [
+            "Two mynahs",
+            "Moutushi",
+            "Bees"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "Where do the birds come flying to?",
+          "options_en": [
+            "The balcony",
+            "A branch of the neem tree",
+            "A red flower"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p7_s1_q1",
+          "type": "choice",
+          "question_en": "Who starts fighting with each other?",
+          "options_en": [
+            "The two mynahs",
+            "The bees",
+            "Moutushi"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p7_s1_q2",
+          "type": "choice",
+          "question_en": "What do they start doing with each other?",
+          "options_en": [
+            "Fighting with each other",
+            "Drinking nectar",
+            "Singing for Didima"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        }
+      ]
+    },
+    {
+      "paragraph_index": 8,
+      "questions": [
+        {
+          "id": "gl_p8_s0_q1",
+          "type": "choice",
+          "question_en": "Whose sleep flies away?",
+          "options_en": [
+            "Moutushi's sleep",
+            "Didima's sleep",
+            "A mynah's sleep"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p8_s0_q2",
+          "type": "choice",
+          "question_en": "What happens to Moutushi's sleep?",
+          "options_en": [
+            "It flies away",
+            "It stays on the branch",
+            "It falls into a flower"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p8_s1_q1",
+          "type": "choice",
+          "question_en": "Who hates fighting?",
+          "options_en": [
+            "She (Moutushi)",
+            "Didima",
+            "The bees"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p8_s1_q2",
+          "type": "choice",
+          "question_en": "What does she hate?",
+          "options_en": [
+            "Fighting",
+            "Cold afternoons",
+            "Loud singing"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p8_s2_q1",
+          "type": "choice",
+          "question_en": "What does Moutushi decide to do?",
+          "options_en": [
+            "Fly away as well",
+            "Drink more nectar",
+            "Go to Didima's house"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p8_s2_q2",
+          "type": "choice",
+          "question_en": "Who decides to fly away as well?",
+          "options_en": [
+            "Moutushi",
+            "Didima",
+            "A mynah"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p8_s3_q1",
+          "type": "choice",
+          "question_en": "What sound is written in the sentence?",
+          "options_en": [
+            "Phat Phat Phat!",
+            "Bees buzz",
+            "Tui, tui, tuu"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p8_s3_q2",
+          "type": "choice",
+          "question_en": "How is Moutushi's movement shown in the line?",
+          "options_en": [
+            "Phat Phat Phat!",
+            "She sings a song",
+            "She rocks herself to sleep"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        }
+      ]
+    },
+    {
+      "paragraph_index": 9,
+      "questions": [
+        {
+          "id": "gl_p9_s0_q1",
+          "type": "choice",
+          "question_en": "Who does she sing for?",
+          "options_en": [
+            "Didima",
+            "The bees",
+            "The mynahs"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p9_s0_q2",
+          "type": "choice",
+          "question_en": "What does she sing before she goes?",
+          "options_en": [
+            "A little song",
+            "A loud cry",
+            "A long story"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p9_s1_q1",
+          "type": "choice",
+          "question_en": "Who calls, 'Where are you?'",
+          "options_en": [
+            "Didima",
+            "She",
+            "A mynah"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p9_s1_q2",
+          "type": "choice",
+          "question_en": "Where does the speaker say they are?",
+          "options_en": [
+            "Here",
+            "On the branch",
+            "At the beehive"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p9_s2_q1",
+          "type": "choice",
+          "question_en": "What sound is repeated in this sentence?",
+          "options_en": [
+            "Tui, tui, tuu",
+            "Phat Phat Phat",
+            "Buzz, buzz, buzz"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p9_s2_q2",
+          "type": "choice",
+          "question_en": "Which of these is spoken in the line?",
+          "options_en": [
+            "Tui, tui, tuu",
+            "Didima calls",
+            "I am here"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p9_s3_q1",
+          "type": "choice",
+          "question_en": "Who asks, 'Are you lost, are you?'",
+          "options_en": [
+            "Didima",
+            "The mynahs",
+            "The bees"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p9_s3_q2",
+          "type": "choice",
+          "question_en": "How does the speaker answer the question about being lost?",
+          "options_en": [
+            "No, I am right here",
+            "Yes, I am lost",
+            "I am on the branch"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p9_s4_q1",
+          "type": "choice",
+          "question_en": "What repeated sound appears in this sentence?",
+          "options_en": [
+            "Tui, tui, tuu",
+            "Phat Phat Phat",
+            "Buzz, buzz, buzz"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p9_s4_q2",
+          "type": "choice",
+          "question_en": "Which sequence of sounds is sung here?",
+          "options_en": [
+            "Tui, tui, tuu",
+            "Aah, my tummy is full",
+            "Didima calls"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p9_s5_q1",
+          "type": "choice",
+          "question_en": "What does Didima ask about in this sentence?",
+          "options_en": [
+            "If the nectar was drunk",
+            "If the mynahs are fighting",
+            "If the bees are nearby"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p9_s5_q2",
+          "type": "choice",
+          "question_en": "What does the speaker say about her tummy?",
+          "options_en": [
+            "It is full",
+            "It is empty",
+            "It is sleepy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p9_s6_q1",
+          "type": "choice",
+          "question_en": "How does the song end in the final line?",
+          "options_en": [
+            "Tui, tui, tuu",
+            "Phat Phat Phat",
+            "Didima calls"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p9_s6_q2",
+          "type": "choice",
+          "question_en": "Which repeated sound appears at the end?",
+          "options_en": [
+            "Tui, tui, tuu",
+            "Buzz, buzz, buzz",
+            "Aah, my tummy is full"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'Moutushi's Song'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "little",
+      "meaning_vi": "bé nhỏ",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "busy",
+      "meaning_vi": "bận rộn",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "flies",
+      "meaning_vi": "bay",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "branch",
+      "meaning_vi": "cành cây",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "another",
+      "meaning_vi": "khác",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "beehive",
+      "meaning_vi": "tổ ong",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "buzz",
+      "meaning_vi": "bay vo ve",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "collecting",
+      "meaning_vi": "thu thập",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "nectar",
+      "meaning_vi": "mật hoa",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "around",
+      "meaning_vi": "xung quanh",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "find",
+      "meaning_vi": "tìm thấy",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "winter",
+      "meaning_vi": "mùa đông",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "enjoying",
+      "meaning_vi": "tận hưởng",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "blooming",
+      "meaning_vi": "nở rộ",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "balcony",
+      "meaning_vi": "ban công",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "pretty",
+      "meaning_vi": "xinh xắn",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "needle-like",
+      "meaning_vi": "nhọn như kim",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "beak",
+      "meaning_vi": "mỏ chim",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "tummy",
+      "meaning_vi": "bụng",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "full",
+      "meaning_vi": "no căng",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "sleepy",
+      "meaning_vi": "buồn ngủ",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "rock",
+      "meaning_vi": "đu đưa",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "mynahs",
+      "meaning_vi": "chim sáo",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "fighting",
+      "meaning_vi": "đánh nhau",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "each other",
+      "meaning_vi": "lẫn nhau",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "hates",
+      "meaning_vi": "ghét",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "decides",
+      "meaning_vi": "quyết định",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "as well",
+      "meaning_vi": "cũng vậy",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "sings",
+      "meaning_vi": "hát",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "calls",
+      "meaning_vi": "gọi",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "lost",
+      "meaning_vi": "bị lạc",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "asks",
+      "meaning_vi": "hỏi",
+      "paragraph_index": 9
+    }
+  ]
+}

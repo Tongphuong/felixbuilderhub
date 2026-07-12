@@ -1,0 +1,926 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L1",
+  "level_label": "Cấp 1",
+  "topic": "My Family",
+  "slug": "book_100912",
+  "audio_filename": "book_100912.mp3",
+  "book_slug": "book_100912",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_100912/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_100912/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_100912/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_100912/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_100912/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_100912/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_100912/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_100912/page_09.jpg",
+    "https://audio.felixbuilderhub.com/books/book_100912/page_10.jpg",
+    "https://audio.felixbuilderhub.com/books/book_100912/page_11.jpg",
+    "https://audio.felixbuilderhub.com/books/book_100912/page_12.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_100912/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_100912/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_100912/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_100912/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_100912/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_100912/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_100912/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_100912/page_09.mp3",
+    "https://audio.felixbuilderhub.com/books/book_100912/page_10.mp3",
+    "https://audio.felixbuilderhub.com/books/book_100912/page_11.mp3",
+    "https://audio.felixbuilderhub.com/books/book_100912/page_12.mp3"
+  ],
+  "book_attribution": {
+    "title": "My Family",
+    "creators": [
+      "Shriya Badanhatti",
+      "Rajeev Verma 'Banjara'"
+    ],
+    "publisher": "StoryWeaver Community",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: My Family is translated by Shriya Badanhatti . The © for this translation lies with Shriya Badanhatti , 2019. Some rights reserved. Released under CC BY 4.0 license. Based on Original story: ' मेरा परिवार ' , by Arshi Naaz , kuldeep sandhu , Sushila . © Pratham Books , 2006. Some rights reserved. Released under CC BY 4.0 license. Images Attributions: Cover page: Welcoming guests into the home , by Rajeev Verma 'Banjara' © Pratham Books, 2006. Some rights reserved. Released under CC BY 4.0 license. Page 2: A girl happily standing in the middle of a room , by Rajeev Verma 'Banjara' © Pratham Books, 2006. Some rights reserved. Released under CC BY 4.0 license. Page 3: Two elders with a child , by Rajeev Verma 'Banjara' © Pratham Books, 2006. Some rights reserved. Released under CC BY 4.0 license. Page 4: Three children smiling together , by Rajeev Verma 'Banjara' © Pratham Books, 2006. Some rights reserved. Released under CC BY 4.0 license. Page 5: Welcoming a couple of guests into the home , by Rajeev Verma 'Banjara' © Pratham Books, 2006. Some rights reserved. Released under CC BY 4.0 license. Page 6: People greeting each other with smiles , by Rajeev Verma 'Banjara' © Pratham Books, 2006. Some rights reserved. Released under CC BY 4.0 license. Page 7: Five men on a sofa and a girl , by Rajeev Verma 'Banjara' © Pratham Books, 2006. Some rights reserved. Released under CC BY 4.0 license. Page 8: Four women and a girl , by Rajeev Verma 'Banjara' © Pratham Books, 2006. Some rights reserved. Released under CC BY 4.0 license. Page 9: Lots of children playing together , by Rajeev Verma 'Banjara' © Pratham Books, 2006. Some rights reserved. Released under CC BY 4.0 license. Page 10: Children playing together , by Rajeev Verma 'Banjara' © Pratham Books, 2006. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/100912-my-family",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "A girl happily standing in the middle of a room , by Rajeev Verma 'Banjara' © Pratham Books, 2006. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "Two elders with a child , by Rajeev Verma 'Banjara' © Pratham Books, 2006. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "Three children smiling together , by Rajeev Verma 'Banjara' © Pratham Books, 2006. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "Welcoming a couple of guests into the home , by Rajeev Verma 'Banjara' © Pratham Books, 2006. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "People greeting each other with smiles , by Rajeev Verma 'Banjara' © Pratham Books, 2006. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "Five men on a sofa and a girl , by Rajeev Verma 'Banjara' © Pratham Books, 2006. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "Four women and a girl , by Rajeev Verma 'Banjara' © Pratham Books, 2006. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "Lots of children playing together , by Rajeev Verma 'Banjara' © Pratham Books, 2006. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 8,
+        "credit_text": "Children playing together , by Rajeev Verma 'Banjara' © Pratham Books, 2006. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 9,
+        "credit_text": "Illustration by Rajeev Verma 'Banjara'."
+      },
+      {
+        "page_index": 10,
+        "credit_text": "Illustration by Rajeev Verma 'Banjara'."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "My Family",
+    "paragraphs_en": [
+      "I'm Tuktuk.I have a large family. Let's meet them!",
+      "This is my mom, and this is my dad.",
+      "This is my brother, Neetu and this is my sister, Meetu.",
+      "These are my paternal grandparents, and these are my maternal grandparents.",
+      "My mom has three sisters. I call them 'Mausi'. And next...",
+      "My dad has four brothers. I call two of them 'Thaauji' and two of them 'Chachaji'. Along with them...",
+      "I also have two 'Thaayi' and two 'Chachi' as well. Let's see...",
+      "There are five, young children in my family too.",
+      "We all together cause mischief in the house.",
+      "Look at how big my family is!",
+      "Oh, wait! I almost forgot about Bujo. It wags its tail and barks, \"Bow, bow, bow!!\""
+    ],
+    "sentences": [
+      {
+        "text_en": "I'm Tuktuk.I have a large family.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_100912/s_000.mp3",
+        "text_vi": "Mình là Tuktuk. Mình có một gia đình rất đông."
+      },
+      {
+        "text_en": "Let's meet them!",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_100912/s_001.mp3",
+        "text_vi": "Cùng gặp họ nhé!"
+      },
+      {
+        "text_en": "This is my mom, and this is my dad.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_100912/s_002.mp3",
+        "text_vi": "Đây là mẹ mình, và đây là bố mình."
+      },
+      {
+        "text_en": "This is my brother, Neetu and this is my sister, Meetu.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_100912/s_003.mp3",
+        "text_vi": "Đây là anh trai mình, Neetu, và đây là em gái mình, Meetu."
+      },
+      {
+        "text_en": "These are my paternal grandparents, and these are my maternal grandparents.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_100912/s_004.mp3",
+        "text_vi": "Đây là ông bà nội của mình, và đây là ông bà ngoại của mình."
+      },
+      {
+        "text_en": "My mom has three sisters.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_100912/s_005.mp3",
+        "text_vi": "Mẹ mình có ba chị em gái."
+      },
+      {
+        "text_en": "I call them 'Mausi'. And next...",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_100912/s_006.mp3",
+        "text_vi": "Mình gọi họ là 'Mausi'. Và tiếp theo..."
+      },
+      {
+        "text_en": "My dad has four brothers.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_100912/s_007.mp3",
+        "text_vi": "Bố mình có bốn anh em trai."
+      },
+      {
+        "text_en": "I call two of them 'Thaauji' and two of them 'Chachaji'.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_100912/s_008.mp3",
+        "text_vi": "Mình gọi hai người là 'Thaauji' và hai người là 'Chachaji'."
+      },
+      {
+        "text_en": "Along with them...",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_100912/s_009.mp3",
+        "text_vi": "Cùng với họ nữa..."
+      },
+      {
+        "text_en": "I also have two 'Thaayi' and two 'Chachi' as well. Let's see...",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_100912/s_010.mp3",
+        "text_vi": "Mình cũng có hai 'Thaayi' và hai 'Chachi' nữa. Để xem nào..."
+      },
+      {
+        "text_en": "There are five, young children in my family too.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_100912/s_011.mp3",
+        "text_vi": "Trong gia đình mình cũng có năm bạn nhỏ nữa."
+      },
+      {
+        "text_en": "We all together cause mischief in the house.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_100912/s_012.mp3",
+        "text_vi": "Tất cả chúng mình cùng nhau nghịch ngợm trong nhà."
+      },
+      {
+        "text_en": "Look at how big my family is!",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_100912/s_013.mp3",
+        "text_vi": "Nhìn xem gia đình mình đông đúc biết bao!"
+      },
+      {
+        "text_en": "Oh, wait! I almost forgot about Bujo.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_100912/s_014.mp3",
+        "text_vi": "Ôi, đợi chút! Mình suýt quên mất Bujo rồi."
+      },
+      {
+        "text_en": "It wags its tail and barks, \"Bow, bow, bow!!\"",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_100912/s_015.mp3",
+        "text_vi": "Nó vẫy đuôi và sủa, \"Gâu, gâu, gâu!!\""
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "I'm Tuktuk.I have a large family.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_100912/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "Let's meet them!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_100912/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "This is my mom, and this is my dad.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_100912/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "This is my brother, Neetu and this is my sister, Meetu.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_100912/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "These are my paternal grandparents, and these are my maternal grandparents.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_100912/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "My mom has three sisters.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_100912/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "I call them 'Mausi'. And next...",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_100912/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "My dad has four brothers.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_100912/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "I call two of them 'Thaauji' and two of them 'Chachaji'.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_100912/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "Along with them...",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_100912/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "I also have two 'Thaayi' and two 'Chachi' as well. Let's see...",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_100912/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "There are five, young children in my family too.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_100912/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "We all together cause mischief in the house.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_100912/s_012.mp3"
+        },
+        {
+          "id": "ra_13",
+          "text_en": "Look at how big my family is!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_100912/s_013.mp3"
+        },
+        {
+          "id": "ra_14",
+          "text_en": "Oh, wait! I almost forgot about Bujo.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_100912/s_014.mp3"
+        },
+        {
+          "id": "ra_15",
+          "text_en": "It wags its tail and barks, \"Bow, bow, bow!!\"",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_100912/s_015.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "Who is speaking in this sentence?",
+          "options_en": [
+            "Tuktuk",
+            "Neetu",
+            "Bujo"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "How big is the speaker's family?",
+          "options_en": [
+            "A large family",
+            "Five young children",
+            "Just my mom and dad"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s1_q1",
+          "type": "choice",
+          "question_en": "Who does the speaker want to meet?",
+          "options_en": [
+            "My family",
+            "My mom",
+            "My paternal grandparents"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s1_q2",
+          "type": "choice",
+          "question_en": "Why does the speaker say \"Let's meet them!\"?",
+          "options_en": [
+            "To meet my family",
+            "To see Bujo",
+            "To call my Mausi"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "Who does the speaker introduce in the sentence?",
+          "options_en": [
+            "My mom and my dad",
+            "My brother, Neetu",
+            "Bujo"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "Who is the first person the speaker introduces?",
+          "options_en": [
+            "My mom",
+            "My sister, Meetu",
+            "My paternal grandparents"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "Who is Neetu?",
+          "options_en": [
+            "My brother",
+            "My dad",
+            "One of my Thaauji"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "Who is Meetu?",
+          "options_en": [
+            "My sister",
+            "One of my Mausi",
+            "My paternal grandparent"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "Which grandparents are mentioned first?",
+          "options_en": [
+            "paternal grandparents",
+            "maternal grandparents",
+            "my mom"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "Which grandparents are mentioned second?",
+          "options_en": [
+            "maternal grandparents",
+            "paternal grandparents",
+            "my dad"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "How many sisters does my mom have?",
+          "options_en": [
+            "Three",
+            "Four",
+            "Two"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "Whose sisters are three?",
+          "options_en": [
+            "My mom's",
+            "My dad's",
+            "My sister's"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p4_s1_q1",
+          "type": "choice",
+          "question_en": "What does the speaker call them?",
+          "options_en": [
+            "'Mausi'",
+            "'Thaauji'",
+            "'Chachi'"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p4_s1_q2",
+          "type": "choice",
+          "question_en": "Who does the speaker call 'Mausi'?",
+          "options_en": [
+            "My mom's sisters",
+            "My dad's brothers",
+            "My paternal grandparents"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "Who has four brothers?",
+          "options_en": [
+            "My dad",
+            "My mom",
+            "Neetu"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "How many brothers does my dad have?",
+          "options_en": [
+            "Four",
+            "Three",
+            "Two"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p5_s1_q1",
+          "type": "choice",
+          "question_en": "What does the speaker call two of them?",
+          "options_en": [
+            "Thaauji",
+            "Mausi",
+            "Bujo"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p5_s1_q2",
+          "type": "choice",
+          "question_en": "How many does the speaker call 'Chachaji'?",
+          "options_en": [
+            "Two",
+            "Three",
+            "Five"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p5_s2_q1",
+          "type": "choice",
+          "question_en": "What does the phrase 'Along with them...' suggest?",
+          "options_en": [
+            "That something else is included",
+            "That Bujo barks",
+            "That there are five young children"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p5_s2_q2",
+          "type": "choice",
+          "question_en": "Why might the speaker say 'Along with them...'?",
+          "options_en": [
+            "To mention others who are part of the group",
+            "To describe Bujo's barking",
+            "To count the three sisters of the mother"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "How many 'Thaayi' does the speaker have?",
+          "options_en": [
+            "Two 'Thaayi'",
+            "Two 'Chachi'",
+            "Three 'Mausi'"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "How many 'Chachi' does the speaker have?",
+          "options_en": [
+            "Two 'Chachi'",
+            "Two 'Thaayi'",
+            "Four brothers"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "How many young children are in my family?",
+          "options_en": [
+            "Five",
+            "Two 'Thaayi'",
+            "Two 'Chachi'"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "Where are five young children?",
+          "options_en": [
+            "In my family",
+            "In the house",
+            "With Bujo"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        }
+      ]
+    },
+    {
+      "paragraph_index": 8,
+      "questions": [
+        {
+          "id": "gl_p8_s0_q1",
+          "type": "choice",
+          "question_en": "Who causes mischief together?",
+          "options_en": [
+            "We all together",
+            "Bujo the dog",
+            "My mom"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p8_s0_q2",
+          "type": "choice",
+          "question_en": "Where do they cause mischief?",
+          "options_en": [
+            "In the house",
+            "At my grandparents' house",
+            "With Bujo"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        }
+      ]
+    },
+    {
+      "paragraph_index": 9,
+      "questions": [
+        {
+          "id": "gl_p9_s0_q1",
+          "type": "choice",
+          "question_en": "How big is the family?",
+          "options_en": [
+            "big",
+            "five young children",
+            "two Thaayi"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p9_s0_q2",
+          "type": "choice",
+          "question_en": "What is the speaker asking us to look at?",
+          "options_en": [
+            "how big my family is",
+            "my dad",
+            "Bujo"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        }
+      ]
+    },
+    {
+      "paragraph_index": 10,
+      "questions": [
+        {
+          "id": "gl_p10_s0_q1",
+          "type": "choice",
+          "question_en": "Who did I almost forget about?",
+          "options_en": [
+            "Bujo",
+            "My mom",
+            "Neetu"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p10_s0_q2",
+          "type": "choice",
+          "question_en": "Why did I say \"Oh, wait!\"?",
+          "options_en": [
+            "Because I almost forgot about Bujo",
+            "Because I saw my dad",
+            "Because I called my Mausi"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p10_s1_q1",
+          "type": "choice",
+          "question_en": "What does it do with its tail?",
+          "options_en": [
+            "Wags its tail",
+            "Sits with my mom",
+            "Plays with Neetu"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p10_s1_q2",
+          "type": "choice",
+          "question_en": "What sound does it make?",
+          "options_en": [
+            "Barks \"Bow, bow, bow!!\"",
+            "Calls 'Mausi'",
+            "Laughs with the family"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'My Family'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "large",
+      "meaning_vi": "đông đúc (cho gia đình)",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "family",
+      "meaning_vi": "gia đình",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "meet",
+      "meaning_vi": "gặp gỡ",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "mom",
+      "meaning_vi": "mẹ",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "dad",
+      "meaning_vi": "bố",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "this",
+      "meaning_vi": "đây",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "brother",
+      "meaning_vi": "anh trai, em trai",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "sister",
+      "meaning_vi": "chị gái, em gái",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "paternal",
+      "meaning_vi": "bên nội (thuộc về bố)",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "maternal",
+      "meaning_vi": "bên ngoại (thuộc về mẹ)",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "grandparents",
+      "meaning_vi": "ông bà",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "these",
+      "meaning_vi": "những người này",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "sisters",
+      "meaning_vi": "chị em gái",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "call",
+      "meaning_vi": "gọi",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "next",
+      "meaning_vi": "tiếp theo",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "brothers",
+      "meaning_vi": "anh em trai",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "four",
+      "meaning_vi": "bốn",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "two",
+      "meaning_vi": "hai",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "along with",
+      "meaning_vi": "cùng với",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "also",
+      "meaning_vi": "cũng",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "as well",
+      "meaning_vi": "cũng vậy, nữa",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "let's see",
+      "meaning_vi": "để xem nào",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "five",
+      "meaning_vi": "năm",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "young",
+      "meaning_vi": "trẻ, nhỏ",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "children",
+      "meaning_vi": "trẻ em, các bạn nhỏ",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "together",
+      "meaning_vi": "cùng nhau",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "mischief",
+      "meaning_vi": "nghịch ngợm, trò quậy phá",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "house",
+      "meaning_vi": "nhà",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "look",
+      "meaning_vi": "nhìn",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "how",
+      "meaning_vi": "thế nào, làm sao",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "big",
+      "meaning_vi": "lớn, to (cho gia đình: đông đúc)",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "almost",
+      "meaning_vi": "suýt nữa, gần như",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "forgot",
+      "meaning_vi": "quên",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "wags",
+      "meaning_vi": "vẫy",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "barks",
+      "meaning_vi": "sủa",
+      "paragraph_index": 10
+    }
+  ]
+}

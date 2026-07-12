@@ -1,0 +1,867 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L1",
+  "level_label": "Cấp 1",
+  "topic": "The Kite",
+  "slug": "book_11949",
+  "audio_filename": "book_11949.mp3",
+  "book_slug": "book_11949",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_11949/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_11949/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_11949/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_11949/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_11949/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_11949/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_11949/page_08.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_11949/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_11949/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_11949/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_11949/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_11949/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_11949/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_11949/page_08.mp3"
+  ],
+  "book_attribution": {
+    "title": "The Kite",
+    "creators": [
+      "Jeyanthi Manokaran"
+    ],
+    "publisher": "Pratham Books",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: The Kite is written by Jeyanthi Manokaran . © Pratham Books , 2016. Some rights reserved. Released under CC BY 4.0 license. Other Credits: 'The Kite' has been published on StoryWeaver by Pratham Books. The development of this book has been supported by P.A.N.I. Foundation. www.prathambooks.org Images Attributions: Cover page: A boy flying a red kite happily , by Jeyanthi Manokaran © Pratham Books, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 2: Children playing in the park with kites , by Jeyanthi Manokaran © Pratham Books, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 3: Group of children chasing a boy with a kite who approaches a rock with a white pattern on it , by Jeyanthi Manokaran © Pratham Books, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 4: A boy with a red kite creating chaos wherever he runs to , by Jeyanthi Manokaran © Pratham Books, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 5: A boy with a red kite riding a bullock cart and running amid vendors , by Jeyanthi Manokaran © Pratham Books, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 6: A boy running through a white pattern of people whose hands are joined together , by Jeyanthi Manokaran © Pratham Books, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 7: A boy running around the streets happily with his red kite , by Jeyanthi Manokaran © Pratham Books, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 8: A group of angry looking boys looking at a boy with a kite , by Jeyanthi Manokaran © Pratham Books, 2016. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/11949-the-kite",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "Children playing in the park with kites , by Jeyanthi Manokaran © Pratham Books, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "Group of children chasing a boy with a kite who approaches a rock with a white pattern on it , by Jeyanthi Manokaran © Pratham Books, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "A boy with a red kite creating chaos wherever he runs to , by Jeyanthi Manokaran © Pratham Books, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "A boy with a red kite riding a bullock cart and running amid vendors , by Jeyanthi Manokaran © Pratham Books, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "A boy running through a white pattern of people whose hands are joined together , by Jeyanthi Manokaran © Pratham Books, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "A boy running around the streets happily with his red kite , by Jeyanthi Manokaran © Pratham Books, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "A group of angry looking boys looking at a boy with a kite , by Jeyanthi Manokaran © Pratham Books, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "The Kite",
+    "paragraphs_en": [
+      "Look! A kite fight! Oops! The purple kite is torn. Oh no! The yellow one’s gone. Aha! The red kite floats down. Climb up high. Stretch out and grab!",
+      "Quick! Zoom away. Now step inside and hide.",
+      "Sprint right through without a stop. Slide over and dodge about.",
+      "Ride on, don’t let them load the hay. Hop off! Zig-zag through the market.",
+      "Charge along, try not to crash. Push through faster! Make a dash!",
+      "Yay! Hurray! It's all mine! This red kite now belongs to me.",
+      "Oh no! Another chase?"
+    ],
+    "sentences": [
+      {
+        "text_en": "Look! A kite fight!",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_11949/s_000.mp3",
+        "text_vi": "Nhìn kìa! Diều đang đánh nhau!"
+      },
+      {
+        "text_en": "Oops! The purple kite is torn.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_11949/s_001.mp3",
+        "text_vi": "Ối! Con diều màu tím bị rách rồi."
+      },
+      {
+        "text_en": "Oh no! The yellow one’s gone.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_11949/s_002.mp3",
+        "text_vi": "Ôi không! Con diều màu vàng bay mất rồi."
+      },
+      {
+        "text_en": "Aha! The red kite floats down.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_11949/s_003.mp3",
+        "text_vi": "Aha! Con diều màu đỏ đang bay xuống."
+      },
+      {
+        "text_en": "Climb up high.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_11949/s_004.mp3",
+        "text_vi": "Leo lên cao."
+      },
+      {
+        "text_en": "Stretch out and grab!",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_11949/s_005.mp3",
+        "text_vi": "Vươn tay ra và tóm lấy!"
+      },
+      {
+        "text_en": "Quick! Zoom away.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_11949/s_006.mp3",
+        "text_vi": "Nhanh lên! Chạy thật nhanh đi."
+      },
+      {
+        "text_en": "Now step inside and hide.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_11949/s_007.mp3",
+        "text_vi": "Bây giờ bước vào trong và trốn đi."
+      },
+      {
+        "text_en": "Sprint right through without a stop.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_11949/s_008.mp3",
+        "text_vi": "Chạy vút qua không ngừng."
+      },
+      {
+        "text_en": "Slide over and dodge about.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_11949/s_009.mp3",
+        "text_vi": "Trượt qua và né tránh."
+      },
+      {
+        "text_en": "Ride on, don’t let them load the hay.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_11949/s_010.mp3",
+        "text_vi": "Cứ đi tiếp đi, đừng để họ chất rơm lên."
+      },
+      {
+        "text_en": "Hop off! Zig-zag through the market.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_11949/s_011.mp3",
+        "text_vi": "Nhảy xuống! Đi zíc-zắc qua chợ."
+      },
+      {
+        "text_en": "Charge along, try not to crash.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_11949/s_012.mp3",
+        "text_vi": "Xông lên, cố gắng đừng để bị va chạm."
+      },
+      {
+        "text_en": "Push through faster!",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_11949/s_013.mp3",
+        "text_vi": "Vượt qua nhanh hơn!"
+      },
+      {
+        "text_en": "Make a dash!",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_11949/s_014.mp3",
+        "text_vi": "Chạy vút đi!"
+      },
+      {
+        "text_en": "Yay! Hurray! It's all mine!",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_11949/s_015.mp3",
+        "text_vi": "Hoan hô! Hoan hô! Tất cả là của mình!"
+      },
+      {
+        "text_en": "This red kite now belongs to me.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_11949/s_016.mp3",
+        "text_vi": "Con diều đỏ này bây giờ là của mình rồi."
+      },
+      {
+        "text_en": "Oh no! Another chase?",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_11949/s_017.mp3",
+        "text_vi": "Ôi không! Lại một cuộc rượt đuổi nữa sao?"
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "Look! A kite fight!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_11949/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "Oops! The purple kite is torn.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_11949/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "Oh no! The yellow one’s gone.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_11949/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "Aha! The red kite floats down.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_11949/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "Climb up high.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_11949/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "Stretch out and grab!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_11949/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "Quick! Zoom away.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_11949/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "Now step inside and hide.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_11949/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "Sprint right through without a stop.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_11949/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "Slide over and dodge about.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_11949/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "Ride on, don’t let them load the hay.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_11949/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "Hop off! Zig-zag through the market.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_11949/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "Charge along, try not to crash.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_11949/s_012.mp3"
+        },
+        {
+          "id": "ra_13",
+          "text_en": "Push through faster!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_11949/s_013.mp3"
+        },
+        {
+          "id": "ra_14",
+          "text_en": "Make a dash!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_11949/s_014.mp3"
+        },
+        {
+          "id": "ra_15",
+          "text_en": "Yay! Hurray! It's all mine!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_11949/s_015.mp3"
+        },
+        {
+          "id": "ra_16",
+          "text_en": "This red kite now belongs to me.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_11949/s_016.mp3"
+        },
+        {
+          "id": "ra_17",
+          "text_en": "Oh no! Another chase?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_11949/s_017.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "What do they see?",
+          "options_en": [
+            "A kite fight",
+            "Another chase",
+            "The market"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "What is happening?",
+          "options_en": [
+            "A kite fight",
+            "A hay loading",
+            "A sprint"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s1_q1",
+          "type": "choice",
+          "question_en": "Which kite is torn?",
+          "options_en": [
+            "The purple kite",
+            "The red kite",
+            "The yellow kite"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s1_q2",
+          "type": "choice",
+          "question_en": "What happened to the purple kite?",
+          "options_en": [
+            "It is torn",
+            "It floats down",
+            "It is gone"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s2_q1",
+          "type": "choice",
+          "question_en": "Which kite is gone?",
+          "options_en": [
+            "The yellow one",
+            "The purple kite",
+            "The red kite"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s2_q2",
+          "type": "choice",
+          "question_en": "What happened to the yellow kite?",
+          "options_en": [
+            "It’s gone",
+            "It is torn",
+            "It floats down"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s3_q1",
+          "type": "choice",
+          "question_en": "Which kite floats down?",
+          "options_en": [
+            "The red kite",
+            "The purple kite",
+            "The yellow kite"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p0_s3_q2",
+          "type": "choice",
+          "question_en": "What does the red kite do?",
+          "options_en": [
+            "It floats down",
+            "It is torn",
+            "It is gone"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p0_s4_q1",
+          "type": "choice",
+          "question_en": "What should they do?",
+          "options_en": [
+            "Climb up high",
+            "Stretch out and grab",
+            "Sprint right through"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p0_s4_q2",
+          "type": "choice",
+          "question_en": "How should they climb?",
+          "options_en": [
+            "Up high",
+            "Through the market",
+            "Fast and zig-zag"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p0_s5_q1",
+          "type": "choice",
+          "question_en": "What should they do next?",
+          "options_en": [
+            "Stretch out and grab",
+            "Climb up high",
+            "Zoom away"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p0_s5_q2",
+          "type": "choice",
+          "question_en": "How should they reach it?",
+          "options_en": [
+            "Stretch out and grab",
+            "Sprint right through",
+            "Slide over and dodge"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "What does the speaker tell you to do?",
+          "options_en": [
+            "Zoom away",
+            "Sprint right through",
+            "Hop off!"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "How should you move?",
+          "options_en": [
+            "Quick",
+            "Charge along, try not to crash",
+            "Slide over and dodge about"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p1_s1_q1",
+          "type": "choice",
+          "question_en": "Where should you go now?",
+          "options_en": [
+            "Inside",
+            "Climb up high",
+            "Zig-zag through the market"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p1_s1_q2",
+          "type": "choice",
+          "question_en": "What should you do after stepping inside?",
+          "options_en": [
+            "Hide",
+            "Stretch out and grab!",
+            "Make a dash!"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "How should you sprint?",
+          "options_en": [
+            "Right through without a stop",
+            "Climb up high",
+            "Zoom away"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "What should you do without a stop?",
+          "options_en": [
+            "Sprint right through",
+            "Hide inside",
+            "Make a dash"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p2_s1_q1",
+          "type": "choice",
+          "question_en": "What should you do while sliding?",
+          "options_en": [
+            "Dodge about",
+            "Stretch out and grab",
+            "Ride on"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p2_s1_q2",
+          "type": "choice",
+          "question_en": "How should you slide?",
+          "options_en": [
+            "Over and dodge about",
+            "Up high to grab",
+            "Through without a stop"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "What should you not let them do?",
+          "options_en": [
+            "Load the hay",
+            "Tear the purple kite",
+            "Grab the red kite"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "Why should you ride on?",
+          "options_en": [
+            "To stop them loading the hay",
+            "To climb up high",
+            "To hide inside"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p3_s1_q1",
+          "type": "choice",
+          "question_en": "What should you do after hopping off?",
+          "options_en": [
+            "Zig-zag through the market",
+            "Sprint right through without a stop",
+            "Slide over and dodge about"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p3_s1_q2",
+          "type": "choice",
+          "question_en": "How should you move through the market?",
+          "options_en": [
+            "Zig-zag through the market",
+            "Charge along, try not to crash",
+            "Make a dash"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "How should you move?",
+          "options_en": [
+            "Charge along",
+            "Climb up high",
+            "Step inside and hide"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "What should you try not to do?",
+          "options_en": [
+            "Crash",
+            "Let them load the hay",
+            "Grab the kite"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p4_s1_q1",
+          "type": "choice",
+          "question_en": "What should you do faster?",
+          "options_en": [
+            "Push through",
+            "Slide over",
+            "Zoom away"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p4_s1_q2",
+          "type": "choice",
+          "question_en": "How should you push through?",
+          "options_en": [
+            "Faster",
+            "Without a stop",
+            "Zig-zag through the market"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p4_s2_q1",
+          "type": "choice",
+          "question_en": "What are you told to do?",
+          "options_en": [
+            "Make a dash",
+            "Hop off",
+            "Hide inside"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p4_s2_q2",
+          "type": "choice",
+          "question_en": "Which action does the sentence give?",
+          "options_en": [
+            "Make a dash",
+            "Climb up high",
+            "Slide over and dodge about"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "What does the speaker say?",
+          "options_en": [
+            "It's all mine!",
+            "Quick! Zoom away.",
+            "Hop off!"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "How does the speaker feel?",
+          "options_en": [
+            "Excited",
+            "Climb up high",
+            "Sprint right through without a stop"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p5_s1_q1",
+          "type": "choice",
+          "question_en": "Whose kite now belongs to the speaker?",
+          "options_en": [
+            "Mine",
+            "The purple kite",
+            "The yellow one"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p5_s1_q2",
+          "type": "choice",
+          "question_en": "Which kite now belongs to the speaker?",
+          "options_en": [
+            "The red kite",
+            "The purple kite",
+            "The yellow one"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "What happens again?",
+          "options_en": [
+            "Another chase",
+            "The purple kite is torn",
+            "The red kite floats down"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "How does the speaker react?",
+          "options_en": [
+            "Oh no!",
+            "Yay! Hurray!",
+            "Quick! Zoom away."
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'The Kite'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "kite",
+      "meaning_vi": "diều",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "torn",
+      "meaning_vi": "bị rách",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "floats",
+      "meaning_vi": "trôi, bay lơ lửng",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "grab",
+      "meaning_vi": "tóm lấy",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "zoom",
+      "meaning_vi": "chạy thật nhanh",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "hide",
+      "meaning_vi": "trốn",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "sprint",
+      "meaning_vi": "chạy nhanh",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "slide",
+      "meaning_vi": "trượt",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "dodge",
+      "meaning_vi": "né tránh",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "load",
+      "meaning_vi": "chất lên",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "hay",
+      "meaning_vi": "rơm",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "hop",
+      "meaning_vi": "nhảy",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "zig-zag",
+      "meaning_vi": "đi zíc-zắc",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "charge",
+      "meaning_vi": "xông lên",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "crash",
+      "meaning_vi": "va chạm",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "dash",
+      "meaning_vi": "chạy vút",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "hurray",
+      "meaning_vi": "hoan hô",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "belongs",
+      "meaning_vi": "thuộc về",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "chase",
+      "meaning_vi": "rượt đuổi",
+      "paragraph_index": 6
+    }
+  ]
+}

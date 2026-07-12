@@ -1,0 +1,835 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L1",
+  "level_label": "Cấp 1",
+  "topic": "Little Sock and the Tiny Creatures",
+  "slug": "book_13919",
+  "audio_filename": "book_13919.mp3",
+  "book_slug": "book_13919",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_13919/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_13919/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_13919/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_13919/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_13919/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_13919/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_13919/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_13919/page_09.jpg",
+    "https://audio.felixbuilderhub.com/books/book_13919/page_10.jpg",
+    "https://audio.felixbuilderhub.com/books/book_13919/page_11.jpg",
+    "https://audio.felixbuilderhub.com/books/book_13919/page_12.jpg",
+    "https://audio.felixbuilderhub.com/books/book_13919/page_13.jpg",
+    "https://audio.felixbuilderhub.com/books/book_13919/page_14.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_13919/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_13919/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_13919/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_13919/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_13919/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_13919/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_13919/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_13919/page_09.mp3",
+    "https://audio.felixbuilderhub.com/books/book_13919/page_10.mp3",
+    "https://audio.felixbuilderhub.com/books/book_13919/page_11.mp3",
+    "https://audio.felixbuilderhub.com/books/book_13919/page_12.mp3",
+    "https://audio.felixbuilderhub.com/books/book_13919/page_13.mp3",
+    "https://audio.felixbuilderhub.com/books/book_13919/page_14.mp3"
+  ],
+  "book_attribution": {
+    "title": "Little Sock and the Tiny Creatures",
+    "creators": [
+      "Jon Keevy",
+      "Lili Probart"
+    ],
+    "publisher": "Book Dash",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: Little Sock and the Tiny Creatures is written by Jon Keevy . © Book Dash , 2016. Some rights reserved. Released under CC BY 4.0 license. Other Credits: This book has been originally published by Book Dash. It was created at Book Dash Cape Town 5 March 2016 by Lili Probart (illustrator), Jon Keevy (writer), and Chani Coetzee (designer). Images Attributions: Cover page: A sock , by Lili Probart © Lili Probart, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 2: A basket full of socks falling , by Lili Probart © Lili Probart, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 3: A sock placed out of a basket , by Lili Probart © Lili Probart, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 4: A sad sock puppet thinking about other sock puppets , by Lili Probart © Lili Probart, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 5: Toys and blocks in one place , by Lili Probart © Lili Probart, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 6: A robot holding something and a sock driving a car , by Lili Probart © Lili Probart, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 7: A sock and a mouse , by Lili Probart © Lili Probart, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 8: A sock, a mouse and some cheese , by Lili Probart © Lili Probart, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 9: A sock and a spider hanging from a colourful web , by Lili Probart © Lili Probart, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 10: A spider in the middle of lots of colourful marbles, and a sock looking at it , by Lili Probart © Lili Probart, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 11: A sock and a marble , by Lili Probart © Lili Probart, 2016. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/13919-little-sock-and-the-tiny-creatures",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "A basket full of socks falling , by Lili Probart © Lili Probart, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "A sock placed out of a basket , by Lili Probart © Lili Probart, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "A sad sock puppet thinking about other sock puppets , by Lili Probart © Lili Probart, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "Toys and blocks in one place , by Lili Probart © Lili Probart, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "A robot holding something and a sock driving a car , by Lili Probart © Lili Probart, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "A sock and a mouse , by Lili Probart © Lili Probart, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "A sock, a mouse and some cheese , by Lili Probart © Lili Probart, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "A sock and a spider hanging from a colourful web , by Lili Probart © Lili Probart, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 8,
+        "credit_text": "A spider in the middle of lots of colourful marbles, and a sock looking at it , by Lili Probart © Lili Probart, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 9,
+        "credit_text": "A sock and a marble , by Lili Probart © Lili Probart, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 10,
+        "credit_text": "Illustration by Lili Probart."
+      },
+      {
+        "page_index": 11,
+        "credit_text": "Illustration by Lili Probart."
+      },
+      {
+        "page_index": 12,
+        "credit_text": "Illustration by Lili Probart."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "Little Sock and the Tiny Creatures",
+    "paragraphs_en": [
+      "It’s wash day for the Socks.",
+      "OH NO! Little Sock falls out!",
+      "“I have to get home,” says Little Sock.",
+      "“Do you know the way home?” asks Little Sock.",
+      "“No, but take this,” says the Robot.",
+      "“Do you know the way home?” asks Little Sock.",
+      "“No, but take this,” says the Mouse.",
+      "“Do you know the way home?” asks Little Sock.",
+      "“No, but take… OOPS!!! ”",
+      "“Maybe the marble knows the way home,” says Little Sock.",
+      "“It does!” says Little Sock.",
+      "Little Sock is happy.",
+      "MAKE YOUR OWN LITTLE SOCK Different socks have different personalities, so pick your favourite. YOU WILL NEED: • a sock • two buttons • a needle and thread • a grown-up to help INSTRUCTIONS Ask your grown-up to sew the buttons onto the sock."
+    ],
+    "sentences": [
+      {
+        "text_en": "It’s wash day for the Socks.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13919/s_000.mp3",
+        "text_vi": "Hôm nay là ngày giặt đồ của nhà Vớ."
+      },
+      {
+        "text_en": "OH NO! Little Sock falls out!",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13919/s_001.mp3",
+        "text_vi": "ÔI KHÔNG! Chiếc Vớ Nhỏ bị rơi ra ngoài!"
+      },
+      {
+        "text_en": "“I have to get home,” says Little Sock.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13919/s_002.mp3",
+        "text_vi": "“Mình phải về nhà,” Chiếc Vớ Nhỏ nói."
+      },
+      {
+        "text_en": "“Do you know the way home?” asks Little Sock.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13919/s_003.mp3",
+        "text_vi": "“Bạn có biết đường về nhà không?” Chiếc Vớ Nhỏ hỏi."
+      },
+      {
+        "text_en": "“No, but take this,” says the Robot.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13919/s_004.mp3",
+        "text_vi": "“Không, nhưng hãy cầm cái này,” Người Máy nói."
+      },
+      {
+        "text_en": "“Do you know the way home?” asks Little Sock.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13919/s_005.mp3",
+        "text_vi": "“Bạn có biết đường về nhà không?” Chiếc Vớ Nhỏ hỏi."
+      },
+      {
+        "text_en": "“No, but take this,” says the Mouse.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13919/s_006.mp3",
+        "text_vi": "“Không, nhưng hãy cầm cái này,” Chuột nói."
+      },
+      {
+        "text_en": "“Do you know the way home?” asks Little Sock.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13919/s_007.mp3",
+        "text_vi": "“Bạn có biết đường về nhà không?” Chiếc Vớ Nhỏ hỏi."
+      },
+      {
+        "text_en": "“No, but take… OOPS!!! ”",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13919/s_008.mp3",
+        "text_vi": "“Không, nhưng hãy cầm… ÔI CHẾT RỒI!!!”"
+      },
+      {
+        "text_en": "“Maybe the marble knows the way home,” says Little Sock.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13919/s_009.mp3",
+        "text_vi": "“Có lẽ viên bi biết đường về nhà,” Chiếc Vớ Nhỏ nói."
+      },
+      {
+        "text_en": "“It does!” says Little Sock.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13919/s_010.mp3",
+        "text_vi": "“Đúng vậy!” Chiếc Vớ Nhỏ nói."
+      },
+      {
+        "text_en": "Little Sock is happy.",
+        "paragraph_index": 11,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13919/s_011.mp3",
+        "text_vi": "Chiếc Vớ Nhỏ rất vui."
+      },
+      {
+        "text_en": "MAKE YOUR OWN LITTLE SOCK Different socks have different personalities, so pick your favourite.",
+        "paragraph_index": 12,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13919/s_012.mp3",
+        "text_vi": "TỰ LÀM CHIẾC VỚ NHỎ CỦA RIÊNG BẠN. Mỗi chiếc vớ có một tính cách khác nhau, vì vậy hãy chọn chiếc bạn thích nhất."
+      },
+      {
+        "text_en": "YOU WILL NEED: • a sock • two buttons • a needle and thread • a grown-up to help INSTRUCTIONS Ask your grown-up to sew the buttons onto the sock.",
+        "paragraph_index": 12,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13919/s_013.mp3",
+        "text_vi": "BẠN SẼ CẦN: • một chiếc vớ • hai cái cúc áo • kim và chỉ • một người lớn giúp đỡ. HƯỚNG DẪN: Nhờ người lớn khâu những cái cúc áo lên chiếc vớ."
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "It’s wash day for the Socks.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13919/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "OH NO! Little Sock falls out!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13919/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "“I have to get home,” says Little Sock.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13919/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "“Do you know the way home?” asks Little Sock.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13919/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "“No, but take this,” says the Robot.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13919/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "“Do you know the way home?” asks Little Sock.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13919/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "“No, but take this,” says the Mouse.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13919/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "“Do you know the way home?” asks Little Sock.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13919/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "“No, but take… OOPS!!! ”",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13919/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "“Maybe the marble knows the way home,” says Little Sock.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13919/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "“It does!” says Little Sock.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13919/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "Little Sock is happy.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13919/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "MAKE YOUR OWN LITTLE SOCK Different socks have different personalities, so pick your favourite.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13919/s_012.mp3"
+        },
+        {
+          "id": "ra_13",
+          "text_en": "YOU WILL NEED: • a sock • two buttons • a needle and thread • a grown-up to help INSTRUCTIONS Ask your grown-up to sew the buttons onto the sock.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13919/s_013.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "What day is it for the Socks?",
+          "options_en": [
+            "Wash day",
+            "Sew day",
+            "Home day"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "Whose wash day is it?",
+          "options_en": [
+            "The Socks",
+            "Little Sock",
+            "The Robot"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "Who falls out?",
+          "options_en": [
+            "Little Sock",
+            "the Robot",
+            "the Mouse"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "What happens to Little Sock?",
+          "options_en": [
+            "It falls out",
+            "It gets home",
+            "It finds the marble"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "Who says \"I have to get home\"?",
+          "options_en": [
+            "Little Sock",
+            "The Robot",
+            "The Mouse"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "Where does Little Sock say they have to get?",
+          "options_en": [
+            "Home",
+            "The wash",
+            "The marble"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "Who asks the question?",
+          "options_en": [
+            "Little Sock",
+            "the Robot",
+            "the Mouse"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "What does Little Sock ask?",
+          "options_en": [
+            "Do you know the way home?",
+            "Do you have a marble?",
+            "Do you know the way to the wash?"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "Who says \"No, but take this\"?",
+          "options_en": [
+            "the Robot",
+            "the Mouse",
+            "Little Sock"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "What does the Robot say?",
+          "options_en": [
+            "\"No, but take this,\"",
+            "\"Do you know the way home?\"",
+            "\"Maybe the marble knows the way home\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "Who asks the question?",
+          "options_en": [
+            "Little Sock",
+            "The Robot",
+            "The Mouse"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "What does Little Sock ask?",
+          "options_en": [
+            "\"Do you know the way home?\"",
+            "\"Maybe the marble knows the way home,\"",
+            "\"Do you want to take this?\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "Who says \"No, but take this\"?",
+          "options_en": [
+            "The Mouse",
+            "The Robot",
+            "Little Sock"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "What does the speaker say?",
+          "options_en": [
+            "\"No, but take this\"",
+            "\"Do you know the way home?\"",
+            "\"Maybe the marble knows the way home\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "Who asks \"Do you know the way home?\"",
+          "options_en": [
+            "Little Sock",
+            "the Robot",
+            "the Mouse"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "What does Little Sock ask?",
+          "options_en": [
+            "Do you know the way home?",
+            "Maybe the marble knows the way home",
+            "I have to get home"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        }
+      ]
+    },
+    {
+      "paragraph_index": 8,
+      "questions": [
+        {
+          "id": "gl_p8_s0_q1",
+          "type": "choice",
+          "question_en": "What does the speaker say right before 'OOPS'?",
+          "options_en": [
+            "No, but take…",
+            "Do you know the way home?",
+            "Maybe the marble knows the way home"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p8_s0_q2",
+          "type": "choice",
+          "question_en": "Which exclamation appears at the end of the sentence?",
+          "options_en": [
+            "OOPS!!!",
+            "It does!",
+            "No, but take…"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        }
+      ]
+    },
+    {
+      "paragraph_index": 9,
+      "questions": [
+        {
+          "id": "gl_p9_s0_q1",
+          "type": "choice",
+          "question_en": "Who says the sentence?",
+          "options_en": [
+            "Little Sock",
+            "Robot",
+            "Mouse"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p9_s0_q2",
+          "type": "choice",
+          "question_en": "What might know the way home?",
+          "options_en": [
+            "The marble",
+            "The Robot",
+            "The Mouse"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        }
+      ]
+    },
+    {
+      "paragraph_index": 10,
+      "questions": [
+        {
+          "id": "gl_p10_s0_q1",
+          "type": "choice",
+          "question_en": "Who says \"It does!\"?",
+          "options_en": [
+            "Little Sock",
+            "The Robot",
+            "The Mouse"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p10_s0_q2",
+          "type": "choice",
+          "question_en": "What does Little Sock say?",
+          "options_en": [
+            "\"It does!\"",
+            "\"Do you know the way home?\"",
+            "\"Maybe the marble knows the way home\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        }
+      ]
+    },
+    {
+      "paragraph_index": 11,
+      "questions": [
+        {
+          "id": "gl_p11_s0_q1",
+          "type": "choice",
+          "question_en": "Who is happy?",
+          "options_en": [
+            "Little Sock",
+            "the Robot",
+            "the Mouse"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p11_s0_q2",
+          "type": "choice",
+          "question_en": "How is Little Sock?",
+          "options_en": [
+            "happy",
+            "lost",
+            "at home"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        }
+      ]
+    },
+    {
+      "paragraph_index": 12,
+      "questions": [
+        {
+          "id": "gl_p12_s0_q1",
+          "type": "choice",
+          "question_en": "What should you pick?",
+          "options_en": [
+            "your favourite",
+            "the marble",
+            "the Robot"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p12_s0_q2",
+          "type": "choice",
+          "question_en": "Why should you pick different socks?",
+          "options_en": [
+            "Because different socks have different personalities",
+            "Because the marble knows the way home",
+            "Because Little Sock is happy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p12_s1_q1",
+          "type": "choice",
+          "question_en": "What will you need?",
+          "options_en": [
+            "a sock • two buttons • a needle and thread • a grown-up to help",
+            "a marble",
+            "the Mouse"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p12_s1_q2",
+          "type": "choice",
+          "question_en": "Who should help with sewing the buttons?",
+          "options_en": [
+            "a grown-up",
+            "the Robot",
+            "the Mouse"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'Little Sock and the Tiny Creatures'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "wash day",
+      "meaning_vi": "ngày giặt đồ",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "Socks",
+      "meaning_vi": "vớ, tất",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "falls out",
+      "meaning_vi": "rơi ra ngoài",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "have to",
+      "meaning_vi": "phải (làm gì đó)",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "get home",
+      "meaning_vi": "về nhà",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "know",
+      "meaning_vi": "biết",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "way home",
+      "meaning_vi": "đường về nhà",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "take this",
+      "meaning_vi": "cầm cái này",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "Robot",
+      "meaning_vi": "người máy",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "know",
+      "meaning_vi": "biết",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "way home",
+      "meaning_vi": "đường về nhà",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "take this",
+      "meaning_vi": "cầm cái này",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "Mouse",
+      "meaning_vi": "chuột",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "know",
+      "meaning_vi": "biết",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "way home",
+      "meaning_vi": "đường về nhà",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "take",
+      "meaning_vi": "cầm, lấy",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "OOPS",
+      "meaning_vi": "ôi không, ôi chết rồi",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "Maybe",
+      "meaning_vi": "có lẽ",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "marble",
+      "meaning_vi": "viên bi",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "knows",
+      "meaning_vi": "biết",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "It does!",
+      "meaning_vi": "Đúng vậy! (nhấn mạnh)",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "happy",
+      "meaning_vi": "vui vẻ",
+      "paragraph_index": 11
+    },
+    {
+      "word_en": "personalities",
+      "meaning_vi": "tính cách",
+      "paragraph_index": 12
+    },
+    {
+      "word_en": "favourite",
+      "meaning_vi": "yêu thích",
+      "paragraph_index": 12
+    },
+    {
+      "word_en": "grown-up",
+      "meaning_vi": "người lớn",
+      "paragraph_index": 12
+    },
+    {
+      "word_en": "sew",
+      "meaning_vi": "khâu, may",
+      "paragraph_index": 12
+    }
+  ]
+}

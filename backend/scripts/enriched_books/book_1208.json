@@ -1,0 +1,1361 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L2",
+  "level_label": "Cấp 2",
+  "topic": "Singing in the Rain",
+  "slug": "book_1208",
+  "audio_filename": "book_1208.mp3",
+  "book_slug": "book_1208",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_1208/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_1208/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_1208/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_1208/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_1208/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_1208/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_1208/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_1208/page_09.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_1208/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_1208/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_1208/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_1208/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_1208/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_1208/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_1208/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_1208/page_09.mp3"
+  ],
+  "book_attribution": {
+    "title": "Singing in the Rain",
+    "creators": [
+      "Mala Kumar",
+      "Manisha Chaudhry",
+      "Rajiv Eipe"
+    ],
+    "publisher": "Pratham Books",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: Singing in the Rain is translated by Mala Kumar , Manisha Chaudhry . The © for this translation lies with Pratham Books , 2015. Some rights reserved. Released under CC BY 4.0 license. Based on Original story: ' बारिश में क्या गाएँ? ' , by Mala Kumar , Manisha Chaudhry . © Pratham Books , 2015. Some rights reserved. Released under CC BY 4.0 license. Other Credits: This story has been inspired by an entry to the #6FrameStoryChallenge, an illustration campaign conducted by Pratham Books. The illustrations in this book were created by one of the judges of the #6FrameStoryChallenge contest. Images Attributions: Cover page: Man and dinosaur under an umbrella , by Rajiv Eipe © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 2: A man in a vast desert , by Rajiv Eipe © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 3: A man singing in a desert , by Rajiv Eipe © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 4: A singing man and a grinning dinosaur , by Rajiv Eipe © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 5: A man and dinosaur singing together , by Rajiv Eipe © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 6: A man and a dinosaur watching dark clouds in a desert , by Rajiv Eipe © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 7: A dinosaur and a man in the rain , by Rajiv Eipe © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 8: A dinosaur watching a man singing , by Rajiv Eipe © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 9: 6frame collage , by Rajiv Eipe © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/1208-singing-in-the-rain",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "A man in a vast desert , by Rajiv Eipe © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "A man singing in a desert , by Rajiv Eipe © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "A singing man and a grinning dinosaur , by Rajiv Eipe © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "A man and dinosaur singing together , by Rajiv Eipe © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "A man and a dinosaur watching dark clouds in a desert , by Rajiv Eipe © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "A dinosaur and a man in the rain , by Rajiv Eipe © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "A dinosaur watching a man singing , by Rajiv Eipe © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "6frame collage , by Rajiv Eipe © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "Singing in the Rain",
+    "paragraphs_en": [
+      "Sukhiya Kaka lived in a village called Bitauna. Bitauna was famous all over Rajasthan for its singers. No celebration was complete without Sukhiya Kaka's sweet songs. Today he had been invited to village Jhalaura.",
+      "Sukhiya Kaka twirled his big moustache and set off. He was singing raag Malhar. ...Come to me o rolling clouds...",
+      "Suddenly, he heard, dhupp dhupp dhupp dhupp! Was someone giving a beat to his song? Dinoo, the dinosuar came running towards him. Sukhiya Kaka was so happy to see him!",
+      "You don't get such a BIG listener every day! ... Come to me o rolling clouds, shower me with lovely rain! Sukhiya Kaka and Dinoo sang a duet and did a little jig to keep time.",
+      "The clouds just had to listen to them! Lightning flashed and the wind danced. Dark clouds came rolling in. Sukhiya Kaka and Dinoo laughed with joy.",
+      "As the rain came pouring down, Sukhiya Kaka and Dinoo shared a small umbrella. Then off they went to Jhalaura following the smell of yummy pakoras, singing ...O thank you for the lovely rain...O..la la la.",
+      "Dear Reader, Have you ever seen a dinosaur? Do you think they would have sung songs? What do you like to do in the rain? What do you like to eat when it rains?",
+      "#6FrameStoryChallenge: A Carnival of Art The illustrations in this book were created as part of the #6FrameStoryChallenge, an online campaign run by Pratham Books to build a rich bank of illustrations for StoryWeaver. The essence of the #6FrameStoryChallenge was to tell a good story using just 6 illustrations. The campaign inspired nearly 70 illustrators to donate their time and skills to India’s first open-source story-publishing platform for children. What started out as an experimental campaign soon blossomed into a carnival of art, birthing nearly 500 new illustrations. These wordless narratives cut across language barriers, opening up a world of possibilities, encouraging StoryWeaver’s growing community to dream up multiple stories around these images. The #6FrameStoryChallenge is a powerful reminder of the need for collaboration, to get closer to our mission: “A Book in Every Child’s Hand.”"
+    ],
+    "sentences": [
+      {
+        "text_en": "Sukhiya Kaka lived in a village called Bitauna.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1208/s_000.mp3",
+        "text_vi": "Sukhiya Kaka sống ở một ngôi làng tên là Bitauna."
+      },
+      {
+        "text_en": "Bitauna was famous all over Rajasthan for its singers.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1208/s_001.mp3",
+        "text_vi": "Bitauna nổi tiếng khắp vùng Rajasthan vì có nhiều ca sĩ giỏi."
+      },
+      {
+        "text_en": "No celebration was complete without Sukhiya Kaka's sweet songs.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1208/s_002.mp3",
+        "text_vi": "Không buổi lễ nào trọn vẹn nếu thiếu những bài hát ngọt ngào của Sukhiya Kaka."
+      },
+      {
+        "text_en": "Today he had been invited to village Jhalaura.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1208/s_003.mp3",
+        "text_vi": "Hôm nay, ông ấy được mời đến làng Jhalaura."
+      },
+      {
+        "text_en": "Sukhiya Kaka twirled his big moustache and set off.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1208/s_004.mp3",
+        "text_vi": "Sukhiya Kaka vuốt bộ ria mép to của mình rồi lên đường."
+      },
+      {
+        "text_en": "He was singing raag Malhar.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1208/s_005.mp3",
+        "text_vi": "Ông ấy đang hát bài raag Malhar."
+      },
+      {
+        "text_en": "...Come to me o rolling clouds...",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1208/s_006.mp3",
+        "text_vi": "...Hãy đến với tôi, hỡi những đám mây cuộn tròn..."
+      },
+      {
+        "text_en": "Suddenly, he heard, dhupp dhupp dhupp dhupp!",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1208/s_007.mp3",
+        "text_vi": "Bỗng nhiên, ông ấy nghe thấy tiếng, dhupp dhupp dhupp dhupp!"
+      },
+      {
+        "text_en": "Was someone giving a beat to his song?",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1208/s_008.mp3",
+        "text_vi": "Có ai đó đang tạo nhịp cho bài hát của ông ấy sao?"
+      },
+      {
+        "text_en": "Dinoo, the dinosuar came running towards him.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1208/s_009.mp3",
+        "text_vi": "Dinoo, chú khủng long, chạy về phía ông ấy."
+      },
+      {
+        "text_en": "Sukhiya Kaka was so happy to see him!",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1208/s_010.mp3",
+        "text_vi": "Sukhiya Kaka rất vui khi gặp chú khủng long!"
+      },
+      {
+        "text_en": "You don't get such a BIG listener every day!",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1208/s_011.mp3",
+        "text_vi": "Không phải ngày nào bạn cũng có một khán giả LỚN như vậy đâu!"
+      },
+      {
+        "text_en": "... Come to me o rolling clouds, shower me with lovely rain!",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1208/s_012.mp3",
+        "text_vi": "...Hãy đến với tôi, hỡi những đám mây cuộn tròn, hãy tưới cho tôi những cơn mưa đáng yêu!"
+      },
+      {
+        "text_en": "Sukhiya Kaka and Dinoo sang a duet and did a little jig to keep time.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1208/s_013.mp3",
+        "text_vi": "Sukhiya Kaka và Dinoo đã hát một bài song ca và nhảy một điệu nhảy nhỏ để giữ nhịp."
+      },
+      {
+        "text_en": "The clouds just had to listen to them!",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1208/s_014.mp3",
+        "text_vi": "Những đám mây chỉ còn biết lắng nghe họ!"
+      },
+      {
+        "text_en": "Lightning flashed and the wind danced.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1208/s_015.mp3",
+        "text_vi": "Sét lóe sáng và gió nhảy múa."
+      },
+      {
+        "text_en": "Dark clouds came rolling in.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1208/s_016.mp3",
+        "text_vi": "Những đám mây đen kéo đến."
+      },
+      {
+        "text_en": "Sukhiya Kaka and Dinoo laughed with joy.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1208/s_017.mp3",
+        "text_vi": "Sukhiya Kaka và Dinoo cười vang vì vui sướng."
+      },
+      {
+        "text_en": "As the rain came pouring down, Sukhiya Kaka and Dinoo shared a small umbrella.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1208/s_018.mp3",
+        "text_vi": "Khi mưa bắt đầu đổ xuống, Sukhiya Kaka và Dinoo đã cùng che chung một chiếc ô nhỏ."
+      },
+      {
+        "text_en": "Then off they went to Jhalaura following the smell of yummy pakoras, singing ...O thank you for the lovely rain...O..la la la.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1208/s_019.mp3",
+        "text_vi": "Sau đó, họ đi đến Jhalaura, theo mùi pakoras thơm ngon, vừa đi vừa hát ...Ôi cảm ơn vì cơn mưa đáng yêu...Ô..la la la."
+      },
+      {
+        "text_en": "Dear Reader, Have you ever seen a dinosaur?",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1208/s_020.mp3",
+        "text_vi": "Bạn đọc thân mến, bạn đã bao giờ nhìn thấy một con khủng long chưa?"
+      },
+      {
+        "text_en": "Do you think they would have sung songs?",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1208/s_021.mp3",
+        "text_vi": "Bạn có nghĩ chúng sẽ hát những bài hát không?"
+      },
+      {
+        "text_en": "What do you like to do in the rain?",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1208/s_022.mp3",
+        "text_vi": "Bạn thích làm gì khi trời mưa?"
+      },
+      {
+        "text_en": "What do you like to eat when it rains?",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1208/s_023.mp3",
+        "text_vi": "Bạn thích ăn gì khi trời mưa?"
+      },
+      {
+        "text_en": "#6FrameStoryChallenge: A Carnival of Art The illustrations in this book were created as part of the #6FrameStoryChallenge, an online campaign run by Pratham Books to build a rich bank of illustrations for StoryWeaver.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1208/s_024.mp3",
+        "text_vi": "#ThửTháchKểChuyện6Khung: Lễ Hội Nghệ Thuật Những hình minh họa trong cuốn sách này được tạo ra như một phần của #ThửTháchKểChuyện6Khung, một chiến dịch trực tuyến do Pratham Books thực hiện để xây dựng một kho hình minh họa phong phú cho StoryWeaver."
+      },
+      {
+        "text_en": "The essence of the #6FrameStoryChallenge was to tell a good story using just 6 illustrations.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1208/s_025.mp3",
+        "text_vi": "Mục đích chính của #ThửTháchKểChuyện6Khung là kể một câu chuyện hay chỉ bằng 6 hình minh họa."
+      },
+      {
+        "text_en": "The campaign inspired nearly 70 illustrators to donate their time and skills to India’s first open-source story-publishing platform for children.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1208/s_026.mp3",
+        "text_vi": "Chiến dịch đã truyền cảm hứng cho gần 70 họa sĩ minh họa quyên góp thời gian và kỹ năng của họ cho nền tảng xuất bản truyện mã nguồn mở đầu tiên của Ấn Độ dành cho trẻ em."
+      },
+      {
+        "text_en": "What started out as an experimental campaign soon blossomed into a carnival of art, birthing nearly 500 new illustrations.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1208/s_027.mp3",
+        "text_vi": "Điều bắt đầu như một chiến dịch thử nghiệm đã sớm nở rộ thành một lễ hội nghệ thuật, tạo ra gần 500 hình minh họa mới."
+      },
+      {
+        "text_en": "These wordless narratives cut across language barriers, opening up a world of possibilities, encouraging StoryWeaver’s growing community to dream up multiple stories around these images.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1208/s_028.mp3",
+        "text_vi": "Những câu chuyện không lời này vượt qua rào cản ngôn ngữ, mở ra một thế giới khả năng, khuyến khích cộng đồng StoryWeaver đang phát triển mơ ước nhiều câu chuyện xung quanh những hình ảnh này."
+      },
+      {
+        "text_en": "The #6FrameStoryChallenge is a powerful reminder of the need for collaboration, to get closer to our mission: “A Book in Every Child’s Hand.”",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1208/s_029.mp3",
+        "text_vi": "#ThửTháchKểChuyện6Khung là một lời nhắc nhở mạnh mẽ về sự cần thiết của hợp tác, để đến gần hơn với sứ mệnh của chúng ta: “Một cuốn sách trong tay mỗi đứa trẻ.”"
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "Sukhiya Kaka lived in a village called Bitauna.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1208/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "Bitauna was famous all over Rajasthan for its singers.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1208/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "No celebration was complete without Sukhiya Kaka's sweet songs.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1208/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "Today he had been invited to village Jhalaura.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1208/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "Sukhiya Kaka twirled his big moustache and set off.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1208/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "He was singing raag Malhar.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1208/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "...Come to me o rolling clouds...",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1208/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "Suddenly, he heard, dhupp dhupp dhupp dhupp!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1208/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "Was someone giving a beat to his song?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1208/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "Dinoo, the dinosuar came running towards him.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1208/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "Sukhiya Kaka was so happy to see him!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1208/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "You don't get such a BIG listener every day!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1208/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "... Come to me o rolling clouds, shower me with lovely rain!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1208/s_012.mp3"
+        },
+        {
+          "id": "ra_13",
+          "text_en": "Sukhiya Kaka and Dinoo sang a duet and did a little jig to keep time.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1208/s_013.mp3"
+        },
+        {
+          "id": "ra_14",
+          "text_en": "The clouds just had to listen to them!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1208/s_014.mp3"
+        },
+        {
+          "id": "ra_15",
+          "text_en": "Lightning flashed and the wind danced.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1208/s_015.mp3"
+        },
+        {
+          "id": "ra_16",
+          "text_en": "Dark clouds came rolling in.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1208/s_016.mp3"
+        },
+        {
+          "id": "ra_17",
+          "text_en": "Sukhiya Kaka and Dinoo laughed with joy.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1208/s_017.mp3"
+        },
+        {
+          "id": "ra_18",
+          "text_en": "As the rain came pouring down, Sukhiya Kaka and Dinoo shared a small umbrella.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1208/s_018.mp3"
+        },
+        {
+          "id": "ra_19",
+          "text_en": "Then off they went to Jhalaura following the smell of yummy pakoras, singing ...O thank you for the lovely rain...O..la la la.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1208/s_019.mp3"
+        },
+        {
+          "id": "ra_20",
+          "text_en": "Dear Reader, Have you ever seen a dinosaur?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1208/s_020.mp3"
+        },
+        {
+          "id": "ra_21",
+          "text_en": "Do you think they would have sung songs?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1208/s_021.mp3"
+        },
+        {
+          "id": "ra_22",
+          "text_en": "What do you like to do in the rain?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1208/s_022.mp3"
+        },
+        {
+          "id": "ra_23",
+          "text_en": "What do you like to eat when it rains?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1208/s_023.mp3"
+        },
+        {
+          "id": "ra_24",
+          "text_en": "#6FrameStoryChallenge: A Carnival of Art The illustrations in this book were created as part of the #6FrameStoryChallenge, an online campaign run by Pratham Books to build a rich bank of illustrations for StoryWeaver.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1208/s_024.mp3"
+        },
+        {
+          "id": "ra_25",
+          "text_en": "The essence of the #6FrameStoryChallenge was to tell a good story using just 6 illustrations.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1208/s_025.mp3"
+        },
+        {
+          "id": "ra_26",
+          "text_en": "The campaign inspired nearly 70 illustrators to donate their time and skills to India’s first open-source story-publishing platform for children.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1208/s_026.mp3"
+        },
+        {
+          "id": "ra_27",
+          "text_en": "What started out as an experimental campaign soon blossomed into a carnival of art, birthing nearly 500 new illustrations.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1208/s_027.mp3"
+        },
+        {
+          "id": "ra_28",
+          "text_en": "These wordless narratives cut across language barriers, opening up a world of possibilities, encouraging StoryWeaver’s growing community to dream up multiple stories around these images.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1208/s_028.mp3"
+        },
+        {
+          "id": "ra_29",
+          "text_en": "The #6FrameStoryChallenge is a powerful reminder of the need for collaboration, to get closer to our mission: “A Book in Every Child’s Hand.”",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1208/s_029.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "Who lived in a village called Bitauna?",
+          "options_en": [
+            "Sukhiya Kaka",
+            "Dinoo",
+            "the singers"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "Where did Sukhiya Kaka live?",
+          "options_en": [
+            "In Bitauna",
+            "In Jhalaura",
+            "In Rajasthan"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s1_q1",
+          "type": "choice",
+          "question_en": "What was Bitauna famous for?",
+          "options_en": [
+            "Its singers",
+            "Its rains",
+            "Its pakoras"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s1_q2",
+          "type": "choice",
+          "question_en": "Where was Bitauna famous?",
+          "options_en": [
+            "All over Rajasthan",
+            "In Jhalaura",
+            "On StoryWeaver"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s2_q1",
+          "type": "choice",
+          "question_en": "Whose sweet songs made celebrations complete?",
+          "options_en": [
+            "Sukhiya Kaka's",
+            "Dinoo's",
+            "the village singers'"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s2_q2",
+          "type": "choice",
+          "question_en": "What was needed to make a celebration complete?",
+          "options_en": [
+            "Sukhiya Kaka's sweet songs",
+            "Yummy pakoras",
+            "A small umbrella"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s3_q1",
+          "type": "choice",
+          "question_en": "Where had he been invited?",
+          "options_en": [
+            "Village Jhalaura",
+            "Village Bitauna",
+            "Jhalaura's celebrations"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p0_s3_q2",
+          "type": "choice",
+          "question_en": "When had he been invited to Jhalaura?",
+          "options_en": [
+            "Today",
+            "Yesterday",
+            "During the rain"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "Who twirled his big moustache and set off?",
+          "options_en": [
+            "Sukhiya Kaka",
+            "Dinoo",
+            "a villager from Bitauna"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "What did Sukhiya Kaka do in the sentence?",
+          "options_en": [
+            "Twirled his big moustache and set off",
+            "Sang a duet with Dinoo",
+            "Shared an umbrella"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p1_s1_q1",
+          "type": "choice",
+          "question_en": "What was he singing?",
+          "options_en": [
+            "raag Malhar",
+            "a duet with Dinoo",
+            "a song about pakoras"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p1_s1_q2",
+          "type": "choice",
+          "question_en": "Which raag was mentioned as being sung?",
+          "options_en": [
+            "raag Malhar",
+            "raag Bhairavi",
+            "raag Megh"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p1_s2_q1",
+          "type": "choice",
+          "question_en": "Who is being asked to come in the line \"Come to me o rolling clouds\"?",
+          "options_en": [
+            "rolling clouds",
+            "Dinoo",
+            "the villagers of Jhalaura"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p1_s2_q2",
+          "type": "choice",
+          "question_en": "What is the speaker asking the clouds to do?",
+          "options_en": [
+            "Come to him",
+            "Give a beat to the song",
+            "Follow the smell of pakoras"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "What did he suddenly hear?",
+          "options_en": [
+            "dhupp dhupp dhupp dhupp",
+            "singing raag Malhar",
+            "the smell of yummy pakoras"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "When did he hear the sound?",
+          "options_en": [
+            "Suddenly",
+            "When the rain started pouring",
+            "When he reached Jhalaura"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p2_s1_q1",
+          "type": "choice",
+          "question_en": "What did he wonder about the sound?",
+          "options_en": [
+            "Was someone giving a beat to his song?",
+            "Was it the smell of pakoras?",
+            "Was it thunder from dark clouds?"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p2_s1_q2",
+          "type": "choice",
+          "question_en": "Why did he question the sound?",
+          "options_en": [
+            "Because it sounded like a beat",
+            "Because he smelled yummy pakoras",
+            "Because he saw lightning"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p2_s2_q1",
+          "type": "choice",
+          "question_en": "Who came running towards him?",
+          "options_en": [
+            "Dinoo, the dinosaur",
+            "A cloud",
+            "A pakora seller"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p2_s2_q2",
+          "type": "choice",
+          "question_en": "How did Dinoo approach him?",
+          "options_en": [
+            "Came running towards him",
+            "Walked slowly with an umbrella",
+            "Flew in with lightning"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p2_s3_q1",
+          "type": "choice",
+          "question_en": "Who was so happy to see him?",
+          "options_en": [
+            "Sukhiya Kaka",
+            "The cloud",
+            "The pakora seller"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p2_s3_q2",
+          "type": "choice",
+          "question_en": "How did Sukhiya Kaka feel when he saw him?",
+          "options_en": [
+            "So happy",
+            "Sad because of rain",
+            "Angry about the umbrella"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "What don't you get every day?",
+          "options_en": [
+            "such a BIG listener",
+            "a dinosaur",
+            "yummy pakoras"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "How often do you get such a BIG listener?",
+          "options_en": [
+            "every day",
+            "when it rains",
+            "at Jhalaura"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p3_s1_q1",
+          "type": "choice",
+          "question_en": "Who is being asked to come?",
+          "options_en": [
+            "rolling clouds",
+            "Sukhiya Kaka",
+            "Dinoo"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p3_s1_q2",
+          "type": "choice",
+          "question_en": "What are they asking the clouds to do?",
+          "options_en": [
+            "shower me with lovely rain",
+            "sing a duet",
+            "share a small umbrella"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p3_s2_q1",
+          "type": "choice",
+          "question_en": "Who sang a duet?",
+          "options_en": [
+            "Sukhiya Kaka and Dinoo",
+            "the clouds",
+            "the villagers"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p3_s2_q2",
+          "type": "choice",
+          "question_en": "What did they do to keep time?",
+          "options_en": [
+            "did a little jig",
+            "shared a small umbrella",
+            "followed the smell of yummy pakoras"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "What had to listen to them?",
+          "options_en": [
+            "The clouds",
+            "The wind",
+            "Sukhiya Kaka"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "Which had to listen to them?",
+          "options_en": [
+            "The clouds",
+            "Dark clouds",
+            "Dinoo"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p4_s1_q1",
+          "type": "choice",
+          "question_en": "What flashed?",
+          "options_en": [
+            "Lightning",
+            "Dark clouds",
+            "An umbrella"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p4_s1_q2",
+          "type": "choice",
+          "question_en": "How did the wind behave?",
+          "options_en": [
+            "It danced",
+            "It sang a duet",
+            "It rolled in"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p4_s2_q1",
+          "type": "choice",
+          "question_en": "What came rolling in?",
+          "options_en": [
+            "Dark clouds",
+            "Lightning",
+            "An umbrella"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p4_s2_q2",
+          "type": "choice",
+          "question_en": "How did the clouds come in?",
+          "options_en": [
+            "They came rolling in",
+            "They flashed",
+            "They danced"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p4_s3_q1",
+          "type": "choice",
+          "question_en": "Who laughed with joy?",
+          "options_en": [
+            "Sukhiya Kaka and Dinoo",
+            "The clouds",
+            "The wind"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p4_s3_q2",
+          "type": "choice",
+          "question_en": "How did Sukhiya Kaka and Dinoo laugh?",
+          "options_en": [
+            "With joy",
+            "While singing loudly",
+            "Under an umbrella"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "Who shared a small umbrella?",
+          "options_en": [
+            "Sukhiya Kaka and Dinoo",
+            "Sukhiya Kaka and the villagers",
+            "Dinoo and other dinosaurs"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "When did they share the small umbrella?",
+          "options_en": [
+            "As the rain came pouring down",
+            "After the song finished",
+            "Before they set off"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p5_s1_q1",
+          "type": "choice",
+          "question_en": "What were they following as they went to Jhalaura?",
+          "options_en": [
+            "The smell of yummy pakoras",
+            "The sound of raag Malhar",
+            "The smell of the rain"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p5_s1_q2",
+          "type": "choice",
+          "question_en": "Where did they go?",
+          "options_en": [
+            "To Jhalaura",
+            "To Bitauna",
+            "To the rolling clouds"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "Who is being asked if they have seen a dinosaur?",
+          "options_en": [
+            "Dear Reader",
+            "Sukhiya Kaka",
+            "Dinoo"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "What does the sentence ask about?",
+          "options_en": [
+            "Seeing a dinosaur",
+            "Singing songs",
+            "Sharing an umbrella"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p6_s1_q1",
+          "type": "choice",
+          "question_en": "What is the sentence asking whether they would have done?",
+          "options_en": [
+            "Sung songs",
+            "Eaten pakoras",
+            "Shared an umbrella"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p6_s1_q2",
+          "type": "choice",
+          "question_en": "Who is being asked to give their opinion about whether they would have sung?",
+          "options_en": [
+            "Dear Reader",
+            "Sukhiya Kaka",
+            "The clouds"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p6_s2_q1",
+          "type": "choice",
+          "question_en": "What is the sentence asking about doing in the rain?",
+          "options_en": [
+            "What you like to do",
+            "Where to go in the rain",
+            "Who sings in the rain"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p6_s2_q2",
+          "type": "choice",
+          "question_en": "Who is being asked what they like to do in the rain?",
+          "options_en": [
+            "Dear Reader",
+            "Dinoo",
+            "Sukhiya Kaka"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p6_s3_q1",
+          "type": "choice",
+          "question_en": "What does the sentence ask about eating?",
+          "options_en": [
+            "What you like to eat when it rains",
+            "How to cook pakoras",
+            "Which song to sing"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p6_s3_q2",
+          "type": "choice",
+          "question_en": "Who is being asked what they like to eat when it rains?",
+          "options_en": [
+            "Dear Reader",
+            "Sukhiya Kaka",
+            "The illustrator"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "What were the illustrations in this book created as part of?",
+          "options_en": [
+            "#6FrameStoryChallenge",
+            "Sukhiya Kaka's trip to Jhalaura",
+            "The duet between Sukhiya Kaka and Dinoo"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "Who ran the online campaign to build a rich bank of illustrations for StoryWeaver?",
+          "options_en": [
+            "Pratham Books",
+            "StoryWeaver",
+            "Sukhiya Kaka"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p7_s1_q1",
+          "type": "choice",
+          "question_en": "What was the essence of the #6FrameStoryChallenge?",
+          "options_en": [
+            "To tell a good story using just 6 illustrations",
+            "To sing raag Malhar",
+            "To share pakoras in the rain"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p7_s1_q2",
+          "type": "choice",
+          "question_en": "How many illustrations were to be used to tell the story in the challenge?",
+          "options_en": [
+            "6",
+            "Nearly 500",
+            "Nearly 70"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p7_s2_q1",
+          "type": "choice",
+          "question_en": "How many illustrators did the campaign inspire to donate their time and skills?",
+          "options_en": [
+            "Nearly 70 illustrators",
+            "One dinosaur named Dinoo",
+            "Nearly 500 illustrators"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p7_s2_q2",
+          "type": "choice",
+          "question_en": "Which platform did the illustrators donate their time and skills to?",
+          "options_en": [
+            "India's first open-source story-publishing platform for children",
+            "The village of Jhalaura",
+            "Sukhiya Kaka's music group"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p7_s3_q1",
+          "type": "choice",
+          "question_en": "What did the experimental campaign soon blossom into?",
+          "options_en": [
+            "A carnival of art",
+            "A duet between Sukhiya Kaka and Dinoo",
+            "A rainstorm with lightning"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        },
+        {
+          "id": "gl_p7_s3_q2",
+          "type": "choice",
+          "question_en": "How many new illustrations did the campaign birth?",
+          "options_en": [
+            "Nearly 500 new illustrations",
+            "Nearly 70 new illustrations",
+            "6 new illustrations"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        },
+        {
+          "id": "gl_p7_s4_q1",
+          "type": "choice",
+          "question_en": "What did the wordless narratives cut across?",
+          "options_en": [
+            "Language barriers",
+            "The smell of yummy pakoras",
+            "The village boundary of Bitauna"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        },
+        {
+          "id": "gl_p7_s4_q2",
+          "type": "choice",
+          "question_en": "What did these images encourage StoryWeaver’s community to do?",
+          "options_en": [
+            "Dream up multiple stories around the images",
+            "Sing duets in the rain",
+            "Share a small umbrella"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        },
+        {
+          "id": "gl_p7_s5_q1",
+          "type": "choice",
+          "question_en": "What is the #6FrameStoryChallenge described as a powerful reminder of?",
+          "options_en": [
+            "The need for collaboration",
+            "Eating pakoras when it rains",
+            "Singing raag Malhar"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p7_s5_q2",
+          "type": "choice",
+          "question_en": "What mission does the challenge help get closer to?",
+          "options_en": [
+            "A Book in Every Child's Hand",
+            "Visiting the village of Jhalaura",
+            "Building an umbrella for Dinoo"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'Singing in the Rain'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "village",
+      "meaning_vi": "làng (nơi mọi người sống, thường nhỏ hơn thành phố)",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "famous",
+      "meaning_vi": "nổi tiếng (nhiều người biết đến)",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "celebration",
+      "meaning_vi": "buổi lễ (một sự kiện vui vẻ để kỷ niệm)",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "complete",
+      "meaning_vi": "trọn vẹn (đầy đủ, không thiếu gì)",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "twirled",
+      "meaning_vi": "vuốt (xoắn nhẹ bằng tay)",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "moustache",
+      "meaning_vi": "ria mép (lông mọc trên môi trên của đàn ông)",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "set off",
+      "meaning_vi": "lên đường (bắt đầu một chuyến đi)",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "rolling",
+      "meaning_vi": "cuộn tròn (di chuyển theo hình tròn)",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "Suddenly",
+      "meaning_vi": "bỗng nhiên (xảy ra bất ngờ)",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "beat",
+      "meaning_vi": "nhịp điệu (âm thanh đều đặn trong nhạc)",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "dinosaur",
+      "meaning_vi": "khủng long (động vật khổng lồ sống từ rất lâu rồi)",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "towards",
+      "meaning_vi": "về phía (đi đến gần một cái gì đó)",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "listener",
+      "meaning_vi": "người nghe (người lắng nghe)",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "shower",
+      "meaning_vi": "tưới (làm ướt bằng nước, như mưa)",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "duet",
+      "meaning_vi": "song ca (hai người cùng hát)",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "jig",
+      "meaning_vi": "điệu nhảy (một điệu nhảy vui vẻ, nhanh)",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "lightning",
+      "meaning_vi": "sét (ánh sáng chói lòa trên bầu trời khi có bão)",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "flashed",
+      "meaning_vi": "lóe sáng (sáng lên rất nhanh rồi tắt)",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "danced",
+      "meaning_vi": "nhảy múa (di chuyển theo nhạc)",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "joy",
+      "meaning_vi": "niềm vui (cảm giác rất hạnh phúc)",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "pouring down",
+      "meaning_vi": "đổ xuống (mưa rơi rất nhiều và nhanh)",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "shared",
+      "meaning_vi": "dùng chung (cùng sử dụng một thứ gì đó)",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "umbrella",
+      "meaning_vi": "ô (vật dùng để che mưa hoặc nắng)",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "yummy",
+      "meaning_vi": "ngon tuyệt (rất ngon)",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "Reader",
+      "meaning_vi": "bạn đọc (người đang đọc sách)",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "ever",
+      "meaning_vi": "đã từng (trong cuộc đời bạn)",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "think",
+      "meaning_vi": "nghĩ (suy nghĩ trong đầu)",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "illustrations",
+      "meaning_vi": "hình minh họa (những bức tranh trong sách)",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "campaign",
+      "meaning_vi": "chiến dịch (một hoạt động lớn để đạt được mục tiêu)",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "inspired",
+      "meaning_vi": "truyền cảm hứng (làm cho ai đó muốn làm điều gì đó tốt đẹp)",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "collaboration",
+      "meaning_vi": "hợp tác (cùng nhau làm việc)",
+      "paragraph_index": 7
+    }
+  ]
+}

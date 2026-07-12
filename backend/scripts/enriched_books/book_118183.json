@@ -1,0 +1,2301 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L2",
+  "level_label": "Cấp 2",
+  "topic": "How I Feel",
+  "slug": "book_118183",
+  "audio_filename": "book_118183.mp3",
+  "book_slug": "book_118183",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_118183/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_118183/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_118183/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_118183/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_118183/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_118183/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_118183/page_09.jpg",
+    "https://audio.felixbuilderhub.com/books/book_118183/page_10.jpg",
+    "https://audio.felixbuilderhub.com/books/book_118183/page_11.jpg",
+    "https://audio.felixbuilderhub.com/books/book_118183/page_12.jpg",
+    "https://audio.felixbuilderhub.com/books/book_118183/page_13.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_118183/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_118183/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_118183/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_118183/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_118183/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_118183/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_118183/page_09.mp3",
+    "https://audio.felixbuilderhub.com/books/book_118183/page_10.mp3",
+    "https://audio.felixbuilderhub.com/books/book_118183/page_11.mp3",
+    "https://audio.felixbuilderhub.com/books/book_118183/page_12.mp3",
+    "https://audio.felixbuilderhub.com/books/book_118183/page_13.mp3"
+  ],
+  "book_attribution": {
+    "title": "How I Feel",
+    "creators": [
+      "Varsha Seshan",
+      "Gitanjali Iyer"
+    ],
+    "publisher": "Pratham Books",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: How I Feel is written by Varsha Seshan . © Pratham Books , 2020. Some rights reserved. Released under CC BY 4.0 license. Other Credits: 'How I Feel' has been published on StoryWeaver by Pratham Books. www.prathambooks.org. Images Attributions: Cover page: Diverse people , by Gitanjali Iyer © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 2: three girls , by Gitanjali Iyer © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 3: Doodle backdrop , by Gitanjali Iyer © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 4: pencil doodle backdrop , by Gitanjali Iyer © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 5: A girl looking at snakes , by Gitanjali Iyer © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 6: A happy girl eating , by Gitanjali Iyer © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 7: A girl looking at her dirty shoe sole , by Gitanjali Iyer © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 8: Girl looking at a dog , by Gitanjali Iyer © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 9: A girl with a big present , by Gitanjali Iyer © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 10: A man talking to a boy , by Gitanjali Iyer © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 11: A child crying by the window , by Gitanjali Iyer © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/118183-how-i-feel",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "Doodle backdrop , by Gitanjali Iyer © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "pencil doodle backdrop , by Gitanjali Iyer © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "A girl looking at snakes , by Gitanjali Iyer © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "A happy girl eating , by Gitanjali Iyer © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "A girl looking at her dirty shoe sole , by Gitanjali Iyer © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "Girl looking at a dog , by Gitanjali Iyer © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "A girl with a big present , by Gitanjali Iyer © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "A man talking to a boy , by Gitanjali Iyer © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 8,
+        "credit_text": "A child crying by the window , by Gitanjali Iyer © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 9,
+        "credit_text": "Illustration by Gitanjali Iyer."
+      },
+      {
+        "page_index": 10,
+        "credit_text": "Illustration by Gitanjali Iyer."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "How I Feel",
+    "paragraphs_en": [
+      "​Sometimes my heart beats fast. Sometimes I scream and shout. Some things make me giggle. Other things make me pout.",
+      "​Can you tell me how I feel? And can you tell me why? Can you tell me why I smile? What makes me want to cry?",
+      "​Sssss! Do you hear that? What is that hissing sound? I freeze, I gasp, I tremble. My eyes grow big and round. Can you tell me how I feel?",
+      "​Wheeeee! Today is special. Nani is coming to stay! My face glows, my eyes shine. I jump and shout, “Hurray!” Can you tell me how I feel?",
+      "​Ewwwww! My shoes are stinky. I think I stepped in poop. I clench my fists. I wrinkle my nose. Yuck! Yucky doo! Can you tell me how I feel?",
+      "​​​I have to return this library book, but I tore it by mistake. I chew my nails. I sweat a bit. My knees begin to shake. Can you tell me how I feel?",
+      "​Is that enormous package really a gift—for me? My mouth falls open. My eyebrows fly up. I wonder what it could be. Can you tell me how I feel?",
+      "​Iiish! I squirm and shuffle my feet. I told a lie today. I hang my head. My face is red. I don’t know what to say. Can you tell me how I feel?",
+      "​Sniff! Nani is leaving. I stand and wave goodbye. My mouth curves down, my eyes are red, and I begin to cry. Can you tell me how I feel?",
+      "​Grrrr! I’m not sleepy! I don’t want to go to bed! I gnash my teeth. I stomp my feet. My face is fiery red. Can you tell me how I feel?",
+      "​Mamma’s hugs are lovely. Cuddly, warm and tight. I sigh and smile and kiss her cheek. My eyes are big and bright. Can you tell me how I feel?"
+    ],
+    "sentences": [
+      {
+        "text_en": "​Sometimes my heart beats fast.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_000.mp3",
+        "text_vi": "Đôi khi tim con đập nhanh."
+      },
+      {
+        "text_en": "Sometimes I scream and shout.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_001.mp3",
+        "text_vi": "Đôi khi con la hét ầm ĩ."
+      },
+      {
+        "text_en": "Some things make me giggle.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_002.mp3",
+        "text_vi": "Có vài điều làm con cười khúc khích."
+      },
+      {
+        "text_en": "Other things make me pout.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_003.mp3",
+        "text_vi": "Những điều khác làm con bĩu môi."
+      },
+      {
+        "text_en": "​Can you tell me how I feel?",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_004.mp3",
+        "text_vi": "Ba/Mẹ có thể nói cho con biết con cảm thấy thế nào không?"
+      },
+      {
+        "text_en": "And can you tell me why?",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_005.mp3",
+        "text_vi": "Và ba/mẹ có thể nói cho con biết tại sao không?"
+      },
+      {
+        "text_en": "Can you tell me why I smile?",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_006.mp3",
+        "text_vi": "Ba/Mẹ có thể nói cho con biết tại sao con cười không?"
+      },
+      {
+        "text_en": "What makes me want to cry?",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_007.mp3",
+        "text_vi": "Điều gì làm con muốn khóc?"
+      },
+      {
+        "text_en": "​Sssss! Do you hear that?",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_008.mp3",
+        "text_vi": "Sssss! Ba/Mẹ có nghe thấy tiếng đó không?"
+      },
+      {
+        "text_en": "What is that hissing sound?",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_009.mp3",
+        "text_vi": "Tiếng rít đó là tiếng gì vậy?"
+      },
+      {
+        "text_en": "I freeze, I gasp, I tremble.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_010.mp3",
+        "text_vi": "Con đứng im, con thở hổn hển, con run rẩy."
+      },
+      {
+        "text_en": "My eyes grow big and round.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_011.mp3",
+        "text_vi": "Mắt con mở to tròn."
+      },
+      {
+        "text_en": "Can you tell me how I feel?",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_012.mp3",
+        "text_vi": "Ba/Mẹ có thể nói cho con biết con cảm thấy thế nào không?"
+      },
+      {
+        "text_en": "​Wheeeee! Today is special.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_013.mp3",
+        "text_vi": "Wheeeee! Hôm nay thật đặc biệt."
+      },
+      {
+        "text_en": "Nani is coming to stay!",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_014.mp3",
+        "text_vi": "Bà Nani đến ở chơi!"
+      },
+      {
+        "text_en": "My face glows, my eyes shine.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_015.mp3",
+        "text_vi": "Mặt con rạng rỡ, mắt con sáng lên."
+      },
+      {
+        "text_en": "I jump and shout, “Hurray!” Can you tell me how I feel?",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_016.mp3",
+        "text_vi": "Con nhảy lên và hét, “Hoan hô!” Ba/Mẹ có thể nói cho con biết con cảm thấy thế nào không?"
+      },
+      {
+        "text_en": "​Ewwwww! My shoes are stinky.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_017.mp3",
+        "text_vi": "Ewwwww! Giày của con bốc mùi quá."
+      },
+      {
+        "text_en": "I think I stepped in poop.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_018.mp3",
+        "text_vi": "Con nghĩ con đã giẫm phải phân."
+      },
+      {
+        "text_en": "I clench my fists.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_019.mp3",
+        "text_vi": "Con nắm chặt tay lại."
+      },
+      {
+        "text_en": "I wrinkle my nose.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_020.mp3",
+        "text_vi": "Con nhăn mũi."
+      },
+      {
+        "text_en": "Yuck! Yucky doo!",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_021.mp3",
+        "text_vi": "Eo ôi! Bẩn quá!"
+      },
+      {
+        "text_en": "Can you tell me how I feel?",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_022.mp3",
+        "text_vi": "Ba/Mẹ có thể nói cho con biết con cảm thấy thế nào không?"
+      },
+      {
+        "text_en": "​​​I have to return this library book, but I tore it by mistake.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_023.mp3",
+        "text_vi": "Con phải trả cuốn sách thư viện này, nhưng con đã lỡ làm rách nó."
+      },
+      {
+        "text_en": "I chew my nails.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_024.mp3",
+        "text_vi": "Con cắn móng tay."
+      },
+      {
+        "text_en": "I sweat a bit.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_025.mp3",
+        "text_vi": "Con hơi đổ mồ hôi."
+      },
+      {
+        "text_en": "My knees begin to shake.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_026.mp3",
+        "text_vi": "Đầu gối con bắt đầu run."
+      },
+      {
+        "text_en": "Can you tell me how I feel?",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_027.mp3",
+        "text_vi": "Ba/Mẹ có thể nói cho con biết con cảm thấy thế nào không?"
+      },
+      {
+        "text_en": "​Is that enormous package really a gift—for me?",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_028.mp3",
+        "text_vi": "Cái gói hàng to đùng kia thật sự là quà – cho con sao?"
+      },
+      {
+        "text_en": "My mouth falls open.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_029.mp3",
+        "text_vi": "Con há hốc mồm."
+      },
+      {
+        "text_en": "My eyebrows fly up.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_030.mp3",
+        "text_vi": "Lông mày con nhướn lên."
+      },
+      {
+        "text_en": "I wonder what it could be.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_031.mp3",
+        "text_vi": "Con tự hỏi không biết đó là gì."
+      },
+      {
+        "text_en": "Can you tell me how I feel?",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_032.mp3",
+        "text_vi": "Ba/Mẹ có thể nói cho con biết con cảm thấy thế nào không?"
+      },
+      {
+        "text_en": "​Iiish! I squirm and shuffle my feet.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_033.mp3",
+        "text_vi": "Iiish! Con cựa quậy và lê chân."
+      },
+      {
+        "text_en": "I told a lie today.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_034.mp3",
+        "text_vi": "Hôm nay con đã nói dối."
+      },
+      {
+        "text_en": "I hang my head.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_035.mp3",
+        "text_vi": "Con cúi đầu."
+      },
+      {
+        "text_en": "My face is red.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_036.mp3",
+        "text_vi": "Mặt con đỏ bừng."
+      },
+      {
+        "text_en": "I don’t know what to say.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_037.mp3",
+        "text_vi": "Con không biết phải nói gì."
+      },
+      {
+        "text_en": "Can you tell me how I feel?",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_038.mp3",
+        "text_vi": "Ba/Mẹ có thể nói cho con biết con cảm thấy thế nào không?"
+      },
+      {
+        "text_en": "​Sniff! Nani is leaving.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_039.mp3",
+        "text_vi": "Hức hức! Bà Nani sắp đi rồi."
+      },
+      {
+        "text_en": "I stand and wave goodbye.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_040.mp3",
+        "text_vi": "Con đứng vẫy tay chào tạm biệt."
+      },
+      {
+        "text_en": "My mouth curves down, my eyes are red, and I begin to cry.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_041.mp3",
+        "text_vi": "Miệng con trề xuống, mắt con đỏ hoe, và con bắt đầu khóc."
+      },
+      {
+        "text_en": "Can you tell me how I feel?",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_042.mp3",
+        "text_vi": "Ba/Mẹ có thể nói cho con biết con cảm thấy thế nào không?"
+      },
+      {
+        "text_en": "​Grrrr! I’m not sleepy!",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_043.mp3",
+        "text_vi": "Grrrr! Con không buồn ngủ!"
+      },
+      {
+        "text_en": "I don’t want to go to bed!",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_044.mp3",
+        "text_vi": "Con không muốn đi ngủ!"
+      },
+      {
+        "text_en": "I gnash my teeth.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_045.mp3",
+        "text_vi": "Con nghiến răng."
+      },
+      {
+        "text_en": "I stomp my feet.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_046.mp3",
+        "text_vi": "Con dậm chân."
+      },
+      {
+        "text_en": "My face is fiery red.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_047.mp3",
+        "text_vi": "Mặt con đỏ bừng."
+      },
+      {
+        "text_en": "Can you tell me how I feel?",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_048.mp3",
+        "text_vi": "Ba/Mẹ có thể nói cho con biết con cảm thấy thế nào không?"
+      },
+      {
+        "text_en": "​Mamma’s hugs are lovely.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_049.mp3",
+        "text_vi": "Những cái ôm của mẹ thật đáng yêu."
+      },
+      {
+        "text_en": "Cuddly, warm and tight.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_050.mp3",
+        "text_vi": "Ấm áp, chặt chẽ và dễ chịu."
+      },
+      {
+        "text_en": "I sigh and smile and kiss her cheek.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_051.mp3",
+        "text_vi": "Con thở dài, mỉm cười và hôn lên má mẹ."
+      },
+      {
+        "text_en": "My eyes are big and bright.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_052.mp3",
+        "text_vi": "Mắt con to và sáng."
+      },
+      {
+        "text_en": "Can you tell me how I feel?",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_053.mp3",
+        "text_vi": "Ba/Mẹ có thể nói cho con biết con cảm thấy thế nào không?"
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "​Sometimes my heart beats fast.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "Sometimes I scream and shout.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "Some things make me giggle.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "Other things make me pout.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "​Can you tell me how I feel?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "And can you tell me why?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "Can you tell me why I smile?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "What makes me want to cry?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "​Sssss! Do you hear that?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "What is that hissing sound?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "I freeze, I gasp, I tremble.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "My eyes grow big and round.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "Can you tell me how I feel?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_012.mp3"
+        },
+        {
+          "id": "ra_13",
+          "text_en": "​Wheeeee! Today is special.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_013.mp3"
+        },
+        {
+          "id": "ra_14",
+          "text_en": "Nani is coming to stay!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_014.mp3"
+        },
+        {
+          "id": "ra_15",
+          "text_en": "My face glows, my eyes shine.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_015.mp3"
+        },
+        {
+          "id": "ra_16",
+          "text_en": "I jump and shout, “Hurray!” Can you tell me how I feel?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_016.mp3"
+        },
+        {
+          "id": "ra_17",
+          "text_en": "​Ewwwww! My shoes are stinky.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_017.mp3"
+        },
+        {
+          "id": "ra_18",
+          "text_en": "I think I stepped in poop.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_018.mp3"
+        },
+        {
+          "id": "ra_19",
+          "text_en": "I clench my fists.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_019.mp3"
+        },
+        {
+          "id": "ra_20",
+          "text_en": "I wrinkle my nose.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_020.mp3"
+        },
+        {
+          "id": "ra_21",
+          "text_en": "Yuck! Yucky doo!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_021.mp3"
+        },
+        {
+          "id": "ra_22",
+          "text_en": "Can you tell me how I feel?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_022.mp3"
+        },
+        {
+          "id": "ra_23",
+          "text_en": "​​​I have to return this library book, but I tore it by mistake.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_023.mp3"
+        },
+        {
+          "id": "ra_24",
+          "text_en": "I chew my nails.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_024.mp3"
+        },
+        {
+          "id": "ra_25",
+          "text_en": "I sweat a bit.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_025.mp3"
+        },
+        {
+          "id": "ra_26",
+          "text_en": "My knees begin to shake.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_026.mp3"
+        },
+        {
+          "id": "ra_27",
+          "text_en": "Can you tell me how I feel?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_027.mp3"
+        },
+        {
+          "id": "ra_28",
+          "text_en": "​Is that enormous package really a gift—for me?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_028.mp3"
+        },
+        {
+          "id": "ra_29",
+          "text_en": "My mouth falls open.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_029.mp3"
+        },
+        {
+          "id": "ra_30",
+          "text_en": "My eyebrows fly up.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_030.mp3"
+        },
+        {
+          "id": "ra_31",
+          "text_en": "I wonder what it could be.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_031.mp3"
+        },
+        {
+          "id": "ra_32",
+          "text_en": "Can you tell me how I feel?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_032.mp3"
+        },
+        {
+          "id": "ra_33",
+          "text_en": "​Iiish! I squirm and shuffle my feet.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_033.mp3"
+        },
+        {
+          "id": "ra_34",
+          "text_en": "I told a lie today.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_034.mp3"
+        },
+        {
+          "id": "ra_35",
+          "text_en": "I hang my head.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_035.mp3"
+        },
+        {
+          "id": "ra_36",
+          "text_en": "My face is red.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_036.mp3"
+        },
+        {
+          "id": "ra_37",
+          "text_en": "I don’t know what to say.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_037.mp3"
+        },
+        {
+          "id": "ra_38",
+          "text_en": "Can you tell me how I feel?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_038.mp3"
+        },
+        {
+          "id": "ra_39",
+          "text_en": "​Sniff! Nani is leaving.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_039.mp3"
+        },
+        {
+          "id": "ra_40",
+          "text_en": "I stand and wave goodbye.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_040.mp3"
+        },
+        {
+          "id": "ra_41",
+          "text_en": "My mouth curves down, my eyes are red, and I begin to cry.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_041.mp3"
+        },
+        {
+          "id": "ra_42",
+          "text_en": "Can you tell me how I feel?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_042.mp3"
+        },
+        {
+          "id": "ra_43",
+          "text_en": "​Grrrr! I’m not sleepy!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_043.mp3"
+        },
+        {
+          "id": "ra_44",
+          "text_en": "I don’t want to go to bed!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_044.mp3"
+        },
+        {
+          "id": "ra_45",
+          "text_en": "I gnash my teeth.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_045.mp3"
+        },
+        {
+          "id": "ra_46",
+          "text_en": "I stomp my feet.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_046.mp3"
+        },
+        {
+          "id": "ra_47",
+          "text_en": "My face is fiery red.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_047.mp3"
+        },
+        {
+          "id": "ra_48",
+          "text_en": "Can you tell me how I feel?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_048.mp3"
+        },
+        {
+          "id": "ra_49",
+          "text_en": "​Mamma’s hugs are lovely.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_049.mp3"
+        },
+        {
+          "id": "ra_50",
+          "text_en": "Cuddly, warm and tight.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_050.mp3"
+        },
+        {
+          "id": "ra_51",
+          "text_en": "I sigh and smile and kiss her cheek.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_051.mp3"
+        },
+        {
+          "id": "ra_52",
+          "text_en": "My eyes are big and bright.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_052.mp3"
+        },
+        {
+          "id": "ra_53",
+          "text_en": "Can you tell me how I feel?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118183/s_053.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "What happens to my heart sometimes?",
+          "options_en": [
+            "It beats fast",
+            "I scream and shout",
+            "My eyes grow big"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "When does my heart beat fast?",
+          "options_en": [
+            "Sometimes",
+            "When Nani is coming to stay",
+            "When I don’t want to go to bed"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s1_q1",
+          "type": "choice",
+          "question_en": "What do I do sometimes?",
+          "options_en": [
+            "Scream and shout",
+            "Giggle",
+            "Stand and wave goodbye"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s1_q2",
+          "type": "choice",
+          "question_en": "When do I scream and shout?",
+          "options_en": [
+            "Sometimes",
+            "When my shoes are stinky",
+            "When I have to return a library book"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s2_q1",
+          "type": "choice",
+          "question_en": "What do some things make me do?",
+          "options_en": [
+            "Giggle",
+            "Pout",
+            "Gnash my teeth"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s2_q2",
+          "type": "choice",
+          "question_en": "What effect do some things have on me?",
+          "options_en": [
+            "They make me giggle",
+            "They make me cry",
+            "They make me freeze and gasp"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s3_q1",
+          "type": "choice",
+          "question_en": "What do other things make me do?",
+          "options_en": [
+            "Pout",
+            "Smile",
+            "Jump and shout"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p0_s3_q2",
+          "type": "choice",
+          "question_en": "Which reaction do other things cause?",
+          "options_en": [
+            "Pout",
+            "Scream",
+            "Cry"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "Who asks to be told how they feel?",
+          "options_en": [
+            "The speaker (I)",
+            "Nani",
+            "Mamma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "Why does the speaker ask this question?",
+          "options_en": [
+            "To know how they feel",
+            "Because Nani is coming",
+            "To return a library book"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p1_s1_q1",
+          "type": "choice",
+          "question_en": "What is the speaker asking for in this sentence?",
+          "options_en": [
+            "The reason for their feelings",
+            "A cuddle from Mamma",
+            "A big package"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p1_s1_q2",
+          "type": "choice",
+          "question_en": "How does the speaker make the request?",
+          "options_en": [
+            "By asking a question",
+            "By stomping their feet",
+            "By waving goodbye"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p1_s2_q1",
+          "type": "choice",
+          "question_en": "What does the speaker want to know in this sentence?",
+          "options_en": [
+            "Why they smile",
+            "What made them scream",
+            "Where Nani is going"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p1_s2_q2",
+          "type": "choice",
+          "question_en": "Who is being asked to explain why the speaker smiles?",
+          "options_en": [
+            "You (the listener)",
+            "Nani",
+            "Mamma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p1_s3_q1",
+          "type": "choice",
+          "question_en": "What is the speaker asking about in this sentence?",
+          "options_en": [
+            "What makes them want to cry",
+            "What makes them giggle",
+            "What is inside the package"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p1_s3_q2",
+          "type": "choice",
+          "question_en": "Who is being asked to answer what makes the speaker want to cry?",
+          "options_en": [
+            "You (the listener)",
+            "Nani",
+            "Mamma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "What sound do you hear?",
+          "options_en": [
+            "Sssss!",
+            "Wheeeee!",
+            "Grrrr!"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "What does the speaker ask?",
+          "options_en": [
+            "Do you hear that?",
+            "What is that hissing sound?",
+            "Can you tell me how I feel?"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p2_s1_q1",
+          "type": "choice",
+          "question_en": "What is the speaker asking about?",
+          "options_en": [
+            "That hissing sound",
+            "Nani coming to stay",
+            "Stinky shoes"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p2_s1_q2",
+          "type": "choice",
+          "question_en": "Which question does the speaker say?",
+          "options_en": [
+            "What is that hissing sound?",
+            "Is that enormous package really a gift?",
+            "Can you tell me why I smile?"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p2_s2_q1",
+          "type": "choice",
+          "question_en": "How does the speaker react?",
+          "options_en": [
+            "They freeze, gasp, and tremble",
+            "They jump and shout",
+            "They sigh and smile"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p2_s2_q2",
+          "type": "choice",
+          "question_en": "What is one thing the speaker does?",
+          "options_en": [
+            "Gasp",
+            "Chew nails",
+            "Stomp their feet"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p2_s3_q1",
+          "type": "choice",
+          "question_en": "What happens to the speaker's eyes?",
+          "options_en": [
+            "They grow big and round",
+            "They shine",
+            "They are red"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p2_s3_q2",
+          "type": "choice",
+          "question_en": "Which description fits the speaker's eyes?",
+          "options_en": [
+            "Big and round",
+            "Big and bright",
+            "Red"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p2_s4_q1",
+          "type": "choice",
+          "question_en": "What does the speaker ask the listener to do?",
+          "options_en": [
+            "Tell how they feel",
+            "Return the library book",
+            "Wave goodbye"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p2_s4_q2",
+          "type": "choice",
+          "question_en": "Who is being asked to answer?",
+          "options_en": [
+            "You (the listener)",
+            "Nani",
+            "Mamma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "When is the day special?",
+          "options_en": [
+            "Today",
+            "When Nani is leaving",
+            "When I go to bed"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "How does the speaker show excitement in this sentence?",
+          "options_en": [
+            "Wheeeee!",
+            "I gnash my teeth",
+            "I squirm and shuffle my feet"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p3_s1_q1",
+          "type": "choice",
+          "question_en": "Who is coming to stay?",
+          "options_en": [
+            "Nani",
+            "Mamma",
+            "I"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p3_s1_q2",
+          "type": "choice",
+          "question_en": "What will Nani do according to the sentence?",
+          "options_en": [
+            "Come to stay",
+            "Leave",
+            "Give a gift"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p3_s2_q1",
+          "type": "choice",
+          "question_en": "How does the speaker's face look?",
+          "options_en": [
+            "My face glows",
+            "My face is red",
+            "My face is stinky"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p3_s2_q2",
+          "type": "choice",
+          "question_en": "What shines in the sentence?",
+          "options_en": [
+            "My eyes",
+            "My shoes",
+            "My mouth"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p3_s3_q1",
+          "type": "choice",
+          "question_en": "What does the speaker do in this sentence?",
+          "options_en": [
+            "Jump and shout",
+            "Squirm and shuffle my feet",
+            "Gnash my teeth"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p3_s3_q2",
+          "type": "choice",
+          "question_en": "How does the speaker show happiness here?",
+          "options_en": [
+            "By shouting \"Hurray!\"",
+            "By clenching my fists",
+            "By chewing my nails"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "What is stinky?",
+          "options_en": [
+            "My shoes",
+            "Nani's shoes",
+            "Mamma's hugs"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "How does the speaker describe their shoes?",
+          "options_en": [
+            "Stinky",
+            "Special",
+            "Lovely"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p4_s1_q1",
+          "type": "choice",
+          "question_en": "What does the speaker think they stepped in?",
+          "options_en": [
+            "Poop",
+            "An enormous package",
+            "A torn library book"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p4_s1_q2",
+          "type": "choice",
+          "question_en": "Who thinks they stepped in poop?",
+          "options_en": [
+            "I (the speaker)",
+            "Nani",
+            "Mamma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p4_s2_q1",
+          "type": "choice",
+          "question_en": "What does the speaker clench?",
+          "options_en": [
+            "My fists",
+            "My knees",
+            "My mouth"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p4_s2_q2",
+          "type": "choice",
+          "question_en": "How does the speaker hold their hands?",
+          "options_en": [
+            "They clench their fists",
+            "They wave goodbye",
+            "They jump and shout"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p4_s3_q1",
+          "type": "choice",
+          "question_en": "What does the speaker wrinkle?",
+          "options_en": [
+            "My nose",
+            "My eyebrows",
+            "My head"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p4_s3_q2",
+          "type": "choice",
+          "question_en": "How does the speaker move their nose?",
+          "options_en": [
+            "They wrinkle it",
+            "Their eyebrows fly up",
+            "They hang their head"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p4_s4_q1",
+          "type": "choice",
+          "question_en": "What does the speaker say to show disgust?",
+          "options_en": [
+            "Yuck! Yucky doo!",
+            "Hurray!",
+            "Sssss!"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p4_s4_q2",
+          "type": "choice",
+          "question_en": "How does the speaker react in this line?",
+          "options_en": [
+            "They show disgust",
+            "They cry",
+            "They jump and shout"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p4_s5_q1",
+          "type": "choice",
+          "question_en": "Who is being asked to tell how the speaker feels?",
+          "options_en": [
+            "You (the listener)",
+            "Nani",
+            "Mamma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p4_s5_q2",
+          "type": "choice",
+          "question_en": "What is the speaker asking the listener to do?",
+          "options_en": [
+            "Tell how they feel",
+            "Bring a gift",
+            "Return a library book"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "What does the speaker have to return?",
+          "options_en": [
+            "a library book",
+            "an enormous package",
+            "Mamma's hugs"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "Why does the speaker need to return the book?",
+          "options_en": [
+            "they tore it by mistake",
+            "Nani is leaving",
+            "their shoes are stinky"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p5_s1_q1",
+          "type": "choice",
+          "question_en": "What does the speaker do with their nails?",
+          "options_en": [
+            "chew them",
+            "clench their fists",
+            "wave goodbye"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p5_s1_q2",
+          "type": "choice",
+          "question_en": "How does the speaker use their hands in this sentence?",
+          "options_en": [
+            "they chew their nails",
+            "they jump and shout",
+            "they stomp their feet"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p5_s2_q1",
+          "type": "choice",
+          "question_en": "What happens to the speaker in this sentence?",
+          "options_en": [
+            "they sweat a bit",
+            "their mouth falls open",
+            "their eyes are red"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p5_s2_q2",
+          "type": "choice",
+          "question_en": "Which physical reaction is described here?",
+          "options_en": [
+            "sweating a bit",
+            "chewing nails",
+            "smiling and kissing"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p5_s3_q1",
+          "type": "choice",
+          "question_en": "What begins to shake?",
+          "options_en": [
+            "the speaker's knees",
+            "the speaker's hands",
+            "the speaker's mouth"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p5_s3_q2",
+          "type": "choice",
+          "question_en": "How do the speaker's knees behave?",
+          "options_en": [
+            "they begin to shake",
+            "they stomp the feet",
+            "they freeze"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p5_s4_q1",
+          "type": "choice",
+          "question_en": "What is the speaker asking the listener to tell them?",
+          "options_en": [
+            "how they feel",
+            "what the hissing sound is",
+            "why Nani is coming"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        },
+        {
+          "id": "gl_p5_s4_q2",
+          "type": "choice",
+          "question_en": "Who is the speaker asking the question to?",
+          "options_en": [
+            "you",
+            "Nani",
+            "Mamma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "What is the speaker asking about?",
+          "options_en": [
+            "an enormous package",
+            "a hissing sound",
+            "stinky shoes"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "Who might the gift be for?",
+          "options_en": [
+            "me",
+            "Nani",
+            "Mamma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        },
+        {
+          "id": "gl_p6_s1_q1",
+          "type": "choice",
+          "question_en": "How does the speaker's mouth change?",
+          "options_en": [
+            "falls open",
+            "jumps and shouts",
+            "screams"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p6_s1_q2",
+          "type": "choice",
+          "question_en": "What happens to the speaker in this sentence?",
+          "options_en": [
+            "their mouth falls open",
+            "their face glows",
+            "they stomp their feet"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p6_s2_q1",
+          "type": "choice",
+          "question_en": "What part of the face moves up?",
+          "options_en": [
+            "eyebrows",
+            "eyes",
+            "nose"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        },
+        {
+          "id": "gl_p6_s2_q2",
+          "type": "choice",
+          "question_en": "How do the eyebrows move?",
+          "options_en": [
+            "fly up",
+            "wrinkle",
+            "hang down"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        },
+        {
+          "id": "gl_p6_s3_q1",
+          "type": "choice",
+          "question_en": "What is the speaker wondering about?",
+          "options_en": [
+            "what it could be",
+            "why they smile",
+            "when Nani is coming"
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        },
+        {
+          "id": "gl_p6_s3_q2",
+          "type": "choice",
+          "question_en": "Which item is the speaker curious about?",
+          "options_en": [
+            "the enormous package",
+            "the library book",
+            "the stinky shoes"
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        },
+        {
+          "id": "gl_p6_s4_q1",
+          "type": "choice",
+          "question_en": "What does the speaker ask the listener to do?",
+          "options_en": [
+            "tell how I feel",
+            "return the library book",
+            "hug Mamma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 32
+        },
+        {
+          "id": "gl_p6_s4_q2",
+          "type": "choice",
+          "question_en": "Who is the speaker asking the question to?",
+          "options_en": [
+            "you",
+            "Nani",
+            "Mamma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 32
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "How does the speaker move?",
+          "options_en": [
+            "They squirm and shuffle their feet",
+            "They jump and shout",
+            "They scream and shout"
+          ],
+          "correct_index": 0,
+          "sentence_index": 33
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "What sound does the sentence begin with?",
+          "options_en": [
+            "Iiish!",
+            "Sssss!",
+            "Wheeeee!"
+          ],
+          "correct_index": 0,
+          "sentence_index": 33
+        },
+        {
+          "id": "gl_p7_s1_q1",
+          "type": "choice",
+          "question_en": "What did the speaker do today?",
+          "options_en": [
+            "They told a lie",
+            "They tore a library book by mistake",
+            "They stepped in poop"
+          ],
+          "correct_index": 0,
+          "sentence_index": 34
+        },
+        {
+          "id": "gl_p7_s1_q2",
+          "type": "choice",
+          "question_en": "Who told a lie today?",
+          "options_en": [
+            "I (the speaker)",
+            "Nani",
+            "Mamma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 34
+        },
+        {
+          "id": "gl_p7_s2_q1",
+          "type": "choice",
+          "question_en": "What does the speaker do with their head?",
+          "options_en": [
+            "They hang their head",
+            "They stand and wave goodbye",
+            "Their mouth falls open"
+          ],
+          "correct_index": 0,
+          "sentence_index": 35
+        },
+        {
+          "id": "gl_p7_s2_q2",
+          "type": "choice",
+          "question_en": "How is the speaker holding themselves in this sentence?",
+          "options_en": [
+            "Hanging their head",
+            "With eyes big and round",
+            "With fists clenched"
+          ],
+          "correct_index": 0,
+          "sentence_index": 35
+        },
+        {
+          "id": "gl_p7_s3_q1",
+          "type": "choice",
+          "question_en": "What color is the speaker's face?",
+          "options_en": [
+            "Red",
+            "Glowing",
+            "Big and bright"
+          ],
+          "correct_index": 0,
+          "sentence_index": 36
+        },
+        {
+          "id": "gl_p7_s3_q2",
+          "type": "choice",
+          "question_en": "How does the sentence describe the speaker's face?",
+          "options_en": [
+            "It is red",
+            "It curves down",
+            "It is fiery red"
+          ],
+          "correct_index": 0,
+          "sentence_index": 36
+        },
+        {
+          "id": "gl_p7_s4_q1",
+          "type": "choice",
+          "question_en": "What doesn't the speaker know?",
+          "options_en": [
+            "What to say",
+            "Why they smile",
+            "How to return a library book"
+          ],
+          "correct_index": 0,
+          "sentence_index": 37
+        },
+        {
+          "id": "gl_p7_s4_q2",
+          "type": "choice",
+          "question_en": "How does the speaker feel about speaking in this sentence?",
+          "options_en": [
+            "They don't know what to say",
+            "They want to cry",
+            "They want to hug Mamma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 37
+        },
+        {
+          "id": "gl_p7_s5_q1",
+          "type": "choice",
+          "question_en": "What is the speaker asking the listener to do?",
+          "options_en": [
+            "Tell how they feel",
+            "Find out what the package is",
+            "Tell why Nani is leaving"
+          ],
+          "correct_index": 0,
+          "sentence_index": 38
+        },
+        {
+          "id": "gl_p7_s5_q2",
+          "type": "choice",
+          "question_en": "Who is being asked to help figure out the speaker's feelings?",
+          "options_en": [
+            "You (the listener)",
+            "Mamma",
+            "Nani"
+          ],
+          "correct_index": 0,
+          "sentence_index": 38
+        }
+      ]
+    },
+    {
+      "paragraph_index": 8,
+      "questions": [
+        {
+          "id": "gl_p8_s0_q1",
+          "type": "choice",
+          "question_en": "Who is leaving?",
+          "options_en": [
+            "Nani",
+            "Mamma",
+            "an enormous package"
+          ],
+          "correct_index": 0,
+          "sentence_index": 39
+        },
+        {
+          "id": "gl_p8_s0_q2",
+          "type": "choice",
+          "question_en": "How does the speaker react to someone leaving?",
+          "options_en": [
+            "They sniff",
+            "They jump and shout",
+            "They stomp their feet"
+          ],
+          "correct_index": 0,
+          "sentence_index": 39
+        },
+        {
+          "id": "gl_p8_s1_q1",
+          "type": "choice",
+          "question_en": "What does the speaker do while saying goodbye?",
+          "options_en": [
+            "Stand and wave",
+            "Chew their nails",
+            "Jump and shout"
+          ],
+          "correct_index": 0,
+          "sentence_index": 40
+        },
+        {
+          "id": "gl_p8_s1_q2",
+          "type": "choice",
+          "question_en": "Who is being waved goodbye to?",
+          "options_en": [
+            "Nani",
+            "Mamma",
+            "a guest with a gift"
+          ],
+          "correct_index": 0,
+          "sentence_index": 40
+        },
+        {
+          "id": "gl_p8_s2_q1",
+          "type": "choice",
+          "question_en": "How does the speaker's mouth curve?",
+          "options_en": [
+            "Down",
+            "Open in surprise",
+            "Into a big smile"
+          ],
+          "correct_index": 0,
+          "sentence_index": 41
+        },
+        {
+          "id": "gl_p8_s2_q2",
+          "type": "choice",
+          "question_en": "What happens to the speaker's eyes?",
+          "options_en": [
+            "They are red",
+            "They grow big and bright",
+            "They shine"
+          ],
+          "correct_index": 0,
+          "sentence_index": 41
+        },
+        {
+          "id": "gl_p8_s3_q1",
+          "type": "choice",
+          "question_en": "What is the speaker asking the reader to tell them?",
+          "options_en": [
+            "How they feel",
+            "Why they smile",
+            "What the hissing sound is"
+          ],
+          "correct_index": 0,
+          "sentence_index": 42
+        },
+        {
+          "id": "gl_p8_s3_q2",
+          "type": "choice",
+          "question_en": "Why might the speaker be asking how they feel?",
+          "options_en": [
+            "Because Nani is leaving",
+            "Because their shoes are stinky",
+            "Because they found an enormous package"
+          ],
+          "correct_index": 0,
+          "sentence_index": 42
+        }
+      ]
+    },
+    {
+      "paragraph_index": 9,
+      "questions": [
+        {
+          "id": "gl_p9_s0_q1",
+          "type": "choice",
+          "question_en": "How does the speaker feel?",
+          "options_en": [
+            "Not sleepy",
+            "Happy that Nani is coming to stay",
+            "Sad because Nani is leaving"
+          ],
+          "correct_index": 0,
+          "sentence_index": 43
+        },
+        {
+          "id": "gl_p9_s0_q2",
+          "type": "choice",
+          "question_en": "Why does the speaker say \"Grrrr\"?",
+          "options_en": [
+            "Because they are not sleepy",
+            "Because their shoes are stinky",
+            "Because they tore a library book"
+          ],
+          "correct_index": 0,
+          "sentence_index": 43
+        },
+        {
+          "id": "gl_p9_s1_q1",
+          "type": "choice",
+          "question_en": "What does the speaker not want to do?",
+          "options_en": [
+            "Go to bed",
+            "Return a library book",
+            "Tell the truth"
+          ],
+          "correct_index": 0,
+          "sentence_index": 44
+        },
+        {
+          "id": "gl_p9_s1_q2",
+          "type": "choice",
+          "question_en": "Where does the speaker not want to go?",
+          "options_en": [
+            "To bed",
+            "To Nani's house",
+            "To the library"
+          ],
+          "correct_index": 0,
+          "sentence_index": 44
+        },
+        {
+          "id": "gl_p9_s2_q1",
+          "type": "choice",
+          "question_en": "What does the speaker do with their teeth?",
+          "options_en": [
+            "Gnash their teeth",
+            "Chew their nails",
+            "Kiss a cheek"
+          ],
+          "correct_index": 0,
+          "sentence_index": 45
+        },
+        {
+          "id": "gl_p9_s2_q2",
+          "type": "choice",
+          "question_en": "How does the speaker show their feeling in this sentence?",
+          "options_en": [
+            "By gnashing their teeth",
+            "By jumping and shouting",
+            "By standing and waving goodbye"
+          ],
+          "correct_index": 0,
+          "sentence_index": 45
+        },
+        {
+          "id": "gl_p9_s3_q1",
+          "type": "choice",
+          "question_en": "What action does the speaker do with their feet?",
+          "options_en": [
+            "Stomp their feet",
+            "Squirm and shuffle their feet",
+            "Jump and shout"
+          ],
+          "correct_index": 0,
+          "sentence_index": 46
+        },
+        {
+          "id": "gl_p9_s3_q2",
+          "type": "choice",
+          "question_en": "Why might the speaker stomp their feet?",
+          "options_en": [
+            "Because they don't want to go to bed",
+            "Because Nani is coming to stay",
+            "Because their shoes are stinky"
+          ],
+          "correct_index": 0,
+          "sentence_index": 46
+        },
+        {
+          "id": "gl_p9_s4_q1",
+          "type": "choice",
+          "question_en": "What color is the speaker's face?",
+          "options_en": [
+            "Fiery red",
+            "Big and bright",
+            "Red from crying"
+          ],
+          "correct_index": 0,
+          "sentence_index": 47
+        },
+        {
+          "id": "gl_p9_s4_q2",
+          "type": "choice",
+          "question_en": "Which part of the speaker is described as fiery red?",
+          "options_en": [
+            "Face",
+            "Eyes",
+            "Mouth"
+          ],
+          "correct_index": 0,
+          "sentence_index": 47
+        },
+        {
+          "id": "gl_p9_s5_q1",
+          "type": "choice",
+          "question_en": "What is the speaker asking the listener to tell them?",
+          "options_en": [
+            "How they feel",
+            "Why they smile",
+            "Where Nani is"
+          ],
+          "correct_index": 0,
+          "sentence_index": 48
+        },
+        {
+          "id": "gl_p9_s5_q2",
+          "type": "choice",
+          "question_en": "Who is asking \"Can you tell me how I feel?\"",
+          "options_en": [
+            "The speaker (I)",
+            "Nani",
+            "Mamma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 48
+        }
+      ]
+    },
+    {
+      "paragraph_index": 10,
+      "questions": [
+        {
+          "id": "gl_p10_s0_q1",
+          "type": "choice",
+          "question_en": "Who gives lovely hugs?",
+          "options_en": [
+            "Mamma",
+            "Nani",
+            "I"
+          ],
+          "correct_index": 0,
+          "sentence_index": 49
+        },
+        {
+          "id": "gl_p10_s0_q2",
+          "type": "choice",
+          "question_en": "How are the hugs described?",
+          "options_en": [
+            "Lovely",
+            "Cuddly",
+            "Stinky"
+          ],
+          "correct_index": 0,
+          "sentence_index": 49
+        },
+        {
+          "id": "gl_p10_s1_q1",
+          "type": "choice",
+          "question_en": "Which words describe the hugs?",
+          "options_en": [
+            "Cuddly, warm and tight",
+            "Stinky and yucky",
+            "Big and round"
+          ],
+          "correct_index": 0,
+          "sentence_index": 50
+        },
+        {
+          "id": "gl_p10_s1_q2",
+          "type": "choice",
+          "question_en": "How are the hugs?",
+          "options_en": [
+            "Cuddly, warm and tight",
+            "Fiery red",
+            "Stinky"
+          ],
+          "correct_index": 0,
+          "sentence_index": 50
+        },
+        {
+          "id": "gl_p10_s2_q1",
+          "type": "choice",
+          "question_en": "What does the speaker do to her cheek?",
+          "options_en": [
+            "Kiss her cheek",
+            "Wave goodbye",
+            "Step in poop"
+          ],
+          "correct_index": 0,
+          "sentence_index": 51
+        },
+        {
+          "id": "gl_p10_s2_q2",
+          "type": "choice",
+          "question_en": "How does the speaker show affection?",
+          "options_en": [
+            "Sigh and smile and kiss her cheek",
+            "Gnash her teeth",
+            "Chew her nails"
+          ],
+          "correct_index": 0,
+          "sentence_index": 51
+        },
+        {
+          "id": "gl_p10_s3_q1",
+          "type": "choice",
+          "question_en": "How are the speaker's eyes described?",
+          "options_en": [
+            "Big and bright",
+            "Red",
+            "Big and round"
+          ],
+          "correct_index": 0,
+          "sentence_index": 52
+        },
+        {
+          "id": "gl_p10_s3_q2",
+          "type": "choice",
+          "question_en": "Which feature is described as big and bright?",
+          "options_en": [
+            "My eyes",
+            "My mouth",
+            "My nose"
+          ],
+          "correct_index": 0,
+          "sentence_index": 52
+        },
+        {
+          "id": "gl_p10_s4_q1",
+          "type": "choice",
+          "question_en": "What is the speaker asking the listener to tell?",
+          "options_en": [
+            "How I feel",
+            "Why I smile",
+            "Why I cry"
+          ],
+          "correct_index": 0,
+          "sentence_index": 53
+        },
+        {
+          "id": "gl_p10_s4_q2",
+          "type": "choice",
+          "question_en": "Who is being asked the question in the sentence?",
+          "options_en": [
+            "You",
+            "Mamma",
+            "Nani"
+          ],
+          "correct_index": 0,
+          "sentence_index": 53
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'How I Feel'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "scream",
+      "meaning_vi": "la hét",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "shout",
+      "meaning_vi": "hét to",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "giggle",
+      "meaning_vi": "cười khúc khích",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "pout",
+      "meaning_vi": "bĩu môi",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "feel",
+      "meaning_vi": "cảm thấy",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "smile",
+      "meaning_vi": "cười",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "cry",
+      "meaning_vi": "khóc",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "why",
+      "meaning_vi": "tại sao",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "hissing",
+      "meaning_vi": "tiếng rít",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "freeze",
+      "meaning_vi": "đứng im",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "gasp",
+      "meaning_vi": "thở hổn hển",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "tremble",
+      "meaning_vi": "run rẩy",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "special",
+      "meaning_vi": "đặc biệt",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "glows",
+      "meaning_vi": "rạng rỡ",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "shine",
+      "meaning_vi": "sáng lên",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "hurray",
+      "meaning_vi": "hoan hô",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "stinky",
+      "meaning_vi": "bốc mùi",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "stepped in",
+      "meaning_vi": "giẫm phải",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "clench",
+      "meaning_vi": "nắm chặt",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "wrinkle",
+      "meaning_vi": "nhăn",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "return",
+      "meaning_vi": "trả lại",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "tore",
+      "meaning_vi": "làm rách",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "chew",
+      "meaning_vi": "cắn",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "sweat",
+      "meaning_vi": "đổ mồ hôi",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "enormous",
+      "meaning_vi": "to đùng",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "package",
+      "meaning_vi": "gói hàng",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "eyebrows",
+      "meaning_vi": "lông mày",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "wonder",
+      "meaning_vi": "tự hỏi",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "squirm",
+      "meaning_vi": "cựa quậy",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "shuffle",
+      "meaning_vi": "lê (chân)",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "lie",
+      "meaning_vi": "nói dối",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "hang my head",
+      "meaning_vi": "cúi đầu",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "leaving",
+      "meaning_vi": "rời đi",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "wave goodbye",
+      "meaning_vi": "vẫy tay chào tạm biệt",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "curves down",
+      "meaning_vi": "trề xuống",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "red",
+      "meaning_vi": "đỏ hoe (mắt)",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "sleepy",
+      "meaning_vi": "buồn ngủ",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "gnash",
+      "meaning_vi": "nghiến (răng)",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "stomp",
+      "meaning_vi": "dậm (chân)",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "fiery red",
+      "meaning_vi": "đỏ bừng",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "hugs",
+      "meaning_vi": "những cái ôm",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "lovely",
+      "meaning_vi": "đáng yêu",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "cuddly",
+      "meaning_vi": "dễ chịu (khi ôm)",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "sigh",
+      "meaning_vi": "thở dài",
+      "paragraph_index": 10
+    }
+  ]
+}

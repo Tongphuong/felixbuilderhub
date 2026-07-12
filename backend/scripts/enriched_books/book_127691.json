@@ -1,0 +1,1891 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L3",
+  "level_label": "Cấp 3",
+  "topic": "A Little Like You",
+  "slug": "book_127691",
+  "audio_filename": "book_127691.mp3",
+  "book_slug": "book_127691",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_127691/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_127691/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_127691/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_127691/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_127691/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_127691/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_127691/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_127691/page_09.jpg",
+    "https://audio.felixbuilderhub.com/books/book_127691/page_10.jpg",
+    "https://audio.felixbuilderhub.com/books/book_127691/page_11.jpg",
+    "https://audio.felixbuilderhub.com/books/book_127691/page_12.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_127691/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_127691/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_127691/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_127691/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_127691/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_127691/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_127691/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_127691/page_09.mp3",
+    "https://audio.felixbuilderhub.com/books/book_127691/page_10.mp3",
+    "https://audio.felixbuilderhub.com/books/book_127691/page_11.mp3",
+    "https://audio.felixbuilderhub.com/books/book_127691/page_12.mp3"
+  ],
+  "book_attribution": {
+    "title": "A Little Like You",
+    "creators": [
+      "Suchi Govindarajan",
+      "Neha Rawat"
+    ],
+    "publisher": "Pratham Books",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: A Little Like You is written by Suchi Govindarajan . © Pratham Books , 2020. Some rights reserved. Released under CC BY 4.0 license. Other Credits: ‘A Little Like You’ has been published on StoryWeaver by Pratham Books. The development of this book has been supported by Oracle. www.prathambooks.org. Guest Editor: Radha Rangarajan, Guest Art Director: Kaveri Gopalakrishnan Images Attributions: Cover page: Animal jigsaw cover , by Neha Rawat © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 2: Rhino thinking , by Neha Rawat © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 3: Rhino walking in the forest , by Neha Rawat © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 4: Rhino and an elephant , by Neha Rawat © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 5: Rhino and a deer , by Neha Rawat © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 6: Rhino and a water buffalo , by Neha Rawat © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 7: A rhino and a crocodile , by Neha Rawat © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 8: Rhino's reflection in the water , by Neha Rawat © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 9: Rhino playing in the water , by Neha Rawat © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 10: A rhinoceros , by Neha Rawat © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 11: man, rhino and elephant , by Neha Rawat © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/ The development of this book has been supported by Oracle.",
+    "source_url": "https://storyweaver.org.in/stories/127691-a-little-like-you",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "Rhino thinking , by Neha Rawat © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "Rhino walking in the forest , by Neha Rawat © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "Rhino and an elephant , by Neha Rawat © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "Rhino and a deer , by Neha Rawat © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "Rhino and a water buffalo , by Neha Rawat © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "A rhino and a crocodile , by Neha Rawat © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "Rhino's reflection in the water , by Neha Rawat © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "Rhino playing in the water , by Neha Rawat © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 8,
+        "credit_text": "A rhinoceros , by Neha Rawat © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 9,
+        "credit_text": "man, rhino and elephant , by Neha Rawat © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 10,
+        "credit_text": "Illustration by Neha Rawat."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "A Little Like You",
+    "paragraphs_en": [
+      "Rinki couldn’t remember who she was! She just couldn’t remember the word. Was she a Highnosesdust? Ginormosauce? Whymarvellous?",
+      "She decided to go for a walk and find out. Maybe she would meet someone who looked like her!",
+      "“I’m large and grey like you. Am I an elephant too?” “Harrumph,” said Elephant. “What you say is true, but we’re taller and bigger than you. Our trunks are like pipes, our ears are all flappy. Rinki, we’re different from you.”",
+      "“I have a horn like some of you. Am I a deer too?” “Hafloof,” said Deer. “What you say is true, but we’re shorter and smaller too. We have antlers, not horns, and they grow like two trees . Rinki, we’re different from you.”",
+      "“I love mud and water baths like you. Am I a water buffalo too?” “Oonph,” said Water Buffalo. “What you say is true, but our horns are long and curvy. Our skin is a bit hairy, not folded or bumpy. Rinki, we’re different from you.”",
+      "“I have bumpy skin like yours. Am I a crocodile too?” “Hurrranngh,” said Crocodile. “What you say is true, but we’re flatter than you. We have long snouts and shiny tails. Rinki, we’re different from you.”",
+      "Rinki thought hard as she walked over to the pond. In the water, she saw herself.",
+      "Big nose. Half-moon horn. Crumpled skin. Oh, now she remembered! She was a rhinoceros! She was a bit like the others, but she was different too. “Mostly,” she thought, “I am just Rinki.”",
+      "Meet the Indian Rhinoceros Rinki is an Indian rhinoceros who lives in Kaziranga, Assam. Indian rhinos mostly live alone. You might see them in groups when they are mating or when they’re very young and need to stay with their mothers. Single horn on top of the nose. Like a unicorn! Lips can curl and grip favourite foods like grass, leaves, branches, fruits, and water plants. Three toes on each foot Legs that can run at about 40 kilometres per hour Bumpy patterns in some places Thick skin that falls in folds",
+      "Indian rhinos are some of the biggest land animals in the country. They're bigger than humans but smaller than elephants.",
+      "Animals you can meet when you visit Kaziranga, Assam. Indian Elephant Barasingha or Eastern Swamp Deer Marsh Crocodile Wild Water Buffalo Kaziranga is also home to tigers, otters, turtles and many species of birds."
+    ],
+    "sentences": [
+      {
+        "text_en": "Rinki couldn’t remember who she was!",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_000.mp3",
+        "text_vi": "Rinki không thể nhớ mình là ai!"
+      },
+      {
+        "text_en": "She just couldn’t remember the word.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_001.mp3",
+        "text_vi": "Cô bé chỉ không thể nhớ ra từ đó."
+      },
+      {
+        "text_en": "Was she a Highnosesdust? Ginormosauce? Whymarvellous?",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_002.mp3",
+        "text_vi": "Cô bé là một Highnosesdust? Ginormosauce? Whymarvellous?"
+      },
+      {
+        "text_en": "She decided to go for a walk and find out.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_003.mp3",
+        "text_vi": "Cô bé quyết định đi dạo để tìm hiểu."
+      },
+      {
+        "text_en": "Maybe she would meet someone who looked like her!",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_004.mp3",
+        "text_vi": "Có lẽ cô bé sẽ gặp ai đó trông giống mình!"
+      },
+      {
+        "text_en": "“I’m large and grey like you.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_005.mp3",
+        "text_vi": "“Tôi to lớn và màu xám giống bạn."
+      },
+      {
+        "text_en": "Am I an elephant too?” “Harrumph,” said Elephant.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_006.mp3",
+        "text_vi": "Tôi cũng là một con voi phải không?” “Hừm,” Voi nói."
+      },
+      {
+        "text_en": "“What you say is true, but we’re taller and bigger than you.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_007.mp3",
+        "text_vi": "“Điều bạn nói đúng, nhưng chúng tôi cao hơn và lớn hơn bạn."
+      },
+      {
+        "text_en": "Our trunks are like pipes, our ears are all flappy.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_008.mp3",
+        "text_vi": "Vòi của chúng tôi giống như ống nước, tai của chúng tôi thì vẫy vẫy."
+      },
+      {
+        "text_en": "Rinki, we’re different from you.”",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_009.mp3",
+        "text_vi": "Rinki, chúng tôi khác bạn.”"
+      },
+      {
+        "text_en": "“I have a horn like some of you.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_010.mp3",
+        "text_vi": "“Tôi có một cái sừng giống một số bạn."
+      },
+      {
+        "text_en": "Am I a deer too?” “Hafloof,” said Deer.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_011.mp3",
+        "text_vi": "Tôi cũng là một con hươu phải không?” “Hafloof,” Hươu nói."
+      },
+      {
+        "text_en": "“What you say is true, but we’re shorter and smaller too.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_012.mp3",
+        "text_vi": "“Điều bạn nói đúng, nhưng chúng tôi thấp hơn và nhỏ hơn bạn."
+      },
+      {
+        "text_en": "We have antlers, not horns, and they grow like two trees .",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_013.mp3",
+        "text_vi": "Chúng tôi có gạc, không phải sừng, và chúng mọc như hai cái cây."
+      },
+      {
+        "text_en": "Rinki, we’re different from you.”",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_014.mp3",
+        "text_vi": "Rinki, chúng tôi khác bạn.”"
+      },
+      {
+        "text_en": "“I love mud and water baths like you.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_015.mp3",
+        "text_vi": "“Tôi thích tắm bùn và tắm nước giống bạn."
+      },
+      {
+        "text_en": "Am I a water buffalo too?” “Oonph,” said Water Buffalo.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_016.mp3",
+        "text_vi": "Tôi cũng là một con trâu nước phải không?” “Oonph,” Trâu nước nói."
+      },
+      {
+        "text_en": "“What you say is true, but our horns are long and curvy.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_017.mp3",
+        "text_vi": "“Điều bạn nói đúng, nhưng sừng của chúng tôi dài và cong."
+      },
+      {
+        "text_en": "Our skin is a bit hairy, not folded or bumpy.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_018.mp3",
+        "text_vi": "Da của chúng tôi hơi có lông, không có nếp gấp hay sần sùi."
+      },
+      {
+        "text_en": "Rinki, we’re different from you.”",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_019.mp3",
+        "text_vi": "Rinki, chúng tôi khác bạn.”"
+      },
+      {
+        "text_en": "“I have bumpy skin like yours.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_020.mp3",
+        "text_vi": "“Tôi có làn da sần sùi giống bạn."
+      },
+      {
+        "text_en": "Am I a crocodile too?” “Hurrranngh,” said Crocodile.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_021.mp3",
+        "text_vi": "Tôi cũng là một con cá sấu phải không?” “Hurrranngh,” Cá sấu nói."
+      },
+      {
+        "text_en": "“What you say is true, but we’re flatter than you.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_022.mp3",
+        "text_vi": "“Điều bạn nói đúng, nhưng chúng tôi dẹt hơn bạn."
+      },
+      {
+        "text_en": "We have long snouts and shiny tails.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_023.mp3",
+        "text_vi": "Chúng tôi có mõm dài và đuôi bóng loáng."
+      },
+      {
+        "text_en": "Rinki, we’re different from you.”",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_024.mp3",
+        "text_vi": "Rinki, chúng tôi khác bạn.”"
+      },
+      {
+        "text_en": "Rinki thought hard as she walked over to the pond.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_025.mp3",
+        "text_vi": "Rinki suy nghĩ thật kỹ khi cô bé đi đến cái ao."
+      },
+      {
+        "text_en": "In the water, she saw herself.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_026.mp3",
+        "text_vi": "Trong nước, cô bé nhìn thấy chính mình."
+      },
+      {
+        "text_en": "Big nose. Half-moon horn.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_027.mp3",
+        "text_vi": "Mũi to. Sừng hình bán nguyệt."
+      },
+      {
+        "text_en": "Crumpled skin. Oh, now she remembered!",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_028.mp3",
+        "text_vi": "Da nhăn nheo. Ồ, bây giờ cô bé đã nhớ ra!"
+      },
+      {
+        "text_en": "She was a rhinoceros!",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_029.mp3",
+        "text_vi": "Cô bé là một con tê giác!"
+      },
+      {
+        "text_en": "She was a bit like the others, but she was different too.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_030.mp3",
+        "text_vi": "Cô bé hơi giống những con vật khác, nhưng cô bé cũng khác biệt."
+      },
+      {
+        "text_en": "“Mostly,” she thought, “I am just Rinki.”",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_031.mp3",
+        "text_vi": "“Chủ yếu,” cô bé nghĩ, “tôi chỉ là Rinki thôi.”"
+      },
+      {
+        "text_en": "Meet the Indian Rhinoceros Rinki is an Indian rhinoceros who lives in Kaziranga, Assam.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_032.mp3",
+        "text_vi": "Gặp gỡ tê giác Ấn Độ. Rinki là một con tê giác Ấn Độ sống ở Kaziranga, Assam."
+      },
+      {
+        "text_en": "Indian rhinos mostly live alone.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_033.mp3",
+        "text_vi": "Tê giác Ấn Độ thường sống một mình."
+      },
+      {
+        "text_en": "You might see them in groups when they are mating or when they’re very young and need to stay with their mothers.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_034.mp3",
+        "text_vi": "Bạn có thể thấy chúng theo nhóm khi chúng giao phối hoặc khi chúng còn rất nhỏ và cần ở với mẹ."
+      },
+      {
+        "text_en": "Single horn on top of the nose.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_035.mp3",
+        "text_vi": "Một cái sừng trên mũi."
+      },
+      {
+        "text_en": "Like a unicorn!",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_036.mp3",
+        "text_vi": "Giống như một con kỳ lân!"
+      },
+      {
+        "text_en": "Lips can curl and grip favourite foods like grass, leaves, branches, fruits, and water plants.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_037.mp3",
+        "text_vi": "Môi có thể cuộn lại và giữ chặt thức ăn yêu thích như cỏ, lá, cành cây, trái cây và cây thủy sinh."
+      },
+      {
+        "text_en": "Three toes on each foot Legs that can run at about 40 kilometres per hour Bumpy patterns in some places Thick skin that falls in folds",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_038.mp3",
+        "text_vi": "Ba ngón chân trên mỗi bàn chân. Chân có thể chạy khoảng 40 kilomet mỗi giờ. Các hoa văn sần sùi ở một số chỗ. Da dày có nhiều nếp gấp."
+      },
+      {
+        "text_en": "Indian rhinos are some of the biggest land animals in the country.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_039.mp3",
+        "text_vi": "Tê giác Ấn Độ là một trong những loài động vật trên cạn lớn nhất ở đất nước này."
+      },
+      {
+        "text_en": "They're bigger than humans but smaller than elephants.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_040.mp3",
+        "text_vi": "Chúng lớn hơn con người nhưng nhỏ hơn voi."
+      },
+      {
+        "text_en": "Animals you can meet when you visit Kaziranga, Assam.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_041.mp3",
+        "text_vi": "Các loài động vật bạn có thể gặp khi đến thăm Kaziranga, Assam."
+      },
+      {
+        "text_en": "Indian Elephant Barasingha or Eastern Swamp Deer Marsh Crocodile Wild Water Buffalo Kaziranga is also home to tigers, otters, turtles and many species of birds.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_042.mp3",
+        "text_vi": "Voi Ấn Độ, Hươu đầm lầy Barasingha hoặc Hươu đầm lầy phía Đông, Cá sấu đầm lầy, Trâu nước hoang dã. Kaziranga cũng là nhà của hổ, rái cá, rùa và nhiều loài chim."
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "Rinki couldn’t remember who she was!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "She just couldn’t remember the word.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "Was she a Highnosesdust? Ginormosauce? Whymarvellous?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "She decided to go for a walk and find out.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "Maybe she would meet someone who looked like her!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "“I’m large and grey like you.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "Am I an elephant too?” “Harrumph,” said Elephant.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "“What you say is true, but we’re taller and bigger than you.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "Our trunks are like pipes, our ears are all flappy.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "Rinki, we’re different from you.”",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "“I have a horn like some of you.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "Am I a deer too?” “Hafloof,” said Deer.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "“What you say is true, but we’re shorter and smaller too.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_012.mp3"
+        },
+        {
+          "id": "ra_13",
+          "text_en": "We have antlers, not horns, and they grow like two trees .",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_013.mp3"
+        },
+        {
+          "id": "ra_14",
+          "text_en": "Rinki, we’re different from you.”",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_014.mp3"
+        },
+        {
+          "id": "ra_15",
+          "text_en": "“I love mud and water baths like you.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_015.mp3"
+        },
+        {
+          "id": "ra_16",
+          "text_en": "Am I a water buffalo too?” “Oonph,” said Water Buffalo.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_016.mp3"
+        },
+        {
+          "id": "ra_17",
+          "text_en": "“What you say is true, but our horns are long and curvy.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_017.mp3"
+        },
+        {
+          "id": "ra_18",
+          "text_en": "Our skin is a bit hairy, not folded or bumpy.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_018.mp3"
+        },
+        {
+          "id": "ra_19",
+          "text_en": "Rinki, we’re different from you.”",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_019.mp3"
+        },
+        {
+          "id": "ra_20",
+          "text_en": "“I have bumpy skin like yours.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_020.mp3"
+        },
+        {
+          "id": "ra_21",
+          "text_en": "Am I a crocodile too?” “Hurrranngh,” said Crocodile.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_021.mp3"
+        },
+        {
+          "id": "ra_22",
+          "text_en": "“What you say is true, but we’re flatter than you.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_022.mp3"
+        },
+        {
+          "id": "ra_23",
+          "text_en": "We have long snouts and shiny tails.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_023.mp3"
+        },
+        {
+          "id": "ra_24",
+          "text_en": "Rinki, we’re different from you.”",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_024.mp3"
+        },
+        {
+          "id": "ra_25",
+          "text_en": "Rinki thought hard as she walked over to the pond.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_025.mp3"
+        },
+        {
+          "id": "ra_26",
+          "text_en": "In the water, she saw herself.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_026.mp3"
+        },
+        {
+          "id": "ra_27",
+          "text_en": "Big nose. Half-moon horn.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_027.mp3"
+        },
+        {
+          "id": "ra_28",
+          "text_en": "Crumpled skin. Oh, now she remembered!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_028.mp3"
+        },
+        {
+          "id": "ra_29",
+          "text_en": "She was a rhinoceros!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_029.mp3"
+        },
+        {
+          "id": "ra_30",
+          "text_en": "She was a bit like the others, but she was different too.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_030.mp3"
+        },
+        {
+          "id": "ra_31",
+          "text_en": "“Mostly,” she thought, “I am just Rinki.”",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_031.mp3"
+        },
+        {
+          "id": "ra_32",
+          "text_en": "Meet the Indian Rhinoceros Rinki is an Indian rhinoceros who lives in Kaziranga, Assam.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_032.mp3"
+        },
+        {
+          "id": "ra_33",
+          "text_en": "Indian rhinos mostly live alone.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_033.mp3"
+        },
+        {
+          "id": "ra_34",
+          "text_en": "You might see them in groups when they are mating or when they’re very young and need to stay with their mothers.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_034.mp3"
+        },
+        {
+          "id": "ra_35",
+          "text_en": "Single horn on top of the nose.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_035.mp3"
+        },
+        {
+          "id": "ra_36",
+          "text_en": "Like a unicorn!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_036.mp3"
+        },
+        {
+          "id": "ra_37",
+          "text_en": "Lips can curl and grip favourite foods like grass, leaves, branches, fruits, and water plants.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_037.mp3"
+        },
+        {
+          "id": "ra_38",
+          "text_en": "Three toes on each foot Legs that can run at about 40 kilometres per hour Bumpy patterns in some places Thick skin that falls in folds",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_038.mp3"
+        },
+        {
+          "id": "ra_39",
+          "text_en": "Indian rhinos are some of the biggest land animals in the country.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_039.mp3"
+        },
+        {
+          "id": "ra_40",
+          "text_en": "They're bigger than humans but smaller than elephants.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_040.mp3"
+        },
+        {
+          "id": "ra_41",
+          "text_en": "Animals you can meet when you visit Kaziranga, Assam.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_041.mp3"
+        },
+        {
+          "id": "ra_42",
+          "text_en": "Indian Elephant Barasingha or Eastern Swamp Deer Marsh Crocodile Wild Water Buffalo Kaziranga is also home to tigers, otters, turtles and many species of birds.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_127691/s_042.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "Who couldn’t remember who she was?",
+          "options_en": [
+            "Rinki",
+            "Elephant",
+            "Deer"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "What couldn’t Rinki remember?",
+          "options_en": [
+            "Who she was",
+            "Her horn",
+            "Where she lived"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s1_q1",
+          "type": "choice",
+          "question_en": "Who couldn’t remember the word?",
+          "options_en": [
+            "Rinki",
+            "Water Buffalo",
+            "Crocodile"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s1_q2",
+          "type": "choice",
+          "question_en": "What did she just say she couldn’t remember?",
+          "options_en": [
+            "The word",
+            "Her horn",
+            "The pond"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s2_q1",
+          "type": "choice",
+          "question_en": "Which name did she ask as a possibility?",
+          "options_en": [
+            "Highnosesdust",
+            "Elephant",
+            "Deer"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s2_q2",
+          "type": "choice",
+          "question_en": "Which other made-up name did she consider?",
+          "options_en": [
+            "Ginormosauce",
+            "Tiger",
+            "Water Buffalo"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "What did she decide to do?",
+          "options_en": [
+            "Go for a walk and find out",
+            "Swim in the pond",
+            "Talk to Elephant"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "Why did she decide to go for a walk?",
+          "options_en": [
+            "To find out",
+            "To look for food",
+            "To see a tiger"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p1_s1_q1",
+          "type": "choice",
+          "question_en": "What did she think might happen on her walk?",
+          "options_en": [
+            "She might meet someone who looked like her",
+            "She might see a crocodile",
+            "She might find a unicorn"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p1_s1_q2",
+          "type": "choice",
+          "question_en": "What is the correct answer to this question: Whom did she hope to meet?",
+          "options_en": [
+            "Someone who looked like her",
+            "A tiger",
+            "A bird"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "What color does the speaker say they are?",
+          "options_en": [
+            "grey",
+            "bumpy",
+            "flappy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "How does the speaker describe themselves compared to the listener?",
+          "options_en": [
+            "large and grey like you",
+            "taller and bigger than you",
+            "shorter and smaller than you"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p2_s1_q1",
+          "type": "choice",
+          "question_en": "What animal does the speaker ask if they are?",
+          "options_en": [
+            "an elephant",
+            "a deer",
+            "a water buffalo"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p2_s1_q2",
+          "type": "choice",
+          "question_en": "Who makes the sound 'Harrumph'?",
+          "options_en": [
+            "Elephant",
+            "Deer",
+            "Crocodile"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p2_s2_q1",
+          "type": "choice",
+          "question_en": "How do they say they compare to the listener?",
+          "options_en": [
+            "we're taller and bigger than you",
+            "we're large and grey like you",
+            "we're flatter than you"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p2_s2_q2",
+          "type": "choice",
+          "question_en": "What does the speaker say about what the other said?",
+          "options_en": [
+            "What you say is true",
+            "What you say is false",
+            "What you say is about horns"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p2_s3_q1",
+          "type": "choice",
+          "question_en": "What do they compare to pipes?",
+          "options_en": [
+            "our trunks",
+            "our ears",
+            "our horns"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p2_s3_q2",
+          "type": "choice",
+          "question_en": "How do they describe their ears?",
+          "options_en": [
+            "all flappy",
+            "shiny",
+            "long snouts"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p2_s4_q1",
+          "type": "choice",
+          "question_en": "Who is addressed by the speakers as different?",
+          "options_en": [
+            "Rinki",
+            "Elephant",
+            "Deer"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p2_s4_q2",
+          "type": "choice",
+          "question_en": "What do they tell Rinki about how they compare?",
+          "options_en": [
+            "we're different from you",
+            "we're the same as you",
+            "we're taller than you"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "Who says \"I have a horn like some of you.\"?",
+          "options_en": [
+            "Rinki",
+            "Elephant",
+            "Deer"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "What does the speaker say they have?",
+          "options_en": [
+            "A horn",
+            "A trunk",
+            "Antlers"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p3_s1_q1",
+          "type": "choice",
+          "question_en": "Who asks \"Am I a deer too?\"",
+          "options_en": [
+            "Rinki",
+            "Water Buffalo",
+            "Crocodile"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p3_s1_q2",
+          "type": "choice",
+          "question_en": "Who says \"Hafloof\"?",
+          "options_en": [
+            "Deer",
+            "Elephant",
+            "Rinki"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p3_s2_q1",
+          "type": "choice",
+          "question_en": "Who says they are shorter and smaller?",
+          "options_en": [
+            "Deer",
+            "Elephant",
+            "Water Buffalo"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p3_s2_q2",
+          "type": "choice",
+          "question_en": "What do they admit is true?",
+          "options_en": [
+            "That the speaker has a horn",
+            "That they have trunks",
+            "That their skin is bumpy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p3_s3_q1",
+          "type": "choice",
+          "question_en": "What do they have instead of horns?",
+          "options_en": [
+            "Antlers",
+            "A single horn",
+            "A trunk"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p3_s3_q2",
+          "type": "choice",
+          "question_en": "How do their antlers grow?",
+          "options_en": [
+            "Like two trees",
+            "Like a pipe",
+            "Long and curvy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p3_s4_q1",
+          "type": "choice",
+          "question_en": "Who are they addressing when they say \"Rinki, we’re different from you.\"?",
+          "options_en": [
+            "Rinki",
+            "Elephant",
+            "Water Buffalo"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p3_s4_q2",
+          "type": "choice",
+          "question_en": "What do they tell Rinki?",
+          "options_en": [
+            "That they are different from her",
+            "That they are taller and bigger",
+            "That they live in Kaziranga"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "Who says they love mud and water baths?",
+          "options_en": [
+            "Rinki",
+            "Water Buffalo",
+            "Elephant"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "What does the speaker say they love?",
+          "options_en": [
+            "Mud and water baths",
+            "Trunks like pipes",
+            "Bumpy skin"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p4_s1_q1",
+          "type": "choice",
+          "question_en": "Who said \"Oonph\"?",
+          "options_en": [
+            "Water Buffalo",
+            "Deer",
+            "Elephant"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p4_s1_q2",
+          "type": "choice",
+          "question_en": "What question is asked in this sentence?",
+          "options_en": [
+            "Am I a water buffalo too?",
+            "Am I an elephant too?",
+            "Am I a crocodile too?"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p4_s2_q1",
+          "type": "choice",
+          "question_en": "What did Water Buffalo say their horns are like?",
+          "options_en": [
+            "Long and curvy",
+            "Like two trees",
+            "Like pipes"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p4_s2_q2",
+          "type": "choice",
+          "question_en": "Why did Water Buffalo say they were different?",
+          "options_en": [
+            "Because their horns are long and curvy",
+            "Because their trunks are like pipes",
+            "Because they have antlers that grow like two trees"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p4_s3_q1",
+          "type": "choice",
+          "question_en": "How did Water Buffalo describe their skin?",
+          "options_en": [
+            "A bit hairy",
+            "Folded",
+            "Bumpy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p4_s3_q2",
+          "type": "choice",
+          "question_en": "What did Water Buffalo say their skin is not?",
+          "options_en": [
+            "Folded or bumpy",
+            "Long and curvy",
+            "Like pipes"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p4_s4_q1",
+          "type": "choice",
+          "question_en": "Who did Water Buffalo say they were different from?",
+          "options_en": [
+            "Rinki",
+            "Elephant",
+            "Crocodile"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p4_s4_q2",
+          "type": "choice",
+          "question_en": "How did Water Buffalo describe their relationship to Rinki?",
+          "options_en": [
+            "Different from you",
+            "The same as you",
+            "Taller and bigger than you"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "Who says they have bumpy skin?",
+          "options_en": [
+            "Rinki",
+            "Crocodile",
+            "Elephant"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "What does the speaker say they have?",
+          "options_en": [
+            "Bumpy skin",
+            "A long snout",
+            "A single horn"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p5_s1_q1",
+          "type": "choice",
+          "question_en": "Who asks, \"Am I a crocodile too?\"",
+          "options_en": [
+            "Rinki",
+            "Crocodile",
+            "Deer"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p5_s1_q2",
+          "type": "choice",
+          "question_en": "Who makes the sound \"Hurrranngh\"?",
+          "options_en": [
+            "Crocodile",
+            "Elephant",
+            "Water Buffalo"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p5_s2_q1",
+          "type": "choice",
+          "question_en": "How does Crocodile say they compare to the speaker?",
+          "options_en": [
+            "They are flatter than you",
+            "They are taller and bigger than you",
+            "They are shorter and smaller than you"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p5_s2_q2",
+          "type": "choice",
+          "question_en": "Why does Crocodile say the speaker is not the same as them?",
+          "options_en": [
+            "Because they are flatter than the speaker",
+            "Because they have trunks like elephants",
+            "Because they have antlers like deer"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p5_s3_q1",
+          "type": "choice",
+          "question_en": "What two features does Crocodile mention they have?",
+          "options_en": [
+            "Long snouts and shiny tails",
+            "Trunks and flappy ears",
+            "Long curvy horns and some hair"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p5_s3_q2",
+          "type": "choice",
+          "question_en": "Which body parts are described in this sentence?",
+          "options_en": [
+            "Snouts and tails",
+            "Ears and trunks",
+            "Horns and antlers"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p5_s4_q1",
+          "type": "choice",
+          "question_en": "Who is directly addressed in this sentence?",
+          "options_en": [
+            "Rinki",
+            "Elephant",
+            "Deer"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p5_s4_q2",
+          "type": "choice",
+          "question_en": "What does Crocodile tell Rinki about them?",
+          "options_en": [
+            "They are different from Rinki",
+            "They are the same as Rinki",
+            "They are taller and bigger than Rinki"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "Who thought hard as she walked over to the pond?",
+          "options_en": [
+            "Rinki",
+            "Elephant",
+            "Deer"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "Where did she walk?",
+          "options_en": [
+            "To the pond",
+            "To Kaziranga",
+            "To the mud"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p6_s1_q1",
+          "type": "choice",
+          "question_en": "What did she see in the water?",
+          "options_en": [
+            "Herself",
+            "An elephant",
+            "A crocodile"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p6_s1_q2",
+          "type": "choice",
+          "question_en": "Where did she see herself?",
+          "options_en": [
+            "In the water",
+            "In Kaziranga",
+            "In the mud"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "What feature does she have on her nose?",
+          "options_en": [
+            "Half-moon horn",
+            "A trunk like an elephant",
+            "Antlers like a deer"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "What is described about her face?",
+          "options_en": [
+            "Big nose",
+            "Long curvy horns like a water buffalo",
+            "Shiny tail like a crocodile"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        },
+        {
+          "id": "gl_p7_s1_q1",
+          "type": "choice",
+          "question_en": "What part of her is crumpled?",
+          "options_en": [
+            "Skin",
+            "Ears like an elephant",
+            "Antlers like a deer"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        },
+        {
+          "id": "gl_p7_s1_q2",
+          "type": "choice",
+          "question_en": "What happened right after noting her crumpled skin?",
+          "options_en": [
+            "She remembered who she was",
+            "She went to a pond like the crocodile",
+            "She met a water buffalo"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        },
+        {
+          "id": "gl_p7_s2_q1",
+          "type": "choice",
+          "question_en": "Which animal was she?",
+          "options_en": [
+            "A rhinoceros",
+            "An elephant",
+            "A deer"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p7_s2_q2",
+          "type": "choice",
+          "question_en": "Who was she identified as in the sentence?",
+          "options_en": [
+            "She was a rhinoceros",
+            "She was a water buffalo",
+            "She was a crocodile"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p7_s3_q1",
+          "type": "choice",
+          "question_en": "How did she compare herself to the others?",
+          "options_en": [
+            "She was a bit like the others but different",
+            "She was exactly the same as the elephant",
+            "She was completely unlike any animal in the story"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        },
+        {
+          "id": "gl_p7_s3_q2",
+          "type": "choice",
+          "question_en": "What does the sentence say about her difference from others?",
+          "options_en": [
+            "She was different too",
+            "She had long curvy horns like the water buffalo",
+            "She had antlers like the deer"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        },
+        {
+          "id": "gl_p7_s4_q1",
+          "type": "choice",
+          "question_en": "What did she think mostly about herself?",
+          "options_en": [
+            "I am just Rinki",
+            "I am an elephant",
+            "I am a crocodile"
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        },
+        {
+          "id": "gl_p7_s4_q2",
+          "type": "choice",
+          "question_en": "Which name did she use for herself in her thought?",
+          "options_en": [
+            "Rinki",
+            "Barasingha",
+            "Water Buffalo"
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        }
+      ]
+    },
+    {
+      "paragraph_index": 8,
+      "questions": [
+        {
+          "id": "gl_p8_s0_q1",
+          "type": "choice",
+          "question_en": "Who is the Indian rhinoceros that lives in Kaziranga, Assam?",
+          "options_en": [
+            "Rinki",
+            "Elephant",
+            "Deer"
+          ],
+          "correct_index": 0,
+          "sentence_index": 32
+        },
+        {
+          "id": "gl_p8_s0_q2",
+          "type": "choice",
+          "question_en": "Where does Rinki live?",
+          "options_en": [
+            "Kaziranga, Assam",
+            "A pond",
+            "A swamp"
+          ],
+          "correct_index": 0,
+          "sentence_index": 32
+        },
+        {
+          "id": "gl_p8_s1_q1",
+          "type": "choice",
+          "question_en": "How do Indian rhinos mostly live?",
+          "options_en": [
+            "Alone",
+            "In large herds",
+            "With elephants"
+          ],
+          "correct_index": 0,
+          "sentence_index": 33
+        },
+        {
+          "id": "gl_p8_s1_q2",
+          "type": "choice",
+          "question_en": "Who mostly live alone?",
+          "options_en": [
+            "Indian rhinos",
+            "Tigers",
+            "Water buffalo"
+          ],
+          "correct_index": 0,
+          "sentence_index": 33
+        },
+        {
+          "id": "gl_p8_s2_q1",
+          "type": "choice",
+          "question_en": "Why might you see Indian rhinos in groups?",
+          "options_en": [
+            "Because they are mating",
+            "Because they are always together",
+            "Because they live in water"
+          ],
+          "correct_index": 0,
+          "sentence_index": 34
+        },
+        {
+          "id": "gl_p8_s2_q2",
+          "type": "choice",
+          "question_en": "When do young rhinos need to stay with their mothers?",
+          "options_en": [
+            "When they’re very young",
+            "When they are hunting",
+            "When they have long trunks"
+          ],
+          "correct_index": 0,
+          "sentence_index": 34
+        },
+        {
+          "id": "gl_p8_s3_q1",
+          "type": "choice",
+          "question_en": "What is on top of the rhino's nose?",
+          "options_en": [
+            "A single horn",
+            "Antlers",
+            "A trunk"
+          ],
+          "correct_index": 0,
+          "sentence_index": 35
+        },
+        {
+          "id": "gl_p8_s3_q2",
+          "type": "choice",
+          "question_en": "How many horns does the sentence say the rhino has?",
+          "options_en": [
+            "One (single horn)",
+            "Two horns",
+            "No horn"
+          ],
+          "correct_index": 0,
+          "sentence_index": 35
+        },
+        {
+          "id": "gl_p8_s4_q1",
+          "type": "choice",
+          "question_en": "Which mythical animal is the rhino compared to?",
+          "options_en": [
+            "A unicorn",
+            "A dragon",
+            "A phoenix"
+          ],
+          "correct_index": 0,
+          "sentence_index": 36
+        },
+        {
+          "id": "gl_p8_s4_q2",
+          "type": "choice",
+          "question_en": "Why is the rhino described as being like a unicorn?",
+          "options_en": [
+            "Because it has a single horn on its nose",
+            "Because it has a long trunk",
+            "Because it swims in water"
+          ],
+          "correct_index": 0,
+          "sentence_index": 36
+        },
+        {
+          "id": "gl_p8_s5_q1",
+          "type": "choice",
+          "question_en": "What can the rhino's lips do?",
+          "options_en": [
+            "Curl and grip food",
+            "Flap like ears",
+            "Glow in the dark"
+          ],
+          "correct_index": 0,
+          "sentence_index": 37
+        },
+        {
+          "id": "gl_p8_s5_q2",
+          "type": "choice",
+          "question_en": "Which of these is listed as a favourite food of the rhino?",
+          "options_en": [
+            "Grass",
+            "Fish",
+            "Insects"
+          ],
+          "correct_index": 0,
+          "sentence_index": 37
+        },
+        {
+          "id": "gl_p8_s6_q1",
+          "type": "choice",
+          "question_en": "What falls in folds on the rhino's body?",
+          "options_en": [
+            "Thick skin",
+            "Long ears",
+            "Shiny tail"
+          ],
+          "correct_index": 0,
+          "sentence_index": 38
+        },
+        {
+          "id": "gl_p8_s6_q2",
+          "type": "choice",
+          "question_en": "How fast can their legs run?",
+          "options_en": [
+            "About 40 kilometres per hour",
+            "Very slowly",
+            "Faster than a tiger"
+          ],
+          "correct_index": 0,
+          "sentence_index": 38
+        }
+      ]
+    },
+    {
+      "paragraph_index": 9,
+      "questions": [
+        {
+          "id": "gl_p9_s0_q1",
+          "type": "choice",
+          "question_en": "Which animals are some of the biggest land animals in the country?",
+          "options_en": [
+            "Indian rhinos",
+            "Elephants",
+            "Marsh Crocodile"
+          ],
+          "correct_index": 0,
+          "sentence_index": 39
+        },
+        {
+          "id": "gl_p9_s0_q2",
+          "type": "choice",
+          "question_en": "Where are Indian rhinos some of the biggest land animals?",
+          "options_en": [
+            "In the country",
+            "In Kaziranga, Assam",
+            "In the pond"
+          ],
+          "correct_index": 0,
+          "sentence_index": 39
+        },
+        {
+          "id": "gl_p9_s1_q1",
+          "type": "choice",
+          "question_en": "What is the correct answer to this question: Compared to what are they bigger?",
+          "options_en": [
+            "Humans",
+            "Deer",
+            "Water Buffalo"
+          ],
+          "correct_index": 0,
+          "sentence_index": 40
+        },
+        {
+          "id": "gl_p9_s1_q2",
+          "type": "choice",
+          "question_en": "What is the correct answer to this question: Compared to what are they smaller?",
+          "options_en": [
+            "Elephants",
+            "Tigers",
+            "Crocodile"
+          ],
+          "correct_index": 0,
+          "sentence_index": 40
+        }
+      ]
+    },
+    {
+      "paragraph_index": 10,
+      "questions": [
+        {
+          "id": "gl_p10_s0_q1",
+          "type": "choice",
+          "question_en": "Where can you meet animals?",
+          "options_en": [
+            "Kaziranga, Assam",
+            "the pond",
+            "the water baths"
+          ],
+          "correct_index": 0,
+          "sentence_index": 41
+        },
+        {
+          "id": "gl_p10_s0_q2",
+          "type": "choice",
+          "question_en": "What can you meet when you visit Kaziranga, Assam?",
+          "options_en": [
+            "Animals",
+            "A rhinoceros",
+            "An elephant"
+          ],
+          "correct_index": 0,
+          "sentence_index": 41
+        },
+        {
+          "id": "gl_p10_s1_q1",
+          "type": "choice",
+          "question_en": "Which of these animals is mentioned in the sentence?",
+          "options_en": [
+            "Marsh Crocodile",
+            "Rhinoceros",
+            "Barasingha"
+          ],
+          "correct_index": 0,
+          "sentence_index": 42
+        },
+        {
+          "id": "gl_p10_s1_q2",
+          "type": "choice",
+          "question_en": "What is Kaziranga also home to?",
+          "options_en": [
+            "tigers",
+            "Rinki",
+            "elephants"
+          ],
+          "correct_index": 0,
+          "sentence_index": 42
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'A Little Like You'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "remember",
+      "meaning_vi": "nhớ",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "word",
+      "meaning_vi": "từ",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "decided",
+      "meaning_vi": "quyết định",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "find out",
+      "meaning_vi": "tìm hiểu",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "meet",
+      "meaning_vi": "gặp",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "looked like",
+      "meaning_vi": "trông giống",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "large",
+      "meaning_vi": "to lớn",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "grey",
+      "meaning_vi": "màu xám",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "trunks",
+      "meaning_vi": "vòi (của voi)",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "flappy",
+      "meaning_vi": "vẫy vẫy, đung đưa",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "horn",
+      "meaning_vi": "sừng",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "deer",
+      "meaning_vi": "hươu",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "antlers",
+      "meaning_vi": "gạc (của hươu)",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "grow",
+      "meaning_vi": "mọc",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "mud",
+      "meaning_vi": "bùn",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "baths",
+      "meaning_vi": "tắm",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "curvy",
+      "meaning_vi": "cong",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "bumpy",
+      "meaning_vi": "sần sùi",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "bumpy",
+      "meaning_vi": "sần sùi",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "crocodile",
+      "meaning_vi": "cá sấu",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "flatter",
+      "meaning_vi": "dẹt hơn",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "snouts",
+      "meaning_vi": "mõm",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "thought hard",
+      "meaning_vi": "suy nghĩ kỹ",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "pond",
+      "meaning_vi": "cái ao",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "herself",
+      "meaning_vi": "chính mình",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "half-moon",
+      "meaning_vi": "bán nguyệt (nửa vầng trăng)",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "crumpled",
+      "meaning_vi": "nhăn nheo",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "rhinoceros",
+      "meaning_vi": "tê giác",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "mostly",
+      "meaning_vi": "chủ yếu",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "alone",
+      "meaning_vi": "một mình",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "mating",
+      "meaning_vi": "giao phối (kết đôi)",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "unicorn",
+      "meaning_vi": "kỳ lân",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "grip",
+      "meaning_vi": "giữ chặt",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "country",
+      "meaning_vi": "đất nước",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "humans",
+      "meaning_vi": "con người",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "visit",
+      "meaning_vi": "thăm",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "swamp",
+      "meaning_vi": "đầm lầy",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "otters",
+      "meaning_vi": "rái cá",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "species",
+      "meaning_vi": "loài (loài vật)",
+      "paragraph_index": 10
+    }
+  ]
+}

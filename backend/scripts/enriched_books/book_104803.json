@@ -1,0 +1,1783 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L3",
+  "level_label": "Cấp 3",
+  "topic": "Tortoise Finds His Home",
+  "slug": "book_104803",
+  "audio_filename": "book_104803.mp3",
+  "book_slug": "book_104803",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_104803/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_104803/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_104803/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_104803/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_104803/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_104803/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_104803/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_104803/page_09.jpg",
+    "https://audio.felixbuilderhub.com/books/book_104803/page_10.jpg",
+    "https://audio.felixbuilderhub.com/books/book_104803/page_11.jpg",
+    "https://audio.felixbuilderhub.com/books/book_104803/page_12.jpg",
+    "https://audio.felixbuilderhub.com/books/book_104803/page_13.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_104803/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_104803/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_104803/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_104803/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_104803/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_104803/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_104803/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_104803/page_09.mp3",
+    "https://audio.felixbuilderhub.com/books/book_104803/page_10.mp3",
+    "https://audio.felixbuilderhub.com/books/book_104803/page_11.mp3",
+    "https://audio.felixbuilderhub.com/books/book_104803/page_12.mp3",
+    "https://audio.felixbuilderhub.com/books/book_104803/page_13.mp3"
+  ],
+  "book_attribution": {
+    "title": "Tortoise Finds His Home",
+    "creators": [
+      "Maya Fowler",
+      "Katrin Coetzer"
+    ],
+    "publisher": "Book Dash",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: Tortoise Finds His Home is written by Maya Fowler . © Book Dash , 2014. Some rights reserved. Released under CC BY 4.0 license. Other Credits: This story 'Tortoise Finds His Home' has been published on StoryWeaver by BookDash Images Attributions: Cover page: Snail on tortoise moving uphill , by Katrin Coetzer © Book Dash, 2014. Some rights reserved. Released under CC BY 4.0 license. Page 2: Snail and tortoise have a conversation in a meadow , by Katrin Coetzer © Book Dash, 2014. Some rights reserved. Released under CC BY 4.0 license. Page 3: Snail and tortoise go together , by Katrin Coetzer © Book Dash, 2014. Some rights reserved. Released under CC BY 4.0 license. Page 4: Tortoise, snails and bird speak , by Katrin Coetzer © Book Dash, 2014. Some rights reserved. Released under CC BY 4.0 license. Page 5: Tortoise, snails and bird travel together , by Katrin Coetzer © Book Dash, 2014. Some rights reserved. Released under CC BY 4.0 license. Page 6: On the meadow , by Katrin Coetzer © Book Dash, 2014. Some rights reserved. Released under CC BY 4.0 license. Page 7: Tortoise and his friends walk on the meadow , by Katrin Coetzer © Book Dash, 2014. Some rights reserved. Released under CC BY 4.0 license. Page 8: Tortoise and mouse talking , by Katrin Coetzer © Book Dash, 2014. Some rights reserved. Released under CC BY 4.0 license. Page 9: Tortoise and his friends in the meadow , by Katrin Coetzer © Book Dash, 2014. Some rights reserved. Released under CC BY 4.0 license. Page 10: Tortoise and his friends happy in the meadow , by Katrin Coetzer © Book Dash, 2014. Some rights reserved. Released under CC BY 4.0 license. Page 11: Animals in the rain , by Katrin Coetzer © Book Dash, 2014. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/104803-tortoise-finds-his-home",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "Snail and tortoise have a conversation in a meadow , by Katrin Coetzer © Book Dash, 2014. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "Snail and tortoise go together , by Katrin Coetzer © Book Dash, 2014. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "Tortoise, snails and bird speak , by Katrin Coetzer © Book Dash, 2014. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "Tortoise, snails and bird travel together , by Katrin Coetzer © Book Dash, 2014. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "On the meadow , by Katrin Coetzer © Book Dash, 2014. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "Tortoise and his friends walk on the meadow , by Katrin Coetzer © Book Dash, 2014. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "Tortoise and mouse talking , by Katrin Coetzer © Book Dash, 2014. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "Tortoise and his friends in the meadow , by Katrin Coetzer © Book Dash, 2014. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 8,
+        "credit_text": "Tortoise and his friends happy in the meadow , by Katrin Coetzer © Book Dash, 2014. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 9,
+        "credit_text": "Animals in the rain , by Katrin Coetzer © Book Dash, 2014. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 10,
+        "credit_text": "Illustration by Katrin Coetzer."
+      },
+      {
+        "page_index": 11,
+        "credit_text": "Illustration by Katrin Coetzer."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "Tortoise Finds His Home",
+    "paragraphs_en": [
+      "One day Tortoise was walking through the veld. He was searching and searching. He gazed into the distance and squinted at the grass. “Yes, I’m looking for my house. Have you seen it?” “Are you looking for something?” Snail asked.",
+      "“No, I haven’t, but I’ll help you look!” Snail climbed onto Tortoise’s shell. Tortoise walked on with Snail on his back. They looked and looked, but there was no sign of a house.",
+      "“Are you looking for something?” asked Sparrow. “Yes, we’re looking for Tortoise’s house. Have you seen it?” “No, I haven’t, but I’ll help you look!”",
+      "Sparrow flapped his wings and whizzed away. “You’re going too fast!” called Tortoise. “Alright, then I’ll hop on too.” Tortoise walked on with Snail and Sparrow perched on his shell. They looked and looked, but there was no sign of a house.",
+      "“Are you looking for something?” asked Ladybird. “Yes, we’re looking for Tortoise’s house. Have you seen it?”",
+      "“No, I haven’t, but I’ll help you look!” Ladybird hopped onto Tortoise’s shell. Tortoise walked on with Snail and Sparrow and Ladybird sitting on his back. They looked and looked, but there was no sign of a house. A breeze started to blow.",
+      "“Are you looking for something?” asked Mouse. “Yes, Mouse, I’m looking for my house. Have you seen it?” “No, I haven’t, but I’ll help you look!”",
+      "Mouse jumped onto Tortoise’s back. Tortoise walked on with Snail and Sparrow and Ladybird and Mouse on his back. They looked and looked, but there was no sign of a house. The wind swept the leaves off the ground and swirled them around Tortoise.",
+      "The wind got stronger and stronger. The sky turned dark. “Oh, where is my house?” Tortoise sighed. Thunder roared in the hills. Lightning flashed in the distance. Drip, drip came the rain. “Oh, where is Tortoise’s house?” asked Snail and Sparrow and Ladybird and Mouse.",
+      "The wind whirled and whipped and blew Snail and Sparrow and Ladybird and Mouse right off Tortoise’s back.",
+      "“Eek!” squeaked Tortoise with a fright, and he shrank back into his shell. It was warm and cosy inside. “Oh, here is my house!”",
+      "“Oh, here is Tortoise’s house!”"
+    ],
+    "sentences": [
+      {
+        "text_en": "One day Tortoise was walking through the veld.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_000.mp3",
+        "text_vi": "Một ngày nọ, Rùa đang đi dạo qua vùng đồng cỏ."
+      },
+      {
+        "text_en": "He was searching and searching.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_001.mp3",
+        "text_vi": "Cậu ấy cứ tìm mãi, tìm mãi."
+      },
+      {
+        "text_en": "He gazed into the distance and squinted at the grass.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_002.mp3",
+        "text_vi": "Cậu ấy nhìn xa xăm và nheo mắt nhìn đám cỏ."
+      },
+      {
+        "text_en": "“Yes, I’m looking for my house.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_003.mp3",
+        "text_vi": "“Đúng vậy, tớ đang tìm nhà của tớ."
+      },
+      {
+        "text_en": "Have you seen it?” “Are you looking for something?” Snail asked.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_004.mp3",
+        "text_vi": "Cậu có thấy nó không?” “Cậu đang tìm gì à?” Ốc Sên hỏi."
+      },
+      {
+        "text_en": "“No, I haven’t, but I’ll help you look!” Snail climbed onto Tortoise’s shell.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_005.mp3",
+        "text_vi": "“Không, tớ chưa thấy, nhưng tớ sẽ giúp cậu tìm!” Ốc Sên trèo lên mai Rùa."
+      },
+      {
+        "text_en": "Tortoise walked on with Snail on his back.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_006.mp3",
+        "text_vi": "Rùa tiếp tục đi, có Ốc Sên trên lưng."
+      },
+      {
+        "text_en": "They looked and looked, but there was no sign of a house.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_007.mp3",
+        "text_vi": "Họ tìm mãi, tìm mãi, nhưng không thấy dấu hiệu nào của một ngôi nhà."
+      },
+      {
+        "text_en": "“Are you looking for something?” asked Sparrow.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_008.mp3",
+        "text_vi": "“Các bạn đang tìm gì à?” Chim Sẻ hỏi."
+      },
+      {
+        "text_en": "“Yes, we’re looking for Tortoise’s house.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_009.mp3",
+        "text_vi": "“Đúng vậy, chúng tớ đang tìm nhà của Rùa."
+      },
+      {
+        "text_en": "Have you seen it?” “No, I haven’t, but I’ll help you look!”",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_010.mp3",
+        "text_vi": "Cậu có thấy nó không?” “Không, tớ chưa thấy, nhưng tớ sẽ giúp các bạn tìm!”"
+      },
+      {
+        "text_en": "Sparrow flapped his wings and whizzed away.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_011.mp3",
+        "text_vi": "Chim Sẻ vỗ cánh và bay vút đi."
+      },
+      {
+        "text_en": "“You’re going too fast!” called Tortoise.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_012.mp3",
+        "text_vi": "“Cậu đi nhanh quá!” Rùa gọi."
+      },
+      {
+        "text_en": "“Alright, then I’ll hop on too.” Tortoise walked on with Snail and Sparrow perched on his shell.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_013.mp3",
+        "text_vi": "“Được rồi, vậy tớ cũng sẽ nhảy lên.” Rùa tiếp tục đi với Ốc Sên và Chim Sẻ đậu trên mai mình."
+      },
+      {
+        "text_en": "They looked and looked, but there was no sign of a house.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_014.mp3",
+        "text_vi": "Họ tìm mãi, tìm mãi, nhưng không thấy dấu hiệu nào của một ngôi nhà."
+      },
+      {
+        "text_en": "“Are you looking for something?” asked Ladybird.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_015.mp3",
+        "text_vi": "“Các bạn đang tìm gì à?” Bọ Rùa hỏi."
+      },
+      {
+        "text_en": "“Yes, we’re looking for Tortoise’s house.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_016.mp3",
+        "text_vi": "“Đúng vậy, chúng tớ đang tìm nhà của Rùa."
+      },
+      {
+        "text_en": "Have you seen it?”",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_017.mp3",
+        "text_vi": "Cậu có thấy nó không?”"
+      },
+      {
+        "text_en": "“No, I haven’t, but I’ll help you look!” Ladybird hopped onto Tortoise’s shell.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_018.mp3",
+        "text_vi": "“Không, tớ chưa thấy, nhưng tớ sẽ giúp các bạn tìm!” Bọ Rùa nhảy lên mai Rùa."
+      },
+      {
+        "text_en": "Tortoise walked on with Snail and Sparrow and Ladybird sitting on his back.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_019.mp3",
+        "text_vi": "Rùa tiếp tục đi với Ốc Sên, Chim Sẻ và Bọ Rùa ngồi trên lưng mình."
+      },
+      {
+        "text_en": "They looked and looked, but there was no sign of a house.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_020.mp3",
+        "text_vi": "Họ tìm mãi, tìm mãi, nhưng không thấy dấu hiệu nào của một ngôi nhà."
+      },
+      {
+        "text_en": "A breeze started to blow.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_021.mp3",
+        "text_vi": "Một làn gió nhẹ bắt đầu thổi."
+      },
+      {
+        "text_en": "“Are you looking for something?” asked Mouse.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_022.mp3",
+        "text_vi": "“Các bạn đang tìm gì à?” Chuột hỏi."
+      },
+      {
+        "text_en": "“Yes, Mouse, I’m looking for my house.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_023.mp3",
+        "text_vi": "“Đúng vậy, Chuột ơi, tớ đang tìm nhà của tớ."
+      },
+      {
+        "text_en": "Have you seen it?” “No, I haven’t, but I’ll help you look!”",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_024.mp3",
+        "text_vi": "Cậu có thấy nó không?” “Không, tớ chưa thấy, nhưng tớ sẽ giúp cậu tìm!”"
+      },
+      {
+        "text_en": "Mouse jumped onto Tortoise’s back.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_025.mp3",
+        "text_vi": "Chuột nhảy lên lưng Rùa."
+      },
+      {
+        "text_en": "Tortoise walked on with Snail and Sparrow and Ladybird and Mouse on his back.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_026.mp3",
+        "text_vi": "Rùa tiếp tục đi với Ốc Sên, Chim Sẻ, Bọ Rùa và Chuột trên lưng mình."
+      },
+      {
+        "text_en": "They looked and looked, but there was no sign of a house.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_027.mp3",
+        "text_vi": "Họ tìm mãi, tìm mãi, nhưng không thấy dấu hiệu nào của một ngôi nhà."
+      },
+      {
+        "text_en": "The wind swept the leaves off the ground and swirled them around Tortoise.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_028.mp3",
+        "text_vi": "Gió cuốn lá rụng khỏi mặt đất và xoáy chúng quanh Rùa."
+      },
+      {
+        "text_en": "The wind got stronger and stronger.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_029.mp3",
+        "text_vi": "Gió càng lúc càng mạnh."
+      },
+      {
+        "text_en": "The sky turned dark.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_030.mp3",
+        "text_vi": "Bầu trời chuyển tối."
+      },
+      {
+        "text_en": "“Oh, where is my house?” Tortoise sighed.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_031.mp3",
+        "text_vi": "“Ôi, nhà của tớ đâu rồi?” Rùa thở dài."
+      },
+      {
+        "text_en": "Thunder roared in the hills.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_032.mp3",
+        "text_vi": "Sấm gầm vang trên những ngọn đồi."
+      },
+      {
+        "text_en": "Lightning flashed in the distance.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_033.mp3",
+        "text_vi": "Chớp lóe sáng ở đằng xa."
+      },
+      {
+        "text_en": "Drip, drip came the rain.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_034.mp3",
+        "text_vi": "Tí tách, tí tách, mưa rơi."
+      },
+      {
+        "text_en": "“Oh, where is Tortoise’s house?” asked Snail and Sparrow and Ladybird and Mouse.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_035.mp3",
+        "text_vi": "“Ôi, nhà của Rùa đâu rồi?” Ốc Sên, Chim Sẻ, Bọ Rùa và Chuột hỏi."
+      },
+      {
+        "text_en": "The wind whirled and whipped and blew Snail and Sparrow and Ladybird and Mouse right off Tortoise’s back.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_036.mp3",
+        "text_vi": "Gió xoáy mạnh, quất và thổi bay Ốc Sên, Chim Sẻ, Bọ Rùa và Chuột khỏi lưng Rùa."
+      },
+      {
+        "text_en": "“Eek!” squeaked Tortoise with a fright, and he shrank back into his shell.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_037.mp3",
+        "text_vi": "“Kít!” Rùa kêu lên một tiếng sợ hãi, và cậu rụt mình vào mai."
+      },
+      {
+        "text_en": "It was warm and cosy inside.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_038.mp3",
+        "text_vi": "Bên trong ấm áp và dễ chịu."
+      },
+      {
+        "text_en": "“Oh, here is my house!”",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_039.mp3",
+        "text_vi": "“Ôi, đây rồi, nhà của tớ đây rồi!”"
+      },
+      {
+        "text_en": "“Oh, here is Tortoise’s house!”",
+        "paragraph_index": 11,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_040.mp3",
+        "text_vi": "“Ôi, đây rồi, nhà của Rùa đây rồi!”"
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "One day Tortoise was walking through the veld.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "He was searching and searching.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "He gazed into the distance and squinted at the grass.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "“Yes, I’m looking for my house.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "Have you seen it?” “Are you looking for something?” Snail asked.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "“No, I haven’t, but I’ll help you look!” Snail climbed onto Tortoise’s shell.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "Tortoise walked on with Snail on his back.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "They looked and looked, but there was no sign of a house.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "“Are you looking for something?” asked Sparrow.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "“Yes, we’re looking for Tortoise’s house.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "Have you seen it?” “No, I haven’t, but I’ll help you look!”",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "Sparrow flapped his wings and whizzed away.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "“You’re going too fast!” called Tortoise.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_012.mp3"
+        },
+        {
+          "id": "ra_13",
+          "text_en": "“Alright, then I’ll hop on too.” Tortoise walked on with Snail and Sparrow perched on his shell.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_013.mp3"
+        },
+        {
+          "id": "ra_14",
+          "text_en": "They looked and looked, but there was no sign of a house.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_014.mp3"
+        },
+        {
+          "id": "ra_15",
+          "text_en": "“Are you looking for something?” asked Ladybird.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_015.mp3"
+        },
+        {
+          "id": "ra_16",
+          "text_en": "“Yes, we’re looking for Tortoise’s house.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_016.mp3"
+        },
+        {
+          "id": "ra_17",
+          "text_en": "Have you seen it?”",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_017.mp3"
+        },
+        {
+          "id": "ra_18",
+          "text_en": "“No, I haven’t, but I’ll help you look!” Ladybird hopped onto Tortoise’s shell.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_018.mp3"
+        },
+        {
+          "id": "ra_19",
+          "text_en": "Tortoise walked on with Snail and Sparrow and Ladybird sitting on his back.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_019.mp3"
+        },
+        {
+          "id": "ra_20",
+          "text_en": "They looked and looked, but there was no sign of a house.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_020.mp3"
+        },
+        {
+          "id": "ra_21",
+          "text_en": "A breeze started to blow.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_021.mp3"
+        },
+        {
+          "id": "ra_22",
+          "text_en": "“Are you looking for something?” asked Mouse.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_022.mp3"
+        },
+        {
+          "id": "ra_23",
+          "text_en": "“Yes, Mouse, I’m looking for my house.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_023.mp3"
+        },
+        {
+          "id": "ra_24",
+          "text_en": "Have you seen it?” “No, I haven’t, but I’ll help you look!”",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_024.mp3"
+        },
+        {
+          "id": "ra_25",
+          "text_en": "Mouse jumped onto Tortoise’s back.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_025.mp3"
+        },
+        {
+          "id": "ra_26",
+          "text_en": "Tortoise walked on with Snail and Sparrow and Ladybird and Mouse on his back.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_026.mp3"
+        },
+        {
+          "id": "ra_27",
+          "text_en": "They looked and looked, but there was no sign of a house.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_027.mp3"
+        },
+        {
+          "id": "ra_28",
+          "text_en": "The wind swept the leaves off the ground and swirled them around Tortoise.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_028.mp3"
+        },
+        {
+          "id": "ra_29",
+          "text_en": "The wind got stronger and stronger.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_029.mp3"
+        },
+        {
+          "id": "ra_30",
+          "text_en": "The sky turned dark.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_030.mp3"
+        },
+        {
+          "id": "ra_31",
+          "text_en": "“Oh, where is my house?” Tortoise sighed.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_031.mp3"
+        },
+        {
+          "id": "ra_32",
+          "text_en": "Thunder roared in the hills.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_032.mp3"
+        },
+        {
+          "id": "ra_33",
+          "text_en": "Lightning flashed in the distance.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_033.mp3"
+        },
+        {
+          "id": "ra_34",
+          "text_en": "Drip, drip came the rain.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_034.mp3"
+        },
+        {
+          "id": "ra_35",
+          "text_en": "“Oh, where is Tortoise’s house?” asked Snail and Sparrow and Ladybird and Mouse.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_035.mp3"
+        },
+        {
+          "id": "ra_36",
+          "text_en": "The wind whirled and whipped and blew Snail and Sparrow and Ladybird and Mouse right off Tortoise’s back.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_036.mp3"
+        },
+        {
+          "id": "ra_37",
+          "text_en": "“Eek!” squeaked Tortoise with a fright, and he shrank back into his shell.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_037.mp3"
+        },
+        {
+          "id": "ra_38",
+          "text_en": "It was warm and cosy inside.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_038.mp3"
+        },
+        {
+          "id": "ra_39",
+          "text_en": "“Oh, here is my house!”",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_039.mp3"
+        },
+        {
+          "id": "ra_40",
+          "text_en": "“Oh, here is Tortoise’s house!”",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104803/s_040.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "Who was walking through the veld?",
+          "options_en": [
+            "Tortoise",
+            "Snail",
+            "Sparrow"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "Where was Tortoise walking?",
+          "options_en": [
+            "Through the veld",
+            "To his house",
+            "On his shell"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s1_q1",
+          "type": "choice",
+          "question_en": "Who was searching and searching?",
+          "options_en": [
+            "Tortoise",
+            "Snail",
+            "Ladybird"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s1_q2",
+          "type": "choice",
+          "question_en": "What was he doing?",
+          "options_en": [
+            "Searching and searching",
+            "Walking with friends",
+            "Climbing on a shell"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s2_q1",
+          "type": "choice",
+          "question_en": "Who gazed into the distance and squinted at the grass?",
+          "options_en": [
+            "Tortoise",
+            "Mouse",
+            "Sparrow"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s2_q2",
+          "type": "choice",
+          "question_en": "What did he squint at?",
+          "options_en": [
+            "The grass",
+            "The sky",
+            "Leaves on the ground"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s3_q1",
+          "type": "choice",
+          "question_en": "Who says, \"I'm looking for my house\"?",
+          "options_en": [
+            "Tortoise",
+            "Snail",
+            "Ladybird"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p0_s3_q2",
+          "type": "choice",
+          "question_en": "What is he looking for?",
+          "options_en": [
+            "His house",
+            "A shell",
+            "A friend"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p0_s4_q1",
+          "type": "choice",
+          "question_en": "Who asked, \"Are you looking for something?\"",
+          "options_en": [
+            "Snail",
+            "Sparrow",
+            "Mouse"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p0_s4_q2",
+          "type": "choice",
+          "question_en": "What did Snail ask?",
+          "options_en": [
+            "Are you looking for something?",
+            "Have you seen it?",
+            "Shall I help you look?"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "Who said \"No, I haven’t, but I’ll help you look!\"?",
+          "options_en": [
+            "Snail",
+            "Tortoise",
+            "Sparrow"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "What did Snail do after saying he would help?",
+          "options_en": [
+            "Climbed onto Tortoise’s shell",
+            "Flapped his wings",
+            "Jumped onto Tortoise’s back"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p1_s1_q1",
+          "type": "choice",
+          "question_en": "Who walked on with Snail on his back?",
+          "options_en": [
+            "Tortoise",
+            "Snail",
+            "Mouse"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p1_s1_q2",
+          "type": "choice",
+          "question_en": "Where was Snail while Tortoise walked on?",
+          "options_en": [
+            "On his back",
+            "On the ground",
+            "On a leaf"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p1_s2_q1",
+          "type": "choice",
+          "question_en": "What did they look for?",
+          "options_en": [
+            "A house",
+            "A leaf",
+            "A tree"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p1_s2_q2",
+          "type": "choice",
+          "question_en": "How did they search for it?",
+          "options_en": [
+            "They looked and looked",
+            "They flew high",
+            "They hid in their shells"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "Who asked, \"Are you looking for something?\"",
+          "options_en": [
+            "Sparrow",
+            "Tortoise",
+            "Snail"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "What did Sparrow ask?",
+          "options_en": [
+            "Are you looking for something?",
+            "Where is my house?",
+            "Will you come with me?"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p2_s1_q1",
+          "type": "choice",
+          "question_en": "What are they looking for?",
+          "options_en": [
+            "Tortoise's house",
+            "Snail's shell",
+            "Sparrow's nest"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p2_s1_q2",
+          "type": "choice",
+          "question_en": "Whose house are they looking for?",
+          "options_en": [
+            "Tortoise's",
+            "Sparrow's",
+            "Mouse's"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p2_s2_q1",
+          "type": "choice",
+          "question_en": "What is the reply to \"Have you seen it?\"",
+          "options_en": [
+            "No, I haven't, but I'll help you look!",
+            "Yes, I saw it over there.",
+            "I don't know where anyone is."
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p2_s2_q2",
+          "type": "choice",
+          "question_en": "How does the speaker offer to help?",
+          "options_en": [
+            "They will help look",
+            "They will flap their wings",
+            "They will climb onto Tortoise's shell"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "Who flapped his wings and whizzed away?",
+          "options_en": [
+            "Sparrow",
+            "Tortoise",
+            "Snail"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "How did Sparrow move away?",
+          "options_en": [
+            "He flapped his wings and whizzed away",
+            "He walked slowly",
+            "He stayed on the ground"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p3_s1_q1",
+          "type": "choice",
+          "question_en": "Who called, \"You’re going too fast!\"?",
+          "options_en": [
+            "Tortoise",
+            "Sparrow",
+            "Snail"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p3_s1_q2",
+          "type": "choice",
+          "question_en": "What did Tortoise say?",
+          "options_en": [
+            "\"You’re going too fast!\"",
+            "\"Are you looking for something?\"",
+            "\"Oh, here is my house!\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p3_s2_q1",
+          "type": "choice",
+          "question_en": "Who was perched on Tortoise's shell?",
+          "options_en": [
+            "Snail and Sparrow",
+            "Ladybird and Mouse",
+            "Only Snail"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p3_s2_q2",
+          "type": "choice",
+          "question_en": "What did Tortoise do while Snail and Sparrow were on his shell?",
+          "options_en": [
+            "He walked on",
+            "He flew away",
+            "He hid in his shell"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p3_s3_q1",
+          "type": "choice",
+          "question_en": "What did they look for?",
+          "options_en": [
+            "A house",
+            "Leaves",
+            "A bird"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p3_s3_q2",
+          "type": "choice",
+          "question_en": "What did they not find?",
+          "options_en": [
+            "Any sign of a house",
+            "A breeze",
+            "Tortoise's shell"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "Who asked, \"Are you looking for something?\"?",
+          "options_en": [
+            "Ladybird",
+            "Tortoise",
+            "Snail"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "What did Ladybird ask?",
+          "options_en": [
+            "Are you looking for something?",
+            "Have you seen it?",
+            "Yes, we're looking for Tortoise's house."
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p4_s1_q1",
+          "type": "choice",
+          "question_en": "Who says they are looking for Tortoise's house?",
+          "options_en": [
+            "We",
+            "Ladybird",
+            "Snail"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p4_s1_q2",
+          "type": "choice",
+          "question_en": "What are they looking for?",
+          "options_en": [
+            "Tortoise's house",
+            "Tortoise's shell",
+            "Snail"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p4_s2_q1",
+          "type": "choice",
+          "question_en": "What question is asked in the sentence?",
+          "options_en": [
+            "Have you seen it?",
+            "Are you looking for something?",
+            "Yes, we're looking for Tortoise's house."
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p4_s2_q2",
+          "type": "choice",
+          "question_en": "Whose house are they asking about when they say \"it\"?",
+          "options_en": [
+            "Tortoise's house",
+            "Snail's house",
+            "Ladybird's house"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "Who said \"No, I haven’t, but I’ll help you look!\"?",
+          "options_en": [
+            "Ladybird",
+            "Sparrow",
+            "Snail"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "Who hopped onto Tortoise’s shell?",
+          "options_en": [
+            "Ladybird",
+            "Mouse",
+            "Sparrow"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p5_s1_q1",
+          "type": "choice",
+          "question_en": "Who was sitting on Tortoise’s back as he walked on?",
+          "options_en": [
+            "Snail and Sparrow and Ladybird",
+            "Mouse and Ladybird",
+            "Sparrow and Mouse"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p5_s1_q2",
+          "type": "choice",
+          "question_en": "Which animals were riding on Tortoise while he walked?",
+          "options_en": [
+            "Snail, Sparrow and Ladybird",
+            "Mouse, Sparrow and Snail",
+            "Ladybird and Mouse"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p5_s2_q1",
+          "type": "choice",
+          "question_en": "What did they look for but not find?",
+          "options_en": [
+            "A house",
+            "Tortoise’s shell",
+            "A big tree"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p5_s2_q2",
+          "type": "choice",
+          "question_en": "What did they do while there was no sign of a house?",
+          "options_en": [
+            "They looked and looked",
+            "They went home",
+            "They hid in the grass"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p5_s3_q1",
+          "type": "choice",
+          "question_en": "What started to blow?",
+          "options_en": [
+            "A breeze",
+            "Thunder",
+            "Rain"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p5_s3_q2",
+          "type": "choice",
+          "question_en": "How did the weather begin to change in this sentence?",
+          "options_en": [
+            "A breeze started to blow",
+            "Leaves were swept off the ground",
+            "It began to rain"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "Who asked the question?",
+          "options_en": [
+            "Mouse",
+            "Tortoise",
+            "Snail"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "What did Mouse ask?",
+          "options_en": [
+            "Are you looking for something?",
+            "Have you seen it?",
+            "Where is my house?"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p6_s1_q1",
+          "type": "choice",
+          "question_en": "What is the speaker looking for?",
+          "options_en": [
+            "My house",
+            "Tortoise's shell",
+            "A place to hide"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p6_s1_q2",
+          "type": "choice",
+          "question_en": "Who is being addressed in the sentence?",
+          "options_en": [
+            "Mouse",
+            "Sparrow",
+            "Ladybird"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p6_s2_q1",
+          "type": "choice",
+          "question_en": "What does the speaker say about seeing it?",
+          "options_en": [
+            "No, I haven't",
+            "Yes, I saw it",
+            "Maybe later"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p6_s2_q2",
+          "type": "choice",
+          "question_en": "What does the speaker offer to do?",
+          "options_en": [
+            "I'll help you look",
+            "I will go home",
+            "I'll hide it"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "Who jumped onto Tortoise's back?",
+          "options_en": [
+            "Mouse",
+            "Snail",
+            "Sparrow"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "Where did Mouse jump?",
+          "options_en": [
+            "Onto Tortoise's back",
+            "Onto Tortoise's shell",
+            "Onto Ladybird"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p7_s1_q1",
+          "type": "choice",
+          "question_en": "Who was on Tortoise's back as he walked on?",
+          "options_en": [
+            "Snail and Sparrow and Ladybird and Mouse",
+            "Snail and Sparrow",
+            "Snail and Sparrow and Ladybird"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p7_s1_q2",
+          "type": "choice",
+          "question_en": "How did Tortoise move in the sentence?",
+          "options_en": [
+            "He walked on",
+            "He flapped his wings",
+            "He hopped on"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p7_s2_q1",
+          "type": "choice",
+          "question_en": "What was there no sign of?",
+          "options_en": [
+            "A house",
+            "A shell",
+            "Leaves"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        },
+        {
+          "id": "gl_p7_s2_q2",
+          "type": "choice",
+          "question_en": "How did they look for the thing?",
+          "options_en": [
+            "They looked and looked",
+            "They walked on",
+            "They flew away"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        },
+        {
+          "id": "gl_p7_s3_q1",
+          "type": "choice",
+          "question_en": "What did the wind sweep off the ground?",
+          "options_en": [
+            "The leaves",
+            "Snail",
+            "Tortoise's shell"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        },
+        {
+          "id": "gl_p7_s3_q2",
+          "type": "choice",
+          "question_en": "How did the wind move the leaves around Tortoise?",
+          "options_en": [
+            "It swirled them around Tortoise",
+            "It whirled and whipped them off Tortoise",
+            "It kept them on the ground"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        }
+      ]
+    },
+    {
+      "paragraph_index": 8,
+      "questions": [
+        {
+          "id": "gl_p8_s0_q1",
+          "type": "choice",
+          "question_en": "What got stronger and stronger?",
+          "options_en": [
+            "The wind",
+            "The sky",
+            "The rain"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p8_s0_q2",
+          "type": "choice",
+          "question_en": "How did the wind change?",
+          "options_en": [
+            "It got stronger and stronger",
+            "It swept the leaves off the ground",
+            "It whirled and whipped"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p8_s1_q1",
+          "type": "choice",
+          "question_en": "What happened to the sky?",
+          "options_en": [
+            "It turned dark",
+            "Lightning flashed in the distance",
+            "Thunder roared in the hills"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        },
+        {
+          "id": "gl_p8_s1_q2",
+          "type": "choice",
+          "question_en": "How did the sky change?",
+          "options_en": [
+            "It turned dark",
+            "It flashed with lightning",
+            "It stayed bright"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        },
+        {
+          "id": "gl_p8_s2_q1",
+          "type": "choice",
+          "question_en": "Who asked, \"Oh, where is my house?\"",
+          "options_en": [
+            "Tortoise",
+            "Snail",
+            "Sparrow"
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        },
+        {
+          "id": "gl_p8_s2_q2",
+          "type": "choice",
+          "question_en": "What did Tortoise do as he asked about his house?",
+          "options_en": [
+            "He sighed",
+            "He walked on",
+            "He shrank into his shell"
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        },
+        {
+          "id": "gl_p8_s3_q1",
+          "type": "choice",
+          "question_en": "What roared in the hills?",
+          "options_en": [
+            "Thunder",
+            "Wind",
+            "Rain"
+          ],
+          "correct_index": 0,
+          "sentence_index": 32
+        },
+        {
+          "id": "gl_p8_s3_q2",
+          "type": "choice",
+          "question_en": "Where did the thunder roar?",
+          "options_en": [
+            "In the hills",
+            "In the distance",
+            "On Tortoise's back"
+          ],
+          "correct_index": 0,
+          "sentence_index": 32
+        },
+        {
+          "id": "gl_p8_s4_q1",
+          "type": "choice",
+          "question_en": "What flashed in the distance?",
+          "options_en": [
+            "Lightning",
+            "Thunder",
+            "The wind"
+          ],
+          "correct_index": 0,
+          "sentence_index": 33
+        },
+        {
+          "id": "gl_p8_s4_q2",
+          "type": "choice",
+          "question_en": "Where did the lightning flash?",
+          "options_en": [
+            "In the distance",
+            "In the hills",
+            "On Tortoise's shell"
+          ],
+          "correct_index": 0,
+          "sentence_index": 33
+        },
+        {
+          "id": "gl_p8_s5_q1",
+          "type": "choice",
+          "question_en": "What came drip, drip?",
+          "options_en": [
+            "The rain",
+            "The wind",
+            "Thunder"
+          ],
+          "correct_index": 0,
+          "sentence_index": 34
+        },
+        {
+          "id": "gl_p8_s5_q2",
+          "type": "choice",
+          "question_en": "How did the rain come?",
+          "options_en": [
+            "Drip, drip",
+            "It swept the leaves off the ground",
+            "It flashed in the distance"
+          ],
+          "correct_index": 0,
+          "sentence_index": 34
+        },
+        {
+          "id": "gl_p8_s6_q1",
+          "type": "choice",
+          "question_en": "Who asked, \"Oh, where is Tortoise's house?\"",
+          "options_en": [
+            "Snail and Sparrow and Ladybird and Mouse",
+            "Tortoise",
+            "Mouse"
+          ],
+          "correct_index": 0,
+          "sentence_index": 35
+        },
+        {
+          "id": "gl_p8_s6_q2",
+          "type": "choice",
+          "question_en": "What did Snail and Sparrow and Ladybird and Mouse ask?",
+          "options_en": [
+            "Where is Tortoise's house?",
+            "Are you looking for something?",
+            "Will you help us look?"
+          ],
+          "correct_index": 0,
+          "sentence_index": 35
+        }
+      ]
+    },
+    {
+      "paragraph_index": 9,
+      "questions": [
+        {
+          "id": "gl_p9_s0_q1",
+          "type": "choice",
+          "question_en": "Who was blown right off Tortoise’s back?",
+          "options_en": [
+            "Snail, Sparrow, Ladybird and Mouse",
+            "Snail and Sparrow",
+            "Tortoise"
+          ],
+          "correct_index": 0,
+          "sentence_index": 36
+        },
+        {
+          "id": "gl_p9_s0_q2",
+          "type": "choice",
+          "question_en": "What did the wind do to the animals on Tortoise’s back?",
+          "options_en": [
+            "Blew them right off his back",
+            "Whirled and whipped the leaves around",
+            "Kept them safely on his shell"
+          ],
+          "correct_index": 0,
+          "sentence_index": 36
+        }
+      ]
+    },
+    {
+      "paragraph_index": 10,
+      "questions": [
+        {
+          "id": "gl_p10_s0_q1",
+          "type": "choice",
+          "question_en": "Who squeaked \"Eek\" with a fright?",
+          "options_en": [
+            "Tortoise",
+            "Snail",
+            "Sparrow"
+          ],
+          "correct_index": 0,
+          "sentence_index": 37
+        },
+        {
+          "id": "gl_p10_s0_q2",
+          "type": "choice",
+          "question_en": "Why did he shrink back into his shell?",
+          "options_en": [
+            "He was frightened",
+            "He was tired",
+            "He was hungry"
+          ],
+          "correct_index": 0,
+          "sentence_index": 37
+        },
+        {
+          "id": "gl_p10_s1_q1",
+          "type": "choice",
+          "question_en": "Where was it warm and cosy?",
+          "options_en": [
+            "Inside his shell",
+            "On his back",
+            "In the veld"
+          ],
+          "correct_index": 0,
+          "sentence_index": 38
+        },
+        {
+          "id": "gl_p10_s1_q2",
+          "type": "choice",
+          "question_en": "How did it feel inside?",
+          "options_en": [
+            "Warm and cosy",
+            "Wet and cold",
+            "Loud and stormy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 38
+        },
+        {
+          "id": "gl_p10_s2_q1",
+          "type": "choice",
+          "question_en": "Who said, \"Oh, here is my house!\"?",
+          "options_en": [
+            "Tortoise",
+            "Mouse",
+            "Ladybird"
+          ],
+          "correct_index": 0,
+          "sentence_index": 39
+        },
+        {
+          "id": "gl_p10_s2_q2",
+          "type": "choice",
+          "question_en": "Whose house was found?",
+          "options_en": [
+            "Tortoise's",
+            "Snail's",
+            "Sparrow's"
+          ],
+          "correct_index": 0,
+          "sentence_index": 39
+        }
+      ]
+    },
+    {
+      "paragraph_index": 11,
+      "questions": [
+        {
+          "id": "gl_p11_s0_q1",
+          "type": "choice",
+          "question_en": "Whose house is here?",
+          "options_en": [
+            "Tortoise's",
+            "Snail's",
+            "Mouse's"
+          ],
+          "correct_index": 0,
+          "sentence_index": 40
+        },
+        {
+          "id": "gl_p11_s0_q2",
+          "type": "choice",
+          "question_en": "What is here?",
+          "options_en": [
+            "Tortoise's house",
+            "Tortoise's shell",
+            "Sparrow's nest"
+          ],
+          "correct_index": 0,
+          "sentence_index": 40
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'Tortoise Finds His Home'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "veld",
+      "meaning_vi": "vùng đồng cỏ (một loại đất trống, có cỏ)",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "searching",
+      "meaning_vi": "tìm kiếm (cố gắng tìm một thứ gì đó)",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "gazed",
+      "meaning_vi": "nhìn chằm chằm, nhìn xa xăm (nhìn lâu và chăm chú)",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "squinted",
+      "meaning_vi": "nheo mắt (khép mắt lại một phần để nhìn rõ hơn)",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "climbed",
+      "meaning_vi": "trèo lên (di chuyển lên bằng tay và chân)",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "shell",
+      "meaning_vi": "mai (lớp vỏ cứng bên ngoài của rùa)",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "sign",
+      "meaning_vi": "dấu hiệu (thứ cho thấy sự tồn tại của cái gì đó)",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "flapped",
+      "meaning_vi": "vỗ (di chuyển cánh lên xuống)",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "whizzed",
+      "meaning_vi": "bay vút đi (di chuyển rất nhanh với tiếng vù vù)",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "hop on",
+      "meaning_vi": "nhảy lên (nhảy nhẹ nhàng lên một cái gì đó)",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "perched",
+      "meaning_vi": "đậu (nghỉ trên một vật gì đó, như chim đậu trên cành)",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "hopped",
+      "meaning_vi": "nhảy lên (nhảy bằng một chân hoặc cả hai chân một cách nhẹ nhàng)",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "breeze",
+      "meaning_vi": "làn gió nhẹ (một luồng gió nhẹ nhàng)",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "blow",
+      "meaning_vi": "thổi (làm không khí di chuyển)",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "jumped",
+      "meaning_vi": "nhảy lên (di chuyển nhanh khỏi mặt đất)",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "swept",
+      "meaning_vi": "cuốn đi, quét đi (di chuyển nhanh và mạnh)",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "swirled",
+      "meaning_vi": "xoáy (di chuyển theo hình tròn)",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "sighed",
+      "meaning_vi": "thở dài (thở một hơi dài, sâu thể hiện buồn bã hoặc nhẹ nhõm)",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "thunder",
+      "meaning_vi": "sấm (tiếng ồn lớn bạn nghe thấy sau tia chớp)",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "roared",
+      "meaning_vi": "gầm vang (phát ra âm thanh rất lớn, sâu)",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "lightning",
+      "meaning_vi": "chớp (một tia sáng chói lòa trên bầu trời trong cơn bão)",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "whirled",
+      "meaning_vi": "xoáy mạnh (di chuyển nhanh theo vòng tròn)",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "whipped",
+      "meaning_vi": "quất (đánh hoặc di chuyển nhanh và mạnh)",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "blew",
+      "meaning_vi": "thổi (làm không khí di chuyển mạnh)",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "right off",
+      "meaning_vi": "bay khỏi (hoàn toàn rời khỏi)",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "squeaked",
+      "meaning_vi": "kêu kít (phát ra âm thanh ngắn, cao)",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "fright",
+      "meaning_vi": "sợ hãi (cảm giác sợ hãi đột ngột)",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "shrank back",
+      "meaning_vi": "rụt mình lại (lùi lại nhanh chóng vì sợ hãi hoặc khó chịu)",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "cosy",
+      "meaning_vi": "ấm cúng, dễ chịu (thoải mái và ấm áp)",
+      "paragraph_index": 10
+    }
+  ]
+}

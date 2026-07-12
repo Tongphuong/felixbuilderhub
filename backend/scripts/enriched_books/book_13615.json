@@ -1,0 +1,1154 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L1",
+  "level_label": "Cấp 1",
+  "topic": "Golu goes to town",
+  "slug": "book_13615",
+  "audio_filename": "book_13615.mp3",
+  "book_slug": "book_13615",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_13615/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_13615/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_13615/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_13615/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_13615/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_13615/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_13615/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_13615/page_09.jpg",
+    "https://audio.felixbuilderhub.com/books/book_13615/page_10.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_13615/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_13615/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_13615/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_13615/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_13615/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_13615/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_13615/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_13615/page_09.mp3",
+    "https://audio.felixbuilderhub.com/books/book_13615/page_10.mp3"
+  ],
+  "book_attribution": {
+    "title": "Golu goes to town",
+    "creators": [
+      "Pahi Shrivastava",
+      "Preeti Krishnamurthy",
+      "Rijuta Ghate",
+      "Suvidha Mistry"
+    ],
+    "publisher": "StoryWeaver Community",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: Golu goes to town is written by Pahi Shrivastava . © Pahi Shrivastava , 2017. Some rights reserved. Released under CC BY 4.0 license. Images Attributions: Cover page: Man rowing a boat near bridge , by Preeti Krishnamurthy © Pratham Books, 2011. Some rights reserved. Released under CC BY 4.0 license. Page 2: Girl pulling out keys from beneath woman's shawl , by Suvidha Mistry © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 3: Woman in a room where printing on cloth is done , by Suvidha Mistry © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 4: Girl hugging woman , by Suvidha Mistry © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 5: Girl and woman holding a block-printed sari , by Suvidha Mistry © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 6: Girl making prints on a cloth , by Suvidha Mistry © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 7: Woman in a room where printing on cloth is done , by Suvidha Mistry © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 8: Worried woman, smiling girl , by Suvidha Mistry © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 9: Girl and woman holding a block-printed sari , by Suvidha Mistry © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 10: Girl hugging her mother , by Rijuta Ghate © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/13615-golu-goes-to-town",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "Girl pulling out keys from beneath woman's shawl , by Suvidha Mistry © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "Woman in a room where printing on cloth is done , by Suvidha Mistry © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "Girl hugging woman , by Suvidha Mistry © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "Girl and woman holding a block-printed sari , by Suvidha Mistry © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "Girl making prints on a cloth , by Suvidha Mistry © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "Woman in a room where printing on cloth is done , by Suvidha Mistry © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "Worried woman, smiling girl , by Suvidha Mistry © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "Girl and woman holding a block-printed sari , by Suvidha Mistry © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 8,
+        "credit_text": "Girl hugging her mother , by Rijuta Ghate © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "Golu goes to town",
+    "paragraphs_en": [
+      "\"Mummy when are we going to the city? Rita saw a big and grey monster there. It went 'Chhook Chhook' I want to see it too.\", Golu told Mummy.",
+      "\"Golu, it is a train, not a monster. It helps people reach different places if they have a ticket. It is a nice and fast way to travel.\", Mummy said.",
+      "Golu still had many things to tell her mother, \"Mummy, Appu saw a bird much bigger than you. It was long and was too big to fit into a nest.\"",
+      "Mummy started to laugh and said,\"It is an airplane, a bird cannot be bigger than me! Airplanes can be expensive but did you know that airplanes can travel faster than trains?",
+      "\"Rani sat in a bullock cart with a steering wheel and many buttons.That bullock cart also had a box that gave out cold air.\",Golu told.",
+      "\"That is a car. A car travels slower than a train. Cars need fuel to work. Car has four wheels\"",
+      "Mummy, I heard there is some pond much bigger than our pond, you can not see the other side. It has big boats bigger than village.",
+      "That is not a pond but Sea. And huge boat is not a boat but ship. Ships are main mode of trade and transporting goods between countries.",
+      "﻿Mummy, let's go to city. I want to see Car, Train, Bus, Airplane and Ship. I have only seen bullock cart till now."
+    ],
+    "sentences": [
+      {
+        "text_en": "\"Mummy when are we going to the city?",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13615/s_000.mp3",
+        "text_vi": "Mẹ ơi, khi nào mình đi thành phố vậy ạ?"
+      },
+      {
+        "text_en": "Rita saw a big and grey monster there.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13615/s_001.mp3",
+        "text_vi": "Chị Rita thấy một con quái vật to lớn và màu xám ở đó."
+      },
+      {
+        "text_en": "It went 'Chhook Chhook' I want to see it too.\", Golu told Mummy.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13615/s_002.mp3",
+        "text_vi": "Nó kêu 'Chhook Chhook' Con cũng muốn xem nó ạ."
+      },
+      {
+        "text_en": "\"Golu, it is a train, not a monster.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13615/s_003.mp3",
+        "text_vi": "Golu à, đó là xe lửa, không phải quái vật đâu con."
+      },
+      {
+        "text_en": "It helps people reach different places if they have a ticket.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13615/s_004.mp3",
+        "text_vi": "Nó giúp mọi người đi đến nhiều nơi khác nhau nếu họ có vé."
+      },
+      {
+        "text_en": "It is a nice and fast way to travel.\", Mummy said.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13615/s_005.mp3",
+        "text_vi": "Đó là một cách đi lại rất hay và nhanh."
+      },
+      {
+        "text_en": "Golu still had many things to tell her mother, \"Mummy, Appu saw a bird much bigger than you.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13615/s_006.mp3",
+        "text_vi": "Golu vẫn còn nhiều điều muốn kể với mẹ, \"Mẹ ơi, bạn Appu thấy một con chim to hơn mẹ nhiều."
+      },
+      {
+        "text_en": "It was long and was too big to fit into a nest.\"",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13615/s_007.mp3",
+        "text_vi": "Nó dài và quá lớn để chui vừa vào tổ.\""
+      },
+      {
+        "text_en": "Mummy started to laugh and said,\"It is an airplane, a bird cannot be bigger than me!",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13615/s_008.mp3",
+        "text_vi": "Mẹ bắt đầu cười và nói, \"Đó là máy bay, một con chim không thể to hơn mẹ được!"
+      },
+      {
+        "text_en": "Airplanes can be expensive but did you know that airplanes can travel faster than trains?",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13615/s_009.mp3",
+        "text_vi": "Máy bay có thể đắt tiền nhưng con có biết máy bay có thể đi nhanh hơn xe lửa không?"
+      },
+      {
+        "text_en": "\"Rani sat in a bullock cart with a steering wheel and many buttons.That bullock cart also had a box that gave out cold air.\",Golu told.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13615/s_010.mp3",
+        "text_vi": "Chị Rani ngồi trên một chiếc xe bò có vô lăng và nhiều nút bấm. Chiếc xe bò đó còn có một cái hộp thổi ra khí lạnh nữa."
+      },
+      {
+        "text_en": "\"That is a car.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13615/s_011.mp3",
+        "text_vi": "Đó là xe hơi."
+      },
+      {
+        "text_en": "A car travels slower than a train.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13615/s_012.mp3",
+        "text_vi": "Xe hơi đi chậm hơn xe lửa."
+      },
+      {
+        "text_en": "Cars need fuel to work.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13615/s_013.mp3",
+        "text_vi": "Xe hơi cần nhiên liệu để chạy."
+      },
+      {
+        "text_en": "Car has four wheels\"",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13615/s_014.mp3",
+        "text_vi": "Xe hơi có bốn bánh."
+      },
+      {
+        "text_en": "Mummy, I heard there is some pond much bigger than our pond, you can not see the other side.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13615/s_015.mp3",
+        "text_vi": "Mẹ ơi, con nghe nói có một cái ao lớn hơn ao nhà mình nhiều, mình không thể nhìn thấy bờ bên kia."
+      },
+      {
+        "text_en": "It has big boats bigger than village.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13615/s_016.mp3",
+        "text_vi": "Nó có những chiếc thuyền lớn hơn cả làng mình nữa."
+      },
+      {
+        "text_en": "That is not a pond but Sea.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13615/s_017.mp3",
+        "text_vi": "Đó không phải là ao mà là Biển."
+      },
+      {
+        "text_en": "And huge boat is not a boat but ship.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13615/s_018.mp3",
+        "text_vi": "Và chiếc thuyền khổng lồ đó không phải là thuyền mà là tàu thủy."
+      },
+      {
+        "text_en": "Ships are main mode of trade and transporting goods between countries.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13615/s_019.mp3",
+        "text_vi": "Tàu thủy là phương tiện chính để buôn bán và vận chuyển hàng hóa giữa các quốc gia."
+      },
+      {
+        "text_en": "﻿Mummy, let's go to city.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13615/s_020.mp3",
+        "text_vi": "Mẹ ơi, mình đi thành phố đi."
+      },
+      {
+        "text_en": "I want to see Car, Train, Bus, Airplane and Ship.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13615/s_021.mp3",
+        "text_vi": "Con muốn xem Xe hơi, Xe lửa, Xe buýt, Máy bay và Tàu thủy."
+      },
+      {
+        "text_en": "I have only seen bullock cart till now.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13615/s_022.mp3",
+        "text_vi": "Con mới chỉ thấy xe bò thôi ạ."
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "\"Mummy when are we going to the city?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13615/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "Rita saw a big and grey monster there.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13615/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "It went 'Chhook Chhook' I want to see it too.\", Golu told Mummy.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13615/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "\"Golu, it is a train, not a monster.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13615/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "It helps people reach different places if they have a ticket.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13615/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "It is a nice and fast way to travel.\", Mummy said.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13615/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "Golu still had many things to tell her mother, \"Mummy, Appu saw a bird much bigger than you.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13615/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "It was long and was too big to fit into a nest.\"",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13615/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "Mummy started to laugh and said,\"It is an airplane, a bird cannot be bigger than me!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13615/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "Airplanes can be expensive but did you know that airplanes can travel faster than trains?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13615/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "\"Rani sat in a bullock cart with a steering wheel and many buttons.That bullock cart also had a box that gave out cold air.\",Golu told.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13615/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "\"That is a car.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13615/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "A car travels slower than a train.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13615/s_012.mp3"
+        },
+        {
+          "id": "ra_13",
+          "text_en": "Cars need fuel to work.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13615/s_013.mp3"
+        },
+        {
+          "id": "ra_14",
+          "text_en": "Car has four wheels\"",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13615/s_014.mp3"
+        },
+        {
+          "id": "ra_15",
+          "text_en": "Mummy, I heard there is some pond much bigger than our pond, you can not see the other side.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13615/s_015.mp3"
+        },
+        {
+          "id": "ra_16",
+          "text_en": "It has big boats bigger than village.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13615/s_016.mp3"
+        },
+        {
+          "id": "ra_17",
+          "text_en": "That is not a pond but Sea.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13615/s_017.mp3"
+        },
+        {
+          "id": "ra_18",
+          "text_en": "And huge boat is not a boat but ship.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13615/s_018.mp3"
+        },
+        {
+          "id": "ra_19",
+          "text_en": "Ships are main mode of trade and transporting goods between countries.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13615/s_019.mp3"
+        },
+        {
+          "id": "ra_20",
+          "text_en": "﻿Mummy, let's go to city.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13615/s_020.mp3"
+        },
+        {
+          "id": "ra_21",
+          "text_en": "I want to see Car, Train, Bus, Airplane and Ship.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13615/s_021.mp3"
+        },
+        {
+          "id": "ra_22",
+          "text_en": "I have only seen bullock cart till now.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13615/s_022.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "Who is Golu asking when they will go to the city?",
+          "options_en": [
+            "Mummy",
+            "Rita",
+            "Appu"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "Where does Golu want to go?",
+          "options_en": [
+            "To the city",
+            "To the pond",
+            "To the sea"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s1_q1",
+          "type": "choice",
+          "question_en": "Who saw a big and grey monster there?",
+          "options_en": [
+            "Rita",
+            "Golu",
+            "Appu"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s1_q2",
+          "type": "choice",
+          "question_en": "What did Rita see there?",
+          "options_en": [
+            "A big and grey monster",
+            "A bullock cart",
+            "A train"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s2_q1",
+          "type": "choice",
+          "question_en": "Who said, \"I want to see it too\"?",
+          "options_en": [
+            "Golu",
+            "Rita",
+            "Mummy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s2_q2",
+          "type": "choice",
+          "question_en": "Why did Golu say, \"I want to see it too\"?",
+          "options_en": [
+            "Because he wanted to see it",
+            "Because he had a ticket",
+            "Because he wanted a car"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "What is it?",
+          "options_en": [
+            "a train",
+            "a monster",
+            "a car"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "What is it not?",
+          "options_en": [
+            "a monster",
+            "an airplane",
+            "a ship"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p1_s1_q1",
+          "type": "choice",
+          "question_en": "Who does it help reach different places?",
+          "options_en": [
+            "people",
+            "Golu",
+            "Mummy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p1_s1_q2",
+          "type": "choice",
+          "question_en": "What do people need to travel on it?",
+          "options_en": [
+            "a ticket",
+            "fuel",
+            "four wheels"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p1_s2_q1",
+          "type": "choice",
+          "question_en": "How is it described as a way to travel?",
+          "options_en": [
+            "nice and fast",
+            "slow and heavy",
+            "expensive"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p1_s2_q2",
+          "type": "choice",
+          "question_en": "Who said the sentence?",
+          "options_en": [
+            "Mummy",
+            "Golu",
+            "Appu"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "Who still had many things to tell her mother?",
+          "options_en": [
+            "Golu",
+            "Rita",
+            "Appu"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "What did Appu see according to Golu?",
+          "options_en": [
+            "A bird much bigger than Mummy",
+            "A train",
+            "A bullock cart"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p2_s1_q1",
+          "type": "choice",
+          "question_en": "How was the creature described in the sentence?",
+          "options_en": [
+            "It was long and too big to fit into a nest",
+            "It went 'Chhook Chhook' like a train",
+            "It had four wheels like a car"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p2_s1_q2",
+          "type": "choice",
+          "question_en": "Why could it not fit into a nest?",
+          "options_en": [
+            "Because it was too big",
+            "Because it needed a ticket",
+            "Because it had many buttons"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "Who started to laugh?",
+          "options_en": [
+            "Mummy",
+            "Golu",
+            "Rani"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "What did Mummy say the big thing was?",
+          "options_en": [
+            "An airplane",
+            "A bird",
+            "A train"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p3_s1_q1",
+          "type": "choice",
+          "question_en": "What can travel faster than trains?",
+          "options_en": [
+            "Airplanes",
+            "Cars",
+            "Ships"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p3_s1_q2",
+          "type": "choice",
+          "question_en": "Why did Mummy mention airplanes?",
+          "options_en": [
+            "To say they can travel faster than trains",
+            "To say they are like birds",
+            "To say they need fuel"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "Who sat in a bullock cart?",
+          "options_en": [
+            "Rani",
+            "Golu",
+            "Appu"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "What did the bullock cart have that gave out cold air?",
+          "options_en": [
+            "A box that gave out cold air",
+            "A steering wheel",
+            "Four wheels"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "What is that?",
+          "options_en": [
+            "A car",
+            "A train",
+            "A bullock cart"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "Which vehicle is that?",
+          "options_en": [
+            "Car",
+            "Train",
+            "Airplane"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p5_s1_q1",
+          "type": "choice",
+          "question_en": "Which is slower than a train?",
+          "options_en": [
+            "A car",
+            "A bullock cart",
+            "An airplane"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p5_s1_q2",
+          "type": "choice",
+          "question_en": "Which travels faster than a car?",
+          "options_en": [
+            "A train",
+            "A ship",
+            "A bullock cart"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p5_s2_q1",
+          "type": "choice",
+          "question_en": "What do cars need to work?",
+          "options_en": [
+            "Fuel",
+            "A ticket",
+            "A steering wheel"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p5_s2_q2",
+          "type": "choice",
+          "question_en": "Which do cars need to run?",
+          "options_en": [
+            "Fuel",
+            "Cold air box",
+            "Wings"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p5_s3_q1",
+          "type": "choice",
+          "question_en": "How many wheels does a car have?",
+          "options_en": [
+            "Four",
+            "Many",
+            "None"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p5_s3_q2",
+          "type": "choice",
+          "question_en": "Which of these does a car have?",
+          "options_en": [
+            "Four wheels",
+            "A box that gave out cold air",
+            "A ticket"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "What did the child say he heard about?",
+          "options_en": [
+            "a pond much bigger than our pond",
+            "a train",
+            "an airplane"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "What could you not see of the pond?",
+          "options_en": [
+            "the other side",
+            "the nest",
+            "the steering wheel"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p6_s1_q1",
+          "type": "choice",
+          "question_en": "What does it have?",
+          "options_en": [
+            "big boats bigger than village",
+            "a big grey monster",
+            "a box that gave out cold air"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p6_s1_q2",
+          "type": "choice",
+          "question_en": "Which things are said to be bigger than the village?",
+          "options_en": [
+            "boats",
+            "a train",
+            "a bullock cart"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "What is not a pond?",
+          "options_en": [
+            "Sea",
+            "Train",
+            "Car"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "Where is said to be not a pond?",
+          "options_en": [
+            "Sea",
+            "City",
+            "Bullock cart"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p7_s1_q1",
+          "type": "choice",
+          "question_en": "What is a huge boat called?",
+          "options_en": [
+            "Ship",
+            "Boat",
+            "Bullock cart"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p7_s1_q2",
+          "type": "choice",
+          "question_en": "How is a huge boat described in the sentence?",
+          "options_en": [
+            "As a ship",
+            "As a train",
+            "As an airplane"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p7_s2_q1",
+          "type": "choice",
+          "question_en": "What is the main mode of trade and transporting goods between countries?",
+          "options_en": [
+            "Ships",
+            "Trains",
+            "Cars"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p7_s2_q2",
+          "type": "choice",
+          "question_en": "Why are ships mentioned in the sentence?",
+          "options_en": [
+            "They transport goods between countries",
+            "They take people to the city",
+            "They are faster than trains"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        }
+      ]
+    },
+    {
+      "paragraph_index": 8,
+      "questions": [
+        {
+          "id": "gl_p8_s0_q1",
+          "type": "choice",
+          "question_en": "Who is being spoken to in this sentence?",
+          "options_en": [
+            "Mummy",
+            "Rani",
+            "Appu"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p8_s0_q2",
+          "type": "choice",
+          "question_en": "Where does the speaker want to go?",
+          "options_en": [
+            "To the city",
+            "To the village pond",
+            "To the train station"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p8_s1_q1",
+          "type": "choice",
+          "question_en": "What does the speaker want to see?",
+          "options_en": [
+            "Car, Train, Bus, Airplane and Ship",
+            "Bullock cart",
+            "A big grey monster"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p8_s1_q2",
+          "type": "choice",
+          "question_en": "Which of these vehicles is mentioned in the sentence?",
+          "options_en": [
+            "Airplane",
+            "Bullock cart",
+            "Monster"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p8_s2_q1",
+          "type": "choice",
+          "question_en": "What has the speaker only seen till now?",
+          "options_en": [
+            "Bullock cart",
+            "Car",
+            "Train"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p8_s2_q2",
+          "type": "choice",
+          "question_en": "How many kinds of vehicles has the speaker seen so far?",
+          "options_en": [
+            "Only the bullock cart",
+            "Car and train",
+            "Airplane and ship"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'Golu goes to town'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "city",
+      "meaning_vi": "thành phố (một nơi có nhiều nhà cửa và người ở)",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "monster",
+      "meaning_vi": "quái vật (một sinh vật đáng sợ)",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "grey",
+      "meaning_vi": "màu xám (màu giống màu tro)",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "told",
+      "meaning_vi": "đã nói (kể lại)",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "train",
+      "meaning_vi": "xe lửa (phương tiện đi trên đường ray)",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "different",
+      "meaning_vi": "khác nhau (không giống nhau)",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "ticket",
+      "meaning_vi": "vé (giấy tờ để được phép đi hoặc vào)",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "travel",
+      "meaning_vi": "đi lại (đi từ nơi này đến nơi khác)",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "still",
+      "meaning_vi": "vẫn còn (chưa thay đổi)",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "bigger",
+      "meaning_vi": "lớn hơn (có kích thước lớn hơn)",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "fit",
+      "meaning_vi": "vừa (có kích thước phù hợp để đặt vào)",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "nest",
+      "meaning_vi": "tổ (nhà của chim hoặc côn trùng)",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "laugh",
+      "meaning_vi": "cười (phát ra tiếng vui vẻ)",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "airplane",
+      "meaning_vi": "máy bay (phương tiện bay trên trời)",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "expensive",
+      "meaning_vi": "đắt tiền (tốn nhiều tiền)",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "faster",
+      "meaning_vi": "nhanh hơn (đi với tốc độ cao hơn)",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "bullock cart",
+      "meaning_vi": "xe bò (xe do bò kéo)",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "steering wheel",
+      "meaning_vi": "vô lăng (bánh lái để điều khiển xe)",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "buttons",
+      "meaning_vi": "nút bấm (bộ phận nhỏ để nhấn)",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "cold",
+      "meaning_vi": "lạnh (không nóng)",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "slower",
+      "meaning_vi": "chậm hơn (đi với tốc độ thấp hơn)",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "fuel",
+      "meaning_vi": "nhiên liệu (chất đốt giúp xe chạy)",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "work",
+      "meaning_vi": "chạy (hoạt động, vận hành)",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "wheels",
+      "meaning_vi": "bánh xe (bộ phận hình tròn giúp xe di chuyển)",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "heard",
+      "meaning_vi": "đã nghe (tiếp nhận âm thanh bằng tai)",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "pond",
+      "meaning_vi": "ao (một vùng nước nhỏ hơn hồ)",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "other side",
+      "meaning_vi": "bờ bên kia (phía đối diện)",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "village",
+      "meaning_vi": "làng (một cộng đồng nhỏ ở nông thôn)",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "Sea",
+      "meaning_vi": "Biển (vùng nước mặn rất lớn)",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "huge",
+      "meaning_vi": "khổng lồ (rất lớn)",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "ship",
+      "meaning_vi": "tàu thủy (phương tiện lớn đi trên biển)",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "trade",
+      "meaning_vi": "buôn bán (mua và bán hàng hóa)",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "let's go",
+      "meaning_vi": "mình đi (chúng ta hãy đi)",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "bus",
+      "meaning_vi": "xe buýt (xe công cộng lớn)",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "only",
+      "meaning_vi": "chỉ (duy nhất, không hơn)",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "till now",
+      "meaning_vi": "cho đến bây giờ (tính đến thời điểm hiện tại)",
+      "paragraph_index": 8
+    }
+  ]
+}

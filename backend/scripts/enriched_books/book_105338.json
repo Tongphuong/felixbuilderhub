@@ -1,0 +1,952 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L2",
+  "level_label": "Cấp 2",
+  "topic": "SAY CHEESE",
+  "slug": "book_105338",
+  "audio_filename": "book_105338.mp3",
+  "book_slug": "book_105338",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_105338/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_105338/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_105338/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_105338/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_105338/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_105338/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_105338/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_105338/page_09.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_105338/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_105338/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_105338/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_105338/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_105338/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_105338/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_105338/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_105338/page_09.mp3"
+  ],
+  "book_attribution": {
+    "title": "SAY CHEESE",
+    "creators": [
+      "Aru",
+      "Aruna Keerthi Gamage",
+      "Sunaina Coelho",
+      "Try Samphors"
+    ],
+    "publisher": "StoryWeaver Community",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: SAY CHEESE is written by Aru . © Aru , 2019. Some rights reserved. Released under CC BY 4.0 license. Images Attributions: Cover page: A mole rat sticks its head out , by Sunaina Coelho © Pratham Books, 2017. Some rights reserved. Released under CC BY 4.0 license. Page 2: A mole rat sticks its head out , by Sunaina Coelho © Pratham Books, 2017. Some rights reserved. Released under CC BY 4.0 license. Page 3: Mole rat is asleep , by Sunaina Coelho © Pratham Books, 2017. Some rights reserved. Released under CC BY 4.0 license. Page 4: A mouse laughs , by Aruna Keerthi Gamage © Room to Read, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 5: A rat sits alone on the ground where a hopscotch has been drawn , by Try Samphors © Room to Read, 2012. Some rights reserved. Released under CC BY 4.0 license. Page 6: An Indian mole rat looking at its tail , by Sunaina Coelho © Pratham Books, 2017. Some rights reserved. Released under CC BY 4.0 license. Page 7: A mouse holds a piece of food , by Aruna Keerthi Gamage © Room to Read, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 8: A family of mole rats , by Sunaina Coelho © Pratham Books, 2017. Some rights reserved. Released under CC BY 4.0 license. Page 9: A mouse holds a piece of food , by Aruna Keerthi Gamage © Room to Read, 2016. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/105338-say-cheese",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "A mole rat sticks its head out , by Sunaina Coelho © Pratham Books, 2017. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "Mole rat is asleep , by Sunaina Coelho © Pratham Books, 2017. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "A mouse laughs , by Aruna Keerthi Gamage © Room to Read, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "A rat sits alone on the ground where a hopscotch has been drawn , by Try Samphors © Room to Read, 2012. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "An Indian mole rat looking at its tail , by Sunaina Coelho © Pratham Books, 2017. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "A mouse holds a piece of food , by Aruna Keerthi Gamage © Room to Read, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "A family of mole rats , by Sunaina Coelho © Pratham Books, 2017. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "A mouse holds a piece of food , by Aruna Keerthi Gamage © Room to Read, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "SAY CHEESE",
+    "paragraphs_en": [
+      "Minnie was a playful rat. Minnie played in mud And Minnie became a dirty rat. The other rats started calling him \"Filthy Minnnie\".",
+      "So Minnie stopped playing And Minnie became an idle rat . The other rats started calling him \"Lazy Minnie\".",
+      "So Minnie started fighting with other rats And Minnie became an angry rat. The other rats started calling him \"Grumpy Minnie“ .",
+      "So Minnie never came out of his house and played with his friends And Minnie became a solitary rat. The other rats started calling him “Lonely Minnie\".",
+      "So Minnie was not happy and never smiled And Minnie became a sad rat . The others rats started calling him \"Unhappy Minnie“ .",
+      "Minnie met his friend Fannie. \"How are you always happy?\" asked Minnie. \"I eat these magic cheese crumbs and say CHEEEEESE…\" said Fannie. Fannie gave Minnie a bag full of magic cheese crumbs.",
+      "Minnie came out of his house. The other rats said \"Oh ! here comes the Filthy, Lazy, Grumpy, Lonely and Unhappy Minnie?\"",
+      "Minnie swallowed the magic cheese crumb and said “CHEEEEESE..” The other rats now started calling him \"Happy and Smiley Minnie\"."
+    ],
+    "sentences": [
+      {
+        "text_en": "Minnie was a playful rat.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_105338/s_000.mp3",
+        "text_vi": "Minnie là một chú chuột rất thích chơi đùa."
+      },
+      {
+        "text_en": "Minnie played in mud And Minnie became a dirty rat.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_105338/s_001.mp3",
+        "text_vi": "Minnie chơi trong bùn Và Minnie trở thành một chú chuột bẩn thỉu."
+      },
+      {
+        "text_en": "The other rats started calling him \"Filthy Minnnie\".",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_105338/s_002.mp3",
+        "text_vi": "Những chú chuột khác bắt đầu gọi cậu ấy là \"Minnie Bẩn Thỉu\"."
+      },
+      {
+        "text_en": "So Minnie stopped playing And Minnie became an idle rat .",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_105338/s_003.mp3",
+        "text_vi": "Thế là Minnie ngừng chơi Và Minnie trở thành một chú chuột lười biếng."
+      },
+      {
+        "text_en": "The other rats started calling him \"Lazy Minnie\".",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_105338/s_004.mp3",
+        "text_vi": "Những chú chuột khác bắt đầu gọi cậu ấy là \"Minnie Lười Biếng\"."
+      },
+      {
+        "text_en": "So Minnie started fighting with other rats And Minnie became an angry rat.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_105338/s_005.mp3",
+        "text_vi": "Thế là Minnie bắt đầu đánh nhau với những chú chuột khác Và Minnie trở thành một chú chuột giận dữ."
+      },
+      {
+        "text_en": "The other rats started calling him \"Grumpy Minnie“ .",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_105338/s_006.mp3",
+        "text_vi": "Những chú chuột khác bắt đầu gọi cậu ấy là \"Minnie Cáu Kỉnh\"."
+      },
+      {
+        "text_en": "So Minnie never came out of his house and played with his friends And Minnie became a solitary rat.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_105338/s_007.mp3",
+        "text_vi": "Thế là Minnie không bao giờ ra khỏi nhà để chơi với bạn bè Và Minnie trở thành một chú chuột cô độc."
+      },
+      {
+        "text_en": "The other rats started calling him “Lonely Minnie\".",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_105338/s_008.mp3",
+        "text_vi": "Những chú chuột khác bắt đầu gọi cậu ấy là “Minnie Cô Đơn”."
+      },
+      {
+        "text_en": "So Minnie was not happy and never smiled And Minnie became a sad rat .",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_105338/s_009.mp3",
+        "text_vi": "Thế là Minnie không vui và không bao giờ cười Và Minnie trở thành một chú chuột buồn bã."
+      },
+      {
+        "text_en": "The others rats started calling him \"Unhappy Minnie“ .",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_105338/s_010.mp3",
+        "text_vi": "Những chú chuột khác bắt đầu gọi cậu ấy là \"Minnie Không Vui\"."
+      },
+      {
+        "text_en": "Minnie met his friend Fannie.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_105338/s_011.mp3",
+        "text_vi": "Minnie gặp người bạn của mình là Fannie."
+      },
+      {
+        "text_en": "\"How are you always happy?\" asked Minnie.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_105338/s_012.mp3",
+        "text_vi": "\"Sao cậu lúc nào cũng vui vẻ vậy?\" Minnie hỏi."
+      },
+      {
+        "text_en": "\"I eat these magic cheese crumbs and say CHEEEEESE…\" said Fannie.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_105338/s_013.mp3",
+        "text_vi": "\"Tớ ăn những mẩu phô mai thần kỳ này và nói CHEEEEESE…\" Fannie nói."
+      },
+      {
+        "text_en": "Fannie gave Minnie a bag full of magic cheese crumbs.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_105338/s_014.mp3",
+        "text_vi": "Fannie đưa cho Minnie một túi đầy những mẩu phô mai thần kỳ."
+      },
+      {
+        "text_en": "Minnie came out of his house.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_105338/s_015.mp3",
+        "text_vi": "Minnie bước ra khỏi nhà."
+      },
+      {
+        "text_en": "The other rats said \"Oh !",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_105338/s_016.mp3",
+        "text_vi": "Những chú chuột khác nói \"Ồ!"
+      },
+      {
+        "text_en": "here comes the Filthy, Lazy, Grumpy, Lonely and Unhappy Minnie?\"",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_105338/s_017.mp3",
+        "text_vi": "Minnie Bẩn Thỉu, Lười Biếng, Cáu Kỉnh, Cô Đơn và Không Vui đây rồi?\""
+      },
+      {
+        "text_en": "Minnie swallowed the magic cheese crumb and said “CHEEEEESE..” The other rats now started calling him \"Happy and Smiley Minnie\".",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_105338/s_018.mp3",
+        "text_vi": "Minnie nuốt mẩu phô mai thần kỳ và nói “CHEEEEESE..” Những chú chuột khác giờ đây bắt đầu gọi cậu ấy là \"Minnie Vui Vẻ và Hay Cười\"."
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "Minnie was a playful rat.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_105338/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "Minnie played in mud And Minnie became a dirty rat.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_105338/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "The other rats started calling him \"Filthy Minnnie\".",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_105338/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "So Minnie stopped playing And Minnie became an idle rat .",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_105338/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "The other rats started calling him \"Lazy Minnie\".",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_105338/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "So Minnie started fighting with other rats And Minnie became an angry rat.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_105338/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "The other rats started calling him \"Grumpy Minnie“ .",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_105338/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "So Minnie never came out of his house and played with his friends And Minnie became a solitary rat.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_105338/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "The other rats started calling him “Lonely Minnie\".",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_105338/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "So Minnie was not happy and never smiled And Minnie became a sad rat .",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_105338/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "The others rats started calling him \"Unhappy Minnie“ .",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_105338/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "Minnie met his friend Fannie.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_105338/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "\"How are you always happy?\" asked Minnie.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_105338/s_012.mp3"
+        },
+        {
+          "id": "ra_13",
+          "text_en": "\"I eat these magic cheese crumbs and say CHEEEEESE…\" said Fannie.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_105338/s_013.mp3"
+        },
+        {
+          "id": "ra_14",
+          "text_en": "Fannie gave Minnie a bag full of magic cheese crumbs.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_105338/s_014.mp3"
+        },
+        {
+          "id": "ra_15",
+          "text_en": "Minnie came out of his house.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_105338/s_015.mp3"
+        },
+        {
+          "id": "ra_16",
+          "text_en": "The other rats said \"Oh !",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_105338/s_016.mp3"
+        },
+        {
+          "id": "ra_17",
+          "text_en": "here comes the Filthy, Lazy, Grumpy, Lonely and Unhappy Minnie?\"",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_105338/s_017.mp3"
+        },
+        {
+          "id": "ra_18",
+          "text_en": "Minnie swallowed the magic cheese crumb and said “CHEEEEESE..” The other rats now started calling him \"Happy and Smiley Minnie\".",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_105338/s_018.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "Who was a playful rat?",
+          "options_en": [
+            "Minnie",
+            "Fannie",
+            "The other rats"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "What was Minnie?",
+          "options_en": [
+            "A playful rat",
+            "A dirty rat",
+            "A solitary rat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s1_q1",
+          "type": "choice",
+          "question_en": "What did Minnie play in?",
+          "options_en": [
+            "Mud",
+            "His house",
+            "With magic cheese crumbs"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s1_q2",
+          "type": "choice",
+          "question_en": "What did Minnie become after playing in the mud?",
+          "options_en": [
+            "A dirty rat",
+            "An idle rat",
+            "A happy rat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s2_q1",
+          "type": "choice",
+          "question_en": "Who started calling him \"Filthy Minnnie\"?",
+          "options_en": [
+            "The other rats",
+            "Fannie",
+            "Minnie himself"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s2_q2",
+          "type": "choice",
+          "question_en": "What name did the other rats call him?",
+          "options_en": [
+            "\"Filthy Minnnie\"",
+            "\"Lazy Minnie\"",
+            "\"Happy and Smiley Minnie\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "Why did Minnie become an idle rat?",
+          "options_en": [
+            "Because he stopped playing",
+            "Because he played in mud",
+            "Because he never smiled"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "What did Minnie stop doing?",
+          "options_en": [
+            "Playing",
+            "Fighting with other rats",
+            "Coming out of his house"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p1_s1_q1",
+          "type": "choice",
+          "question_en": "Who started calling him \"Lazy Minnie\"?",
+          "options_en": [
+            "The other rats",
+            "Fannie",
+            "Minnie"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p1_s1_q2",
+          "type": "choice",
+          "question_en": "What name did the other rats start calling him?",
+          "options_en": [
+            "Lazy Minnie",
+            "Filthy Minnie",
+            "Grumpy Minnie"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "Who started fighting with other rats?",
+          "options_en": [
+            "Minnie",
+            "Fannie",
+            "the other rats"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "What did Minnie become after he started fighting?",
+          "options_en": [
+            "an angry rat",
+            "a dirty rat",
+            "an idle rat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p2_s1_q1",
+          "type": "choice",
+          "question_en": "Who started calling him \"Grumpy Minnie\"?",
+          "options_en": [
+            "the other rats",
+            "Fannie",
+            "his friends"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p2_s1_q2",
+          "type": "choice",
+          "question_en": "What name did the other rats call him?",
+          "options_en": [
+            "\"Grumpy Minnie\"",
+            "\"Lazy Minnie\"",
+            "\"Filthy Minnie\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "Who never came out of his house and played with his friends?",
+          "options_en": [
+            "Minnie",
+            "Filthy Minnie",
+            "Fannie"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "What did Minnie become?",
+          "options_en": [
+            "a solitary rat",
+            "a dirty rat",
+            "an idle rat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p3_s1_q1",
+          "type": "choice",
+          "question_en": "What did the other rats start calling him?",
+          "options_en": [
+            "\"Lonely Minnie\"",
+            "\"Filthy Minnie\"",
+            "\"Grumpy Minnie\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p3_s1_q2",
+          "type": "choice",
+          "question_en": "Who started calling him \"Lonely Minnie\"?",
+          "options_en": [
+            "The other rats",
+            "His friends",
+            "Fannie"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "Who became a sad rat?",
+          "options_en": [
+            "Minnie",
+            "Fannie",
+            "The other rats"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "What happened to Minnie?",
+          "options_en": [
+            "He became a sad rat",
+            "He became a dirty rat",
+            "He became an idle rat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p4_s1_q1",
+          "type": "choice",
+          "question_en": "Who started calling him \"Unhappy Minnie\"?",
+          "options_en": [
+            "The other rats",
+            "Fannie",
+            "Minnie himself"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p4_s1_q2",
+          "type": "choice",
+          "question_en": "What did the other rats call him?",
+          "options_en": [
+            "\"Unhappy Minnie\"",
+            "\"Filthy Minnie\"",
+            "\"Happy and Smiley Minnie\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "Who did Minnie meet?",
+          "options_en": [
+            "Fannie",
+            "the other rats",
+            "a bag of magic cheese crumbs"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "Whose friend did Minnie meet?",
+          "options_en": [
+            "Minnie’s",
+            "Fannie’s",
+            "the other rats'"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p5_s1_q1",
+          "type": "choice",
+          "question_en": "Who asked \"How are you always happy?\"",
+          "options_en": [
+            "Minnie",
+            "Fannie",
+            "the other rats"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p5_s1_q2",
+          "type": "choice",
+          "question_en": "What did Minnie ask Fannie?",
+          "options_en": [
+            "How are you always happy?",
+            "Why don't you play?",
+            "Are you angry?"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p5_s2_q1",
+          "type": "choice",
+          "question_en": "What does Fannie say she eats?",
+          "options_en": [
+            "these magic cheese crumbs",
+            "mud",
+            "a bag of crumbs"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p5_s2_q2",
+          "type": "choice",
+          "question_en": "What does Fannie say she says after eating them?",
+          "options_en": [
+            "CHEEEEESE",
+            "I'm dirty",
+            "I'm lonely"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p5_s3_q1",
+          "type": "choice",
+          "question_en": "What did Fannie give Minnie?",
+          "options_en": [
+            "a bag full of magic cheese crumbs",
+            "a bag of mud",
+            "his house"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p5_s3_q2",
+          "type": "choice",
+          "question_en": "Whose bag did Minnie receive?",
+          "options_en": [
+            "Fannie’s",
+            "the other rats'",
+            "Minnie’s"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "Who came out of his house?",
+          "options_en": [
+            "Minnie",
+            "Fannie",
+            "The other rats"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "Where did Minnie come out from?",
+          "options_en": [
+            "His house",
+            "The mud",
+            "A bag of magic cheese crumbs"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p6_s1_q1",
+          "type": "choice",
+          "question_en": "Who said \"Oh !\"?",
+          "options_en": [
+            "The other rats",
+            "Minnie",
+            "Fannie"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p6_s1_q2",
+          "type": "choice",
+          "question_en": "What did the other rats say?",
+          "options_en": [
+            "\"Oh !\"",
+            "\"CHEEEEESE..\"",
+            "\"Happy and Smiley Minnie\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p6_s2_q1",
+          "type": "choice",
+          "question_en": "Who did the rats say was coming?",
+          "options_en": [
+            "Minnie",
+            "Fannie",
+            "A solitary rat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p6_s2_q2",
+          "type": "choice",
+          "question_en": "Which words did the rats use to describe Minnie?",
+          "options_en": [
+            "Filthy, Lazy, Grumpy, Lonely and Unhappy",
+            "Happy and Smiley",
+            "Magic and playful"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "Who swallowed the magic cheese crumb?",
+          "options_en": [
+            "Minnie",
+            "Fannie",
+            "The other rats"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "What did the other rats start calling him?",
+          "options_en": [
+            "Happy and Smiley Minnie",
+            "Filthy Minnie",
+            "Lonely Minnie"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'SAY CHEESE'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "playful",
+      "meaning_vi": "thích chơi đùa, hay đùa giỡn",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "mud",
+      "meaning_vi": "bùn",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "dirty",
+      "meaning_vi": "bẩn, dơ",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "Filthy",
+      "meaning_vi": "rất bẩn, dơ bẩn",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "stopped",
+      "meaning_vi": "ngừng, dừng lại",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "idle",
+      "meaning_vi": "lười biếng, không làm gì",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "Lazy",
+      "meaning_vi": "lười biếng",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "fighting",
+      "meaning_vi": "đánh nhau, cãi nhau",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "angry",
+      "meaning_vi": "giận dữ, tức giận",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "Grumpy",
+      "meaning_vi": "cáu kỉnh, gắt gỏng",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "never",
+      "meaning_vi": "không bao giờ",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "solitary",
+      "meaning_vi": "cô độc, một mình",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "Lonely",
+      "meaning_vi": "cô đơn",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "happy",
+      "meaning_vi": "vui vẻ, hạnh phúc",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "smiled",
+      "meaning_vi": "mỉm cười, cười",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "sad",
+      "meaning_vi": "buồn bã",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "Unhappy",
+      "meaning_vi": "không vui, buồn",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "met",
+      "meaning_vi": "gặp gỡ (quá khứ của meet)",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "always",
+      "meaning_vi": "luôn luôn, lúc nào cũng",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "magic",
+      "meaning_vi": "thần kỳ, phép thuật",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "cheese crumbs",
+      "meaning_vi": "mẩu phô mai vụn",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "came out",
+      "meaning_vi": "bước ra, đi ra",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "here comes",
+      "meaning_vi": "đây rồi, đến rồi",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "swallowed",
+      "meaning_vi": "nuốt",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "now",
+      "meaning_vi": "bây giờ, giờ đây",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "Smiley",
+      "meaning_vi": "hay cười, tươi cười",
+      "paragraph_index": 7
+    }
+  ]
+}

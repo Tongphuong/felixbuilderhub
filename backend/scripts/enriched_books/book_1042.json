@@ -1,0 +1,906 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L1",
+  "level_label": "Cấp 1",
+  "topic": "My Best Friend",
+  "slug": "book_1042",
+  "audio_filename": "book_1042.mp3",
+  "book_slug": "book_1042",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_1042/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_1042/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_1042/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_1042/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_1042/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_1042/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_1042/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_1042/page_09.jpg",
+    "https://audio.felixbuilderhub.com/books/book_1042/page_10.jpg",
+    "https://audio.felixbuilderhub.com/books/book_1042/page_11.jpg",
+    "https://audio.felixbuilderhub.com/books/book_1042/page_12.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_1042/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_1042/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_1042/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_1042/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_1042/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_1042/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_1042/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_1042/page_09.mp3",
+    "https://audio.felixbuilderhub.com/books/book_1042/page_10.mp3",
+    "https://audio.felixbuilderhub.com/books/book_1042/page_11.mp3",
+    "https://audio.felixbuilderhub.com/books/book_1042/page_12.mp3"
+  ],
+  "book_attribution": {
+    "title": "My Best Friend",
+    "creators": [
+      "Anupa Lal",
+      "Suvidha Mistry"
+    ],
+    "publisher": "Pratham Books",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: My Best Friend is written by Anupa Lal . © Pratham Books , 2015. Some rights reserved. Released under CC BY 4.0 license. Other Credits: 'My Best Friend'has been published on StoryWeaver by Pratham Books.The development of the print version of this book has been supported by HDFC Asset Management Company Limited (A joint venture with Standard Life Investments). www.prathambooks.org Images Attributions: Cover page: Two girls sitting on a tree , by Suvidha Mistry © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 2: Two girls looking at each other through the window , by Suvidha Mistry © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 3: Two girls dancing happily , by Suvidha Mistry © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 4: Two girls crying , by Suvidha Mistry © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 5: A girl and a goat looking at their reflection in the mirror , by Suvidha Mistry © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 6: A girl looking into the mirror , by Suvidha Mistry © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 7: A girl whispers to another who is asleep , by Suvidha Mistry © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 8: Two girls playing , by Suvidha Mistry © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 9: Two girls shouting , by Suvidha Mistry © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 10: Two girls on a tree, with their arms around each other , by Suvidha Mistry © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 11: Two girls hugging each other , by Suvidha Mistry © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/1042-my-best-friend",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "Two girls looking at each other through the window , by Suvidha Mistry © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "Two girls dancing happily , by Suvidha Mistry © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "Two girls crying , by Suvidha Mistry © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "A girl and a goat looking at their reflection in the mirror , by Suvidha Mistry © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "A girl looking into the mirror , by Suvidha Mistry © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "A girl whispers to another who is asleep , by Suvidha Mistry © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "Two girls playing , by Suvidha Mistry © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "Two girls shouting , by Suvidha Mistry © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 8,
+        "credit_text": "Two girls on a tree, with their arms around each other , by Suvidha Mistry © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 9,
+        "credit_text": "Two girls hugging each other , by Suvidha Mistry © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 10,
+        "credit_text": "Illustration by Suvidha Mistry."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "My Best Friend",
+    "paragraphs_en": [
+      "I have a friend. She lives in my house.",
+      "When I am happy, so is she.",
+      "When I cry, she cries too.",
+      "But I cannot hear her voice. My friend lives inside the mirror.",
+      "“Come out,” I tell her, “we will play.” She does not come out.",
+      "I am not happy. I go to sleep.",
+      "She comes out of the mirror in my sleep! And we have fun.",
+      "We play, we run, we shout and scream together.",
+      "When I talk to her, she also talks to me.",
+      "In the morning, my friend will go back into the mirror.",
+      "But I don't mind at all. We will play again in my dreams!"
+    ],
+    "sentences": [
+      {
+        "text_en": "I have a friend.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1042/s_000.mp3",
+        "text_vi": "Mình có một người bạn."
+      },
+      {
+        "text_en": "She lives in my house.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1042/s_001.mp3",
+        "text_vi": "Bạn ấy sống trong nhà mình."
+      },
+      {
+        "text_en": "When I am happy, so is she.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1042/s_002.mp3",
+        "text_vi": "Khi mình vui, bạn ấy cũng vui."
+      },
+      {
+        "text_en": "When I cry, she cries too.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1042/s_003.mp3",
+        "text_vi": "Khi mình khóc, bạn ấy cũng khóc."
+      },
+      {
+        "text_en": "But I cannot hear her voice.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1042/s_004.mp3",
+        "text_vi": "Nhưng mình không nghe thấy tiếng bạn ấy."
+      },
+      {
+        "text_en": "My friend lives inside the mirror.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1042/s_005.mp3",
+        "text_vi": "Bạn mình sống trong gương."
+      },
+      {
+        "text_en": "“Come out,” I tell her, “we will play.” She does not come out.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1042/s_006.mp3",
+        "text_vi": "Mình bảo bạn ấy: “Ra đây nào, chúng mình cùng chơi nhé!” Bạn ấy không ra."
+      },
+      {
+        "text_en": "I am not happy.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1042/s_007.mp3",
+        "text_vi": "Mình không vui."
+      },
+      {
+        "text_en": "I go to sleep.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1042/s_008.mp3",
+        "text_vi": "Mình đi ngủ."
+      },
+      {
+        "text_en": "She comes out of the mirror in my sleep!",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1042/s_009.mp3",
+        "text_vi": "Trong giấc ngủ, bạn ấy ra khỏi gương!"
+      },
+      {
+        "text_en": "And we have fun.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1042/s_010.mp3",
+        "text_vi": "Và chúng mình chơi vui lắm."
+      },
+      {
+        "text_en": "We play, we run, we shout and scream together.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1042/s_011.mp3",
+        "text_vi": "Chúng mình chơi, chạy, la hét và reo hò cùng nhau."
+      },
+      {
+        "text_en": "When I talk to her, she also talks to me.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1042/s_012.mp3",
+        "text_vi": "Khi mình nói chuyện với bạn ấy, bạn ấy cũng nói chuyện với mình."
+      },
+      {
+        "text_en": "In the morning, my friend will go back into the mirror.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1042/s_013.mp3",
+        "text_vi": "Sáng hôm sau, bạn mình sẽ quay lại trong gương."
+      },
+      {
+        "text_en": "But I don't mind at all.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1042/s_014.mp3",
+        "text_vi": "Nhưng mình không bận tâm chút nào."
+      },
+      {
+        "text_en": "We will play again in my dreams!",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1042/s_015.mp3",
+        "text_vi": "Chúng mình sẽ lại chơi trong giấc mơ của mình!"
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "I have a friend.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1042/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "She lives in my house.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1042/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "When I am happy, so is she.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1042/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "When I cry, she cries too.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1042/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "But I cannot hear her voice.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1042/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "My friend lives inside the mirror.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1042/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "“Come out,” I tell her, “we will play.” She does not come out.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1042/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "I am not happy.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1042/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "I go to sleep.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1042/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "She comes out of the mirror in my sleep!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1042/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "And we have fun.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1042/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "We play, we run, we shout and scream together.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1042/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "When I talk to her, she also talks to me.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1042/s_012.mp3"
+        },
+        {
+          "id": "ra_13",
+          "text_en": "In the morning, my friend will go back into the mirror.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1042/s_013.mp3"
+        },
+        {
+          "id": "ra_14",
+          "text_en": "But I don't mind at all.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1042/s_014.mp3"
+        },
+        {
+          "id": "ra_15",
+          "text_en": "We will play again in my dreams!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1042/s_015.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "Who do I have?",
+          "options_en": [
+            "A friend",
+            "A friend inside the mirror",
+            "A friend in my dreams"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "What do I have?",
+          "options_en": [
+            "A friend",
+            "A friend who cries",
+            "A friend who comes out of the mirror"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s1_q1",
+          "type": "choice",
+          "question_en": "Where does she live?",
+          "options_en": [
+            "In my house",
+            "Inside the mirror",
+            "In my dreams"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s1_q2",
+          "type": "choice",
+          "question_en": "Whose house does she live in?",
+          "options_en": [
+            "My house",
+            "The mirror's house",
+            "My dream house"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "Who is happy when I am happy?",
+          "options_en": [
+            "She",
+            "My friend",
+            "My friend in the mirror"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "When is she happy?",
+          "options_en": [
+            "When I am happy",
+            "When I cry",
+            "When I sleep"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "Who cries when I cry?",
+          "options_en": [
+            "She",
+            "My friend",
+            "My friend in the mirror"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "What happens when I cry?",
+          "options_en": [
+            "She cries too",
+            "She does not come out",
+            "She goes back into the mirror in the morning"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "Who cannot hear her voice?",
+          "options_en": [
+            "I",
+            "My friend",
+            "She"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "What cannot be heard?",
+          "options_en": [
+            "Her voice",
+            "Her cry",
+            "Her shout"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p3_s1_q1",
+          "type": "choice",
+          "question_en": "Where does my friend live?",
+          "options_en": [
+            "Inside the mirror",
+            "In my house",
+            "In my dreams"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p3_s1_q2",
+          "type": "choice",
+          "question_en": "Who lives inside the mirror?",
+          "options_en": [
+            "My friend",
+            "I",
+            "She"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "Who does the speaker tell to come out?",
+          "options_en": [
+            "her",
+            "the mirror",
+            "my friend"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "What do they say they will do?",
+          "options_en": [
+            "play",
+            "go to sleep",
+            "have fun"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "How does the speaker feel?",
+          "options_en": [
+            "Not happy",
+            "Happy",
+            "Sad"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "What does the speaker say about their happiness?",
+          "options_en": [
+            "I am not happy.",
+            "She lives inside the mirror.",
+            "We will play again in my dreams!"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p5_s1_q1",
+          "type": "choice",
+          "question_en": "What does the speaker do?",
+          "options_en": [
+            "Go to sleep",
+            "Play with the friend",
+            "She comes out of the mirror"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p5_s1_q2",
+          "type": "choice",
+          "question_en": "Who goes to sleep?",
+          "options_en": [
+            "I",
+            "My friend",
+            "She"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "Who comes out of the mirror?",
+          "options_en": [
+            "My friend",
+            "The narrator",
+            "Her voice"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "When does she come out of the mirror?",
+          "options_en": [
+            "In my sleep",
+            "In the morning",
+            "When I am happy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p6_s1_q1",
+          "type": "choice",
+          "question_en": "Who has fun?",
+          "options_en": [
+            "We (the narrator and the friend)",
+            "Only the friend",
+            "Only the narrator"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p6_s1_q2",
+          "type": "choice",
+          "question_en": "What do they do?",
+          "options_en": [
+            "Have fun",
+            "Play alone",
+            "Cry"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "What do we do together?",
+          "options_en": [
+            "Play and run",
+            "Go to sleep",
+            "Go back into the mirror"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "Who plays, runs, shouts and screams together?",
+          "options_en": [
+            "We (the child and her friend)",
+            "My friend alone",
+            "The friend in the mirror"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        }
+      ]
+    },
+    {
+      "paragraph_index": 8,
+      "questions": [
+        {
+          "id": "gl_p8_s0_q1",
+          "type": "choice",
+          "question_en": "Who talks to her?",
+          "options_en": [
+            "I",
+            "My friend",
+            "She"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p8_s0_q2",
+          "type": "choice",
+          "question_en": "Who talks to me?",
+          "options_en": [
+            "She",
+            "I",
+            "My friend"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        }
+      ]
+    },
+    {
+      "paragraph_index": 9,
+      "questions": [
+        {
+          "id": "gl_p9_s0_q1",
+          "type": "choice",
+          "question_en": "Who will go back into the mirror?",
+          "options_en": [
+            "My friend",
+            "I",
+            "She"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p9_s0_q2",
+          "type": "choice",
+          "question_en": "When will my friend go back into the mirror?",
+          "options_en": [
+            "In the morning",
+            "In my sleep",
+            "When I am happy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        }
+      ]
+    },
+    {
+      "paragraph_index": 10,
+      "questions": [
+        {
+          "id": "gl_p10_s0_q1",
+          "type": "choice",
+          "question_en": "How does the speaker feel?",
+          "options_en": [
+            "They don't mind at all",
+            "They are not happy",
+            "They cry"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p10_s0_q2",
+          "type": "choice",
+          "question_en": "Who doesn't mind at all?",
+          "options_en": [
+            "I",
+            "My friend",
+            "The mirror"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p10_s1_q1",
+          "type": "choice",
+          "question_en": "When will they play again?",
+          "options_en": [
+            "In my dreams",
+            "In the morning",
+            "Out of the mirror"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p10_s1_q2",
+          "type": "choice",
+          "question_en": "What will they do again?",
+          "options_en": [
+            "Play again",
+            "Go back into the mirror",
+            "Cry"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'My Best Friend'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "friend",
+      "meaning_vi": "người mà mình chơi cùng, yêu quý",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "lives",
+      "meaning_vi": "ở một nơi nào đó",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "house",
+      "meaning_vi": "nơi mình ở",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "happy",
+      "meaning_vi": "cảm thấy sung sướng",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "so",
+      "meaning_vi": "cũng vậy, giống như thế",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "cry",
+      "meaning_vi": "chảy nước mắt vì buồn",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "too",
+      "meaning_vi": "thêm vào, giống như vậy",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "cannot",
+      "meaning_vi": "không làm được",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "hear",
+      "meaning_vi": "dùng tai để nhận biết âm thanh",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "voice",
+      "meaning_vi": "âm thanh khi mình nói",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "mirror",
+      "meaning_vi": "vật để soi hình mình",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "tell",
+      "meaning_vi": "nói cho ai đó biết",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "will",
+      "meaning_vi": "chỉ việc xảy ra trong tương lai",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "play",
+      "meaning_vi": "tham gia trò vui",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "not",
+      "meaning_vi": "phủ định, không làm gì đó",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "sleep",
+      "meaning_vi": "nhắm mắt nghỉ ngơi",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "comes out",
+      "meaning_vi": "đi từ trong ra ngoài",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "fun",
+      "meaning_vi": "niềm vui, sự thích thú",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "run",
+      "meaning_vi": "di chuyển nhanh bằng chân",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "shout",
+      "meaning_vi": "nói to, kêu to",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "scream",
+      "meaning_vi": "kêu to vì vui hoặc sợ",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "together",
+      "meaning_vi": "làm chung với người khác",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "talk",
+      "meaning_vi": "trao đổi lời nói",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "also",
+      "meaning_vi": "thêm vào, tương tự",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "morning",
+      "meaning_vi": "thời gian đầu ngày",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "go back",
+      "meaning_vi": "trở về chỗ cũ",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "into",
+      "meaning_vi": "đi vào bên trong",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "mind",
+      "meaning_vi": "lo lắng, để ý",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "at all",
+      "meaning_vi": "hoàn toàn không",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "again",
+      "meaning_vi": "thêm một lần nữa",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "dreams",
+      "meaning_vi": "những hình ảnh, câu chuyện khi ngủ",
+      "paragraph_index": 10
+    }
+  ]
+}

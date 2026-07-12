@@ -1,0 +1,1767 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L1",
+  "level_label": "Cấp 1",
+  "topic": "Animals of Uganda",
+  "slug": "book_118925",
+  "audio_filename": "book_118925.mp3",
+  "book_slug": "book_118925",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_118925/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_118925/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_118925/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_118925/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_118925/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_118925/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_118925/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_118925/page_09.jpg",
+    "https://audio.felixbuilderhub.com/books/book_118925/page_10.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_118925/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_118925/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_118925/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_118925/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_118925/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_118925/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_118925/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_118925/page_09.mp3",
+    "https://audio.felixbuilderhub.com/books/book_118925/page_10.mp3"
+  ],
+  "book_attribution": {
+    "title": "Animals of Uganda",
+    "creators": [
+      "Wendy Parry",
+      "Rob Owen"
+    ],
+    "publisher": "African Storybook Initiative",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: Animals of Uganda is written by Wendy Parry . © African Storybook Initiative , 2015. Some rights reserved. Released under CC BY 4.0 license. Other Credits: This story 'Animals of Uganda' has been published on StoryWeaver by African Storybook Initiative. Images Attributions: Cover page: All animals together , by Rob Owen © African Storybook Initiative, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 2: Two giraffes drinking water , by Rob Owen © African Storybook Initiative, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 3: Magestic elephant , by Rob Owen © African Storybook Initiative, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 4: Crocodile on the shore , by Rob Owen © African Storybook Initiative, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 5: Roaring lion , by Rob Owen © African Storybook Initiative, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 6: Struting Ostrich , by Rob Owen © African Storybook Initiative, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 7: Bisons and Cranes , by Rob Owen © African Storybook Initiative, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 8: Zebras running , by Rob Owen © African Storybook Initiative, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 9: Antelopes and Warthogs , by Rob Owen © African Storybook Initiative, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 10: Fish and frogs in the water , by Rob Owen © African Storybook Initiative, 2015. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/118925-animals-of-uganda",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "Two giraffes drinking water , by Rob Owen © African Storybook Initiative, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "Magestic elephant , by Rob Owen © African Storybook Initiative, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "Crocodile on the shore , by Rob Owen © African Storybook Initiative, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "Roaring lion , by Rob Owen © African Storybook Initiative, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "Struting Ostrich , by Rob Owen © African Storybook Initiative, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "Bisons and Cranes , by Rob Owen © African Storybook Initiative, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "Zebras running , by Rob Owen © African Storybook Initiative, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "Antelopes and Warthogs , by Rob Owen © African Storybook Initiative, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 8,
+        "credit_text": "Fish and frogs in the water , by Rob Owen © African Storybook Initiative, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "Animals of Uganda",
+    "paragraphs_en": [
+      "These are giraffes. They have very long necks. They eat leaves from tall trees. What colour is a giraffe?",
+      "This is an elephant. The males have white tusks. They have large ears. Elephants have long trunks. They use their trunks to pick leaves off the tall trees. Elephants eat grasses and leaves. What colour is the elephant?",
+      "This is a crocodile. It lives in the rivers and lakes. It has a long tail. It has a wide mouth and many sharp teeth. It eats fish and other animals. What colour is the crocodile?",
+      "This is a lion. It has big, sharp teeth. Male lions have a mane. Where is the mane on this lion?",
+      "This is the crested crane. It is the symbol of Uganda. It has long legs and a crown. What are the colours of the crested crane?",
+      "These are water buffalo. They eats grasses and live near rivers and lakes. What does a water buffalo have growing on its head?",
+      "These animals are called zebras. They have black and white stripes. What other animal do you know that looks like a zebra?",
+      "Here are two different types of animals. There is a mother warthog with her babies. Warthogs have tusks too. How many warthogs can you count in the picture? The other animals are antelopes. They eat grasses. What colour is the antelope?",
+      "What types of animals do you see? Where do they live? Which one would you eat?"
+    ],
+    "sentences": [
+      {
+        "text_en": "These are giraffes.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_000.mp3",
+        "text_vi": "Đây là những con hươu cao cổ."
+      },
+      {
+        "text_en": "They have very long necks.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_001.mp3",
+        "text_vi": "Chúng có cái cổ rất dài."
+      },
+      {
+        "text_en": "They eat leaves from tall trees.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_002.mp3",
+        "text_vi": "Chúng ăn lá từ những cây cao."
+      },
+      {
+        "text_en": "What colour is a giraffe?",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_003.mp3",
+        "text_vi": "Hươu cao cổ màu gì?"
+      },
+      {
+        "text_en": "This is an elephant.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_004.mp3",
+        "text_vi": "Đây là một con voi."
+      },
+      {
+        "text_en": "The males have white tusks.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_005.mp3",
+        "text_vi": "Voi đực có ngà trắng."
+      },
+      {
+        "text_en": "They have large ears.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_006.mp3",
+        "text_vi": "Chúng có đôi tai to."
+      },
+      {
+        "text_en": "Elephants have long trunks.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_007.mp3",
+        "text_vi": "Voi có cái vòi dài."
+      },
+      {
+        "text_en": "They use their trunks to pick leaves off the tall trees.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_008.mp3",
+        "text_vi": "Chúng dùng vòi để hái lá từ những cây cao."
+      },
+      {
+        "text_en": "Elephants eat grasses and leaves.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_009.mp3",
+        "text_vi": "Voi ăn cỏ và lá cây."
+      },
+      {
+        "text_en": "What colour is the elephant?",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_010.mp3",
+        "text_vi": "Con voi màu gì?"
+      },
+      {
+        "text_en": "This is a crocodile.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_011.mp3",
+        "text_vi": "Đây là một con cá sấu."
+      },
+      {
+        "text_en": "It lives in the rivers and lakes.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_012.mp3",
+        "text_vi": "Nó sống ở sông và hồ."
+      },
+      {
+        "text_en": "It has a long tail.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_013.mp3",
+        "text_vi": "Nó có cái đuôi dài."
+      },
+      {
+        "text_en": "It has a wide mouth and many sharp teeth.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_014.mp3",
+        "text_vi": "Nó có cái miệng rộng và nhiều răng sắc nhọn."
+      },
+      {
+        "text_en": "It eats fish and other animals.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_015.mp3",
+        "text_vi": "Nó ăn cá và các loài động vật khác."
+      },
+      {
+        "text_en": "What colour is the crocodile?",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_016.mp3",
+        "text_vi": "Con cá sấu màu gì?"
+      },
+      {
+        "text_en": "This is a lion.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_017.mp3",
+        "text_vi": "Đây là một con sư tử."
+      },
+      {
+        "text_en": "It has big, sharp teeth.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_018.mp3",
+        "text_vi": "Nó có răng to và sắc nhọn."
+      },
+      {
+        "text_en": "Male lions have a mane.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_019.mp3",
+        "text_vi": "Sư tử đực có bờm."
+      },
+      {
+        "text_en": "Where is the mane on this lion?",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_020.mp3",
+        "text_vi": "Bờm của con sư tử này ở đâu?"
+      },
+      {
+        "text_en": "This is the crested crane.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_021.mp3",
+        "text_vi": "Đây là con sếu đầu vương miện."
+      },
+      {
+        "text_en": "It is the symbol of Uganda.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_022.mp3",
+        "text_vi": "Nó là biểu tượng của Uganda."
+      },
+      {
+        "text_en": "It has long legs and a crown.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_023.mp3",
+        "text_vi": "Nó có đôi chân dài và một cái vương miện."
+      },
+      {
+        "text_en": "What are the colours of the crested crane?",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_024.mp3",
+        "text_vi": "Con sếu đầu vương miện có những màu gì?"
+      },
+      {
+        "text_en": "These are water buffalo.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_025.mp3",
+        "text_vi": "Đây là những con trâu nước."
+      },
+      {
+        "text_en": "They eats grasses and live near rivers and lakes.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_026.mp3",
+        "text_vi": "Chúng ăn cỏ và sống gần sông, hồ."
+      },
+      {
+        "text_en": "What does a water buffalo have growing on its head?",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_027.mp3",
+        "text_vi": "Con trâu nước có gì mọc trên đầu?"
+      },
+      {
+        "text_en": "These animals are called zebras.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_028.mp3",
+        "text_vi": "Những con vật này được gọi là ngựa vằn."
+      },
+      {
+        "text_en": "They have black and white stripes.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_029.mp3",
+        "text_vi": "Chúng có sọc đen và trắng."
+      },
+      {
+        "text_en": "What other animal do you know that looks like a zebra?",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_030.mp3",
+        "text_vi": "Bạn biết con vật nào khác trông giống ngựa vằn không?"
+      },
+      {
+        "text_en": "Here are two different types of animals.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_031.mp3",
+        "text_vi": "Đây là hai loại động vật khác nhau."
+      },
+      {
+        "text_en": "There is a mother warthog with her babies.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_032.mp3",
+        "text_vi": "Có một con lợn bướu mẹ với những con non của nó."
+      },
+      {
+        "text_en": "Warthogs have tusks too.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_033.mp3",
+        "text_vi": "Lợn bướu cũng có ngà."
+      },
+      {
+        "text_en": "How many warthogs can you count in the picture?",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_034.mp3",
+        "text_vi": "Bạn có thể đếm được bao nhiêu con lợn bướu trong bức tranh?"
+      },
+      {
+        "text_en": "The other animals are antelopes.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_035.mp3",
+        "text_vi": "Những con vật khác là linh dương."
+      },
+      {
+        "text_en": "They eat grasses.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_036.mp3",
+        "text_vi": "Chúng ăn cỏ."
+      },
+      {
+        "text_en": "What colour is the antelope?",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_037.mp3",
+        "text_vi": "Con linh dương màu gì?"
+      },
+      {
+        "text_en": "What types of animals do you see?",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_038.mp3",
+        "text_vi": "Bạn thấy những loại động vật nào?"
+      },
+      {
+        "text_en": "Where do they live?",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_039.mp3",
+        "text_vi": "Chúng sống ở đâu?"
+      },
+      {
+        "text_en": "Which one would you eat?",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_040.mp3",
+        "text_vi": "Bạn sẽ ăn con nào?"
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "These are giraffes.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "They have very long necks.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "They eat leaves from tall trees.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "What colour is a giraffe?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "This is an elephant.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "The males have white tusks.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "They have large ears.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "Elephants have long trunks.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "They use their trunks to pick leaves off the tall trees.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "Elephants eat grasses and leaves.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "What colour is the elephant?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "This is a crocodile.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "It lives in the rivers and lakes.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_012.mp3"
+        },
+        {
+          "id": "ra_13",
+          "text_en": "It has a long tail.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_013.mp3"
+        },
+        {
+          "id": "ra_14",
+          "text_en": "It has a wide mouth and many sharp teeth.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_014.mp3"
+        },
+        {
+          "id": "ra_15",
+          "text_en": "It eats fish and other animals.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_015.mp3"
+        },
+        {
+          "id": "ra_16",
+          "text_en": "What colour is the crocodile?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_016.mp3"
+        },
+        {
+          "id": "ra_17",
+          "text_en": "This is a lion.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_017.mp3"
+        },
+        {
+          "id": "ra_18",
+          "text_en": "It has big, sharp teeth.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_018.mp3"
+        },
+        {
+          "id": "ra_19",
+          "text_en": "Male lions have a mane.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_019.mp3"
+        },
+        {
+          "id": "ra_20",
+          "text_en": "Where is the mane on this lion?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_020.mp3"
+        },
+        {
+          "id": "ra_21",
+          "text_en": "This is the crested crane.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_021.mp3"
+        },
+        {
+          "id": "ra_22",
+          "text_en": "It is the symbol of Uganda.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_022.mp3"
+        },
+        {
+          "id": "ra_23",
+          "text_en": "It has long legs and a crown.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_023.mp3"
+        },
+        {
+          "id": "ra_24",
+          "text_en": "What are the colours of the crested crane?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_024.mp3"
+        },
+        {
+          "id": "ra_25",
+          "text_en": "These are water buffalo.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_025.mp3"
+        },
+        {
+          "id": "ra_26",
+          "text_en": "They eats grasses and live near rivers and lakes.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_026.mp3"
+        },
+        {
+          "id": "ra_27",
+          "text_en": "What does a water buffalo have growing on its head?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_027.mp3"
+        },
+        {
+          "id": "ra_28",
+          "text_en": "These animals are called zebras.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_028.mp3"
+        },
+        {
+          "id": "ra_29",
+          "text_en": "They have black and white stripes.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_029.mp3"
+        },
+        {
+          "id": "ra_30",
+          "text_en": "What other animal do you know that looks like a zebra?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_030.mp3"
+        },
+        {
+          "id": "ra_31",
+          "text_en": "Here are two different types of animals.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_031.mp3"
+        },
+        {
+          "id": "ra_32",
+          "text_en": "There is a mother warthog with her babies.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_032.mp3"
+        },
+        {
+          "id": "ra_33",
+          "text_en": "Warthogs have tusks too.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_033.mp3"
+        },
+        {
+          "id": "ra_34",
+          "text_en": "How many warthogs can you count in the picture?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_034.mp3"
+        },
+        {
+          "id": "ra_35",
+          "text_en": "The other animals are antelopes.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_035.mp3"
+        },
+        {
+          "id": "ra_36",
+          "text_en": "They eat grasses.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_036.mp3"
+        },
+        {
+          "id": "ra_37",
+          "text_en": "What colour is the antelope?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_037.mp3"
+        },
+        {
+          "id": "ra_38",
+          "text_en": "What types of animals do you see?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_038.mp3"
+        },
+        {
+          "id": "ra_39",
+          "text_en": "Where do they live?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_039.mp3"
+        },
+        {
+          "id": "ra_40",
+          "text_en": "Which one would you eat?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118925/s_040.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "What are these?",
+          "options_en": [
+            "Giraffes",
+            "Elephants",
+            "Crocodiles"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "Which animals are shown?",
+          "options_en": [
+            "Giraffes",
+            "Zebras",
+            "Lions"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s1_q1",
+          "type": "choice",
+          "question_en": "What do they have?",
+          "options_en": [
+            "Very long necks",
+            "Long trunks",
+            "White tusks"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s1_q2",
+          "type": "choice",
+          "question_en": "How are their necks?",
+          "options_en": [
+            "Very long",
+            "Wide like a mouth",
+            "Big like ears"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s2_q1",
+          "type": "choice",
+          "question_en": "What do they eat?",
+          "options_en": [
+            "Leaves from tall trees",
+            "Grasses",
+            "Fish"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s2_q2",
+          "type": "choice",
+          "question_en": "Where do they eat leaves from?",
+          "options_en": [
+            "Tall trees",
+            "Rivers and lakes",
+            "On the ground with grasses"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s3_q1",
+          "type": "choice",
+          "question_en": "What does this sentence ask about a giraffe?",
+          "options_en": [
+            "Its colour",
+            "Its neck",
+            "Its diet"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p0_s3_q2",
+          "type": "choice",
+          "question_en": "Who is the sentence asking about?",
+          "options_en": [
+            "A giraffe",
+            "An elephant",
+            "A crocodile"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "What is this?",
+          "options_en": [
+            "An elephant",
+            "A giraffe",
+            "A crocodile"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "Which animal is being shown?",
+          "options_en": [
+            "Elephant",
+            "Giraffe",
+            "Crocodile"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p1_s1_q1",
+          "type": "choice",
+          "question_en": "Who have white tusks?",
+          "options_en": [
+            "The males",
+            "The crocodiles",
+            "The warthogs"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p1_s1_q2",
+          "type": "choice",
+          "question_en": "What colour are the tusks?",
+          "options_en": [
+            "White",
+            "Black and white",
+            "Green"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p1_s2_q1",
+          "type": "choice",
+          "question_en": "What do they have?",
+          "options_en": [
+            "Large ears",
+            "Long necks",
+            "A long tail"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p1_s2_q2",
+          "type": "choice",
+          "question_en": "Who have large ears?",
+          "options_en": [
+            "They (the elephants)",
+            "Giraffes",
+            "Crocodiles"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p1_s3_q1",
+          "type": "choice",
+          "question_en": "What do elephants have?",
+          "options_en": [
+            "Long trunks",
+            "Long necks",
+            "A wide mouth"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p1_s3_q2",
+          "type": "choice",
+          "question_en": "Which animals have long trunks?",
+          "options_en": [
+            "Elephants",
+            "Giraffes",
+            "Crocodiles"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p1_s4_q1",
+          "type": "choice",
+          "question_en": "What do they use to pick leaves?",
+          "options_en": [
+            "Their trunks",
+            "Their long necks",
+            "Their long tail"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p1_s4_q2",
+          "type": "choice",
+          "question_en": "Where do they pick leaves off?",
+          "options_en": [
+            "Tall trees",
+            "Rivers and lakes",
+            "Tall grasses"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p1_s5_q1",
+          "type": "choice",
+          "question_en": "What do elephants eat?",
+          "options_en": [
+            "Grasses and leaves",
+            "Fish and other animals",
+            "Meat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p1_s5_q2",
+          "type": "choice",
+          "question_en": "Which of these is part of an elephant's diet?",
+          "options_en": [
+            "Leaves",
+            "Fish",
+            "Antelopes"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p1_s6_q1",
+          "type": "choice",
+          "question_en": "What is being asked about the elephant?",
+          "options_en": [
+            "Its colour",
+            "What it eats",
+            "Where it lives"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p1_s6_q2",
+          "type": "choice",
+          "question_en": "Which question is written at the end?",
+          "options_en": [
+            "What colour is the elephant?",
+            "Where does the elephant live?",
+            "What does the elephant eat?"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "Who is this?",
+          "options_en": [
+            "A crocodile",
+            "A giraffe",
+            "An elephant"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "What is this?",
+          "options_en": [
+            "A crocodile",
+            "A lion",
+            "A zebra"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p2_s1_q1",
+          "type": "choice",
+          "question_en": "Where does it live?",
+          "options_en": [
+            "In the rivers and lakes",
+            "In tall trees",
+            "On the grasslands"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p2_s1_q2",
+          "type": "choice",
+          "question_en": "Which places does it live in?",
+          "options_en": [
+            "Rivers and lakes",
+            "Near tall trees",
+            "In the savannah"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p2_s2_q1",
+          "type": "choice",
+          "question_en": "What does it have that is long?",
+          "options_en": [
+            "A long tail",
+            "A long neck",
+            "A long trunk"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p2_s2_q2",
+          "type": "choice",
+          "question_en": "Which body part is described as long?",
+          "options_en": [
+            "Tail",
+            "Neck",
+            "Trunk"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p2_s3_q1",
+          "type": "choice",
+          "question_en": "What kind of mouth does it have?",
+          "options_en": [
+            "A wide mouth",
+            "A long trunk",
+            "A mane"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p2_s3_q2",
+          "type": "choice",
+          "question_en": "What does it have many of?",
+          "options_en": [
+            "Sharp teeth",
+            "Long legs",
+            "Tusks"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p2_s4_q1",
+          "type": "choice",
+          "question_en": "What does it eat?",
+          "options_en": [
+            "Fish and other animals",
+            "Leaves from tall trees",
+            "Grasses"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p2_s4_q2",
+          "type": "choice",
+          "question_en": "Which of these is part of its diet?",
+          "options_en": [
+            "Fish",
+            "Leaves",
+            "Grass"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p2_s5_q1",
+          "type": "choice",
+          "question_en": "What is the question asking about the crocodile?",
+          "options_en": [
+            "Its colour",
+            "How many babies it has",
+            "Where it lives"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p2_s5_q2",
+          "type": "choice",
+          "question_en": "Which property of the crocodile is being asked?",
+          "options_en": [
+            "Colour",
+            "Diet",
+            "Number of tusks"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "What is this animal?",
+          "options_en": [
+            "A lion",
+            "A giraffe",
+            "An elephant"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "Which animal is shown?",
+          "options_en": [
+            "Lion",
+            "Crocodile",
+            "Zebra"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p3_s1_q1",
+          "type": "choice",
+          "question_en": "What does it have?",
+          "options_en": [
+            "Big, sharp teeth",
+            "A long neck",
+            "A long trunk"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p3_s1_q2",
+          "type": "choice",
+          "question_en": "How are its teeth described?",
+          "options_en": [
+            "Big and sharp",
+            "White tusks",
+            "Black and white stripes"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p3_s2_q1",
+          "type": "choice",
+          "question_en": "Which lions have a mane?",
+          "options_en": [
+            "Male lions",
+            "Giraffes",
+            "Crocodiles"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p3_s2_q2",
+          "type": "choice",
+          "question_en": "What do male lions have?",
+          "options_en": [
+            "A mane",
+            "White tusks",
+            "A crown"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p3_s3_q1",
+          "type": "choice",
+          "question_en": "Where is the mane on this lion?",
+          "options_en": [
+            "Around its neck",
+            "On its trunk",
+            "On its tail"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p3_s3_q2",
+          "type": "choice",
+          "question_en": "Which part of the lion has the mane?",
+          "options_en": [
+            "Its head/neck",
+            "Its ears",
+            "Its legs"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "What is this?",
+          "options_en": [
+            "The crested crane",
+            "A giraffe",
+            "An elephant"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "Which animal is shown?",
+          "options_en": [
+            "The crested crane",
+            "A crocodile",
+            "A lion"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p4_s1_q1",
+          "type": "choice",
+          "question_en": "What is it a symbol of?",
+          "options_en": [
+            "Uganda",
+            "Giraffe",
+            "Elephant"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p4_s1_q2",
+          "type": "choice",
+          "question_en": "Which country is mentioned as associated with it?",
+          "options_en": [
+            "Uganda",
+            "Zambia",
+            "Kenya"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p4_s2_q1",
+          "type": "choice",
+          "question_en": "What does it have?",
+          "options_en": [
+            "Long legs and a crown",
+            "A mane and big teeth",
+            "Black and white stripes"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p4_s2_q2",
+          "type": "choice",
+          "question_en": "What else does it have besides long legs?",
+          "options_en": [
+            "A crown",
+            "A mane",
+            "White tusks"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p4_s3_q1",
+          "type": "choice",
+          "question_en": "What is the question asking about the crested crane?",
+          "options_en": [
+            "Its colours",
+            "Its long legs",
+            "Its habitat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p4_s3_q2",
+          "type": "choice",
+          "question_en": "Which aspect of the crested crane does the question ask?",
+          "options_en": [
+            "Colours",
+            "Ears",
+            "Stripes"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "What are these?",
+          "options_en": [
+            "water buffalo",
+            "giraffes",
+            "zebras"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "Which animals are shown?",
+          "options_en": [
+            "water buffalo",
+            "crocodiles",
+            "antelopes"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p5_s1_q1",
+          "type": "choice",
+          "question_en": "What do they eat?",
+          "options_en": [
+            "grasses",
+            "leaves",
+            "fish"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p5_s1_q2",
+          "type": "choice",
+          "question_en": "Where do they live?",
+          "options_en": [
+            "near rivers and lakes",
+            "in tall trees",
+            "on the plains"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p5_s2_q1",
+          "type": "choice",
+          "question_en": "What does the sentence ask about a water buffalo?",
+          "options_en": [
+            "what it has growing on its head",
+            "what colour it is",
+            "where it lives"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        },
+        {
+          "id": "gl_p5_s2_q2",
+          "type": "choice",
+          "question_en": "Which body part is mentioned in the question?",
+          "options_en": [
+            "head",
+            "neck",
+            "tail"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "What are these animals called?",
+          "options_en": [
+            "Zebras",
+            "Giraffes",
+            "Elephants"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "Which animals does the sentence name?",
+          "options_en": [
+            "Zebras",
+            "Crocodiles",
+            "Lions"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        },
+        {
+          "id": "gl_p6_s1_q1",
+          "type": "choice",
+          "question_en": "What do they have?",
+          "options_en": [
+            "Black and white stripes",
+            "Very long necks",
+            "Long trunks"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p6_s1_q2",
+          "type": "choice",
+          "question_en": "How are their stripes described?",
+          "options_en": [
+            "Black and white",
+            "Big, sharp",
+            "Long tail"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p6_s2_q1",
+          "type": "choice",
+          "question_en": "What does the last sentence ask you to name?",
+          "options_en": [
+            "Another animal that looks like a zebra",
+            "The colour of the elephant",
+            "How many warthogs"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        },
+        {
+          "id": "gl_p6_s2_q2",
+          "type": "choice",
+          "question_en": "Which kind of creature is the question asking about?",
+          "options_en": [
+            "An animal that looks like a zebra",
+            "A tall tree",
+            "A river animal"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "How many different types of animals are there?",
+          "options_en": [
+            "Two different types",
+            "Giraffes and elephants",
+            "Many animals"
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "What is being shown in the picture?",
+          "options_en": [
+            "Two different types of animals",
+            "A single giraffe",
+            "An elephant herd"
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        },
+        {
+          "id": "gl_p7_s1_q1",
+          "type": "choice",
+          "question_en": "Who is with the babies?",
+          "options_en": [
+            "A mother warthog",
+            "A male lion",
+            "A crested crane"
+          ],
+          "correct_index": 0,
+          "sentence_index": 32
+        },
+        {
+          "id": "gl_p7_s1_q2",
+          "type": "choice",
+          "question_en": "What animal has babies in the sentence?",
+          "options_en": [
+            "Warthog",
+            "Zebra",
+            "Crocodile"
+          ],
+          "correct_index": 0,
+          "sentence_index": 32
+        },
+        {
+          "id": "gl_p7_s2_q1",
+          "type": "choice",
+          "question_en": "What do warthogs have too?",
+          "options_en": [
+            "Tusks",
+            "Long necks",
+            "A mane"
+          ],
+          "correct_index": 0,
+          "sentence_index": 33
+        },
+        {
+          "id": "gl_p7_s2_q2",
+          "type": "choice",
+          "question_en": "Why might a warthog be recognized in the picture?",
+          "options_en": [
+            "Because it has tusks",
+            "Because it has stripes",
+            "Because it has a long trunk"
+          ],
+          "correct_index": 0,
+          "sentence_index": 33
+        },
+        {
+          "id": "gl_p7_s3_q1",
+          "type": "choice",
+          "question_en": "How many warthogs does the sentence ask you to count?",
+          "options_en": [
+            "The number of warthogs in the picture",
+            "The number of giraffes",
+            "The number of zebras"
+          ],
+          "correct_index": 0,
+          "sentence_index": 34
+        },
+        {
+          "id": "gl_p7_s3_q2",
+          "type": "choice",
+          "question_en": "What does the question in the sentence ask about?",
+          "options_en": [
+            "How many warthogs you can count",
+            "Where the animals live",
+            "What the animals eat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 34
+        },
+        {
+          "id": "gl_p7_s4_q1",
+          "type": "choice",
+          "question_en": "What are the other animals called?",
+          "options_en": [
+            "Antelopes",
+            "Crocodiles",
+            "Water buffalo"
+          ],
+          "correct_index": 0,
+          "sentence_index": 35
+        },
+        {
+          "id": "gl_p7_s4_q2",
+          "type": "choice",
+          "question_en": "Which animals are mentioned as the other group?",
+          "options_en": [
+            "Antelopes",
+            "Giraffes",
+            "Lions"
+          ],
+          "correct_index": 0,
+          "sentence_index": 35
+        },
+        {
+          "id": "gl_p7_s5_q1",
+          "type": "choice",
+          "question_en": "What do they eat?",
+          "options_en": [
+            "Grasses",
+            "Fish",
+            "Leaves from tall trees"
+          ],
+          "correct_index": 0,
+          "sentence_index": 36
+        },
+        {
+          "id": "gl_p7_s5_q2",
+          "type": "choice",
+          "question_en": "Why are the animals mentioned in this sentence likely to be found grazing?",
+          "options_en": [
+            "Because they eat grasses",
+            "Because they have sharp teeth",
+            "Because they live in rivers"
+          ],
+          "correct_index": 0,
+          "sentence_index": 36
+        },
+        {
+          "id": "gl_p7_s6_q1",
+          "type": "choice",
+          "question_en": "What colour is the antelope?",
+          "options_en": [
+            "The sentence asks what colour the antelope is",
+            "The sentence asks where the antelope lives",
+            "The sentence asks how many antelopes there are"
+          ],
+          "correct_index": 0,
+          "sentence_index": 37
+        },
+        {
+          "id": "gl_p7_s6_q2",
+          "type": "choice",
+          "question_en": "Which detail does the sentence ask about the antelope?",
+          "options_en": [
+            "Its colour",
+            "Its tail length",
+            "Its number of tusks"
+          ],
+          "correct_index": 0,
+          "sentence_index": 37
+        }
+      ]
+    },
+    {
+      "paragraph_index": 8,
+      "questions": [
+        {
+          "id": "gl_p8_s0_q1",
+          "type": "choice",
+          "question_en": "What does the question ask you to name?",
+          "options_en": [
+            "types of animals",
+            "giraffes",
+            "elephants"
+          ],
+          "correct_index": 0,
+          "sentence_index": 38
+        },
+        {
+          "id": "gl_p8_s0_q2",
+          "type": "choice",
+          "question_en": "Which thing are you asked to look at?",
+          "options_en": [
+            "animals",
+            "tall trees",
+            "long trunks"
+          ],
+          "correct_index": 0,
+          "sentence_index": 38
+        },
+        {
+          "id": "gl_p8_s1_q1",
+          "type": "choice",
+          "question_en": "What is the question asking about?",
+          "options_en": [
+            "where they live",
+            "what colour they are",
+            "what they eat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 39
+        },
+        {
+          "id": "gl_p8_s1_q2",
+          "type": "choice",
+          "question_en": "Which place-related detail does the question want?",
+          "options_en": [
+            "where they live",
+            "rivers and lakes",
+            "tall trees"
+          ],
+          "correct_index": 0,
+          "sentence_index": 39
+        },
+        {
+          "id": "gl_p8_s2_q1",
+          "type": "choice",
+          "question_en": "What does the question ask you to choose?",
+          "options_en": [
+            "which one you would eat",
+            "which one has a mane",
+            "which one has stripes"
+          ],
+          "correct_index": 0,
+          "sentence_index": 40
+        },
+        {
+          "id": "gl_p8_s2_q2",
+          "type": "choice",
+          "question_en": "Which action does the question ask about?",
+          "options_en": [
+            "eat",
+            "pick leaves",
+            "have a mane"
+          ],
+          "correct_index": 0,
+          "sentence_index": 40
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'Animals of Uganda'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "giraffes",
+      "meaning_vi": "hươu cao cổ",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "necks",
+      "meaning_vi": "cái cổ",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "leaves",
+      "meaning_vi": "lá cây",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "tall",
+      "meaning_vi": "cao",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "elephant",
+      "meaning_vi": "con voi",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "tusks",
+      "meaning_vi": "ngà voi",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "trunks",
+      "meaning_vi": "vòi voi",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "pick",
+      "meaning_vi": "hái, nhặt",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "crocodile",
+      "meaning_vi": "cá sấu",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "rivers",
+      "meaning_vi": "sông",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "lakes",
+      "meaning_vi": "hồ",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "sharp",
+      "meaning_vi": "sắc, nhọn",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "lion",
+      "meaning_vi": "sư tử",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "sharp",
+      "meaning_vi": "sắc, nhọn",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "mane",
+      "meaning_vi": "bờm (sư tử)",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "crested crane",
+      "meaning_vi": "sếu đầu vương miện",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "symbol",
+      "meaning_vi": "biểu tượng",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "legs",
+      "meaning_vi": "chân",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "crown",
+      "meaning_vi": "vương miện",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "water buffalo",
+      "meaning_vi": "trâu nước",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "grasses",
+      "meaning_vi": "cỏ",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "growing",
+      "meaning_vi": "mọc (trên đầu)",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "head",
+      "meaning_vi": "đầu",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "zebras",
+      "meaning_vi": "ngựa vằn",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "stripes",
+      "meaning_vi": "sọc, vằn",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "looks like",
+      "meaning_vi": "trông giống",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "different",
+      "meaning_vi": "khác nhau",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "warthog",
+      "meaning_vi": "lợn bướu",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "count",
+      "meaning_vi": "đếm",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "antelopes",
+      "meaning_vi": "linh dương",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "types",
+      "meaning_vi": "loại",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "live",
+      "meaning_vi": "sống",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "eat",
+      "meaning_vi": "ăn",
+      "paragraph_index": 8
+    }
+  ]
+}

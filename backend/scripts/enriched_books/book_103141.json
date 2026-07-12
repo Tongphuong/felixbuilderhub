@@ -1,0 +1,515 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L0",
+  "level_label": "Cấp 0",
+  "topic": "Let's Count Legs",
+  "slug": "book_103141",
+  "audio_filename": "book_103141.mp3",
+  "book_slug": "book_103141",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_103141/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103141/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103141/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103141/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103141/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103141/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103141/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103141/page_09.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_103141/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103141/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103141/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103141/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103141/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103141/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103141/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103141/page_09.mp3"
+  ],
+  "book_attribution": {
+    "title": "Let's Count Legs",
+    "creators": [
+      "All Children Reading Cambodia",
+      "Measa Sovonnarea"
+    ],
+    "publisher": "The Asia Foundation",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: Let's Count Legs is written by All Children Reading Cambodia . © Let's Read , 2018. Some rights reserved. Released under CC BY 4.0 license. Other Credits: This story 'Let's Count Legs' has been published on StoryWeaver by Asia Foundation. Images Attributions: Cover page: Animal Legs , by Measa Sovonnarea © The Asia Foundation, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 2: Chirping Bird , by Measa Sovonnarea © The Asia Foundation, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 3: Crane looking at its feet , by Measa Sovonnarea © The Asia Foundation, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 4: Crane on Cow , by Measa Sovonnarea © The Asia Foundation, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 5: Cicada on elephant tail , by Measa Sovonnarea © The Asia Foundation, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 6: Cicada singing on a branch , by Measa Sovonnarea © The Asia Foundation, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 7: Firefly in the darkness , by Measa Sovonnarea © The Asia Foundation, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 8: Spider Web , by Measa Sovonnarea © The Asia Foundation, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 9: The octopus with books , by Measa Sovonnarea © The Asia Foundation, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 10: All the birds, insects and animals , by Measa Sovonnarea © The Asia Foundation, 2018. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/103141-let-s-count-legs",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "Chirping Bird , by Measa Sovonnarea © The Asia Foundation, 2018. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "Crane looking at its feet , by Measa Sovonnarea © The Asia Foundation, 2018. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "Crane on Cow , by Measa Sovonnarea © The Asia Foundation, 2018. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "Cicada on elephant tail , by Measa Sovonnarea © The Asia Foundation, 2018. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "Cicada singing on a branch , by Measa Sovonnarea © The Asia Foundation, 2018. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "Firefly in the darkness , by Measa Sovonnarea © The Asia Foundation, 2018. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "Spider Web , by Measa Sovonnarea © The Asia Foundation, 2018. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "The octopus with books , by Measa Sovonnarea © The Asia Foundation, 2018. Some rights reserved. Released under CC BY 4.0 license."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "Let's Count Legs",
+    "paragraphs_en": [
+      "Bird has two legs.",
+      "Egret has two legs too.",
+      "Cow has four legs.",
+      "Elephant has four legs too.",
+      "Cicada has six legs.",
+      "Firefly has six legs too.",
+      "Spider has eight legs.",
+      "Octopus has eight legs too."
+    ],
+    "sentences": [
+      {
+        "text_en": "Bird has two legs.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103141/s_000.mp3",
+        "text_vi": "Chim có hai chân."
+      },
+      {
+        "text_en": "Egret has two legs too.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103141/s_001.mp3",
+        "text_vi": "Cò cũng có hai chân."
+      },
+      {
+        "text_en": "Cow has four legs.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103141/s_002.mp3",
+        "text_vi": "Bò có bốn chân."
+      },
+      {
+        "text_en": "Elephant has four legs too.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103141/s_003.mp3",
+        "text_vi": "Voi cũng có bốn chân."
+      },
+      {
+        "text_en": "Cicada has six legs.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103141/s_004.mp3",
+        "text_vi": "Ve sầu có sáu chân."
+      },
+      {
+        "text_en": "Firefly has six legs too.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103141/s_005.mp3",
+        "text_vi": "Đom đóm cũng có sáu chân."
+      },
+      {
+        "text_en": "Spider has eight legs.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103141/s_006.mp3",
+        "text_vi": "Nhện có tám chân."
+      },
+      {
+        "text_en": "Octopus has eight legs too.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103141/s_007.mp3",
+        "text_vi": "Bạch tuộc cũng có tám chân."
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "Bird has two legs.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103141/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "Egret has two legs too.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103141/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "Cow has four legs.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103141/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "Elephant has four legs too.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103141/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "Cicada has six legs.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103141/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "Firefly has six legs too.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103141/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "Spider has eight legs.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103141/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "Octopus has eight legs too.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103141/s_007.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "How many legs does the bird have?",
+          "options_en": [
+            "Two legs",
+            "Four legs",
+            "Six legs"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "What has two legs?",
+          "options_en": [
+            "Bird",
+            "Egret",
+            "Cow"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "What has two legs too?",
+          "options_en": [
+            "Egret",
+            "Cow",
+            "Spider"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "How many legs does the egret have?",
+          "options_en": [
+            "Two legs",
+            "Four legs",
+            "Six legs"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "How many legs does the cow have?",
+          "options_en": [
+            "Four",
+            "Two",
+            "Six"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "Which animal has four legs?",
+          "options_en": [
+            "Cow",
+            "Bird",
+            "Spider"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "How many legs does the elephant have?",
+          "options_en": [
+            "four legs",
+            "two legs",
+            "six legs"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "Which animal has four legs too?",
+          "options_en": [
+            "Elephant",
+            "Cow",
+            "Bird"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "How many legs does the cicada have?",
+          "options_en": [
+            "Six legs",
+            "Two legs",
+            "Four legs"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "Which animal has six legs?",
+          "options_en": [
+            "Cicada",
+            "Bird",
+            "Spider"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "What has six legs?",
+          "options_en": [
+            "Firefly",
+            "Cicada",
+            "Bird"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "How many legs does the firefly have?",
+          "options_en": [
+            "Six legs",
+            "Two legs",
+            "Four legs"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "How many legs does the spider have?",
+          "options_en": [
+            "Eight legs",
+            "Two legs",
+            "Six legs"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "Which animal has eight legs?",
+          "options_en": [
+            "Spider",
+            "Octopus",
+            "Cow"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "How many legs does the octopus have?",
+          "options_en": [
+            "Eight legs",
+            "Two legs",
+            "Four legs"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "Which animal has eight legs too?",
+          "options_en": [
+            "Octopus",
+            "Spider",
+            "Cow"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'Let's Count Legs'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "Bird",
+      "meaning_vi": "Con chim",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "legs",
+      "meaning_vi": "chân",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "Egret",
+      "meaning_vi": "Con cò",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "too",
+      "meaning_vi": "cũng vậy",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "Cow",
+      "meaning_vi": "Con bò",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "four",
+      "meaning_vi": "bốn",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "Elephant",
+      "meaning_vi": "Con voi",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "too",
+      "meaning_vi": "cũng vậy",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "Cicada",
+      "meaning_vi": "Con ve sầu",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "six",
+      "meaning_vi": "sáu",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "Firefly",
+      "meaning_vi": "Con đom đóm",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "too",
+      "meaning_vi": "cũng vậy",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "Spider",
+      "meaning_vi": "Con nhện",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "eight",
+      "meaning_vi": "tám",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "Octopus",
+      "meaning_vi": "Con bạch tuộc",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "too",
+      "meaning_vi": "cũng vậy",
+      "paragraph_index": 7
+    }
+  ]
+}

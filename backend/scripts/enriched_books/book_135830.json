@@ -1,0 +1,762 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L2",
+  "level_label": "Cấp 2",
+  "topic": "It is all the cat's fault!",
+  "slug": "book_135830",
+  "audio_filename": "book_135830.mp3",
+  "book_slug": "book_135830",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_135830/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_135830/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_135830/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_135830/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_135830/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_135830/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_135830/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_135830/page_09.jpg",
+    "https://audio.felixbuilderhub.com/books/book_135830/page_10.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_135830/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_135830/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_135830/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_135830/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_135830/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_135830/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_135830/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_135830/page_09.mp3",
+    "https://audio.felixbuilderhub.com/books/book_135830/page_10.mp3"
+  ],
+  "book_attribution": {
+    "title": "It is all the cat's fault!",
+    "creators": [
+      "Gayatri Aich",
+      "Priya Kuriyan"
+    ],
+    "publisher": "StoryWeaver Community",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: It is all the cat's fault! is translated by Gayatri Aich . The © for this translation lies with Gayatri Aich , 2020. Some rights reserved. Released under CC BY 4.0 license. Derived from: ' Die Katze ist schuld! ' , by Martina Endlein Monteiro . © Martina Endlein Monteiro , 2016. Some rights reserved. Released under CC BY 4.0 license. Based on Original story: ' It's All the Cat's Fault! ' , by Anushka Ravishankar . © StoryWeaver , 2015. Some rights reserved. Released under CC BY 4.0 license. This story may have intermediate versions between the root and parent story. To see all versions, please visit the links. Images Attributions: Cover page: Cat stuck on a tree , by Priya Kuriyan © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 2: Teacher and boy in the class , by Priya Kuriyan © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 3: Cat on a tree, boy moving a ladder , by Priya Kuriyan © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 4: Boy repairing a ladder, baby crying in the house , by Priya Kuriyan © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 5: Monkey in the kitchen, woman running towards crying baby , by Priya Kuriyan © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 6: Monkey eating food from a kitchen , by Priya Kuriyan © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 7: Scene at a tea shop, dog chasing a man , by Priya Kuriyan © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 8: Dog chewing on a boy's red book , by Priya Kuriyan © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 9: Teacher scolding a student , by Priya Kuriyan © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/135830-it-is-all-the-cat-s-fault",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "Teacher and boy in the class , by Priya Kuriyan © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "Cat on a tree, boy moving a ladder , by Priya Kuriyan © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "Boy repairing a ladder, baby crying in the house , by Priya Kuriyan © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "Monkey in the kitchen, woman running towards crying baby , by Priya Kuriyan © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "Monkey eating food from a kitchen , by Priya Kuriyan © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "Scene at a tea shop, dog chasing a man , by Priya Kuriyan © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "Dog chewing on a boy's red book , by Priya Kuriyan © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "Teacher scolding a student , by Priya Kuriyan © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 8,
+        "credit_text": "Illustration by Priya Kuriyan."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "It is all the cat's fault!",
+    "paragraphs_en": [
+      "Why have you not done your homework? The cat is to blame, teacher.",
+      "If she had not climbed the tree and gotten stuck, I would not have taken the ladder to climb it.",
+      "If I had not taken the ladder to climb it, I would not have to repair it . If I had not had to repair it, I would not have woken the baby up.",
+      "If I had not woken the baby up, my mother would not have rushed out of the kitchen. If my mother had not rushed out of the kitchen, the monkey would not have gotten in.",
+      "If the monkey would not have gotten in, he would not have eaten all the food. If he had not eaten all the food, my father would not have bought rotis and chicken curry from the tea-shop.",
+      "If my father had not bought rotis and chicken curry from the tea-shop, the dog would not have followed him.",
+      "If the dog had not followed him, he would not have eaten my homework.",
+      "So, you are saying that the dog ate your homework?",
+      "Yes, teacher! It is all the cat's fault!"
+    ],
+    "sentences": [
+      {
+        "text_en": "Why have you not done your homework?",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135830/s_000.mp3",
+        "text_vi": "Sao con chưa làm bài tập về nhà?"
+      },
+      {
+        "text_en": "The cat is to blame, teacher.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135830/s_001.mp3",
+        "text_vi": "Là lỗi của con mèo, thưa cô."
+      },
+      {
+        "text_en": "If she had not climbed the tree and gotten stuck, I would not have taken the ladder to climb it.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135830/s_002.mp3",
+        "text_vi": "Nếu nó không trèo cây và bị kẹt, thì con đã không lấy thang để trèo lên."
+      },
+      {
+        "text_en": "If I had not taken the ladder to climb it, I would not have to repair it .",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135830/s_003.mp3",
+        "text_vi": "Nếu con không lấy thang để trèo lên, thì con đã không phải sửa nó."
+      },
+      {
+        "text_en": "If I had not had to repair it, I would not have woken the baby up.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135830/s_004.mp3",
+        "text_vi": "Nếu con không phải sửa nó, thì con đã không đánh thức em bé dậy."
+      },
+      {
+        "text_en": "If I had not woken the baby up, my mother would not have rushed out of the kitchen.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135830/s_005.mp3",
+        "text_vi": "Nếu con không đánh thức em bé dậy, thì mẹ con đã không vội chạy ra khỏi bếp."
+      },
+      {
+        "text_en": "If my mother had not rushed out of the kitchen, the monkey would not have gotten in.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135830/s_006.mp3",
+        "text_vi": "Nếu mẹ con không vội chạy ra khỏi bếp, thì con khỉ đã không chui vào."
+      },
+      {
+        "text_en": "If the monkey would not have gotten in, he would not have eaten all the food.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135830/s_007.mp3",
+        "text_vi": "Nếu con khỉ không chui vào, thì nó đã không ăn hết tất cả thức ăn."
+      },
+      {
+        "text_en": "If he had not eaten all the food, my father would not have bought rotis and chicken curry from the tea-shop.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135830/s_008.mp3",
+        "text_vi": "Nếu nó không ăn hết thức ăn, thì bố con đã không mua bánh mì dẹt và cà ri gà ở quán trà."
+      },
+      {
+        "text_en": "If my father had not bought rotis and chicken curry from the tea-shop, the dog would not have followed him.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135830/s_009.mp3",
+        "text_vi": "Nếu bố con không mua bánh mì dẹt và cà ri gà ở quán trà, thì con chó đã không đi theo ông ấy."
+      },
+      {
+        "text_en": "If the dog had not followed him, he would not have eaten my homework.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135830/s_010.mp3",
+        "text_vi": "Nếu con chó không đi theo ông ấy, thì nó đã không ăn bài tập về nhà của con."
+      },
+      {
+        "text_en": "So, you are saying that the dog ate your homework?",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135830/s_011.mp3",
+        "text_vi": "Vậy là con đang nói con chó đã ăn bài tập về nhà của con à?"
+      },
+      {
+        "text_en": "Yes, teacher! It is all the cat's fault!",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135830/s_012.mp3",
+        "text_vi": "Vâng, thưa cô! Tất cả là lỗi của con mèo ạ!"
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "Why have you not done your homework?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135830/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "The cat is to blame, teacher.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135830/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "If she had not climbed the tree and gotten stuck, I would not have taken the ladder to climb it.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135830/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "If I had not taken the ladder to climb it, I would not have to repair it .",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135830/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "If I had not had to repair it, I would not have woken the baby up.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135830/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "If I had not woken the baby up, my mother would not have rushed out of the kitchen.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135830/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "If my mother had not rushed out of the kitchen, the monkey would not have gotten in.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135830/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "If the monkey would not have gotten in, he would not have eaten all the food.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135830/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "If he had not eaten all the food, my father would not have bought rotis and chicken curry from the tea-shop.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135830/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "If my father had not bought rotis and chicken curry from the tea-shop, the dog would not have followed him.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135830/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "If the dog had not followed him, he would not have eaten my homework.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135830/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "So, you are saying that the dog ate your homework?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135830/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "Yes, teacher! It is all the cat's fault!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135830/s_012.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "Who asks why the homework has not been done?",
+          "options_en": [
+            "The teacher",
+            "The mother",
+            "The father"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "What is the question about?",
+          "options_en": [
+            "The homework",
+            "The ladder",
+            "The baby"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s1_q1",
+          "type": "choice",
+          "question_en": "Who is blamed in the sentence?",
+          "options_en": [
+            "The cat",
+            "The dog",
+            "The monkey"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s1_q2",
+          "type": "choice",
+          "question_en": "Who is being addressed in this sentence?",
+          "options_en": [
+            "The teacher",
+            "The mother",
+            "The father"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "Who got stuck?",
+          "options_en": [
+            "She",
+            "The cat",
+            "The monkey"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "Why would I not have taken the ladder?",
+          "options_en": [
+            "Because she had not climbed the tree and gotten stuck",
+            "Because the dog ate the homework",
+            "Because my father bought rotis and chicken curry"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "Who took the ladder to climb it?",
+          "options_en": [
+            "I",
+            "the cat",
+            "my father"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "What would not have to be repaired?",
+          "options_en": [
+            "the ladder",
+            "the tree",
+            "the homework"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p2_s1_q1",
+          "type": "choice",
+          "question_en": "Why did I wake the baby up?",
+          "options_en": [
+            "Because I had to repair it",
+            "Because the cat climbed the tree",
+            "Because the dog ate the homework"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p2_s1_q2",
+          "type": "choice",
+          "question_en": "Who was woken up?",
+          "options_en": [
+            "the baby",
+            "my mother",
+            "the monkey"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "Who rushed out of the kitchen?",
+          "options_en": [
+            "my mother",
+            "the cat",
+            "my father"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "Why would my mother not have rushed out of the kitchen?",
+          "options_en": [
+            "Because I had not woken the baby up",
+            "Because the monkey got in",
+            "Because the cat climbed the tree"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p3_s1_q1",
+          "type": "choice",
+          "question_en": "Who would not have gotten in if my mother had not rushed out of the kitchen?",
+          "options_en": [
+            "the monkey",
+            "the dog",
+            "the cat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p3_s1_q2",
+          "type": "choice",
+          "question_en": "Why would the monkey not have gotten in?",
+          "options_en": [
+            "Because my mother rushed out of the kitchen",
+            "Because my father bought rotis and chicken curry",
+            "Because the cat got stuck in the tree"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "Who would have eaten all the food?",
+          "options_en": [
+            "The monkey",
+            "The dog",
+            "My father"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "What would not have happened if the monkey had not gotten in?",
+          "options_en": [
+            "He would not have eaten all the food",
+            "My father would not have bought rotis and chicken curry",
+            "The baby would not have been woken"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p4_s1_q1",
+          "type": "choice",
+          "question_en": "Who would not have bought rotis and chicken curry?",
+          "options_en": [
+            "My father",
+            "My mother",
+            "The tea-shop owner"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p4_s1_q2",
+          "type": "choice",
+          "question_en": "What would my father not have bought from the tea-shop?",
+          "options_en": [
+            "Rotis and chicken curry",
+            "A ladder",
+            "Ice cream"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "Who would not have followed him?",
+          "options_en": [
+            "the dog",
+            "the monkey",
+            "the cat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "What did my father buy from the tea-shop?",
+          "options_en": [
+            "rotis and chicken curry",
+            "a ladder",
+            "all the food"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "Who would not have eaten my homework?",
+          "options_en": [
+            "The dog",
+            "My father",
+            "The monkey"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "Why would he not have eaten my homework?",
+          "options_en": [
+            "Because the dog had not followed him",
+            "Because the cat climbed the tree",
+            "Because my mother rushed out of the kitchen"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "Who are you saying ate the homework?",
+          "options_en": [
+            "The dog",
+            "The cat",
+            "The monkey"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "What are you saying happened to your homework?",
+          "options_en": [
+            "It was eaten by the dog",
+            "It was eaten by the cat",
+            "It was eaten by the monkey"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        }
+      ]
+    },
+    {
+      "paragraph_index": 8,
+      "questions": [
+        {
+          "id": "gl_p8_s0_q1",
+          "type": "choice",
+          "question_en": "Who is the speaker addressing?",
+          "options_en": [
+            "The teacher",
+            "The mother",
+            "The father"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p8_s0_q2",
+          "type": "choice",
+          "question_en": "Which animal does the speaker blame?",
+          "options_en": [
+            "The cat",
+            "The dog",
+            "The monkey"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'It is all the cat's fault!'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "homework",
+      "meaning_vi": "bài tập về nhà",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "blame",
+      "meaning_vi": "lỗi, đổ lỗi",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "teacher",
+      "meaning_vi": "cô giáo/thầy giáo",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "climbed",
+      "meaning_vi": "trèo lên",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "stuck",
+      "meaning_vi": "bị kẹt",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "ladder",
+      "meaning_vi": "cái thang",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "repair",
+      "meaning_vi": "sửa chữa",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "woken up",
+      "meaning_vi": "đánh thức dậy",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "baby",
+      "meaning_vi": "em bé",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "rushed out",
+      "meaning_vi": "vội chạy ra",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "kitchen",
+      "meaning_vi": "nhà bếp",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "monkey",
+      "meaning_vi": "con khỉ",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "gotten in",
+      "meaning_vi": "chui vào",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "bought",
+      "meaning_vi": "đã mua",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "rotis",
+      "meaning_vi": "bánh mì dẹt",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "chicken curry",
+      "meaning_vi": "cà ri gà",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "tea-shop",
+      "meaning_vi": "quán trà",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "bought",
+      "meaning_vi": "đã mua",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "tea-shop",
+      "meaning_vi": "quán trà",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "followed",
+      "meaning_vi": "đi theo",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "followed",
+      "meaning_vi": "đi theo",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "eaten",
+      "meaning_vi": "đã ăn",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "homework",
+      "meaning_vi": "bài tập về nhà",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "saying",
+      "meaning_vi": "đang nói",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "ate",
+      "meaning_vi": "đã ăn",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "homework",
+      "meaning_vi": "bài tập về nhà",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "fault",
+      "meaning_vi": "lỗi",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "teacher",
+      "meaning_vi": "cô giáo/thầy giáo",
+      "paragraph_index": 8
+    }
+  ]
+}

@@ -1,0 +1,947 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L1",
+  "level_label": "Cấp 1",
+  "topic": "Shaan's incredible insects",
+  "slug": "book_129031",
+  "audio_filename": "book_129031.mp3",
+  "book_slug": "book_129031",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_129031/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_129031/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_129031/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_129031/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_129031/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_129031/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_129031/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_129031/page_09.jpg",
+    "https://audio.felixbuilderhub.com/books/book_129031/page_10.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_129031/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_129031/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_129031/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_129031/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_129031/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_129031/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_129031/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_129031/page_09.mp3",
+    "https://audio.felixbuilderhub.com/books/book_129031/page_10.mp3"
+  ],
+  "book_attribution": {
+    "title": "Shaan's incredible insects",
+    "creators": [
+      "Surekha Reddy",
+      "Deepa Balsavar",
+      "Lavanya Naidu",
+      "Maya Ramaswamy",
+      "Sabyasachi Hazra",
+      "Sam van Riet",
+      "Sheena Deviah"
+    ],
+    "publisher": "StoryWeaver Community",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: Shaan's incredible insects is written by Surekha Reddy . © Surekha Reddy , 2020. Some rights reserved. Released under CC BY 4.0 license. Images Attributions: Cover page: Boy With beetle , by Sam van Riet © Book Dash, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 2: Curious Boy in garden , by Sam van Riet © Book Dash, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 3: Ladybirds , by Sheena Deviah © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 4: Butterflies , by Lavanya Naidu © Pratham Books, 2017. Some rights reserved. Released under CC BY 4.0 license. Page 5: A butterfly, a dragonfly and a bird , by Sabyasachi Hazra © Room to Read, 2013. Some rights reserved. Released under CC BY 4.0 license. Page 6: A Honeycomb with two bees , by Maya Ramaswamy © Pratham Books, 2013. Some rights reserved. Released under CC BY 4.0 license. Page 7: Grasshopper , by Sheena Deviah © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 8: Leaf insects , by Sheena Deviah © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 9: Child watching a row of ants , by Deepa Balsavar © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 10: Boy With beetle , by Sam van Riet © Book Dash, 2018. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/129031-shaan-s-incredible-insects",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "Curious Boy in garden , by Sam van Riet © Book Dash, 2018. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "Ladybirds , by Sheena Deviah © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "Butterflies , by Lavanya Naidu © Pratham Books, 2017. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "A butterfly, a dragonfly and a bird , by Sabyasachi Hazra © Room to Read, 2013. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "A Honeycomb with two bees , by Maya Ramaswamy © Pratham Books, 2013. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "Grasshopper , by Sheena Deviah © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "Leaf insects , by Sheena Deviah © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "Child watching a row of ants , by Deepa Balsavar © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 8,
+        "credit_text": "Boy With beetle , by Sam van Riet © Book Dash, 2018. Some rights reserved. Released under CC BY 4.0 license."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "Shaan's incredible insects",
+    "paragraphs_en": [
+      "Shaan is curious about incredible insects. He went to the garden to find few incredible insects. He took the magnifying glass along with him. Let's join Shaan to find few incredible insects.",
+      "Look, Shaan spots a lady bug, an insect that is red with black spots. The lady bugs are very helpful insects, they eat bugs called aphids that harm plants.",
+      "Look, Shaan spots beautiful butterflies, these insects have colourful wings.",
+      "Look, Shaan spots a dragonfly, this insect is an expert flier, it hovers like a helicopter.",
+      "Look, Shaan spots honey bees, they live in hives. They are always busy making honey. Yummy!",
+      "Look, Shaan spots a grasshopper, this insect eats plants and grass. A grasshopper can not only fly, it can also jump.",
+      "Look, Shaan spots leaf insects, these insects look like leaves they are also called walking leaves.",
+      "Look, Shaan spots a group of ants, they are social insects. A group of ants is called an army.",
+      "After looking at all the bugs, Shaan was curious to count the black spots on the lady bug. He went back to the lady bug and started counting the black spots."
+    ],
+    "sentences": [
+      {
+        "text_en": "Shaan is curious about incredible insects.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_129031/s_000.mp3",
+        "text_vi": "Shaan rất tò mò về những loài côn trùng thật đáng kinh ngạc."
+      },
+      {
+        "text_en": "He went to the garden to find few incredible insects.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_129031/s_001.mp3",
+        "text_vi": "Cậu ấy đã đi ra vườn để tìm vài loài côn trùng đáng kinh ngạc."
+      },
+      {
+        "text_en": "He took the magnifying glass along with him.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_129031/s_002.mp3",
+        "text_vi": "Cậu ấy mang theo kính lúp."
+      },
+      {
+        "text_en": "Let's join Shaan to find few incredible insects.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_129031/s_003.mp3",
+        "text_vi": "Chúng ta hãy cùng Shaan đi tìm vài loài côn trùng đáng kinh ngạc nhé."
+      },
+      {
+        "text_en": "Look, Shaan spots a lady bug, an insect that is red with black spots.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_129031/s_004.mp3",
+        "text_vi": "Nhìn kìa, Shaan thấy một con bọ rùa, một loài côn trùng màu đỏ có đốm đen."
+      },
+      {
+        "text_en": "The lady bugs are very helpful insects, they eat bugs called aphids that harm plants.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_129031/s_005.mp3",
+        "text_vi": "Bọ rùa là loài côn trùng rất có ích, chúng ăn những con rệp gây hại cho cây cối."
+      },
+      {
+        "text_en": "Look, Shaan spots beautiful butterflies, these insects have colourful wings.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_129031/s_006.mp3",
+        "text_vi": "Nhìn kìa, Shaan thấy những con bướm xinh đẹp, những loài côn trùng này có đôi cánh đầy màu sắc."
+      },
+      {
+        "text_en": "Look, Shaan spots a dragonfly, this insect is an expert flier, it hovers like a helicopter.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_129031/s_007.mp3",
+        "text_vi": "Nhìn kìa, Shaan thấy một con chuồn chuồn, loài côn trùng này là một phi công chuyên nghiệp, nó bay lượn như máy bay trực thăng."
+      },
+      {
+        "text_en": "Look, Shaan spots honey bees, they live in hives.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_129031/s_008.mp3",
+        "text_vi": "Nhìn kìa, Shaan thấy những con ong mật, chúng sống trong tổ ong."
+      },
+      {
+        "text_en": "They are always busy making honey. Yummy!",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_129031/s_009.mp3",
+        "text_vi": "Chúng luôn bận rộn làm mật ong. Ngon tuyệt!"
+      },
+      {
+        "text_en": "Look, Shaan spots a grasshopper, this insect eats plants and grass.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_129031/s_010.mp3",
+        "text_vi": "Nhìn kìa, Shaan thấy một con châu chấu, loài côn trùng này ăn cây và cỏ."
+      },
+      {
+        "text_en": "A grasshopper can not only fly, it can also jump.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_129031/s_011.mp3",
+        "text_vi": "Châu chấu không chỉ biết bay mà còn có thể nhảy nữa."
+      },
+      {
+        "text_en": "Look, Shaan spots leaf insects, these insects look like leaves they are also called walking leaves.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_129031/s_012.mp3",
+        "text_vi": "Nhìn kìa, Shaan thấy những con bọ lá, những loài côn trùng này trông giống như lá cây, chúng còn được gọi là lá cây biết đi."
+      },
+      {
+        "text_en": "Look, Shaan spots a group of ants, they are social insects.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_129031/s_013.mp3",
+        "text_vi": "Nhìn kìa, Shaan thấy một đàn kiến, chúng là loài côn trùng sống theo bầy đàn."
+      },
+      {
+        "text_en": "A group of ants is called an army.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_129031/s_014.mp3",
+        "text_vi": "Một đàn kiến được gọi là một đội quân."
+      },
+      {
+        "text_en": "After looking at all the bugs, Shaan was curious to count the black spots on the lady bug.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_129031/s_015.mp3",
+        "text_vi": "Sau khi nhìn tất cả các loài côn trùng, Shaan tò mò muốn đếm những đốm đen trên con bọ rùa."
+      },
+      {
+        "text_en": "He went back to the lady bug and started counting the black spots.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_129031/s_016.mp3",
+        "text_vi": "Cậu ấy quay lại chỗ con bọ rùa và bắt đầu đếm những đốm đen."
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "Shaan is curious about incredible insects.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_129031/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "He went to the garden to find few incredible insects.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_129031/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "He took the magnifying glass along with him.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_129031/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "Let's join Shaan to find few incredible insects.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_129031/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "Look, Shaan spots a lady bug, an insect that is red with black spots.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_129031/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "The lady bugs are very helpful insects, they eat bugs called aphids that harm plants.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_129031/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "Look, Shaan spots beautiful butterflies, these insects have colourful wings.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_129031/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "Look, Shaan spots a dragonfly, this insect is an expert flier, it hovers like a helicopter.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_129031/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "Look, Shaan spots honey bees, they live in hives.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_129031/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "They are always busy making honey. Yummy!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_129031/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "Look, Shaan spots a grasshopper, this insect eats plants and grass.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_129031/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "A grasshopper can not only fly, it can also jump.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_129031/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "Look, Shaan spots leaf insects, these insects look like leaves they are also called walking leaves.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_129031/s_012.mp3"
+        },
+        {
+          "id": "ra_13",
+          "text_en": "Look, Shaan spots a group of ants, they are social insects.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_129031/s_013.mp3"
+        },
+        {
+          "id": "ra_14",
+          "text_en": "A group of ants is called an army.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_129031/s_014.mp3"
+        },
+        {
+          "id": "ra_15",
+          "text_en": "After looking at all the bugs, Shaan was curious to count the black spots on the lady bug.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_129031/s_015.mp3"
+        },
+        {
+          "id": "ra_16",
+          "text_en": "He went back to the lady bug and started counting the black spots.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_129031/s_016.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "Who is curious about incredible insects?",
+          "options_en": [
+            "Shaan",
+            "Lady bug",
+            "Honey bee"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "What is Shaan curious about?",
+          "options_en": [
+            "Incredible insects",
+            "Colourful wings",
+            "A hive"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s1_q1",
+          "type": "choice",
+          "question_en": "Where did he go to find incredible insects?",
+          "options_en": [
+            "The garden",
+            "A hive",
+            "The grass"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s1_q2",
+          "type": "choice",
+          "question_en": "Why did he go to the garden?",
+          "options_en": [
+            "To find incredible insects",
+            "To make honey",
+            "To eat plants"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s2_q1",
+          "type": "choice",
+          "question_en": "What did he take along with him?",
+          "options_en": [
+            "A magnifying glass",
+            "A leaf",
+            "A hive"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s2_q2",
+          "type": "choice",
+          "question_en": "Which object did he bring with him?",
+          "options_en": [
+            "Magnifying glass",
+            "Butterfly wings",
+            "Ant army"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s3_q1",
+          "type": "choice",
+          "question_en": "Who are we invited to join?",
+          "options_en": [
+            "Shaan",
+            "A dragonfly",
+            "A grasshopper"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p0_s3_q2",
+          "type": "choice",
+          "question_en": "What are we joining Shaan to do?",
+          "options_en": [
+            "Find a few incredible insects",
+            "Make honey",
+            "Count black spots"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "Who spots a lady bug?",
+          "options_en": [
+            "Shaan",
+            "A grasshopper",
+            "A dragonfly"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "What color is the lady bug?",
+          "options_en": [
+            "Red with black spots",
+            "Colorful wings",
+            "Lives in a hive"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p1_s1_q1",
+          "type": "choice",
+          "question_en": "What do the lady bugs eat?",
+          "options_en": [
+            "Aphids",
+            "Honey",
+            "Plants and grass"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p1_s1_q2",
+          "type": "choice",
+          "question_en": "Why are the lady bugs described as helpful?",
+          "options_en": [
+            "Because they eat aphids that harm plants",
+            "Because they make honey",
+            "Because they can hover like a helicopter"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "What does Shaan spot?",
+          "options_en": [
+            "Beautiful butterflies",
+            "A lady bug",
+            "A dragonfly"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "What do these insects have?",
+          "options_en": [
+            "Colourful wings",
+            "Black spots",
+            "A hive"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "Who spots a dragonfly?",
+          "options_en": [
+            "Shaan",
+            "A grasshopper",
+            "A honey bee"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "How does this insect hover?",
+          "options_en": [
+            "Like a helicopter",
+            "It jumps",
+            "It lives in hives"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "Who spots honey bees?",
+          "options_en": [
+            "Shaan",
+            "a lady bug",
+            "a dragonfly"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "Where do honey bees live?",
+          "options_en": [
+            "in hives",
+            "on leaves",
+            "in a group called an army"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p4_s1_q1",
+          "type": "choice",
+          "question_en": "What are they always busy making?",
+          "options_en": [
+            "honey",
+            "eating aphids",
+            "colourful wings"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p4_s1_q2",
+          "type": "choice",
+          "question_en": "Why does the sentence say \"Yummy!\"?",
+          "options_en": [
+            "Because the honey is tasty",
+            "Because they eat aphids",
+            "Because a grasshopper can jump"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "What does Shaan spot?",
+          "options_en": [
+            "a grasshopper",
+            "a lady bug",
+            "a dragonfly"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "What does this insect eat?",
+          "options_en": [
+            "plants and grass",
+            "aphids",
+            "honey"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p5_s1_q1",
+          "type": "choice",
+          "question_en": "What can a grasshopper do besides fly?",
+          "options_en": [
+            "jump",
+            "hover like a helicopter",
+            "look like leaves"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p5_s1_q2",
+          "type": "choice",
+          "question_en": "How can a grasshopper move?",
+          "options_en": [
+            "by flying and jumping",
+            "by hovering like a helicopter",
+            "by living in hives"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "What does Shaan spot?",
+          "options_en": [
+            "leaf insects",
+            "lady bug",
+            "butterflies"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "What are these insects also called?",
+          "options_en": [
+            "walking leaves",
+            "honey bees",
+            "dragonfly"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "Who spots a group of ants?",
+          "options_en": [
+            "Shaan",
+            "The lady bug",
+            "The grasshopper"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "What kind of insects are the ants described as?",
+          "options_en": [
+            "Social insects",
+            "Helpful insects",
+            "Expert fliers"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p7_s1_q1",
+          "type": "choice",
+          "question_en": "What is a group of ants called?",
+          "options_en": [
+            "An army",
+            "A hive",
+            "Walking leaves"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p7_s1_q2",
+          "type": "choice",
+          "question_en": "Which insects form an army?",
+          "options_en": [
+            "Ants",
+            "Honey bees",
+            "Lady bugs"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        }
+      ]
+    },
+    {
+      "paragraph_index": 8,
+      "questions": [
+        {
+          "id": "gl_p8_s0_q1",
+          "type": "choice",
+          "question_en": "Who was curious to count the black spots on the lady bug?",
+          "options_en": [
+            "Shaan",
+            "a dragonfly",
+            "a grasshopper"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p8_s0_q2",
+          "type": "choice",
+          "question_en": "What was Shaan curious to count?",
+          "options_en": [
+            "the black spots on the lady bug",
+            "the colourful wings of butterflies",
+            "the honey made by bees"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p8_s1_q1",
+          "type": "choice",
+          "question_en": "Where did he go back to?",
+          "options_en": [
+            "to the lady bug",
+            "to the garden",
+            "to the hive"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p8_s1_q2",
+          "type": "choice",
+          "question_en": "What did he start doing?",
+          "options_en": [
+            "counting the black spots",
+            "looking with a magnifying glass",
+            "watching the dragonfly hover"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'Shaan's incredible insects'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "curious",
+      "meaning_vi": "tò mò, muốn biết",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "incredible",
+      "meaning_vi": "đáng kinh ngạc, rất đặc biệt",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "insects",
+      "meaning_vi": "côn trùng, loài vật nhỏ có 6 chân",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "magnifying glass",
+      "meaning_vi": "kính lúp, kính giúp nhìn vật nhỏ rõ hơn",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "spots",
+      "meaning_vi": "đốm, chấm tròn",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "helpful",
+      "meaning_vi": "có ích, giúp đỡ",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "aphids",
+      "meaning_vi": "rệp, côn trùng nhỏ hút nhựa cây",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "harm",
+      "meaning_vi": "làm hại, gây tổn thương",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "beautiful",
+      "meaning_vi": "đẹp, rất xinh",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "butterflies",
+      "meaning_vi": "bướm, côn trùng có cánh đẹp",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "colourful",
+      "meaning_vi": "nhiều màu sắc, sặc sỡ",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "wings",
+      "meaning_vi": "cánh, bộ phận giúp bay",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "dragonfly",
+      "meaning_vi": "chuồn chuồn, côn trùng bay nhanh",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "expert",
+      "meaning_vi": "chuyên gia, rất giỏi",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "flier",
+      "meaning_vi": "người/vật bay, thứ biết bay",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "hovers",
+      "meaning_vi": "bay lơ lửng, đứng yên trên không",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "honey bees",
+      "meaning_vi": "ong mật, loài ong làm mật",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "hives",
+      "meaning_vi": "tổ ong, nhà của ong",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "busy",
+      "meaning_vi": "bận rộn, có nhiều việc phải làm",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "yummy",
+      "meaning_vi": "ngon tuyệt, rất ngon",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "grasshopper",
+      "meaning_vi": "châu chấu, côn trùng biết nhảy",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "plants",
+      "meaning_vi": "thực vật, cây cối",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "grass",
+      "meaning_vi": "cỏ, cây xanh nhỏ",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "jump",
+      "meaning_vi": "nhảy, bật lên",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "leaf insects",
+      "meaning_vi": "bọ lá, côn trùng giống lá",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "look like",
+      "meaning_vi": "trông giống, có hình dạng tương tự",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "called",
+      "meaning_vi": "được gọi là, có tên là",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "walking leaves",
+      "meaning_vi": "lá cây biết đi, tên gọi khác của bọ lá",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "group",
+      "meaning_vi": "nhóm, đàn",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "ants",
+      "meaning_vi": "kiến, côn trùng nhỏ sống theo đàn",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "social insects",
+      "meaning_vi": "côn trùng xã hội, côn trùng sống theo bầy đàn",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "army",
+      "meaning_vi": "đội quân, một nhóm lớn",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "after",
+      "meaning_vi": "sau khi, sau lúc",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "count",
+      "meaning_vi": "đếm, tính số lượng",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "black spots",
+      "meaning_vi": "đốm đen, chấm màu đen",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "started",
+      "meaning_vi": "bắt đầu, khởi đầu",
+      "paragraph_index": 8
+    }
+  ]
+}

@@ -1,0 +1,583 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L1",
+  "level_label": "Cấp 1",
+  "topic": "Can and Can't",
+  "slug": "book_137",
+  "audio_filename": "book_137.mp3",
+  "book_slug": "book_137",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_137/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_137/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_137/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_137/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_137/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_137/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_137/page_08.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_137/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_137/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_137/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_137/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_137/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_137/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_137/page_08.mp3"
+  ],
+  "book_attribution": {
+    "title": "Can and Can't",
+    "creators": [
+      "Radha HS",
+      "Ruchi Shah"
+    ],
+    "publisher": "Pratham Books",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: Can and Can't is written by Radha HS . © Pratham Books , 2010. Some rights reserved. Released under CC BY 4.0 license. Other Credits: 'Can and Can't' has been published on StoryWeaver by Pratham Books. Pratham Books is a not-for-profit organization that publishes books in multiple Indian languages to promote reading among children. www.prathambooks.org Images Attributions: Cover page: Girl, cat and ant , by Ruchi Shah © Pratham Books, 2010. Some rights reserved. Released under CC BY 4.0 license. Page 2: Girl, cat and fish , by Ruchi Shah © Pratham Books, 2010. Some rights reserved. Released under CC BY 4.0 license. Page 3: Bird and flying pig , by Ruchi Shah © Pratham Books, 2010. Some rights reserved. Released under CC BY 4.0 license. Page 4: Dog, ant and crow singing and dancing , by Ruchi Shah © Pratham Books, 2010. Some rights reserved. Released under CC BY 4.0 license. Page 5: Monkey cooking and girl watching , by Ruchi Shah © Pratham Books, 2010. Some rights reserved. Released under CC BY 4.0 license. Page 6: Monkey swinging , by Ruchi Shah © Pratham Books, 2010. Some rights reserved. Released under CC BY 4.0 license. Page 7: Dog and bird , by Ruchi Shah © Pratham Books, 2010. Some rights reserved. Released under CC BY 4.0 license. Page 8: Girl, pig, fish and cat , by Ruchi Shah © Pratham Books, 2010. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/137-can-and-can-t",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "Girl, cat and fish , by Ruchi Shah © Pratham Books, 2010. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "Bird and flying pig , by Ruchi Shah © Pratham Books, 2010. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "Dog, ant and crow singing and dancing , by Ruchi Shah © Pratham Books, 2010. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "Monkey cooking and girl watching , by Ruchi Shah © Pratham Books, 2010. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "Monkey swinging , by Ruchi Shah © Pratham Books, 2010. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "Dog and bird , by Ruchi Shah © Pratham Books, 2010. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "Girl, pig, fish and cat , by Ruchi Shah © Pratham Books, 2010. Some rights reserved. Released under CC BY 4.0 license."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "Can and Can't",
+    "paragraphs_en": [
+      "I can’t knit, cats can’t write, fish can’t blink...",
+      "...pigs can’t fly!",
+      "Dogs can’t dance, ants can’t read, crows can’t sing...",
+      "...monkeys can’t cook!",
+      "But , monkeys can swing!",
+      "Crows can caw... ants can bite... dogs can bark!",
+      "Pigs can eat, fish can swim, cats can jump... and I can read!"
+    ],
+    "sentences": [
+      {
+        "text_en": "I can’t knit, cats can’t write, fish can’t blink...",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_137/s_000.mp3",
+        "text_vi": "Tôi không biết đan, mèo không biết viết, cá không biết chớp mắt..."
+      },
+      {
+        "text_en": "...pigs can’t fly!",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_137/s_001.mp3",
+        "text_vi": "...heo không biết bay!"
+      },
+      {
+        "text_en": "Dogs can’t dance, ants can’t read, crows can’t sing...",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_137/s_002.mp3",
+        "text_vi": "Chó không biết nhảy múa, kiến không biết đọc, quạ không biết hát..."
+      },
+      {
+        "text_en": "...monkeys can’t cook!",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_137/s_003.mp3",
+        "text_vi": "...khỉ không biết nấu ăn!"
+      },
+      {
+        "text_en": "But , monkeys can swing!",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_137/s_004.mp3",
+        "text_vi": "Nhưng mà, khỉ biết đu dây!"
+      },
+      {
+        "text_en": "Crows can caw...",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_137/s_005.mp3",
+        "text_vi": "Quạ biết kêu quạ quạ..."
+      },
+      {
+        "text_en": "ants can bite...",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_137/s_006.mp3",
+        "text_vi": "kiến biết cắn..."
+      },
+      {
+        "text_en": "dogs can bark!",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_137/s_007.mp3",
+        "text_vi": "chó biết sủa!"
+      },
+      {
+        "text_en": "Pigs can eat, fish can swim, cats can jump...",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_137/s_008.mp3",
+        "text_vi": "Heo biết ăn, cá biết bơi, mèo biết nhảy..."
+      },
+      {
+        "text_en": "and I can read!",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_137/s_009.mp3",
+        "text_vi": "và tôi biết đọc!"
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "I can’t knit, cats can’t write, fish can’t blink...",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_137/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "...pigs can’t fly!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_137/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "Dogs can’t dance, ants can’t read, crows can’t sing...",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_137/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "...monkeys can’t cook!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_137/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "But , monkeys can swing!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_137/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "Crows can caw...",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_137/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "ants can bite...",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_137/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "dogs can bark!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_137/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "Pigs can eat, fish can swim, cats can jump...",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_137/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "and I can read!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_137/s_009.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "What can't I do?",
+          "options_en": [
+            "knit",
+            "fly",
+            "dance"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "What can't fish do?",
+          "options_en": [
+            "blink",
+            "cook",
+            "bark"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "What can't pigs do?",
+          "options_en": [
+            "Fly",
+            "Write",
+            "Swim"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "Which animal can't fly?",
+          "options_en": [
+            "Pigs",
+            "Crows",
+            "Fish"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "Which animals can't dance?",
+          "options_en": [
+            "Dogs",
+            "Cats",
+            "Pigs"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "What can't ants do?",
+          "options_en": [
+            "Read",
+            "Bite",
+            "Swing"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "Who can't cook?",
+          "options_en": [
+            "Monkeys",
+            "Pigs",
+            "Cats"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "What can't monkeys do?",
+          "options_en": [
+            "Cook",
+            "Swing",
+            "Read"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "Who can swing?",
+          "options_en": [
+            "Monkeys",
+            "Dogs",
+            "Cats"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "What can monkeys do?",
+          "options_en": [
+            "Swing",
+            "Cook",
+            "Sing"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "Who can caw?",
+          "options_en": [
+            "Crows",
+            "Ants",
+            "Dogs"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "What can crows do?",
+          "options_en": [
+            "Caw",
+            "Bite",
+            "Bark"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p5_s1_q1",
+          "type": "choice",
+          "question_en": "Who can bite?",
+          "options_en": [
+            "Ants",
+            "Crows",
+            "Dogs"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p5_s1_q2",
+          "type": "choice",
+          "question_en": "What can ants do?",
+          "options_en": [
+            "Bite",
+            "Caw",
+            "Bark"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p5_s2_q1",
+          "type": "choice",
+          "question_en": "Who can bark?",
+          "options_en": [
+            "Dogs",
+            "Ants",
+            "Crows"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p5_s2_q2",
+          "type": "choice",
+          "question_en": "What can dogs do?",
+          "options_en": [
+            "Bark",
+            "Caw",
+            "Bite"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "What can fish do?",
+          "options_en": [
+            "Swim",
+            "Blink",
+            "Dance"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "Which animal can jump?",
+          "options_en": [
+            "Cats",
+            "Monkeys",
+            "Dogs"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p6_s1_q1",
+          "type": "choice",
+          "question_en": "Who can read?",
+          "options_en": [
+            "I",
+            "Ants",
+            "Pigs"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p6_s1_q2",
+          "type": "choice",
+          "question_en": "What can I do?",
+          "options_en": [
+            "Read",
+            "Swing",
+            "Bark"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'Can and Can't'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "knit",
+      "meaning_vi": "đan (len, áo)",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "write",
+      "meaning_vi": "viết",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "blink",
+      "meaning_vi": "chớp mắt",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "pigs",
+      "meaning_vi": "con heo/lợn",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "fly",
+      "meaning_vi": "bay",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "dance",
+      "meaning_vi": "nhảy múa",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "ants",
+      "meaning_vi": "con kiến",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "read",
+      "meaning_vi": "đọc",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "crows",
+      "meaning_vi": "con quạ",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "monkeys",
+      "meaning_vi": "con khỉ",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "cook",
+      "meaning_vi": "nấu ăn",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "swing",
+      "meaning_vi": "đu dây",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "caw",
+      "meaning_vi": "kêu quạ quạ (tiếng quạ kêu)",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "bite",
+      "meaning_vi": "cắn",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "bark",
+      "meaning_vi": "sủa (tiếng chó kêu)",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "eat",
+      "meaning_vi": "ăn",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "swim",
+      "meaning_vi": "bơi",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "jump",
+      "meaning_vi": "nhảy",
+      "paragraph_index": 6
+    }
+  ]
+}

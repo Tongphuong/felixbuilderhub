@@ -1,0 +1,1558 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L3",
+  "level_label": "Cấp 3",
+  "topic": "There Must be a Rainbow",
+  "slug": "book_105169",
+  "audio_filename": "book_105169.mp3",
+  "book_slug": "book_105169",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_105169/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_105169/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_105169/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_105169/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_105169/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_105169/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_105169/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_105169/page_09.jpg",
+    "https://audio.felixbuilderhub.com/books/book_105169/page_10.jpg",
+    "https://audio.felixbuilderhub.com/books/book_105169/page_11.jpg",
+    "https://audio.felixbuilderhub.com/books/book_105169/page_12.jpg",
+    "https://audio.felixbuilderhub.com/books/book_105169/page_13.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_105169/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_105169/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_105169/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_105169/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_105169/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_105169/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_105169/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_105169/page_09.mp3",
+    "https://audio.felixbuilderhub.com/books/book_105169/page_10.mp3",
+    "https://audio.felixbuilderhub.com/books/book_105169/page_11.mp3",
+    "https://audio.felixbuilderhub.com/books/book_105169/page_12.mp3",
+    "https://audio.felixbuilderhub.com/books/book_105169/page_13.mp3"
+  ],
+  "book_attribution": {
+    "title": "There Must be a Rainbow",
+    "creators": [
+      "Nerissa Govender",
+      "Sinomonde Ngwane"
+    ],
+    "publisher": "Book Dash",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: There Must be a Rainbow is written by Nerissa Govender . © Book Dash , 2015. Some rights reserved. Released under CC BY 4.0 license. Other Credits: This story 'There Must be a Rainbow' has been published on StoryWeaver by BookDash Images Attributions: Cover page: Girl in front of a Rainbow , by Sinomonde Ngwane © Book Dash, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 2: Rooster outside a village , by Sinomonde Ngwane © Book Dash, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 3: Girl smiling , by Sinomonde Ngwane © Book Dash, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 4: Family in a field , by Sinomonde Ngwane © Book Dash, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 5: Girl thinking of a rainbow , by Sinomonde Ngwane © Book Dash, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 6: Man pointing out dark clouds to a girl , by Sinomonde Ngwane © Book Dash, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 7: Storm blowing away roofs of houses , by Sinomonde Ngwane © Book Dash, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 8: Girl smiling in a storm with unhappy people behind her , by Sinomonde Ngwane © Book Dash, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 9: Girl pointing to a rainbow after a storm , by Sinomonde Ngwane © Book Dash, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 10: Rainbow , by Sinomonde Ngwane © Book Dash, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 11: Hapy people under a rainbow , by Sinomonde Ngwane © Book Dash, 2015. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/105169-there-must-be-a-rainbow",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "Rooster outside a village , by Sinomonde Ngwane © Book Dash, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "Girl smiling , by Sinomonde Ngwane © Book Dash, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "Family in a field , by Sinomonde Ngwane © Book Dash, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "Girl thinking of a rainbow , by Sinomonde Ngwane © Book Dash, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "Man pointing out dark clouds to a girl , by Sinomonde Ngwane © Book Dash, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "Storm blowing away roofs of houses , by Sinomonde Ngwane © Book Dash, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "Girl smiling in a storm with unhappy people behind her , by Sinomonde Ngwane © Book Dash, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "Girl pointing to a rainbow after a storm , by Sinomonde Ngwane © Book Dash, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 8,
+        "credit_text": "Rainbow , by Sinomonde Ngwane © Book Dash, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 9,
+        "credit_text": "Hapy people under a rainbow , by Sinomonde Ngwane © Book Dash, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 10,
+        "credit_text": "Illustration by Sinomonde Ngwane."
+      },
+      {
+        "page_index": 11,
+        "credit_text": "Illustration by Sinomonde Ngwane."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "There Must be a Rainbow",
+    "paragraphs_en": [
+      "Nestled in the Kingdom of the Zulu is a magnificent place called the Valley.",
+      "A little girl called Jabulile lives here. Jabulile was always a happy child. She was also curious, and full of questions about life. Everything fascinated her.",
+      "Jabulile’s father was a mielie farmer. Her mother was a teacher. They taught her to dream big dreams. Jabulile’s biggest dream was to help people.",
+      "Everyone in the village was Jabulile’s friend, especially the elders. They taught her about the wise men and women who once lived in the Valley. Jabulile also wanted to be wise.",
+      "One awful day, the clouds began to gather over the Valley. Everything grew dark and grey. An ugly storm swept over the land.",
+      "Great gusts of wind blew the roofs off the huts. All the animals lost their homes. It was a very sad day.",
+      "The village folk cried, “What shall we do now?” “All the crops are ruined!” cried the farmers. “Our homes are gone!” said the elders. All hope seemed lost. But Jabulile remembered something her wise father once told her.",
+      "Jabulile started speaking to the villagers. “The storm only hurts us,” she said, “because of the way we choose to see it. If you look up, the sun is shining again. It is a new day. “After every storm, there must be a rainbow!” she shouted excitedly.",
+      "Just then a glorious rainbow appeared in the sky.",
+      "The villagers saw the rainbow and they began to smile. It stood as a promise that the storm was over.",
+      "The villagers rebuilt their homes. Farmers planted new crops. The grass grew greener than ever before.",
+      "Once again there was hope and happiness in the Valley."
+    ],
+    "sentences": [
+      {
+        "text_en": "Nestled in the Kingdom of the Zulu is a magnificent place called the Valley.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_105169/s_000.mp3",
+        "text_vi": "Nằm sâu trong Vương quốc Zulu có một nơi rất đẹp tên là Thung lũng."
+      },
+      {
+        "text_en": "A little girl called Jabulile lives here.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_105169/s_001.mp3",
+        "text_vi": "Một cô bé tên Jabulile sống ở đây."
+      },
+      {
+        "text_en": "Jabulile was always a happy child.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_105169/s_002.mp3",
+        "text_vi": "Jabulile luôn là một đứa trẻ vui vẻ."
+      },
+      {
+        "text_en": "She was also curious, and full of questions about life.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_105169/s_003.mp3",
+        "text_vi": "Cô bé cũng rất tò mò và có nhiều câu hỏi về cuộc sống."
+      },
+      {
+        "text_en": "Everything fascinated her.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_105169/s_004.mp3",
+        "text_vi": "Mọi thứ đều làm cô bé thích thú."
+      },
+      {
+        "text_en": "Jabulile’s father was a mielie farmer.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_105169/s_005.mp3",
+        "text_vi": "Bố của Jabulile là một nông dân trồng ngô."
+      },
+      {
+        "text_en": "Her mother was a teacher.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_105169/s_006.mp3",
+        "text_vi": "Mẹ cô bé là một giáo viên."
+      },
+      {
+        "text_en": "They taught her to dream big dreams.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_105169/s_007.mp3",
+        "text_vi": "Họ dạy cô bé hãy mơ những giấc mơ lớn."
+      },
+      {
+        "text_en": "Jabulile’s biggest dream was to help people.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_105169/s_008.mp3",
+        "text_vi": "Ước mơ lớn nhất của Jabulile là giúp đỡ mọi người."
+      },
+      {
+        "text_en": "Everyone in the village was Jabulile’s friend, especially the elders.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_105169/s_009.mp3",
+        "text_vi": "Mọi người trong làng đều là bạn của Jabulile, đặc biệt là những người lớn tuổi."
+      },
+      {
+        "text_en": "They taught her about the wise men and women who once lived in the Valley.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_105169/s_010.mp3",
+        "text_vi": "Họ kể cho cô bé nghe về những người đàn ông và phụ nữ thông thái từng sống ở Thung lũng."
+      },
+      {
+        "text_en": "Jabulile also wanted to be wise.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_105169/s_011.mp3",
+        "text_vi": "Jabulile cũng muốn trở nên thông thái."
+      },
+      {
+        "text_en": "One awful day, the clouds began to gather over the Valley.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_105169/s_012.mp3",
+        "text_vi": "Một ngày kinh khủng, mây bắt đầu kéo đến trên Thung lũng."
+      },
+      {
+        "text_en": "Everything grew dark and grey.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_105169/s_013.mp3",
+        "text_vi": "Mọi thứ trở nên tối tăm và xám xịt."
+      },
+      {
+        "text_en": "An ugly storm swept over the land.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_105169/s_014.mp3",
+        "text_vi": "Một cơn bão khủng khiếp quét qua vùng đất."
+      },
+      {
+        "text_en": "Great gusts of wind blew the roofs off the huts.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_105169/s_015.mp3",
+        "text_vi": "Những cơn gió mạnh thổi bay mái nhà của các túp lều."
+      },
+      {
+        "text_en": "All the animals lost their homes.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_105169/s_016.mp3",
+        "text_vi": "Tất cả các con vật đều mất nhà."
+      },
+      {
+        "text_en": "It was a very sad day.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_105169/s_017.mp3",
+        "text_vi": "Đó là một ngày rất buồn."
+      },
+      {
+        "text_en": "The village folk cried, “What shall we do now?” “All the crops are ruined!” cried the farmers.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_105169/s_018.mp3",
+        "text_vi": "Dân làng kêu lên, “Bây giờ chúng ta phải làm gì?” “Tất cả mùa màng đều bị phá hủy rồi!” những người nông dân kêu lên."
+      },
+      {
+        "text_en": "“Our homes are gone!” said the elders.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_105169/s_019.mp3",
+        "text_vi": "“Nhà của chúng ta không còn nữa!” những người lớn tuổi nói."
+      },
+      {
+        "text_en": "All hope seemed lost.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_105169/s_020.mp3",
+        "text_vi": "Mọi hy vọng dường như đã mất."
+      },
+      {
+        "text_en": "But Jabulile remembered something her wise father once told her.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_105169/s_021.mp3",
+        "text_vi": "Nhưng Jabulile nhớ lại điều gì đó mà người cha thông thái của cô bé đã từng nói."
+      },
+      {
+        "text_en": "Jabulile started speaking to the villagers.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_105169/s_022.mp3",
+        "text_vi": "Jabulile bắt đầu nói chuyện với dân làng."
+      },
+      {
+        "text_en": "“The storm only hurts us,” she said, “because of the way we choose to see it.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_105169/s_023.mp3",
+        "text_vi": "Cô bé nói, “Cơn bão chỉ làm chúng ta đau khổ vì cách chúng ta chọn nhìn nhận nó thôi.”"
+      },
+      {
+        "text_en": "If you look up, the sun is shining again.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_105169/s_024.mp3",
+        "text_vi": "Nếu các bạn nhìn lên, mặt trời lại đang chiếu sáng rồi."
+      },
+      {
+        "text_en": "It is a new day.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_105169/s_025.mp3",
+        "text_vi": "Đó là một ngày mới."
+      },
+      {
+        "text_en": "“After every storm, there must be a rainbow!” she shouted excitedly.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_105169/s_026.mp3",
+        "text_vi": "“Sau mỗi cơn bão, nhất định sẽ có cầu vồng!” cô bé reo lên đầy phấn khích."
+      },
+      {
+        "text_en": "Just then a glorious rainbow appeared in the sky.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_105169/s_027.mp3",
+        "text_vi": "Ngay lúc đó, một cầu vồng rực rỡ xuất hiện trên bầu trời."
+      },
+      {
+        "text_en": "The villagers saw the rainbow and they began to smile.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_105169/s_028.mp3",
+        "text_vi": "Dân làng nhìn thấy cầu vồng và họ bắt đầu mỉm cười."
+      },
+      {
+        "text_en": "It stood as a promise that the storm was over.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_105169/s_029.mp3",
+        "text_vi": "Nó như một lời hứa rằng cơn bão đã qua đi."
+      },
+      {
+        "text_en": "The villagers rebuilt their homes.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_105169/s_030.mp3",
+        "text_vi": "Dân làng xây dựng lại nhà cửa của họ."
+      },
+      {
+        "text_en": "Farmers planted new crops.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_105169/s_031.mp3",
+        "text_vi": "Nông dân trồng những vụ mùa mới."
+      },
+      {
+        "text_en": "The grass grew greener than ever before.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_105169/s_032.mp3",
+        "text_vi": "Cỏ mọc xanh tươi hơn bao giờ hết."
+      },
+      {
+        "text_en": "Once again there was hope and happiness in the Valley.",
+        "paragraph_index": 11,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_105169/s_033.mp3",
+        "text_vi": "Một lần nữa, hy vọng và hạnh phúc lại tràn ngập Thung lũng."
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "Nestled in the Kingdom of the Zulu is a magnificent place called the Valley.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_105169/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "A little girl called Jabulile lives here.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_105169/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "Jabulile was always a happy child.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_105169/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "She was also curious, and full of questions about life.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_105169/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "Everything fascinated her.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_105169/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "Jabulile’s father was a mielie farmer.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_105169/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "Her mother was a teacher.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_105169/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "They taught her to dream big dreams.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_105169/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "Jabulile’s biggest dream was to help people.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_105169/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "Everyone in the village was Jabulile’s friend, especially the elders.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_105169/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "They taught her about the wise men and women who once lived in the Valley.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_105169/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "Jabulile also wanted to be wise.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_105169/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "One awful day, the clouds began to gather over the Valley.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_105169/s_012.mp3"
+        },
+        {
+          "id": "ra_13",
+          "text_en": "Everything grew dark and grey.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_105169/s_013.mp3"
+        },
+        {
+          "id": "ra_14",
+          "text_en": "An ugly storm swept over the land.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_105169/s_014.mp3"
+        },
+        {
+          "id": "ra_15",
+          "text_en": "Great gusts of wind blew the roofs off the huts.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_105169/s_015.mp3"
+        },
+        {
+          "id": "ra_16",
+          "text_en": "All the animals lost their homes.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_105169/s_016.mp3"
+        },
+        {
+          "id": "ra_17",
+          "text_en": "It was a very sad day.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_105169/s_017.mp3"
+        },
+        {
+          "id": "ra_18",
+          "text_en": "The village folk cried, “What shall we do now?” “All the crops are ruined!” cried the farmers.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_105169/s_018.mp3"
+        },
+        {
+          "id": "ra_19",
+          "text_en": "“Our homes are gone!” said the elders.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_105169/s_019.mp3"
+        },
+        {
+          "id": "ra_20",
+          "text_en": "All hope seemed lost.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_105169/s_020.mp3"
+        },
+        {
+          "id": "ra_21",
+          "text_en": "But Jabulile remembered something her wise father once told her.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_105169/s_021.mp3"
+        },
+        {
+          "id": "ra_22",
+          "text_en": "Jabulile started speaking to the villagers.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_105169/s_022.mp3"
+        },
+        {
+          "id": "ra_23",
+          "text_en": "“The storm only hurts us,” she said, “because of the way we choose to see it.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_105169/s_023.mp3"
+        },
+        {
+          "id": "ra_24",
+          "text_en": "If you look up, the sun is shining again.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_105169/s_024.mp3"
+        },
+        {
+          "id": "ra_25",
+          "text_en": "It is a new day.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_105169/s_025.mp3"
+        },
+        {
+          "id": "ra_26",
+          "text_en": "“After every storm, there must be a rainbow!” she shouted excitedly.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_105169/s_026.mp3"
+        },
+        {
+          "id": "ra_27",
+          "text_en": "Just then a glorious rainbow appeared in the sky.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_105169/s_027.mp3"
+        },
+        {
+          "id": "ra_28",
+          "text_en": "The villagers saw the rainbow and they began to smile.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_105169/s_028.mp3"
+        },
+        {
+          "id": "ra_29",
+          "text_en": "It stood as a promise that the storm was over.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_105169/s_029.mp3"
+        },
+        {
+          "id": "ra_30",
+          "text_en": "The villagers rebuilt their homes.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_105169/s_030.mp3"
+        },
+        {
+          "id": "ra_31",
+          "text_en": "Farmers planted new crops.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_105169/s_031.mp3"
+        },
+        {
+          "id": "ra_32",
+          "text_en": "The grass grew greener than ever before.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_105169/s_032.mp3"
+        },
+        {
+          "id": "ra_33",
+          "text_en": "Once again there was hope and happiness in the Valley.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_105169/s_033.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "Where is the magnificent place called the Valley?",
+          "options_en": [
+            "In the Kingdom of the Zulu",
+            "In the village",
+            "On a mielie farm"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "What is the Valley described as?",
+          "options_en": [
+            "A magnificent place",
+            "A village",
+            "A farm"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "Who lives here?",
+          "options_en": [
+            "Jabulile",
+            "Her father the mielie farmer",
+            "The village elders"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "What is the name of the little girl who lives here?",
+          "options_en": [
+            "Jabulile",
+            "Her mother the teacher",
+            "A wise woman"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p1_s1_q1",
+          "type": "choice",
+          "question_en": "How was Jabulile described?",
+          "options_en": [
+            "Always happy",
+            "A mielie farmer",
+            "An elder"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p1_s1_q2",
+          "type": "choice",
+          "question_en": "What kind of child was Jabulile?",
+          "options_en": [
+            "A happy child",
+            "A farmer's helper",
+            "A teacher"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p1_s2_q1",
+          "type": "choice",
+          "question_en": "What was she full of?",
+          "options_en": [
+            "Questions about life",
+            "Mielie crops",
+            "Promises from a rainbow"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p1_s2_q2",
+          "type": "choice",
+          "question_en": "What was she curious about?",
+          "options_en": [
+            "Life",
+            "Farming methods",
+            "The storm"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p1_s3_q1",
+          "type": "choice",
+          "question_en": "What fascinated her?",
+          "options_en": [
+            "Everything",
+            "The village elders",
+            "The ruined crops"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p1_s3_q2",
+          "type": "choice",
+          "question_en": "How much fascinated was she?",
+          "options_en": [
+            "Everything fascinated her",
+            "Only the elders fascinated her",
+            "Only the rainbow fascinated her"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "Who was a mielie farmer?",
+          "options_en": [
+            "Jabulile's father",
+            "Her mother",
+            "One of the elders"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "What was Jabulile's father?",
+          "options_en": [
+            "A mielie farmer",
+            "A teacher",
+            "A wise man"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p2_s1_q1",
+          "type": "choice",
+          "question_en": "Who was a teacher?",
+          "options_en": [
+            "Her mother",
+            "Jabulile",
+            "A farmer"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p2_s1_q2",
+          "type": "choice",
+          "question_en": "What was her mother?",
+          "options_en": [
+            "A teacher",
+            "An elder",
+            "A villager"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p2_s2_q1",
+          "type": "choice",
+          "question_en": "Who taught her to dream big dreams?",
+          "options_en": [
+            "They (her parents)",
+            "The elders",
+            "The farmers"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p2_s2_q2",
+          "type": "choice",
+          "question_en": "What did they teach her?",
+          "options_en": [
+            "To dream big dreams",
+            "To plant new crops",
+            "To rebuild homes"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p2_s3_q1",
+          "type": "choice",
+          "question_en": "What was Jabulile's biggest dream?",
+          "options_en": [
+            "To help people",
+            "To be wise",
+            "To grow mielies"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p2_s3_q2",
+          "type": "choice",
+          "question_en": "Whose biggest dream was to help people?",
+          "options_en": [
+            "Jabulile's",
+            "Her mother's",
+            "One of the elders'"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "Who was Jabulile's friend?",
+          "options_en": [
+            "Everyone in the village",
+            "Her father",
+            "The farmers"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "Which group were especially her friends?",
+          "options_en": [
+            "The elders",
+            "The wise men and women",
+            "The animals"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p3_s1_q1",
+          "type": "choice",
+          "question_en": "Who taught her about the wise men and women?",
+          "options_en": [
+            "They",
+            "Her mother",
+            "The farmers"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p3_s1_q2",
+          "type": "choice",
+          "question_en": "What did they teach her about?",
+          "options_en": [
+            "The wise men and women who once lived in the Valley",
+            "How to plant crops",
+            "How to rebuild houses"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p3_s2_q1",
+          "type": "choice",
+          "question_en": "What did Jabulile also want to be?",
+          "options_en": [
+            "Wise",
+            "A teacher",
+            "A mielie farmer"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p3_s2_q2",
+          "type": "choice",
+          "question_en": "Who also wanted to be wise?",
+          "options_en": [
+            "Jabulile",
+            "The elders",
+            "Her father"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "What began to gather over the Valley?",
+          "options_en": [
+            "The clouds",
+            "The sun",
+            "A rainbow"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "When did the clouds begin to gather?",
+          "options_en": [
+            "One awful day",
+            "After the storm",
+            "When the villagers smiled"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p4_s1_q1",
+          "type": "choice",
+          "question_en": "What happened to everything?",
+          "options_en": [
+            "It grew dark and grey",
+            "It grew greener than before",
+            "It became bright and sunny"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p4_s1_q2",
+          "type": "choice",
+          "question_en": "How did the Valley look?",
+          "options_en": [
+            "Dark and grey",
+            "Colorful with a rainbow",
+            "Cheerful and sunny"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p4_s2_q1",
+          "type": "choice",
+          "question_en": "What swept over the land?",
+          "options_en": [
+            "An ugly storm",
+            "A glorious rainbow",
+            "Great gusts of wind"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p4_s2_q2",
+          "type": "choice",
+          "question_en": "How is the storm described?",
+          "options_en": [
+            "Ugly",
+            "Awful",
+            "Glorious"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "What blew the roofs off the huts?",
+          "options_en": [
+            "Great gusts of wind",
+            "An ugly storm",
+            "The sun"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "Which part of the huts was blown off?",
+          "options_en": [
+            "The roofs",
+            "The animals' homes",
+            "The crops"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p5_s1_q1",
+          "type": "choice",
+          "question_en": "Who lost their homes?",
+          "options_en": [
+            "All the animals",
+            "The villagers",
+            "The farmers"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p5_s1_q2",
+          "type": "choice",
+          "question_en": "What did all the animals lose?",
+          "options_en": [
+            "Their homes",
+            "Their crops",
+            "Their roofs"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p5_s2_q1",
+          "type": "choice",
+          "question_en": "How was the day described?",
+          "options_en": [
+            "Very sad",
+            "A new day",
+            "Glorious"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p5_s2_q2",
+          "type": "choice",
+          "question_en": "What was it?",
+          "options_en": [
+            "A very sad day",
+            "A happy day",
+            "A day of planting"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "Who cried, “All the crops are ruined!”?",
+          "options_en": [
+            "the farmers",
+            "the elders",
+            "Jabulile"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "What did the village folk ask?",
+          "options_en": [
+            "\"What shall we do now?\"",
+            "\"Where is the rainbow?\"",
+            "\"How will we rebuild?\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p6_s1_q1",
+          "type": "choice",
+          "question_en": "Who said, “Our homes are gone!”?",
+          "options_en": [
+            "the elders",
+            "the farmers",
+            "Jabulile"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p6_s1_q2",
+          "type": "choice",
+          "question_en": "What did the elders say was gone?",
+          "options_en": [
+            "our homes",
+            "the crops",
+            "the sun"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p6_s2_q1",
+          "type": "choice",
+          "question_en": "What seemed lost?",
+          "options_en": [
+            "all hope",
+            "the roofs",
+            "the animals"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p6_s2_q2",
+          "type": "choice",
+          "question_en": "How did things seem?",
+          "options_en": [
+            "lost",
+            "bright",
+            "safe"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p6_s3_q1",
+          "type": "choice",
+          "question_en": "Who remembered something her wise father once told her?",
+          "options_en": [
+            "Jabulile",
+            "her father",
+            "the elders"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p6_s3_q2",
+          "type": "choice",
+          "question_en": "Whose words did Jabulile remember?",
+          "options_en": [
+            "her wise father",
+            "her mother",
+            "the wise men"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "Who started speaking to the villagers?",
+          "options_en": [
+            "Jabulile",
+            "Her father",
+            "The elders"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "What is the correct answer to this question: To whom did Jabulile start speaking?",
+          "options_en": [
+            "The villagers",
+            "The animals",
+            "The farmers"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p7_s1_q1",
+          "type": "choice",
+          "question_en": "What does she say only hurts them?",
+          "options_en": [
+            "The storm",
+            "The ruined crops",
+            "The wind"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p7_s1_q2",
+          "type": "choice",
+          "question_en": "Why does she say the storm only hurts them?",
+          "options_en": [
+            "Because of the way we choose to see it",
+            "Because roofs were blown off",
+            "Because all the animals lost their homes"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p7_s2_q1",
+          "type": "choice",
+          "question_en": "What should you do to see the sun?",
+          "options_en": [
+            "Look up",
+            "Plant new crops",
+            "Rebuild your home"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p7_s2_q2",
+          "type": "choice",
+          "question_en": "What is shining again?",
+          "options_en": [
+            "The sun",
+            "The rainbow",
+            "The grass"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p7_s3_q1",
+          "type": "choice",
+          "question_en": "What does she say it is?",
+          "options_en": [
+            "A new day",
+            "A storm",
+            "A sad time"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p7_s3_q2",
+          "type": "choice",
+          "question_en": "How does she describe the day?",
+          "options_en": [
+            "New",
+            "Ruined",
+            "Grey"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p7_s4_q1",
+          "type": "choice",
+          "question_en": "What does she say must come after every storm?",
+          "options_en": [
+            "A rainbow",
+            "New crops",
+            "Rebuilt homes"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p7_s4_q2",
+          "type": "choice",
+          "question_en": "How did she say the line about the rainbow?",
+          "options_en": [
+            "She shouted excitedly",
+            "She whispered sadly",
+            "She spoke quietly"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        }
+      ]
+    },
+    {
+      "paragraph_index": 8,
+      "questions": [
+        {
+          "id": "gl_p8_s0_q1",
+          "type": "choice",
+          "question_en": "What appeared in the sky?",
+          "options_en": [
+            "a glorious rainbow",
+            "the sun",
+            "great gusts of wind"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        },
+        {
+          "id": "gl_p8_s0_q2",
+          "type": "choice",
+          "question_en": "When did the glorious rainbow appear?",
+          "options_en": [
+            "Just then",
+            "After the storm",
+            "When the villagers cried"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        }
+      ]
+    },
+    {
+      "paragraph_index": 9,
+      "questions": [
+        {
+          "id": "gl_p9_s0_q1",
+          "type": "choice",
+          "question_en": "Who saw the rainbow?",
+          "options_en": [
+            "The villagers",
+            "Jabulile",
+            "The farmers"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        },
+        {
+          "id": "gl_p9_s0_q2",
+          "type": "choice",
+          "question_en": "What did the villagers do when they saw the rainbow?",
+          "options_en": [
+            "They began to smile",
+            "They rebuilt their homes",
+            "They cried"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        },
+        {
+          "id": "gl_p9_s1_q1",
+          "type": "choice",
+          "question_en": "What did it stand as?",
+          "options_en": [
+            "A promise that the storm was over",
+            "A new day",
+            "A lesson from the elders"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p9_s1_q2",
+          "type": "choice",
+          "question_en": "What did the promise show?",
+          "options_en": [
+            "The storm was over",
+            "All the crops were ruined",
+            "The roofs were blown off the huts"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        }
+      ]
+    },
+    {
+      "paragraph_index": 10,
+      "questions": [
+        {
+          "id": "gl_p10_s0_q1",
+          "type": "choice",
+          "question_en": "Who rebuilt their homes?",
+          "options_en": [
+            "The villagers",
+            "The elders",
+            "The farmers"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        },
+        {
+          "id": "gl_p10_s0_q2",
+          "type": "choice",
+          "question_en": "What did the villagers rebuild?",
+          "options_en": [
+            "Their homes",
+            "The rainbow",
+            "The crops"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        },
+        {
+          "id": "gl_p10_s1_q1",
+          "type": "choice",
+          "question_en": "Who planted new crops?",
+          "options_en": [
+            "Farmers",
+            "Jabulile",
+            "The villagers"
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        },
+        {
+          "id": "gl_p10_s1_q2",
+          "type": "choice",
+          "question_en": "What did farmers plant?",
+          "options_en": [
+            "New crops",
+            "Homes",
+            "Mielies"
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        },
+        {
+          "id": "gl_p10_s2_q1",
+          "type": "choice",
+          "question_en": "What grew greener than ever before?",
+          "options_en": [
+            "The grass",
+            "The crops",
+            "The valley"
+          ],
+          "correct_index": 0,
+          "sentence_index": 32
+        },
+        {
+          "id": "gl_p10_s2_q2",
+          "type": "choice",
+          "question_en": "Which became greener than ever before?",
+          "options_en": [
+            "The grass",
+            "The roofs",
+            "The animals"
+          ],
+          "correct_index": 0,
+          "sentence_index": 32
+        }
+      ]
+    },
+    {
+      "paragraph_index": 11,
+      "questions": [
+        {
+          "id": "gl_p11_s0_q1",
+          "type": "choice",
+          "question_en": "What was there once again?",
+          "options_en": [
+            "hope and happiness",
+            "an ugly storm",
+            "a glorious rainbow"
+          ],
+          "correct_index": 0,
+          "sentence_index": 33
+        },
+        {
+          "id": "gl_p11_s0_q2",
+          "type": "choice",
+          "question_en": "Where was there hope and happiness?",
+          "options_en": [
+            "in the Valley",
+            "in the village",
+            "in the sky"
+          ],
+          "correct_index": 0,
+          "sentence_index": 33
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'There Must be a Rainbow'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "Nestled",
+      "meaning_vi": "Nằm gọn, ẩn mình",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "Kingdom",
+      "meaning_vi": "Vương quốc",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "magnificent",
+      "meaning_vi": "Tráng lệ, tuyệt đẹp",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "curious",
+      "meaning_vi": "Tò mò, muốn tìm hiểu",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "fascinated",
+      "meaning_vi": "Bị thu hút, rất thích thú",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "farmer",
+      "meaning_vi": "Nông dân, người làm ruộng",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "dream",
+      "meaning_vi": "Mơ ước, mong muốn",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "village",
+      "meaning_vi": "Làng, thôn",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "elders",
+      "meaning_vi": "Người lớn tuổi, người già",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "wise",
+      "meaning_vi": "Thông thái, khôn ngoan",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "awful",
+      "meaning_vi": "Kinh khủng, tồi tệ",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "gather",
+      "meaning_vi": "Tụ lại, kéo đến",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "swept over",
+      "meaning_vi": "Quét qua, tràn qua",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "gusts",
+      "meaning_vi": "Cơn gió mạnh, luồng gió",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "huts",
+      "meaning_vi": "Túp lều, nhà tranh",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "lost",
+      "meaning_vi": "Mất, không còn",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "folk",
+      "meaning_vi": "Dân chúng, người dân",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "crops",
+      "meaning_vi": "Mùa màng, cây trồng",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "ruined",
+      "meaning_vi": "Bị phá hủy, hư hỏng",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "hope",
+      "meaning_vi": "Hy vọng, mong ước",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "choose",
+      "meaning_vi": "Lựa chọn, quyết định",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "shining",
+      "meaning_vi": "Chiếu sáng, tỏa sáng",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "rainbow",
+      "meaning_vi": "Cầu vồng",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "excitedly",
+      "meaning_vi": "Hào hứng, phấn khích",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "glorious",
+      "meaning_vi": "Rực rỡ, lộng lẫy",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "appeared",
+      "meaning_vi": "Xuất hiện, hiện ra",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "promise",
+      "meaning_vi": "Lời hứa, cam kết",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "over",
+      "meaning_vi": "Kết thúc, qua đi",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "rebuilt",
+      "meaning_vi": "Xây dựng lại",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "planted",
+      "meaning_vi": "Trồng (cây)",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "greener",
+      "meaning_vi": "Xanh hơn",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "happiness",
+      "meaning_vi": "Hạnh phúc, niềm vui",
+      "paragraph_index": 11
+    },
+    {
+      "word_en": "once again",
+      "meaning_vi": "Một lần nữa, lại",
+      "paragraph_index": 11
+    }
+  ]
+}

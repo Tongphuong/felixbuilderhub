@@ -1,0 +1,777 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L1",
+  "level_label": "Cấp 1",
+  "topic": "My story",
+  "slug": "book_128171",
+  "audio_filename": "book_128171.mp3",
+  "book_slug": "book_128171",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_128171/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_128171/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_128171/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_128171/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_128171/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_128171/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_128171/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_128171/page_09.jpg",
+    "https://audio.felixbuilderhub.com/books/book_128171/page_10.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_128171/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_128171/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_128171/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_128171/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_128171/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_128171/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_128171/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_128171/page_09.mp3",
+    "https://audio.felixbuilderhub.com/books/book_128171/page_10.mp3"
+  ],
+  "book_attribution": {
+    "title": "My story",
+    "creators": [
+      "Sarvika Tuli",
+      "Ketan Raut"
+    ],
+    "publisher": "StoryWeaver Community",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: My story is translated by Sarvika Tuli . The © for this translation lies with Sarvika Tuli , 2020. Some rights reserved. Released under CC BY 4.0 license. Based on Original story: ' मेरी कहानी ' , by Omprakash Kshatriya 'prakash' ओमप्रकाश क्षत्रिय 'प्रकाश' . © Omprakash Kshatriya 'prakash' ओमप्रकाश क्षत्रिय 'प्रकाश' , 2017. Some rights reserved. Released under CC BY 4.0 license. Images Attributions: Cover page: A tree in different stages of its growth , by Ketan Raut © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license. Page 2: A tree in different stages of its growth , by Ketan Raut © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license. Page 3: A tree in different stages of its growth , by Ketan Raut © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license. Page 4: A tree in different stages of its growth , by Ketan Raut © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license. Page 5: A tree in different stages of its growth , by Ketan Raut © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license. Page 6: A tree in different stages of its growth , by Ketan Raut © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license. Page 7: A tree in different stages of its growth , by Ketan Raut © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license. Page 8: A tree in different stages of its growth , by Ketan Raut © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license. Page 9: A tree in different stages of its growth , by Ketan Raut © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license. Page 10: A tree in different stages of its growth , by Ketan Raut © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/128171-my-story",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "A tree in different stages of its growth , by Ketan Raut © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "A tree in different stages of its growth , by Ketan Raut © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "A tree in different stages of its growth , by Ketan Raut © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "A tree in different stages of its growth , by Ketan Raut © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "A tree in different stages of its growth , by Ketan Raut © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "A tree in different stages of its growth , by Ketan Raut © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "A tree in different stages of its growth , by Ketan Raut © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "A tree in different stages of its growth , by Ketan Raut © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 8,
+        "credit_text": "A tree in different stages of its growth , by Ketan Raut © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "My story",
+    "paragraphs_en": [
+      "Who am I? I am a seed.",
+      "I was buried under the ground. Then, the root and the stem grew out of me.",
+      "Then, the leaves grew bigger.",
+      "A lot of my leaves came out and I became a plant.",
+      "Slowly, I began to grow.",
+      "A few years later, I became a tree.",
+      "Fruits grew on me. Do you wish to eat them?",
+      "I am a fruit. What will you do after you eat me?",
+      "Take my seed and bury it under the ground. Then I will become a tree."
+    ],
+    "sentences": [
+      {
+        "text_en": "Who am I?",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_128171/s_000.mp3",
+        "text_vi": "Tôi là ai?"
+      },
+      {
+        "text_en": "I am a seed.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_128171/s_001.mp3",
+        "text_vi": "Tôi là một hạt giống."
+      },
+      {
+        "text_en": "I was buried under the ground.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_128171/s_002.mp3",
+        "text_vi": "Tôi đã được chôn dưới đất."
+      },
+      {
+        "text_en": "Then, the root and the stem grew out of me.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_128171/s_003.mp3",
+        "text_vi": "Sau đó, rễ và thân cây mọc ra từ tôi."
+      },
+      {
+        "text_en": "Then, the leaves grew bigger.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_128171/s_004.mp3",
+        "text_vi": "Sau đó, những chiếc lá lớn hơn."
+      },
+      {
+        "text_en": "A lot of my leaves came out and I became a plant.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_128171/s_005.mp3",
+        "text_vi": "Rất nhiều lá của tôi mọc ra và tôi trở thành một cái cây con."
+      },
+      {
+        "text_en": "Slowly, I began to grow.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_128171/s_006.mp3",
+        "text_vi": "Từ từ, tôi bắt đầu lớn lên."
+      },
+      {
+        "text_en": "A few years later, I became a tree.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_128171/s_007.mp3",
+        "text_vi": "Vài năm sau, tôi trở thành một cái cây lớn."
+      },
+      {
+        "text_en": "Fruits grew on me.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_128171/s_008.mp3",
+        "text_vi": "Trái cây mọc trên tôi."
+      },
+      {
+        "text_en": "Do you wish to eat them?",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_128171/s_009.mp3",
+        "text_vi": "Bạn có muốn ăn chúng không?"
+      },
+      {
+        "text_en": "I am a fruit.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_128171/s_010.mp3",
+        "text_vi": "Tôi là một quả trái cây."
+      },
+      {
+        "text_en": "What will you do after you eat me?",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_128171/s_011.mp3",
+        "text_vi": "Bạn sẽ làm gì sau khi ăn tôi?"
+      },
+      {
+        "text_en": "Take my seed and bury it under the ground.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_128171/s_012.mp3",
+        "text_vi": "Hãy lấy hạt của tôi và chôn nó xuống đất."
+      },
+      {
+        "text_en": "Then I will become a tree.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_128171/s_013.mp3",
+        "text_vi": "Sau đó tôi sẽ trở thành một cái cây."
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "Who am I?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_128171/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "I am a seed.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_128171/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "I was buried under the ground.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_128171/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "Then, the root and the stem grew out of me.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_128171/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "Then, the leaves grew bigger.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_128171/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "A lot of my leaves came out and I became a plant.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_128171/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "Slowly, I began to grow.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_128171/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "A few years later, I became a tree.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_128171/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "Fruits grew on me.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_128171/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "Do you wish to eat them?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_128171/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "I am a fruit.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_128171/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "What will you do after you eat me?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_128171/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "Take my seed and bury it under the ground.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_128171/s_012.mp3"
+        },
+        {
+          "id": "ra_13",
+          "text_en": "Then I will become a tree.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_128171/s_013.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "Who is speaking in the question?",
+          "options_en": [
+            "A seed",
+            "A tree",
+            "A fruit"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "What does the speaker ask in the first sentence?",
+          "options_en": [
+            "Who am I?",
+            "Do you wish to eat them?",
+            "What will you do after you eat me?"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s1_q1",
+          "type": "choice",
+          "question_en": "What does the speaker say they are?",
+          "options_en": [
+            "A seed",
+            "A tree",
+            "A fruit"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s1_q2",
+          "type": "choice",
+          "question_en": "Which of these is the speaker identifying themselves as?",
+          "options_en": [
+            "A seed",
+            "A tree",
+            "A fruit"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "Where was I buried?",
+          "options_en": [
+            "Under the ground",
+            "In the tree",
+            "Inside the fruit"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "What happened to me?",
+          "options_en": [
+            "I was buried under the ground",
+            "I became a tree",
+            "Fruits grew on me"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p1_s1_q1",
+          "type": "choice",
+          "question_en": "What grew out of me?",
+          "options_en": [
+            "The root and the stem",
+            "Many leaves",
+            "Fruits"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p1_s1_q2",
+          "type": "choice",
+          "question_en": "How did I begin to grow?",
+          "options_en": [
+            "The root and the stem grew out of me",
+            "Leaves grew bigger",
+            "I became a tree"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "What grew bigger?",
+          "options_en": [
+            "The leaves",
+            "The root",
+            "The stem"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "When did the leaves grow bigger?",
+          "options_en": [
+            "Then",
+            "A few years later",
+            "After the seed was buried"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "What came out?",
+          "options_en": [
+            "My leaves",
+            "The root",
+            "Fruits"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "What did I become?",
+          "options_en": [
+            "A plant",
+            "A tree",
+            "A seed"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "Who began to grow?",
+          "options_en": [
+            "I",
+            "the seed",
+            "the tree"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "When did I begin to grow?",
+          "options_en": [
+            "Slowly",
+            "A few years later",
+            "Then"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "When did I become a tree?",
+          "options_en": [
+            "A few years later",
+            "After I was buried",
+            "When the fruits grew"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "What did I become?",
+          "options_en": [
+            "A tree",
+            "A plant",
+            "A fruit"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "What grew on me?",
+          "options_en": [
+            "Fruits",
+            "Leaves",
+            "Roots"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "Where did things grow?",
+          "options_en": [
+            "On me",
+            "Under the ground",
+            "On the leaves"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p6_s1_q1",
+          "type": "choice",
+          "question_en": "Who is being asked if they wish to eat them?",
+          "options_en": [
+            "You",
+            "I",
+            "The seed"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p6_s1_q2",
+          "type": "choice",
+          "question_en": "What is the speaker asking about eating?",
+          "options_en": [
+            "Them (the fruits)",
+            "Seeds",
+            "Leaves"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "What am I?",
+          "options_en": [
+            "A fruit",
+            "A seed",
+            "A tree"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "Which am I?",
+          "options_en": [
+            "A fruit",
+            "A seed",
+            "A tree"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p7_s1_q1",
+          "type": "choice",
+          "question_en": "When will you do it?",
+          "options_en": [
+            "After you eat me",
+            "When buried under the ground",
+            "A few years later"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p7_s1_q2",
+          "type": "choice",
+          "question_en": "What does the sentence ask?",
+          "options_en": [
+            "What will you do after you eat me?",
+            "Do you wish to eat them?",
+            "Take my seed and bury it under the ground."
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        }
+      ]
+    },
+    {
+      "paragraph_index": 8,
+      "questions": [
+        {
+          "id": "gl_p8_s0_q1",
+          "type": "choice",
+          "question_en": "What should you take?",
+          "options_en": [
+            "My seed",
+            "A fruit",
+            "My leaves"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p8_s0_q2",
+          "type": "choice",
+          "question_en": "Where should you bury it?",
+          "options_en": [
+            "Under the ground",
+            "On the leaves",
+            "Inside the fruit"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p8_s1_q1",
+          "type": "choice",
+          "question_en": "What will I become?",
+          "options_en": [
+            "A tree",
+            "A plant",
+            "A fruit"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p8_s1_q2",
+          "type": "choice",
+          "question_en": "When will I become a tree?",
+          "options_en": [
+            "Then",
+            "A few years later",
+            "After you eat me"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'My story'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "Who",
+      "meaning_vi": "Ai",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "seed",
+      "meaning_vi": "hạt giống",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "buried",
+      "meaning_vi": "chôn",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "ground",
+      "meaning_vi": "đất",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "root",
+      "meaning_vi": "rễ",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "stem",
+      "meaning_vi": "thân cây",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "leaves",
+      "meaning_vi": "lá",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "bigger",
+      "meaning_vi": "lớn hơn",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "plant",
+      "meaning_vi": "cây con",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "became",
+      "meaning_vi": "trở thành",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "Slowly",
+      "meaning_vi": "Từ từ",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "began",
+      "meaning_vi": "bắt đầu",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "grow",
+      "meaning_vi": "lớn lên",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "years",
+      "meaning_vi": "năm",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "later",
+      "meaning_vi": "sau",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "tree",
+      "meaning_vi": "cây lớn",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "Fruits",
+      "meaning_vi": "Trái cây",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "wish",
+      "meaning_vi": "muốn",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "eat",
+      "meaning_vi": "ăn",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "fruit",
+      "meaning_vi": "quả trái cây",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "after",
+      "meaning_vi": "sau khi",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "Take",
+      "meaning_vi": "Lấy",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "bury",
+      "meaning_vi": "chôn",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "will",
+      "meaning_vi": "sẽ",
+      "paragraph_index": 8
+    }
+  ]
+}

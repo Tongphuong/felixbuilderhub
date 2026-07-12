@@ -1,0 +1,1031 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L2",
+  "level_label": "Cấp 2",
+  "topic": "Little Green Animal-eaters",
+  "slug": "book_16021",
+  "audio_filename": "book_16021.mp3",
+  "book_slug": "book_16021",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_16021/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_16021/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_16021/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_16021/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_16021/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_16021/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_16021/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_16021/page_09.jpg",
+    "https://audio.felixbuilderhub.com/books/book_16021/page_10.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_16021/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_16021/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_16021/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_16021/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_16021/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_16021/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_16021/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_16021/page_09.mp3",
+    "https://audio.felixbuilderhub.com/books/book_16021/page_10.mp3"
+  ],
+  "book_attribution": {
+    "title": "Little Green Animal-eaters",
+    "creators": [
+      "Geetha Ramaswami"
+    ],
+    "publisher": "Nature Conservation Foundation",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: Little Green Animal-eaters is written by Geetha Ramaswami . © Nature Conservation Foundation , 2017. Some rights reserved. Released under CC BY 4.0 license. Other Credits: This story 'Little Green Animal-eaters' has been published on StoryWeaver by Nature Conservation Foundation. Images Attributions: Cover page: Cover Miss Ant hi res , by Geetha Ramaswami © Geetha Ramaswami, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 2: Page 2 Miss Ant hi res , by Geetha Ramaswami © Geetha Ramaswami, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 3: Page 3 Miss Ant hi res , by Geetha Ramaswami © Geetha Ramaswami, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 4: Page 4 Miss Ant hi res , by Geetha Ramaswami © Geetha Ramaswami, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 5: Page 5 Miss Ant hi res , by Geetha Ramaswami © Geetha Ramaswami, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 6: Page 6 Miss Ant hi res , by Geetha Ramaswami © Geetha Ramaswami, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 7: Page 7 Miss Ant hi res , by Geetha Ramaswami © Geetha Ramaswami, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 8: Page 8 Miss Ant hi res , by Geetha Ramaswami © Geetha Ramaswami, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 9: Page 9 Miss Ant hi res , by Geetha Ramaswami © Geetha Ramaswami, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 10: Page 10 Miss Ant hi res , by Geetha Ramaswami © Geetha Ramaswami, 2026. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/16021-little-green-animal-eaters",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "Page 2 Miss Ant hi res , by Geetha Ramaswami © Geetha Ramaswami, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "Page 3 Miss Ant hi res , by Geetha Ramaswami © Geetha Ramaswami, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "Page 4 Miss Ant hi res , by Geetha Ramaswami © Geetha Ramaswami, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "Page 5 Miss Ant hi res , by Geetha Ramaswami © Geetha Ramaswami, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "Page 6 Miss Ant hi res , by Geetha Ramaswami © Geetha Ramaswami, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "Page 7 Miss Ant hi res , by Geetha Ramaswami © Geetha Ramaswami, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "Page 8 Miss Ant hi res , by Geetha Ramaswami © Geetha Ramaswami, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "Page 9 Miss Ant hi res , by Geetha Ramaswami © Geetha Ramaswami, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 8,
+        "credit_text": "Page 10 Miss Ant hi res , by Geetha Ramaswami © Geetha Ramaswami, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "Little Green Animal-eaters",
+    "paragraphs_en": [
+      "WHOOSH!! PHWIKKK!! THWACKKK!! SHLOOP!! Oh my, what’s that, asked the fly, What’s all that noise I hear? An animal-eating plant, said Ant, Chomping beings that come too near.",
+      "Animals like tigers and lions? Eating them would be a fuss! Not at all, said Ant, they are quite small, They eat insects just like us!",
+      "The Pitcher Plant’s big belly Is full of slooshy slush WHOOOOSH! The bugs slide on its tongue, They fall and there’s a hush.",
+      "The Sundew has such spindly arms, They’re sticky and tend to droop. PHWIKKKK! They roll a beetle over, Now it’s a ball of goop!",
+      "That’s a Venus Flytrap Its palms are big and hairy THWAAKKKK! A fly is now snap-trapped Gosh! that does look scary!",
+      "The under-water Bladderwort Has big cheeks like a pouch, SCHLOOOOP! it sucks in water-bugs They go in screaming 'ouch'!",
+      "Tell me, Ant, why they devour, those bugs and flies in flight? Have they forgotten they are plants who cook their food with light?",
+      "Dear Fly, from the soil and the sun, If they don't get much to eat They snack on poor, wandering bugs, To get some extra meat.",
+      "Ah, thanks, dear Ant, for telling me, now I really know! But wait - there were so many of us, (PHWIKKK!) where did everyone go?"
+    ],
+    "sentences": [
+      {
+        "text_en": "WHOOSH!! PHWIKKK!! THWACKKK!!",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_16021/s_000.mp3",
+        "text_vi": "WHOOSH!! PHWIKKK!! THWACKKK!!"
+      },
+      {
+        "text_en": "SHLOOP!! Oh my, what’s that, asked the fly, What’s all that noise I hear?",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_16021/s_001.mp3",
+        "text_vi": "SHLOOP!! Ôi trời, cái gì thế? Ruồi hỏi. Tiếng ồn đó là gì vậy?"
+      },
+      {
+        "text_en": "An animal-eating plant, said Ant, Chomping beings that come too near.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_16021/s_002.mp3",
+        "text_vi": "Kiến nói: Đó là cây ăn thịt, nó nhai ngấu nghiến những sinh vật đến quá gần."
+      },
+      {
+        "text_en": "Animals like tigers and lions?",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_16021/s_003.mp3",
+        "text_vi": "Động vật như hổ và sư tử ư?"
+      },
+      {
+        "text_en": "Eating them would be a fuss!",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_16021/s_004.mp3",
+        "text_vi": "Ăn chúng thì rắc rối lắm!"
+      },
+      {
+        "text_en": "Not at all, said Ant, they are quite small, They eat insects just like us!",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_16021/s_005.mp3",
+        "text_vi": "Kiến nói: Không phải đâu, chúng khá nhỏ, chúng ăn côn trùng giống như chúng ta thôi!"
+      },
+      {
+        "text_en": "The Pitcher Plant’s big belly Is full of slooshy slush WHOOOOSH!",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_16021/s_006.mp3",
+        "text_vi": "Cái bụng to của cây Nắp Ấm đầy bùn nhão WHOOOOSH!"
+      },
+      {
+        "text_en": "The bugs slide on its tongue, They fall and there’s a hush.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_16021/s_007.mp3",
+        "text_vi": "Lũ bọ trượt trên lưỡi nó, chúng rơi xuống và im bặt."
+      },
+      {
+        "text_en": "The Sundew has such spindly arms, They’re sticky and tend to droop.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_16021/s_008.mp3",
+        "text_vi": "Cây Gọng Kìm có những cánh tay gầy guộc, chúng dính và thường rủ xuống."
+      },
+      {
+        "text_en": "PHWIKKKK! They roll a beetle over, Now it’s a ball of goop!",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_16021/s_009.mp3",
+        "text_vi": "PHWIKKKK! Chúng cuộn một con bọ cánh cứng lại, giờ nó thành một cục nhão nhoét!"
+      },
+      {
+        "text_en": "That’s a Venus Flytrap Its palms are big and hairy THWAAKKKK!",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_16021/s_010.mp3",
+        "text_vi": "Đó là cây Bắt Ruồi Venus. Lá của nó to và có lông THWAAKKKK!"
+      },
+      {
+        "text_en": "A fly is now snap-trapped Gosh!",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_16021/s_011.mp3",
+        "text_vi": "Một con ruồi vừa bị kẹp chặt! Ôi trời!"
+      },
+      {
+        "text_en": "that does look scary!",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_16021/s_012.mp3",
+        "text_vi": "Trông đáng sợ thật!"
+      },
+      {
+        "text_en": "The under-water Bladderwort Has big cheeks like a pouch, SCHLOOOOP!",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_16021/s_013.mp3",
+        "text_vi": "Cây Rong Đuôi Chồn dưới nước có những cái má to như một cái túi, SCHLOOOOP!"
+      },
+      {
+        "text_en": "it sucks in water-bugs They go in screaming 'ouch'!",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_16021/s_014.mp3",
+        "text_vi": "Nó hút những con bọ nước vào. Chúng kêu 'ouch' khi bị hút vào!"
+      },
+      {
+        "text_en": "Tell me, Ant, why they devour, those bugs and flies in flight?",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_16021/s_015.mp3",
+        "text_vi": "Kiến ơi, nói cho tôi biết tại sao chúng lại nuốt chửng những con bọ và ruồi đang bay đó?"
+      },
+      {
+        "text_en": "Have they forgotten they are plants who cook their food with light?",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_16021/s_016.mp3",
+        "text_vi": "Chúng quên mất mình là cây cối, tự nấu thức ăn bằng ánh sáng rồi sao?"
+      },
+      {
+        "text_en": "Dear Fly, from the soil and the sun, If they don't get much to eat They snack on poor, wandering bugs, To get some extra meat.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_16021/s_017.mp3",
+        "text_vi": "Ruồi thân mến, từ đất và mặt trời, nếu chúng không nhận đủ thức ăn, chúng sẽ ăn vặt những con bọ tội nghiệp, lang thang để có thêm chất đạm."
+      },
+      {
+        "text_en": "Ah, thanks, dear Ant, for telling me, now I really know!",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_16021/s_018.mp3",
+        "text_vi": "À, cảm ơn Kiến nhé, vì đã nói cho tôi biết, giờ thì tôi đã hiểu rồi!"
+      },
+      {
+        "text_en": "But wait - there were so many of us, (PHWIKKK!) where did everyone go?",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_16021/s_019.mp3",
+        "text_vi": "Nhưng đợi đã - có rất nhiều chúng ta mà, (PHWIKKK!) mọi người đi đâu hết rồi?"
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "WHOOSH!! PHWIKKK!! THWACKKK!!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_16021/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "SHLOOP!! Oh my, what’s that, asked the fly, What’s all that noise I hear?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_16021/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "An animal-eating plant, said Ant, Chomping beings that come too near.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_16021/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "Animals like tigers and lions?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_16021/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "Eating them would be a fuss!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_16021/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "Not at all, said Ant, they are quite small, They eat insects just like us!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_16021/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "The Pitcher Plant’s big belly Is full of slooshy slush WHOOOOSH!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_16021/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "The bugs slide on its tongue, They fall and there’s a hush.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_16021/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "The Sundew has such spindly arms, They’re sticky and tend to droop.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_16021/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "PHWIKKKK! They roll a beetle over, Now it’s a ball of goop!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_16021/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "That’s a Venus Flytrap Its palms are big and hairy THWAAKKKK!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_16021/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "A fly is now snap-trapped Gosh!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_16021/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "that does look scary!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_16021/s_012.mp3"
+        },
+        {
+          "id": "ra_13",
+          "text_en": "The under-water Bladderwort Has big cheeks like a pouch, SCHLOOOOP!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_16021/s_013.mp3"
+        },
+        {
+          "id": "ra_14",
+          "text_en": "it sucks in water-bugs They go in screaming 'ouch'!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_16021/s_014.mp3"
+        },
+        {
+          "id": "ra_15",
+          "text_en": "Tell me, Ant, why they devour, those bugs and flies in flight?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_16021/s_015.mp3"
+        },
+        {
+          "id": "ra_16",
+          "text_en": "Have they forgotten they are plants who cook their food with light?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_16021/s_016.mp3"
+        },
+        {
+          "id": "ra_17",
+          "text_en": "Dear Fly, from the soil and the sun, If they don't get much to eat They snack on poor, wandering bugs, To get some extra meat.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_16021/s_017.mp3"
+        },
+        {
+          "id": "ra_18",
+          "text_en": "Ah, thanks, dear Ant, for telling me, now I really know!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_16021/s_018.mp3"
+        },
+        {
+          "id": "ra_19",
+          "text_en": "But wait - there were so many of us, (PHWIKKK!) where did everyone go?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_16021/s_019.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "What sounds are heard in the sentence?",
+          "options_en": [
+            "WHOOSH!! PHWIKKK!! THWACKKK!!",
+            "SHLOOP!!",
+            "THWAAKKKK!"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "Which sound appears in the sentence?",
+          "options_en": [
+            "PHWIKKK!!",
+            "SHLOOP!!",
+            "SCHLOOOOP!"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s1_q1",
+          "type": "choice",
+          "question_en": "Who asked, \"What’s that?\"",
+          "options_en": [
+            "the fly",
+            "Ant",
+            "the Pitcher Plant"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s1_q2",
+          "type": "choice",
+          "question_en": "What does the fly ask about in the sentence?",
+          "options_en": [
+            "What’s all that noise I hear?",
+            "Where did everyone go?",
+            "Why do they devour bugs?"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s2_q1",
+          "type": "choice",
+          "question_en": "Who says, \"An animal-eating plant\"?",
+          "options_en": [
+            "Ant",
+            "the fly",
+            "Venus Flytrap"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s2_q2",
+          "type": "choice",
+          "question_en": "What does Ant describe as \"Chomping beings that come too near\"?",
+          "options_en": [
+            "An animal-eating plant",
+            "The Pitcher Plant's big belly",
+            "The Sundew's sticky arms"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "Which animals are mentioned?",
+          "options_en": [
+            "tigers and lions",
+            "Pitcher Plant and Sundew",
+            "Venus Flytrap and Bladderwort"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "What kind of creatures does the sentence ask about?",
+          "options_en": [
+            "animals like tigers and lions",
+            "insects that slide on a tongue",
+            "under-water Bladderworts"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p1_s1_q1",
+          "type": "choice",
+          "question_en": "What would be a fuss?",
+          "options_en": [
+            "eating them",
+            "the Pitcher Plant's big belly",
+            "rolling a beetle over"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p1_s1_q2",
+          "type": "choice",
+          "question_en": "How is the action described?",
+          "options_en": [
+            "a fuss",
+            "slooshy slush",
+            "snap-trapped"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p1_s2_q1",
+          "type": "choice",
+          "question_en": "Who said they are quite small?",
+          "options_en": [
+            "Ant",
+            "Fly",
+            "Pitcher Plant"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p1_s2_q2",
+          "type": "choice",
+          "question_en": "What do they eat just like us?",
+          "options_en": [
+            "insects",
+            "water-bugs",
+            "flies"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "What is full of slooshy slush?",
+          "options_en": [
+            "The Pitcher Plant’s big belly",
+            "The Sundew’s spindly arms",
+            "The under-water Bladderwort’s big cheeks"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "What sound is written in the sentence?",
+          "options_en": [
+            "WHOOOOSH!",
+            "PHWIKKK!!",
+            "THWAAKKKK!"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p2_s1_q1",
+          "type": "choice",
+          "question_en": "What do the bugs do on its tongue?",
+          "options_en": [
+            "They slide",
+            "They roll",
+            "They are snap-trapped"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p2_s1_q2",
+          "type": "choice",
+          "question_en": "What happens after the bugs fall?",
+          "options_en": [
+            "There’s a hush",
+            "They scream 'ouch'",
+            "Now it’s a ball of goop"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "Which plant has spindly arms?",
+          "options_en": [
+            "The Sundew",
+            "The Pitcher Plant",
+            "The Venus Flytrap"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "How are its arms described?",
+          "options_en": [
+            "They’re sticky and tend to droop",
+            "Its belly is full of slooshy slush",
+            "Its palms are big and hairy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p3_s1_q1",
+          "type": "choice",
+          "question_en": "What do they roll over?",
+          "options_en": [
+            "A beetle",
+            "A fly",
+            "A water-bug"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p3_s1_q2",
+          "type": "choice",
+          "question_en": "What does the beetle become?",
+          "options_en": [
+            "A ball of goop",
+            "Slooshy slush",
+            "Snap-trapped"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "What is that?",
+          "options_en": [
+            "A Venus Flytrap",
+            "The Pitcher Plant",
+            "The Sundew"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "How are its palms described?",
+          "options_en": [
+            "Big and hairy",
+            "Spindly and sticky",
+            "Big belly and slushy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p4_s1_q1",
+          "type": "choice",
+          "question_en": "Who is now snap-trapped?",
+          "options_en": [
+            "A fly",
+            "A beetle",
+            "A water-bug"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p4_s1_q2",
+          "type": "choice",
+          "question_en": "What happened to the fly?",
+          "options_en": [
+            "It was snap-trapped",
+            "It slid into the Pitcher Plant",
+            "It was rolled by the Sundew"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p4_s2_q1",
+          "type": "choice",
+          "question_en": "Which thing does the speaker say looks scary?",
+          "options_en": [
+            "That",
+            "The Pitcher Plant",
+            "The Bladderwort"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p4_s2_q2",
+          "type": "choice",
+          "question_en": "Why does the speaker say it looks scary?",
+          "options_en": [
+            "Because a fly is snap-trapped",
+            "Because the Pitcher Plant has a big belly",
+            "Because the Sundew rolls a beetle"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "What has big cheeks like a pouch?",
+          "options_en": [
+            "The under-water Bladderwort",
+            "The Pitcher Plant",
+            "The Venus Flytrap"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "Where is the Bladderwort located?",
+          "options_en": [
+            "Under-water",
+            "In the soil",
+            "In the Pitcher Plant's belly"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p5_s1_q1",
+          "type": "choice",
+          "question_en": "What does it suck in?",
+          "options_en": [
+            "Water-bugs",
+            "Flies",
+            "Beetles"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p5_s1_q2",
+          "type": "choice",
+          "question_en": "How do the water-bugs react when they are sucked in?",
+          "options_en": [
+            "They go in screaming 'ouch'",
+            "They slide on its tongue",
+            "They roll into a ball of goop"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "Who is being asked about why they devour bugs and flies?",
+          "options_en": [
+            "Ant",
+            "Fly",
+            "Pitcher Plant"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "What do they devour in the sentence?",
+          "options_en": [
+            "Bugs and flies in flight",
+            "Tigers and lions",
+            "Water-bugs"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p6_s1_q1",
+          "type": "choice",
+          "question_en": "What does the sentence say they are?",
+          "options_en": [
+            "Plants who cook their food with light",
+            "Animals like tigers and lions",
+            "Insects that snap flies"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p6_s1_q2",
+          "type": "choice",
+          "question_en": "How do these plants normally get their food, according to the sentence?",
+          "options_en": [
+            "They cook their food with light",
+            "They snap flies with big palms",
+            "They suck in water-bugs"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "Where do they get nutrients from?",
+          "options_en": [
+            "From the soil and the sun",
+            "From the Pitcher Plant’s belly",
+            "From the under-water Bladderwort"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "What do they snack on when they don't get much to eat?",
+          "options_en": [
+            "Poor, wandering bugs",
+            "Water-bugs",
+            "A fly"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        }
+      ]
+    },
+    {
+      "paragraph_index": 8,
+      "questions": [
+        {
+          "id": "gl_p8_s0_q1",
+          "type": "choice",
+          "question_en": "Who is being thanked?",
+          "options_en": [
+            "Ant",
+            "Pitcher Plant",
+            "Venus Flytrap"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p8_s0_q2",
+          "type": "choice",
+          "question_en": "Why is the speaker thanking Ant?",
+          "options_en": [
+            "Because Ant told them something",
+            "Because Ant trapped a fly",
+            "Because Ant sang a song"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p8_s1_q1",
+          "type": "choice",
+          "question_en": "What is the speaker wondering about?",
+          "options_en": [
+            "Where everyone went",
+            "How the Pitcher Plant works",
+            "Why the Sundew is sticky"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p8_s1_q2",
+          "type": "choice",
+          "question_en": "Why does the speaker ask where everyone went?",
+          "options_en": [
+            "Because there had been so many of them",
+            "Because the Bladderwort made a noise",
+            "Because the Venus Flytrap snapped shut"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'Little Green Animal-eaters'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "noise",
+      "meaning_vi": "tiếng ồn",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "animal-eating",
+      "meaning_vi": "ăn thịt động vật",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "chomping",
+      "meaning_vi": "nhai ngấu nghiến",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "beings",
+      "meaning_vi": "sinh vật",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "fuss",
+      "meaning_vi": "rắc rối",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "quite",
+      "meaning_vi": "khá",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "insects",
+      "meaning_vi": "côn trùng",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "belly",
+      "meaning_vi": "bụng",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "sloosh",
+      "meaning_vi": "bùn nhão",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "slide",
+      "meaning_vi": "trượt",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "hush",
+      "meaning_vi": "im bặt",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "spindly",
+      "meaning_vi": "gầy guộc",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "sticky",
+      "meaning_vi": "dính",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "droop",
+      "meaning_vi": "rủ xuống",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "goop",
+      "meaning_vi": "cục nhão nhoét",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "palms",
+      "meaning_vi": "lá (cây)",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "hairy",
+      "meaning_vi": "có lông",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "snap-trapped",
+      "meaning_vi": "bị kẹp chặt",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "scary",
+      "meaning_vi": "đáng sợ",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "under-water",
+      "meaning_vi": "dưới nước",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "cheeks",
+      "meaning_vi": "má",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "pouch",
+      "meaning_vi": "cái túi",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "sucks in",
+      "meaning_vi": "hút vào",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "devour",
+      "meaning_vi": "nuốt chửng",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "in flight",
+      "meaning_vi": "đang bay",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "forgotten",
+      "meaning_vi": "quên mất",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "cook",
+      "meaning_vi": "nấu",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "soil",
+      "meaning_vi": "đất",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "snack on",
+      "meaning_vi": "ăn vặt",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "wandering",
+      "meaning_vi": "lang thang",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "extra meat",
+      "meaning_vi": "chất đạm bổ sung",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "really",
+      "meaning_vi": "thật sự",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "everyone",
+      "meaning_vi": "mọi người",
+      "paragraph_index": 8
+    }
+  ]
+}

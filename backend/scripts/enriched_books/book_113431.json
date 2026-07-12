@@ -1,0 +1,3167 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L4",
+  "level_label": "Cấp 4",
+  "topic": "Home",
+  "slug": "book_113431",
+  "audio_filename": "book_113431.mp3",
+  "book_slug": "book_113431",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_113431/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_113431/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_113431/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_113431/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_113431/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_113431/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_113431/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_113431/page_09.jpg",
+    "https://audio.felixbuilderhub.com/books/book_113431/page_10.jpg",
+    "https://audio.felixbuilderhub.com/books/book_113431/page_11.jpg",
+    "https://audio.felixbuilderhub.com/books/book_113431/page_12.jpg",
+    "https://audio.felixbuilderhub.com/books/book_113431/page_13.jpg",
+    "https://audio.felixbuilderhub.com/books/book_113431/page_14.jpg",
+    "https://audio.felixbuilderhub.com/books/book_113431/page_15.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_113431/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_113431/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_113431/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_113431/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_113431/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_113431/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_113431/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_113431/page_09.mp3",
+    "https://audio.felixbuilderhub.com/books/book_113431/page_10.mp3",
+    "https://audio.felixbuilderhub.com/books/book_113431/page_11.mp3",
+    "https://audio.felixbuilderhub.com/books/book_113431/page_12.mp3",
+    "https://audio.felixbuilderhub.com/books/book_113431/page_13.mp3",
+    "https://audio.felixbuilderhub.com/books/book_113431/page_14.mp3",
+    "https://audio.felixbuilderhub.com/books/book_113431/page_15.mp3"
+  ],
+  "book_attribution": {
+    "title": "Home",
+    "creators": [
+      "Fausto Aarya De Santis",
+      "Ogin Nayam"
+    ],
+    "publisher": "Pratham Books",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: Home is written by Fausto Aarya De Santis . © Pratham Books , 2020. Some rights reserved. Released under CC BY 4.0 license. Other Credits: 'Home' has been published on StoryWeaver by Pratham Books. www.prathambooks.org Images Attributions: Cover page: child looks at water drops , by Ogin Nayam © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 2: child looks into a water puddle , by Ogin Nayam © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 3: child having fun in the rain , by Ogin Nayam © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 4: child under a huge colourful blanket , by Ogin Nayam © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 5: mother holds a blanket , by Ogin Nayam © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 6: child and a mother listening to an announcement , by Ogin Nayam © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 7: child hides behind her mother , by Ogin Nayam © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 8: refugees walk across deserted lands , by Ogin Nayam © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 9: Refugees crossing a river , by Ogin Nayam © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 10: Refugees crossing barren land , by Ogin Nayam © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 11: houses stacked together , by Ogin Nayam © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/113431-home",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "child looks into a water puddle , by Ogin Nayam © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "child having fun in the rain , by Ogin Nayam © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "child under a huge colourful blanket , by Ogin Nayam © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "mother holds a blanket , by Ogin Nayam © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "child and a mother listening to an announcement , by Ogin Nayam © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "child hides behind her mother , by Ogin Nayam © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "refugees walk across deserted lands , by Ogin Nayam © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "Refugees crossing a river , by Ogin Nayam © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 8,
+        "credit_text": "Refugees crossing barren land , by Ogin Nayam © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 9,
+        "credit_text": "houses stacked together , by Ogin Nayam © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 10,
+        "credit_text": "Illustration by Ogin Nayam."
+      },
+      {
+        "page_index": 11,
+        "credit_text": "Illustration by Ogin Nayam."
+      },
+      {
+        "page_index": 12,
+        "credit_text": "Illustration by Ogin Nayam."
+      },
+      {
+        "page_index": 13,
+        "credit_text": "Illustration by Ogin Nayam."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "Home",
+    "paragraphs_en": [
+      "“Tip-top drip-drop,” I sing with the rain, jumping over puddles on my way home from school. The crinkly metal sheets covering the houses in our village sing along: “Tip-tip-drop drip-drip-top.”",
+      "I love the rain! But sometimes I completely disapprove of it. It’s not as bad as beetroot, but I get annoyed when the sky can’t decide if it’s happy or sad. “Again?” I complain to the clouds. Again, the clouds send down a neverending river of droplets.",
+      "Dada says our family has lived in this village, Feizung, since the grandparents of the great-grandparents of the great-great-grandparents of our great-great-great-grandparents! That is more than three hundred years. We make scarves and shawls, each one special. But I love most the shawls that Dada makes. They are so big and soft — I sleep with one of his shawls curled under my arms.",
+      "Amma weaves words instead of threads . She is the most theatrical storyteller in the whole village — unlike Abbu, who tells stories at the pace of an old tortoise. Our village is surrounded by rice fields — lush, green and vast — with homes made of bamboo scattered like stars in the sky. Our country is big, but we are not allowed everywhere. Amma says we can only go to places where people look like us. Luckily, the village has everything I need—my family, my friends, and fields to play in. The only thing we lack is a doctor.",
+      "Which is why, when I begin sneezing more times than a train choo-choos, Amma takes me to a doctor in the village two hours away. As we prepare to leave the clinic, I hear the masjid’s loudspeaker. But instead of singing, the imam is shouting. “Run west. Everyone, run west. Run with what you have in hand. Don’t go home. There is no time. Armed men are coming towards us and burning everything they pass. We are afraid they may kill anyone who crosses their path. Run west. Run!” The imam sounds terrified.",
+      "All I have in my hand is Amma’s hand and all I can do is to hold it tight. Everyone else is holding something or carrying someone.",
+      "And so, we run. We run west, with hundreds of other people. Just like many droplets create a river, we form a river flowing west. Each droplet is a person walking, running, stumbling. This neverending river crosses rice fields, orchards, forests and hills. New droplets join. Many are lost along the way. But the droplets I want most — Abbu, Dada, Mami, the rest of our family — never join the river.",
+      "The people-river crosses what Amma says is a border. She says we are in a new country now. But everything looks the same. Do rivers know they have crossed borders? Do they even know what borders are?",
+      "We are in an open, and barren field. On one horizon, rice fields fade into where our home was. On the other horizon, a town fades into the ocean.",
+      "The empty field slowly fills up with tents and huts. Food is not grown here. People give it to us. Water does not come from wells. It arrives in trucks.",
+      "Amma says we are safe here. But what about Abbu, Dada and Mami? Are they safe? I look and look all around me. Safety seems to have become an open field inside an invisible bubble. Here, we are all living in the hope of going home, some day. Is it even possible to feel safe without a home? Safe, without my family and friends?",
+      "I often wonder, where is home? Is it here? Or is it where my family is? Can home be in two places? A part of my heart will always be in Feizung. But is it still home if we never go back to it?",
+      "School starts. Two years pass. Abbu, Dada, Mami and everyone I love never come. Amma and I are still here. We are told we cannot leave this camp. But everyone also keeps saying we can’t stay forever. On one side there is still the road to Feizung. On the other, the ocean. Sometimes we think of escaping. But today, I have school.",
+      "“Hasina, did you cover the books in plastic?” Amma shouts as I hurry off to school in the rain. “Yes, Amma, I did,” I yell back, trying to be louder than the crinkly plastic sheets that sing, “Tip-tip-drop drip-drip-top.”"
+    ],
+    "sentences": [
+      {
+        "text_en": "“Tip-top drip-drop,” I sing with the rain, jumping over puddles on my way home from school.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_000.mp3",
+        "text_vi": "“Tip-top drip-drop,” tôi hát theo tiếng mưa, nhảy qua những vũng nước trên đường đi học về nhà."
+      },
+      {
+        "text_en": "The crinkly metal sheets covering the houses in our village sing along: “Tip-tip-drop drip-drip-top.”",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_001.mp3",
+        "text_vi": "Những tấm tôn lợp nhà lượn sóng trong làng tôi cũng hát theo: “Tip-tip-drop drip-drip-top.”"
+      },
+      {
+        "text_en": "I love the rain!",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_002.mp3",
+        "text_vi": "Tôi yêu mưa!"
+      },
+      {
+        "text_en": "But sometimes I completely disapprove of it.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_003.mp3",
+        "text_vi": "Nhưng đôi khi tôi lại hoàn toàn không thích nó."
+      },
+      {
+        "text_en": "It’s not as bad as beetroot, but I get annoyed when the sky can’t decide if it’s happy or sad.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_004.mp3",
+        "text_vi": "Nó không tệ như củ dền, nhưng tôi thấy khó chịu khi trời cứ lúc vui lúc buồn, không dứt khoát."
+      },
+      {
+        "text_en": "“Again?” I complain to the clouds.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_005.mp3",
+        "text_vi": "“Lại nữa à?” Tôi làu bàu với những đám mây."
+      },
+      {
+        "text_en": "Again, the clouds send down a neverending river of droplets.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_006.mp3",
+        "text_vi": "Lại nữa, những đám mây lại trút xuống một dòng sông giọt nước không ngừng."
+      },
+      {
+        "text_en": "Dada says our family has lived in this village, Feizung, since the grandparents of the great-grandparents of the great-great-grandparents of our great-great-great-grandparents!",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_007.mp3",
+        "text_vi": "Dada nói gia đình chúng tôi đã sống ở làng này, Feizung, từ đời ông bà của ông bà cố của ông bà cụ kỵ của ông bà sơ kỵ của chúng tôi!"
+      },
+      {
+        "text_en": "That is more than three hundred years.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_008.mp3",
+        "text_vi": "Tức là hơn ba trăm năm rồi."
+      },
+      {
+        "text_en": "We make scarves and shawls, each one special.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_009.mp3",
+        "text_vi": "Chúng tôi làm khăn quàng cổ và khăn choàng, mỗi chiếc đều rất đặc biệt."
+      },
+      {
+        "text_en": "But I love most the shawls that Dada makes.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_010.mp3",
+        "text_vi": "Nhưng tôi thích nhất là những chiếc khăn choàng mà Dada làm."
+      },
+      {
+        "text_en": "They are so big and soft — I sleep with one of his shawls curled under my arms.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_011.mp3",
+        "text_vi": "Chúng rất to và mềm mại — tôi ngủ với một chiếc khăn choàng của ông ấy cuộn tròn dưới cánh tay."
+      },
+      {
+        "text_en": "Amma weaves words instead of threads .",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_012.mp3",
+        "text_vi": "Amma dệt lời nói thay vì dệt sợi."
+      },
+      {
+        "text_en": "She is the most theatrical storyteller in the whole village — unlike Abbu, who tells stories at the pace of an old tortoise.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_013.mp3",
+        "text_vi": "Bà là người kể chuyện kịch tính nhất cả làng — không giống Abbu, người kể chuyện chậm như một con rùa già."
+      },
+      {
+        "text_en": "Our village is surrounded by rice fields — lush, green and vast — with homes made of bamboo scattered like stars in the sky.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_014.mp3",
+        "text_vi": "Làng của chúng tôi được bao quanh bởi những cánh đồng lúa — xanh tươi, rộng lớn — với những ngôi nhà tre rải rác như những vì sao trên trời."
+      },
+      {
+        "text_en": "Our country is big, but we are not allowed everywhere.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_015.mp3",
+        "text_vi": "Đất nước chúng tôi rộng lớn, nhưng chúng tôi không được phép đi khắp mọi nơi."
+      },
+      {
+        "text_en": "Amma says we can only go to places where people look like us.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_016.mp3",
+        "text_vi": "Amma nói chúng tôi chỉ có thể đến những nơi mà mọi người trông giống chúng tôi."
+      },
+      {
+        "text_en": "Luckily, the village has everything I need—my family, my friends, and fields to play in.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_017.mp3",
+        "text_vi": "May mắn thay, ngôi làng có mọi thứ tôi cần — gia đình, bạn bè và những cánh đồng để chơi."
+      },
+      {
+        "text_en": "The only thing we lack is a doctor.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_018.mp3",
+        "text_vi": "Điều duy nhất chúng tôi thiếu là một bác sĩ."
+      },
+      {
+        "text_en": "Which is why, when I begin sneezing more times than a train choo-choos, Amma takes me to a doctor in the village two hours away.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_019.mp3",
+        "text_vi": "Đó là lý do tại sao, khi tôi bắt đầu hắt hơi nhiều hơn cả tiếng tàu hỏa chạy, Amma đưa tôi đến một bác sĩ ở ngôi làng cách đó hai giờ."
+      },
+      {
+        "text_en": "As we prepare to leave the clinic, I hear the masjid’s loudspeaker.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_020.mp3",
+        "text_vi": "Khi chúng tôi chuẩn bị rời phòng khám, tôi nghe thấy tiếng loa của nhà thờ Hồi giáo."
+      },
+      {
+        "text_en": "But instead of singing, the imam is shouting.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_021.mp3",
+        "text_vi": "Nhưng thay vì hát, vị giáo sĩ đang la hét."
+      },
+      {
+        "text_en": "“Run west. Everyone, run west.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_022.mp3",
+        "text_vi": "“Chạy về phía tây. Mọi người, chạy về phía tây."
+      },
+      {
+        "text_en": "Run with what you have in hand.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_023.mp3",
+        "text_vi": "Cầm theo những gì bạn có trong tay mà chạy."
+      },
+      {
+        "text_en": "Don’t go home.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_024.mp3",
+        "text_vi": "Đừng về nhà."
+      },
+      {
+        "text_en": "There is no time.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_025.mp3",
+        "text_vi": "Không còn thời gian nữa."
+      },
+      {
+        "text_en": "Armed men are coming towards us and burning everything they pass.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_026.mp3",
+        "text_vi": "Những người đàn ông có vũ trang đang đến gần chúng ta và đốt cháy mọi thứ họ đi qua."
+      },
+      {
+        "text_en": "We are afraid they may kill anyone who crosses their path.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_027.mp3",
+        "text_vi": "Chúng ta sợ họ có thể giết bất cứ ai cản đường họ."
+      },
+      {
+        "text_en": "Run west. Run!” The imam sounds terrified.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_028.mp3",
+        "text_vi": "Chạy về phía tây. Chạy đi!” Vị giáo sĩ nghe có vẻ kinh hoàng."
+      },
+      {
+        "text_en": "All I have in my hand is Amma’s hand and all I can do is to hold it tight.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_029.mp3",
+        "text_vi": "Tất cả những gì tôi có trong tay là tay của Amma và tất cả những gì tôi có thể làm là nắm chặt lấy nó."
+      },
+      {
+        "text_en": "Everyone else is holding something or carrying someone.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_030.mp3",
+        "text_vi": "Mọi người khác thì đang cầm thứ gì đó hoặc cõng ai đó."
+      },
+      {
+        "text_en": "And so, we run.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_031.mp3",
+        "text_vi": "Và thế là, chúng tôi chạy."
+      },
+      {
+        "text_en": "We run west, with hundreds of other people.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_032.mp3",
+        "text_vi": "Chúng tôi chạy về phía tây, cùng với hàng trăm người khác."
+      },
+      {
+        "text_en": "Just like many droplets create a river, we form a river flowing west.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_033.mp3",
+        "text_vi": "Giống như nhiều giọt nước tạo thành một dòng sông, chúng tôi tạo thành một dòng sông chảy về phía tây."
+      },
+      {
+        "text_en": "Each droplet is a person walking, running, stumbling.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_034.mp3",
+        "text_vi": "Mỗi giọt nước là một người đang đi bộ, chạy, hoặc vấp ngã."
+      },
+      {
+        "text_en": "This neverending river crosses rice fields, orchards, forests and hills.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_035.mp3",
+        "text_vi": "Dòng sông không ngừng này băng qua những cánh đồng lúa, vườn cây ăn trái, rừng và đồi."
+      },
+      {
+        "text_en": "New droplets join.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_036.mp3",
+        "text_vi": "Những giọt nước mới tham gia vào."
+      },
+      {
+        "text_en": "Many are lost along the way.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_037.mp3",
+        "text_vi": "Nhiều người bị lạc trên đường đi."
+      },
+      {
+        "text_en": "But the droplets I want most — Abbu, Dada, Mami, the rest of our family — never join the river.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_038.mp3",
+        "text_vi": "Nhưng những giọt nước mà tôi mong muốn nhất — Abbu, Dada, Mami, những người còn lại trong gia đình chúng tôi — không bao giờ nhập vào dòng sông."
+      },
+      {
+        "text_en": "The people-river crosses what Amma says is a border.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_039.mp3",
+        "text_vi": "Dòng sông người băng qua cái mà Amma nói là một biên giới."
+      },
+      {
+        "text_en": "She says we are in a new country now.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_040.mp3",
+        "text_vi": "Bà nói bây giờ chúng tôi đang ở một đất nước mới."
+      },
+      {
+        "text_en": "But everything looks the same.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_041.mp3",
+        "text_vi": "Nhưng mọi thứ trông vẫn giống nhau."
+      },
+      {
+        "text_en": "Do rivers know they have crossed borders?",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_042.mp3",
+        "text_vi": "Liệu những dòng sông có biết chúng đã vượt qua biên giới không?"
+      },
+      {
+        "text_en": "Do they even know what borders are?",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_043.mp3",
+        "text_vi": "Chúng thậm chí có biết biên giới là gì không?"
+      },
+      {
+        "text_en": "We are in an open, and barren field.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_044.mp3",
+        "text_vi": "Chúng tôi đang ở một cánh đồng trống trải và cằn cỗi."
+      },
+      {
+        "text_en": "On one horizon, rice fields fade into where our home was.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_045.mp3",
+        "text_vi": "Ở một phía chân trời, những cánh đồng lúa mờ dần vào nơi ngôi nhà của chúng tôi đã từng ở."
+      },
+      {
+        "text_en": "On the other horizon, a town fades into the ocean.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_046.mp3",
+        "text_vi": "Ở phía chân trời kia, một thị trấn mờ dần vào đại dương."
+      },
+      {
+        "text_en": "The empty field slowly fills up with tents and huts.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_047.mp3",
+        "text_vi": "Cánh đồng trống dần dần đầy lên những lều và túp lều."
+      },
+      {
+        "text_en": "Food is not grown here.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_048.mp3",
+        "text_vi": "Thức ăn không được trồng ở đây."
+      },
+      {
+        "text_en": "People give it to us.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_049.mp3",
+        "text_vi": "Mọi người mang đến cho chúng tôi."
+      },
+      {
+        "text_en": "Water does not come from wells.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_050.mp3",
+        "text_vi": "Nước không đến từ giếng."
+      },
+      {
+        "text_en": "It arrives in trucks.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_051.mp3",
+        "text_vi": "Nó được chở đến bằng xe tải."
+      },
+      {
+        "text_en": "Amma says we are safe here.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_052.mp3",
+        "text_vi": "Amma nói chúng tôi an toàn ở đây."
+      },
+      {
+        "text_en": "But what about Abbu, Dada and Mami?",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_053.mp3",
+        "text_vi": "Nhưng còn Abbu, Dada và Mami thì sao?"
+      },
+      {
+        "text_en": "Are they safe?",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_054.mp3",
+        "text_vi": "Họ có an toàn không?"
+      },
+      {
+        "text_en": "I look and look all around me.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_055.mp3",
+        "text_vi": "Tôi nhìn khắp mọi nơi xung quanh mình."
+      },
+      {
+        "text_en": "Safety seems to have become an open field inside an invisible bubble.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_056.mp3",
+        "text_vi": "Sự an toàn dường như đã trở thành một cánh đồng trống bên trong một bong bóng vô hình."
+      },
+      {
+        "text_en": "Here, we are all living in the hope of going home, some day.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_057.mp3",
+        "text_vi": "Ở đây, tất cả chúng tôi đều sống trong hy vọng một ngày nào đó sẽ được về nhà."
+      },
+      {
+        "text_en": "Is it even possible to feel safe without a home?",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_058.mp3",
+        "text_vi": "Liệu có thể cảm thấy an toàn mà không có nhà không?"
+      },
+      {
+        "text_en": "Safe, without my family and friends?",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_059.mp3",
+        "text_vi": "An toàn, mà không có gia đình và bạn bè của tôi sao?"
+      },
+      {
+        "text_en": "I often wonder, where is home?",
+        "paragraph_index": 11,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_060.mp3",
+        "text_vi": "Tôi thường tự hỏi, nhà là ở đâu?"
+      },
+      {
+        "text_en": "Is it here?",
+        "paragraph_index": 11,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_061.mp3",
+        "text_vi": "Nó ở đây sao?"
+      },
+      {
+        "text_en": "Or is it where my family is?",
+        "paragraph_index": 11,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_062.mp3",
+        "text_vi": "Hay là nơi gia đình tôi đang ở?"
+      },
+      {
+        "text_en": "Can home be in two places?",
+        "paragraph_index": 11,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_063.mp3",
+        "text_vi": "Nhà có thể ở hai nơi không?"
+      },
+      {
+        "text_en": "A part of my heart will always be in Feizung.",
+        "paragraph_index": 11,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_064.mp3",
+        "text_vi": "Một phần trái tim tôi sẽ luôn ở Feizung."
+      },
+      {
+        "text_en": "But is it still home if we never go back to it?",
+        "paragraph_index": 11,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_065.mp3",
+        "text_vi": "Nhưng liệu nó có còn là nhà không nếu chúng tôi không bao giờ quay trở lại đó?"
+      },
+      {
+        "text_en": "School starts. Two years pass.",
+        "paragraph_index": 12,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_066.mp3",
+        "text_vi": "Trường học bắt đầu. Hai năm trôi qua."
+      },
+      {
+        "text_en": "Abbu, Dada, Mami and everyone I love never come.",
+        "paragraph_index": 12,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_067.mp3",
+        "text_vi": "Abbu, Dada, Mami và tất cả những người tôi yêu thương không bao giờ đến."
+      },
+      {
+        "text_en": "Amma and I are still here.",
+        "paragraph_index": 12,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_068.mp3",
+        "text_vi": "Amma và tôi vẫn ở đây."
+      },
+      {
+        "text_en": "We are told we cannot leave this camp.",
+        "paragraph_index": 12,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_069.mp3",
+        "text_vi": "Chúng tôi được bảo là không thể rời khỏi trại này."
+      },
+      {
+        "text_en": "But everyone also keeps saying we can’t stay forever.",
+        "paragraph_index": 12,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_070.mp3",
+        "text_vi": "Nhưng mọi người cũng liên tục nói rằng chúng tôi không thể ở lại mãi mãi."
+      },
+      {
+        "text_en": "On one side there is still the road to Feizung.",
+        "paragraph_index": 12,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_071.mp3",
+        "text_vi": "Một bên vẫn là con đường đến Feizung."
+      },
+      {
+        "text_en": "On the other, the ocean.",
+        "paragraph_index": 12,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_072.mp3",
+        "text_vi": "Bên kia là đại dương."
+      },
+      {
+        "text_en": "Sometimes we think of escaping.",
+        "paragraph_index": 12,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_073.mp3",
+        "text_vi": "Đôi khi chúng tôi nghĩ đến việc trốn thoát."
+      },
+      {
+        "text_en": "But today, I have school.",
+        "paragraph_index": 12,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_074.mp3",
+        "text_vi": "Nhưng hôm nay, tôi phải đi học."
+      },
+      {
+        "text_en": "“Hasina, did you cover the books in plastic?” Amma shouts as I hurry off to school in the rain.",
+        "paragraph_index": 13,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_075.mp3",
+        "text_vi": "“Hasina, con đã bọc sách bằng ni lông chưa?” Amma hét lên khi tôi vội vã đi học dưới mưa."
+      },
+      {
+        "text_en": "“Yes, Amma, I did,” I yell back, trying to be louder than the crinkly plastic sheets that sing, “Tip-tip-drop drip-drip-top.”",
+        "paragraph_index": 13,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_076.mp3",
+        "text_vi": "“Rồi ạ, Amma, con làm rồi!” Tôi hét lại, cố gắng nói to hơn tiếng những tấm ni lông lượn sóng đang hát, “Tip-tip-drop drip-drip-top.”"
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "“Tip-top drip-drop,” I sing with the rain, jumping over puddles on my way home from school.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "The crinkly metal sheets covering the houses in our village sing along: “Tip-tip-drop drip-drip-top.”",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "I love the rain!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "But sometimes I completely disapprove of it.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "It’s not as bad as beetroot, but I get annoyed when the sky can’t decide if it’s happy or sad.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "“Again?” I complain to the clouds.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "Again, the clouds send down a neverending river of droplets.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "Dada says our family has lived in this village, Feizung, since the grandparents of the great-grandparents of the great-great-grandparents of our great-great-great-grandparents!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "That is more than three hundred years.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "We make scarves and shawls, each one special.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "But I love most the shawls that Dada makes.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "They are so big and soft — I sleep with one of his shawls curled under my arms.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "Amma weaves words instead of threads .",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_012.mp3"
+        },
+        {
+          "id": "ra_13",
+          "text_en": "She is the most theatrical storyteller in the whole village — unlike Abbu, who tells stories at the pace of an old tortoise.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_013.mp3"
+        },
+        {
+          "id": "ra_14",
+          "text_en": "Our village is surrounded by rice fields — lush, green and vast — with homes made of bamboo scattered like stars in the sky.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_014.mp3"
+        },
+        {
+          "id": "ra_15",
+          "text_en": "Our country is big, but we are not allowed everywhere.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_015.mp3"
+        },
+        {
+          "id": "ra_16",
+          "text_en": "Amma says we can only go to places where people look like us.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_016.mp3"
+        },
+        {
+          "id": "ra_17",
+          "text_en": "Luckily, the village has everything I need—my family, my friends, and fields to play in.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_017.mp3"
+        },
+        {
+          "id": "ra_18",
+          "text_en": "The only thing we lack is a doctor.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_018.mp3"
+        },
+        {
+          "id": "ra_19",
+          "text_en": "Which is why, when I begin sneezing more times than a train choo-choos, Amma takes me to a doctor in the village two hours away.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_019.mp3"
+        },
+        {
+          "id": "ra_20",
+          "text_en": "As we prepare to leave the clinic, I hear the masjid’s loudspeaker.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_020.mp3"
+        },
+        {
+          "id": "ra_21",
+          "text_en": "But instead of singing, the imam is shouting.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_021.mp3"
+        },
+        {
+          "id": "ra_22",
+          "text_en": "“Run west. Everyone, run west.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_022.mp3"
+        },
+        {
+          "id": "ra_23",
+          "text_en": "Run with what you have in hand.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_023.mp3"
+        },
+        {
+          "id": "ra_24",
+          "text_en": "Don’t go home.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_024.mp3"
+        },
+        {
+          "id": "ra_25",
+          "text_en": "There is no time.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_025.mp3"
+        },
+        {
+          "id": "ra_26",
+          "text_en": "Armed men are coming towards us and burning everything they pass.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_026.mp3"
+        },
+        {
+          "id": "ra_27",
+          "text_en": "We are afraid they may kill anyone who crosses their path.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_027.mp3"
+        },
+        {
+          "id": "ra_28",
+          "text_en": "Run west. Run!” The imam sounds terrified.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_028.mp3"
+        },
+        {
+          "id": "ra_29",
+          "text_en": "All I have in my hand is Amma’s hand and all I can do is to hold it tight.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_029.mp3"
+        },
+        {
+          "id": "ra_30",
+          "text_en": "Everyone else is holding something or carrying someone.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_030.mp3"
+        },
+        {
+          "id": "ra_31",
+          "text_en": "And so, we run.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_031.mp3"
+        },
+        {
+          "id": "ra_32",
+          "text_en": "We run west, with hundreds of other people.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_032.mp3"
+        },
+        {
+          "id": "ra_33",
+          "text_en": "Just like many droplets create a river, we form a river flowing west.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_033.mp3"
+        },
+        {
+          "id": "ra_34",
+          "text_en": "Each droplet is a person walking, running, stumbling.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_034.mp3"
+        },
+        {
+          "id": "ra_35",
+          "text_en": "This neverending river crosses rice fields, orchards, forests and hills.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_035.mp3"
+        },
+        {
+          "id": "ra_36",
+          "text_en": "New droplets join.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_036.mp3"
+        },
+        {
+          "id": "ra_37",
+          "text_en": "Many are lost along the way.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_037.mp3"
+        },
+        {
+          "id": "ra_38",
+          "text_en": "But the droplets I want most — Abbu, Dada, Mami, the rest of our family — never join the river.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_038.mp3"
+        },
+        {
+          "id": "ra_39",
+          "text_en": "The people-river crosses what Amma says is a border.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_039.mp3"
+        },
+        {
+          "id": "ra_40",
+          "text_en": "She says we are in a new country now.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_040.mp3"
+        },
+        {
+          "id": "ra_41",
+          "text_en": "But everything looks the same.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_041.mp3"
+        },
+        {
+          "id": "ra_42",
+          "text_en": "Do rivers know they have crossed borders?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_042.mp3"
+        },
+        {
+          "id": "ra_43",
+          "text_en": "Do they even know what borders are?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_043.mp3"
+        },
+        {
+          "id": "ra_44",
+          "text_en": "We are in an open, and barren field.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_044.mp3"
+        },
+        {
+          "id": "ra_45",
+          "text_en": "On one horizon, rice fields fade into where our home was.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_045.mp3"
+        },
+        {
+          "id": "ra_46",
+          "text_en": "On the other horizon, a town fades into the ocean.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_046.mp3"
+        },
+        {
+          "id": "ra_47",
+          "text_en": "The empty field slowly fills up with tents and huts.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_047.mp3"
+        },
+        {
+          "id": "ra_48",
+          "text_en": "Food is not grown here.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_048.mp3"
+        },
+        {
+          "id": "ra_49",
+          "text_en": "People give it to us.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_049.mp3"
+        },
+        {
+          "id": "ra_50",
+          "text_en": "Water does not come from wells.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_050.mp3"
+        },
+        {
+          "id": "ra_51",
+          "text_en": "It arrives in trucks.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_051.mp3"
+        },
+        {
+          "id": "ra_52",
+          "text_en": "Amma says we are safe here.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_052.mp3"
+        },
+        {
+          "id": "ra_53",
+          "text_en": "But what about Abbu, Dada and Mami?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_053.mp3"
+        },
+        {
+          "id": "ra_54",
+          "text_en": "Are they safe?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_054.mp3"
+        },
+        {
+          "id": "ra_55",
+          "text_en": "I look and look all around me.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_055.mp3"
+        },
+        {
+          "id": "ra_56",
+          "text_en": "Safety seems to have become an open field inside an invisible bubble.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_056.mp3"
+        },
+        {
+          "id": "ra_57",
+          "text_en": "Here, we are all living in the hope of going home, some day.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_057.mp3"
+        },
+        {
+          "id": "ra_58",
+          "text_en": "Is it even possible to feel safe without a home?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_058.mp3"
+        },
+        {
+          "id": "ra_59",
+          "text_en": "Safe, without my family and friends?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_059.mp3"
+        },
+        {
+          "id": "ra_60",
+          "text_en": "I often wonder, where is home?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_060.mp3"
+        },
+        {
+          "id": "ra_61",
+          "text_en": "Is it here?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_061.mp3"
+        },
+        {
+          "id": "ra_62",
+          "text_en": "Or is it where my family is?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_062.mp3"
+        },
+        {
+          "id": "ra_63",
+          "text_en": "Can home be in two places?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_063.mp3"
+        },
+        {
+          "id": "ra_64",
+          "text_en": "A part of my heart will always be in Feizung.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_064.mp3"
+        },
+        {
+          "id": "ra_65",
+          "text_en": "But is it still home if we never go back to it?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_065.mp3"
+        },
+        {
+          "id": "ra_66",
+          "text_en": "School starts. Two years pass.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_066.mp3"
+        },
+        {
+          "id": "ra_67",
+          "text_en": "Abbu, Dada, Mami and everyone I love never come.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_067.mp3"
+        },
+        {
+          "id": "ra_68",
+          "text_en": "Amma and I are still here.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_068.mp3"
+        },
+        {
+          "id": "ra_69",
+          "text_en": "We are told we cannot leave this camp.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_069.mp3"
+        },
+        {
+          "id": "ra_70",
+          "text_en": "But everyone also keeps saying we can’t stay forever.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_070.mp3"
+        },
+        {
+          "id": "ra_71",
+          "text_en": "On one side there is still the road to Feizung.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_071.mp3"
+        },
+        {
+          "id": "ra_72",
+          "text_en": "On the other, the ocean.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_072.mp3"
+        },
+        {
+          "id": "ra_73",
+          "text_en": "Sometimes we think of escaping.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_073.mp3"
+        },
+        {
+          "id": "ra_74",
+          "text_en": "But today, I have school.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_074.mp3"
+        },
+        {
+          "id": "ra_75",
+          "text_en": "“Hasina, did you cover the books in plastic?” Amma shouts as I hurry off to school in the rain.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_075.mp3"
+        },
+        {
+          "id": "ra_76",
+          "text_en": "“Yes, Amma, I did,” I yell back, trying to be louder than the crinkly plastic sheets that sing, “Tip-tip-drop drip-drip-top.”",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113431/s_076.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "What does the narrator sing with the rain?",
+          "options_en": [
+            "“Tip-top drip-drop”",
+            "“Tip-tip-drop drip-drip-top”",
+            "a song about shawls"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "How is the narrator moving as they go home from school?",
+          "options_en": [
+            "Jumping over puddles",
+            "Walking slowly like an old tortoise",
+            "Running west"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s1_q1",
+          "type": "choice",
+          "question_en": "What is singing along with the narrator?",
+          "options_en": [
+            "The crinkly metal sheets covering the houses",
+            "Dada's shawls",
+            "The masjid's loudspeaker"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s1_q2",
+          "type": "choice",
+          "question_en": "Where are the crinkly metal sheets covering?",
+          "options_en": [
+            "Houses in our village",
+            "Tents in the camp",
+            "Rice fields"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "Who loves the rain?",
+          "options_en": [
+            "I (the speaker)",
+            "Dada",
+            "Amma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "What does the speaker love?",
+          "options_en": [
+            "The rain",
+            "Shawls",
+            "Rice fields"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p1_s1_q1",
+          "type": "choice",
+          "question_en": "What does the speaker sometimes do?",
+          "options_en": [
+            "Completely disapprove of it",
+            "Sing with it",
+            "Weave words"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p1_s1_q2",
+          "type": "choice",
+          "question_en": "When does the speaker disapprove of it?",
+          "options_en": [
+            "Sometimes",
+            "Always",
+            "Never"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p1_s2_q1",
+          "type": "choice",
+          "question_en": "What is not as bad as beetroot?",
+          "options_en": [
+            "The rain",
+            "The shawl",
+            "The clinic"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p1_s2_q2",
+          "type": "choice",
+          "question_en": "When does the speaker get annoyed?",
+          "options_en": [
+            "When the sky can’t decide if it’s happy or sad",
+            "When Amma calls",
+            "When school starts"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p1_s3_q1",
+          "type": "choice",
+          "question_en": "Who does the speaker complain to?",
+          "options_en": [
+            "The clouds",
+            "Amma",
+            "Dada"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p1_s3_q2",
+          "type": "choice",
+          "question_en": "What does the speaker say to the clouds?",
+          "options_en": [
+            "“Again?”",
+            "“Run west.”",
+            "“Tip-top drip-drop”"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p1_s4_q1",
+          "type": "choice",
+          "question_en": "What do the clouds send down?",
+          "options_en": [
+            "A neverending river of droplets",
+            "Shawls",
+            "Food"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p1_s4_q2",
+          "type": "choice",
+          "question_en": "How do the droplets come?",
+          "options_en": [
+            "As a neverending river",
+            "Slowly like a tortoise",
+            "In trucks"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "Who says the family has lived in Feizung for many generations?",
+          "options_en": [
+            "Dada",
+            "Amma",
+            "Abbu"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "Where does Dada say the family has lived for many generations?",
+          "options_en": [
+            "Feizung",
+            "In the camp",
+            "In the rice fields"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p2_s1_q1",
+          "type": "choice",
+          "question_en": "How long does the sentence say the family has lived there?",
+          "options_en": [
+            "More than three hundred years",
+            "Two years",
+            "Since the grandparents"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p2_s1_q2",
+          "type": "choice",
+          "question_en": "What length of time is given in the sentence?",
+          "options_en": [
+            "More than three hundred years",
+            "A few days",
+            "One lifetime"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p2_s2_q1",
+          "type": "choice",
+          "question_en": "What do they make in the village?",
+          "options_en": [
+            "Scarves and shawls",
+            "Tents and huts",
+            "Rice fields"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p2_s2_q2",
+          "type": "choice",
+          "question_en": "How are the scarves and shawls described?",
+          "options_en": [
+            "Each one special",
+            "Crinkly like metal",
+            "Theatrical and loud"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p2_s3_q1",
+          "type": "choice",
+          "question_en": "Which shawls does the speaker love most?",
+          "options_en": [
+            "The shawls that Dada makes",
+            "The shawls from the market",
+            "The scarves Amma makes"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p2_s3_q2",
+          "type": "choice",
+          "question_en": "Who makes the shawls the speaker loves most?",
+          "options_en": [
+            "Dada",
+            "Amma",
+            "Abbu"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p2_s4_q1",
+          "type": "choice",
+          "question_en": "How are the shawls described in the sentence?",
+          "options_en": [
+            "Big and soft",
+            "Small and hard",
+            "Crinkly and thin"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p2_s4_q2",
+          "type": "choice",
+          "question_en": "What does the speaker do with one of Dada's shawls?",
+          "options_en": [
+            "Sleep with it curled under their arms",
+            "Use it to cover books",
+            "Carry it when running west"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "Who weaves words instead of threads?",
+          "options_en": [
+            "Amma",
+            "Abbu",
+            "Dada"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "What does Amma weave instead of threads?",
+          "options_en": [
+            "Words",
+            "Scarves",
+            "Shawls"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p3_s1_q1",
+          "type": "choice",
+          "question_en": "Who is described as the most theatrical storyteller in the village?",
+          "options_en": [
+            "She (Amma)",
+            "Abbu",
+            "Dada"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p3_s1_q2",
+          "type": "choice",
+          "question_en": "How does Abbu tell stories?",
+          "options_en": [
+            "At the pace of an old tortoise",
+            "Quickly like droplets",
+            "In the sound of the crinkly metal sheets"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p3_s2_q1",
+          "type": "choice",
+          "question_en": "What surrounds the village?",
+          "options_en": [
+            "Rice fields",
+            "The ocean",
+            "Tents"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p3_s2_q2",
+          "type": "choice",
+          "question_en": "What are the homes in the village made of?",
+          "options_en": [
+            "Bamboo",
+            "Crinkly metal sheets",
+            "Shawls"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p3_s3_q1",
+          "type": "choice",
+          "question_en": "What is said about the country?",
+          "options_en": [
+            "It is big",
+            "It is small",
+            "It is crowded with tents"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p3_s3_q2",
+          "type": "choice",
+          "question_en": "Where are we not allowed?",
+          "options_en": [
+            "Everywhere",
+            "To school",
+            "To the market"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p3_s4_q1",
+          "type": "choice",
+          "question_en": "Who says we can only go to places where people look like us?",
+          "options_en": [
+            "Amma",
+            "Abbu",
+            "The imam"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p3_s4_q2",
+          "type": "choice",
+          "question_en": "Where can we go, according to Amma?",
+          "options_en": [
+            "Places where people look like us",
+            "Anywhere in the country",
+            "To the camp"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p3_s5_q1",
+          "type": "choice",
+          "question_en": "What does the village provide for the narrator?",
+          "options_en": [
+            "My family, my friends, and fields to play in",
+            "A doctor and a hospital",
+            "A loudspeaker and tents"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p3_s5_q2",
+          "type": "choice",
+          "question_en": "Who does the narrator say is in the village?",
+          "options_en": [
+            "My family",
+            "Abbu",
+            "A doctor"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p3_s6_q1",
+          "type": "choice",
+          "question_en": "What is the only thing the village lacks?",
+          "options_en": [
+            "A doctor",
+            "Food",
+            "Water"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p3_s6_q2",
+          "type": "choice",
+          "question_en": "Where do they lack a doctor?",
+          "options_en": [
+            "In the village",
+            "In the camp",
+            "In the town"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "Who takes the narrator to a doctor?",
+          "options_en": [
+            "Amma",
+            "Dada",
+            "Abbu"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "Why does Amma take the narrator to a doctor?",
+          "options_en": [
+            "Because the narrator begins sneezing more times than a train choo-choos",
+            "Because it is raining heavily",
+            "Because they want to visit Dada"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p4_s1_q1",
+          "type": "choice",
+          "question_en": "Where are they preparing to leave from when the narrator hears the loudspeaker?",
+          "options_en": [
+            "The clinic",
+            "Home",
+            "School"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p4_s1_q2",
+          "type": "choice",
+          "question_en": "What does the narrator hear as they prepare to leave the clinic?",
+          "options_en": [
+            "The masjid’s loudspeaker",
+            "The crinkly metal sheets singing",
+            "Dada calling"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p4_s2_q1",
+          "type": "choice",
+          "question_en": "Who is shouting instead of singing?",
+          "options_en": [
+            "The imam",
+            "Amma",
+            "Dada"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p4_s2_q2",
+          "type": "choice",
+          "question_en": "What is the imam doing instead of singing?",
+          "options_en": [
+            "Shouting",
+            "Telling a story",
+            "Making tea"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p4_s3_q1",
+          "type": "choice",
+          "question_en": "What direction does the imam tell people to run?",
+          "options_en": [
+            "West",
+            "East",
+            "Home"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p4_s3_q2",
+          "type": "choice",
+          "question_en": "Who does the imam address with the command \"Run west\"?",
+          "options_en": [
+            "Everyone",
+            "Amma and the narrator",
+            "Only the children"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p4_s4_q1",
+          "type": "choice",
+          "question_en": "How does the imam tell people to run?",
+          "options_en": [
+            "With what they have in hand",
+            "Holding shawls",
+            "With covered books"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p4_s4_q2",
+          "type": "choice",
+          "question_en": "What does the imam advise people to carry as they run?",
+          "options_en": [
+            "What they have in hand",
+            "Only umbrellas",
+            "Dada's shawls"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p4_s5_q1",
+          "type": "choice",
+          "question_en": "What does the imam tell the people not to do?",
+          "options_en": [
+            "Don't go home",
+            "Don't go to the clinic",
+            "Don't go to school"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p4_s5_q2",
+          "type": "choice",
+          "question_en": "Where does the imam say people should not go?",
+          "options_en": [
+            "Home",
+            "The clinic",
+            "The masjid"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p4_s6_q1",
+          "type": "choice",
+          "question_en": "What does the imam say about time?",
+          "options_en": [
+            "There is no time",
+            "There is plenty of time",
+            "It is nearly lunchtime"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p4_s6_q2",
+          "type": "choice",
+          "question_en": "Why does the imam urge people to leave immediately?",
+          "options_en": [
+            "Because there is no time",
+            "Because it is raining",
+            "Because school is starting"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p4_s7_q1",
+          "type": "choice",
+          "question_en": "Who is coming towards the people?",
+          "options_en": [
+            "Armed men",
+            "The imam",
+            "Villagers"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p4_s7_q2",
+          "type": "choice",
+          "question_en": "What are the armed men doing as they come?",
+          "options_en": [
+            "Burning everything they pass",
+            "Making scarves",
+            "Singing"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p4_s8_q1",
+          "type": "choice",
+          "question_en": "What are the people afraid the armed men may do?",
+          "options_en": [
+            "Kill anyone who crosses their path",
+            "Take away their shawls",
+            "Make them sneeze more"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        },
+        {
+          "id": "gl_p4_s8_q2",
+          "type": "choice",
+          "question_en": "Who might the armed men kill, according to the sentence?",
+          "options_en": [
+            "Anyone who crosses their path",
+            "Only the children",
+            "Only the villagers from Feizung"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        },
+        {
+          "id": "gl_p4_s9_q1",
+          "type": "choice",
+          "question_en": "How does the imam sound at the end of the sentence?",
+          "options_en": [
+            "Terrified",
+            "Calm",
+            "Happy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        },
+        {
+          "id": "gl_p4_s9_q2",
+          "type": "choice",
+          "question_en": "What does the imam repeat as he speaks?",
+          "options_en": [
+            "Run west",
+            "Sing",
+            "Tell a story"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "Whose hand does the narrator have in their hand?",
+          "options_en": [
+            "Amma’s hand",
+            "Dada’s hand",
+            "Abbu’s hand"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "How does the narrator hold Amma’s hand?",
+          "options_en": [
+            "They hold it tight",
+            "They wave it in the air",
+            "They let it go"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p5_s1_q1",
+          "type": "choice",
+          "question_en": "Who is holding something or carrying someone?",
+          "options_en": [
+            "Everyone else",
+            "Only the children",
+            "Only the elders"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        },
+        {
+          "id": "gl_p5_s1_q2",
+          "type": "choice",
+          "question_en": "What are the other people doing?",
+          "options_en": [
+            "Holding something or carrying someone",
+            "Weaving scarves and shawls",
+            "Covering books in plastic"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "Who runs?",
+          "options_en": [
+            "We",
+            "Amma",
+            "Abbu"
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "What do they do?",
+          "options_en": [
+            "Run",
+            "Sing with the rain",
+            "Sleep with a shawl"
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        },
+        {
+          "id": "gl_p6_s1_q1",
+          "type": "choice",
+          "question_en": "Where do we run?",
+          "options_en": [
+            "West",
+            "To school",
+            "To the camp"
+          ],
+          "correct_index": 0,
+          "sentence_index": 32
+        },
+        {
+          "id": "gl_p6_s1_q2",
+          "type": "choice",
+          "question_en": "What is the correct answer to this question: With whom do they run?",
+          "options_en": [
+            "Hundreds of other people",
+            "Dada and Mami",
+            "Amma and Hasina"
+          ],
+          "correct_index": 0,
+          "sentence_index": 32
+        },
+        {
+          "id": "gl_p6_s2_q1",
+          "type": "choice",
+          "question_en": "What do many droplets create?",
+          "options_en": [
+            "A river",
+            "A shawl",
+            "A tent village"
+          ],
+          "correct_index": 0,
+          "sentence_index": 33
+        },
+        {
+          "id": "gl_p6_s2_q2",
+          "type": "choice",
+          "question_en": "What do we form?",
+          "options_en": [
+            "A river flowing west",
+            "A line to the clinic",
+            "A group at the masjid"
+          ],
+          "correct_index": 0,
+          "sentence_index": 33
+        },
+        {
+          "id": "gl_p6_s3_q1",
+          "type": "choice",
+          "question_en": "What is each droplet?",
+          "options_en": [
+            "A person walking, running, stumbling",
+            "A bird flying",
+            "A soft shawl"
+          ],
+          "correct_index": 0,
+          "sentence_index": 34
+        },
+        {
+          "id": "gl_p6_s3_q2",
+          "type": "choice",
+          "question_en": "How are the people moving?",
+          "options_en": [
+            "Walking, running, stumbling",
+            "Singing with the rain",
+            "Sleeping in tents"
+          ],
+          "correct_index": 0,
+          "sentence_index": 34
+        },
+        {
+          "id": "gl_p6_s4_q1",
+          "type": "choice",
+          "question_en": "What does this neverending river cross?",
+          "options_en": [
+            "Rice fields, orchards, forests and hills",
+            "The clinic and the masjid",
+            "The tents and the ocean"
+          ],
+          "correct_index": 0,
+          "sentence_index": 35
+        },
+        {
+          "id": "gl_p6_s4_q2",
+          "type": "choice",
+          "question_en": "Which word describes the river?",
+          "options_en": [
+            "Neverending",
+            "Crinkly",
+            "Soft"
+          ],
+          "correct_index": 0,
+          "sentence_index": 35
+        },
+        {
+          "id": "gl_p6_s5_q1",
+          "type": "choice",
+          "question_en": "Who joins?",
+          "options_en": [
+            "New droplets",
+            "Abbu and Dada",
+            "Amma and Hasina"
+          ],
+          "correct_index": 0,
+          "sentence_index": 36
+        },
+        {
+          "id": "gl_p6_s5_q2",
+          "type": "choice",
+          "question_en": "What happens in this sentence?",
+          "options_en": [
+            "New droplets join",
+            "People build tents",
+            "They return home"
+          ],
+          "correct_index": 0,
+          "sentence_index": 36
+        },
+        {
+          "id": "gl_p6_s6_q1",
+          "type": "choice",
+          "question_en": "Who are lost along the way?",
+          "options_en": [
+            "Many",
+            "The imam",
+            "The doctor"
+          ],
+          "correct_index": 0,
+          "sentence_index": 37
+        },
+        {
+          "id": "gl_p6_s6_q2",
+          "type": "choice",
+          "question_en": "Where are many lost?",
+          "options_en": [
+            "Along the way",
+            "In the camp",
+            "At home in Feizung"
+          ],
+          "correct_index": 0,
+          "sentence_index": 37
+        },
+        {
+          "id": "gl_p6_s7_q1",
+          "type": "choice",
+          "question_en": "Who does the speaker want most?",
+          "options_en": [
+            "Abbu, Dada, Mami and the rest of our family",
+            "The imam and the villagers",
+            "The doctor and the teacher"
+          ],
+          "correct_index": 0,
+          "sentence_index": 38
+        },
+        {
+          "id": "gl_p6_s7_q2",
+          "type": "choice",
+          "question_en": "What do these droplets do?",
+          "options_en": [
+            "Never join the river",
+            "Join the river",
+            "Set up tents"
+          ],
+          "correct_index": 0,
+          "sentence_index": 38
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "Who crosses what Amma says is a border?",
+          "options_en": [
+            "The people-river",
+            "Droplets",
+            "Amma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 39
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "Where does the people-river cross?",
+          "options_en": [
+            "A border",
+            "Rice fields",
+            "An open field"
+          ],
+          "correct_index": 0,
+          "sentence_index": 39
+        },
+        {
+          "id": "gl_p7_s1_q1",
+          "type": "choice",
+          "question_en": "Who says we are in a new country now?",
+          "options_en": [
+            "She (Amma)",
+            "The imam",
+            "Dada"
+          ],
+          "correct_index": 0,
+          "sentence_index": 40
+        },
+        {
+          "id": "gl_p7_s1_q2",
+          "type": "choice",
+          "question_en": "What does she say about where they are now?",
+          "options_en": [
+            "They are in a new country now",
+            "They are safe here",
+            "They must run west"
+          ],
+          "correct_index": 0,
+          "sentence_index": 40
+        },
+        {
+          "id": "gl_p7_s2_q1",
+          "type": "choice",
+          "question_en": "What looks the same?",
+          "options_en": [
+            "Everything",
+            "The tents",
+            "The town"
+          ],
+          "correct_index": 0,
+          "sentence_index": 41
+        },
+        {
+          "id": "gl_p7_s2_q2",
+          "type": "choice",
+          "question_en": "How does everything look?",
+          "options_en": [
+            "The same",
+            "Different",
+            "Empty"
+          ],
+          "correct_index": 0,
+          "sentence_index": 41
+        },
+        {
+          "id": "gl_p7_s3_q1",
+          "type": "choice",
+          "question_en": "What do they ask about rivers?",
+          "options_en": [
+            "Whether rivers know they have crossed borders",
+            "Whether rivers sing with the rain",
+            "Whether rivers bring water in trucks"
+          ],
+          "correct_index": 0,
+          "sentence_index": 42
+        },
+        {
+          "id": "gl_p7_s3_q2",
+          "type": "choice",
+          "question_en": "Which subject is being questioned in this sentence?",
+          "options_en": [
+            "Rivers",
+            "People",
+            "Trucks"
+          ],
+          "correct_index": 0,
+          "sentence_index": 42
+        },
+        {
+          "id": "gl_p7_s4_q1",
+          "type": "choice",
+          "question_en": "What do they wonder about borders?",
+          "options_en": [
+            "If rivers even know what borders are",
+            "If borders are made of rice fields",
+            "If borders bring food"
+          ],
+          "correct_index": 0,
+          "sentence_index": 43
+        },
+        {
+          "id": "gl_p7_s4_q2",
+          "type": "choice",
+          "question_en": "Who does 'they' refer to in this question about borders?",
+          "options_en": [
+            "Rivers",
+            "The people-river",
+            "Amma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 43
+        }
+      ]
+    },
+    {
+      "paragraph_index": 8,
+      "questions": [
+        {
+          "id": "gl_p8_s0_q1",
+          "type": "choice",
+          "question_en": "Where are we?",
+          "options_en": [
+            "In an open, barren field",
+            "In the rice fields",
+            "In our village"
+          ],
+          "correct_index": 0,
+          "sentence_index": 44
+        },
+        {
+          "id": "gl_p8_s0_q2",
+          "type": "choice",
+          "question_en": "How is the field described?",
+          "options_en": [
+            "Open and barren",
+            "Lush and green",
+            "Filled with tents"
+          ],
+          "correct_index": 0,
+          "sentence_index": 44
+        },
+        {
+          "id": "gl_p8_s1_q1",
+          "type": "choice",
+          "question_en": "What fades into where our home was?",
+          "options_en": [
+            "Rice fields",
+            "A town",
+            "Tents and huts"
+          ],
+          "correct_index": 0,
+          "sentence_index": 45
+        },
+        {
+          "id": "gl_p8_s1_q2",
+          "type": "choice",
+          "question_en": "Where do the rice fields fade into?",
+          "options_en": [
+            "Where our home was",
+            "Into the ocean",
+            "Into the camp"
+          ],
+          "correct_index": 0,
+          "sentence_index": 45
+        },
+        {
+          "id": "gl_p8_s2_q1",
+          "type": "choice",
+          "question_en": "What fades into the ocean?",
+          "options_en": [
+            "A town",
+            "Rice fields",
+            "The road to Feizung"
+          ],
+          "correct_index": 0,
+          "sentence_index": 46
+        },
+        {
+          "id": "gl_p8_s2_q2",
+          "type": "choice",
+          "question_en": "Where does the town fade into?",
+          "options_en": [
+            "The ocean",
+            "Where our home was",
+            "The sky"
+          ],
+          "correct_index": 0,
+          "sentence_index": 46
+        }
+      ]
+    },
+    {
+      "paragraph_index": 9,
+      "questions": [
+        {
+          "id": "gl_p9_s0_q1",
+          "type": "choice",
+          "question_en": "What fills up the empty field?",
+          "options_en": [
+            "Tents and huts",
+            "Rice fields",
+            "Shawls"
+          ],
+          "correct_index": 0,
+          "sentence_index": 47
+        },
+        {
+          "id": "gl_p9_s0_q2",
+          "type": "choice",
+          "question_en": "How does the field fill up?",
+          "options_en": [
+            "Slowly",
+            "With people running west",
+            "With dripping rain"
+          ],
+          "correct_index": 0,
+          "sentence_index": 47
+        },
+        {
+          "id": "gl_p9_s1_q1",
+          "type": "choice",
+          "question_en": "What is not grown here?",
+          "options_en": [
+            "Food",
+            "Shawls",
+            "Rice"
+          ],
+          "correct_index": 0,
+          "sentence_index": 48
+        },
+        {
+          "id": "gl_p9_s1_q2",
+          "type": "choice",
+          "question_en": "Where is food not grown?",
+          "options_en": [
+            "Here",
+            "In the village",
+            "In the rice fields"
+          ],
+          "correct_index": 0,
+          "sentence_index": 48
+        },
+        {
+          "id": "gl_p9_s2_q1",
+          "type": "choice",
+          "question_en": "Who gives it to us?",
+          "options_en": [
+            "People",
+            "Amma",
+            "Trucks"
+          ],
+          "correct_index": 0,
+          "sentence_index": 49
+        },
+        {
+          "id": "gl_p9_s2_q2",
+          "type": "choice",
+          "question_en": "What do people give to us?",
+          "options_en": [
+            "Food",
+            "Water",
+            "Shawls"
+          ],
+          "correct_index": 0,
+          "sentence_index": 49
+        },
+        {
+          "id": "gl_p9_s3_q1",
+          "type": "choice",
+          "question_en": "Where does water not come from?",
+          "options_en": [
+            "Wells",
+            "Trucks",
+            "Puddles"
+          ],
+          "correct_index": 0,
+          "sentence_index": 50
+        },
+        {
+          "id": "gl_p9_s3_q2",
+          "type": "choice",
+          "question_en": "What does not come from wells?",
+          "options_en": [
+            "Water",
+            "Food",
+            "Shawls"
+          ],
+          "correct_index": 0,
+          "sentence_index": 50
+        },
+        {
+          "id": "gl_p9_s4_q1",
+          "type": "choice",
+          "question_en": "What arrives in trucks?",
+          "options_en": [
+            "Water",
+            "Food",
+            "People"
+          ],
+          "correct_index": 0,
+          "sentence_index": 51
+        },
+        {
+          "id": "gl_p9_s4_q2",
+          "type": "choice",
+          "question_en": "How does it arrive?",
+          "options_en": [
+            "In trucks",
+            "In wells",
+            "By rain"
+          ],
+          "correct_index": 0,
+          "sentence_index": 51
+        }
+      ]
+    },
+    {
+      "paragraph_index": 10,
+      "questions": [
+        {
+          "id": "gl_p10_s0_q1",
+          "type": "choice",
+          "question_en": "Who says we are safe here?",
+          "options_en": [
+            "Amma",
+            "Abbu",
+            "Dada"
+          ],
+          "correct_index": 0,
+          "sentence_index": 52
+        },
+        {
+          "id": "gl_p10_s0_q2",
+          "type": "choice",
+          "question_en": "What does Amma say?",
+          "options_en": [
+            "We are safe here",
+            "We must leave now",
+            "We are going home"
+          ],
+          "correct_index": 0,
+          "sentence_index": 52
+        },
+        {
+          "id": "gl_p10_s1_q1",
+          "type": "choice",
+          "question_en": "Who is the speaker asking about?",
+          "options_en": [
+            "Abbu, Dada and Mami",
+            "Amma and I",
+            "The villagers"
+          ],
+          "correct_index": 0,
+          "sentence_index": 53
+        },
+        {
+          "id": "gl_p10_s1_q2",
+          "type": "choice",
+          "question_en": "What is being asked about Abbu, Dada and Mami?",
+          "options_en": [
+            "Whether they are safe",
+            "Where they are working",
+            "What they are wearing"
+          ],
+          "correct_index": 0,
+          "sentence_index": 53
+        },
+        {
+          "id": "gl_p10_s2_q1",
+          "type": "choice",
+          "question_en": "What question does the speaker ask?",
+          "options_en": [
+            "Are they safe?",
+            "Are they coming home?",
+            "Are they at school?"
+          ],
+          "correct_index": 0,
+          "sentence_index": 54
+        },
+        {
+          "id": "gl_p10_s2_q2",
+          "type": "choice",
+          "question_en": "Who does 'they' likely refer to in this question?",
+          "options_en": [
+            "Abbu, Dada and Mami",
+            "The teachers",
+            "The doctors"
+          ],
+          "correct_index": 0,
+          "sentence_index": 54
+        },
+        {
+          "id": "gl_p10_s3_q1",
+          "type": "choice",
+          "question_en": "Who looks all around?",
+          "options_en": [
+            "I",
+            "Amma",
+            "Abbu"
+          ],
+          "correct_index": 0,
+          "sentence_index": 55
+        },
+        {
+          "id": "gl_p10_s3_q2",
+          "type": "choice",
+          "question_en": "What does the speaker do all around them?",
+          "options_en": [
+            "Look and look",
+            "Hold Amma's hand",
+            "Sing with the rain"
+          ],
+          "correct_index": 0,
+          "sentence_index": 55
+        },
+        {
+          "id": "gl_p10_s4_q1",
+          "type": "choice",
+          "question_en": "What seems to have become an open field inside an invisible bubble?",
+          "options_en": [
+            "Safety",
+            "The village",
+            "The river"
+          ],
+          "correct_index": 0,
+          "sentence_index": 56
+        },
+        {
+          "id": "gl_p10_s4_q2",
+          "type": "choice",
+          "question_en": "How does safety seem in this sentence?",
+          "options_en": [
+            "Like an open field inside an invisible bubble",
+            "Like a big soft shawl",
+            "Like a crowded market"
+          ],
+          "correct_index": 0,
+          "sentence_index": 56
+        },
+        {
+          "id": "gl_p10_s5_q1",
+          "type": "choice",
+          "question_en": "Where are they living in the hope of going home someday?",
+          "options_en": [
+            "Here",
+            "In Feizung",
+            "In the rice fields"
+          ],
+          "correct_index": 0,
+          "sentence_index": 57
+        },
+        {
+          "id": "gl_p10_s5_q2",
+          "type": "choice",
+          "question_en": "What are they all hoping for?",
+          "options_en": [
+            "Going home someday",
+            "Finding a doctor",
+            "Playing in the fields"
+          ],
+          "correct_index": 0,
+          "sentence_index": 57
+        },
+        {
+          "id": "gl_p10_s6_q1",
+          "type": "choice",
+          "question_en": "What is being questioned in this sentence?",
+          "options_en": [
+            "Whether it is possible to feel safe without a home",
+            "Whether they can stay forever",
+            "Whether school will start"
+          ],
+          "correct_index": 0,
+          "sentence_index": 58
+        },
+        {
+          "id": "gl_p10_s6_q2",
+          "type": "choice",
+          "question_en": "Where does the sentence place the question of feeling safe?",
+          "options_en": [
+            "Without a home",
+            "In the camp",
+            "With family and friends"
+          ],
+          "correct_index": 0,
+          "sentence_index": 58
+        },
+        {
+          "id": "gl_p10_s7_q1",
+          "type": "choice",
+          "question_en": "Who is the speaker asking about being without family and friends?",
+          "options_en": [
+            "My (the speaker)",
+            "Amma",
+            "The villagers"
+          ],
+          "correct_index": 0,
+          "sentence_index": 59
+        },
+        {
+          "id": "gl_p10_s7_q2",
+          "type": "choice",
+          "question_en": "What is the speaker asking about in this sentence?",
+          "options_en": [
+            "Being safe without my family and friends",
+            "Going back to Feizung",
+            "Covering the books in plastic"
+          ],
+          "correct_index": 0,
+          "sentence_index": 59
+        }
+      ]
+    },
+    {
+      "paragraph_index": 11,
+      "questions": [
+        {
+          "id": "gl_p11_s0_q1",
+          "type": "choice",
+          "question_en": "Who often wonders where home is?",
+          "options_en": [
+            "The speaker (I)",
+            "Amma",
+            "Dada"
+          ],
+          "correct_index": 0,
+          "sentence_index": 60
+        },
+        {
+          "id": "gl_p11_s0_q2",
+          "type": "choice",
+          "question_en": "What does the speaker often wonder about?",
+          "options_en": [
+            "Where home is",
+            "When to leave",
+            "What to cook"
+          ],
+          "correct_index": 0,
+          "sentence_index": 60
+        },
+        {
+          "id": "gl_p11_s1_q1",
+          "type": "choice",
+          "question_en": "Where does the question ask if home might be?",
+          "options_en": [
+            "Here",
+            "Feizung",
+            "The camp"
+          ],
+          "correct_index": 0,
+          "sentence_index": 61
+        },
+        {
+          "id": "gl_p11_s1_q2",
+          "type": "choice",
+          "question_en": "What is being asked about 'here'?",
+          "options_en": [
+            "Whether it is home",
+            "Whether it is safe",
+            "Whether it is big"
+          ],
+          "correct_index": 0,
+          "sentence_index": 61
+        },
+        {
+          "id": "gl_p11_s2_q1",
+          "type": "choice",
+          "question_en": "Whose location is suggested as a possible home?",
+          "options_en": [
+            "The speaker's family",
+            "The imam",
+            "The villagers"
+          ],
+          "correct_index": 0,
+          "sentence_index": 62
+        },
+        {
+          "id": "gl_p11_s2_q2",
+          "type": "choice",
+          "question_en": "What alternative place does the speaker suggest might be home?",
+          "options_en": [
+            "Where their family is",
+            "The rice fields",
+            "A town by the ocean"
+          ],
+          "correct_index": 0,
+          "sentence_index": 62
+        },
+        {
+          "id": "gl_p11_s3_q1",
+          "type": "choice",
+          "question_en": "What possibility does the speaker ask about home?",
+          "options_en": [
+            "Whether home can be in two places",
+            "Whether home can be a scarf",
+            "Whether home can be a tent"
+          ],
+          "correct_index": 0,
+          "sentence_index": 63
+        },
+        {
+          "id": "gl_p11_s3_q2",
+          "type": "choice",
+          "question_en": "How many places does the speaker ask if home can be in?",
+          "options_en": [
+            "Two places",
+            "One place",
+            "Many places"
+          ],
+          "correct_index": 0,
+          "sentence_index": 63
+        },
+        {
+          "id": "gl_p11_s4_q1",
+          "type": "choice",
+          "question_en": "Where will a part of the speaker's heart always be?",
+          "options_en": [
+            "Feizung",
+            "The camp",
+            "The ocean town"
+          ],
+          "correct_index": 0,
+          "sentence_index": 64
+        },
+        {
+          "id": "gl_p11_s4_q2",
+          "type": "choice",
+          "question_en": "Whose heart is said to be partly in Feizung?",
+          "options_en": [
+            "The speaker's",
+            "Amma's",
+            "Abbu's"
+          ],
+          "correct_index": 0,
+          "sentence_index": 64
+        },
+        {
+          "id": "gl_p11_s5_q1",
+          "type": "choice",
+          "question_en": "What condition does the speaker question about Feizung being home?",
+          "options_en": [
+            "If they never go back to it",
+            "If it rains often",
+            "If it has a school"
+          ],
+          "correct_index": 0,
+          "sentence_index": 65
+        },
+        {
+          "id": "gl_p11_s5_q2",
+          "type": "choice",
+          "question_en": "What does the speaker ask about returning to Feizung?",
+          "options_en": [
+            "Whether it would still be home if they never go back",
+            "When they will go back",
+            "Who will go back first"
+          ],
+          "correct_index": 0,
+          "sentence_index": 65
+        }
+      ]
+    },
+    {
+      "paragraph_index": 12,
+      "questions": [
+        {
+          "id": "gl_p12_s0_q1",
+          "type": "choice",
+          "question_en": "What starts?",
+          "options_en": [
+            "School",
+            "The rain",
+            "The people-river"
+          ],
+          "correct_index": 0,
+          "sentence_index": 66
+        },
+        {
+          "id": "gl_p12_s0_q2",
+          "type": "choice",
+          "question_en": "How much time passes?",
+          "options_en": [
+            "Two years",
+            "Three hundred years",
+            "Two hours"
+          ],
+          "correct_index": 0,
+          "sentence_index": 66
+        },
+        {
+          "id": "gl_p12_s1_q1",
+          "type": "choice",
+          "question_en": "Who never come?",
+          "options_en": [
+            "Abbu, Dada, Mami and everyone I love",
+            "The doctor in the village",
+            "New droplets who join"
+          ],
+          "correct_index": 0,
+          "sentence_index": 67
+        },
+        {
+          "id": "gl_p12_s1_q2",
+          "type": "choice",
+          "question_en": "Which people are mentioned as not coming?",
+          "options_en": [
+            "Abbu, Dada, Mami and everyone I love",
+            "The imam and villagers",
+            "People carrying something or someone"
+          ],
+          "correct_index": 0,
+          "sentence_index": 67
+        },
+        {
+          "id": "gl_p12_s2_q1",
+          "type": "choice",
+          "question_en": "Who is still here?",
+          "options_en": [
+            "Amma and I",
+            "The armed men",
+            "The great-great-grandparents"
+          ],
+          "correct_index": 0,
+          "sentence_index": 68
+        },
+        {
+          "id": "gl_p12_s2_q2",
+          "type": "choice",
+          "question_en": "Where are Amma and I?",
+          "options_en": [
+            "Still here",
+            "In the village clinic",
+            "On the road to Feizung"
+          ],
+          "correct_index": 0,
+          "sentence_index": 68
+        },
+        {
+          "id": "gl_p12_s3_q1",
+          "type": "choice",
+          "question_en": "What are we told we cannot do?",
+          "options_en": [
+            "Leave this camp",
+            "Go to the doctor",
+            "Weave scarves"
+          ],
+          "correct_index": 0,
+          "sentence_index": 69
+        },
+        {
+          "id": "gl_p12_s3_q2",
+          "type": "choice",
+          "question_en": "Why are we told something about the camp?",
+          "options_en": [
+            "We are told we cannot leave this camp",
+            "Because the masjid warned everyone",
+            "Because Amma says we can only go where people look like us"
+          ],
+          "correct_index": 0,
+          "sentence_index": 69
+        },
+        {
+          "id": "gl_p12_s4_q1",
+          "type": "choice",
+          "question_en": "What does everyone keep saying about staying?",
+          "options_en": [
+            "We can’t stay forever",
+            "We must stay forever",
+            "We should run west"
+          ],
+          "correct_index": 0,
+          "sentence_index": 70
+        },
+        {
+          "id": "gl_p12_s4_q2",
+          "type": "choice",
+          "question_en": "How do people describe the length of stay?",
+          "options_en": [
+            "Not forever",
+            "Like three hundred years",
+            "Only two hours"
+          ],
+          "correct_index": 0,
+          "sentence_index": 70
+        },
+        {
+          "id": "gl_p12_s5_q1",
+          "type": "choice",
+          "question_en": "Where is the road that is still there?",
+          "options_en": [
+            "To Feizung",
+            "To the clinic",
+            "To the ocean"
+          ],
+          "correct_index": 0,
+          "sentence_index": 71
+        },
+        {
+          "id": "gl_p12_s5_q2",
+          "type": "choice",
+          "question_en": "Which side has the road?",
+          "options_en": [
+            "One side",
+            "Inside the tents",
+            "In the village two hours away"
+          ],
+          "correct_index": 0,
+          "sentence_index": 71
+        },
+        {
+          "id": "gl_p12_s6_q1",
+          "type": "choice",
+          "question_en": "What is on the other side?",
+          "options_en": [
+            "The ocean",
+            "Rice fields",
+            "The road to Feizung"
+          ],
+          "correct_index": 0,
+          "sentence_index": 72
+        },
+        {
+          "id": "gl_p12_s6_q2",
+          "type": "choice",
+          "question_en": "Where is the ocean mentioned?",
+          "options_en": [
+            "On the other side",
+            "Beyond the clinic",
+            "Inside the village"
+          ],
+          "correct_index": 0,
+          "sentence_index": 72
+        },
+        {
+          "id": "gl_p12_s7_q1",
+          "type": "choice",
+          "question_en": "What do they sometimes think of doing?",
+          "options_en": [
+            "Escaping",
+            "Weaving shawls",
+            "Running to the clinic"
+          ],
+          "correct_index": 0,
+          "sentence_index": 73
+        },
+        {
+          "id": "gl_p12_s7_q2",
+          "type": "choice",
+          "question_en": "Why do they consider escaping?",
+          "options_en": [
+            "Sometimes they think of escaping",
+            "Because the rain starts",
+            "To visit Feizung for scarves"
+          ],
+          "correct_index": 0,
+          "sentence_index": 73
+        },
+        {
+          "id": "gl_p12_s8_q1",
+          "type": "choice",
+          "question_en": "What does the narrator have today?",
+          "options_en": [
+            "School",
+            "A doctor visit",
+            "A run west"
+          ],
+          "correct_index": 0,
+          "sentence_index": 74
+        },
+        {
+          "id": "gl_p12_s8_q2",
+          "type": "choice",
+          "question_en": "Why does the narrator not focus on escaping today?",
+          "options_en": [
+            "Because they have school today",
+            "Because the imam is shouting",
+            "Because Amma weaves words"
+          ],
+          "correct_index": 0,
+          "sentence_index": 74
+        }
+      ]
+    },
+    {
+      "paragraph_index": 13,
+      "questions": [
+        {
+          "id": "gl_p13_s0_q1",
+          "type": "choice",
+          "question_en": "Who asks Hasina if she covered the books in plastic?",
+          "options_en": [
+            "Amma",
+            "Dada",
+            "Abbu"
+          ],
+          "correct_index": 0,
+          "sentence_index": 75
+        },
+        {
+          "id": "gl_p13_s0_q2",
+          "type": "choice",
+          "question_en": "Where is the speaker hurrying to in the rain?",
+          "options_en": [
+            "School",
+            "The clinic",
+            "Home"
+          ],
+          "correct_index": 0,
+          "sentence_index": 75
+        },
+        {
+          "id": "gl_p13_s1_q1",
+          "type": "choice",
+          "question_en": "What does the narrator try to be louder than?",
+          "options_en": [
+            "The crinkly plastic sheets",
+            "The imam's loudspeaker",
+            "The rain"
+          ],
+          "correct_index": 0,
+          "sentence_index": 76
+        },
+        {
+          "id": "gl_p13_s1_q2",
+          "type": "choice",
+          "question_en": "What do the crinkly plastic sheets sing?",
+          "options_en": [
+            "\"Tip-tip-drop drip-drip-top.\"",
+            "\"Tip-top drip-drop.\"",
+            "\"Choo-choo\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 76
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'Home'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "puddles",
+      "meaning_vi": "vũng nước nhỏ",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "crinkly",
+      "meaning_vi": "nhăn nheo, lượn sóng",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "metal sheets",
+      "meaning_vi": "tấm kim loại, tôn",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "disapprove",
+      "meaning_vi": "không đồng ý, không thích",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "beetroot",
+      "meaning_vi": "củ dền",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "annoyed",
+      "meaning_vi": "khó chịu, bực mình",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "neverending",
+      "meaning_vi": "không bao giờ kết thúc",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "grandparents",
+      "meaning_vi": "ông bà",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "scarves",
+      "meaning_vi": "khăn quàng cổ",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "shawls",
+      "meaning_vi": "khăn choàng",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "curled",
+      "meaning_vi": "cuộn tròn",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "theatrical",
+      "meaning_vi": "kịch tính, hay diễn",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "tortoise",
+      "meaning_vi": "rùa",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "surrounded",
+      "meaning_vi": "bao quanh",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "vast",
+      "meaning_vi": "rộng lớn, bao la",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "sneezing",
+      "meaning_vi": "hắt hơi",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "clinic",
+      "meaning_vi": "phòng khám",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "armed",
+      "meaning_vi": "có vũ trang",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "terrified",
+      "meaning_vi": "kinh hoàng, sợ hãi",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "tight",
+      "meaning_vi": "chặt, chắc",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "carrying",
+      "meaning_vi": "mang, cõng",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "hundreds",
+      "meaning_vi": "hàng trăm",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "stumbling",
+      "meaning_vi": "vấp ngã",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "orchards",
+      "meaning_vi": "vườn cây ăn trái",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "lost",
+      "meaning_vi": "bị lạc",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "border",
+      "meaning_vi": "biên giới",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "crossed",
+      "meaning_vi": "vượt qua",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "barren",
+      "meaning_vi": "cằn cỗi, hoang vắng",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "horizon",
+      "meaning_vi": "chân trời",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "fade",
+      "meaning_vi": "mờ dần",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "ocean",
+      "meaning_vi": "đại dương",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "tents",
+      "meaning_vi": "lều",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "huts",
+      "meaning_vi": "túp lều",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "wells",
+      "meaning_vi": "giếng",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "trucks",
+      "meaning_vi": "xe tải",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "invisible",
+      "meaning_vi": "vô hình",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "bubble",
+      "meaning_vi": "bong bóng",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "hope",
+      "meaning_vi": "hy vọng",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "possible",
+      "meaning_vi": "có thể",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "wonder",
+      "meaning_vi": "tự hỏi",
+      "paragraph_index": 11
+    },
+    {
+      "word_en": "part",
+      "meaning_vi": "một phần",
+      "paragraph_index": 11
+    },
+    {
+      "word_en": "pass",
+      "meaning_vi": "trôi qua (thời gian)",
+      "paragraph_index": 12
+    },
+    {
+      "word_en": "camp",
+      "meaning_vi": "trại",
+      "paragraph_index": 12
+    },
+    {
+      "word_en": "forever",
+      "meaning_vi": "mãi mãi",
+      "paragraph_index": 12
+    },
+    {
+      "word_en": "escaping",
+      "meaning_vi": "trốn thoát",
+      "paragraph_index": 12
+    },
+    {
+      "word_en": "cover",
+      "meaning_vi": "bọc, che",
+      "paragraph_index": 13
+    },
+    {
+      "word_en": "plastic",
+      "meaning_vi": "ni lông, nhựa",
+      "paragraph_index": 13
+    },
+    {
+      "word_en": "hurry off",
+      "meaning_vi": "vội vã đi",
+      "paragraph_index": 13
+    },
+    {
+      "word_en": "yell",
+      "meaning_vi": "hét to",
+      "paragraph_index": 13
+    }
+  ]
+}

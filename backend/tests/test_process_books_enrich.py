@@ -122,10 +122,21 @@ def test_validate_enrichment_response_rejects_empty_text_vi():
         process_books.validate_enrichment_response(response, 1)
 
 
-def test_validate_enrichment_response_rejects_too_many_hard_words():
+def test_validate_enrichment_response_truncates_extra_hard_words():
+    # Batch-observed failure mode: the model offers >4 useful words. Keep the
+    # first 4 instead of rejecting the page (non-list still rejects).
     response = {
         "sentences": [{"index": 0, "text_vi": "Xin chao"}],
         "hard_words": [{"word_en": f"w{i}", "meaning_vi": f"m{i}"} for i in range(5)],
+    }
+    _, hard_words = process_books.validate_enrichment_response(response, 1)
+    assert [w["word_en"] for w in hard_words] == ["w0", "w1", "w2", "w3"]
+
+
+def test_validate_enrichment_response_rejects_non_list_hard_words():
+    response = {
+        "sentences": [{"index": 0, "text_vi": "Xin chao"}],
+        "hard_words": "not-a-list",
     }
     with pytest.raises(process_books.BookProcessingError, match="hard_words"):
         process_books.validate_enrichment_response(response, 1)

@@ -1,0 +1,843 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L1",
+  "level_label": "Cấp 1",
+  "topic": "Katiiti’s Song",
+  "slug": "book_13915",
+  "audio_filename": "book_13915.mp3",
+  "book_slug": "book_13915",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_13915/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_13915/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_13915/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_13915/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_13915/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_13915/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_13915/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_13915/page_09.jpg",
+    "https://audio.felixbuilderhub.com/books/book_13915/page_10.jpg",
+    "https://audio.felixbuilderhub.com/books/book_13915/page_11.jpg",
+    "https://audio.felixbuilderhub.com/books/book_13915/page_12.jpg",
+    "https://audio.felixbuilderhub.com/books/book_13915/page_13.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_13915/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_13915/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_13915/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_13915/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_13915/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_13915/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_13915/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_13915/page_09.mp3",
+    "https://audio.felixbuilderhub.com/books/book_13915/page_10.mp3",
+    "https://audio.felixbuilderhub.com/books/book_13915/page_11.mp3",
+    "https://audio.felixbuilderhub.com/books/book_13915/page_12.mp3",
+    "https://audio.felixbuilderhub.com/books/book_13915/page_13.mp3"
+  ],
+  "book_attribution": {
+    "title": "Katiiti’s Song",
+    "creators": [
+      "Philippa Namutebi Kabali-Kagwa",
+      "Mary Marble"
+    ],
+    "publisher": "Book Dash",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: Katiiti’s Song is written by Philippa Namutebi Kabali-Kagwa . © Book Dash , 2016. Some rights reserved. Released under CC BY 4.0 license. Other Credits: This book has been originally published by Book Dash. It was created at Book Dash Cape Town on 5 March 2016 by Philippa Namutebi Kabali-Kagwa (writer), Mary Marble (illustrator) and Kirsten Walker (designer). Images Attributions: Cover page: Girl holding a flower in a forest , by Mary Marble © Mary Marble, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 2: Huts in a beautiful valley , by Mary Marble © Mary Marble, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 3: A girl holding a flower in a forest , by Mary Marble © Mary Marble, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 4: A woman singing, and a gorilla in the background , by Mary Marble © Mary Marble, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 5: A girl and a gorilla together , by Mary Marble © Mary Marble, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 6: A girl standing by a tree in a beautiful garden , by Mary Marble © Mary Marble, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 7: A gorilla singing a song , by Mary Marble © Mary Marble, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 8: Lots of bananas falling down , by Mary Marble © Mary Marble, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 9: A gorilla singing , by Mary Marble © Mary Marble, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 10: A beehive hanging from a tree , by Mary Marble © Mary Marble, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 11: A singing gorilla , by Mary Marble © Mary Marble, 2016. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/13915-katiiti-s-song",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "Huts in a beautiful valley , by Mary Marble © Mary Marble, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "A girl holding a flower in a forest , by Mary Marble © Mary Marble, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "A woman singing, and a gorilla in the background , by Mary Marble © Mary Marble, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "A girl and a gorilla together , by Mary Marble © Mary Marble, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "A girl standing by a tree in a beautiful garden , by Mary Marble © Mary Marble, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "A gorilla singing a song , by Mary Marble © Mary Marble, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "Lots of bananas falling down , by Mary Marble © Mary Marble, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "A gorilla singing , by Mary Marble © Mary Marble, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 8,
+        "credit_text": "A beehive hanging from a tree , by Mary Marble © Mary Marble, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 9,
+        "credit_text": "A singing gorilla , by Mary Marble © Mary Marble, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 10,
+        "credit_text": "Illustration by Mary Marble."
+      },
+      {
+        "page_index": 11,
+        "credit_text": "Illustration by Mary Marble."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "Katiiti’s Song",
+    "paragraphs_en": [
+      "Katiiti lived in a village next to a forest.",
+      "She loved playing in the forest. Maama told her to be careful.",
+      "Every day Maama would sing their special song to call her.",
+      "One day, Katiiti bumped into a gorilla.",
+      "She ran and hid in a cave.",
+      "Gorilla came and sang Maama’s song in a gruff voice.",
+      "Gorilla ate lots of bananas to make his voice sweeter.",
+      "Gorilla sang sweetishly.",
+      "Gorilla went away and ate lots of honey to make his voice even sweeter.",
+      "Gorilla sang as sweetly as Maama.",
+      "Maama came just in time to chase away Gorilla.",
+      "Katiiti and Maama sang all the way back home."
+    ],
+    "sentences": [
+      {
+        "text_en": "Katiiti lived in a village next to a forest.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13915/s_000.mp3",
+        "text_vi": "Katiiti sống trong một ngôi làng cạnh khu rừng."
+      },
+      {
+        "text_en": "She loved playing in the forest.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13915/s_001.mp3",
+        "text_vi": "Cô bé rất thích chơi trong rừng."
+      },
+      {
+        "text_en": "Maama told her to be careful.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13915/s_002.mp3",
+        "text_vi": "Maama dặn cô bé phải cẩn thận."
+      },
+      {
+        "text_en": "Every day Maama would sing their special song to call her.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13915/s_003.mp3",
+        "text_vi": "Ngày nào Maama cũng hát bài hát đặc biệt của họ để gọi cô bé về."
+      },
+      {
+        "text_en": "One day, Katiiti bumped into a gorilla.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13915/s_004.mp3",
+        "text_vi": "Một ngày nọ, Katiiti đụng phải một con khỉ đột."
+      },
+      {
+        "text_en": "She ran and hid in a cave.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13915/s_005.mp3",
+        "text_vi": "Cô bé chạy trốn vào một cái hang."
+      },
+      {
+        "text_en": "Gorilla came and sang Maama’s song in a gruff voice.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13915/s_006.mp3",
+        "text_vi": "Khỉ đột đến và hát bài hát của Maama bằng giọng khàn khàn."
+      },
+      {
+        "text_en": "Gorilla ate lots of bananas to make his voice sweeter.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13915/s_007.mp3",
+        "text_vi": "Khỉ đột ăn rất nhiều chuối để giọng mình ngọt hơn."
+      },
+      {
+        "text_en": "Gorilla sang sweetishly.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13915/s_008.mp3",
+        "text_vi": "Khỉ đột hát một cách ngọt ngào."
+      },
+      {
+        "text_en": "Gorilla went away and ate lots of honey to make his voice even sweeter.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13915/s_009.mp3",
+        "text_vi": "Khỉ đột bỏ đi và ăn rất nhiều mật ong để giọng mình còn ngọt hơn nữa."
+      },
+      {
+        "text_en": "Gorilla sang as sweetly as Maama.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13915/s_010.mp3",
+        "text_vi": "Khỉ đột hát ngọt ngào như Maama."
+      },
+      {
+        "text_en": "Maama came just in time to chase away Gorilla.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13915/s_011.mp3",
+        "text_vi": "Maama đến đúng lúc để đuổi Khỉ đột đi."
+      },
+      {
+        "text_en": "Katiiti and Maama sang all the way back home.",
+        "paragraph_index": 11,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13915/s_012.mp3",
+        "text_vi": "Katiiti và Maama vừa đi vừa hát suốt đường về nhà."
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "Katiiti lived in a village next to a forest.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13915/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "She loved playing in the forest.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13915/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "Maama told her to be careful.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13915/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "Every day Maama would sing their special song to call her.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13915/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "One day, Katiiti bumped into a gorilla.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13915/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "She ran and hid in a cave.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13915/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "Gorilla came and sang Maama’s song in a gruff voice.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13915/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "Gorilla ate lots of bananas to make his voice sweeter.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13915/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "Gorilla sang sweetishly.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13915/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "Gorilla went away and ate lots of honey to make his voice even sweeter.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13915/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "Gorilla sang as sweetly as Maama.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13915/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "Maama came just in time to chase away Gorilla.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13915/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "Katiiti and Maama sang all the way back home.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13915/s_012.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "Who lived in a village next to a forest?",
+          "options_en": [
+            "Katiiti",
+            "Maama",
+            "Gorilla"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "Where did Katiiti live?",
+          "options_en": [
+            "In a village next to a forest",
+            "In a cave",
+            "In the forest"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "What did she love doing?",
+          "options_en": [
+            "Playing in the forest",
+            "Hiding in a cave",
+            "Singing Maama’s song"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "Where did she love playing?",
+          "options_en": [
+            "In the forest",
+            "In a cave",
+            "In the village"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p1_s1_q1",
+          "type": "choice",
+          "question_en": "Who told her to be careful?",
+          "options_en": [
+            "Maama",
+            "Gorilla",
+            "Katiiti"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p1_s1_q2",
+          "type": "choice",
+          "question_en": "What did Maama tell her to do?",
+          "options_en": [
+            "To be careful",
+            "To sing the song",
+            "To eat bananas"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "Who would sing their special song every day?",
+          "options_en": [
+            "Maama",
+            "Katiiti",
+            "Gorilla"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "Why would Maama sing their special song?",
+          "options_en": [
+            "To call her",
+            "To chase away Gorilla",
+            "To make his voice sweeter"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "Who bumped into a gorilla?",
+          "options_en": [
+            "Katiiti",
+            "Maama",
+            "Gorilla"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "When did Katiiti bump into a gorilla?",
+          "options_en": [
+            "One day",
+            "Every day",
+            "When Maama sang"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "Where did she run and hide?",
+          "options_en": [
+            "In a cave",
+            "In the forest",
+            "At home"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "What did she do?",
+          "options_en": [
+            "She ran and hid in a cave",
+            "She played in the forest",
+            "She sang Maama’s song"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "Who came and sang Maama’s song?",
+          "options_en": [
+            "Gorilla",
+            "Katiiti",
+            "Maama"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "How did Gorilla sing Maama’s song?",
+          "options_en": [
+            "In a gruff voice",
+            "Sweetly",
+            "As sweetly as Maama"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "Who ate lots of bananas?",
+          "options_en": [
+            "Gorilla",
+            "Katiiti",
+            "Maama"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "Why did he eat lots of bananas?",
+          "options_en": [
+            "To make his voice sweeter",
+            "To hide in a cave",
+            "To sing Maama's song"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "Who sang sweetishly?",
+          "options_en": [
+            "Gorilla",
+            "Katiiti",
+            "Maama"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "How did the gorilla sing?",
+          "options_en": [
+            "Sweetishly",
+            "In a gruff voice",
+            "As sweetly as Maama"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        }
+      ]
+    },
+    {
+      "paragraph_index": 8,
+      "questions": [
+        {
+          "id": "gl_p8_s0_q1",
+          "type": "choice",
+          "question_en": "Who went away and ate lots of honey?",
+          "options_en": [
+            "Gorilla",
+            "Katiiti",
+            "Maama"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p8_s0_q2",
+          "type": "choice",
+          "question_en": "Why did he eat lots of honey?",
+          "options_en": [
+            "To make his voice even sweeter",
+            "To hide in the cave",
+            "To call Katiiti"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        }
+      ]
+    },
+    {
+      "paragraph_index": 9,
+      "questions": [
+        {
+          "id": "gl_p9_s0_q1",
+          "type": "choice",
+          "question_en": "Who sang as sweetly as Maama?",
+          "options_en": [
+            "Gorilla",
+            "Katiiti",
+            "Maama"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p9_s0_q2",
+          "type": "choice",
+          "question_en": "What did Gorilla do as sweetly as Maama?",
+          "options_en": [
+            "Sang",
+            "Ate lots of bananas",
+            "Hid in a cave"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        }
+      ]
+    },
+    {
+      "paragraph_index": 10,
+      "questions": [
+        {
+          "id": "gl_p10_s0_q1",
+          "type": "choice",
+          "question_en": "Who came just in time?",
+          "options_en": [
+            "Maama",
+            "Katiiti",
+            "Gorilla"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p10_s0_q2",
+          "type": "choice",
+          "question_en": "Why did Maama come just in time?",
+          "options_en": [
+            "To chase away Gorilla",
+            "To sing their special song",
+            "To hide in a cave"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        }
+      ]
+    },
+    {
+      "paragraph_index": 11,
+      "questions": [
+        {
+          "id": "gl_p11_s0_q1",
+          "type": "choice",
+          "question_en": "Who sang all the way back home?",
+          "options_en": [
+            "Katiiti and Maama",
+            "Gorilla",
+            "Katiiti"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p11_s0_q2",
+          "type": "choice",
+          "question_en": "Where did they sing all the way?",
+          "options_en": [
+            "Back home",
+            "In the cave",
+            "In the forest"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'Katiiti’s Song'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "lived",
+      "meaning_vi": "sống",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "village",
+      "meaning_vi": "làng, ngôi làng",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "next to",
+      "meaning_vi": "cạnh, bên cạnh",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "forest",
+      "meaning_vi": "khu rừng",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "loved",
+      "meaning_vi": "rất thích",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "playing",
+      "meaning_vi": "chơi",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "told",
+      "meaning_vi": "dặn, nói",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "careful",
+      "meaning_vi": "cẩn thận",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "Every day",
+      "meaning_vi": "mỗi ngày, ngày nào cũng",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "sing",
+      "meaning_vi": "hát",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "special",
+      "meaning_vi": "đặc biệt",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "call",
+      "meaning_vi": "gọi",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "One day",
+      "meaning_vi": "một ngày nọ",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "bumped into",
+      "meaning_vi": "đụng phải",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "gorilla",
+      "meaning_vi": "khỉ đột",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "ran",
+      "meaning_vi": "chạy",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "hid",
+      "meaning_vi": "trốn",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "cave",
+      "meaning_vi": "cái hang",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "came",
+      "meaning_vi": "đến",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "sang",
+      "meaning_vi": "hát",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "gruff",
+      "meaning_vi": "khàn khàn",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "voice",
+      "meaning_vi": "giọng",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "ate",
+      "meaning_vi": "ăn",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "lots of",
+      "meaning_vi": "rất nhiều",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "bananas",
+      "meaning_vi": "chuối",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "sweeter",
+      "meaning_vi": "ngọt hơn",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "sang",
+      "meaning_vi": "hát",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "sweetishly",
+      "meaning_vi": "một cách ngọt ngào",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "went away",
+      "meaning_vi": "bỏ đi",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "honey",
+      "meaning_vi": "mật ong",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "even sweeter",
+      "meaning_vi": "còn ngọt hơn nữa",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "sang",
+      "meaning_vi": "hát",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "sweetly",
+      "meaning_vi": "ngọt ngào",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "just in time",
+      "meaning_vi": "đúng lúc",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "chase away",
+      "meaning_vi": "đuổi đi",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "sang",
+      "meaning_vi": "hát",
+      "paragraph_index": 11
+    },
+    {
+      "word_en": "all the way back home",
+      "meaning_vi": "suốt đường về nhà",
+      "paragraph_index": 11
+    }
+  ]
+}

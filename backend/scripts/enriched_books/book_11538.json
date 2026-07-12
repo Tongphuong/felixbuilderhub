@@ -1,0 +1,596 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L1",
+  "level_label": "Cấp 1",
+  "topic": "My Sister and Me",
+  "slug": "book_11538",
+  "audio_filename": "book_11538.mp3",
+  "book_slug": "book_11538",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_11538/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_11538/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_11538/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_11538/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_11538/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_11538/page_07.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_11538/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_11538/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_11538/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_11538/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_11538/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_11538/page_07.mp3"
+  ],
+  "book_attribution": {
+    "title": "My Sister and Me",
+    "creators": [
+      "Kanchan Bannerjee",
+      "Saloni Chopra"
+    ],
+    "publisher": "Pratham Books",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: My Sister and Me is written by Kanchan Bannerjee . © Pratham Books , 2013. Some rights reserved. Released under CC BY 4.0 license. Other Credits: 'My Sister and Me' has been published on StoryWeaver by Pratham Books. The illustration and design of this book has been undertaken by Srishti School of Art, Design and Technology. www.prathambooks.org Images Attributions: Cover page: Two girls on a swing hanging from a tree , by Saloni Chopra © Pratham Books, 2013. Some rights reserved. Released under CC BY 4.0 license. Page 2: An angry girl scolding someone , by Saloni Chopra © Pratham Books, 2013. Some rights reserved. Released under CC BY 4.0 license. Page 3: One girl scolding another while teaching her , by Saloni Chopra © Pratham Books, 2013. Some rights reserved. Released under CC BY 4.0 license. Page 4: A girl helping another to ride a bicycle , by Saloni Chopra © Pratham Books, 2013. Some rights reserved. Released under CC BY 4.0 license. Page 5: A girl falls down from her bicycle in front of another girl , by Saloni Chopra © Pratham Books, 2013. Some rights reserved. Released under CC BY 4.0 license. Page 6: A girl teasing another girl by pulling her hair , by Saloni Chopra © Pratham Books, 2013. Some rights reserved. Released under CC BY 4.0 license. Page 7: Two girls sharing an ice cream , by Saloni Chopra © Pratham Books, 2013. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/11538-my-sister-and-me",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "An angry girl scolding someone , by Saloni Chopra © Pratham Books, 2013. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "One girl scolding another while teaching her , by Saloni Chopra © Pratham Books, 2013. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "A girl helping another to ride a bicycle , by Saloni Chopra © Pratham Books, 2013. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "A girl falls down from her bicycle in front of another girl , by Saloni Chopra © Pratham Books, 2013. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "A girl teasing another girl by pulling her hair , by Saloni Chopra © Pratham Books, 2013. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "Two girls sharing an ice cream , by Saloni Chopra © Pratham Books, 2013. Some rights reserved. Released under CC BY 4.0 license."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "My Sister and Me",
+    "paragraphs_en": [
+      "Anu is my sister. She helps me do my homework.",
+      "Some days I do not like to do my homework. But Anu makes me sit down.",
+      "Anu has a big cycle. She teaches me to ride it.",
+      "When I fall she comes running to help me.",
+      "Anu also fights with me. Then I get angry.",
+      "But after some time she is sorry. That is why I love my sister Anu."
+    ],
+    "sentences": [
+      {
+        "text_en": "Anu is my sister.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_11538/s_000.mp3",
+        "text_vi": "Anu là chị gái của mình."
+      },
+      {
+        "text_en": "She helps me do my homework.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_11538/s_001.mp3",
+        "text_vi": "Chị ấy giúp mình làm bài tập về nhà."
+      },
+      {
+        "text_en": "Some days I do not like to do my homework.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_11538/s_002.mp3",
+        "text_vi": "Có những ngày mình không thích làm bài tập về nhà."
+      },
+      {
+        "text_en": "But Anu makes me sit down.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_11538/s_003.mp3",
+        "text_vi": "Nhưng Anu bắt mình ngồi xuống."
+      },
+      {
+        "text_en": "Anu has a big cycle.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_11538/s_004.mp3",
+        "text_vi": "Anu có một chiếc xe đạp lớn."
+      },
+      {
+        "text_en": "She teaches me to ride it.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_11538/s_005.mp3",
+        "text_vi": "Chị ấy dạy mình cách đi xe."
+      },
+      {
+        "text_en": "When I fall she comes running to help me.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_11538/s_006.mp3",
+        "text_vi": "Khi mình bị ngã, chị ấy chạy đến giúp mình ngay."
+      },
+      {
+        "text_en": "Anu also fights with me.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_11538/s_007.mp3",
+        "text_vi": "Anu cũng hay cãi nhau với mình."
+      },
+      {
+        "text_en": "Then I get angry.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_11538/s_008.mp3",
+        "text_vi": "Rồi mình giận."
+      },
+      {
+        "text_en": "But after some time she is sorry.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_11538/s_009.mp3",
+        "text_vi": "Nhưng sau một lúc, chị ấy lại xin lỗi."
+      },
+      {
+        "text_en": "That is why I love my sister Anu.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_11538/s_010.mp3",
+        "text_vi": "Đó là lý do vì sao mình yêu chị Anu."
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "Anu is my sister.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_11538/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "She helps me do my homework.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_11538/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "Some days I do not like to do my homework.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_11538/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "But Anu makes me sit down.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_11538/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "Anu has a big cycle.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_11538/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "She teaches me to ride it.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_11538/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "When I fall she comes running to help me.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_11538/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "Anu also fights with me.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_11538/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "Then I get angry.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_11538/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "But after some time she is sorry.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_11538/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "That is why I love my sister Anu.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_11538/s_010.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "Who is Anu?",
+          "options_en": [
+            "My sister",
+            "The one who helps me do my homework",
+            "The one who has a big cycle"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "How is Anu related to me?",
+          "options_en": [
+            "She is my sister",
+            "She helps me do my homework",
+            "She teaches me to ride a cycle"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s1_q1",
+          "type": "choice",
+          "question_en": "What does she help me do?",
+          "options_en": [
+            "Do my homework",
+            "Teach me to ride the cycle",
+            "Make me sit down"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s1_q2",
+          "type": "choice",
+          "question_en": "Who helps me do my homework?",
+          "options_en": [
+            "Anu",
+            "The one who has a big cycle",
+            "The one who teaches me to ride it"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "When do I not like to do my homework?",
+          "options_en": [
+            "Some days",
+            "When I fall",
+            "After some time"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "What does the speaker not like to do?",
+          "options_en": [
+            "Do my homework",
+            "Ride the cycle",
+            "Fight with Anu"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p1_s1_q1",
+          "type": "choice",
+          "question_en": "Who makes me sit down?",
+          "options_en": [
+            "Anu",
+            "My sister",
+            "Anu's big cycle"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p1_s1_q2",
+          "type": "choice",
+          "question_en": "What does Anu make me do?",
+          "options_en": [
+            "Sit down",
+            "Ride the cycle",
+            "Help me when I fall"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "What does Anu have?",
+          "options_en": [
+            "a big cycle",
+            "homework",
+            "a fight"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "Who has a big cycle?",
+          "options_en": [
+            "Anu",
+            "I",
+            "my homework"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p2_s1_q1",
+          "type": "choice",
+          "question_en": "Who teaches me to ride it?",
+          "options_en": [
+            "Anu",
+            "I",
+            "my sister"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p2_s1_q2",
+          "type": "choice",
+          "question_en": "What does she teach me to do?",
+          "options_en": [
+            "to ride it",
+            "to do my homework",
+            "to sit down"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "Who comes running to help me?",
+          "options_en": [
+            "Anu",
+            "my big cycle",
+            "my homework"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "When does she come running to help me?",
+          "options_en": [
+            "When I fall",
+            "When I do my homework",
+            "When I ride the cycle"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "Who fights with me?",
+          "options_en": [
+            "Anu",
+            "my sister",
+            "Anu's big cycle"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "What does Anu do?",
+          "options_en": [
+            "Fights with me",
+            "Helps me do my homework",
+            "Teaches me to ride"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p4_s1_q1",
+          "type": "choice",
+          "question_en": "How do I feel?",
+          "options_en": [
+            "Angry",
+            "Sorry",
+            "Happy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p4_s1_q2",
+          "type": "choice",
+          "question_en": "What happens then?",
+          "options_en": [
+            "I get angry",
+            "She is sorry",
+            "She helps me with homework"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "Who is sorry?",
+          "options_en": [
+            "my sister Anu",
+            "I",
+            "Anu's friend"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "When is she sorry?",
+          "options_en": [
+            "after some time",
+            "when I fall",
+            "when she teaches me to ride"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p5_s1_q1",
+          "type": "choice",
+          "question_en": "Why do I love my sister Anu?",
+          "options_en": [
+            "Because she is sorry after some time",
+            "Because she has a big cycle",
+            "Because she helps me do my homework"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p5_s1_q2",
+          "type": "choice",
+          "question_en": "Who do I love?",
+          "options_en": [
+            "my sister Anu",
+            "my homework",
+            "the big cycle"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'My Sister and Me'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "sister",
+      "meaning_vi": "chị gái / em gái",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "helps",
+      "meaning_vi": "giúp đỡ",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "homework",
+      "meaning_vi": "bài tập về nhà",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "Some days",
+      "meaning_vi": "Có những ngày",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "like",
+      "meaning_vi": "thích",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "sit down",
+      "meaning_vi": "ngồi xuống",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "cycle",
+      "meaning_vi": "xe đạp",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "teaches",
+      "meaning_vi": "dạy",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "ride",
+      "meaning_vi": "đi (xe)",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "fall",
+      "meaning_vi": "ngã",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "running",
+      "meaning_vi": "chạy",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "fights",
+      "meaning_vi": "cãi nhau",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "angry",
+      "meaning_vi": "tức giận",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "after some time",
+      "meaning_vi": "sau một lúc",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "sorry",
+      "meaning_vi": "xin lỗi",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "love",
+      "meaning_vi": "yêu",
+      "paragraph_index": 5
+    }
+  ]
+}

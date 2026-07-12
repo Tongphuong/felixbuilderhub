@@ -1,0 +1,2352 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L4",
+  "level_label": "Cấp 4",
+  "topic": "The Story of Help Us Green",
+  "slug": "book_176866",
+  "audio_filename": "book_176866.mp3",
+  "book_slug": "book_176866",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_176866/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_176866/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_176866/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_176866/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_176866/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_176866/page_07.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_176866/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_176866/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_176866/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_176866/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_176866/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_176866/page_07.mp3"
+  ],
+  "book_attribution": {
+    "title": "The Story of Help Us Green",
+    "creators": [
+      "Bhumija Rishi",
+      "Harshika G",
+      "Rhea Nandy"
+    ],
+    "publisher": "Why Waste?",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: The Story of Help Us Green is written by Bhumija Rishi . © Why Waste? , 2020. Some rights reserved. Released under CC BY 4.0 license. Other Credits: The story 'The Story of Help Us Green' has been published by Why Waste Foundation as a part of the series Sustainability Stories on StoryWeaver. Edited by Anvita Nair and Shruti Parthasarathy. Publication Design by Prajakta Santosh and Rhea Nandy. Images Attributions: Cover page: The Story of Help Us Green cover , by Harshika G © Why Waste?, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 2: Man talking to a teddy bear , by Harshika G , Rhea Nandy © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 3: Blue and white background with water droplets and a floating lotus , by Harshika G , Rhea Nandy © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 4: Blue and white background with water droplets , by Harshika G , Rhea Nandy © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 5: Blue and white background with water droplets3 , by Harshika G , Rhea Nandy © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 6: Blue and white background with water droplets , by Harshika G , Rhea Nandy © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 7: Blue and white background with water droplets3 , by Harshika G , Rhea Nandy © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 8: Blue and white background with a floating lotus , by Harshika G , Rhea Nandy © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/176866-the-story-of-help-us-green",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "Man talking to a teddy bear , by Harshika G , Rhea Nandy © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "Blue and white background with water droplets and a floating lotus , by Harshika G , Rhea Nandy © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "Blue and white background with water droplets , by Harshika G , Rhea Nandy © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "Blue and white background with water droplets3 , by Harshika G , Rhea Nandy © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "Blue and white background with water droplets , by Harshika G , Rhea Nandy © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "Blue and white background with water droplets3 , by Harshika G , Rhea Nandy © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "The Story of Help Us Green",
+    "paragraphs_en": [
+      "Bholu the bear had a busy day. He was a reporter in the television channel Aaj Ka Jungle. Today, he had to take the interview of Ankit Aggarwal, the founder of Help Us Green. He had set up the company in 2015. The company specialised in recycling flowers into vermicompost. They made many creative items out of it. Bholu: Hello, everyone, today we have one of India’s most creative businessmen amongst us. Not only does he run a huge organization but saves the environment while running it.",
+      "Welcome, Mr. Ankit Aggarwal, how are you? Could you tell us a little something about your company, Help Us Green? Ankit Aggarwal: Hi Bholu. I am well. Our company – Help Us Green recycles flower waste. By recycling this waste, we achieve many purposes, we save our rivers, promote organic materials and produce biodegradable products in a creative way. Bholu: You said something about saving our rivers, how does this happen? Ankit Aggarwal: Hi Bholu. I am well. Our company – Help Us Green recycles flower waste. By recycling this waste, we achieve many purposes, we save our rivers, promote organic materials and produce biodegradable products in a creative way.",
+      "Bholu: You said something about saving our rivers, how does this happen? Ankit Aggarwal: You would have definitely noticed that devotees from various religious places throw a lot of flowers after worship in our rivers and ponds. This is especially true of Ganga and Yamuna. Many tonnes of roses, jasmines, daffodils, lilies and lotuses are thrown into water bodies. They float on water bodies and rot away. They pollute the water a lot. I observed that foam had formed on these flowers. On examining it closely, my team and I realized that this foam was actually a fully biodegradable type of fibre. We thought that we should use this fibre creatively. Even the water we use for recycling is completely purified. Bholu: So you started making vermicompost out of this foam of flowers that you call florafoam. You used it to create incense sticks (called phool).",
+      "Ankit Aggarwal: Not just incense sticks, it is also used in biodegradable packing of electronics. It has replaced thermocol in many instances as it is 27% cheaper than thermocol. This is especially good as thermocol is one of the world’s biggest polluters. The biodegradable packaging can be disposed off by burying it into the earth. We aim to make 11 tonnes of such material everyday and are opening a plant in Kanpur for that purpose. Bholu: I understand. Are you thinking of launching any new products? Ankit: Yes, definitely, our next range of products also include mosquito repellents and diabetes medicines. I really look forward to this expansion. I am also planning to expand our units to Mathura and Vrindavan since the water bodies out there tend to get very polluted. We have also started manufacturing leather from flower waste. It can be dyed by beautiful natural colours and looks very stylish! We plan to sell this leather to top designers.",
+      "Bholu: This sounds great. What do you consider as your biggest victory in this entire process? Ankit: I feel that my biggest victory has been to save our Ganges from pollution, in whatever little way we could, and the empowerment of rural women. Mostly village women are involved in our factory-work. My aim is to generate full-time employment for five thousand women and empower them economically. Bholu: That is truly an inspiring idea. What is the one factor that really helped you?",
+      "Ankit: I think the fact that the products are made from flowers that were once offered to gods, have made our products seem sacred. Some people thought that we will not be able to sell our products as they have been made from waste, but this was entirely wrong. People were very happy to buy them. This Diwali we even ran out of stock! Bholu: That is indeed great. You have already won many prestigious awards for your initiative. I wish you more awards, more luck for your future endeavours and wish that many others get inspired by you and work towards saving our rivers. Thanks a lot for humouring us. Ankit: Thanks, this was my pleasure."
+    ],
+    "sentences": [
+      {
+        "text_en": "Bholu the bear had a busy day.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_000.mp3",
+        "text_vi": "Gấu Bholu đã có một ngày bận rộn."
+      },
+      {
+        "text_en": "He was a reporter in the television channel Aaj Ka Jungle.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_001.mp3",
+        "text_vi": "Cậu ấy là phóng viên của kênh truyền hình Aaj Ka Jungle."
+      },
+      {
+        "text_en": "Today, he had to take the interview of Ankit Aggarwal, the founder of Help Us Green.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_002.mp3",
+        "text_vi": "Hôm nay, cậu ấy phải phỏng vấn Ankit Aggarwal, người sáng lập công ty Help Us Green."
+      },
+      {
+        "text_en": "He had set up the company in 2015.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_003.mp3",
+        "text_vi": "Anh ấy đã thành lập công ty vào năm 2015."
+      },
+      {
+        "text_en": "The company specialised in recycling flowers into vermicompost.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_004.mp3",
+        "text_vi": "Công ty chuyên tái chế hoa thành phân trùn quế."
+      },
+      {
+        "text_en": "They made many creative items out of it.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_005.mp3",
+        "text_vi": "Họ đã làm ra nhiều món đồ sáng tạo từ đó."
+      },
+      {
+        "text_en": "Bholu: Hello, everyone, today we have one of India’s most creative businessmen amongst us.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_006.mp3",
+        "text_vi": "Bholu: Xin chào mọi người, hôm nay chúng ta có một trong những doanh nhân sáng tạo nhất Ấn Độ ở đây."
+      },
+      {
+        "text_en": "Not only does he run a huge organization but saves the environment while running it.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_007.mp3",
+        "text_vi": "Anh ấy không chỉ điều hành một tổ chức lớn mà còn bảo vệ môi trường khi làm việc đó."
+      },
+      {
+        "text_en": "Welcome, Mr. Ankit Aggarwal, how are you?",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_008.mp3",
+        "text_vi": "Chào mừng ông Ankit Aggarwal, ông khỏe không?"
+      },
+      {
+        "text_en": "Could you tell us a little something about your company, Help Us Green?",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_009.mp3",
+        "text_vi": "Ông có thể kể cho chúng tôi nghe một chút về công ty của ông, Help Us Green không?"
+      },
+      {
+        "text_en": "Ankit Aggarwal: Hi Bholu.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_010.mp3",
+        "text_vi": "Ankit Aggarwal: Chào Bholu."
+      },
+      {
+        "text_en": "I am well.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_011.mp3",
+        "text_vi": "Tôi khỏe."
+      },
+      {
+        "text_en": "Our company – Help Us Green recycles flower waste.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_012.mp3",
+        "text_vi": "Công ty của chúng tôi – Help Us Green tái chế rác thải hoa."
+      },
+      {
+        "text_en": "By recycling this waste, we achieve many purposes, we save our rivers, promote organic materials and produce biodegradable products in a creative way.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_013.mp3",
+        "text_vi": "Bằng cách tái chế rác thải này, chúng tôi đạt được nhiều mục đích: chúng tôi cứu sông ngòi, quảng bá vật liệu hữu cơ và sản xuất các sản phẩm tự phân hủy một cách sáng tạo."
+      },
+      {
+        "text_en": "Bholu: You said something about saving our rivers, how does this happen?",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_014.mp3",
+        "text_vi": "Bholu: Ông vừa nói về việc cứu sông ngòi, điều đó xảy ra như thế nào?"
+      },
+      {
+        "text_en": "Ankit Aggarwal: Hi Bholu.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_015.mp3",
+        "text_vi": "Ankit Aggarwal: Chào Bholu."
+      },
+      {
+        "text_en": "I am well.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_016.mp3",
+        "text_vi": "Tôi khỏe."
+      },
+      {
+        "text_en": "Our company – Help Us Green recycles flower waste.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_017.mp3",
+        "text_vi": "Công ty của chúng tôi – Help Us Green tái chế rác thải hoa."
+      },
+      {
+        "text_en": "By recycling this waste, we achieve many purposes, we save our rivers, promote organic materials and produce biodegradable products in a creative way.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_018.mp3",
+        "text_vi": "Bằng cách tái chế rác thải này, chúng tôi đạt được nhiều mục đích: chúng tôi cứu sông ngòi, quảng bá vật liệu hữu cơ và sản xuất các sản phẩm tự phân hủy một cách sáng tạo."
+      },
+      {
+        "text_en": "Bholu: You said something about saving our rivers, how does this happen?",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_019.mp3",
+        "text_vi": "Bholu: Ông vừa nói về việc cứu sông ngòi, điều đó xảy ra như thế nào?"
+      },
+      {
+        "text_en": "Ankit Aggarwal: You would have definitely noticed that devotees from various religious places throw a lot of flowers after worship in our rivers and ponds.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_020.mp3",
+        "text_vi": "Ankit Aggarwal: Chắc hẳn cháu đã nhận thấy rằng những người sùng đạo từ nhiều nơi thờ cúng khác nhau thường vứt rất nhiều hoa sau khi cúng bái xuống sông và ao hồ của chúng ta."
+      },
+      {
+        "text_en": "This is especially true of Ganga and Yamuna.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_021.mp3",
+        "text_vi": "Điều này đặc biệt đúng với sông Ganga và Yamuna."
+      },
+      {
+        "text_en": "Many tonnes of roses, jasmines, daffodils, lilies and lotuses are thrown into water bodies.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_022.mp3",
+        "text_vi": "Hàng tấn hoa hồng, hoa nhài, hoa thủy tiên, hoa loa kèn và hoa sen bị vứt xuống các nguồn nước."
+      },
+      {
+        "text_en": "They float on water bodies and rot away.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_023.mp3",
+        "text_vi": "Chúng nổi trên mặt nước và thối rữa."
+      },
+      {
+        "text_en": "They pollute the water a lot.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_024.mp3",
+        "text_vi": "Chúng làm ô nhiễm nước rất nhiều."
+      },
+      {
+        "text_en": "I observed that foam had formed on these flowers.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_025.mp3",
+        "text_vi": "Tôi quan sát thấy bọt đã hình thành trên những bông hoa này."
+      },
+      {
+        "text_en": "On examining it closely, my team and I realized that this foam was actually a fully biodegradable type of fibre.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_026.mp3",
+        "text_vi": "Khi kiểm tra kỹ, nhóm của tôi và tôi nhận ra rằng lớp bọt này thực ra là một loại sợi hoàn toàn tự phân hủy."
+      },
+      {
+        "text_en": "We thought that we should use this fibre creatively.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_027.mp3",
+        "text_vi": "Chúng tôi nghĩ rằng chúng ta nên sử dụng loại sợi này một cách sáng tạo."
+      },
+      {
+        "text_en": "Even the water we use for recycling is completely purified.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_028.mp3",
+        "text_vi": "Ngay cả nước chúng tôi dùng để tái chế cũng được làm sạch hoàn toàn."
+      },
+      {
+        "text_en": "Bholu: So you started making vermicompost out of this foam of flowers that you call florafoam.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_029.mp3",
+        "text_vi": "Bholu: Vậy là ông bắt đầu làm phân trùn quế từ lớp bọt hoa mà ông gọi là florafoam."
+      },
+      {
+        "text_en": "You used it to create incense sticks (called phool).",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_030.mp3",
+        "text_vi": "Ông đã dùng nó để làm nhang (gọi là phool)."
+      },
+      {
+        "text_en": "Ankit Aggarwal: Not just incense sticks, it is also used in biodegradable packing of electronics.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_031.mp3",
+        "text_vi": "Ankit Aggarwal: Không chỉ nhang, nó còn được dùng để đóng gói đồ điện tử tự phân hủy."
+      },
+      {
+        "text_en": "It has replaced thermocol in many instances as it is 27% cheaper than thermocol.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_032.mp3",
+        "text_vi": "Nó đã thay thế xốp (thermocol) trong nhiều trường hợp vì nó rẻ hơn xốp 27%."
+      },
+      {
+        "text_en": "This is especially good as thermocol is one of the world’s biggest polluters.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_033.mp3",
+        "text_vi": "Điều này đặc biệt tốt vì xốp là một trong những chất gây ô nhiễm lớn nhất thế giới."
+      },
+      {
+        "text_en": "The biodegradable packaging can be disposed off by burying it into the earth.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_034.mp3",
+        "text_vi": "Bao bì tự phân hủy có thể được vứt bỏ bằng cách chôn xuống đất."
+      },
+      {
+        "text_en": "We aim to make 11 tonnes of such material everyday and are opening a plant in Kanpur for that purpose.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_035.mp3",
+        "text_vi": "Chúng tôi đặt mục tiêu sản xuất 11 tấn vật liệu như vậy mỗi ngày và đang mở một nhà máy ở Kanpur cho mục đích đó."
+      },
+      {
+        "text_en": "Bholu: I understand.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_036.mp3",
+        "text_vi": "Bholu: Cháu hiểu rồi."
+      },
+      {
+        "text_en": "Are you thinking of launching any new products?",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_037.mp3",
+        "text_vi": "Ông có đang nghĩ đến việc ra mắt sản phẩm mới nào không?"
+      },
+      {
+        "text_en": "Ankit: Yes, definitely, our next range of products also include mosquito repellents and diabetes medicines.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_038.mp3",
+        "text_vi": "Ankit: Vâng, chắc chắn rồi, dòng sản phẩm tiếp theo của chúng tôi cũng bao gồm thuốc chống muỗi và thuốc trị tiểu đường."
+      },
+      {
+        "text_en": "I really look forward to this expansion.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_039.mp3",
+        "text_vi": "Tôi rất mong chờ sự mở rộng này."
+      },
+      {
+        "text_en": "I am also planning to expand our units to Mathura and Vrindavan since the water bodies out there tend to get very polluted.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_040.mp3",
+        "text_vi": "Tôi cũng đang lên kế hoạch mở rộng các đơn vị của chúng tôi đến Mathura và Vrindavan vì các nguồn nước ở đó có xu hướng bị ô nhiễm rất nhiều."
+      },
+      {
+        "text_en": "We have also started manufacturing leather from flower waste.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_041.mp3",
+        "text_vi": "Chúng tôi cũng đã bắt đầu sản xuất da từ rác thải hoa."
+      },
+      {
+        "text_en": "It can be dyed by beautiful natural colours and looks very stylish!",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_042.mp3",
+        "text_vi": "Nó có thể được nhuộm bằng màu tự nhiên đẹp mắt và trông rất thời trang!"
+      },
+      {
+        "text_en": "We plan to sell this leather to top designers.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_043.mp3",
+        "text_vi": "Chúng tôi dự định bán loại da này cho các nhà thiết kế hàng đầu."
+      },
+      {
+        "text_en": "Bholu: This sounds great.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_044.mp3",
+        "text_vi": "Bholu: Nghe tuyệt vời quá."
+      },
+      {
+        "text_en": "What do you consider as your biggest victory in this entire process?",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_045.mp3",
+        "text_vi": "Ông coi điều gì là chiến thắng lớn nhất của mình trong toàn bộ quá trình này?"
+      },
+      {
+        "text_en": "Ankit: I feel that my biggest victory has been to save our Ganges from pollution, in whatever little way we could, and the empowerment of rural women.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_046.mp3",
+        "text_vi": "Ankit: Tôi cảm thấy chiến thắng lớn nhất của mình là đã cứu sông Hằng khỏi ô nhiễm, dù chỉ là một phần nhỏ, và trao quyền cho phụ nữ nông thôn."
+      },
+      {
+        "text_en": "Mostly village women are involved in our factory-work.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_047.mp3",
+        "text_vi": "Hầu hết phụ nữ nông thôn tham gia vào công việc nhà máy của chúng tôi."
+      },
+      {
+        "text_en": "My aim is to generate full-time employment for five thousand women and empower them economically.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_048.mp3",
+        "text_vi": "Mục tiêu của tôi là tạo việc làm toàn thời gian cho năm nghìn phụ nữ và trao quyền kinh tế cho họ."
+      },
+      {
+        "text_en": "Bholu: That is truly an inspiring idea.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_049.mp3",
+        "text_vi": "Bholu: Đó thực sự là một ý tưởng truyền cảm hứng."
+      },
+      {
+        "text_en": "What is the one factor that really helped you?",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_050.mp3",
+        "text_vi": "Yếu tố nào thực sự đã giúp ông?"
+      },
+      {
+        "text_en": "Ankit: I think the fact that the products are made from flowers that were once offered to gods, have made our products seem sacred.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_051.mp3",
+        "text_vi": "Ankit: Tôi nghĩ rằng việc các sản phẩm được làm từ những bông hoa từng được dâng lên các vị thần đã khiến sản phẩm của chúng tôi trở nên linh thiêng."
+      },
+      {
+        "text_en": "Some people thought that we will not be able to sell our products as they have been made from waste, but this was entirely wrong.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_052.mp3",
+        "text_vi": "Một số người nghĩ rằng chúng tôi sẽ không thể bán được sản phẩm vì chúng được làm từ rác thải, nhưng điều này hoàn toàn sai."
+      },
+      {
+        "text_en": "People were very happy to buy them.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_053.mp3",
+        "text_vi": "Mọi người rất vui khi mua chúng."
+      },
+      {
+        "text_en": "This Diwali we even ran out of stock!",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_054.mp3",
+        "text_vi": "Dịp lễ Diwali này chúng tôi thậm chí còn hết hàng!"
+      },
+      {
+        "text_en": "Bholu: That is indeed great.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_055.mp3",
+        "text_vi": "Bholu: Điều đó thực sự tuyệt vời."
+      },
+      {
+        "text_en": "You have already won many prestigious awards for your initiative.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_056.mp3",
+        "text_vi": "Ông đã giành được nhiều giải thưởng danh giá cho sáng kiến của mình."
+      },
+      {
+        "text_en": "I wish you more awards, more luck for your future endeavours and wish that many others get inspired by you and work towards saving our rivers.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_057.mp3",
+        "text_vi": "Cháu chúc ông có thêm nhiều giải thưởng, nhiều may mắn cho những nỗ lực trong tương lai và mong rằng nhiều người khác sẽ được truyền cảm hứng từ ông để cùng hành động bảo vệ sông ngòi của chúng ta."
+      },
+      {
+        "text_en": "Thanks a lot for humouring us.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_058.mp3",
+        "text_vi": "Cảm ơn ông rất nhiều vì đã dành thời gian cho chúng cháu."
+      },
+      {
+        "text_en": "Ankit: Thanks, this was my pleasure.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_059.mp3",
+        "text_vi": "Ankit: Cảm ơn, đó là niềm vinh hạnh của tôi."
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "Bholu the bear had a busy day.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "He was a reporter in the television channel Aaj Ka Jungle.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "Today, he had to take the interview of Ankit Aggarwal, the founder of Help Us Green.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "He had set up the company in 2015.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "The company specialised in recycling flowers into vermicompost.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "They made many creative items out of it.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "Bholu: Hello, everyone, today we have one of India’s most creative businessmen amongst us.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "Not only does he run a huge organization but saves the environment while running it.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "Welcome, Mr. Ankit Aggarwal, how are you?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "Could you tell us a little something about your company, Help Us Green?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "Ankit Aggarwal: Hi Bholu.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "I am well.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "Our company – Help Us Green recycles flower waste.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_012.mp3"
+        },
+        {
+          "id": "ra_13",
+          "text_en": "By recycling this waste, we achieve many purposes, we save our rivers, promote organic materials and produce biodegradable products in a creative way.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_013.mp3"
+        },
+        {
+          "id": "ra_14",
+          "text_en": "Bholu: You said something about saving our rivers, how does this happen?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_014.mp3"
+        },
+        {
+          "id": "ra_15",
+          "text_en": "Ankit Aggarwal: Hi Bholu.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_015.mp3"
+        },
+        {
+          "id": "ra_16",
+          "text_en": "I am well.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_016.mp3"
+        },
+        {
+          "id": "ra_17",
+          "text_en": "Our company – Help Us Green recycles flower waste.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_017.mp3"
+        },
+        {
+          "id": "ra_18",
+          "text_en": "By recycling this waste, we achieve many purposes, we save our rivers, promote organic materials and produce biodegradable products in a creative way.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_018.mp3"
+        },
+        {
+          "id": "ra_19",
+          "text_en": "Bholu: You said something about saving our rivers, how does this happen?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_019.mp3"
+        },
+        {
+          "id": "ra_20",
+          "text_en": "Ankit Aggarwal: You would have definitely noticed that devotees from various religious places throw a lot of flowers after worship in our rivers and ponds.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_020.mp3"
+        },
+        {
+          "id": "ra_21",
+          "text_en": "This is especially true of Ganga and Yamuna.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_021.mp3"
+        },
+        {
+          "id": "ra_22",
+          "text_en": "Many tonnes of roses, jasmines, daffodils, lilies and lotuses are thrown into water bodies.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_022.mp3"
+        },
+        {
+          "id": "ra_23",
+          "text_en": "They float on water bodies and rot away.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_023.mp3"
+        },
+        {
+          "id": "ra_24",
+          "text_en": "They pollute the water a lot.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_024.mp3"
+        },
+        {
+          "id": "ra_25",
+          "text_en": "I observed that foam had formed on these flowers.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_025.mp3"
+        },
+        {
+          "id": "ra_26",
+          "text_en": "On examining it closely, my team and I realized that this foam was actually a fully biodegradable type of fibre.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_026.mp3"
+        },
+        {
+          "id": "ra_27",
+          "text_en": "We thought that we should use this fibre creatively.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_027.mp3"
+        },
+        {
+          "id": "ra_28",
+          "text_en": "Even the water we use for recycling is completely purified.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_028.mp3"
+        },
+        {
+          "id": "ra_29",
+          "text_en": "Bholu: So you started making vermicompost out of this foam of flowers that you call florafoam.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_029.mp3"
+        },
+        {
+          "id": "ra_30",
+          "text_en": "You used it to create incense sticks (called phool).",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_030.mp3"
+        },
+        {
+          "id": "ra_31",
+          "text_en": "Ankit Aggarwal: Not just incense sticks, it is also used in biodegradable packing of electronics.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_031.mp3"
+        },
+        {
+          "id": "ra_32",
+          "text_en": "It has replaced thermocol in many instances as it is 27% cheaper than thermocol.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_032.mp3"
+        },
+        {
+          "id": "ra_33",
+          "text_en": "This is especially good as thermocol is one of the world’s biggest polluters.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_033.mp3"
+        },
+        {
+          "id": "ra_34",
+          "text_en": "The biodegradable packaging can be disposed off by burying it into the earth.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_034.mp3"
+        },
+        {
+          "id": "ra_35",
+          "text_en": "We aim to make 11 tonnes of such material everyday and are opening a plant in Kanpur for that purpose.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_035.mp3"
+        },
+        {
+          "id": "ra_36",
+          "text_en": "Bholu: I understand.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_036.mp3"
+        },
+        {
+          "id": "ra_37",
+          "text_en": "Are you thinking of launching any new products?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_037.mp3"
+        },
+        {
+          "id": "ra_38",
+          "text_en": "Ankit: Yes, definitely, our next range of products also include mosquito repellents and diabetes medicines.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_038.mp3"
+        },
+        {
+          "id": "ra_39",
+          "text_en": "I really look forward to this expansion.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_039.mp3"
+        },
+        {
+          "id": "ra_40",
+          "text_en": "I am also planning to expand our units to Mathura and Vrindavan since the water bodies out there tend to get very polluted.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_040.mp3"
+        },
+        {
+          "id": "ra_41",
+          "text_en": "We have also started manufacturing leather from flower waste.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_041.mp3"
+        },
+        {
+          "id": "ra_42",
+          "text_en": "It can be dyed by beautiful natural colours and looks very stylish!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_042.mp3"
+        },
+        {
+          "id": "ra_43",
+          "text_en": "We plan to sell this leather to top designers.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_043.mp3"
+        },
+        {
+          "id": "ra_44",
+          "text_en": "Bholu: This sounds great.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_044.mp3"
+        },
+        {
+          "id": "ra_45",
+          "text_en": "What do you consider as your biggest victory in this entire process?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_045.mp3"
+        },
+        {
+          "id": "ra_46",
+          "text_en": "Ankit: I feel that my biggest victory has been to save our Ganges from pollution, in whatever little way we could, and the empowerment of rural women.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_046.mp3"
+        },
+        {
+          "id": "ra_47",
+          "text_en": "Mostly village women are involved in our factory-work.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_047.mp3"
+        },
+        {
+          "id": "ra_48",
+          "text_en": "My aim is to generate full-time employment for five thousand women and empower them economically.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_048.mp3"
+        },
+        {
+          "id": "ra_49",
+          "text_en": "Bholu: That is truly an inspiring idea.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_049.mp3"
+        },
+        {
+          "id": "ra_50",
+          "text_en": "What is the one factor that really helped you?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_050.mp3"
+        },
+        {
+          "id": "ra_51",
+          "text_en": "Ankit: I think the fact that the products are made from flowers that were once offered to gods, have made our products seem sacred.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_051.mp3"
+        },
+        {
+          "id": "ra_52",
+          "text_en": "Some people thought that we will not be able to sell our products as they have been made from waste, but this was entirely wrong.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_052.mp3"
+        },
+        {
+          "id": "ra_53",
+          "text_en": "People were very happy to buy them.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_053.mp3"
+        },
+        {
+          "id": "ra_54",
+          "text_en": "This Diwali we even ran out of stock!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_054.mp3"
+        },
+        {
+          "id": "ra_55",
+          "text_en": "Bholu: That is indeed great.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_055.mp3"
+        },
+        {
+          "id": "ra_56",
+          "text_en": "You have already won many prestigious awards for your initiative.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_056.mp3"
+        },
+        {
+          "id": "ra_57",
+          "text_en": "I wish you more awards, more luck for your future endeavours and wish that many others get inspired by you and work towards saving our rivers.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_057.mp3"
+        },
+        {
+          "id": "ra_58",
+          "text_en": "Thanks a lot for humouring us.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_058.mp3"
+        },
+        {
+          "id": "ra_59",
+          "text_en": "Ankit: Thanks, this was my pleasure.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_176866/s_059.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "Who had a busy day?",
+          "options_en": [
+            "Bholu the bear",
+            "Ankit Aggarwal",
+            "Village women"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "What kind of day did Bholu have?",
+          "options_en": [
+            "A busy day",
+            "A huge organization",
+            "A large interview"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s1_q1",
+          "type": "choice",
+          "question_en": "What was he?",
+          "options_en": [
+            "A reporter",
+            "The founder of Help Us Green",
+            "One of India’s most creative businessmen"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s1_q2",
+          "type": "choice",
+          "question_en": "Where was he a reporter?",
+          "options_en": [
+            "The television channel Aaj Ka Jungle",
+            "Help Us Green",
+            "Kanpur"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s2_q1",
+          "type": "choice",
+          "question_en": "What is the correct answer to this question: Whom did he have to interview today?",
+          "options_en": [
+            "Ankit Aggarwal",
+            "Devotees",
+            "Village women"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s2_q2",
+          "type": "choice",
+          "question_en": "Who is described in this sentence as a founder?",
+          "options_en": [
+            "Ankit Aggarwal, the founder of Help Us Green",
+            "Bholu the reporter",
+            "Rural women workers"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s3_q1",
+          "type": "choice",
+          "question_en": "When was the company set up?",
+          "options_en": [
+            "In 2015",
+            "Today",
+            "During Diwali"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p0_s3_q2",
+          "type": "choice",
+          "question_en": "What did he do in 2015?",
+          "options_en": [
+            "Set up the company",
+            "Recycled flowers",
+            "Opened a plant in Kanpur"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p0_s4_q1",
+          "type": "choice",
+          "question_en": "What did the company specialise in?",
+          "options_en": [
+            "Recycling flowers into vermicompost",
+            "Making biodegradable packaging",
+            "Manufacturing leather from flower waste"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p0_s4_q2",
+          "type": "choice",
+          "question_en": "What is the correct answer to this question: Into what did the company recycle flowers?",
+          "options_en": [
+            "Vermicompost",
+            "Florafoam",
+            "Leather"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p0_s5_q1",
+          "type": "choice",
+          "question_en": "What did they make out of it?",
+          "options_en": [
+            "Many creative items",
+            "Incense sticks",
+            "Biodegradable packing"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p0_s5_q2",
+          "type": "choice",
+          "question_en": "How are the items described?",
+          "options_en": [
+            "Many creative items",
+            "Eleven tonnes of material",
+            "Full-time employment"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p0_s6_q1",
+          "type": "choice",
+          "question_en": "Who does Bholu say is among them?",
+          "options_en": [
+            "One of India’s most creative businessmen",
+            "The founder of Help Us Green",
+            "Rural women workers"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p0_s6_q2",
+          "type": "choice",
+          "question_en": "What does Bholu call the businessman?",
+          "options_en": [
+            "One of India’s most creative businessmen",
+            "Someone who saves the environment",
+            "A reporter"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p0_s7_q1",
+          "type": "choice",
+          "question_en": "What does he run?",
+          "options_en": [
+            "A huge organization",
+            "Help Us Green",
+            "A factory"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p0_s7_q2",
+          "type": "choice",
+          "question_en": "What does he do while running the organization?",
+          "options_en": [
+            "Saves the environment",
+            "Makes vermicompost",
+            "Empowers rural women"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "Who is being greeted in the sentence?",
+          "options_en": [
+            "Mr. Ankit Aggarwal",
+            "Bholu the bear",
+            "A village woman"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "How is the speaker addressing Mr. Ankit Aggarwal?",
+          "options_en": [
+            "With a welcome",
+            "With a farewell",
+            "With a complaint"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p1_s1_q1",
+          "type": "choice",
+          "question_en": "What is the speaker asking about Help Us Green?",
+          "options_en": [
+            "A little something about the company",
+            "The company's bank accounts",
+            "The company's food recipes"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p1_s1_q2",
+          "type": "choice",
+          "question_en": "Who is being asked to tell about the company?",
+          "options_en": [
+            "Mr. Ankit Aggarwal",
+            "A government official",
+            "A student from Kanpur"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p1_s2_q1",
+          "type": "choice",
+          "question_en": "Who speaks in this sentence?",
+          "options_en": [
+            "Ankit Aggarwal",
+            "Bholu",
+            "A village woman"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p1_s2_q2",
+          "type": "choice",
+          "question_en": "How does Ankit begin his reply in this sentence?",
+          "options_en": [
+            "By saying 'Hi Bholu.'",
+            "By explaining the factory",
+            "By mentioning awards"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p1_s3_q1",
+          "type": "choice",
+          "question_en": "How does Ankit say he is feeling?",
+          "options_en": [
+            "He is well",
+            "He is tired",
+            "He is angry"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p1_s3_q2",
+          "type": "choice",
+          "question_en": "Who is saying 'I am well'?",
+          "options_en": [
+            "Ankit Aggarwal",
+            "Bholu the bear",
+            "A village woman"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p1_s4_q1",
+          "type": "choice",
+          "question_en": "What does Help Us Green recycle?",
+          "options_en": [
+            "Flower waste",
+            "Plastic bottles",
+            "Electronic waste"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p1_s4_q2",
+          "type": "choice",
+          "question_en": "Which company recycles flower waste according to the sentence?",
+          "options_en": [
+            "Help Us Green",
+            "Aaj Ka Jungle",
+            "A government agency"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p1_s5_q1",
+          "type": "choice",
+          "question_en": "Why does the company recycle flower waste according to the sentence?",
+          "options_en": [
+            "To save rivers, promote organic materials and produce biodegradable products",
+            "To build a television channel",
+            "To teach school children"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p1_s5_q2",
+          "type": "choice",
+          "question_en": "How does the company produce products, as stated in the sentence?",
+          "options_en": [
+            "In a creative way",
+            "Using fossil fuels",
+            "By importing materials"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p1_s6_q1",
+          "type": "choice",
+          "question_en": "Who asks how saving the rivers happens?",
+          "options_en": [
+            "Bholu",
+            "Ankit Aggarwal",
+            "A village woman"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p1_s6_q2",
+          "type": "choice",
+          "question_en": "What is Bholu asking about in this sentence?",
+          "options_en": [
+            "How saving the rivers happens",
+            "Where the company is located",
+            "When the company was founded"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p1_s7_q1",
+          "type": "choice",
+          "question_en": "Who greets Bholu again in this sentence?",
+          "options_en": [
+            "Ankit Aggarwal",
+            "A news anchor",
+            "A team member"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p1_s7_q2",
+          "type": "choice",
+          "question_en": "How does Ankit start his reply in this repeated line?",
+          "options_en": [
+            "By saying 'Hi Bholu.'",
+            "By naming products",
+            "By giving a date"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p1_s8_q1",
+          "type": "choice",
+          "question_en": "What does the speaker say about his condition in this sentence?",
+          "options_en": [
+            "I am well",
+            "I am busy",
+            "I am surprised"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p1_s8_q2",
+          "type": "choice",
+          "question_en": "Who says 'I am well' in this repeated sentence?",
+          "options_en": [
+            "Ankit Aggarwal",
+            "Bholu the reporter",
+            "A factory worker"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p1_s9_q1",
+          "type": "choice",
+          "question_en": "What does Help Us Green do according to this repeated sentence?",
+          "options_en": [
+            "Recycles flower waste",
+            "Manufactures leather shoes",
+            "Runs a television channel"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p1_s9_q2",
+          "type": "choice",
+          "question_en": "Which company is mentioned in this sentence?",
+          "options_en": [
+            "Help Us Green",
+            "Aaj Ka Jungle",
+            "Kanpur Plant"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p1_s10_q1",
+          "type": "choice",
+          "question_en": "Why does the company recycle this waste according to the repeated sentence?",
+          "options_en": [
+            "To save rivers, promote organic materials and produce biodegradable products",
+            "To start a TV show",
+            "To build houses"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p1_s10_q2",
+          "type": "choice",
+          "question_en": "How are the products described as being made in this sentence?",
+          "options_en": [
+            "In a creative way",
+            "With imported plastics",
+            "In a hurry"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "What did Bholu ask about?",
+          "options_en": [
+            "Saving our rivers",
+            "Opening a plant in Kanpur",
+            "Making leather from flowers"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "How did Bholu ask for more information?",
+          "options_en": [
+            "By asking how this happens",
+            "By asking about product prices",
+            "By asking about awards"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p2_s1_q1",
+          "type": "choice",
+          "question_en": "Who throws a lot of flowers after worship?",
+          "options_en": [
+            "Devotees from various religious places",
+            "Village women in the factory",
+            "Top designers"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p2_s1_q2",
+          "type": "choice",
+          "question_en": "Where do devotees throw the flowers after worship?",
+          "options_en": [
+            "In our rivers and ponds",
+            "In biodegradable packaging",
+            "Into vermicompost pits"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p2_s2_q1",
+          "type": "choice",
+          "question_en": "Which rivers are mentioned as especially affected?",
+          "options_en": [
+            "Ganga and Yamuna",
+            "Narmada and Godavari",
+            "Kaveri and Krishna"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p2_s2_q2",
+          "type": "choice",
+          "question_en": "What is said to be especially true of Ganga and Yamuna?",
+          "options_en": [
+            "Devotees throw flowers into them",
+            "They are sources of thermocol",
+            "They are locations of factories"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p2_s3_q1",
+          "type": "choice",
+          "question_en": "What types of flowers are thrown into water bodies?",
+          "options_en": [
+            "Roses, jasmines, daffodils, lilies and lotuses",
+            "Marigolds, sunflowers and tulips",
+            "Cacti and succulents"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p2_s3_q2",
+          "type": "choice",
+          "question_en": "How much of these flowers are thrown into water bodies?",
+          "options_en": [
+            "Many tonnes",
+            "A few packets",
+            "Several bottles"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p2_s4_q1",
+          "type": "choice",
+          "question_en": "What happens to the flowers on the water?",
+          "options_en": [
+            "They float and rot away",
+            "They turn into leather",
+            "They become thermocol"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p2_s4_q2",
+          "type": "choice",
+          "question_en": "Where do the flowers float?",
+          "options_en": [
+            "On water bodies",
+            "In packaging",
+            "In the factory"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p2_s5_q1",
+          "type": "choice",
+          "question_en": "What effect do the rotting flowers have on water?",
+          "options_en": [
+            "They pollute the water a lot",
+            "They clean the water",
+            "They convert water to compost"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p2_s5_q2",
+          "type": "choice",
+          "question_en": "How much do the flowers pollute the water?",
+          "options_en": [
+            "A lot",
+            "A little",
+            "Not at all"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p2_s6_q1",
+          "type": "choice",
+          "question_en": "Who observed that foam had formed on the flowers?",
+          "options_en": [
+            "I",
+            "Top designers",
+            "Devotees"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p2_s6_q2",
+          "type": "choice",
+          "question_en": "What did the observer notice on the flowers?",
+          "options_en": [
+            "Foam had formed",
+            "They were turned into leather",
+            "They were packaged in thermocol"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p2_s7_q1",
+          "type": "choice",
+          "question_en": "Who examined the foam closely?",
+          "options_en": [
+            "My team and I",
+            "Bholu the reporter",
+            "Top designers"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p2_s7_q2",
+          "type": "choice",
+          "question_en": "What did they realize the foam was?",
+          "options_en": [
+            "A fully biodegradable type of fibre",
+            "Thermocol",
+            "Leather"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p2_s8_q1",
+          "type": "choice",
+          "question_en": "Who thought they should use the fibre creatively?",
+          "options_en": [
+            "We",
+            "Devotees",
+            "Government officials"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        },
+        {
+          "id": "gl_p2_s8_q2",
+          "type": "choice",
+          "question_en": "What did they think they should do with the fibre?",
+          "options_en": [
+            "Use this fibre creatively",
+            "Dump it in rivers",
+            "Sell it to top designers without changes"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        },
+        {
+          "id": "gl_p2_s9_q1",
+          "type": "choice",
+          "question_en": "What is said about the water used for recycling?",
+          "options_en": [
+            "It is completely purified",
+            "It contains thermocol",
+            "It is dyed with natural colours"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        },
+        {
+          "id": "gl_p2_s9_q2",
+          "type": "choice",
+          "question_en": "How is the recycling water described?",
+          "options_en": [
+            "Completely purified",
+            "Full of foam",
+            "Used for making leather"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        },
+        {
+          "id": "gl_p2_s10_q1",
+          "type": "choice",
+          "question_en": "What did they start making out of the foam of flowers?",
+          "options_en": [
+            "Vermicompost",
+            "Thermocol",
+            "Mosquito repellents"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p2_s10_q2",
+          "type": "choice",
+          "question_en": "What name do they give to the foam of flowers?",
+          "options_en": [
+            "Florafoam",
+            "Phool",
+            "Flower leather"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p2_s11_q1",
+          "type": "choice",
+          "question_en": "What did they create using the foam?",
+          "options_en": [
+            "Incense sticks",
+            "Biodegradable packing",
+            "Diabetes medicines"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        },
+        {
+          "id": "gl_p2_s11_q2",
+          "type": "choice",
+          "question_en": "What are the incense sticks called?",
+          "options_en": [
+            "Phool",
+            "Florafoam",
+            "Thermocol"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "What else is it used in besides incense sticks?",
+          "options_en": [
+            "Biodegradable packing of electronics",
+            "Vermicompost",
+            "Leather from flower waste"
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "Which type of packing is mentioned in the sentence?",
+          "options_en": [
+            "Biodegradable packing of electronics",
+            "Thermocol packing",
+            "Plastic packing"
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        },
+        {
+          "id": "gl_p3_s1_q1",
+          "type": "choice",
+          "question_en": "What has it replaced in many instances?",
+          "options_en": [
+            "Thermocol",
+            "Incense sticks",
+            "Flower foam"
+          ],
+          "correct_index": 0,
+          "sentence_index": 32
+        },
+        {
+          "id": "gl_p3_s1_q2",
+          "type": "choice",
+          "question_en": "How much cheaper is it than thermocol?",
+          "options_en": [
+            "27% cheaper",
+            "11 tonnes",
+            "Made in 2015"
+          ],
+          "correct_index": 0,
+          "sentence_index": 32
+        },
+        {
+          "id": "gl_p3_s2_q1",
+          "type": "choice",
+          "question_en": "Why is this considered especially good?",
+          "options_en": [
+            "Because thermocol is one of the world’s biggest polluters",
+            "Because flower waste is expensive",
+            "Because incense sticks are sacred"
+          ],
+          "correct_index": 0,
+          "sentence_index": 33
+        },
+        {
+          "id": "gl_p3_s2_q2",
+          "type": "choice",
+          "question_en": "Which material is called one of the world’s biggest polluters?",
+          "options_en": [
+            "Thermocol",
+            "Vermicompost",
+            "Biodegradable packaging"
+          ],
+          "correct_index": 0,
+          "sentence_index": 33
+        },
+        {
+          "id": "gl_p3_s3_q1",
+          "type": "choice",
+          "question_en": "How can the biodegradable packaging be disposed of?",
+          "options_en": [
+            "By burying it into the earth",
+            "By throwing it into rivers",
+            "By burning it"
+          ],
+          "correct_index": 0,
+          "sentence_index": 34
+        },
+        {
+          "id": "gl_p3_s3_q2",
+          "type": "choice",
+          "question_en": "Where should the biodegradable packaging be disposed of according to the sentence?",
+          "options_en": [
+            "Into the earth",
+            "Into the water bodies",
+            "In a factory"
+          ],
+          "correct_index": 0,
+          "sentence_index": 34
+        },
+        {
+          "id": "gl_p3_s4_q1",
+          "type": "choice",
+          "question_en": "How much material do they aim to make every day?",
+          "options_en": [
+            "11 tonnes",
+            "27% more",
+            "Five thousand units"
+          ],
+          "correct_index": 0,
+          "sentence_index": 35
+        },
+        {
+          "id": "gl_p3_s4_q2",
+          "type": "choice",
+          "question_en": "Where are they opening a plant for that purpose?",
+          "options_en": [
+            "Kanpur",
+            "Mathura",
+            "Vrindavan"
+          ],
+          "correct_index": 0,
+          "sentence_index": 35
+        },
+        {
+          "id": "gl_p3_s5_q1",
+          "type": "choice",
+          "question_en": "Who says \"I understand\" in the sentence?",
+          "options_en": [
+            "Bholu",
+            "Ankit",
+            "A village woman"
+          ],
+          "correct_index": 0,
+          "sentence_index": 36
+        },
+        {
+          "id": "gl_p3_s5_q2",
+          "type": "choice",
+          "question_en": "What does Bholu say in this sentence?",
+          "options_en": [
+            "I understand",
+            "Thank you",
+            "I disagree"
+          ],
+          "correct_index": 0,
+          "sentence_index": 36
+        },
+        {
+          "id": "gl_p3_s6_q1",
+          "type": "choice",
+          "question_en": "What is the question asking about?",
+          "options_en": [
+            "Launching any new products",
+            "Opening a plant in Kanpur",
+            "Making vermicompost"
+          ],
+          "correct_index": 0,
+          "sentence_index": 37
+        },
+        {
+          "id": "gl_p3_s6_q2",
+          "type": "choice",
+          "question_en": "Which topic is being asked about in the sentence?",
+          "options_en": [
+            "New products",
+            "River pollution",
+            "Employment of women"
+          ],
+          "correct_index": 0,
+          "sentence_index": 37
+        },
+        {
+          "id": "gl_p3_s7_q1",
+          "type": "choice",
+          "question_en": "Which products does Ankit say the next range includes?",
+          "options_en": [
+            "Mosquito repellents and diabetes medicines",
+            "Incense sticks and thermocol",
+            "Vermicompost and leather"
+          ],
+          "correct_index": 0,
+          "sentence_index": 38
+        },
+        {
+          "id": "gl_p3_s7_q2",
+          "type": "choice",
+          "question_en": "Who mentions the next range of products?",
+          "options_en": [
+            "Ankit",
+            "Bholu",
+            "Top designers"
+          ],
+          "correct_index": 0,
+          "sentence_index": 38
+        },
+        {
+          "id": "gl_p3_s8_q1",
+          "type": "choice",
+          "question_en": "What does the speaker say they look forward to?",
+          "options_en": [
+            "This expansion",
+            "Opening a plant in Kanpur",
+            "Making incense sticks"
+          ],
+          "correct_index": 0,
+          "sentence_index": 39
+        },
+        {
+          "id": "gl_p3_s8_q2",
+          "type": "choice",
+          "question_en": "How does the speaker feel about the expansion?",
+          "options_en": [
+            "They really look forward to it",
+            "They are worried about it",
+            "They are uninterested in it"
+          ],
+          "correct_index": 0,
+          "sentence_index": 39
+        },
+        {
+          "id": "gl_p3_s9_q1",
+          "type": "choice",
+          "question_en": "Where is the speaker planning to expand their units?",
+          "options_en": [
+            "Mathura and Vrindavan",
+            "Kanpur and Mathura",
+            "Ganges and Yamuna"
+          ],
+          "correct_index": 0,
+          "sentence_index": 40
+        },
+        {
+          "id": "gl_p3_s9_q2",
+          "type": "choice",
+          "question_en": "Why does the speaker want to expand to those places?",
+          "options_en": [
+            "Because the water bodies out there tend to get very polluted",
+            "Because they are sacred",
+            "Because they have many designers"
+          ],
+          "correct_index": 0,
+          "sentence_index": 40
+        },
+        {
+          "id": "gl_p3_s10_q1",
+          "type": "choice",
+          "question_en": "What have they started manufacturing?",
+          "options_en": [
+            "Leather from flower waste",
+            "Thermocol packaging",
+            "Incense sticks"
+          ],
+          "correct_index": 0,
+          "sentence_index": 41
+        },
+        {
+          "id": "gl_p3_s10_q2",
+          "type": "choice",
+          "question_en": "What is the correct answer to this question: From what is the new leather made?",
+          "options_en": [
+            "Flower waste",
+            "Plastic",
+            "Wood pulp"
+          ],
+          "correct_index": 0,
+          "sentence_index": 41
+        },
+        {
+          "id": "gl_p3_s11_q1",
+          "type": "choice",
+          "question_en": "How can the leather be dyed according to the sentence?",
+          "options_en": [
+            "By beautiful natural colours",
+            "By chemical dyes",
+            "By metallic paints"
+          ],
+          "correct_index": 0,
+          "sentence_index": 42
+        },
+        {
+          "id": "gl_p3_s11_q2",
+          "type": "choice",
+          "question_en": "How does the leather look after dyeing?",
+          "options_en": [
+            "Very stylish",
+            "Ugly",
+            "Plain"
+          ],
+          "correct_index": 0,
+          "sentence_index": 42
+        },
+        {
+          "id": "gl_p3_s12_q1",
+          "type": "choice",
+          "question_en": "Who do they plan to sell the leather to?",
+          "options_en": [
+            "Top designers",
+            "Village women",
+            "Electronics companies"
+          ],
+          "correct_index": 0,
+          "sentence_index": 43
+        },
+        {
+          "id": "gl_p3_s12_q2",
+          "type": "choice",
+          "question_en": "What do they plan to sell to top designers?",
+          "options_en": [
+            "This leather",
+            "Biodegradable packaging",
+            "Mosquito repellents"
+          ],
+          "correct_index": 0,
+          "sentence_index": 43
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "Who says \"This sounds great\"?",
+          "options_en": [
+            "Bholu",
+            "Ankit",
+            "A village woman"
+          ],
+          "correct_index": 0,
+          "sentence_index": 44
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "How does the speaker respond to what was said?",
+          "options_en": [
+            "They say it sounds great",
+            "They announce a new plant",
+            "They mention making vermicompost"
+          ],
+          "correct_index": 0,
+          "sentence_index": 44
+        },
+        {
+          "id": "gl_p4_s1_q1",
+          "type": "choice",
+          "question_en": "What is the interviewer asking about in this question?",
+          "options_en": [
+            "The interviewer's biggest victory in the process",
+            "The company's production targets",
+            "Plans to open a plant in Kanpur"
+          ],
+          "correct_index": 0,
+          "sentence_index": 45
+        },
+        {
+          "id": "gl_p4_s1_q2",
+          "type": "choice",
+          "question_en": "What does the question ask the interviewee to identify?",
+          "options_en": [
+            "Their biggest victory",
+            "Their next product",
+            "The number of awards won"
+          ],
+          "correct_index": 0,
+          "sentence_index": 45
+        },
+        {
+          "id": "gl_p4_s2_q1",
+          "type": "choice",
+          "question_en": "What does Ankit say has been his biggest victory?",
+          "options_en": [
+            "To save the Ganges from pollution and empower rural women",
+            "To open a plant in Kanpur",
+            "To make leather from flower waste"
+          ],
+          "correct_index": 0,
+          "sentence_index": 46
+        },
+        {
+          "id": "gl_p4_s2_q2",
+          "type": "choice",
+          "question_en": "Who does Ankit mention in connection with empowerment?",
+          "options_en": [
+            "Rural women",
+            "Temple devotees",
+            "Top designers"
+          ],
+          "correct_index": 0,
+          "sentence_index": 46
+        },
+        {
+          "id": "gl_p4_s3_q1",
+          "type": "choice",
+          "question_en": "Who are mostly involved in the factory work?",
+          "options_en": [
+            "Village women",
+            "Company founders",
+            "Devotees who throw flowers"
+          ],
+          "correct_index": 0,
+          "sentence_index": 47
+        },
+        {
+          "id": "gl_p4_s3_q2",
+          "type": "choice",
+          "question_en": "Where are these village women involved?",
+          "options_en": [
+            "In factory-work",
+            "In selling to top designers",
+            "In running television channels"
+          ],
+          "correct_index": 0,
+          "sentence_index": 47
+        },
+        {
+          "id": "gl_p4_s4_q1",
+          "type": "choice",
+          "question_en": "What is Ankit's aim stated in this sentence?",
+          "options_en": [
+            "Generate full-time employment for five thousand women and empower them economically",
+            "Replace thermocol with biodegradable packing",
+            "Make eleven tonnes of material every day"
+          ],
+          "correct_index": 0,
+          "sentence_index": 48
+        },
+        {
+          "id": "gl_p4_s4_q2",
+          "type": "choice",
+          "question_en": "How many women does he aim to provide full-time employment for?",
+          "options_en": [
+            "Five thousand women",
+            "Eleven tonnes of workers",
+            "One thousand women"
+          ],
+          "correct_index": 0,
+          "sentence_index": 48
+        },
+        {
+          "id": "gl_p4_s5_q1",
+          "type": "choice",
+          "question_en": "Who calls the idea \"truly an inspiring idea\"?",
+          "options_en": [
+            "Bholu",
+            "Ankit",
+            "A top designer"
+          ],
+          "correct_index": 0,
+          "sentence_index": 49
+        },
+        {
+          "id": "gl_p4_s5_q2",
+          "type": "choice",
+          "question_en": "How does Bholu describe the idea?",
+          "options_en": [
+            "Truly an inspiring idea",
+            "A problem for rivers",
+            "A failed business plan"
+          ],
+          "correct_index": 0,
+          "sentence_index": 49
+        },
+        {
+          "id": "gl_p4_s6_q1",
+          "type": "choice",
+          "question_en": "What is Bholu asking about in this question?",
+          "options_en": [
+            "The one factor that really helped",
+            "The company's manufacturing process",
+            "Where to buy the products"
+          ],
+          "correct_index": 0,
+          "sentence_index": 50
+        },
+        {
+          "id": "gl_p4_s6_q2",
+          "type": "choice",
+          "question_en": "Which word in the question asks for a single important reason?",
+          "options_en": [
+            "one factor",
+            "many products",
+            "full-time employment"
+          ],
+          "correct_index": 0,
+          "sentence_index": 50
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "Why did the products seem sacred?",
+          "options_en": [
+            "Because they were made from flowers that were once offered to gods",
+            "Because they helped save rivers",
+            "Because they were biodegradable"
+          ],
+          "correct_index": 0,
+          "sentence_index": 51
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "What were the products made from?",
+          "options_en": [
+            "Flowers that were once offered to gods",
+            "Florafoam from recycling process",
+            "Thermocol"
+          ],
+          "correct_index": 0,
+          "sentence_index": 51
+        },
+        {
+          "id": "gl_p5_s1_q1",
+          "type": "choice",
+          "question_en": "Who thought they would not be able to sell the products?",
+          "options_en": [
+            "Some people",
+            "Village women working in the factory",
+            "Top designers"
+          ],
+          "correct_index": 0,
+          "sentence_index": 52
+        },
+        {
+          "id": "gl_p5_s1_q2",
+          "type": "choice",
+          "question_en": "Why did some people think the products could not be sold?",
+          "options_en": [
+            "Because they were made from waste",
+            "Because they were sacred",
+            "Because they were biodegradable"
+          ],
+          "correct_index": 0,
+          "sentence_index": 52
+        },
+        {
+          "id": "gl_p5_s2_q1",
+          "type": "choice",
+          "question_en": "Who were very happy to buy them?",
+          "options_en": [
+            "People",
+            "Devotees",
+            "Villagers"
+          ],
+          "correct_index": 0,
+          "sentence_index": 53
+        },
+        {
+          "id": "gl_p5_s2_q2",
+          "type": "choice",
+          "question_en": "What was people's reaction to the products?",
+          "options_en": [
+            "They were very happy to buy them",
+            "They used them as biodegradable packing",
+            "They used them to make vermicompost"
+          ],
+          "correct_index": 0,
+          "sentence_index": 53
+        },
+        {
+          "id": "gl_p5_s3_q1",
+          "type": "choice",
+          "question_en": "When did they run out of stock?",
+          "options_en": [
+            "This Diwali",
+            "When opening the plant in Kanpur",
+            "Last summer"
+          ],
+          "correct_index": 0,
+          "sentence_index": 54
+        },
+        {
+          "id": "gl_p5_s3_q2",
+          "type": "choice",
+          "question_en": "What happened this Diwali?",
+          "options_en": [
+            "They ran out of stock",
+            "They produced 11 tonnes of material",
+            "They opened a plant in Kanpur"
+          ],
+          "correct_index": 0,
+          "sentence_index": 54
+        },
+        {
+          "id": "gl_p5_s4_q1",
+          "type": "choice",
+          "question_en": "What did Bholu say about that?",
+          "options_en": [
+            "That is indeed great",
+            "Thanks a lot for humouring us",
+            "I wish you more awards"
+          ],
+          "correct_index": 0,
+          "sentence_index": 55
+        },
+        {
+          "id": "gl_p5_s4_q2",
+          "type": "choice",
+          "question_en": "How did Bholu respond?",
+          "options_en": [
+            "He said, 'That is indeed great.'",
+            "He asked about new products",
+            "He said they had run out of stock"
+          ],
+          "correct_index": 0,
+          "sentence_index": 55
+        },
+        {
+          "id": "gl_p5_s5_q1",
+          "type": "choice",
+          "question_en": "What has Ankit already won for his initiative?",
+          "options_en": [
+            "Many prestigious awards",
+            "A plant in Kanpur",
+            "Empowerment of rural women"
+          ],
+          "correct_index": 0,
+          "sentence_index": 56
+        },
+        {
+          "id": "gl_p5_s5_q2",
+          "type": "choice",
+          "question_en": "Who has won many prestigious awards for the initiative?",
+          "options_en": [
+            "You (Ankit)",
+            "Bholu",
+            "Village women"
+          ],
+          "correct_index": 0,
+          "sentence_index": 56
+        },
+        {
+          "id": "gl_p5_s6_q1",
+          "type": "choice",
+          "question_en": "What does Bholu wish for Ankit's future?",
+          "options_en": [
+            "More awards and more luck for his future endeavours",
+            "To open a plant in Kanpur",
+            "To replace thermocol worldwide"
+          ],
+          "correct_index": 0,
+          "sentence_index": 57
+        },
+        {
+          "id": "gl_p5_s6_q2",
+          "type": "choice",
+          "question_en": "What does Bholu hope others will do?",
+          "options_en": [
+            "Get inspired by Ankit and work towards saving our rivers",
+            "Buy products this Diwali",
+            "Manufacture leather from flower waste"
+          ],
+          "correct_index": 0,
+          "sentence_index": 57
+        },
+        {
+          "id": "gl_p5_s7_q1",
+          "type": "choice",
+          "question_en": "What does Bholu thank Ankit for?",
+          "options_en": [
+            "Humouring us",
+            "Saving the Ganges",
+            "Winning awards"
+          ],
+          "correct_index": 0,
+          "sentence_index": 58
+        },
+        {
+          "id": "gl_p5_s7_q2",
+          "type": "choice",
+          "question_en": "How does Bholu express his gratitude?",
+          "options_en": [
+            "Thanks a lot for humouring us",
+            "That is indeed great",
+            "I wish you more awards"
+          ],
+          "correct_index": 0,
+          "sentence_index": 58
+        },
+        {
+          "id": "gl_p5_s8_q1",
+          "type": "choice",
+          "question_en": "What does Ankit say in response?",
+          "options_en": [
+            "Thanks, this was my pleasure",
+            "I will open another plant",
+            "We ran out of stock"
+          ],
+          "correct_index": 0,
+          "sentence_index": 59
+        },
+        {
+          "id": "gl_p5_s8_q2",
+          "type": "choice",
+          "question_en": "How does Ankit describe the interview?",
+          "options_en": [
+            "It was his pleasure",
+            "It was difficult",
+            "It was inspiring"
+          ],
+          "correct_index": 0,
+          "sentence_index": 59
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'The Story of Help Us Green'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "reporter",
+      "meaning_vi": "phóng viên (người đưa tin)",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "founder",
+      "meaning_vi": "người sáng lập (người tạo ra)",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "recycling",
+      "meaning_vi": "tái chế (biến đồ cũ thành đồ mới)",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "environment",
+      "meaning_vi": "môi trường (tất cả xung quanh chúng ta)",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "waste",
+      "meaning_vi": "rác thải (đồ bỏ đi)",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "achieve",
+      "meaning_vi": "đạt được (làm được điều gì đó)",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "organic materials",
+      "meaning_vi": "vật liệu hữu cơ (vật liệu tự nhiên, tốt cho môi trường)",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "biodegradable products",
+      "meaning_vi": "sản phẩm tự phân hủy (sản phẩm có thể tự biến mất, không gây hại môi trường)",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "devotees",
+      "meaning_vi": "người sùng đạo (người tin và thờ cúng)",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "pollute",
+      "meaning_vi": "làm ô nhiễm (làm bẩn, làm hại)",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "foam",
+      "meaning_vi": "bọt (lớp bọt trắng nổi lên)",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "fibre",
+      "meaning_vi": "sợi (chất liệu dạng sợi)",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "electronics",
+      "meaning_vi": "đồ điện tử (máy móc dùng điện)",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "polluters",
+      "meaning_vi": "chất gây ô nhiễm (thứ làm bẩn môi trường)",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "disposed off",
+      "meaning_vi": "vứt bỏ (bỏ đi)",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "mosquito repellents",
+      "meaning_vi": "thuốc chống muỗi (thuốc đuổi muỗi)",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "victory",
+      "meaning_vi": "chiến thắng (thành công lớn)",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "empowerment",
+      "meaning_vi": "trao quyền (giúp ai đó có sức mạnh, tự chủ hơn)",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "employment",
+      "meaning_vi": "việc làm (công việc để kiếm tiền)",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "inspiring",
+      "meaning_vi": "truyền cảm hứng (làm cho người khác muốn làm điều tốt đẹp)",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "sacred",
+      "meaning_vi": "linh thiêng (rất đáng tôn kính)",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "ran out of stock",
+      "meaning_vi": "hết hàng (không còn hàng để bán)",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "prestigious",
+      "meaning_vi": "danh giá (có giá trị, được nhiều người kính trọng)",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "endeavours",
+      "meaning_vi": "nỗ lực (cố gắng làm điều gì đó)",
+      "paragraph_index": 5
+    }
+  ]
+}

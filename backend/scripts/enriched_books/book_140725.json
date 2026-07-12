@@ -1,0 +1,3261 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L4",
+  "level_label": "Cấp 4",
+  "topic": "The Story of Martha",
+  "slug": "book_140725",
+  "audio_filename": "book_140725.mp3",
+  "book_slug": "book_140725",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_140725/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_140725/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_140725/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_140725/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_140725/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_140725/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_140725/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_140725/page_09.jpg",
+    "https://audio.felixbuilderhub.com/books/book_140725/page_10.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_140725/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_140725/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_140725/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_140725/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_140725/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_140725/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_140725/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_140725/page_09.mp3",
+    "https://audio.felixbuilderhub.com/books/book_140725/page_10.mp3"
+  ],
+  "book_attribution": {
+    "title": "The Story of Martha",
+    "creators": [
+      "Hermione Granger",
+      "Ishita Sharma",
+      "Jemma Jose",
+      "Kanika Nair",
+      "Kavitha Mandana",
+      "Manjari Chakravarti",
+      "Rajeev Verma 'Banjara'",
+      "Sahitya Rani",
+      "Sonal Gupta Vaswani",
+      "Srikrishna Kedilaya",
+      "Suvidha Mistry"
+    ],
+    "publisher": "StoryWeaver Community",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: The Story of Martha is written by Hermione Granger . © Hermione Granger , 2020. Some rights reserved. Released under CC BY 4.0 license. Images Attributions: Cover page: marathon , by Ishita Sharma © Ishita Sharma, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 2: girl athlete with medals and trophy , by Kavitha Mandana © Kavitha Mandana, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 3: A girl thinking, a boy with a box , by Sahitya Rani © Pratham Books, 2017. Some rights reserved. Released under CC BY 4.0 license. Page 4: A boy in thought , by Srikrishna Kedilaya © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license. Page 5: A family photo , by Rajeev Verma 'Banjara' © Pratham Books, 2006. Some rights reserved. Released under CC BY 4.0 license. Page 6: Two people walking in the forest , by Manjari Chakravarti © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 7: A child winks while hugging an adult , by Kanika Nair © Room to Read, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 8: Girls running for the running race , by Jemma Jose © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 9: Two girls hugging each other , by Suvidha Mistry © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 10: A girl wearing medals , by Sonal Gupta Vaswani © Pratham Books, 2017. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/140725-the-story-of-martha",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "girl athlete with medals and trophy , by Kavitha Mandana © Kavitha Mandana, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "A girl thinking, a boy with a box , by Sahitya Rani © Pratham Books, 2017. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "A boy in thought , by Srikrishna Kedilaya © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "A family photo , by Rajeev Verma 'Banjara' © Pratham Books, 2006. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "Two people walking in the forest , by Manjari Chakravarti © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "A child winks while hugging an adult , by Kanika Nair © Room to Read, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "Girls running for the running race , by Jemma Jose © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "Two girls hugging each other , by Suvidha Mistry © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 8,
+        "credit_text": "A girl wearing medals , by Sonal Gupta Vaswani © Pratham Books, 2017. Some rights reserved. Released under CC BY 4.0 license."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "The Story of Martha",
+    "paragraphs_en": [
+      "Martha was a 11-year-old girl. Marathon running was her passion. She joined her school's marathon club and succeeded in all her marathon contests and made everyone proud. One fine day, while Martha was eating her breakfast, her mom leaped into the dinning room and hugged Martha. She couldn't understand anything and was confused. Then, her mom said that Martha was selected for the district level Marathon competition!! Martha was so happy. She decided to practice very hard for the competition. Then, she called her cousin and best friend, Zoe, who studied in the same school as Martha, and told her about the news. Zoe was also a marathon runner but wasn't as good as Martha. In fact, Zoe envied Martha. But the news of Martha being selected for the district level made Zoe's envy turn into jealousy.",
+      "As soon as Martha hung up the phone, evil thoughts began flooding Zoe's mind. She was thinking of a plan to not let Martha participate. That is when Zoe's older brother, Zen, interrupted her thoughts. He was curious of what kept his sister so lost in thought. Zoe opened up and told him everything. Zen, who was unlike his jealous sister, felt happy for Martha. But, he didn't say anything about it to Zoe. He had a plan in his mind. He would listen to Zoe's evil ideas and inform it to Martha and both of them would figure out a way to stop her. Zoe said that she would somehow injure Martha's leg so that Martha couldn't play and since she is the second best marathon runner, she would be selected. Zen had his own plans.",
+      "Soon, Zen was walking to Martha's house to tell her about Zoe's evil plan. Martha, on the other hand, refused to believe him. She trusted Zoe. Even though Zen told her everything, she still refused to believe. The sun was beginning to set and Zen was walking back home, thinking what he could do to save his cousin sister. Soon, he came up with a plan. Time flew and it was finally one day before Martha's competition. Everything was going as per the plan for all the three of them. Martha practiced very hard, Zoe was working on executing her plan and Zen was setting up some costumes for his plan. The sun set that day. Martha and her parents went out that night as Zoe had invited all of them for a family dinner at her home.",
+      "Everybody in the family was present at Zoe's house. Zoe sat next to Martha during dinner time as usual. They were casually chatting but Martha didn't mention anything about Zen's warning of Zoe's evil plans. That night, everybody's attention was on Martha, which made Zoe even more jealous. So, she set out early to execute her plan. She went to the nearby forest and examined for any dangerous animals and then switched off the lights in the street so that Martha wouldn't have a clue of where Zoe was leading her to. She then spotted Martha in the corner of the room, standing alone. She invited Martha for a walk, which was actually a plan for injuring Martha's leg.",
+      "Although everything was going according the plan, Zoe smelled something fishy about Martha. She seemed, well, different. But Zoe didn't have any time for investigations. She carried on. She was talking with Martha and walked to the dark forest. She immediately recognized the trap in the grass that she had set for Martha and walked towards it with Martha by her side. On the other hand, the bright and always curious Martha didn't have any suspicions, which was unusual. Zoe slowly led Martha into the trap and suddenly, Martha slipped and fell with a thud. Zoe smiled on the inside but pretended she was sorry on the outside. She helped Martha get up and examined the wound. It was a pretty big wound, just as she expected and took her home.",
+      "Soon, Zoe was back home, screaming that Martha was hurt. Everybody looked shocked, instead of immediately rushing and helping her. They said that Martha was standing right behind them. Then, Martha appeared out of the crowd and waved at Zoe telling her that she was right there for the past thirty minutes and that it was her brother Zen, who was hurt. Zoe was terrified. She looked at the face only to see her older brother winking at her ans he whispered, \"Your evil plans won't work as long as I am here\". On seeing Zen wounded, everybody rushed and took him to the doctor for medical aid, while Martha and her family left home as she had to wake up early for the following day's contest. The next morning, Martha woke early and was surprised to get a phone call from Zen telling her that what he said earlier was true and that he had gone as Martha the previous night to trick Zoe.",
+      "The next morning, Martha woke early and was surprised to get a phone call from Zen telling her that what he said earlier was true and that he had gone as Martha the previous night to trick Zoe. Martha thanked him with a whole heart and he said that it was a brother's duty to protect his sister from harmful people, even if it was against his own sister. Then finally, it was time for the marathon to begin. All the students from Martha's school was present to cheer her, except for Zoe, who decided to stay home after what had happened the previous night. Martha ran confidently that she would get a prize and yes! She did get a prize! The first prize!! Everyone felt so happy for her, even Zoe, after she heard that it was her sister and best friend who had won. She immediately went to the arena to apologize after realizing what a horrible mistake she had done. Martha accepted her apology and both the sisters lived happily ever after.",
+      "She immediately went to the arena to apologize after realizing what a horrible mistake she had done and told Martha everything and also that she had learned her lesson from Zen, who scolded her heavily the previous night. Martha accepted her apology and said that she already knew about Zoe's plans but still trusted her. Zoe felt even more sad after hearing how much Martha trusted her. She swore to never repeat this mistake and Martha immediately hugged her. Both the sisters then lived happily ever after.",
+      "Many years later, a little girl named Ruby, was reading a story book. Her mom came in and asked her what she was reading. Ruby replied, \"Mom, do you know, a girl named Martha who lives in our country won the gold medal for marathon running for six times in the Olympics? I am reading a book about her. Did you know that her sister Zoe had won the silver medal every time Martha won the gold? I also wanna become like Martha and one day and then people will publish stories about me!!\" This way, everyone knew about Martha, the Marathon Champion and she became a role model for everybody. They also knew about Zoe, the silver medalist in marathon running, who was Martha's best friend and a great sister till the very end of her life. THE END"
+    ],
+    "sentences": [
+      {
+        "text_en": "Martha was a 11-year-old girl.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_000.mp3",
+        "text_vi": "Martha là một cô bé 11 tuổi."
+      },
+      {
+        "text_en": "Marathon running was her passion.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_001.mp3",
+        "text_vi": "Chạy marathon là niềm đam mê của cô bé."
+      },
+      {
+        "text_en": "She joined her school's marathon club and succeeded in all her marathon contests and made everyone proud.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_002.mp3",
+        "text_vi": "Cô bé tham gia câu lạc bộ chạy marathon của trường và thắng tất cả các cuộc thi, khiến mọi người rất tự hào."
+      },
+      {
+        "text_en": "One fine day, while Martha was eating her breakfast, her mom leaped into the dinning room and hugged Martha.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_003.mp3",
+        "text_vi": "Một ngày đẹp trời nọ, khi Martha đang ăn sáng, mẹ cô bé chạy vội vào phòng ăn và ôm chầm lấy Martha."
+      },
+      {
+        "text_en": "She couldn't understand anything and was confused.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_004.mp3",
+        "text_vi": "Martha không hiểu gì cả và thấy rất bối rối."
+      },
+      {
+        "text_en": "Then, her mom said that Martha was selected for the district level Marathon competition!!",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_005.mp3",
+        "text_vi": "Rồi mẹ cô bé nói rằng Martha đã được chọn tham gia cuộc thi Marathon cấp quận!!"
+      },
+      {
+        "text_en": "Martha was so happy.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_006.mp3",
+        "text_vi": "Martha vui sướng vô cùng."
+      },
+      {
+        "text_en": "She decided to practice very hard for the competition.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_007.mp3",
+        "text_vi": "Cô bé quyết định luyện tập thật chăm chỉ cho cuộc thi."
+      },
+      {
+        "text_en": "Then, she called her cousin and best friend, Zoe, who studied in the same school as Martha, and told her about the news.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_008.mp3",
+        "text_vi": "Sau đó, cô bé gọi cho người chị họ và cũng là bạn thân nhất của mình, Zoe, người học cùng trường với Martha, để kể tin vui."
+      },
+      {
+        "text_en": "Zoe was also a marathon runner but wasn't as good as Martha.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_009.mp3",
+        "text_vi": "Zoe cũng là một vận động viên chạy marathon nhưng không giỏi bằng Martha."
+      },
+      {
+        "text_en": "In fact, Zoe envied Martha.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_010.mp3",
+        "text_vi": "Thật ra, Zoe ghen tị với Martha."
+      },
+      {
+        "text_en": "But the news of Martha being selected for the district level made Zoe's envy turn into jealousy.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_011.mp3",
+        "text_vi": "Nhưng tin Martha được chọn vào vòng cấp quận đã biến sự ghen tị của Zoe thành đố kỵ."
+      },
+      {
+        "text_en": "As soon as Martha hung up the phone, evil thoughts began flooding Zoe's mind.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_012.mp3",
+        "text_vi": "Ngay khi Martha cúp điện thoại, những ý nghĩ xấu xa bắt đầu tràn ngập trong đầu Zoe."
+      },
+      {
+        "text_en": "She was thinking of a plan to not let Martha participate.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_013.mp3",
+        "text_vi": "Cô bé đang nghĩ ra một kế hoạch để không cho Martha tham gia."
+      },
+      {
+        "text_en": "That is when Zoe's older brother, Zen, interrupted her thoughts.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_014.mp3",
+        "text_vi": "Đúng lúc đó, anh trai của Zoe, Zen, đã cắt ngang suy nghĩ của cô bé."
+      },
+      {
+        "text_en": "He was curious of what kept his sister so lost in thought.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_015.mp3",
+        "text_vi": "Anh tò mò không biết điều gì khiến em gái mình suy nghĩ đăm chiêu đến vậy."
+      },
+      {
+        "text_en": "Zoe opened up and told him everything.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_016.mp3",
+        "text_vi": "Zoe đã mở lòng và kể cho anh nghe mọi chuyện."
+      },
+      {
+        "text_en": "Zen, who was unlike his jealous sister, felt happy for Martha.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_017.mp3",
+        "text_vi": "Zen, khác với cô em gái hay ghen tị của mình, cảm thấy vui cho Martha."
+      },
+      {
+        "text_en": "But, he didn't say anything about it to Zoe.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_018.mp3",
+        "text_vi": "Nhưng anh không nói gì về điều đó với Zoe."
+      },
+      {
+        "text_en": "He had a plan in his mind.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_019.mp3",
+        "text_vi": "Anh đã có một kế hoạch trong đầu."
+      },
+      {
+        "text_en": "He would listen to Zoe's evil ideas and inform it to Martha and both of them would figure out a way to stop her.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_020.mp3",
+        "text_vi": "Anh sẽ lắng nghe những ý tưởng xấu xa của Zoe, sau đó báo cho Martha biết, và cả hai sẽ cùng tìm cách ngăn cản Zoe."
+      },
+      {
+        "text_en": "Zoe said that she would somehow injure Martha's leg so that Martha couldn't play and since she is the second best marathon runner, she would be selected.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_021.mp3",
+        "text_vi": "Zoe nói rằng cô bé sẽ tìm cách làm Martha bị thương ở chân để Martha không thể thi đấu, và vì cô bé là vận động viên chạy marathon giỏi thứ hai, cô bé sẽ được chọn thay thế."
+      },
+      {
+        "text_en": "Zen had his own plans.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_022.mp3",
+        "text_vi": "Zen cũng có những kế hoạch riêng của mình."
+      },
+      {
+        "text_en": "Soon, Zen was walking to Martha's house to tell her about Zoe's evil plan.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_023.mp3",
+        "text_vi": "Chẳng mấy chốc, Zen đi bộ đến nhà Martha để kể cho cô bé nghe về kế hoạch xấu xa của Zoe."
+      },
+      {
+        "text_en": "Martha, on the other hand, refused to believe him.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_024.mp3",
+        "text_vi": "Martha, ngược lại, không chịu tin anh."
+      },
+      {
+        "text_en": "She trusted Zoe.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_025.mp3",
+        "text_vi": "Cô bé tin tưởng Zoe."
+      },
+      {
+        "text_en": "Even though Zen told her everything, she still refused to believe.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_026.mp3",
+        "text_vi": "Mặc dù Zen đã kể hết mọi chuyện, cô bé vẫn không chịu tin."
+      },
+      {
+        "text_en": "The sun was beginning to set and Zen was walking back home, thinking what he could do to save his cousin sister.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_027.mp3",
+        "text_vi": "Mặt trời bắt đầu lặn và Zen đang đi bộ về nhà, suy nghĩ xem mình có thể làm gì để cứu em họ của mình."
+      },
+      {
+        "text_en": "Soon, he came up with a plan.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_028.mp3",
+        "text_vi": "Chẳng mấy chốc, anh đã nghĩ ra một kế hoạch."
+      },
+      {
+        "text_en": "Time flew and it was finally one day before Martha's competition.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_029.mp3",
+        "text_vi": "Thời gian trôi nhanh và cuối cùng chỉ còn một ngày nữa là đến cuộc thi của Martha."
+      },
+      {
+        "text_en": "Everything was going as per the plan for all the three of them.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_030.mp3",
+        "text_vi": "Mọi thứ đều diễn ra theo kế hoạch của cả ba người."
+      },
+      {
+        "text_en": "Martha practiced very hard, Zoe was working on executing her plan and Zen was setting up some costumes for his plan.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_031.mp3",
+        "text_vi": "Martha luyện tập rất chăm chỉ, Zoe đang thực hiện kế hoạch của mình và Zen thì chuẩn bị một số trang phục cho kế hoạch của anh."
+      },
+      {
+        "text_en": "The sun set that day.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_032.mp3",
+        "text_vi": "Mặt trời lặn vào ngày hôm đó."
+      },
+      {
+        "text_en": "Martha and her parents went out that night as Zoe had invited all of them for a family dinner at her home.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_033.mp3",
+        "text_vi": "Martha và bố mẹ cô bé đã ra ngoài tối hôm đó vì Zoe đã mời tất cả họ đến nhà ăn tối gia đình."
+      },
+      {
+        "text_en": "Everybody in the family was present at Zoe's house.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_034.mp3",
+        "text_vi": "Mọi người trong gia đình đều có mặt tại nhà Zoe."
+      },
+      {
+        "text_en": "Zoe sat next to Martha during dinner time as usual.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_035.mp3",
+        "text_vi": "Zoe ngồi cạnh Martha trong bữa tối như mọi khi."
+      },
+      {
+        "text_en": "They were casually chatting but Martha didn't mention anything about Zen's warning of Zoe's evil plans.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_036.mp3",
+        "text_vi": "Họ trò chuyện bình thường nhưng Martha không hề nhắc đến lời cảnh báo của Zen về kế hoạch xấu xa của Zoe."
+      },
+      {
+        "text_en": "That night, everybody's attention was on Martha, which made Zoe even more jealous.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_037.mp3",
+        "text_vi": "Đêm đó, sự chú ý của mọi người đều đổ dồn vào Martha, điều này càng khiến Zoe ghen tị hơn."
+      },
+      {
+        "text_en": "So, she set out early to execute her plan.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_038.mp3",
+        "text_vi": "Vì vậy, cô bé đã ra ngoài sớm để thực hiện kế hoạch của mình."
+      },
+      {
+        "text_en": "She went to the nearby forest and examined for any dangerous animals and then switched off the lights in the street so that Martha wouldn't have a clue of where Zoe was leading her to.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_039.mp3",
+        "text_vi": "Cô bé đi đến khu rừng gần đó và kiểm tra xem có con vật nguy hiểm nào không, sau đó tắt đèn đường để Martha không biết Zoe đang dẫn mình đi đâu."
+      },
+      {
+        "text_en": "She then spotted Martha in the corner of the room, standing alone.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_040.mp3",
+        "text_vi": "Sau đó, cô bé nhìn thấy Martha đang đứng một mình ở góc phòng."
+      },
+      {
+        "text_en": "She invited Martha for a walk, which was actually a plan for injuring Martha's leg.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_041.mp3",
+        "text_vi": "Cô bé mời Martha đi dạo, nhưng đó thực ra là một kế hoạch để làm Martha bị thương ở chân."
+      },
+      {
+        "text_en": "Although everything was going according the plan, Zoe smelled something fishy about Martha.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_042.mp3",
+        "text_vi": "Mặc dù mọi thứ đang diễn ra theo kế hoạch, Zoe vẫn cảm thấy có điều gì đó không ổn về Martha."
+      },
+      {
+        "text_en": "She seemed, well, different.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_043.mp3",
+        "text_vi": "Cô bé trông có vẻ, ừm, khác lạ."
+      },
+      {
+        "text_en": "But Zoe didn't have any time for investigations.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_044.mp3",
+        "text_vi": "Nhưng Zoe không có thời gian để điều tra."
+      },
+      {
+        "text_en": "She carried on.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_045.mp3",
+        "text_vi": "Cô bé tiếp tục."
+      },
+      {
+        "text_en": "She was talking with Martha and walked to the dark forest.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_046.mp3",
+        "text_vi": "Cô bé vừa nói chuyện với Martha vừa đi vào khu rừng tối."
+      },
+      {
+        "text_en": "She immediately recognized the trap in the grass that she had set for Martha and walked towards it with Martha by her side.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_047.mp3",
+        "text_vi": "Cô bé ngay lập tức nhận ra cái bẫy trong bụi cỏ mà mình đã đặt cho Martha và đi về phía đó cùng Martha bên cạnh."
+      },
+      {
+        "text_en": "On the other hand, the bright and always curious Martha didn't have any suspicions, which was unusual.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_048.mp3",
+        "text_vi": "Ngược lại, Martha thông minh và luôn tò mò lại không hề có chút nghi ngờ nào, điều này thật bất thường."
+      },
+      {
+        "text_en": "Zoe slowly led Martha into the trap and suddenly, Martha slipped and fell with a thud.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_049.mp3",
+        "text_vi": "Zoe từ từ dẫn Martha vào cái bẫy và đột nhiên, Martha trượt chân ngã với một tiếng 'thịch'."
+      },
+      {
+        "text_en": "Zoe smiled on the inside but pretended she was sorry on the outside.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_050.mp3",
+        "text_vi": "Zoe mỉm cười trong lòng nhưng bên ngoài lại giả vờ xin lỗi."
+      },
+      {
+        "text_en": "She helped Martha get up and examined the wound.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_051.mp3",
+        "text_vi": "Cô bé giúp Martha đứng dậy và kiểm tra vết thương."
+      },
+      {
+        "text_en": "It was a pretty big wound, just as she expected and took her home.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_052.mp3",
+        "text_vi": "Đó là một vết thương khá lớn, đúng như cô bé mong đợi và cô bé đưa Martha về nhà."
+      },
+      {
+        "text_en": "Soon, Zoe was back home, screaming that Martha was hurt.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_053.mp3",
+        "text_vi": "Chẳng mấy chốc, Zoe về đến nhà, la lên rằng Martha bị thương."
+      },
+      {
+        "text_en": "Everybody looked shocked, instead of immediately rushing and helping her.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_054.mp3",
+        "text_vi": "Mọi người đều trông sốc, thay vì ngay lập tức chạy đến giúp cô bé."
+      },
+      {
+        "text_en": "They said that Martha was standing right behind them.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_055.mp3",
+        "text_vi": "Họ nói rằng Martha đang đứng ngay phía sau họ."
+      },
+      {
+        "text_en": "Then, Martha appeared out of the crowd and waved at Zoe telling her that she was right there for the past thirty minutes and that it was her brother Zen, who was hurt.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_056.mp3",
+        "text_vi": "Sau đó, Martha xuất hiện từ đám đông và vẫy tay với Zoe, nói rằng cô bé đã ở đó suốt ba mươi phút qua và người bị thương là anh trai Zen của cô bé."
+      },
+      {
+        "text_en": "Zoe was terrified.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_057.mp3",
+        "text_vi": "Zoe sợ hãi tột độ."
+      },
+      {
+        "text_en": "She looked at the face only to see her older brother winking at her ans he whispered, \"Your evil plans won't work as long as I am here\".",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_058.mp3",
+        "text_vi": "Cô bé nhìn vào mặt anh trai chỉ thấy anh đang nháy mắt với mình và thì thầm, \"Kế hoạch xấu xa của em sẽ không thành công đâu chừng nào anh còn ở đây\"."
+      },
+      {
+        "text_en": "On seeing Zen wounded, everybody rushed and took him to the doctor for medical aid, while Martha and her family left home as she had to wake up early for the following day's contest.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_059.mp3",
+        "text_vi": "Thấy Zen bị thương, mọi người vội vàng đưa anh đến bác sĩ để được cấp cứu, trong khi Martha và gia đình cô bé rời nhà vì cô bé phải dậy sớm cho cuộc thi ngày hôm sau."
+      },
+      {
+        "text_en": "The next morning, Martha woke early and was surprised to get a phone call from Zen telling her that what he said earlier was true and that he had gone as Martha the previous night to trick Zoe.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_060.mp3",
+        "text_vi": "Sáng hôm sau, Martha dậy sớm và ngạc nhiên khi nhận được điện thoại từ Zen, anh nói rằng những gì anh đã nói trước đó là sự thật và anh đã giả làm Martha đêm hôm trước để lừa Zoe."
+      },
+      {
+        "text_en": "The next morning, Martha woke early and was surprised to get a phone call from Zen telling her that what he said earlier was true and that he had gone as Martha the previous night to trick Zoe.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_061.mp3",
+        "text_vi": "Sáng hôm sau, Martha dậy sớm và ngạc nhiên khi nhận được điện thoại từ Zen, anh nói rằng những gì anh đã nói trước đó là sự thật và anh đã giả làm Martha đêm hôm trước để lừa Zoe."
+      },
+      {
+        "text_en": "Martha thanked him with a whole heart and he said that it was a brother's duty to protect his sister from harmful people, even if it was against his own sister.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_062.mp3",
+        "text_vi": "Martha cảm ơn anh ấy từ tận đáy lòng và anh nói rằng đó là nhiệm vụ của một người anh trai phải bảo vệ em gái mình khỏi những người xấu, ngay cả khi đó là chống lại chính em gái ruột của mình."
+      },
+      {
+        "text_en": "Then finally, it was time for the marathon to begin.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_063.mp3",
+        "text_vi": "Cuối cùng, đã đến lúc cuộc thi marathon bắt đầu."
+      },
+      {
+        "text_en": "All the students from Martha's school was present to cheer her, except for Zoe, who decided to stay home after what had happened the previous night.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_064.mp3",
+        "text_vi": "Tất cả học sinh từ trường của Martha đều có mặt để cổ vũ cô bé, trừ Zoe, người đã quyết định ở nhà sau những gì đã xảy ra đêm hôm trước."
+      },
+      {
+        "text_en": "Martha ran confidently that she would get a prize and yes!",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_065.mp3",
+        "text_vi": "Martha chạy đầy tự tin rằng cô bé sẽ giành được giải thưởng và đúng vậy!"
+      },
+      {
+        "text_en": "She did get a prize!",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_066.mp3",
+        "text_vi": "Cô bé đã giành được giải thưởng!"
+      },
+      {
+        "text_en": "The first prize!!",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_067.mp3",
+        "text_vi": "Giải nhất!!"
+      },
+      {
+        "text_en": "Everyone felt so happy for her, even Zoe, after she heard that it was her sister and best friend who had won.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_068.mp3",
+        "text_vi": "Mọi người đều rất vui mừng cho cô bé, ngay cả Zoe, sau khi cô bé nghe tin người chị họ và bạn thân của mình đã thắng cuộc."
+      },
+      {
+        "text_en": "She immediately went to the arena to apologize after realizing what a horrible mistake she had done.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_069.mp3",
+        "text_vi": "Cô bé ngay lập tức đến sân vận động để xin lỗi sau khi nhận ra mình đã mắc một lỗi lầm khủng khiếp."
+      },
+      {
+        "text_en": "Martha accepted her apology and both the sisters lived happily ever after.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_070.mp3",
+        "text_vi": "Martha chấp nhận lời xin lỗi của cô bé và cả hai chị em sống hạnh phúc mãi mãi về sau."
+      },
+      {
+        "text_en": "She immediately went to the arena to apologize after realizing what a horrible mistake she had done and told Martha everything and also that she had learned her lesson from Zen, who scolded her heavily the previous night.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_071.mp3",
+        "text_vi": "Cô bé ngay lập tức đến sân vận động để xin lỗi sau khi nhận ra mình đã mắc một lỗi lầm khủng khiếp và kể cho Martha nghe mọi chuyện, đồng thời nói rằng cô bé đã học được bài học từ Zen, người đã mắng cô bé rất nặng lời đêm hôm trước."
+      },
+      {
+        "text_en": "Martha accepted her apology and said that she already knew about Zoe's plans but still trusted her.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_072.mp3",
+        "text_vi": "Martha chấp nhận lời xin lỗi của cô bé và nói rằng cô bé đã biết về kế hoạch của Zoe nhưng vẫn tin tưởng cô bé."
+      },
+      {
+        "text_en": "Zoe felt even more sad after hearing how much Martha trusted her.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_073.mp3",
+        "text_vi": "Zoe cảm thấy buồn hơn nữa sau khi nghe Martha tin tưởng mình nhiều đến thế."
+      },
+      {
+        "text_en": "She swore to never repeat this mistake and Martha immediately hugged her.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_074.mp3",
+        "text_vi": "Cô bé thề sẽ không bao giờ lặp lại lỗi lầm này nữa và Martha ngay lập tức ôm chầm lấy cô bé."
+      },
+      {
+        "text_en": "Both the sisters then lived happily ever after.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_075.mp3",
+        "text_vi": "Cả hai chị em sau đó sống hạnh phúc mãi mãi về sau."
+      },
+      {
+        "text_en": "Many years later, a little girl named Ruby, was reading a story book.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_076.mp3",
+        "text_vi": "Nhiều năm sau, một cô bé tên Ruby đang đọc một cuốn sách truyện."
+      },
+      {
+        "text_en": "Her mom came in and asked her what she was reading.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_077.mp3",
+        "text_vi": "Mẹ cô bé bước vào và hỏi cô bé đang đọc gì."
+      },
+      {
+        "text_en": "Ruby replied, \"Mom, do you know, a girl named Martha who lives in our country won the gold medal for marathon running for six times in the Olympics?",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_078.mp3",
+        "text_vi": "Ruby trả lời, \"Mẹ ơi, mẹ có biết không, một cô gái tên Martha sống ở đất nước mình đã giành huy chương vàng chạy marathon sáu lần tại Thế vận hội đấy ạ?\""
+      },
+      {
+        "text_en": "I am reading a book about her.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_079.mp3",
+        "text_vi": "Con đang đọc một cuốn sách về cô ấy."
+      },
+      {
+        "text_en": "Did you know that her sister Zoe had won the silver medal every time Martha won the gold?",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_080.mp3",
+        "text_vi": "Mẹ có biết rằng chị họ của cô ấy là Zoe đã giành huy chương bạc mỗi khi Martha giành huy chương vàng không?"
+      },
+      {
+        "text_en": "I also wanna become like Martha and one day and then people will publish stories about me!!\" This way, everyone knew about Martha, the Marathon Champion and she became a role model for everybody.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_081.mp3",
+        "text_vi": "Con cũng muốn trở thành như Martha và một ngày nào đó mọi người sẽ xuất bản những câu chuyện về con!!\" Cứ như vậy, mọi người đều biết đến Martha, Nhà vô địch Marathon và cô bé trở thành hình mẫu cho tất cả mọi người."
+      },
+      {
+        "text_en": "They also knew about Zoe, the silver medalist in marathon running, who was Martha's best friend and a great sister till the very end of her life. THE END",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_082.mp3",
+        "text_vi": "Họ cũng biết về Zoe, người giành huy chương bạc trong môn chạy marathon, người bạn thân nhất và một người chị tuyệt vời của Martha cho đến cuối đời. HẾT TRUYỆN"
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "Martha was a 11-year-old girl.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "Marathon running was her passion.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "She joined her school's marathon club and succeeded in all her marathon contests and made everyone proud.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "One fine day, while Martha was eating her breakfast, her mom leaped into the dinning room and hugged Martha.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "She couldn't understand anything and was confused.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "Then, her mom said that Martha was selected for the district level Marathon competition!!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "Martha was so happy.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "She decided to practice very hard for the competition.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "Then, she called her cousin and best friend, Zoe, who studied in the same school as Martha, and told her about the news.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "Zoe was also a marathon runner but wasn't as good as Martha.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "In fact, Zoe envied Martha.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "But the news of Martha being selected for the district level made Zoe's envy turn into jealousy.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "As soon as Martha hung up the phone, evil thoughts began flooding Zoe's mind.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_012.mp3"
+        },
+        {
+          "id": "ra_13",
+          "text_en": "She was thinking of a plan to not let Martha participate.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_013.mp3"
+        },
+        {
+          "id": "ra_14",
+          "text_en": "That is when Zoe's older brother, Zen, interrupted her thoughts.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_014.mp3"
+        },
+        {
+          "id": "ra_15",
+          "text_en": "He was curious of what kept his sister so lost in thought.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_015.mp3"
+        },
+        {
+          "id": "ra_16",
+          "text_en": "Zoe opened up and told him everything.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_016.mp3"
+        },
+        {
+          "id": "ra_17",
+          "text_en": "Zen, who was unlike his jealous sister, felt happy for Martha.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_017.mp3"
+        },
+        {
+          "id": "ra_18",
+          "text_en": "But, he didn't say anything about it to Zoe.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_018.mp3"
+        },
+        {
+          "id": "ra_19",
+          "text_en": "He had a plan in his mind.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_019.mp3"
+        },
+        {
+          "id": "ra_20",
+          "text_en": "He would listen to Zoe's evil ideas and inform it to Martha and both of them would figure out a way to stop her.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_020.mp3"
+        },
+        {
+          "id": "ra_21",
+          "text_en": "Zoe said that she would somehow injure Martha's leg so that Martha couldn't play and since she is the second best marathon runner, she would be selected.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_021.mp3"
+        },
+        {
+          "id": "ra_22",
+          "text_en": "Zen had his own plans.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_022.mp3"
+        },
+        {
+          "id": "ra_23",
+          "text_en": "Soon, Zen was walking to Martha's house to tell her about Zoe's evil plan.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_023.mp3"
+        },
+        {
+          "id": "ra_24",
+          "text_en": "Martha, on the other hand, refused to believe him.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_024.mp3"
+        },
+        {
+          "id": "ra_25",
+          "text_en": "She trusted Zoe.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_025.mp3"
+        },
+        {
+          "id": "ra_26",
+          "text_en": "Even though Zen told her everything, she still refused to believe.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_026.mp3"
+        },
+        {
+          "id": "ra_27",
+          "text_en": "The sun was beginning to set and Zen was walking back home, thinking what he could do to save his cousin sister.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_027.mp3"
+        },
+        {
+          "id": "ra_28",
+          "text_en": "Soon, he came up with a plan.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_028.mp3"
+        },
+        {
+          "id": "ra_29",
+          "text_en": "Time flew and it was finally one day before Martha's competition.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_029.mp3"
+        },
+        {
+          "id": "ra_30",
+          "text_en": "Everything was going as per the plan for all the three of them.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_030.mp3"
+        },
+        {
+          "id": "ra_31",
+          "text_en": "Martha practiced very hard, Zoe was working on executing her plan and Zen was setting up some costumes for his plan.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_031.mp3"
+        },
+        {
+          "id": "ra_32",
+          "text_en": "The sun set that day.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_032.mp3"
+        },
+        {
+          "id": "ra_33",
+          "text_en": "Martha and her parents went out that night as Zoe had invited all of them for a family dinner at her home.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_033.mp3"
+        },
+        {
+          "id": "ra_34",
+          "text_en": "Everybody in the family was present at Zoe's house.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_034.mp3"
+        },
+        {
+          "id": "ra_35",
+          "text_en": "Zoe sat next to Martha during dinner time as usual.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_035.mp3"
+        },
+        {
+          "id": "ra_36",
+          "text_en": "They were casually chatting but Martha didn't mention anything about Zen's warning of Zoe's evil plans.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_036.mp3"
+        },
+        {
+          "id": "ra_37",
+          "text_en": "That night, everybody's attention was on Martha, which made Zoe even more jealous.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_037.mp3"
+        },
+        {
+          "id": "ra_38",
+          "text_en": "So, she set out early to execute her plan.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_038.mp3"
+        },
+        {
+          "id": "ra_39",
+          "text_en": "She went to the nearby forest and examined for any dangerous animals and then switched off the lights in the street so that Martha wouldn't have a clue of where Zoe was leading her to.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_039.mp3"
+        },
+        {
+          "id": "ra_40",
+          "text_en": "She then spotted Martha in the corner of the room, standing alone.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_040.mp3"
+        },
+        {
+          "id": "ra_41",
+          "text_en": "She invited Martha for a walk, which was actually a plan for injuring Martha's leg.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_041.mp3"
+        },
+        {
+          "id": "ra_42",
+          "text_en": "Although everything was going according the plan, Zoe smelled something fishy about Martha.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_042.mp3"
+        },
+        {
+          "id": "ra_43",
+          "text_en": "She seemed, well, different.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_043.mp3"
+        },
+        {
+          "id": "ra_44",
+          "text_en": "But Zoe didn't have any time for investigations.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_044.mp3"
+        },
+        {
+          "id": "ra_45",
+          "text_en": "She carried on.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_045.mp3"
+        },
+        {
+          "id": "ra_46",
+          "text_en": "She was talking with Martha and walked to the dark forest.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_046.mp3"
+        },
+        {
+          "id": "ra_47",
+          "text_en": "She immediately recognized the trap in the grass that she had set for Martha and walked towards it with Martha by her side.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_047.mp3"
+        },
+        {
+          "id": "ra_48",
+          "text_en": "On the other hand, the bright and always curious Martha didn't have any suspicions, which was unusual.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_048.mp3"
+        },
+        {
+          "id": "ra_49",
+          "text_en": "Zoe slowly led Martha into the trap and suddenly, Martha slipped and fell with a thud.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_049.mp3"
+        },
+        {
+          "id": "ra_50",
+          "text_en": "Zoe smiled on the inside but pretended she was sorry on the outside.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_050.mp3"
+        },
+        {
+          "id": "ra_51",
+          "text_en": "She helped Martha get up and examined the wound.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_051.mp3"
+        },
+        {
+          "id": "ra_52",
+          "text_en": "It was a pretty big wound, just as she expected and took her home.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_052.mp3"
+        },
+        {
+          "id": "ra_53",
+          "text_en": "Soon, Zoe was back home, screaming that Martha was hurt.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_053.mp3"
+        },
+        {
+          "id": "ra_54",
+          "text_en": "Everybody looked shocked, instead of immediately rushing and helping her.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_054.mp3"
+        },
+        {
+          "id": "ra_55",
+          "text_en": "They said that Martha was standing right behind them.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_055.mp3"
+        },
+        {
+          "id": "ra_56",
+          "text_en": "Then, Martha appeared out of the crowd and waved at Zoe telling her that she was right there for the past thirty minutes and that it was her brother Zen, who was hurt.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_056.mp3"
+        },
+        {
+          "id": "ra_57",
+          "text_en": "Zoe was terrified.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_057.mp3"
+        },
+        {
+          "id": "ra_58",
+          "text_en": "She looked at the face only to see her older brother winking at her ans he whispered, \"Your evil plans won't work as long as I am here\".",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_058.mp3"
+        },
+        {
+          "id": "ra_59",
+          "text_en": "On seeing Zen wounded, everybody rushed and took him to the doctor for medical aid, while Martha and her family left home as she had to wake up early for the following day's contest.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_059.mp3"
+        },
+        {
+          "id": "ra_60",
+          "text_en": "The next morning, Martha woke early and was surprised to get a phone call from Zen telling her that what he said earlier was true and that he had gone as Martha the previous night to trick Zoe.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_060.mp3"
+        },
+        {
+          "id": "ra_61",
+          "text_en": "The next morning, Martha woke early and was surprised to get a phone call from Zen telling her that what he said earlier was true and that he had gone as Martha the previous night to trick Zoe.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_061.mp3"
+        },
+        {
+          "id": "ra_62",
+          "text_en": "Martha thanked him with a whole heart and he said that it was a brother's duty to protect his sister from harmful people, even if it was against his own sister.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_062.mp3"
+        },
+        {
+          "id": "ra_63",
+          "text_en": "Then finally, it was time for the marathon to begin.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_063.mp3"
+        },
+        {
+          "id": "ra_64",
+          "text_en": "All the students from Martha's school was present to cheer her, except for Zoe, who decided to stay home after what had happened the previous night.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_064.mp3"
+        },
+        {
+          "id": "ra_65",
+          "text_en": "Martha ran confidently that she would get a prize and yes!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_065.mp3"
+        },
+        {
+          "id": "ra_66",
+          "text_en": "She did get a prize!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_066.mp3"
+        },
+        {
+          "id": "ra_67",
+          "text_en": "The first prize!!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_067.mp3"
+        },
+        {
+          "id": "ra_68",
+          "text_en": "Everyone felt so happy for her, even Zoe, after she heard that it was her sister and best friend who had won.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_068.mp3"
+        },
+        {
+          "id": "ra_69",
+          "text_en": "She immediately went to the arena to apologize after realizing what a horrible mistake she had done.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_069.mp3"
+        },
+        {
+          "id": "ra_70",
+          "text_en": "Martha accepted her apology and both the sisters lived happily ever after.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_070.mp3"
+        },
+        {
+          "id": "ra_71",
+          "text_en": "She immediately went to the arena to apologize after realizing what a horrible mistake she had done and told Martha everything and also that she had learned her lesson from Zen, who scolded her heavily the previous night.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_071.mp3"
+        },
+        {
+          "id": "ra_72",
+          "text_en": "Martha accepted her apology and said that she already knew about Zoe's plans but still trusted her.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_072.mp3"
+        },
+        {
+          "id": "ra_73",
+          "text_en": "Zoe felt even more sad after hearing how much Martha trusted her.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_073.mp3"
+        },
+        {
+          "id": "ra_74",
+          "text_en": "She swore to never repeat this mistake and Martha immediately hugged her.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_074.mp3"
+        },
+        {
+          "id": "ra_75",
+          "text_en": "Both the sisters then lived happily ever after.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_075.mp3"
+        },
+        {
+          "id": "ra_76",
+          "text_en": "Many years later, a little girl named Ruby, was reading a story book.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_076.mp3"
+        },
+        {
+          "id": "ra_77",
+          "text_en": "Her mom came in and asked her what she was reading.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_077.mp3"
+        },
+        {
+          "id": "ra_78",
+          "text_en": "Ruby replied, \"Mom, do you know, a girl named Martha who lives in our country won the gold medal for marathon running for six times in the Olympics?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_078.mp3"
+        },
+        {
+          "id": "ra_79",
+          "text_en": "I am reading a book about her.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_079.mp3"
+        },
+        {
+          "id": "ra_80",
+          "text_en": "Did you know that her sister Zoe had won the silver medal every time Martha won the gold?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_080.mp3"
+        },
+        {
+          "id": "ra_81",
+          "text_en": "I also wanna become like Martha and one day and then people will publish stories about me!!\" This way, everyone knew about Martha, the Marathon Champion and she became a role model for everybody.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_081.mp3"
+        },
+        {
+          "id": "ra_82",
+          "text_en": "They also knew about Zoe, the silver medalist in marathon running, who was Martha's best friend and a great sister till the very end of her life. THE END",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_140725/s_082.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "How old was Martha?",
+          "options_en": [
+            "11",
+            "10",
+            "12"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "Who was a 11-year-old girl?",
+          "options_en": [
+            "Martha",
+            "Zoe",
+            "Ruby"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s1_q1",
+          "type": "choice",
+          "question_en": "What was her passion?",
+          "options_en": [
+            "Marathon running",
+            "Swimming",
+            "Painting"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s1_q2",
+          "type": "choice",
+          "question_en": "Which sport was her passion?",
+          "options_en": [
+            "Marathon running",
+            "Tennis",
+            "Soccer"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s2_q1",
+          "type": "choice",
+          "question_en": "What club did she join?",
+          "options_en": [
+            "Her school's marathon club",
+            "Her school's chess club",
+            "Her school's drama club"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s2_q2",
+          "type": "choice",
+          "question_en": "How did she do in her marathon contests?",
+          "options_en": [
+            "Succeeded in all her marathon contests",
+            "Lost most of her contests",
+            "Did not participate in contests"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s3_q1",
+          "type": "choice",
+          "question_en": "Where was Martha when her mom leaped into the dining room?",
+          "options_en": [
+            "Eating her breakfast",
+            "Sleeping in her room",
+            "At school"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p0_s3_q2",
+          "type": "choice",
+          "question_en": "Who leaped into the dining room and hugged Martha?",
+          "options_en": [
+            "Her mom",
+            "Zoe",
+            "Zen"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p0_s4_q1",
+          "type": "choice",
+          "question_en": "How did she feel after her mom hugged her?",
+          "options_en": [
+            "Confused",
+            "Excited",
+            "Angry"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p0_s4_q2",
+          "type": "choice",
+          "question_en": "What couldn't she do?",
+          "options_en": [
+            "Understand anything",
+            "Run fast",
+            "Sleep well"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p0_s5_q1",
+          "type": "choice",
+          "question_en": "What did her mom tell her?",
+          "options_en": [
+            "Martha was selected for the district level Marathon competition",
+            "Martha had failed her exam",
+            "Martha should rest for a week"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p0_s5_q2",
+          "type": "choice",
+          "question_en": "Which competition was Martha selected for?",
+          "options_en": [
+            "The district level Marathon competition",
+            "The school quiz",
+            "The science fair"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p0_s6_q1",
+          "type": "choice",
+          "question_en": "How did Martha feel after hearing the news?",
+          "options_en": [
+            "So happy",
+            "Very sad",
+            "Worried"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p0_s6_q2",
+          "type": "choice",
+          "question_en": "Who was described as 'so happy'?",
+          "options_en": [
+            "Martha",
+            "Zoe",
+            "Her mom"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p0_s7_q1",
+          "type": "choice",
+          "question_en": "What did she decide to do for the competition?",
+          "options_en": [
+            "Practice very hard",
+            "Go on vacation",
+            "Quit running"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p0_s7_q2",
+          "type": "choice",
+          "question_en": "How did she plan to prepare?",
+          "options_en": [
+            "Practice very hard",
+            "Practice very little",
+            "Not practice at all"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p0_s8_q1",
+          "type": "choice",
+          "question_en": "Who did she call to tell the news?",
+          "options_en": [
+            "Her cousin and best friend, Zoe",
+            "Her mom",
+            "Zen"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p0_s8_q2",
+          "type": "choice",
+          "question_en": "Where did Zoe study?",
+          "options_en": [
+            "In the same school as Martha",
+            "In another town",
+            "At college"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p0_s9_q1",
+          "type": "choice",
+          "question_en": "How was Zoe compared to Martha as a runner?",
+          "options_en": [
+            "Wasn't as good as Martha",
+            "Was better than Martha",
+            "Was exactly the same as Martha"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p0_s9_q2",
+          "type": "choice",
+          "question_en": "What sport did Zoe also do?",
+          "options_en": [
+            "Marathon running",
+            "Swimming",
+            "Dancing"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p0_s10_q1",
+          "type": "choice",
+          "question_en": "What did Zoe feel toward Martha?",
+          "options_en": [
+            "Envied Martha",
+            "Supported Martha",
+            "Ignored Martha"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p0_s10_q2",
+          "type": "choice",
+          "question_en": "Who did Zoe envy?",
+          "options_en": [
+            "Martha",
+            "Zen",
+            "Ruby"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p0_s11_q1",
+          "type": "choice",
+          "question_en": "What did the news of Martha's selection turn Zoe's envy into?",
+          "options_en": [
+            "Jealousy",
+            "Happiness",
+            "Anger"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p0_s11_q2",
+          "type": "choice",
+          "question_en": "Why did Zoe become jealous?",
+          "options_en": [
+            "Because Martha was selected for the district level",
+            "Because Zen was hurt",
+            "Because Ruby read a book"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "Who hung up the phone?",
+          "options_en": [
+            "Martha",
+            "Zoe",
+            "Zen"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "What began flooding Zoe's mind?",
+          "options_en": [
+            "Evil thoughts",
+            "Happy thoughts",
+            "Plans to run"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p1_s1_q1",
+          "type": "choice",
+          "question_en": "Who was thinking of a plan to not let Martha participate?",
+          "options_en": [
+            "Zoe",
+            "Martha",
+            "Zen"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p1_s1_q2",
+          "type": "choice",
+          "question_en": "What was the plan about?",
+          "options_en": [
+            "To not let Martha participate",
+            "To help Martha practice",
+            "To call Martha again"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p1_s2_q1",
+          "type": "choice",
+          "question_en": "Who interrupted her thoughts?",
+          "options_en": [
+            "Zen",
+            "Martha",
+            "Zoe's mother"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p1_s2_q2",
+          "type": "choice",
+          "question_en": "Whose older brother is Zen?",
+          "options_en": [
+            "Zoe's",
+            "Martha's",
+            "Zen's friend's"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p1_s3_q1",
+          "type": "choice",
+          "question_en": "What was he curious about?",
+          "options_en": [
+            "What kept his sister so lost in thought",
+            "Where Martha was going",
+            "How to win the marathon"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p1_s3_q2",
+          "type": "choice",
+          "question_en": "Whose sister was he curious about?",
+          "options_en": [
+            "His sister (Zoe)",
+            "Martha's sister",
+            "His friend's sister"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p1_s4_q1",
+          "type": "choice",
+          "question_en": "What did Zoe do when Zen asked?",
+          "options_en": [
+            "Opened up and told him everything",
+            "Hung up the phone",
+            "Left the room"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p1_s4_q2",
+          "type": "choice",
+          "question_en": "What is the correct answer to this question: Whom did Zoe tell everything to?",
+          "options_en": [
+            "Him (Zen)",
+            "Martha",
+            "Her coach"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p1_s5_q1",
+          "type": "choice",
+          "question_en": "Who felt happy for Martha?",
+          "options_en": [
+            "Zen",
+            "Zoe",
+            "Martha"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p1_s5_q2",
+          "type": "choice",
+          "question_en": "How was Zen described compared to his sister?",
+          "options_en": [
+            "Unlike his jealous sister",
+            "As jealous as his sister",
+            "Less supportive than his sister"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p1_s6_q1",
+          "type": "choice",
+          "question_en": "What didn't he do about it?",
+          "options_en": [
+            "Say anything about it to Zoe",
+            "Tell Martha immediately",
+            "Join Zoe's plan"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p1_s6_q2",
+          "type": "choice",
+          "question_en": "What is the correct answer to this question: To whom did he not say anything?",
+          "options_en": [
+            "Zoe",
+            "Martha",
+            "Their parents"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p1_s7_q1",
+          "type": "choice",
+          "question_en": "What did he have in his mind?",
+          "options_en": [
+            "A plan",
+            "A medal",
+            "A race schedule"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p1_s7_q2",
+          "type": "choice",
+          "question_en": "Whose plan was it?",
+          "options_en": [
+            "His (Zen's) plan",
+            "Zoe's plan",
+            "Martha's plan"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p1_s8_q1",
+          "type": "choice",
+          "question_en": "What would he do with Zoe's evil ideas?",
+          "options_en": [
+            "Listen and inform Martha",
+            "Join Zoe in carrying them out",
+            "Keep them secret forever"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p1_s8_q2",
+          "type": "choice",
+          "question_en": "Who would figure out a way to stop her?",
+          "options_en": [
+            "He and Martha",
+            "Zoe and Martha",
+            "Zen and Zoe"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p1_s9_q1",
+          "type": "choice",
+          "question_en": "What did Zoe say she would do to Martha?",
+          "options_en": [
+            "Injure Martha's leg so she couldn't play",
+            "Help Martha practice more",
+            "Tell Martha the truth"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p1_s9_q2",
+          "type": "choice",
+          "question_en": "Why did Zoe want to injure Martha's leg?",
+          "options_en": [
+            "So the second best runner (Zoe) would be selected",
+            "To make Martha run faster",
+            "To make Zen proud"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p1_s10_q1",
+          "type": "choice",
+          "question_en": "Who had his own plans?",
+          "options_en": [
+            "Zen",
+            "Zoe",
+            "Martha"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p1_s10_q2",
+          "type": "choice",
+          "question_en": "What did Zen have?",
+          "options_en": [
+            "His own plans",
+            "A plan to race",
+            "A plan to help Zoe carry out her scheme"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "Who was walking to Martha's house?",
+          "options_en": [
+            "Zen",
+            "Zoe",
+            "Martha"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "Why was Zen walking to Martha's house?",
+          "options_en": [
+            "To tell her about Zoe's evil plan",
+            "To invite her to dinner",
+            "To practice for the competition"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p2_s1_q1",
+          "type": "choice",
+          "question_en": "Who refused to believe him?",
+          "options_en": [
+            "Martha",
+            "Zoe",
+            "Zen"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p2_s1_q2",
+          "type": "choice",
+          "question_en": "What did Martha do when Zen told her?",
+          "options_en": [
+            "She refused to believe him",
+            "She warned everyone immediately",
+            "She left the house"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p2_s2_q1",
+          "type": "choice",
+          "question_en": "Who did she trust?",
+          "options_en": [
+            "Zoe",
+            "Zen",
+            "Her parents"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p2_s2_q2",
+          "type": "choice",
+          "question_en": "What was her feeling toward Zoe?",
+          "options_en": [
+            "She trusted Zoe",
+            "She was worried about Zoe",
+            "She was jealous of Zoe"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p2_s3_q1",
+          "type": "choice",
+          "question_en": "Who told her everything?",
+          "options_en": [
+            "Zen",
+            "Zoe",
+            "Martha"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p2_s3_q2",
+          "type": "choice",
+          "question_en": "What did she do even after Zen told her everything?",
+          "options_en": [
+            "She still refused to believe",
+            "She immediately called her parents",
+            "She decided to confront Zoe"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p2_s4_q1",
+          "type": "choice",
+          "question_en": "Where was Zen walking?",
+          "options_en": [
+            "Back home",
+            "To Martha's house",
+            "To Zoe's house"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        },
+        {
+          "id": "gl_p2_s4_q2",
+          "type": "choice",
+          "question_en": "What was Zen thinking about as he walked?",
+          "options_en": [
+            "What he could do to save his cousin sister",
+            "How to win the marathon",
+            "What to cook for dinner"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        },
+        {
+          "id": "gl_p2_s5_q1",
+          "type": "choice",
+          "question_en": "Who came up with a plan?",
+          "options_en": [
+            "He (Zen)",
+            "Zoe",
+            "Martha"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        },
+        {
+          "id": "gl_p2_s5_q2",
+          "type": "choice",
+          "question_en": "What did he come up with?",
+          "options_en": [
+            "A plan",
+            "A costume",
+            "An invitation"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        },
+        {
+          "id": "gl_p2_s6_q1",
+          "type": "choice",
+          "question_en": "When was it in relation to Martha's competition?",
+          "options_en": [
+            "One day before Martha's competition",
+            "The day of the competition",
+            "A week after the competition"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p2_s6_q2",
+          "type": "choice",
+          "question_en": "What event was approaching?",
+          "options_en": [
+            "Martha's competition",
+            "Zoe's family dinner",
+            "Zen's birthday"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p2_s7_q1",
+          "type": "choice",
+          "question_en": "How was everything going for all three of them?",
+          "options_en": [
+            "As per the plan",
+            "Poorly",
+            "Unexpectedly"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        },
+        {
+          "id": "gl_p2_s7_q2",
+          "type": "choice",
+          "question_en": "Who does 'all the three of them' refer to in this sentence?",
+          "options_en": [
+            "Martha, Zoe, and Zen",
+            "Martha and her parents",
+            "Zoe and her family"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        },
+        {
+          "id": "gl_p2_s8_q1",
+          "type": "choice",
+          "question_en": "What was Martha doing?",
+          "options_en": [
+            "Practiced very hard",
+            "Setting up costumes",
+            "Turning off street lights"
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        },
+        {
+          "id": "gl_p2_s8_q2",
+          "type": "choice",
+          "question_en": "What was Zen doing for his plan?",
+          "options_en": [
+            "Setting up some costumes",
+            "Practicing running",
+            "Inviting the family to dinner"
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        },
+        {
+          "id": "gl_p2_s9_q1",
+          "type": "choice",
+          "question_en": "What happened to the sun that day?",
+          "options_en": [
+            "The sun set",
+            "The sun rose",
+            "The sun shone brightly"
+          ],
+          "correct_index": 0,
+          "sentence_index": 32
+        },
+        {
+          "id": "gl_p2_s9_q2",
+          "type": "choice",
+          "question_en": "When did the sun set?",
+          "options_en": [
+            "That day",
+            "The next morning",
+            "One week later"
+          ],
+          "correct_index": 0,
+          "sentence_index": 32
+        },
+        {
+          "id": "gl_p2_s10_q1",
+          "type": "choice",
+          "question_en": "Where did Martha and her parents go that night?",
+          "options_en": [
+            "To Zoe's home for a family dinner",
+            "To the marathon arena",
+            "To Zen's house"
+          ],
+          "correct_index": 0,
+          "sentence_index": 33
+        },
+        {
+          "id": "gl_p2_s10_q2",
+          "type": "choice",
+          "question_en": "Why did they go out that night?",
+          "options_en": [
+            "Because Zoe had invited all of them for a family dinner",
+            "To practice for the competition",
+            "To buy costumes"
+          ],
+          "correct_index": 0,
+          "sentence_index": 33
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "Who was present at Zoe's house?",
+          "options_en": [
+            "Everybody in the family",
+            "Only Zoe's parents",
+            "Martha and Zen"
+          ],
+          "correct_index": 0,
+          "sentence_index": 34
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "Where was everybody in the family?",
+          "options_en": [
+            "At Zoe's house",
+            "At Martha's house",
+            "In the nearby forest"
+          ],
+          "correct_index": 0,
+          "sentence_index": 34
+        },
+        {
+          "id": "gl_p3_s1_q1",
+          "type": "choice",
+          "question_en": "Who sat next to Martha during dinner time?",
+          "options_en": [
+            "Zoe",
+            "Zen",
+            "Martha's mom"
+          ],
+          "correct_index": 0,
+          "sentence_index": 35
+        },
+        {
+          "id": "gl_p3_s1_q2",
+          "type": "choice",
+          "question_en": "When did Zoe sit next to Martha as usual?",
+          "options_en": [
+            "During dinner time",
+            "During the marathon",
+            "During breakfast"
+          ],
+          "correct_index": 0,
+          "sentence_index": 35
+        },
+        {
+          "id": "gl_p3_s2_q1",
+          "type": "choice",
+          "question_en": "What were they doing while Martha didn't mention Zen's warning?",
+          "options_en": [
+            "Casually chatting",
+            "Practicing for the marathon",
+            "Arguing loudly"
+          ],
+          "correct_index": 0,
+          "sentence_index": 36
+        },
+        {
+          "id": "gl_p3_s2_q2",
+          "type": "choice",
+          "question_en": "What did Martha not mention while they were talking?",
+          "options_en": [
+            "Zen's warning of Zoe's evil plans",
+            "The marathon selection news",
+            "Her breakfast that morning"
+          ],
+          "correct_index": 0,
+          "sentence_index": 36
+        },
+        {
+          "id": "gl_p3_s3_q1",
+          "type": "choice",
+          "question_en": "Whose attention was on Martha that night?",
+          "options_en": [
+            "Everybody's",
+            "Only Zoe's",
+            "Only Zen's"
+          ],
+          "correct_index": 0,
+          "sentence_index": 37
+        },
+        {
+          "id": "gl_p3_s3_q2",
+          "type": "choice",
+          "question_en": "How did Zoe feel when everybody's attention was on Martha?",
+          "options_en": [
+            "Even more jealous",
+            "Very happy",
+            "Completely surprised"
+          ],
+          "correct_index": 0,
+          "sentence_index": 37
+        },
+        {
+          "id": "gl_p3_s4_q1",
+          "type": "choice",
+          "question_en": "Who set out early to execute her plan?",
+          "options_en": [
+            "She (Zoe)",
+            "Martha",
+            "Zen"
+          ],
+          "correct_index": 0,
+          "sentence_index": 38
+        },
+        {
+          "id": "gl_p3_s4_q2",
+          "type": "choice",
+          "question_en": "Why did she set out early?",
+          "options_en": [
+            "To execute her plan",
+            "To practice for the marathon",
+            "To visit the doctor"
+          ],
+          "correct_index": 0,
+          "sentence_index": 38
+        },
+        {
+          "id": "gl_p3_s5_q1",
+          "type": "choice",
+          "question_en": "Where did she go before switching off the street lights?",
+          "options_en": [
+            "To the nearby forest",
+            "To Zoe's house",
+            "To the marathon arena"
+          ],
+          "correct_index": 0,
+          "sentence_index": 39
+        },
+        {
+          "id": "gl_p3_s5_q2",
+          "type": "choice",
+          "question_en": "Why did she switch off the lights in the street?",
+          "options_en": [
+            "So that Martha wouldn't have a clue of where Zoe was leading her to",
+            "To save electricity",
+            "To hide from Zen"
+          ],
+          "correct_index": 0,
+          "sentence_index": 39
+        },
+        {
+          "id": "gl_p3_s6_q1",
+          "type": "choice",
+          "question_en": "Who did she spot in the corner of the room?",
+          "options_en": [
+            "Martha",
+            "Zen",
+            "Martha's parent"
+          ],
+          "correct_index": 0,
+          "sentence_index": 40
+        },
+        {
+          "id": "gl_p3_s6_q2",
+          "type": "choice",
+          "question_en": "How was Martha positioned when she was spotted?",
+          "options_en": [
+            "Standing alone",
+            "Sitting with the family",
+            "Walking with Zoe"
+          ],
+          "correct_index": 0,
+          "sentence_index": 40
+        },
+        {
+          "id": "gl_p3_s7_q1",
+          "type": "choice",
+          "question_en": "What did she invite Martha to do?",
+          "options_en": [
+            "Go for a walk",
+            "Join a marathon practice",
+            "Have more dinner"
+          ],
+          "correct_index": 0,
+          "sentence_index": 41
+        },
+        {
+          "id": "gl_p3_s7_q2",
+          "type": "choice",
+          "question_en": "What was the walk actually a plan for?",
+          "options_en": [
+            "Injuring Martha's leg",
+            "Helping Martha train",
+            "Surprising Martha with a gift"
+          ],
+          "correct_index": 0,
+          "sentence_index": 41
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "Who smelled something fishy?",
+          "options_en": [
+            "Zoe",
+            "Martha",
+            "Zen"
+          ],
+          "correct_index": 0,
+          "sentence_index": 42
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "What did Zoe smell about Martha?",
+          "options_en": [
+            "Something fishy",
+            "A trap in the grass",
+            "A wound"
+          ],
+          "correct_index": 0,
+          "sentence_index": 42
+        },
+        {
+          "id": "gl_p4_s1_q1",
+          "type": "choice",
+          "question_en": "Who seemed different?",
+          "options_en": [
+            "Martha",
+            "Zoe",
+            "Zen"
+          ],
+          "correct_index": 0,
+          "sentence_index": 43
+        },
+        {
+          "id": "gl_p4_s1_q2",
+          "type": "choice",
+          "question_en": "How did she seem?",
+          "options_en": [
+            "Different",
+            "Curious",
+            "Hurt"
+          ],
+          "correct_index": 0,
+          "sentence_index": 43
+        },
+        {
+          "id": "gl_p4_s2_q1",
+          "type": "choice",
+          "question_en": "Who didn't have any time for investigations?",
+          "options_en": [
+            "Zoe",
+            "Martha",
+            "Zen"
+          ],
+          "correct_index": 0,
+          "sentence_index": 44
+        },
+        {
+          "id": "gl_p4_s2_q2",
+          "type": "choice",
+          "question_en": "Why didn't Zoe investigate?",
+          "options_en": [
+            "She didn't have any time",
+            "She trusted Martha completely",
+            "She was injured"
+          ],
+          "correct_index": 0,
+          "sentence_index": 44
+        },
+        {
+          "id": "gl_p4_s3_q1",
+          "type": "choice",
+          "question_en": "Who carried on?",
+          "options_en": [
+            "Zoe",
+            "Martha",
+            "Zen"
+          ],
+          "correct_index": 0,
+          "sentence_index": 45
+        },
+        {
+          "id": "gl_p4_s3_q2",
+          "type": "choice",
+          "question_en": "What did she do next?",
+          "options_en": [
+            "She carried on",
+            "She stopped to investigate",
+            "She went home"
+          ],
+          "correct_index": 0,
+          "sentence_index": 45
+        },
+        {
+          "id": "gl_p4_s4_q1",
+          "type": "choice",
+          "question_en": "Who was she talking with as they walked?",
+          "options_en": [
+            "Martha",
+            "Zen",
+            "Zoe"
+          ],
+          "correct_index": 0,
+          "sentence_index": 46
+        },
+        {
+          "id": "gl_p4_s4_q2",
+          "type": "choice",
+          "question_en": "Where did they walk?",
+          "options_en": [
+            "To the dark forest",
+            "To Zoe's house",
+            "To the marathon arena"
+          ],
+          "correct_index": 0,
+          "sentence_index": 46
+        },
+        {
+          "id": "gl_p4_s5_q1",
+          "type": "choice",
+          "question_en": "What did she immediately recognize in the grass?",
+          "options_en": [
+            "The trap",
+            "A hidden path",
+            "A lost shoe"
+          ],
+          "correct_index": 0,
+          "sentence_index": 47
+        },
+        {
+          "id": "gl_p4_s5_q2",
+          "type": "choice",
+          "question_en": "Who had set the trap?",
+          "options_en": [
+            "She (Zoe)",
+            "Zen",
+            "Martha"
+          ],
+          "correct_index": 0,
+          "sentence_index": 47
+        },
+        {
+          "id": "gl_p4_s6_q1",
+          "type": "choice",
+          "question_en": "Who didn't have any suspicions?",
+          "options_en": [
+            "Martha",
+            "Zoe",
+            "Zen"
+          ],
+          "correct_index": 0,
+          "sentence_index": 48
+        },
+        {
+          "id": "gl_p4_s6_q2",
+          "type": "choice",
+          "question_en": "How is Martha described in this sentence?",
+          "options_en": [
+            "Bright and always curious",
+            "Jealous and angry",
+            "Injured and tired"
+          ],
+          "correct_index": 0,
+          "sentence_index": 48
+        },
+        {
+          "id": "gl_p4_s7_q1",
+          "type": "choice",
+          "question_en": "Who slowly led Martha into the trap?",
+          "options_en": [
+            "Zoe",
+            "Zen",
+            "Martha"
+          ],
+          "correct_index": 0,
+          "sentence_index": 49
+        },
+        {
+          "id": "gl_p4_s7_q2",
+          "type": "choice",
+          "question_en": "What happened to Martha in the trap?",
+          "options_en": [
+            "She slipped and fell with a thud",
+            "She found a hidden prize",
+            "She ran away safely"
+          ],
+          "correct_index": 0,
+          "sentence_index": 49
+        },
+        {
+          "id": "gl_p4_s8_q1",
+          "type": "choice",
+          "question_en": "How did Zoe act on the outside?",
+          "options_en": [
+            "She pretended she was sorry",
+            "She laughed out loud",
+            "She ran away"
+          ],
+          "correct_index": 0,
+          "sentence_index": 50
+        },
+        {
+          "id": "gl_p4_s8_q2",
+          "type": "choice",
+          "question_en": "How did Zoe feel on the inside?",
+          "options_en": [
+            "She smiled on the inside",
+            "She was crying",
+            "She was angry"
+          ],
+          "correct_index": 0,
+          "sentence_index": 50
+        },
+        {
+          "id": "gl_p4_s9_q1",
+          "type": "choice",
+          "question_en": "What did she do to help after the fall?",
+          "options_en": [
+            "Helped Martha get up",
+            "Left Martha on the ground",
+            "Called the marathon coach"
+          ],
+          "correct_index": 0,
+          "sentence_index": 51
+        },
+        {
+          "id": "gl_p4_s9_q2",
+          "type": "choice",
+          "question_en": "What did she examine?",
+          "options_en": [
+            "The wound",
+            "The trap",
+            "Martha's running shoes"
+          ],
+          "correct_index": 0,
+          "sentence_index": 51
+        },
+        {
+          "id": "gl_p4_s10_q1",
+          "type": "choice",
+          "question_en": "What was the wound like?",
+          "options_en": [
+            "Pretty big",
+            "Small and unimportant",
+            "Already healed"
+          ],
+          "correct_index": 0,
+          "sentence_index": 52
+        },
+        {
+          "id": "gl_p4_s10_q2",
+          "type": "choice",
+          "question_en": "What did she do after examining the wound?",
+          "options_en": [
+            "Took her home",
+            "Left her at the forest",
+            "Sent her to the marathon"
+          ],
+          "correct_index": 0,
+          "sentence_index": 52
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "Who was back home screaming?",
+          "options_en": [
+            "Zoe",
+            "Martha",
+            "Zen"
+          ],
+          "correct_index": 0,
+          "sentence_index": 53
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "What was Zoe screaming about?",
+          "options_en": [
+            "Martha was hurt",
+            "She had won a prize",
+            "She was lost"
+          ],
+          "correct_index": 0,
+          "sentence_index": 53
+        },
+        {
+          "id": "gl_p5_s1_q1",
+          "type": "choice",
+          "question_en": "Who looked shocked?",
+          "options_en": [
+            "Everybody",
+            "Zoe",
+            "Martha"
+          ],
+          "correct_index": 0,
+          "sentence_index": 54
+        },
+        {
+          "id": "gl_p5_s1_q2",
+          "type": "choice",
+          "question_en": "What did they not do immediately?",
+          "options_en": [
+            "Rush and help her",
+            "Call the doctor",
+            "Cheer for Martha"
+          ],
+          "correct_index": 0,
+          "sentence_index": 54
+        },
+        {
+          "id": "gl_p5_s2_q1",
+          "type": "choice",
+          "question_en": "What did they say about Martha's location?",
+          "options_en": [
+            "She was standing right behind them",
+            "She was at home",
+            "She was at the doctor"
+          ],
+          "correct_index": 0,
+          "sentence_index": 55
+        },
+        {
+          "id": "gl_p5_s2_q2",
+          "type": "choice",
+          "question_en": "Where was Martha according to them?",
+          "options_en": [
+            "Right behind them",
+            "In the forest",
+            "At Zoe's house"
+          ],
+          "correct_index": 0,
+          "sentence_index": 55
+        },
+        {
+          "id": "gl_p5_s3_q1",
+          "type": "choice",
+          "question_en": "Who appeared out of the crowd and waved at Zoe?",
+          "options_en": [
+            "Martha",
+            "Zoe",
+            "Zen"
+          ],
+          "correct_index": 0,
+          "sentence_index": 56
+        },
+        {
+          "id": "gl_p5_s3_q2",
+          "type": "choice",
+          "question_en": "Who did Martha say was hurt?",
+          "options_en": [
+            "Her brother Zen",
+            "Zoe",
+            "Her father"
+          ],
+          "correct_index": 0,
+          "sentence_index": 56
+        },
+        {
+          "id": "gl_p5_s4_q1",
+          "type": "choice",
+          "question_en": "How did Zoe feel?",
+          "options_en": [
+            "Terrified",
+            "Relieved",
+            "Excited"
+          ],
+          "correct_index": 0,
+          "sentence_index": 57
+        },
+        {
+          "id": "gl_p5_s4_q2",
+          "type": "choice",
+          "question_en": "Who was described as terrified?",
+          "options_en": [
+            "Zoe",
+            "Martha",
+            "Zen"
+          ],
+          "correct_index": 0,
+          "sentence_index": 57
+        },
+        {
+          "id": "gl_p5_s5_q1",
+          "type": "choice",
+          "question_en": "Who was winking at her?",
+          "options_en": [
+            "Her older brother",
+            "Zen",
+            "Martha"
+          ],
+          "correct_index": 0,
+          "sentence_index": 58
+        },
+        {
+          "id": "gl_p5_s5_q2",
+          "type": "choice",
+          "question_en": "What did her older brother whisper to her?",
+          "options_en": [
+            "\"Your evil plans won't work as long as I am here\"",
+            "\"Run to the doctor now\"",
+            "\"I forgive you\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 58
+        },
+        {
+          "id": "gl_p5_s6_q1",
+          "type": "choice",
+          "question_en": "Who was rushed to the doctor for medical aid?",
+          "options_en": [
+            "Zen",
+            "Martha",
+            "Zoe"
+          ],
+          "correct_index": 0,
+          "sentence_index": 59
+        },
+        {
+          "id": "gl_p5_s6_q2",
+          "type": "choice",
+          "question_en": "Why did Martha and her family leave home?",
+          "options_en": [
+            "She had to wake up early for the following day's contest",
+            "They were going to a party",
+            "They needed to visit the doctor"
+          ],
+          "correct_index": 0,
+          "sentence_index": 59
+        },
+        {
+          "id": "gl_p5_s7_q1",
+          "type": "choice",
+          "question_en": "Who called Martha the next morning?",
+          "options_en": [
+            "Zen",
+            "Zoe",
+            "Her mother"
+          ],
+          "correct_index": 0,
+          "sentence_index": 60
+        },
+        {
+          "id": "gl_p5_s7_q2",
+          "type": "choice",
+          "question_en": "What did Zen tell Martha he had done the previous night?",
+          "options_en": [
+            "He had gone as Martha to trick Zoe",
+            "He had injured Zoe",
+            "He had arranged the contest"
+          ],
+          "correct_index": 0,
+          "sentence_index": 60
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "Who called Martha that morning?",
+          "options_en": [
+            "Zen",
+            "Zoe",
+            "Martha's mom"
+          ],
+          "correct_index": 0,
+          "sentence_index": 61
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "What did Zen tell Martha on the phone?",
+          "options_en": [
+            "That he had gone as Martha the previous night to trick Zoe",
+            "That Martha had won the marathon",
+            "That Zoe would cheer for Martha"
+          ],
+          "correct_index": 0,
+          "sentence_index": 61
+        },
+        {
+          "id": "gl_p6_s1_q1",
+          "type": "choice",
+          "question_en": "What did Martha do after Zen's call?",
+          "options_en": [
+            "Thanked him with a whole heart",
+            "Scolded him for lying",
+            "Hung up without speaking"
+          ],
+          "correct_index": 0,
+          "sentence_index": 62
+        },
+        {
+          "id": "gl_p6_s1_q2",
+          "type": "choice",
+          "question_en": "Why did Zen say he had acted as he did?",
+          "options_en": [
+            "Because it was a brother's duty to protect his sister",
+            "Because he wanted to win a prize",
+            "Because he wanted to trick Martha"
+          ],
+          "correct_index": 0,
+          "sentence_index": 62
+        },
+        {
+          "id": "gl_p6_s2_q1",
+          "type": "choice",
+          "question_en": "What was about to begin?",
+          "options_en": [
+            "The marathon",
+            "The family dinner",
+            "The school assembly"
+          ],
+          "correct_index": 0,
+          "sentence_index": 63
+        },
+        {
+          "id": "gl_p6_s2_q2",
+          "type": "choice",
+          "question_en": "When did the marathon begin according to the sentence?",
+          "options_en": [
+            "Finally, it was time for the marathon to begin",
+            "The previous night",
+            "After the apology"
+          ],
+          "correct_index": 0,
+          "sentence_index": 63
+        },
+        {
+          "id": "gl_p6_s3_q1",
+          "type": "choice",
+          "question_en": "Who from Martha's school did not come to cheer her?",
+          "options_en": [
+            "Zoe",
+            "Zen",
+            "Martha"
+          ],
+          "correct_index": 0,
+          "sentence_index": 64
+        },
+        {
+          "id": "gl_p6_s3_q2",
+          "type": "choice",
+          "question_en": "Why did Zoe decide to stay home?",
+          "options_en": [
+            "Because of what had happened the previous night",
+            "Because she was running in the race",
+            "Because she was injured during the marathon"
+          ],
+          "correct_index": 0,
+          "sentence_index": 64
+        },
+        {
+          "id": "gl_p6_s4_q1",
+          "type": "choice",
+          "question_en": "How did Martha run in the race?",
+          "options_en": [
+            "Confidently that she would get a prize",
+            "Slowly and sadly",
+            "Hesitantly and unsure"
+          ],
+          "correct_index": 0,
+          "sentence_index": 65
+        },
+        {
+          "id": "gl_p6_s4_q2",
+          "type": "choice",
+          "question_en": "What did Martha believe she would get?",
+          "options_en": [
+            "A prize",
+            "A phone call",
+            "A costume"
+          ],
+          "correct_index": 0,
+          "sentence_index": 65
+        },
+        {
+          "id": "gl_p6_s5_q1",
+          "type": "choice",
+          "question_en": "What happened to Martha in the race?",
+          "options_en": [
+            "She did get a prize",
+            "She stayed home",
+            "She withdrew from the race"
+          ],
+          "correct_index": 0,
+          "sentence_index": 66
+        },
+        {
+          "id": "gl_p6_s5_q2",
+          "type": "choice",
+          "question_en": "Who received a prize according to the sentence?",
+          "options_en": [
+            "She (Martha)",
+            "Zoe",
+            "Zen"
+          ],
+          "correct_index": 0,
+          "sentence_index": 66
+        },
+        {
+          "id": "gl_p6_s6_q1",
+          "type": "choice",
+          "question_en": "Which prize did Martha win?",
+          "options_en": [
+            "The first prize",
+            "The second prize",
+            "No prize"
+          ],
+          "correct_index": 0,
+          "sentence_index": 67
+        },
+        {
+          "id": "gl_p6_s6_q2",
+          "type": "choice",
+          "question_en": "What does the sentence emphasize about Martha's prize?",
+          "options_en": [
+            "It was the first prize",
+            "It was a consolation prize",
+            "It was a participation ribbon"
+          ],
+          "correct_index": 0,
+          "sentence_index": 67
+        },
+        {
+          "id": "gl_p6_s7_q1",
+          "type": "choice",
+          "question_en": "Who felt happy for Martha after she won?",
+          "options_en": [
+            "Everyone, even Zoe",
+            "Only Zen",
+            "No one at all"
+          ],
+          "correct_index": 0,
+          "sentence_index": 68
+        },
+        {
+          "id": "gl_p6_s7_q2",
+          "type": "choice",
+          "question_en": "Who heard that it was her sister and best friend who had won?",
+          "options_en": [
+            "Zoe",
+            "Ruby",
+            "Martha's mom"
+          ],
+          "correct_index": 0,
+          "sentence_index": 68
+        },
+        {
+          "id": "gl_p6_s8_q1",
+          "type": "choice",
+          "question_en": "Who immediately went to the arena to apologize?",
+          "options_en": [
+            "She (Zoe)",
+            "Martha",
+            "Zen"
+          ],
+          "correct_index": 0,
+          "sentence_index": 69
+        },
+        {
+          "id": "gl_p6_s8_q2",
+          "type": "choice",
+          "question_en": "Why did she go to apologize?",
+          "options_en": [
+            "After realizing what a horrible mistake she had done",
+            "To cheer Martha on the stage",
+            "To accept a prize"
+          ],
+          "correct_index": 0,
+          "sentence_index": 69
+        },
+        {
+          "id": "gl_p6_s9_q1",
+          "type": "choice",
+          "question_en": "What did Martha do when Zoe apologized?",
+          "options_en": [
+            "Accepted her apology",
+            "Refused to forgive her",
+            "Ignored her apology"
+          ],
+          "correct_index": 0,
+          "sentence_index": 70
+        },
+        {
+          "id": "gl_p6_s9_q2",
+          "type": "choice",
+          "question_en": "How did the sisters live after the apology?",
+          "options_en": [
+            "Happily ever after",
+            "Separated and unhappy",
+            "Not mentioned"
+          ],
+          "correct_index": 0,
+          "sentence_index": 70
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "Who immediately went to the arena to apologize?",
+          "options_en": [
+            "Zoe",
+            "Martha",
+            "Zen"
+          ],
+          "correct_index": 0,
+          "sentence_index": 71
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "Why did she go to the arena?",
+          "options_en": [
+            "To apologize after realizing a horrible mistake",
+            "To watch the marathon",
+            "To practice running"
+          ],
+          "correct_index": 0,
+          "sentence_index": 71
+        },
+        {
+          "id": "gl_p7_s1_q1",
+          "type": "choice",
+          "question_en": "What did Martha do when Zoe apologized?",
+          "options_en": [
+            "Accepted her apology",
+            "Scolded Zoe",
+            "Left the arena"
+          ],
+          "correct_index": 0,
+          "sentence_index": 72
+        },
+        {
+          "id": "gl_p7_s1_q2",
+          "type": "choice",
+          "question_en": "What did Martha say she already knew?",
+          "options_en": [
+            "About Zoe's plans",
+            "About Zen's plan",
+            "About the marathon result"
+          ],
+          "correct_index": 0,
+          "sentence_index": 72
+        },
+        {
+          "id": "gl_p7_s2_q1",
+          "type": "choice",
+          "question_en": "How did Zoe feel after hearing how much Martha trusted her?",
+          "options_en": [
+            "Even more sad",
+            "Happy",
+            "Angry"
+          ],
+          "correct_index": 0,
+          "sentence_index": 73
+        },
+        {
+          "id": "gl_p7_s2_q2",
+          "type": "choice",
+          "question_en": "Why did Zoe feel even more sad?",
+          "options_en": [
+            "Because she heard how much Martha trusted her",
+            "Because she lost the race",
+            "Because Zen was injured"
+          ],
+          "correct_index": 0,
+          "sentence_index": 73
+        },
+        {
+          "id": "gl_p7_s3_q1",
+          "type": "choice",
+          "question_en": "What did she swear to never do again?",
+          "options_en": [
+            "Repeat this mistake",
+            "Run in the marathon",
+            "Hide Zen's plans"
+          ],
+          "correct_index": 0,
+          "sentence_index": 74
+        },
+        {
+          "id": "gl_p7_s3_q2",
+          "type": "choice",
+          "question_en": "What did Martha do immediately after Zoe swore?",
+          "options_en": [
+            "Hugged her",
+            "Cried loudly",
+            "Walked away"
+          ],
+          "correct_index": 0,
+          "sentence_index": 74
+        },
+        {
+          "id": "gl_p7_s4_q1",
+          "type": "choice",
+          "question_en": "Who lived happily ever after?",
+          "options_en": [
+            "Both the sisters",
+            "Martha only",
+            "Zen and Zoe"
+          ],
+          "correct_index": 0,
+          "sentence_index": 75
+        },
+        {
+          "id": "gl_p7_s4_q2",
+          "type": "choice",
+          "question_en": "How did the sisters live after that?",
+          "options_en": [
+            "Happily ever after",
+            "Sadly",
+            "Secretly"
+          ],
+          "correct_index": 0,
+          "sentence_index": 75
+        }
+      ]
+    },
+    {
+      "paragraph_index": 8,
+      "questions": [
+        {
+          "id": "gl_p8_s0_q1",
+          "type": "choice",
+          "question_en": "Who was reading a story book?",
+          "options_en": [
+            "Ruby",
+            "Martha",
+            "Zoe"
+          ],
+          "correct_index": 0,
+          "sentence_index": 76
+        },
+        {
+          "id": "gl_p8_s0_q2",
+          "type": "choice",
+          "question_en": "When was the little girl reading a story book?",
+          "options_en": [
+            "Many years later",
+            "The next morning",
+            "One fine day"
+          ],
+          "correct_index": 0,
+          "sentence_index": 76
+        },
+        {
+          "id": "gl_p8_s1_q1",
+          "type": "choice",
+          "question_en": "Who came in and asked what she was reading?",
+          "options_en": [
+            "Her mom",
+            "Zen",
+            "Zoe"
+          ],
+          "correct_index": 0,
+          "sentence_index": 77
+        },
+        {
+          "id": "gl_p8_s1_q2",
+          "type": "choice",
+          "question_en": "What did her mom ask her?",
+          "options_en": [
+            "What she was reading",
+            "Where she was going",
+            "Who she was with"
+          ],
+          "correct_index": 0,
+          "sentence_index": 77
+        },
+        {
+          "id": "gl_p8_s2_q1",
+          "type": "choice",
+          "question_en": "Who did Ruby say won the gold medal for marathon running six times?",
+          "options_en": [
+            "Martha",
+            "Zoe",
+            "Ruby"
+          ],
+          "correct_index": 0,
+          "sentence_index": 78
+        },
+        {
+          "id": "gl_p8_s2_q2",
+          "type": "choice",
+          "question_en": "Where did Ruby say Martha lives?",
+          "options_en": [
+            "In our country",
+            "In a nearby town",
+            "In another city"
+          ],
+          "correct_index": 0,
+          "sentence_index": 78
+        },
+        {
+          "id": "gl_p8_s3_q1",
+          "type": "choice",
+          "question_en": "What was Ruby reading about?",
+          "options_en": [
+            "A book about Martha",
+            "A book about Zen",
+            "A book about Zoe"
+          ],
+          "correct_index": 0,
+          "sentence_index": 79
+        },
+        {
+          "id": "gl_p8_s3_q2",
+          "type": "choice",
+          "question_en": "Who is the subject of the book Ruby is reading?",
+          "options_en": [
+            "Martha",
+            "Zen",
+            "Her mom"
+          ],
+          "correct_index": 0,
+          "sentence_index": 79
+        },
+        {
+          "id": "gl_p8_s4_q1",
+          "type": "choice",
+          "question_en": "Who did Ruby say won the silver medal every time Martha won gold?",
+          "options_en": [
+            "Zoe",
+            "Zen",
+            "Ruby"
+          ],
+          "correct_index": 0,
+          "sentence_index": 80
+        },
+        {
+          "id": "gl_p8_s4_q2",
+          "type": "choice",
+          "question_en": "How often did Zoe win silver according to Ruby?",
+          "options_en": [
+            "Every time Martha won gold",
+            "Only once",
+            "Never"
+          ],
+          "correct_index": 0,
+          "sentence_index": 80
+        },
+        {
+          "id": "gl_p8_s5_q1",
+          "type": "choice",
+          "question_en": "Why did Ruby want to become like Martha?",
+          "options_en": [
+            "So people will publish stories about her",
+            "So she could run faster than Zoe",
+            "So she could win a prize at school"
+          ],
+          "correct_index": 0,
+          "sentence_index": 81
+        },
+        {
+          "id": "gl_p8_s5_q2",
+          "type": "choice",
+          "question_en": "What did everyone know about Martha in the sentence?",
+          "options_en": [
+            "She was the Marathon Champion and a role model",
+            "She had stopped running",
+            "She moved to another country"
+          ],
+          "correct_index": 0,
+          "sentence_index": 81
+        },
+        {
+          "id": "gl_p8_s6_q1",
+          "type": "choice",
+          "question_en": "Who is described as the silver medalist and a great sister?",
+          "options_en": [
+            "Zoe",
+            "Ruby",
+            "Zen"
+          ],
+          "correct_index": 0,
+          "sentence_index": 82
+        },
+        {
+          "id": "gl_p8_s6_q2",
+          "type": "choice",
+          "question_en": "How long was Zoe a great sister according to the sentence?",
+          "options_en": [
+            "Till the very end of her life",
+            "Only during the competition",
+            "For a short time"
+          ],
+          "correct_index": 0,
+          "sentence_index": 82
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'The Story of Martha'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "passion",
+      "meaning_vi": "niềm đam mê (thích làm gì đó rất nhiều)",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "succeeded",
+      "meaning_vi": "đã thành công (làm được điều mình muốn)",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "confused",
+      "meaning_vi": "bối rối (không hiểu chuyện gì đang xảy ra)",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "jealousy",
+      "meaning_vi": "đố kỵ (cảm thấy khó chịu khi người khác giỏi hơn hoặc có thứ mình muốn)",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "evil",
+      "meaning_vi": "xấu xa (rất tệ, muốn làm hại người khác)",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "participate",
+      "meaning_vi": "tham gia (cùng làm một việc gì đó)",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "curious",
+      "meaning_vi": "tò mò (muốn biết về một điều gì đó)",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "injure",
+      "meaning_vi": "làm bị thương (làm đau một bộ phận trên cơ thể)",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "refused",
+      "meaning_vi": "từ chối (không đồng ý làm gì)",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "trusted",
+      "meaning_vi": "tin tưởng (tin vào lời nói hoặc hành động của ai đó)",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "executing",
+      "meaning_vi": "thực hiện (làm theo một kế hoạch)",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "costumes",
+      "meaning_vi": "trang phục (quần áo đặc biệt để đóng vai hoặc dự tiệc)",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "present",
+      "meaning_vi": "có mặt (có ở đó)",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "attention",
+      "meaning_vi": "sự chú ý (tập trung nhìn hoặc nghe)",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "examined",
+      "meaning_vi": "kiểm tra (xem xét cẩn thận)",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "clue",
+      "meaning_vi": "manh mối (một dấu hiệu giúp tìm ra điều gì đó)",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "fishy",
+      "meaning_vi": "đáng ngờ (có điều gì đó không đúng)",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "investigations",
+      "meaning_vi": "điều tra (tìm hiểu kỹ sự thật)",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "trap",
+      "meaning_vi": "cái bẫy (một thứ dùng để bắt giữ)",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "unusual",
+      "meaning_vi": "bất thường (không giống bình thường)",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "screaming",
+      "meaning_vi": "la hét (kêu to)",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "shocked",
+      "meaning_vi": "sốc (rất ngạc nhiên và buồn)",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "terrified",
+      "meaning_vi": "sợ hãi (rất sợ)",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "trick",
+      "meaning_vi": "lừa (làm cho ai đó tin điều không đúng)",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "duty",
+      "meaning_vi": "nhiệm vụ (việc cần phải làm)",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "protect",
+      "meaning_vi": "bảo vệ (giữ cho ai đó an toàn)",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "confidently",
+      "meaning_vi": "tự tin (tin tưởng vào khả năng của mình)",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "apologize",
+      "meaning_vi": "xin lỗi (nói rằng mình hối tiếc vì đã làm sai)",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "arena",
+      "meaning_vi": "sân vận động (nơi tổ chức các cuộc thi đấu thể thao)",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "mistake",
+      "meaning_vi": "lỗi lầm (việc làm sai)",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "scolded",
+      "meaning_vi": "mắng (nói giận dữ với ai đó)",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "swore",
+      "meaning_vi": "thề (hứa một cách mạnh mẽ)",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "replied",
+      "meaning_vi": "trả lời (đáp lại câu hỏi)",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "gold medal",
+      "meaning_vi": "huy chương vàng (giải thưởng cao nhất trong thể thao)",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "Olympics",
+      "meaning_vi": "Thế vận hội (đại hội thể thao lớn nhất thế giới)",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "role model",
+      "meaning_vi": "hình mẫu (người mà mình muốn noi theo)",
+      "paragraph_index": 8
+    }
+  ]
+}

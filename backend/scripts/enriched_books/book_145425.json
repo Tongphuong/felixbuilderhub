@@ -1,0 +1,1412 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L4",
+  "level_label": "Cấp 4",
+  "topic": "Amara and Animals",
+  "slug": "book_145425",
+  "audio_filename": "book_145425.mp3",
+  "book_slug": "book_145425",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_145425/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_145425/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_145425/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_145425/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_145425/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_145425/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_145425/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_145425/page_09.jpg",
+    "https://audio.felixbuilderhub.com/books/book_145425/page_10.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_145425/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_145425/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_145425/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_145425/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_145425/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_145425/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_145425/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_145425/page_09.mp3",
+    "https://audio.felixbuilderhub.com/books/book_145425/page_10.mp3"
+  ],
+  "book_attribution": {
+    "title": "Amara and Animals",
+    "creators": [
+      "Judy B. Maranga",
+      "Sarah Bouwer"
+    ],
+    "publisher": "African Storybook Initiative",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: Amara and Animals is written by Judy B. Maranga . © African Storybook Initiative , 2015. Some rights reserved. Released under CC BY 4.0 license. Other Credits: This story 'Amara and Animals' has been published on StoryWeaver by African Storybook Initiative. Images Attributions: Cover page: Children and dog , by Sarah Bouwer © African Storybook Initiative, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 2: Boy feeding chickens and ducks while girl and dog look at each other , by Sarah Bouwer © African Storybook Initiative, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 3: Woman and girl pulling out carrots , by Sarah Bouwer © African Storybook Initiative, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 4: Boy pets goat, girl looks on , by Sarah Bouwer © African Storybook Initiative, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 5: Boy plucks grass, goats graze, girl tries to stop , by Sarah Bouwer © African Storybook Initiative, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 6: Children playing football , by Sarah Bouwer © African Storybook Initiative, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 7: Family at dinner table , by Sarah Bouwer © African Storybook Initiative, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 8: Woman pointing, children playing , by Sarah Bouwer © African Storybook Initiative, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 9: Children and dog , by Sarah Bouwer © African Storybook Initiative, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 10: Girl reads out to woman from paper , by Sarah Bouwer © African Storybook Initiative, 2015. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/145425-amara-and-animals",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "Boy feeding chickens and ducks while girl and dog look at each other , by Sarah Bouwer © African Storybook Initiative, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "Woman and girl pulling out carrots , by Sarah Bouwer © African Storybook Initiative, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "Boy pets goat, girl looks on , by Sarah Bouwer © African Storybook Initiative, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "Boy plucks grass, goats graze, girl tries to stop , by Sarah Bouwer © African Storybook Initiative, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "Children playing football , by Sarah Bouwer © African Storybook Initiative, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "Family at dinner table , by Sarah Bouwer © African Storybook Initiative, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "Woman pointing, children playing , by Sarah Bouwer © African Storybook Initiative, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "Children and dog , by Sarah Bouwer © African Storybook Initiative, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 8,
+        "credit_text": "Girl reads out to woman from paper , by Sarah Bouwer © African Storybook Initiative, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "Amara and Animals",
+    "paragraphs_en": [
+      "Amara was nine years old. She went to Kerema primary school. Her favorite subjects were English, Science and Social Studies. She wanted to be a lawyer when she grew up. Amara loved animals very much.",
+      "Amara lived with her mother, Margy. She was a very hardworking farmer. Amara's father died when she was 5 years old.",
+      "When Amara was not at school, she spent her time with Mbisa, the goat. She cleaned and fed it.",
+      "Amara also had her pet, Simba. Her mother did not like dogs very much, but she let Amara keep Simba. Whenever Simba disturbed her, she would shout, \"Go away before I kick you out.\" Amara felt sad.",
+      "One Saturday, they had visitors from the women's group. Amara was happy that her mother's friends had come with their children. They could play football.",
+      "Her mother had prepared the food that the group liked. Amara was reminded by her mother to keep Simba locked up. It barked at strangers. Amara did not lock up Simba well. The visitors were surprised to see the dog in the room. Mama Oto asked, \"Why do you allow the dog to come inside the house?\" Amara's mother called Amara to come and take Simba out.",
+      "Amara did not hear her mother calling because they were busy playing.",
+      "When Amara went to the house, she called Simba out. Simba was very obedient to Amara. After the meal, the visitors said, \"We'll also treat our dogs well like Amara. We mistreat them and yet they are so helpful.\"",
+      "Afterwards, Amara's mother apologised for being mean and cruel to Simba. Amara was happy that her mother accepted her dog at last. When Amara is in school her mother feeds Simba. Her mother's friends have learned to be good to their dogs."
+    ],
+    "sentences": [
+      {
+        "text_en": "Amara was nine years old.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_145425/s_000.mp3",
+        "text_vi": "Amara chín tuổi rồi."
+      },
+      {
+        "text_en": "She went to Kerema primary school.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_145425/s_001.mp3",
+        "text_vi": "Cô bé đi học ở trường tiểu học Kerema."
+      },
+      {
+        "text_en": "Her favorite subjects were English, Science and Social Studies.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_145425/s_002.mp3",
+        "text_vi": "Các môn học yêu thích của cô bé là tiếng Anh, Khoa học và môn Xã hội."
+      },
+      {
+        "text_en": "She wanted to be a lawyer when she grew up.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_145425/s_003.mp3",
+        "text_vi": "Khi lớn lên, cô bé muốn trở thành luật sư."
+      },
+      {
+        "text_en": "Amara loved animals very much.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_145425/s_004.mp3",
+        "text_vi": "Amara rất yêu động vật."
+      },
+      {
+        "text_en": "Amara lived with her mother, Margy.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_145425/s_005.mp3",
+        "text_vi": "Amara sống với mẹ của mình, tên là Margy."
+      },
+      {
+        "text_en": "She was a very hardworking farmer.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_145425/s_006.mp3",
+        "text_vi": "Mẹ cô bé là một nông dân rất chăm chỉ."
+      },
+      {
+        "text_en": "Amara's father died when she was 5 years old.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_145425/s_007.mp3",
+        "text_vi": "Bố của Amara mất khi cô bé mới 5 tuổi."
+      },
+      {
+        "text_en": "When Amara was not at school, she spent her time with Mbisa, the goat.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_145425/s_008.mp3",
+        "text_vi": "Khi không ở trường, Amara dành thời gian chơi với Mbisa, con dê của mình."
+      },
+      {
+        "text_en": "She cleaned and fed it.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_145425/s_009.mp3",
+        "text_vi": "Cô bé dọn dẹp và cho nó ăn."
+      },
+      {
+        "text_en": "Amara also had her pet, Simba.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_145425/s_010.mp3",
+        "text_vi": "Amara còn có một con vật cưng tên là Simba."
+      },
+      {
+        "text_en": "Her mother did not like dogs very much, but she let Amara keep Simba.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_145425/s_011.mp3",
+        "text_vi": "Mẹ cô bé không thích chó lắm, nhưng bà vẫn cho Amara nuôi Simba."
+      },
+      {
+        "text_en": "Whenever Simba disturbed her, she would shout, \"Go away before I kick you out.\" Amara felt sad.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_145425/s_012.mp3",
+        "text_vi": "Mỗi khi Simba làm phiền, mẹ cô bé lại hét lên: \"Đi chỗ khác ngay trước khi mẹ đuổi con ra ngoài!\" Amara cảm thấy buồn."
+      },
+      {
+        "text_en": "One Saturday, they had visitors from the women's group.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_145425/s_013.mp3",
+        "text_vi": "Một ngày thứ Bảy, nhà Amara có khách từ hội phụ nữ đến chơi."
+      },
+      {
+        "text_en": "Amara was happy that her mother's friends had come with their children.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_145425/s_014.mp3",
+        "text_vi": "Amara rất vui vì bạn của mẹ đã đến cùng với các con của họ."
+      },
+      {
+        "text_en": "They could play football.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_145425/s_015.mp3",
+        "text_vi": "Các bạn có thể chơi đá bóng cùng nhau."
+      },
+      {
+        "text_en": "Her mother had prepared the food that the group liked.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_145425/s_016.mp3",
+        "text_vi": "Mẹ cô bé đã chuẩn bị món ăn mà cả nhóm thích."
+      },
+      {
+        "text_en": "Amara was reminded by her mother to keep Simba locked up.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_145425/s_017.mp3",
+        "text_vi": "Mẹ nhắc Amara phải nhốt Simba lại."
+      },
+      {
+        "text_en": "It barked at strangers.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_145425/s_018.mp3",
+        "text_vi": "Nó hay sủa người lạ."
+      },
+      {
+        "text_en": "Amara did not lock up Simba well.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_145425/s_019.mp3",
+        "text_vi": "Amara đã không nhốt Simba cẩn thận."
+      },
+      {
+        "text_en": "The visitors were surprised to see the dog in the room.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_145425/s_020.mp3",
+        "text_vi": "Khách rất ngạc nhiên khi thấy con chó ở trong phòng."
+      },
+      {
+        "text_en": "Mama Oto asked, \"Why do you allow the dog to come inside the house?\" Amara's mother called Amara to come and take Simba out.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_145425/s_021.mp3",
+        "text_vi": "Bà Oto hỏi: \"Sao cháu lại để chó vào nhà thế?\" Mẹ Amara gọi Amara ra để đưa Simba ra ngoài."
+      },
+      {
+        "text_en": "Amara did not hear her mother calling because they were busy playing.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_145425/s_022.mp3",
+        "text_vi": "Amara không nghe thấy mẹ gọi vì các bạn đang mải chơi."
+      },
+      {
+        "text_en": "When Amara went to the house, she called Simba out.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_145425/s_023.mp3",
+        "text_vi": "Khi Amara vào nhà, cô bé gọi Simba ra ngoài."
+      },
+      {
+        "text_en": "Simba was very obedient to Amara.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_145425/s_024.mp3",
+        "text_vi": "Simba rất vâng lời Amara."
+      },
+      {
+        "text_en": "After the meal, the visitors said, \"We'll also treat our dogs well like Amara.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_145425/s_025.mp3",
+        "text_vi": "Sau bữa ăn, các vị khách nói: \"Chúng tôi cũng sẽ đối xử tốt với chó của mình như Amara."
+      },
+      {
+        "text_en": "We mistreat them and yet they are so helpful.\"",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_145425/s_026.mp3",
+        "text_vi": "Chúng tôi đã ngược đãi chúng, vậy mà chúng vẫn rất hữu ích.\""
+      },
+      {
+        "text_en": "Afterwards, Amara's mother apologised for being mean and cruel to Simba.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_145425/s_027.mp3",
+        "text_vi": "Sau đó, mẹ Amara đã xin lỗi vì đã đối xử tệ và độc ác với Simba."
+      },
+      {
+        "text_en": "Amara was happy that her mother accepted her dog at last.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_145425/s_028.mp3",
+        "text_vi": "Amara rất vui vì cuối cùng mẹ cũng đã chấp nhận con chó của mình."
+      },
+      {
+        "text_en": "When Amara is in school her mother feeds Simba.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_145425/s_029.mp3",
+        "text_vi": "Khi Amara ở trường, mẹ cô bé sẽ cho Simba ăn."
+      },
+      {
+        "text_en": "Her mother's friends have learned to be good to their dogs.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_145425/s_030.mp3",
+        "text_vi": "Bạn bè của mẹ cô bé cũng đã học được cách đối xử tốt với chó của họ."
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "Amara was nine years old.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_145425/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "She went to Kerema primary school.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_145425/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "Her favorite subjects were English, Science and Social Studies.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_145425/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "She wanted to be a lawyer when she grew up.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_145425/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "Amara loved animals very much.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_145425/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "Amara lived with her mother, Margy.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_145425/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "She was a very hardworking farmer.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_145425/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "Amara's father died when she was 5 years old.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_145425/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "When Amara was not at school, she spent her time with Mbisa, the goat.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_145425/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "She cleaned and fed it.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_145425/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "Amara also had her pet, Simba.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_145425/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "Her mother did not like dogs very much, but she let Amara keep Simba.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_145425/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "Whenever Simba disturbed her, she would shout, \"Go away before I kick you out.\" Amara felt sad.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_145425/s_012.mp3"
+        },
+        {
+          "id": "ra_13",
+          "text_en": "One Saturday, they had visitors from the women's group.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_145425/s_013.mp3"
+        },
+        {
+          "id": "ra_14",
+          "text_en": "Amara was happy that her mother's friends had come with their children.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_145425/s_014.mp3"
+        },
+        {
+          "id": "ra_15",
+          "text_en": "They could play football.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_145425/s_015.mp3"
+        },
+        {
+          "id": "ra_16",
+          "text_en": "Her mother had prepared the food that the group liked.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_145425/s_016.mp3"
+        },
+        {
+          "id": "ra_17",
+          "text_en": "Amara was reminded by her mother to keep Simba locked up.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_145425/s_017.mp3"
+        },
+        {
+          "id": "ra_18",
+          "text_en": "It barked at strangers.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_145425/s_018.mp3"
+        },
+        {
+          "id": "ra_19",
+          "text_en": "Amara did not lock up Simba well.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_145425/s_019.mp3"
+        },
+        {
+          "id": "ra_20",
+          "text_en": "The visitors were surprised to see the dog in the room.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_145425/s_020.mp3"
+        },
+        {
+          "id": "ra_21",
+          "text_en": "Mama Oto asked, \"Why do you allow the dog to come inside the house?\" Amara's mother called Amara to come and take Simba out.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_145425/s_021.mp3"
+        },
+        {
+          "id": "ra_22",
+          "text_en": "Amara did not hear her mother calling because they were busy playing.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_145425/s_022.mp3"
+        },
+        {
+          "id": "ra_23",
+          "text_en": "When Amara went to the house, she called Simba out.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_145425/s_023.mp3"
+        },
+        {
+          "id": "ra_24",
+          "text_en": "Simba was very obedient to Amara.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_145425/s_024.mp3"
+        },
+        {
+          "id": "ra_25",
+          "text_en": "After the meal, the visitors said, \"We'll also treat our dogs well like Amara.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_145425/s_025.mp3"
+        },
+        {
+          "id": "ra_26",
+          "text_en": "We mistreat them and yet they are so helpful.\"",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_145425/s_026.mp3"
+        },
+        {
+          "id": "ra_27",
+          "text_en": "Afterwards, Amara's mother apologised for being mean and cruel to Simba.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_145425/s_027.mp3"
+        },
+        {
+          "id": "ra_28",
+          "text_en": "Amara was happy that her mother accepted her dog at last.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_145425/s_028.mp3"
+        },
+        {
+          "id": "ra_29",
+          "text_en": "When Amara is in school her mother feeds Simba.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_145425/s_029.mp3"
+        },
+        {
+          "id": "ra_30",
+          "text_en": "Her mother's friends have learned to be good to their dogs.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_145425/s_030.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "Who was nine years old?",
+          "options_en": [
+            "Amara",
+            "Margy",
+            "Mbisa"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "How old was Amara?",
+          "options_en": [
+            "Nine years old",
+            "Five years old",
+            "Twelve years old"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s1_q1",
+          "type": "choice",
+          "question_en": "Where did she go to school?",
+          "options_en": [
+            "Kerema primary school",
+            "The farm",
+            "The market"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s1_q2",
+          "type": "choice",
+          "question_en": "Which school did she attend?",
+          "options_en": [
+            "Kerema primary school",
+            "Kerema secondary school",
+            "Kerema nursery"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s2_q1",
+          "type": "choice",
+          "question_en": "Which subjects were her favorites?",
+          "options_en": [
+            "English, Science and Social Studies",
+            "Farming, Football and Cooking",
+            "Maths, Art and Music"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s2_q2",
+          "type": "choice",
+          "question_en": "How many favorite subjects are listed?",
+          "options_en": [
+            "Three",
+            "Two",
+            "Four"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s3_q1",
+          "type": "choice",
+          "question_en": "What did she want to be when she grew up?",
+          "options_en": [
+            "A lawyer",
+            "A farmer",
+            "A football player"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p0_s3_q2",
+          "type": "choice",
+          "question_en": "Who wanted to be a lawyer when she grew up?",
+          "options_en": [
+            "Amara",
+            "Margy",
+            "Mama Oto"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p0_s4_q1",
+          "type": "choice",
+          "question_en": "What did Amara love very much?",
+          "options_en": [
+            "Animals",
+            "Food",
+            "Football"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p0_s4_q2",
+          "type": "choice",
+          "question_en": "How did Amara feel about animals?",
+          "options_en": [
+            "She loved them very much",
+            "She was afraid of them",
+            "She ignored them"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "Who did Amara live with?",
+          "options_en": [
+            "Her mother, Margy",
+            "Mbisa the goat",
+            "Her father"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "Where did Amara live?",
+          "options_en": [
+            "With her mother, Margy",
+            "At Kerema primary school",
+            "With Mbisa the goat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p1_s1_q1",
+          "type": "choice",
+          "question_en": "Who was a very hardworking farmer?",
+          "options_en": [
+            "Her mother, Margy",
+            "Amara",
+            "Mbisa the goat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p1_s1_q2",
+          "type": "choice",
+          "question_en": "What was Margy described as?",
+          "options_en": [
+            "A very hardworking farmer",
+            "A student at Kerema primary school",
+            "A member of the women's group"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p1_s2_q1",
+          "type": "choice",
+          "question_en": "When did Amara's father die?",
+          "options_en": [
+            "When she was 5 years old",
+            "When she was nine years old",
+            "When she was a baby"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p1_s2_q2",
+          "type": "choice",
+          "question_en": "Whose father died when she was 5 years old?",
+          "options_en": [
+            "Amara's father",
+            "Margy's father",
+            "Simba's owner"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "Who did Amara spend her time with when she was not at school?",
+          "options_en": [
+            "Mbisa the goat",
+            "Simba the dog",
+            "Her mother Margy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "When did Amara spend time with Mbisa?",
+          "options_en": [
+            "When she was not at school",
+            "When visitors came",
+            "On Saturdays"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p2_s1_q1",
+          "type": "choice",
+          "question_en": "What did she do to Mbisa?",
+          "options_en": [
+            "She cleaned and fed it",
+            "She played football with it",
+            "She locked it up"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p2_s1_q2",
+          "type": "choice",
+          "question_en": "How did she care for the goat?",
+          "options_en": [
+            "By cleaning and feeding it",
+            "By letting Simba look after it",
+            "By sending it to Kerema school"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "Who had a pet?",
+          "options_en": [
+            "Amara",
+            "Mbisa the goat",
+            "Mama Oto"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "What was the name of Amara's pet?",
+          "options_en": [
+            "Simba",
+            "Mbisa",
+            "Margy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p3_s1_q1",
+          "type": "choice",
+          "question_en": "Who did not like dogs very much?",
+          "options_en": [
+            "Her mother",
+            "Amara",
+            "Mama Oto"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p3_s1_q2",
+          "type": "choice",
+          "question_en": "How did her mother feel about dogs?",
+          "options_en": [
+            "She did not like them very much",
+            "She loved them very much",
+            "She treated them well"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p3_s2_q1",
+          "type": "choice",
+          "question_en": "What would she shout when Simba disturbed her?",
+          "options_en": [
+            "\"Go away before I kick you out.\"",
+            "\"Why do you allow the dog to come inside the house?\"",
+            "\"We'll also treat our dogs well like Amara.\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p3_s2_q2",
+          "type": "choice",
+          "question_en": "How did Amara feel when her mother shouted at Simba?",
+          "options_en": [
+            "Sad",
+            "Happy",
+            "Surprised"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "When did they have visitors?",
+          "options_en": [
+            "One Saturday",
+            "When Amara was at school",
+            "When Amara was not at school"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "Who had visitors?",
+          "options_en": [
+            "Amara and her mother",
+            "Amara and Mbisa the goat",
+            "Amara's father"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p4_s1_q1",
+          "type": "choice",
+          "question_en": "Why was Amara happy?",
+          "options_en": [
+            "Because her mother's friends had come with their children",
+            "Because she cleaned and fed Mbisa",
+            "Because she wanted to be a lawyer"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p4_s1_q2",
+          "type": "choice",
+          "question_en": "Who had come with their children?",
+          "options_en": [
+            "Her mother's friends",
+            "Amara's schoolmates",
+            "The women's group"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p4_s2_q1",
+          "type": "choice",
+          "question_en": "What could they do?",
+          "options_en": [
+            "Play football",
+            "Feed the goat",
+            "Study English"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p4_s2_q2",
+          "type": "choice",
+          "question_en": "Who could play football?",
+          "options_en": [
+            "The children",
+            "Amara and her mother",
+            "Simba the dog"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "Who prepared the food that the group liked?",
+          "options_en": [
+            "Her mother",
+            "Amara",
+            "Mama Oto"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "What had her mother prepared?",
+          "options_en": [
+            "The food that the group liked",
+            "The goat Mbisa",
+            "A place to play football"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p5_s1_q1",
+          "type": "choice",
+          "question_en": "Who reminded Amara to keep Simba locked up?",
+          "options_en": [
+            "Her mother",
+            "Mama Oto",
+            "Amara's father"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p5_s1_q2",
+          "type": "choice",
+          "question_en": "What was Amara reminded to do?",
+          "options_en": [
+            "Keep Simba locked up",
+            "Feed Mbisa the goat",
+            "Play football with the children"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p5_s2_q1",
+          "type": "choice",
+          "question_en": "What did it do?",
+          "options_en": [
+            "Barked at strangers",
+            "Cleaned and fed Mbisa",
+            "Prepared the food"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p5_s2_q2",
+          "type": "choice",
+          "question_en": "Who did it bark at?",
+          "options_en": [
+            "Strangers",
+            "The visitors",
+            "Amara"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p5_s3_q1",
+          "type": "choice",
+          "question_en": "What did Amara not do well?",
+          "options_en": [
+            "Lock up Simba",
+            "Prepare the food",
+            "Clean Mbisa"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p5_s3_q2",
+          "type": "choice",
+          "question_en": "How did Amara lock up Simba?",
+          "options_en": [
+            "Not well",
+            "Carefully",
+            "With her mother"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p5_s4_q1",
+          "type": "choice",
+          "question_en": "Who were surprised to see the dog in the room?",
+          "options_en": [
+            "The visitors",
+            "Amara's mother",
+            "Mama Oto"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p5_s4_q2",
+          "type": "choice",
+          "question_en": "What surprised the visitors?",
+          "options_en": [
+            "Seeing the dog in the room",
+            "The prepared food",
+            "The children playing football"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p5_s5_q1",
+          "type": "choice",
+          "question_en": "Who asked why the dog was allowed to come inside the house?",
+          "options_en": [
+            "Mama Oto",
+            "Amara's mother",
+            "Amara"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p5_s5_q2",
+          "type": "choice",
+          "question_en": "What did Amara's mother call Amara to do?",
+          "options_en": [
+            "Come and take Simba out",
+            "Play football with the children",
+            "Prepare more food"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "Why did Amara not hear her mother calling?",
+          "options_en": [
+            "They were busy playing",
+            "She was at school",
+            "She was feeding Mbisa"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "Who did not hear her mother calling?",
+          "options_en": [
+            "Amara",
+            "Mbisa the goat",
+            "Simba"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "Who called Simba out?",
+          "options_en": [
+            "Amara",
+            "Margy",
+            "Mama Oto"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "Where did Amara go when she called Simba out?",
+          "options_en": [
+            "To the house",
+            "To Kerema primary school",
+            "To the field"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p7_s1_q1",
+          "type": "choice",
+          "question_en": "How was Simba to Amara?",
+          "options_en": [
+            "Very obedient",
+            "Disobedient like Mbisa",
+            "Afraid of visitors"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p7_s1_q2",
+          "type": "choice",
+          "question_en": "Who did Simba obey?",
+          "options_en": [
+            "Amara",
+            "Margy",
+            "The visitors"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p7_s2_q1",
+          "type": "choice",
+          "question_en": "Who said they would treat their dogs well like Amara?",
+          "options_en": [
+            "The visitors",
+            "Amara's mother's friends",
+            "Mbisa the goat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p7_s2_q2",
+          "type": "choice",
+          "question_en": "What did the visitors say they would do after the meal?",
+          "options_en": [
+            "Treat their dogs well like Amara",
+            "Keep Simba locked up",
+            "Play football"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p7_s3_q1",
+          "type": "choice",
+          "question_en": "What did the visitors admit about how they treat their dogs?",
+          "options_en": [
+            "They mistreat them",
+            "They never feed them at school",
+            "They always lock them up"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p7_s3_q2",
+          "type": "choice",
+          "question_en": "What did the visitors say about the dogs despite mistreating them?",
+          "options_en": [
+            "They are so helpful",
+            "They bark at strangers",
+            "They play football"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        }
+      ]
+    },
+    {
+      "paragraph_index": 8,
+      "questions": [
+        {
+          "id": "gl_p8_s0_q1",
+          "type": "choice",
+          "question_en": "Who apologised for being mean and cruel to Simba?",
+          "options_en": [
+            "Amara's mother",
+            "Mama Oto",
+            "Amara"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        },
+        {
+          "id": "gl_p8_s0_q2",
+          "type": "choice",
+          "question_en": "Why did she apologise?",
+          "options_en": [
+            "For being mean and cruel to Simba",
+            "Because she prepared the food",
+            "Because she shouted at the children"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        },
+        {
+          "id": "gl_p8_s1_q1",
+          "type": "choice",
+          "question_en": "Why was Amara happy?",
+          "options_en": [
+            "Her mother accepted her dog at last",
+            "She could play football",
+            "She wanted to be a lawyer"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        },
+        {
+          "id": "gl_p8_s1_q2",
+          "type": "choice",
+          "question_en": "What did Amara's mother accept?",
+          "options_en": [
+            "Her dog",
+            "Mbisa the goat",
+            "The visitors"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        },
+        {
+          "id": "gl_p8_s2_q1",
+          "type": "choice",
+          "question_en": "When does Amara's mother feed Simba?",
+          "options_en": [
+            "When Amara is in school",
+            "When Amara is at home",
+            "After the meal"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p8_s2_q2",
+          "type": "choice",
+          "question_en": "Who feeds Simba when Amara is in school?",
+          "options_en": [
+            "Her mother",
+            "Amara",
+            "Mama Oto"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p8_s3_q1",
+          "type": "choice",
+          "question_en": "Who have learned to be good to their dogs?",
+          "options_en": [
+            "Her mother's friends",
+            "Amara's classmates",
+            "The women's group visitors"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        },
+        {
+          "id": "gl_p8_s3_q2",
+          "type": "choice",
+          "question_en": "What have her mother's friends learned to do?",
+          "options_en": [
+            "Be good to their dogs",
+            "Play football",
+            "Prepare the food"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'Amara and Animals'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "primary school",
+      "meaning_vi": "trường tiểu học",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "favorite",
+      "meaning_vi": "yêu thích nhất",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "subjects",
+      "meaning_vi": "môn học",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "lawyer",
+      "meaning_vi": "người làm luật, giúp người khác về luật pháp",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "hardworking",
+      "meaning_vi": "chăm chỉ",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "farmer",
+      "meaning_vi": "người làm nông, trồng trọt",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "died",
+      "meaning_vi": "mất, qua đời",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "spent her time",
+      "meaning_vi": "dành thời gian",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "goat",
+      "meaning_vi": "con dê",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "cleaned",
+      "meaning_vi": "làm sạch, dọn dẹp",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "fed",
+      "meaning_vi": "cho ăn",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "pet",
+      "meaning_vi": "thú cưng, vật nuôi",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "disturbed",
+      "meaning_vi": "làm phiền",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "shout",
+      "meaning_vi": "hét to",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "kick you out",
+      "meaning_vi": "đuổi ra ngoài",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "visitors",
+      "meaning_vi": "khách đến chơi",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "women's group",
+      "meaning_vi": "hội phụ nữ",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "football",
+      "meaning_vi": "môn bóng đá",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "prepared",
+      "meaning_vi": "chuẩn bị",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "reminded",
+      "meaning_vi": "nhắc nhở",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "locked up",
+      "meaning_vi": "nhốt lại",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "strangers",
+      "meaning_vi": "người lạ",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "hear",
+      "meaning_vi": "nghe thấy",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "busy",
+      "meaning_vi": "bận rộn",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "obedient",
+      "meaning_vi": "vâng lời",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "treat",
+      "meaning_vi": "đối xử",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "mistreat",
+      "meaning_vi": "đối xử tệ, ngược đãi",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "helpful",
+      "meaning_vi": "có ích, giúp đỡ",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "apologised",
+      "meaning_vi": "xin lỗi",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "mean",
+      "meaning_vi": "xấu tính, tệ bạc",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "cruel",
+      "meaning_vi": "độc ác",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "accepted",
+      "meaning_vi": "chấp nhận",
+      "paragraph_index": 8
+    }
+  ]
+}

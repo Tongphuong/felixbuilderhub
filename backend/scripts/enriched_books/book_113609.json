@@ -1,0 +1,1287 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L3",
+  "level_label": "Cấp 3",
+  "topic": "What Shall I Wear Today?",
+  "slug": "book_113609",
+  "audio_filename": "book_113609.mp3",
+  "book_slug": "book_113609",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_113609/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_113609/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_113609/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_113609/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_113609/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_113609/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_113609/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_113609/page_09.jpg",
+    "https://audio.felixbuilderhub.com/books/book_113609/page_10.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_113609/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_113609/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_113609/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_113609/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_113609/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_113609/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_113609/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_113609/page_09.mp3",
+    "https://audio.felixbuilderhub.com/books/book_113609/page_10.mp3"
+  ],
+  "book_attribution": {
+    "title": "What Shall I Wear Today?",
+    "creators": [
+      "Right To Play",
+      "Tanvi Bhat"
+    ],
+    "publisher": "StoryWeaver Community",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: What Shall I Wear Today? is re-levelled by Right To Play . The © for this re-level lies with Right To Play , 2020. Some rights reserved. Released under CC BY 4.0 license. Based on Original story: ' What Shall I Wear Today? ' , by Natasha Sharma . © Pratham Books , 2015. Some rights reserved. Released under CC BY 4.0 license. Images Attributions: Cover page: Girl and clothes line , by Tanvi Bhat © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 2: Girl in bathroom thinking , by Tanvi Bhat © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 3: Girl buttoning shirt , by Tanvi Bhat © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 4: Girl dressing in lehenga , by Tanvi Bhat © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 5: Girl dressing in long salwar , by Tanvi Bhat © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 6: Girl pulling on pants , by Tanvi Bhat © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 7: Girl holding frock and t shirt , by Tanvi Bhat © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 8: Girl draped in sari , by Tanvi Bhat © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 9: Girl sitting on a pile of clothes , by Tanvi Bhat © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 10: Girl dressed up in front of mirror , by Tanvi Bhat © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/113609-what-shall-i-wear-today",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "Girl in bathroom thinking , by Tanvi Bhat © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "Girl buttoning shirt , by Tanvi Bhat © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "Girl dressing in lehenga , by Tanvi Bhat © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "Girl dressing in long salwar , by Tanvi Bhat © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "Girl pulling on pants , by Tanvi Bhat © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "Girl holding frock and t shirt , by Tanvi Bhat © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "Girl draped in sari , by Tanvi Bhat © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "Girl sitting on a pile of clothes , by Tanvi Bhat © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 8,
+        "credit_text": "Girl dressed up in front of mirror , by Tanvi Bhat © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "What Shall I Wear Today?",
+    "paragraphs_en": [
+      "Do you ever feel like your clothes aren't quite right... ...that they're all too big or too small or too tight?",
+      "Something is wrong with the buttons on this shirt. And these pants are so tight that they're starting to hurt.",
+      "This skirt is much too long for me. And this top is too tight! Do you agree?",
+      "My pants are too old. They need to be stitched. And these golden stars are making me itch.",
+      "I think I'll try on these trousers instead. But they pull and tug and are hard to put on. What will I do? All my options are gone!",
+      "How about this dress? No, I think it's too bright. What about my brother's stripy t-shirt? That would be a funny sight!",
+      "Or how about my daddy 's jacket ? No, I think they would be much too long. I 'll try on my mother 's scarf instead. Oh no, I've put it on all wrong! I can't reach anything else on the washing line. So I'll have to find something else of mine.",
+      "These clothes seem to say, \"We don’t want to agree\" But an idea is beginning to come to me.",
+      "I'll mix and match to create my own style... ...so that finally I can relax and smile!"
+    ],
+    "sentences": [
+      {
+        "text_en": "Do you ever feel like your clothes aren't quite right...",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113609/s_000.mp3",
+        "text_vi": "Con có bao giờ cảm thấy quần áo của mình không vừa ý không..."
+      },
+      {
+        "text_en": "...that they're all too big or too small or too tight?",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113609/s_001.mp3",
+        "text_vi": "...chúng quá rộng, quá chật hay quá bó?"
+      },
+      {
+        "text_en": "Something is wrong with the buttons on this shirt.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113609/s_002.mp3",
+        "text_vi": "Có gì đó không ổn với cúc áo trên chiếc áo sơ mi này."
+      },
+      {
+        "text_en": "And these pants are so tight that they're starting to hurt.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113609/s_003.mp3",
+        "text_vi": "Và chiếc quần này chật đến nỗi bắt đầu làm đau rồi."
+      },
+      {
+        "text_en": "This skirt is much too long for me.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113609/s_004.mp3",
+        "text_vi": "Chiếc váy này quá dài so với con."
+      },
+      {
+        "text_en": "And this top is too tight!",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113609/s_005.mp3",
+        "text_vi": "Và chiếc áo này quá chật!"
+      },
+      {
+        "text_en": "Do you agree?",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113609/s_006.mp3",
+        "text_vi": "Con có đồng ý không?"
+      },
+      {
+        "text_en": "My pants are too old.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113609/s_007.mp3",
+        "text_vi": "Quần của con cũ quá rồi."
+      },
+      {
+        "text_en": "They need to be stitched.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113609/s_008.mp3",
+        "text_vi": "Chúng cần được khâu lại."
+      },
+      {
+        "text_en": "And these golden stars are making me itch.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113609/s_009.mp3",
+        "text_vi": "Và những ngôi sao vàng này làm con ngứa."
+      },
+      {
+        "text_en": "I think I'll try on these trousers instead.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113609/s_010.mp3",
+        "text_vi": "Con nghĩ con sẽ thử chiếc quần dài này thay vào đó."
+      },
+      {
+        "text_en": "But they pull and tug and are hard to put on.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113609/s_011.mp3",
+        "text_vi": "Nhưng chúng cứ kéo và giật, khó mặc quá."
+      },
+      {
+        "text_en": "What will I do?",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113609/s_012.mp3",
+        "text_vi": "Con sẽ làm gì đây?"
+      },
+      {
+        "text_en": "All my options are gone!",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113609/s_013.mp3",
+        "text_vi": "Hết lựa chọn rồi!"
+      },
+      {
+        "text_en": "How about this dress?",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113609/s_014.mp3",
+        "text_vi": "Còn chiếc váy này thì sao?"
+      },
+      {
+        "text_en": "No, I think it's too bright.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113609/s_015.mp3",
+        "text_vi": "Không, con nghĩ nó quá sáng."
+      },
+      {
+        "text_en": "What about my brother's stripy t-shirt?",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113609/s_016.mp3",
+        "text_vi": "Còn chiếc áo phông sọc của anh/em trai con thì sao?"
+      },
+      {
+        "text_en": "That would be a funny sight!",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113609/s_017.mp3",
+        "text_vi": "Trông sẽ buồn cười lắm!"
+      },
+      {
+        "text_en": "Or how about my daddy 's jacket ?",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113609/s_018.mp3",
+        "text_vi": "Hay là chiếc áo khoác của bố con?"
+      },
+      {
+        "text_en": "No, I think they would be much too long.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113609/s_019.mp3",
+        "text_vi": "Không, con nghĩ chúng sẽ quá dài."
+      },
+      {
+        "text_en": "I 'll try on my mother 's scarf instead.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113609/s_020.mp3",
+        "text_vi": "Con sẽ thử chiếc khăn quàng của mẹ con thay vào đó."
+      },
+      {
+        "text_en": "Oh no, I've put it on all wrong!",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113609/s_021.mp3",
+        "text_vi": "Ôi không, con đã mặc nó sai rồi!"
+      },
+      {
+        "text_en": "I can't reach anything else on the washing line.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113609/s_022.mp3",
+        "text_vi": "Con không thể với tới thứ gì khác trên dây phơi."
+      },
+      {
+        "text_en": "So I'll have to find something else of mine.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113609/s_023.mp3",
+        "text_vi": "Vậy nên con sẽ phải tìm thứ gì đó khác của mình."
+      },
+      {
+        "text_en": "These clothes seem to say, \"We don’t want to agree\" But an idea is beginning to come to me.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113609/s_024.mp3",
+        "text_vi": "Những bộ quần áo này dường như nói rằng, \"Chúng tôi không muốn đồng ý\" Nhưng một ý tưởng đang bắt đầu nảy ra trong đầu con."
+      },
+      {
+        "text_en": "I'll mix and match to create my own style...",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113609/s_025.mp3",
+        "text_vi": "Con sẽ phối đồ để tạo ra phong cách riêng của mình..."
+      },
+      {
+        "text_en": "...so that finally I can relax and smile!",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113609/s_026.mp3",
+        "text_vi": "...để cuối cùng con có thể thư giãn và mỉm cười!"
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "Do you ever feel like your clothes aren't quite right...",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113609/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "...that they're all too big or too small or too tight?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113609/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "Something is wrong with the buttons on this shirt.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113609/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "And these pants are so tight that they're starting to hurt.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113609/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "This skirt is much too long for me.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113609/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "And this top is too tight!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113609/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "Do you agree?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113609/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "My pants are too old.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113609/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "They need to be stitched.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113609/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "And these golden stars are making me itch.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113609/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "I think I'll try on these trousers instead.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113609/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "But they pull and tug and are hard to put on.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113609/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "What will I do?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113609/s_012.mp3"
+        },
+        {
+          "id": "ra_13",
+          "text_en": "All my options are gone!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113609/s_013.mp3"
+        },
+        {
+          "id": "ra_14",
+          "text_en": "How about this dress?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113609/s_014.mp3"
+        },
+        {
+          "id": "ra_15",
+          "text_en": "No, I think it's too bright.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113609/s_015.mp3"
+        },
+        {
+          "id": "ra_16",
+          "text_en": "What about my brother's stripy t-shirt?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113609/s_016.mp3"
+        },
+        {
+          "id": "ra_17",
+          "text_en": "That would be a funny sight!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113609/s_017.mp3"
+        },
+        {
+          "id": "ra_18",
+          "text_en": "Or how about my daddy 's jacket ?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113609/s_018.mp3"
+        },
+        {
+          "id": "ra_19",
+          "text_en": "No, I think they would be much too long.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113609/s_019.mp3"
+        },
+        {
+          "id": "ra_20",
+          "text_en": "I 'll try on my mother 's scarf instead.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113609/s_020.mp3"
+        },
+        {
+          "id": "ra_21",
+          "text_en": "Oh no, I've put it on all wrong!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113609/s_021.mp3"
+        },
+        {
+          "id": "ra_22",
+          "text_en": "I can't reach anything else on the washing line.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113609/s_022.mp3"
+        },
+        {
+          "id": "ra_23",
+          "text_en": "So I'll have to find something else of mine.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113609/s_023.mp3"
+        },
+        {
+          "id": "ra_24",
+          "text_en": "These clothes seem to say, \"We don’t want to agree\" But an idea is beginning to come to me.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113609/s_024.mp3"
+        },
+        {
+          "id": "ra_25",
+          "text_en": "I'll mix and match to create my own style...",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113609/s_025.mp3"
+        },
+        {
+          "id": "ra_26",
+          "text_en": "...so that finally I can relax and smile!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113609/s_026.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "How do your clothes feel?",
+          "options_en": [
+            "Not quite right",
+            "Too long",
+            "They make you itch"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "What do you ever feel like?",
+          "options_en": [
+            "Your clothes aren't quite right",
+            "Your pants need stitching",
+            "Your scarf is on wrong"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s1_q1",
+          "type": "choice",
+          "question_en": "What are the clothes described as?",
+          "options_en": [
+            "Too big, too small, or too tight",
+            "Too bright",
+            "Too long"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s1_q2",
+          "type": "choice",
+          "question_en": "Why might someone feel unhappy about their clothes?",
+          "options_en": [
+            "Because they are too big, too small, or too tight",
+            "Because the buttons are wrong",
+            "Because the stars make them itch"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "What is wrong with the shirt?",
+          "options_en": [
+            "The buttons",
+            "The pants are too tight",
+            "The skirt is much too long"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "Which part of the shirt is mentioned as wrong?",
+          "options_en": [
+            "The buttons",
+            "The golden stars",
+            "The mother's scarf"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p1_s1_q1",
+          "type": "choice",
+          "question_en": "Which clothes are starting to hurt?",
+          "options_en": [
+            "The pants",
+            "The shirt buttons",
+            "The dress"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p1_s1_q2",
+          "type": "choice",
+          "question_en": "Why are the pants causing pain?",
+          "options_en": [
+            "Because they are so tight",
+            "Because they are too long",
+            "Because they are too bright"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "What is much too long for the speaker?",
+          "options_en": [
+            "This skirt",
+            "These pants",
+            "This dress"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "How is the skirt described?",
+          "options_en": [
+            "Much too long",
+            "Too tight",
+            "Too bright"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p2_s1_q1",
+          "type": "choice",
+          "question_en": "What is too tight?",
+          "options_en": [
+            "This top",
+            "These trousers",
+            "My pants"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p2_s1_q2",
+          "type": "choice",
+          "question_en": "How does the speaker describe the top?",
+          "options_en": [
+            "Too tight",
+            "Much too long",
+            "Too bright"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p2_s2_q1",
+          "type": "choice",
+          "question_en": "Who is the speaker asking about agreement?",
+          "options_en": [
+            "You",
+            "My brother",
+            "My mother"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p2_s2_q2",
+          "type": "choice",
+          "question_en": "What is the speaker asking the listener?",
+          "options_en": [
+            "If they agree",
+            "To try on trousers",
+            "To stitch the pants"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "Whose pants are too old?",
+          "options_en": [
+            "Mine",
+            "My brother's",
+            "My daddy's"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "How are the pants described?",
+          "options_en": [
+            "Too old",
+            "Too tight",
+            "Too long"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p3_s1_q1",
+          "type": "choice",
+          "question_en": "What do the pants need?",
+          "options_en": [
+            "To be stitched",
+            "To be washed",
+            "To be mixed and matched"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p3_s1_q2",
+          "type": "choice",
+          "question_en": "How do they need to be fixed?",
+          "options_en": [
+            "They need to be stitched",
+            "Their buttons need fixing",
+            "They need to be hemmed"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p3_s2_q1",
+          "type": "choice",
+          "question_en": "What is making the speaker itch?",
+          "options_en": [
+            "These golden stars",
+            "The buttons on the shirt",
+            "The mother's scarf"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p3_s2_q2",
+          "type": "choice",
+          "question_en": "Why is the speaker uncomfortable?",
+          "options_en": [
+            "Because the golden stars are making them itch",
+            "Because the trousers are too tight",
+            "Because the dress is too bright"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "Who says they will try on these trousers?",
+          "options_en": [
+            "I (the speaker)",
+            "My brother",
+            "My daddy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "What will the speaker try on instead?",
+          "options_en": [
+            "These trousers",
+            "This dress",
+            "My mother's scarf"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p4_s1_q1",
+          "type": "choice",
+          "question_en": "What do the trousers do when the speaker tries them on?",
+          "options_en": [
+            "They pull and tug",
+            "They make golden stars",
+            "They are much too long"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p4_s1_q2",
+          "type": "choice",
+          "question_en": "How are the trousers to put on?",
+          "options_en": [
+            "They are hard to put on",
+            "They are too bright",
+            "They need to be stitched"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p4_s2_q1",
+          "type": "choice",
+          "question_en": "What does the speaker ask in this sentence?",
+          "options_en": [
+            "What will I do?",
+            "How about this dress?",
+            "Why are the buttons wrong?"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p4_s2_q2",
+          "type": "choice",
+          "question_en": "Why does the speaker wonder what to do?",
+          "options_en": [
+            "Because the trousers pull and are hard to put on",
+            "Because the skirt is much too long",
+            "Because the golden stars are making them itch"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p4_s3_q1",
+          "type": "choice",
+          "question_en": "What does the speaker say about their options?",
+          "options_en": [
+            "All my options are gone",
+            "These clothes don't want to agree",
+            "The skirt is too long"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p4_s3_q2",
+          "type": "choice",
+          "question_en": "How does the speaker describe the state of their options?",
+          "options_en": [
+            "Gone",
+            "Too tight",
+            "Itchy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "What item is the speaker asking about?",
+          "options_en": [
+            "A dress",
+            "Trousers",
+            "A scarf"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "Which piece of clothing is mentioned in the question?",
+          "options_en": [
+            "A dress",
+            "A stripy t-shirt",
+            "A jacket"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p5_s1_q1",
+          "type": "choice",
+          "question_en": "Why does the speaker say no?",
+          "options_en": [
+            "Because it's too bright",
+            "Because it needs stitching",
+            "Because it's too long"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p5_s1_q2",
+          "type": "choice",
+          "question_en": "What does the speaker think about the item?",
+          "options_en": [
+            "It is too bright",
+            "It is too tight",
+            "It makes them itch"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p5_s2_q1",
+          "type": "choice",
+          "question_en": "Whose stripy t-shirt is mentioned?",
+          "options_en": [
+            "My brother's",
+            "My mother's",
+            "My daddy's"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p5_s2_q2",
+          "type": "choice",
+          "question_en": "What kind of clothing is suggested in this sentence?",
+          "options_en": [
+            "A stripy t-shirt",
+            "Trousers",
+            "A dress"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p5_s3_q1",
+          "type": "choice",
+          "question_en": "What would be a funny sight?",
+          "options_en": [
+            "My brother's stripy t-shirt",
+            "Daddy's jacket",
+            "Mother's scarf"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p5_s3_q2",
+          "type": "choice",
+          "question_en": "Why does the speaker call it a funny sight?",
+          "options_en": [
+            "Because it would look amusing",
+            "Because it needs stitching",
+            "Because it is too long"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "Whose jacket does the speaker suggest?",
+          "options_en": [
+            "daddy's jacket",
+            "brother's stripy t-shirt",
+            "mother's scarf"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "What item does the speaker suggest trying on?",
+          "options_en": [
+            "a jacket",
+            "trousers",
+            "a scarf"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p6_s1_q1",
+          "type": "choice",
+          "question_en": "Why does the speaker reject that item?",
+          "options_en": [
+            "they would be much too long",
+            "they are too bright",
+            "they are too tight"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p6_s1_q2",
+          "type": "choice",
+          "question_en": "Which characteristic is mentioned about the item?",
+          "options_en": [
+            "too long",
+            "too old",
+            "too bright"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p6_s2_q1",
+          "type": "choice",
+          "question_en": "Whose scarf will the speaker try on instead?",
+          "options_en": [
+            "mother's scarf",
+            "daddy's jacket",
+            "brother's stripy t-shirt"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p6_s2_q2",
+          "type": "choice",
+          "question_en": "What will the speaker try on instead?",
+          "options_en": [
+            "a scarf",
+            "trousers",
+            "a dress"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p6_s3_q1",
+          "type": "choice",
+          "question_en": "What has the speaker put on all wrong?",
+          "options_en": [
+            "the scarf",
+            "the jacket",
+            "the trousers"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p6_s3_q2",
+          "type": "choice",
+          "question_en": "How did the speaker put it on?",
+          "options_en": [
+            "all wrong",
+            "too tight",
+            "too bright"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p6_s4_q1",
+          "type": "choice",
+          "question_en": "Where can't the speaker reach anything else?",
+          "options_en": [
+            "on the washing line",
+            "in the wardrobe",
+            "in the drawer"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p6_s4_q2",
+          "type": "choice",
+          "question_en": "What can't the speaker do on the washing line?",
+          "options_en": [
+            "reach anything else",
+            "find golden stars",
+            "stitch pants"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p6_s5_q1",
+          "type": "choice",
+          "question_en": "What will the speaker have to find?",
+          "options_en": [
+            "something else of mine",
+            "daddy's jacket",
+            "brother's stripy t-shirt"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p6_s5_q2",
+          "type": "choice",
+          "question_en": "Whose item will the speaker look for?",
+          "options_en": [
+            "mine",
+            "mother's",
+            "daddy's"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "What do the clothes seem to say?",
+          "options_en": [
+            "We don’t want to agree",
+            "They are too big",
+            "They are too tight"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "What is beginning to come to the speaker?",
+          "options_en": [
+            "An idea",
+            "Try on these trousers",
+            "Mix and match to create my own style"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        }
+      ]
+    },
+    {
+      "paragraph_index": 8,
+      "questions": [
+        {
+          "id": "gl_p8_s0_q1",
+          "type": "choice",
+          "question_en": "Why will the speaker mix and match?",
+          "options_en": [
+            "To create their own style",
+            "To make pants fit",
+            "To wash clothes on the line"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p8_s0_q2",
+          "type": "choice",
+          "question_en": "What will the speaker create?",
+          "options_en": [
+            "Their own style",
+            "A bright dress",
+            "A funny sight"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p8_s1_q1",
+          "type": "choice",
+          "question_en": "What will the speaker do finally?",
+          "options_en": [
+            "Relax and smile",
+            "Stitch the pants",
+            "Try on trousers"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p8_s1_q2",
+          "type": "choice",
+          "question_en": "How will the speaker feel finally?",
+          "options_en": [
+            "Relaxed and smiling",
+            "Itchy from golden stars",
+            "Too tight in clothes"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'What Shall I Wear Today?'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "ever",
+      "meaning_vi": "bao giờ",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "quite",
+      "meaning_vi": "khá",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "right",
+      "meaning_vi": "vừa vặn",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "tight",
+      "meaning_vi": "chật",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "wrong",
+      "meaning_vi": "không ổn",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "buttons",
+      "meaning_vi": "cúc áo",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "starting",
+      "meaning_vi": "bắt đầu",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "hurt",
+      "meaning_vi": "làm đau",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "skirt",
+      "meaning_vi": "váy",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "much",
+      "meaning_vi": "rất",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "top",
+      "meaning_vi": "áo trên",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "agree",
+      "meaning_vi": "đồng ý",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "old",
+      "meaning_vi": "cũ",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "stitched",
+      "meaning_vi": "khâu",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "golden",
+      "meaning_vi": "màu vàng",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "itch",
+      "meaning_vi": "ngứa",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "trousers",
+      "meaning_vi": "quần dài",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "instead",
+      "meaning_vi": "thay vào đó",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "tug",
+      "meaning_vi": "giật",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "options",
+      "meaning_vi": "lựa chọn",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "dress",
+      "meaning_vi": "váy liền",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "bright",
+      "meaning_vi": "sáng",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "stripy",
+      "meaning_vi": "có sọc",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "sight",
+      "meaning_vi": "cảnh tượng",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "jacket",
+      "meaning_vi": "áo khoác",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "scarf",
+      "meaning_vi": "khăn quàng",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "reach",
+      "meaning_vi": "với tới",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "washing line",
+      "meaning_vi": "dây phơi",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "seem",
+      "meaning_vi": "dường như",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "agree",
+      "meaning_vi": "đồng ý",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "idea",
+      "meaning_vi": "ý tưởng",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "mix",
+      "meaning_vi": "phối",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "match",
+      "meaning_vi": "kết hợp",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "create",
+      "meaning_vi": "tạo ra",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "style",
+      "meaning_vi": "phong cách",
+      "paragraph_index": 8
+    }
+  ]
+}

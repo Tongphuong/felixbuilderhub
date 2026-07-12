@@ -1,0 +1,951 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L1",
+  "level_label": "Cấp 1",
+  "topic": "Our Living Room",
+  "slug": "book_114297",
+  "audio_filename": "book_114297.mp3",
+  "book_slug": "book_114297",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_114297/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_114297/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_114297/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_114297/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_114297/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_114297/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_114297/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_114297/page_09.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_114297/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_114297/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_114297/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_114297/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_114297/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_114297/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_114297/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_114297/page_09.mp3"
+  ],
+  "book_attribution": {
+    "title": "Our Living Room",
+    "creators": [
+      "Story Teller",
+      "Rajeev Verma 'Banjara'",
+      "Suvidha Mistry"
+    ],
+    "publisher": "StoryWeaver Community",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: Our Living Room is written by Story Teller . © Story Teller , 2020. Some rights reserved. Released under CC BY 4.0 license. Images Attributions: Cover page: Children arranging things in boxes , by Suvidha Mistry © Pratham Books, 2010. Some rights reserved. Released under CC BY 4.0 license. Page 2: Two children with their hands raised , by Suvidha Mistry © Pratham Books, 2010. Some rights reserved. Released under CC BY 4.0 license. Page 3: Children in a room playing with different things , by Suvidha Mistry © Pratham Books, 2010. Some rights reserved. Released under CC BY 4.0 license. Page 4: Children in a room playing with different things , by Suvidha Mistry © Pratham Books, 2010. Some rights reserved. Released under CC BY 4.0 license. Page 5: Children reading books , by Suvidha Mistry © Pratham Books, 2010. Some rights reserved. Released under CC BY 4.0 license. Page 6: Children in a room playing with different things , by Suvidha Mistry © Pratham Books, 2010. Some rights reserved. Released under CC BY 4.0 license. Page 7: A boy sitting in the middle of chaos , by Suvidha Mistry © Pratham Books, 2010. Some rights reserved. Released under CC BY 4.0 license. Page 8: Sofa in a living room , by Rajeev Verma 'Banjara' © Pratham Books, 2007. Some rights reserved. Released under CC BY 4.0 license. Page 9: Children arranging things in boxes , by Suvidha Mistry © Pratham Books, 2010. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/114297-our-living-room",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "Two children with their hands raised , by Suvidha Mistry © Pratham Books, 2010. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "Children in a room playing with different things , by Suvidha Mistry © Pratham Books, 2010. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "Children in a room playing with different things , by Suvidha Mistry © Pratham Books, 2010. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "Children reading books , by Suvidha Mistry © Pratham Books, 2010. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "Children in a room playing with different things , by Suvidha Mistry © Pratham Books, 2010. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "A boy sitting in the middle of chaos , by Suvidha Mistry © Pratham Books, 2010. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "Sofa in a living room , by Rajeev Verma 'Banjara' © Pratham Books, 2007. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "Children arranging things in boxes , by Suvidha Mistry © Pratham Books, 2010. Some rights reserved. Released under CC BY 4.0 license."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "Our Living Room",
+    "paragraphs_en": [
+      "I am Rina. This is my brother Sonu. We love each other.",
+      "We play together in our living room.",
+      "We have a bookshelf in our living room. My father keeps many books in the bookshelf.",
+      "I read one story everyday.",
+      "I am very neat.",
+      "But my brother is very messy. He throws his toys, books, shoes and pens on the floor.",
+      "We have a sofa in our living room. My parents like to sit on the sofa. We also have a carpet in our living room. The carpet is on the floor. I like to sit on the carpet.",
+      "My brother and I help our mother in cleaning the house. I sweep the floor. My brother cleans the bookshelf. We love our home a lot."
+    ],
+    "sentences": [
+      {
+        "text_en": "I am Rina.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_114297/s_000.mp3",
+        "text_vi": "Cháu là Rina."
+      },
+      {
+        "text_en": "This is my brother Sonu.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_114297/s_001.mp3",
+        "text_vi": "Đây là anh trai cháu, Sonu."
+      },
+      {
+        "text_en": "We love each other.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_114297/s_002.mp3",
+        "text_vi": "Chúng cháu yêu thương nhau."
+      },
+      {
+        "text_en": "We play together in our living room.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_114297/s_003.mp3",
+        "text_vi": "Chúng cháu chơi cùng nhau trong phòng khách."
+      },
+      {
+        "text_en": "We have a bookshelf in our living room.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_114297/s_004.mp3",
+        "text_vi": "Nhà cháu có một giá sách trong phòng khách."
+      },
+      {
+        "text_en": "My father keeps many books in the bookshelf.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_114297/s_005.mp3",
+        "text_vi": "Bố cháu để nhiều sách trên giá sách."
+      },
+      {
+        "text_en": "I read one story everyday.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_114297/s_006.mp3",
+        "text_vi": "Cháu đọc một câu chuyện mỗi ngày."
+      },
+      {
+        "text_en": "I am very neat.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_114297/s_007.mp3",
+        "text_vi": "Cháu rất gọn gàng."
+      },
+      {
+        "text_en": "But my brother is very messy.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_114297/s_008.mp3",
+        "text_vi": "Nhưng anh trai cháu thì rất bừa bộn."
+      },
+      {
+        "text_en": "He throws his toys, books, shoes and pens on the floor.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_114297/s_009.mp3",
+        "text_vi": "Anh ấy vứt đồ chơi, sách, giày và bút xuống sàn nhà."
+      },
+      {
+        "text_en": "We have a sofa in our living room.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_114297/s_010.mp3",
+        "text_vi": "Nhà cháu có một chiếc ghế sofa trong phòng khách."
+      },
+      {
+        "text_en": "My parents like to sit on the sofa.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_114297/s_011.mp3",
+        "text_vi": "Bố mẹ cháu thích ngồi trên ghế sofa."
+      },
+      {
+        "text_en": "We also have a carpet in our living room.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_114297/s_012.mp3",
+        "text_vi": "Chúng cháu cũng có một tấm thảm trong phòng khách."
+      },
+      {
+        "text_en": "The carpet is on the floor.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_114297/s_013.mp3",
+        "text_vi": "Tấm thảm ở trên sàn nhà."
+      },
+      {
+        "text_en": "I like to sit on the carpet.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_114297/s_014.mp3",
+        "text_vi": "Cháu thích ngồi trên tấm thảm."
+      },
+      {
+        "text_en": "My brother and I help our mother in cleaning the house.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_114297/s_015.mp3",
+        "text_vi": "Anh trai cháu và cháu giúp mẹ dọn dẹp nhà cửa."
+      },
+      {
+        "text_en": "I sweep the floor.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_114297/s_016.mp3",
+        "text_vi": "Cháu quét sàn nhà."
+      },
+      {
+        "text_en": "My brother cleans the bookshelf.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_114297/s_017.mp3",
+        "text_vi": "Anh trai cháu lau giá sách."
+      },
+      {
+        "text_en": "We love our home a lot.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_114297/s_018.mp3",
+        "text_vi": "Chúng cháu rất yêu ngôi nhà của mình."
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "I am Rina.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_114297/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "This is my brother Sonu.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_114297/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "We love each other.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_114297/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "We play together in our living room.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_114297/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "We have a bookshelf in our living room.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_114297/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "My father keeps many books in the bookshelf.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_114297/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "I read one story everyday.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_114297/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "I am very neat.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_114297/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "But my brother is very messy.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_114297/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "He throws his toys, books, shoes and pens on the floor.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_114297/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "We have a sofa in our living room.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_114297/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "My parents like to sit on the sofa.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_114297/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "We also have a carpet in our living room.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_114297/s_012.mp3"
+        },
+        {
+          "id": "ra_13",
+          "text_en": "The carpet is on the floor.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_114297/s_013.mp3"
+        },
+        {
+          "id": "ra_14",
+          "text_en": "I like to sit on the carpet.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_114297/s_014.mp3"
+        },
+        {
+          "id": "ra_15",
+          "text_en": "My brother and I help our mother in cleaning the house.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_114297/s_015.mp3"
+        },
+        {
+          "id": "ra_16",
+          "text_en": "I sweep the floor.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_114297/s_016.mp3"
+        },
+        {
+          "id": "ra_17",
+          "text_en": "My brother cleans the bookshelf.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_114297/s_017.mp3"
+        },
+        {
+          "id": "ra_18",
+          "text_en": "We love our home a lot.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_114297/s_018.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "Who is speaking?",
+          "options_en": [
+            "Rina",
+            "Sonu",
+            "My father"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "What is the name given in the sentence?",
+          "options_en": [
+            "Rina",
+            "Sonu",
+            "My mother"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s1_q1",
+          "type": "choice",
+          "question_en": "Who is Sonu?",
+          "options_en": [
+            "My brother",
+            "My father",
+            "My mother"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s1_q2",
+          "type": "choice",
+          "question_en": "What relation is Sonu to the speaker?",
+          "options_en": [
+            "Brother",
+            "Father",
+            "Mother"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s2_q1",
+          "type": "choice",
+          "question_en": "Who love each other?",
+          "options_en": [
+            "Rina and Sonu",
+            "My parents",
+            "My mother and father"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s2_q2",
+          "type": "choice",
+          "question_en": "How do they feel about each other?",
+          "options_en": [
+            "They love each other",
+            "They are messy",
+            "They play in the living room"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "Where do we play together?",
+          "options_en": [
+            "In our living room",
+            "On the carpet",
+            "On the sofa"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "What do we do together?",
+          "options_en": [
+            "Play",
+            "Read a story",
+            "Sweep the floor"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "What do we have in our living room?",
+          "options_en": [
+            "A bookshelf",
+            "A sofa",
+            "A carpet"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "Where is the bookshelf?",
+          "options_en": [
+            "In our living room",
+            "On the sofa",
+            "On the floor"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p2_s1_q1",
+          "type": "choice",
+          "question_en": "Who keeps many books in the bookshelf?",
+          "options_en": [
+            "My father",
+            "My brother",
+            "My mother"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p2_s1_q2",
+          "type": "choice",
+          "question_en": "What does my father keep in the bookshelf?",
+          "options_en": [
+            "Many books",
+            "Toys",
+            "Pens"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "What does the speaker read?",
+          "options_en": [
+            "one story",
+            "books from the bookshelf",
+            "a book on the carpet"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "When does the speaker read a story?",
+          "options_en": [
+            "everyday",
+            "in the living room",
+            "on the carpet"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "Who is very neat?",
+          "options_en": [
+            "I",
+            "My brother Sonu",
+            "My father"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "How is the speaker?",
+          "options_en": [
+            "Very neat",
+            "Very messy",
+            "Helpful"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "Who is very messy?",
+          "options_en": [
+            "My brother",
+            "I",
+            "My father"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "How is my brother?",
+          "options_en": [
+            "Very messy",
+            "Very neat",
+            "Helpful"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p5_s1_q1",
+          "type": "choice",
+          "question_en": "What does he throw on the floor?",
+          "options_en": [
+            "Toys, books, shoes and pens",
+            "A carpet",
+            "Bookshelf"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p5_s1_q2",
+          "type": "choice",
+          "question_en": "Where does he throw his toys, books, shoes and pens?",
+          "options_en": [
+            "On the floor",
+            "On the bookshelf",
+            "On the sofa"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "What do we have in our living room?",
+          "options_en": [
+            "a sofa",
+            "a bookshelf",
+            "a carpet"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "Where is the sofa?",
+          "options_en": [
+            "in our living room",
+            "on the floor",
+            "in the bookshelf"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p6_s1_q1",
+          "type": "choice",
+          "question_en": "Who likes to sit on the sofa?",
+          "options_en": [
+            "My parents",
+            "I",
+            "My brother"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p6_s1_q2",
+          "type": "choice",
+          "question_en": "What do my parents like to do on the sofa?",
+          "options_en": [
+            "sit on it",
+            "read books",
+            "play together"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p6_s2_q1",
+          "type": "choice",
+          "question_en": "What else do we have in our living room?",
+          "options_en": [
+            "a carpet",
+            "many books",
+            "toys"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p6_s2_q2",
+          "type": "choice",
+          "question_en": "Where do we have a carpet?",
+          "options_en": [
+            "in our living room",
+            "on the floor",
+            "on the sofa"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p6_s3_q1",
+          "type": "choice",
+          "question_en": "Where is the carpet?",
+          "options_en": [
+            "on the floor",
+            "in the bookshelf",
+            "on the sofa"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p6_s3_q2",
+          "type": "choice",
+          "question_en": "What is on the floor?",
+          "options_en": [
+            "the carpet",
+            "many books",
+            "toys"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p6_s4_q1",
+          "type": "choice",
+          "question_en": "Who likes to sit on the carpet?",
+          "options_en": [
+            "I",
+            "My brother",
+            "My parents"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p6_s4_q2",
+          "type": "choice",
+          "question_en": "Where do I like to sit?",
+          "options_en": [
+            "on the carpet",
+            "on the sofa",
+            "in the bookshelf"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "Who helps our mother in cleaning the house?",
+          "options_en": [
+            "My brother and I",
+            "My father",
+            "Sonu"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "Why do they help their mother?",
+          "options_en": [
+            "In cleaning the house",
+            "To play in the living room",
+            "To read books"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p7_s1_q1",
+          "type": "choice",
+          "question_en": "Who sweeps the floor?",
+          "options_en": [
+            "I",
+            "My brother",
+            "My mother"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p7_s1_q2",
+          "type": "choice",
+          "question_en": "What does the narrator sweep?",
+          "options_en": [
+            "The floor",
+            "The carpet",
+            "The bookshelf"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p7_s2_q1",
+          "type": "choice",
+          "question_en": "Who cleans the bookshelf?",
+          "options_en": [
+            "My brother",
+            "I",
+            "My father"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p7_s2_q2",
+          "type": "choice",
+          "question_en": "What does my brother clean?",
+          "options_en": [
+            "The bookshelf",
+            "The floor",
+            "The sofa"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p7_s3_q1",
+          "type": "choice",
+          "question_en": "Who loves their home a lot?",
+          "options_en": [
+            "We",
+            "My parents",
+            "I"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p7_s3_q2",
+          "type": "choice",
+          "question_en": "What do they love a lot?",
+          "options_en": [
+            "Our home",
+            "The bookshelf",
+            "The living room"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'Our Living Room'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "brother",
+      "meaning_vi": "anh/em trai",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "love",
+      "meaning_vi": "yêu thương",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "each other",
+      "meaning_vi": "lẫn nhau",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "play",
+      "meaning_vi": "chơi",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "together",
+      "meaning_vi": "cùng nhau",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "living room",
+      "meaning_vi": "phòng khách",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "bookshelf",
+      "meaning_vi": "giá sách",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "keeps",
+      "meaning_vi": "để (giữ)",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "many",
+      "meaning_vi": "nhiều",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "read",
+      "meaning_vi": "đọc",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "story",
+      "meaning_vi": "câu chuyện",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "everyday",
+      "meaning_vi": "mỗi ngày",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "very",
+      "meaning_vi": "rất",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "neat",
+      "meaning_vi": "gọn gàng",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "messy",
+      "meaning_vi": "bừa bộn",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "throws",
+      "meaning_vi": "vứt",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "toys",
+      "meaning_vi": "đồ chơi",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "floor",
+      "meaning_vi": "sàn nhà",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "sofa",
+      "meaning_vi": "ghế sofa",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "parents",
+      "meaning_vi": "bố mẹ",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "carpet",
+      "meaning_vi": "tấm thảm",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "sit",
+      "meaning_vi": "ngồi",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "help",
+      "meaning_vi": "giúp",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "cleaning",
+      "meaning_vi": "dọn dẹp",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "sweep",
+      "meaning_vi": "quét",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "home",
+      "meaning_vi": "nhà",
+      "paragraph_index": 7
+    }
+  ]
+}

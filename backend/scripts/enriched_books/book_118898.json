@@ -1,0 +1,863 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L2",
+  "level_label": "Cấp 2",
+  "topic": "The new planet",
+  "slug": "book_118898",
+  "audio_filename": "book_118898.mp3",
+  "book_slug": "book_118898",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_118898/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_118898/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_118898/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_118898/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_118898/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_118898/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_118898/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_118898/page_09.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_118898/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_118898/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_118898/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_118898/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_118898/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_118898/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_118898/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_118898/page_09.mp3"
+  ],
+  "book_attribution": {
+    "title": "The new planet",
+    "creators": [
+      "Riddhi Shobhavat",
+      "Delwyn Remedios",
+      "Dorian Dutrieux",
+      "Fahad Faizal",
+      "Kavita Singh Kale",
+      "Mahika Arora",
+      "Mary Anne Hampton",
+      "Sandhya Prabhat",
+      "Tanvi Sawant",
+      "Vidyun Sabhaney"
+    ],
+    "publisher": "StoryWeaver Community",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: The new planet is written by Riddhi Shobhavat . © Riddhi Shobhavat , 2020. Some rights reserved. Released under CC BY 4.0 license. Images Attributions: Cover page: Astronauts clicking pictures in space , by Fahad Faizal © Pratham Books, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 2: Girl in a rocket , by Mary Anne Hampton © Book Dash, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 3: Scientists discussing the Internet , by Delwyn Remedios © StoryWeaver Team, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 4: Three astronauts , by Vidyun Sabhaney © Pratham Books, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 5: Little astronaut girl floating in space , by Sandhya Prabhat © Pratham Books, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 6: Saving From a planet , by Dorian Dutrieux © Book Dash, 2017. Some rights reserved. Released under CC BY 4.0 license. Page 7: Alien Magician , by Kavita Singh Kale © StoryWeaver Team, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 8: alien , by Tanvi Sawant, Mahika Arora © Tanvi Sawant, Mahika Arora, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 9: Astronaut and alien , by Kavita Singh Kale © StoryWeaver Team, 2015. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/118898-the-new-planet",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "Girl in a rocket , by Mary Anne Hampton © Book Dash, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "Scientists discussing the Internet , by Delwyn Remedios © StoryWeaver Team, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "Three astronauts , by Vidyun Sabhaney © Pratham Books, 2018. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "Little astronaut girl floating in space , by Sandhya Prabhat © Pratham Books, 2018. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "Saving From a planet , by Dorian Dutrieux © Book Dash, 2017. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "Alien Magician , by Kavita Singh Kale © StoryWeaver Team, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "alien , by Tanvi Sawant, Mahika Arora © Tanvi Sawant, Mahika Arora, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "Astronaut and alien , by Kavita Singh Kale © StoryWeaver Team, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "The new planet",
+    "paragraphs_en": [
+      "Nick and his team were preparing to take off from earth to an unknown planet in another solar system to see if it could be inhabited by humans.",
+      "Their biologist , Stacy had researched and found out that there is at least one planet with life in every solar system.",
+      "They decided to go and explore their closest solar system. They reached the planet in a few earth days.",
+      "The planet was a white one. It didn't look like Earth or feel like it either. They explored many parts of the planet but didn't find a sign of life anywhere.",
+      "Nick banged his foot on the surface in anger and disappointment but then he was surprised when the surface started cracking like an egg. They all fell in.",
+      "They opened their eyes and were completely shocked. There were plants and tiny living creatures everywhere.",
+      "Stacy figured out a way to communicate with them. She asked them if she could get humans on that planet. The creatures panicked and pleaded them not to do so.",
+      "The little creatures wanted to protect their planet from any harm. Nick and his team learnt a lesson from that and decided to go back to their planet to protect it and care for like the creatures did instead of finding a replacement for it."
+    ],
+    "sentences": [
+      {
+        "text_en": "Nick and his team were preparing to take off from earth to an unknown planet in another solar system to see if it could be inhabited by humans.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118898/s_000.mp3",
+        "text_vi": "Nick và đội của cậu ấy đang chuẩn bị bay khỏi Trái Đất để đến một hành tinh chưa biết ở một hệ mặt trời khác, xem liệu con người có thể sống ở đó được không."
+      },
+      {
+        "text_en": "Their biologist , Stacy had researched and found out that there is at least one planet with life in every solar system.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118898/s_001.mp3",
+        "text_vi": "Nhà sinh vật học của họ, Stacy, đã nghiên cứu và phát hiện ra rằng có ít nhất một hành tinh có sự sống trong mỗi hệ mặt trời."
+      },
+      {
+        "text_en": "They decided to go and explore their closest solar system.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118898/s_002.mp3",
+        "text_vi": "Họ quyết định đi khám phá hệ mặt trời gần nhất của mình."
+      },
+      {
+        "text_en": "They reached the planet in a few earth days.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118898/s_003.mp3",
+        "text_vi": "Họ đến hành tinh đó chỉ trong vài ngày Trái Đất."
+      },
+      {
+        "text_en": "The planet was a white one.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118898/s_004.mp3",
+        "text_vi": "Hành tinh đó có màu trắng."
+      },
+      {
+        "text_en": "It didn't look like Earth or feel like it either.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118898/s_005.mp3",
+        "text_vi": "Nó không giống Trái Đất về hình dáng hay cảm giác."
+      },
+      {
+        "text_en": "They explored many parts of the planet but didn't find a sign of life anywhere.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118898/s_006.mp3",
+        "text_vi": "Họ đã khám phá nhiều nơi trên hành tinh nhưng không tìm thấy dấu hiệu sự sống nào cả."
+      },
+      {
+        "text_en": "Nick banged his foot on the surface in anger and disappointment but then he was surprised when the surface started cracking like an egg.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118898/s_007.mp3",
+        "text_vi": "Nick tức giận và thất vọng, cậu ấy dậm chân xuống bề mặt hành tinh, nhưng rồi cậu ngạc nhiên khi bề mặt bắt đầu nứt ra như vỏ trứng."
+      },
+      {
+        "text_en": "They all fell in.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118898/s_008.mp3",
+        "text_vi": "Tất cả họ đều rơi xuống."
+      },
+      {
+        "text_en": "They opened their eyes and were completely shocked.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118898/s_009.mp3",
+        "text_vi": "Họ mở mắt ra và hoàn toàn sốc."
+      },
+      {
+        "text_en": "There were plants and tiny living creatures everywhere.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118898/s_010.mp3",
+        "text_vi": "Có cây cối và những sinh vật nhỏ bé sống ở khắp mọi nơi."
+      },
+      {
+        "text_en": "Stacy figured out a way to communicate with them.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118898/s_011.mp3",
+        "text_vi": "Stacy đã tìm ra cách để giao tiếp với chúng."
+      },
+      {
+        "text_en": "She asked them if she could get humans on that planet.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118898/s_012.mp3",
+        "text_vi": "Cô ấy hỏi liệu cô ấy có thể đưa con người đến hành tinh đó không."
+      },
+      {
+        "text_en": "The creatures panicked and pleaded them not to do so.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118898/s_013.mp3",
+        "text_vi": "Các sinh vật hoảng sợ và van xin họ đừng làm vậy."
+      },
+      {
+        "text_en": "The little creatures wanted to protect their planet from any harm.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118898/s_014.mp3",
+        "text_vi": "Những sinh vật nhỏ bé muốn bảo vệ hành tinh của chúng khỏi mọi nguy hiểm."
+      },
+      {
+        "text_en": "Nick and his team learnt a lesson from that and decided to go back to their planet to protect it and care for like the creatures did instead of finding a replacement for it.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118898/s_015.mp3",
+        "text_vi": "Nick và đội của cậu ấy đã học được một bài học từ đó và quyết định quay về hành tinh của mình để bảo vệ và chăm sóc nó như cách các sinh vật kia đã làm, thay vì tìm một nơi thay thế."
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "Nick and his team were preparing to take off from earth to an unknown planet in another solar system to see if it could be inhabited by humans.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118898/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "Their biologist , Stacy had researched and found out that there is at least one planet with life in every solar system.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118898/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "They decided to go and explore their closest solar system.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118898/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "They reached the planet in a few earth days.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118898/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "The planet was a white one.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118898/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "It didn't look like Earth or feel like it either.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118898/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "They explored many parts of the planet but didn't find a sign of life anywhere.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118898/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "Nick banged his foot on the surface in anger and disappointment but then he was surprised when the surface started cracking like an egg.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118898/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "They all fell in.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118898/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "They opened their eyes and were completely shocked.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118898/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "There were plants and tiny living creatures everywhere.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118898/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "Stacy figured out a way to communicate with them.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118898/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "She asked them if she could get humans on that planet.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118898/s_012.mp3"
+        },
+        {
+          "id": "ra_13",
+          "text_en": "The creatures panicked and pleaded them not to do so.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118898/s_013.mp3"
+        },
+        {
+          "id": "ra_14",
+          "text_en": "The little creatures wanted to protect their planet from any harm.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118898/s_014.mp3"
+        },
+        {
+          "id": "ra_15",
+          "text_en": "Nick and his team learnt a lesson from that and decided to go back to their planet to protect it and care for like the creatures did instead of finding a replacement for it.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118898/s_015.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "Who was preparing to take off?",
+          "options_en": [
+            "Nick and his team",
+            "Stacy and her team",
+            "The little creatures"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "Where were they preparing to take off from?",
+          "options_en": [
+            "Earth",
+            "An unknown planet",
+            "Their planet"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "Who had researched and found this out?",
+          "options_en": [
+            "Their biologist, Stacy",
+            "Nick",
+            "The rest of the team"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "What did Stacy find out?",
+          "options_en": [
+            "There is at least one planet with life in every solar system",
+            "They reached the planet in a few earth days",
+            "The planet was white"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "What did they decide to do?",
+          "options_en": [
+            "Explore their closest solar system",
+            "Take off from Earth to an unknown planet",
+            "Protect their planet and care for it"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "Which solar system did they decide to explore?",
+          "options_en": [
+            "Their closest solar system",
+            "Another solar system",
+            "Their own solar system"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p2_s1_q1",
+          "type": "choice",
+          "question_en": "When did they reach the planet?",
+          "options_en": [
+            "In a few earth days",
+            "When preparing to take off from earth",
+            "After exploring many parts of the planet"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p2_s1_q2",
+          "type": "choice",
+          "question_en": "How long did it take them to reach the planet?",
+          "options_en": [
+            "A few earth days",
+            "While preparing to take off from earth",
+            "After they opened their eyes"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "What color was the planet?",
+          "options_en": [
+            "white",
+            "Earth",
+            "another solar system"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "Which planet is described in the sentence?",
+          "options_en": [
+            "a white planet",
+            "the closest solar system",
+            "a planet with life"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p3_s1_q1",
+          "type": "choice",
+          "question_en": "What did the planet not look like?",
+          "options_en": [
+            "Earth",
+            "a planet with life",
+            "their planet"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p3_s1_q2",
+          "type": "choice",
+          "question_en": "How did the planet not feel?",
+          "options_en": [
+            "like Earth",
+            "like a planet with life",
+            "like their home planet"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p3_s2_q1",
+          "type": "choice",
+          "question_en": "What did they explore many parts of?",
+          "options_en": [
+            "the planet",
+            "the closest solar system",
+            "the surface of Earth"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p3_s2_q2",
+          "type": "choice",
+          "question_en": "What did they not find anywhere?",
+          "options_en": [
+            "a sign of life",
+            "plants and tiny living creatures",
+            "a replacement for Earth"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "Who banged his foot on the surface?",
+          "options_en": [
+            "Nick",
+            "Stacy",
+            "His team"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "What did the surface do that surprised him?",
+          "options_en": [
+            "It started cracking like an egg",
+            "They couldn't find a sign of life",
+            "They reached the planet in a few earth days"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p4_s1_q1",
+          "type": "choice",
+          "question_en": "What happened to them?",
+          "options_en": [
+            "They all fell in",
+            "They found plants everywhere",
+            "They prepared to take off from Earth"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p4_s1_q2",
+          "type": "choice",
+          "question_en": "Why did they fall in?",
+          "options_en": [
+            "Because the surface started cracking",
+            "To find a replacement planet",
+            "To communicate with the creatures"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "What happened when they opened their eyes?",
+          "options_en": [
+            "They were completely shocked",
+            "The surface started cracking like an egg",
+            "They found no sign of life"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "How did they feel after opening their eyes?",
+          "options_en": [
+            "They were completely shocked",
+            "They were angry and disappointed",
+            "They panicked and pleaded"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p5_s1_q1",
+          "type": "choice",
+          "question_en": "What was everywhere?",
+          "options_en": [
+            "Plants and tiny living creatures",
+            "A white planet surface",
+            "No sign of life"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p5_s1_q2",
+          "type": "choice",
+          "question_en": "Which small things were found everywhere?",
+          "options_en": [
+            "Tiny living creatures",
+            "Nick and his team",
+            "Humans"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "Who figured out a way to communicate with them?",
+          "options_en": [
+            "Stacy",
+            "Nick",
+            "The creatures"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "How did Stacy manage to interact with them?",
+          "options_en": [
+            "She figured out a way to communicate with them",
+            "She sent a message from Earth",
+            "She built a machine to change the planet"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p6_s1_q1",
+          "type": "choice",
+          "question_en": "What did she ask them?",
+          "options_en": [
+            "If she could get humans on that planet",
+            "Whether the planet had plants",
+            "To help her explore the planet"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p6_s1_q2",
+          "type": "choice",
+          "question_en": "Who did she ask if humans could come to the planet?",
+          "options_en": [
+            "Them (the creatures)",
+            "Nick and his team",
+            "People on Earth"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p6_s2_q1",
+          "type": "choice",
+          "question_en": "How did the creatures react?",
+          "options_en": [
+            "They panicked and pleaded them not to do so",
+            "They welcomed the idea of humans",
+            "They ignored the visitors"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p6_s2_q2",
+          "type": "choice",
+          "question_en": "What did the creatures ask the visitors not to do?",
+          "options_en": [
+            "Bring humans to that planet",
+            "Leave the planet immediately",
+            "Take their plants away"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "Who wanted to protect their planet from any harm?",
+          "options_en": [
+            "The little creatures",
+            "Nick and his team",
+            "Stacy the biologist"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "What did the little creatures want to protect their planet from?",
+          "options_en": [
+            "Any harm",
+            "Humans moving there",
+            "The planet's surface cracking"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p7_s1_q1",
+          "type": "choice",
+          "question_en": "What did Nick and his team decide to do?",
+          "options_en": [
+            "Go back to their planet to protect and care for it like the creatures did",
+            "Find a replacement planet for theirs",
+            "Bring humans to live on the white planet"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p7_s1_q2",
+          "type": "choice",
+          "question_en": "Why did Nick and his team decide to go back to their planet?",
+          "options_en": [
+            "They learnt a lesson from that",
+            "They wanted to find a replacement",
+            "They planned to stay on the new planet"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'The new planet'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "preparing",
+      "meaning_vi": "chuẩn bị (sắp xếp mọi thứ sẵn sàng)",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "unknown",
+      "meaning_vi": "chưa biết (mà mình không biết là gì)",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "solar system",
+      "meaning_vi": "hệ mặt trời (Mặt Trời và các hành tinh quay quanh nó)",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "inhabited",
+      "meaning_vi": "có người ở/sinh sống (nơi có người hoặc con vật sống)",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "biologist",
+      "meaning_vi": "nhà sinh vật học (người nghiên cứu về các loài vật và cây cối)",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "researched",
+      "meaning_vi": "nghiên cứu (tìm hiểu kỹ để biết thêm thông tin)",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "at least",
+      "meaning_vi": "ít nhất (không ít hơn số đó)",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "decided",
+      "meaning_vi": "quyết định (chọn làm một việc gì đó)",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "explore",
+      "meaning_vi": "khám phá (đi đến một nơi mới để tìm hiểu)",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "closest",
+      "meaning_vi": "gần nhất (ở vị trí gần nhất)",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "sign",
+      "meaning_vi": "dấu hiệu (điều cho thấy có cái gì đó)",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "anywhere",
+      "meaning_vi": "bất cứ đâu (ở bất kỳ nơi nào)",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "banged",
+      "meaning_vi": "dậm/đập mạnh (đánh hoặc đập cái gì đó rất mạnh)",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "surface",
+      "meaning_vi": "bề mặt (phần bên ngoài của một vật)",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "disappointment",
+      "meaning_vi": "thất vọng (cảm giác buồn vì không được như mong muốn)",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "cracking",
+      "meaning_vi": "nứt ra (bị vỡ nhưng chưa tách rời)",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "completely",
+      "meaning_vi": "hoàn toàn (tất cả, không còn gì khác)",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "shocked",
+      "meaning_vi": "sốc/kinh ngạc (rất bất ngờ và bối rối)",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "tiny",
+      "meaning_vi": "nhỏ bé (rất nhỏ)",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "creatures",
+      "meaning_vi": "sinh vật (một loài vật bất kỳ)",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "figured out",
+      "meaning_vi": "tìm ra/hiểu ra (tìm được cách giải quyết hoặc hiểu được điều gì đó)",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "communicate",
+      "meaning_vi": "giao tiếp (trao đổi thông tin hoặc cảm xúc)",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "panicked",
+      "meaning_vi": "hoảng sợ (cảm thấy sợ hãi đột ngột và không kiểm soát được)",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "pleaded",
+      "meaning_vi": "van xin/cầu xin (yêu cầu điều gì đó một cách nghiêm túc và xúc động)",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "protect",
+      "meaning_vi": "bảo vệ (giữ cho an toàn khỏi bị hại)",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "harm",
+      "meaning_vi": "nguy hiểm/tổn hại (sự gây hại hoặc tổn thương)",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "learnt a lesson",
+      "meaning_vi": "học được bài học (rút ra kinh nghiệm từ một sự việc)",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "replacement",
+      "meaning_vi": "sự thay thế (người hoặc vật dùng để thay cho cái khác)",
+      "paragraph_index": 7
+    }
+  ]
+}

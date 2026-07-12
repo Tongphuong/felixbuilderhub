@@ -1,0 +1,1967 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L3",
+  "level_label": "Cấp 3",
+  "topic": "What Was That?",
+  "slug": "book_141962",
+  "audio_filename": "book_141962.mp3",
+  "book_slug": "book_141962",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_141962/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_141962/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_141962/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_141962/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_141962/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_141962/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_141962/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_141962/page_09.jpg",
+    "https://audio.felixbuilderhub.com/books/book_141962/page_10.jpg",
+    "https://audio.felixbuilderhub.com/books/book_141962/page_11.jpg",
+    "https://audio.felixbuilderhub.com/books/book_141962/page_12.jpg",
+    "https://audio.felixbuilderhub.com/books/book_141962/page_13.jpg",
+    "https://audio.felixbuilderhub.com/books/book_141962/page_14.jpg",
+    "https://audio.felixbuilderhub.com/books/book_141962/page_15.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_141962/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_141962/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_141962/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_141962/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_141962/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_141962/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_141962/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_141962/page_09.mp3",
+    "https://audio.felixbuilderhub.com/books/book_141962/page_10.mp3",
+    "https://audio.felixbuilderhub.com/books/book_141962/page_11.mp3",
+    "https://audio.felixbuilderhub.com/books/book_141962/page_12.mp3",
+    "https://audio.felixbuilderhub.com/books/book_141962/page_13.mp3",
+    "https://audio.felixbuilderhub.com/books/book_141962/page_14.mp3",
+    "https://audio.felixbuilderhub.com/books/book_141962/page_15.mp3"
+  ],
+  "book_attribution": {
+    "title": "What Was That?",
+    "creators": [
+      "Rajesh Khar",
+      "Alyssa Pachuau"
+    ],
+    "publisher": "Pratham Books",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: What Was That? is translated by Rajesh Khar . The © for this translation lies with Pratham Books , 2020. Some rights reserved. Released under CC BY 4.0 license. Based on Original story: ' यह क्या था? ' , by Raju Boro . © Pratham Books , 2020. Some rights reserved. Released under CC BY 4.0 license. Other Credits: 'What Was That?' has been published on StoryWeaver by Pratham Books. www.prathambooks.org; Guest Art Director: Aditi Dilip. Images Attributions: Cover page: Scared boy , by Alyssa Pachuau © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 2: Boys forest campaign , by Alyssa Pachuau © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 3: Looking around , by Alyssa Pachuau © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 4: Finds deer , by Alyssa Pachuau © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 5: Deer running , by Alyssa Pachuau © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 6: Boy , by Alyssa Pachuau © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 7: Baboon , by Alyssa Pachuau © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 8: Boy hide behind a tree , by Alyssa Pachuau © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 9: Cat , by Alyssa Pachuau © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 10: Boy and trees , by Alyssa Pachuau © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/141962-what-was-that",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "Boys forest campaign , by Alyssa Pachuau © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "Looking around , by Alyssa Pachuau © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "Finds deer , by Alyssa Pachuau © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "Deer running , by Alyssa Pachuau © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "Boy , by Alyssa Pachuau © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "Baboon , by Alyssa Pachuau © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "Boy hide behind a tree , by Alyssa Pachuau © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "Cat , by Alyssa Pachuau © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 8,
+        "credit_text": "Boy and trees , by Alyssa Pachuau © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 9,
+        "credit_text": "Illustration by Alyssa Pachuau."
+      },
+      {
+        "page_index": 10,
+        "credit_text": "Illustration by Alyssa Pachuau."
+      },
+      {
+        "page_index": 11,
+        "credit_text": "Illustration by Alyssa Pachuau."
+      },
+      {
+        "page_index": 12,
+        "credit_text": "Illustration by Alyssa Pachuau."
+      },
+      {
+        "page_index": 13,
+        "credit_text": "Illustration by Alyssa Pachuau."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "What Was That?",
+    "paragraphs_en": [
+      "Deep inside a jungle was a camp. Hiren, Rakesh and Tape had just started working in this jungle camp. One day, Hiren realised they needed to go buy some more food. “I have some work to finish. I will not be able to go,” said Rakesh. “I also have to finish work. I will also not be able to go,” said Tape.",
+      "Poor Hiren would have to go alone. “I better leave now, so that I can return before dark,” he said. So off went Hiren and bought lots and lots of food. It was getting dark as the young man made his way back to the camp. So he started walking fast. Sarak, sarak, sarak, sarak.",
+      "What was that? Scared, Hiren stopped in his tracks. He peered into the dark and saw…",
+      "… a Barking Deer running away. Sarak, sarak, sarak, sarak. Sarak, sarak Sarak, sarak",
+      "Laughing, Hiren started walking again. Khatak-khatak. Khatak-khatak. What was that? Scared, Hiren started running. He turned around and saw…",
+      "… a Capped Langur jumping from one tree to the other. Khatak-khatak. Khatak-khatak. Khatak-khatak. Khatak-khatak.",
+      "Shaking his head, Hiren started walking again. Suc-suc-suc. Suc-suc-suc. What was that? Scared, Hiren hid behind a tree. He looked out and saw…",
+      "… a Marbled Cat crossing the path. Suc-suc-suc. Suc-suc-suc. Suc-suc-suc Suc-suc-suc",
+      "A little ahead, Hiren heard something. Sring, sring, sring, sring. What was that? Hiren trembled with fear. He looked around and saw…",
+      "… a Porcupine moving in the bushes. Sring, sring, sring, sring. Sring, sring Sring, sring",
+      "Relieved, Hiren walked on until he was near the camp. Chhalak-chhalak. Chhalak-chhalak.",
+      "What was that? Frightened, Hiren wondered if it was an elephant coming his way.",
+      "He ran to his camp and saw…",
+      "his friends stomping and pretending to be elephants! Chhalak-chhalak. Chhalak-chhalak. Chhalak-chhalak Chhalak-chhalak"
+    ],
+    "sentences": [
+      {
+        "text_en": "Deep inside a jungle was a camp.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_000.mp3",
+        "text_vi": "Sâu trong rừng rậm có một khu trại."
+      },
+      {
+        "text_en": "Hiren, Rakesh and Tape had just started working in this jungle camp.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_001.mp3",
+        "text_vi": "Hiren, Rakesh và Tape vừa mới bắt đầu làm việc ở khu trại trong rừng này."
+      },
+      {
+        "text_en": "One day, Hiren realised they needed to go buy some more food.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_002.mp3",
+        "text_vi": "Một ngày nọ, Hiren nhận ra họ cần đi mua thêm thức ăn."
+      },
+      {
+        "text_en": "“I have some work to finish.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_003.mp3",
+        "text_vi": "“Tôi có việc cần làm xong."
+      },
+      {
+        "text_en": "I will not be able to go,” said Rakesh.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_004.mp3",
+        "text_vi": "Tôi sẽ không đi được,” Rakesh nói."
+      },
+      {
+        "text_en": "“I also have to finish work.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_005.mp3",
+        "text_vi": "“Tôi cũng phải làm xong việc."
+      },
+      {
+        "text_en": "I will also not be able to go,” said Tape.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_006.mp3",
+        "text_vi": "Tôi cũng sẽ không đi được,” Tape nói."
+      },
+      {
+        "text_en": "Poor Hiren would have to go alone.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_007.mp3",
+        "text_vi": "Hiren tội nghiệp sẽ phải đi một mình."
+      },
+      {
+        "text_en": "“I better leave now, so that I can return before dark,” he said.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_008.mp3",
+        "text_vi": "“Tôi nên đi ngay bây giờ, để có thể về trước khi trời tối,” cậu ấy nói."
+      },
+      {
+        "text_en": "So off went Hiren and bought lots and lots of food.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_009.mp3",
+        "text_vi": "Thế là Hiren lên đường và mua rất nhiều thức ăn."
+      },
+      {
+        "text_en": "It was getting dark as the young man made his way back to the camp.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_010.mp3",
+        "text_vi": "Trời đang tối dần khi chàng trai trẻ quay về trại."
+      },
+      {
+        "text_en": "So he started walking fast.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_011.mp3",
+        "text_vi": "Vì vậy cậu ấy bắt đầu đi nhanh."
+      },
+      {
+        "text_en": "Sarak, sarak, sarak, sarak.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_012.mp3",
+        "text_vi": "Sarak, sarak, sarak, sarak."
+      },
+      {
+        "text_en": "What was that?",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_013.mp3",
+        "text_vi": "Cái gì thế?"
+      },
+      {
+        "text_en": "Scared, Hiren stopped in his tracks.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_014.mp3",
+        "text_vi": "Sợ hãi, Hiren dừng lại ngay lập tức."
+      },
+      {
+        "text_en": "He peered into the dark and saw…",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_015.mp3",
+        "text_vi": "Cậu ấy nhìn kỹ vào bóng tối và thấy…"
+      },
+      {
+        "text_en": "… a Barking Deer running away.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_016.mp3",
+        "text_vi": "… một con Mang (hươu sủa) đang chạy đi."
+      },
+      {
+        "text_en": "Sarak, sarak, sarak, sarak.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_017.mp3",
+        "text_vi": "Sarak, sarak, sarak, sarak."
+      },
+      {
+        "text_en": "Sarak, sarak Sarak, sarak",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_018.mp3",
+        "text_vi": "Sarak, sarak Sarak, sarak."
+      },
+      {
+        "text_en": "Laughing, Hiren started walking again.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_019.mp3",
+        "text_vi": "Cười, Hiren lại bắt đầu đi tiếp."
+      },
+      {
+        "text_en": "Khatak-khatak. Khatak-khatak. What was that?",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_020.mp3",
+        "text_vi": "Khatak-khatak. Khatak-khatak. Cái gì thế?"
+      },
+      {
+        "text_en": "Scared, Hiren started running.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_021.mp3",
+        "text_vi": "Sợ hãi, Hiren bắt đầu chạy."
+      },
+      {
+        "text_en": "He turned around and saw…",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_022.mp3",
+        "text_vi": "Cậu ấy quay lại và thấy…"
+      },
+      {
+        "text_en": "… a Capped Langur jumping from one tree to the other.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_023.mp3",
+        "text_vi": "… một con Voọc mũ đang nhảy từ cây này sang cây khác."
+      },
+      {
+        "text_en": "Khatak-khatak. Khatak-khatak. Khatak-khatak. Khatak-khatak.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_024.mp3",
+        "text_vi": "Khatak-khatak. Khatak-khatak. Khatak-khatak. Khatak-khatak."
+      },
+      {
+        "text_en": "Shaking his head, Hiren started walking again.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_025.mp3",
+        "text_vi": "Lắc đầu, Hiren lại bắt đầu đi tiếp."
+      },
+      {
+        "text_en": "Suc-suc-suc. Suc-suc-suc. What was that?",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_026.mp3",
+        "text_vi": "Suc-suc-suc. Suc-suc-suc. Cái gì thế?"
+      },
+      {
+        "text_en": "Scared, Hiren hid behind a tree.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_027.mp3",
+        "text_vi": "Sợ hãi, Hiren trốn sau một cái cây."
+      },
+      {
+        "text_en": "He looked out and saw…",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_028.mp3",
+        "text_vi": "Cậu ấy nhìn ra và thấy…"
+      },
+      {
+        "text_en": "… a Marbled Cat crossing the path.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_029.mp3",
+        "text_vi": "… một con Mèo gấm đang băng qua đường."
+      },
+      {
+        "text_en": "Suc-suc-suc. Suc-suc-suc. Suc-suc-suc Suc-suc-suc",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_030.mp3",
+        "text_vi": "Suc-suc-suc. Suc-suc-suc. Suc-suc-suc Suc-suc-suc."
+      },
+      {
+        "text_en": "A little ahead, Hiren heard something.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_031.mp3",
+        "text_vi": "Đi thêm một chút, Hiren nghe thấy gì đó."
+      },
+      {
+        "text_en": "Sring, sring, sring, sring.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_032.mp3",
+        "text_vi": "Sring, sring, sring, sring."
+      },
+      {
+        "text_en": "What was that?",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_033.mp3",
+        "text_vi": "Cái gì thế?"
+      },
+      {
+        "text_en": "Hiren trembled with fear.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_034.mp3",
+        "text_vi": "Hiren run lên vì sợ hãi."
+      },
+      {
+        "text_en": "He looked around and saw…",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_035.mp3",
+        "text_vi": "Cậu ấy nhìn xung quanh và thấy…"
+      },
+      {
+        "text_en": "… a Porcupine moving in the bushes.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_036.mp3",
+        "text_vi": "… một con Nhím đang di chuyển trong bụi cây."
+      },
+      {
+        "text_en": "Sring, sring, sring, sring.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_037.mp3",
+        "text_vi": "Sring, sring, sring, sring."
+      },
+      {
+        "text_en": "Sring, sring Sring, sring",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_038.mp3",
+        "text_vi": "Sring, sring Sring, sring."
+      },
+      {
+        "text_en": "Relieved, Hiren walked on until he was near the camp. Chhalak-chhalak. Chhalak-chhalak.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_039.mp3",
+        "text_vi": "Nhẹ nhõm, Hiren đi tiếp cho đến khi cậu ấy gần đến trại. Chhalak-chhalak. Chhalak-chhalak."
+      },
+      {
+        "text_en": "What was that?",
+        "paragraph_index": 11,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_040.mp3",
+        "text_vi": "Cái gì thế?"
+      },
+      {
+        "text_en": "Frightened, Hiren wondered if it was an elephant coming his way.",
+        "paragraph_index": 11,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_041.mp3",
+        "text_vi": "Sợ hãi, Hiren tự hỏi liệu có phải một con voi đang đi về phía mình không."
+      },
+      {
+        "text_en": "He ran to his camp and saw…",
+        "paragraph_index": 12,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_042.mp3",
+        "text_vi": "Cậu ấy chạy về trại của mình và thấy…"
+      },
+      {
+        "text_en": "his friends stomping and pretending to be elephants!",
+        "paragraph_index": 13,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_043.mp3",
+        "text_vi": "bạn bè của cậu ấy đang dậm chân và giả vờ làm voi!"
+      },
+      {
+        "text_en": "Chhalak-chhalak. Chhalak-chhalak. Chhalak-chhalak Chhalak-chhalak",
+        "paragraph_index": 13,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_044.mp3",
+        "text_vi": "Chhalak-chhalak. Chhalak-chhalak. Chhalak-chhalak Chhalak-chhalak."
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "Deep inside a jungle was a camp.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "Hiren, Rakesh and Tape had just started working in this jungle camp.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "One day, Hiren realised they needed to go buy some more food.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "“I have some work to finish.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "I will not be able to go,” said Rakesh.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "“I also have to finish work.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "I will also not be able to go,” said Tape.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "Poor Hiren would have to go alone.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "“I better leave now, so that I can return before dark,” he said.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "So off went Hiren and bought lots and lots of food.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "It was getting dark as the young man made his way back to the camp.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "So he started walking fast.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "Sarak, sarak, sarak, sarak.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_012.mp3"
+        },
+        {
+          "id": "ra_13",
+          "text_en": "What was that?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_013.mp3"
+        },
+        {
+          "id": "ra_14",
+          "text_en": "Scared, Hiren stopped in his tracks.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_014.mp3"
+        },
+        {
+          "id": "ra_15",
+          "text_en": "He peered into the dark and saw…",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_015.mp3"
+        },
+        {
+          "id": "ra_16",
+          "text_en": "… a Barking Deer running away.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_016.mp3"
+        },
+        {
+          "id": "ra_17",
+          "text_en": "Sarak, sarak, sarak, sarak.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_017.mp3"
+        },
+        {
+          "id": "ra_18",
+          "text_en": "Sarak, sarak Sarak, sarak",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_018.mp3"
+        },
+        {
+          "id": "ra_19",
+          "text_en": "Laughing, Hiren started walking again.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_019.mp3"
+        },
+        {
+          "id": "ra_20",
+          "text_en": "Khatak-khatak. Khatak-khatak. What was that?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_020.mp3"
+        },
+        {
+          "id": "ra_21",
+          "text_en": "Scared, Hiren started running.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_021.mp3"
+        },
+        {
+          "id": "ra_22",
+          "text_en": "He turned around and saw…",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_022.mp3"
+        },
+        {
+          "id": "ra_23",
+          "text_en": "… a Capped Langur jumping from one tree to the other.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_023.mp3"
+        },
+        {
+          "id": "ra_24",
+          "text_en": "Khatak-khatak. Khatak-khatak. Khatak-khatak. Khatak-khatak.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_024.mp3"
+        },
+        {
+          "id": "ra_25",
+          "text_en": "Shaking his head, Hiren started walking again.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_025.mp3"
+        },
+        {
+          "id": "ra_26",
+          "text_en": "Suc-suc-suc. Suc-suc-suc. What was that?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_026.mp3"
+        },
+        {
+          "id": "ra_27",
+          "text_en": "Scared, Hiren hid behind a tree.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_027.mp3"
+        },
+        {
+          "id": "ra_28",
+          "text_en": "He looked out and saw…",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_028.mp3"
+        },
+        {
+          "id": "ra_29",
+          "text_en": "… a Marbled Cat crossing the path.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_029.mp3"
+        },
+        {
+          "id": "ra_30",
+          "text_en": "Suc-suc-suc. Suc-suc-suc. Suc-suc-suc Suc-suc-suc",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_030.mp3"
+        },
+        {
+          "id": "ra_31",
+          "text_en": "A little ahead, Hiren heard something.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_031.mp3"
+        },
+        {
+          "id": "ra_32",
+          "text_en": "Sring, sring, sring, sring.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_032.mp3"
+        },
+        {
+          "id": "ra_33",
+          "text_en": "What was that?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_033.mp3"
+        },
+        {
+          "id": "ra_34",
+          "text_en": "Hiren trembled with fear.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_034.mp3"
+        },
+        {
+          "id": "ra_35",
+          "text_en": "He looked around and saw…",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_035.mp3"
+        },
+        {
+          "id": "ra_36",
+          "text_en": "… a Porcupine moving in the bushes.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_036.mp3"
+        },
+        {
+          "id": "ra_37",
+          "text_en": "Sring, sring, sring, sring.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_037.mp3"
+        },
+        {
+          "id": "ra_38",
+          "text_en": "Sring, sring Sring, sring",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_038.mp3"
+        },
+        {
+          "id": "ra_39",
+          "text_en": "Relieved, Hiren walked on until he was near the camp. Chhalak-chhalak. Chhalak-chhalak.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_039.mp3"
+        },
+        {
+          "id": "ra_40",
+          "text_en": "What was that?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_040.mp3"
+        },
+        {
+          "id": "ra_41",
+          "text_en": "Frightened, Hiren wondered if it was an elephant coming his way.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_041.mp3"
+        },
+        {
+          "id": "ra_42",
+          "text_en": "He ran to his camp and saw…",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_042.mp3"
+        },
+        {
+          "id": "ra_43",
+          "text_en": "his friends stomping and pretending to be elephants!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_043.mp3"
+        },
+        {
+          "id": "ra_44",
+          "text_en": "Chhalak-chhalak. Chhalak-chhalak. Chhalak-chhalak Chhalak-chhalak",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141962/s_044.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "Where was a camp?",
+          "options_en": [
+            "Deep inside a jungle",
+            "Near the bushes",
+            "Near the trees"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "What was located deep inside a jungle?",
+          "options_en": [
+            "A camp",
+            "A porcupine",
+            "A big tree"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s1_q1",
+          "type": "choice",
+          "question_en": "Who had just started working in this jungle camp?",
+          "options_en": [
+            "Hiren, Rakesh and Tape",
+            "Hiren",
+            "Rakesh and Tape"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s1_q2",
+          "type": "choice",
+          "question_en": "What had Hiren, Rakesh and Tape just started doing in the jungle camp?",
+          "options_en": [
+            "Working in this jungle camp",
+            "Buying food",
+            "Pretending to be elephants"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s2_q1",
+          "type": "choice",
+          "question_en": "Who realised they needed to go buy some more food?",
+          "options_en": [
+            "Hiren",
+            "Rakesh",
+            "Tape"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s2_q2",
+          "type": "choice",
+          "question_en": "What did Hiren realise they needed to do?",
+          "options_en": [
+            "Go buy some more food",
+            "Finish work",
+            "Run back to camp"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s3_q1",
+          "type": "choice",
+          "question_en": "Who said, \"I have some work to finish.\"?",
+          "options_en": [
+            "Rakesh",
+            "Tape",
+            "Hiren"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p0_s3_q2",
+          "type": "choice",
+          "question_en": "What did the speaker say he had to finish?",
+          "options_en": [
+            "Some work",
+            "Buying food",
+            "Walking back to camp"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p0_s4_q1",
+          "type": "choice",
+          "question_en": "Who said, \"I will not be able to go\"?",
+          "options_en": [
+            "Rakesh",
+            "Hiren",
+            "Tape"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p0_s4_q2",
+          "type": "choice",
+          "question_en": "What did Rakesh say about going?",
+          "options_en": [
+            "He will not be able to go",
+            "He has some work to finish",
+            "He will go later"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p0_s5_q1",
+          "type": "choice",
+          "question_en": "Who said, \"I also have to finish work.\"?",
+          "options_en": [
+            "Tape",
+            "Rakesh",
+            "Hiren"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p0_s5_q2",
+          "type": "choice",
+          "question_en": "What did the speaker say they also had to do?",
+          "options_en": [
+            "Finish work",
+            "Buy food",
+            "Stomp like an elephant"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p0_s6_q1",
+          "type": "choice",
+          "question_en": "Who said, \"I will also not be able to go\"?",
+          "options_en": [
+            "Tape",
+            "Rakesh",
+            "Hiren"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p0_s6_q2",
+          "type": "choice",
+          "question_en": "What did Tape say about going?",
+          "options_en": [
+            "He will also not be able to go",
+            "He will buy food",
+            "He will finish work"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "Who would have to go alone?",
+          "options_en": [
+            "Hiren",
+            "Rakesh",
+            "Tape"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "Whose situation is described as 'poor'?",
+          "options_en": [
+            "Hiren",
+            "Rakesh",
+            "Tape"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p1_s1_q1",
+          "type": "choice",
+          "question_en": "When did he say he should leave?",
+          "options_en": [
+            "Now",
+            "Tomorrow",
+            "Later"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p1_s1_q2",
+          "type": "choice",
+          "question_en": "Why did he say he should leave now?",
+          "options_en": [
+            "So that he can return before dark",
+            "To finish his work",
+            "To play with friends"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p1_s2_q1",
+          "type": "choice",
+          "question_en": "Who went off and bought lots of food?",
+          "options_en": [
+            "Hiren",
+            "Rakesh",
+            "Tape"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p1_s2_q2",
+          "type": "choice",
+          "question_en": "What did he buy?",
+          "options_en": [
+            "Lots and lots of food",
+            "No food",
+            "Camp supplies"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p1_s3_q1",
+          "type": "choice",
+          "question_en": "Where was the young man making his way back to?",
+          "options_en": [
+            "The camp",
+            "The market",
+            "The jungle entrance"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p1_s3_q2",
+          "type": "choice",
+          "question_en": "When was it as he walked back to the camp?",
+          "options_en": [
+            "Getting dark",
+            "Morning",
+            "Noon"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p1_s4_q1",
+          "type": "choice",
+          "question_en": "How did he start walking?",
+          "options_en": [
+            "Fast",
+            "Slowly",
+            "Running"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p1_s4_q2",
+          "type": "choice",
+          "question_en": "Why did he start walking fast?",
+          "options_en": [
+            "Because it was getting dark",
+            "Because he was tired",
+            "Because he was playing"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p1_s5_q1",
+          "type": "choice",
+          "question_en": "What sound is repeated in the sentence?",
+          "options_en": [
+            "Sarak, sarak, sarak, sarak",
+            "Khatak-khatak",
+            "Suc-suc-suc"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p1_s5_q2",
+          "type": "choice",
+          "question_en": "How many times is 'sarak' written in the sentence?",
+          "options_en": [
+            "Four times",
+            "Two times",
+            "Three times"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "Who asked, \"What was that?\"",
+          "options_en": [
+            "Hiren",
+            "Rakesh",
+            "Tape"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "Why did Hiren say, \"What was that?\"",
+          "options_en": [
+            "He was scared",
+            "He was hungry",
+            "He wanted to run to camp"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p2_s1_q1",
+          "type": "choice",
+          "question_en": "How did Hiren feel?",
+          "options_en": [
+            "Scared",
+            "Happy",
+            "Tired"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p2_s1_q2",
+          "type": "choice",
+          "question_en": "What did Hiren do when he was scared?",
+          "options_en": [
+            "Stopped in his tracks",
+            "Ran to the camp",
+            "Bought food"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p2_s2_q1",
+          "type": "choice",
+          "question_en": "Where did Hiren peer?",
+          "options_en": [
+            "Into the dark",
+            "At the food",
+            "At his friends"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p2_s2_q2",
+          "type": "choice",
+          "question_en": "What did Hiren do to try to see?",
+          "options_en": [
+            "Peered into the dark",
+            "Shouted for help",
+            "Closed his eyes"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "What was running away?",
+          "options_en": [
+            "a Barking Deer",
+            "a Capped Langur",
+            "a Porcupine"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "Who was running away?",
+          "options_en": [
+            "a Barking Deer",
+            "Hiren",
+            "his friends"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p3_s1_q1",
+          "type": "choice",
+          "question_en": "What sound is written in the sentence?",
+          "options_en": [
+            "Sarak, sarak, sarak, sarak",
+            "Khatak-khatak",
+            "Suc-suc-suc"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p3_s1_q2",
+          "type": "choice",
+          "question_en": "Which repeated sound appears in the sentence?",
+          "options_en": [
+            "Sarak, sarak, sarak, sarak",
+            "Chhalak-chhalak",
+            "Sring, sring, sring, sring"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p3_s2_q1",
+          "type": "choice",
+          "question_en": "What repeated sound appears in this line?",
+          "options_en": [
+            "Sarak, sarak Sarak, sarak",
+            "Khatak-khatak",
+            "Chhalak-chhalak"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p3_s2_q2",
+          "type": "choice",
+          "question_en": "Which animal's sound is shown by 'Sarak, sarak Sarak, sarak'?",
+          "options_en": [
+            "a Barking Deer",
+            "a Marbled Cat",
+            "a Porcupine"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "Who started walking again?",
+          "options_en": [
+            "Hiren",
+            "Rakesh",
+            "Tape"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "How was Hiren described as he started walking again?",
+          "options_en": [
+            "Laughing",
+            "Scared",
+            "Tired"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p4_s1_q1",
+          "type": "choice",
+          "question_en": "What sound is repeated in the sentence?",
+          "options_en": [
+            "Khatak-khatak",
+            "Sarak-sarak",
+            "Suc-suc"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p4_s1_q2",
+          "type": "choice",
+          "question_en": "Why does the sentence ask 'What was that?'",
+          "options_en": [
+            "Because a repeated sound was heard",
+            "Because someone called his name",
+            "Because he found food"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p4_s2_q1",
+          "type": "choice",
+          "question_en": "Who started running?",
+          "options_en": [
+            "Hiren",
+            "Rakesh",
+            "Tape"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p4_s2_q2",
+          "type": "choice",
+          "question_en": "Why did Hiren start running?",
+          "options_en": [
+            "He was scared",
+            "He was laughing",
+            "He was hungry"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p4_s3_q1",
+          "type": "choice",
+          "question_en": "What did he do before seeing something?",
+          "options_en": [
+            "He turned around",
+            "He started walking",
+            "He hid behind a tree"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p4_s3_q2",
+          "type": "choice",
+          "question_en": "When did he see something?",
+          "options_en": [
+            "After he turned around",
+            "Before he started running",
+            "While he was laughing"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "Who was jumping from one tree to the other?",
+          "options_en": [
+            "A Capped Langur",
+            "A Barking Deer",
+            "A Marbled Cat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "Where was the animal jumping?",
+          "options_en": [
+            "From one tree to the other",
+            "Along the path",
+            "Into the bushes"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p5_s1_q1",
+          "type": "choice",
+          "question_en": "What sound is repeated in this sentence?",
+          "options_en": [
+            "Khatak-khatak",
+            "Sarak-sarak",
+            "Suc-suc-suc"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p5_s1_q2",
+          "type": "choice",
+          "question_en": "How many times is the sound \"Khatak-khatak\" written here?",
+          "options_en": [
+            "Four times",
+            "Two times",
+            "Three times"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "Who started walking again?",
+          "options_en": [
+            "Hiren",
+            "Rakesh",
+            "Tape"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "How did he start walking again?",
+          "options_en": [
+            "Shaking his head",
+            "Laughing",
+            "Running"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p6_s1_q1",
+          "type": "choice",
+          "question_en": "What did the lines say he heard?",
+          "options_en": [
+            "Suc-suc-suc sound",
+            "Sarak-sarak sound",
+            "Khatak-khatak sound"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p6_s1_q2",
+          "type": "choice",
+          "question_en": "Why did the sentence ask 'What was that?'",
+          "options_en": [
+            "Because he heard a sound",
+            "Because he saw a deer",
+            "Because he saw a langur"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p6_s2_q1",
+          "type": "choice",
+          "question_en": "Where did Hiren hide?",
+          "options_en": [
+            "Behind a tree",
+            "Behind the camp",
+            "In the bushes"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        },
+        {
+          "id": "gl_p6_s2_q2",
+          "type": "choice",
+          "question_en": "Why did Hiren hide behind a tree?",
+          "options_en": [
+            "Because he was scared",
+            "Because he was laughing",
+            "Because he was hungry"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        },
+        {
+          "id": "gl_p6_s3_q1",
+          "type": "choice",
+          "question_en": "Who looked out and saw something?",
+          "options_en": [
+            "Hiren",
+            "Rakesh",
+            "Tape"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        },
+        {
+          "id": "gl_p6_s3_q2",
+          "type": "choice",
+          "question_en": "What did he do after hiding?",
+          "options_en": [
+            "He looked out and saw something",
+            "He started running",
+            "He ran to his camp"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "What animal was crossing the path?",
+          "options_en": [
+            "A Marbled Cat",
+            "A Barking Deer",
+            "A Capped Langur"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "Where was the Marbled Cat?",
+          "options_en": [
+            "Crossing the path",
+            "In the bushes",
+            "On the trees"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p7_s1_q1",
+          "type": "choice",
+          "question_en": "What sound was heard?",
+          "options_en": [
+            "Suc-suc-suc",
+            "Sarak-sarak",
+            "Khatak-khatak"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        },
+        {
+          "id": "gl_p7_s1_q2",
+          "type": "choice",
+          "question_en": "How did the sound go?",
+          "options_en": [
+            "Suc-suc-suc",
+            "Sring-sring",
+            "Chhalak-chhalak"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        }
+      ]
+    },
+    {
+      "paragraph_index": 8,
+      "questions": [
+        {
+          "id": "gl_p8_s0_q1",
+          "type": "choice",
+          "question_en": "Who heard something?",
+          "options_en": [
+            "Hiren",
+            "Rakesh",
+            "Tape"
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        },
+        {
+          "id": "gl_p8_s0_q2",
+          "type": "choice",
+          "question_en": "Where did Hiren hear something?",
+          "options_en": [
+            "A little ahead",
+            "Near the camp",
+            "Inside the market"
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        },
+        {
+          "id": "gl_p8_s1_q1",
+          "type": "choice",
+          "question_en": "What sound is written in the sentence?",
+          "options_en": [
+            "Sring, sring, sring, sring",
+            "Sarak, sarak, sarak, sarak",
+            "Khatak-khatak"
+          ],
+          "correct_index": 0,
+          "sentence_index": 32
+        },
+        {
+          "id": "gl_p8_s1_q2",
+          "type": "choice",
+          "question_en": "How did the sound go?",
+          "options_en": [
+            "Sring, sring, sring, sring",
+            "Suc-suc-suc",
+            "Chhalak-chhalak"
+          ],
+          "correct_index": 0,
+          "sentence_index": 32
+        },
+        {
+          "id": "gl_p8_s2_q1",
+          "type": "choice",
+          "question_en": "Who asked the question in the sentence?",
+          "options_en": [
+            "Hiren",
+            "Rakesh",
+            "Tape"
+          ],
+          "correct_index": 0,
+          "sentence_index": 33
+        },
+        {
+          "id": "gl_p8_s2_q2",
+          "type": "choice",
+          "question_en": "What question was asked?",
+          "options_en": [
+            "\"What was that?\"",
+            "\"Where is the camp?\"",
+            "\"Who is there?\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 33
+        },
+        {
+          "id": "gl_p8_s3_q1",
+          "type": "choice",
+          "question_en": "Who trembled with fear?",
+          "options_en": [
+            "Hiren",
+            "A Barking Deer",
+            "Rakesh"
+          ],
+          "correct_index": 0,
+          "sentence_index": 34
+        },
+        {
+          "id": "gl_p8_s3_q2",
+          "type": "choice",
+          "question_en": "Why did he tremble?",
+          "options_en": [
+            "With fear",
+            "Because he was buying food",
+            "Because he was laughing"
+          ],
+          "correct_index": 0,
+          "sentence_index": 34
+        },
+        {
+          "id": "gl_p8_s4_q1",
+          "type": "choice",
+          "question_en": "Who looked around and saw something?",
+          "options_en": [
+            "He (Hiren)",
+            "Rakesh",
+            "Tape"
+          ],
+          "correct_index": 0,
+          "sentence_index": 35
+        },
+        {
+          "id": "gl_p8_s4_q2",
+          "type": "choice",
+          "question_en": "What did he do after hearing the sound?",
+          "options_en": [
+            "He looked around and saw…",
+            "He ran back to the market",
+            "He went to sleep"
+          ],
+          "correct_index": 0,
+          "sentence_index": 35
+        }
+      ]
+    },
+    {
+      "paragraph_index": 9,
+      "questions": [
+        {
+          "id": "gl_p9_s0_q1",
+          "type": "choice",
+          "question_en": "Who was moving in the bushes?",
+          "options_en": [
+            "A Porcupine",
+            "A Barking Deer",
+            "A Marbled Cat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 36
+        },
+        {
+          "id": "gl_p9_s0_q2",
+          "type": "choice",
+          "question_en": "Where was the porcupine moving?",
+          "options_en": [
+            "In the bushes",
+            "Near the camp",
+            "On the path"
+          ],
+          "correct_index": 0,
+          "sentence_index": 36
+        },
+        {
+          "id": "gl_p9_s1_q1",
+          "type": "choice",
+          "question_en": "What sound is written in this sentence?",
+          "options_en": [
+            "Sring, sring, sring, sring",
+            "Sarak, sarak, sarak, sarak",
+            "Khatak-khatak"
+          ],
+          "correct_index": 0,
+          "sentence_index": 37
+        },
+        {
+          "id": "gl_p9_s1_q2",
+          "type": "choice",
+          "question_en": "How many times is the sound 'Sring' written here?",
+          "options_en": [
+            "Four times",
+            "Two times",
+            "Three times"
+          ],
+          "correct_index": 0,
+          "sentence_index": 37
+        },
+        {
+          "id": "gl_p9_s2_q1",
+          "type": "choice",
+          "question_en": "What sound appears in this line?",
+          "options_en": [
+            "Sring, sring Sring, sring",
+            "Khatak-khatak",
+            "Suc-suc-suc"
+          ],
+          "correct_index": 0,
+          "sentence_index": 38
+        },
+        {
+          "id": "gl_p9_s2_q2",
+          "type": "choice",
+          "question_en": "How many 'Sring' words are in this sentence?",
+          "options_en": [
+            "Four",
+            "Two",
+            "Five"
+          ],
+          "correct_index": 0,
+          "sentence_index": 38
+        }
+      ]
+    },
+    {
+      "paragraph_index": 10,
+      "questions": [
+        {
+          "id": "gl_p10_s0_q1",
+          "type": "choice",
+          "question_en": "Who walked on until he was near the camp?",
+          "options_en": [
+            "Hiren",
+            "Rakesh",
+            "Tape"
+          ],
+          "correct_index": 0,
+          "sentence_index": 39
+        },
+        {
+          "id": "gl_p10_s0_q2",
+          "type": "choice",
+          "question_en": "What sound is heard as he is near the camp?",
+          "options_en": [
+            "Chhalak-chhalak",
+            "Sarak, sarak",
+            "Khatak-khatak"
+          ],
+          "correct_index": 0,
+          "sentence_index": 39
+        }
+      ]
+    },
+    {
+      "paragraph_index": 11,
+      "questions": [
+        {
+          "id": "gl_p11_s0_q1",
+          "type": "choice",
+          "question_en": "What question is asked?",
+          "options_en": [
+            "What was that?",
+            "Where is the camp?",
+            "Who is making the noise?"
+          ],
+          "correct_index": 0,
+          "sentence_index": 40
+        },
+        {
+          "id": "gl_p11_s0_q2",
+          "type": "choice",
+          "question_en": "How is the surprise shown in the sentence?",
+          "options_en": [
+            "By asking \"What was that?\"",
+            "By laughing loudly",
+            "By pretending to be an elephant"
+          ],
+          "correct_index": 0,
+          "sentence_index": 40
+        },
+        {
+          "id": "gl_p11_s1_q1",
+          "type": "choice",
+          "question_en": "Why did Hiren wonder if it was an elephant coming his way?",
+          "options_en": [
+            "He was frightened",
+            "He had to finish work",
+            "He had bought lots of food"
+          ],
+          "correct_index": 0,
+          "sentence_index": 41
+        },
+        {
+          "id": "gl_p11_s1_q2",
+          "type": "choice",
+          "question_en": "What did Hiren wonder?",
+          "options_en": [
+            "If it was an elephant coming his way",
+            "If it was a Barking Deer",
+            "If it was a Porcupine"
+          ],
+          "correct_index": 0,
+          "sentence_index": 41
+        }
+      ]
+    },
+    {
+      "paragraph_index": 12,
+      "questions": [
+        {
+          "id": "gl_p12_s0_q1",
+          "type": "choice",
+          "question_en": "Where did he run?",
+          "options_en": [
+            "To his camp",
+            "To buy more food",
+            "Into the jungle"
+          ],
+          "correct_index": 0,
+          "sentence_index": 42
+        },
+        {
+          "id": "gl_p12_s0_q2",
+          "type": "choice",
+          "question_en": "How did he go to his camp?",
+          "options_en": [
+            "He ran",
+            "He walked fast",
+            "He hid behind a tree"
+          ],
+          "correct_index": 0,
+          "sentence_index": 42
+        }
+      ]
+    },
+    {
+      "paragraph_index": 13,
+      "questions": [
+        {
+          "id": "gl_p13_s0_q1",
+          "type": "choice",
+          "question_en": "Who was stomping and pretending to be elephants?",
+          "options_en": [
+            "his friends",
+            "Hiren",
+            "a Porcupine"
+          ],
+          "correct_index": 0,
+          "sentence_index": 43
+        },
+        {
+          "id": "gl_p13_s0_q2",
+          "type": "choice",
+          "question_en": "What were his friends pretending to be?",
+          "options_en": [
+            "elephants",
+            "a Barking Deer",
+            "a Capped Langur"
+          ],
+          "correct_index": 0,
+          "sentence_index": 43
+        },
+        {
+          "id": "gl_p13_s1_q1",
+          "type": "choice",
+          "question_en": "What sound is written in the sentence?",
+          "options_en": [
+            "Chhalak-chhalak",
+            "Sarak-sarak",
+            "Khatak-khatak"
+          ],
+          "correct_index": 0,
+          "sentence_index": 44
+        },
+        {
+          "id": "gl_p13_s1_q2",
+          "type": "choice",
+          "question_en": "How does the sound in the sentence go?",
+          "options_en": [
+            "Chhalak-chhalak",
+            "Suc-suc-suc",
+            "Sring-sring"
+          ],
+          "correct_index": 0,
+          "sentence_index": 44
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'What Was That?'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "jungle",
+      "meaning_vi": "rừng rậm",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "camp",
+      "meaning_vi": "khu trại",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "realised",
+      "meaning_vi": "nhận ra",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "finish",
+      "meaning_vi": "làm xong",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "alone",
+      "meaning_vi": "một mình",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "return",
+      "meaning_vi": "quay về",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "dark",
+      "meaning_vi": "tối",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "fast",
+      "meaning_vi": "nhanh",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "scared",
+      "meaning_vi": "sợ hãi",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "peered",
+      "meaning_vi": "nhìn kỹ",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "running away",
+      "meaning_vi": "chạy đi",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "laughing",
+      "meaning_vi": "cười",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "turned around",
+      "meaning_vi": "quay lại",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "jumping",
+      "meaning_vi": "nhảy",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "shaking",
+      "meaning_vi": "lắc",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "hid",
+      "meaning_vi": "trốn",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "behind",
+      "meaning_vi": "sau",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "crossing",
+      "meaning_vi": "băng qua",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "path",
+      "meaning_vi": "đường đi",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "ahead",
+      "meaning_vi": "phía trước",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "heard",
+      "meaning_vi": "nghe thấy",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "trembled",
+      "meaning_vi": "run rẩy",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "fear",
+      "meaning_vi": "sợ hãi",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "moving",
+      "meaning_vi": "di chuyển",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "bushes",
+      "meaning_vi": "bụi cây",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "relieved",
+      "meaning_vi": "nhẹ nhõm",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "near",
+      "meaning_vi": "gần",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "frightened",
+      "meaning_vi": "sợ hãi",
+      "paragraph_index": 11
+    },
+    {
+      "word_en": "wondered",
+      "meaning_vi": "tự hỏi",
+      "paragraph_index": 11
+    },
+    {
+      "word_en": "elephant",
+      "meaning_vi": "voi",
+      "paragraph_index": 11
+    },
+    {
+      "word_en": "ran",
+      "meaning_vi": "chạy",
+      "paragraph_index": 12
+    },
+    {
+      "word_en": "stomping",
+      "meaning_vi": "dậm chân",
+      "paragraph_index": 13
+    },
+    {
+      "word_en": "pretending",
+      "meaning_vi": "giả vờ",
+      "paragraph_index": 13
+    }
+  ]
+}

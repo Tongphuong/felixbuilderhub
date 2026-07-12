@@ -1,0 +1,1836 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L2",
+  "level_label": "Cấp 2",
+  "topic": "With You, Ma",
+  "slug": "book_113404",
+  "audio_filename": "book_113404.mp3",
+  "book_slug": "book_113404",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_113404/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_113404/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_113404/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_113404/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_113404/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_113404/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_113404/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_113404/page_09.jpg",
+    "https://audio.felixbuilderhub.com/books/book_113404/page_10.jpg",
+    "https://audio.felixbuilderhub.com/books/book_113404/page_11.jpg",
+    "https://audio.felixbuilderhub.com/books/book_113404/page_12.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_113404/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_113404/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_113404/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_113404/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_113404/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_113404/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_113404/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_113404/page_09.mp3",
+    "https://audio.felixbuilderhub.com/books/book_113404/page_10.mp3",
+    "https://audio.felixbuilderhub.com/books/book_113404/page_11.mp3",
+    "https://audio.felixbuilderhub.com/books/book_113404/page_12.mp3"
+  ],
+  "book_attribution": {
+    "title": "With You, Ma",
+    "creators": [
+      "Adith A.K.",
+      "Amalendu Kaushik"
+    ],
+    "publisher": "Pratham Books",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: With You, Ma is written by Adith A.K. . © Pratham Books , 2020. Some rights reserved. Released under CC BY 4.0 license. Other Credits: 'With You, Ma' has been published on StoryWeaver by Pratham Books. www.prathambooks.org. Images Attributions: Cover page: A mother and child walking , by Amalendu Kaushik © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 2: A mother and daughter packing for a trip , by Amalendu Kaushik © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 3: A child and a mother standing at a ticket counter , by Amalendu Kaushik © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 4: A child sitting on a scooter , by Amalendu Kaushik © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 5: A child talking to other children , by Amalendu Kaushik © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 6: A child talking to her mother , by Amalendu Kaushik © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 7: Two children playing with wooden horses , by Amalendu Kaushik © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 8: Children eating together , by Amalendu Kaushik © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 9: Children enjoying the rain , by Amalendu Kaushik © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 10: Two children playing in nature , by Amalendu Kaushik © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 11: A child and a mother getting ready , by Amalendu Kaushik © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/113404-with-you-ma",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "A mother and daughter packing for a trip , by Amalendu Kaushik © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "A child and a mother standing at a ticket counter , by Amalendu Kaushik © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "A child sitting on a scooter , by Amalendu Kaushik © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "A child talking to other children , by Amalendu Kaushik © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "A child talking to her mother , by Amalendu Kaushik © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "Two children playing with wooden horses , by Amalendu Kaushik © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "Children eating together , by Amalendu Kaushik © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "Children enjoying the rain , by Amalendu Kaushik © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 8,
+        "credit_text": "Two children playing in nature , by Amalendu Kaushik © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 9,
+        "credit_text": "A child and a mother getting ready , by Amalendu Kaushik © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 10,
+        "credit_text": "Illustration by Amalendu Kaushik."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "With You, Ma",
+    "paragraphs_en": [
+      "“With you, Ma!” says Aadya. Ma wants Aadya to pack her bag. They are going to an island called Majuli in Assam. “Why don’t you try packing by yourself?” says Ma. But Aadya keeps sitting by her side.",
+      "“With you, Ma!” It’s a big ferry - so many people. But everyone is smiling. There’s water, all around. Ma is buying tickets. Aadya runs fast to stand with her. Majuli is very far! We took a plane, a car, and now a ferry ride!",
+      "“With you, Ma” says Aadya. She wants to go on the same scooter as Ma. They are going to be staying in a school for two days.",
+      "The next day, Ma and Aadya visit the school. “Hi! I’m Kim-kim and this is my sister…” “Aallooo,” says Muang-muang. “Do you want to play? Come.”",
+      "“With you, Ma!” says Aadya.",
+      "Within a few minutes Aadya and Kim-kim become best friends. “Ma, see me.” They jump from log to log. They ride a wooden horse. They play in the sand. They run around the firewood gaadi. Adhumpa! Adhumpa! Tu-duk! Tu-duk! Tok-tok! Tok-tok! Ssssrrrrr-tik-tik! Sssssrrrrr-tik-tik! Duuurrrr- drrrrrrr!",
+      "“Ma, see me.” Gudu-gudu-gudu-gudu. They run to the hand-pump Chapppp-chapppp-chapppp-chappp. They splash in the water. “Aadya, it’s time for food!” says Ma. “Feed me, Ma!” Nom-nom-nom-nom. They eat rice and daal. BUUURRRRRRPPPPP!",
+      "Tip-tip tip-tip tip-tip tip-tip. Droplets fall from the sky. “Aadya! Come! We are going to the river,” says Kim-kim.",
+      "Gudu-gudu-gudu-gudu Wrrrrr-wrrrrrrrrrrr Dhop-dhum-dhup-dhom Frrrrrrr-shhhttttt Nomnomnomnom! Dip-dip-dip-dip Ma watches Aadya as she comes back with her new friends from the river. They are laughing and eating bugories.",
+      "The next day, Ma and Aadya get ready to go home. “Aadya, let me help you with your shoelaces,” says Ma.",
+      "“On my own, Ma!”"
+    ],
+    "sentences": [
+      {
+        "text_en": "“With you, Ma!” says Aadya.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_000.mp3",
+        "text_vi": "“Con đi với mẹ ạ!” Aadya nói."
+      },
+      {
+        "text_en": "Ma wants Aadya to pack her bag.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_001.mp3",
+        "text_vi": "Mẹ muốn Aadya tự xếp túi đồ của mình."
+      },
+      {
+        "text_en": "They are going to an island called Majuli in Assam.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_002.mp3",
+        "text_vi": "Họ sẽ đi đến một hòn đảo tên là Majuli ở Assam."
+      },
+      {
+        "text_en": "“Why don’t you try packing by yourself?” says Ma.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_003.mp3",
+        "text_vi": "Mẹ nói: “Sao con không thử tự xếp đồ một mình xem?”"
+      },
+      {
+        "text_en": "But Aadya keeps sitting by her side.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_004.mp3",
+        "text_vi": "Nhưng Aadya cứ ngồi cạnh mẹ."
+      },
+      {
+        "text_en": "“With you, Ma!” It’s a big ferry - so many people.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_005.mp3",
+        "text_vi": "“Con đi với mẹ!” Đó là một chiếc phà lớn - rất nhiều người."
+      },
+      {
+        "text_en": "But everyone is smiling.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_006.mp3",
+        "text_vi": "Nhưng ai cũng đang mỉm cười."
+      },
+      {
+        "text_en": "There’s water, all around.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_007.mp3",
+        "text_vi": "Nước ở khắp mọi nơi."
+      },
+      {
+        "text_en": "Ma is buying tickets.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_008.mp3",
+        "text_vi": "Mẹ đang mua vé."
+      },
+      {
+        "text_en": "Aadya runs fast to stand with her.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_009.mp3",
+        "text_vi": "Aadya chạy nhanh đến đứng cạnh mẹ."
+      },
+      {
+        "text_en": "Majuli is very far!",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_010.mp3",
+        "text_vi": "Majuli xa lắm!"
+      },
+      {
+        "text_en": "We took a plane, a car, and now a ferry ride!",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_011.mp3",
+        "text_vi": "Chúng ta đã đi máy bay, đi ô tô, và bây giờ là đi phà!"
+      },
+      {
+        "text_en": "“With you, Ma” says Aadya.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_012.mp3",
+        "text_vi": "“Con đi với mẹ,” Aadya nói."
+      },
+      {
+        "text_en": "She wants to go on the same scooter as Ma.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_013.mp3",
+        "text_vi": "Cô bé muốn đi cùng xe máy với mẹ."
+      },
+      {
+        "text_en": "They are going to be staying in a school for two days.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_014.mp3",
+        "text_vi": "Họ sẽ ở lại một ngôi trường trong hai ngày."
+      },
+      {
+        "text_en": "The next day, Ma and Aadya visit the school.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_015.mp3",
+        "text_vi": "Ngày hôm sau, mẹ và Aadya đến thăm trường."
+      },
+      {
+        "text_en": "“Hi! I’m Kim-kim and this is my sister…” “Aallooo,” says Muang-muang.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_016.mp3",
+        "text_vi": "“Chào! Tớ là Kim-kim và đây là em gái tớ...” “Aallooo,” Muang-muang nói."
+      },
+      {
+        "text_en": "“Do you want to play? Come.”",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_017.mp3",
+        "text_vi": "“Các cậu muốn chơi không? Lại đây.”"
+      },
+      {
+        "text_en": "“With you, Ma!” says Aadya.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_018.mp3",
+        "text_vi": "“Con đi với mẹ!” Aadya nói."
+      },
+      {
+        "text_en": "Within a few minutes Aadya and Kim-kim become best friends.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_019.mp3",
+        "text_vi": "Chỉ vài phút sau, Aadya và Kim-kim đã trở thành bạn thân."
+      },
+      {
+        "text_en": "“Ma, see me.” They jump from log to log.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_020.mp3",
+        "text_vi": "“Mẹ ơi, nhìn con này.” Hai bạn nhảy từ khúc gỗ này sang khúc gỗ khác."
+      },
+      {
+        "text_en": "They ride a wooden horse.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_021.mp3",
+        "text_vi": "Hai bạn cưỡi một con ngựa gỗ."
+      },
+      {
+        "text_en": "They play in the sand.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_022.mp3",
+        "text_vi": "Hai bạn chơi trong cát."
+      },
+      {
+        "text_en": "They run around the firewood gaadi.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_023.mp3",
+        "text_vi": "Hai bạn chạy quanh chiếc xe chở củi."
+      },
+      {
+        "text_en": "Adhumpa! Adhumpa! Tu-duk!",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_024.mp3",
+        "text_vi": "Adhumpa! Adhumpa! Tu-duk!"
+      },
+      {
+        "text_en": "Tu-duk! Tok-tok! Tok-tok!",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_025.mp3",
+        "text_vi": "Tu-duk! Tok-tok! Tok-tok!"
+      },
+      {
+        "text_en": "Ssssrrrrr-tik-tik! Sssssrrrrr-tik-tik! Duuurrrr- drrrrrrr!",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_026.mp3",
+        "text_vi": "Ssssrrrrr-tik-tik! Ssssrrrrr-tik-tik! Duuurrrr- drrrrrrr!"
+      },
+      {
+        "text_en": "“Ma, see me.” Gudu-gudu-gudu-gudu.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_027.mp3",
+        "text_vi": "“Mẹ ơi, nhìn con này.” Gudu-gudu-gudu-gudu."
+      },
+      {
+        "text_en": "They run to the hand-pump Chapppp-chapppp-chapppp-chappp.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_028.mp3",
+        "text_vi": "Hai bạn chạy đến cái bơm nước bằng tay Chapppp-chapppp-chapppp-chappp."
+      },
+      {
+        "text_en": "They splash in the water.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_029.mp3",
+        "text_vi": "Hai bạn té nước vào nhau."
+      },
+      {
+        "text_en": "“Aadya, it’s time for food!” says Ma.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_030.mp3",
+        "text_vi": "Mẹ nói: “Aadya, đến giờ ăn rồi!”"
+      },
+      {
+        "text_en": "“Feed me, Ma!” Nom-nom-nom-nom.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_031.mp3",
+        "text_vi": "“Mẹ đút con ăn đi!” Nom-nom-nom-nom."
+      },
+      {
+        "text_en": "They eat rice and daal. BUUURRRRRRPPPPP!",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_032.mp3",
+        "text_vi": "Hai bạn ăn cơm và daal. BUUURRRRRRPPPPP!"
+      },
+      {
+        "text_en": "Tip-tip tip-tip tip-tip tip-tip.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_033.mp3",
+        "text_vi": "Tí tách tí tách tí tách tí tách."
+      },
+      {
+        "text_en": "Droplets fall from the sky.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_034.mp3",
+        "text_vi": "Những giọt nước nhỏ rơi từ trên trời xuống."
+      },
+      {
+        "text_en": "“Aadya! Come! We are going to the river,” says Kim-kim.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_035.mp3",
+        "text_vi": "Kim-kim nói: “Aadya! Lại đây! Chúng mình đi ra sông nào.”"
+      },
+      {
+        "text_en": "Gudu-gudu-gudu-gudu Wrrrrr-wrrrrrrrrrrr Dhop-dhum-dhup-dhom Frrrrrrr-shhhttttt Nomnomnomnom!",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_036.mp3",
+        "text_vi": "Gudu-gudu-gudu-gudu Wrrrrr-wrrrrrrrrrrr Dhop-dhum-dhup-dhom Frrrrrrr-shhhttttt Nomnomnomnom!"
+      },
+      {
+        "text_en": "Dip-dip-dip-dip Ma watches Aadya as she comes back with her new friends from the river.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_037.mp3",
+        "text_vi": "Dip-dip-dip-dip Mẹ nhìn Aadya khi cô bé trở về cùng những người bạn mới từ con sông."
+      },
+      {
+        "text_en": "They are laughing and eating bugories.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_038.mp3",
+        "text_vi": "Các bạn ấy đang cười và ăn bugories."
+      },
+      {
+        "text_en": "The next day, Ma and Aadya get ready to go home.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_039.mp3",
+        "text_vi": "Ngày hôm sau, mẹ và Aadya chuẩn bị về nhà."
+      },
+      {
+        "text_en": "“Aadya, let me help you with your shoelaces,” says Ma.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_040.mp3",
+        "text_vi": "Mẹ nói: “Aadya, để mẹ giúp con buộc dây giày nhé.”"
+      },
+      {
+        "text_en": "“On my own, Ma!”",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_041.mp3",
+        "text_vi": "“Con tự làm được, mẹ ơi!”"
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "“With you, Ma!” says Aadya.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "Ma wants Aadya to pack her bag.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "They are going to an island called Majuli in Assam.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "“Why don’t you try packing by yourself?” says Ma.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "But Aadya keeps sitting by her side.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "“With you, Ma!” It’s a big ferry - so many people.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "But everyone is smiling.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "There’s water, all around.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "Ma is buying tickets.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "Aadya runs fast to stand with her.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "Majuli is very far!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "We took a plane, a car, and now a ferry ride!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "“With you, Ma” says Aadya.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_012.mp3"
+        },
+        {
+          "id": "ra_13",
+          "text_en": "She wants to go on the same scooter as Ma.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_013.mp3"
+        },
+        {
+          "id": "ra_14",
+          "text_en": "They are going to be staying in a school for two days.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_014.mp3"
+        },
+        {
+          "id": "ra_15",
+          "text_en": "The next day, Ma and Aadya visit the school.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_015.mp3"
+        },
+        {
+          "id": "ra_16",
+          "text_en": "“Hi! I’m Kim-kim and this is my sister…” “Aallooo,” says Muang-muang.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_016.mp3"
+        },
+        {
+          "id": "ra_17",
+          "text_en": "“Do you want to play? Come.”",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_017.mp3"
+        },
+        {
+          "id": "ra_18",
+          "text_en": "“With you, Ma!” says Aadya.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_018.mp3"
+        },
+        {
+          "id": "ra_19",
+          "text_en": "Within a few minutes Aadya and Kim-kim become best friends.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_019.mp3"
+        },
+        {
+          "id": "ra_20",
+          "text_en": "“Ma, see me.” They jump from log to log.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_020.mp3"
+        },
+        {
+          "id": "ra_21",
+          "text_en": "They ride a wooden horse.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_021.mp3"
+        },
+        {
+          "id": "ra_22",
+          "text_en": "They play in the sand.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_022.mp3"
+        },
+        {
+          "id": "ra_23",
+          "text_en": "They run around the firewood gaadi.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_023.mp3"
+        },
+        {
+          "id": "ra_24",
+          "text_en": "Adhumpa! Adhumpa! Tu-duk!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_024.mp3"
+        },
+        {
+          "id": "ra_25",
+          "text_en": "Tu-duk! Tok-tok! Tok-tok!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_025.mp3"
+        },
+        {
+          "id": "ra_26",
+          "text_en": "Ssssrrrrr-tik-tik! Sssssrrrrr-tik-tik! Duuurrrr- drrrrrrr!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_026.mp3"
+        },
+        {
+          "id": "ra_27",
+          "text_en": "“Ma, see me.” Gudu-gudu-gudu-gudu.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_027.mp3"
+        },
+        {
+          "id": "ra_28",
+          "text_en": "They run to the hand-pump Chapppp-chapppp-chapppp-chappp.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_028.mp3"
+        },
+        {
+          "id": "ra_29",
+          "text_en": "They splash in the water.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_029.mp3"
+        },
+        {
+          "id": "ra_30",
+          "text_en": "“Aadya, it’s time for food!” says Ma.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_030.mp3"
+        },
+        {
+          "id": "ra_31",
+          "text_en": "“Feed me, Ma!” Nom-nom-nom-nom.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_031.mp3"
+        },
+        {
+          "id": "ra_32",
+          "text_en": "They eat rice and daal. BUUURRRRRRPPPPP!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_032.mp3"
+        },
+        {
+          "id": "ra_33",
+          "text_en": "Tip-tip tip-tip tip-tip tip-tip.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_033.mp3"
+        },
+        {
+          "id": "ra_34",
+          "text_en": "Droplets fall from the sky.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_034.mp3"
+        },
+        {
+          "id": "ra_35",
+          "text_en": "“Aadya! Come! We are going to the river,” says Kim-kim.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_035.mp3"
+        },
+        {
+          "id": "ra_36",
+          "text_en": "Gudu-gudu-gudu-gudu Wrrrrr-wrrrrrrrrrrr Dhop-dhum-dhup-dhom Frrrrrrr-shhhttttt Nomnomnomnom!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_036.mp3"
+        },
+        {
+          "id": "ra_37",
+          "text_en": "Dip-dip-dip-dip Ma watches Aadya as she comes back with her new friends from the river.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_037.mp3"
+        },
+        {
+          "id": "ra_38",
+          "text_en": "They are laughing and eating bugories.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_038.mp3"
+        },
+        {
+          "id": "ra_39",
+          "text_en": "The next day, Ma and Aadya get ready to go home.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_039.mp3"
+        },
+        {
+          "id": "ra_40",
+          "text_en": "“Aadya, let me help you with your shoelaces,” says Ma.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_040.mp3"
+        },
+        {
+          "id": "ra_41",
+          "text_en": "“On my own, Ma!”",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_113404/s_041.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "Who says \"With you, Ma!\"?",
+          "options_en": [
+            "Aadya",
+            "Ma",
+            "Kim-kim"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "Who is Aadya speaking to?",
+          "options_en": [
+            "Ma",
+            "Muang-muang",
+            "Kim-kim"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s1_q1",
+          "type": "choice",
+          "question_en": "What does Ma want Aadya to do?",
+          "options_en": [
+            "Pack her bag",
+            "Eat food",
+            "Ride the scooter"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s1_q2",
+          "type": "choice",
+          "question_en": "Who wants Aadya to pack her bag?",
+          "options_en": [
+            "Ma",
+            "Aadya",
+            "Kim-kim"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s2_q1",
+          "type": "choice",
+          "question_en": "Where are they going?",
+          "options_en": [
+            "To an island called Majuli in Assam",
+            "To the river",
+            "To the school"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s2_q2",
+          "type": "choice",
+          "question_en": "What are they going to?",
+          "options_en": [
+            "An island called Majuli",
+            "A ferry",
+            "A car"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s3_q1",
+          "type": "choice",
+          "question_en": "What does Ma ask Aadya to try?",
+          "options_en": [
+            "Packing by herself",
+            "Playing with Kim-kim",
+            "Riding the scooter with Ma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p0_s3_q2",
+          "type": "choice",
+          "question_en": "How does Ma suggest Aadya pack?",
+          "options_en": [
+            "By herself",
+            "With her friends",
+            "With Ma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p0_s4_q1",
+          "type": "choice",
+          "question_en": "Where does Aadya keep sitting?",
+          "options_en": [
+            "By Ma's side",
+            "On the scooter",
+            "On the ferry"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p0_s4_q2",
+          "type": "choice",
+          "question_en": "What does Aadya keep doing?",
+          "options_en": [
+            "Sitting by Ma's side",
+            "Running fast",
+            "Playing with Kim-kim"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "Who is on the ferry?",
+          "options_en": [
+            "many people",
+            "Ma",
+            "Aadya"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "What is described as big?",
+          "options_en": [
+            "the ferry",
+            "the plane",
+            "the car"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p1_s1_q1",
+          "type": "choice",
+          "question_en": "Who is smiling?",
+          "options_en": [
+            "everyone",
+            "Ma",
+            "Kim-kim"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p1_s1_q2",
+          "type": "choice",
+          "question_en": "What are the people doing?",
+          "options_en": [
+            "smiling",
+            "buying tickets",
+            "packing a bag"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p1_s2_q1",
+          "type": "choice",
+          "question_en": "What is all around?",
+          "options_en": [
+            "water",
+            "people",
+            "tickets"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p1_s2_q2",
+          "type": "choice",
+          "question_en": "Where is there a lot of something?",
+          "options_en": [
+            "all around is water",
+            "all around are people",
+            "all around are schools"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p1_s3_q1",
+          "type": "choice",
+          "question_en": "Who is buying tickets?",
+          "options_en": [
+            "Ma",
+            "Aadya",
+            "Kim-kim"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p1_s3_q2",
+          "type": "choice",
+          "question_en": "What is Ma doing?",
+          "options_en": [
+            "buying tickets",
+            "packing a bag",
+            "watching Aadya play"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p1_s4_q1",
+          "type": "choice",
+          "question_en": "Who runs fast to stand with her?",
+          "options_en": [
+            "Aadya",
+            "Ma",
+            "Muang-muang"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p1_s4_q2",
+          "type": "choice",
+          "question_en": "Why does Aadya run fast?",
+          "options_en": [
+            "to stand with her",
+            "to pack her bag",
+            "to buy tickets"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p1_s5_q1",
+          "type": "choice",
+          "question_en": "What is said to be very far?",
+          "options_en": [
+            "Majuli",
+            "the river",
+            "the school"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p1_s5_q2",
+          "type": "choice",
+          "question_en": "How is Majuli described?",
+          "options_en": [
+            "very far",
+            "very near",
+            "close by"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p1_s6_q1",
+          "type": "choice",
+          "question_en": "What did they take first?",
+          "options_en": [
+            "a plane",
+            "a car",
+            "a ferry ride"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p1_s6_q2",
+          "type": "choice",
+          "question_en": "Which mode of travel are they on now?",
+          "options_en": [
+            "a ferry ride",
+            "a plane",
+            "a school bus"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "Who says \"With you, Ma\"?",
+          "options_en": [
+            "Aadya",
+            "Ma",
+            "Kim-kim"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "What does Aadya say to Ma?",
+          "options_en": [
+            "\"With you, Ma\"",
+            "\"On my own, Ma!\"",
+            "\"Feed me, Ma!\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p2_s1_q1",
+          "type": "choice",
+          "question_en": "Who does she want to go on the scooter with?",
+          "options_en": [
+            "Ma",
+            "Kim-kim",
+            "Muang-muang"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p2_s1_q2",
+          "type": "choice",
+          "question_en": "What does she want to go on?",
+          "options_en": [
+            "The same scooter as Ma",
+            "A big ferry",
+            "A wooden horse"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p2_s2_q1",
+          "type": "choice",
+          "question_en": "Where are they going to be staying?",
+          "options_en": [
+            "In a school",
+            "On the ferry",
+            "On the island Majuli"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p2_s2_q2",
+          "type": "choice",
+          "question_en": "How long will they be staying in the school?",
+          "options_en": [
+            "For two days",
+            "During the ferry ride",
+            "For the trip to Majuli"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "Who visits the school?",
+          "options_en": [
+            "Ma and Aadya",
+            "Kim-kim and her sister",
+            "Ma and Muang-muang"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "When do they visit the school?",
+          "options_en": [
+            "The next day",
+            "On the ferry",
+            "When they go to the river"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p3_s1_q1",
+          "type": "choice",
+          "question_en": "Who says \"Aallooo\"?",
+          "options_en": [
+            "Muang-muang",
+            "Ma",
+            "Aadya"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p3_s1_q2",
+          "type": "choice",
+          "question_en": "Who introduces herself as Kim-kim?",
+          "options_en": [
+            "Kim-kim",
+            "Muang-muang",
+            "Ma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p3_s2_q1",
+          "type": "choice",
+          "question_en": "What does the speaker ask in this sentence?",
+          "options_en": [
+            "If they want to play",
+            "If they want to pack a bag",
+            "If they want to go to the river"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p3_s2_q2",
+          "type": "choice",
+          "question_en": "How does the speaker invite the listener?",
+          "options_en": [
+            "By saying \"Come\"",
+            "By offering food",
+            "By helping with shoelaces"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "Who says \"With you, Ma!\"?",
+          "options_en": [
+            "Aadya",
+            "Ma",
+            "Kim-kim"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "What does Aadya say?",
+          "options_en": [
+            "\"With you, Ma!\"",
+            "\"On my own, Ma!\"",
+            "\"Feed me, Ma!\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "Who becomes best friends?",
+          "options_en": [
+            "Aadya and Kim-kim",
+            "Ma and Aadya",
+            "Aadya and Muang-muang"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "How quickly do Aadya and Kim-kim become best friends?",
+          "options_en": [
+            "Within a few minutes",
+            "After two days",
+            "On the ferry"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p5_s1_q1",
+          "type": "choice",
+          "question_en": "What does Aadya say while playing?",
+          "options_en": [
+            "“Ma, see me.”",
+            "“With you, Ma!”",
+            "“On my own, Ma!”"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p5_s1_q2",
+          "type": "choice",
+          "question_en": "What do they jump from?",
+          "options_en": [
+            "Log to log",
+            "Rock to rock",
+            "Puddle to puddle"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p5_s2_q1",
+          "type": "choice",
+          "question_en": "What do they ride?",
+          "options_en": [
+            "A wooden horse",
+            "A scooter",
+            "A ferry"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p5_s2_q2",
+          "type": "choice",
+          "question_en": "How are they playing on the wooden toy?",
+          "options_en": [
+            "They ride a wooden horse",
+            "They fix the wooden horse",
+            "They buy a wooden horse"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p5_s3_q1",
+          "type": "choice",
+          "question_en": "Where do they play?",
+          "options_en": [
+            "In the sand",
+            "In the school",
+            "On the ferry"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p5_s3_q2",
+          "type": "choice",
+          "question_en": "What activity are the children doing in this sentence?",
+          "options_en": [
+            "They play in the sand",
+            "They eat rice and daal",
+            "They pack a bag"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p5_s4_q1",
+          "type": "choice",
+          "question_en": "Where do they run around?",
+          "options_en": [
+            "The firewood gaadi",
+            "The hand-pump",
+            "The wooden horse"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p5_s4_q2",
+          "type": "choice",
+          "question_en": "What kind of thing is mentioned that they run around?",
+          "options_en": [
+            "A firewood gaadi",
+            "A big ferry",
+            "A school"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p5_s5_q1",
+          "type": "choice",
+          "question_en": "Which of these sounds appears in the sentence?",
+          "options_en": [
+            "Adhumpa!",
+            "Gudu-gudu-gudu-gudu",
+            "Nom-nom-nom-nom"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p5_s5_q2",
+          "type": "choice",
+          "question_en": "How many different sound words are shown in the sentence?",
+          "options_en": [
+            "Three",
+            "One",
+            "Five"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p5_s6_q1",
+          "type": "choice",
+          "question_en": "Which repeated sound is in this sentence?",
+          "options_en": [
+            "Tu-duk!",
+            "Chapppp-chapppp-chapppp-chappp",
+            "Nomnomnomnom!"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p5_s6_q2",
+          "type": "choice",
+          "question_en": "How are the sounds presented in this sentence?",
+          "options_en": [
+            "Short repeated sounds like Tok-tok",
+            "Long words about packing",
+            "A sentence about food"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p5_s7_q1",
+          "type": "choice",
+          "question_en": "Which of these long sound words appears in the sentence?",
+          "options_en": [
+            "Ssssrrrrr-tik-tik!",
+            "Gudu-gudu-gudu-gudu",
+            "BUUURRRRRRPPPPP!"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p5_s7_q2",
+          "type": "choice",
+          "question_en": "How does the sentence end soundwise?",
+          "options_en": [
+            "Duuurrrr- drrrrrrr!",
+            "Dip-dip-dip-dip",
+            "Tip-tip tip-tip"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "Who says \"Ma, see me.\"?",
+          "options_en": [
+            "Aadya",
+            "Ma",
+            "Kim-kim"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "Who is being asked to look?",
+          "options_en": [
+            "Ma",
+            "Aadya",
+            "Kim-kim"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        },
+        {
+          "id": "gl_p6_s1_q1",
+          "type": "choice",
+          "question_en": "Where do they run?",
+          "options_en": [
+            "To the hand-pump",
+            "To the ferry",
+            "To the river"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        },
+        {
+          "id": "gl_p6_s1_q2",
+          "type": "choice",
+          "question_en": "What sound is written with the running to the hand-pump?",
+          "options_en": [
+            "Chapppp-chapppp-chapppp-chappp",
+            "Gudu-gudu-gudu-gudu",
+            "Tip-tip tip-tip tip-tip"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        },
+        {
+          "id": "gl_p6_s2_q1",
+          "type": "choice",
+          "question_en": "What do they do in the water?",
+          "options_en": [
+            "They splash",
+            "They pack their bags",
+            "They eat rice"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p6_s2_q2",
+          "type": "choice",
+          "question_en": "Where are they splashing?",
+          "options_en": [
+            "In the water",
+            "At the hand-pump",
+            "In the sand"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p6_s3_q1",
+          "type": "choice",
+          "question_en": "Who says, \"Aadya, it's time for food!\"?",
+          "options_en": [
+            "Ma",
+            "Aadya",
+            "Kim-kim"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        },
+        {
+          "id": "gl_p6_s3_q2",
+          "type": "choice",
+          "question_en": "What is it time for, according to Ma?",
+          "options_en": [
+            "Food",
+            "Play",
+            "Travel"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        },
+        {
+          "id": "gl_p6_s4_q1",
+          "type": "choice",
+          "question_en": "Who says, \"Feed me, Ma!\"?",
+          "options_en": [
+            "Aadya",
+            "Ma",
+            "Kim-kim"
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        },
+        {
+          "id": "gl_p6_s4_q2",
+          "type": "choice",
+          "question_en": "What sound shows they are eating?",
+          "options_en": [
+            "Nom-nom-nom-nom",
+            "Gudu-gudu-gudu-gudu",
+            "Adhumpa!"
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        },
+        {
+          "id": "gl_p6_s5_q1",
+          "type": "choice",
+          "question_en": "What do they eat?",
+          "options_en": [
+            "Rice and daal",
+            "Bugories",
+            "Bread"
+          ],
+          "correct_index": 0,
+          "sentence_index": 32
+        },
+        {
+          "id": "gl_p6_s5_q2",
+          "type": "choice",
+          "question_en": "What loud noise is written after they eat?",
+          "options_en": [
+            "BUUURRRRRRPPPPP",
+            "Chapppp-chapppp-chapppp-chappp",
+            "Tip-tip tip-tip tip-tip"
+          ],
+          "correct_index": 0,
+          "sentence_index": 32
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "What is happening in this sentence?",
+          "options_en": [
+            "It is raining",
+            "They are on a ferry",
+            "They are eating rice"
+          ],
+          "correct_index": 0,
+          "sentence_index": 33
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "How are the sounds written in this sentence?",
+          "options_en": [
+            "Tip-tip tip-tip",
+            "Gudu-gudu-gudu-gudu",
+            "Nom-nom-nom-nom"
+          ],
+          "correct_index": 0,
+          "sentence_index": 33
+        },
+        {
+          "id": "gl_p7_s1_q1",
+          "type": "choice",
+          "question_en": "What falls from the sky?",
+          "options_en": [
+            "Droplets",
+            "Tickets",
+            "Bugories"
+          ],
+          "correct_index": 0,
+          "sentence_index": 34
+        },
+        {
+          "id": "gl_p7_s1_q2",
+          "type": "choice",
+          "question_en": "Where do the droplets fall from?",
+          "options_en": [
+            "The sky",
+            "The river",
+            "The ferry"
+          ],
+          "correct_index": 0,
+          "sentence_index": 34
+        },
+        {
+          "id": "gl_p7_s2_q1",
+          "type": "choice",
+          "question_en": "Who says, \"We are going to the river\"?",
+          "options_en": [
+            "Kim-kim",
+            "Ma",
+            "Aadya"
+          ],
+          "correct_index": 0,
+          "sentence_index": 35
+        },
+        {
+          "id": "gl_p7_s2_q2",
+          "type": "choice",
+          "question_en": "Where are they going, according to Kim-kim?",
+          "options_en": [
+            "To the river",
+            "To the school",
+            "To the ferry"
+          ],
+          "correct_index": 0,
+          "sentence_index": 35
+        }
+      ]
+    },
+    {
+      "paragraph_index": 8,
+      "questions": [
+        {
+          "id": "gl_p8_s0_q1",
+          "type": "choice",
+          "question_en": "What do the noises in the sentence suggest?",
+          "options_en": [
+            "people eating",
+            "the ferry moving",
+            "children playing"
+          ],
+          "correct_index": 0,
+          "sentence_index": 36
+        },
+        {
+          "id": "gl_p8_s0_q2",
+          "type": "choice",
+          "question_en": "Who might be making the 'Nomnomnomnom' sound?",
+          "options_en": [
+            "Aadya or her friends",
+            "Ma buying tickets",
+            "the ferry engine"
+          ],
+          "correct_index": 0,
+          "sentence_index": 36
+        },
+        {
+          "id": "gl_p8_s1_q1",
+          "type": "choice",
+          "question_en": "Who watches Aadya as she comes back?",
+          "options_en": [
+            "Ma",
+            "Kim-kim",
+            "Aadya"
+          ],
+          "correct_index": 0,
+          "sentence_index": 37
+        },
+        {
+          "id": "gl_p8_s1_q2",
+          "type": "choice",
+          "question_en": "Where does Aadya come back from?",
+          "options_en": [
+            "the river",
+            "the ferry",
+            "the school"
+          ],
+          "correct_index": 0,
+          "sentence_index": 37
+        },
+        {
+          "id": "gl_p8_s2_q1",
+          "type": "choice",
+          "question_en": "What are they doing in the sentence?",
+          "options_en": [
+            "laughing and eating bugories",
+            "packing their bags",
+            "riding a scooter"
+          ],
+          "correct_index": 0,
+          "sentence_index": 38
+        },
+        {
+          "id": "gl_p8_s2_q2",
+          "type": "choice",
+          "question_en": "Who are eating bugories?",
+          "options_en": [
+            "they (Aadya and her new friends)",
+            "Ma and Aadya",
+            "Kim-kim and Ma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 38
+        }
+      ]
+    },
+    {
+      "paragraph_index": 9,
+      "questions": [
+        {
+          "id": "gl_p9_s0_q1",
+          "type": "choice",
+          "question_en": "Who gets ready to go home?",
+          "options_en": [
+            "Ma and Aadya",
+            "Kim-kim",
+            "Muang-muang"
+          ],
+          "correct_index": 0,
+          "sentence_index": 39
+        },
+        {
+          "id": "gl_p9_s0_q2",
+          "type": "choice",
+          "question_en": "When do Ma and Aadya get ready to go home?",
+          "options_en": [
+            "The next day",
+            "After playing",
+            "During the day"
+          ],
+          "correct_index": 0,
+          "sentence_index": 39
+        },
+        {
+          "id": "gl_p9_s1_q1",
+          "type": "choice",
+          "question_en": "Who says, \"Let me help you with your shoelaces\"?",
+          "options_en": [
+            "Ma",
+            "Aadya",
+            "Kim-kim"
+          ],
+          "correct_index": 0,
+          "sentence_index": 40
+        },
+        {
+          "id": "gl_p9_s1_q2",
+          "type": "choice",
+          "question_en": "What does Ma offer to help with?",
+          "options_en": [
+            "Her shoelaces",
+            "Packing the bag",
+            "Buying tickets"
+          ],
+          "correct_index": 0,
+          "sentence_index": 40
+        }
+      ]
+    },
+    {
+      "paragraph_index": 10,
+      "questions": [
+        {
+          "id": "gl_p10_s0_q1",
+          "type": "choice",
+          "question_en": "Who is being spoken to?",
+          "options_en": [
+            "Ma",
+            "Kim-kim",
+            "Muang-muang"
+          ],
+          "correct_index": 0,
+          "sentence_index": 41
+        },
+        {
+          "id": "gl_p10_s0_q2",
+          "type": "choice",
+          "question_en": "What does the speaker say they want to do?",
+          "options_en": [
+            "Be on their own",
+            "Be with you, Ma",
+            "Feed me, Ma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 41
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'With You, Ma'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "pack",
+      "meaning_vi": "xếp đồ, đóng gói",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "island",
+      "meaning_vi": "hòn đảo",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "by yourself",
+      "meaning_vi": "tự mình, một mình",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "side",
+      "meaning_vi": "bên cạnh",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "ferry",
+      "meaning_vi": "phà (tàu chở người và xe)",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "smiling",
+      "meaning_vi": "đang cười",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "around",
+      "meaning_vi": "xung quanh, khắp nơi",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "far",
+      "meaning_vi": "xa",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "scooter",
+      "meaning_vi": "xe máy (xe tay ga)",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "staying",
+      "meaning_vi": "ở lại",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "school",
+      "meaning_vi": "trường học",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "days",
+      "meaning_vi": "ngày",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "visit",
+      "meaning_vi": "thăm",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "sister",
+      "meaning_vi": "em gái",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "play",
+      "meaning_vi": "chơi",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "become",
+      "meaning_vi": "trở thành",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "best friends",
+      "meaning_vi": "bạn thân nhất",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "jump",
+      "meaning_vi": "nhảy",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "log",
+      "meaning_vi": "khúc gỗ",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "hand-pump",
+      "meaning_vi": "bơm nước bằng tay",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "splash",
+      "meaning_vi": "té nước",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "feed",
+      "meaning_vi": "đút ăn, cho ăn",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "daal",
+      "meaning_vi": "đậu lăng (một món ăn)",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "droplets",
+      "meaning_vi": "giọt nước nhỏ",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "fall",
+      "meaning_vi": "rơi",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "sky",
+      "meaning_vi": "bầu trời",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "river",
+      "meaning_vi": "con sông",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "watches",
+      "meaning_vi": "nhìn, quan sát",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "comes back",
+      "meaning_vi": "trở về",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "laughing",
+      "meaning_vi": "đang cười",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "bugories",
+      "meaning_vi": "một loại quả/món ăn",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "get ready",
+      "meaning_vi": "chuẩn bị",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "help",
+      "meaning_vi": "giúp đỡ",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "shoelaces",
+      "meaning_vi": "dây giày",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "on my own",
+      "meaning_vi": "tự mình, một mình",
+      "paragraph_index": 10
+    }
+  ]
+}

@@ -1,0 +1,554 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L0",
+  "level_label": "Cấp 0",
+  "topic": "Face",
+  "slug": "book_152917",
+  "audio_filename": "book_152917.mp3",
+  "book_slug": "book_152917",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_152917/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_152917/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_152917/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_152917/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_152917/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_152917/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_152917/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_152917/page_09.jpg",
+    "https://audio.felixbuilderhub.com/books/book_152917/page_10.jpg",
+    "https://audio.felixbuilderhub.com/books/book_152917/page_11.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_152917/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_152917/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_152917/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_152917/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_152917/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_152917/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_152917/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_152917/page_09.mp3",
+    "https://audio.felixbuilderhub.com/books/book_152917/page_10.mp3",
+    "https://audio.felixbuilderhub.com/books/book_152917/page_11.mp3"
+  ],
+  "book_attribution": {
+    "title": "Face",
+    "creators": [
+      "Little Zebra Books",
+      "Sue Beattie"
+    ],
+    "publisher": "African Storybook Initiative",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: Face is written by Little Zebra Books . © African Storybook Initiative , 2018. Some rights reserved. Released under CC BY 4.0 license. Other Credits: This story 'Face' has been published on StoryWeaver by African Storybook Initiative. Images Attributions: Cover page: Reflection in the mirror , by Sue Beattie © African Storybook Initiative, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 2: Girl with sunglasses , by Sue Beattie © African Storybook Initiative, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 3: Girl wearing earring , by Sue Beattie © African Storybook Initiative, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 4: Yawning , by Sue Beattie © African Storybook Initiative, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 5: Girl smelling flower , by Sue Beattie © African Storybook Initiative, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 6: Thinking , by Sue Beattie © African Storybook Initiative, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 7: Brushing teeth , by Sue Beattie © African Storybook Initiative, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 8: Man pointing to tongue , by Sue Beattie © African Storybook Initiative, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 9: Boy inflating balloon , by Sue Beattie © African Storybook Initiative, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 10: Girl pointing at eyebrow , by Sue Beattie © African Storybook Initiative, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 11: Girl adjusting hair , by Sue Beattie © African Storybook Initiative, 2018. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/152917-face",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "Girl with sunglasses , by Sue Beattie © African Storybook Initiative, 2018. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "Girl wearing earring , by Sue Beattie © African Storybook Initiative, 2018. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "Yawning , by Sue Beattie © African Storybook Initiative, 2018. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "Girl smelling flower , by Sue Beattie © African Storybook Initiative, 2018. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "Thinking , by Sue Beattie © African Storybook Initiative, 2018. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "Brushing teeth , by Sue Beattie © African Storybook Initiative, 2018. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "Man pointing to tongue , by Sue Beattie © African Storybook Initiative, 2018. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "Boy inflating balloon , by Sue Beattie © African Storybook Initiative, 2018. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 8,
+        "credit_text": "Girl pointing at eyebrow , by Sue Beattie © African Storybook Initiative, 2018. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 9,
+        "credit_text": "Girl adjusting hair , by Sue Beattie © African Storybook Initiative, 2018. Some rights reserved. Released under CC BY 4.0 license."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "Face",
+    "paragraphs_en": [
+      "Eyes",
+      "Ears",
+      "Mouth",
+      "Nose",
+      "Chin",
+      "Teeth",
+      "Tongue",
+      "Cheeks",
+      "Eyebrows",
+      "Hair"
+    ],
+    "sentences": [
+      {
+        "text_en": "Eyes",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_152917/s_000.mp3",
+        "text_vi": "Mắt"
+      },
+      {
+        "text_en": "Ears",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_152917/s_001.mp3",
+        "text_vi": "Tai"
+      },
+      {
+        "text_en": "Mouth",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_152917/s_002.mp3",
+        "text_vi": "Miệng"
+      },
+      {
+        "text_en": "Nose",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_152917/s_003.mp3",
+        "text_vi": "Mũi"
+      },
+      {
+        "text_en": "Chin",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_152917/s_004.mp3",
+        "text_vi": "Cằm"
+      },
+      {
+        "text_en": "Teeth",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_152917/s_005.mp3",
+        "text_vi": "Răng"
+      },
+      {
+        "text_en": "Tongue",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_152917/s_006.mp3",
+        "text_vi": "Lưỡi"
+      },
+      {
+        "text_en": "Cheeks",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_152917/s_007.mp3",
+        "text_vi": "Má"
+      },
+      {
+        "text_en": "Eyebrows",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_152917/s_008.mp3",
+        "text_vi": "Lông mày"
+      },
+      {
+        "text_en": "Hair",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_152917/s_009.mp3",
+        "text_vi": "Tóc"
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "Eyes",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_152917/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "Ears",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_152917/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "Mouth",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_152917/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "Nose",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_152917/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "Chin",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_152917/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "Teeth",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_152917/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "Tongue",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_152917/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "Cheeks",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_152917/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "Eyebrows",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_152917/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "Hair",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_152917/s_009.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "What body part is mentioned?",
+          "options_en": [
+            "Eyes",
+            "Ears",
+            "Nose"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "Which part of the face is listed?",
+          "options_en": [
+            "Eyes",
+            "Mouth",
+            "Chin"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "What body part is mentioned?",
+          "options_en": [
+            "Ears",
+            "Eyes",
+            "Mouth"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "Which part of the face is the sentence about?",
+          "options_en": [
+            "Ears",
+            "Nose",
+            "Teeth"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "What word is on the page?",
+          "options_en": [
+            "Mouth",
+            "Eyes",
+            "Nose"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "Which body part is named in the sentence?",
+          "options_en": [
+            "Mouth",
+            "Ears",
+            "Chin"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "Which body part is mentioned?",
+          "options_en": [
+            "Nose",
+            "Eyes",
+            "Mouth"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "What body part does the sentence name?",
+          "options_en": [
+            "Nose",
+            "Tongue",
+            "Hair"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "Which part of the face is named in the sentence?",
+          "options_en": [
+            "Chin",
+            "Eyes",
+            "Nose"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "What is the sentence about?",
+          "options_en": [
+            "Chin",
+            "Hair",
+            "Tongue"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "What is the sentence about?",
+          "options_en": [
+            "Teeth",
+            "Eyes",
+            "Ears"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "Which body part is named in the sentence?",
+          "options_en": [
+            "Teeth",
+            "Nose",
+            "Tongue"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "Which body part is mentioned?",
+          "options_en": [
+            "Tongue",
+            "Eyes",
+            "Nose"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "What is the sentence about?",
+          "options_en": [
+            "Tongue",
+            "Hair",
+            "Teeth"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "What part of the body is mentioned in the sentence?",
+          "options_en": [
+            "Cheeks",
+            "Eyes",
+            "Nose"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "Which facial feature does the sentence name?",
+          "options_en": [
+            "Cheeks",
+            "Mouth",
+            "Ears"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        }
+      ]
+    },
+    {
+      "paragraph_index": 8,
+      "questions": [
+        {
+          "id": "gl_p8_s0_q1",
+          "type": "choice",
+          "question_en": "What facial feature is mentioned?",
+          "options_en": [
+            "Eyebrows",
+            "Eyes",
+            "Mouth"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p8_s0_q2",
+          "type": "choice",
+          "question_en": "Which part of the face is the sentence naming?",
+          "options_en": [
+            "Eyebrows",
+            "Nose",
+            "Hair"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        }
+      ]
+    },
+    {
+      "paragraph_index": 9,
+      "questions": [
+        {
+          "id": "gl_p9_s0_q1",
+          "type": "choice",
+          "question_en": "What is the sentence about?",
+          "options_en": [
+            "Hair",
+            "Eyes",
+            "Ears"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p9_s0_q2",
+          "type": "choice",
+          "question_en": "Which body part is named?",
+          "options_en": [
+            "Hair",
+            "Mouth",
+            "Nose"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'Face'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "Chin",
+      "meaning_vi": "Phần dưới cùng của mặt, dưới miệng.",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "Teeth",
+      "meaning_vi": "Nhiều cái răng. Một cái là 'tooth'.",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "Tongue",
+      "meaning_vi": "Bộ phận mềm trong miệng giúp nếm và nói.",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "Cheeks",
+      "meaning_vi": "Hai bên mặt, dưới mắt.",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "Eyebrows",
+      "meaning_vi": "Lông mọc phía trên mắt.",
+      "paragraph_index": 8
+    }
+  ]
+}

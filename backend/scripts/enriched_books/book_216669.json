@@ -1,0 +1,520 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L0",
+  "level_label": "Cấp 0",
+  "topic": "Bus",
+  "slug": "book_216669",
+  "audio_filename": "book_216669.mp3",
+  "book_slug": "book_216669",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_216669/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_216669/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_216669/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_216669/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_216669/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_216669/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_216669/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_216669/page_09.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_216669/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_216669/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_216669/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_216669/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_216669/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_216669/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_216669/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_216669/page_09.mp3"
+  ],
+  "book_attribution": {
+    "title": "Bus",
+    "creators": [
+      "Pratham English Team",
+      "Ajit Narayan"
+    ],
+    "publisher": "Pratham Education Foundation",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: Bus is translated by Pratham English Team . The © for this translation lies with Pratham Education Foundation , 2020. Some rights reserved. Released under CC BY 4.0 license. Based on Original story: ' बस ' , by Ranjana . © Pratham Education Foundation , 2020. Some rights reserved. Released under CC BY 4.0 license. Other Credits: 'Bus' has been published on StoryWeaver by Pratham Education Foundation. www.pratham.org Images Attributions: Cover page: A Bus running on the road , by Ajit Narayan , Ajit Narayan © Pratham Education Foundation, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 2: A red bus running on the road , by Ajit Narayan , Ajit Narayan © Pratham Education Foundation, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 3: A bus running & smoking , by Ajit Narayan , Ajit Narayan © Pratham Education Foundation, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 4: conductor is playing whistling , by Ajit Narayan , Ajit Narayan © Pratham Education Foundation, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 5: A red bus is climbing the hill , by Ajit Narayan , Ajit Narayan © Pratham Education Foundation, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 6: Passangers getting up and down in the bus , by Ajit Narayan , Ajit Narayan © Pratham Education Foundation, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 7: Passenger getting up and down in the bus , by Ajit Narayan , Ajit Narayan © Pratham Education Foundation, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 8: A red bus running on the road via hills , by Ajit Narayan , Ajit Narayan © Pratham Education Foundation, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 9: A Red bus smiling on the road , by Ajit Narayan , Ajit Narayan © Pratham Education Foundation, 2020. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/216669-bus",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "A red bus running on the road , by Ajit Narayan , Ajit Narayan © Pratham Education Foundation, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "A bus running & smoking , by Ajit Narayan , Ajit Narayan © Pratham Education Foundation, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "conductor is playing whistling , by Ajit Narayan , Ajit Narayan © Pratham Education Foundation, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "A red bus is climbing the hill , by Ajit Narayan , Ajit Narayan © Pratham Education Foundation, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "Passangers getting up and down in the bus , by Ajit Narayan , Ajit Narayan © Pratham Education Foundation, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "Passenger getting up and down in the bus , by Ajit Narayan , Ajit Narayan © Pratham Education Foundation, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "A red bus running on the road via hills , by Ajit Narayan , Ajit Narayan © Pratham Education Foundation, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "A Red bus smiling on the road , by Ajit Narayan , Ajit Narayan © Pratham Education Foundation, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "Bus",
+    "paragraphs_en": [
+      "Po-po comes the bus...",
+      "all along, blowing dust.",
+      "The conductor calls everyone and...",
+      "...takes them somewhere!",
+      "Some people get off the bus and...",
+      "some people get on the bus.",
+      "Again the bus blows off dust...",
+      "po-po goes the bus!"
+    ],
+    "sentences": [
+      {
+        "text_en": "Po-po comes the bus...",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_216669/s_000.mp3",
+        "text_vi": "Xe buýt đến rồi, po-po..."
+      },
+      {
+        "text_en": "all along, blowing dust.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_216669/s_001.mp3",
+        "text_vi": "Đi suốt đường, bụi bay mù mịt."
+      },
+      {
+        "text_en": "The conductor calls everyone and...",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_216669/s_002.mp3",
+        "text_vi": "Bác phụ xe gọi tất cả mọi người và..."
+      },
+      {
+        "text_en": "...takes them somewhere!",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_216669/s_003.mp3",
+        "text_vi": "...chở họ đi đâu đó!"
+      },
+      {
+        "text_en": "Some people get off the bus and...",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_216669/s_004.mp3",
+        "text_vi": "Một vài người xuống xe buýt và..."
+      },
+      {
+        "text_en": "some people get on the bus.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_216669/s_005.mp3",
+        "text_vi": "một vài người lên xe buýt."
+      },
+      {
+        "text_en": "Again the bus blows off dust...",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_216669/s_006.mp3",
+        "text_vi": "Xe buýt lại làm bụi bay mù mịt..."
+      },
+      {
+        "text_en": "po-po goes the bus!",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_216669/s_007.mp3",
+        "text_vi": "Xe buýt chạy, po-po!"
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "Po-po comes the bus...",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_216669/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "all along, blowing dust.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_216669/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "The conductor calls everyone and...",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_216669/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "...takes them somewhere!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_216669/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "Some people get off the bus and...",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_216669/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "some people get on the bus.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_216669/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "Again the bus blows off dust...",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_216669/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "po-po goes the bus!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_216669/s_007.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "What comes?",
+          "options_en": [
+            "the bus",
+            "the conductor",
+            "some people"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "How does the bus come?",
+          "options_en": [
+            "Po-po",
+            "blowing dust",
+            "calling everyone"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "What was blowing all along?",
+          "options_en": [
+            "dust",
+            "the bus",
+            "the conductor"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "How was it all along?",
+          "options_en": [
+            "blowing dust",
+            "some people get off the bus",
+            "po-po goes the bus"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "Who calls everyone?",
+          "options_en": [
+            "The conductor",
+            "The bus",
+            "The driver"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "What is the correct answer to this question: Whom does the conductor call?",
+          "options_en": [
+            "Everyone",
+            "Some people",
+            "People on the bus"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "What happens?",
+          "options_en": [
+            "They are taken somewhere",
+            "Some people get off the bus",
+            "The conductor calls everyone"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "Which phrase is in the sentence?",
+          "options_en": [
+            "takes them somewhere",
+            "Some people get on the bus",
+            "Po-po goes the bus"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "Who gets off the bus?",
+          "options_en": [
+            "Some people",
+            "The conductor",
+            "Some people get on the bus"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "What do some people do?",
+          "options_en": [
+            "Get off the bus",
+            "Get on the bus",
+            "Take them somewhere"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "Who gets on the bus?",
+          "options_en": [
+            "Some people",
+            "Some people get off the bus",
+            "The conductor"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "Where do some people get on?",
+          "options_en": [
+            "On the bus",
+            "Off the bus",
+            "Somewhere"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "What does the bus do again?",
+          "options_en": [
+            "Blows off dust",
+            "Takes them somewhere",
+            "Calls everyone"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "When does the bus blow off dust?",
+          "options_en": [
+            "Again",
+            "When people get on the bus",
+            "When the conductor calls everyone"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "What goes \"po-po\"?",
+          "options_en": [
+            "the bus",
+            "the conductor",
+            "dust"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "Which vehicle goes \"po-po\"?",
+          "options_en": [
+            "the bus",
+            "the conductor",
+            "the people"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'Bus'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "bus",
+      "meaning_vi": "xe buýt",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "comes",
+      "meaning_vi": "đến",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "along",
+      "meaning_vi": "suốt, dọc theo",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "blowing",
+      "meaning_vi": "thổi, làm bay",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "dust",
+      "meaning_vi": "bụi",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "conductor",
+      "meaning_vi": "phụ xe",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "calls",
+      "meaning_vi": "gọi",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "everyone",
+      "meaning_vi": "mọi người",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "takes",
+      "meaning_vi": "chở đi, đưa đi",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "somewhere",
+      "meaning_vi": "một nơi nào đó, đâu đó",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "some",
+      "meaning_vi": "một vài, một số",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "people",
+      "meaning_vi": "người",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "get off",
+      "meaning_vi": "xuống xe",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "get on",
+      "meaning_vi": "lên xe",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "again",
+      "meaning_vi": "lại, một lần nữa",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "blows off",
+      "meaning_vi": "thổi bay, làm bay đi",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "goes",
+      "meaning_vi": "đi, chạy",
+      "paragraph_index": 7
+    }
+  ]
+}

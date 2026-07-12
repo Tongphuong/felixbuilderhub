@@ -1,0 +1,1525 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L4",
+  "level_label": "Cấp 4",
+  "topic": "The Western Horse",
+  "slug": "book_181463",
+  "audio_filename": "book_181463.mp3",
+  "book_slug": "book_181463",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_181463/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_181463/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_181463/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_181463/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_181463/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_181463/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_181463/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_181463/page_09.jpg",
+    "https://audio.felixbuilderhub.com/books/book_181463/page_10.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_181463/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_181463/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_181463/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_181463/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_181463/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_181463/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_181463/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_181463/page_09.mp3",
+    "https://audio.felixbuilderhub.com/books/book_181463/page_10.mp3"
+  ],
+  "book_attribution": {
+    "title": "The Western Horse",
+    "creators": [
+      "Aadish Acharya",
+      "Aditya Gupta",
+      "Ajay Hembron",
+      "Ethan Thomas Bishu",
+      "Pallab Brahmaputra dey",
+      "Rijuta Ghate",
+      "Riya Gogte",
+      "Rupesh Sudhanshu",
+      "Subinita Deshaprabhu",
+      "Tanishtha Teotia"
+    ],
+    "publisher": "StoryWeaver Community",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: The Western Horse is written by Aadish Acharya . © Aadish Acharya , 2020. Some rights reserved. Released under CC BY 4.0 license. Images Attributions: Cover page: horse , by Pallab Brahmaputra dey © Pallab Brahmaputra dey, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 2: A boy cycling , by Subinita Deshaprabhu © Room to Read, 2014. Some rights reserved. Released under CC BY 4.0 license. Page 3: Boy looking surprised , by Rijuta Ghate © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license. Page 4: A sad boy , by Rijuta Ghate © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license. Page 5: Strangers meet , by Rupesh Sudhanshu © Rupesh Sudhanshu, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 6: Two boys high fiving , by Aditya Gupta © Aditya Gupta, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 7: horse riding , by Ethan Thomas Bishu © Ethan Thomas Bishu, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 8: Farm (3) (horse) , by Riya Gogte © Riya Gogte, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 9: Two boys smiling in a field , by Ajay Hembron © StoryWeaver, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 10: THUMBS UP EMOJI , by Tanishtha Teotia © Tanishtha Teotia, 2026. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/181463-the-western-horse",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "A boy cycling , by Subinita Deshaprabhu © Room to Read, 2014. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "Boy looking surprised , by Rijuta Ghate © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "A sad boy , by Rijuta Ghate © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "Strangers meet , by Rupesh Sudhanshu © Rupesh Sudhanshu, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "Two boys high fiving , by Aditya Gupta © Aditya Gupta, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "horse riding , by Ethan Thomas Bishu © Ethan Thomas Bishu, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "Farm (3) (horse) , by Riya Gogte © Riya Gogte, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "Two boys smiling in a field , by Ajay Hembron © StoryWeaver, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 8,
+        "credit_text": "THUMBS UP EMOJI , by Tanishtha Teotia © Tanishtha Teotia, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "The Western Horse",
+    "paragraphs_en": [
+      "Prakash was a ordinary boy.He had one brother-Praveen,and his Parents-Padmaj Srivastav and Ramini Srivastav. He was underestimated in his family except for his brother. Praveen treated him like a teacher and that made him happy. One day,his parents and Praveen had to go to Delhi for Praveen's college application,so Prakash started living with his best friend-Ravindra. Ravindra was their neighbor and 3 weeks younger than Prakash.",
+      "Prakash had tripped over Praveen's favorite child toy-a toy horse. He got a flick of memory near him- They loved horses!!!He was surprised and inarticulated by the memory.The very same night,He dreamt about horses and the next day set out for an adventure-bring home a horse for him and his brother.While packing, Ravindra found him and looked inexplicable. He asked Prakash \"What are you doing?\"",
+      "Prakash didn't want Ravindra to know so he prevaricated \"Mum and Dad called me and said they will return early.\"The next moment,in a jiffy, Ravindra went and catechized his mum\"Mum,did Prakash's mum text you that they will come early?\" Luckily Prakash was eavesdropping and he had his mum's phone to call his parent she typed that they would be coming early secretly and Ravindra's mom said yes!!!",
+      "As he was passing a hay field he saw a stranger on a mat. Prakash looked enervated while the stranger-Raghbir looked vigorous. He noticed Prakash and said\"Hi.I am Raghbir. Come and sit,come on.\" Prakash agreed and interrogated\"Why are you alone?\"\"I need my pet\" replied Raghbir. My horse ran west. I wanna find him.\"\"I need a horse as my pet too!! Lets team up!\" propounded Prakash. They agreed.",
+      "Raghbir took of his hood to reveal a hat which divulged his long hair in a ponytail.They high-fived each other and set out for the journey.It had taken them 5 minutes when an aeroplane soared above them. It was the plane taking his brother and parents to Delhi!!! Prakash realized that his parents flight was delayed!!! They had plenty of time. They set of to west to Mumbai. There they rested under the trees shade for the night.",
+      "They took out their book about horses and read for 30 minutes. Then they ate the fruits and went to sleep. When they woke up in the morning, they set out to the journey near Mahabaleshwar and Matheran . they found a horse foot print there. They followed it to a stable with horses!!!!!!!!!!!! They had found Raghbirs western horse!!! And Prakash and Raghbir rode their pets and took them home.",
+      "Their horses stopped for water and sadly,there they departed. They went in their own ways and went to there own homes. Prakash saw his family aeroplane and came home before them. Praveen saw the surprise and jumped happily.",
+      "They then lived happily ever after!!!!!",
+      "Hello, I hope you liked the story and please love it and you will keep hearing from me!!!!!"
+    ],
+    "sentences": [
+      {
+        "text_en": "Prakash was a ordinary boy.He had one brother-Praveen,and his Parents-Padmaj Srivastav and Ramini Srivastav.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_181463/s_000.mp3",
+        "text_vi": "Prakash là một cậu bé bình thường. Cậu có một người anh em trai tên là Praveen, và bố mẹ là Padmaj Srivastav và Ramini Srivastav."
+      },
+      {
+        "text_en": "He was underestimated in his family except for his brother.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_181463/s_001.mp3",
+        "text_vi": "Cậu ấy không được gia đình coi trọng, trừ người anh em trai của mình."
+      },
+      {
+        "text_en": "Praveen treated him like a teacher and that made him happy.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_181463/s_002.mp3",
+        "text_vi": "Praveen đối xử với cậu như một người thầy, điều đó khiến cậu rất vui."
+      },
+      {
+        "text_en": "One day,his parents and Praveen had to go to Delhi for Praveen's college application,so Prakash started living with his best friend-Ravindra.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_181463/s_003.mp3",
+        "text_vi": "Một ngày nọ, bố mẹ và Praveen phải đến Delhi để Praveen nộp đơn vào đại học, vì vậy Prakash bắt đầu sống với người bạn thân nhất của mình là Ravindra."
+      },
+      {
+        "text_en": "Ravindra was their neighbor and 3 weeks younger than Prakash.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_181463/s_004.mp3",
+        "text_vi": "Ravindra là hàng xóm của họ và nhỏ hơn Prakash 3 tuần."
+      },
+      {
+        "text_en": "Prakash had tripped over Praveen's favorite child toy-a toy horse.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_181463/s_005.mp3",
+        "text_vi": "Prakash đã vấp phải món đồ chơi yêu thích của Praveen – một con ngựa đồ chơi."
+      },
+      {
+        "text_en": "He got a flick of memory near him- They loved horses!!!He was surprised and inarticulated by the memory.The very same night,He dreamt about horses and the next day set out for an adventure-bring home a horse for him and his brother.While packing, Ravindra found him and looked inexplicable.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_181463/s_006.mp3",
+        "text_vi": "Cậu ấy chợt nhớ ra một điều – Họ rất yêu ngựa!!! Cậu ấy ngạc nhiên và không nói nên lời vì ký ức đó. Ngay đêm đó, cậu mơ về những con ngựa và ngày hôm sau, cậu lên đường cho một cuộc phiêu lưu – mang về một con ngựa cho mình và anh em trai. Khi đang đóng gói đồ, Ravindra tìm thấy cậu và trông rất khó hiểu."
+      },
+      {
+        "text_en": "He asked Prakash \"What are you doing?\"",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_181463/s_007.mp3",
+        "text_vi": "Cậu ấy hỏi Prakash: \"Cậu đang làm gì vậy?\""
+      },
+      {
+        "text_en": "Prakash didn't want Ravindra to know so he prevaricated \"Mum and Dad called me and said they will return early.\"The next moment,in a jiffy, Ravindra went and catechized his mum\"Mum,did Prakash's mum text you that they will come early?\" Luckily Prakash was eavesdropping and he had his mum's phone to call his parent she typed that they would be coming early secretly and Ravindra's mom said yes!!!",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_181463/s_008.mp3",
+        "text_vi": "Prakash không muốn Ravindra biết nên cậu nói dối: \"Bố mẹ gọi cho tớ và nói rằng họ sẽ về sớm.\" Ngay lập tức, Ravindra chạy đến hỏi dồn mẹ mình: \"Mẹ ơi, mẹ của Prakash có nhắn tin cho mẹ là họ sẽ về sớm không?\" May mắn thay, Prakash đang nghe lén và cậu đã dùng điện thoại của mẹ mình để gọi cho bố mẹ, cậu ấy đã nhắn tin rằng họ sẽ về sớm một cách bí mật và mẹ của Ravindra đã nói có!!!"
+      },
+      {
+        "text_en": "As he was passing a hay field he saw a stranger on a mat.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_181463/s_009.mp3",
+        "text_vi": "Khi đang đi qua một cánh đồng cỏ khô, cậu thấy một người lạ đang ngồi trên một tấm thảm."
+      },
+      {
+        "text_en": "Prakash looked enervated while the stranger-Raghbir looked vigorous.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_181463/s_010.mp3",
+        "text_vi": "Prakash trông rất mệt mỏi trong khi người lạ – Raghbir – lại trông rất khỏe mạnh."
+      },
+      {
+        "text_en": "He noticed Prakash and said\"Hi.I am Raghbir.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_181463/s_011.mp3",
+        "text_vi": "Anh ấy nhận ra Prakash và nói: \"Chào. Tôi là Raghbir."
+      },
+      {
+        "text_en": "Come and sit,come on.\" Prakash agreed and interrogated\"Why are you alone?\"\"I need my pet\" replied Raghbir.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_181463/s_012.mp3",
+        "text_vi": "Lại đây ngồi đi.\" Prakash đồng ý và hỏi: \"Tại sao anh lại ở một mình?\" \"Tôi cần thú cưng của mình,\" Raghbir trả lời."
+      },
+      {
+        "text_en": "My horse ran west.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_181463/s_013.mp3",
+        "text_vi": "Ngựa của tôi đã chạy về phía tây."
+      },
+      {
+        "text_en": "I wanna find him.\"\"I need a horse as my pet too!!",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_181463/s_014.mp3",
+        "text_vi": "Tôi muốn tìm nó.\" \"Tôi cũng cần một con ngựa làm thú cưng!!\""
+      },
+      {
+        "text_en": "Lets team up!\" propounded Prakash. They agreed.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_181463/s_015.mp3",
+        "text_vi": "Chúng ta hãy hợp tác nhé!\" Prakash đề nghị. Họ đồng ý."
+      },
+      {
+        "text_en": "Raghbir took of his hood to reveal a hat which divulged his long hair in a ponytail.They high-fived each other and set out for the journey.It had taken them 5 minutes when an aeroplane soared above them.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_181463/s_016.mp3",
+        "text_vi": "Raghbir cởi mũ trùm đầu ra, để lộ một chiếc mũ và mái tóc dài buộc đuôi ngựa của anh ấy. Họ đập tay nhau và bắt đầu cuộc hành trình. Chỉ 5 phút sau, một chiếc máy bay bay vút qua đầu họ."
+      },
+      {
+        "text_en": "It was the plane taking his brother and parents to Delhi!!!",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_181463/s_017.mp3",
+        "text_vi": "Đó là chiếc máy bay chở anh em trai và bố mẹ cậu đến Delhi!!!"
+      },
+      {
+        "text_en": "Prakash realized that his parents flight was delayed!!!",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_181463/s_018.mp3",
+        "text_vi": "Prakash nhận ra rằng chuyến bay của bố mẹ cậu đã bị hoãn!!!"
+      },
+      {
+        "text_en": "They had plenty of time.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_181463/s_019.mp3",
+        "text_vi": "Họ có rất nhiều thời gian."
+      },
+      {
+        "text_en": "They set of to west to Mumbai.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_181463/s_020.mp3",
+        "text_vi": "Họ lên đường về phía tây đến Mumbai."
+      },
+      {
+        "text_en": "There they rested under the trees shade for the night.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_181463/s_021.mp3",
+        "text_vi": "Ở đó, họ nghỉ ngơi dưới bóng cây suốt đêm."
+      },
+      {
+        "text_en": "They took out their book about horses and read for 30 minutes.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_181463/s_022.mp3",
+        "text_vi": "Họ lấy sách về ngựa ra và đọc trong 30 phút."
+      },
+      {
+        "text_en": "Then they ate the fruits and went to sleep.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_181463/s_023.mp3",
+        "text_vi": "Sau đó họ ăn trái cây và đi ngủ."
+      },
+      {
+        "text_en": "When they woke up in the morning, they set out to the journey near Mahabaleshwar and Matheran .",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_181463/s_024.mp3",
+        "text_vi": "Khi thức dậy vào buổi sáng, họ lên đường đến gần Mahabaleshwar và Matheran."
+      },
+      {
+        "text_en": "they found a horse foot print there.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_181463/s_025.mp3",
+        "text_vi": "Họ tìm thấy một dấu chân ngựa ở đó."
+      },
+      {
+        "text_en": "They followed it to a stable with horses!!!!!!!!!!!!",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_181463/s_026.mp3",
+        "text_vi": "Họ đi theo dấu chân đó đến một chuồng ngựa với rất nhiều ngựa!!!!!!!!!!!!"
+      },
+      {
+        "text_en": "They had found Raghbirs western horse!!!",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_181463/s_027.mp3",
+        "text_vi": "Họ đã tìm thấy con ngựa phương Tây của Raghbir!!!"
+      },
+      {
+        "text_en": "And Prakash and Raghbir rode their pets and took them home.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_181463/s_028.mp3",
+        "text_vi": "Và Prakash cùng Raghbir cưỡi thú cưng của mình về nhà."
+      },
+      {
+        "text_en": "Their horses stopped for water and sadly,there they departed.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_181463/s_029.mp3",
+        "text_vi": "Ngựa của họ dừng lại uống nước và thật buồn, ở đó họ đã chia tay."
+      },
+      {
+        "text_en": "They went in their own ways and went to there own homes.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_181463/s_030.mp3",
+        "text_vi": "Họ đi theo những con đường riêng và về nhà của mình."
+      },
+      {
+        "text_en": "Prakash saw his family aeroplane and came home before them.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_181463/s_031.mp3",
+        "text_vi": "Prakash nhìn thấy máy bay của gia đình mình và về nhà trước họ."
+      },
+      {
+        "text_en": "Praveen saw the surprise and jumped happily.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_181463/s_032.mp3",
+        "text_vi": "Praveen nhìn thấy điều bất ngờ và nhảy cẫng lên vui sướng."
+      },
+      {
+        "text_en": "They then lived happily ever after!!!!!",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_181463/s_033.mp3",
+        "text_vi": "Sau đó, họ sống hạnh phúc mãi mãi về sau!!!!!"
+      },
+      {
+        "text_en": "Hello, I hope you liked the story and please love it and you will keep hearing from me!!!!!",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_181463/s_034.mp3",
+        "text_vi": "Chào các bạn, mình hy vọng các bạn thích câu chuyện này và hãy yêu thích nó nhé, các bạn sẽ còn nghe tin từ mình nữa đó!!!!!"
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "Prakash was a ordinary boy.He had one brother-Praveen,and his Parents-Padmaj Srivastav and Ramini Srivastav.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_181463/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "He was underestimated in his family except for his brother.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_181463/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "Praveen treated him like a teacher and that made him happy.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_181463/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "One day,his parents and Praveen had to go to Delhi for Praveen's college application,so Prakash started living with his best friend-Ravindra.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_181463/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "Ravindra was their neighbor and 3 weeks younger than Prakash.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_181463/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "Prakash had tripped over Praveen's favorite child toy-a toy horse.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_181463/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "He got a flick of memory near him- They loved horses!!!He was surprised and inarticulated by the memory.The very same night,He dreamt about horses and the next day set out for an adventure-bring home a horse for him and his brother.While packing, Ravindra found him and looked inexplicable.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_181463/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "He asked Prakash \"What are you doing?\"",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_181463/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "Prakash didn't want Ravindra to know so he prevaricated \"Mum and Dad called me and said they will return early.\"The next moment,in a jiffy, Ravindra went and catechized his mum\"Mum,did Prakash's mum text you that they will come early?\" Luckily Prakash was eavesdropping and he had his mum's phone to call his parent she typed that they would be coming early secretly and Ravindra's mom said yes!!!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_181463/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "As he was passing a hay field he saw a stranger on a mat.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_181463/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "Prakash looked enervated while the stranger-Raghbir looked vigorous.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_181463/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "He noticed Prakash and said\"Hi.I am Raghbir.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_181463/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "Come and sit,come on.\" Prakash agreed and interrogated\"Why are you alone?\"\"I need my pet\" replied Raghbir.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_181463/s_012.mp3"
+        },
+        {
+          "id": "ra_13",
+          "text_en": "My horse ran west.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_181463/s_013.mp3"
+        },
+        {
+          "id": "ra_14",
+          "text_en": "I wanna find him.\"\"I need a horse as my pet too!!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_181463/s_014.mp3"
+        },
+        {
+          "id": "ra_15",
+          "text_en": "Lets team up!\" propounded Prakash. They agreed.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_181463/s_015.mp3"
+        },
+        {
+          "id": "ra_16",
+          "text_en": "Raghbir took of his hood to reveal a hat which divulged his long hair in a ponytail.They high-fived each other and set out for the journey.It had taken them 5 minutes when an aeroplane soared above them.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_181463/s_016.mp3"
+        },
+        {
+          "id": "ra_17",
+          "text_en": "It was the plane taking his brother and parents to Delhi!!!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_181463/s_017.mp3"
+        },
+        {
+          "id": "ra_18",
+          "text_en": "Prakash realized that his parents flight was delayed!!!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_181463/s_018.mp3"
+        },
+        {
+          "id": "ra_19",
+          "text_en": "They had plenty of time.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_181463/s_019.mp3"
+        },
+        {
+          "id": "ra_20",
+          "text_en": "They set of to west to Mumbai.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_181463/s_020.mp3"
+        },
+        {
+          "id": "ra_21",
+          "text_en": "There they rested under the trees shade for the night.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_181463/s_021.mp3"
+        },
+        {
+          "id": "ra_22",
+          "text_en": "They took out their book about horses and read for 30 minutes.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_181463/s_022.mp3"
+        },
+        {
+          "id": "ra_23",
+          "text_en": "Then they ate the fruits and went to sleep.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_181463/s_023.mp3"
+        },
+        {
+          "id": "ra_24",
+          "text_en": "When they woke up in the morning, they set out to the journey near Mahabaleshwar and Matheran .",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_181463/s_024.mp3"
+        },
+        {
+          "id": "ra_25",
+          "text_en": "they found a horse foot print there.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_181463/s_025.mp3"
+        },
+        {
+          "id": "ra_26",
+          "text_en": "They followed it to a stable with horses!!!!!!!!!!!!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_181463/s_026.mp3"
+        },
+        {
+          "id": "ra_27",
+          "text_en": "They had found Raghbirs western horse!!!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_181463/s_027.mp3"
+        },
+        {
+          "id": "ra_28",
+          "text_en": "And Prakash and Raghbir rode their pets and took them home.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_181463/s_028.mp3"
+        },
+        {
+          "id": "ra_29",
+          "text_en": "Their horses stopped for water and sadly,there they departed.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_181463/s_029.mp3"
+        },
+        {
+          "id": "ra_30",
+          "text_en": "They went in their own ways and went to there own homes.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_181463/s_030.mp3"
+        },
+        {
+          "id": "ra_31",
+          "text_en": "Prakash saw his family aeroplane and came home before them.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_181463/s_031.mp3"
+        },
+        {
+          "id": "ra_32",
+          "text_en": "Praveen saw the surprise and jumped happily.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_181463/s_032.mp3"
+        },
+        {
+          "id": "ra_33",
+          "text_en": "They then lived happily ever after!!!!!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_181463/s_033.mp3"
+        },
+        {
+          "id": "ra_34",
+          "text_en": "Hello, I hope you liked the story and please love it and you will keep hearing from me!!!!!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_181463/s_034.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "Who was an ordinary boy?",
+          "options_en": [
+            "Prakash",
+            "Praveen",
+            "Ravindra"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "Whose parents were Padmaj Srivastav and Ramini Srivastav?",
+          "options_en": [
+            "Prakash's",
+            "Raghbir's",
+            "Praveen's"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s1_q1",
+          "type": "choice",
+          "question_en": "What happened to him in his family?",
+          "options_en": [
+            "He was underestimated",
+            "He was celebrated",
+            "He was ignored by everyone"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s1_q2",
+          "type": "choice",
+          "question_en": "Who did not underestimate him?",
+          "options_en": [
+            "His brother",
+            "His parents",
+            "Ravindra"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s2_q1",
+          "type": "choice",
+          "question_en": "How did Praveen treat him?",
+          "options_en": [
+            "Like a teacher",
+            "Like a stranger",
+            "Like a rival"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s2_q2",
+          "type": "choice",
+          "question_en": "What did Praveen's treatment make him feel?",
+          "options_en": [
+            "Happy",
+            "Sad",
+            "Angry"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s3_q1",
+          "type": "choice",
+          "question_en": "Where did his parents and Praveen have to go?",
+          "options_en": [
+            "Delhi",
+            "Mumbai",
+            "Mahabaleshwar"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p0_s3_q2",
+          "type": "choice",
+          "question_en": "Who did Prakash start living with when his family went away?",
+          "options_en": [
+            "His best friend Ravindra",
+            "His brother Praveen",
+            "A stranger Raghbir"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p0_s4_q1",
+          "type": "choice",
+          "question_en": "Who was their neighbor?",
+          "options_en": [
+            "Ravindra",
+            "Praveen",
+            "Raghbir"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p0_s4_q2",
+          "type": "choice",
+          "question_en": "How much younger was Ravindra than Prakash?",
+          "options_en": [
+            "Three weeks younger",
+            "Two years younger",
+            "The same age"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "Who tripped over the toy horse?",
+          "options_en": [
+            "Prakash",
+            "Praveen",
+            "Ravindra"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "Whose favorite child toy did he trip over?",
+          "options_en": [
+            "Praveen's",
+            "Prakash's",
+            "Ravindra's"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p1_s1_q1",
+          "type": "choice",
+          "question_en": "What memory did he get near him?",
+          "options_en": [
+            "They loved horses",
+            "His parents would return early",
+            "Praveen was going to college"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p1_s1_q2",
+          "type": "choice",
+          "question_en": "What did he dream about the very same night?",
+          "options_en": [
+            "Horses",
+            "An aeroplane",
+            "A book about horses"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p1_s2_q1",
+          "type": "choice",
+          "question_en": "Who asked Prakash \"What are you doing?\"?",
+          "options_en": [
+            "Ravindra",
+            "Raghbir",
+            "Praveen"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p1_s2_q2",
+          "type": "choice",
+          "question_en": "What did he ask Prakash?",
+          "options_en": [
+            "\"What are you doing?\"",
+            "\"Where are you going?\"",
+            "\"Why are you packing?\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "Who pretended that his parents had called and would return early?",
+          "options_en": [
+            "Prakash",
+            "Ravindra",
+            "Praveen"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "What was Prakash doing while Ravindra asked his mum about the message?",
+          "options_en": [
+            "He was eavesdropping",
+            "He was travelling to Delhi",
+            "He was riding a horse"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "Who was passing a hay field when he saw a stranger on a mat?",
+          "options_en": [
+            "Prakash",
+            "Raghbir",
+            "Ravindra"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "Where was the stranger sitting when he was seen?",
+          "options_en": [
+            "On a mat",
+            "In a stable",
+            "Under a tree"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p3_s1_q1",
+          "type": "choice",
+          "question_en": "Who looked enervated?",
+          "options_en": [
+            "Prakash",
+            "Raghbir",
+            "Praveen"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p3_s1_q2",
+          "type": "choice",
+          "question_en": "How did the stranger Raghbir look?",
+          "options_en": [
+            "Vigorous",
+            "Tired",
+            "Surprised"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p3_s2_q1",
+          "type": "choice",
+          "question_en": "Who said \"Hi. I am Raghbir.\"?",
+          "options_en": [
+            "Raghbir",
+            "Prakash",
+            "Ravindra"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p3_s2_q2",
+          "type": "choice",
+          "question_en": "Who did he notice before speaking?",
+          "options_en": [
+            "Prakash",
+            "Praveen",
+            "His brother"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p3_s3_q1",
+          "type": "choice",
+          "question_en": "What did Raghbir invite Prakash to do?",
+          "options_en": [
+            "Come and sit",
+            "Run away",
+            "Stay silent"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p3_s3_q2",
+          "type": "choice",
+          "question_en": "What question did Prakash ask after agreeing?",
+          "options_en": [
+            "\"Why are you alone?\"",
+            "\"Where is your horse?\"",
+            "\"How are you?\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p3_s4_q1",
+          "type": "choice",
+          "question_en": "Whose horse ran west?",
+          "options_en": [
+            "Raghbir's",
+            "Prakash's",
+            "Praveen's"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p3_s4_q2",
+          "type": "choice",
+          "question_en": "Which direction did the horse run?",
+          "options_en": [
+            "West",
+            "East",
+            "North"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p3_s5_q1",
+          "type": "choice",
+          "question_en": "What did the speaker say they wanted to find?",
+          "options_en": [
+            "His horse",
+            "His brother",
+            "His friend"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p3_s5_q2",
+          "type": "choice",
+          "question_en": "What did the other person say about needing a pet?",
+          "options_en": [
+            "I need a horse as my pet too",
+            "I need a dog",
+            "I need a toy horse"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p3_s6_q1",
+          "type": "choice",
+          "question_en": "Who proposed that they team up?",
+          "options_en": [
+            "Prakash",
+            "Raghbir",
+            "Ravindra"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p3_s6_q2",
+          "type": "choice",
+          "question_en": "What did they do after Prakash's proposal?",
+          "options_en": [
+            "They agreed",
+            "They fought",
+            "They left separately"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "Who took off his hood?",
+          "options_en": [
+            "Raghbir",
+            "Prakash",
+            "Ravindra"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "What did the hat reveal?",
+          "options_en": [
+            "His long hair in a ponytail",
+            "A toy horse",
+            "A map"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p4_s1_q1",
+          "type": "choice",
+          "question_en": "Whose plane was it?",
+          "options_en": [
+            "His brother and parents' plane",
+            "Raghbir's plane",
+            "Ravindra's family's plane"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p4_s1_q2",
+          "type": "choice",
+          "question_en": "Where was the plane going?",
+          "options_en": [
+            "Delhi",
+            "Mumbai",
+            "Mahabaleshwar"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p4_s2_q1",
+          "type": "choice",
+          "question_en": "Who realized the flight was delayed?",
+          "options_en": [
+            "Prakash",
+            "Raghbir",
+            "Praveen"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p4_s2_q2",
+          "type": "choice",
+          "question_en": "Whose flight was delayed?",
+          "options_en": [
+            "His parents' flight",
+            "His brother's flight",
+            "Raghbir's flight"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p4_s3_q1",
+          "type": "choice",
+          "question_en": "Who had plenty of time?",
+          "options_en": [
+            "They (Prakash and Raghbir)",
+            "Prakash and Praveen",
+            "His parents"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p4_s3_q2",
+          "type": "choice",
+          "question_en": "How much time did they have?",
+          "options_en": [
+            "Plenty of time",
+            "Very little time",
+            "No time"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p4_s4_q1",
+          "type": "choice",
+          "question_en": "Where did they set off to?",
+          "options_en": [
+            "Mumbai",
+            "Delhi",
+            "Mahabaleshwar"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p4_s4_q2",
+          "type": "choice",
+          "question_en": "Which direction did they go?",
+          "options_en": [
+            "West",
+            "East",
+            "North"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p4_s5_q1",
+          "type": "choice",
+          "question_en": "Where did they rest for the night?",
+          "options_en": [
+            "Under the trees' shade",
+            "In a stable",
+            "At home"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p4_s5_q2",
+          "type": "choice",
+          "question_en": "How did they rest that night?",
+          "options_en": [
+            "Under the trees' shade",
+            "In a bed",
+            "On the aeroplane"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "Who took out their book about horses?",
+          "options_en": [
+            "They",
+            "Prakash",
+            "Ravindra"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "How long did they read the book?",
+          "options_en": [
+            "30 minutes",
+            "5 minutes",
+            "All night"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p5_s1_q1",
+          "type": "choice",
+          "question_en": "What did they eat?",
+          "options_en": [
+            "The fruits",
+            "Horse feed",
+            "A sandwich"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p5_s1_q2",
+          "type": "choice",
+          "question_en": "What did they do after eating the fruits?",
+          "options_en": [
+            "Went to sleep",
+            "Set out on the journey",
+            "Read more from the book"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p5_s2_q1",
+          "type": "choice",
+          "question_en": "When did they set out on the journey?",
+          "options_en": [
+            "In the morning when they woke up",
+            "After five minutes",
+            "At night"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p5_s2_q2",
+          "type": "choice",
+          "question_en": "Where did they set out to the journey?",
+          "options_en": [
+            "Near Mahabaleshwar and Matheran",
+            "To Mumbai",
+            "To Delhi"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p5_s3_q1",
+          "type": "choice",
+          "question_en": "What did they find there?",
+          "options_en": [
+            "A horse foot print",
+            "A plane",
+            "A hat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p5_s3_q2",
+          "type": "choice",
+          "question_en": "Whose footprint did they find?",
+          "options_en": [
+            "A horse's",
+            "Prakash's",
+            "Raghbir's"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p5_s4_q1",
+          "type": "choice",
+          "question_en": "What did they follow to a stable?",
+          "options_en": [
+            "The footprint",
+            "The plane",
+            "The book"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p5_s4_q2",
+          "type": "choice",
+          "question_en": "Where did the footprint lead them?",
+          "options_en": [
+            "To a stable with horses",
+            "To a hay field",
+            "To their home"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p5_s5_q1",
+          "type": "choice",
+          "question_en": "Whose horse had they found?",
+          "options_en": [
+            "Raghbir's",
+            "Prakash's",
+            "Ravindra's"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        },
+        {
+          "id": "gl_p5_s5_q2",
+          "type": "choice",
+          "question_en": "Which horse had they found?",
+          "options_en": [
+            "Raghbir's western horse",
+            "Praveen's toy horse",
+            "Prakash's horse"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        },
+        {
+          "id": "gl_p5_s6_q1",
+          "type": "choice",
+          "question_en": "Who rode their pets?",
+          "options_en": [
+            "Prakash and Raghbir",
+            "Praveen and their parents",
+            "Ravindra and Praveen"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        },
+        {
+          "id": "gl_p5_s6_q2",
+          "type": "choice",
+          "question_en": "Where did they take their pets?",
+          "options_en": [
+            "Home",
+            "To Delhi",
+            "To Mumbai"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "Who stopped for water?",
+          "options_en": [
+            "Their horses",
+            "Prakash",
+            "Praveen"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "What did they do after stopping for water?",
+          "options_en": [
+            "They departed",
+            "They ate fruit",
+            "They slept"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p6_s1_q1",
+          "type": "choice",
+          "question_en": "Who went to their own homes?",
+          "options_en": [
+            "They",
+            "Raghbir",
+            "Ravindra"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        },
+        {
+          "id": "gl_p6_s1_q2",
+          "type": "choice",
+          "question_en": "Where did they go?",
+          "options_en": [
+            "To their own homes",
+            "To Delhi",
+            "To Mahabaleshwar"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        },
+        {
+          "id": "gl_p6_s2_q1",
+          "type": "choice",
+          "question_en": "What did Prakash see?",
+          "options_en": [
+            "His family aeroplane",
+            "A horse",
+            "Ravindra's mum"
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        },
+        {
+          "id": "gl_p6_s2_q2",
+          "type": "choice",
+          "question_en": "When did Prakash come home compared to them?",
+          "options_en": [
+            "Before them",
+            "After them",
+            "At the same time"
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        },
+        {
+          "id": "gl_p6_s3_q1",
+          "type": "choice",
+          "question_en": "Who saw the surprise?",
+          "options_en": [
+            "Praveen",
+            "Prakash",
+            "Raghbir"
+          ],
+          "correct_index": 0,
+          "sentence_index": 32
+        },
+        {
+          "id": "gl_p6_s3_q2",
+          "type": "choice",
+          "question_en": "How did Praveen react to the surprise?",
+          "options_en": [
+            "He jumped happily",
+            "He cried",
+            "He called his mum"
+          ],
+          "correct_index": 0,
+          "sentence_index": 32
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "How did they live?",
+          "options_en": [
+            "happily ever after",
+            "with their horses",
+            "in Delhi"
+          ],
+          "correct_index": 0,
+          "sentence_index": 33
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "When did they live happily?",
+          "options_en": [
+            "then",
+            "after finding horses",
+            "before the trip"
+          ],
+          "correct_index": 0,
+          "sentence_index": 33
+        }
+      ]
+    },
+    {
+      "paragraph_index": 8,
+      "questions": [
+        {
+          "id": "gl_p8_s0_q1",
+          "type": "choice",
+          "question_en": "Who says they will keep hearing from me?",
+          "options_en": [
+            "I",
+            "Prakash",
+            "Raghbir"
+          ],
+          "correct_index": 0,
+          "sentence_index": 34
+        },
+        {
+          "id": "gl_p8_s0_q2",
+          "type": "choice",
+          "question_en": "What does the speaker hope?",
+          "options_en": [
+            "That you liked the story",
+            "That you will find a horse",
+            "That his parents return early"
+          ],
+          "correct_index": 0,
+          "sentence_index": 34
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'The Western Horse'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "ordinary",
+      "meaning_vi": "bình thường, không có gì đặc biệt",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "underestimated",
+      "meaning_vi": "không được đánh giá cao, không được coi trọng",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "treated",
+      "meaning_vi": "đối xử, cư xử với ai đó",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "application",
+      "meaning_vi": "đơn xin, giấy tờ để đăng ký",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "tripped",
+      "meaning_vi": "vấp ngã, vấp phải",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "inarticulated",
+      "meaning_vi": "không nói nên lời, không diễn tả được",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "adventure",
+      "meaning_vi": "cuộc phiêu lưu, chuyến đi mạo hiểm",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "inexplicable",
+      "meaning_vi": "khó hiểu, không giải thích được",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "prevaricated",
+      "meaning_vi": "nói dối, nói quanh co",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "in a jiffy",
+      "meaning_vi": "rất nhanh, trong chớp mắt",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "catechized",
+      "meaning_vi": "hỏi dồn, tra hỏi kỹ",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "eavesdropping",
+      "meaning_vi": "nghe lén, nghe trộm",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "enervated",
+      "meaning_vi": "mệt mỏi, kiệt sức",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "vigorous",
+      "meaning_vi": "khỏe mạnh, tràn đầy năng lượng",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "interrogated",
+      "meaning_vi": "hỏi, tra hỏi",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "propounded",
+      "meaning_vi": "đề nghị, đưa ra ý kiến",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "divulged",
+      "meaning_vi": "để lộ ra, cho thấy",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "soared",
+      "meaning_vi": "bay vút lên, bay cao",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "realized",
+      "meaning_vi": "nhận ra, hiểu ra",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "delayed",
+      "meaning_vi": "bị hoãn, bị chậm trễ",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "set out",
+      "meaning_vi": "lên đường, bắt đầu chuyến đi",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "foot print",
+      "meaning_vi": "dấu chân",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "stable",
+      "meaning_vi": "chuồng ngựa",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "departed",
+      "meaning_vi": "chia tay, rời đi",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "surprise",
+      "meaning_vi": "điều bất ngờ",
+      "paragraph_index": 6
+    }
+  ]
+}

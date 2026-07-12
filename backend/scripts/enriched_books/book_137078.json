@@ -1,0 +1,721 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L1",
+  "level_label": "Cấp 1",
+  "topic": "Girls Planting Tree",
+  "slug": "book_137078",
+  "audio_filename": "book_137078.mp3",
+  "book_slug": "book_137078",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_137078/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_137078/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_137078/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_137078/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_137078/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_137078/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_137078/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_137078/page_09.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_137078/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_137078/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_137078/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_137078/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_137078/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_137078/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_137078/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_137078/page_09.mp3"
+  ],
+  "book_attribution": {
+    "title": "Girls Planting Tree",
+    "creators": [
+      "Santi Yustika",
+      "Priya Kuriyan",
+      "Raju Babu Shakya"
+    ],
+    "publisher": "StoryWeaver Community",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: Girls Planting Tree is written by Santi Yustika . © Santi Yustika , 2020. Some rights reserved. Released under CC BY 4.0 license. Images Attributions: Cover page: Girl and grandfather gardening , by Priya Kuriyan © Pratham Books, 2012. Some rights reserved. Released under CC BY 4.0 license. Page 2: Girl and grandfather gardening , by Priya Kuriyan © Pratham Books, 2012. Some rights reserved. Released under CC BY 4.0 license. Page 3: A man waters a garden , by Raju Babu Shakya © Room to Read, 2014. Some rights reserved. Released under CC BY 4.0 license. Page 4: Girl sitting on bed with winter clothes around her and lady bringing mugs , by Priya Kuriyan © Pratham Books, 2012. Some rights reserved. Released under CC BY 4.0 license. Page 5: Girl gardening in the sun , by Priya Kuriyan © Pratham Books, 2012. Some rights reserved. Released under CC BY 4.0 license. Page 6: Girl looking at the sun , by Priya Kuriyan © Pratham Books, 2012. Some rights reserved. Released under CC BY 4.0 license. Page 7: Girl sitting below a tree full of birds , by Priya Kuriyan © Pratham Books, 2012. Some rights reserved. Released under CC BY 4.0 license. Page 8: Girl looking at a tree with a bird and its eggs in the nest , by Priya Kuriyan © Pratham Books, 2012. Some rights reserved. Released under CC BY 4.0 license. Page 9: Children sitting below a tree and eating fruits , by Priya Kuriyan © Pratham Books, 2012. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/137078-girls-planting-tree",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "Girl and grandfather gardening , by Priya Kuriyan © Pratham Books, 2012. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "A man waters a garden , by Raju Babu Shakya © Room to Read, 2014. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "Girl sitting on bed with winter clothes around her and lady bringing mugs , by Priya Kuriyan © Pratham Books, 2012. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "Girl gardening in the sun , by Priya Kuriyan © Pratham Books, 2012. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "Girl looking at the sun , by Priya Kuriyan © Pratham Books, 2012. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "Girl sitting below a tree full of birds , by Priya Kuriyan © Pratham Books, 2012. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "Girl looking at a tree with a bird and its eggs in the nest , by Priya Kuriyan © Pratham Books, 2012. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "Children sitting below a tree and eating fruits , by Priya Kuriyan © Pratham Books, 2012. Some rights reserved. Released under CC BY 4.0 license."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "Girls Planting Tree",
+    "paragraphs_en": [
+      "On Sunday, Nunu was planting trees with the farmers who looked after the garden. \"Uncle, can you help me plant a tree?\" asked Nunu \"With a pleasure, dear \"said uncle.",
+      "Nunu was happy and she watered the tree every morning so tree grew well.",
+      "Meanwhile, Nami, Nunu's sister was not as diligent as Nunu... \"Mom, where is nunu?\" asked Nami. \"Nunu is watering and taking care of tree,\" said mommy.",
+      "Then, following Nunu, Nami planted a tree. Actually she did not like planting but she wanted to look diligent, just like Nunu.",
+      "Nami forgot to water her tree so the tree was dry.",
+      "Nunu's tree looked green and beautiful, Nunu was very happy. “yeay! I am happy, I am happy!”",
+      "However, Nami's tree did not grow because it was dry.",
+      "Nunu invited Nami to play under the tree with her and Nami realized that she could not only follow what her sister did but also should love it and take care of it."
+    ],
+    "sentences": [
+      {
+        "text_en": "On Sunday, Nunu was planting trees with the farmers who looked after the garden.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_137078/s_000.mp3",
+        "text_vi": "Vào Chủ Nhật, Nunu đang trồng cây cùng với những người nông dân chăm sóc khu vườn."
+      },
+      {
+        "text_en": "\"Uncle, can you help me plant a tree?\" asked Nunu \"With a pleasure, dear \"said uncle.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_137078/s_001.mp3",
+        "text_vi": "Nunu hỏi: \"Bác ơi, bác giúp cháu trồng cây được không ạ?\" Bác nói: \"Được chứ, cháu yêu.\""
+      },
+      {
+        "text_en": "Nunu was happy and she watered the tree every morning so tree grew well.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_137078/s_002.mp3",
+        "text_vi": "Nunu rất vui và cô bé tưới cây mỗi buổi sáng nên cây lớn rất tốt."
+      },
+      {
+        "text_en": "Meanwhile, Nami, Nunu's sister was not as diligent as Nunu...",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_137078/s_003.mp3",
+        "text_vi": "Trong khi đó, Nami, chị gái của Nunu, lại không chăm chỉ bằng Nunu."
+      },
+      {
+        "text_en": "\"Mom, where is nunu?\" asked Nami.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_137078/s_004.mp3",
+        "text_vi": "Nami hỏi: \"Mẹ ơi, Nunu đâu rồi ạ?\""
+      },
+      {
+        "text_en": "\"Nunu is watering and taking care of tree,\" said mommy.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_137078/s_005.mp3",
+        "text_vi": "Mẹ nói: \"Nunu đang tưới nước và chăm sóc cây đấy con.\""
+      },
+      {
+        "text_en": "Then, following Nunu, Nami planted a tree.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_137078/s_006.mp3",
+        "text_vi": "Sau đó, làm theo Nunu, Nami cũng trồng một cái cây."
+      },
+      {
+        "text_en": "Actually she did not like planting but she wanted to look diligent, just like Nunu.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_137078/s_007.mp3",
+        "text_vi": "Thật ra cô bé không thích trồng cây, nhưng cô bé muốn trông có vẻ chăm chỉ, giống như Nunu."
+      },
+      {
+        "text_en": "Nami forgot to water her tree so the tree was dry.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_137078/s_008.mp3",
+        "text_vi": "Nami quên mất tưới nước cho cây của mình nên cái cây bị khô héo."
+      },
+      {
+        "text_en": "Nunu's tree looked green and beautiful, Nunu was very happy.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_137078/s_009.mp3",
+        "text_vi": "Cây của Nunu trông xanh tươi và đẹp đẽ, Nunu rất vui."
+      },
+      {
+        "text_en": "“yeay! I am happy, I am happy!”",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_137078/s_010.mp3",
+        "text_vi": "Nunu reo lên: \"Cháu vui quá, cháu vui quá!\""
+      },
+      {
+        "text_en": "However, Nami's tree did not grow because it was dry.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_137078/s_011.mp3",
+        "text_vi": "Tuy nhiên, cây của Nami lại không lớn lên vì nó đã bị khô héo."
+      },
+      {
+        "text_en": "Nunu invited Nami to play under the tree with her and Nami realized that she could not only follow what her sister did but also should love it and take care of it.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_137078/s_012.mp3",
+        "text_vi": "Nunu mời Nami đến chơi dưới gốc cây cùng mình và Nami nhận ra rằng cô bé không chỉ nên làm theo những gì chị mình làm mà còn phải yêu thương và chăm sóc nó nữa."
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "On Sunday, Nunu was planting trees with the farmers who looked after the garden.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_137078/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "\"Uncle, can you help me plant a tree?\" asked Nunu \"With a pleasure, dear \"said uncle.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_137078/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "Nunu was happy and she watered the tree every morning so tree grew well.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_137078/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "Meanwhile, Nami, Nunu's sister was not as diligent as Nunu...",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_137078/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "\"Mom, where is nunu?\" asked Nami.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_137078/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "\"Nunu is watering and taking care of tree,\" said mommy.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_137078/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "Then, following Nunu, Nami planted a tree.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_137078/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "Actually she did not like planting but she wanted to look diligent, just like Nunu.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_137078/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "Nami forgot to water her tree so the tree was dry.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_137078/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "Nunu's tree looked green and beautiful, Nunu was very happy.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_137078/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "“yeay! I am happy, I am happy!”",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_137078/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "However, Nami's tree did not grow because it was dry.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_137078/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "Nunu invited Nami to play under the tree with her and Nami realized that she could not only follow what her sister did but also should love it and take care of it.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_137078/s_012.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "When was Nunu planting trees?",
+          "options_en": [
+            "On Sunday",
+            "Every morning",
+            "On Monday"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "Who was Nunu planting trees with?",
+          "options_en": [
+            "The farmers who looked after the garden",
+            "Her sister Nami",
+            "Her mom"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s1_q1",
+          "type": "choice",
+          "question_en": "Who asked for help to plant a tree?",
+          "options_en": [
+            "Nunu",
+            "Nami",
+            "Mommy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s1_q2",
+          "type": "choice",
+          "question_en": "How did the uncle respond to Nunu's request?",
+          "options_en": [
+            "\"With a pleasure, dear\" said uncle",
+            "\"Nunu is watering and taking care of tree,\" said mommy",
+            "\"Yeay! I am happy, I am happy!\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "Who watered the tree every morning?",
+          "options_en": [
+            "Nunu",
+            "Nami",
+            "Uncle"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "Why did the tree grow well?",
+          "options_en": [
+            "Because she watered it every morning",
+            "Because Nami planted it",
+            "Because Uncle helped plant it"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "Who was not as diligent as Nunu?",
+          "options_en": [
+            "Nami",
+            "Mommy",
+            "The farmers"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "How was Nami described compared to Nunu?",
+          "options_en": [
+            "Not as diligent",
+            "Planting trees",
+            "Watering every morning"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p2_s1_q1",
+          "type": "choice",
+          "question_en": "Who asked where Nunu was?",
+          "options_en": [
+            "Nami",
+            "Uncle",
+            "Mommy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p2_s1_q2",
+          "type": "choice",
+          "question_en": "What did Nami ask her mom?",
+          "options_en": [
+            "Where is Nunu?",
+            "Can I plant a tree?",
+            "Did you water the tree?"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p2_s2_q1",
+          "type": "choice",
+          "question_en": "What is Nunu doing according to mommy?",
+          "options_en": [
+            "Watering and taking care of the tree",
+            "Planting a tree with the farmers",
+            "Playing under the tree"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p2_s2_q2",
+          "type": "choice",
+          "question_en": "Who said that Nunu is watering and taking care of the tree?",
+          "options_en": [
+            "Mommy",
+            "Uncle",
+            "Nami"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "Who planted a tree?",
+          "options_en": [
+            "Nami",
+            "Nunu",
+            "the farmers"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "Who did Nami follow when she planted a tree?",
+          "options_en": [
+            "Nunu",
+            "mommy",
+            "the farmers"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p3_s1_q1",
+          "type": "choice",
+          "question_en": "How did she feel about planting?",
+          "options_en": [
+            "She did not like planting",
+            "She watered the tree every morning",
+            "She was happy and excited"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p3_s1_q2",
+          "type": "choice",
+          "question_en": "Why did she want to plant a tree?",
+          "options_en": [
+            "She wanted to look diligent, just like Nunu",
+            "She wanted to water it every morning",
+            "She wanted to play under it"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "Who forgot to water her tree?",
+          "options_en": [
+            "Nami",
+            "Nunu",
+            "Mommy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "Why was the tree dry?",
+          "options_en": [
+            "Because Nami forgot to water it",
+            "Because Nunu did not water it",
+            "Because the farmers did not care for it"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "Who was very happy?",
+          "options_en": [
+            "Nunu",
+            "Nami",
+            "Uncle"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "What did Nunu's tree look like?",
+          "options_en": [
+            "Green and beautiful",
+            "Dry because it was not watered",
+            "Watered every morning"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p5_s1_q1",
+          "type": "choice",
+          "question_en": "Who said “yeay! I am happy, I am happy!”?",
+          "options_en": [
+            "Nunu",
+            "Nami",
+            "Mommy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p5_s1_q2",
+          "type": "choice",
+          "question_en": "How did the speaker feel?",
+          "options_en": [
+            "Happy",
+            "Sad because a tree was dry",
+            "Proud of planting a tree"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "Why did Nami's tree not grow?",
+          "options_en": [
+            "Because it was dry",
+            "Because Nunu watered it every morning",
+            "Because uncle planted it"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "Whose tree did not grow?",
+          "options_en": [
+            "Nami's",
+            "Nunu's",
+            "Mommy's"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "Who invited Nami to play under the tree?",
+          "options_en": [
+            "Nunu",
+            "The uncle",
+            "Mommy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "What did Nami realize?",
+          "options_en": [
+            "She should love it and take care of it",
+            "She should water the tree every morning",
+            "She should plant a tree with the farmers"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'Girls Planting Tree'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "planting",
+      "meaning_vi": "trồng (đặt cây xuống đất)",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "farmers",
+      "meaning_vi": "nông dân (người trồng trọt)",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "garden",
+      "meaning_vi": "khu vườn (nơi trồng cây, hoa)",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "pleasure",
+      "meaning_vi": "sẵn lòng (rất vui vẻ làm gì đó)",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "watered",
+      "meaning_vi": "tưới nước (cho cây uống nước)",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "grew well",
+      "meaning_vi": "lớn tốt (phát triển khỏe mạnh)",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "Meanwhile",
+      "meaning_vi": "trong khi đó (cùng lúc với việc khác)",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "diligent",
+      "meaning_vi": "chăm chỉ (làm việc siêng năng)",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "taking care of",
+      "meaning_vi": "chăm sóc (quan tâm, nuôi dưỡng)",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "following",
+      "meaning_vi": "làm theo (làm giống như người khác)",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "Actually",
+      "meaning_vi": "thật ra (sự thật là)",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "wanted",
+      "meaning_vi": "muốn (có ý định làm gì)",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "forgot",
+      "meaning_vi": "quên (không nhớ)",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "dry",
+      "meaning_vi": "khô héo (không có nước, bị chết)",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "green",
+      "meaning_vi": "xanh tươi (màu xanh của cây)",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "beautiful",
+      "meaning_vi": "đẹp đẽ (rất đẹp)",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "However",
+      "meaning_vi": "tuy nhiên (nhưng mà)",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "grow",
+      "meaning_vi": "lớn lên (phát triển)",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "invited",
+      "meaning_vi": "mời (rủ ai đó đến)",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "realized",
+      "meaning_vi": "nhận ra (hiểu được điều gì đó)",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "follow",
+      "meaning_vi": "làm theo (làm giống như)",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "love",
+      "meaning_vi": "yêu thương (có tình cảm sâu sắc)",
+      "paragraph_index": 7
+    }
+  ]
+}

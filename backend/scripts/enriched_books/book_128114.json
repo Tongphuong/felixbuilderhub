@@ -1,0 +1,891 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L1",
+  "level_label": "Cấp 1",
+  "topic": "Vihaan's vehicles",
+  "slug": "book_128114",
+  "audio_filename": "book_128114.mp3",
+  "book_slug": "book_128114",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_128114/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_128114/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_128114/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_128114/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_128114/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_128114/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_128114/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_128114/page_09.jpg",
+    "https://audio.felixbuilderhub.com/books/book_128114/page_10.jpg",
+    "https://audio.felixbuilderhub.com/books/book_128114/page_11.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_128114/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_128114/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_128114/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_128114/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_128114/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_128114/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_128114/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_128114/page_09.mp3",
+    "https://audio.felixbuilderhub.com/books/book_128114/page_10.mp3",
+    "https://audio.felixbuilderhub.com/books/book_128114/page_11.mp3"
+  ],
+  "book_attribution": {
+    "title": "Vihaan's vehicles",
+    "creators": [
+      "Surekha Reddy",
+      "Ajanta Guhathakurta",
+      "Alina Aphayvanh",
+      "Sadhna Prasad"
+    ],
+    "publisher": "StoryWeaver Community",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: Vihaan's vehicles is written by Surekha Reddy . © Surekha Reddy , 2020. Some rights reserved. Released under CC BY 4.0 license. Images Attributions: Cover page: Auto in the center of traffic , by Ajanta Guhathakurta © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 2: Auto in the sky and cars on road below , by Ajanta Guhathakurta © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 3: A bicycle , by Sadhna Prasad © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 4: A bus , by Sadhna Prasad © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 5: A tractor , by Sadhna Prasad © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 6: A colorful truck , by Sadhna Prasad © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 7: A train , by Sadhna Prasad © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 8: A scooter , by Sadhna Prasad © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 9: An aeroplane , by Sadhna Prasad © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 10: A boy reading by the light of an electric bulb, a lamp looks on sadly , by Alina Aphayvanh © Room to Read, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 11: Auto in the sky and cars on road below , by Ajanta Guhathakurta © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/128114-vihaan-s-vehicles",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "Auto in the sky and cars on road below , by Ajanta Guhathakurta © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "A bicycle , by Sadhna Prasad © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "A bus , by Sadhna Prasad © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "A tractor , by Sadhna Prasad © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "A colorful truck , by Sadhna Prasad © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "A train , by Sadhna Prasad © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "A scooter , by Sadhna Prasad © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "An aeroplane , by Sadhna Prasad © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 8,
+        "credit_text": "A boy reading by the light of an electric bulb, a lamp looks on sadly , by Alina Aphayvanh © Room to Read, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 9,
+        "credit_text": "Auto in the sky and cars on road below , by Ajanta Guhathakurta © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "Vihaan's vehicles",
+    "paragraphs_en": [
+      "Vihaan loves vehicles, he made a book with pictures of different vehicles. He collected pictures of vehicles to make the book \"Vehicles\".",
+      "Vihaan drew a picture of a bicycle and coloured it for his book \"Vehicles\".",
+      "Vihaan found this picture of the red bus in a magazine, he cut it out of the magazine for his book \"Vehicles\".",
+      "Vihaan asked his mom to help him draw the picture of a tractor and he coloured it for his book \"Vehicles\".",
+      "Wow! A truck. Vihaan found this picture in an old newspaper, he cut this picture out of the newspaper, for his book \"Vehicles\".",
+      "This is a picture of a train . Vihaan's his sister helped him to draw and colour this picture for his book \"Vehicles\" .",
+      "Vihaan painted this picture of a scooter for his book \"Vehicles\".",
+      "This is Vihaan's favourite vehicle, an aeroplane. Vihaan's dad helped him to make this picture, for his book \"Vehicles\".",
+      "Vihaan glued all the pictures of vehicles he had collected on papers and made a book \"Vehicles\". Vroom Vroom Vroom! Vihaan was super excited!",
+      "Vroom Vroom Vroom !! \"Vehicles\". Vehicles Author Vihaan"
+    ],
+    "sentences": [
+      {
+        "text_en": "Vihaan loves vehicles, he made a book with pictures of different vehicles.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_128114/s_000.mp3",
+        "text_vi": "Vihaan rất thích các loại xe, cậu bé đã làm một cuốn sách với hình ảnh của nhiều loại xe khác nhau."
+      },
+      {
+        "text_en": "He collected pictures of vehicles to make the book \"Vehicles\".",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_128114/s_001.mp3",
+        "text_vi": "Cậu bé đã sưu tầm các bức ảnh về xe cộ để làm cuốn sách \"Các Loại Xe\"."
+      },
+      {
+        "text_en": "Vihaan drew a picture of a bicycle and coloured it for his book \"Vehicles\".",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_128114/s_002.mp3",
+        "text_vi": "Vihaan đã vẽ một bức tranh về chiếc xe đạp và tô màu cho nó cho cuốn sách \"Các Loại Xe\" của mình."
+      },
+      {
+        "text_en": "Vihaan found this picture of the red bus in a magazine, he cut it out of the magazine for his book \"Vehicles\".",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_128114/s_003.mp3",
+        "text_vi": "Vihaan tìm thấy bức tranh chiếc xe buýt màu đỏ này trong một cuốn tạp chí, cậu bé đã cắt nó ra từ cuốn tạp chí đó để dùng cho cuốn sách \"Các Loại Xe\" của mình."
+      },
+      {
+        "text_en": "Vihaan asked his mom to help him draw the picture of a tractor and he coloured it for his book \"Vehicles\".",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_128114/s_004.mp3",
+        "text_vi": "Vihaan đã nhờ mẹ giúp cậu bé vẽ bức tranh về chiếc máy kéo và cậu bé đã tô màu cho nó cho cuốn sách \"Các Loại Xe\" của mình."
+      },
+      {
+        "text_en": "Wow! A truck.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_128114/s_005.mp3",
+        "text_vi": "Chà! Một chiếc xe tải."
+      },
+      {
+        "text_en": "Vihaan found this picture in an old newspaper, he cut this picture out of the newspaper, for his book \"Vehicles\".",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_128114/s_006.mp3",
+        "text_vi": "Vihaan tìm thấy bức tranh này trong một tờ báo cũ, cậu bé đã cắt bức tranh này ra từ tờ báo để dùng cho cuốn sách \"Các Loại Xe\" của mình."
+      },
+      {
+        "text_en": "This is a picture of a train .",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_128114/s_007.mp3",
+        "text_vi": "Đây là một bức tranh về chiếc xe lửa."
+      },
+      {
+        "text_en": "Vihaan's his sister helped him to draw and colour this picture for his book \"Vehicles\" .",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_128114/s_008.mp3",
+        "text_vi": "Chị của Vihaan đã giúp cậu bé vẽ và tô màu bức tranh này cho cuốn sách \"Các Loại Xe\" của cậu bé."
+      },
+      {
+        "text_en": "Vihaan painted this picture of a scooter for his book \"Vehicles\".",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_128114/s_009.mp3",
+        "text_vi": "Vihaan đã vẽ bức tranh chiếc xe tay ga này cho cuốn sách \"Các Loại Xe\" của mình."
+      },
+      {
+        "text_en": "This is Vihaan's favourite vehicle, an aeroplane.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_128114/s_010.mp3",
+        "text_vi": "Đây là loại xe yêu thích của Vihaan, một chiếc máy bay."
+      },
+      {
+        "text_en": "Vihaan's dad helped him to make this picture, for his book \"Vehicles\".",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_128114/s_011.mp3",
+        "text_vi": "Bố của Vihaan đã giúp cậu bé làm bức tranh này cho cuốn sách \"Các Loại Xe\" của mình."
+      },
+      {
+        "text_en": "Vihaan glued all the pictures of vehicles he had collected on papers and made a book \"Vehicles\".",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_128114/s_012.mp3",
+        "text_vi": "Vihaan đã dán tất cả các bức tranh về xe cộ mà cậu bé đã sưu tầm lên các trang giấy và làm thành một cuốn sách \"Các Loại Xe\"."
+      },
+      {
+        "text_en": "Vroom Vroom Vroom!",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_128114/s_013.mp3",
+        "text_vi": "Vroom Vroom Vroom!"
+      },
+      {
+        "text_en": "Vihaan was super excited!",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_128114/s_014.mp3",
+        "text_vi": "Vihaan đã cực kỳ hào hứng!"
+      },
+      {
+        "text_en": "Vroom Vroom Vroom !!",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_128114/s_015.mp3",
+        "text_vi": "Vroom Vroom Vroom !!"
+      },
+      {
+        "text_en": "\"Vehicles\". Vehicles Author Vihaan",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_128114/s_016.mp3",
+        "text_vi": "\"Các Loại Xe\". Tác giả: Vihaan."
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "Vihaan loves vehicles, he made a book with pictures of different vehicles.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_128114/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "He collected pictures of vehicles to make the book \"Vehicles\".",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_128114/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "Vihaan drew a picture of a bicycle and coloured it for his book \"Vehicles\".",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_128114/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "Vihaan found this picture of the red bus in a magazine, he cut it out of the magazine for his book \"Vehicles\".",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_128114/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "Vihaan asked his mom to help him draw the picture of a tractor and he coloured it for his book \"Vehicles\".",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_128114/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "Wow! A truck.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_128114/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "Vihaan found this picture in an old newspaper, he cut this picture out of the newspaper, for his book \"Vehicles\".",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_128114/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "This is a picture of a train .",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_128114/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "Vihaan's his sister helped him to draw and colour this picture for his book \"Vehicles\" .",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_128114/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "Vihaan painted this picture of a scooter for his book \"Vehicles\".",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_128114/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "This is Vihaan's favourite vehicle, an aeroplane.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_128114/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "Vihaan's dad helped him to make this picture, for his book \"Vehicles\".",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_128114/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "Vihaan glued all the pictures of vehicles he had collected on papers and made a book \"Vehicles\".",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_128114/s_012.mp3"
+        },
+        {
+          "id": "ra_13",
+          "text_en": "Vroom Vroom Vroom!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_128114/s_013.mp3"
+        },
+        {
+          "id": "ra_14",
+          "text_en": "Vihaan was super excited!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_128114/s_014.mp3"
+        },
+        {
+          "id": "ra_15",
+          "text_en": "Vroom Vroom Vroom !!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_128114/s_015.mp3"
+        },
+        {
+          "id": "ra_16",
+          "text_en": "\"Vehicles\". Vehicles Author Vihaan",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_128114/s_016.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "Who loves vehicles?",
+          "options_en": [
+            "Vihaan",
+            "His sister",
+            "His dad"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "What did he make?",
+          "options_en": [
+            "A book with pictures of different vehicles",
+            "A painting of a scooter",
+            "A picture of a bicycle"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s1_q1",
+          "type": "choice",
+          "question_en": "What did he collect?",
+          "options_en": [
+            "Pictures of vehicles",
+            "A picture of a red bus",
+            "A picture from an old newspaper"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s1_q2",
+          "type": "choice",
+          "question_en": "Why did he collect pictures of vehicles?",
+          "options_en": [
+            "To make the book \"Vehicles\"",
+            "To colour them",
+            "To cut them out"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "Who drew a picture of a bicycle?",
+          "options_en": [
+            "Vihaan",
+            "His sister",
+            "His dad"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "Why did he colour the picture?",
+          "options_en": [
+            "For his book \"Vehicles\"",
+            "For a magazine",
+            "For a newspaper"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "Who found the picture of the red bus?",
+          "options_en": [
+            "Vihaan",
+            "His sister",
+            "His mom"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "Where did he find the picture of the red bus?",
+          "options_en": [
+            "In a magazine",
+            "In an old newspaper",
+            "In his book \"Vehicles\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "Who did Vihaan ask to help him draw the picture of a tractor?",
+          "options_en": [
+            "His mom",
+            "His sister",
+            "His dad"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "What did Vihaan colour for his book \"Vehicles\"?",
+          "options_en": [
+            "The picture of a tractor",
+            "A picture of a bicycle",
+            "A picture of a red bus"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "What vehicle is mentioned?",
+          "options_en": [
+            "A truck",
+            "A red bus",
+            "A bicycle"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "Which thing does the speaker notice?",
+          "options_en": [
+            "A truck",
+            "A train",
+            "An aeroplane"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p4_s1_q1",
+          "type": "choice",
+          "question_en": "Who found the picture in the old newspaper?",
+          "options_en": [
+            "Vihaan",
+            "His sister",
+            "His dad"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p4_s1_q2",
+          "type": "choice",
+          "question_en": "Where did Vihaan find the picture?",
+          "options_en": [
+            "In an old newspaper",
+            "In a magazine",
+            "In a book"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "What is this a picture of?",
+          "options_en": [
+            "a train",
+            "a bicycle",
+            "a red bus"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "Which vehicle is shown in the picture?",
+          "options_en": [
+            "train",
+            "tractor",
+            "scooter"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p5_s1_q1",
+          "type": "choice",
+          "question_en": "Who helped him to draw and colour this picture?",
+          "options_en": [
+            "his sister",
+            "his mom",
+            "his dad"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p5_s1_q2",
+          "type": "choice",
+          "question_en": "Why did his sister help him?",
+          "options_en": [
+            "To draw and colour this picture for his book \"Vehicles\"",
+            "To cut out a picture from a magazine",
+            "To paint a scooter"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "Who painted this picture of a scooter?",
+          "options_en": [
+            "Vihaan",
+            "His sister",
+            "His dad"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "Which vehicle did Vihaan paint a picture of?",
+          "options_en": [
+            "A scooter",
+            "A bicycle",
+            "A red bus"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "Whose favourite vehicle is the aeroplane?",
+          "options_en": [
+            "Vihaan",
+            "His sister",
+            "Vihaan's dad"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "What is Vihaan's favourite vehicle?",
+          "options_en": [
+            "An aeroplane",
+            "A bicycle",
+            "A tractor"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p7_s1_q1",
+          "type": "choice",
+          "question_en": "Who helped Vihaan make this picture?",
+          "options_en": [
+            "Vihaan's dad",
+            "His mom",
+            "His sister"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p7_s1_q2",
+          "type": "choice",
+          "question_en": "Why did his dad help him make the picture?",
+          "options_en": [
+            "For his book \"Vehicles\"",
+            "To cut it from a magazine",
+            "To paint a scooter"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        }
+      ]
+    },
+    {
+      "paragraph_index": 8,
+      "questions": [
+        {
+          "id": "gl_p8_s0_q1",
+          "type": "choice",
+          "question_en": "Who glued all the pictures?",
+          "options_en": [
+            "Vihaan",
+            "His sister",
+            "His dad"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p8_s0_q2",
+          "type": "choice",
+          "question_en": "What did he make with the pictures?",
+          "options_en": [
+            "A book \"Vehicles\"",
+            "A picture of a bicycle",
+            "A red bus picture"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p8_s1_q1",
+          "type": "choice",
+          "question_en": "Which sound is written in the sentence?",
+          "options_en": [
+            "Vroom Vroom Vroom!",
+            "Wow!",
+            "Vroom Vroom Vroom !!"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p8_s1_q2",
+          "type": "choice",
+          "question_en": "What does the repeated word 'Vroom' represent?",
+          "options_en": [
+            "The sound of a vehicle",
+            "An exclamation 'Wow!'",
+            "The title \"Vehicles\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p8_s2_q1",
+          "type": "choice",
+          "question_en": "Who was super excited?",
+          "options_en": [
+            "Vihaan",
+            "His sister",
+            "His dad"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p8_s2_q2",
+          "type": "choice",
+          "question_en": "How was Vihaan feeling?",
+          "options_en": [
+            "Super excited",
+            "Happy to paint",
+            "Excited about an aeroplane"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        }
+      ]
+    },
+    {
+      "paragraph_index": 9,
+      "questions": [
+        {
+          "id": "gl_p9_s0_q1",
+          "type": "choice",
+          "question_en": "What sound is repeated in the sentence?",
+          "options_en": [
+            "Vroom Vroom Vroom",
+            "He coloured it",
+            "He cut it out of the magazine"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p9_s0_q2",
+          "type": "choice",
+          "question_en": "Which word in the sentence shows a vehicle sound?",
+          "options_en": [
+            "Vroom",
+            "Bicycle",
+            "Train"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p9_s1_q1",
+          "type": "choice",
+          "question_en": "What is the title shown in the sentence?",
+          "options_en": [
+            "Vehicles",
+            "Tractor",
+            "Scooter"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p9_s1_q2",
+          "type": "choice",
+          "question_en": "Who is named as the author in the sentence?",
+          "options_en": [
+            "Vihaan",
+            "His mom",
+            "His sister"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'Vihaan's vehicles'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "vehicles",
+      "meaning_vi": "các loại xe, phương tiện giao thông",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "different",
+      "meaning_vi": "khác nhau",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "collected",
+      "meaning_vi": "đã sưu tầm, đã thu thập",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "pictures",
+      "meaning_vi": "hình ảnh, tranh ảnh",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "drew",
+      "meaning_vi": "đã vẽ",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "bicycle",
+      "meaning_vi": "xe đạp",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "coloured",
+      "meaning_vi": "đã tô màu",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "found",
+      "meaning_vi": "đã tìm thấy",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "magazine",
+      "meaning_vi": "tạp chí",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "cut out",
+      "meaning_vi": "đã cắt ra",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "asked",
+      "meaning_vi": "đã nhờ, đã yêu cầu",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "tractor",
+      "meaning_vi": "máy kéo",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "truck",
+      "meaning_vi": "xe tải",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "newspaper",
+      "meaning_vi": "tờ báo",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "train",
+      "meaning_vi": "xe lửa, tàu hỏa",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "sister",
+      "meaning_vi": "chị gái",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "painted",
+      "meaning_vi": "đã vẽ (bằng sơn)",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "scooter",
+      "meaning_vi": "xe tay ga",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "favourite",
+      "meaning_vi": "yêu thích nhất",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "aeroplane",
+      "meaning_vi": "máy bay",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "glued",
+      "meaning_vi": "đã dán",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "super excited",
+      "meaning_vi": "cực kỳ hào hứng, rất vui sướng",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "Author",
+      "meaning_vi": "tác giả",
+      "paragraph_index": 9
+    }
+  ]
+}

@@ -1,0 +1,525 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L0",
+  "level_label": "Cấp 0",
+  "topic": "Raju and Muniya",
+  "slug": "book_213361",
+  "audio_filename": "book_213361.mp3",
+  "book_slug": "book_213361",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_213361/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_213361/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_213361/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_213361/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_213361/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_213361/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_213361/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_213361/page_09.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_213361/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_213361/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_213361/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_213361/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_213361/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_213361/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_213361/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_213361/page_09.mp3"
+  ],
+  "book_attribution": {
+    "title": "Raju and Muniya",
+    "creators": [
+      "Kaminee Singh",
+      "Ajit Narayan"
+    ],
+    "publisher": "Pratham Education Foundation",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: Raju and Muniya is translated by Kaminee Singh . The © for this translation lies with Pratham Education Foundation , 2020. Some rights reserved. Released under CC BY 4.0 license. Based on Original story: ' राजू और मुनिया ' , by Madhu B. Joshi . © Pratham Education Foundation , 2020. Some rights reserved. Released under CC BY 4.0 license. Other Credits: 'Raju and Muniya' has been published on StoryWeaver by Pratham Education Foundation. www.pratham.org Images Attributions: Cover page: Bunny dancing , by Ajit Narayan © Pratham Education Foundation, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 2: Bunny dancing on floor , by Ajit Narayan © Pratham Education Foundation, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 3: Girl dacning like lattu , by Ajit Narayan © Pratham Education Foundation, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 4: boy climbing on chair , by Ajit Narayan © Pratham Education Foundation, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 5: Bunny dancing on floor , by Ajit Narayan © Pratham Education Foundation, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 6: Girl nache jhoom jhoom , by Ajit Narayan © Pratham Education Foundation, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 7: Boy jumping jhoom , by Ajit Narayan © Pratham Education Foundation, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 8: Woman laughing on seeing , by Ajit Narayan © Pratham Education Foundation, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 9: Woman dancing jhoom , by Ajit Narayan © Pratham Education Foundation, 2020. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/213361-raju-and-muniya",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "Bunny dancing on floor , by Ajit Narayan © Pratham Education Foundation, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "Girl dacning like lattu , by Ajit Narayan © Pratham Education Foundation, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "boy climbing on chair , by Ajit Narayan © Pratham Education Foundation, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "Bunny dancing on floor , by Ajit Narayan © Pratham Education Foundation, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "Girl nache jhoom jhoom , by Ajit Narayan © Pratham Education Foundation, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "Boy jumping jhoom , by Ajit Narayan © Pratham Education Foundation, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "Woman laughing on seeing , by Ajit Narayan © Pratham Education Foundation, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "Woman dancing jhoom , by Ajit Narayan © Pratham Education Foundation, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "Raju and Muniya",
+    "paragraphs_en": [
+      "The spinning top is green and blue.",
+      "Muniya’s skirt is yellow.",
+      "Raju’s bed is blue.",
+      "The spinning top spins round and round.",
+      "Muniya dances on the ground.",
+      "Raju jumps up and down.",
+      "Looking at them, mother smiles.",
+      "And joins them as they dance in style!"
+    ],
+    "sentences": [
+      {
+        "text_en": "The spinning top is green and blue.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_213361/s_000.mp3",
+        "text_vi": "Con quay màu xanh lá và xanh dương."
+      },
+      {
+        "text_en": "Muniya’s skirt is yellow.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_213361/s_001.mp3",
+        "text_vi": "Váy của Muniya màu vàng."
+      },
+      {
+        "text_en": "Raju’s bed is blue.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_213361/s_002.mp3",
+        "text_vi": "Giường của Raju màu xanh dương."
+      },
+      {
+        "text_en": "The spinning top spins round and round.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_213361/s_003.mp3",
+        "text_vi": "Con quay quay tròn tròn."
+      },
+      {
+        "text_en": "Muniya dances on the ground.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_213361/s_004.mp3",
+        "text_vi": "Muniya nhảy múa trên mặt đất."
+      },
+      {
+        "text_en": "Raju jumps up and down.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_213361/s_005.mp3",
+        "text_vi": "Raju nhảy lên nhảy xuống."
+      },
+      {
+        "text_en": "Looking at them, mother smiles.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_213361/s_006.mp3",
+        "text_vi": "Nhìn các bạn ấy, mẹ mỉm cười."
+      },
+      {
+        "text_en": "And joins them as they dance in style!",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_213361/s_007.mp3",
+        "text_vi": "Và cùng tham gia nhảy múa thật đẹp!"
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "The spinning top is green and blue.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_213361/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "Muniya’s skirt is yellow.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_213361/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "Raju’s bed is blue.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_213361/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "The spinning top spins round and round.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_213361/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "Muniya dances on the ground.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_213361/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "Raju jumps up and down.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_213361/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "Looking at them, mother smiles.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_213361/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "And joins them as they dance in style!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_213361/s_007.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "What color is the spinning top?",
+          "options_en": [
+            "green and blue",
+            "yellow",
+            "blue"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "Which object is green and blue?",
+          "options_en": [
+            "The spinning top",
+            "Muniya’s skirt",
+            "Raju’s bed"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "Whose skirt is yellow?",
+          "options_en": [
+            "Muniya's",
+            "Raju's",
+            "Mother's"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "What color is Muniya's skirt?",
+          "options_en": [
+            "Yellow",
+            "Blue",
+            "Green"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "What color is Raju’s bed?",
+          "options_en": [
+            "Blue",
+            "Yellow",
+            "Green and blue"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "Whose bed is blue?",
+          "options_en": [
+            "Raju's",
+            "Muniya's",
+            "Mother's"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "What spins round and round?",
+          "options_en": [
+            "The spinning top",
+            "Muniya's skirt",
+            "Raju's bed"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "How does the spinning top move?",
+          "options_en": [
+            "It spins round and round",
+            "It dances on the ground",
+            "It jumps up and down"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "Who dances on the ground?",
+          "options_en": [
+            "Muniya",
+            "Raju",
+            "Mother"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "Where does Muniya dance?",
+          "options_en": [
+            "On the ground",
+            "On Raju's bed",
+            "On the spinning top"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "Who jumps up and down?",
+          "options_en": [
+            "Raju",
+            "Muniya",
+            "Mother"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "How does Raju move?",
+          "options_en": [
+            "Up and down",
+            "Round and round",
+            "On the ground"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "Who smiles?",
+          "options_en": [
+            "mother",
+            "Muniya",
+            "Raju"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "What makes mother smile?",
+          "options_en": [
+            "Looking at them",
+            "The spinning top",
+            "Raju jumps up and down"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "What do they do in style?",
+          "options_en": [
+            "Dance",
+            "Spin round and round",
+            "Jump up and down"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "How do they dance?",
+          "options_en": [
+            "In style",
+            "On the ground",
+            "Round and round"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'Raju and Muniya'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "spinning top",
+      "meaning_vi": "con quay (một món đồ chơi có thể quay tròn)",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "green",
+      "meaning_vi": "màu xanh lá cây",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "blue",
+      "meaning_vi": "màu xanh dương",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "skirt",
+      "meaning_vi": "cái váy (quần áo của bé gái)",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "yellow",
+      "meaning_vi": "màu vàng",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "bed",
+      "meaning_vi": "cái giường (đồ dùng để ngủ)",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "blue",
+      "meaning_vi": "màu xanh dương",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "spins",
+      "meaning_vi": "quay (xoay tròn nhanh)",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "round",
+      "meaning_vi": "tròn (có hình dạng như vòng tròn)",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "dances",
+      "meaning_vi": "nhảy múa (di chuyển cơ thể theo nhạc)",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "ground",
+      "meaning_vi": "mặt đất (bề mặt của trái đất)",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "jumps",
+      "meaning_vi": "nhảy (đẩy mình lên không trung)",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "up",
+      "meaning_vi": "lên (về phía trên)",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "down",
+      "meaning_vi": "xuống (về phía dưới)",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "looking",
+      "meaning_vi": "nhìn (hướng mắt về phía cái gì đó)",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "smiles",
+      "meaning_vi": "mỉm cười (làm khóe miệng cong lên để thể hiện niềm vui)",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "joins",
+      "meaning_vi": "tham gia (trở thành một phần của nhóm hoặc hoạt động)",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "style",
+      "meaning_vi": "phong cách / đẹp (một cách làm gì đó, thường là đẹp hoặc khéo léo)",
+      "paragraph_index": 7
+    }
+  ]
+}

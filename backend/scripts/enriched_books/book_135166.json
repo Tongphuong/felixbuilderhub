@@ -1,0 +1,4462 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L4",
+  "level_label": "Cấp 4",
+  "topic": "My diary!",
+  "slug": "book_135166",
+  "audio_filename": "book_135166.mp3",
+  "book_slug": "book_135166",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_135166/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_135166/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_135166/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_135166/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_135166/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_135166/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_135166/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_135166/page_09.jpg",
+    "https://audio.felixbuilderhub.com/books/book_135166/page_10.jpg",
+    "https://audio.felixbuilderhub.com/books/book_135166/page_11.jpg",
+    "https://audio.felixbuilderhub.com/books/book_135166/page_12.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_135166/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_135166/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_135166/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_135166/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_135166/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_135166/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_135166/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_135166/page_09.mp3",
+    "https://audio.felixbuilderhub.com/books/book_135166/page_10.mp3",
+    "https://audio.felixbuilderhub.com/books/book_135166/page_11.mp3",
+    "https://audio.felixbuilderhub.com/books/book_135166/page_12.mp3"
+  ],
+  "book_attribution": {
+    "title": "My diary!",
+    "creators": [
+      "Aathira Karthik",
+      "Deepa Balsavar",
+      "Jayasudha Bhaskaran"
+    ],
+    "publisher": "StoryWeaver Community",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: My diary! is written by Aathira Karthik . © Aathira Karthik , 2020. Some rights reserved. Released under CC BY 4.0 license. Images Attributions: Cover page: Football lily , by Jayasudha Bhaskaran © Jayasudha Bhaskaran, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 2: New Refrigerator , by Deepa Balsavar © Pratham Books, 2013. Some rights reserved. Released under CC BY 4.0 license. Page 3: Working together , by Deepa Balsavar © Pratham Books, 2013. Some rights reserved. Released under CC BY 4.0 license. Page 4: The women have a say , by Deepa Balsavar © Pratham Books, 2013. Some rights reserved. Released under CC BY 4.0 license. Page 5: Family's daily life , by Deepa Balsavar © Pratham Books, 2013. Some rights reserved. Released under CC BY 4.0 license. Page 6: A discussion ensues , by Deepa Balsavar © Pratham Books, 2013. Some rights reserved. Released under CC BY 4.0 license. Page 7: A food truck's on it's way , by Deepa Balsavar © Pratham Books, 2013. Some rights reserved. Released under CC BY 4.0 license. Page 8: Working together , by Deepa Balsavar © Pratham Books, 2013. Some rights reserved. Released under CC BY 4.0 license. Page 9: The speed of delivery , by Deepa Balsavar © Pratham Books, 2013. Some rights reserved. Released under CC BY 4.0 license. Page 10: Little Girl , by Deepa Balsavar © Pratham Books, 2013. Some rights reserved. Released under CC BY 4.0 license. Page 11: Conversations , by Deepa Balsavar © Pratham Books, 2013. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/135166-my-diary",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "New Refrigerator , by Deepa Balsavar © Pratham Books, 2013. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "Working together , by Deepa Balsavar © Pratham Books, 2013. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "The women have a say , by Deepa Balsavar © Pratham Books, 2013. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "Family's daily life , by Deepa Balsavar © Pratham Books, 2013. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "A discussion ensues , by Deepa Balsavar © Pratham Books, 2013. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "A food truck's on it's way , by Deepa Balsavar © Pratham Books, 2013. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "Working together , by Deepa Balsavar © Pratham Books, 2013. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "The speed of delivery , by Deepa Balsavar © Pratham Books, 2013. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 8,
+        "credit_text": "Little Girl , by Deepa Balsavar © Pratham Books, 2013. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 9,
+        "credit_text": "Conversations , by Deepa Balsavar © Pratham Books, 2013. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 10,
+        "credit_text": "Illustration by Deepa Balsavar, Jayasudha Bhaskaran."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "My diary!",
+    "paragraphs_en": [
+      "My name is Aisha and I am 10 years old. This book is about my daily diary. Read the next pages if you want to. --------------------------------------------------------------- /17 I live in a small neighborhood in Noida and all the people who live there ( even the kids ) have a group. There are about 120 children in our neighborhood and we have been divided into groups by the people who own our houses. Today my friend Gauri just told us that she is moving to Mumbai, oh no! When I tell this to Muma, she is quite not- surprised. \" Oh, Anushka (Gauri's muma) told me yesterday when you Gauri, Meena, and Kimara (my friends)were playing at the park, me, Anushka, Pinky, and Amalika ( my friends's moms) were having a group FaceTime call and Anushka told us this news.",
+      "\" said muma. I still can't believe that Gauri is leaving. I said to muma \" muma we have to make Gauri and Anushka aunty the best Farewell party\". Muma says \" of course we will Aisha. We will start planning tomorrow, ok\".For dinner today we had some delicious pasta and I cried \" muma we have to put this on the menu for the farewell.\" Papa said \" Arre, who's farewell? Oh, is this Rahul Gupta's farewell you talking about ( Rahul Gupta is Gauri's Dad. Papa likes to call him by his full name, not only Rahul.)\" papa how do you know? And Pankaj Bhaya (my older annoying elder brother) do you also know?\" I ask. \" Of course I know. Kirti ( Gauri's closest cousin) told me.\" Big Bhaya's seem to know everything. Anyways good night. I will write tomorrow.",
+      "/19 Today is a school day and cybersecurity day and tomorrow is Saturday. And today at school some Didi's from class 12th came and told us about cybersecurity. \" today you youngsters will be making your own chart on cybersecurity.\" one Didi said. We are not youngsters! We are 5th graders. Most of us are 10 years old! After making the chart the Didi's left and we voted which looked best and has the most information. I came first and Sameena Dingra ( one girl in my class ) came last because she drew the most and wrote the least. And plus she's the least to succeed: voted by the class president Raj Sharma. He is a fat and rich boy who keeps giving his friends money thinking that they are his friends but they are not his friends. They just pretend to be his friends so they get money.",
+      "Ma'am said that since Raj Sharma has so many friends he shall be class president. Ma'am should have made me class president because I'm so kind and I would never put poor Sameena in such a difficult spot. Second thing about Raj: he doesn't have respect. Suppose he has this maid and her name is Tweety. When he calls her he is like \" Oh, Tweety come here \". He calls her by her name! She is 26 years old and he is 11 years old. And he is really good at drawing since he started doing art classes since he was 5 years old. Of course, since he is so rich he can throw around money everywhere. Last year, he joined this school, and our class and I heard rumors that he got kicked out of his first school and his parents did not mind and just put him in this school. If I were in his place I would have been scolded like how.",
+      "/17 Sorry, I wrote after a long time. We had a really hard math quiz to do and loads of homework. I really wish homework was not invented. It is so boring and if we didn't have it then we would catch up with our friends, watch tons of t.v and play video games. Anyway, today we have to plan tons of the farewell and I am so not going to help muma, Pinky aunty, and Amalika auntie. I, Meena, and Kimara are going to play loads of video games while those Ladies are going to chat all day long, order some stuff and call people for delivery. After half an hour I, Meena and Kimara are really hungry. So our mum's make us some yummy Nutella and peanut butter sandwich and tell us about the farewell. \" We will be hosting it at Meena's house because it is really big, and girls this is a surprise farewell so please don't tell Gauri, Rahul uncle or Anushka aunty. Understood \" says muma. \" yes Auntie \" says Kimara on my and Meena's behalf.",
+      "/17 Today is the food truck party! A food truck party happens in neighborhoods in Sector 2 ( the sector where I live ) monthly. It happens on every 19th of a month. On the day of the food truck party there is a theme of food to eat. Suppose last month on 19th June the theme was Italian and it happens in the night so the rest of the meals will not be Italian at all. If you don't follow this rule then you will not get to the Italian party. And food trucks all over the sector will serve Italian. Last month, Pankaj Bhaya didn't go because he ate pasta for lunch. Everyone gets a message of the theme the night before the party. In every neighborhood, there are at least 30 food trucks. Sometimes you can put up your own food truck, like last month me Gauri, Kimara, and Meena put a lemonade truck in Kimara's car and made our own lemonade. We made Rs 1500 last year because it was really hot and people needed a refreshment and we gave them a chilled lemonade for Rs 10.",
+      "The theme of this year is Mexican I think, and mummy told me that there is going to be a chocolate and vegan taco truck. Yum! \" My muma told me that there is going to be a fruit custard stand too, Aisha! I can't believe this is my last food truck party,\" says Gauri sadly. \" Didn't your muma say you are going to leave on 19th August?\" Kimara says. \" oh, no she will leave on the day of a food truck party! \" said Meena. Gauri said \" I don't think so. Pops ( what Gauri calls her father ) told me that we will leave at 12 'o'clock in the night and the party stops at 10 only.\" oh yay, you not going to miss it \" I say. Then suddenly a singer jumps on to the stage of the food truck party and says \" we want to thank you for coming to this food truck party. We want to celebrate the leaving of a member of this special group who is standing right next to the stage. Say your farewells to miss Gauri Gupta, Mr Rahul Gupta and Mrs Anushka Gupta.\" I hear lots of clapping so I start clapping too. Then my parents and I go into Meena's humangas mansion.",
+      "I asked my mum why is the farewell so early and she said that because Gauri will leave at 12:00 today. What a coincidence !! Instead of the party happening outside like usual it happened in Meena's house. After tons of partying, we finally had to say goodbye to Gauri. We were really sad because when I had just moved to sector 2 Noida from Gurgaon DLF, I was sitting alone in the park and she comforted me and became my first friend in Noida. I was feeling really sad when she left but I knew I would visit her in Mumbai and I could easily text with her on the computer.",
+      "/17 Today I woke up at 5:00 so I can text Gauri if she is awake. I start texting her and she texts back. After 1 hour of texting, she goes to sleep and I get ready for school. Suddenly, I see raindrops pouring. Half an hour later, muma gets an email from the school saying that the school is closed due to heavy rain. Yay, no school. But muma even gets an email saying that Pankaj Bhaya will go to school because he is in 9th grade. No Bhaya also! And mummy, papa have to go work. But no school for me! My parents drop me off at Kimara's and Meena comes over too because even both her parents go to work. My parents dropped me off at Kimara's house because it is huge and her mum is a stay at home and she has many maids to take care of her. We play and eat lunch with her, then my and Meena's mum come to pick us up and we really had a fun time!",
+      "/17 Today Meena has some news to tell us. I'll give you the hint she gave me and Kimara. Meena's hint: I am an only child. Could you figure out something? Well, Kimara did. \" oh, you are getting a puppy?\" she says. Meena tells her \" Yes! We are definitely getting a puppy\".\" Guys, we will talk about this later. There is a movie releasing today its name is Descendants 2\". I say. \" Have we even watched Descendants 1, and you are saying we can watch part 2,\" Kimara says. Meena replies \" yeah, we don't even know what is Descendants is,\". \" Don't worry. My father got premiere tickets from his office to go to the Descendants 1 movie.\" I said. \" do our parents know about this?\" Kimara worried. \" yes of course they know. Aisha told her father to tell our parents.\" Meena said. And it was set. We put on our best clothes and went to the movie theater with our fathers.",
+      "So, after the movie, we were really happy and Kimara and Meena's parents gave the money to my Papa. That is the end of my diary. BYE!!"
+    ],
+    "sentences": [
+      {
+        "text_en": "My name is Aisha and I am 10 years old.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_000.mp3",
+        "text_vi": "Tên tớ là Aisha và tớ 10 tuổi."
+      },
+      {
+        "text_en": "This book is about my daily diary.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_001.mp3",
+        "text_vi": "Cuốn sách này là về nhật ký hàng ngày của tớ."
+      },
+      {
+        "text_en": "Read the next pages if you want to.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_002.mp3",
+        "text_vi": "Đọc các trang tiếp theo nếu cậu muốn nhé."
+      },
+      {
+        "text_en": "--------------------------------------------------------------- /17 I live in a small neighborhood in Noida and all the people who live there ( even the kids ) have a group.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_003.mp3",
+        "text_vi": "Tớ sống trong một khu phố nhỏ ở Noida và tất cả mọi người sống ở đó (kể cả trẻ con) đều có một nhóm."
+      },
+      {
+        "text_en": "There are about 120 children in our neighborhood and we have been divided into groups by the people who own our houses.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_004.mp3",
+        "text_vi": "Có khoảng 120 đứa trẻ trong khu phố của chúng tớ và chúng tớ được chia thành các nhóm bởi những người chủ nhà."
+      },
+      {
+        "text_en": "Today my friend Gauri just told us that she is moving to Mumbai, oh no!",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_005.mp3",
+        "text_vi": "Hôm nay bạn tớ Gauri vừa kể rằng cậu ấy sẽ chuyển đến Mumbai, ôi không!"
+      },
+      {
+        "text_en": "When I tell this to Muma, she is quite not- surprised.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_006.mp3",
+        "text_vi": "Khi tớ kể chuyện này cho Muma, bà ấy không hề ngạc nhiên chút nào."
+      },
+      {
+        "text_en": "\" Oh, Anushka (Gauri's muma) told me yesterday when you Gauri, Meena, and Kimara (my friends)were playing at the park, me, Anushka, Pinky, and Amalika ( my friends's moms) were having a group FaceTime call and Anushka told us this news.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_007.mp3",
+        "text_vi": "\"Ồ, Anushka (mẹ của Gauri) đã kể với mẹ hôm qua khi con, Gauri, Meena và Kimara (các bạn của con) đang chơi ở công viên, mẹ, Anushka, Pinky và Amalika (các mẹ của bạn con) đang gọi điện FaceTime nhóm và Anushka đã kể cho chúng ta tin này.\""
+      },
+      {
+        "text_en": "\" said muma.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_008.mp3",
+        "text_vi": "\" Muma nói."
+      },
+      {
+        "text_en": "I still can't believe that Gauri is leaving.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_009.mp3",
+        "text_vi": "Tớ vẫn không thể tin là Gauri sẽ đi."
+      },
+      {
+        "text_en": "I said to muma \" muma we have to make Gauri and Anushka aunty the best Farewell party\".",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_010.mp3",
+        "text_vi": "Tớ nói với Muma: \"Muma ơi, chúng ta phải tổ chức cho Gauri và dì Anushka một bữa tiệc chia tay thật tuyệt vời.\""
+      },
+      {
+        "text_en": "Muma says \" of course we will Aisha.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_011.mp3",
+        "text_vi": "Muma nói: \"Tất nhiên rồi Aisha."
+      },
+      {
+        "text_en": "We will start planning tomorrow, ok\".For dinner today we had some delicious pasta and I cried \" muma we have to put this on the menu for the farewell.\" Papa said \" Arre, who's farewell?",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_012.mp3",
+        "text_vi": "Chúng ta sẽ bắt đầu lên kế hoạch vào ngày mai, được không?\" Bữa tối nay chúng tớ ăn mì Ý rất ngon và tớ kêu lên: \"Muma ơi, chúng ta phải đưa món này vào thực đơn cho bữa tiệc chia tay!\" Papa nói: \"Arre, tiệc chia tay của ai vậy?"
+      },
+      {
+        "text_en": "Oh, is this Rahul Gupta's farewell you talking about ( Rahul Gupta is Gauri's Dad.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_013.mp3",
+        "text_vi": "Ồ, con đang nói về tiệc chia tay của Rahul Gupta à (Rahul Gupta là bố của Gauri."
+      },
+      {
+        "text_en": "Papa likes to call him by his full name, not only Rahul.)\" papa how do you know?",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_014.mp3",
+        "text_vi": "Papa thích gọi ông ấy bằng cả họ tên, không chỉ Rahul thôi đâu.)\" Papa, sao bố biết ạ?"
+      },
+      {
+        "text_en": "And Pankaj Bhaya (my older annoying elder brother) do you also know?\" I ask.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_015.mp3",
+        "text_vi": "Và anh Pankaj Bhaya (anh trai lớn hơn, phiền phức của tớ) anh cũng biết à?\" Tớ hỏi."
+      },
+      {
+        "text_en": "\" Of course I know.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_016.mp3",
+        "text_vi": "\"Tất nhiên là anh biết rồi."
+      },
+      {
+        "text_en": "Kirti ( Gauri's closest cousin) told me.\" Big Bhaya's seem to know everything.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_017.mp3",
+        "text_vi": "Kirti (em họ thân nhất của Gauri) đã kể cho anh.\" Các anh lớn dường như biết hết mọi thứ."
+      },
+      {
+        "text_en": "Anyways good night.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_018.mp3",
+        "text_vi": "Dù sao thì, chúc ngủ ngon."
+      },
+      {
+        "text_en": "I will write tomorrow.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_019.mp3",
+        "text_vi": "Tớ sẽ viết vào ngày mai."
+      },
+      {
+        "text_en": "/19 Today is a school day and cybersecurity day and tomorrow is Saturday.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_020.mp3",
+        "text_vi": "Hôm nay là ngày đi học và ngày an ninh mạng, còn ngày mai là thứ Bảy."
+      },
+      {
+        "text_en": "And today at school some Didi's from class 12th came and told us about cybersecurity.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_021.mp3",
+        "text_vi": "Và hôm nay ở trường, mấy chị Didi từ lớp 12 đến kể cho chúng tớ nghe về an ninh mạng."
+      },
+      {
+        "text_en": "\" today you youngsters will be making your own chart on cybersecurity.\" one Didi said.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_022.mp3",
+        "text_vi": "Một chị Didi nói: \"Hôm nay các em nhỏ sẽ tự làm biểu đồ về an ninh mạng.\""
+      },
+      {
+        "text_en": "We are not youngsters!",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_023.mp3",
+        "text_vi": "Chúng tớ không phải là trẻ con!"
+      },
+      {
+        "text_en": "We are 5th graders.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_024.mp3",
+        "text_vi": "Chúng tớ là học sinh lớp 5."
+      },
+      {
+        "text_en": "Most of us are 10 years old!",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_025.mp3",
+        "text_vi": "Hầu hết chúng tớ đều 10 tuổi!"
+      },
+      {
+        "text_en": "After making the chart the Didi's left and we voted which looked best and has the most information.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_026.mp3",
+        "text_vi": "Sau khi làm xong biểu đồ, các chị Didi rời đi và chúng tớ bình chọn cái nào đẹp nhất và có nhiều thông tin nhất."
+      },
+      {
+        "text_en": "I came first and Sameena Dingra ( one girl in my class ) came last because she drew the most and wrote the least.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_027.mp3",
+        "text_vi": "Tớ về nhất còn Sameena Dingra (một bạn gái trong lớp tớ) về cuối vì bạn ấy vẽ nhiều nhất và viết ít nhất."
+      },
+      {
+        "text_en": "And plus she's the least to succeed: voted by the class president Raj Sharma.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_028.mp3",
+        "text_vi": "Hơn nữa, bạn ấy là người ít có khả năng thành công nhất: do lớp trưởng Raj Sharma bình chọn."
+      },
+      {
+        "text_en": "He is a fat and rich boy who keeps giving his friends money thinking that they are his friends but they are not his friends.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_029.mp3",
+        "text_vi": "Cậu ấy là một cậu bé béo và giàu có, luôn cho bạn bè tiền, nghĩ rằng họ là bạn của cậu ấy nhưng họ không phải là bạn của cậu ấy."
+      },
+      {
+        "text_en": "They just pretend to be his friends so they get money.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_030.mp3",
+        "text_vi": "Họ chỉ giả vờ làm bạn của cậu ấy để lấy tiền thôi."
+      },
+      {
+        "text_en": "Ma'am said that since Raj Sharma has so many friends he shall be class president.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_031.mp3",
+        "text_vi": "Cô giáo nói rằng vì Raj Sharma có nhiều bạn nên cậu ấy sẽ làm lớp trưởng."
+      },
+      {
+        "text_en": "Ma'am should have made me class president because I'm so kind and I would never put poor Sameena in such a difficult spot.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_032.mp3",
+        "text_vi": "Cô giáo nên chọn tớ làm lớp trưởng vì tớ rất tốt bụng và tớ sẽ không bao giờ đặt Sameena tội nghiệp vào tình huống khó khăn như vậy."
+      },
+      {
+        "text_en": "Second thing about Raj: he doesn't have respect.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_033.mp3",
+        "text_vi": "Điều thứ hai về Raj: cậu ấy không có sự tôn trọng."
+      },
+      {
+        "text_en": "Suppose he has this maid and her name is Tweety.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_034.mp3",
+        "text_vi": "Giả sử cậu ấy có một người giúp việc tên là Tweety."
+      },
+      {
+        "text_en": "When he calls her he is like \" Oh, Tweety come here \".",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_035.mp3",
+        "text_vi": "Khi cậu ấy gọi cô ấy, cậu ấy nói: \"Ồ, Tweety lại đây.\""
+      },
+      {
+        "text_en": "He calls her by her name!",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_036.mp3",
+        "text_vi": "Cậu ấy gọi cô ấy bằng tên!"
+      },
+      {
+        "text_en": "She is 26 years old and he is 11 years old.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_037.mp3",
+        "text_vi": "Cô ấy 26 tuổi còn cậu ấy 11 tuổi."
+      },
+      {
+        "text_en": "And he is really good at drawing since he started doing art classes since he was 5 years old.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_038.mp3",
+        "text_vi": "Và cậu ấy rất giỏi vẽ vì cậu ấy bắt đầu học vẽ từ năm 5 tuổi."
+      },
+      {
+        "text_en": "Of course, since he is so rich he can throw around money everywhere.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_039.mp3",
+        "text_vi": "Tất nhiên, vì cậu ấy rất giàu nên cậu ấy có thể vung tiền khắp nơi."
+      },
+      {
+        "text_en": "Last year, he joined this school, and our class and I heard rumors that he got kicked out of his first school and his parents did not mind and just put him in this school.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_040.mp3",
+        "text_vi": "Năm ngoái, cậu ấy vào trường này, vào lớp chúng tớ và tớ nghe tin đồn rằng cậu ấy bị đuổi khỏi trường đầu tiên và bố mẹ cậu ấy không bận tâm mà chỉ cho cậu ấy vào trường này."
+      },
+      {
+        "text_en": "If I were in his place I would have been scolded like how.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_041.mp3",
+        "text_vi": "Nếu tớ ở vị trí của cậu ấy, tớ đã bị mắng té tát rồi."
+      },
+      {
+        "text_en": "/17 Sorry, I wrote after a long time.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_042.mp3",
+        "text_vi": "Xin lỗi, tớ viết sau một thời gian dài."
+      },
+      {
+        "text_en": "We had a really hard math quiz to do and loads of homework.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_043.mp3",
+        "text_vi": "Chúng tớ có một bài kiểm tra toán rất khó và rất nhiều bài tập về nhà."
+      },
+      {
+        "text_en": "I really wish homework was not invented.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_044.mp3",
+        "text_vi": "Tớ ước gì bài tập về nhà không được phát minh ra."
+      },
+      {
+        "text_en": "It is so boring and if we didn't have it then we would catch up with our friends, watch tons of t.v and play video games.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_045.mp3",
+        "text_vi": "Nó thật là chán và nếu không có nó thì chúng tớ sẽ được gặp gỡ bạn bè, xem rất nhiều tivi và chơi trò chơi điện tử."
+      },
+      {
+        "text_en": "Anyway, today we have to plan tons of the farewell and I am so not going to help muma, Pinky aunty, and Amalika auntie.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_046.mp3",
+        "text_vi": "Dù sao thì, hôm nay chúng tớ phải lên kế hoạch rất nhiều cho bữa tiệc chia tay và tớ sẽ không giúp Muma, dì Pinky và dì Amalika đâu."
+      },
+      {
+        "text_en": "I, Meena, and Kimara are going to play loads of video games while those Ladies are going to chat all day long, order some stuff and call people for delivery.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_047.mp3",
+        "text_vi": "Tớ, Meena và Kimara sẽ chơi rất nhiều trò chơi điện tử trong khi các quý cô đó sẽ trò chuyện cả ngày, đặt đồ và gọi người giao hàng."
+      },
+      {
+        "text_en": "After half an hour I, Meena and Kimara are really hungry.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_048.mp3",
+        "text_vi": "Sau nửa tiếng, tớ, Meena và Kimara rất đói."
+      },
+      {
+        "text_en": "So our mum's make us some yummy Nutella and peanut butter sandwich and tell us about the farewell.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_049.mp3",
+        "text_vi": "Thế là các mẹ của chúng tớ làm cho chúng tớ món bánh mì kẹp Nutella và bơ đậu phộng ngon tuyệt và kể cho chúng tớ nghe về bữa tiệc chia tay."
+      },
+      {
+        "text_en": "\" We will be hosting it at Meena's house because it is really big, and girls this is a surprise farewell so please don't tell Gauri, Rahul uncle or Anushka aunty.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_050.mp3",
+        "text_vi": "\"Chúng ta sẽ tổ chức nó ở nhà Meena vì nhà bạn ấy rất rộng, và các con gái, đây là một bữa tiệc chia tay bất ngờ nên làm ơn đừng nói cho Gauri, chú Rahul hay dì Anushka biết nhé."
+      },
+      {
+        "text_en": "Understood \" says muma.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_051.mp3",
+        "text_vi": "Hiểu chưa?\" Muma nói."
+      },
+      {
+        "text_en": "\" yes Auntie \" says Kimara on my and Meena's behalf.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_052.mp3",
+        "text_vi": "\"Vâng ạ, dì\" Kimara nói thay cho tớ và Meena."
+      },
+      {
+        "text_en": "/17 Today is the food truck party!",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_053.mp3",
+        "text_vi": "Hôm nay là ngày hội xe tải đồ ăn!"
+      },
+      {
+        "text_en": "A food truck party happens in neighborhoods in Sector 2 ( the sector where I live ) monthly.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_054.mp3",
+        "text_vi": "Một bữa tiệc xe tải đồ ăn diễn ra ở các khu phố trong Khu 2 (khu tớ sống) hàng tháng."
+      },
+      {
+        "text_en": "It happens on every 19th of a month.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_055.mp3",
+        "text_vi": "Nó diễn ra vào ngày 19 hàng tháng."
+      },
+      {
+        "text_en": "On the day of the food truck party there is a theme of food to eat.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_056.mp3",
+        "text_vi": "Vào ngày hội xe tải đồ ăn, có một chủ đề đồ ăn để thưởng thức."
+      },
+      {
+        "text_en": "Suppose last month on 19th June the theme was Italian and it happens in the night so the rest of the meals will not be Italian at all.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_057.mp3",
+        "text_vi": "Giả sử tháng trước vào ngày 19 tháng 6, chủ đề là món Ý và nó diễn ra vào buổi tối nên các bữa ăn còn lại sẽ không phải là món Ý chút nào."
+      },
+      {
+        "text_en": "If you don't follow this rule then you will not get to the Italian party.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_058.mp3",
+        "text_vi": "Nếu cậu không tuân theo quy tắc này thì cậu sẽ không được tham gia bữa tiệc Ý."
+      },
+      {
+        "text_en": "And food trucks all over the sector will serve Italian.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_059.mp3",
+        "text_vi": "Và các xe tải đồ ăn khắp khu vực sẽ phục vụ món Ý."
+      },
+      {
+        "text_en": "Last month, Pankaj Bhaya didn't go because he ate pasta for lunch.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_060.mp3",
+        "text_vi": "Tháng trước, anh Pankaj Bhaya không đi vì anh ấy đã ăn mì Ý vào bữa trưa."
+      },
+      {
+        "text_en": "Everyone gets a message of the theme the night before the party.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_061.mp3",
+        "text_vi": "Mọi người đều nhận được tin nhắn về chủ đề vào đêm trước bữa tiệc."
+      },
+      {
+        "text_en": "In every neighborhood, there are at least 30 food trucks.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_062.mp3",
+        "text_vi": "Ở mỗi khu phố, có ít nhất 30 xe tải đồ ăn."
+      },
+      {
+        "text_en": "Sometimes you can put up your own food truck, like last month me Gauri, Kimara, and Meena put a lemonade truck in Kimara's car and made our own lemonade.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_063.mp3",
+        "text_vi": "Đôi khi cậu có thể tự mở xe tải đồ ăn của mình, như tháng trước tớ, Gauri, Kimara và Meena đã đặt một xe nước chanh vào xe của Kimara và tự làm nước chanh của chúng tớ."
+      },
+      {
+        "text_en": "We made Rs 1500 last year because it was really hot and people needed a refreshment and we gave them a chilled lemonade for Rs 10.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_064.mp3",
+        "text_vi": "Chúng tớ kiếm được 1500 Rupee năm ngoái vì trời rất nóng và mọi người cần đồ giải khát, chúng tớ đã bán cho họ một ly nước chanh ướp lạnh với giá 10 Rupee."
+      },
+      {
+        "text_en": "The theme of this year is Mexican I think, and mummy told me that there is going to be a chocolate and vegan taco truck.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_065.mp3",
+        "text_vi": "Chủ đề năm nay là món Mexico tớ nghĩ vậy, và mẹ tớ nói rằng sẽ có một xe tải bán taco sô cô la và thuần chay."
+      },
+      {
+        "text_en": "Yum! \" My muma told me that there is going to be a fruit custard stand too, Aisha!",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_066.mp3",
+        "text_vi": "Ngon quá! \"Muma tớ nói rằng sẽ có cả quầy kem trứng trái cây nữa đó, Aisha!"
+      },
+      {
+        "text_en": "I can't believe this is my last food truck party,\" says Gauri sadly.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_067.mp3",
+        "text_vi": "Tớ không thể tin đây là bữa tiệc xe tải đồ ăn cuối cùng của tớ,\" Gauri buồn bã nói."
+      },
+      {
+        "text_en": "\" Didn't your muma say you are going to leave on 19th August?\" Kimara says.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_068.mp3",
+        "text_vi": "\"Muma cậu không nói là cậu sẽ đi vào ngày 19 tháng 8 sao?\" Kimara nói."
+      },
+      {
+        "text_en": "\" oh, no she will leave on the day of a food truck party!",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_069.mp3",
+        "text_vi": "\"Ồ, không, cậu ấy sẽ đi vào ngày hội xe tải đồ ăn!"
+      },
+      {
+        "text_en": "\" said Meena.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_070.mp3",
+        "text_vi": "\" Meena nói."
+      },
+      {
+        "text_en": "Gauri said \" I don't think so.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_071.mp3",
+        "text_vi": "Gauri nói: \"Tớ không nghĩ vậy."
+      },
+      {
+        "text_en": "Pops ( what Gauri calls her father ) told me that we will leave at 12 'o'clock in the night and the party stops at 10 only.\" oh yay, you not going to miss it \" I say.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_072.mp3",
+        "text_vi": "Pops (cách Gauri gọi bố cậu ấy) nói với tớ rằng chúng tớ sẽ rời đi lúc 12 giờ đêm và bữa tiệc chỉ kết thúc lúc 10 giờ thôi.\" Ồ tuyệt vời, cậu sẽ không bỏ lỡ nó đâu,\" tớ nói."
+      },
+      {
+        "text_en": "Then suddenly a singer jumps on to the stage of the food truck party and says \" we want to thank you for coming to this food truck party.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_073.mp3",
+        "text_vi": "Rồi đột nhiên một ca sĩ nhảy lên sân khấu của bữa tiệc xe tải đồ ăn và nói: \"Chúng tôi muốn cảm ơn các bạn đã đến bữa tiệc xe tải đồ ăn này."
+      },
+      {
+        "text_en": "We want to celebrate the leaving of a member of this special group who is standing right next to the stage.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_074.mp3",
+        "text_vi": "Chúng tôi muốn chúc mừng sự ra đi của một thành viên trong nhóm đặc biệt này, người đang đứng ngay cạnh sân khấu."
+      },
+      {
+        "text_en": "Say your farewells to miss Gauri Gupta, Mr Rahul Gupta and Mrs Anushka Gupta.\" I hear lots of clapping so I start clapping too.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_075.mp3",
+        "text_vi": "Hãy nói lời chia tay với cô Gauri Gupta, ông Rahul Gupta và bà Anushka Gupta.\" Tớ nghe thấy rất nhiều tiếng vỗ tay nên tớ cũng bắt đầu vỗ tay."
+      },
+      {
+        "text_en": "Then my parents and I go into Meena's humangas mansion.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_076.mp3",
+        "text_vi": "Sau đó bố mẹ tớ và tớ đi vào biệt thự khổng lồ của Meena."
+      },
+      {
+        "text_en": "I asked my mum why is the farewell so early and she said that because Gauri will leave at 12:00 today.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_077.mp3",
+        "text_vi": "Tớ hỏi mẹ tại sao tiệc chia tay lại sớm thế và mẹ nói vì Gauri sẽ rời đi lúc 12 giờ hôm nay."
+      },
+      {
+        "text_en": "What a coincidence !!",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_078.mp3",
+        "text_vi": "Thật là một sự trùng hợp!"
+      },
+      {
+        "text_en": "Instead of the party happening outside like usual it happened in Meena's house.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_079.mp3",
+        "text_vi": "Thay vì bữa tiệc diễn ra bên ngoài như thường lệ, nó lại diễn ra ở nhà Meena."
+      },
+      {
+        "text_en": "After tons of partying, we finally had to say goodbye to Gauri.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_080.mp3",
+        "text_vi": "Sau rất nhiều tiệc tùng, cuối cùng chúng tớ cũng phải nói lời tạm biệt Gauri."
+      },
+      {
+        "text_en": "We were really sad because when I had just moved to sector 2 Noida from Gurgaon DLF, I was sitting alone in the park and she comforted me and became my first friend in Noida.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_081.mp3",
+        "text_vi": "Chúng tớ rất buồn vì khi tớ mới chuyển đến khu 2 Noida từ Gurgaon DLF, tớ đã ngồi một mình trong công viên và cậu ấy đã an ủi tớ và trở thành người bạn đầu tiên của tớ ở Noida."
+      },
+      {
+        "text_en": "I was feeling really sad when she left but I knew I would visit her in Mumbai and I could easily text with her on the computer.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_082.mp3",
+        "text_vi": "Tớ cảm thấy rất buồn khi cậu ấy rời đi nhưng tớ biết tớ sẽ đến thăm cậu ấy ở Mumbai và tớ có thể dễ dàng nhắn tin với cậu ấy trên máy tính."
+      },
+      {
+        "text_en": "/17 Today I woke up at 5:00 so I can text Gauri if she is awake.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_083.mp3",
+        "text_vi": "Hôm nay tớ thức dậy lúc 5 giờ để tớ có thể nhắn tin cho Gauri xem cậu ấy đã dậy chưa."
+      },
+      {
+        "text_en": "I start texting her and she texts back.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_084.mp3",
+        "text_vi": "Tớ bắt đầu nhắn tin cho cậu ấy và cậu ấy nhắn tin lại."
+      },
+      {
+        "text_en": "After 1 hour of texting, she goes to sleep and I get ready for school.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_085.mp3",
+        "text_vi": "Sau 1 giờ nhắn tin, cậu ấy đi ngủ và tớ chuẩn bị đi học."
+      },
+      {
+        "text_en": "Suddenly, I see raindrops pouring.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_086.mp3",
+        "text_vi": "Đột nhiên, tớ thấy những hạt mưa đang đổ xuống."
+      },
+      {
+        "text_en": "Half an hour later, muma gets an email from the school saying that the school is closed due to heavy rain.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_087.mp3",
+        "text_vi": "Nửa giờ sau, muma nhận được một email từ trường nói rằng trường đóng cửa vì mưa lớn."
+      },
+      {
+        "text_en": "Yay, no school.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_088.mp3",
+        "text_vi": "Hoan hô, không phải đi học."
+      },
+      {
+        "text_en": "But muma even gets an email saying that Pankaj Bhaya will go to school because he is in 9th grade.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_089.mp3",
+        "text_vi": "Nhưng muma còn nhận được một email nói rằng anh Pankaj Bhaya sẽ đi học vì anh ấy học lớp 9."
+      },
+      {
+        "text_en": "No Bhaya also!",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_090.mp3",
+        "text_vi": "Không, cả anh Bhaya nữa!"
+      },
+      {
+        "text_en": "And mummy, papa have to go work.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_091.mp3",
+        "text_vi": "Và mẹ, bố phải đi làm."
+      },
+      {
+        "text_en": "But no school for me!",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_092.mp3",
+        "text_vi": "Nhưng tớ thì không phải đi học!"
+      },
+      {
+        "text_en": "My parents drop me off at Kimara's and Meena comes over too because even both her parents go to work.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_093.mp3",
+        "text_vi": "Bố mẹ tớ đưa tớ đến nhà Kimara và Meena cũng đến vì cả bố mẹ bạn ấy cũng đi làm."
+      },
+      {
+        "text_en": "My parents dropped me off at Kimara's house because it is huge and her mum is a stay at home and she has many maids to take care of her.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_094.mp3",
+        "text_vi": "Bố mẹ tớ đưa tớ đến nhà Kimara vì nhà bạn ấy rất rộng và mẹ bạn ấy là người nội trợ ở nhà, bạn ấy có nhiều người giúp việc để chăm sóc."
+      },
+      {
+        "text_en": "We play and eat lunch with her, then my and Meena's mum come to pick us up and we really had a fun time!",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_095.mp3",
+        "text_vi": "Chúng tớ chơi và ăn trưa với bạn ấy, sau đó mẹ tớ và mẹ Meena đến đón chúng tớ và chúng tớ đã có một khoảng thời gian rất vui!"
+      },
+      {
+        "text_en": "/17 Today Meena has some news to tell us.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_096.mp3",
+        "text_vi": "Hôm nay Meena có tin tức muốn kể cho chúng tớ."
+      },
+      {
+        "text_en": "I'll give you the hint she gave me and Kimara.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_097.mp3",
+        "text_vi": "Tớ sẽ cho cậu gợi ý mà bạn ấy đã cho tớ và Kimara."
+      },
+      {
+        "text_en": "Meena's hint: I am an only child.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_098.mp3",
+        "text_vi": "Gợi ý của Meena: Tớ là con một."
+      },
+      {
+        "text_en": "Could you figure out something?",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_099.mp3",
+        "text_vi": "Cậu có đoán ra được điều gì không?"
+      },
+      {
+        "text_en": "Well, Kimara did.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_100.mp3",
+        "text_vi": "Chà, Kimara đã đoán ra."
+      },
+      {
+        "text_en": "\" oh, you are getting a puppy?\" she says.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_101.mp3",
+        "text_vi": "\"Ồ, cậu sắp có một chú chó con à?\" bạn ấy nói."
+      },
+      {
+        "text_en": "Meena tells her \" Yes!",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_102.mp3",
+        "text_vi": "Meena nói với bạn ấy: \"Đúng vậy!"
+      },
+      {
+        "text_en": "We are definitely getting a puppy\".\" Guys, we will talk about this later.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_103.mp3",
+        "text_vi": "Chúng tớ chắc chắn sẽ có một chú chó con.\" \"Các cậu ơi, chúng ta sẽ nói về chuyện này sau."
+      },
+      {
+        "text_en": "There is a movie releasing today its name is Descendants 2\".",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_104.mp3",
+        "text_vi": "Hôm nay có một bộ phim ra mắt tên là Descendants 2.\""
+      },
+      {
+        "text_en": "I say. \" Have we even watched Descendants 1, and you are saying we can watch part 2,\" Kimara says.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_105.mp3",
+        "text_vi": "Tớ nói. \"Chúng ta đã xem Descendants 1 đâu, mà cậu lại nói chúng ta có thể xem phần 2,\" Kimara nói."
+      },
+      {
+        "text_en": "Meena replies \" yeah, we don't even know what is Descendants is,\".",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_106.mp3",
+        "text_vi": "Meena đáp: \"Đúng vậy, chúng ta còn không biết Descendants là gì nữa.\""
+      },
+      {
+        "text_en": "\" Don't worry.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_107.mp3",
+        "text_vi": "\"Đừng lo."
+      },
+      {
+        "text_en": "My father got premiere tickets from his office to go to the Descendants 1 movie.\" I said.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_108.mp3",
+        "text_vi": "Bố tớ đã có vé xem suất chiếu ra mắt phim Descendants 1 từ văn phòng của bố.\" Tớ nói."
+      },
+      {
+        "text_en": "\" do our parents know about this?\" Kimara worried.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_109.mp3",
+        "text_vi": "\"Bố mẹ chúng ta có biết về chuyện này không?\" Kimara lo lắng."
+      },
+      {
+        "text_en": "\" yes of course they know.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_110.mp3",
+        "text_vi": "\"Có chứ, tất nhiên họ biết."
+      },
+      {
+        "text_en": "Aisha told her father to tell our parents.\" Meena said.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_111.mp3",
+        "text_vi": "Aisha đã bảo bố cậu ấy nói với bố mẹ chúng ta rồi.\" Meena nói."
+      },
+      {
+        "text_en": "And it was set.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_112.mp3",
+        "text_vi": "Và mọi thứ đã được sắp xếp."
+      },
+      {
+        "text_en": "We put on our best clothes and went to the movie theater with our fathers.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_113.mp3",
+        "text_vi": "Chúng tớ mặc quần áo đẹp nhất và đi đến rạp chiếu phim cùng với các bố của chúng tớ."
+      },
+      {
+        "text_en": "So, after the movie, we were really happy and Kimara and Meena's parents gave the money to my Papa.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_114.mp3",
+        "text_vi": "Vậy là, sau bộ phim, chúng tớ rất vui và bố mẹ của Kimara và Meena đã đưa tiền cho Papa của tớ."
+      },
+      {
+        "text_en": "That is the end of my diary. BYE!!",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_115.mp3",
+        "text_vi": "Đây là hết nhật ký của tớ. TẠM BIỆT!!"
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "My name is Aisha and I am 10 years old.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "This book is about my daily diary.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "Read the next pages if you want to.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "--------------------------------------------------------------- /17 I live in a small neighborhood in Noida and all the people who live there ( even the kids ) have a group.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "There are about 120 children in our neighborhood and we have been divided into groups by the people who own our houses.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "Today my friend Gauri just told us that she is moving to Mumbai, oh no!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "When I tell this to Muma, she is quite not- surprised.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "\" Oh, Anushka (Gauri's muma) told me yesterday when you Gauri, Meena, and Kimara (my friends)were playing at the park, me, Anushka, Pinky, and Amalika ( my friends's moms) were having a group FaceTime call and Anushka told us this news.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "\" said muma.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "I still can't believe that Gauri is leaving.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "I said to muma \" muma we have to make Gauri and Anushka aunty the best Farewell party\".",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "Muma says \" of course we will Aisha.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "We will start planning tomorrow, ok\".For dinner today we had some delicious pasta and I cried \" muma we have to put this on the menu for the farewell.\" Papa said \" Arre, who's farewell?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_012.mp3"
+        },
+        {
+          "id": "ra_13",
+          "text_en": "Oh, is this Rahul Gupta's farewell you talking about ( Rahul Gupta is Gauri's Dad.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_013.mp3"
+        },
+        {
+          "id": "ra_14",
+          "text_en": "Papa likes to call him by his full name, not only Rahul.)\" papa how do you know?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_014.mp3"
+        },
+        {
+          "id": "ra_15",
+          "text_en": "And Pankaj Bhaya (my older annoying elder brother) do you also know?\" I ask.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_015.mp3"
+        },
+        {
+          "id": "ra_16",
+          "text_en": "\" Of course I know.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_016.mp3"
+        },
+        {
+          "id": "ra_17",
+          "text_en": "Kirti ( Gauri's closest cousin) told me.\" Big Bhaya's seem to know everything.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_017.mp3"
+        },
+        {
+          "id": "ra_18",
+          "text_en": "Anyways good night.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_018.mp3"
+        },
+        {
+          "id": "ra_19",
+          "text_en": "I will write tomorrow.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_019.mp3"
+        },
+        {
+          "id": "ra_20",
+          "text_en": "/19 Today is a school day and cybersecurity day and tomorrow is Saturday.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_020.mp3"
+        },
+        {
+          "id": "ra_21",
+          "text_en": "And today at school some Didi's from class 12th came and told us about cybersecurity.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_021.mp3"
+        },
+        {
+          "id": "ra_22",
+          "text_en": "\" today you youngsters will be making your own chart on cybersecurity.\" one Didi said.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_022.mp3"
+        },
+        {
+          "id": "ra_23",
+          "text_en": "We are not youngsters!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_023.mp3"
+        },
+        {
+          "id": "ra_24",
+          "text_en": "We are 5th graders.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_024.mp3"
+        },
+        {
+          "id": "ra_25",
+          "text_en": "Most of us are 10 years old!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_025.mp3"
+        },
+        {
+          "id": "ra_26",
+          "text_en": "After making the chart the Didi's left and we voted which looked best and has the most information.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_026.mp3"
+        },
+        {
+          "id": "ra_27",
+          "text_en": "I came first and Sameena Dingra ( one girl in my class ) came last because she drew the most and wrote the least.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_027.mp3"
+        },
+        {
+          "id": "ra_28",
+          "text_en": "And plus she's the least to succeed: voted by the class president Raj Sharma.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_028.mp3"
+        },
+        {
+          "id": "ra_29",
+          "text_en": "He is a fat and rich boy who keeps giving his friends money thinking that they are his friends but they are not his friends.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_029.mp3"
+        },
+        {
+          "id": "ra_30",
+          "text_en": "They just pretend to be his friends so they get money.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_030.mp3"
+        },
+        {
+          "id": "ra_31",
+          "text_en": "Ma'am said that since Raj Sharma has so many friends he shall be class president.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_031.mp3"
+        },
+        {
+          "id": "ra_32",
+          "text_en": "Ma'am should have made me class president because I'm so kind and I would never put poor Sameena in such a difficult spot.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_032.mp3"
+        },
+        {
+          "id": "ra_33",
+          "text_en": "Second thing about Raj: he doesn't have respect.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_033.mp3"
+        },
+        {
+          "id": "ra_34",
+          "text_en": "Suppose he has this maid and her name is Tweety.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_034.mp3"
+        },
+        {
+          "id": "ra_35",
+          "text_en": "When he calls her he is like \" Oh, Tweety come here \".",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_035.mp3"
+        },
+        {
+          "id": "ra_36",
+          "text_en": "He calls her by her name!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_036.mp3"
+        },
+        {
+          "id": "ra_37",
+          "text_en": "She is 26 years old and he is 11 years old.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_037.mp3"
+        },
+        {
+          "id": "ra_38",
+          "text_en": "And he is really good at drawing since he started doing art classes since he was 5 years old.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_038.mp3"
+        },
+        {
+          "id": "ra_39",
+          "text_en": "Of course, since he is so rich he can throw around money everywhere.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_039.mp3"
+        },
+        {
+          "id": "ra_40",
+          "text_en": "Last year, he joined this school, and our class and I heard rumors that he got kicked out of his first school and his parents did not mind and just put him in this school.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_040.mp3"
+        },
+        {
+          "id": "ra_41",
+          "text_en": "If I were in his place I would have been scolded like how.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_041.mp3"
+        },
+        {
+          "id": "ra_42",
+          "text_en": "/17 Sorry, I wrote after a long time.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_042.mp3"
+        },
+        {
+          "id": "ra_43",
+          "text_en": "We had a really hard math quiz to do and loads of homework.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_043.mp3"
+        },
+        {
+          "id": "ra_44",
+          "text_en": "I really wish homework was not invented.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_044.mp3"
+        },
+        {
+          "id": "ra_45",
+          "text_en": "It is so boring and if we didn't have it then we would catch up with our friends, watch tons of t.v and play video games.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_045.mp3"
+        },
+        {
+          "id": "ra_46",
+          "text_en": "Anyway, today we have to plan tons of the farewell and I am so not going to help muma, Pinky aunty, and Amalika auntie.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_046.mp3"
+        },
+        {
+          "id": "ra_47",
+          "text_en": "I, Meena, and Kimara are going to play loads of video games while those Ladies are going to chat all day long, order some stuff and call people for delivery.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_047.mp3"
+        },
+        {
+          "id": "ra_48",
+          "text_en": "After half an hour I, Meena and Kimara are really hungry.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_048.mp3"
+        },
+        {
+          "id": "ra_49",
+          "text_en": "So our mum's make us some yummy Nutella and peanut butter sandwich and tell us about the farewell.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_049.mp3"
+        },
+        {
+          "id": "ra_50",
+          "text_en": "\" We will be hosting it at Meena's house because it is really big, and girls this is a surprise farewell so please don't tell Gauri, Rahul uncle or Anushka aunty.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_050.mp3"
+        },
+        {
+          "id": "ra_51",
+          "text_en": "Understood \" says muma.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_051.mp3"
+        },
+        {
+          "id": "ra_52",
+          "text_en": "\" yes Auntie \" says Kimara on my and Meena's behalf.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_052.mp3"
+        },
+        {
+          "id": "ra_53",
+          "text_en": "/17 Today is the food truck party!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_053.mp3"
+        },
+        {
+          "id": "ra_54",
+          "text_en": "A food truck party happens in neighborhoods in Sector 2 ( the sector where I live ) monthly.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_054.mp3"
+        },
+        {
+          "id": "ra_55",
+          "text_en": "It happens on every 19th of a month.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_055.mp3"
+        },
+        {
+          "id": "ra_56",
+          "text_en": "On the day of the food truck party there is a theme of food to eat.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_056.mp3"
+        },
+        {
+          "id": "ra_57",
+          "text_en": "Suppose last month on 19th June the theme was Italian and it happens in the night so the rest of the meals will not be Italian at all.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_057.mp3"
+        },
+        {
+          "id": "ra_58",
+          "text_en": "If you don't follow this rule then you will not get to the Italian party.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_058.mp3"
+        },
+        {
+          "id": "ra_59",
+          "text_en": "And food trucks all over the sector will serve Italian.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_059.mp3"
+        },
+        {
+          "id": "ra_60",
+          "text_en": "Last month, Pankaj Bhaya didn't go because he ate pasta for lunch.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_060.mp3"
+        },
+        {
+          "id": "ra_61",
+          "text_en": "Everyone gets a message of the theme the night before the party.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_061.mp3"
+        },
+        {
+          "id": "ra_62",
+          "text_en": "In every neighborhood, there are at least 30 food trucks.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_062.mp3"
+        },
+        {
+          "id": "ra_63",
+          "text_en": "Sometimes you can put up your own food truck, like last month me Gauri, Kimara, and Meena put a lemonade truck in Kimara's car and made our own lemonade.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_063.mp3"
+        },
+        {
+          "id": "ra_64",
+          "text_en": "We made Rs 1500 last year because it was really hot and people needed a refreshment and we gave them a chilled lemonade for Rs 10.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_064.mp3"
+        },
+        {
+          "id": "ra_65",
+          "text_en": "The theme of this year is Mexican I think, and mummy told me that there is going to be a chocolate and vegan taco truck.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_065.mp3"
+        },
+        {
+          "id": "ra_66",
+          "text_en": "Yum! \" My muma told me that there is going to be a fruit custard stand too, Aisha!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_066.mp3"
+        },
+        {
+          "id": "ra_67",
+          "text_en": "I can't believe this is my last food truck party,\" says Gauri sadly.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_067.mp3"
+        },
+        {
+          "id": "ra_68",
+          "text_en": "\" Didn't your muma say you are going to leave on 19th August?\" Kimara says.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_068.mp3"
+        },
+        {
+          "id": "ra_69",
+          "text_en": "\" oh, no she will leave on the day of a food truck party!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_069.mp3"
+        },
+        {
+          "id": "ra_70",
+          "text_en": "\" said Meena.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_070.mp3"
+        },
+        {
+          "id": "ra_71",
+          "text_en": "Gauri said \" I don't think so.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_071.mp3"
+        },
+        {
+          "id": "ra_72",
+          "text_en": "Pops ( what Gauri calls her father ) told me that we will leave at 12 'o'clock in the night and the party stops at 10 only.\" oh yay, you not going to miss it \" I say.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_072.mp3"
+        },
+        {
+          "id": "ra_73",
+          "text_en": "Then suddenly a singer jumps on to the stage of the food truck party and says \" we want to thank you for coming to this food truck party.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_073.mp3"
+        },
+        {
+          "id": "ra_74",
+          "text_en": "We want to celebrate the leaving of a member of this special group who is standing right next to the stage.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_074.mp3"
+        },
+        {
+          "id": "ra_75",
+          "text_en": "Say your farewells to miss Gauri Gupta, Mr Rahul Gupta and Mrs Anushka Gupta.\" I hear lots of clapping so I start clapping too.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_075.mp3"
+        },
+        {
+          "id": "ra_76",
+          "text_en": "Then my parents and I go into Meena's humangas mansion.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_076.mp3"
+        },
+        {
+          "id": "ra_77",
+          "text_en": "I asked my mum why is the farewell so early and she said that because Gauri will leave at 12:00 today.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_077.mp3"
+        },
+        {
+          "id": "ra_78",
+          "text_en": "What a coincidence !!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_078.mp3"
+        },
+        {
+          "id": "ra_79",
+          "text_en": "Instead of the party happening outside like usual it happened in Meena's house.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_079.mp3"
+        },
+        {
+          "id": "ra_80",
+          "text_en": "After tons of partying, we finally had to say goodbye to Gauri.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_080.mp3"
+        },
+        {
+          "id": "ra_81",
+          "text_en": "We were really sad because when I had just moved to sector 2 Noida from Gurgaon DLF, I was sitting alone in the park and she comforted me and became my first friend in Noida.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_081.mp3"
+        },
+        {
+          "id": "ra_82",
+          "text_en": "I was feeling really sad when she left but I knew I would visit her in Mumbai and I could easily text with her on the computer.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_082.mp3"
+        },
+        {
+          "id": "ra_83",
+          "text_en": "/17 Today I woke up at 5:00 so I can text Gauri if she is awake.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_083.mp3"
+        },
+        {
+          "id": "ra_84",
+          "text_en": "I start texting her and she texts back.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_084.mp3"
+        },
+        {
+          "id": "ra_85",
+          "text_en": "After 1 hour of texting, she goes to sleep and I get ready for school.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_085.mp3"
+        },
+        {
+          "id": "ra_86",
+          "text_en": "Suddenly, I see raindrops pouring.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_086.mp3"
+        },
+        {
+          "id": "ra_87",
+          "text_en": "Half an hour later, muma gets an email from the school saying that the school is closed due to heavy rain.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_087.mp3"
+        },
+        {
+          "id": "ra_88",
+          "text_en": "Yay, no school.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_088.mp3"
+        },
+        {
+          "id": "ra_89",
+          "text_en": "But muma even gets an email saying that Pankaj Bhaya will go to school because he is in 9th grade.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_089.mp3"
+        },
+        {
+          "id": "ra_90",
+          "text_en": "No Bhaya also!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_090.mp3"
+        },
+        {
+          "id": "ra_91",
+          "text_en": "And mummy, papa have to go work.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_091.mp3"
+        },
+        {
+          "id": "ra_92",
+          "text_en": "But no school for me!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_092.mp3"
+        },
+        {
+          "id": "ra_93",
+          "text_en": "My parents drop me off at Kimara's and Meena comes over too because even both her parents go to work.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_093.mp3"
+        },
+        {
+          "id": "ra_94",
+          "text_en": "My parents dropped me off at Kimara's house because it is huge and her mum is a stay at home and she has many maids to take care of her.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_094.mp3"
+        },
+        {
+          "id": "ra_95",
+          "text_en": "We play and eat lunch with her, then my and Meena's mum come to pick us up and we really had a fun time!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_095.mp3"
+        },
+        {
+          "id": "ra_96",
+          "text_en": "/17 Today Meena has some news to tell us.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_096.mp3"
+        },
+        {
+          "id": "ra_97",
+          "text_en": "I'll give you the hint she gave me and Kimara.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_097.mp3"
+        },
+        {
+          "id": "ra_98",
+          "text_en": "Meena's hint: I am an only child.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_098.mp3"
+        },
+        {
+          "id": "ra_99",
+          "text_en": "Could you figure out something?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_099.mp3"
+        },
+        {
+          "id": "ra_100",
+          "text_en": "Well, Kimara did.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_100.mp3"
+        },
+        {
+          "id": "ra_101",
+          "text_en": "\" oh, you are getting a puppy?\" she says.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_101.mp3"
+        },
+        {
+          "id": "ra_102",
+          "text_en": "Meena tells her \" Yes!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_102.mp3"
+        },
+        {
+          "id": "ra_103",
+          "text_en": "We are definitely getting a puppy\".\" Guys, we will talk about this later.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_103.mp3"
+        },
+        {
+          "id": "ra_104",
+          "text_en": "There is a movie releasing today its name is Descendants 2\".",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_104.mp3"
+        },
+        {
+          "id": "ra_105",
+          "text_en": "I say. \" Have we even watched Descendants 1, and you are saying we can watch part 2,\" Kimara says.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_105.mp3"
+        },
+        {
+          "id": "ra_106",
+          "text_en": "Meena replies \" yeah, we don't even know what is Descendants is,\".",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_106.mp3"
+        },
+        {
+          "id": "ra_107",
+          "text_en": "\" Don't worry.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_107.mp3"
+        },
+        {
+          "id": "ra_108",
+          "text_en": "My father got premiere tickets from his office to go to the Descendants 1 movie.\" I said.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_108.mp3"
+        },
+        {
+          "id": "ra_109",
+          "text_en": "\" do our parents know about this?\" Kimara worried.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_109.mp3"
+        },
+        {
+          "id": "ra_110",
+          "text_en": "\" yes of course they know.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_110.mp3"
+        },
+        {
+          "id": "ra_111",
+          "text_en": "Aisha told her father to tell our parents.\" Meena said.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_111.mp3"
+        },
+        {
+          "id": "ra_112",
+          "text_en": "And it was set.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_112.mp3"
+        },
+        {
+          "id": "ra_113",
+          "text_en": "We put on our best clothes and went to the movie theater with our fathers.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_113.mp3"
+        },
+        {
+          "id": "ra_114",
+          "text_en": "So, after the movie, we were really happy and Kimara and Meena's parents gave the money to my Papa.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_114.mp3"
+        },
+        {
+          "id": "ra_115",
+          "text_en": "That is the end of my diary. BYE!!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_135166/s_115.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "Who is the narrator?",
+          "options_en": [
+            "Aisha",
+            "Gauri",
+            "Meena"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "How old is the narrator?",
+          "options_en": [
+            "10 years old",
+            "11 years old",
+            "9 years old"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s1_q1",
+          "type": "choice",
+          "question_en": "What is the book about?",
+          "options_en": [
+            "Her daily diary",
+            "The food truck party",
+            "A farewell party"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s1_q2",
+          "type": "choice",
+          "question_en": "Whose diary is the book about?",
+          "options_en": [
+            "Aisha's",
+            "Gauri's",
+            "Meena's"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s2_q1",
+          "type": "choice",
+          "question_en": "What does the writer invite the reader to do?",
+          "options_en": [
+            "Read the next pages",
+            "Come to the farewell",
+            "Call Muma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s2_q2",
+          "type": "choice",
+          "question_en": "When should the reader read the next pages?",
+          "options_en": [
+            "If you want to",
+            "Tomorrow",
+            "At night"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s3_q1",
+          "type": "choice",
+          "question_en": "Where does the narrator live?",
+          "options_en": [
+            "Noida",
+            "Mumbai",
+            "Gurgaon"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p0_s3_q2",
+          "type": "choice",
+          "question_en": "Who in the neighborhood has a group?",
+          "options_en": [
+            "All the people who live there (even the kids)",
+            "Only the adults",
+            "Only the kids"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p0_s4_q1",
+          "type": "choice",
+          "question_en": "What is the correct answer to this question: About how many children are in the neighborhood?",
+          "options_en": [
+            "About 120 children",
+            "About 30 children",
+            "About 10 children"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p0_s4_q2",
+          "type": "choice",
+          "question_en": "How have the children been divided into groups?",
+          "options_en": [
+            "By the people who own their houses",
+            "By their teachers",
+            "By their parents' jobs"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p0_s5_q1",
+          "type": "choice",
+          "question_en": "Who told them she is moving to Mumbai?",
+          "options_en": [
+            "Gauri",
+            "Anushka",
+            "Meena"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p0_s5_q2",
+          "type": "choice",
+          "question_en": "Where is Gauri moving to?",
+          "options_en": [
+            "Mumbai",
+            "Noida",
+            "Gurgaon"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p0_s6_q1",
+          "type": "choice",
+          "question_en": "Who was not surprised when told the news?",
+          "options_en": [
+            "Muma",
+            "Aisha",
+            "Gauri"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p0_s6_q2",
+          "type": "choice",
+          "question_en": "How did Muma react to the news?",
+          "options_en": [
+            "She was not surprised",
+            "She cried",
+            "She laughed"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p0_s7_q1",
+          "type": "choice",
+          "question_en": "Who told Muma the news yesterday?",
+          "options_en": [
+            "Anushka",
+            "Pinky",
+            "Rahul"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p0_s7_q2",
+          "type": "choice",
+          "question_en": "How were the moms talking when Anushka told them the news?",
+          "options_en": [
+            "On a group FaceTime call",
+            "At the park",
+            "By text message"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "Who said the line?",
+          "options_en": [
+            "Muma",
+            "Papa",
+            "Kirti"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "How is the speaker referred to in this sentence?",
+          "options_en": [
+            "Muma",
+            "Pankaj Bhaya",
+            "Anushka aunty"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p1_s1_q1",
+          "type": "choice",
+          "question_en": "Who still can't believe that Gauri is leaving?",
+          "options_en": [
+            "I (the narrator)",
+            "Gauri",
+            "Pankaj Bhaya"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p1_s1_q2",
+          "type": "choice",
+          "question_en": "What can't the speaker believe?",
+          "options_en": [
+            "That Gauri is leaving",
+            "That the party is cancelled",
+            "That school is closed"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p1_s2_q1",
+          "type": "choice",
+          "question_en": "Who does the speaker tell about making the farewell party?",
+          "options_en": [
+            "Muma",
+            "Papa",
+            "Kirti"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p1_s2_q2",
+          "type": "choice",
+          "question_en": "What do they say they must make for Gauri and Anushka aunty?",
+          "options_en": [
+            "The best farewell party",
+            "A chart on cybersecurity",
+            "A lemonade stand"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p1_s3_q1",
+          "type": "choice",
+          "question_en": "Who replies \"of course we will\"?",
+          "options_en": [
+            "Muma",
+            "Papa",
+            "Meena"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p1_s3_q2",
+          "type": "choice",
+          "question_en": "What is the correct answer to this question: To whom does Muma speak in this line?",
+          "options_en": [
+            "Aisha",
+            "Gauri",
+            "Kimara"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p1_s4_q1",
+          "type": "choice",
+          "question_en": "When will they start planning?",
+          "options_en": [
+            "Tomorrow",
+            "Tonight",
+            "Next week"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p1_s4_q2",
+          "type": "choice",
+          "question_en": "What did they have for dinner today?",
+          "options_en": [
+            "Delicious pasta",
+            "Nutella and peanut butter sandwich",
+            "Chilled lemonade"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p1_s5_q1",
+          "type": "choice",
+          "question_en": "Whose farewell is being mentioned?",
+          "options_en": [
+            "Rahul Gupta's",
+            "Meena's",
+            "Raj Sharma's"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p1_s5_q2",
+          "type": "choice",
+          "question_en": "Who is Rahul Gupta according to the sentence?",
+          "options_en": [
+            "Gauri's dad",
+            "A classmate",
+            "A food truck owner"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p1_s6_q1",
+          "type": "choice",
+          "question_en": "How does Papa like to call him?",
+          "options_en": [
+            "By his full name",
+            "By a nickname",
+            "Only by his first name"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p1_s6_q2",
+          "type": "choice",
+          "question_en": "Who is mentioned as asking \"how do you know?\" in this sentence?",
+          "options_en": [
+            "Papa (the speaker is addressed to Papa)",
+            "Kirti",
+            "Meena"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p1_s7_q1",
+          "type": "choice",
+          "question_en": "Who is Pankaj Bhaya described as?",
+          "options_en": [
+            "My older annoying elder brother",
+            "A singer at the party",
+            "A food truck owner"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p1_s7_q2",
+          "type": "choice",
+          "question_en": "Who asks if Pankaj Bhaya also knows?",
+          "options_en": [
+            "I (the narrator)",
+            "Pinky aunty",
+            "Raj Sharma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p1_s8_q1",
+          "type": "choice",
+          "question_en": "What does the speaker answer in this sentence?",
+          "options_en": [
+            "Of course I know",
+            "I don't know",
+            "Maybe"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p1_s8_q2",
+          "type": "choice",
+          "question_en": "How does the speaker respond to the question about knowing?",
+          "options_en": [
+            "They say they know",
+            "They stay silent",
+            "They change the subject to food trucks"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p1_s9_q1",
+          "type": "choice",
+          "question_en": "Who told him the information according to this sentence?",
+          "options_en": [
+            "Kirti",
+            "Meena",
+            "Raj Sharma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p1_s9_q2",
+          "type": "choice",
+          "question_en": "Who is Kirti described as?",
+          "options_en": [
+            "Gauri's closest cousin",
+            "A class 12 Didi",
+            "The narrator's aunt"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p1_s10_q1",
+          "type": "choice",
+          "question_en": "What does the narrator say before going to sleep?",
+          "options_en": [
+            "Good night",
+            "See you tomorrow",
+            "Thank you"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p1_s10_q2",
+          "type": "choice",
+          "question_en": "How does the narrator end this short part of the diary?",
+          "options_en": [
+            "By saying good night",
+            "By planning the farewell",
+            "By listing the food truck themes"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p1_s11_q1",
+          "type": "choice",
+          "question_en": "When will the narrator write again?",
+          "options_en": [
+            "Tomorrow",
+            "Next month",
+            "Tonight"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p1_s11_q2",
+          "type": "choice",
+          "question_en": "What will the narrator do tomorrow?",
+          "options_en": [
+            "Write",
+            "Go to a food truck party",
+            "Buy a puppy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "What kind of day is today?",
+          "options_en": [
+            "A school day and cybersecurity day",
+            "A food truck party day",
+            "Gauri's farewell day"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "When is tomorrow?",
+          "options_en": [
+            "Saturday",
+            "The 19th of the month",
+            "The day of the farewell"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p2_s1_q1",
+          "type": "choice",
+          "question_en": "Who came to school today?",
+          "options_en": [
+            "Some Didis from class 12th",
+            "Meena and Kimara",
+            "Raj Sharma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p2_s1_q2",
+          "type": "choice",
+          "question_en": "What did the Didis tell them about?",
+          "options_en": [
+            "Cybersecurity",
+            "The food truck party",
+            "Gauri's farewell"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p2_s2_q1",
+          "type": "choice",
+          "question_en": "What did one Didi say the students would make?",
+          "options_en": [
+            "Their own chart on cybersecurity",
+            "A lemonade stall",
+            "A farewell card"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p2_s2_q2",
+          "type": "choice",
+          "question_en": "Who did the Didi address as 'youngsters'?",
+          "options_en": [
+            "The students she was speaking to",
+            "Class 12th students",
+            "Gauri and her family"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p2_s3_q1",
+          "type": "choice",
+          "question_en": "What do the students say they are not?",
+          "options_en": [
+            "Youngsters",
+            "5th graders",
+            "Class president"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p2_s3_q2",
+          "type": "choice",
+          "question_en": "How do the students respond to being called youngsters?",
+          "options_en": [
+            "They say 'We are not youngsters!'",
+            "They laugh and clap",
+            "They agree and nod"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p2_s4_q1",
+          "type": "choice",
+          "question_en": "Which grade are the students in?",
+          "options_en": [
+            "5th graders",
+            "12th graders",
+            "9th graders"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p2_s4_q2",
+          "type": "choice",
+          "question_en": "What does the sentence 'We are 5th graders' tell us about them?",
+          "options_en": [
+            "Their school grade",
+            "Their favorite food",
+            "Where they live"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p2_s5_q1",
+          "type": "choice",
+          "question_en": "How old are most of the students?",
+          "options_en": [
+            "10 years old",
+            "26 years old",
+            "11 years old"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p2_s5_q2",
+          "type": "choice",
+          "question_en": "Who does the sentence say are 10 years old?",
+          "options_en": [
+            "Most of us (the students)",
+            "Tweety the maid",
+            "Raj Sharma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p2_s6_q1",
+          "type": "choice",
+          "question_en": "What happened after making the chart?",
+          "options_en": [
+            "The Didis left and they voted which looked best",
+            "They went to a food truck party",
+            "Gauri moved to Mumbai"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p2_s6_q2",
+          "type": "choice",
+          "question_en": "What did the students vote for?",
+          "options_en": [
+            "Which chart looked best and had the most information",
+            "Which food truck to visit",
+            "Who should be class president"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p2_s7_q1",
+          "type": "choice",
+          "question_en": "Who came first in the vote?",
+          "options_en": [
+            "I (the narrator)",
+            "Sameena Dingra",
+            "Raj Sharma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        },
+        {
+          "id": "gl_p2_s7_q2",
+          "type": "choice",
+          "question_en": "Why did Sameena come last?",
+          "options_en": [
+            "Because she drew the most and wrote the least",
+            "Because she was late for school",
+            "Because she helped plan the farewell"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        },
+        {
+          "id": "gl_p2_s8_q1",
+          "type": "choice",
+          "question_en": "Who voted that she is 'the least to succeed'?",
+          "options_en": [
+            "The class president Raj Sharma",
+            "Meena",
+            "A Didi from class 12th"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        },
+        {
+          "id": "gl_p2_s8_q2",
+          "type": "choice",
+          "question_en": "What did the class president say about her?",
+          "options_en": [
+            "She is the least to succeed",
+            "She drew the best chart",
+            "She should be class president"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        },
+        {
+          "id": "gl_p2_s9_q1",
+          "type": "choice",
+          "question_en": "How is Raj Sharma described?",
+          "options_en": [
+            "A fat and rich boy",
+            "A singer at the food truck party",
+            "Gauri's father"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p2_s9_q2",
+          "type": "choice",
+          "question_en": "Why does Raj keep giving his friends money?",
+          "options_en": [
+            "He thinks they are his friends",
+            "He wants to buy lemonade",
+            "He is paying for a movie ticket"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p2_s10_q1",
+          "type": "choice",
+          "question_en": "Why do they pretend to be his friends?",
+          "options_en": [
+            "So they get money",
+            "To plan a farewell",
+            "To join his art classes"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        },
+        {
+          "id": "gl_p2_s10_q2",
+          "type": "choice",
+          "question_en": "Who just pretend to be his friends?",
+          "options_en": [
+            "They (his so-called friends)",
+            "The Didis from class 12th",
+            "Meena and Kimara"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "Who did Ma'am say shall be class president?",
+          "options_en": [
+            "Raj Sharma",
+            "Aisha",
+            "Sameena"
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "Why did Ma'am choose him as class president?",
+          "options_en": [
+            "Because he has so many friends",
+            "Because he is kind",
+            "Because he draws well"
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        },
+        {
+          "id": "gl_p3_s1_q1",
+          "type": "choice",
+          "question_en": "Who says Ma'am should have made her class president?",
+          "options_en": [
+            "The speaker (me)",
+            "Raj Sharma",
+            "Sameena"
+          ],
+          "correct_index": 0,
+          "sentence_index": 32
+        },
+        {
+          "id": "gl_p3_s1_q2",
+          "type": "choice",
+          "question_en": "Why does the speaker say she should have been class president?",
+          "options_en": [
+            "Because she is kind",
+            "Because she is rich",
+            "Because she draws well"
+          ],
+          "correct_index": 0,
+          "sentence_index": 32
+        },
+        {
+          "id": "gl_p3_s2_q1",
+          "type": "choice",
+          "question_en": "What is the second thing the speaker says about Raj?",
+          "options_en": [
+            "He doesn't have respect",
+            "He is good at drawing",
+            "He joined last year"
+          ],
+          "correct_index": 0,
+          "sentence_index": 33
+        },
+        {
+          "id": "gl_p3_s2_q2",
+          "type": "choice",
+          "question_en": "How is Raj described in this sentence?",
+          "options_en": [
+            "As someone who doesn't have respect",
+            "As someone who is kind",
+            "As someone planning a farewell"
+          ],
+          "correct_index": 0,
+          "sentence_index": 33
+        },
+        {
+          "id": "gl_p3_s3_q1",
+          "type": "choice",
+          "question_en": "Who is named Tweety?",
+          "options_en": [
+            "The maid",
+            "A classmate",
+            "A singer"
+          ],
+          "correct_index": 0,
+          "sentence_index": 34
+        },
+        {
+          "id": "gl_p3_s3_q2",
+          "type": "choice",
+          "question_en": "Whose maid is mentioned in the sentence?",
+          "options_en": [
+            "Raj's maid",
+            "Meena's maid",
+            "Aisha's maid"
+          ],
+          "correct_index": 0,
+          "sentence_index": 34
+        },
+        {
+          "id": "gl_p3_s4_q1",
+          "type": "choice",
+          "question_en": "What does he say when he calls her?",
+          "options_en": [
+            "\"Oh, Tweety come here\"",
+            "\"Come here, Sameena\"",
+            "\"Let's go to the party\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 35
+        },
+        {
+          "id": "gl_p3_s4_q2",
+          "type": "choice",
+          "question_en": "How does he call the maid in the sentence?",
+          "options_en": [
+            "By saying her name",
+            "By asking for money",
+            "By clapping"
+          ],
+          "correct_index": 0,
+          "sentence_index": 35
+        },
+        {
+          "id": "gl_p3_s5_q1",
+          "type": "choice",
+          "question_en": "What does he call her by?",
+          "options_en": [
+            "Her name",
+            "Her job title",
+            "A nickname like \"Pops\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 36
+        },
+        {
+          "id": "gl_p3_s5_q2",
+          "type": "choice",
+          "question_en": "Who does he call by her name?",
+          "options_en": [
+            "The maid",
+            "Gauri",
+            "Sameena"
+          ],
+          "correct_index": 0,
+          "sentence_index": 36
+        },
+        {
+          "id": "gl_p3_s6_q1",
+          "type": "choice",
+          "question_en": "How old is the maid?",
+          "options_en": [
+            "26 years old",
+            "11 years old",
+            "5 years old"
+          ],
+          "correct_index": 0,
+          "sentence_index": 37
+        },
+        {
+          "id": "gl_p3_s6_q2",
+          "type": "choice",
+          "question_en": "How old is he?",
+          "options_en": [
+            "11 years old",
+            "26 years old",
+            "10 years old"
+          ],
+          "correct_index": 0,
+          "sentence_index": 37
+        },
+        {
+          "id": "gl_p3_s7_q1",
+          "type": "choice",
+          "question_en": "What is he really good at?",
+          "options_en": [
+            "Drawing",
+            "Cooking",
+            "Singing"
+          ],
+          "correct_index": 0,
+          "sentence_index": 38
+        },
+        {
+          "id": "gl_p3_s7_q2",
+          "type": "choice",
+          "question_en": "When did he start doing art classes?",
+          "options_en": [
+            "Since he was 5 years old",
+            "Last year",
+            "When he joined this school"
+          ],
+          "correct_index": 0,
+          "sentence_index": 38
+        },
+        {
+          "id": "gl_p3_s8_q1",
+          "type": "choice",
+          "question_en": "Why can he throw around money everywhere?",
+          "options_en": [
+            "Because he is rich",
+            "Because he draws well",
+            "Because he is class president"
+          ],
+          "correct_index": 0,
+          "sentence_index": 39
+        },
+        {
+          "id": "gl_p3_s8_q2",
+          "type": "choice",
+          "question_en": "What can he do because he is rich?",
+          "options_en": [
+            "Throw around money everywhere",
+            "Host the food truck party",
+            "Be a teacher"
+          ],
+          "correct_index": 0,
+          "sentence_index": 39
+        },
+        {
+          "id": "gl_p3_s9_q1",
+          "type": "choice",
+          "question_en": "When did he join this school?",
+          "options_en": [
+            "Last year",
+            "This morning",
+            "When he was 5"
+          ],
+          "correct_index": 0,
+          "sentence_index": 40
+        },
+        {
+          "id": "gl_p3_s9_q2",
+          "type": "choice",
+          "question_en": "What rumor did the speaker hear about him?",
+          "options_en": [
+            "He got kicked out of his first school",
+            "He won a drawing contest",
+            "He moved to Mumbai"
+          ],
+          "correct_index": 0,
+          "sentence_index": 40
+        },
+        {
+          "id": "gl_p3_s10_q1",
+          "type": "choice",
+          "question_en": "What is the correct answer to this question: If the speaker were in his place, what does she say would have happened?",
+          "options_en": [
+            "She would have been scolded",
+            "She would have been made class president",
+            "She would have been given money"
+          ],
+          "correct_index": 0,
+          "sentence_index": 41
+        },
+        {
+          "id": "gl_p3_s10_q2",
+          "type": "choice",
+          "question_en": "Who imagines being scolded in this sentence?",
+          "options_en": [
+            "The speaker (I)",
+            "Raj Sharma",
+            "Sameena"
+          ],
+          "correct_index": 0,
+          "sentence_index": 41
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "Why did the writer apologize at the start?",
+          "options_en": [
+            "They had not written for a long time",
+            "They lost their homework",
+            "They were late to school"
+          ],
+          "correct_index": 0,
+          "sentence_index": 42
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "When did the writer say they were writing again?",
+          "options_en": [
+            "After a long time",
+            "This morning",
+            "During the food truck party"
+          ],
+          "correct_index": 0,
+          "sentence_index": 42
+        },
+        {
+          "id": "gl_p4_s1_q1",
+          "type": "choice",
+          "question_en": "What kind of quiz did they have?",
+          "options_en": [
+            "A really hard math quiz",
+            "An easy science quiz",
+            "A history quiz"
+          ],
+          "correct_index": 0,
+          "sentence_index": 43
+        },
+        {
+          "id": "gl_p4_s1_q2",
+          "type": "choice",
+          "question_en": "What else did they have besides the quiz?",
+          "options_en": [
+            "Loads of homework",
+            "A school play",
+            "A birthday party"
+          ],
+          "correct_index": 0,
+          "sentence_index": 43
+        },
+        {
+          "id": "gl_p4_s2_q1",
+          "type": "choice",
+          "question_en": "What does the writer wish had not been invented?",
+          "options_en": [
+            "Homework",
+            "Food trucks",
+            "Video games"
+          ],
+          "correct_index": 0,
+          "sentence_index": 44
+        },
+        {
+          "id": "gl_p4_s2_q2",
+          "type": "choice",
+          "question_en": "How does the writer feel about homework?",
+          "options_en": [
+            "They wish it was not invented",
+            "They enjoy it a lot",
+            "They think it's fun"
+          ],
+          "correct_index": 0,
+          "sentence_index": 44
+        },
+        {
+          "id": "gl_p4_s3_q1",
+          "type": "choice",
+          "question_en": "What would the writer do if there were no homework?",
+          "options_en": [
+            "Catch up with friends, watch TV and play video games",
+            "Help plan the farewell",
+            "Go to school earlier"
+          ],
+          "correct_index": 0,
+          "sentence_index": 45
+        },
+        {
+          "id": "gl_p4_s3_q2",
+          "type": "choice",
+          "question_en": "Which activity is mentioned as something they would watch?",
+          "options_en": [
+            "T.V.",
+            "A movie at the theater",
+            "The food truck show"
+          ],
+          "correct_index": 0,
+          "sentence_index": 45
+        },
+        {
+          "id": "gl_p4_s4_q1",
+          "type": "choice",
+          "question_en": "What do they have to plan today?",
+          "options_en": [
+            "The farewell",
+            "A food truck party",
+            "A birthday party"
+          ],
+          "correct_index": 0,
+          "sentence_index": 46
+        },
+        {
+          "id": "gl_p4_s4_q2",
+          "type": "choice",
+          "question_en": "Who does the writer say they will not help?",
+          "options_en": [
+            "Muma, Pinky aunty, and Amalika aunty",
+            "Meena and Kimara",
+            "Gauri and Rahul uncle"
+          ],
+          "correct_index": 0,
+          "sentence_index": 46
+        },
+        {
+          "id": "gl_p4_s5_q1",
+          "type": "choice",
+          "question_en": "Who will play loads of video games?",
+          "options_en": [
+            "I, Meena, and Kimara",
+            "Muma, Pinky aunty, and Amalika aunty",
+            "Gauri and Rahul uncle"
+          ],
+          "correct_index": 0,
+          "sentence_index": 47
+        },
+        {
+          "id": "gl_p4_s5_q2",
+          "type": "choice",
+          "question_en": "What will the ladies do while the kids play?",
+          "options_en": [
+            "Chat, order stuff and call people for delivery",
+            "Play video games with the kids",
+            "Watch a movie"
+          ],
+          "correct_index": 0,
+          "sentence_index": 47
+        },
+        {
+          "id": "gl_p4_s6_q1",
+          "type": "choice",
+          "question_en": "When do they become really hungry?",
+          "options_en": [
+            "After half an hour",
+            "Right away",
+            "The next morning"
+          ],
+          "correct_index": 0,
+          "sentence_index": 48
+        },
+        {
+          "id": "gl_p4_s6_q2",
+          "type": "choice",
+          "question_en": "Who are really hungry after half an hour?",
+          "options_en": [
+            "I, Meena and Kimara",
+            "Muma and the aunties",
+            "Gauri and Rahul uncle"
+          ],
+          "correct_index": 0,
+          "sentence_index": 48
+        },
+        {
+          "id": "gl_p4_s7_q1",
+          "type": "choice",
+          "question_en": "What do their mums make for them?",
+          "options_en": [
+            "Nutella and peanut butter sandwich",
+            "Pasta",
+            "Lemonade"
+          ],
+          "correct_index": 0,
+          "sentence_index": 49
+        },
+        {
+          "id": "gl_p4_s7_q2",
+          "type": "choice",
+          "question_en": "Why do their mums make the sandwiches?",
+          "options_en": [
+            "Because they are hungry",
+            "Because of the food truck theme",
+            "Because it's breakfast time"
+          ],
+          "correct_index": 0,
+          "sentence_index": 49
+        },
+        {
+          "id": "gl_p4_s8_q1",
+          "type": "choice",
+          "question_en": "Where will they host the farewell?",
+          "options_en": [
+            "Meena's house",
+            "The park",
+            "Sector 2 food truck area"
+          ],
+          "correct_index": 0,
+          "sentence_index": 50
+        },
+        {
+          "id": "gl_p4_s8_q2",
+          "type": "choice",
+          "question_en": "Why is Meena's house chosen for the farewell?",
+          "options_en": [
+            "Because it is really big",
+            "Because it is near the food trucks",
+            "Because Gauri lives there"
+          ],
+          "correct_index": 0,
+          "sentence_index": 50
+        },
+        {
+          "id": "gl_p4_s9_q1",
+          "type": "choice",
+          "question_en": "What instruction does muma give about the farewell?",
+          "options_en": [
+            "Don't tell Gauri, Rahul uncle or Anushka aunty",
+            "Invite everyone in the neighborhood",
+            "Have the party at night"
+          ],
+          "correct_index": 0,
+          "sentence_index": 51
+        },
+        {
+          "id": "gl_p4_s9_q2",
+          "type": "choice",
+          "question_en": "How does muma address the girls when giving the instruction?",
+          "options_en": [
+            "She says 'girls'",
+            "She calls them 'children of the neighborhood'",
+            "She calls them 'food truck helpers'"
+          ],
+          "correct_index": 0,
+          "sentence_index": 51
+        },
+        {
+          "id": "gl_p4_s10_q1",
+          "type": "choice",
+          "question_en": "Who responds for Aisha and Meena?",
+          "options_en": [
+            "Kimara",
+            "Pinky aunty",
+            "Amalika aunty"
+          ],
+          "correct_index": 0,
+          "sentence_index": 52
+        },
+        {
+          "id": "gl_p4_s10_q2",
+          "type": "choice",
+          "question_en": "What does Kimara say on their behalf?",
+          "options_en": [
+            "Yes Auntie",
+            "No thanks",
+            "We will help"
+          ],
+          "correct_index": 0,
+          "sentence_index": 52
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "What is happening today?",
+          "options_en": [
+            "A food truck party",
+            "A farewell party",
+            "A school day"
+          ],
+          "correct_index": 0,
+          "sentence_index": 53
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "When is the food truck party?",
+          "options_en": [
+            "Today",
+            "On the 19th",
+            "Last month"
+          ],
+          "correct_index": 0,
+          "sentence_index": 53
+        },
+        {
+          "id": "gl_p5_s1_q1",
+          "type": "choice",
+          "question_en": "Where do food truck parties happen?",
+          "options_en": [
+            "In neighborhoods in Sector 2",
+            "At Meena's house",
+            "At school"
+          ],
+          "correct_index": 0,
+          "sentence_index": 54
+        },
+        {
+          "id": "gl_p5_s1_q2",
+          "type": "choice",
+          "question_en": "How often do food truck parties happen?",
+          "options_en": [
+            "Monthly",
+            "On the 19th only",
+            "Once a year"
+          ],
+          "correct_index": 0,
+          "sentence_index": 54
+        },
+        {
+          "id": "gl_p5_s2_q1",
+          "type": "choice",
+          "question_en": "When does the food truck party happen each month?",
+          "options_en": [
+            "On every 19th",
+            "At the end of the month",
+            "On weekends"
+          ],
+          "correct_index": 0,
+          "sentence_index": 55
+        },
+        {
+          "id": "gl_p5_s2_q2",
+          "type": "choice",
+          "question_en": "How often does the event on the 19th occur?",
+          "options_en": [
+            "Every month on the 19th",
+            "Once a year on the 19th",
+            "Every night"
+          ],
+          "correct_index": 0,
+          "sentence_index": 55
+        },
+        {
+          "id": "gl_p5_s3_q1",
+          "type": "choice",
+          "question_en": "What is there on the day of the food truck party?",
+          "options_en": [
+            "A theme of food to eat",
+            "A farewell celebration",
+            "A math quiz"
+          ],
+          "correct_index": 0,
+          "sentence_index": 56
+        },
+        {
+          "id": "gl_p5_s3_q2",
+          "type": "choice",
+          "question_en": "What do people follow on the day of the party?",
+          "options_en": [
+            "The food theme",
+            "Their normal meals",
+            "A school schedule"
+          ],
+          "correct_index": 0,
+          "sentence_index": 56
+        },
+        {
+          "id": "gl_p5_s4_q1",
+          "type": "choice",
+          "question_en": "What was the theme on 19th June last month?",
+          "options_en": [
+            "Italian",
+            "Mexican",
+            "Lemonade"
+          ],
+          "correct_index": 0,
+          "sentence_index": 57
+        },
+        {
+          "id": "gl_p5_s4_q2",
+          "type": "choice",
+          "question_en": "When did that themed event happen on 19th June?",
+          "options_en": [
+            "At night",
+            "In the morning",
+            "At noon"
+          ],
+          "correct_index": 0,
+          "sentence_index": 57
+        },
+        {
+          "id": "gl_p5_s5_q1",
+          "type": "choice",
+          "question_en": "What happens if you don't follow the rule?",
+          "options_en": [
+            "You will not get to the Italian party",
+            "You will get a fine",
+            "You will be given free lemonade"
+          ],
+          "correct_index": 0,
+          "sentence_index": 58
+        },
+        {
+          "id": "gl_p5_s5_q2",
+          "type": "choice",
+          "question_en": "Which party will you be kept from if you break the rule?",
+          "options_en": [
+            "The Italian party",
+            "The farewell party",
+            "The school party"
+          ],
+          "correct_index": 0,
+          "sentence_index": 58
+        },
+        {
+          "id": "gl_p5_s6_q1",
+          "type": "choice",
+          "question_en": "What will food trucks all over the sector serve?",
+          "options_en": [
+            "Italian",
+            "Chocolate",
+            "Lemonade"
+          ],
+          "correct_index": 0,
+          "sentence_index": 59
+        },
+        {
+          "id": "gl_p5_s6_q2",
+          "type": "choice",
+          "question_en": "Where will they serve Italian food?",
+          "options_en": [
+            "All over the sector",
+            "Only at Meena's house",
+            "Only at school"
+          ],
+          "correct_index": 0,
+          "sentence_index": 59
+        },
+        {
+          "id": "gl_p5_s7_q1",
+          "type": "choice",
+          "question_en": "Who didn't go last month?",
+          "options_en": [
+            "Pankaj Bhaya",
+            "Gauri",
+            "Meena"
+          ],
+          "correct_index": 0,
+          "sentence_index": 60
+        },
+        {
+          "id": "gl_p5_s7_q2",
+          "type": "choice",
+          "question_en": "Why didn't Pankaj Bhaya go?",
+          "options_en": [
+            "He ate pasta for lunch",
+            "He was moving to Mumbai",
+            "It was raining"
+          ],
+          "correct_index": 0,
+          "sentence_index": 60
+        },
+        {
+          "id": "gl_p5_s8_q1",
+          "type": "choice",
+          "question_en": "Who gets a message of the theme?",
+          "options_en": [
+            "Everyone",
+            "Only the children",
+            "Only the parents"
+          ],
+          "correct_index": 0,
+          "sentence_index": 61
+        },
+        {
+          "id": "gl_p5_s8_q2",
+          "type": "choice",
+          "question_en": "When do people get the message about the theme?",
+          "options_en": [
+            "The night before the party",
+            "The morning of the party",
+            "An hour before the party"
+          ],
+          "correct_index": 0,
+          "sentence_index": 61
+        },
+        {
+          "id": "gl_p5_s9_q1",
+          "type": "choice",
+          "question_en": "How many food trucks are there in every neighborhood?",
+          "options_en": [
+            "At least 30",
+            "120",
+            "3"
+          ],
+          "correct_index": 0,
+          "sentence_index": 62
+        },
+        {
+          "id": "gl_p5_s9_q2",
+          "type": "choice",
+          "question_en": "Where are there at least 30 food trucks?",
+          "options_en": [
+            "In every neighborhood",
+            "At school",
+            "In Meena's house"
+          ],
+          "correct_index": 0,
+          "sentence_index": 62
+        },
+        {
+          "id": "gl_p5_s10_q1",
+          "type": "choice",
+          "question_en": "Who put a lemonade truck in Kimara's car last month?",
+          "options_en": [
+            "Aisha, Gauri, Kimara, and Meena",
+            "Pankaj Bhaya",
+            "Raj Sharma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 63
+        },
+        {
+          "id": "gl_p5_s10_q2",
+          "type": "choice",
+          "question_en": "What did they put in Kimara's car?",
+          "options_en": [
+            "A lemonade truck",
+            "A chocolate truck",
+            "A taco truck"
+          ],
+          "correct_index": 0,
+          "sentence_index": 63
+        },
+        {
+          "id": "gl_p5_s11_q1",
+          "type": "choice",
+          "question_en": "How much money did they make last year?",
+          "options_en": [
+            "Rs 1500",
+            "Rs 10",
+            "Rs 1000"
+          ],
+          "correct_index": 0,
+          "sentence_index": 64
+        },
+        {
+          "id": "gl_p5_s11_q2",
+          "type": "choice",
+          "question_en": "How much did they charge for a chilled lemonade?",
+          "options_en": [
+            "Rs 10",
+            "Rs 1500",
+            "Rs 5"
+          ],
+          "correct_index": 0,
+          "sentence_index": 64
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "What is the theme of this year?",
+          "options_en": [
+            "Mexican",
+            "Italian",
+            "Descendants"
+          ],
+          "correct_index": 0,
+          "sentence_index": 65
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "Which food trucks did mummy say would come?",
+          "options_en": [
+            "a chocolate and vegan taco truck",
+            "a lemonade truck",
+            "a pizza truck"
+          ],
+          "correct_index": 0,
+          "sentence_index": 65
+        },
+        {
+          "id": "gl_p6_s1_q1",
+          "type": "choice",
+          "question_en": "What did muma tell Aisha would be there too?",
+          "options_en": [
+            "a fruit custard stand",
+            "a chocolate taco truck",
+            "a lemonade stand"
+          ],
+          "correct_index": 0,
+          "sentence_index": 66
+        },
+        {
+          "id": "gl_p6_s1_q2",
+          "type": "choice",
+          "question_en": "Who is being addressed in this sentence?",
+          "options_en": [
+            "Aisha",
+            "Gauri",
+            "Meena"
+          ],
+          "correct_index": 0,
+          "sentence_index": 66
+        },
+        {
+          "id": "gl_p6_s2_q1",
+          "type": "choice",
+          "question_en": "Who says it is her last food truck party?",
+          "options_en": [
+            "Gauri",
+            "Aisha",
+            "Kimara"
+          ],
+          "correct_index": 0,
+          "sentence_index": 67
+        },
+        {
+          "id": "gl_p6_s2_q2",
+          "type": "choice",
+          "question_en": "How does Gauri say this line?",
+          "options_en": [
+            "sadly",
+            "excitedly",
+            "angrily"
+          ],
+          "correct_index": 0,
+          "sentence_index": 67
+        },
+        {
+          "id": "gl_p6_s3_q1",
+          "type": "choice",
+          "question_en": "Who asks about the leaving date?",
+          "options_en": [
+            "Kimara",
+            "Meena",
+            "Pops"
+          ],
+          "correct_index": 0,
+          "sentence_index": 68
+        },
+        {
+          "id": "gl_p6_s3_q2",
+          "type": "choice",
+          "question_en": "Which date does Kimara mention for leaving?",
+          "options_en": [
+            "19th August",
+            "19th June",
+            "12th July"
+          ],
+          "correct_index": 0,
+          "sentence_index": 68
+        },
+        {
+          "id": "gl_p6_s4_q1",
+          "type": "choice",
+          "question_en": "When does the speaker say she will leave?",
+          "options_en": [
+            "on the day of a food truck party",
+            "on 19th June",
+            "at midnight after the party"
+          ],
+          "correct_index": 0,
+          "sentence_index": 69
+        },
+        {
+          "id": "gl_p6_s4_q2",
+          "type": "choice",
+          "question_en": "What event is mentioned in this sentence?",
+          "options_en": [
+            "a food truck party",
+            "a movie premiere",
+            "a school quiz"
+          ],
+          "correct_index": 0,
+          "sentence_index": 69
+        },
+        {
+          "id": "gl_p6_s5_q1",
+          "type": "choice",
+          "question_en": "Who is credited with saying the previous line?",
+          "options_en": [
+            "Meena",
+            "Kimara",
+            "Gauri"
+          ],
+          "correct_index": 0,
+          "sentence_index": 70
+        },
+        {
+          "id": "gl_p6_s5_q2",
+          "type": "choice",
+          "question_en": "Which character's name appears in this sentence?",
+          "options_en": [
+            "Meena",
+            "Aisha",
+            "Rahul"
+          ],
+          "correct_index": 0,
+          "sentence_index": 70
+        },
+        {
+          "id": "gl_p6_s6_q1",
+          "type": "choice",
+          "question_en": "Who says \"I don't think so\"?",
+          "options_en": [
+            "Gauri",
+            "Meena",
+            "Kimara"
+          ],
+          "correct_index": 0,
+          "sentence_index": 71
+        },
+        {
+          "id": "gl_p6_s6_q2",
+          "type": "choice",
+          "question_en": "What does Gauri express in this sentence?",
+          "options_en": [
+            "doubt — \"I don't think so\"",
+            "happiness about leaving",
+            "that the party will last all night"
+          ],
+          "correct_index": 0,
+          "sentence_index": 71
+        },
+        {
+          "id": "gl_p6_s7_q1",
+          "type": "choice",
+          "question_en": "Who told them they will leave at 12 o'clock in the night?",
+          "options_en": [
+            "Pops",
+            "Muma",
+            "Pankaj Bhaya"
+          ],
+          "correct_index": 0,
+          "sentence_index": 72
+        },
+        {
+          "id": "gl_p6_s7_q2",
+          "type": "choice",
+          "question_en": "What is the correct answer to this question: According to the sentence, what time does the party stop?",
+          "options_en": [
+            "10 o'clock",
+            "12 o'clock",
+            "5 o'clock"
+          ],
+          "correct_index": 0,
+          "sentence_index": 72
+        },
+        {
+          "id": "gl_p6_s8_q1",
+          "type": "choice",
+          "question_en": "Who jumps onto the stage of the food truck party?",
+          "options_en": [
+            "a singer",
+            "Pankaj Bhaya",
+            "a class Didi"
+          ],
+          "correct_index": 0,
+          "sentence_index": 73
+        },
+        {
+          "id": "gl_p6_s8_q2",
+          "type": "choice",
+          "question_en": "What does the singer say at the party?",
+          "options_en": [
+            "we want to thank you for coming to this food truck party",
+            "we will sell lemonade here",
+            "school is closed today"
+          ],
+          "correct_index": 0,
+          "sentence_index": 73
+        },
+        {
+          "id": "gl_p6_s9_q1",
+          "type": "choice",
+          "question_en": "What do they want to celebrate?",
+          "options_en": [
+            "the leaving of a member of this special group",
+            "winning a school contest",
+            "the opening of a lemonade truck"
+          ],
+          "correct_index": 0,
+          "sentence_index": 74
+        },
+        {
+          "id": "gl_p6_s9_q2",
+          "type": "choice",
+          "question_en": "Where is the member who is leaving standing?",
+          "options_en": [
+            "right next to the stage",
+            "in Meena's mansion",
+            "at the park"
+          ],
+          "correct_index": 0,
+          "sentence_index": 74
+        },
+        {
+          "id": "gl_p6_s10_q1",
+          "type": "choice",
+          "question_en": "What is the correct answer to this question: Whom does the singer ask the crowd to say farewells to?",
+          "options_en": [
+            "Miss Gauri Gupta, Mr Rahul Gupta and Mrs Anushka Gupta",
+            "Raj Sharma and Sameena Dingra",
+            "Pankaj Bhaya and Kirti"
+          ],
+          "correct_index": 0,
+          "sentence_index": 75
+        },
+        {
+          "id": "gl_p6_s10_q2",
+          "type": "choice",
+          "question_en": "What does the narrator do after hearing lots of clapping?",
+          "options_en": [
+            "starts clapping too",
+            "leaves with her parents",
+            "jumps on stage"
+          ],
+          "correct_index": 0,
+          "sentence_index": 75
+        },
+        {
+          "id": "gl_p6_s11_q1",
+          "type": "choice",
+          "question_en": "Who goes into Meena's mansion?",
+          "options_en": [
+            "my parents and I",
+            "Gauri and Rahul",
+            "Kimara and Meena"
+          ],
+          "correct_index": 0,
+          "sentence_index": 76
+        },
+        {
+          "id": "gl_p6_s11_q2",
+          "type": "choice",
+          "question_en": "Whose mansion do they enter?",
+          "options_en": [
+            "Meena's humangas mansion",
+            "Pankaj Bhaya's house",
+            "Aisha's apartment"
+          ],
+          "correct_index": 0,
+          "sentence_index": 76
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "Who will leave at 12:00 today?",
+          "options_en": [
+            "Gauri",
+            "Pankaj Bhaya",
+            "Meena"
+          ],
+          "correct_index": 0,
+          "sentence_index": 77
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "Why is the farewell so early?",
+          "options_en": [
+            "Because Gauri will leave at 12:00 today",
+            "Because of heavy rain",
+            "Because it is a food truck party"
+          ],
+          "correct_index": 0,
+          "sentence_index": 77
+        },
+        {
+          "id": "gl_p7_s1_q1",
+          "type": "choice",
+          "question_en": "What does the speaker exclaim?",
+          "options_en": [
+            "What a coincidence !!",
+            "Goodbye Gauri",
+            "See you later"
+          ],
+          "correct_index": 0,
+          "sentence_index": 78
+        },
+        {
+          "id": "gl_p7_s1_q2",
+          "type": "choice",
+          "question_en": "How does the speaker react in this sentence?",
+          "options_en": [
+            "By saying 'What a coincidence !!'",
+            "By crying",
+            "By laughing"
+          ],
+          "correct_index": 0,
+          "sentence_index": 78
+        },
+        {
+          "id": "gl_p7_s2_q1",
+          "type": "choice",
+          "question_en": "Where did the party happen instead of outside?",
+          "options_en": [
+            "In Meena's house",
+            "Outside",
+            "In Kimara's house"
+          ],
+          "correct_index": 0,
+          "sentence_index": 79
+        },
+        {
+          "id": "gl_p7_s2_q2",
+          "type": "choice",
+          "question_en": "What happened instead of the party happening outside like usual?",
+          "options_en": [
+            "It happened in Meena's house",
+            "It was canceled",
+            "It moved to the park"
+          ],
+          "correct_index": 0,
+          "sentence_index": 79
+        },
+        {
+          "id": "gl_p7_s3_q1",
+          "type": "choice",
+          "question_en": "What did they have to do after tons of partying?",
+          "options_en": [
+            "Say goodbye to Gauri",
+            "Eat pasta",
+            "Watch a movie"
+          ],
+          "correct_index": 0,
+          "sentence_index": 80
+        },
+        {
+          "id": "gl_p7_s3_q2",
+          "type": "choice",
+          "question_en": "Who did they finally have to say goodbye to?",
+          "options_en": [
+            "Gauri",
+            "Rahul Gupta",
+            "Meena"
+          ],
+          "correct_index": 0,
+          "sentence_index": 80
+        },
+        {
+          "id": "gl_p7_s4_q1",
+          "type": "choice",
+          "question_en": "Why were they really sad?",
+          "options_en": [
+            "Because Gauri had comforted the narrator and was their first friend in Noida",
+            "Because the food truck party ended",
+            "Because of heavy rain"
+          ],
+          "correct_index": 0,
+          "sentence_index": 81
+        },
+        {
+          "id": "gl_p7_s4_q2",
+          "type": "choice",
+          "question_en": "Where had the narrator moved to when Gauri comforted them?",
+          "options_en": [
+            "Sector 2 Noida",
+            "Gurgaon DLF",
+            "Meena's house"
+          ],
+          "correct_index": 0,
+          "sentence_index": 81
+        },
+        {
+          "id": "gl_p7_s5_q1",
+          "type": "choice",
+          "question_en": "Where would the narrator visit Gauri?",
+          "options_en": [
+            "Mumbai",
+            "Noida",
+            "Gurgaon"
+          ],
+          "correct_index": 0,
+          "sentence_index": 82
+        },
+        {
+          "id": "gl_p7_s5_q2",
+          "type": "choice",
+          "question_en": "How could the narrator easily keep in touch with Gauri?",
+          "options_en": [
+            "By texting with her on the computer",
+            "By calling Rahul",
+            "By sending letters"
+          ],
+          "correct_index": 0,
+          "sentence_index": 82
+        }
+      ]
+    },
+    {
+      "paragraph_index": 8,
+      "questions": [
+        {
+          "id": "gl_p8_s0_q1",
+          "type": "choice",
+          "question_en": "When did Aisha wake up?",
+          "options_en": [
+            "At 5:00",
+            "At 7:00",
+            "At 6:30"
+          ],
+          "correct_index": 0,
+          "sentence_index": 83
+        },
+        {
+          "id": "gl_p8_s0_q2",
+          "type": "choice",
+          "question_en": "Why did she wake up at 5:00?",
+          "options_en": [
+            "So she can text Gauri to see if she is awake",
+            "To get ready for a party",
+            "To help her parents with work"
+          ],
+          "correct_index": 0,
+          "sentence_index": 83
+        },
+        {
+          "id": "gl_p8_s1_q1",
+          "type": "choice",
+          "question_en": "Who responds when Aisha starts texting?",
+          "options_en": [
+            "Gauri",
+            "Meena",
+            "Kimara"
+          ],
+          "correct_index": 0,
+          "sentence_index": 84
+        },
+        {
+          "id": "gl_p8_s1_q2",
+          "type": "choice",
+          "question_en": "What does Gauri do after Aisha starts texting?",
+          "options_en": [
+            "Texts back",
+            "Calls Aisha",
+            "Goes to school"
+          ],
+          "correct_index": 0,
+          "sentence_index": 84
+        },
+        {
+          "id": "gl_p8_s2_q1",
+          "type": "choice",
+          "question_en": "How long did Aisha text before Gauri went to sleep?",
+          "options_en": [
+            "1 hour",
+            "30 minutes",
+            "2 hours"
+          ],
+          "correct_index": 0,
+          "sentence_index": 85
+        },
+        {
+          "id": "gl_p8_s2_q2",
+          "type": "choice",
+          "question_en": "What does Aisha do after Gauri goes to sleep?",
+          "options_en": [
+            "Gets ready for school",
+            "Goes back to bed",
+            "Calls her mum"
+          ],
+          "correct_index": 0,
+          "sentence_index": 85
+        },
+        {
+          "id": "gl_p8_s3_q1",
+          "type": "choice",
+          "question_en": "What does Aisha suddenly see?",
+          "options_en": [
+            "Raindrops pouring",
+            "A car arriving",
+            "A cat in the garden"
+          ],
+          "correct_index": 0,
+          "sentence_index": 86
+        },
+        {
+          "id": "gl_p8_s3_q2",
+          "type": "choice",
+          "question_en": "How do the raindrops appear in the sentence?",
+          "options_en": [
+            "Pouring",
+            "Dripping slowly",
+            "Falling as snow"
+          ],
+          "correct_index": 0,
+          "sentence_index": 86
+        },
+        {
+          "id": "gl_p8_s4_q1",
+          "type": "choice",
+          "question_en": "Who gets an email from the school?",
+          "options_en": [
+            "Muma",
+            "Papa",
+            "Aisha"
+          ],
+          "correct_index": 0,
+          "sentence_index": 87
+        },
+        {
+          "id": "gl_p8_s4_q2",
+          "type": "choice",
+          "question_en": "What does the email from the school say?",
+          "options_en": [
+            "The school is closed due to heavy rain",
+            "There is a school holiday tomorrow",
+            "School will start late"
+          ],
+          "correct_index": 0,
+          "sentence_index": 87
+        },
+        {
+          "id": "gl_p8_s5_q1",
+          "type": "choice",
+          "question_en": "What is Aisha's reaction to the school closure?",
+          "options_en": [
+            "Yay, no school",
+            "She is upset",
+            "She goes to sleep"
+          ],
+          "correct_index": 0,
+          "sentence_index": 88
+        },
+        {
+          "id": "gl_p8_s5_q2",
+          "type": "choice",
+          "question_en": "What does the sentence 'Yay, no school.' express?",
+          "options_en": [
+            "Happiness about no school",
+            "Disappointment about missing class",
+            "Confusion about an email"
+          ],
+          "correct_index": 0,
+          "sentence_index": 88
+        },
+        {
+          "id": "gl_p8_s6_q1",
+          "type": "choice",
+          "question_en": "Who will still go to school according to the email?",
+          "options_en": [
+            "Pankaj Bhaya",
+            "Aisha",
+            "Gauri"
+          ],
+          "correct_index": 0,
+          "sentence_index": 89
+        },
+        {
+          "id": "gl_p8_s6_q2",
+          "type": "choice",
+          "question_en": "Why will Pankaj Bhaya go to school?",
+          "options_en": [
+            "Because he is in 9th grade",
+            "Because he missed the bus",
+            "Because he has a test"
+          ],
+          "correct_index": 0,
+          "sentence_index": 89
+        },
+        {
+          "id": "gl_p8_s7_q1",
+          "type": "choice",
+          "question_en": "What does Aisha exclaim about Bhaya?",
+          "options_en": [
+            "No Bhaya also!",
+            "Bhaya is lucky",
+            "Bhaya is late"
+          ],
+          "correct_index": 0,
+          "sentence_index": 90
+        },
+        {
+          "id": "gl_p8_s7_q2",
+          "type": "choice",
+          "question_en": "Which feeling does 'No Bhaya also!' most likely show?",
+          "options_en": [
+            "Disappointment that Bhaya will go",
+            "Relief that Bhaya stays home",
+            "Surprise that Bhaya is absent"
+          ],
+          "correct_index": 0,
+          "sentence_index": 90
+        },
+        {
+          "id": "gl_p8_s8_q1",
+          "type": "choice",
+          "question_en": "Who have to go to work?",
+          "options_en": [
+            "Mummy and papa",
+            "Aisha and Meena",
+            "Kimara's mum"
+          ],
+          "correct_index": 0,
+          "sentence_index": 91
+        },
+        {
+          "id": "gl_p8_s8_q2",
+          "type": "choice",
+          "question_en": "Why do mummy and papa go out in this sentence?",
+          "options_en": [
+            "To go to work",
+            "To pick up Aisha",
+            "To take Bhaya to school"
+          ],
+          "correct_index": 0,
+          "sentence_index": 91
+        },
+        {
+          "id": "gl_p8_s9_q1",
+          "type": "choice",
+          "question_en": "What does Aisha say about her own school plans?",
+          "options_en": [
+            "But no school for me!",
+            "I will go to school",
+            "I will visit Gauri"
+          ],
+          "correct_index": 0,
+          "sentence_index": 92
+        },
+        {
+          "id": "gl_p8_s9_q2",
+          "type": "choice",
+          "question_en": "Which word shows Aisha's feeling about not having school?",
+          "options_en": [
+            "No",
+            "Maybe",
+            "Later"
+          ],
+          "correct_index": 0,
+          "sentence_index": 92
+        },
+        {
+          "id": "gl_p8_s10_q1",
+          "type": "choice",
+          "question_en": "Where do Aisha's parents drop her off?",
+          "options_en": [
+            "At Kimara's",
+            "At the park",
+            "At Meena's school"
+          ],
+          "correct_index": 0,
+          "sentence_index": 93
+        },
+        {
+          "id": "gl_p8_s10_q2",
+          "type": "choice",
+          "question_en": "Who comes over to Kimara's as well?",
+          "options_en": [
+            "Meena",
+            "Gauri",
+            "Pankaj Bhaya"
+          ],
+          "correct_index": 0,
+          "sentence_index": 93
+        },
+        {
+          "id": "gl_p8_s11_q1",
+          "type": "choice",
+          "question_en": "Why do Aisha's parents drop her off at Kimara's house?",
+          "options_en": [
+            "Because it is huge and her mum is a stay at home with many maids",
+            "Because Kimara goes to the same school",
+            "Because Kimara's mum works late"
+          ],
+          "correct_index": 0,
+          "sentence_index": 94
+        },
+        {
+          "id": "gl_p8_s11_q2",
+          "type": "choice",
+          "question_en": "Whose house is described as huge with many maids?",
+          "options_en": [
+            "Kimara's mum's house",
+            "Meena's house",
+            "Aisha's house"
+          ],
+          "correct_index": 0,
+          "sentence_index": 94
+        },
+        {
+          "id": "gl_p8_s12_q1",
+          "type": "choice",
+          "question_en": "What do the children do at Kimara's house?",
+          "options_en": [
+            "Play and eat lunch",
+            "Go to schoolwork",
+            "Watch a movie"
+          ],
+          "correct_index": 0,
+          "sentence_index": 95
+        },
+        {
+          "id": "gl_p8_s12_q2",
+          "type": "choice",
+          "question_en": "Who comes to pick Aisha and Meena up after lunch?",
+          "options_en": [
+            "Their mums",
+            "Pankaj Bhaya",
+            "Kimara's dad"
+          ],
+          "correct_index": 0,
+          "sentence_index": 95
+        }
+      ]
+    },
+    {
+      "paragraph_index": 9,
+      "questions": [
+        {
+          "id": "gl_p9_s0_q1",
+          "type": "choice",
+          "question_en": "Who has some news to tell us today?",
+          "options_en": [
+            "Meena",
+            "Aisha",
+            "Kimara"
+          ],
+          "correct_index": 0,
+          "sentence_index": 96
+        },
+        {
+          "id": "gl_p9_s0_q2",
+          "type": "choice",
+          "question_en": "When does Meena have news to tell?",
+          "options_en": [
+            "Today",
+            "Tomorrow",
+            "Yesterday"
+          ],
+          "correct_index": 0,
+          "sentence_index": 96
+        },
+        {
+          "id": "gl_p9_s1_q1",
+          "type": "choice",
+          "question_en": "What will the speaker give us?",
+          "options_en": [
+            "The hint Meena gave",
+            "A ticket to the movie",
+            "A sandwich"
+          ],
+          "correct_index": 0,
+          "sentence_index": 97
+        },
+        {
+          "id": "gl_p9_s1_q2",
+          "type": "choice",
+          "question_en": "Who received the same hint along with the speaker?",
+          "options_en": [
+            "Kimara",
+            "Gauri",
+            "Pankaj"
+          ],
+          "correct_index": 0,
+          "sentence_index": 97
+        },
+        {
+          "id": "gl_p9_s2_q1",
+          "type": "choice",
+          "question_en": "What is Meena's hint?",
+          "options_en": [
+            "I am an only child",
+            "I like pasta",
+            "I am moving away"
+          ],
+          "correct_index": 0,
+          "sentence_index": 98
+        },
+        {
+          "id": "gl_p9_s2_q2",
+          "type": "choice",
+          "question_en": "How does Meena describe her family status in the hint?",
+          "options_en": [
+            "Only child",
+            "Oldest sibling",
+            "Has many siblings"
+          ],
+          "correct_index": 0,
+          "sentence_index": 98
+        },
+        {
+          "id": "gl_p9_s3_q1",
+          "type": "choice",
+          "question_en": "What does the speaker ask after hearing the hint?",
+          "options_en": [
+            "Could you figure out something?",
+            "Where is the puppy?",
+            "When is the party?"
+          ],
+          "correct_index": 0,
+          "sentence_index": 99
+        },
+        {
+          "id": "gl_p9_s3_q2",
+          "type": "choice",
+          "question_en": "Why does the speaker ask 'Could you figure out something?'",
+          "options_en": [
+            "To see if the hint revealed information",
+            "To ask about the movie time",
+            "To ask about lunch plans"
+          ],
+          "correct_index": 0,
+          "sentence_index": 99
+        },
+        {
+          "id": "gl_p9_s4_q1",
+          "type": "choice",
+          "question_en": "Who figured out something from the hint?",
+          "options_en": [
+            "Kimara",
+            "Aisha",
+            "Gauri"
+          ],
+          "correct_index": 0,
+          "sentence_index": 100
+        },
+        {
+          "id": "gl_p9_s4_q2",
+          "type": "choice",
+          "question_en": "What did Kimara do after hearing the hint?",
+          "options_en": [
+            "She figured something out",
+            "She left the room",
+            "She called her mum"
+          ],
+          "correct_index": 0,
+          "sentence_index": 100
+        },
+        {
+          "id": "gl_p9_s5_q1",
+          "type": "choice",
+          "question_en": "What does Kimara say after figuring it out?",
+          "options_en": [
+            "Oh, you are getting a puppy?",
+            "Are we going to the food truck party?",
+            "Did you finish your homework?"
+          ],
+          "correct_index": 0,
+          "sentence_index": 101
+        },
+        {
+          "id": "gl_p9_s5_q2",
+          "type": "choice",
+          "question_en": "How is Kimara's question punctuated in the sentence?",
+          "options_en": [
+            "As a question",
+            "As a statement",
+            "As an exclamation"
+          ],
+          "correct_index": 0,
+          "sentence_index": 101
+        },
+        {
+          "id": "gl_p9_s6_q1",
+          "type": "choice",
+          "question_en": "What does Meena tell Kimara in response?",
+          "options_en": [
+            "Yes! We are definitely getting a puppy",
+            "No, we are not getting a puppy",
+            "Maybe later this year"
+          ],
+          "correct_index": 0,
+          "sentence_index": 102
+        },
+        {
+          "id": "gl_p9_s6_q2",
+          "type": "choice",
+          "question_en": "What do they decide to do about the news for now?",
+          "options_en": [
+            "Talk about it later",
+            "Tell everyone immediately",
+            "Cancel the plan"
+          ],
+          "correct_index": 0,
+          "sentence_index": 102
+        },
+        {
+          "id": "gl_p9_s7_q1",
+          "type": "choice",
+          "question_en": "What does the speaker say is releasing today?",
+          "options_en": [
+            "A movie",
+            "A book",
+            "A new song"
+          ],
+          "correct_index": 0,
+          "sentence_index": 103
+        },
+        {
+          "id": "gl_p9_s7_q2",
+          "type": "choice",
+          "question_en": "Which movie name does the speaker mention?",
+          "options_en": [
+            "Descendants 2",
+            "Descendants 1",
+            "The Food Truck Party"
+          ],
+          "correct_index": 0,
+          "sentence_index": 103
+        },
+        {
+          "id": "gl_p9_s8_q1",
+          "type": "choice",
+          "question_en": "What does Kimara ask about watching?",
+          "options_en": [
+            "If they have watched Descendants 1",
+            "If they have seen the food truck",
+            "If they have finished homework"
+          ],
+          "correct_index": 0,
+          "sentence_index": 104
+        },
+        {
+          "id": "gl_p9_s8_q2",
+          "type": "choice",
+          "question_en": "Why is Kimara surprised about watching part 2?",
+          "options_en": [
+            "They haven't watched part 1",
+            "They don't like movies",
+            "They missed the premiere"
+          ],
+          "correct_index": 0,
+          "sentence_index": 104
+        },
+        {
+          "id": "gl_p9_s9_q1",
+          "type": "choice",
+          "question_en": "What does Meena reply about knowing Descendants?",
+          "options_en": [
+            "They don't even know what Descendants is",
+            "They have watched it many times",
+            "They read the book"
+          ],
+          "correct_index": 0,
+          "sentence_index": 105
+        },
+        {
+          "id": "gl_p9_s9_q2",
+          "type": "choice",
+          "question_en": "How does Meena describe their knowledge of Descendants?",
+          "options_en": [
+            "They don't even know what it is",
+            "They are experts",
+            "They have tickets"
+          ],
+          "correct_index": 0,
+          "sentence_index": 105
+        },
+        {
+          "id": "gl_p9_s10_q1",
+          "type": "choice",
+          "question_en": "What reassurance does someone give after Meena's reply?",
+          "options_en": [
+            "Don't worry",
+            "Don't go to the movie",
+            "Don't tell anyone"
+          ],
+          "correct_index": 0,
+          "sentence_index": 106
+        },
+        {
+          "id": "gl_p9_s10_q2",
+          "type": "choice",
+          "question_en": "How many words start the reassuring sentence?",
+          "options_en": [
+            "Don't worry",
+            "Be careful",
+            "Good job"
+          ],
+          "correct_index": 0,
+          "sentence_index": 106
+        },
+        {
+          "id": "gl_p9_s11_q1",
+          "type": "choice",
+          "question_en": "Who got premiere tickets from his office?",
+          "options_en": [
+            "My father",
+            "Rahul Gupta",
+            "Pankaj"
+          ],
+          "correct_index": 0,
+          "sentence_index": 107
+        },
+        {
+          "id": "gl_p9_s11_q2",
+          "type": "choice",
+          "question_en": "Which movie were the premiere tickets for?",
+          "options_en": [
+            "Descendants 1",
+            "Descendants 2",
+            "A food truck show"
+          ],
+          "correct_index": 0,
+          "sentence_index": 107
+        },
+        {
+          "id": "gl_p9_s12_q1",
+          "type": "choice",
+          "question_en": "What is Kimara worried about?",
+          "options_en": [
+            "Whether their parents know about this",
+            "Whether they have snacks",
+            "Whether it will rain"
+          ],
+          "correct_index": 0,
+          "sentence_index": 108
+        },
+        {
+          "id": "gl_p9_s12_q2",
+          "type": "choice",
+          "question_en": "How does Kimara express her worry?",
+          "options_en": [
+            "She asks if their parents know",
+            "She yells loudly",
+            "She goes to sleep"
+          ],
+          "correct_index": 0,
+          "sentence_index": 108
+        },
+        {
+          "id": "gl_p9_s13_q1",
+          "type": "choice",
+          "question_en": "Who says that of course the parents know?",
+          "options_en": [
+            "Meena",
+            "Aisha",
+            "Gauri"
+          ],
+          "correct_index": 0,
+          "sentence_index": 109
+        },
+        {
+          "id": "gl_p9_s13_q2",
+          "type": "choice",
+          "question_en": "What does Meena say about the parents' knowledge?",
+          "options_en": [
+            "Yes of course they know",
+            "No they don't know",
+            "They will never know"
+          ],
+          "correct_index": 0,
+          "sentence_index": 109
+        },
+        {
+          "id": "gl_p9_s14_q1",
+          "type": "choice",
+          "question_en": "Who told her father to tell their parents?",
+          "options_en": [
+            "Aisha",
+            "Kimara",
+            "Meena"
+          ],
+          "correct_index": 0,
+          "sentence_index": 110
+        },
+        {
+          "id": "gl_p9_s14_q2",
+          "type": "choice",
+          "question_en": "What action did Aisha take according to Meena?",
+          "options_en": [
+            "Told her father to tell their parents",
+            "Bought premiere tickets",
+            "Prepared sandwiches"
+          ],
+          "correct_index": 0,
+          "sentence_index": 110
+        },
+        {
+          "id": "gl_p9_s15_q1",
+          "type": "choice",
+          "question_en": "What happens after Meena says parents know and Aisha told her father?",
+          "options_en": [
+            "And it was set",
+            "They changed their minds",
+            "They postponed the movie"
+          ],
+          "correct_index": 0,
+          "sentence_index": 111
+        },
+        {
+          "id": "gl_p9_s15_q2",
+          "type": "choice",
+          "question_en": "How is the plan described after parents are informed?",
+          "options_en": [
+            "It was set",
+            "It was cancelled",
+            "It was postponed"
+          ],
+          "correct_index": 0,
+          "sentence_index": 111
+        },
+        {
+          "id": "gl_p9_s16_q1",
+          "type": "choice",
+          "question_en": "What did they put on before going out?",
+          "options_en": [
+            "Their best clothes",
+            "Raincoats",
+            "Pajamas"
+          ],
+          "correct_index": 0,
+          "sentence_index": 112
+        },
+        {
+          "id": "gl_p9_s16_q2",
+          "type": "choice",
+          "question_en": "Where did they go with their fathers?",
+          "options_en": [
+            "The movie theater",
+            "The food truck party",
+            "The park"
+          ],
+          "correct_index": 0,
+          "sentence_index": 112
+        },
+        {
+          "id": "gl_p9_s17_q1",
+          "type": "choice",
+          "question_en": "How did they feel after the movie?",
+          "options_en": [
+            "Really happy",
+            "Very sad",
+            "Bored"
+          ],
+          "correct_index": 0,
+          "sentence_index": 113
+        },
+        {
+          "id": "gl_p9_s17_q2",
+          "type": "choice",
+          "question_en": "What did Kimara and Meena's parents give to the speaker's papa after the movie?",
+          "options_en": [
+            "The money",
+            "A sandwich",
+            "A ticket"
+          ],
+          "correct_index": 0,
+          "sentence_index": 113
+        }
+      ]
+    },
+    {
+      "paragraph_index": 10,
+      "questions": [
+        {
+          "id": "gl_p10_s0_q1",
+          "type": "choice",
+          "question_en": "Who gave the money to my Papa?",
+          "options_en": [
+            "Kimara and Meena's parents",
+            "My parents",
+            "The singer"
+          ],
+          "correct_index": 0,
+          "sentence_index": 114
+        },
+        {
+          "id": "gl_p10_s0_q2",
+          "type": "choice",
+          "question_en": "Why were we really happy?",
+          "options_en": [
+            "Because of the movie",
+            "Because of the food truck party",
+            "Because we got a puppy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 114
+        },
+        {
+          "id": "gl_p10_s1_q1",
+          "type": "choice",
+          "question_en": "What is the end of?",
+          "options_en": [
+            "The diary",
+            "The food truck party",
+            "The farewell"
+          ],
+          "correct_index": 0,
+          "sentence_index": 115
+        },
+        {
+          "id": "gl_p10_s1_q2",
+          "type": "choice",
+          "question_en": "How does the writer say goodbye?",
+          "options_en": [
+            "BYE!!",
+            "Good night",
+            "See you later"
+          ],
+          "correct_index": 0,
+          "sentence_index": 115
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'My diary!'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "daily",
+      "meaning_vi": "hàng ngày",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "diary",
+      "meaning_vi": "nhật ký",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "neighborhood",
+      "meaning_vi": "khu phố, khu dân cư",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "divided",
+      "meaning_vi": "chia ra",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "believe",
+      "meaning_vi": "tin",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "farewell",
+      "meaning_vi": "tiệc chia tay",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "delicious",
+      "meaning_vi": "ngon",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "annoying",
+      "meaning_vi": "phiền phức",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "cybersecurity",
+      "meaning_vi": "an ninh mạng",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "youngsters",
+      "meaning_vi": "thanh thiếu niên (trẻ con)",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "voted",
+      "meaning_vi": "bình chọn",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "pretend",
+      "meaning_vi": "giả vờ",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "president",
+      "meaning_vi": "lớp trưởng",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "respect",
+      "meaning_vi": "tôn trọng",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "rumors",
+      "meaning_vi": "tin đồn",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "scolded",
+      "meaning_vi": "bị mắng",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "invented",
+      "meaning_vi": "phát minh",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "catch up",
+      "meaning_vi": "bắt kịp, gặp gỡ",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "hosting",
+      "meaning_vi": "tổ chức",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "behalf",
+      "meaning_vi": "thay mặt",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "monthly",
+      "meaning_vi": "hàng tháng",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "theme",
+      "meaning_vi": "chủ đề",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "refreshment",
+      "meaning_vi": "đồ giải khát",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "chilled",
+      "meaning_vi": "ướp lạnh",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "vegan",
+      "meaning_vi": "thuần chay",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "custard",
+      "meaning_vi": "kem trứng",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "suddenly",
+      "meaning_vi": "đột nhiên",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "mansion",
+      "meaning_vi": "biệt thự",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "coincidence",
+      "meaning_vi": "sự trùng hợp",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "comforted",
+      "meaning_vi": "an ủi",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "easily",
+      "meaning_vi": "dễ dàng",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "text",
+      "meaning_vi": "nhắn tin",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "raindrops",
+      "meaning_vi": "hạt mưa",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "pouring",
+      "meaning_vi": "đổ xuống (mưa)",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "closed",
+      "meaning_vi": "đóng cửa",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "maids",
+      "meaning_vi": "người giúp việc",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "hint",
+      "meaning_vi": "gợi ý",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "figure out",
+      "meaning_vi": "đoán ra, tìm ra",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "definitely",
+      "meaning_vi": "chắc chắn",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "premiere",
+      "meaning_vi": "suất chiếu ra mắt",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "happy",
+      "meaning_vi": "vui vẻ",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "end",
+      "meaning_vi": "kết thúc",
+      "paragraph_index": 10
+    }
+  ]
+}

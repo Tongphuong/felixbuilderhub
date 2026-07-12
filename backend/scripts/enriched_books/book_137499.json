@@ -1,0 +1,642 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L1",
+  "level_label": "Cấp 1",
+  "topic": "All about me '_'",
+  "slug": "book_137499",
+  "audio_filename": "book_137499.mp3",
+  "book_slug": "book_137499",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_137499/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_137499/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_137499/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_137499/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_137499/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_137499/page_07.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_137499/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_137499/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_137499/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_137499/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_137499/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_137499/page_07.mp3"
+  ],
+  "book_attribution": {
+    "title": "All about me '_'",
+    "creators": [
+      "Yike He",
+      "Rijuta Ghate",
+      "Ruchi Bakshi"
+    ],
+    "publisher": "StoryWeaver Community",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: All about me '_' is written by Yike He . © Yike He , 2020. Some rights reserved. Released under CC BY 4.0 license. Images Attributions: Cover page: Smiling girl in a pink dress , by Rijuta Ghate © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license. Page 2: Girl eating a banana , by Rijuta Ghate © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license. Page 3: Girl smiling , by Rijuta Ghate © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license. Page 4: A girl surrounded by birds and animals , by Ruchi Bakshi © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 5: Crying baby , by Rijuta Ghate © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license. Page 6: Boy and girl eating mangoes , by Rijuta Ghate © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license. Page 7: A boy and a girl reading , by Rijuta Ghate © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/137499-all-about-me",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "Girl eating a banana , by Rijuta Ghate © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "Girl smiling , by Rijuta Ghate © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "A girl surrounded by birds and animals , by Ruchi Bakshi © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "Crying baby , by Rijuta Ghate © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "Boy and girl eating mangoes , by Rijuta Ghate © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "A boy and a girl reading , by Rijuta Ghate © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "All about me '_'",
+    "paragraphs_en": [
+      "Hi! My name is Yike. What's your name?",
+      "I'm 8 years old. How old are you?",
+      "I have black hair. How about you?",
+      "I have a little brother. How about you?",
+      "I like to eat. how about you?",
+      "I like this book. How about you?"
+    ],
+    "sentences": [
+      {
+        "text_en": "Hi! My name is Yike.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_137499/s_000.mp3",
+        "text_vi": "Chào bạn! Tên mình là Yike."
+      },
+      {
+        "text_en": "What's your name?",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_137499/s_001.mp3",
+        "text_vi": "Tên bạn là gì?"
+      },
+      {
+        "text_en": "I'm 8 years old.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_137499/s_002.mp3",
+        "text_vi": "Mình 8 tuổi."
+      },
+      {
+        "text_en": "How old are you?",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_137499/s_003.mp3",
+        "text_vi": "Bạn bao nhiêu tuổi?"
+      },
+      {
+        "text_en": "I have black hair.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_137499/s_004.mp3",
+        "text_vi": "Mình có tóc đen."
+      },
+      {
+        "text_en": "How about you?",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_137499/s_005.mp3",
+        "text_vi": "Còn bạn thì sao?"
+      },
+      {
+        "text_en": "I have a little brother.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_137499/s_006.mp3",
+        "text_vi": "Mình có một em trai nhỏ."
+      },
+      {
+        "text_en": "How about you?",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_137499/s_007.mp3",
+        "text_vi": "Còn bạn thì sao?"
+      },
+      {
+        "text_en": "I like to eat.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_137499/s_008.mp3",
+        "text_vi": "Mình thích ăn."
+      },
+      {
+        "text_en": "how about you?",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_137499/s_009.mp3",
+        "text_vi": "Còn bạn thì sao?"
+      },
+      {
+        "text_en": "I like this book.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_137499/s_010.mp3",
+        "text_vi": "Mình thích quyển sách này."
+      },
+      {
+        "text_en": "How about you?",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_137499/s_011.mp3",
+        "text_vi": "Còn bạn thì sao?"
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "Hi! My name is Yike.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_137499/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "What's your name?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_137499/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "I'm 8 years old.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_137499/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "How old are you?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_137499/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "I have black hair.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_137499/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "How about you?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_137499/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "I have a little brother.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_137499/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "How about you?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_137499/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "I like to eat.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_137499/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "how about you?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_137499/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "I like this book.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_137499/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "How about you?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_137499/s_011.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "What is the speaker's name?",
+          "options_en": [
+            "Yike",
+            "I'm 8 years old",
+            "I have black hair"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "Who says their name in the sentence?",
+          "options_en": [
+            "Yike",
+            "a little brother",
+            "I"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s1_q1",
+          "type": "choice",
+          "question_en": "What question does the speaker ask the listener?",
+          "options_en": [
+            "What's your name?",
+            "How old are you?",
+            "How about you?"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s1_q2",
+          "type": "choice",
+          "question_en": "Which question is used to ask for someone's name?",
+          "options_en": [
+            "What's your name?",
+            "I like to eat.",
+            "I have a little brother."
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "How old is the speaker?",
+          "options_en": [
+            "8 years old",
+            "Has black hair",
+            "Has a little brother"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "What is the speaker's age?",
+          "options_en": [
+            "8 years old",
+            "Yike",
+            "Likes to eat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p1_s1_q1",
+          "type": "choice",
+          "question_en": "What does the speaker ask?",
+          "options_en": [
+            "How old are you?",
+            "What's your name?",
+            "Do you have a little brother?"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p1_s1_q2",
+          "type": "choice",
+          "question_en": "Which information is the speaker asking for?",
+          "options_en": [
+            "Age",
+            "Name",
+            "Hair color"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "What does the speaker say they have?",
+          "options_en": [
+            "black hair",
+            "a little brother",
+            "this book"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "Whose hair is black?",
+          "options_en": [
+            "I (the speaker)",
+            "my little brother",
+            "Yike"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p2_s1_q1",
+          "type": "choice",
+          "question_en": "Who is being asked by the speaker?",
+          "options_en": [
+            "You",
+            "I (the speaker)",
+            "my little brother"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p2_s1_q2",
+          "type": "choice",
+          "question_en": "What does the speaker ask with this sentence?",
+          "options_en": [
+            "How about you?",
+            "How old are you?",
+            "Do you like this book?"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "Who does the speaker have?",
+          "options_en": [
+            "a little brother",
+            "black hair",
+            "this book"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "How many brothers does the speaker have?",
+          "options_en": [
+            "one",
+            "8 years old",
+            "black hair"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p3_s1_q1",
+          "type": "choice",
+          "question_en": "Who is being asked in the question?",
+          "options_en": [
+            "you",
+            "Yike",
+            "his little brother"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p3_s1_q2",
+          "type": "choice",
+          "question_en": "What does the speaker ask the listener?",
+          "options_en": [
+            "How about you?",
+            "How old are you?",
+            "Do you like this book?"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "What does the speaker like to do?",
+          "options_en": [
+            "Eat",
+            "Have black hair",
+            "Have a little brother"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "Who likes to eat?",
+          "options_en": [
+            "I",
+            "Yike",
+            "My little brother"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p4_s1_q1",
+          "type": "choice",
+          "question_en": "What does the speaker ask?",
+          "options_en": [
+            "How about you?",
+            "How old are you?",
+            "What's your name?"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p4_s1_q2",
+          "type": "choice",
+          "question_en": "Who is the speaker asking?",
+          "options_en": [
+            "You",
+            "Yike",
+            "A little brother"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "What does the speaker like?",
+          "options_en": [
+            "this book",
+            "black hair",
+            "a little brother"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "How does the speaker feel about the book?",
+          "options_en": [
+            "likes it",
+            "is 8 years old",
+            "likes to eat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p5_s1_q1",
+          "type": "choice",
+          "question_en": "Who is the speaker asking about?",
+          "options_en": [
+            "you",
+            "Yike",
+            "little brother"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p5_s1_q2",
+          "type": "choice",
+          "question_en": "What does the speaker ask the listener?",
+          "options_en": [
+            "How about you?",
+            "What's your name?",
+            "How old are you?"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'All about me '_''. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "Hi",
+      "meaning_vi": "Chào",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "name",
+      "meaning_vi": "Tên",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "is",
+      "meaning_vi": "Là",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "your",
+      "meaning_vi": "Của bạn",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "years old",
+      "meaning_vi": "Tuổi",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "How old",
+      "meaning_vi": "Bao nhiêu tuổi",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "are",
+      "meaning_vi": "Là",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "have",
+      "meaning_vi": "Có",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "black",
+      "meaning_vi": "Đen",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "hair",
+      "meaning_vi": "Tóc",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "How about you?",
+      "meaning_vi": "Còn bạn thì sao?",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "a",
+      "meaning_vi": "Một",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "little",
+      "meaning_vi": "Nhỏ",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "brother",
+      "meaning_vi": "Em trai",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "like",
+      "meaning_vi": "Thích",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "eat",
+      "meaning_vi": "Ăn",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "this",
+      "meaning_vi": "Này",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "book",
+      "meaning_vi": "Sách",
+      "paragraph_index": 5
+    }
+  ]
+}

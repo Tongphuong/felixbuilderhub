@@ -1,0 +1,1820 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L4",
+  "level_label": "Cấp 4",
+  "topic": "Fruits of Freedom",
+  "slug": "book_163675",
+  "audio_filename": "book_163675.mp3",
+  "book_slug": "book_163675",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_163675/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_163675/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_163675/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_163675/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_163675/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_163675/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_163675/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_163675/page_09.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_163675/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_163675/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_163675/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_163675/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_163675/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_163675/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_163675/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_163675/page_09.mp3"
+  ],
+  "book_attribution": {
+    "title": "Fruits of Freedom",
+    "creators": [
+      "Rose Mburu",
+      "Catherine Groenewald"
+    ],
+    "publisher": "African Storybook Initiative",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: Fruits of Freedom is written by Rose Mburu . © African Storybook Initiative , 2017. Some rights reserved. Released under CC BY 4.0 license. Other Credits: This story 'Fruits of Freedom' has been published on StoryWeaver by African Storybook Initiative. Images Attributions: Cover page: Old lady narrating stories to children seated around a bonfire , by Catherine Groenewald © African Storybook Initiative, 2017. Some rights reserved. Released under CC BY 4.0 license. Page 2: Old lady narrating stories to children seated around a bonfire , by Catherine Groenewald © African Storybook Initiative, 2017. Some rights reserved. Released under CC BY 4.0 license. Page 3: A family working near their huts , by Catherine Groenewald © African Storybook Initiative, 2017. Some rights reserved. Released under CC BY 4.0 license. Page 4: A group of people listening to a man give a speech , by Catherine Groenewald © African Storybook Initiative, 2017. Some rights reserved. Released under CC BY 4.0 license. Page 5: A group of people listening to a man give a speech , by Catherine Groenewald © African Storybook Initiative, 2017. Some rights reserved. Released under CC BY 4.0 license. Page 6: A young man talking to an older man seated on a white sofa , by Catherine Groenewald © African Storybook Initiative, 2017. Some rights reserved. Released under CC BY 4.0 license. Page 7: A young man talking to an older man seated on a white sofa , by Catherine Groenewald © African Storybook Initiative, 2017. Some rights reserved. Released under CC BY 4.0 license. Page 8: People laughing and dancing near a stream , by Catherine Groenewald © African Storybook Initiative, 2017. Some rights reserved. Released under CC BY 4.0 license. Page 9: Old lady narrating stories to sleepy children seated around an empty bonfire , by Catherine Groenewald © African Storybook Initiative, 2017. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/163675-fruits-of-freedom",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "Old lady narrating stories to children seated around a bonfire , by Catherine Groenewald © African Storybook Initiative, 2017. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "A family working near their huts , by Catherine Groenewald © African Storybook Initiative, 2017. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "A group of people listening to a man give a speech , by Catherine Groenewald © African Storybook Initiative, 2017. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "A group of people listening to a man give a speech , by Catherine Groenewald © African Storybook Initiative, 2017. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "A young man talking to an older man seated on a white sofa , by Catherine Groenewald © African Storybook Initiative, 2017. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "A young man talking to an older man seated on a white sofa , by Catherine Groenewald © African Storybook Initiative, 2017. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "People laughing and dancing near a stream , by Catherine Groenewald © African Storybook Initiative, 2017. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "Old lady narrating stories to sleepy children seated around an empty bonfire , by Catherine Groenewald © African Storybook Initiative, 2017. Some rights reserved. Released under CC BY 4.0 license."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "Fruits of Freedom",
+    "paragraphs_en": [
+      "Wamaitha and her grandchildren sat outside her house. The children were excited because they really enjoyed listening to their grandmother's stories. Wamaitha began, “Long, long ago.” She paused and looked at her grandchildren's faces glow with curiosity.",
+      "Wamaitha continued to tell the story: “In the early 1960s beyond the hills and valleys was a village called Mongu. For years, it had been invaded by people from Kitwe village. The people in Mongu were forced to work for long hours with little pay. All they produced was taken to Kitwe village. The little that remained was sold to members of Mongu village at high prices.”",
+      "One night in 1963, the people of Mongu held a secret meeting with the consent of their masters from Kitwe. They had decided enough was enough and wanted back their land. They sat and began to weigh the odds of them winning. They knew Kitwe had a strong army and better weapons. They began to put ideas across but time flew fast and they had no solution. Just as they were about to give up, a young man stood up and said, “I think I know a way.”",
+      "They were all curious and asked, “Tell us!” The young man began, “My grandfather told us about a man named Ubuntu who lives across the forest. He grows a fruit called Freedom which gives people strength to do anything. Let us find this man.” They were all silent and did not know what to do. Since no one else had a better idea, they said, “You go and find this Ubuntu.”",
+      "The young man set out to find Ubuntu. After five days of going through the forest he came across big house. He was very happy. He found an elderly man. The man asked, “What do you want?” The young man answered, “I want Freedom.” Immediately he said that, the man's eyes grew bigger. It was so long since anyone had gone in search of the fruit.",
+      "They talked for a long time. Ubuntu decided to give the young man the fruit. He said, “Listen carefully. Once you eat this fruit you will acquire wisdom and knowledge which will help you to lead your people to independence. This fruit will make you the leader of your people. Rule them with humility.” He handed a fruit in the shape of a grape and added, “Follow my instructions and your land will prosper. Now, go and tell no one about me.”",
+      "The young man went back to Mongu. Just as the old man had said, they were able to chase the people of Kitwe away and get back their land. A celebration was held in the whole land. The young man was praised for his courage. He became the first King of Mongu village. As king, he was wise enough to rule his people well. He served them with humility and considered them in every action he took. THE END.",
+      "Wamaitha said, “My dear grandchildren, the fruit of freedom comes to each one of us at a given point. Be wise enough to use it well. Remember your actions do not only affect you but everyone around you.” Satisfied and happy, the grandchildren went into the house. Wamaitha sat back and watched them go. She hoped the stories she told them every day would build them into better people and leaders for tomorrow."
+    ],
+    "sentences": [
+      {
+        "text_en": "Wamaitha and her grandchildren sat outside her house.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_000.mp3",
+        "text_vi": "Wamaitha và các cháu ngồi bên ngoài nhà bà."
+      },
+      {
+        "text_en": "The children were excited because they really enjoyed listening to their grandmother's stories.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_001.mp3",
+        "text_vi": "Các cháu rất hào hứng vì chúng rất thích nghe bà kể chuyện."
+      },
+      {
+        "text_en": "Wamaitha began, “Long, long ago.” She paused and looked at her grandchildren's faces glow with curiosity.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_002.mp3",
+        "text_vi": "Wamaitha bắt đầu, “Ngày xửa ngày xưa.” Bà ngừng lại và nhìn khuôn mặt các cháu sáng bừng lên vì tò mò."
+      },
+      {
+        "text_en": "Wamaitha continued to tell the story: “In the early 1960s beyond the hills and valleys was a village called Mongu.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_003.mp3",
+        "text_vi": "Wamaitha kể tiếp câu chuyện: “Vào đầu những năm 1960, phía bên kia đồi núi có một ngôi làng tên là Mongu."
+      },
+      {
+        "text_en": "For years, it had been invaded by people from Kitwe village.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_004.mp3",
+        "text_vi": "Nhiều năm liền, làng này bị người từ làng Kitwe xâm chiếm."
+      },
+      {
+        "text_en": "The people in Mongu were forced to work for long hours with little pay.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_005.mp3",
+        "text_vi": "Người dân ở Mongu bị ép phải làm việc nhiều giờ với tiền công ít ỏi."
+      },
+      {
+        "text_en": "All they produced was taken to Kitwe village.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_006.mp3",
+        "text_vi": "Tất cả những gì họ làm ra đều bị mang về làng Kitwe."
+      },
+      {
+        "text_en": "The little that remained was sold to members of Mongu village at high prices.”",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_007.mp3",
+        "text_vi": "Số ít còn lại thì bị bán cho người dân làng Mongu với giá rất cao.”"
+      },
+      {
+        "text_en": "One night in 1963, the people of Mongu held a secret meeting with the consent of their masters from Kitwe.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_008.mp3",
+        "text_vi": "Một đêm năm 1963, người dân làng Mongu tổ chức một cuộc họp bí mật với sự đồng ý của những người chủ từ Kitwe."
+      },
+      {
+        "text_en": "They had decided enough was enough and wanted back their land.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_009.mp3",
+        "text_vi": "Họ đã quyết định rằng đủ rồi và muốn lấy lại đất của mình."
+      },
+      {
+        "text_en": "They sat and began to weigh the odds of them winning.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_010.mp3",
+        "text_vi": "Họ ngồi xuống và bắt đầu cân nhắc khả năng chiến thắng của mình."
+      },
+      {
+        "text_en": "They knew Kitwe had a strong army and better weapons.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_011.mp3",
+        "text_vi": "Họ biết Kitwe có một đội quân mạnh và vũ khí tốt hơn."
+      },
+      {
+        "text_en": "They began to put ideas across but time flew fast and they had no solution.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_012.mp3",
+        "text_vi": "Họ bắt đầu đưa ra các ý tưởng nhưng thời gian trôi nhanh và họ không có giải pháp nào."
+      },
+      {
+        "text_en": "Just as they were about to give up, a young man stood up and said, “I think I know a way.”",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_013.mp3",
+        "text_vi": "Ngay khi họ sắp bỏ cuộc, một chàng trai trẻ đứng dậy và nói, “Cháu nghĩ cháu biết một cách.”"
+      },
+      {
+        "text_en": "They were all curious and asked, “Tell us!” The young man began, “My grandfather told us about a man named Ubuntu who lives across the forest.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_014.mp3",
+        "text_vi": "Tất cả đều tò mò và hỏi, “Kể cho chúng tôi nghe đi!” Chàng trai trẻ bắt đầu, “Ông cháu kể cho chúng cháu nghe về một người đàn ông tên là Ubuntu sống bên kia khu rừng."
+      },
+      {
+        "text_en": "He grows a fruit called Freedom which gives people strength to do anything.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_015.mp3",
+        "text_vi": "Ông ấy trồng một loại trái cây gọi là Tự Do, nó giúp mọi người có sức mạnh để làm bất cứ điều gì."
+      },
+      {
+        "text_en": "Let us find this man.” They were all silent and did not know what to do.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_016.mp3",
+        "text_vi": "Chúng ta hãy đi tìm người đàn ông này.” Tất cả đều im lặng và không biết phải làm gì."
+      },
+      {
+        "text_en": "Since no one else had a better idea, they said, “You go and find this Ubuntu.”",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_017.mp3",
+        "text_vi": "Vì không ai có ý tưởng nào hay hơn, họ nói, “Con hãy đi tìm Ubuntu này đi.”"
+      },
+      {
+        "text_en": "The young man set out to find Ubuntu.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_018.mp3",
+        "text_vi": "Chàng trai trẻ lên đường đi tìm Ubuntu."
+      },
+      {
+        "text_en": "After five days of going through the forest he came across big house.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_019.mp3",
+        "text_vi": "Sau năm ngày đi xuyên qua khu rừng, cậu gặp một ngôi nhà lớn."
+      },
+      {
+        "text_en": "He was very happy.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_020.mp3",
+        "text_vi": "Cậu rất vui mừng."
+      },
+      {
+        "text_en": "He found an elderly man.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_021.mp3",
+        "text_vi": "Cậu tìm thấy một người đàn ông lớn tuổi."
+      },
+      {
+        "text_en": "The man asked, “What do you want?” The young man answered, “I want Freedom.” Immediately he said that, the man's eyes grew bigger.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_022.mp3",
+        "text_vi": "Người đàn ông hỏi, “Con muốn gì?” Chàng trai trẻ trả lời, “Cháu muốn Tự Do.” Ngay khi cậu nói vậy, mắt người đàn ông mở to hơn."
+      },
+      {
+        "text_en": "It was so long since anyone had gone in search of the fruit.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_023.mp3",
+        "text_vi": "Đã rất lâu rồi không có ai đi tìm loại trái cây đó."
+      },
+      {
+        "text_en": "They talked for a long time.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_024.mp3",
+        "text_vi": "Họ nói chuyện rất lâu."
+      },
+      {
+        "text_en": "Ubuntu decided to give the young man the fruit.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_025.mp3",
+        "text_vi": "Ubuntu quyết định đưa trái cây cho chàng trai trẻ."
+      },
+      {
+        "text_en": "He said, “Listen carefully.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_026.mp3",
+        "text_vi": "Ông nói, “Hãy lắng nghe cẩn thận."
+      },
+      {
+        "text_en": "Once you eat this fruit you will acquire wisdom and knowledge which will help you to lead your people to independence.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_027.mp3",
+        "text_vi": "Một khi con ăn trái cây này, con sẽ có được sự khôn ngoan và kiến thức giúp con dẫn dắt người dân của mình đến độc lập."
+      },
+      {
+        "text_en": "This fruit will make you the leader of your people.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_028.mp3",
+        "text_vi": "Trái cây này sẽ biến con thành người lãnh đạo của dân tộc con."
+      },
+      {
+        "text_en": "Rule them with humility.” He handed a fruit in the shape of a grape and added, “Follow my instructions and your land will prosper.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_029.mp3",
+        "text_vi": "Hãy cai trị họ bằng sự khiêm tốn.” Ông đưa một trái cây hình quả nho và nói thêm, “Hãy làm theo lời chỉ dẫn của ta và đất nước của con sẽ thịnh vượng."
+      },
+      {
+        "text_en": "Now, go and tell no one about me.”",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_030.mp3",
+        "text_vi": "Bây giờ, hãy đi và đừng kể cho ai về ta.”"
+      },
+      {
+        "text_en": "The young man went back to Mongu.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_031.mp3",
+        "text_vi": "Chàng trai trẻ quay trở lại Mongu."
+      },
+      {
+        "text_en": "Just as the old man had said, they were able to chase the people of Kitwe away and get back their land.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_032.mp3",
+        "text_vi": "Đúng như lời ông lão đã nói, họ đã có thể đuổi người làng Kitwe đi và lấy lại đất của mình."
+      },
+      {
+        "text_en": "A celebration was held in the whole land.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_033.mp3",
+        "text_vi": "Một lễ kỷ niệm đã được tổ chức trên khắp đất nước."
+      },
+      {
+        "text_en": "The young man was praised for his courage.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_034.mp3",
+        "text_vi": "Chàng trai trẻ được ca ngợi vì lòng dũng cảm của mình."
+      },
+      {
+        "text_en": "He became the first King of Mongu village.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_035.mp3",
+        "text_vi": "Cậu trở thành vị Vua đầu tiên của làng Mongu."
+      },
+      {
+        "text_en": "As king, he was wise enough to rule his people well.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_036.mp3",
+        "text_vi": "Với tư cách là vua, cậu đủ khôn ngoan để cai trị dân chúng của mình thật tốt."
+      },
+      {
+        "text_en": "He served them with humility and considered them in every action he took. THE END.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_037.mp3",
+        "text_vi": "Cậu phục vụ họ bằng sự khiêm tốn và luôn nghĩ đến họ trong mọi hành động của mình. HẾT TRUYỆN."
+      },
+      {
+        "text_en": "Wamaitha said, “My dear grandchildren, the fruit of freedom comes to each one of us at a given point.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_038.mp3",
+        "text_vi": "Wamaitha nói, “Các cháu yêu quý của bà, quả tự do đến với mỗi chúng ta vào một thời điểm nhất định."
+      },
+      {
+        "text_en": "Be wise enough to use it well.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_039.mp3",
+        "text_vi": "Hãy đủ khôn ngoan để sử dụng nó thật tốt."
+      },
+      {
+        "text_en": "Remember your actions do not only affect you but everyone around you.” Satisfied and happy, the grandchildren went into the house.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_040.mp3",
+        "text_vi": "Hãy nhớ rằng hành động của các cháu không chỉ ảnh hưởng đến các cháu mà còn đến mọi người xung quanh.” Hài lòng và vui vẻ, các cháu đi vào nhà."
+      },
+      {
+        "text_en": "Wamaitha sat back and watched them go.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_041.mp3",
+        "text_vi": "Wamaitha ngồi tựa lưng và nhìn các cháu đi."
+      },
+      {
+        "text_en": "She hoped the stories she told them every day would build them into better people and leaders for tomorrow.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_042.mp3",
+        "text_vi": "Bà hy vọng những câu chuyện bà kể cho chúng nghe mỗi ngày sẽ giúp chúng trở thành những người tốt hơn và những nhà lãnh đạo cho tương lai."
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "Wamaitha and her grandchildren sat outside her house.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "The children were excited because they really enjoyed listening to their grandmother's stories.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "Wamaitha began, “Long, long ago.” She paused and looked at her grandchildren's faces glow with curiosity.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "Wamaitha continued to tell the story: “In the early 1960s beyond the hills and valleys was a village called Mongu.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "For years, it had been invaded by people from Kitwe village.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "The people in Mongu were forced to work for long hours with little pay.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "All they produced was taken to Kitwe village.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "The little that remained was sold to members of Mongu village at high prices.”",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "One night in 1963, the people of Mongu held a secret meeting with the consent of their masters from Kitwe.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "They had decided enough was enough and wanted back their land.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "They sat and began to weigh the odds of them winning.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "They knew Kitwe had a strong army and better weapons.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "They began to put ideas across but time flew fast and they had no solution.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_012.mp3"
+        },
+        {
+          "id": "ra_13",
+          "text_en": "Just as they were about to give up, a young man stood up and said, “I think I know a way.”",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_013.mp3"
+        },
+        {
+          "id": "ra_14",
+          "text_en": "They were all curious and asked, “Tell us!” The young man began, “My grandfather told us about a man named Ubuntu who lives across the forest.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_014.mp3"
+        },
+        {
+          "id": "ra_15",
+          "text_en": "He grows a fruit called Freedom which gives people strength to do anything.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_015.mp3"
+        },
+        {
+          "id": "ra_16",
+          "text_en": "Let us find this man.” They were all silent and did not know what to do.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_016.mp3"
+        },
+        {
+          "id": "ra_17",
+          "text_en": "Since no one else had a better idea, they said, “You go and find this Ubuntu.”",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_017.mp3"
+        },
+        {
+          "id": "ra_18",
+          "text_en": "The young man set out to find Ubuntu.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_018.mp3"
+        },
+        {
+          "id": "ra_19",
+          "text_en": "After five days of going through the forest he came across big house.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_019.mp3"
+        },
+        {
+          "id": "ra_20",
+          "text_en": "He was very happy.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_020.mp3"
+        },
+        {
+          "id": "ra_21",
+          "text_en": "He found an elderly man.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_021.mp3"
+        },
+        {
+          "id": "ra_22",
+          "text_en": "The man asked, “What do you want?” The young man answered, “I want Freedom.” Immediately he said that, the man's eyes grew bigger.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_022.mp3"
+        },
+        {
+          "id": "ra_23",
+          "text_en": "It was so long since anyone had gone in search of the fruit.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_023.mp3"
+        },
+        {
+          "id": "ra_24",
+          "text_en": "They talked for a long time.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_024.mp3"
+        },
+        {
+          "id": "ra_25",
+          "text_en": "Ubuntu decided to give the young man the fruit.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_025.mp3"
+        },
+        {
+          "id": "ra_26",
+          "text_en": "He said, “Listen carefully.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_026.mp3"
+        },
+        {
+          "id": "ra_27",
+          "text_en": "Once you eat this fruit you will acquire wisdom and knowledge which will help you to lead your people to independence.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_027.mp3"
+        },
+        {
+          "id": "ra_28",
+          "text_en": "This fruit will make you the leader of your people.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_028.mp3"
+        },
+        {
+          "id": "ra_29",
+          "text_en": "Rule them with humility.” He handed a fruit in the shape of a grape and added, “Follow my instructions and your land will prosper.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_029.mp3"
+        },
+        {
+          "id": "ra_30",
+          "text_en": "Now, go and tell no one about me.”",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_030.mp3"
+        },
+        {
+          "id": "ra_31",
+          "text_en": "The young man went back to Mongu.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_031.mp3"
+        },
+        {
+          "id": "ra_32",
+          "text_en": "Just as the old man had said, they were able to chase the people of Kitwe away and get back their land.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_032.mp3"
+        },
+        {
+          "id": "ra_33",
+          "text_en": "A celebration was held in the whole land.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_033.mp3"
+        },
+        {
+          "id": "ra_34",
+          "text_en": "The young man was praised for his courage.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_034.mp3"
+        },
+        {
+          "id": "ra_35",
+          "text_en": "He became the first King of Mongu village.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_035.mp3"
+        },
+        {
+          "id": "ra_36",
+          "text_en": "As king, he was wise enough to rule his people well.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_036.mp3"
+        },
+        {
+          "id": "ra_37",
+          "text_en": "He served them with humility and considered them in every action he took. THE END.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_037.mp3"
+        },
+        {
+          "id": "ra_38",
+          "text_en": "Wamaitha said, “My dear grandchildren, the fruit of freedom comes to each one of us at a given point.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_038.mp3"
+        },
+        {
+          "id": "ra_39",
+          "text_en": "Be wise enough to use it well.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_039.mp3"
+        },
+        {
+          "id": "ra_40",
+          "text_en": "Remember your actions do not only affect you but everyone around you.” Satisfied and happy, the grandchildren went into the house.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_040.mp3"
+        },
+        {
+          "id": "ra_41",
+          "text_en": "Wamaitha sat back and watched them go.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_041.mp3"
+        },
+        {
+          "id": "ra_42",
+          "text_en": "She hoped the stories she told them every day would build them into better people and leaders for tomorrow.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_163675/s_042.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "Who sat outside her house?",
+          "options_en": [
+            "Wamaitha and her grandchildren",
+            "The young man",
+            "The people of Mongu"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "Where did they sit?",
+          "options_en": [
+            "Outside her house",
+            "In the forest",
+            "In Mongu village"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s1_q1",
+          "type": "choice",
+          "question_en": "Why were the children excited?",
+          "options_en": [
+            "Because they really enjoyed listening to their grandmother's stories",
+            "Because they found the fruit Freedom",
+            "Because they chased people of Kitwe away"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s1_q2",
+          "type": "choice",
+          "question_en": "What did the children enjoy?",
+          "options_en": [
+            "Listening to their grandmother's stories",
+            "Eating the fruit",
+            "Meeting Ubuntu"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s2_q1",
+          "type": "choice",
+          "question_en": "What did Wamaitha begin to say?",
+          "options_en": [
+            "Long, long ago.",
+            "I want Freedom.",
+            "Follow my instructions."
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s2_q2",
+          "type": "choice",
+          "question_en": "How did the grandchildren's faces look?",
+          "options_en": [
+            "They glowed with curiosity",
+            "They were angry at their masters",
+            "They were sad about being forced to work"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "When was the village called Mongu said to be?",
+          "options_en": [
+            "In the early 1960s",
+            "One night in 1963",
+            "Long, long ago"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "Where was the village called Mongu located?",
+          "options_en": [
+            "Beyond the hills and valleys",
+            "Across the forest",
+            "Inside a big house"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p1_s1_q1",
+          "type": "choice",
+          "question_en": "Who had invaded the village of Mongu?",
+          "options_en": [
+            "People from Kitwe village",
+            "The young man",
+            "Ubuntu"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p1_s1_q2",
+          "type": "choice",
+          "question_en": "How long had Mongu been invaded?",
+          "options_en": [
+            "For years",
+            "Five days",
+            "One night in 1963"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p1_s2_q1",
+          "type": "choice",
+          "question_en": "What were the people in Mongu forced to do?",
+          "options_en": [
+            "Work for long hours with little pay",
+            "Search for the fruit Freedom",
+            "Chase the people of Kitwe away"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p1_s2_q2",
+          "type": "choice",
+          "question_en": "Why were the people of Mongu suffering according to the sentence?",
+          "options_en": [
+            "Because they worked long hours with little pay",
+            "Because they found Ubuntu",
+            "Because they held a secret meeting"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p1_s3_q1",
+          "type": "choice",
+          "question_en": "What happened to all that the people of Mongu produced?",
+          "options_en": [
+            "It was taken to Kitwe village",
+            "It was sold at high prices within Mongu",
+            "It was eaten by the people"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p1_s3_q2",
+          "type": "choice",
+          "question_en": "Where was all they produced taken?",
+          "options_en": [
+            "To Kitwe village",
+            "To Mongu village",
+            "Across the forest"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p1_s4_q1",
+          "type": "choice",
+          "question_en": "Who bought the little that remained?",
+          "options_en": [
+            "Members of Mongu village",
+            "People from Kitwe village",
+            "The young man"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p1_s4_q2",
+          "type": "choice",
+          "question_en": "How were the prices for the little that remained?",
+          "options_en": [
+            "High prices",
+            "Low prices",
+            "Reasonable prices"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "Who held a secret meeting?",
+          "options_en": [
+            "The people of Mongu",
+            "Their masters from Kitwe",
+            "Wamaitha and her grandchildren"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "When did they hold the secret meeting?",
+          "options_en": [
+            "One night in 1963",
+            "Five days later",
+            "Long, long ago"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p2_s1_q1",
+          "type": "choice",
+          "question_en": "What had they decided?",
+          "options_en": [
+            "Enough was enough",
+            "To find Ubuntu",
+            "To work for long hours"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p2_s1_q2",
+          "type": "choice",
+          "question_en": "What did they want back?",
+          "options_en": [
+            "Their land",
+            "The fruit called Freedom",
+            "Their pay"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p2_s2_q1",
+          "type": "choice",
+          "question_en": "What did they begin to do after they sat?",
+          "options_en": [
+            "Weigh the odds of them winning",
+            "Look for Ubuntu across the forest",
+            "Ask their masters for permission"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p2_s2_q2",
+          "type": "choice",
+          "question_en": "How did they act while considering their chances?",
+          "options_en": [
+            "They sat and began to weigh the odds",
+            "They immediately chased the people of Kitwe",
+            "They celebrated with a feast"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p2_s3_q1",
+          "type": "choice",
+          "question_en": "Who had a strong army?",
+          "options_en": [
+            "Kitwe",
+            "Mongu",
+            "Ubuntu"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p2_s3_q2",
+          "type": "choice",
+          "question_en": "What did Kitwe have besides a strong army?",
+          "options_en": [
+            "Better weapons",
+            "A fruit called Freedom",
+            "A big house"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p2_s4_q1",
+          "type": "choice",
+          "question_en": "What did they begin to do during the meeting?",
+          "options_en": [
+            "Put ideas across",
+            "Eat the fruit of Freedom",
+            "Chase the people of Kitwe away"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p2_s4_q2",
+          "type": "choice",
+          "question_en": "What happened to time while they discussed?",
+          "options_en": [
+            "Time flew fast",
+            "Five days passed",
+            "A celebration was held"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p2_s5_q1",
+          "type": "choice",
+          "question_en": "Who stood up just as they were about to give up?",
+          "options_en": [
+            "A young man",
+            "An elderly man",
+            "Wamaitha"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p2_s5_q2",
+          "type": "choice",
+          "question_en": "What did the young man say when he stood up?",
+          "options_en": [
+            "I think I know a way",
+            "I want Freedom",
+            "Tell us!"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "Who asked, \"Tell us!\"?",
+          "options_en": [
+            "They (the people at the meeting)",
+            "Wamaitha",
+            "Ubuntu"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "Who did the young man say his grandfather told them about?",
+          "options_en": [
+            "A man named Ubuntu",
+            "The King of Mongu",
+            "A leader from Kitwe"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p3_s1_q1",
+          "type": "choice",
+          "question_en": "What does he grow?",
+          "options_en": [
+            "A fruit called Freedom",
+            "Crops for the village",
+            "High-priced goods"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p3_s1_q2",
+          "type": "choice",
+          "question_en": "What does the fruit called Freedom give people?",
+          "options_en": [
+            "Strength to do anything",
+            "Wealth and goods",
+            "Land to farm"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p3_s2_q1",
+          "type": "choice",
+          "question_en": "What did the young man say to the group?",
+          "options_en": [
+            "Let us find this man",
+            "You must pay more",
+            "We should sell our produce"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p3_s2_q2",
+          "type": "choice",
+          "question_en": "How did the group react after he spoke?",
+          "options_en": [
+            "They were excited and shouted",
+            "They were all silent and did not know what to do",
+            "They immediately made a plan"
+          ],
+          "correct_index": 1,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p3_s3_q1",
+          "type": "choice",
+          "question_en": "Why did they tell him, \"You go and find this Ubuntu\"?",
+          "options_en": [
+            "Because no one else had a better idea",
+            "Because Ubuntu had already visited them",
+            "Because Wamaitha ordered them to"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p3_s3_q2",
+          "type": "choice",
+          "question_en": "What did they ask him to do?",
+          "options_en": [
+            "Go and find this Ubuntu",
+            "Stay and lead the meeting",
+            "Buy fruit for the village"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "Who set out to find Ubuntu?",
+          "options_en": [
+            "The young man",
+            "Wamaitha",
+            "The elderly man"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "What did the young man set out to find?",
+          "options_en": [
+            "Ubuntu",
+            "Freedom",
+            "The fruit"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p4_s1_q1",
+          "type": "choice",
+          "question_en": "How many days did it take him to come across the big house?",
+          "options_en": [
+            "Five days",
+            "One night",
+            "For years"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p4_s1_q2",
+          "type": "choice",
+          "question_en": "Where did he come across the big house?",
+          "options_en": [
+            "In the forest",
+            "In Mongu village",
+            "At Wamaitha's house"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p4_s2_q1",
+          "type": "choice",
+          "question_en": "How did he feel after coming across the house?",
+          "options_en": [
+            "He was very happy",
+            "He was excited",
+            "He was curious"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p4_s2_q2",
+          "type": "choice",
+          "question_en": "Why was he very happy?",
+          "options_en": [
+            "He had come across a big house",
+            "He was praised by his people",
+            "He had joined the secret meeting"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p4_s3_q1",
+          "type": "choice",
+          "question_en": "What is the correct answer to this question: Whom did he find at the house?",
+          "options_en": [
+            "An elderly man",
+            "Ubuntu",
+            "His grandfather"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p4_s3_q2",
+          "type": "choice",
+          "question_en": "Which person did he find?",
+          "options_en": [
+            "The elderly man",
+            "A man from Kitwe",
+            "One of the grandchildren"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p4_s4_q1",
+          "type": "choice",
+          "question_en": "What did the man ask the young man?",
+          "options_en": [
+            "\"What do you want?\"",
+            "\"Tell us!\"",
+            "\"Listen carefully.\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p4_s4_q2",
+          "type": "choice",
+          "question_en": "What did the young man answer when asked?",
+          "options_en": [
+            "\"I want Freedom.\"",
+            "\"I want Ubuntu.\"",
+            "\"I want the fruit.\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p4_s5_q1",
+          "type": "choice",
+          "question_en": "What had not happened for a long time?",
+          "options_en": [
+            "Anyone going in search of the fruit",
+            "People visiting Mongu",
+            "The children listening to stories"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p4_s5_q2",
+          "type": "choice",
+          "question_en": "Why did the man's eyes grow bigger when the young man spoke?",
+          "options_en": [
+            "Because it had been so long since anyone had gone in search of the fruit",
+            "Because the young man wanted Freedom",
+            "Because they had already chosen a King"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "Who talked for a long time?",
+          "options_en": [
+            "Ubuntu and the young man",
+            "Wamaitha and her grandchildren",
+            "The people of Mongu"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "How did they talk?",
+          "options_en": [
+            "For a long time",
+            "For five days",
+            "All night"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p5_s1_q1",
+          "type": "choice",
+          "question_en": "Who decided to give the young man the fruit?",
+          "options_en": [
+            "Ubuntu",
+            "The young man",
+            "Wamaitha"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p5_s1_q2",
+          "type": "choice",
+          "question_en": "What did Ubuntu decide to give the young man?",
+          "options_en": [
+            "The fruit",
+            "A big house",
+            "Wisdom only"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p5_s2_q1",
+          "type": "choice",
+          "question_en": "Who said, \"Listen carefully\"?",
+          "options_en": [
+            "He (Ubuntu)",
+            "The young man",
+            "Wamaitha"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p5_s2_q2",
+          "type": "choice",
+          "question_en": "What did he tell the listener to do?",
+          "options_en": [
+            "Listen carefully",
+            "Go back to Mongu",
+            "Find the fruit"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p5_s3_q1",
+          "type": "choice",
+          "question_en": "What will you acquire once you eat this fruit?",
+          "options_en": [
+            "Wisdom and knowledge",
+            "Strength to do anything",
+            "A big house"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        },
+        {
+          "id": "gl_p5_s3_q2",
+          "type": "choice",
+          "question_en": "How will the wisdom and knowledge help you?",
+          "options_en": [
+            "To lead your people to independence",
+            "To work for Kitwe village",
+            "To sell produce at high prices"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        },
+        {
+          "id": "gl_p5_s4_q1",
+          "type": "choice",
+          "question_en": "What will the fruit make you?",
+          "options_en": [
+            "The leader of your people",
+            "The first King of Mongu",
+            "A simple farmer"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        },
+        {
+          "id": "gl_p5_s4_q2",
+          "type": "choice",
+          "question_en": "What is the correct answer to this question: Whom will you lead?",
+          "options_en": [
+            "Your people",
+            "The grandchildren",
+            "The people of Kitwe"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        },
+        {
+          "id": "gl_p5_s5_q1",
+          "type": "choice",
+          "question_en": "How should you rule them?",
+          "options_en": [
+            "With humility",
+            "With courage",
+            "With strictness"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p5_s5_q2",
+          "type": "choice",
+          "question_en": "What shape was the fruit he handed?",
+          "options_en": [
+            "The shape of a grape",
+            "The fruit called Freedom",
+            "From a big house"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p5_s6_q1",
+          "type": "choice",
+          "question_en": "What did he tell the young man not to do?",
+          "options_en": [
+            "Tell anyone about me",
+            "Return home immediately",
+            "Eat the fruit before leaving"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        },
+        {
+          "id": "gl_p5_s6_q2",
+          "type": "choice",
+          "question_en": "When did he tell the young man to go?",
+          "options_en": [
+            "Now",
+            "After five days",
+            "At night"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "Who went back to Mongu?",
+          "options_en": [
+            "The young man",
+            "Wamaitha",
+            "Ubuntu"
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "Where did the young man go back to?",
+          "options_en": [
+            "Mongu",
+            "Kitwe",
+            "Across the forest"
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        },
+        {
+          "id": "gl_p6_s1_q1",
+          "type": "choice",
+          "question_en": "What were they able to chase away?",
+          "options_en": [
+            "The people of Kitwe",
+            "The people of Mongu",
+            "The army of Kitwe"
+          ],
+          "correct_index": 0,
+          "sentence_index": 32
+        },
+        {
+          "id": "gl_p6_s1_q2",
+          "type": "choice",
+          "question_en": "What did they get back?",
+          "options_en": [
+            "Their land",
+            "The fruit of Freedom",
+            "The big house"
+          ],
+          "correct_index": 0,
+          "sentence_index": 32
+        },
+        {
+          "id": "gl_p6_s2_q1",
+          "type": "choice",
+          "question_en": "What was held in the whole land?",
+          "options_en": [
+            "A celebration",
+            "A secret meeting",
+            "A council"
+          ],
+          "correct_index": 0,
+          "sentence_index": 33
+        },
+        {
+          "id": "gl_p6_s2_q2",
+          "type": "choice",
+          "question_en": "Where was the celebration held?",
+          "options_en": [
+            "In the whole land",
+            "In Kitwe village",
+            "In the forest"
+          ],
+          "correct_index": 0,
+          "sentence_index": 33
+        },
+        {
+          "id": "gl_p6_s3_q1",
+          "type": "choice",
+          "question_en": "Why was the young man praised?",
+          "options_en": [
+            "For his courage",
+            "For giving the fruit",
+            "For finding the big house"
+          ],
+          "correct_index": 0,
+          "sentence_index": 34
+        },
+        {
+          "id": "gl_p6_s3_q2",
+          "type": "choice",
+          "question_en": "Who was praised for his courage?",
+          "options_en": [
+            "The young man",
+            "Ubuntu",
+            "Wamaitha"
+          ],
+          "correct_index": 0,
+          "sentence_index": 34
+        },
+        {
+          "id": "gl_p6_s4_q1",
+          "type": "choice",
+          "question_en": "What did he become?",
+          "options_en": [
+            "The first King of Mongu village",
+            "A farmer",
+            "Ubuntu's helper"
+          ],
+          "correct_index": 0,
+          "sentence_index": 35
+        },
+        {
+          "id": "gl_p6_s4_q2",
+          "type": "choice",
+          "question_en": "Where was he king?",
+          "options_en": [
+            "Mongu village",
+            "Kitwe village",
+            "Across the forest"
+          ],
+          "correct_index": 0,
+          "sentence_index": 35
+        },
+        {
+          "id": "gl_p6_s5_q1",
+          "type": "choice",
+          "question_en": "How did he rule his people?",
+          "options_en": [
+            "Wisely and well",
+            "With strict punishment",
+            "By leaving them"
+          ],
+          "correct_index": 0,
+          "sentence_index": 36
+        },
+        {
+          "id": "gl_p6_s5_q2",
+          "type": "choice",
+          "question_en": "What quality did he have as king?",
+          "options_en": [
+            "He was wise",
+            "He was hungry",
+            "He was frightened"
+          ],
+          "correct_index": 0,
+          "sentence_index": 36
+        },
+        {
+          "id": "gl_p6_s6_q1",
+          "type": "choice",
+          "question_en": "How did he serve them?",
+          "options_en": [
+            "With humility",
+            "With anger",
+            "With silence"
+          ],
+          "correct_index": 0,
+          "sentence_index": 37
+        },
+        {
+          "id": "gl_p6_s6_q2",
+          "type": "choice",
+          "question_en": "What did he consider in every action he took?",
+          "options_en": [
+            "His people",
+            "The fruit of Freedom",
+            "The army of Kitwe"
+          ],
+          "correct_index": 0,
+          "sentence_index": 37
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "Who did Wamaitha speak to?",
+          "options_en": [
+            "Her grandchildren",
+            "The people of Mongu",
+            "Ubuntu"
+          ],
+          "correct_index": 0,
+          "sentence_index": 38
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "What did Wamaitha say comes to each one of us at a given point?",
+          "options_en": [
+            "The fruit of freedom",
+            "A celebration",
+            "A strong army"
+          ],
+          "correct_index": 0,
+          "sentence_index": 38
+        },
+        {
+          "id": "gl_p7_s1_q1",
+          "type": "choice",
+          "question_en": "What did she tell them to be?",
+          "options_en": [
+            "Wise enough to use it well",
+            "Humble rulers",
+            "Silent listeners"
+          ],
+          "correct_index": 0,
+          "sentence_index": 39
+        },
+        {
+          "id": "gl_p7_s1_q2",
+          "type": "choice",
+          "question_en": "How did she tell them to use it?",
+          "options_en": [
+            "Well",
+            "Secretly",
+            "Quickly"
+          ],
+          "correct_index": 0,
+          "sentence_index": 39
+        },
+        {
+          "id": "gl_p7_s2_q1",
+          "type": "choice",
+          "question_en": "What did Wamaitha tell them to remember?",
+          "options_en": [
+            "Their actions affect everyone around them",
+            "To go find Ubuntu",
+            "To celebrate with a feast"
+          ],
+          "correct_index": 0,
+          "sentence_index": 40
+        },
+        {
+          "id": "gl_p7_s2_q2",
+          "type": "choice",
+          "question_en": "Where did the grandchildren go?",
+          "options_en": [
+            "Into the house",
+            "To the forest",
+            "To Kitwe village"
+          ],
+          "correct_index": 0,
+          "sentence_index": 40
+        },
+        {
+          "id": "gl_p7_s3_q1",
+          "type": "choice",
+          "question_en": "What did Wamaitha do as they left?",
+          "options_en": [
+            "Sat back and watched them go",
+            "Gave them the fruit",
+            "Joined them outside"
+          ],
+          "correct_index": 0,
+          "sentence_index": 41
+        },
+        {
+          "id": "gl_p7_s3_q2",
+          "type": "choice",
+          "question_en": "Who did she watch go?",
+          "options_en": [
+            "The grandchildren",
+            "The people of Kitwe",
+            "The young man"
+          ],
+          "correct_index": 0,
+          "sentence_index": 41
+        },
+        {
+          "id": "gl_p7_s4_q1",
+          "type": "choice",
+          "question_en": "What did she hope the stories would do for them?",
+          "options_en": [
+            "Build them into better people and leaders for tomorrow",
+            "Make them rich",
+            "Teach them to fight"
+          ],
+          "correct_index": 0,
+          "sentence_index": 42
+        },
+        {
+          "id": "gl_p7_s4_q2",
+          "type": "choice",
+          "question_en": "How often did she tell them stories?",
+          "options_en": [
+            "Every day",
+            "Once in 1963",
+            "Only at night"
+          ],
+          "correct_index": 0,
+          "sentence_index": 42
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'Fruits of Freedom'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "grandchildren",
+      "meaning_vi": "cháu (con của con mình)",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "excited",
+      "meaning_vi": "hào hứng, vui vẻ",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "enjoyed",
+      "meaning_vi": "thích thú",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "curiosity",
+      "meaning_vi": "sự tò mò",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "continued",
+      "meaning_vi": "tiếp tục",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "invaded",
+      "meaning_vi": "bị xâm chiếm",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "forced",
+      "meaning_vi": "bị ép buộc",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "produced",
+      "meaning_vi": "làm ra, sản xuất",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "secret",
+      "meaning_vi": "bí mật",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "consent",
+      "meaning_vi": "sự đồng ý",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "solution",
+      "meaning_vi": "giải pháp",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "give up",
+      "meaning_vi": "bỏ cuộc",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "curious",
+      "meaning_vi": "tò mò",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "strength",
+      "meaning_vi": "sức mạnh",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "silent",
+      "meaning_vi": "im lặng",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "idea",
+      "meaning_vi": "ý tưởng",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "set out",
+      "meaning_vi": "lên đường",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "through",
+      "meaning_vi": "xuyên qua",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "elderly",
+      "meaning_vi": "lớn tuổi",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "immediately",
+      "meaning_vi": "ngay lập tức",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "acquire",
+      "meaning_vi": "có được, đạt được",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "wisdom",
+      "meaning_vi": "sự khôn ngoan",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "independence",
+      "meaning_vi": "độc lập",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "humility",
+      "meaning_vi": "sự khiêm tốn",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "chase away",
+      "meaning_vi": "đuổi đi",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "celebration",
+      "meaning_vi": "lễ kỷ niệm",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "praised",
+      "meaning_vi": "được ca ngợi",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "courage",
+      "meaning_vi": "lòng dũng cảm",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "freedom",
+      "meaning_vi": "tự do",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "affect",
+      "meaning_vi": "ảnh hưởng",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "satisfied",
+      "meaning_vi": "hài lòng",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "leaders",
+      "meaning_vi": "nhà lãnh đạo",
+      "paragraph_index": 7
+    }
+  ]
+}

@@ -1,0 +1,740 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L1",
+  "level_label": "Cấp 1",
+  "topic": "Two friends",
+  "slug": "book_123635",
+  "audio_filename": "book_123635.mp3",
+  "book_slug": "book_123635",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_123635/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_123635/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_123635/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_123635/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_123635/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_123635/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_123635/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_123635/page_09.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_123635/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_123635/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_123635/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_123635/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_123635/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_123635/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_123635/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_123635/page_09.mp3"
+  ],
+  "book_attribution": {
+    "title": "Two friends",
+    "creators": [
+      "Dr.Abhay Karandikar",
+      "Ajit Narayan"
+    ],
+    "publisher": "StoryWeaver Community",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: Two friends is translated by Dr.Abhay Karandikar . The © for this translation lies with Dr.Abhay Karandikar , 2020. Some rights reserved. Released under CC BY 4.0 license. Based on Original story: ' दोन मित्र ' , by arvind chide . © arvind chide , 2016. Some rights reserved. Released under CC BY 4.0 license. Images Attributions: Cover page: Rabbit sitting on an elephant , by Ajit Narayan © Pratham Books, 2007. Some rights reserved. Released under CC BY 4.0 license. Page 2: Rabbit and elephant talking , by Ajit Narayan © Pratham Books, 2007. Some rights reserved. Released under CC BY 4.0 license. Page 3: Rabbit sitting on elephant , by Ajit Narayan © Pratham Books, 2007. Some rights reserved. Released under CC BY 4.0 license. Page 4: Elephant and rabbit talking excitedly , by Ajit Narayan © Pratham Books, 2007. Some rights reserved. Released under CC BY 4.0 license. Page 5: Rabbit pointing something out to elephant , by Ajit Narayan © Pratham Books, 2007. Some rights reserved. Released under CC BY 4.0 license. Page 6: Rabbit jumping over elephant , by Ajit Narayan © Pratham Books, 2007. Some rights reserved. Released under CC BY 4.0 license. Page 7: Scared elephant , by Ajit Narayan © Pratham Books, 2007. Some rights reserved. Released under CC BY 4.0 license. Page 8: Rabbit looking at jumping elephant , by Ajit Narayan © Pratham Books, 2007. Some rights reserved. Released under CC BY 4.0 license. Page 9: Coconut falling on rabbit and elephant running away , by Ajit Narayan © Pratham Books, 2007. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/123635-two-friends",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "Rabbit and elephant talking , by Ajit Narayan © Pratham Books, 2007. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "Rabbit sitting on elephant , by Ajit Narayan © Pratham Books, 2007. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "Elephant and rabbit talking excitedly , by Ajit Narayan © Pratham Books, 2007. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "Rabbit pointing something out to elephant , by Ajit Narayan © Pratham Books, 2007. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "Rabbit jumping over elephant , by Ajit Narayan © Pratham Books, 2007. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "Scared elephant , by Ajit Narayan © Pratham Books, 2007. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "Rabbit looking at jumping elephant , by Ajit Narayan © Pratham Books, 2007. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "Coconut falling on rabbit and elephant running away , by Ajit Narayan © Pratham Books, 2007. Some rights reserved. Released under CC BY 4.0 license."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "Two friends",
+    "paragraphs_en": [
+      "Gaju and Raju were two friends living in a forest.",
+      "Because of the good friendship of the two, they used to walk in the desert, eat, play, and get together.",
+      "One day Raju wanted to eat coconut in a tree outside the forest.",
+      "He told it to Gaju too. Gaju became happy.",
+      "But the problem was that neither of the two could reach the coconut. Then Raju said, I collect coconut, you need to push the tree.",
+      "﻿ Gaju shook the tree loudly. The coconut began to fall down the same instant.",
+      "And all the coconuts fell like stones on Gaju",
+      "﻿ Gaju started to run from there. And one of the coconuts fell on Raju's head. Both of them fled towards the dense forest."
+    ],
+    "sentences": [
+      {
+        "text_en": "Gaju and Raju were two friends living in a forest.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123635/s_000.mp3",
+        "text_vi": "Gaju và Raju là hai người bạn sống trong một khu rừng."
+      },
+      {
+        "text_en": "Because of the good friendship of the two, they used to walk in the desert, eat, play, and get together.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123635/s_001.mp3",
+        "text_vi": "Vì tình bạn tốt đẹp của hai người, họ thường đi dạo trong sa mạc, ăn uống, chơi đùa và ở bên nhau."
+      },
+      {
+        "text_en": "One day Raju wanted to eat coconut in a tree outside the forest.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123635/s_002.mp3",
+        "text_vi": "Một ngày nọ, Raju muốn ăn dừa trên một cái cây bên ngoài khu rừng."
+      },
+      {
+        "text_en": "He told it to Gaju too.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123635/s_003.mp3",
+        "text_vi": "Cậu ấy cũng nói với Gaju."
+      },
+      {
+        "text_en": "Gaju became happy.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123635/s_004.mp3",
+        "text_vi": "Gaju trở nên vui vẻ."
+      },
+      {
+        "text_en": "But the problem was that neither of the two could reach the coconut.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123635/s_005.mp3",
+        "text_vi": "Nhưng vấn đề là cả hai đều không thể với tới quả dừa."
+      },
+      {
+        "text_en": "Then Raju said, I collect coconut, you need to push the tree.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123635/s_006.mp3",
+        "text_vi": "Sau đó Raju nói, tớ sẽ hái dừa, cậu cần đẩy cái cây."
+      },
+      {
+        "text_en": "﻿ Gaju shook the tree loudly.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123635/s_007.mp3",
+        "text_vi": "Gaju lắc mạnh cái cây."
+      },
+      {
+        "text_en": "The coconut began to fall down the same instant.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123635/s_008.mp3",
+        "text_vi": "Quả dừa bắt đầu rơi xuống ngay lập tức."
+      },
+      {
+        "text_en": "And all the coconuts fell like stones on Gaju",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123635/s_009.mp3",
+        "text_vi": "Và tất cả những quả dừa rơi như đá vào người Gaju."
+      },
+      {
+        "text_en": "﻿ Gaju started to run from there.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123635/s_010.mp3",
+        "text_vi": "Gaju bắt đầu chạy khỏi đó."
+      },
+      {
+        "text_en": "And one of the coconuts fell on Raju's head.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123635/s_011.mp3",
+        "text_vi": "Và một quả dừa rơi trúng đầu Raju."
+      },
+      {
+        "text_en": "Both of them fled towards the dense forest.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123635/s_012.mp3",
+        "text_vi": "Cả hai bỏ chạy về phía khu rừng rậm."
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "Gaju and Raju were two friends living in a forest.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123635/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "Because of the good friendship of the two, they used to walk in the desert, eat, play, and get together.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123635/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "One day Raju wanted to eat coconut in a tree outside the forest.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123635/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "He told it to Gaju too.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123635/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "Gaju became happy.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123635/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "But the problem was that neither of the two could reach the coconut.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123635/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "Then Raju said, I collect coconut, you need to push the tree.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123635/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "﻿ Gaju shook the tree loudly.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123635/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "The coconut began to fall down the same instant.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123635/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "And all the coconuts fell like stones on Gaju",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123635/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "﻿ Gaju started to run from there.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123635/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "And one of the coconuts fell on Raju's head.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123635/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "Both of them fled towards the dense forest.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123635/s_012.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "Who were two friends?",
+          "options_en": [
+            "Gaju and Raju",
+            "Two coconuts",
+            "Two trees"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "Where did they live?",
+          "options_en": [
+            "In a forest",
+            "In the desert",
+            "Near a coconut tree"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "Who had the good friendship?",
+          "options_en": [
+            "The two friends",
+            "Gaju",
+            "Raju"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "Where did they used to walk?",
+          "options_en": [
+            "In the desert",
+            "In the forest",
+            "Outside the forest"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "Who wanted to eat coconut?",
+          "options_en": [
+            "Raju",
+            "Gaju",
+            "Both Raju and Gaju"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "Where was the coconut he wanted to eat?",
+          "options_en": [
+            "In a tree outside the forest",
+            "Inside the forest",
+            "In the desert"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "Who did he tell it to?",
+          "options_en": [
+            "Gaju",
+            "Raju",
+            "The coconut tree"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "How did Gaju learn about it?",
+          "options_en": [
+            "He was told it by him",
+            "He climbed the tree and saw it",
+            "He found the coconut on the ground"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p3_s1_q1",
+          "type": "choice",
+          "question_en": "What happened to Gaju?",
+          "options_en": [
+            "Gaju became happy",
+            "He could not reach the coconut",
+            "Gaju started to run"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p3_s1_q2",
+          "type": "choice",
+          "question_en": "Who became happy?",
+          "options_en": [
+            "Gaju",
+            "Raju",
+            "Both of them"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "Who could not reach the coconut?",
+          "options_en": [
+            "Gaju and Raju",
+            "Raju alone",
+            "Gaju alone"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "What was the problem?",
+          "options_en": [
+            "Neither of the two could reach the coconut",
+            "The coconut was on a tree outside the forest",
+            "Gaju became happy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p4_s1_q1",
+          "type": "choice",
+          "question_en": "Who said he would collect the coconut?",
+          "options_en": [
+            "Raju",
+            "Gaju",
+            "Both friends"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p4_s1_q2",
+          "type": "choice",
+          "question_en": "What did Raju ask the other to do?",
+          "options_en": [
+            "Push the tree",
+            "Collect the coconut",
+            "Shake the tree loudly"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "Who shook the tree?",
+          "options_en": [
+            "Gaju",
+            "Raju",
+            "Both friends"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "What did Gaju shake?",
+          "options_en": [
+            "The tree",
+            "A coconut",
+            "The tree outside the forest"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p5_s1_q1",
+          "type": "choice",
+          "question_en": "What began to fall?",
+          "options_en": [
+            "The coconut",
+            "All the coconuts",
+            "One of the coconuts"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p5_s1_q2",
+          "type": "choice",
+          "question_en": "When did the coconut begin to fall?",
+          "options_en": [
+            "The same instant",
+            "After Raju said to collect coconut",
+            "When they were in the forest"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "Who did all the coconuts fall on?",
+          "options_en": [
+            "Gaju",
+            "Raju",
+            "Both Gaju and Raju"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "How did the coconuts fall?",
+          "options_en": [
+            "Like stones",
+            "Fell on Raju's head",
+            "Fell down"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "Who started to run?",
+          "options_en": [
+            "Gaju",
+            "Raju",
+            "Both friends"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "Where did Gaju start to run from?",
+          "options_en": [
+            "From there",
+            "From the coconut tree",
+            "From the desert"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p7_s1_q1",
+          "type": "choice",
+          "question_en": "What fell on Raju's head?",
+          "options_en": [
+            "One of the coconuts",
+            "A stone",
+            "Many coconuts"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p7_s1_q2",
+          "type": "choice",
+          "question_en": "Who did one of the coconuts fall on?",
+          "options_en": [
+            "Raju",
+            "Gaju",
+            "Both of them"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p7_s2_q1",
+          "type": "choice",
+          "question_en": "Who fled towards the dense forest?",
+          "options_en": [
+            "Both of them",
+            "Only Gaju",
+            "Only Raju"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p7_s2_q2",
+          "type": "choice",
+          "question_en": "Where did both of them flee?",
+          "options_en": [
+            "Toward the dense forest",
+            "Toward the coconut tree",
+            "Toward the desert"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'Two friends'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "friends",
+      "meaning_vi": "bạn bè",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "living",
+      "meaning_vi": "sống",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "forest",
+      "meaning_vi": "rừng",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "friendship",
+      "meaning_vi": "tình bạn",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "desert",
+      "meaning_vi": "sa mạc",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "together",
+      "meaning_vi": "cùng nhau, ở bên nhau",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "wanted",
+      "meaning_vi": "muốn",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "coconut",
+      "meaning_vi": "quả dừa",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "outside",
+      "meaning_vi": "bên ngoài",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "told",
+      "meaning_vi": "nói",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "became",
+      "meaning_vi": "trở nên",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "happy",
+      "meaning_vi": "vui vẻ",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "problem",
+      "meaning_vi": "vấn đề",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "reach",
+      "meaning_vi": "với tới",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "collect",
+      "meaning_vi": "hái, thu thập",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "push",
+      "meaning_vi": "đẩy",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "shook",
+      "meaning_vi": "lắc",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "loudly",
+      "meaning_vi": "mạnh, ồn ào",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "began",
+      "meaning_vi": "bắt đầu",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "instant",
+      "meaning_vi": "khoảnh khắc, ngay lập tức",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "fell",
+      "meaning_vi": "rơi",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "stones",
+      "meaning_vi": "những hòn đá",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "started",
+      "meaning_vi": "bắt đầu",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "head",
+      "meaning_vi": "đầu",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "fled",
+      "meaning_vi": "bỏ chạy",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "dense",
+      "meaning_vi": "rậm rạp, dày đặc",
+      "paragraph_index": 7
+    }
+  ]
+}

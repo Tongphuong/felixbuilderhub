@@ -1,0 +1,884 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L3",
+  "level_label": "Cấp 3",
+  "topic": "The Lifelong Question",
+  "slug": "book_136711",
+  "audio_filename": "book_136711.mp3",
+  "book_slug": "book_136711",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_136711/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_136711/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_136711/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_136711/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_136711/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_136711/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_136711/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_136711/page_09.jpg",
+    "https://audio.felixbuilderhub.com/books/book_136711/page_10.jpg",
+    "https://audio.felixbuilderhub.com/books/book_136711/page_11.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_136711/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_136711/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_136711/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_136711/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_136711/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_136711/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_136711/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_136711/page_09.mp3",
+    "https://audio.felixbuilderhub.com/books/book_136711/page_10.mp3",
+    "https://audio.felixbuilderhub.com/books/book_136711/page_11.mp3"
+  ],
+  "book_attribution": {
+    "title": "The Lifelong Question",
+    "creators": [
+      "Payal Mehta",
+      "Siddhi Vartak"
+    ],
+    "publisher": "Pratham Books",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: The Lifelong Question is written by Payal Mehta . © Pratham Books , 2020. Some rights reserved. Released under CC BY 4.0 license. Other Credits: ‘The Lifelong Question’ has been published on StoryWeaver by Pratham Books. The development of this book has been supported by Oracle. www.prathambooks.org. Guest Editor: Radha Rangarajan, Guest Art Director: Kaveri Gopalakrishnan Images Attributions: Cover page: Old lady looking at the nest , by Siddhi Vartak © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 2: Old lady in the garden , by Siddhi Vartak © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 3: Sea otter with red sea urchin , by Siddhi Vartak © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 4: Greenland Sharks and Lion's Mane Jellyfish , by Siddhi Vartak © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 5: Asiatic elephant and elephant grass , by Siddhi Vartak © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 6: Clarks's Nutcracker and bristle cone pine tree , by Siddhi Vartak © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 7: Crested Serpent Eagle and Rat Snake , by Siddhi Vartak © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 8: Honey Buzzards and Deaths head hawk , by Siddhi Vartak © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 9: Pipistrelle bats and mosquitoes , by Siddhi Vartak © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 10: House sparrows and house flies , by Siddhi Vartak © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 11: Old lady in her garden with butterflies , by Siddhi Vartak © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/ The development of this book has been supported by Oracle.",
+    "source_url": "https://storyweaver.org.in/stories/136711-the-lifelong-question",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "Old lady in the garden , by Siddhi Vartak © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "Sea otter with red sea urchin , by Siddhi Vartak © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "Greenland Sharks and Lion's Mane Jellyfish , by Siddhi Vartak © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "Asiatic elephant and elephant grass , by Siddhi Vartak © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "Clarks's Nutcracker and bristle cone pine tree , by Siddhi Vartak © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "Crested Serpent Eagle and Rat Snake , by Siddhi Vartak © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "Honey Buzzards and Deaths head hawk , by Siddhi Vartak © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "Pipistrelle bats and mosquitoes , by Siddhi Vartak © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 8,
+        "credit_text": "House sparrows and house flies , by Siddhi Vartak © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 9,
+        "credit_text": "Old lady in her garden with butterflies , by Siddhi Vartak © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "The Lifelong Question",
+    "paragraphs_en": [
+      "How long do human beings live? Around 72 years. Does that sound like a long time? Humans share this planet with many amazing creatures that live much longer and shorter lives than we do — from hundreds of years to a few hours.",
+      "In the coastal waters of the Pacific Ocean, Sea Otters live for about 20 years, while Red Sea Urchins can live for 200 years.",
+      "In the icy Arctic waters, Greenland Sharks can live for 400 years, while the Lion’s Mane Jellyfish lives only for one.",
+      "Found in the floodplains of South East Asia, Asiatic Elephants can live for 70 years, while Elephant Grass lives for up to 15 years.",
+      "In the forests of California, Bristlecone Pine trees can live for 5000 years, while Clark’s Nutcrackers live for 15 years.",
+      "In Indian jungles, Crested Serpent Eagles can live for 40 years, while Rat Snakes live for 10 years.",
+      "Found in South East Asian countries, Oriental Honey Buzzards live for around 20 years, while Death’s Head Hawk Moths live for about three months.",
+      "Found in many parts of South Asia, Indian Pipestrelle Bats can live for over 25 years while Mosquitoes live about one month.",
+      "Found on every continent except Antarctica, House Sparrows live for about 5 years, while House Flies live for about one month.",
+      "How different life spans can be! A pine tree can live for thousands of years, while a moth has only a few days under the sun. No matter how much time we share on planet Earth, we all play a role in keeping it healthy and balanced."
+    ],
+    "sentences": [
+      {
+        "text_en": "How long do human beings live?",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136711/s_000.mp3",
+        "text_vi": "Con người sống được bao lâu?"
+      },
+      {
+        "text_en": "Around 72 years.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136711/s_001.mp3",
+        "text_vi": "Khoảng 72 năm."
+      },
+      {
+        "text_en": "Does that sound like a long time?",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136711/s_002.mp3",
+        "text_vi": "Nghe có vẻ lâu không?"
+      },
+      {
+        "text_en": "Humans share this planet with many amazing creatures that live much longer and shorter lives than we do — from hundreds of years to a few hours.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136711/s_003.mp3",
+        "text_vi": "Con người sống chung trên hành tinh này với nhiều loài vật tuyệt vời khác. Chúng có thể sống lâu hơn hoặc ít hơn chúng ta rất nhiều – từ hàng trăm năm đến chỉ vài giờ."
+      },
+      {
+        "text_en": "In the coastal waters of the Pacific Ocean, Sea Otters live for about 20 years, while Red Sea Urchins can live for 200 years.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136711/s_004.mp3",
+        "text_vi": "Ở vùng biển ven bờ Thái Bình Dương, rái cá biển sống khoảng 20 năm, trong khi nhím biển đỏ có thể sống tới 200 năm."
+      },
+      {
+        "text_en": "In the icy Arctic waters, Greenland Sharks can live for 400 years, while the Lion’s Mane Jellyfish lives only for one.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136711/s_005.mp3",
+        "text_vi": "Ở vùng nước băng giá Bắc Cực, cá mập Greenland có thể sống 400 năm, trong khi sứa bờm sư tử chỉ sống được một năm."
+      },
+      {
+        "text_en": "Found in the floodplains of South East Asia, Asiatic Elephants can live for 70 years, while Elephant Grass lives for up to 15 years.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136711/s_006.mp3",
+        "text_vi": "Tìm thấy ở vùng đồng bằng ngập nước Đông Nam Á, voi châu Á có thể sống 70 năm, trong khi cỏ voi sống được tới 15 năm."
+      },
+      {
+        "text_en": "In the forests of California, Bristlecone Pine trees can live for 5000 years, while Clark’s Nutcrackers live for 15 years.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136711/s_007.mp3",
+        "text_vi": "Trong rừng ở California, cây thông Bristlecone có thể sống 5000 năm, trong khi chim Nutcracker của Clark sống 15 năm."
+      },
+      {
+        "text_en": "In Indian jungles, Crested Serpent Eagles can live for 40 years, while Rat Snakes live for 10 years.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136711/s_008.mp3",
+        "text_vi": "Trong các khu rừng rậm ở Ấn Độ, đại bàng đầu rắn mào có thể sống 40 năm, trong khi rắn chuột sống 10 năm."
+      },
+      {
+        "text_en": "Found in South East Asian countries, Oriental Honey Buzzards live for around 20 years, while Death’s Head Hawk Moths live for about three months.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136711/s_009.mp3",
+        "text_vi": "Tìm thấy ở các nước Đông Nam Á, diều mật phương Đông sống khoảng 20 năm, trong khi bướm đầu lâu sống khoảng ba tháng."
+      },
+      {
+        "text_en": "Found in many parts of South Asia, Indian Pipestrelle Bats can live for over 25 years while Mosquitoes live about one month.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136711/s_010.mp3",
+        "text_vi": "Tìm thấy ở nhiều nơi thuộc Nam Á, dơi Pipestrelle Ấn Độ có thể sống hơn 25 năm trong khi muỗi sống khoảng một tháng."
+      },
+      {
+        "text_en": "Found on every continent except Antarctica, House Sparrows live for about 5 years, while House Flies live for about one month.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136711/s_011.mp3",
+        "text_vi": "Tìm thấy ở mọi châu lục trừ Nam Cực, chim sẻ nhà sống khoảng 5 năm, trong khi ruồi nhà sống khoảng một tháng."
+      },
+      {
+        "text_en": "How different life spans can be!",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136711/s_012.mp3",
+        "text_vi": "Tuổi thọ có thể khác nhau đến thế nào!"
+      },
+      {
+        "text_en": "A pine tree can live for thousands of years, while a moth has only a few days under the sun.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136711/s_013.mp3",
+        "text_vi": "Một cây thông có thể sống hàng ngàn năm, trong khi một con bướm đêm chỉ sống được vài ngày dưới ánh mặt trời."
+      },
+      {
+        "text_en": "No matter how much time we share on planet Earth, we all play a role in keeping it healthy and balanced.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_136711/s_014.mp3",
+        "text_vi": "Dù chúng ta sống bao lâu trên Trái Đất, tất cả chúng ta đều có vai trò giữ cho hành tinh này khỏe mạnh và cân bằng."
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "How long do human beings live?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136711/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "Around 72 years.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136711/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "Does that sound like a long time?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136711/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "Humans share this planet with many amazing creatures that live much longer and shorter lives than we do — from hundreds of years to a few hours.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136711/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "In the coastal waters of the Pacific Ocean, Sea Otters live for about 20 years, while Red Sea Urchins can live for 200 years.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136711/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "In the icy Arctic waters, Greenland Sharks can live for 400 years, while the Lion’s Mane Jellyfish lives only for one.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136711/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "Found in the floodplains of South East Asia, Asiatic Elephants can live for 70 years, while Elephant Grass lives for up to 15 years.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136711/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "In the forests of California, Bristlecone Pine trees can live for 5000 years, while Clark’s Nutcrackers live for 15 years.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136711/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "In Indian jungles, Crested Serpent Eagles can live for 40 years, while Rat Snakes live for 10 years.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136711/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "Found in South East Asian countries, Oriental Honey Buzzards live for around 20 years, while Death’s Head Hawk Moths live for about three months.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136711/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "Found in many parts of South Asia, Indian Pipestrelle Bats can live for over 25 years while Mosquitoes live about one month.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136711/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "Found on every continent except Antarctica, House Sparrows live for about 5 years, while House Flies live for about one month.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136711/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "How different life spans can be!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136711/s_012.mp3"
+        },
+        {
+          "id": "ra_13",
+          "text_en": "A pine tree can live for thousands of years, while a moth has only a few days under the sun.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136711/s_013.mp3"
+        },
+        {
+          "id": "ra_14",
+          "text_en": "No matter how much time we share on planet Earth, we all play a role in keeping it healthy and balanced.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_136711/s_014.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "Who is the question asking about?",
+          "options_en": [
+            "human beings",
+            "Sea Otters",
+            "Bristlecone Pine trees"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "How long do human beings live?",
+          "options_en": [
+            "Around 72 years",
+            "About 20 years",
+            "Up to 5000 years"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s1_q1",
+          "type": "choice",
+          "question_en": "How many years are mentioned in this sentence?",
+          "options_en": [
+            "Around 72 years",
+            "200 years",
+            "400 years"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s1_q2",
+          "type": "choice",
+          "question_en": "What number does the sentence give for human life length?",
+          "options_en": [
+            "Around 72 years",
+            "About 15 years",
+            "About 20 years"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s2_q1",
+          "type": "choice",
+          "question_en": "What is the sentence asking about?",
+          "options_en": [
+            "whether that sounds like a long time",
+            "how long Sea Otters live",
+            "where pine trees grow"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s2_q2",
+          "type": "choice",
+          "question_en": "Why does the sentence pose a question?",
+          "options_en": [
+            "to ask if 72 years sounds like a long time",
+            "to say where Greenalnd Sharks live",
+            "to state how long mosquitoes live"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s3_q1",
+          "type": "choice",
+          "question_en": "What is the correct answer to this question: With whom do humans share this planet?",
+          "options_en": [
+            "many amazing creatures",
+            "Elephant Grass",
+            "House Sparrows"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p0_s3_q2",
+          "type": "choice",
+          "question_en": "How long can the lives of these creatures be?",
+          "options_en": [
+            "from hundreds of years to a few hours",
+            "about 20 years to 200 years",
+            "about one month to 25 years"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "Where do Sea Otters live?",
+          "options_en": [
+            "In the coastal waters of the Pacific Ocean",
+            "In the icy Arctic waters",
+            "In the forests of California"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "How long can Red Sea Urchins live?",
+          "options_en": [
+            "About 200 years",
+            "About 20 years",
+            "About 400 years"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "Which animal can live for 400 years?",
+          "options_en": [
+            "Greenland Sharks",
+            "Red Sea Urchins",
+            "Bristlecone Pine trees"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "Where do Greenland Sharks live?",
+          "options_en": [
+            "In the icy Arctic waters",
+            "In the coastal waters of the Pacific Ocean",
+            "In the forests of California"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "Where are Asiatic Elephants found?",
+          "options_en": [
+            "In the floodplains of South East Asia",
+            "In the coastal waters of the Pacific Ocean",
+            "In the forests of California"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "How long can Elephant Grass live?",
+          "options_en": [
+            "Up to 15 years",
+            "About 20 years",
+            "5000 years"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "Where are Bristlecone Pine trees found?",
+          "options_en": [
+            "In the forests of California",
+            "In the coastal waters of the Pacific Ocean",
+            "In the icy Arctic waters"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "How long can Clark’s Nutcrackers live?",
+          "options_en": [
+            "15 years",
+            "About 20 years",
+            "Around 72 years"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "Where do Crested Serpent Eagles live?",
+          "options_en": [
+            "In Indian jungles",
+            "In coastal waters of the Pacific Ocean",
+            "In the icy Arctic waters"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "How long can Rat Snakes live?",
+          "options_en": [
+            "10 years",
+            "40 years",
+            "200 years"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "What lives for around 20 years?",
+          "options_en": [
+            "Oriental Honey Buzzards",
+            "Sea Otters",
+            "Asiatic Elephants"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "How long do Death’s Head Hawk Moths live?",
+          "options_en": [
+            "About three months",
+            "About one month",
+            "About 400 years"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "Where are Indian Pipestrelle Bats found?",
+          "options_en": [
+            "many parts of South Asia",
+            "coastal waters of the Pacific Ocean",
+            "forests of California"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "How long can Indian Pipestrelle Bats live?",
+          "options_en": [
+            "over 25 years",
+            "about 20 years",
+            "400 years"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        }
+      ]
+    },
+    {
+      "paragraph_index": 8,
+      "questions": [
+        {
+          "id": "gl_p8_s0_q1",
+          "type": "choice",
+          "question_en": "Where are House Sparrows found?",
+          "options_en": [
+            "Every continent except Antarctica",
+            "Coastal waters of the Pacific Ocean",
+            "Icy Arctic waters"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p8_s0_q2",
+          "type": "choice",
+          "question_en": "How long do House Flies live?",
+          "options_en": [
+            "About one month",
+            "About 5 years",
+            "About 400 years"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        }
+      ]
+    },
+    {
+      "paragraph_index": 9,
+      "questions": [
+        {
+          "id": "gl_p9_s0_q1",
+          "type": "choice",
+          "question_en": "How are life spans described?",
+          "options_en": [
+            "They can be very different",
+            "They are always long like pine trees",
+            "They are always short like moths"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p9_s0_q2",
+          "type": "choice",
+          "question_en": "What can be different?",
+          "options_en": [
+            "Life spans",
+            "Human lifespan of around 72 years",
+            "Greenland Shark lifespan of 400 years"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p9_s1_q1",
+          "type": "choice",
+          "question_en": "Which two creatures are compared in the sentence?",
+          "options_en": [
+            "A pine tree and a moth",
+            "A Sea Otter and a Red Sea Urchin",
+            "A Greenland Shark and a Lion’s Mane Jellyfish"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p9_s1_q2",
+          "type": "choice",
+          "question_en": "How long can a moth live according to the sentence?",
+          "options_en": [
+            "Only a few days under the sun",
+            "About 20 years",
+            "400 years"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p9_s2_q1",
+          "type": "choice",
+          "question_en": "What do we all play a role in, no matter how much time we share on Earth?",
+          "options_en": [
+            "Keeping planet Earth healthy and balanced",
+            "Living for hundreds of years",
+            "Sharing the planet for around 72 years"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p9_s2_q2",
+          "type": "choice",
+          "question_en": "Why do we all play a role?",
+          "options_en": [
+            "To keep Earth healthy and balanced",
+            "To live for thousands of years",
+            "To have only a few days under the sun"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'The Lifelong Question'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "human beings",
+      "meaning_vi": "con người",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "planet",
+      "meaning_vi": "hành tinh",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "amazing",
+      "meaning_vi": "tuyệt vời",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "creatures",
+      "meaning_vi": "sinh vật",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "coastal",
+      "meaning_vi": "ven bờ",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "Otters",
+      "meaning_vi": "rái cá",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "Urchins",
+      "meaning_vi": "nhím biển",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "icy",
+      "meaning_vi": "băng giá",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "Sharks",
+      "meaning_vi": "cá mập",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "Jellyfish",
+      "meaning_vi": "sứa",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "floodplains",
+      "meaning_vi": "đồng bằng ngập nước",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "Asiatic",
+      "meaning_vi": "thuộc châu Á",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "Elephants",
+      "meaning_vi": "voi",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "Grass",
+      "meaning_vi": "cỏ",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "forests",
+      "meaning_vi": "rừng",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "Pine",
+      "meaning_vi": "thông",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "Nutcrackers",
+      "meaning_vi": "chim Nutcracker",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "jungles",
+      "meaning_vi": "rừng rậm",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "Crested",
+      "meaning_vi": "có mào",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "Eagles",
+      "meaning_vi": "đại bàng",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "Snakes",
+      "meaning_vi": "rắn",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "countries",
+      "meaning_vi": "quốc gia",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "Oriental",
+      "meaning_vi": "phương Đông",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "Buzzards",
+      "meaning_vi": "diều hâu",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "Moths",
+      "meaning_vi": "ngài (bướm đêm)",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "parts",
+      "meaning_vi": "khu vực",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "Bats",
+      "meaning_vi": "dơi",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "Mosquitoes",
+      "meaning_vi": "muỗi",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "continent",
+      "meaning_vi": "châu lục",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "except",
+      "meaning_vi": "ngoại trừ",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "Sparrows",
+      "meaning_vi": "chim sẻ",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "Flies",
+      "meaning_vi": "ruồi",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "life spans",
+      "meaning_vi": "tuổi thọ",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "thousands",
+      "meaning_vi": "hàng ngàn",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "role",
+      "meaning_vi": "vai trò",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "balanced",
+      "meaning_vi": "cân bằng",
+      "paragraph_index": 9
+    }
+  ]
+}

@@ -1,0 +1,576 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L0",
+  "level_label": "Cấp 0",
+  "topic": "The Sun and The Moon",
+  "slug": "book_212785",
+  "audio_filename": "book_212785.mp3",
+  "book_slug": "book_212785",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_212785/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_212785/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_212785/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_212785/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_212785/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_212785/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_212785/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_212785/page_09.jpg",
+    "https://audio.felixbuilderhub.com/books/book_212785/page_10.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_212785/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_212785/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_212785/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_212785/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_212785/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_212785/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_212785/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_212785/page_09.mp3",
+    "https://audio.felixbuilderhub.com/books/book_212785/page_10.mp3"
+  ],
+  "book_attribution": {
+    "title": "The Sun and The Moon",
+    "creators": [
+      "Zubin Miller",
+      "Greystroke",
+      "Niloufer Wadia",
+      "Partho Sengupta",
+      "Priyanka Kumar",
+      "Tapas Guha"
+    ],
+    "publisher": "Pratham Education Foundation",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: The Sun and The Moon is translated by Zubin Miller . The © for this translation lies with Pratham Education Foundation , 2020. Some rights reserved. Released under CC BY 4.0 license. Based on Original story: ' चाँद और सूरज ' , by Dropti Sharma . © Pratham Education Foundation , 2020. Some rights reserved. Released under CC BY 4.0 license. Other Credits: 'Chand aur Suraj' has been published on StoryWeaver by Pratham Education Foundation. www.pratham.org Images Attributions: Cover page: Moon and sun , by Tapas Guha , Niloufer Wadia © Pratham Education Foundation, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 2: Sky , by Niloufer Wadia © Pratham Education Foundation, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 3: Smiling sun , by Niloufer Wadia © Pratham Education Foundation, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 4: Sleeping sun , by Greystroke © Pratham Education Foundation, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 5: Sun with rays , by Greystroke © Pratham Education Foundation, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 6: stars image with text box , by Partho Sengupta © Pratham Education Foundation, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 7: Moon and stars with text box , by Partho Sengupta © Pratham Education Foundation, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 8: Girl and moon with textbox , by Partho Sengupta © Pratham Education Foundation, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 9: Stars and moon with textbox , by Partho Sengupta © Pratham Education Foundation, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 10: Confused girl , by Tapas Guha , Priyanka Kumar © Pratham Education Foundation, 2020. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/212785-the-sun-and-the-moon",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "Sky , by Niloufer Wadia © Pratham Education Foundation, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "Smiling sun , by Niloufer Wadia © Pratham Education Foundation, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "Sleeping sun , by Greystroke © Pratham Education Foundation, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "Sun with rays , by Greystroke © Pratham Education Foundation, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "stars image with text box , by Partho Sengupta © Pratham Education Foundation, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "Moon and stars with text box , by Partho Sengupta © Pratham Education Foundation, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "Girl and moon with textbox , by Partho Sengupta © Pratham Education Foundation, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "Stars and moon with textbox , by Partho Sengupta © Pratham Education Foundation, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 8,
+        "credit_text": "Confused girl , by Tapas Guha , Priyanka Kumar © Pratham Education Foundation, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "The Sun and The Moon",
+    "paragraphs_en": [
+      "It's morning.",
+      "The sun is out.",
+      "Rising in the east…",
+      "setting in the west.",
+      "It’s night now…",
+      "and the moon is out.",
+      "Sometimes a half moon…",
+      "sometimes a full moon!",
+      "But how do they change so soon?"
+    ],
+    "sentences": [
+      {
+        "text_en": "It's morning.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_212785/s_000.mp3",
+        "text_vi": "Trời sáng rồi."
+      },
+      {
+        "text_en": "The sun is out.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_212785/s_001.mp3",
+        "text_vi": "Mặt trời đã lên rồi."
+      },
+      {
+        "text_en": "Rising in the east…",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_212785/s_002.mp3",
+        "text_vi": "Mọc ở phía đông…"
+      },
+      {
+        "text_en": "setting in the west.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_212785/s_003.mp3",
+        "text_vi": "lặn ở phía tây."
+      },
+      {
+        "text_en": "It’s night now…",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_212785/s_004.mp3",
+        "text_vi": "Bây giờ là buổi tối rồi…"
+      },
+      {
+        "text_en": "and the moon is out.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_212785/s_005.mp3",
+        "text_vi": "và mặt trăng đã lên."
+      },
+      {
+        "text_en": "Sometimes a half moon…",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_212785/s_006.mp3",
+        "text_vi": "Đôi khi là trăng khuyết…"
+      },
+      {
+        "text_en": "sometimes a full moon!",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_212785/s_007.mp3",
+        "text_vi": "đôi khi là trăng tròn!"
+      },
+      {
+        "text_en": "But how do they change so soon?",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_212785/s_008.mp3",
+        "text_vi": "Nhưng sao chúng lại thay đổi nhanh thế?"
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "It's morning.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_212785/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "The sun is out.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_212785/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "Rising in the east…",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_212785/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "setting in the west.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_212785/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "It’s night now…",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_212785/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "and the moon is out.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_212785/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "Sometimes a half moon…",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_212785/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "sometimes a full moon!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_212785/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "But how do they change so soon?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_212785/s_008.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "When is it?",
+          "options_en": [
+            "morning",
+            "night",
+            "when the moon is out"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "Which time of day is mentioned?",
+          "options_en": [
+            "morning",
+            "when the sun is out",
+            "a full moon"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "What is out?",
+          "options_en": [
+            "The sun",
+            "The moon",
+            "The full moon"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "Which celestial body is out?",
+          "options_en": [
+            "The sun",
+            "The moon",
+            "A half moon"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "Where is it rising?",
+          "options_en": [
+            "in the east",
+            "in the west",
+            "at night"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "Which direction is it rising?",
+          "options_en": [
+            "the east",
+            "the west",
+            "the moon"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "Where is it setting?",
+          "options_en": [
+            "in the west",
+            "in the east",
+            "at night"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "What is happening in the west?",
+          "options_en": [
+            "setting",
+            "rising in the east",
+            "the moon is out"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "When is it?",
+          "options_en": [
+            "Night",
+            "Morning",
+            "Sunrise"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "What is it now?",
+          "options_en": [
+            "Night",
+            "Morning",
+            "The sun is out"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "What is out?",
+          "options_en": [
+            "the moon",
+            "the sun",
+            "a half moon"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "How is the moon?",
+          "options_en": [
+            "out",
+            "rising in the east",
+            "setting in the west"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "When does the sentence say there is a half moon?",
+          "options_en": [
+            "Sometimes",
+            "In the morning",
+            "At night"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "What kind of moon is mentioned in the sentence?",
+          "options_en": [
+            "A half moon",
+            "A full moon",
+            "The sun"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "What sometimes appears?",
+          "options_en": [
+            "a full moon",
+            "a half moon",
+            "the sun is out"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "Which moon is mentioned?",
+          "options_en": [
+            "full moon",
+            "half moon",
+            "the moon is out"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        }
+      ]
+    },
+    {
+      "paragraph_index": 8,
+      "questions": [
+        {
+          "id": "gl_p8_s0_q1",
+          "type": "choice",
+          "question_en": "What does the sentence ask?",
+          "options_en": [
+            "How they change so soon",
+            "Where the sun rises",
+            "When it's night now"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p8_s0_q2",
+          "type": "choice",
+          "question_en": "Which thing is being asked about?",
+          "options_en": [
+            "They changing so soon",
+            "A half moon",
+            "The sun setting in the west"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'The Sun and The Moon'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "morning",
+      "meaning_vi": "buổi sáng",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "sun",
+      "meaning_vi": "mặt trời",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "out",
+      "meaning_vi": "xuất hiện, ló ra",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "rising",
+      "meaning_vi": "mọc lên",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "east",
+      "meaning_vi": "phía đông",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "setting",
+      "meaning_vi": "lặn xuống",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "west",
+      "meaning_vi": "phía tây",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "night",
+      "meaning_vi": "buổi tối, ban đêm",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "now",
+      "meaning_vi": "bây giờ",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "moon",
+      "meaning_vi": "mặt trăng",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "out",
+      "meaning_vi": "xuất hiện, ló ra",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "sometimes",
+      "meaning_vi": "đôi khi, thỉnh thoảng",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "half",
+      "meaning_vi": "một nửa",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "half moon",
+      "meaning_vi": "trăng khuyết",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "full",
+      "meaning_vi": "đầy, tròn",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "full moon",
+      "meaning_vi": "trăng tròn",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "change",
+      "meaning_vi": "thay đổi",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "soon",
+      "meaning_vi": "sớm, nhanh chóng",
+      "paragraph_index": 8
+    }
+  ]
+}

@@ -1,0 +1,1811 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L3",
+  "level_label": "Cấp 3",
+  "topic": "Doctor Donut",
+  "slug": "book_119308",
+  "audio_filename": "book_119308.mp3",
+  "book_slug": "book_119308",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_119308/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_119308/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_119308/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_119308/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_119308/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_119308/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_119308/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_119308/page_09.jpg",
+    "https://audio.felixbuilderhub.com/books/book_119308/page_10.jpg",
+    "https://audio.felixbuilderhub.com/books/book_119308/page_11.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_119308/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_119308/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_119308/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_119308/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_119308/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_119308/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_119308/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_119308/page_09.mp3",
+    "https://audio.felixbuilderhub.com/books/book_119308/page_10.mp3",
+    "https://audio.felixbuilderhub.com/books/book_119308/page_11.mp3"
+  ],
+  "book_attribution": {
+    "title": "Doctor Donut",
+    "creators": [
+      "Rachna Chhabria",
+      "Archana Sreenivasan",
+      "Brad Cuzen",
+      "Kanak Shashi",
+      "Magriet Brink",
+      "Mary Anne Hampton",
+      "Mieke van der Merwe",
+      "Nompumelelo Mdluli",
+      "Tanvee Nabar"
+    ],
+    "publisher": "StoryWeaver Community",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: Doctor Donut is written by Rachna Chhabria . © Rachna Chhabria , 2020. Some rights reserved. Released under CC BY 4.0 license. Images Attributions: Cover page: Different cakes , by Nompumelelo Mdluli © Book Dash, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 2: Carrot cake , by Nompumelelo Mdluli © Book Dash, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 3: Three cakes , by Magriet Brink © African Storybook Initiative, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 4: Cakes and Strawberries , by Mieke van der Merwe © Book Dash, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 5: A cake and house , by Brad Cuzen © Book Dash, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 6: A heartshaped cake , by Kanak Shashi © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 7: Tumbling cake , by Nompumelelo Mdluli © Book Dash, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 8: Girl and an injection , by Tanvee Nabar © Pratham Books, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 9: Rice and chocolate , by Archana Sreenivasan © StoryWeaver Team, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 10: Cupcakes , by Mary Anne Hampton © Book Dash, 2017. Some rights reserved. Released under CC BY 4.0 license. Page 11: Cupcakes on a table , by Mary Anne Hampton © Book Dash, 2017. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/119308-doctor-donut",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "Carrot cake , by Nompumelelo Mdluli © Book Dash, 2018. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "Three cakes , by Magriet Brink © African Storybook Initiative, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "Cakes and Strawberries , by Mieke van der Merwe © Book Dash, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "A cake and house , by Brad Cuzen © Book Dash, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "A heartshaped cake , by Kanak Shashi © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "Tumbling cake , by Nompumelelo Mdluli © Book Dash, 2018. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "Girl and an injection , by Tanvee Nabar © Pratham Books, 2018. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "Rice and chocolate , by Archana Sreenivasan © StoryWeaver Team, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 8,
+        "credit_text": "Cupcakes , by Mary Anne Hampton © Book Dash, 2017. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 9,
+        "credit_text": "Cupcakes on a table , by Mary Anne Hampton © Book Dash, 2017. Some rights reserved. Released under CC BY 4.0 license."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "Doctor Donut",
+    "paragraphs_en": [
+      "Doctor Donut was the busiest doctor in the Dessert Hospital. His patients loved his sweet medicines and his gentle treatments. He rolled out of his room for his daily visits to the various wards, in his white chocolate coat, with nurse Croissant jogging behind him. His first stop was the sponge cake room, to check his patients.",
+      "“Doc, ours bums are paining,” three round cakes waddled over the table. “Does it pain while sitting?”the doctor asked. “Yes,” the cakes replied. “Stick cherries and strawberries heated in maple syrup to their bottom,” Doctor Donut told the nurse. “And make them lie upside down until they feel better.”",
+      "“We are feeling cold,” several funny shaped cakes shivered. “A bath with pink chocolate will make them feel better,” the doctor said to the nurse.",
+      "“What about me doc?” a round cake asked. “I’m feeling very itchy.” “Do you have rashes?” “No, I just feel like scratching.” “A dressing of white cream and blue icing sugar will cure it,” Doctor Donut smiled at the flaky cake.",
+      "“Doc help me,” said a heart shaped cake with a large crack across it. “Do you have any pain?\" doctor donut asked. “No,” the cake replied. “I just feel cold and tired.” The kind doctor smiled. “Nurse, cover him with a thick colourful blanket and stick gems, flowers and leaves over him.\"",
+      "Doctor Donut rolled out of the room, wheeling down the corridor with nurse Croissant jogging behind him. He stopped outside the cup-cake ward. The small cakes, with human faces, were groaning in pain, clutching their stomachs, they rolled from side to side.",
+      "“Doc, we’ve a hollow feeling in our stomachs,” they rubbed their bellies. “Hmmm…” Doctor Donut prodded the cakes with a candy cane. He made a few of them turn upside down. “This is an epidemic,” he frowned. “Get the injections ready,” he said to the nurse. “Please doc, no syringes,” the cup-cakes shivered in fear.",
+      "“Not even injections filled with hot chocolate?” the doctor’s kind eyes’ twinkled. “I promise that you won’t feel any pain,” he smiled. “Infact, you will feel nice and warm.” “No,” the cup-cakes said running all over the room. Doctor Donut frowned. This epidemic was contagious. If he couldn’t treat it, then within a short time it would spread across the hospital and there would be no desserts left.",
+      "“Let nurse put you to sleep,” the doctor said gently. “We’ll decide your treatment in the morning.” The cup-cakes lay down on their backs. Nurse Croissant fed them a spoonful of hot milk with honey. Within a few minutes the cup-cakes were snoring soundly.",
+      "Filling a syringe with hot chocolate, Doctor Donut jabbed the cupcakes in their stomach. As the hot chocolate filled their stomachs, their stomachs swelled. “Cover them with a red velvet blanket,” Doctor Donut told the nurse. “They will be completely alright by tomorrow morning.”"
+    ],
+    "sentences": [
+      {
+        "text_en": "Doctor Donut was the busiest doctor in the Dessert Hospital.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_000.mp3",
+        "text_vi": "Bác sĩ Donut là bác sĩ bận rộn nhất ở Bệnh viện Bánh Kẹo."
+      },
+      {
+        "text_en": "His patients loved his sweet medicines and his gentle treatments.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_001.mp3",
+        "text_vi": "Các bệnh nhân của ông ấy rất thích thuốc ngọt và cách chữa trị nhẹ nhàng của ông."
+      },
+      {
+        "text_en": "He rolled out of his room for his daily visits to the various wards, in his white chocolate coat, with nurse Croissant jogging behind him.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_002.mp3",
+        "text_vi": "Ông lăn ra khỏi phòng để đi thăm các khoa khác nhau mỗi ngày, trong chiếc áo khoác sô cô la trắng, cùng y tá Croissant chạy bộ theo sau."
+      },
+      {
+        "text_en": "His first stop was the sponge cake room, to check his patients.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_003.mp3",
+        "text_vi": "Điểm dừng đầu tiên của ông là phòng bánh bông lan, để kiểm tra các bệnh nhân."
+      },
+      {
+        "text_en": "“Doc, ours bums are paining,” three round cakes waddled over the table.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_004.mp3",
+        "text_vi": "\"Bác sĩ ơi, mông của tụi con đau quá,\" ba chiếc bánh tròn lạch bạch đi tới bàn."
+      },
+      {
+        "text_en": "“Does it pain while sitting?”the doctor asked.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_005.mp3",
+        "text_vi": "\"Có đau khi ngồi không?\" bác sĩ hỏi."
+      },
+      {
+        "text_en": "“Yes,” the cakes replied.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_006.mp3",
+        "text_vi": "\"Dạ có,\" các chiếc bánh trả lời."
+      },
+      {
+        "text_en": "“Stick cherries and strawberries heated in maple syrup to their bottom,” Doctor Donut told the nurse.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_007.mp3",
+        "text_vi": "\"Dán anh đào và dâu tây đã hâm nóng trong si-rô phong vào mông chúng,\" Bác sĩ Donut nói với y tá."
+      },
+      {
+        "text_en": "“And make them lie upside down until they feel better.”",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_008.mp3",
+        "text_vi": "\"Và cho chúng nằm úp xuống cho đến khi chúng thấy đỡ hơn.\""
+      },
+      {
+        "text_en": "“We are feeling cold,” several funny shaped cakes shivered.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_009.mp3",
+        "text_vi": "\"Chúng con thấy lạnh,\" vài chiếc bánh hình thù ngộ nghĩnh run rẩy."
+      },
+      {
+        "text_en": "“A bath with pink chocolate will make them feel better,” the doctor said to the nurse.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_010.mp3",
+        "text_vi": "\"Tắm bằng sô cô la hồng sẽ làm chúng thấy đỡ hơn,\" bác sĩ nói với y tá."
+      },
+      {
+        "text_en": "“What about me doc?” a round cake asked.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_011.mp3",
+        "text_vi": "\"Còn con thì sao bác sĩ?\" một chiếc bánh tròn hỏi."
+      },
+      {
+        "text_en": "“I’m feeling very itchy.” “Do you have rashes?” “No, I just feel like scratching.” “A dressing of white cream and blue icing sugar will cure it,” Doctor Donut smiled at the flaky cake.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_012.mp3",
+        "text_vi": "\"Con thấy rất ngứa.\" \"Con có bị phát ban không?\" \"Không, con chỉ muốn gãi thôi.\" \"Một lớp kem trắng và đường bột màu xanh sẽ chữa khỏi,\" Bác sĩ Donut mỉm cười với chiếc bánh giòn."
+      },
+      {
+        "text_en": "“Doc help me,” said a heart shaped cake with a large crack across it.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_013.mp3",
+        "text_vi": "\"Bác sĩ giúp con với,\" một chiếc bánh hình trái tim với một vết nứt lớn nói."
+      },
+      {
+        "text_en": "“Do you have any pain?\" doctor donut asked.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_014.mp3",
+        "text_vi": "\"Con có đau không?\" bác sĩ Donut hỏi."
+      },
+      {
+        "text_en": "“No,” the cake replied.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_015.mp3",
+        "text_vi": "\"Không ạ,\" chiếc bánh trả lời."
+      },
+      {
+        "text_en": "“I just feel cold and tired.” The kind doctor smiled.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_016.mp3",
+        "text_vi": "\"Con chỉ thấy lạnh và mệt thôi.\" Bác sĩ tốt bụng mỉm cười."
+      },
+      {
+        "text_en": "“Nurse, cover him with a thick colourful blanket and stick gems, flowers and leaves over him.\"",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_017.mp3",
+        "text_vi": "\"Y tá, đắp cho cậu ấy một chiếc chăn dày nhiều màu sắc và dán đá quý, hoa, lá lên người cậu ấy.\""
+      },
+      {
+        "text_en": "Doctor Donut rolled out of the room, wheeling down the corridor with nurse Croissant jogging behind him.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_018.mp3",
+        "text_vi": "Bác sĩ Donut lăn ra khỏi phòng, đi dọc hành lang cùng y tá Croissant chạy bộ theo sau."
+      },
+      {
+        "text_en": "He stopped outside the cup-cake ward.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_019.mp3",
+        "text_vi": "Ông dừng lại bên ngoài khoa bánh cupcake."
+      },
+      {
+        "text_en": "The small cakes, with human faces, were groaning in pain, clutching their stomachs, they rolled from side to side.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_020.mp3",
+        "text_vi": "Những chiếc bánh nhỏ, với khuôn mặt người, đang rên rỉ vì đau, ôm bụng, chúng lăn qua lăn lại."
+      },
+      {
+        "text_en": "“Doc, we’ve a hollow feeling in our stomachs,” they rubbed their bellies.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_021.mp3",
+        "text_vi": "\"Bác sĩ ơi, tụi con thấy bụng rỗng tuếch,\" chúng xoa bụng."
+      },
+      {
+        "text_en": "“Hmmm…” Doctor Donut prodded the cakes with a candy cane.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_022.mp3",
+        "text_vi": "\"Ưm...\" Bác sĩ Donut chọc nhẹ vào các chiếc bánh bằng một cây kẹo gậy."
+      },
+      {
+        "text_en": "He made a few of them turn upside down.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_023.mp3",
+        "text_vi": "Ông làm vài chiếc bánh lật úp lại."
+      },
+      {
+        "text_en": "“This is an epidemic,” he frowned.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_024.mp3",
+        "text_vi": "\"Đây là một dịch bệnh,\" ông cau mày."
+      },
+      {
+        "text_en": "“Get the injections ready,” he said to the nurse.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_025.mp3",
+        "text_vi": "\"Chuẩn bị thuốc tiêm đi,\" ông nói với y tá."
+      },
+      {
+        "text_en": "“Please doc, no syringes,” the cup-cakes shivered in fear.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_026.mp3",
+        "text_vi": "\"Làm ơn bác sĩ, đừng tiêm,\" các chiếc bánh cupcake run rẩy vì sợ hãi."
+      },
+      {
+        "text_en": "“Not even injections filled with hot chocolate?” the doctor’s kind eyes’ twinkled.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_027.mp3",
+        "text_vi": "\"Ngay cả thuốc tiêm chứa sô cô la nóng cũng không sao?\" đôi mắt nhân hậu của bác sĩ lấp lánh."
+      },
+      {
+        "text_en": "“I promise that you won’t feel any pain,” he smiled.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_028.mp3",
+        "text_vi": "\"Ta hứa là các con sẽ không thấy đau chút nào,\" ông mỉm cười."
+      },
+      {
+        "text_en": "“Infact, you will feel nice and warm.” “No,” the cup-cakes said running all over the room.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_029.mp3",
+        "text_vi": "\"Thật ra, các con sẽ thấy dễ chịu và ấm áp.\" \"Không!\" các chiếc bánh cupcake nói và chạy khắp phòng."
+      },
+      {
+        "text_en": "Doctor Donut frowned.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_030.mp3",
+        "text_vi": "Bác sĩ Donut cau mày."
+      },
+      {
+        "text_en": "This epidemic was contagious.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_031.mp3",
+        "text_vi": "Dịch bệnh này rất dễ lây lan."
+      },
+      {
+        "text_en": "If he couldn’t treat it, then within a short time it would spread across the hospital and there would be no desserts left.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_032.mp3",
+        "text_vi": "Nếu ông không thể chữa trị, thì trong thời gian ngắn nó sẽ lây lan khắp bệnh viện và sẽ không còn món tráng miệng nào nữa."
+      },
+      {
+        "text_en": "“Let nurse put you to sleep,” the doctor said gently.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_033.mp3",
+        "text_vi": "\"Để y tá cho các con ngủ nhé,\" bác sĩ nói nhẹ nhàng."
+      },
+      {
+        "text_en": "“We’ll decide your treatment in the morning.” The cup-cakes lay down on their backs.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_034.mp3",
+        "text_vi": "\"Chúng ta sẽ quyết định cách chữa trị vào sáng mai.\" Các chiếc bánh cupcake nằm ngửa ra."
+      },
+      {
+        "text_en": "Nurse Croissant fed them a spoonful of hot milk with honey.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_035.mp3",
+        "text_vi": "Y tá Croissant đút cho chúng một thìa sữa nóng pha mật ong."
+      },
+      {
+        "text_en": "Within a few minutes the cup-cakes were snoring soundly.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_036.mp3",
+        "text_vi": "Chỉ trong vài phút, các chiếc bánh cupcake đã ngáy khò khò."
+      },
+      {
+        "text_en": "Filling a syringe with hot chocolate, Doctor Donut jabbed the cupcakes in their stomach.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_037.mp3",
+        "text_vi": "Đổ sô cô la nóng vào ống tiêm, Bác sĩ Donut tiêm vào bụng các chiếc bánh cupcake."
+      },
+      {
+        "text_en": "As the hot chocolate filled their stomachs, their stomachs swelled.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_038.mp3",
+        "text_vi": "Khi sô cô la nóng lấp đầy bụng chúng, bụng chúng phồng lên."
+      },
+      {
+        "text_en": "“Cover them with a red velvet blanket,” Doctor Donut told the nurse.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_039.mp3",
+        "text_vi": "\"Đắp cho chúng một chiếc chăn nhung đỏ,\" Bác sĩ Donut nói với y tá."
+      },
+      {
+        "text_en": "“They will be completely alright by tomorrow morning.”",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_040.mp3",
+        "text_vi": "\"Chúng sẽ hoàn toàn khỏe lại vào sáng mai.\""
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "Doctor Donut was the busiest doctor in the Dessert Hospital.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "His patients loved his sweet medicines and his gentle treatments.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "He rolled out of his room for his daily visits to the various wards, in his white chocolate coat, with nurse Croissant jogging behind him.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "His first stop was the sponge cake room, to check his patients.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "“Doc, ours bums are paining,” three round cakes waddled over the table.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "“Does it pain while sitting?”the doctor asked.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "“Yes,” the cakes replied.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "“Stick cherries and strawberries heated in maple syrup to their bottom,” Doctor Donut told the nurse.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "“And make them lie upside down until they feel better.”",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "“We are feeling cold,” several funny shaped cakes shivered.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "“A bath with pink chocolate will make them feel better,” the doctor said to the nurse.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "“What about me doc?” a round cake asked.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "“I’m feeling very itchy.” “Do you have rashes?” “No, I just feel like scratching.” “A dressing of white cream and blue icing sugar will cure it,” Doctor Donut smiled at the flaky cake.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_012.mp3"
+        },
+        {
+          "id": "ra_13",
+          "text_en": "“Doc help me,” said a heart shaped cake with a large crack across it.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_013.mp3"
+        },
+        {
+          "id": "ra_14",
+          "text_en": "“Do you have any pain?\" doctor donut asked.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_014.mp3"
+        },
+        {
+          "id": "ra_15",
+          "text_en": "“No,” the cake replied.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_015.mp3"
+        },
+        {
+          "id": "ra_16",
+          "text_en": "“I just feel cold and tired.” The kind doctor smiled.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_016.mp3"
+        },
+        {
+          "id": "ra_17",
+          "text_en": "“Nurse, cover him with a thick colourful blanket and stick gems, flowers and leaves over him.\"",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_017.mp3"
+        },
+        {
+          "id": "ra_18",
+          "text_en": "Doctor Donut rolled out of the room, wheeling down the corridor with nurse Croissant jogging behind him.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_018.mp3"
+        },
+        {
+          "id": "ra_19",
+          "text_en": "He stopped outside the cup-cake ward.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_019.mp3"
+        },
+        {
+          "id": "ra_20",
+          "text_en": "The small cakes, with human faces, were groaning in pain, clutching their stomachs, they rolled from side to side.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_020.mp3"
+        },
+        {
+          "id": "ra_21",
+          "text_en": "“Doc, we’ve a hollow feeling in our stomachs,” they rubbed their bellies.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_021.mp3"
+        },
+        {
+          "id": "ra_22",
+          "text_en": "“Hmmm…” Doctor Donut prodded the cakes with a candy cane.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_022.mp3"
+        },
+        {
+          "id": "ra_23",
+          "text_en": "He made a few of them turn upside down.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_023.mp3"
+        },
+        {
+          "id": "ra_24",
+          "text_en": "“This is an epidemic,” he frowned.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_024.mp3"
+        },
+        {
+          "id": "ra_25",
+          "text_en": "“Get the injections ready,” he said to the nurse.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_025.mp3"
+        },
+        {
+          "id": "ra_26",
+          "text_en": "“Please doc, no syringes,” the cup-cakes shivered in fear.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_026.mp3"
+        },
+        {
+          "id": "ra_27",
+          "text_en": "“Not even injections filled with hot chocolate?” the doctor’s kind eyes’ twinkled.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_027.mp3"
+        },
+        {
+          "id": "ra_28",
+          "text_en": "“I promise that you won’t feel any pain,” he smiled.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_028.mp3"
+        },
+        {
+          "id": "ra_29",
+          "text_en": "“Infact, you will feel nice and warm.” “No,” the cup-cakes said running all over the room.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_029.mp3"
+        },
+        {
+          "id": "ra_30",
+          "text_en": "Doctor Donut frowned.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_030.mp3"
+        },
+        {
+          "id": "ra_31",
+          "text_en": "This epidemic was contagious.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_031.mp3"
+        },
+        {
+          "id": "ra_32",
+          "text_en": "If he couldn’t treat it, then within a short time it would spread across the hospital and there would be no desserts left.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_032.mp3"
+        },
+        {
+          "id": "ra_33",
+          "text_en": "“Let nurse put you to sleep,” the doctor said gently.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_033.mp3"
+        },
+        {
+          "id": "ra_34",
+          "text_en": "“We’ll decide your treatment in the morning.” The cup-cakes lay down on their backs.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_034.mp3"
+        },
+        {
+          "id": "ra_35",
+          "text_en": "Nurse Croissant fed them a spoonful of hot milk with honey.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_035.mp3"
+        },
+        {
+          "id": "ra_36",
+          "text_en": "Within a few minutes the cup-cakes were snoring soundly.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_036.mp3"
+        },
+        {
+          "id": "ra_37",
+          "text_en": "Filling a syringe with hot chocolate, Doctor Donut jabbed the cupcakes in their stomach.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_037.mp3"
+        },
+        {
+          "id": "ra_38",
+          "text_en": "As the hot chocolate filled their stomachs, their stomachs swelled.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_038.mp3"
+        },
+        {
+          "id": "ra_39",
+          "text_en": "“Cover them with a red velvet blanket,” Doctor Donut told the nurse.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_039.mp3"
+        },
+        {
+          "id": "ra_40",
+          "text_en": "“They will be completely alright by tomorrow morning.”",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_119308/s_040.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "Who was the busiest doctor in the Dessert Hospital?",
+          "options_en": [
+            "Doctor Donut",
+            "Nurse Croissant",
+            "The sponge cakes"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "Where did the busiest doctor work?",
+          "options_en": [
+            "Dessert Hospital",
+            "Sponge cake room",
+            "Cup-cake ward"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s1_q1",
+          "type": "choice",
+          "question_en": "What did his patients love about him?",
+          "options_en": [
+            "His sweet medicines and his gentle treatments",
+            "His white chocolate coat",
+            "His injections filled with hot chocolate"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s1_q2",
+          "type": "choice",
+          "question_en": "Why did the patients like him?",
+          "options_en": [
+            "Because of his sweet medicines and gentle treatments",
+            "Because he wore a white chocolate coat",
+            "Because nurse Croissant jogged behind him"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s2_q1",
+          "type": "choice",
+          "question_en": "Where did he roll out of for his daily visits?",
+          "options_en": [
+            "His room",
+            "The sponge cake room",
+            "The cup-cake ward"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s2_q2",
+          "type": "choice",
+          "question_en": "Who was jogging behind him?",
+          "options_en": [
+            "Nurse Croissant",
+            "Three round cakes",
+            "The small cup-cakes"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s3_q1",
+          "type": "choice",
+          "question_en": "What was his first stop?",
+          "options_en": [
+            "The sponge cake room",
+            "The cup-cake ward",
+            "His own room"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p0_s3_q2",
+          "type": "choice",
+          "question_en": "Why did he stop at the sponge cake room?",
+          "options_en": [
+            "To check his patients",
+            "To get injections ready",
+            "To feed them hot milk with honey"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "Who said their bums are paining?",
+          "options_en": [
+            "three round cakes",
+            "Doctor Donut",
+            "Nurse Croissant"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "Where did the cakes waddle?",
+          "options_en": [
+            "over the table",
+            "into the sponge cake room",
+            "down the corridor"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p1_s1_q1",
+          "type": "choice",
+          "question_en": "Who asked if it pains while sitting?",
+          "options_en": [
+            "the doctor",
+            "Nurse Croissant",
+            "a round cake"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p1_s1_q2",
+          "type": "choice",
+          "question_en": "What did the doctor ask about?",
+          "options_en": [
+            "if it pains while sitting",
+            "if they felt cold",
+            "if they had rashes"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p1_s2_q1",
+          "type": "choice",
+          "question_en": "Who replied \"Yes\"?",
+          "options_en": [
+            "the cakes",
+            "Doctor Donut",
+            "Nurse Croissant"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p1_s2_q2",
+          "type": "choice",
+          "question_en": "What was the cakes' reply?",
+          "options_en": [
+            "\"Yes\"",
+            "\"No\"",
+            "\"Help me\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p1_s3_q1",
+          "type": "choice",
+          "question_en": "What did Doctor Donut tell the nurse to stick to their bottom?",
+          "options_en": [
+            "cherries and strawberries heated in maple syrup",
+            "gems, flowers and leaves",
+            "a thick colourful blanket"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p1_s3_q2",
+          "type": "choice",
+          "question_en": "Who gave the instruction about sticking fruit to their bottom?",
+          "options_en": [
+            "Doctor Donut",
+            "the cakes",
+            "Nurse Croissant"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p1_s4_q1",
+          "type": "choice",
+          "question_en": "What did the doctor tell the nurse to make them do?",
+          "options_en": [
+            "lie upside down until they feel better",
+            "lie on their backs",
+            "cover them with a red velvet blanket"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p1_s4_q2",
+          "type": "choice",
+          "question_en": "Why should they lie upside down?",
+          "options_en": [
+            "until they feel better",
+            "because they are cold",
+            "to get injections"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "Who said \"We are feeling cold\"?",
+          "options_en": [
+            "several funny shaped cakes",
+            "three round cakes",
+            "a heart shaped cake"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "How were the cakes feeling?",
+          "options_en": [
+            "cold",
+            "itchy",
+            "in pain"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p2_s1_q1",
+          "type": "choice",
+          "question_en": "What did the doctor say would make them feel better?",
+          "options_en": [
+            "a bath with pink chocolate",
+            "a dressing of white cream and blue icing sugar",
+            "injections filled with hot chocolate"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p2_s1_q2",
+          "type": "choice",
+          "question_en": "Who did the doctor speak to?",
+          "options_en": [
+            "the nurse",
+            "the flaky cake",
+            "three round cakes"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "Who asked \"What about me doc?\"",
+          "options_en": [
+            "A round cake",
+            "Doctor Donut",
+            "Nurse Croissant"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "What did the round cake ask the doctor?",
+          "options_en": [
+            "\"What about me doc?\"",
+            "\"Do you have rashes?\"",
+            "\"Doc help me\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p3_s1_q1",
+          "type": "choice",
+          "question_en": "How did the cake say it was feeling?",
+          "options_en": [
+            "Very itchy",
+            "Cold and tired",
+            "In pain while sitting"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p3_s1_q2",
+          "type": "choice",
+          "question_en": "What remedy did Doctor Donut say would cure the cake?",
+          "options_en": [
+            "A dressing of white cream and blue icing sugar",
+            "A bath with pink chocolate",
+            "Cover him with a thick colourful blanket"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "Who asked for help?",
+          "options_en": [
+            "a heart shaped cake with a large crack across it",
+            "three round cakes",
+            "a round cake"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "What did the cake have across it?",
+          "options_en": [
+            "a large crack",
+            "rashes",
+            "a hollow feeling in its stomach"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p4_s1_q1",
+          "type": "choice",
+          "question_en": "Who asked if there was any pain?",
+          "options_en": [
+            "doctor donut",
+            "nurse croissant",
+            "the heart shaped cake"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p4_s1_q2",
+          "type": "choice",
+          "question_en": "What question did Doctor Donut ask?",
+          "options_en": [
+            "Do you have any pain?",
+            "Do you have rashes?",
+            "Are you feeling cold and tired?"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p4_s2_q1",
+          "type": "choice",
+          "question_en": "Who replied \"No\"?",
+          "options_en": [
+            "the cake",
+            "Doctor Donut",
+            "Nurse Croissant"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p4_s2_q2",
+          "type": "choice",
+          "question_en": "What was the cake's answer?",
+          "options_en": [
+            "No",
+            "Doc help me",
+            "I just feel cold and tired"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p4_s3_q1",
+          "type": "choice",
+          "question_en": "How did the cake say it felt?",
+          "options_en": [
+            "cold and tired",
+            "itchy",
+            "with a hollow feeling in the stomach"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p4_s3_q2",
+          "type": "choice",
+          "question_en": "What did the kind doctor do?",
+          "options_en": [
+            "smiled",
+            "frowned",
+            "rolled out of the room"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p4_s4_q1",
+          "type": "choice",
+          "question_en": "Who did the doctor ask to cover him?",
+          "options_en": [
+            "Nurse",
+            "Doctor Donut",
+            "Nurse Croissant"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p4_s4_q2",
+          "type": "choice",
+          "question_en": "What did the doctor tell the nurse to stick over him?",
+          "options_en": [
+            "gems, flowers and leaves",
+            "cherries and strawberries heated in maple syrup",
+            "white cream and blue icing sugar"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "Who rolled out of the room?",
+          "options_en": [
+            "Doctor Donut",
+            "Nurse Croissant",
+            "The cup-cakes"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "Who was jogging behind him?",
+          "options_en": [
+            "Nurse Croissant",
+            "Doctor Donut",
+            "A heart shaped cake"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p5_s1_q1",
+          "type": "choice",
+          "question_en": "Where did he stop?",
+          "options_en": [
+            "Outside the cup-cake ward",
+            "Outside the sponge cake room",
+            "Outside the Dessert Hospital entrance"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p5_s1_q2",
+          "type": "choice",
+          "question_en": "Which ward did he stop outside?",
+          "options_en": [
+            "The cup-cake ward",
+            "The sponge cake room",
+            "The sponge room"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p5_s2_q1",
+          "type": "choice",
+          "question_en": "Who were groaning in pain?",
+          "options_en": [
+            "The small cakes with human faces",
+            "The sponge cakes",
+            "The heart shaped cake"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p5_s2_q2",
+          "type": "choice",
+          "question_en": "How were they moving?",
+          "options_en": [
+            "They rolled from side to side",
+            "They waddled over the table",
+            "They lay down on their backs"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "Who said they had a hollow feeling in their stomachs?",
+          "options_en": [
+            "the cup-cakes",
+            "Doctor Donut",
+            "Nurse Croissant"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "What did they rub when they said they had a hollow feeling?",
+          "options_en": [
+            "their bellies",
+            "their bums",
+            "a blanket"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p6_s1_q1",
+          "type": "choice",
+          "question_en": "Who prodded the cakes with a candy cane?",
+          "options_en": [
+            "Doctor Donut",
+            "Nurse Croissant",
+            "the cup-cakes"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p6_s1_q2",
+          "type": "choice",
+          "question_en": "What did Doctor Donut use to prod the cakes?",
+          "options_en": [
+            "a candy cane",
+            "a syringe",
+            "a spoonful of hot milk"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p6_s2_q1",
+          "type": "choice",
+          "question_en": "What did he make a few of them do?",
+          "options_en": [
+            "turn upside down",
+            "lie on their backs",
+            "snore"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p6_s2_q2",
+          "type": "choice",
+          "question_en": "Who made a few of them turn upside down?",
+          "options_en": [
+            "he (Doctor Donut)",
+            "Nurse Croissant",
+            "the cup-cakes themselves"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p6_s3_q1",
+          "type": "choice",
+          "question_en": "What did he call the situation?",
+          "options_en": [
+            "an epidemic",
+            "a cold",
+            "a pain"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p6_s3_q2",
+          "type": "choice",
+          "question_en": "How did he show his feeling when he spoke?",
+          "options_en": [
+            "he frowned",
+            "he smiled",
+            "his eyes twinkled"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p6_s4_q1",
+          "type": "choice",
+          "question_en": "What did he tell the nurse to get ready?",
+          "options_en": [
+            "the injections",
+            "a thick colourful blanket",
+            "hot milk with honey"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p6_s4_q2",
+          "type": "choice",
+          "question_en": "Who did he say this to?",
+          "options_en": [
+            "the nurse",
+            "the cup-cakes",
+            "Nurse Croissant"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p6_s5_q1",
+          "type": "choice",
+          "question_en": "What did the cup-cakes ask the doctor not to use?",
+          "options_en": [
+            "syringes",
+            "injections filled with hot chocolate",
+            "a red velvet blanket"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p6_s5_q2",
+          "type": "choice",
+          "question_en": "How did the cup-cakes react when they spoke?",
+          "options_en": [
+            "they shivered in fear",
+            "they were snoring",
+            "they smiled"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "Who asked about injections filled with hot chocolate?",
+          "options_en": [
+            "the doctor",
+            "nurse Croissant",
+            "the cup-cakes"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "What was said could fill the injections?",
+          "options_en": [
+            "hot chocolate",
+            "hot milk",
+            "pink chocolate"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        },
+        {
+          "id": "gl_p7_s1_q1",
+          "type": "choice",
+          "question_en": "Who promised that they wouldn't feel any pain?",
+          "options_en": [
+            "he",
+            "nurse Croissant",
+            "the cup-cakes"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        },
+        {
+          "id": "gl_p7_s1_q2",
+          "type": "choice",
+          "question_en": "What did he promise they would not feel?",
+          "options_en": [
+            "any pain",
+            "cold",
+            "itching"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        },
+        {
+          "id": "gl_p7_s2_q1",
+          "type": "choice",
+          "question_en": "Who said \"No\" while running all over the room?",
+          "options_en": [
+            "the cup-cakes",
+            "Doctor Donut",
+            "nurse Croissant"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p7_s2_q2",
+          "type": "choice",
+          "question_en": "How did the cup-cakes move in the room?",
+          "options_en": [
+            "running all over the room",
+            "waddled over the table",
+            "lay down on their backs"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p7_s3_q1",
+          "type": "choice",
+          "question_en": "Who frowned?",
+          "options_en": [
+            "Doctor Donut",
+            "the cup-cakes",
+            "nurse Croissant"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        },
+        {
+          "id": "gl_p7_s3_q2",
+          "type": "choice",
+          "question_en": "What did Doctor Donut do in this sentence?",
+          "options_en": [
+            "frowned",
+            "smiled",
+            "shivered"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        },
+        {
+          "id": "gl_p7_s4_q1",
+          "type": "choice",
+          "question_en": "What was described as contagious?",
+          "options_en": [
+            "this epidemic",
+            "the hospital",
+            "the syringe"
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        },
+        {
+          "id": "gl_p7_s4_q2",
+          "type": "choice",
+          "question_en": "How was the epidemic described?",
+          "options_en": [
+            "contagious",
+            "painful",
+            "warm"
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        },
+        {
+          "id": "gl_p7_s5_q1",
+          "type": "choice",
+          "question_en": "What would happen if he couldn't treat it?",
+          "options_en": [
+            "it would spread across the hospital",
+            "they would get injections",
+            "they would go to sleep"
+          ],
+          "correct_index": 0,
+          "sentence_index": 32
+        },
+        {
+          "id": "gl_p7_s5_q2",
+          "type": "choice",
+          "question_en": "What would there be none left of if it spread?",
+          "options_en": [
+            "desserts",
+            "cakes",
+            "patients"
+          ],
+          "correct_index": 0,
+          "sentence_index": 32
+        }
+      ]
+    },
+    {
+      "paragraph_index": 8,
+      "questions": [
+        {
+          "id": "gl_p8_s0_q1",
+          "type": "choice",
+          "question_en": "Who said, \"Let nurse put you to sleep\"?",
+          "options_en": [
+            "the doctor",
+            "Nurse Croissant",
+            "Doctor Donut"
+          ],
+          "correct_index": 0,
+          "sentence_index": 33
+        },
+        {
+          "id": "gl_p8_s0_q2",
+          "type": "choice",
+          "question_en": "What did the doctor suggest should be done?",
+          "options_en": [
+            "Let nurse put you to sleep",
+            "Feed them a spoonful of hot milk with honey",
+            "Decide their treatment immediately"
+          ],
+          "correct_index": 0,
+          "sentence_index": 33
+        },
+        {
+          "id": "gl_p8_s1_q1",
+          "type": "choice",
+          "question_en": "When will they decide the cup-cakes' treatment?",
+          "options_en": [
+            "in the morning",
+            "right away",
+            "by the afternoon"
+          ],
+          "correct_index": 0,
+          "sentence_index": 34
+        },
+        {
+          "id": "gl_p8_s1_q2",
+          "type": "choice",
+          "question_en": "How did the cup-cakes lie down?",
+          "options_en": [
+            "on their backs",
+            "upside down",
+            "rolling from side to side"
+          ],
+          "correct_index": 0,
+          "sentence_index": 34
+        },
+        {
+          "id": "gl_p8_s2_q1",
+          "type": "choice",
+          "question_en": "Who fed the cup-cakes a spoonful of hot milk with honey?",
+          "options_en": [
+            "Nurse Croissant",
+            "Doctor Donut",
+            "the cup-cakes themselves"
+          ],
+          "correct_index": 0,
+          "sentence_index": 35
+        },
+        {
+          "id": "gl_p8_s2_q2",
+          "type": "choice",
+          "question_en": "What did Nurse Croissant give the cup-cakes to eat?",
+          "options_en": [
+            "a spoonful of hot milk with honey",
+            "injections of hot chocolate",
+            "a bath with pink chocolate"
+          ],
+          "correct_index": 0,
+          "sentence_index": 35
+        },
+        {
+          "id": "gl_p8_s3_q1",
+          "type": "choice",
+          "question_en": "When did the cup-cakes begin snoring soundly?",
+          "options_en": [
+            "within a few minutes",
+            "immediately",
+            "after their treatment in the morning"
+          ],
+          "correct_index": 0,
+          "sentence_index": 36
+        },
+        {
+          "id": "gl_p8_s3_q2",
+          "type": "choice",
+          "question_en": "What were the cup-cakes doing within a few minutes?",
+          "options_en": [
+            "snoring soundly",
+            "groaning in pain",
+            "rolling from side to side"
+          ],
+          "correct_index": 0,
+          "sentence_index": 36
+        }
+      ]
+    },
+    {
+      "paragraph_index": 9,
+      "questions": [
+        {
+          "id": "gl_p9_s0_q1",
+          "type": "choice",
+          "question_en": "Who jabbed the cupcakes in their stomach?",
+          "options_en": [
+            "Doctor Donut",
+            "Nurse Croissant",
+            "Three round cakes"
+          ],
+          "correct_index": 0,
+          "sentence_index": 37
+        },
+        {
+          "id": "gl_p9_s0_q2",
+          "type": "choice",
+          "question_en": "What did Doctor Donut fill the syringe with?",
+          "options_en": [
+            "Hot chocolate",
+            "Pink chocolate",
+            "Hot milk with honey"
+          ],
+          "correct_index": 0,
+          "sentence_index": 37
+        },
+        {
+          "id": "gl_p9_s1_q1",
+          "type": "choice",
+          "question_en": "What happened as the hot chocolate filled their stomachs?",
+          "options_en": [
+            "Their stomachs swelled",
+            "They fell asleep",
+            "They felt cold"
+          ],
+          "correct_index": 0,
+          "sentence_index": 38
+        },
+        {
+          "id": "gl_p9_s1_q2",
+          "type": "choice",
+          "question_en": "Which part of their body swelled?",
+          "options_en": [
+            "Their stomachs",
+            "Their bums",
+            "Their backs"
+          ],
+          "correct_index": 0,
+          "sentence_index": 38
+        },
+        {
+          "id": "gl_p9_s2_q1",
+          "type": "choice",
+          "question_en": "Who did Doctor Donut tell to cover them with a red velvet blanket?",
+          "options_en": [
+            "The nurse",
+            "Nurse Croissant",
+            "The cupcakes"
+          ],
+          "correct_index": 0,
+          "sentence_index": 39
+        },
+        {
+          "id": "gl_p9_s2_q2",
+          "type": "choice",
+          "question_en": "What was Doctor Donut telling the nurse to use to cover them?",
+          "options_en": [
+            "A red velvet blanket",
+            "A thick colourful blanket",
+            "A dressing of white cream"
+          ],
+          "correct_index": 0,
+          "sentence_index": 39
+        },
+        {
+          "id": "gl_p9_s3_q1",
+          "type": "choice",
+          "question_en": "When did Doctor Donut say they would be completely alright?",
+          "options_en": [
+            "By tomorrow morning",
+            "Within a few minutes",
+            "Within a short time"
+          ],
+          "correct_index": 0,
+          "sentence_index": 40
+        },
+        {
+          "id": "gl_p9_s3_q2",
+          "type": "choice",
+          "question_en": "How did Doctor Donut describe how the cupcakes would be by tomorrow morning?",
+          "options_en": [
+            "Completely alright",
+            "Part of an epidemic",
+            "Cold and tired"
+          ],
+          "correct_index": 0,
+          "sentence_index": 40
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'Doctor Donut'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "busiest",
+      "meaning_vi": "bận rộn nhất",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "patients",
+      "meaning_vi": "bệnh nhân",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "gentle",
+      "meaning_vi": "nhẹ nhàng",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "wards",
+      "meaning_vi": "các khoa (trong bệnh viện)",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "paining",
+      "meaning_vi": "đang đau",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "waddled",
+      "meaning_vi": "đi lạch bạch",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "maple syrup",
+      "meaning_vi": "si-rô phong",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "upside down",
+      "meaning_vi": "lộn ngược/úp xuống",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "several",
+      "meaning_vi": "vài",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "shivered",
+      "meaning_vi": "run rẩy",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "itchy",
+      "meaning_vi": "ngứa",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "rashes",
+      "meaning_vi": "phát ban",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "scratching",
+      "meaning_vi": "gãi",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "icing sugar",
+      "meaning_vi": "đường bột",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "crack",
+      "meaning_vi": "vết nứt",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "kind",
+      "meaning_vi": "tốt bụng",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "blanket",
+      "meaning_vi": "chăn",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "gems",
+      "meaning_vi": "đá quý",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "corridor",
+      "meaning_vi": "hành lang",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "ward",
+      "meaning_vi": "khoa (bệnh viện)",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "groaning",
+      "meaning_vi": "rên rỉ",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "clutching",
+      "meaning_vi": "ôm chặt",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "hollow",
+      "meaning_vi": "rỗng tuếch",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "prodded",
+      "meaning_vi": "chọc nhẹ",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "epidemic",
+      "meaning_vi": "dịch bệnh",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "syringes",
+      "meaning_vi": "ống tiêm",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "twinkled",
+      "meaning_vi": "lấp lánh",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "promise",
+      "meaning_vi": "hứa",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "contagious",
+      "meaning_vi": "dễ lây lan",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "spread",
+      "meaning_vi": "lây lan",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "gently",
+      "meaning_vi": "nhẹ nhàng",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "decide",
+      "meaning_vi": "quyết định",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "spoonful",
+      "meaning_vi": "một thìa",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "snoring",
+      "meaning_vi": "ngáy",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "syringe",
+      "meaning_vi": "ống tiêm",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "jabbed",
+      "meaning_vi": "tiêm/chích",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "swelled",
+      "meaning_vi": "phồng lên",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "velvet",
+      "meaning_vi": "nhung",
+      "paragraph_index": 9
+    }
+  ]
+}

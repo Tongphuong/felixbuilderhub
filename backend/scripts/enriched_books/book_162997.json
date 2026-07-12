@@ -1,0 +1,579 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L0",
+  "level_label": "Cấp 0",
+  "topic": "Farm Animals",
+  "slug": "book_162997",
+  "audio_filename": "book_162997.mp3",
+  "book_slug": "book_162997",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_162997/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_162997/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_162997/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_162997/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_162997/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_162997/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_162997/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_162997/page_09.jpg",
+    "https://audio.felixbuilderhub.com/books/book_162997/page_10.jpg",
+    "https://audio.felixbuilderhub.com/books/book_162997/page_11.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_162997/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_162997/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_162997/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_162997/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_162997/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_162997/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_162997/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_162997/page_09.mp3",
+    "https://audio.felixbuilderhub.com/books/book_162997/page_10.mp3",
+    "https://audio.felixbuilderhub.com/books/book_162997/page_11.mp3"
+  ],
+  "book_attribution": {
+    "title": "Farm Animals",
+    "creators": [
+      "Little Zebra Books",
+      "Marleen Visser"
+    ],
+    "publisher": "African Storybook Initiative",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: Farm Animals is written by Little Zebra Books . © African Storybook Initiative , 2018. Some rights reserved. Released under CC BY 4.0 license. Other Credits: This story 'Farm Animals' has been published on StoryWeaver by African Storybook Initiative. Images Attributions: Cover page: Donkey , by Marleen Visser © African Storybook Initiative, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 2: Running dog , by Marleen Visser © African Storybook Initiative, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 3: White duck with dark green patches , by Marleen Visser © African Storybook Initiative, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 4: Cow , by Marleen Visser © African Storybook Initiative, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 5: Donkey , by Marleen Visser © African Storybook Initiative, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 6: Rat , by Marleen Visser © African Storybook Initiative, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 7: Cat licking its paw , by Marleen Visser © African Storybook Initiative, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 8: A sheep , by Marleen Visser © African Storybook Initiative, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 9: Goat chewing leaves from a tree , by Marleen Visser © African Storybook Initiative, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 10: A pig , by Marleen Visser © African Storybook Initiative, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 11: A hen , by Marleen Visser © African Storybook Initiative, 2018. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/162997-farm-animals",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "Running dog , by Marleen Visser © African Storybook Initiative, 2018. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "White duck with dark green patches , by Marleen Visser © African Storybook Initiative, 2018. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "Cow , by Marleen Visser © African Storybook Initiative, 2018. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "Donkey , by Marleen Visser © African Storybook Initiative, 2018. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "Rat , by Marleen Visser © African Storybook Initiative, 2018. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "Cat licking its paw , by Marleen Visser © African Storybook Initiative, 2018. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "A sheep , by Marleen Visser © African Storybook Initiative, 2018. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "Goat chewing leaves from a tree , by Marleen Visser © African Storybook Initiative, 2018. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 8,
+        "credit_text": "A pig , by Marleen Visser © African Storybook Initiative, 2018. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 9,
+        "credit_text": "A hen , by Marleen Visser © African Storybook Initiative, 2018. Some rights reserved. Released under CC BY 4.0 license."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "Farm Animals",
+    "paragraphs_en": [
+      "Dog",
+      "Duck",
+      "Cow",
+      "Donkey",
+      "Mouse",
+      "Cat",
+      "Sheep",
+      "Goat",
+      "Pig",
+      "Chicken"
+    ],
+    "sentences": [
+      {
+        "text_en": "Dog",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_162997/s_000.mp3",
+        "text_vi": "Chó"
+      },
+      {
+        "text_en": "Duck",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_162997/s_001.mp3",
+        "text_vi": "Vịt"
+      },
+      {
+        "text_en": "Cow",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_162997/s_002.mp3",
+        "text_vi": "Bò"
+      },
+      {
+        "text_en": "Donkey",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_162997/s_003.mp3",
+        "text_vi": "Lừa"
+      },
+      {
+        "text_en": "Mouse",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_162997/s_004.mp3",
+        "text_vi": "Chuột"
+      },
+      {
+        "text_en": "Cat",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_162997/s_005.mp3",
+        "text_vi": "Mèo"
+      },
+      {
+        "text_en": "Sheep",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_162997/s_006.mp3",
+        "text_vi": "Cừu"
+      },
+      {
+        "text_en": "Goat",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_162997/s_007.mp3",
+        "text_vi": "Dê"
+      },
+      {
+        "text_en": "Pig",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_162997/s_008.mp3",
+        "text_vi": "Heo"
+      },
+      {
+        "text_en": "Chicken",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_162997/s_009.mp3",
+        "text_vi": "Gà"
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "Dog",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_162997/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "Duck",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_162997/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "Cow",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_162997/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "Donkey",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_162997/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "Mouse",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_162997/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "Cat",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_162997/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "Sheep",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_162997/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "Goat",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_162997/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "Pig",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_162997/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "Chicken",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_162997/s_009.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "What animal is in the sentence?",
+          "options_en": [
+            "Dog",
+            "Cat",
+            "Cow"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "Which animal is named?",
+          "options_en": [
+            "Dog",
+            "Goat",
+            "Duck"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "Which animal is mentioned?",
+          "options_en": [
+            "Duck",
+            "Dog",
+            "Cat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "What animal is written in the sentence?",
+          "options_en": [
+            "Duck",
+            "Cow",
+            "Chicken"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "What animal is on the page?",
+          "options_en": [
+            "Cow",
+            "Dog",
+            "Cat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "Which animal is shown?",
+          "options_en": [
+            "Cow",
+            "Sheep",
+            "Pig"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "What animal is mentioned?",
+          "options_en": [
+            "Donkey",
+            "Dog",
+            "Cat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "Which animal appears in the sentence?",
+          "options_en": [
+            "Donkey",
+            "Cow",
+            "Sheep"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "What animal is mentioned?",
+          "options_en": [
+            "Mouse",
+            "Dog",
+            "Cat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "Which animal is named in the sentence?",
+          "options_en": [
+            "Mouse",
+            "Cow",
+            "Sheep"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "What animal is mentioned?",
+          "options_en": [
+            "Cat",
+            "Dog",
+            "Cow"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "Which animal appears in the sentence?",
+          "options_en": [
+            "Cat",
+            "Sheep",
+            "Pig"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "What animal is named?",
+          "options_en": [
+            "Sheep",
+            "Dog",
+            "Cat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "Which animal appears in the sentence?",
+          "options_en": [
+            "Sheep",
+            "Cow",
+            "Goat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "What animal is shown?",
+          "options_en": [
+            "Goat",
+            "Dog",
+            "Cat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "Which animal is on the page?",
+          "options_en": [
+            "Goat",
+            "Sheep",
+            "Pig"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        }
+      ]
+    },
+    {
+      "paragraph_index": 8,
+      "questions": [
+        {
+          "id": "gl_p8_s0_q1",
+          "type": "choice",
+          "question_en": "What animal is mentioned?",
+          "options_en": [
+            "Pig",
+            "Dog",
+            "Cat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p8_s0_q2",
+          "type": "choice",
+          "question_en": "Which animal is the sentence about?",
+          "options_en": [
+            "Pig",
+            "Cow",
+            "Chicken"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        }
+      ]
+    },
+    {
+      "paragraph_index": 9,
+      "questions": [
+        {
+          "id": "gl_p9_s0_q1",
+          "type": "choice",
+          "question_en": "What animal is the sentence about?",
+          "options_en": [
+            "Chicken",
+            "Dog",
+            "Cat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p9_s0_q2",
+          "type": "choice",
+          "question_en": "Which animal is mentioned?",
+          "options_en": [
+            "Duck",
+            "Chicken",
+            "Cow"
+          ],
+          "correct_index": 1,
+          "sentence_index": 9
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'Farm Animals'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "Dog",
+      "meaning_vi": "Con chó",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "Duck",
+      "meaning_vi": "Con vịt",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "Cow",
+      "meaning_vi": "Con bò",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "Donkey",
+      "meaning_vi": "Con lừa",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "Mouse",
+      "meaning_vi": "Con chuột",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "Cat",
+      "meaning_vi": "Con mèo",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "Sheep",
+      "meaning_vi": "Con cừu",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "Goat",
+      "meaning_vi": "Con dê",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "Pig",
+      "meaning_vi": "Con heo",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "Chicken",
+      "meaning_vi": "Con gà",
+      "paragraph_index": 9
+    }
+  ]
+}

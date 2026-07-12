@@ -1,0 +1,2309 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L3",
+  "level_label": "Cấp 3",
+  "topic": "Ammu and the Sparrows",
+  "slug": "book_132178",
+  "audio_filename": "book_132178.mp3",
+  "book_slug": "book_132178",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_132178/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_132178/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_132178/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_132178/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_132178/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_132178/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_132178/page_09.jpg",
+    "https://audio.felixbuilderhub.com/books/book_132178/page_10.jpg",
+    "https://audio.felixbuilderhub.com/books/book_132178/page_11.jpg",
+    "https://audio.felixbuilderhub.com/books/book_132178/page_12.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_132178/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_132178/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_132178/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_132178/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_132178/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_132178/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_132178/page_09.mp3",
+    "https://audio.felixbuilderhub.com/books/book_132178/page_10.mp3",
+    "https://audio.felixbuilderhub.com/books/book_132178/page_11.mp3",
+    "https://audio.felixbuilderhub.com/books/book_132178/page_12.mp3"
+  ],
+  "book_attribution": {
+    "title": "Ammu and the Sparrows",
+    "creators": [
+      "Vinitha R",
+      "Jayesh Sivan"
+    ],
+    "publisher": "Pratham Books",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: Ammu and the Sparrows is written by Vinitha R . © Pratham Books , 2020. Some rights reserved. Released under CC BY 4.0 license. Other Credits: 'Ammu and the Sparrows' has been originally published by Pratham Books. The development of this book has been supported by Parag, an initiative of Tata Trusts. www.prathambooks.org. | Vinitha dedicates this book to V and A, who waited. Images Attributions: Cover page: A sulking boy with birds , by Jayesh Sivan © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 2: Three sparrows , by Jayesh Sivan © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 3: a boy at the gate looking out , by Jayesh Sivan © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 4: A boy and a lady feeding birds , by Jayesh Sivan © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 5: A framed photograph on a table , by Jayesh Sivan © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 6: A boy feeding birds in the terrace , by Jayesh Sivan © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 7: A boy and a lady talking , by Jayesh Sivan © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 8: Open balcony , by Jayesh Sivan © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 9: Two birds perched on a flowering plant , by Jayesh Sivan © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 10: A lady and a boy working , by Jayesh Sivan © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 11: A boy looking at birds on a bird feeder , by Jayesh Sivan © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/ The development of this book has been supported by Parag, an initiative of Tata Trusts. www.prathambooks.org",
+    "source_url": "https://storyweaver.org.in/stories/132178-ammu-and-the-sparrows",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "a boy at the gate looking out , by Jayesh Sivan © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "A boy and a lady feeding birds , by Jayesh Sivan © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "A framed photograph on a table , by Jayesh Sivan © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "A boy feeding birds in the terrace , by Jayesh Sivan © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "A boy and a lady talking , by Jayesh Sivan © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "Open balcony , by Jayesh Sivan © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "Two birds perched on a flowering plant , by Jayesh Sivan © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "A lady and a boy working , by Jayesh Sivan © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 8,
+        "credit_text": "A boy looking at birds on a bird feeder , by Jayesh Sivan © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 9,
+        "credit_text": "Illustration by Jayesh Sivan."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "Ammu and the Sparrows",
+    "paragraphs_en": [
+      "​He waited and waited. All day he waited. But Ammu’s Amma and Accha didn’t come. They would come soon, any day, Ammu told himself. Crows came, pigeons came. He even heard a screech of parakeets somewhere.",
+      "​They didn’t come the next day. Nor the day after that. Ammamma threw a fistful of leftover rice on the parapet. The pigeons flocked down to peck at it. Ammu looked into their eyes. They stared back. Unblinking. Then the crows came. They were bold. They jabbed at blobs of rice and hopped closer. Ammu looked into their eyes. They stared back. And cocked their heads.",
+      "​He remembered the times when he, Amma and Accha had played together. Then suddenly the three of them were not together any more.",
+      "​Where were the little birds? “Maybe they don’t like rice,” Ammu thought. He spread a spoonful of porridge on the ledge. He left breadcrumbs. It had been four days, but they had still not come.",
+      "​Next morning, Ammamma was ready with bits of dosa. “Come,” she called him. Ammu sighed. Amma still hadn’t come. And the little birds still hadn’t come.",
+      "​Ammamma looked sad. Ammu asked her, “What are they called? The two little brown birds.” “Sparrows,” said his Ammamma. “Kili. Do you miss them? “No, I do not!” said Ammu. But his grandmother knew Ammu’s heart. “Amma sparrow and Accha sparrow must be busy,” she said.",
+      "​Suddenly they were there. The two little brown birds. ​“Which is Amma, which is Accha?” asked Ammu, his heart bursting with joy. He hoped that the pale, brown one was the Amma sparrow. It looked soft and gentle. “The one with big eyes, with lines around them, is Accha sparrow,” said Ammamma.",
+      "​That Sunday, Ammu and Ammamma sat down together to make a sparrow feeder. As they cut the holes and filled it with seeds, Ammamma said, “The court has not decided yet.” Ammu looked away, his eyes brimming. “They love you. You do know that? They need some time.”",
+      "​That evening three sparrows came. Not two. Three. Ammu wanted to leap and he wanted to dance. But he stood as still as a statue. He did not want to frighten the birds away. They hopped onto the feeder and hopped off, their beaks busy.",
+      "​“Are these the same sparrows?” Ammu asked. All sparrows looked the same to Ammamma, but she peered at them carefully and said, “Oh yes! Amma and Accha sparrow have even brought a baby sparrow along.” Ammu smiled."
+    ],
+    "sentences": [
+      {
+        "text_en": "​He waited and waited.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_000.mp3",
+        "text_vi": "Cậu bé cứ chờ, chờ mãi."
+      },
+      {
+        "text_en": "All day he waited.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_001.mp3",
+        "text_vi": "Cậu chờ đợi cả ngày."
+      },
+      {
+        "text_en": "But Ammu’s Amma and Accha didn’t come.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_002.mp3",
+        "text_vi": "Nhưng Amma và Accha của Ammu đã không đến."
+      },
+      {
+        "text_en": "They would come soon, any day, Ammu told himself.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_003.mp3",
+        "text_vi": "Ammu tự nhủ rằng họ sẽ đến sớm thôi, bất cứ ngày nào."
+      },
+      {
+        "text_en": "Crows came, pigeons came.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_004.mp3",
+        "text_vi": "Quạ đến, bồ câu đến."
+      },
+      {
+        "text_en": "He even heard a screech of parakeets somewhere.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_005.mp3",
+        "text_vi": "Cậu bé thậm chí còn nghe thấy tiếng vẹt kêu chói tai ở đâu đó."
+      },
+      {
+        "text_en": "​They didn’t come the next day.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_006.mp3",
+        "text_vi": "Họ không đến vào ngày hôm sau."
+      },
+      {
+        "text_en": "Nor the day after that.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_007.mp3",
+        "text_vi": "Cũng không đến vào ngày tiếp theo nữa."
+      },
+      {
+        "text_en": "Ammamma threw a fistful of leftover rice on the parapet.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_008.mp3",
+        "text_vi": "Ammamma ném một nắm cơm thừa lên thành tường."
+      },
+      {
+        "text_en": "The pigeons flocked down to peck at it.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_009.mp3",
+        "text_vi": "Đàn bồ câu bay xuống đậu để mổ ăn."
+      },
+      {
+        "text_en": "Ammu looked into their eyes.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_010.mp3",
+        "text_vi": "Ammu nhìn vào mắt chúng."
+      },
+      {
+        "text_en": "They stared back.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_011.mp3",
+        "text_vi": "Chúng nhìn lại cậu."
+      },
+      {
+        "text_en": "Unblinking. Then the crows came.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_012.mp3",
+        "text_vi": "Không chớp mắt. Sau đó, đàn quạ đến."
+      },
+      {
+        "text_en": "They were bold.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_013.mp3",
+        "text_vi": "Chúng rất bạo dạn."
+      },
+      {
+        "text_en": "They jabbed at blobs of rice and hopped closer.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_014.mp3",
+        "text_vi": "Chúng mổ vào những cục cơm và nhảy lại gần hơn."
+      },
+      {
+        "text_en": "Ammu looked into their eyes.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_015.mp3",
+        "text_vi": "Ammu nhìn vào mắt chúng."
+      },
+      {
+        "text_en": "They stared back.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_016.mp3",
+        "text_vi": "Chúng nhìn lại cậu."
+      },
+      {
+        "text_en": "And cocked their heads.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_017.mp3",
+        "text_vi": "Và nghiêng đầu."
+      },
+      {
+        "text_en": "​He remembered the times when he, Amma and Accha had played together.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_018.mp3",
+        "text_vi": "Cậu bé nhớ những lúc cậu, Amma và Accha đã chơi cùng nhau."
+      },
+      {
+        "text_en": "Then suddenly the three of them were not together any more.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_019.mp3",
+        "text_vi": "Rồi đột nhiên, ba người họ không còn ở bên nhau nữa."
+      },
+      {
+        "text_en": "​Where were the little birds?",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_020.mp3",
+        "text_vi": "Những chú chim nhỏ đâu rồi?"
+      },
+      {
+        "text_en": "“Maybe they don’t like rice,” Ammu thought.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_021.mp3",
+        "text_vi": "“Có lẽ chúng không thích cơm,” Ammu nghĩ."
+      },
+      {
+        "text_en": "He spread a spoonful of porridge on the ledge.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_022.mp3",
+        "text_vi": "Cậu bé phết một thìa cháo lên gờ cửa sổ."
+      },
+      {
+        "text_en": "He left breadcrumbs.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_023.mp3",
+        "text_vi": "Cậu để lại những mẩu bánh mì vụn."
+      },
+      {
+        "text_en": "It had been four days, but they had still not come.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_024.mp3",
+        "text_vi": "Đã bốn ngày trôi qua, nhưng chúng vẫn chưa đến."
+      },
+      {
+        "text_en": "​Next morning, Ammamma was ready with bits of dosa.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_025.mp3",
+        "text_vi": "Sáng hôm sau, Ammamma đã chuẩn bị sẵn những miếng bánh dosa."
+      },
+      {
+        "text_en": "“Come,” she called him.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_026.mp3",
+        "text_vi": "“Lại đây,” bà gọi cậu."
+      },
+      {
+        "text_en": "Ammu sighed. Amma still hadn’t come.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_027.mp3",
+        "text_vi": "Ammu thở dài. Amma vẫn chưa đến."
+      },
+      {
+        "text_en": "And the little birds still hadn’t come.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_028.mp3",
+        "text_vi": "Và những chú chim nhỏ vẫn chưa đến."
+      },
+      {
+        "text_en": "​Ammamma looked sad.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_029.mp3",
+        "text_vi": "Ammamma trông buồn bầu."
+      },
+      {
+        "text_en": "Ammu asked her, “What are they called?",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_030.mp3",
+        "text_vi": "Ammu hỏi bà, “Chúng được gọi là gì ạ?"
+      },
+      {
+        "text_en": "The two little brown birds.” “Sparrows,” said his Ammamma.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_031.mp3",
+        "text_vi": "Hai chú chim nhỏ màu nâu đó.” “Chim sẻ,” Ammamma của cậu nói."
+      },
+      {
+        "text_en": "“Kili. Do you miss them?",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_032.mp3",
+        "text_vi": "“Kili. Cháu có nhớ chúng không?”"
+      },
+      {
+        "text_en": "“No, I do not!” said Ammu.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_033.mp3",
+        "text_vi": "“Không, cháu không nhớ!” Ammu nói."
+      },
+      {
+        "text_en": "But his grandmother knew Ammu’s heart.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_034.mp3",
+        "text_vi": "Nhưng bà của cậu biết lòng Ammu."
+      },
+      {
+        "text_en": "“Amma sparrow and Accha sparrow must be busy,” she said.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_035.mp3",
+        "text_vi": "“Chim sẻ Amma và chim sẻ Accha chắc đang bận,” bà nói."
+      },
+      {
+        "text_en": "​Suddenly they were there.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_036.mp3",
+        "text_vi": "Đột nhiên chúng xuất hiện ở đó."
+      },
+      {
+        "text_en": "The two little brown birds.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_037.mp3",
+        "text_vi": "Hai chú chim nhỏ màu nâu."
+      },
+      {
+        "text_en": "​“Which is Amma, which is Accha?” asked Ammu, his heart bursting with joy.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_038.mp3",
+        "text_vi": "“Con nào là Amma, con nào là Accha?” Ammu hỏi, lòng cậu tràn ngập niềm vui."
+      },
+      {
+        "text_en": "He hoped that the pale, brown one was the Amma sparrow.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_039.mp3",
+        "text_vi": "Cậu bé hy vọng con chim màu nâu nhạt là chim sẻ Amma."
+      },
+      {
+        "text_en": "It looked soft and gentle.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_040.mp3",
+        "text_vi": "Nó trông mềm mại và hiền lành."
+      },
+      {
+        "text_en": "“The one with big eyes, with lines around them, is Accha sparrow,” said Ammamma.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_041.mp3",
+        "text_vi": "“Con có đôi mắt to, với những vệt xung quanh mắt, là chim sẻ Accha,” Ammamma nói."
+      },
+      {
+        "text_en": "​That Sunday, Ammu and Ammamma sat down together to make a sparrow feeder.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_042.mp3",
+        "text_vi": "Chủ nhật đó, Ammu và Ammamma ngồi xuống cùng nhau làm một máng ăn cho chim sẻ."
+      },
+      {
+        "text_en": "As they cut the holes and filled it with seeds, Ammamma said, “The court has not decided yet.” Ammu looked away, his eyes brimming.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_043.mp3",
+        "text_vi": "Khi họ cắt các lỗ và đổ hạt vào, Ammamma nói, “Tòa án vẫn chưa quyết định.” Ammu nhìn đi chỗ khác, mắt cậu rưng rưng."
+      },
+      {
+        "text_en": "“They love you.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_044.mp3",
+        "text_vi": "“Họ yêu cháu."
+      },
+      {
+        "text_en": "You do know that?",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_045.mp3",
+        "text_vi": "Cháu biết điều đó mà?"
+      },
+      {
+        "text_en": "They need some time.”",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_046.mp3",
+        "text_vi": "Họ cần một chút thời gian.”"
+      },
+      {
+        "text_en": "​That evening three sparrows came.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_047.mp3",
+        "text_vi": "Tối hôm đó, ba chú chim sẻ đến."
+      },
+      {
+        "text_en": "Not two. Three.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_048.mp3",
+        "text_vi": "Không phải hai. Mà là ba."
+      },
+      {
+        "text_en": "Ammu wanted to leap and he wanted to dance.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_049.mp3",
+        "text_vi": "Ammu muốn nhảy cẫng lên và muốn khiêu vũ."
+      },
+      {
+        "text_en": "But he stood as still as a statue.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_050.mp3",
+        "text_vi": "Nhưng cậu đứng yên như một bức tượng."
+      },
+      {
+        "text_en": "He did not want to frighten the birds away.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_051.mp3",
+        "text_vi": "Cậu không muốn làm lũ chim sợ bay đi."
+      },
+      {
+        "text_en": "They hopped onto the feeder and hopped off, their beaks busy.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_052.mp3",
+        "text_vi": "Chúng nhảy lên máng ăn rồi nhảy xuống, mỏ chúng bận rộn mổ thức ăn."
+      },
+      {
+        "text_en": "​“Are these the same sparrows?” Ammu asked.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_053.mp3",
+        "text_vi": "“Đây có phải là những chú chim sẻ cũ không ạ?” Ammu hỏi."
+      },
+      {
+        "text_en": "All sparrows looked the same to Ammamma, but she peered at them carefully and said, “Oh yes!",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_054.mp3",
+        "text_vi": "Tất cả chim sẻ đều trông giống nhau đối với Ammamma, nhưng bà nhìn chúng thật kỹ và nói, “Ồ đúng rồi!"
+      },
+      {
+        "text_en": "Amma and Accha sparrow have even brought a baby sparrow along.” Ammu smiled.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_055.mp3",
+        "text_vi": "Chim sẻ Amma và Accha thậm chí còn mang theo một chú chim sẻ con nữa.” Ammu mỉm cười."
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "​He waited and waited.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "All day he waited.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "But Ammu’s Amma and Accha didn’t come.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "They would come soon, any day, Ammu told himself.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "Crows came, pigeons came.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "He even heard a screech of parakeets somewhere.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "​They didn’t come the next day.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "Nor the day after that.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "Ammamma threw a fistful of leftover rice on the parapet.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "The pigeons flocked down to peck at it.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "Ammu looked into their eyes.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "They stared back.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "Unblinking. Then the crows came.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_012.mp3"
+        },
+        {
+          "id": "ra_13",
+          "text_en": "They were bold.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_013.mp3"
+        },
+        {
+          "id": "ra_14",
+          "text_en": "They jabbed at blobs of rice and hopped closer.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_014.mp3"
+        },
+        {
+          "id": "ra_15",
+          "text_en": "Ammu looked into their eyes.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_015.mp3"
+        },
+        {
+          "id": "ra_16",
+          "text_en": "They stared back.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_016.mp3"
+        },
+        {
+          "id": "ra_17",
+          "text_en": "And cocked their heads.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_017.mp3"
+        },
+        {
+          "id": "ra_18",
+          "text_en": "​He remembered the times when he, Amma and Accha had played together.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_018.mp3"
+        },
+        {
+          "id": "ra_19",
+          "text_en": "Then suddenly the three of them were not together any more.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_019.mp3"
+        },
+        {
+          "id": "ra_20",
+          "text_en": "​Where were the little birds?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_020.mp3"
+        },
+        {
+          "id": "ra_21",
+          "text_en": "“Maybe they don’t like rice,” Ammu thought.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_021.mp3"
+        },
+        {
+          "id": "ra_22",
+          "text_en": "He spread a spoonful of porridge on the ledge.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_022.mp3"
+        },
+        {
+          "id": "ra_23",
+          "text_en": "He left breadcrumbs.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_023.mp3"
+        },
+        {
+          "id": "ra_24",
+          "text_en": "It had been four days, but they had still not come.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_024.mp3"
+        },
+        {
+          "id": "ra_25",
+          "text_en": "​Next morning, Ammamma was ready with bits of dosa.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_025.mp3"
+        },
+        {
+          "id": "ra_26",
+          "text_en": "“Come,” she called him.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_026.mp3"
+        },
+        {
+          "id": "ra_27",
+          "text_en": "Ammu sighed. Amma still hadn’t come.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_027.mp3"
+        },
+        {
+          "id": "ra_28",
+          "text_en": "And the little birds still hadn’t come.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_028.mp3"
+        },
+        {
+          "id": "ra_29",
+          "text_en": "​Ammamma looked sad.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_029.mp3"
+        },
+        {
+          "id": "ra_30",
+          "text_en": "Ammu asked her, “What are they called?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_030.mp3"
+        },
+        {
+          "id": "ra_31",
+          "text_en": "The two little brown birds.” “Sparrows,” said his Ammamma.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_031.mp3"
+        },
+        {
+          "id": "ra_32",
+          "text_en": "“Kili. Do you miss them?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_032.mp3"
+        },
+        {
+          "id": "ra_33",
+          "text_en": "“No, I do not!” said Ammu.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_033.mp3"
+        },
+        {
+          "id": "ra_34",
+          "text_en": "But his grandmother knew Ammu’s heart.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_034.mp3"
+        },
+        {
+          "id": "ra_35",
+          "text_en": "“Amma sparrow and Accha sparrow must be busy,” she said.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_035.mp3"
+        },
+        {
+          "id": "ra_36",
+          "text_en": "​Suddenly they were there.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_036.mp3"
+        },
+        {
+          "id": "ra_37",
+          "text_en": "The two little brown birds.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_037.mp3"
+        },
+        {
+          "id": "ra_38",
+          "text_en": "​“Which is Amma, which is Accha?” asked Ammu, his heart bursting with joy.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_038.mp3"
+        },
+        {
+          "id": "ra_39",
+          "text_en": "He hoped that the pale, brown one was the Amma sparrow.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_039.mp3"
+        },
+        {
+          "id": "ra_40",
+          "text_en": "It looked soft and gentle.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_040.mp3"
+        },
+        {
+          "id": "ra_41",
+          "text_en": "“The one with big eyes, with lines around them, is Accha sparrow,” said Ammamma.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_041.mp3"
+        },
+        {
+          "id": "ra_42",
+          "text_en": "​That Sunday, Ammu and Ammamma sat down together to make a sparrow feeder.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_042.mp3"
+        },
+        {
+          "id": "ra_43",
+          "text_en": "As they cut the holes and filled it with seeds, Ammamma said, “The court has not decided yet.” Ammu looked away, his eyes brimming.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_043.mp3"
+        },
+        {
+          "id": "ra_44",
+          "text_en": "“They love you.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_044.mp3"
+        },
+        {
+          "id": "ra_45",
+          "text_en": "You do know that?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_045.mp3"
+        },
+        {
+          "id": "ra_46",
+          "text_en": "They need some time.”",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_046.mp3"
+        },
+        {
+          "id": "ra_47",
+          "text_en": "​That evening three sparrows came.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_047.mp3"
+        },
+        {
+          "id": "ra_48",
+          "text_en": "Not two. Three.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_048.mp3"
+        },
+        {
+          "id": "ra_49",
+          "text_en": "Ammu wanted to leap and he wanted to dance.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_049.mp3"
+        },
+        {
+          "id": "ra_50",
+          "text_en": "But he stood as still as a statue.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_050.mp3"
+        },
+        {
+          "id": "ra_51",
+          "text_en": "He did not want to frighten the birds away.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_051.mp3"
+        },
+        {
+          "id": "ra_52",
+          "text_en": "They hopped onto the feeder and hopped off, their beaks busy.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_052.mp3"
+        },
+        {
+          "id": "ra_53",
+          "text_en": "​“Are these the same sparrows?” Ammu asked.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_053.mp3"
+        },
+        {
+          "id": "ra_54",
+          "text_en": "All sparrows looked the same to Ammamma, but she peered at them carefully and said, “Oh yes!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_054.mp3"
+        },
+        {
+          "id": "ra_55",
+          "text_en": "Amma and Accha sparrow have even brought a baby sparrow along.” Ammu smiled.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_132178/s_055.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "Who waited and waited?",
+          "options_en": [
+            "He",
+            "Ammu’s Amma",
+            "The pigeons"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "How did he wait?",
+          "options_en": [
+            "He waited and waited",
+            "He fed the birds",
+            "He played with Amma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s1_q1",
+          "type": "choice",
+          "question_en": "When did he wait?",
+          "options_en": [
+            "All day",
+            "Next morning",
+            "That evening"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s1_q2",
+          "type": "choice",
+          "question_en": "What is the correct answer to this question: For how long did he wait?",
+          "options_en": [
+            "All day",
+            "A few minutes",
+            "Several Sundays"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s2_q1",
+          "type": "choice",
+          "question_en": "Who didn’t come?",
+          "options_en": [
+            "Ammu’s Amma and Accha",
+            "The crows",
+            "The parakeets"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s2_q2",
+          "type": "choice",
+          "question_en": "What is said about Ammu’s Amma and Accha?",
+          "options_en": [
+            "They didn’t come",
+            "They brought a baby sparrow",
+            "They fed the pigeons"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s3_q1",
+          "type": "choice",
+          "question_en": "Who told himself they would come soon?",
+          "options_en": [
+            "Ammu",
+            "Ammamma",
+            "A crow"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p0_s3_q2",
+          "type": "choice",
+          "question_en": "When did Ammu think they would arrive?",
+          "options_en": [
+            "Soon, any day",
+            "After many weeks",
+            "On Sunday"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p0_s4_q1",
+          "type": "choice",
+          "question_en": "Which birds came?",
+          "options_en": [
+            "Crows and pigeons",
+            "Sparrows",
+            "A baby sparrow"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p0_s4_q2",
+          "type": "choice",
+          "question_en": "What came to the place?",
+          "options_en": [
+            "Crows and pigeons",
+            "Amma and Accha",
+            "Bits of dosa"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p0_s5_q1",
+          "type": "choice",
+          "question_en": "What did he hear somewhere?",
+          "options_en": [
+            "A screech of parakeets",
+            "The cooing of pigeons",
+            "The chirp of sparrows"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p0_s5_q2",
+          "type": "choice",
+          "question_en": "Where did the screech of parakeets come from?",
+          "options_en": [
+            "Somewhere",
+            "On the parapet",
+            "From the feeder"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "When did they not come?",
+          "options_en": [
+            "The next day",
+            "That same morning",
+            "The previous week"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "Who did not come the next day?",
+          "options_en": [
+            "They",
+            "Ammu and Ammamma",
+            "The pigeons"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p1_s1_q1",
+          "type": "choice",
+          "question_en": "When else did they not come?",
+          "options_en": [
+            "The day after that",
+            "That evening",
+            "The following month"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p1_s1_q2",
+          "type": "choice",
+          "question_en": "What does the sentence say about coming?",
+          "options_en": [
+            "They did not come the day after that",
+            "They arrived that afternoon",
+            "They came back immediately"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p1_s2_q1",
+          "type": "choice",
+          "question_en": "Who threw a fistful of leftover rice on the parapet?",
+          "options_en": [
+            "Ammamma",
+            "Ammu",
+            "Accha"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p1_s2_q2",
+          "type": "choice",
+          "question_en": "What did Ammamma throw on the parapet?",
+          "options_en": [
+            "A fistful of leftover rice",
+            "A spoonful of porridge",
+            "Bits of dosa"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p1_s3_q1",
+          "type": "choice",
+          "question_en": "Which birds flocked down to peck at it?",
+          "options_en": [
+            "The pigeons",
+            "The crows",
+            "The sparrows"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p1_s3_q2",
+          "type": "choice",
+          "question_en": "What did the pigeons do on the parapet?",
+          "options_en": [
+            "Flocked down to peck at it",
+            "Hopped closer and jabbed",
+            "Sat still and watched"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p1_s4_q1",
+          "type": "choice",
+          "question_en": "Who looked into their eyes?",
+          "options_en": [
+            "Ammu",
+            "Ammamma",
+            "The crows"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p1_s4_q2",
+          "type": "choice",
+          "question_en": "What did Ammu do when the birds came?",
+          "options_en": [
+            "Looked into their eyes",
+            "Called Ammamma",
+            "Made a feeder"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p1_s5_q1",
+          "type": "choice",
+          "question_en": "How did the birds respond when Ammu looked at them?",
+          "options_en": [
+            "They stared back",
+            "They flew away",
+            "They sang loudly"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p1_s5_q2",
+          "type": "choice",
+          "question_en": "What did the birds do with their gaze?",
+          "options_en": [
+            "Stared back",
+            "Closed their eyes",
+            "Turned to the feeder"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p1_s6_q1",
+          "type": "choice",
+          "question_en": "How did the birds look when they stared back?",
+          "options_en": [
+            "Unblinking",
+            "Blinking rapidly",
+            "Looking away"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p1_s6_q2",
+          "type": "choice",
+          "question_en": "What happened then?",
+          "options_en": [
+            "The crows came",
+            "The sparrows returned",
+            "Ammamma called him"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p1_s7_q1",
+          "type": "choice",
+          "question_en": "Which birds were described as bold?",
+          "options_en": [
+            "The crows",
+            "The pigeons",
+            "The sparrows"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p1_s7_q2",
+          "type": "choice",
+          "question_en": "How were the crows described?",
+          "options_en": [
+            "Bold",
+            "Shy",
+            "Quiet"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p1_s8_q1",
+          "type": "choice",
+          "question_en": "What did the crows jab at?",
+          "options_en": [
+            "Blobs of rice",
+            "Bits of dosa",
+            "Breadcrumbs"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p1_s8_q2",
+          "type": "choice",
+          "question_en": "How did the crows move as they ate?",
+          "options_en": [
+            "Hopped closer",
+            "Flew away",
+            "Sang from a tree"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p1_s9_q1",
+          "type": "choice",
+          "question_en": "Who looked into their eyes again?",
+          "options_en": [
+            "Ammu",
+            "Ammamma",
+            "Accha"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p1_s9_q2",
+          "type": "choice",
+          "question_en": "What did Ammu do when the crows were near?",
+          "options_en": [
+            "Looked into their eyes",
+            "Scattered the rice",
+            "Called the sparrows"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p1_s10_q1",
+          "type": "choice",
+          "question_en": "What did the birds do when Ammu looked at them the second time?",
+          "options_en": [
+            "They stared back",
+            "They flew away",
+            "They hid"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p1_s10_q2",
+          "type": "choice",
+          "question_en": "How did the birds respond to Ammu's gaze in that sentence?",
+          "options_en": [
+            "Stared back",
+            "Pecked more quickly",
+            "Called other birds"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p1_s11_q1",
+          "type": "choice",
+          "question_en": "What did the birds do with their heads?",
+          "options_en": [
+            "Cocked their heads",
+            "Lowered their heads",
+            "Shook their heads"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p1_s11_q2",
+          "type": "choice",
+          "question_en": "When the birds stared back, what extra action did they take?",
+          "options_en": [
+            "Cocked their heads",
+            "Opened their beaks",
+            "Fluffed their feathers"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "Who remembered the times when they had played together?",
+          "options_en": [
+            "He (Ammu)",
+            "Ammamma",
+            "Amma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "Who had played together in the remembered times?",
+          "options_en": [
+            "He, Amma and Accha",
+            "He and Ammamma",
+            "Amma and Ammamma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p2_s1_q1",
+          "type": "choice",
+          "question_en": "What happened to the three of them?",
+          "options_en": [
+            "They were not together any more",
+            "They were still playing together",
+            "They had gone to fetch food"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p2_s1_q2",
+          "type": "choice",
+          "question_en": "When did the three of them stop being together?",
+          "options_en": [
+            "Suddenly (then)",
+            "After many days",
+            "The next morning"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "What is the sentence asking about?",
+          "options_en": [
+            "Where the little birds were",
+            "Why Amma didn’t come",
+            "How to make a feeder"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "Who is being asked about in the sentence?",
+          "options_en": [
+            "The little birds",
+            "Ammu",
+            "Ammamma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p3_s1_q1",
+          "type": "choice",
+          "question_en": "What did Ammu think?",
+          "options_en": [
+            "Maybe they don’t like rice",
+            "He spread porridge on the ledge",
+            "They will come soon"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p3_s1_q2",
+          "type": "choice",
+          "question_en": "Who had the thought?",
+          "options_en": [
+            "Ammu",
+            "Ammamma",
+            "Amma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p3_s2_q1",
+          "type": "choice",
+          "question_en": "What did he spread on the ledge?",
+          "options_en": [
+            "A spoonful of porridge",
+            "Leftover rice",
+            "Breadcrumbs"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p3_s2_q2",
+          "type": "choice",
+          "question_en": "Where did he spread the porridge?",
+          "options_en": [
+            "On the ledge",
+            "On the parapet",
+            "On the feeder"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p3_s3_q1",
+          "type": "choice",
+          "question_en": "What did he leave?",
+          "options_en": [
+            "Breadcrumbs",
+            "Bits of dosa",
+            "Seeds"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p3_s3_q2",
+          "type": "choice",
+          "question_en": "Who left breadcrumbs?",
+          "options_en": [
+            "He (Ammu)",
+            "Ammamma",
+            "The crows"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p3_s4_q1",
+          "type": "choice",
+          "question_en": "How long had it been?",
+          "options_en": [
+            "Four days",
+            "One day",
+            "Three days"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p3_s4_q2",
+          "type": "choice",
+          "question_en": "Who had still not come?",
+          "options_en": [
+            "The little birds",
+            "Amma and Accha",
+            "The pigeons"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "When was Ammamma ready with bits of dosa?",
+          "options_en": [
+            "Next morning",
+            "That Sunday",
+            "All day"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "Who was ready with bits of dosa?",
+          "options_en": [
+            "Ammamma",
+            "Ammu",
+            "Amma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p4_s1_q1",
+          "type": "choice",
+          "question_en": "Who called him?",
+          "options_en": [
+            "Ammamma",
+            "Ammu",
+            "Amma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p4_s1_q2",
+          "type": "choice",
+          "question_en": "What did she say when she called him?",
+          "options_en": [
+            "“Come”",
+            "“Wait”",
+            "“Sit”"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p4_s2_q1",
+          "type": "choice",
+          "question_en": "How did Ammu respond in the sentence?",
+          "options_en": [
+            "He sighed",
+            "He laughed",
+            "He shouted"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        },
+        {
+          "id": "gl_p4_s2_q2",
+          "type": "choice",
+          "question_en": "Who still hadn’t come?",
+          "options_en": [
+            "Amma",
+            "Accha",
+            "Ammamma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        },
+        {
+          "id": "gl_p4_s3_q1",
+          "type": "choice",
+          "question_en": "Which creatures still hadn’t come?",
+          "options_en": [
+            "The little birds",
+            "The crows",
+            "The pigeons"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        },
+        {
+          "id": "gl_p4_s3_q2",
+          "type": "choice",
+          "question_en": "What had still not come?",
+          "options_en": [
+            "The little birds",
+            "Ammamma with dosa",
+            "Ammu's friends"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "Who looked sad?",
+          "options_en": [
+            "Ammamma",
+            "Ammu",
+            "Amma sparrow"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "How did Ammamma look?",
+          "options_en": [
+            "Sad",
+            "Happy",
+            "Busy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p5_s1_q1",
+          "type": "choice",
+          "question_en": "Who asked her, \"What are they called?\"",
+          "options_en": [
+            "Ammu",
+            "Ammamma",
+            "Amma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        },
+        {
+          "id": "gl_p5_s1_q2",
+          "type": "choice",
+          "question_en": "What did Ammu ask?",
+          "options_en": [
+            "What are they called?",
+            "Do you miss them?",
+            "Are they busy?"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        },
+        {
+          "id": "gl_p5_s2_q1",
+          "type": "choice",
+          "question_en": "What are the two little brown birds called?",
+          "options_en": [
+            "Sparrows",
+            "Crows",
+            "Pigeons"
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        },
+        {
+          "id": "gl_p5_s2_q2",
+          "type": "choice",
+          "question_en": "Who said \"Sparrows\"?",
+          "options_en": [
+            "Ammamma",
+            "Ammu",
+            "Amma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        },
+        {
+          "id": "gl_p5_s3_q1",
+          "type": "choice",
+          "question_en": "Which word did Ammamma say after \"Sparrows\"?",
+          "options_en": [
+            "Kili",
+            "Sparrows",
+            "Amma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 32
+        },
+        {
+          "id": "gl_p5_s3_q2",
+          "type": "choice",
+          "question_en": "What question did Ammamma ask?",
+          "options_en": [
+            "Do you miss them?",
+            "Which is Amma?",
+            "Are they busy?"
+          ],
+          "correct_index": 0,
+          "sentence_index": 32
+        },
+        {
+          "id": "gl_p5_s4_q1",
+          "type": "choice",
+          "question_en": "Who said, \"No, I do not!\"?",
+          "options_en": [
+            "Ammu",
+            "Ammamma",
+            "Amma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 33
+        },
+        {
+          "id": "gl_p5_s4_q2",
+          "type": "choice",
+          "question_en": "What did Ammu say in response?",
+          "options_en": [
+            "No, I do not!",
+            "Yes, I do miss them",
+            "Maybe they don't like rice"
+          ],
+          "correct_index": 0,
+          "sentence_index": 33
+        },
+        {
+          "id": "gl_p5_s5_q1",
+          "type": "choice",
+          "question_en": "Who knew Ammu's heart?",
+          "options_en": [
+            "His grandmother",
+            "Ammu",
+            "Amma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 34
+        },
+        {
+          "id": "gl_p5_s5_q2",
+          "type": "choice",
+          "question_en": "What did his grandmother know?",
+          "options_en": [
+            "Ammu's heart",
+            "The sparrows' names",
+            "When Amma would come"
+          ],
+          "correct_index": 0,
+          "sentence_index": 34
+        },
+        {
+          "id": "gl_p5_s6_q1",
+          "type": "choice",
+          "question_en": "Which sparrows did she say must be busy?",
+          "options_en": [
+            "Amma sparrow and Accha sparrow",
+            "Baby sparrow",
+            "Pigeons"
+          ],
+          "correct_index": 0,
+          "sentence_index": 35
+        },
+        {
+          "id": "gl_p5_s6_q2",
+          "type": "choice",
+          "question_en": "What did she say about Amma sparrow and Accha sparrow?",
+          "options_en": [
+            "They must be busy",
+            "They are gone",
+            "They are at the feeder"
+          ],
+          "correct_index": 0,
+          "sentence_index": 35
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "Who arrived suddenly?",
+          "options_en": [
+            "The two little brown birds",
+            "The pigeons",
+            "The crows"
+          ],
+          "correct_index": 0,
+          "sentence_index": 36
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "When did they appear?",
+          "options_en": [
+            "Suddenly",
+            "Next morning",
+            "That Sunday"
+          ],
+          "correct_index": 0,
+          "sentence_index": 36
+        },
+        {
+          "id": "gl_p6_s1_q1",
+          "type": "choice",
+          "question_en": "What was there?",
+          "options_en": [
+            "The two little brown birds",
+            "Three sparrows",
+            "A baby sparrow"
+          ],
+          "correct_index": 0,
+          "sentence_index": 37
+        },
+        {
+          "id": "gl_p6_s1_q2",
+          "type": "choice",
+          "question_en": "How many birds were there?",
+          "options_en": [
+            "Two",
+            "Three",
+            "One"
+          ],
+          "correct_index": 0,
+          "sentence_index": 37
+        },
+        {
+          "id": "gl_p6_s2_q1",
+          "type": "choice",
+          "question_en": "Who asked, \"Which is Amma, which is Accha?\"",
+          "options_en": [
+            "Ammu",
+            "Ammamma",
+            "Amma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 38
+        },
+        {
+          "id": "gl_p6_s2_q2",
+          "type": "choice",
+          "question_en": "How was Ammu feeling when he asked the question?",
+          "options_en": [
+            "His heart was bursting with joy",
+            "He felt sad",
+            "He was patient"
+          ],
+          "correct_index": 0,
+          "sentence_index": 38
+        },
+        {
+          "id": "gl_p6_s3_q1",
+          "type": "choice",
+          "question_en": "What did he hope about the pale, brown one?",
+          "options_en": [
+            "That it was the Amma sparrow",
+            "That Amma would come",
+            "That sparrows didn't like rice"
+          ],
+          "correct_index": 0,
+          "sentence_index": 39
+        },
+        {
+          "id": "gl_p6_s3_q2",
+          "type": "choice",
+          "question_en": "Which sparrow did he want the pale brown one to be?",
+          "options_en": [
+            "Amma sparrow",
+            "Accha sparrow",
+            "Baby sparrow"
+          ],
+          "correct_index": 0,
+          "sentence_index": 39
+        },
+        {
+          "id": "gl_p6_s4_q1",
+          "type": "choice",
+          "question_en": "What did it look like?",
+          "options_en": [
+            "Soft and gentle",
+            "Bold and noisy",
+            "Pale and brown"
+          ],
+          "correct_index": 0,
+          "sentence_index": 40
+        },
+        {
+          "id": "gl_p6_s4_q2",
+          "type": "choice",
+          "question_en": "How did the bird seem?",
+          "options_en": [
+            "Soft and gentle",
+            "Unblinking",
+            "Busy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 40
+        },
+        {
+          "id": "gl_p6_s5_q1",
+          "type": "choice",
+          "question_en": "Which sparrow has big eyes with lines around them?",
+          "options_en": [
+            "Accha sparrow",
+            "Amma sparrow",
+            "Baby sparrow"
+          ],
+          "correct_index": 0,
+          "sentence_index": 41
+        },
+        {
+          "id": "gl_p6_s5_q2",
+          "type": "choice",
+          "question_en": "Who said that the one with big eyes is Accha sparrow?",
+          "options_en": [
+            "Ammamma",
+            "Ammu",
+            "Amma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 41
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "Who sat down together to make a sparrow feeder?",
+          "options_en": [
+            "Ammu and Ammamma",
+            "Amma and Accha",
+            "Ammu and Amma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 42
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "What did they make that Sunday?",
+          "options_en": [
+            "A sparrow feeder",
+            "Bits of dosa",
+            "A spoonful of porridge"
+          ],
+          "correct_index": 0,
+          "sentence_index": 42
+        },
+        {
+          "id": "gl_p7_s1_q1",
+          "type": "choice",
+          "question_en": "What were they doing as Ammamma spoke about the court?",
+          "options_en": [
+            "Cutting the holes and filling it with seeds",
+            "Throwing rice on the parapet",
+            "Spreading a spoonful of porridge on the ledge"
+          ],
+          "correct_index": 0,
+          "sentence_index": 43
+        },
+        {
+          "id": "gl_p7_s1_q2",
+          "type": "choice",
+          "question_en": "How did Ammu look when Ammamma said, \"The court has not decided yet\"?",
+          "options_en": [
+            "He looked away, his eyes brimming",
+            "He stood as still as a statue",
+            "He smiled"
+          ],
+          "correct_index": 0,
+          "sentence_index": 43
+        },
+        {
+          "id": "gl_p7_s2_q1",
+          "type": "choice",
+          "question_en": "Who does Ammamma say love you?",
+          "options_en": [
+            "Sparrows",
+            "Amma and Accha",
+            "Pigeons"
+          ],
+          "correct_index": 0,
+          "sentence_index": 44
+        },
+        {
+          "id": "gl_p7_s2_q2",
+          "type": "choice",
+          "question_en": "What does Ammamma say in this line?",
+          "options_en": [
+            "They love you",
+            "They don't like rice",
+            "The court has decided"
+          ],
+          "correct_index": 0,
+          "sentence_index": 44
+        },
+        {
+          "id": "gl_p7_s3_q1",
+          "type": "choice",
+          "question_en": "Who is Ammamma addressing when she asks, \"You do know that?\"",
+          "options_en": [
+            "Ammu",
+            "Amma",
+            "The sparrows"
+          ],
+          "correct_index": 0,
+          "sentence_index": 45
+        },
+        {
+          "id": "gl_p7_s3_q2",
+          "type": "choice",
+          "question_en": "What question does Ammamma ask in this sentence?",
+          "options_en": [
+            "You do know that?",
+            "Do you miss them?",
+            "Are these the same sparrows?"
+          ],
+          "correct_index": 0,
+          "sentence_index": 45
+        },
+        {
+          "id": "gl_p7_s4_q1",
+          "type": "choice",
+          "question_en": "What does Ammamma say they need?",
+          "options_en": [
+            "Some time",
+            "A baby sparrow",
+            "Seeds"
+          ],
+          "correct_index": 0,
+          "sentence_index": 46
+        },
+        {
+          "id": "gl_p7_s4_q2",
+          "type": "choice",
+          "question_en": "Who does Ammamma say need some time?",
+          "options_en": [
+            "They (the sparrows)",
+            "Amma and Accha",
+            "Ammu"
+          ],
+          "correct_index": 0,
+          "sentence_index": 46
+        }
+      ]
+    },
+    {
+      "paragraph_index": 8,
+      "questions": [
+        {
+          "id": "gl_p8_s0_q1",
+          "type": "choice",
+          "question_en": "When did the sparrows come?",
+          "options_en": [
+            "That evening",
+            "Next morning",
+            "All day"
+          ],
+          "correct_index": 0,
+          "sentence_index": 47
+        },
+        {
+          "id": "gl_p8_s0_q2",
+          "type": "choice",
+          "question_en": "How many sparrows came?",
+          "options_en": [
+            "Three",
+            "Two",
+            "One"
+          ],
+          "correct_index": 0,
+          "sentence_index": 47
+        },
+        {
+          "id": "gl_p8_s1_q1",
+          "type": "choice",
+          "question_en": "What number is being emphasized?",
+          "options_en": [
+            "Three",
+            "Two",
+            "Four"
+          ],
+          "correct_index": 0,
+          "sentence_index": 48
+        },
+        {
+          "id": "gl_p8_s1_q2",
+          "type": "choice",
+          "question_en": "Which number was stated as not being correct?",
+          "options_en": [
+            "Two",
+            "Three",
+            "Four"
+          ],
+          "correct_index": 0,
+          "sentence_index": 48
+        },
+        {
+          "id": "gl_p8_s2_q1",
+          "type": "choice",
+          "question_en": "What did Ammu want to do?",
+          "options_en": [
+            "Leap and dance",
+            "Stand as still as a statue",
+            "Feed pigeons"
+          ],
+          "correct_index": 0,
+          "sentence_index": 49
+        },
+        {
+          "id": "gl_p8_s2_q2",
+          "type": "choice",
+          "question_en": "Which actions did Ammu want to take?",
+          "options_en": [
+            "Leap and dance",
+            "Make a sparrow feeder",
+            "Wait quietly"
+          ],
+          "correct_index": 0,
+          "sentence_index": 49
+        },
+        {
+          "id": "gl_p8_s3_q1",
+          "type": "choice",
+          "question_en": "How did he stand?",
+          "options_en": [
+            "As still as a statue",
+            "On the parapet",
+            "Sitting down"
+          ],
+          "correct_index": 0,
+          "sentence_index": 50
+        },
+        {
+          "id": "gl_p8_s3_q2",
+          "type": "choice",
+          "question_en": "Which simile describes how he stood?",
+          "options_en": [
+            "As still as a statue",
+            "Like a dancer",
+            "Like a bird"
+          ],
+          "correct_index": 0,
+          "sentence_index": 50
+        },
+        {
+          "id": "gl_p8_s4_q1",
+          "type": "choice",
+          "question_en": "Why did he stand still?",
+          "options_en": [
+            "He did not want to frighten the birds away",
+            "He wanted to eat porridge",
+            "He wanted to call Amma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 51
+        },
+        {
+          "id": "gl_p8_s4_q2",
+          "type": "choice",
+          "question_en": "What did he not want to do?",
+          "options_en": [
+            "Frighten the birds away",
+            "Scare Amma",
+            "Stop the pigeons"
+          ],
+          "correct_index": 0,
+          "sentence_index": 51
+        },
+        {
+          "id": "gl_p8_s5_q1",
+          "type": "choice",
+          "question_en": "Where did the sparrows hop onto and off?",
+          "options_en": [
+            "The feeder",
+            "The parapet",
+            "The ledge"
+          ],
+          "correct_index": 0,
+          "sentence_index": 52
+        },
+        {
+          "id": "gl_p8_s5_q2",
+          "type": "choice",
+          "question_en": "How were the sparrows' beaks described?",
+          "options_en": [
+            "Busy",
+            "With big eyes",
+            "With lines around them"
+          ],
+          "correct_index": 0,
+          "sentence_index": 52
+        }
+      ]
+    },
+    {
+      "paragraph_index": 9,
+      "questions": [
+        {
+          "id": "gl_p9_s0_q1",
+          "type": "choice",
+          "question_en": "Who asked the question?",
+          "options_en": [
+            "Ammu",
+            "Ammamma",
+            "Amma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 53
+        },
+        {
+          "id": "gl_p9_s0_q2",
+          "type": "choice",
+          "question_en": "What did Ammu ask?",
+          "options_en": [
+            "If these are the same sparrows",
+            "If the sparrows like rice",
+            "If Amma had come"
+          ],
+          "correct_index": 0,
+          "sentence_index": 53
+        },
+        {
+          "id": "gl_p9_s1_q1",
+          "type": "choice",
+          "question_en": "How did Ammamma look at the sparrows?",
+          "options_en": [
+            "She peered at them carefully",
+            "She glanced quickly",
+            "She looked away"
+          ],
+          "correct_index": 0,
+          "sentence_index": 54
+        },
+        {
+          "id": "gl_p9_s1_q2",
+          "type": "choice",
+          "question_en": "What did Ammamma say after peering?",
+          "options_en": [
+            "“Oh yes!”",
+            "“They love you.”",
+            "“Sparrows.”"
+          ],
+          "correct_index": 0,
+          "sentence_index": 54
+        },
+        {
+          "id": "gl_p9_s2_q1",
+          "type": "choice",
+          "question_en": "Who have even brought a baby sparrow along?",
+          "options_en": [
+            "Amma and Accha sparrow",
+            "Ammu and Ammamma",
+            "The crows"
+          ],
+          "correct_index": 0,
+          "sentence_index": 55
+        },
+        {
+          "id": "gl_p9_s2_q2",
+          "type": "choice",
+          "question_en": "How did Ammu respond at the end of the sentence?",
+          "options_en": [
+            "He smiled",
+            "He stood as still as a statue",
+            "He sighed"
+          ],
+          "correct_index": 0,
+          "sentence_index": 55
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'Ammu and the Sparrows'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "waited",
+      "meaning_vi": "chờ đợi",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "crows",
+      "meaning_vi": "quạ",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "pigeons",
+      "meaning_vi": "bồ câu",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "screech",
+      "meaning_vi": "tiếng kêu chói tai",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "parapet",
+      "meaning_vi": "thành tường (lan can)",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "flocked",
+      "meaning_vi": "tụ tập thành đàn",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "peck",
+      "meaning_vi": "mổ (bằng mỏ)",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "bold",
+      "meaning_vi": "bạo dạn",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "remembered",
+      "meaning_vi": "nhớ",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "suddenly",
+      "meaning_vi": "đột nhiên",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "porridge",
+      "meaning_vi": "cháo",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "ledge",
+      "meaning_vi": "gờ (cửa sổ, tường)",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "breadcrumbs",
+      "meaning_vi": "vụn bánh mì",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "sighed",
+      "meaning_vi": "thở dài",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "sparrows",
+      "meaning_vi": "chim sẻ",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "miss",
+      "meaning_vi": "nhớ",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "grandmother",
+      "meaning_vi": "bà (nội/ngoại)",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "busy",
+      "meaning_vi": "bận rộn",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "bursting",
+      "meaning_vi": "tràn ngập",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "joy",
+      "meaning_vi": "niềm vui",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "pale",
+      "meaning_vi": "nhạt màu",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "gentle",
+      "meaning_vi": "hiền lành",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "feeder",
+      "meaning_vi": "máng ăn (cho chim)",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "seeds",
+      "meaning_vi": "hạt",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "court",
+      "meaning_vi": "tòa án",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "brimming",
+      "meaning_vi": "rưng rưng (nước mắt)",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "leap",
+      "meaning_vi": "nhảy vọt",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "statue",
+      "meaning_vi": "bức tượng",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "frighten",
+      "meaning_vi": "làm sợ hãi",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "beaks",
+      "meaning_vi": "mỏ (chim)",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "same",
+      "meaning_vi": "giống nhau",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "peered",
+      "meaning_vi": "nhìn kỹ, nhìn chăm chú",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "carefully",
+      "meaning_vi": "cẩn thận",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "brought",
+      "meaning_vi": "mang theo",
+      "paragraph_index": 9
+    }
+  ]
+}

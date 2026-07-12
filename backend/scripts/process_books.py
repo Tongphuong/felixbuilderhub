@@ -837,8 +837,11 @@ def validate_enrichment_response(
     text_vi_list = [by_index[i] for i in range(page_sentence_count)]
 
     hard_words_raw = response.get("hard_words") if response.get("hard_words") is not None else []
-    if not isinstance(hard_words_raw, list) or len(hard_words_raw) > 4:
-        raise BookProcessingError("enrichment hard_words must be a list of at most 4 entries")
+    if not isinstance(hard_words_raw, list):
+        raise BookProcessingError("enrichment hard_words must be a list")
+    # The model sometimes offers more than 4 useful words; keep the first 4
+    # rather than rejecting the whole page (batch-observed failure mode).
+    hard_words_raw = hard_words_raw[:4]
     hard_words: list[dict[str, str]] = []
     for entry in hard_words_raw:
         if not isinstance(entry, dict):

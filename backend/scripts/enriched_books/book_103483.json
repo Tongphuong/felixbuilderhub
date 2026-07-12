@@ -1,0 +1,5153 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L4",
+  "level_label": "Cấp 4",
+  "topic": "A Promise Kept",
+  "slug": "book_103483",
+  "audio_filename": "book_103483.mp3",
+  "book_slug": "book_103483",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_103483/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103483/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103483/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103483/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103483/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103483/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103483/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103483/page_09.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103483/page_10.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103483/page_11.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_103483/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103483/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103483/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103483/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103483/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103483/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103483/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103483/page_09.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103483/page_10.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103483/page_11.mp3"
+  ],
+  "book_attribution": {
+    "title": "A Promise Kept",
+    "creators": [
+      "Rutuj Kankaria"
+    ],
+    "publisher": "StoryWeaver Community",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: A Promise Kept is written by Rutuj Kankaria . © Rutuj Kankaria , 2019. Some rights reserved. Released under CC BY 4.0 license. Images Attributions: Cover page: 10 , by Rutuj Kankaria © Rutuj Kankaria, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 2: 1 , by Rutuj Kankaria © Rutuj Kankaria, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 3: 2 , by Rutuj Kankaria © Rutuj Kankaria, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 4: 4 , by Rutuj Kankaria © Rutuj Kankaria, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 5: 3 , by Rutuj Kankaria © Rutuj Kankaria, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 6: 5 , by Rutuj Kankaria © Rutuj Kankaria, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 7: 6 , by Rutuj Kankaria © Rutuj Kankaria, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 8: 7 , by Rutuj Kankaria © Rutuj Kankaria, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 9: 8 , by Rutuj Kankaria © Rutuj Kankaria, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 10: 9 , by Rutuj Kankaria © Rutuj Kankaria, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 11: 10 , by Rutuj Kankaria © Rutuj Kankaria, 2026. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/103483-a-promise-kept",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "1 , by Rutuj Kankaria © Rutuj Kankaria, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "2 , by Rutuj Kankaria © Rutuj Kankaria, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "4 , by Rutuj Kankaria © Rutuj Kankaria, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "3 , by Rutuj Kankaria © Rutuj Kankaria, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "5 , by Rutuj Kankaria © Rutuj Kankaria, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "6 , by Rutuj Kankaria © Rutuj Kankaria, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "7 , by Rutuj Kankaria © Rutuj Kankaria, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "8 , by Rutuj Kankaria © Rutuj Kankaria, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 8,
+        "credit_text": "9 , by Rutuj Kankaria © Rutuj Kankaria, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 9,
+        "credit_text": "10 , by Rutuj Kankaria © Rutuj Kankaria, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "A Promise Kept",
+    "paragraphs_en": [
+      "The telephone kept on the table beside the bed rang sharply. The black polished telephone contrasted the brilliantly lit white room. The nurse came in from the other room and answered. “Hullo? Renata?” “May I know who I am speaking to please?” “May I speak to Renata Berger please? I am her husband, Herz Berger. Tell her my name, she would recognize.” The burgundy colored train with the yellow characters ‘PENNSYLVANIA’ stopped on the station of Philadelphia. Herz Berger stepped out of the passenger coach of second class. He had a long black overcoat draped over his hunched back. There was a silhouette of a six-point star etched on his coat. At one time, there was The Star of David sown there. It was just the shadow left now. A long white beard overlapped the overcoat. Mr. Berger walked slowly, measuring every step judiciously. The telephone kept on the table beside the bed rang sharply. The black polished telephone contrasted the brilliantly lit white room. The nurse came in from the other room and answered. “Hullo? Renata?” “May I know who I am speaking to please?” “May I speak to Renata Berger please? I am her husband, Herz Berger. Tell her my name, she would recognize.” The burgundy colored train with the yellow characters ‘PENNSYLVANIA’ stopped on the station of Philadelphia. Herz Berger stepped out of the passenger coach of second class. He had a long black overcoat draped over his hunched back. There was a silhouette of a six-point star etched on his coat. At one time, there was The Star of David sown there. It was just the shadow left now. A long white beard overlapped the overcoat. Mr Berger walked slowly, measuring every step judiciously.",
+      "Herz was brought into the small room by the nurse. Renata sat on the bed, facing on the other side, staring at the wall. She was in a long black frock with grey hair tied in an untidy bun. “Renata?” He whispered from underneath the unkempt mustache. “Mr. Berger, I told you that Mrs. Berger is suffering from Retrograde amnesia. She does not even remember her name. That is exactly why she has been kept in this nursing home.” Herz tilted his head towards the nurse, still looking at the ground. Tears welled up in his wrinkled eyes. It took him great courage to ask, “Is there any chance she can get better?”",
+      "“Renata, I promise I will see you very soon,” I said at the Port of Amsterdam as she prepared to leave with some fellow Jews. I knew sending her to the New World was not safe, especially with German U- boats scanning the Atlantic. But I had no other alternative to ensure she survives. She would wait for me there. She would live in the Emergency Refugee Shelter in New York. As soon as the war is over, I would travel there too. I remember her telling me with moist eyes, “Herz, must we separate? We lived together; can't we die together?” I had no answer for that.",
+      "Herz sat beside his wife. It was after a long time he was next to her. She looked so different when she left the coasts of war- struck Amsterdam. Renata had wrinkled pale skin. She sat dreadfully still and stared into the infinity. Her lifeless face showed no emotion. He tried to talk with her. What followed was a monologue- “Dear Renata, I know you are upset with me. You have every reason to. I am sorry. I gave up. I should have kept searching for you,” he paused to take a deep breath as his voice choked. That evening, the nurse entered the room again and administered Renata with medicines. She looked at Herz. His eyes revealed that he was desperately searching for answers. He deserved to know. “I have been in the service of your wife for 10 years now. I didn’t doubt that you were her husband for a second. Despite not remembering big portions of her past, your wife accurately remembers that she had a loved one for whom she is waiting. Once every one or two months, she would, all of a sudden, start writing a letter. It was the same content, addressed to an unknown, and signed as waiting. Every letter looked identical to the previous. Over the course of 10 years, she wrote 75 letters. Since they were addressed to an unknown, we didn't know what to do with them. I still kept them for the record.\"",
+      "As soon as I set foot on the soil of the New World, I knew it was not going to be easy. A visit to the Refugee Shelter changed my doubts into realities. A homeless Jew in foreign soil, who had just had a very narrow escape from the Holocaust. What possibly could I do? I checked all records of every refugee that landed in America in the last five years. I visited every refugee shelter on the East coast. I had some relatives in Georgia. I tried contacting them, but in vain. The mystery was killing me slowly. It was then that one day a successful newspaper published the names of all refugees who had died during travel to or by disease in the States. One of them talked of a middle-aged lady whose name was Rita. A part of me died that day. It was not impossible that they were talking of Renata and had misprinted the name. Unfortunately, they had no information more than what they had published. It took me three years to finally accept the fact you were gone, my love: snatched away from me by the War.",
+      "Two months later, Renata was sitting on an arm chair in the veranda of the Nursing Home. She was reading the newspaper. Renata's health was improving steadily. She looked closer to her age now. As she sat and handled her newspaper to season the streak of sunlight pouring in, she squinted her eyes to read better. Despite being able to read again, and with her health improving, memory had not arrived yet. She would forget everything, where the door to the room was, what she was asked a minute ago, even what her name was. December 5, 1971 IN THE INDO- PAKISTAN WAR OF 1971, USA TAKES A STAND! As soon as she read the news, her hands began shivering. The newspaper crackled as she shook it violently. Grief flashed on her face. Renata was in a flood of tears. Reading the word ‘War’ affected her significantly. \"Renata! What's wrong my dear? You are safe here, we are all safe here, and together. I will never leave you again. Please recognize me, I am your love, Herz, your Herz . . .\"",
+      "I think about her all the time. I am still staying in Oswego, New York and visit the Emergency Refugee shelter every week with the hope that my Renata would be there some day. I will never forgive myself for doing that to Renata. I should never have left her alone. It was not the War, it was I who shattered our small lives!",
+      "14 February, 1972. A date Herz would never forget. As a part of his weekly practice, Herz was holding Renata’s hand and taking her for a walk among the Sugar Maple, Red Cedar and Green Ash in the deciduous parks. Being in the serenity of parks helped Renata a lot. After the 75 minute walk, they would return to the Nursing Home. On the table in her room, was kept a very dusty old letter. Renata picked up the letter and felt it with her hands, drawing it closer to her face, she closed her eyes and took a deep breath to draw in every scent of the old paper. The letter had just been delivered, but surprisingly felt familiar. Had she crossed paths with it before? She opened her eyes and read the letter. The letter was very old and was tinge of pale yellow. It was torn and at some places even burnt on the sides. Regardless of all the harm. The hand script still was neat and filled with beauty. It took no notice of how uneven and ugly the edges of the letter had become. As soon she finished reading the letter, she lifted her head and looked at Herz. She stretched her hand to give the letter to its recipient. In the golden hour, her eyes glistened with tears. \"You have come, Herz! You have returned, you have fulfilled your promise! \"",
+      "Dear love, It would give you immense pleasure to know that I have reached the United States of America safely. For four months, I lived in the Refugee’s Shelter. Later, I decided to move to Philadelphia. I have also received a proposal for job. Come to America as soon as possible, Herz. A new, fresh start awaits us here. The address for our home in Philadelphia would be: 621 Halleon Way 25 Drive St., Philadelphia. Waiting for you to fulfil your promise. Love, Renata. Date: 12th of August, 1944. Name & address: Herz Berger, Prinsengracht 1024 GV Amsterdam Netherlands.",
+      "The letter took 27 years to reach the right hands."
+    ],
+    "sentences": [
+      {
+        "text_en": "The telephone kept on the table beside the bed rang sharply.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_000.mp3",
+        "text_vi": "Chiếc điện thoại đặt trên bàn cạnh giường kêu reo inh ỏi."
+      },
+      {
+        "text_en": "The black polished telephone contrasted the brilliantly lit white room.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_001.mp3",
+        "text_vi": "Chiếc điện thoại đen bóng nổi bật hẳn trong căn phòng trắng sáng rực rỡ."
+      },
+      {
+        "text_en": "The nurse came in from the other room and answered.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_002.mp3",
+        "text_vi": "Cô y tá từ phòng khác bước vào và nghe máy."
+      },
+      {
+        "text_en": "“Hullo? Renata?” “May I know who I am speaking to please?” “May I speak to Renata Berger please?",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_003.mp3",
+        "text_vi": "\"A lô? Renata?\" \"Xin hỏi ai đang nói chuyện vậy ạ?\" \"Làm ơn cho tôi nói chuyện với Renata Berger được không?"
+      },
+      {
+        "text_en": "I am her husband, Herz Berger.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_004.mp3",
+        "text_vi": "Tôi là chồng cô ấy, Herz Berger."
+      },
+      {
+        "text_en": "Tell her my name, she would recognize.” The burgundy colored train with the yellow characters ‘PENNSYLVANIA’ stopped on the station of Philadelphia.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_005.mp3",
+        "text_vi": "Hãy nói tên tôi, cô ấy sẽ nhận ra.\" Chuyến tàu màu đỏ mận với chữ vàng 'PENNSYLVANIA' dừng lại ở ga Philadelphia."
+      },
+      {
+        "text_en": "Herz Berger stepped out of the passenger coach of second class.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_006.mp3",
+        "text_vi": "Herz Berger bước ra khỏi toa tàu khách hạng hai."
+      },
+      {
+        "text_en": "He had a long black overcoat draped over his hunched back.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_007.mp3",
+        "text_vi": "Ông ấy khoác một chiếc áo khoác dài màu đen lên lưng gù của mình."
+      },
+      {
+        "text_en": "There was a silhouette of a six-point star etched on his coat.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_008.mp3",
+        "text_vi": "Có một hình bóng ngôi sao sáu cánh được khắc trên áo khoác của ông."
+      },
+      {
+        "text_en": "At one time, there was The Star of David sown there.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_009.mp3",
+        "text_vi": "Đã từng có Ngôi sao David được may ở đó."
+      },
+      {
+        "text_en": "It was just the shadow left now.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_010.mp3",
+        "text_vi": "Giờ chỉ còn lại cái bóng."
+      },
+      {
+        "text_en": "A long white beard overlapped the overcoat.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_011.mp3",
+        "text_vi": "Bộ râu dài màu trắng che phủ lên chiếc áo khoác."
+      },
+      {
+        "text_en": "Mr. Berger walked slowly, measuring every step judiciously.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_012.mp3",
+        "text_vi": "Ông Berger bước đi chậm rãi, cẩn thận từng bước một."
+      },
+      {
+        "text_en": "The telephone kept on the table beside the bed rang sharply.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_013.mp3",
+        "text_vi": "Chiếc điện thoại đặt trên bàn cạnh giường kêu reo inh ỏi."
+      },
+      {
+        "text_en": "The black polished telephone contrasted the brilliantly lit white room.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_014.mp3",
+        "text_vi": "Chiếc điện thoại đen bóng nổi bật hẳn trong căn phòng trắng sáng rực rỡ."
+      },
+      {
+        "text_en": "The nurse came in from the other room and answered.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_015.mp3",
+        "text_vi": "Cô y tá từ phòng khác bước vào và nghe máy."
+      },
+      {
+        "text_en": "“Hullo? Renata?” “May I know who I am speaking to please?” “May I speak to Renata Berger please?",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_016.mp3",
+        "text_vi": "\"A lô? Renata?\" \"Xin hỏi ai đang nói chuyện vậy ạ?\" \"Làm ơn cho tôi nói chuyện với Renata Berger được không?"
+      },
+      {
+        "text_en": "I am her husband, Herz Berger.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_017.mp3",
+        "text_vi": "Tôi là chồng cô ấy, Herz Berger."
+      },
+      {
+        "text_en": "Tell her my name, she would recognize.” The burgundy colored train with the yellow characters ‘PENNSYLVANIA’ stopped on the station of Philadelphia.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_018.mp3",
+        "text_vi": "Hãy nói tên tôi, cô ấy sẽ nhận ra.\" Chuyến tàu màu đỏ mận với chữ vàng 'PENNSYLVANIA' dừng lại ở ga Philadelphia."
+      },
+      {
+        "text_en": "Herz Berger stepped out of the passenger coach of second class.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_019.mp3",
+        "text_vi": "Herz Berger bước ra khỏi toa tàu khách hạng hai."
+      },
+      {
+        "text_en": "He had a long black overcoat draped over his hunched back.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_020.mp3",
+        "text_vi": "Ông ấy khoác một chiếc áo khoác dài màu đen lên lưng gù của mình."
+      },
+      {
+        "text_en": "There was a silhouette of a six-point star etched on his coat.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_021.mp3",
+        "text_vi": "Có một hình bóng ngôi sao sáu cánh được khắc trên áo khoác của ông."
+      },
+      {
+        "text_en": "At one time, there was The Star of David sown there.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_022.mp3",
+        "text_vi": "Đã từng có Ngôi sao David được may ở đó."
+      },
+      {
+        "text_en": "It was just the shadow left now.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_023.mp3",
+        "text_vi": "Giờ chỉ còn lại cái bóng."
+      },
+      {
+        "text_en": "A long white beard overlapped the overcoat.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_024.mp3",
+        "text_vi": "Bộ râu dài màu trắng che phủ lên chiếc áo khoác."
+      },
+      {
+        "text_en": "Mr Berger walked slowly, measuring every step judiciously.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_025.mp3",
+        "text_vi": "Ông Berger bước đi chậm rãi, cẩn thận từng bước một."
+      },
+      {
+        "text_en": "Herz was brought into the small room by the nurse.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_026.mp3",
+        "text_vi": "Herz được cô y tá đưa vào căn phòng nhỏ."
+      },
+      {
+        "text_en": "Renata sat on the bed, facing on the other side, staring at the wall.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_027.mp3",
+        "text_vi": "Renata ngồi trên giường, quay mặt về phía khác, nhìn chằm chằm vào bức tường."
+      },
+      {
+        "text_en": "She was in a long black frock with grey hair tied in an untidy bun.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_028.mp3",
+        "text_vi": "Cô ấy mặc một chiếc váy dài màu đen, tóc bạc búi lộn xộn."
+      },
+      {
+        "text_en": "“Renata?” He whispered from underneath the unkempt mustache.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_029.mp3",
+        "text_vi": "\"Renata?\" Ông thì thầm dưới bộ ria mép bù xù."
+      },
+      {
+        "text_en": "“Mr. Berger, I told you that Mrs.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_030.mp3",
+        "text_vi": "\"Ông Berger, tôi đã nói với ông rằng bà..."
+      },
+      {
+        "text_en": "Berger is suffering from Retrograde amnesia.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_031.mp3",
+        "text_vi": "Berger đang mắc chứng mất trí nhớ về quá khứ."
+      },
+      {
+        "text_en": "She does not even remember her name.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_032.mp3",
+        "text_vi": "Cô ấy thậm chí không nhớ tên mình."
+      },
+      {
+        "text_en": "That is exactly why she has been kept in this nursing home.” Herz tilted his head towards the nurse, still looking at the ground.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_033.mp3",
+        "text_vi": "Đó chính là lý do cô ấy được giữ lại ở viện dưỡng lão này.\" Herz nghiêng đầu về phía cô y tá, mắt vẫn nhìn xuống đất."
+      },
+      {
+        "text_en": "Tears welled up in his wrinkled eyes.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_034.mp3",
+        "text_vi": "Nước mắt trào ra trong đôi mắt nhăn nheo của ông."
+      },
+      {
+        "text_en": "It took him great courage to ask, “Is there any chance she can get better?”",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_035.mp3",
+        "text_vi": "Ông lấy hết can đảm để hỏi: \"Liệu cô ấy có cơ hội nào để khỏe lại không?\""
+      },
+      {
+        "text_en": "“Renata, I promise I will see you very soon,” I said at the Port of Amsterdam as she prepared to leave with some fellow Jews.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_036.mp3",
+        "text_vi": "\"Renata, anh hứa sẽ gặp em rất sớm,\" tôi nói ở Cảng Amsterdam khi cô ấy chuẩn bị rời đi cùng một số người Do Thái khác."
+      },
+      {
+        "text_en": "I knew sending her to the New World was not safe, especially with German U- boats scanning the Atlantic.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_037.mp3",
+        "text_vi": "Tôi biết việc đưa cô ấy đến Thế giới mới không an toàn, đặc biệt là khi tàu ngầm U-boat của Đức đang rà soát Đại Tây Dương."
+      },
+      {
+        "text_en": "But I had no other alternative to ensure she survives.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_038.mp3",
+        "text_vi": "Nhưng tôi không có lựa chọn nào khác để đảm bảo cô ấy sống sót."
+      },
+      {
+        "text_en": "She would wait for me there.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_039.mp3",
+        "text_vi": "Cô ấy sẽ đợi tôi ở đó."
+      },
+      {
+        "text_en": "She would live in the Emergency Refugee Shelter in New York.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_040.mp3",
+        "text_vi": "Cô ấy sẽ sống trong Trại tị nạn khẩn cấp ở New York."
+      },
+      {
+        "text_en": "As soon as the war is over, I would travel there too.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_041.mp3",
+        "text_vi": "Ngay khi chiến tranh kết thúc, tôi cũng sẽ đến đó."
+      },
+      {
+        "text_en": "I remember her telling me with moist eyes, “Herz, must we separate?",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_042.mp3",
+        "text_vi": "Tôi nhớ cô ấy đã nói với đôi mắt ngấn lệ: \"Herz, chúng ta nhất định phải chia lìa sao?"
+      },
+      {
+        "text_en": "We lived together; can't we die together?” I had no answer for that.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_043.mp3",
+        "text_vi": "Chúng ta đã sống cùng nhau; sao chúng ta không thể chết cùng nhau?\" Tôi không có câu trả lời nào cho điều đó."
+      },
+      {
+        "text_en": "Herz sat beside his wife.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_044.mp3",
+        "text_vi": "Herz ngồi bên cạnh vợ mình."
+      },
+      {
+        "text_en": "It was after a long time he was next to her.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_045.mp3",
+        "text_vi": "Đã rất lâu rồi ông mới được ở cạnh cô ấy."
+      },
+      {
+        "text_en": "She looked so different when she left the coasts of war- struck Amsterdam.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_046.mp3",
+        "text_vi": "Cô ấy trông khác hẳn so với khi rời bờ biển Amsterdam bị chiến tranh tàn phá."
+      },
+      {
+        "text_en": "Renata had wrinkled pale skin.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_047.mp3",
+        "text_vi": "Renata có làn da nhợt nhạt, nhăn nheo."
+      },
+      {
+        "text_en": "She sat dreadfully still and stared into the infinity.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_048.mp3",
+        "text_vi": "Cô ấy ngồi yên một cách đáng sợ và nhìn chằm chằm vào khoảng không vô định."
+      },
+      {
+        "text_en": "Her lifeless face showed no emotion.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_049.mp3",
+        "text_vi": "Khuôn mặt vô hồn của cô ấy không biểu lộ cảm xúc gì."
+      },
+      {
+        "text_en": "He tried to talk with her.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_050.mp3",
+        "text_vi": "Ông cố gắng nói chuyện với cô ấy."
+      },
+      {
+        "text_en": "What followed was a monologue- “Dear Renata, I know you are upset with me.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_051.mp3",
+        "text_vi": "Sau đó là một đoạn độc thoại: \"Renata yêu quý, anh biết em đang buồn vì anh."
+      },
+      {
+        "text_en": "You have every reason to.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_052.mp3",
+        "text_vi": "Em có mọi lý do để buồn."
+      },
+      {
+        "text_en": "I am sorry.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_053.mp3",
+        "text_vi": "Anh xin lỗi."
+      },
+      {
+        "text_en": "I gave up.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_054.mp3",
+        "text_vi": "Anh đã bỏ cuộc."
+      },
+      {
+        "text_en": "I should have kept searching for you,” he paused to take a deep breath as his voice choked.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_055.mp3",
+        "text_vi": "Anh lẽ ra phải tiếp tục tìm kiếm em,\" ông ngừng lại để hít một hơi thật sâu khi giọng nói nghẹn lại."
+      },
+      {
+        "text_en": "That evening, the nurse entered the room again and administered Renata with medicines.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_056.mp3",
+        "text_vi": "Tối hôm đó, cô y tá lại vào phòng và cho Renata uống thuốc."
+      },
+      {
+        "text_en": "She looked at Herz.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_057.mp3",
+        "text_vi": "Cô ấy nhìn Herz."
+      },
+      {
+        "text_en": "His eyes revealed that he was desperately searching for answers.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_058.mp3",
+        "text_vi": "Đôi mắt ông cho thấy ông đang tuyệt vọng tìm kiếm câu trả lời."
+      },
+      {
+        "text_en": "He deserved to know.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_059.mp3",
+        "text_vi": "Ông xứng đáng được biết."
+      },
+      {
+        "text_en": "“I have been in the service of your wife for 10 years now.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_060.mp3",
+        "text_vi": "\"Tôi đã chăm sóc vợ ông được 10 năm rồi."
+      },
+      {
+        "text_en": "I didn’t doubt that you were her husband for a second.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_061.mp3",
+        "text_vi": "Tôi chưa bao giờ nghi ngờ ông là chồng cô ấy dù chỉ một giây."
+      },
+      {
+        "text_en": "Despite not remembering big portions of her past, your wife accurately remembers that she had a loved one for whom she is waiting.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_062.mp3",
+        "text_vi": "Mặc dù không nhớ nhiều về quá khứ, vợ ông vẫn nhớ chính xác rằng cô ấy có một người thân yêu mà cô ấy đang chờ đợi."
+      },
+      {
+        "text_en": "Once every one or two months, she would, all of a sudden, start writing a letter.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_063.mp3",
+        "text_vi": "Cứ mỗi một hoặc hai tháng, cô ấy lại đột nhiên bắt đầu viết một lá thư."
+      },
+      {
+        "text_en": "It was the same content, addressed to an unknown, and signed as waiting.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_064.mp3",
+        "text_vi": "Nội dung luôn giống nhau, gửi cho một người không quen biết, và ký tên là 'đang chờ đợi'."
+      },
+      {
+        "text_en": "Every letter looked identical to the previous.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_065.mp3",
+        "text_vi": "Mỗi lá thư đều giống hệt lá thư trước."
+      },
+      {
+        "text_en": "Over the course of 10 years, she wrote 75 letters.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_066.mp3",
+        "text_vi": "Trong suốt 10 năm, cô ấy đã viết 75 lá thư."
+      },
+      {
+        "text_en": "Since they were addressed to an unknown, we didn't know what to do with them.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_067.mp3",
+        "text_vi": "Vì chúng được gửi cho một người không quen biết, chúng tôi không biết phải làm gì với chúng."
+      },
+      {
+        "text_en": "I still kept them for the record.\"",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_068.mp3",
+        "text_vi": "Tôi vẫn giữ chúng lại để lưu hồ sơ.\""
+      },
+      {
+        "text_en": "As soon as I set foot on the soil of the New World, I knew it was not going to be easy.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_069.mp3",
+        "text_vi": "Ngay khi đặt chân lên đất của Thế giới mới, tôi biết mọi chuyện sẽ không dễ dàng."
+      },
+      {
+        "text_en": "A visit to the Refugee Shelter changed my doubts into realities.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_070.mp3",
+        "text_vi": "Một chuyến thăm Trại tị nạn đã biến những nghi ngờ của tôi thành sự thật."
+      },
+      {
+        "text_en": "A homeless Jew in foreign soil, who had just had a very narrow escape from the Holocaust.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_071.mp3",
+        "text_vi": "Một người Do Thái vô gia cư trên đất khách, vừa thoát chết trong gang tấc khỏi nạn diệt chủng Holocaust."
+      },
+      {
+        "text_en": "What possibly could I do?",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_072.mp3",
+        "text_vi": "Tôi có thể làm gì đây?"
+      },
+      {
+        "text_en": "I checked all records of every refugee that landed in America in the last five years.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_073.mp3",
+        "text_vi": "Tôi đã kiểm tra tất cả hồ sơ của mọi người tị nạn đến Mỹ trong năm năm qua."
+      },
+      {
+        "text_en": "I visited every refugee shelter on the East coast.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_074.mp3",
+        "text_vi": "Tôi đã đến thăm mọi trại tị nạn ở bờ biển phía Đông."
+      },
+      {
+        "text_en": "I had some relatives in Georgia.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_075.mp3",
+        "text_vi": "Tôi có một số người thân ở Georgia."
+      },
+      {
+        "text_en": "I tried contacting them, but in vain.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_076.mp3",
+        "text_vi": "Tôi đã cố gắng liên lạc với họ, nhưng vô ích."
+      },
+      {
+        "text_en": "The mystery was killing me slowly.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_077.mp3",
+        "text_vi": "Sự bí ẩn đang giết chết tôi dần dần."
+      },
+      {
+        "text_en": "It was then that one day a successful newspaper published the names of all refugees who had died during travel to or by disease in the States.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_078.mp3",
+        "text_vi": "Rồi một ngày, một tờ báo nổi tiếng đã công bố tên của tất cả những người tị nạn đã chết trong chuyến đi hoặc do bệnh tật ở Hoa Kỳ."
+      },
+      {
+        "text_en": "One of them talked of a middle-aged lady whose name was Rita.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_079.mp3",
+        "text_vi": "Một trong số đó nói về một phụ nữ trung niên tên là Rita."
+      },
+      {
+        "text_en": "A part of me died that day.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_080.mp3",
+        "text_vi": "Một phần trong tôi đã chết vào ngày hôm đó."
+      },
+      {
+        "text_en": "It was not impossible that they were talking of Renata and had misprinted the name.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_081.mp3",
+        "text_vi": "Không phải là không thể họ đang nói về Renata và đã in sai tên."
+      },
+      {
+        "text_en": "Unfortunately, they had no information more than what they had published.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_082.mp3",
+        "text_vi": "Thật không may, họ không có thêm thông tin nào ngoài những gì đã công bố."
+      },
+      {
+        "text_en": "It took me three years to finally accept the fact you were gone, my love: snatched away from me by the War.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_083.mp3",
+        "text_vi": "Tôi mất ba năm để cuối cùng chấp nhận sự thật rằng em đã ra đi, tình yêu của anh: bị chiến tranh cướp mất khỏi anh."
+      },
+      {
+        "text_en": "Two months later, Renata was sitting on an arm chair in the veranda of the Nursing Home.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_084.mp3",
+        "text_vi": "Hai tháng sau, Renata đang ngồi trên ghế bành ở hiên của Viện dưỡng lão."
+      },
+      {
+        "text_en": "She was reading the newspaper.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_085.mp3",
+        "text_vi": "Cô ấy đang đọc báo."
+      },
+      {
+        "text_en": "Renata's health was improving steadily.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_086.mp3",
+        "text_vi": "Sức khỏe của Renata đang cải thiện đều đặn."
+      },
+      {
+        "text_en": "She looked closer to her age now.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_087.mp3",
+        "text_vi": "Giờ cô ấy trông gần với tuổi thật của mình hơn."
+      },
+      {
+        "text_en": "As she sat and handled her newspaper to season the streak of sunlight pouring in, she squinted her eyes to read better.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_088.mp3",
+        "text_vi": "Khi cô ấy ngồi và điều chỉnh tờ báo để đón vệt nắng chiếu vào, cô ấy nheo mắt để đọc rõ hơn."
+      },
+      {
+        "text_en": "Despite being able to read again, and with her health improving, memory had not arrived yet.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_089.mp3",
+        "text_vi": "Mặc dù đã có thể đọc lại và sức khỏe đang cải thiện, trí nhớ của cô ấy vẫn chưa trở lại."
+      },
+      {
+        "text_en": "She would forget everything, where the door to the room was, what she was asked a minute ago, even what her name was.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_090.mp3",
+        "text_vi": "Cô ấy sẽ quên mọi thứ, cửa phòng ở đâu, cô ấy vừa được hỏi gì một phút trước, thậm chí cả tên của mình."
+      },
+      {
+        "text_en": "December 5, 1971 IN THE INDO- PAKISTAN WAR OF 1971, USA TAKES A STAND!",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_091.mp3",
+        "text_vi": "Ngày 5 tháng 12 năm 1971 TRONG CUỘC CHIẾN TRANH ẤN ĐỘ - PAKISTAN NĂM 1971, MỸ ĐỨNG VỀ MỘT PHÍA!"
+      },
+      {
+        "text_en": "As soon as she read the news, her hands began shivering.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_092.mp3",
+        "text_vi": "Ngay khi đọc tin tức, tay cô ấy bắt đầu run rẩy."
+      },
+      {
+        "text_en": "The newspaper crackled as she shook it violently.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_093.mp3",
+        "text_vi": "Tờ báo kêu lách tách khi cô ấy lắc mạnh."
+      },
+      {
+        "text_en": "Grief flashed on her face.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_094.mp3",
+        "text_vi": "Nỗi đau buồn hiện rõ trên khuôn mặt cô ấy."
+      },
+      {
+        "text_en": "Renata was in a flood of tears.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_095.mp3",
+        "text_vi": "Renata khóc nức nở."
+      },
+      {
+        "text_en": "Reading the word ‘War’ affected her significantly.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_096.mp3",
+        "text_vi": "Việc đọc từ 'Chiến tranh' đã ảnh hưởng đáng kể đến cô ấy."
+      },
+      {
+        "text_en": "\"Renata! What's wrong my dear?",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_097.mp3",
+        "text_vi": "\"Renata! Em yêu, có chuyện gì vậy?"
+      },
+      {
+        "text_en": "You are safe here, we are all safe here, and together.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_098.mp3",
+        "text_vi": "Em an toàn ở đây, tất cả chúng ta đều an toàn ở đây, và ở bên nhau."
+      },
+      {
+        "text_en": "I will never leave you again.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_099.mp3",
+        "text_vi": "Anh sẽ không bao giờ rời xa em nữa."
+      },
+      {
+        "text_en": "Please recognize me, I am your love, Herz, your Herz . . .\"",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_100.mp3",
+        "text_vi": "Xin hãy nhận ra anh, anh là tình yêu của em, Herz, Herz của em...\""
+      },
+      {
+        "text_en": "I think about her all the time.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_101.mp3",
+        "text_vi": "Tôi luôn nghĩ về cô ấy."
+      },
+      {
+        "text_en": "I am still staying in Oswego, New York and visit the Emergency Refugee shelter every week with the hope that my Renata would be there some day.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_102.mp3",
+        "text_vi": "Tôi vẫn đang ở Oswego, New York và mỗi tuần đều đến thăm trại tị nạn khẩn cấp với hy vọng rằng Renata của tôi sẽ ở đó vào một ngày nào đó."
+      },
+      {
+        "text_en": "I will never forgive myself for doing that to Renata.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_103.mp3",
+        "text_vi": "Tôi sẽ không bao giờ tha thứ cho bản thân vì đã làm điều đó với Renata."
+      },
+      {
+        "text_en": "I should never have left her alone.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_104.mp3",
+        "text_vi": "Tôi lẽ ra không bao giờ nên bỏ cô ấy một mình."
+      },
+      {
+        "text_en": "It was not the War, it was I who shattered our small lives!",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_105.mp3",
+        "text_vi": "Không phải chiến tranh, mà chính tôi đã phá tan cuộc sống nhỏ bé của chúng ta!"
+      },
+      {
+        "text_en": "14 February, 1972.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_106.mp3",
+        "text_vi": "Ngày 14 tháng 2 năm 1972."
+      },
+      {
+        "text_en": "A date Herz would never forget.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_107.mp3",
+        "text_vi": "Một ngày mà Herz sẽ không bao giờ quên."
+      },
+      {
+        "text_en": "As a part of his weekly practice, Herz was holding Renata’s hand and taking her for a walk among the Sugar Maple, Red Cedar and Green Ash in the deciduous parks.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_108.mp3",
+        "text_vi": "Theo thói quen hàng tuần, Herz nắm tay Renata và đưa cô đi dạo giữa những cây phong đường, tuyết tùng đỏ và tần bì xanh trong các công viên cây rụng lá."
+      },
+      {
+        "text_en": "Being in the serenity of parks helped Renata a lot.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_109.mp3",
+        "text_vi": "Việc ở trong sự thanh bình của công viên đã giúp Renata rất nhiều."
+      },
+      {
+        "text_en": "After the 75 minute walk, they would return to the Nursing Home.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_110.mp3",
+        "text_vi": "Sau 75 phút đi bộ, họ sẽ trở về Viện dưỡng lão."
+      },
+      {
+        "text_en": "On the table in her room, was kept a very dusty old letter.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_111.mp3",
+        "text_vi": "Trên bàn trong phòng cô ấy, có một lá thư cũ rất bám bụi."
+      },
+      {
+        "text_en": "Renata picked up the letter and felt it with her hands, drawing it closer to her face, she closed her eyes and took a deep breath to draw in every scent of the old paper.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_112.mp3",
+        "text_vi": "Renata nhặt lá thư lên và cảm nhận nó bằng tay, đưa nó lại gần mặt, cô nhắm mắt và hít một hơi thật sâu để cảm nhận mọi mùi hương của tờ giấy cũ."
+      },
+      {
+        "text_en": "The letter had just been delivered, but surprisingly felt familiar.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_113.mp3",
+        "text_vi": "Lá thư vừa được gửi đến, nhưng đáng ngạc nhiên là nó lại quen thuộc."
+      },
+      {
+        "text_en": "Had she crossed paths with it before?",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_114.mp3",
+        "text_vi": "Cô ấy đã từng gặp nó trước đây chưa?"
+      },
+      {
+        "text_en": "She opened her eyes and read the letter.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_115.mp3",
+        "text_vi": "Cô ấy mở mắt và đọc lá thư."
+      },
+      {
+        "text_en": "The letter was very old and was tinge of pale yellow.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_116.mp3",
+        "text_vi": "Lá thư rất cũ và có một chút màu vàng nhạt."
+      },
+      {
+        "text_en": "It was torn and at some places even burnt on the sides.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_117.mp3",
+        "text_vi": "Nó bị rách và ở một số chỗ còn bị cháy ở các cạnh."
+      },
+      {
+        "text_en": "Regardless of all the harm.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_118.mp3",
+        "text_vi": "Bất kể mọi hư hại."
+      },
+      {
+        "text_en": "The hand script still was neat and filled with beauty.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_119.mp3",
+        "text_vi": "Chữ viết tay vẫn gọn gàng và đầy vẻ đẹp."
+      },
+      {
+        "text_en": "It took no notice of how uneven and ugly the edges of the letter had become.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_120.mp3",
+        "text_vi": "Nó không để ý đến việc các cạnh của lá thư đã trở nên không đều và xấu xí như thế nào."
+      },
+      {
+        "text_en": "As soon she finished reading the letter, she lifted her head and looked at Herz.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_121.mp3",
+        "text_vi": "Ngay khi đọc xong lá thư, cô ấy ngẩng đầu lên và nhìn Herz."
+      },
+      {
+        "text_en": "She stretched her hand to give the letter to its recipient.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_122.mp3",
+        "text_vi": "Cô ấy vươn tay đưa lá thư cho người nhận."
+      },
+      {
+        "text_en": "In the golden hour, her eyes glistened with tears.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_123.mp3",
+        "text_vi": "Trong giờ vàng, đôi mắt cô ấy lấp lánh nước mắt."
+      },
+      {
+        "text_en": "\"You have come, Herz!",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_124.mp3",
+        "text_vi": "\"Anh đã đến rồi, Herz!"
+      },
+      {
+        "text_en": "You have returned, you have fulfilled your promise! \"",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_125.mp3",
+        "text_vi": "Anh đã trở về, anh đã thực hiện lời hứa của mình!\""
+      },
+      {
+        "text_en": "Dear love, It would give you immense pleasure to know that I have reached the United States of America safely.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_126.mp3",
+        "text_vi": "Tình yêu của em, anh sẽ rất vui khi biết rằng em đã đến Hợp chủng quốc Hoa Kỳ an toàn."
+      },
+      {
+        "text_en": "For four months, I lived in the Refugee’s Shelter.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_127.mp3",
+        "text_vi": "Trong bốn tháng, em đã sống ở Trại tị nạn."
+      },
+      {
+        "text_en": "Later, I decided to move to Philadelphia.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_128.mp3",
+        "text_vi": "Sau đó, em quyết định chuyển đến Philadelphia."
+      },
+      {
+        "text_en": "I have also received a proposal for job.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_129.mp3",
+        "text_vi": "Em cũng đã nhận được một lời đề nghị làm việc."
+      },
+      {
+        "text_en": "Come to America as soon as possible, Herz.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_130.mp3",
+        "text_vi": "Hãy đến Mỹ càng sớm càng tốt, Herz."
+      },
+      {
+        "text_en": "A new, fresh start awaits us here.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_131.mp3",
+        "text_vi": "Một khởi đầu mới mẻ đang chờ đợi chúng ta ở đây."
+      },
+      {
+        "text_en": "The address for our home in Philadelphia would be: 621 Halleon Way 25 Drive St., Philadelphia.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_132.mp3",
+        "text_vi": "Địa chỉ nhà của chúng ta ở Philadelphia sẽ là: 621 Halleon Way 25 Drive St., Philadelphia."
+      },
+      {
+        "text_en": "Waiting for you to fulfil your promise.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_133.mp3",
+        "text_vi": "Đang chờ anh thực hiện lời hứa của mình."
+      },
+      {
+        "text_en": "Love, Renata. Date: 12th of August, 1944.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_134.mp3",
+        "text_vi": "Yêu, Renata. Ngày: 12 tháng 8 năm 1944."
+      },
+      {
+        "text_en": "Name & address: Herz Berger, Prinsengracht 1024 GV Amsterdam Netherlands.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_135.mp3",
+        "text_vi": "Tên & địa chỉ: Herz Berger, Prinsengracht 1024 GV Amsterdam Hà Lan."
+      },
+      {
+        "text_en": "The letter took 27 years to reach the right hands.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_136.mp3",
+        "text_vi": "Lá thư mất 27 năm để đến đúng người."
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "The telephone kept on the table beside the bed rang sharply.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "The black polished telephone contrasted the brilliantly lit white room.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "The nurse came in from the other room and answered.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "“Hullo? Renata?” “May I know who I am speaking to please?” “May I speak to Renata Berger please?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "I am her husband, Herz Berger.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "Tell her my name, she would recognize.” The burgundy colored train with the yellow characters ‘PENNSYLVANIA’ stopped on the station of Philadelphia.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "Herz Berger stepped out of the passenger coach of second class.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "He had a long black overcoat draped over his hunched back.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "There was a silhouette of a six-point star etched on his coat.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "At one time, there was The Star of David sown there.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "It was just the shadow left now.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "A long white beard overlapped the overcoat.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "Mr. Berger walked slowly, measuring every step judiciously.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_012.mp3"
+        },
+        {
+          "id": "ra_13",
+          "text_en": "The telephone kept on the table beside the bed rang sharply.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_013.mp3"
+        },
+        {
+          "id": "ra_14",
+          "text_en": "The black polished telephone contrasted the brilliantly lit white room.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_014.mp3"
+        },
+        {
+          "id": "ra_15",
+          "text_en": "The nurse came in from the other room and answered.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_015.mp3"
+        },
+        {
+          "id": "ra_16",
+          "text_en": "“Hullo? Renata?” “May I know who I am speaking to please?” “May I speak to Renata Berger please?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_016.mp3"
+        },
+        {
+          "id": "ra_17",
+          "text_en": "I am her husband, Herz Berger.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_017.mp3"
+        },
+        {
+          "id": "ra_18",
+          "text_en": "Tell her my name, she would recognize.” The burgundy colored train with the yellow characters ‘PENNSYLVANIA’ stopped on the station of Philadelphia.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_018.mp3"
+        },
+        {
+          "id": "ra_19",
+          "text_en": "Herz Berger stepped out of the passenger coach of second class.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_019.mp3"
+        },
+        {
+          "id": "ra_20",
+          "text_en": "He had a long black overcoat draped over his hunched back.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_020.mp3"
+        },
+        {
+          "id": "ra_21",
+          "text_en": "There was a silhouette of a six-point star etched on his coat.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_021.mp3"
+        },
+        {
+          "id": "ra_22",
+          "text_en": "At one time, there was The Star of David sown there.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_022.mp3"
+        },
+        {
+          "id": "ra_23",
+          "text_en": "It was just the shadow left now.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_023.mp3"
+        },
+        {
+          "id": "ra_24",
+          "text_en": "A long white beard overlapped the overcoat.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_024.mp3"
+        },
+        {
+          "id": "ra_25",
+          "text_en": "Mr Berger walked slowly, measuring every step judiciously.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_025.mp3"
+        },
+        {
+          "id": "ra_26",
+          "text_en": "Herz was brought into the small room by the nurse.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_026.mp3"
+        },
+        {
+          "id": "ra_27",
+          "text_en": "Renata sat on the bed, facing on the other side, staring at the wall.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_027.mp3"
+        },
+        {
+          "id": "ra_28",
+          "text_en": "She was in a long black frock with grey hair tied in an untidy bun.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_028.mp3"
+        },
+        {
+          "id": "ra_29",
+          "text_en": "“Renata?” He whispered from underneath the unkempt mustache.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_029.mp3"
+        },
+        {
+          "id": "ra_30",
+          "text_en": "“Mr. Berger, I told you that Mrs.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_030.mp3"
+        },
+        {
+          "id": "ra_31",
+          "text_en": "Berger is suffering from Retrograde amnesia.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_031.mp3"
+        },
+        {
+          "id": "ra_32",
+          "text_en": "She does not even remember her name.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_032.mp3"
+        },
+        {
+          "id": "ra_33",
+          "text_en": "That is exactly why she has been kept in this nursing home.” Herz tilted his head towards the nurse, still looking at the ground.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_033.mp3"
+        },
+        {
+          "id": "ra_34",
+          "text_en": "Tears welled up in his wrinkled eyes.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_034.mp3"
+        },
+        {
+          "id": "ra_35",
+          "text_en": "It took him great courage to ask, “Is there any chance she can get better?”",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_035.mp3"
+        },
+        {
+          "id": "ra_36",
+          "text_en": "“Renata, I promise I will see you very soon,” I said at the Port of Amsterdam as she prepared to leave with some fellow Jews.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_036.mp3"
+        },
+        {
+          "id": "ra_37",
+          "text_en": "I knew sending her to the New World was not safe, especially with German U- boats scanning the Atlantic.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_037.mp3"
+        },
+        {
+          "id": "ra_38",
+          "text_en": "But I had no other alternative to ensure she survives.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_038.mp3"
+        },
+        {
+          "id": "ra_39",
+          "text_en": "She would wait for me there.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_039.mp3"
+        },
+        {
+          "id": "ra_40",
+          "text_en": "She would live in the Emergency Refugee Shelter in New York.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_040.mp3"
+        },
+        {
+          "id": "ra_41",
+          "text_en": "As soon as the war is over, I would travel there too.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_041.mp3"
+        },
+        {
+          "id": "ra_42",
+          "text_en": "I remember her telling me with moist eyes, “Herz, must we separate?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_042.mp3"
+        },
+        {
+          "id": "ra_43",
+          "text_en": "We lived together; can't we die together?” I had no answer for that.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_043.mp3"
+        },
+        {
+          "id": "ra_44",
+          "text_en": "Herz sat beside his wife.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_044.mp3"
+        },
+        {
+          "id": "ra_45",
+          "text_en": "It was after a long time he was next to her.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_045.mp3"
+        },
+        {
+          "id": "ra_46",
+          "text_en": "She looked so different when she left the coasts of war- struck Amsterdam.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_046.mp3"
+        },
+        {
+          "id": "ra_47",
+          "text_en": "Renata had wrinkled pale skin.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_047.mp3"
+        },
+        {
+          "id": "ra_48",
+          "text_en": "She sat dreadfully still and stared into the infinity.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_048.mp3"
+        },
+        {
+          "id": "ra_49",
+          "text_en": "Her lifeless face showed no emotion.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_049.mp3"
+        },
+        {
+          "id": "ra_50",
+          "text_en": "He tried to talk with her.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_050.mp3"
+        },
+        {
+          "id": "ra_51",
+          "text_en": "What followed was a monologue- “Dear Renata, I know you are upset with me.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_051.mp3"
+        },
+        {
+          "id": "ra_52",
+          "text_en": "You have every reason to.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_052.mp3"
+        },
+        {
+          "id": "ra_53",
+          "text_en": "I am sorry.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_053.mp3"
+        },
+        {
+          "id": "ra_54",
+          "text_en": "I gave up.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_054.mp3"
+        },
+        {
+          "id": "ra_55",
+          "text_en": "I should have kept searching for you,” he paused to take a deep breath as his voice choked.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_055.mp3"
+        },
+        {
+          "id": "ra_56",
+          "text_en": "That evening, the nurse entered the room again and administered Renata with medicines.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_056.mp3"
+        },
+        {
+          "id": "ra_57",
+          "text_en": "She looked at Herz.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_057.mp3"
+        },
+        {
+          "id": "ra_58",
+          "text_en": "His eyes revealed that he was desperately searching for answers.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_058.mp3"
+        },
+        {
+          "id": "ra_59",
+          "text_en": "He deserved to know.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_059.mp3"
+        },
+        {
+          "id": "ra_60",
+          "text_en": "“I have been in the service of your wife for 10 years now.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_060.mp3"
+        },
+        {
+          "id": "ra_61",
+          "text_en": "I didn’t doubt that you were her husband for a second.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_061.mp3"
+        },
+        {
+          "id": "ra_62",
+          "text_en": "Despite not remembering big portions of her past, your wife accurately remembers that she had a loved one for whom she is waiting.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_062.mp3"
+        },
+        {
+          "id": "ra_63",
+          "text_en": "Once every one or two months, she would, all of a sudden, start writing a letter.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_063.mp3"
+        },
+        {
+          "id": "ra_64",
+          "text_en": "It was the same content, addressed to an unknown, and signed as waiting.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_064.mp3"
+        },
+        {
+          "id": "ra_65",
+          "text_en": "Every letter looked identical to the previous.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_065.mp3"
+        },
+        {
+          "id": "ra_66",
+          "text_en": "Over the course of 10 years, she wrote 75 letters.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_066.mp3"
+        },
+        {
+          "id": "ra_67",
+          "text_en": "Since they were addressed to an unknown, we didn't know what to do with them.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_067.mp3"
+        },
+        {
+          "id": "ra_68",
+          "text_en": "I still kept them for the record.\"",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_068.mp3"
+        },
+        {
+          "id": "ra_69",
+          "text_en": "As soon as I set foot on the soil of the New World, I knew it was not going to be easy.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_069.mp3"
+        },
+        {
+          "id": "ra_70",
+          "text_en": "A visit to the Refugee Shelter changed my doubts into realities.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_070.mp3"
+        },
+        {
+          "id": "ra_71",
+          "text_en": "A homeless Jew in foreign soil, who had just had a very narrow escape from the Holocaust.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_071.mp3"
+        },
+        {
+          "id": "ra_72",
+          "text_en": "What possibly could I do?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_072.mp3"
+        },
+        {
+          "id": "ra_73",
+          "text_en": "I checked all records of every refugee that landed in America in the last five years.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_073.mp3"
+        },
+        {
+          "id": "ra_74",
+          "text_en": "I visited every refugee shelter on the East coast.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_074.mp3"
+        },
+        {
+          "id": "ra_75",
+          "text_en": "I had some relatives in Georgia.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_075.mp3"
+        },
+        {
+          "id": "ra_76",
+          "text_en": "I tried contacting them, but in vain.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_076.mp3"
+        },
+        {
+          "id": "ra_77",
+          "text_en": "The mystery was killing me slowly.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_077.mp3"
+        },
+        {
+          "id": "ra_78",
+          "text_en": "It was then that one day a successful newspaper published the names of all refugees who had died during travel to or by disease in the States.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_078.mp3"
+        },
+        {
+          "id": "ra_79",
+          "text_en": "One of them talked of a middle-aged lady whose name was Rita.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_079.mp3"
+        },
+        {
+          "id": "ra_80",
+          "text_en": "A part of me died that day.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_080.mp3"
+        },
+        {
+          "id": "ra_81",
+          "text_en": "It was not impossible that they were talking of Renata and had misprinted the name.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_081.mp3"
+        },
+        {
+          "id": "ra_82",
+          "text_en": "Unfortunately, they had no information more than what they had published.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_082.mp3"
+        },
+        {
+          "id": "ra_83",
+          "text_en": "It took me three years to finally accept the fact you were gone, my love: snatched away from me by the War.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_083.mp3"
+        },
+        {
+          "id": "ra_84",
+          "text_en": "Two months later, Renata was sitting on an arm chair in the veranda of the Nursing Home.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_084.mp3"
+        },
+        {
+          "id": "ra_85",
+          "text_en": "She was reading the newspaper.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_085.mp3"
+        },
+        {
+          "id": "ra_86",
+          "text_en": "Renata's health was improving steadily.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_086.mp3"
+        },
+        {
+          "id": "ra_87",
+          "text_en": "She looked closer to her age now.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_087.mp3"
+        },
+        {
+          "id": "ra_88",
+          "text_en": "As she sat and handled her newspaper to season the streak of sunlight pouring in, she squinted her eyes to read better.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_088.mp3"
+        },
+        {
+          "id": "ra_89",
+          "text_en": "Despite being able to read again, and with her health improving, memory had not arrived yet.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_089.mp3"
+        },
+        {
+          "id": "ra_90",
+          "text_en": "She would forget everything, where the door to the room was, what she was asked a minute ago, even what her name was.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_090.mp3"
+        },
+        {
+          "id": "ra_91",
+          "text_en": "December 5, 1971 IN THE INDO- PAKISTAN WAR OF 1971, USA TAKES A STAND!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_091.mp3"
+        },
+        {
+          "id": "ra_92",
+          "text_en": "As soon as she read the news, her hands began shivering.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_092.mp3"
+        },
+        {
+          "id": "ra_93",
+          "text_en": "The newspaper crackled as she shook it violently.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_093.mp3"
+        },
+        {
+          "id": "ra_94",
+          "text_en": "Grief flashed on her face.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_094.mp3"
+        },
+        {
+          "id": "ra_95",
+          "text_en": "Renata was in a flood of tears.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_095.mp3"
+        },
+        {
+          "id": "ra_96",
+          "text_en": "Reading the word ‘War’ affected her significantly.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_096.mp3"
+        },
+        {
+          "id": "ra_97",
+          "text_en": "\"Renata! What's wrong my dear?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_097.mp3"
+        },
+        {
+          "id": "ra_98",
+          "text_en": "You are safe here, we are all safe here, and together.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_098.mp3"
+        },
+        {
+          "id": "ra_99",
+          "text_en": "I will never leave you again.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_099.mp3"
+        },
+        {
+          "id": "ra_100",
+          "text_en": "Please recognize me, I am your love, Herz, your Herz . . .\"",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_100.mp3"
+        },
+        {
+          "id": "ra_101",
+          "text_en": "I think about her all the time.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_101.mp3"
+        },
+        {
+          "id": "ra_102",
+          "text_en": "I am still staying in Oswego, New York and visit the Emergency Refugee shelter every week with the hope that my Renata would be there some day.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_102.mp3"
+        },
+        {
+          "id": "ra_103",
+          "text_en": "I will never forgive myself for doing that to Renata.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_103.mp3"
+        },
+        {
+          "id": "ra_104",
+          "text_en": "I should never have left her alone.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_104.mp3"
+        },
+        {
+          "id": "ra_105",
+          "text_en": "It was not the War, it was I who shattered our small lives!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_105.mp3"
+        },
+        {
+          "id": "ra_106",
+          "text_en": "14 February, 1972.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_106.mp3"
+        },
+        {
+          "id": "ra_107",
+          "text_en": "A date Herz would never forget.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_107.mp3"
+        },
+        {
+          "id": "ra_108",
+          "text_en": "As a part of his weekly practice, Herz was holding Renata’s hand and taking her for a walk among the Sugar Maple, Red Cedar and Green Ash in the deciduous parks.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_108.mp3"
+        },
+        {
+          "id": "ra_109",
+          "text_en": "Being in the serenity of parks helped Renata a lot.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_109.mp3"
+        },
+        {
+          "id": "ra_110",
+          "text_en": "After the 75 minute walk, they would return to the Nursing Home.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_110.mp3"
+        },
+        {
+          "id": "ra_111",
+          "text_en": "On the table in her room, was kept a very dusty old letter.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_111.mp3"
+        },
+        {
+          "id": "ra_112",
+          "text_en": "Renata picked up the letter and felt it with her hands, drawing it closer to her face, she closed her eyes and took a deep breath to draw in every scent of the old paper.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_112.mp3"
+        },
+        {
+          "id": "ra_113",
+          "text_en": "The letter had just been delivered, but surprisingly felt familiar.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_113.mp3"
+        },
+        {
+          "id": "ra_114",
+          "text_en": "Had she crossed paths with it before?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_114.mp3"
+        },
+        {
+          "id": "ra_115",
+          "text_en": "She opened her eyes and read the letter.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_115.mp3"
+        },
+        {
+          "id": "ra_116",
+          "text_en": "The letter was very old and was tinge of pale yellow.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_116.mp3"
+        },
+        {
+          "id": "ra_117",
+          "text_en": "It was torn and at some places even burnt on the sides.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_117.mp3"
+        },
+        {
+          "id": "ra_118",
+          "text_en": "Regardless of all the harm.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_118.mp3"
+        },
+        {
+          "id": "ra_119",
+          "text_en": "The hand script still was neat and filled with beauty.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_119.mp3"
+        },
+        {
+          "id": "ra_120",
+          "text_en": "It took no notice of how uneven and ugly the edges of the letter had become.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_120.mp3"
+        },
+        {
+          "id": "ra_121",
+          "text_en": "As soon she finished reading the letter, she lifted her head and looked at Herz.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_121.mp3"
+        },
+        {
+          "id": "ra_122",
+          "text_en": "She stretched her hand to give the letter to its recipient.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_122.mp3"
+        },
+        {
+          "id": "ra_123",
+          "text_en": "In the golden hour, her eyes glistened with tears.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_123.mp3"
+        },
+        {
+          "id": "ra_124",
+          "text_en": "\"You have come, Herz!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_124.mp3"
+        },
+        {
+          "id": "ra_125",
+          "text_en": "You have returned, you have fulfilled your promise! \"",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_125.mp3"
+        },
+        {
+          "id": "ra_126",
+          "text_en": "Dear love, It would give you immense pleasure to know that I have reached the United States of America safely.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_126.mp3"
+        },
+        {
+          "id": "ra_127",
+          "text_en": "For four months, I lived in the Refugee’s Shelter.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_127.mp3"
+        },
+        {
+          "id": "ra_128",
+          "text_en": "Later, I decided to move to Philadelphia.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_128.mp3"
+        },
+        {
+          "id": "ra_129",
+          "text_en": "I have also received a proposal for job.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_129.mp3"
+        },
+        {
+          "id": "ra_130",
+          "text_en": "Come to America as soon as possible, Herz.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_130.mp3"
+        },
+        {
+          "id": "ra_131",
+          "text_en": "A new, fresh start awaits us here.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_131.mp3"
+        },
+        {
+          "id": "ra_132",
+          "text_en": "The address for our home in Philadelphia would be: 621 Halleon Way 25 Drive St., Philadelphia.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_132.mp3"
+        },
+        {
+          "id": "ra_133",
+          "text_en": "Waiting for you to fulfil your promise.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_133.mp3"
+        },
+        {
+          "id": "ra_134",
+          "text_en": "Love, Renata. Date: 12th of August, 1944.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_134.mp3"
+        },
+        {
+          "id": "ra_135",
+          "text_en": "Name & address: Herz Berger, Prinsengracht 1024 GV Amsterdam Netherlands.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_135.mp3"
+        },
+        {
+          "id": "ra_136",
+          "text_en": "The letter took 27 years to reach the right hands.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103483/s_136.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "What rang sharply beside the bed?",
+          "options_en": [
+            "The telephone",
+            "A train",
+            "A doorbell"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "Where was the telephone kept?",
+          "options_en": [
+            "On the table beside the bed",
+            "In the nurse's room",
+            "On the train"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s1_q1",
+          "type": "choice",
+          "question_en": "What color was the polished telephone?",
+          "options_en": [
+            "Black",
+            "Burgundy",
+            "White"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s1_q2",
+          "type": "choice",
+          "question_en": "What did the black telephone contrast with?",
+          "options_en": [
+            "The brilliantly lit white room",
+            "The burgundy train",
+            "The long overcoat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s2_q1",
+          "type": "choice",
+          "question_en": "Who came in from the other room?",
+          "options_en": [
+            "The nurse",
+            "Herz Berger",
+            "Renata"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s2_q2",
+          "type": "choice",
+          "question_en": "What did the nurse do when she came in?",
+          "options_en": [
+            "Answered (the telephone)",
+            "Left the room",
+            "Wrote a letter"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s3_q1",
+          "type": "choice",
+          "question_en": "Who was being asked for on the phone?",
+          "options_en": [
+            "Renata",
+            "Herz",
+            "Mr. Berger"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p0_s3_q2",
+          "type": "choice",
+          "question_en": "What did the caller ask at first?",
+          "options_en": [
+            "May I know who I am speaking to please?",
+            "Is this the train station?",
+            "Where is the nurse?"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p0_s4_q1",
+          "type": "choice",
+          "question_en": "Who identified himself as Renata's husband?",
+          "options_en": [
+            "Herz Berger",
+            "Mr. Berger's brother",
+            "The nurse"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p0_s4_q2",
+          "type": "choice",
+          "question_en": "What relation did the caller claim to have with Renata?",
+          "options_en": [
+            "Husband",
+            "Brother",
+            "Friend"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p0_s5_q1",
+          "type": "choice",
+          "question_en": "What did the caller say Renata would do on hearing his name?",
+          "options_en": [
+            "Recognize him",
+            "Leave the room",
+            "Hang up"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p0_s5_q2",
+          "type": "choice",
+          "question_en": "What color was the train mentioned in the sentence?",
+          "options_en": [
+            "Burgundy",
+            "Black",
+            "White"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p0_s6_q1",
+          "type": "choice",
+          "question_en": "Where did the burgundy train stop?",
+          "options_en": [
+            "At the station of Philadelphia",
+            "At the Port of Amsterdam",
+            "At Oswego"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p0_s6_q2",
+          "type": "choice",
+          "question_en": "What word was written in yellow characters on the train?",
+          "options_en": [
+            "PENNSYLVANIA",
+            "AMSTERDAM",
+            "PHILADELPHIA"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p0_s7_q1",
+          "type": "choice",
+          "question_en": "Who stepped out of the passenger coach?",
+          "options_en": [
+            "Herz Berger",
+            "The nurse",
+            "Renata"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p0_s7_q2",
+          "type": "choice",
+          "question_en": "What is the correct answer to this question: From which class coach did he step out?",
+          "options_en": [
+            "Second class",
+            "First class",
+            "Third class"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p0_s8_q1",
+          "type": "choice",
+          "question_en": "What did he have draped over his hunched back?",
+          "options_en": [
+            "A long black overcoat",
+            "A burgundy coat",
+            "A white blanket"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p0_s8_q2",
+          "type": "choice",
+          "question_en": "How was his back described?",
+          "options_en": [
+            "Hunched",
+            "Straight",
+            "Broad"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p0_s9_q1",
+          "type": "choice",
+          "question_en": "What was etched on his coat?",
+          "options_en": [
+            "A silhouette of a six-point star",
+            "The word PENNSYLVANIA",
+            "A train logo"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p0_s9_q2",
+          "type": "choice",
+          "question_en": "How many points did the star silhouette have?",
+          "options_en": [
+            "Six",
+            "Five",
+            "Four"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p0_s10_q1",
+          "type": "choice",
+          "question_en": "What was once sewn on his coat?",
+          "options_en": [
+            "The Star of David",
+            "A train patch",
+            "A nurse's badge"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p0_s10_q2",
+          "type": "choice",
+          "question_en": "What does the sentence say about the Star of David now?",
+          "options_en": [
+            "It was just the shadow left now",
+            "It was bright and clear",
+            "It was stitched in gold"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p0_s11_q1",
+          "type": "choice",
+          "question_en": "What overlapped the overcoat?",
+          "options_en": [
+            "A long white beard",
+            "A black scarf",
+            "A letter"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p0_s11_q2",
+          "type": "choice",
+          "question_en": "What color was the beard?",
+          "options_en": [
+            "White",
+            "Black",
+            "Burgundy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p0_s12_q1",
+          "type": "choice",
+          "question_en": "How did Mr. Berger walk?",
+          "options_en": [
+            "Slowly, measuring every step judiciously",
+            "Quickly and hurriedly",
+            "Running toward the train"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p0_s12_q2",
+          "type": "choice",
+          "question_en": "What was Mr. Berger careful about when walking?",
+          "options_en": [
+            "Every step",
+            "His hat",
+            "His ticket"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p0_s13_q1",
+          "type": "choice",
+          "question_en": "What rang sharply beside the bed?",
+          "options_en": [
+            "The telephone",
+            "A newspaper",
+            "A letter"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p0_s13_q2",
+          "type": "choice",
+          "question_en": "Where was the telephone placed?",
+          "options_en": [
+            "On the table beside the bed",
+            "In the coach",
+            "At the station"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p0_s14_q1",
+          "type": "choice",
+          "question_en": "What color was the polished telephone mentioned again?",
+          "options_en": [
+            "Black",
+            "Burgundy",
+            "White"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p0_s14_q2",
+          "type": "choice",
+          "question_en": "What did the telephone contrast with in this sentence?",
+          "options_en": [
+            "The brilliantly lit white room",
+            "The overcoat",
+            "The beard"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p0_s15_q1",
+          "type": "choice",
+          "question_en": "Who came in from the other room in the repeated line?",
+          "options_en": [
+            "The nurse",
+            "Herz Berger",
+            "Renata"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p0_s15_q2",
+          "type": "choice",
+          "question_en": "What action did the nurse take in this repeat?",
+          "options_en": [
+            "Answered",
+            "Left immediately",
+            "Ate a sandwich"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p0_s16_q1",
+          "type": "choice",
+          "question_en": "Who was called on the phone in the repeated dialogue?",
+          "options_en": [
+            "Renata",
+            "Herz",
+            "Mr. Berger"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p0_s16_q2",
+          "type": "choice",
+          "question_en": "What question was asked after 'Hullo? Renata?'",
+          "options_en": [
+            "May I know who I am speaking to please?",
+            "Is this Philadelphia?",
+            "Are you on the train?"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p0_s17_q1",
+          "type": "choice",
+          "question_en": "Who said 'I am her husband' in the repeated lines?",
+          "options_en": [
+            "Herz Berger",
+            "The nurse",
+            "Mr. Berger's son"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p0_s17_q2",
+          "type": "choice",
+          "question_en": "What name did the caller give in this repetition?",
+          "options_en": [
+            "Herz Berger",
+            "Renata Berger",
+            "Rita Berger"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p0_s18_q1",
+          "type": "choice",
+          "question_en": "What did the caller ask to tell Renata in the repeated sentence?",
+          "options_en": [
+            "Tell her my name, she would recognize",
+            "Tell her to come to the train",
+            "Tell her to call me later"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p0_s18_q2",
+          "type": "choice",
+          "question_en": "What color was the train mentioned again in this repeated line?",
+          "options_en": [
+            "Burgundy",
+            "Black",
+            "White"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p0_s19_q1",
+          "type": "choice",
+          "question_en": "Where did the train stop in the repeated sentence?",
+          "options_en": [
+            "On the station of Philadelphia",
+            "At the Port of Amsterdam",
+            "In Oswego"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p0_s19_q2",
+          "type": "choice",
+          "question_en": "What word appeared on the train in yellow characters in the repeat?",
+          "options_en": [
+            "PENNSYLVANIA",
+            "AMSTERDAM",
+            "PHILADELPHIA"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p0_s20_q1",
+          "type": "choice",
+          "question_en": "Who stepped out of the passenger coach again?",
+          "options_en": [
+            "Herz Berger",
+            "The nurse",
+            "Renata"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p0_s20_q2",
+          "type": "choice",
+          "question_en": "What is the correct answer to this question: From which coach did he step out in the repeated sentence?",
+          "options_en": [
+            "Second class",
+            "First class",
+            "Third class"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p0_s21_q1",
+          "type": "choice",
+          "question_en": "What did he have draped over his back in the repeat?",
+          "options_en": [
+            "A long black overcoat",
+            "A white blanket",
+            "A train ticket"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p0_s21_q2",
+          "type": "choice",
+          "question_en": "How was his back described in this repeated line?",
+          "options_en": [
+            "Hunched",
+            "Straight",
+            "Strong"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p0_s22_q1",
+          "type": "choice",
+          "question_en": "What was etched on his coat in the repeated sentence?",
+          "options_en": [
+            "A silhouette of a six-point star",
+            "A map of Philadelphia",
+            "The word 'Waiting'"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p0_s22_q2",
+          "type": "choice",
+          "question_en": "What shape did the silhouette on the coat have?",
+          "options_en": [
+            "Six-point star",
+            "Circle",
+            "Square"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p0_s23_q1",
+          "type": "choice",
+          "question_en": "What had once been sewn on his coat according to the repeat?",
+          "options_en": [
+            "The Star of David",
+            "A train emblem",
+            "A nurse's badge"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p0_s23_q2",
+          "type": "choice",
+          "question_en": "What remained of the sewn symbol now?",
+          "options_en": [
+            "Just the shadow",
+            "A bright patch",
+            "A newspaper clipping"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p0_s24_q1",
+          "type": "choice",
+          "question_en": "What overlapped the overcoat in the repeated sentence?",
+          "options_en": [
+            "A long white beard",
+            "A black scarf",
+            "A newspaper"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p0_s24_q2",
+          "type": "choice",
+          "question_en": "What color was the beard mentioned again?",
+          "options_en": [
+            "White",
+            "Black",
+            "Burgundy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p0_s25_q1",
+          "type": "choice",
+          "question_en": "How did Mr Berger walk in the repeated final line?",
+          "options_en": [
+            "Slowly, measuring every step judiciously",
+            "Quickly to the nurse",
+            "Running toward Renata"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p0_s25_q2",
+          "type": "choice",
+          "question_en": "What was he careful about while walking in this sentence?",
+          "options_en": [
+            "Measuring every step",
+            "Carrying a letter",
+            "Reading a newspaper"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "Who was brought into the small room?",
+          "options_en": [
+            "Herz",
+            "Renata",
+            "The nurse"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "Who brought Herz into the room?",
+          "options_en": [
+            "The nurse",
+            "Renata",
+            "A doctor"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p1_s1_q1",
+          "type": "choice",
+          "question_en": "Who sat on the bed?",
+          "options_en": [
+            "Renata",
+            "Herz",
+            "The nurse"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        },
+        {
+          "id": "gl_p1_s1_q2",
+          "type": "choice",
+          "question_en": "What was Renata doing on the bed?",
+          "options_en": [
+            "Staring at the wall",
+            "Reading the newspaper",
+            "Walking in the park"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        },
+        {
+          "id": "gl_p1_s2_q1",
+          "type": "choice",
+          "question_en": "What was she wearing?",
+          "options_en": [
+            "A long black frock",
+            "A long black overcoat",
+            "A white dress"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        },
+        {
+          "id": "gl_p1_s2_q2",
+          "type": "choice",
+          "question_en": "How was her hair tied?",
+          "options_en": [
+            "In an untidy bun",
+            "In a neat braid",
+            "Loose and flowing"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        },
+        {
+          "id": "gl_p1_s3_q1",
+          "type": "choice",
+          "question_en": "Who whispered \"Renata?\"",
+          "options_en": [
+            "He (Herz)",
+            "The nurse",
+            "A stranger"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p1_s3_q2",
+          "type": "choice",
+          "question_en": "Where did he whisper from?",
+          "options_en": [
+            "From underneath the unkempt mustache",
+            "Loudly across the room",
+            "From the phone"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p1_s4_q1",
+          "type": "choice",
+          "question_en": "Who is being addressed in this sentence?",
+          "options_en": [
+            "Mr. Berger",
+            "Renata",
+            "The nurse"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        },
+        {
+          "id": "gl_p1_s4_q2",
+          "type": "choice",
+          "question_en": "What did the speaker say they had done?",
+          "options_en": [
+            "Told him",
+            "Brought him into the room",
+            "Gave medicine"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        },
+        {
+          "id": "gl_p1_s5_q1",
+          "type": "choice",
+          "question_en": "Who is suffering from Retrograde amnesia?",
+          "options_en": [
+            "Mrs. Berger",
+            "Herz",
+            "The nurse"
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        },
+        {
+          "id": "gl_p1_s5_q2",
+          "type": "choice",
+          "question_en": "What is Mrs. Berger suffering from?",
+          "options_en": [
+            "Retrograde amnesia",
+            "A disease from travel",
+            "Forgetting letters"
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        },
+        {
+          "id": "gl_p1_s6_q1",
+          "type": "choice",
+          "question_en": "What does she not even remember?",
+          "options_en": [
+            "Her name",
+            "The address",
+            "The train"
+          ],
+          "correct_index": 0,
+          "sentence_index": 32
+        },
+        {
+          "id": "gl_p1_s6_q2",
+          "type": "choice",
+          "question_en": "Who does not remember her name?",
+          "options_en": [
+            "She (Mrs. Berger)",
+            "Herz",
+            "The nurse"
+          ],
+          "correct_index": 0,
+          "sentence_index": 32
+        },
+        {
+          "id": "gl_p1_s7_q1",
+          "type": "choice",
+          "question_en": "Where has she been kept?",
+          "options_en": [
+            "In this nursing home",
+            "In the Emergency Refugee Shelter",
+            "In Philadelphia"
+          ],
+          "correct_index": 0,
+          "sentence_index": 33
+        },
+        {
+          "id": "gl_p1_s7_q2",
+          "type": "choice",
+          "question_en": "How did Herz tilt his head?",
+          "options_en": [
+            "Towards the nurse",
+            "Towards Renata",
+            "Towards the window"
+          ],
+          "correct_index": 0,
+          "sentence_index": 33
+        },
+        {
+          "id": "gl_p1_s8_q1",
+          "type": "choice",
+          "question_en": "What welled up in his eyes?",
+          "options_en": [
+            "Tears",
+            "Laughter",
+            "Sweat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 34
+        },
+        {
+          "id": "gl_p1_s8_q2",
+          "type": "choice",
+          "question_en": "How are his eyes described?",
+          "options_en": [
+            "Wrinkled",
+            "Pale",
+            "Bright"
+          ],
+          "correct_index": 0,
+          "sentence_index": 34
+        },
+        {
+          "id": "gl_p1_s9_q1",
+          "type": "choice",
+          "question_en": "What did it take him to ask the question?",
+          "options_en": [
+            "Great courage",
+            "No effort",
+            "Anger"
+          ],
+          "correct_index": 0,
+          "sentence_index": 35
+        },
+        {
+          "id": "gl_p1_s9_q2",
+          "type": "choice",
+          "question_en": "What did he ask about?",
+          "options_en": [
+            "Whether she can get better",
+            "Where she lives",
+            "What her name is"
+          ],
+          "correct_index": 0,
+          "sentence_index": 35
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "Who promised to see Renata very soon?",
+          "options_en": [
+            "I (the speaker)",
+            "Renata",
+            "The nurse"
+          ],
+          "correct_index": 0,
+          "sentence_index": 36
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "Where did he say this to Renata?",
+          "options_en": [
+            "The Port of Amsterdam",
+            "The Emergency Refugee Shelter",
+            "The Philadelphia station"
+          ],
+          "correct_index": 0,
+          "sentence_index": 36
+        },
+        {
+          "id": "gl_p2_s1_q1",
+          "type": "choice",
+          "question_en": "What did he know was not safe?",
+          "options_en": [
+            "Sending her to the New World",
+            "Staying in the nursing home",
+            "Riding the burgundy train"
+          ],
+          "correct_index": 0,
+          "sentence_index": 37
+        },
+        {
+          "id": "gl_p2_s1_q2",
+          "type": "choice",
+          "question_en": "Why was sending her not safe?",
+          "options_en": [
+            "Because German U-boats were scanning the Atlantic",
+            "Because the phone kept ringing",
+            "Because the train stopped in Philadelphia"
+          ],
+          "correct_index": 0,
+          "sentence_index": 37
+        },
+        {
+          "id": "gl_p2_s2_q1",
+          "type": "choice",
+          "question_en": "Why did he send her away despite the danger?",
+          "options_en": [
+            "To ensure she survives",
+            "To find a job in Philadelphia",
+            "To visit relatives in Georgia"
+          ],
+          "correct_index": 0,
+          "sentence_index": 38
+        },
+        {
+          "id": "gl_p2_s2_q2",
+          "type": "choice",
+          "question_en": "What did he say he had no other of?",
+          "options_en": [
+            "No other alternative to ensure she survives",
+            "No other train ticket",
+            "No other nurse to help"
+          ],
+          "correct_index": 0,
+          "sentence_index": 38
+        },
+        {
+          "id": "gl_p2_s3_q1",
+          "type": "choice",
+          "question_en": "Who would wait for him there?",
+          "options_en": [
+            "She (Renata)",
+            "The nurse",
+            "A fellow Jew"
+          ],
+          "correct_index": 0,
+          "sentence_index": 39
+        },
+        {
+          "id": "gl_p2_s3_q2",
+          "type": "choice",
+          "question_en": "Where would she wait for him?",
+          "options_en": [
+            "In the New World (there)",
+            "At the Port of Amsterdam",
+            "On the Pennsylvania train"
+          ],
+          "correct_index": 0,
+          "sentence_index": 39
+        },
+        {
+          "id": "gl_p2_s4_q1",
+          "type": "choice",
+          "question_en": "Where would she live in the New World?",
+          "options_en": [
+            "The Emergency Refugee Shelter in New York",
+            "A nursing home in Amsterdam",
+            "A shelter in Philadelphia"
+          ],
+          "correct_index": 0,
+          "sentence_index": 40
+        },
+        {
+          "id": "gl_p2_s4_q2",
+          "type": "choice",
+          "question_en": "Which city is mentioned as the location of the Emergency Refugee Shelter?",
+          "options_en": [
+            "New York",
+            "Amsterdam",
+            "Philadelphia"
+          ],
+          "correct_index": 0,
+          "sentence_index": 40
+        },
+        {
+          "id": "gl_p2_s5_q1",
+          "type": "choice",
+          "question_en": "When would he travel there too?",
+          "options_en": [
+            "As soon as the war is over",
+            "After writing 75 letters",
+            "When the telephone rang"
+          ],
+          "correct_index": 0,
+          "sentence_index": 41
+        },
+        {
+          "id": "gl_p2_s5_q2",
+          "type": "choice",
+          "question_en": "Where did he say he would travel to when the war was over?",
+          "options_en": [
+            "There (to where she was)",
+            "To the nursing home in Amsterdam",
+            "To Georgia to see relatives"
+          ],
+          "correct_index": 0,
+          "sentence_index": 41
+        },
+        {
+          "id": "gl_p2_s6_q1",
+          "type": "choice",
+          "question_en": "Who asked, \"Herz, must we separate?\"",
+          "options_en": [
+            "She (Renata)",
+            "The nurse",
+            "A fellow Jew leaving"
+          ],
+          "correct_index": 0,
+          "sentence_index": 42
+        },
+        {
+          "id": "gl_p2_s6_q2",
+          "type": "choice",
+          "question_en": "How were her eyes when she asked him to stay together?",
+          "options_en": [
+            "Moist",
+            "Wrinkled and pale",
+            "Dry"
+          ],
+          "correct_index": 0,
+          "sentence_index": 42
+        },
+        {
+          "id": "gl_p2_s7_q1",
+          "type": "choice",
+          "question_en": "What did she ask about their fate together?",
+          "options_en": [
+            "Can't we die together?",
+            "Will you come to America?",
+            "Will you visit the Refugee Shelter?"
+          ],
+          "correct_index": 0,
+          "sentence_index": 43
+        },
+        {
+          "id": "gl_p2_s7_q2",
+          "type": "choice",
+          "question_en": "How did he respond to her plea about dying together?",
+          "options_en": [
+            "He had no answer",
+            "He promised again",
+            "He started to write letters"
+          ],
+          "correct_index": 0,
+          "sentence_index": 43
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "Who sat beside his wife?",
+          "options_en": [
+            "Herz",
+            "The nurse",
+            "A stranger"
+          ],
+          "correct_index": 0,
+          "sentence_index": 44
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "Where did Herz sit?",
+          "options_en": [
+            "Beside his wife",
+            "On a bench outside",
+            "At the refugee shelter"
+          ],
+          "correct_index": 0,
+          "sentence_index": 44
+        },
+        {
+          "id": "gl_p3_s1_q1",
+          "type": "choice",
+          "question_en": "When was he next to her?",
+          "options_en": [
+            "After a long time",
+            "Every day",
+            "That morning"
+          ],
+          "correct_index": 0,
+          "sentence_index": 45
+        },
+        {
+          "id": "gl_p3_s1_q2",
+          "type": "choice",
+          "question_en": "Why is the time described as notable?",
+          "options_en": [
+            "It had been a long time since he was next to her",
+            "They had just married",
+            "He had never seen her before"
+          ],
+          "correct_index": 0,
+          "sentence_index": 45
+        },
+        {
+          "id": "gl_p3_s2_q1",
+          "type": "choice",
+          "question_en": "How did she look compared to when she left Amsterdam?",
+          "options_en": [
+            "So different",
+            "Exactly the same",
+            "Happier"
+          ],
+          "correct_index": 0,
+          "sentence_index": 46
+        },
+        {
+          "id": "gl_p3_s2_q2",
+          "type": "choice",
+          "question_en": "Where had she left from?",
+          "options_en": [
+            "The coasts of war-struck Amsterdam",
+            "Philadelphia",
+            "A nursing home"
+          ],
+          "correct_index": 0,
+          "sentence_index": 46
+        },
+        {
+          "id": "gl_p3_s3_q1",
+          "type": "choice",
+          "question_en": "What was Renata's skin described as?",
+          "options_en": [
+            "Wrinkled pale skin",
+            "Tan and smooth",
+            "Sunburned"
+          ],
+          "correct_index": 0,
+          "sentence_index": 47
+        },
+        {
+          "id": "gl_p3_s3_q2",
+          "type": "choice",
+          "question_en": "Who had wrinkled pale skin?",
+          "options_en": [
+            "Renata",
+            "The nurse",
+            "Herz"
+          ],
+          "correct_index": 0,
+          "sentence_index": 47
+        },
+        {
+          "id": "gl_p3_s4_q1",
+          "type": "choice",
+          "question_en": "How did she sit?",
+          "options_en": [
+            "Dreadfully still",
+            "Restlessly pacing",
+            "Reading a newspaper"
+          ],
+          "correct_index": 0,
+          "sentence_index": 48
+        },
+        {
+          "id": "gl_p3_s4_q2",
+          "type": "choice",
+          "question_en": "What was she staring into?",
+          "options_en": [
+            "The infinity",
+            "Her husband's face",
+            "A book"
+          ],
+          "correct_index": 0,
+          "sentence_index": 48
+        },
+        {
+          "id": "gl_p3_s5_q1",
+          "type": "choice",
+          "question_en": "What did her face show?",
+          "options_en": [
+            "No emotion",
+            "A smile",
+            "Anger"
+          ],
+          "correct_index": 0,
+          "sentence_index": 49
+        },
+        {
+          "id": "gl_p3_s5_q2",
+          "type": "choice",
+          "question_en": "How is her face described?",
+          "options_en": [
+            "Lifeless",
+            "Blushing",
+            "Flushed"
+          ],
+          "correct_index": 0,
+          "sentence_index": 49
+        },
+        {
+          "id": "gl_p3_s6_q1",
+          "type": "choice",
+          "question_en": "What did he try to do?",
+          "options_en": [
+            "Talk with her",
+            "Leave the room",
+            "Call the nurse"
+          ],
+          "correct_index": 0,
+          "sentence_index": 50
+        },
+        {
+          "id": "gl_p3_s6_q2",
+          "type": "choice",
+          "question_en": "Who tried to talk with Renata?",
+          "options_en": [
+            "He (Herz)",
+            "The nurse",
+            "A stranger"
+          ],
+          "correct_index": 0,
+          "sentence_index": 50
+        },
+        {
+          "id": "gl_p3_s7_q1",
+          "type": "choice",
+          "question_en": "What followed after he tried to talk with her?",
+          "options_en": [
+            "A monologue",
+            "A short answer from Renata",
+            "The nurse interrupted them"
+          ],
+          "correct_index": 0,
+          "sentence_index": 51
+        },
+        {
+          "id": "gl_p3_s7_q2",
+          "type": "choice",
+          "question_en": "Who is addressed in the monologue?",
+          "options_en": [
+            "Renata",
+            "The nurse",
+            "A refugee"
+          ],
+          "correct_index": 0,
+          "sentence_index": 51
+        },
+        {
+          "id": "gl_p3_s8_q1",
+          "type": "choice",
+          "question_en": "Why does he say she has every reason?",
+          "options_en": [
+            "She is upset with him",
+            "She lost her letters",
+            "She remembered the past"
+          ],
+          "correct_index": 0,
+          "sentence_index": 52
+        },
+        {
+          "id": "gl_p3_s8_q2",
+          "type": "choice",
+          "question_en": "Who is described as having every reason?",
+          "options_en": [
+            "She (Renata)",
+            "The nurse",
+            "The refugee shelter"
+          ],
+          "correct_index": 0,
+          "sentence_index": 52
+        },
+        {
+          "id": "gl_p3_s9_q1",
+          "type": "choice",
+          "question_en": "What does he say after acknowledging her reasons?",
+          "options_en": [
+            "I am sorry",
+            "I will write letters",
+            "I will leave"
+          ],
+          "correct_index": 0,
+          "sentence_index": 53
+        },
+        {
+          "id": "gl_p3_s9_q2",
+          "type": "choice",
+          "question_en": "Who apologizes in the sentence?",
+          "options_en": [
+            "He (Herz)",
+            "The nurse",
+            "Renata"
+          ],
+          "correct_index": 0,
+          "sentence_index": 53
+        },
+        {
+          "id": "gl_p3_s10_q1",
+          "type": "choice",
+          "question_en": "What does he admit he did?",
+          "options_en": [
+            "He gave up",
+            "He searched more",
+            "He wrote letters"
+          ],
+          "correct_index": 0,
+          "sentence_index": 54
+        },
+        {
+          "id": "gl_p3_s10_q2",
+          "type": "choice",
+          "question_en": "Who said 'I gave up'?",
+          "options_en": [
+            "He (Herz)",
+            "The nurse",
+            "A fellow refugee"
+          ],
+          "correct_index": 0,
+          "sentence_index": 54
+        },
+        {
+          "id": "gl_p3_s11_q1",
+          "type": "choice",
+          "question_en": "What does he say he should have done?",
+          "options_en": [
+            "Kept searching for her",
+            "Moved to Philadelphia",
+            "Called the nurse"
+          ],
+          "correct_index": 0,
+          "sentence_index": 55
+        },
+        {
+          "id": "gl_p3_s11_q2",
+          "type": "choice",
+          "question_en": "How does his voice behave as he pauses?",
+          "options_en": [
+            "Choked",
+            "Laughed",
+            "Sang softly"
+          ],
+          "correct_index": 0,
+          "sentence_index": 55
+        },
+        {
+          "id": "gl_p3_s12_q1",
+          "type": "choice",
+          "question_en": "When did the nurse enter the room again?",
+          "options_en": [
+            "That evening",
+            "That morning",
+            "The next week"
+          ],
+          "correct_index": 0,
+          "sentence_index": 56
+        },
+        {
+          "id": "gl_p3_s12_q2",
+          "type": "choice",
+          "question_en": "What did the nurse administer to Renata?",
+          "options_en": [
+            "Medicines",
+            "Food",
+            "A letter"
+          ],
+          "correct_index": 0,
+          "sentence_index": 56
+        },
+        {
+          "id": "gl_p3_s13_q1",
+          "type": "choice",
+          "question_en": "Who looked at Herz?",
+          "options_en": [
+            "She (the nurse)",
+            "A visitor",
+            "Renata"
+          ],
+          "correct_index": 0,
+          "sentence_index": 57
+        },
+        {
+          "id": "gl_p3_s13_q2",
+          "type": "choice",
+          "question_en": "What did she do when she entered the room?",
+          "options_en": [
+            "Looked at Herz",
+            "Left immediately",
+            "Read a letter aloud"
+          ],
+          "correct_index": 0,
+          "sentence_index": 57
+        },
+        {
+          "id": "gl_p3_s14_q1",
+          "type": "choice",
+          "question_en": "What did his eyes reveal?",
+          "options_en": [
+            "He was desperately searching for answers",
+            "He was asleep",
+            "He was smiling"
+          ],
+          "correct_index": 0,
+          "sentence_index": 58
+        },
+        {
+          "id": "gl_p3_s14_q2",
+          "type": "choice",
+          "question_en": "Who had eyes that revealed desperation?",
+          "options_en": [
+            "He (Herz)",
+            "The nurse",
+            "A refugee"
+          ],
+          "correct_index": 0,
+          "sentence_index": 58
+        },
+        {
+          "id": "gl_p3_s15_q1",
+          "type": "choice",
+          "question_en": "Who deserved to know?",
+          "options_en": [
+            "He (Herz)",
+            "The nurse",
+            "Renata"
+          ],
+          "correct_index": 0,
+          "sentence_index": 59
+        },
+        {
+          "id": "gl_p3_s15_q2",
+          "type": "choice",
+          "question_en": "Why is someone said to deserve to know?",
+          "options_en": [
+            "Because he was searching for answers",
+            "Because he wrote letters",
+            "Because he worked at the shelter"
+          ],
+          "correct_index": 0,
+          "sentence_index": 59
+        },
+        {
+          "id": "gl_p3_s16_q1",
+          "type": "choice",
+          "question_en": "How long has the speaker been in the service of the wife?",
+          "options_en": [
+            "10 years",
+            "One year",
+            "Five years"
+          ],
+          "correct_index": 0,
+          "sentence_index": 60
+        },
+        {
+          "id": "gl_p3_s16_q2",
+          "type": "choice",
+          "question_en": "Who has been in the service of the wife for 10 years?",
+          "options_en": [
+            "The speaker (the nurse)",
+            "Herz",
+            "A refugee"
+          ],
+          "correct_index": 0,
+          "sentence_index": 60
+        },
+        {
+          "id": "gl_p3_s17_q1",
+          "type": "choice",
+          "question_en": "Who didn't doubt that he was her husband for a second?",
+          "options_en": [
+            "The speaker (the nurse)",
+            "Renata",
+            "A visitor"
+          ],
+          "correct_index": 0,
+          "sentence_index": 61
+        },
+        {
+          "id": "gl_p3_s17_q2",
+          "type": "choice",
+          "question_en": "What relationship is affirmed in the sentence?",
+          "options_en": [
+            "He was her husband",
+            "She was a nurse",
+            "They were strangers"
+          ],
+          "correct_index": 0,
+          "sentence_index": 61
+        },
+        {
+          "id": "gl_p3_s18_q1",
+          "type": "choice",
+          "question_en": "What does Renata accurately remember despite other memory loss?",
+          "options_en": [
+            "That she had a loved one for whom she is waiting",
+            "The address in Philadelphia",
+            "The names in the newspaper"
+          ],
+          "correct_index": 0,
+          "sentence_index": 62
+        },
+        {
+          "id": "gl_p3_s18_q2",
+          "type": "choice",
+          "question_en": "Who accurately remembers having a loved one waiting?",
+          "options_en": [
+            "Your wife (Renata)",
+            "The nurse",
+            "The refugee"
+          ],
+          "correct_index": 0,
+          "sentence_index": 62
+        },
+        {
+          "id": "gl_p3_s19_q1",
+          "type": "choice",
+          "question_en": "How often would she start writing a letter?",
+          "options_en": [
+            "Once every one or two months",
+            "Every day",
+            "Once a year"
+          ],
+          "correct_index": 0,
+          "sentence_index": 63
+        },
+        {
+          "id": "gl_p3_s19_q2",
+          "type": "choice",
+          "question_en": "What would she suddenly begin to do?",
+          "options_en": [
+            "Start writing a letter",
+            "Leave the room",
+            "Call the nurse"
+          ],
+          "correct_index": 0,
+          "sentence_index": 63
+        },
+        {
+          "id": "gl_p3_s20_q1",
+          "type": "choice",
+          "question_en": "What was the content of the letters?",
+          "options_en": [
+            "The same content, addressed to an unknown, and signed as waiting",
+            "Different stories about the war",
+            "Notes to the nurse"
+          ],
+          "correct_index": 0,
+          "sentence_index": 64
+        },
+        {
+          "id": "gl_p3_s20_q2",
+          "type": "choice",
+          "question_en": "How were the letters signed?",
+          "options_en": [
+            "As waiting",
+            "With Herz's name",
+            "With the nurse's name"
+          ],
+          "correct_index": 0,
+          "sentence_index": 64
+        },
+        {
+          "id": "gl_p3_s21_q1",
+          "type": "choice",
+          "question_en": "How did every letter compare to the previous one?",
+          "options_en": [
+            "Every letter looked identical to the previous",
+            "Each was completely different",
+            "They had different addresses"
+          ],
+          "correct_index": 0,
+          "sentence_index": 65
+        },
+        {
+          "id": "gl_p3_s21_q2",
+          "type": "choice",
+          "question_en": "What characteristic is attributed to the letters?",
+          "options_en": [
+            "They were identical",
+            "They were burnt",
+            "They contained addresses"
+          ],
+          "correct_index": 0,
+          "sentence_index": 65
+        },
+        {
+          "id": "gl_p3_s22_q1",
+          "type": "choice",
+          "question_en": "How many letters did she write over 10 years?",
+          "options_en": [
+            "75 letters",
+            "10 letters",
+            "25 letters"
+          ],
+          "correct_index": 0,
+          "sentence_index": 66
+        },
+        {
+          "id": "gl_p3_s22_q2",
+          "type": "choice",
+          "question_en": "What is the correct answer to this question: Over what time span were the 75 letters written?",
+          "options_en": [
+            "Over the course of 10 years",
+            "In one year",
+            "Over a month"
+          ],
+          "correct_index": 0,
+          "sentence_index": 66
+        },
+        {
+          "id": "gl_p3_s23_q1",
+          "type": "choice",
+          "question_en": "Why didn't they know what to do with the letters?",
+          "options_en": [
+            "Because they were addressed to an unknown",
+            "Because they were burnt",
+            "Because Renata refused to sign them"
+          ],
+          "correct_index": 0,
+          "sentence_index": 67
+        },
+        {
+          "id": "gl_p3_s23_q2",
+          "type": "choice",
+          "question_en": "Who said they didn't know what to do with the letters?",
+          "options_en": [
+            "The speaker (the nurse)",
+            "Herz",
+            "A refugee official"
+          ],
+          "correct_index": 0,
+          "sentence_index": 67
+        },
+        {
+          "id": "gl_p3_s24_q1",
+          "type": "choice",
+          "question_en": "What did the speaker do with the letters?",
+          "options_en": [
+            "Kept them for the record",
+            "Destroyed them",
+            "Sent them to Philadelphia"
+          ],
+          "correct_index": 0,
+          "sentence_index": 68
+        },
+        {
+          "id": "gl_p3_s24_q2",
+          "type": "choice",
+          "question_en": "Whose letters were kept for the record?",
+          "options_en": [
+            "Your wife's (Renata's) letters",
+            "The nurse's letters",
+            "A refugee's letters"
+          ],
+          "correct_index": 0,
+          "sentence_index": 68
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "When did the speaker arrive in the New World?",
+          "options_en": [
+            "As soon as they set foot on the soil of the New World",
+            "After three years of searching",
+            "When the newspaper was published"
+          ],
+          "correct_index": 0,
+          "sentence_index": 69
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "How did the speaker feel about arriving in the New World?",
+          "options_en": [
+            "They knew it was not going to be easy",
+            "They felt triumphant and safe",
+            "They thought everything would be simple"
+          ],
+          "correct_index": 0,
+          "sentence_index": 69
+        },
+        {
+          "id": "gl_p4_s1_q1",
+          "type": "choice",
+          "question_en": "What changed the speaker's doubts into realities?",
+          "options_en": [
+            "A visit to the Refugee Shelter",
+            "A letter from Renata",
+            "A walk in the park"
+          ],
+          "correct_index": 0,
+          "sentence_index": 70
+        },
+        {
+          "id": "gl_p4_s1_q2",
+          "type": "choice",
+          "question_en": "Why did the speaker's doubts become realities?",
+          "options_en": [
+            "Because of what they saw at the Refugee Shelter",
+            "Because they received a newspaper",
+            "Because they found relatives in Georgia"
+          ],
+          "correct_index": 0,
+          "sentence_index": 70
+        },
+        {
+          "id": "gl_p4_s2_q1",
+          "type": "choice",
+          "question_en": "Who is described as homeless on foreign soil?",
+          "options_en": [
+            "A homeless Jew",
+            "A nurse at the shelter",
+            "A middle-aged lady named Rita"
+          ],
+          "correct_index": 0,
+          "sentence_index": 71
+        },
+        {
+          "id": "gl_p4_s2_q2",
+          "type": "choice",
+          "question_en": "What had this homeless Jew narrowly escaped from?",
+          "options_en": [
+            "The Holocaust",
+            "The December 1971 war",
+            "Retrograde amnesia"
+          ],
+          "correct_index": 0,
+          "sentence_index": 71
+        },
+        {
+          "id": "gl_p4_s3_q1",
+          "type": "choice",
+          "question_en": "What question does the speaker ask themselves in sentence 3?",
+          "options_en": [
+            "What possibly could I do?",
+            "Where is Renata living?",
+            "When will the war end?"
+          ],
+          "correct_index": 0,
+          "sentence_index": 72
+        },
+        {
+          "id": "gl_p4_s3_q2",
+          "type": "choice",
+          "question_en": "Why does the speaker ask 'What possibly could I do?'?",
+          "options_en": [
+            "Because they felt helpless in the new country",
+            "Because they found a letter from 1944",
+            "Because they had relatives in Georgia"
+          ],
+          "correct_index": 0,
+          "sentence_index": 72
+        },
+        {
+          "id": "gl_p4_s4_q1",
+          "type": "choice",
+          "question_en": "What records did the speaker check?",
+          "options_en": [
+            "All records of every refugee that landed in America in the last five years",
+            "Hospital records of nursing homes",
+            "Train passenger lists for Philadelphia"
+          ],
+          "correct_index": 0,
+          "sentence_index": 73
+        },
+        {
+          "id": "gl_p4_s4_q2",
+          "type": "choice",
+          "question_en": "How far back did the speaker check refugee records?",
+          "options_en": [
+            "The last five years",
+            "The last twenty years",
+            "Since 1971"
+          ],
+          "correct_index": 0,
+          "sentence_index": 73
+        },
+        {
+          "id": "gl_p4_s5_q1",
+          "type": "choice",
+          "question_en": "Where did the speaker visit to look for information?",
+          "options_en": [
+            "Every refugee shelter on the East coast",
+            "The nursing home veranda",
+            "The park with Sugar Maple and Red Cedar"
+          ],
+          "correct_index": 0,
+          "sentence_index": 74
+        },
+        {
+          "id": "gl_p4_s5_q2",
+          "type": "choice",
+          "question_en": "Why did the speaker visit refugee shelters on the East coast?",
+          "options_en": [
+            "To try to find the missing refugee",
+            "To take Renata for walks",
+            "To deliver a letter"
+          ],
+          "correct_index": 0,
+          "sentence_index": 74
+        },
+        {
+          "id": "gl_p4_s6_q1",
+          "type": "choice",
+          "question_en": "Where did the speaker have some relatives?",
+          "options_en": [
+            "In Georgia",
+            "In Philadelphia",
+            "In Amsterdam"
+          ],
+          "correct_index": 0,
+          "sentence_index": 75
+        },
+        {
+          "id": "gl_p4_s6_q2",
+          "type": "choice",
+          "question_en": "What did the speaker hope by mentioning relatives in Georgia?",
+          "options_en": [
+            "That they might help find the missing person",
+            "That they would send a newspaper",
+            "That they would take walks with Renata"
+          ],
+          "correct_index": 0,
+          "sentence_index": 75
+        },
+        {
+          "id": "gl_p4_s7_q1",
+          "type": "choice",
+          "question_en": "What happened when the speaker tried contacting their relatives?",
+          "options_en": [
+            "They tried contacting them, but in vain",
+            "They received helpful information",
+            "They found the relatives at the shelter"
+          ],
+          "correct_index": 0,
+          "sentence_index": 76
+        },
+        {
+          "id": "gl_p4_s7_q2",
+          "type": "choice",
+          "question_en": "Why was the speaker frustrated after contacting relatives?",
+          "options_en": [
+            "Because the contact attempts were in vain",
+            "Because they received a letter from Renata",
+            "Because they found a misprinted name in a newspaper"
+          ],
+          "correct_index": 0,
+          "sentence_index": 76
+        },
+        {
+          "id": "gl_p4_s8_q1",
+          "type": "choice",
+          "question_en": "How did the mystery affect the speaker?",
+          "options_en": [
+            "It was killing them slowly",
+            "It made them feel joyful",
+            "It helped them forget the past"
+          ],
+          "correct_index": 0,
+          "sentence_index": 77
+        },
+        {
+          "id": "gl_p4_s8_q2",
+          "type": "choice",
+          "question_en": "Why did the speaker describe the situation as a mystery?",
+          "options_en": [
+            "Because they could not find the missing person",
+            "Because they received many letters",
+            "Because they settled in Philadelphia"
+          ],
+          "correct_index": 0,
+          "sentence_index": 77
+        },
+        {
+          "id": "gl_p4_s9_q1",
+          "type": "choice",
+          "question_en": "What did the newspaper publish one day?",
+          "options_en": [
+            "The names of all refugees who had died during travel to or by disease in the States",
+            "A letter addressed to Herz",
+            "An article about parks and trees"
+          ],
+          "correct_index": 0,
+          "sentence_index": 78
+        },
+        {
+          "id": "gl_p4_s9_q2",
+          "type": "choice",
+          "question_en": "Why was the newspaper's publication important to the speaker?",
+          "options_en": [
+            "It provided names of refugees who had died, which affected their search",
+            "It announced a job proposal in Philadelphia",
+            "It printed details about the nursing home"
+          ],
+          "correct_index": 0,
+          "sentence_index": 78
+        },
+        {
+          "id": "gl_p4_s10_q1",
+          "type": "choice",
+          "question_en": "Who was mentioned among the names published in the newspaper?",
+          "options_en": [
+            "A middle-aged lady whose name was Rita",
+            "Renata Berger by full name",
+            "Herz Berger"
+          ],
+          "correct_index": 0,
+          "sentence_index": 79
+        },
+        {
+          "id": "gl_p4_s10_q2",
+          "type": "choice",
+          "question_en": "What detail did the newspaper give about the person named Rita?",
+          "options_en": [
+            "That she was a middle-aged lady",
+            "That she lived in Georgia",
+            "That she worked at the Refugee Shelter"
+          ],
+          "correct_index": 0,
+          "sentence_index": 79
+        },
+        {
+          "id": "gl_p4_s11_q1",
+          "type": "choice",
+          "question_en": "How did the speaker react to reading the name Rita?",
+          "options_en": [
+            "A part of them died that day",
+            "They felt relieved",
+            "They decided to move to Philadelphia"
+          ],
+          "correct_index": 0,
+          "sentence_index": 80
+        },
+        {
+          "id": "gl_p4_s11_q2",
+          "type": "choice",
+          "question_en": "Why was the speaker so affected by the newspaper entry?",
+          "options_en": [
+            "Because the name suggested the person they were searching for might be dead",
+            "Because it gave an address they recognized",
+            "Because it mentioned a job offer"
+          ],
+          "correct_index": 0,
+          "sentence_index": 80
+        },
+        {
+          "id": "gl_p4_s12_q1",
+          "type": "choice",
+          "question_en": "What did the speaker think might have happened to the name Rita?",
+          "options_en": [
+            "That it might be Renata misprinted as Rita",
+            "That Rita was a nurse at the home",
+            "That Rita was living in Georgia"
+          ],
+          "correct_index": 0,
+          "sentence_index": 81
+        },
+        {
+          "id": "gl_p4_s12_q2",
+          "type": "choice",
+          "question_en": "Why did the speaker consider the misprint possibility?",
+          "options_en": [
+            "Because the names were similar and could have been misprinted",
+            "Because the newspaper gave the full address",
+            "Because Rita had written many letters"
+          ],
+          "correct_index": 0,
+          "sentence_index": 81
+        },
+        {
+          "id": "gl_p4_s13_q1",
+          "type": "choice",
+          "question_en": "What limitation did the newspaper have?",
+          "options_en": [
+            "They had no information more than what they had published",
+            "They published the full history of each refugee",
+            "They delivered letters to the nursing home"
+          ],
+          "correct_index": 0,
+          "sentence_index": 82
+        },
+        {
+          "id": "gl_p4_s13_q2",
+          "type": "choice",
+          "question_en": "How did this limitation affect the speaker's search?",
+          "options_en": [
+            "It prevented them from getting more details from the paper",
+            "It helped them find relatives in Georgia",
+            "It led them to move to Philadelphia"
+          ],
+          "correct_index": 0,
+          "sentence_index": 82
+        },
+        {
+          "id": "gl_p4_s14_q1",
+          "type": "choice",
+          "question_en": "How long did it take the speaker to accept that their love was gone?",
+          "options_en": [
+            "Three years",
+            "Seventy-five letters later",
+            "Two months"
+          ],
+          "correct_index": 0,
+          "sentence_index": 83
+        },
+        {
+          "id": "gl_p4_s14_q2",
+          "type": "choice",
+          "question_en": "Why does the speaker say their love was gone?",
+          "options_en": [
+            "Snatched away by the War",
+            "Because of retrograde amnesia",
+            "Because she moved to Philadelphia"
+          ],
+          "correct_index": 0,
+          "sentence_index": 83
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "Where was Renata sitting?",
+          "options_en": [
+            "On an arm chair in the veranda of the Nursing Home",
+            "On a bench in the park",
+            "On a train in Philadelphia"
+          ],
+          "correct_index": 0,
+          "sentence_index": 84
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "Who was sitting on an arm chair in the veranda?",
+          "options_en": [
+            "Renata",
+            "Herz",
+            "The nurse"
+          ],
+          "correct_index": 0,
+          "sentence_index": 84
+        },
+        {
+          "id": "gl_p5_s1_q1",
+          "type": "choice",
+          "question_en": "What was Renata doing?",
+          "options_en": [
+            "Reading the newspaper",
+            "Writing a letter",
+            "Answering the telephone"
+          ],
+          "correct_index": 0,
+          "sentence_index": 85
+        },
+        {
+          "id": "gl_p5_s1_q2",
+          "type": "choice",
+          "question_en": "Where was Renata when she read?",
+          "options_en": [
+            "In the Nursing Home veranda",
+            "At the Refugee Shelter",
+            "On the station platform"
+          ],
+          "correct_index": 0,
+          "sentence_index": 85
+        },
+        {
+          "id": "gl_p5_s2_q1",
+          "type": "choice",
+          "question_en": "How was Renata's health changing?",
+          "options_en": [
+            "Improving steadily",
+            "Getting worse rapidly",
+            "Remaining the same"
+          ],
+          "correct_index": 0,
+          "sentence_index": 86
+        },
+        {
+          "id": "gl_p5_s2_q2",
+          "type": "choice",
+          "question_en": "Whose health was improving steadily?",
+          "options_en": [
+            "Renata's",
+            "Herz's",
+            "The nurse's"
+          ],
+          "correct_index": 0,
+          "sentence_index": 86
+        },
+        {
+          "id": "gl_p5_s3_q1",
+          "type": "choice",
+          "question_en": "How did Renata look now?",
+          "options_en": [
+            "Closer to her age",
+            "Younger than before",
+            "Like a child"
+          ],
+          "correct_index": 0,
+          "sentence_index": 87
+        },
+        {
+          "id": "gl_p5_s3_q2",
+          "type": "choice",
+          "question_en": "What change in appearance is mentioned about Renata?",
+          "options_en": [
+            "She looked closer to her age",
+            "She wore a new coat",
+            "She had a hat on"
+          ],
+          "correct_index": 0,
+          "sentence_index": 87
+        },
+        {
+          "id": "gl_p5_s4_q1",
+          "type": "choice",
+          "question_en": "Why did Renata squint her eyes?",
+          "options_en": [
+            "To read better",
+            "Because of the nurse's voice",
+            "Because she was outside"
+          ],
+          "correct_index": 0,
+          "sentence_index": 88
+        },
+        {
+          "id": "gl_p5_s4_q2",
+          "type": "choice",
+          "question_en": "What was Renata handling as the sunlight poured in?",
+          "options_en": [
+            "Her newspaper",
+            "A dusty letter",
+            "A telephone"
+          ],
+          "correct_index": 0,
+          "sentence_index": 88
+        },
+        {
+          "id": "gl_p5_s5_q1",
+          "type": "choice",
+          "question_en": "What is the correct answer to this question: Despite reading again and health improving, what had not returned?",
+          "options_en": [
+            "Her memory",
+            "Her sight",
+            "Her appetite"
+          ],
+          "correct_index": 0,
+          "sentence_index": 89
+        },
+        {
+          "id": "gl_p5_s5_q2",
+          "type": "choice",
+          "question_en": "What two abilities are contrasted in the sentence?",
+          "options_en": [
+            "Being able to read again but not having memory",
+            "Having memory but not being able to read",
+            "Being able to walk but not speak"
+          ],
+          "correct_index": 0,
+          "sentence_index": 89
+        },
+        {
+          "id": "gl_p5_s6_q1",
+          "type": "choice",
+          "question_en": "What would Renata forget?",
+          "options_en": [
+            "Everything, including where the door was and even her name",
+            "Only the names of places in Philadelphia",
+            "Only what she read in newspapers"
+          ],
+          "correct_index": 0,
+          "sentence_index": 90
+        },
+        {
+          "id": "gl_p5_s6_q2",
+          "type": "choice",
+          "question_en": "When would Renata forget what she was asked?",
+          "options_en": [
+            "A minute ago",
+            "The day before",
+            "A month later"
+          ],
+          "correct_index": 0,
+          "sentence_index": 90
+        },
+        {
+          "id": "gl_p5_s7_q1",
+          "type": "choice",
+          "question_en": "When is the date printed in the newspaper headline?",
+          "options_en": [
+            "December 5, 1971",
+            "August 12, 1944",
+            "February 14, 1972"
+          ],
+          "correct_index": 0,
+          "sentence_index": 91
+        },
+        {
+          "id": "gl_p5_s7_q2",
+          "type": "choice",
+          "question_en": "What event does the headline mention?",
+          "options_en": [
+            "The Indo-Pakistan War of 1971",
+            "The end of World War II",
+            "A flood in Philadelphia"
+          ],
+          "correct_index": 0,
+          "sentence_index": 91
+        },
+        {
+          "id": "gl_p5_s8_q1",
+          "type": "choice",
+          "question_en": "What happened to Renata as soon as she read the news?",
+          "options_en": [
+            "Her hands began shivering",
+            "She smiled broadly",
+            "She fell asleep"
+          ],
+          "correct_index": 0,
+          "sentence_index": 92
+        },
+        {
+          "id": "gl_p5_s8_q2",
+          "type": "choice",
+          "question_en": "How did Renata physically react to the news?",
+          "options_en": [
+            "She began shivering",
+            "She started singing",
+            "She got up and walked away"
+          ],
+          "correct_index": 0,
+          "sentence_index": 92
+        },
+        {
+          "id": "gl_p5_s9_q1",
+          "type": "choice",
+          "question_en": "What sound did the newspaper make when she shook it?",
+          "options_en": [
+            "It crackled",
+            "It squeaked",
+            "It hummed"
+          ],
+          "correct_index": 0,
+          "sentence_index": 93
+        },
+        {
+          "id": "gl_p5_s9_q2",
+          "type": "choice",
+          "question_en": "How did Renata hold the newspaper at that moment?",
+          "options_en": [
+            "She shook it violently",
+            "She folded it neatly",
+            "She put it in her pocket"
+          ],
+          "correct_index": 0,
+          "sentence_index": 93
+        },
+        {
+          "id": "gl_p5_s10_q1",
+          "type": "choice",
+          "question_en": "What flashed on Renata's face?",
+          "options_en": [
+            "Grief",
+            "Surprise",
+            "Joy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 94
+        },
+        {
+          "id": "gl_p5_s10_q2",
+          "type": "choice",
+          "question_en": "How did the text describe Renata's expression?",
+          "options_en": [
+            "Grief flashed on her face",
+            "A smile lit up her face",
+            "She looked confused"
+          ],
+          "correct_index": 0,
+          "sentence_index": 94
+        },
+        {
+          "id": "gl_p5_s11_q1",
+          "type": "choice",
+          "question_en": "What overwhelmed Renata?",
+          "options_en": [
+            "A flood of tears",
+            "A feeling of relief",
+            "A nap"
+          ],
+          "correct_index": 0,
+          "sentence_index": 95
+        },
+        {
+          "id": "gl_p5_s11_q2",
+          "type": "choice",
+          "question_en": "How is Renata's crying described?",
+          "options_en": [
+            "As being in a flood of tears",
+            "As a single tear",
+            "As quiet sobbing only at night"
+          ],
+          "correct_index": 0,
+          "sentence_index": 95
+        },
+        {
+          "id": "gl_p5_s12_q1",
+          "type": "choice",
+          "question_en": "Which word in the news affected Renata significantly?",
+          "options_en": [
+            "War",
+            "Shelter",
+            "Letter"
+          ],
+          "correct_index": 0,
+          "sentence_index": 96
+        },
+        {
+          "id": "gl_p5_s12_q2",
+          "type": "choice",
+          "question_en": "Why was Renata affected in the sentence?",
+          "options_en": [
+            "Because reading the word 'War' affected her",
+            "Because she remembered Philadelphia",
+            "Because she found an address"
+          ],
+          "correct_index": 0,
+          "sentence_index": 96
+        },
+        {
+          "id": "gl_p5_s13_q1",
+          "type": "choice",
+          "question_en": "Who called out to Renata in the quoted speech?",
+          "options_en": [
+            "Someone addressing Renata (speaking to her)",
+            "A newspaper vendor",
+            "A train conductor"
+          ],
+          "correct_index": 0,
+          "sentence_index": 97
+        },
+        {
+          "id": "gl_p5_s13_q2",
+          "type": "choice",
+          "question_en": "What question is asked to Renata in the quote?",
+          "options_en": [
+            "What's wrong my dear?",
+            "Do you remember where you live?",
+            "Have you finished your letter?"
+          ],
+          "correct_index": 0,
+          "sentence_index": 97
+        },
+        {
+          "id": "gl_p5_s14_q1",
+          "type": "choice",
+          "question_en": "What reassurance is given in the quote?",
+          "options_en": [
+            "You are safe here, we are all safe here, and together",
+            "You should leave immediately",
+            "You must go to Philadelphia"
+          ],
+          "correct_index": 0,
+          "sentence_index": 98
+        },
+        {
+          "id": "gl_p5_s14_q2",
+          "type": "choice",
+          "question_en": "Who says 'we are all safe here, and together' in the paragraph?",
+          "options_en": [
+            "The person speaking to Renata",
+            "The newspaper headline",
+            "The nurse recording notes"
+          ],
+          "correct_index": 0,
+          "sentence_index": 98
+        },
+        {
+          "id": "gl_p5_s15_q1",
+          "type": "choice",
+          "question_en": "What promise is made in the speech?",
+          "options_en": [
+            "I will never leave you again",
+            "I will send more letters",
+            "I will move to Philadelphia"
+          ],
+          "correct_index": 0,
+          "sentence_index": 99
+        },
+        {
+          "id": "gl_p5_s15_q2",
+          "type": "choice",
+          "question_en": "How does the speaker express commitment?",
+          "options_en": [
+            "By saying they will never leave Renata again",
+            "By asking Renata to write",
+            "By calling the nurse"
+          ],
+          "correct_index": 0,
+          "sentence_index": 99
+        },
+        {
+          "id": "gl_p5_s16_q1",
+          "type": "choice",
+          "question_en": "What plea does the speaker make to Renata?",
+          "options_en": [
+            "Please recognize me",
+            "Please write a letter",
+            "Please read the newspaper aloud"
+          ],
+          "correct_index": 0,
+          "sentence_index": 100
+        },
+        {
+          "id": "gl_p5_s16_q2",
+          "type": "choice",
+          "question_en": "Who does the speaker identify themself as in the quote?",
+          "options_en": [
+            "Herz, her love",
+            "The nurse",
+            "A train passenger"
+          ],
+          "correct_index": 0,
+          "sentence_index": 100
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "Who does the narrator think about all the time?",
+          "options_en": [
+            "Renata",
+            "the nurse",
+            "a homeless Jew"
+          ],
+          "correct_index": 0,
+          "sentence_index": 101
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "How often does the narrator think about her?",
+          "options_en": [
+            "All the time",
+            "Once a week",
+            "Every month"
+          ],
+          "correct_index": 0,
+          "sentence_index": 101
+        },
+        {
+          "id": "gl_p6_s1_q1",
+          "type": "choice",
+          "question_en": "Where is the narrator still staying?",
+          "options_en": [
+            "Oswego, New York",
+            "Philadelphia",
+            "Amsterdam"
+          ],
+          "correct_index": 0,
+          "sentence_index": 102
+        },
+        {
+          "id": "gl_p6_s1_q2",
+          "type": "choice",
+          "question_en": "How often does the narrator visit the Emergency Refugee shelter?",
+          "options_en": [
+            "Every week",
+            "Every day",
+            "Once a month"
+          ],
+          "correct_index": 0,
+          "sentence_index": 102
+        },
+        {
+          "id": "gl_p6_s2_q1",
+          "type": "choice",
+          "question_en": "Who does he say he will never forgive himself for doing that to?",
+          "options_en": [
+            "Renata",
+            "the nurse",
+            "Mrs. Berger's husband"
+          ],
+          "correct_index": 0,
+          "sentence_index": 103
+        },
+        {
+          "id": "gl_p6_s2_q2",
+          "type": "choice",
+          "question_en": "What does he say he will never do to himself?",
+          "options_en": [
+            "Forgive himself",
+            "Forget her",
+            "Leave again"
+          ],
+          "correct_index": 0,
+          "sentence_index": 103
+        },
+        {
+          "id": "gl_p6_s3_q1",
+          "type": "choice",
+          "question_en": "Who does he say he should never have left alone?",
+          "options_en": [
+            "Her (Renata)",
+            "The nurse",
+            "A homeless Jew"
+          ],
+          "correct_index": 0,
+          "sentence_index": 104
+        },
+        {
+          "id": "gl_p6_s3_q2",
+          "type": "choice",
+          "question_en": "What does he say he should never have done?",
+          "options_en": [
+            "Left her alone",
+            "Moved to Oswego",
+            "Written letters"
+          ],
+          "correct_index": 0,
+          "sentence_index": 104
+        },
+        {
+          "id": "gl_p6_s4_q1",
+          "type": "choice",
+          "question_en": "What does he say was not the cause of their shattered lives?",
+          "options_en": [
+            "The War",
+            "The Emergency Refugee shelter",
+            "German U-boats"
+          ],
+          "correct_index": 0,
+          "sentence_index": 105
+        },
+        {
+          "id": "gl_p6_s4_q2",
+          "type": "choice",
+          "question_en": "Who does he say actually shattered their small lives?",
+          "options_en": [
+            "Himself (I)",
+            "The War",
+            "Renata"
+          ],
+          "correct_index": 0,
+          "sentence_index": 105
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "When is the date mentioned?",
+          "options_en": [
+            "14 February, 1972",
+            "12th of August, 1944",
+            "December 5, 1971"
+          ],
+          "correct_index": 0,
+          "sentence_index": 106
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "What is being stated in this sentence?",
+          "options_en": [
+            "A specific date",
+            "A place name",
+            "A person's name"
+          ],
+          "correct_index": 0,
+          "sentence_index": 106
+        },
+        {
+          "id": "gl_p7_s1_q1",
+          "type": "choice",
+          "question_en": "Whose memory is mentioned in the sentence?",
+          "options_en": [
+            "Herz",
+            "Renata",
+            "The nurse"
+          ],
+          "correct_index": 0,
+          "sentence_index": 107
+        },
+        {
+          "id": "gl_p7_s1_q2",
+          "type": "choice",
+          "question_en": "What will Herz never do with that date?",
+          "options_en": [
+            "Forget it",
+            "Move away",
+            "Ignore a letter"
+          ],
+          "correct_index": 0,
+          "sentence_index": 107
+        },
+        {
+          "id": "gl_p7_s2_q1",
+          "type": "choice",
+          "question_en": "Who was holding Renata's hand?",
+          "options_en": [
+            "Herz",
+            "The nurse",
+            "A stranger"
+          ],
+          "correct_index": 0,
+          "sentence_index": 108
+        },
+        {
+          "id": "gl_p7_s2_q2",
+          "type": "choice",
+          "question_en": "Where were they walking?",
+          "options_en": [
+            "In the deciduous parks",
+            "In the refugee shelter",
+            "On the train platform"
+          ],
+          "correct_index": 0,
+          "sentence_index": 108
+        },
+        {
+          "id": "gl_p7_s3_q1",
+          "type": "choice",
+          "question_en": "What helped Renata a lot?",
+          "options_en": [
+            "Being in the serenity of parks",
+            "Reading the newspaper",
+            "Visiting the shelter"
+          ],
+          "correct_index": 0,
+          "sentence_index": 109
+        },
+        {
+          "id": "gl_p7_s3_q2",
+          "type": "choice",
+          "question_en": "Why did the parks help Renata?",
+          "options_en": [
+            "Because of their serenity",
+            "Because of the medical staff",
+            "Because of loud music"
+          ],
+          "correct_index": 0,
+          "sentence_index": 109
+        },
+        {
+          "id": "gl_p7_s4_q1",
+          "type": "choice",
+          "question_en": "How long was the walk before they returned?",
+          "options_en": [
+            "75 minute",
+            "Four months",
+            "Three years"
+          ],
+          "correct_index": 0,
+          "sentence_index": 110
+        },
+        {
+          "id": "gl_p7_s4_q2",
+          "type": "choice",
+          "question_en": "Where would they return after the walk?",
+          "options_en": [
+            "The Nursing Home",
+            "The Refugee Shelter",
+            "The train station"
+          ],
+          "correct_index": 0,
+          "sentence_index": 110
+        },
+        {
+          "id": "gl_p7_s5_q1",
+          "type": "choice",
+          "question_en": "What was kept on the table in her room?",
+          "options_en": [
+            "A very dusty old letter",
+            "A telephone",
+            "A newspaper"
+          ],
+          "correct_index": 0,
+          "sentence_index": 111
+        },
+        {
+          "id": "gl_p7_s5_q2",
+          "type": "choice",
+          "question_en": "Where was the dusty old letter located?",
+          "options_en": [
+            "On the table in her room",
+            "In the refuge shelter",
+            "At the train station"
+          ],
+          "correct_index": 0,
+          "sentence_index": 111
+        },
+        {
+          "id": "gl_p7_s6_q1",
+          "type": "choice",
+          "question_en": "What did Renata do with the letter?",
+          "options_en": [
+            "Picked it up and smelled it",
+            "Threw it away",
+            "Sent it back"
+          ],
+          "correct_index": 0,
+          "sentence_index": 112
+        },
+        {
+          "id": "gl_p7_s6_q2",
+          "type": "choice",
+          "question_en": "How did Renata bring the letter closer to her face?",
+          "options_en": [
+            "She drew it closer and closed her eyes to smell it",
+            "She read it aloud immediately",
+            "She put it in her pocket"
+          ],
+          "correct_index": 0,
+          "sentence_index": 112
+        },
+        {
+          "id": "gl_p7_s7_q1",
+          "type": "choice",
+          "question_en": "What was surprising about the letter?",
+          "options_en": [
+            "It felt familiar",
+            "It was unsigned",
+            "It was brand new"
+          ],
+          "correct_index": 0,
+          "sentence_index": 113
+        },
+        {
+          "id": "gl_p7_s7_q2",
+          "type": "choice",
+          "question_en": "When the letter arrived, how did it feel to Renata?",
+          "options_en": [
+            "Familiar",
+            "Strange and foreign",
+            "Unreadable"
+          ],
+          "correct_index": 0,
+          "sentence_index": 113
+        },
+        {
+          "id": "gl_p7_s8_q1",
+          "type": "choice",
+          "question_en": "What question does Renata ask about the letter?",
+          "options_en": [
+            "Had she crossed paths with it before?",
+            "Should she throw it away?",
+            "Who wrote it?"
+          ],
+          "correct_index": 0,
+          "sentence_index": 114
+        },
+        {
+          "id": "gl_p7_s8_q2",
+          "type": "choice",
+          "question_en": "Why is Renata wondering about the letter?",
+          "options_en": [
+            "Because it felt familiar",
+            "Because it was addressed to Herz",
+            "Because it smelled bad"
+          ],
+          "correct_index": 0,
+          "sentence_index": 114
+        },
+        {
+          "id": "gl_p7_s9_q1",
+          "type": "choice",
+          "question_en": "What did Renata do after opening her eyes?",
+          "options_en": [
+            "She read the letter",
+            "She called the nurse",
+            "She folded the letter back"
+          ],
+          "correct_index": 0,
+          "sentence_index": 115
+        },
+        {
+          "id": "gl_p7_s9_q2",
+          "type": "choice",
+          "question_en": "When did she read the letter?",
+          "options_en": [
+            "After opening her eyes",
+            "Before touching it",
+            "After giving it to Herz"
+          ],
+          "correct_index": 0,
+          "sentence_index": 115
+        },
+        {
+          "id": "gl_p7_s10_q1",
+          "type": "choice",
+          "question_en": "How is the letter described in terms of age and color?",
+          "options_en": [
+            "Very old and tinged pale yellow",
+            "Brand new and white",
+            "Old and bright pink"
+          ],
+          "correct_index": 0,
+          "sentence_index": 116
+        },
+        {
+          "id": "gl_p7_s10_q2",
+          "type": "choice",
+          "question_en": "What detail about the letter's appearance is given?",
+          "options_en": [
+            "It was tinged pale yellow",
+            "It had a postage stamp missing",
+            "It was sealed with wax"
+          ],
+          "correct_index": 0,
+          "sentence_index": 116
+        },
+        {
+          "id": "gl_p7_s11_q1",
+          "type": "choice",
+          "question_en": "What damage did the letter have?",
+          "options_en": [
+            "It was torn and burnt on the sides",
+            "It was wet and smudged",
+            "It had been stapled shut"
+          ],
+          "correct_index": 0,
+          "sentence_index": 117
+        },
+        {
+          "id": "gl_p7_s11_q2",
+          "type": "choice",
+          "question_en": "Where was the letter burnt?",
+          "options_en": [
+            "On the sides",
+            "In the middle",
+            "On the envelope only"
+          ],
+          "correct_index": 0,
+          "sentence_index": 117
+        },
+        {
+          "id": "gl_p7_s12_q1",
+          "type": "choice",
+          "question_en": "What does the sentence 'Regardless of all the harm.' imply about the letter?",
+          "options_en": [
+            "The letter was still significant despite damage",
+            "The letter was discarded",
+            "The letter could not be read"
+          ],
+          "correct_index": 0,
+          "sentence_index": 118
+        },
+        {
+          "id": "gl_p7_s12_q2",
+          "type": "choice",
+          "question_en": "How does this sentence relate to the previous description of damage?",
+          "options_en": [
+            "It says the damage did not matter",
+            "It explains how it was damaged",
+            "It gives the sender's name"
+          ],
+          "correct_index": 0,
+          "sentence_index": 118
+        },
+        {
+          "id": "gl_p7_s13_q1",
+          "type": "choice",
+          "question_en": "What is said about the handwriting?",
+          "options_en": [
+            "The hand script was neat and filled with beauty",
+            "The handwriting was messy and unreadable",
+            "There was no handwriting"
+          ],
+          "correct_index": 0,
+          "sentence_index": 119
+        },
+        {
+          "id": "gl_p7_s13_q2",
+          "type": "choice",
+          "question_en": "How did the handwriting compare to the letter's condition?",
+          "options_en": [
+            "It remained neat and beautiful despite damage",
+            "It matched the torn edges",
+            "It was printed in a newspaper style"
+          ],
+          "correct_index": 0,
+          "sentence_index": 119
+        },
+        {
+          "id": "gl_p7_s14_q1",
+          "type": "choice",
+          "question_en": "What did the handwriting take no notice of?",
+          "options_en": [
+            "How uneven and ugly the edges had become",
+            "The date on the letter",
+            "Who would receive it"
+          ],
+          "correct_index": 0,
+          "sentence_index": 120
+        },
+        {
+          "id": "gl_p7_s14_q2",
+          "type": "choice",
+          "question_en": "Which part of the letter is described as uneven and ugly?",
+          "options_en": [
+            "The edges",
+            "The stamp",
+            "The signature"
+          ],
+          "correct_index": 0,
+          "sentence_index": 120
+        },
+        {
+          "id": "gl_p7_s15_q1",
+          "type": "choice",
+          "question_en": "What did Renata do after finishing reading the letter?",
+          "options_en": [
+            "Lifted her head and looked at Herz",
+            "Put the letter back on the table",
+            "Cried without looking up"
+          ],
+          "correct_index": 0,
+          "sentence_index": 121
+        },
+        {
+          "id": "gl_p7_s15_q2",
+          "type": "choice",
+          "question_en": "Who did Renata look at after reading?",
+          "options_en": [
+            "Herz",
+            "The nurse",
+            "No one"
+          ],
+          "correct_index": 0,
+          "sentence_index": 121
+        },
+        {
+          "id": "gl_p7_s16_q1",
+          "type": "choice",
+          "question_en": "What did Renata stretch her hand to do?",
+          "options_en": [
+            "Give the letter to its recipient",
+            "Take Herz's coat",
+            "Grab the nurse's hand"
+          ],
+          "correct_index": 0,
+          "sentence_index": 122
+        },
+        {
+          "id": "gl_p7_s16_q2",
+          "type": "choice",
+          "question_en": "Who is the intended recipient mentioned in this sentence?",
+          "options_en": [
+            "The recipient of the letter",
+            "The nurse on duty",
+            "A stranger in the park"
+          ],
+          "correct_index": 0,
+          "sentence_index": 122
+        },
+        {
+          "id": "gl_p7_s17_q1",
+          "type": "choice",
+          "question_en": "What happened to Renata's eyes in the golden hour?",
+          "options_en": [
+            "They glistened with tears",
+            "They closed in sleep",
+            "They looked angry"
+          ],
+          "correct_index": 0,
+          "sentence_index": 123
+        },
+        {
+          "id": "gl_p7_s17_q2",
+          "type": "choice",
+          "question_en": "When did her eyes glisten with tears?",
+          "options_en": [
+            "In the golden hour",
+            "During the train ride",
+            "At midnight"
+          ],
+          "correct_index": 0,
+          "sentence_index": 123
+        },
+        {
+          "id": "gl_p7_s18_q1",
+          "type": "choice",
+          "question_en": "Who does Renata address in the quoted line?",
+          "options_en": [
+            "Herz",
+            "The nurse",
+            "A postal worker"
+          ],
+          "correct_index": 0,
+          "sentence_index": 124
+        },
+        {
+          "id": "gl_p7_s18_q2",
+          "type": "choice",
+          "question_en": "What is the first phrase Renata says in the quote?",
+          "options_en": [
+            "\"You have come, Herz!\"",
+            "\"I have left\"",
+            "\"Where is my home?\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 124
+        },
+        {
+          "id": "gl_p7_s19_q1",
+          "type": "choice",
+          "question_en": "What does Renata say Herz has done in the second quoted line?",
+          "options_en": [
+            "Returned and fulfilled his promise",
+            "Left her alone again",
+            "Sent her a newspaper"
+          ],
+          "correct_index": 0,
+          "sentence_index": 125
+        },
+        {
+          "id": "gl_p7_s19_q2",
+          "type": "choice",
+          "question_en": "How does Renata express her feeling toward Herz in the quote?",
+          "options_en": [
+            "She expresses joy that he fulfilled his promise",
+            "She asks him to leave",
+            "She tells him to read the letter"
+          ],
+          "correct_index": 0,
+          "sentence_index": 125
+        }
+      ]
+    },
+    {
+      "paragraph_index": 8,
+      "questions": [
+        {
+          "id": "gl_p8_s0_q1",
+          "type": "choice",
+          "question_en": "Who has reached the United States of America safely?",
+          "options_en": [
+            "Renata",
+            "Herz",
+            "Rita"
+          ],
+          "correct_index": 0,
+          "sentence_index": 126
+        },
+        {
+          "id": "gl_p8_s0_q2",
+          "type": "choice",
+          "question_en": "What would give you immense pleasure?",
+          "options_en": [
+            "Knowing she has reached the United States safely",
+            "Receiving a job proposal",
+            "Moving to Philadelphia"
+          ],
+          "correct_index": 0,
+          "sentence_index": 126
+        },
+        {
+          "id": "gl_p8_s1_q1",
+          "type": "choice",
+          "question_en": "How long did she live in the Refugee’s Shelter?",
+          "options_en": [
+            "For four months",
+            "For three years",
+            "For seventy-five minutes"
+          ],
+          "correct_index": 0,
+          "sentence_index": 127
+        },
+        {
+          "id": "gl_p8_s1_q2",
+          "type": "choice",
+          "question_en": "Where did she live for four months?",
+          "options_en": [
+            "The Refugee’s Shelter",
+            "The Nursing Home",
+            "The Emergency Refugee shelter in New York"
+          ],
+          "correct_index": 0,
+          "sentence_index": 127
+        },
+        {
+          "id": "gl_p8_s2_q1",
+          "type": "choice",
+          "question_en": "Where did she decide to move later?",
+          "options_en": [
+            "Philadelphia",
+            "Oswego",
+            "Amsterdam"
+          ],
+          "correct_index": 0,
+          "sentence_index": 128
+        },
+        {
+          "id": "gl_p8_s2_q2",
+          "type": "choice",
+          "question_en": "When did she decide to move?",
+          "options_en": [
+            "Later",
+            "Immediately",
+            "After three years"
+          ],
+          "correct_index": 0,
+          "sentence_index": 128
+        },
+        {
+          "id": "gl_p8_s3_q1",
+          "type": "choice",
+          "question_en": "What did she receive?",
+          "options_en": [
+            "A proposal for a job",
+            "A letter about a train",
+            "A newspaper"
+          ],
+          "correct_index": 0,
+          "sentence_index": 129
+        },
+        {
+          "id": "gl_p8_s3_q2",
+          "type": "choice",
+          "question_en": "Who has received a proposal for a job?",
+          "options_en": [
+            "Renata (I)",
+            "Herz",
+            "The nurse"
+          ],
+          "correct_index": 0,
+          "sentence_index": 129
+        },
+        {
+          "id": "gl_p8_s4_q1",
+          "type": "choice",
+          "question_en": "Who is asked to come to America?",
+          "options_en": [
+            "Herz",
+            "Renata",
+            "The nurse"
+          ],
+          "correct_index": 0,
+          "sentence_index": 130
+        },
+        {
+          "id": "gl_p8_s4_q2",
+          "type": "choice",
+          "question_en": "When is Herz asked to come to America?",
+          "options_en": [
+            "As soon as possible",
+            "Next year",
+            "After the war"
+          ],
+          "correct_index": 0,
+          "sentence_index": 130
+        },
+        {
+          "id": "gl_p8_s5_q1",
+          "type": "choice",
+          "question_en": "What awaits them here?",
+          "options_en": [
+            "A new, fresh start",
+            "A train to Pennsylvania",
+            "A telephone call"
+          ],
+          "correct_index": 0,
+          "sentence_index": 131
+        },
+        {
+          "id": "gl_p8_s5_q2",
+          "type": "choice",
+          "question_en": "Who will have a new, fresh start here?",
+          "options_en": [
+            "Us",
+            "The nurse",
+            "The newspaper"
+          ],
+          "correct_index": 0,
+          "sentence_index": 131
+        },
+        {
+          "id": "gl_p8_s6_q1",
+          "type": "choice",
+          "question_en": "What is the address for their home in Philadelphia?",
+          "options_en": [
+            "621 Halleon Way 25 Drive St., Philadelphia",
+            "Prinsengracht 1024 GV Amsterdam",
+            "621 Oswego Road"
+          ],
+          "correct_index": 0,
+          "sentence_index": 132
+        },
+        {
+          "id": "gl_p8_s6_q2",
+          "type": "choice",
+          "question_en": "Where is their home according to the address?",
+          "options_en": [
+            "Philadelphia",
+            "Amsterdam",
+            "New York"
+          ],
+          "correct_index": 0,
+          "sentence_index": 132
+        },
+        {
+          "id": "gl_p8_s7_q1",
+          "type": "choice",
+          "question_en": "Who is waiting for someone to fulfil a promise?",
+          "options_en": [
+            "Renata",
+            "The nurse",
+            "A refugee"
+          ],
+          "correct_index": 0,
+          "sentence_index": 133
+        },
+        {
+          "id": "gl_p8_s7_q2",
+          "type": "choice",
+          "question_en": "What is she waiting for Herz to do?",
+          "options_en": [
+            "Fulfil his promise",
+            "Send money",
+            "Send the letter"
+          ],
+          "correct_index": 0,
+          "sentence_index": 133
+        },
+        {
+          "id": "gl_p8_s8_q1",
+          "type": "choice",
+          "question_en": "Who signed the letter?",
+          "options_en": [
+            "Renata",
+            "Herz",
+            "Rita"
+          ],
+          "correct_index": 0,
+          "sentence_index": 134
+        },
+        {
+          "id": "gl_p8_s8_q2",
+          "type": "choice",
+          "question_en": "When was the letter dated?",
+          "options_en": [
+            "12th of August, 1944",
+            "14 February, 1972",
+            "5 December, 1971"
+          ],
+          "correct_index": 0,
+          "sentence_index": 134
+        },
+        {
+          "id": "gl_p8_s9_q1",
+          "type": "choice",
+          "question_en": "Whose name and address are given?",
+          "options_en": [
+            "Herz Berger",
+            "Renata",
+            "Rita"
+          ],
+          "correct_index": 0,
+          "sentence_index": 135
+        },
+        {
+          "id": "gl_p8_s9_q2",
+          "type": "choice",
+          "question_en": "Where is Herz Berger's address located?",
+          "options_en": [
+            "Amsterdam, Netherlands",
+            "Philadelphia",
+            "Oswego, New York"
+          ],
+          "correct_index": 0,
+          "sentence_index": 135
+        }
+      ]
+    },
+    {
+      "paragraph_index": 9,
+      "questions": [
+        {
+          "id": "gl_p9_s0_q1",
+          "type": "choice",
+          "question_en": "How long did the letter take to reach the right hands?",
+          "options_en": [
+            "27 years",
+            "three years",
+            "75 minutes"
+          ],
+          "correct_index": 0,
+          "sentence_index": 136
+        },
+        {
+          "id": "gl_p9_s0_q2",
+          "type": "choice",
+          "question_en": "What took 27 years to reach the right hands?",
+          "options_en": [
+            "The letter",
+            "Renata",
+            "The burgundy train"
+          ],
+          "correct_index": 0,
+          "sentence_index": 136
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'A Promise Kept'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "sharply",
+      "meaning_vi": "kêu to, chói tai",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "contrasted",
+      "meaning_vi": "đối lập, khác hẳn",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "silhouette",
+      "meaning_vi": "hình bóng, bóng đen",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "judiciously",
+      "meaning_vi": "cẩn thận, khôn ngoan",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "frock",
+      "meaning_vi": "váy, áo đầm",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "unkempt",
+      "meaning_vi": "không chải chuốt, bù xù",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "Retrograde amnesia",
+      "meaning_vi": "chứng mất trí nhớ về quá khứ",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "courage",
+      "meaning_vi": "lòng dũng cảm",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "Port",
+      "meaning_vi": "cảng",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "alternative",
+      "meaning_vi": "lựa chọn khác",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "ensure",
+      "meaning_vi": "đảm bảo",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "separate",
+      "meaning_vi": "chia lìa, xa cách",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "dreadfully",
+      "meaning_vi": "cực kỳ, rất",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "monologue",
+      "meaning_vi": "độc thoại",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "desperately",
+      "meaning_vi": "rất muốn, tuyệt vọng",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "identical",
+      "meaning_vi": "giống hệt",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "refugee",
+      "meaning_vi": "người tị nạn",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "in vain",
+      "meaning_vi": "vô ích",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "misprinted",
+      "meaning_vi": "in sai",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "snatched away",
+      "meaning_vi": "cướp đi, giật lấy",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "veranda",
+      "meaning_vi": "hiên nhà, ban công",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "steadily",
+      "meaning_vi": "đều đặn, ổn định",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "squinted",
+      "meaning_vi": "nheo mắt",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "grief",
+      "meaning_vi": "nỗi đau buồn",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "shelter",
+      "meaning_vi": "nơi trú ẩn",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "forgive",
+      "meaning_vi": "tha thứ",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "shattered",
+      "meaning_vi": "phá tan, làm tan vỡ",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "deciduous",
+      "meaning_vi": "cây rụng lá",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "serenity",
+      "meaning_vi": "sự thanh bình",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "recipient",
+      "meaning_vi": "người nhận",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "fulfilled",
+      "meaning_vi": "đã thực hiện",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "immense",
+      "meaning_vi": "rất lớn, vô cùng",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "proposal",
+      "meaning_vi": "đề nghị",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "awaits",
+      "meaning_vi": "chờ đợi",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "fulfil",
+      "meaning_vi": "thực hiện",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "reach",
+      "meaning_vi": "đến, tới",
+      "paragraph_index": 9
+    }
+  ]
+}

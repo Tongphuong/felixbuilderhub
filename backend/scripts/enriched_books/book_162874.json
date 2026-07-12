@@ -1,0 +1,1152 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L0",
+  "level_label": "Cấp 0",
+  "topic": "Super Mummy and Super Super!",
+  "slug": "book_162874",
+  "audio_filename": "book_162874.mp3",
+  "book_slug": "book_162874",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_162874/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_162874/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_162874/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_162874/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_162874/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_162874/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_162874/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_162874/page_09.jpg",
+    "https://audio.felixbuilderhub.com/books/book_162874/page_10.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_162874/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_162874/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_162874/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_162874/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_162874/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_162874/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_162874/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_162874/page_09.mp3",
+    "https://audio.felixbuilderhub.com/books/book_162874/page_10.mp3"
+  ],
+  "book_attribution": {
+    "title": "Super Mummy and Super Super!",
+    "creators": [
+      "Mimi Werna",
+      "Marion Drew"
+    ],
+    "publisher": "African Storybook Initiative",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: Super Mummy and Super Super! is written by Mimi Werna . © African Storybook Initiative , 2014. Some rights reserved. Released under CC BY 4.0 license. Other Credits: This story 'Super Mummy and Super Super!' has been published on StoryWeaver by African Storybook Initiative. Images Attributions: Cover page: Mother on a call while coocking , by Marion Drew © African Storybook Initiative, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 2: Mother shouting on a call in her shop with her children and customers nearby , by Marion Drew © African Storybook Initiative, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 3: Mother busy on a call in her shop with a customer around , by Marion Drew © African Storybook Initiative, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 4: Mother smiling on a call in her shop with customers around , by Marion Drew © African Storybook Initiative, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 5: Mother separating two fighting kids in her shop , by Marion Drew © African Storybook Initiative, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 6: Children watching TV with their mother in her shop , by Marion Drew © African Storybook Initiative, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 7: Mother smiling on a call in her shop , by Marion Drew © African Storybook Initiative, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 8: Mother walking on the street with her children , by Marion Drew © African Storybook Initiative, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 9: Mother bringing food for sick children in bed , by Marion Drew © African Storybook Initiative, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 10: Mother falling asleep while pouring coffee , by Marion Drew © African Storybook Initiative, 2019. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/162874-super-mummy-and-super-super",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "Mother shouting on a call in her shop with her children and customers nearby , by Marion Drew © African Storybook Initiative, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "Mother busy on a call in her shop with a customer around , by Marion Drew © African Storybook Initiative, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "Mother smiling on a call in her shop with customers around , by Marion Drew © African Storybook Initiative, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "Mother separating two fighting kids in her shop , by Marion Drew © African Storybook Initiative, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "Children watching TV with their mother in her shop , by Marion Drew © African Storybook Initiative, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "Mother smiling on a call in her shop , by Marion Drew © African Storybook Initiative, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "Mother walking on the street with her children , by Marion Drew © African Storybook Initiative, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "Mother bringing food for sick children in bed , by Marion Drew © African Storybook Initiative, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 8,
+        "credit_text": "Mother falling asleep while pouring coffee , by Marion Drew © African Storybook Initiative, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "Super Mummy and Super Super!",
+    "paragraphs_en": [
+      "Her phone rings almost non-stop. Customers call to ask prices, and to place their orders. They call to trace their orders, and to complain about their orders.",
+      "We often go to her shop in the afternoons. We tell her about school. But our conversations are always interrupted by customers eager for her attention.",
+      "We have fun with children who come to the shop with their parents. Sometimes, mother has to serve as referee as well as help customers. I think that she has super powers!",
+      "When we become too noisy, mother says, “Now sit quietly and watch TV.” She always adds, “But only for 30 minutes, while we take a break!”",
+      "If we don't have schoolwork, sometimes mother asks me or my older sister to help her. I am not always ready to help. But I do it because I know she works so hard.",
+      "As we walk home from the shop with the sun setting, we talk about our day. We have to hurry to keep up with her, but we love walking and talking with mother.",
+      "She makes sure that we do homework, and have time to play. She makes sure that we eat vegetables and fruits, and drink water. When we are sick, she cares for us.",
+      "At night, mother continues to work at home. There is always work from the shop. Sometimes she falls asleep at the table!",
+      "Father makes sure that mother has time to relax, and he helps around the house. “You're a Super Mummy!” he says. “And you're my Super Super!” smiles mother."
+    ],
+    "sentences": [
+      {
+        "text_en": "Her phone rings almost non-stop.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_162874/s_000.mp3",
+        "text_vi": "Điện thoại của mẹ reo gần như không ngừng."
+      },
+      {
+        "text_en": "Customers call to ask prices, and to place their orders.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_162874/s_001.mp3",
+        "text_vi": "Khách hàng gọi để hỏi giá và đặt hàng."
+      },
+      {
+        "text_en": "They call to trace their orders, and to complain about their orders.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_162874/s_002.mp3",
+        "text_vi": "Họ gọi để hỏi xem hàng đã đến đâu rồi, và để phàn nàn về đơn hàng của họ."
+      },
+      {
+        "text_en": "We often go to her shop in the afternoons.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_162874/s_003.mp3",
+        "text_vi": "Chúng con thường đến cửa hàng của mẹ vào các buổi chiều."
+      },
+      {
+        "text_en": "We tell her about school.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_162874/s_004.mp3",
+        "text_vi": "Chúng con kể cho mẹ nghe chuyện ở trường."
+      },
+      {
+        "text_en": "But our conversations are always interrupted by customers eager for her attention.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_162874/s_005.mp3",
+        "text_vi": "Nhưng những cuộc trò chuyện của chúng con luôn bị ngắt quãng bởi khách hàng muốn mẹ chú ý."
+      },
+      {
+        "text_en": "We have fun with children who come to the shop with their parents.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_162874/s_006.mp3",
+        "text_vi": "Chúng con chơi vui với các bạn nhỏ đến cửa hàng cùng bố mẹ."
+      },
+      {
+        "text_en": "Sometimes, mother has to serve as referee as well as help customers.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_162874/s_007.mp3",
+        "text_vi": "Đôi khi, mẹ phải làm trọng tài hòa giải, vừa phải giúp khách hàng nữa."
+      },
+      {
+        "text_en": "I think that she has super powers!",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_162874/s_008.mp3",
+        "text_vi": "Con nghĩ mẹ có siêu năng lực!"
+      },
+      {
+        "text_en": "When we become too noisy, mother says, “Now sit quietly and watch TV.” She always adds, “But only for 30 minutes, while we take a break!”",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_162874/s_009.mp3",
+        "text_vi": "Khi chúng con quá ồn ào, mẹ nói: “Bây giờ ngồi yên lặng và xem TV đi.” Mẹ luôn nói thêm: “Nhưng chỉ 30 phút thôi nhé, trong lúc chúng ta nghỉ ngơi!”"
+      },
+      {
+        "text_en": "If we don't have schoolwork, sometimes mother asks me or my older sister to help her.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_162874/s_010.mp3",
+        "text_vi": "Nếu chúng con không có bài tập về nhà, đôi khi mẹ nhờ con hoặc chị gái giúp mẹ."
+      },
+      {
+        "text_en": "I am not always ready to help.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_162874/s_011.mp3",
+        "text_vi": "Con không phải lúc nào cũng sẵn sàng giúp đỡ."
+      },
+      {
+        "text_en": "But I do it because I know she works so hard.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_162874/s_012.mp3",
+        "text_vi": "Nhưng con vẫn làm vì con biết mẹ làm việc rất vất vả."
+      },
+      {
+        "text_en": "As we walk home from the shop with the sun setting, we talk about our day.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_162874/s_013.mp3",
+        "text_vi": "Khi chúng con đi bộ về nhà từ cửa hàng lúc mặt trời lặn, chúng con nói chuyện về một ngày của mình."
+      },
+      {
+        "text_en": "We have to hurry to keep up with her, but we love walking and talking with mother.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_162874/s_014.mp3",
+        "text_vi": "Chúng con phải đi nhanh để theo kịp mẹ, nhưng chúng con thích đi bộ và nói chuyện với mẹ."
+      },
+      {
+        "text_en": "She makes sure that we do homework, and have time to play.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_162874/s_015.mp3",
+        "text_vi": "Mẹ đảm bảo chúng con làm bài tập về nhà và có thời gian chơi."
+      },
+      {
+        "text_en": "She makes sure that we eat vegetables and fruits, and drink water.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_162874/s_016.mp3",
+        "text_vi": "Mẹ đảm bảo chúng con ăn rau củ quả và uống nước."
+      },
+      {
+        "text_en": "When we are sick, she cares for us.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_162874/s_017.mp3",
+        "text_vi": "Khi chúng con bị ốm, mẹ chăm sóc chúng con."
+      },
+      {
+        "text_en": "At night, mother continues to work at home.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_162874/s_018.mp3",
+        "text_vi": "Vào buổi tối, mẹ vẫn tiếp tục làm việc ở nhà."
+      },
+      {
+        "text_en": "There is always work from the shop.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_162874/s_019.mp3",
+        "text_vi": "Luôn có việc từ cửa hàng."
+      },
+      {
+        "text_en": "Sometimes she falls asleep at the table!",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_162874/s_020.mp3",
+        "text_vi": "Đôi khi mẹ ngủ gật trên bàn!"
+      },
+      {
+        "text_en": "Father makes sure that mother has time to relax, and he helps around the house.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_162874/s_021.mp3",
+        "text_vi": "Bố đảm bảo mẹ có thời gian thư giãn, và bố giúp đỡ việc nhà."
+      },
+      {
+        "text_en": "“You're a Super Mummy!” he says.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_162874/s_022.mp3",
+        "text_vi": "Bố nói: “Mẹ là một Siêu Mẹ!”"
+      },
+      {
+        "text_en": "“And you're my Super Super!” smiles mother.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_162874/s_023.mp3",
+        "text_vi": "Mẹ cười và nói: “Và bố là Siêu Siêu của mẹ!”"
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "Her phone rings almost non-stop.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_162874/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "Customers call to ask prices, and to place their orders.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_162874/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "They call to trace their orders, and to complain about their orders.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_162874/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "We often go to her shop in the afternoons.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_162874/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "We tell her about school.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_162874/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "But our conversations are always interrupted by customers eager for her attention.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_162874/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "We have fun with children who come to the shop with their parents.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_162874/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "Sometimes, mother has to serve as referee as well as help customers.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_162874/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "I think that she has super powers!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_162874/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "When we become too noisy, mother says, “Now sit quietly and watch TV.” She always adds, “But only for 30 minutes, while we take a break!”",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_162874/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "If we don't have schoolwork, sometimes mother asks me or my older sister to help her.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_162874/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "I am not always ready to help.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_162874/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "But I do it because I know she works so hard.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_162874/s_012.mp3"
+        },
+        {
+          "id": "ra_13",
+          "text_en": "As we walk home from the shop with the sun setting, we talk about our day.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_162874/s_013.mp3"
+        },
+        {
+          "id": "ra_14",
+          "text_en": "We have to hurry to keep up with her, but we love walking and talking with mother.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_162874/s_014.mp3"
+        },
+        {
+          "id": "ra_15",
+          "text_en": "She makes sure that we do homework, and have time to play.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_162874/s_015.mp3"
+        },
+        {
+          "id": "ra_16",
+          "text_en": "She makes sure that we eat vegetables and fruits, and drink water.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_162874/s_016.mp3"
+        },
+        {
+          "id": "ra_17",
+          "text_en": "When we are sick, she cares for us.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_162874/s_017.mp3"
+        },
+        {
+          "id": "ra_18",
+          "text_en": "At night, mother continues to work at home.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_162874/s_018.mp3"
+        },
+        {
+          "id": "ra_19",
+          "text_en": "There is always work from the shop.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_162874/s_019.mp3"
+        },
+        {
+          "id": "ra_20",
+          "text_en": "Sometimes she falls asleep at the table!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_162874/s_020.mp3"
+        },
+        {
+          "id": "ra_21",
+          "text_en": "Father makes sure that mother has time to relax, and he helps around the house.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_162874/s_021.mp3"
+        },
+        {
+          "id": "ra_22",
+          "text_en": "“You're a Super Mummy!” he says.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_162874/s_022.mp3"
+        },
+        {
+          "id": "ra_23",
+          "text_en": "“And you're my Super Super!” smiles mother.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_162874/s_023.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "What happens to her phone?",
+          "options_en": [
+            "It rings almost non-stop",
+            "She takes a break for 30 minutes",
+            "She falls asleep at the table"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "How often does her phone ring?",
+          "options_en": [
+            "Almost non-stop",
+            "In the afternoons",
+            "Only for 30 minutes"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s1_q1",
+          "type": "choice",
+          "question_en": "Why do customers call?",
+          "options_en": [
+            "To ask prices",
+            "To trace their orders",
+            "To play with the children"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s1_q2",
+          "type": "choice",
+          "question_en": "What do customers place when they call?",
+          "options_en": [
+            "Their orders",
+            "Schoolwork",
+            "TV time"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s2_q1",
+          "type": "choice",
+          "question_en": "Why do they call according to this sentence?",
+          "options_en": [
+            "To trace their orders",
+            "To ask prices",
+            "To help around the house"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s2_q2",
+          "type": "choice",
+          "question_en": "What do customers complain about?",
+          "options_en": [
+            "Their orders",
+            "Vegetables and fruits",
+            "Homework"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "Who often goes to her shop?",
+          "options_en": [
+            "We",
+            "Mother",
+            "Father"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "When do we go to her shop?",
+          "options_en": [
+            "In the afternoons",
+            "At night",
+            "After school"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p1_s1_q1",
+          "type": "choice",
+          "question_en": "What do we tell her about?",
+          "options_en": [
+            "School",
+            "Our day",
+            "Orders"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p1_s1_q2",
+          "type": "choice",
+          "question_en": "Who do we tell about school?",
+          "options_en": [
+            "Her",
+            "Father",
+            "Customers"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p1_s2_q1",
+          "type": "choice",
+          "question_en": "Who interrupts our conversations?",
+          "options_en": [
+            "Customers",
+            "Children",
+            "Father"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p1_s2_q2",
+          "type": "choice",
+          "question_en": "Why are our conversations interrupted?",
+          "options_en": [
+            "Because customers are eager for her attention",
+            "Because we are noisy",
+            "Because the phone rings"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "Who do we have fun with?",
+          "options_en": [
+            "children who come to the shop with their parents",
+            "customers who call to ask prices",
+            "father"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "Where do we have fun with children?",
+          "options_en": [
+            "at the shop",
+            "at home",
+            "at school"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p2_s1_q1",
+          "type": "choice",
+          "question_en": "Who has to serve as referee sometimes?",
+          "options_en": [
+            "mother",
+            "father",
+            "our older sister"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p2_s1_q2",
+          "type": "choice",
+          "question_en": "What does mother do as well as serve as referee?",
+          "options_en": [
+            "help customers",
+            "make dinner",
+            "help with homework"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p2_s2_q1",
+          "type": "choice",
+          "question_en": "What does the speaker think she has?",
+          "options_en": [
+            "super powers",
+            "a phone",
+            "a shop"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p2_s2_q2",
+          "type": "choice",
+          "question_en": "Who does the speaker think has super powers?",
+          "options_en": [
+            "she",
+            "father",
+            "children"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "Who tells the children to sit quietly and watch TV?",
+          "options_en": [
+            "Mother",
+            "Father",
+            "Customers"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "How long does mother say they can watch TV?",
+          "options_en": [
+            "30 minutes",
+            "Until they finish homework",
+            "Until the phone stops ringing"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "Who asks the narrator or her older sister to help?",
+          "options_en": [
+            "Mother",
+            "Father",
+            "Customers"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "When does mother ask them to help?",
+          "options_en": [
+            "When they don't have schoolwork",
+            "In the afternoons",
+            "At night"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p4_s1_q1",
+          "type": "choice",
+          "question_en": "Who is not always ready to help?",
+          "options_en": [
+            "The narrator (I)",
+            "The older sister",
+            "Mother"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p4_s1_q2",
+          "type": "choice",
+          "question_en": "How often is the narrator ready to help?",
+          "options_en": [
+            "Not always",
+            "Sometimes",
+            "Always"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p4_s2_q1",
+          "type": "choice",
+          "question_en": "Why does the narrator help her mother?",
+          "options_en": [
+            "Because she knows mother works so hard",
+            "Because mother works at night",
+            "Because father tells them to"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p4_s2_q2",
+          "type": "choice",
+          "question_en": "Who works so hard, according to the narrator?",
+          "options_en": [
+            "Mother",
+            "Father",
+            "Older sister"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "Where are we walking?",
+          "options_en": [
+            "Home from the shop",
+            "To her shop",
+            "To school"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "When are we walking home?",
+          "options_en": [
+            "With the sun setting",
+            "In the afternoons",
+            "At night"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p5_s1_q1",
+          "type": "choice",
+          "question_en": "Why do we have to hurry?",
+          "options_en": [
+            "To keep up with her",
+            "Because her phone rings",
+            "Because mother falls asleep"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p5_s1_q2",
+          "type": "choice",
+          "question_en": "Who do we love walking and talking with?",
+          "options_en": [
+            "Mother",
+            "Father",
+            "Our older sister"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "Who makes sure that we do homework and have time to play?",
+          "options_en": [
+            "She (mother)",
+            "Father",
+            "Customers"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "What does she make sure we do?",
+          "options_en": [
+            "Do homework and have time to play",
+            "Serve customers at the shop",
+            "Walk home with her"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p6_s1_q1",
+          "type": "choice",
+          "question_en": "What does she make sure we eat?",
+          "options_en": [
+            "Vegetables and fruits",
+            "Snacks from the shop",
+            "TV snacks"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p6_s1_q2",
+          "type": "choice",
+          "question_en": "What does she make sure we drink?",
+          "options_en": [
+            "Water",
+            "Orders",
+            "Tea on TV"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p6_s2_q1",
+          "type": "choice",
+          "question_en": "When does she care for us?",
+          "options_en": [
+            "When we are sick",
+            "When customers call",
+            "At night"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p6_s2_q2",
+          "type": "choice",
+          "question_en": "Who cares for us when we are sick?",
+          "options_en": [
+            "She (mother)",
+            "Father",
+            "Customers"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "When does mother continue to work at home?",
+          "options_en": [
+            "At night",
+            "In the afternoons",
+            "When we are sick"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "Who continues to work at home at night?",
+          "options_en": [
+            "Mother",
+            "Father",
+            "My older sister"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p7_s1_q1",
+          "type": "choice",
+          "question_en": "What is always from the shop?",
+          "options_en": [
+            "Work",
+            "Children",
+            "Vegetables and fruits"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p7_s1_q2",
+          "type": "choice",
+          "question_en": "Where does the work come from?",
+          "options_en": [
+            "The shop",
+            "The table",
+            "School"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p7_s2_q1",
+          "type": "choice",
+          "question_en": "Who sometimes falls asleep at the table?",
+          "options_en": [
+            "She (mother)",
+            "Father",
+            "One of the children"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p7_s2_q2",
+          "type": "choice",
+          "question_en": "Where does she sometimes fall asleep?",
+          "options_en": [
+            "At the table",
+            "In the shop",
+            "On the way home"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        }
+      ]
+    },
+    {
+      "paragraph_index": 8,
+      "questions": [
+        {
+          "id": "gl_p8_s0_q1",
+          "type": "choice",
+          "question_en": "Who makes sure that mother has time to relax?",
+          "options_en": [
+            "Father",
+            "Mother",
+            "Customers at the shop"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p8_s0_q2",
+          "type": "choice",
+          "question_en": "What does he do around the house?",
+          "options_en": [
+            "He helps around the house",
+            "He serves customers at the shop",
+            "He falls asleep at the table"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p8_s1_q1",
+          "type": "choice",
+          "question_en": "Who says, “You're a Super Mummy!”?",
+          "options_en": [
+            "He (father)",
+            "Mother",
+            "A customer"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p8_s1_q2",
+          "type": "choice",
+          "question_en": "What does he call mother?",
+          "options_en": [
+            "\"Super Mummy\"",
+            "\"Super Super\"",
+            "A shop owner"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p8_s2_q1",
+          "type": "choice",
+          "question_en": "Who smiles and says, “And you're my Super Super!”?",
+          "options_en": [
+            "Mother",
+            "Father",
+            "One of the children"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p8_s2_q2",
+          "type": "choice",
+          "question_en": "What does mother call him?",
+          "options_en": [
+            "\"my Super Super\"",
+            "\"a Super Mummy\"",
+            "a referee"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'Super Mummy and Super Super!'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "non-stop",
+      "meaning_vi": "không ngừng nghỉ",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "customers",
+      "meaning_vi": "khách hàng (người mua đồ)",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "place their orders",
+      "meaning_vi": "đặt hàng (yêu cầu mua đồ)",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "complain",
+      "meaning_vi": "phàn nàn (nói không hài lòng)",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "often",
+      "meaning_vi": "thường xuyên (làm gì đó nhiều lần)",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "shop",
+      "meaning_vi": "cửa hàng (nơi bán đồ)",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "interrupted",
+      "meaning_vi": "bị ngắt quãng (bị dừng lại giữa chừng)",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "attention",
+      "meaning_vi": "sự chú ý (nhìn vào, nghe theo)",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "sometimes",
+      "meaning_vi": "đôi khi (thỉnh thoảng, không phải lúc nào cũng vậy)",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "referee",
+      "meaning_vi": "trọng tài (người giải quyết tranh cãi)",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "super powers",
+      "meaning_vi": "siêu năng lực (sức mạnh đặc biệt)",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "noisy",
+      "meaning_vi": "ồn ào (làm ra tiếng động lớn)",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "quietly",
+      "meaning_vi": "yên lặng (không làm ra tiếng động)",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "break",
+      "meaning_vi": "nghỉ ngơi (dừng làm việc để thư giãn)",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "schoolwork",
+      "meaning_vi": "bài tập về nhà (việc học ở trường phải làm thêm ở nhà)",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "ready",
+      "meaning_vi": "sẵn sàng (chuẩn bị xong, có thể làm ngay)",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "hard",
+      "meaning_vi": "vất vả (làm việc nhiều, mệt mỏi)",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "setting",
+      "meaning_vi": "lặn (mặt trời đi xuống)",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "hurry",
+      "meaning_vi": "vội vàng (làm nhanh lên)",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "keep up with",
+      "meaning_vi": "theo kịp (đi cùng tốc độ)",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "makes sure",
+      "meaning_vi": "đảm bảo (chắc chắn điều gì đó xảy ra)",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "vegetables",
+      "meaning_vi": "rau củ (thức ăn từ cây)",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "fruits",
+      "meaning_vi": "trái cây (quả ngọt)",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "cares for",
+      "meaning_vi": "chăm sóc (quan tâm, giúp đỡ khi ốm)",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "continues",
+      "meaning_vi": "tiếp tục (làm tiếp, không dừng lại)",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "always",
+      "meaning_vi": "luôn luôn (lúc nào cũng vậy)",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "falls asleep",
+      "meaning_vi": "ngủ gật (ngủ thiếp đi một chút)",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "relax",
+      "meaning_vi": "thư giãn (nghỉ ngơi cho thoải mái)",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "around the house",
+      "meaning_vi": "việc nhà (những công việc trong nhà)",
+      "paragraph_index": 8
+    }
+  ]
+}

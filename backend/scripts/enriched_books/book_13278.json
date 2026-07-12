@@ -1,0 +1,734 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L2",
+  "level_label": "Cấp 2",
+  "topic": "Inside your body, the parts you cannot see",
+  "slug": "book_13278",
+  "audio_filename": "book_13278.mp3",
+  "book_slug": "book_13278",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_13278/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_13278/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_13278/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_13278/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_13278/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_13278/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_13278/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_13278/page_09.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_13278/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_13278/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_13278/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_13278/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_13278/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_13278/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_13278/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_13278/page_09.mp3"
+  ],
+  "book_attribution": {
+    "title": "Inside your body, the parts you cannot see",
+    "creators": [
+      "Meghna Pant"
+    ],
+    "publisher": "StoryWeaver Community",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: Inside your body, the parts you cannot see is written by Meghna Pant . © Meghna Pant , 2017. Some rights reserved. Released under CC BY 4.0 license. Images Attributions: Cover page: Inside the body Collage , by Meghna Pant © Meghna Pant, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 2: Rain, Mother, Daughter , by Meghna Pant © Meghna Pant, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 3: Brain Cartoon , by Meghna Pant © Meghna Pant, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 4: Heart Cartoon , by Meghna Pant © Meghna Pant, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 5: Lungs cartoon , by Meghna Pant © Meghna Pant, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 6: Stomach , by Meghna Pant © Meghna Pant, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 7: liver , by Meghna Pant © Meghna Pant, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 8: Kidney Cartoon , by Meghna Pant © Meghna Pant, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 9: sun mother daughter , by Meghna Pant © Meghna Pant, 2026. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/13278-inside-your-body-the-parts-you-cannot-see",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "Rain, Mother, Daughter , by Meghna Pant © Meghna Pant, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "Brain Cartoon , by Meghna Pant © Meghna Pant, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "Heart Cartoon , by Meghna Pant © Meghna Pant, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "Lungs cartoon , by Meghna Pant © Meghna Pant, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "Stomach , by Meghna Pant © Meghna Pant, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "liver , by Meghna Pant © Meghna Pant, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "Kidney Cartoon , by Meghna Pant © Meghna Pant, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "sun mother daughter , by Meghna Pant © Meghna Pant, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "Inside your body, the parts you cannot see",
+    "paragraphs_en": [
+      "\"It's raining and I am bored\", cried little Mini. \"Let's play a game identifying parts of body!\" \"I know all the body parts! Hands, feet, nose, eyes and tummy!\" \"Do you know there are parts inside, the ones we cannot see?\" \"What? Inside the body! Do Tell me.\" \"Just turn the page and sing along with me.\"",
+      "\"Inside your head is your bossy little brain Carefully protected from sun and rain\" Inside your head is your bossy little brain Carefully protected from sun and rain",
+      "\"A little below the head, inside your chest You will hear your heart beating without any rest\"",
+      "\"A pair of loyal lungs is present very close to heart They fill up and shrink like balloons as you breathe in and out\"",
+      "\"Now we reach your little tummy and that means food Inside is a little sac called stomach that stores what you chewed\"",
+      "\"Next to you stomach lies a liver so lovable It protects your body and keeps everything functional\"",
+      "\"You move down a little and reach a bean shaped kidney They usually come in pairs and make you go pee\"",
+      "\"There are more parts inside, not even I know them all Look the rain has stopped, so now go play with your ball\""
+    ],
+    "sentences": [
+      {
+        "text_en": "\"It's raining and I am bored\", cried little Mini.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13278/s_000.mp3",
+        "text_vi": "\"Trời đang mưa và con chán quá\", bé Mini kêu lên."
+      },
+      {
+        "text_en": "\"Let's play a game identifying parts of body!\" \"I know all the body parts!",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13278/s_001.mp3",
+        "text_vi": "\"Mình chơi trò đoán các bộ phận cơ thể đi!\" \"Con biết hết các bộ phận cơ thể rồi!"
+      },
+      {
+        "text_en": "Hands, feet, nose, eyes and tummy!\" \"Do you know there are parts inside, the ones we cannot see?\" \"What?",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13278/s_002.mp3",
+        "text_vi": "Tay, chân, mũi, mắt và bụng!\" \"Con có biết có những bộ phận ở bên trong mà mình không nhìn thấy không?\" \"Cái gì cơ?"
+      },
+      {
+        "text_en": "Inside the body!",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13278/s_003.mp3",
+        "text_vi": "Bên trong cơ thể!"
+      },
+      {
+        "text_en": "Do Tell me.\" \"Just turn the page and sing along with me.\"",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13278/s_004.mp3",
+        "text_vi": "Kể cho con nghe đi.\" \"Cứ lật trang và hát cùng tớ nhé.\""
+      },
+      {
+        "text_en": "\"Inside your head is your bossy little brain Carefully protected from sun and rain\" Inside your head is your bossy little brain Carefully protected from sun and rain",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13278/s_005.mp3",
+        "text_vi": "\"Bên trong đầu con là bộ não nhỏ bé hay ra lệnh Được bảo vệ cẩn thận khỏi nắng và mưa\""
+      },
+      {
+        "text_en": "\"A little below the head, inside your chest You will hear your heart beating without any rest\"",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13278/s_006.mp3",
+        "text_vi": "\"Thấp hơn đầu một chút, bên trong ngực con Con sẽ nghe thấy tim mình đập không ngừng nghỉ\""
+      },
+      {
+        "text_en": "\"A pair of loyal lungs is present very close to heart They fill up and shrink like balloons as you breathe in and out\"",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13278/s_007.mp3",
+        "text_vi": "\"Một cặp phổi trung thành nằm rất gần tim Chúng phồng lên và xẹp xuống như bong bóng khi con hít vào thở ra\""
+      },
+      {
+        "text_en": "\"Now we reach your little tummy and that means food Inside is a little sac called stomach that stores what you chewed\"",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13278/s_008.mp3",
+        "text_vi": "\"Bây giờ chúng ta đến bụng nhỏ của con và đó là nơi chứa thức ăn Bên trong là một cái túi nhỏ gọi là dạ dày để chứa những gì con đã nhai\""
+      },
+      {
+        "text_en": "\"Next to you stomach lies a liver so lovable It protects your body and keeps everything functional\"",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13278/s_009.mp3",
+        "text_vi": "\"Cạnh dạ dày con là một lá gan đáng yêu Nó bảo vệ cơ thể con và giữ cho mọi thứ hoạt động tốt\""
+      },
+      {
+        "text_en": "\"You move down a little and reach a bean shaped kidney They usually come in pairs and make you go pee\"",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13278/s_010.mp3",
+        "text_vi": "\"Con di chuyển xuống một chút và đến một quả thận hình hạt đậu Chúng thường có hai cái và giúp con đi tè\""
+      },
+      {
+        "text_en": "\"There are more parts inside, not even I know them all Look the rain has stopped, so now go play with your ball\"",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_13278/s_011.mp3",
+        "text_vi": "\"Còn nhiều bộ phận bên trong nữa, ngay cả tớ cũng không biết hết đâu Nhìn kìa, trời đã tạnh mưa rồi, giờ thì đi chơi bóng đi thôi\""
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "\"It's raining and I am bored\", cried little Mini.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13278/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "\"Let's play a game identifying parts of body!\" \"I know all the body parts!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13278/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "Hands, feet, nose, eyes and tummy!\" \"Do you know there are parts inside, the ones we cannot see?\" \"What?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13278/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "Inside the body!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13278/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "Do Tell me.\" \"Just turn the page and sing along with me.\"",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13278/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "\"Inside your head is your bossy little brain Carefully protected from sun and rain\" Inside your head is your bossy little brain Carefully protected from sun and rain",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13278/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "\"A little below the head, inside your chest You will hear your heart beating without any rest\"",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13278/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "\"A pair of loyal lungs is present very close to heart They fill up and shrink like balloons as you breathe in and out\"",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13278/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "\"Now we reach your little tummy and that means food Inside is a little sac called stomach that stores what you chewed\"",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13278/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "\"Next to you stomach lies a liver so lovable It protects your body and keeps everything functional\"",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13278/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "\"You move down a little and reach a bean shaped kidney They usually come in pairs and make you go pee\"",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13278/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "\"There are more parts inside, not even I know them all Look the rain has stopped, so now go play with your ball\"",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_13278/s_011.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "Who cried that it was raining and they were bored?",
+          "options_en": [
+            "little Mini",
+            "the bossy little brain",
+            "a pair of loyal lungs"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "Why did the speaker say they were bored?",
+          "options_en": [
+            "Because it's raining",
+            "Because the rain has stopped",
+            "Because they want to play with their ball"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s1_q1",
+          "type": "choice",
+          "question_en": "What game does the speaker suggest playing?",
+          "options_en": [
+            "A game identifying parts of body",
+            "Sing along",
+            "Turn the page"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s1_q2",
+          "type": "choice",
+          "question_en": "What does the other child say about body parts?",
+          "options_en": [
+            "I know all the body parts!",
+            "There are parts inside we cannot see",
+            "A little sac called stomach stores food"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s2_q1",
+          "type": "choice",
+          "question_en": "Which body parts are listed by the speaker?",
+          "options_en": [
+            "Hands, feet, nose, eyes and tummy",
+            "Brain, heart and lungs",
+            "A little sac called stomach"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s2_q2",
+          "type": "choice",
+          "question_en": "What question does the speaker ask after listing body parts?",
+          "options_en": [
+            "Do you know there are parts inside, the ones we cannot see?",
+            "They fill up and shrink like balloons as you breathe in and out",
+            "Next to your stomach lies a liver so lovable"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s3_q1",
+          "type": "choice",
+          "question_en": "Where did the speaker say the hidden parts are?",
+          "options_en": [
+            "Inside the body",
+            "Inside your head",
+            "Inside a little sac called stomach"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p0_s3_q2",
+          "type": "choice",
+          "question_en": "Which phrase does the speaker use to show the location?",
+          "options_en": [
+            "Inside the body!",
+            "Carefully protected from sun and rain",
+            "They usually come in pairs and make you go pee"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p0_s4_q1",
+          "type": "choice",
+          "question_en": "What does the listener ask after hearing about parts inside?",
+          "options_en": [
+            "Do tell me.",
+            "Look the rain has stopped",
+            "Now go play with your ball"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p0_s4_q2",
+          "type": "choice",
+          "question_en": "What does the speaker ask the listener to do next?",
+          "options_en": [
+            "Just turn the page and sing along with me",
+            "You will hear your heart beating without any rest",
+            "They fill up and shrink like balloons as you breathe in and out"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "What is inside your head?",
+          "options_en": [
+            "Your bossy little brain",
+            "Your heart",
+            "A pair of lungs"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "What is the correct answer to this question: From what is the brain protected?",
+          "options_en": [
+            "Sun and rain",
+            "Your ball",
+            "Food in your tummy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "Where will you hear your heart beating?",
+          "options_en": [
+            "Inside your chest",
+            "Inside your head",
+            "In your tummy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "What will you hear a little below the head?",
+          "options_en": [
+            "Your heart beating without any rest",
+            "A pair of lungs filling and shrinking",
+            "A little sac called stomach that stores food"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "Where is a pair of loyal lungs present?",
+          "options_en": [
+            "Very close to the heart",
+            "Inside your head",
+            "In your tummy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "How do the lungs behave as you breathe in and out?",
+          "options_en": [
+            "They fill up and shrink like balloons",
+            "They protect your body and keep everything functional",
+            "They store the food you chewed"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "What is inside your little tummy?",
+          "options_en": [
+            "a little sac called stomach",
+            "a bossy little brain",
+            "a pair of loyal lungs"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "What does the stomach store?",
+          "options_en": [
+            "what you chewed",
+            "your heartbeat",
+            "air you breathe"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "Where does a liver lie?",
+          "options_en": [
+            "Next to your stomach",
+            "Inside your head",
+            "In your chest"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "What does the liver do?",
+          "options_en": [
+            "It protects your body and keeps everything functional",
+            "It stores what you chewed",
+            "It makes you go pee"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "What do you reach when you move down a little?",
+          "options_en": [
+            "a bean shaped kidney",
+            "your heart",
+            "your stomach"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "What do kidneys usually make you do?",
+          "options_en": [
+            "make you go pee",
+            "make you breathe in and out",
+            "make your heart beat without any rest"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "What has stopped?",
+          "options_en": [
+            "the rain",
+            "your heart beating",
+            "your lungs filling"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "What are you told to do now?",
+          "options_en": [
+            "go play with your ball",
+            "turn the page and sing",
+            "identify parts of body"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'Inside your body, the parts you cannot see'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "bored",
+      "meaning_vi": "chán",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "cried",
+      "meaning_vi": "kêu lên",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "identifying",
+      "meaning_vi": "nhận biết",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "inside",
+      "meaning_vi": "bên trong",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "bossy",
+      "meaning_vi": "hay ra lệnh",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "brain",
+      "meaning_vi": "não",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "protected",
+      "meaning_vi": "được bảo vệ",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "carefully",
+      "meaning_vi": "cẩn thận",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "below",
+      "meaning_vi": "bên dưới",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "chest",
+      "meaning_vi": "ngực",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "beating",
+      "meaning_vi": "đập",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "rest",
+      "meaning_vi": "nghỉ ngơi",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "loyal",
+      "meaning_vi": "trung thành",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "lungs",
+      "meaning_vi": "phổi",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "shrink",
+      "meaning_vi": "co lại, xẹp xuống",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "breathe",
+      "meaning_vi": "hít thở",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "reach",
+      "meaning_vi": "đến, tới",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "sac",
+      "meaning_vi": "cái túi",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "stomach",
+      "meaning_vi": "dạ dày",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "chewed",
+      "meaning_vi": "đã nhai",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "lies",
+      "meaning_vi": "nằm",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "liver",
+      "meaning_vi": "gan",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "protects",
+      "meaning_vi": "bảo vệ",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "functional",
+      "meaning_vi": "hoạt động tốt",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "shaped",
+      "meaning_vi": "hình dạng",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "kidney",
+      "meaning_vi": "thận",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "pairs",
+      "meaning_vi": "cặp, đôi",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "pee",
+      "meaning_vi": "đi tè",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "more",
+      "meaning_vi": "nhiều hơn",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "even",
+      "meaning_vi": "ngay cả",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "stopped",
+      "meaning_vi": "đã tạnh",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "all",
+      "meaning_vi": "tất cả",
+      "paragraph_index": 7
+    }
+  ]
+}

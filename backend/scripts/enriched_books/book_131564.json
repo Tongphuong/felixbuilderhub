@@ -1,0 +1,813 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L1",
+  "level_label": "Cấp 1",
+  "topic": "The ice cream",
+  "slug": "book_131564",
+  "audio_filename": "book_131564.mp3",
+  "book_slug": "book_131564",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_131564/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_131564/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_131564/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_131564/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_131564/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_131564/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_131564/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_131564/page_09.jpg",
+    "https://audio.felixbuilderhub.com/books/book_131564/page_10.jpg",
+    "https://audio.felixbuilderhub.com/books/book_131564/page_11.jpg",
+    "https://audio.felixbuilderhub.com/books/book_131564/page_12.jpg",
+    "https://audio.felixbuilderhub.com/books/book_131564/page_13.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_131564/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_131564/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_131564/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_131564/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_131564/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_131564/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_131564/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_131564/page_09.mp3",
+    "https://audio.felixbuilderhub.com/books/book_131564/page_10.mp3",
+    "https://audio.felixbuilderhub.com/books/book_131564/page_11.mp3",
+    "https://audio.felixbuilderhub.com/books/book_131564/page_12.mp3",
+    "https://audio.felixbuilderhub.com/books/book_131564/page_13.mp3"
+  ],
+  "book_attribution": {
+    "title": "The ice cream",
+    "creators": [
+      "cam flower",
+      "Angie & Upesh",
+      "Brunda Anandarao",
+      "Dhiman Sarkar",
+      "Dixa Barooah",
+      "Eric Nii Addy",
+      "Jesse Breytenbach",
+      "Karen Vermeulen",
+      "Mary Anne Hampton",
+      "Melany Pietersen",
+      "Suvidha Mistry",
+      "Wesley van Eeden"
+    ],
+    "publisher": "StoryWeaver Community",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: The ice cream is translated by cam flower . The © for this translation lies with cam flower , 2020. Some rights reserved. Released under CC BY 4.0 license. Based on Original story: ' El Helado ' , by Lynn Choi . © Lynn Choi , 2019. Some rights reserved. Released under CC BY 4.0 license. Images Attributions: Cover page: Dog and icecream , by Karen Vermeulen © Book Dash, 2017. Some rights reserved. Released under CC BY 4.0 license. Page 2: One happy girl , by Dixa Barooah © Pratham Books, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 3: Ei Alphabet , by Brunda Anandarao © Brunda Anandarao, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 4: Girl licks ice cream happily , by Dhiman Sarkar © Room to Read, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 5: Girl licking icecream , by Mary Anne Hampton © Book Dash, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 6: Ei Alphabet , by Brunda Anandarao © Brunda Anandarao, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 7: Girl looking at her own stomach , by Angie & Upesh © Pratham Books, 2008. Some rights reserved. Released under CC BY 4.0 license. Page 8: Two girls crying , by Suvidha Mistry © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 9: Mom questioning daughter , by Eric Nii Addy © Sub-Saharan Publishers, 2013. Some rights reserved. Released under CC BY 4.0 license. Page 10: Girl crying to her mother , by Jesse Breytenbach © African Storybook Initiative, 2017. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/131564-the-ice-cream",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "One happy girl , by Dixa Barooah © Pratham Books, 2018. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "Ei Alphabet , by Brunda Anandarao © Brunda Anandarao, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "Girl licks ice cream happily , by Dhiman Sarkar © Room to Read, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "Girl licking icecream , by Mary Anne Hampton © Book Dash, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "Ei Alphabet , by Brunda Anandarao © Brunda Anandarao, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "Girl looking at her own stomach , by Angie & Upesh © Pratham Books, 2008. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "Two girls crying , by Suvidha Mistry © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "Mom questioning daughter , by Eric Nii Addy © Sub-Saharan Publishers, 2013. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 8,
+        "credit_text": "Girl crying to her mother , by Jesse Breytenbach © African Storybook Initiative, 2017. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 9,
+        "credit_text": "Illustration by Angie & Upesh, Brunda Anandarao, Dhiman Sarkar, Dixa Barooah, Eric Nii Addy, Jesse Breytenbach, Karen Vermeulen, Mary Anne Hampton, Melany Pietersen, Suvidha Mistry, Wesley van Eeden."
+      },
+      {
+        "page_index": 10,
+        "credit_text": "Illustration by Angie & Upesh, Brunda Anandarao, Dhiman Sarkar, Dixa Barooah, Eric Nii Addy, Jesse Breytenbach, Karen Vermeulen, Mary Anne Hampton, Melany Pietersen, Suvidha Mistry, Wesley van Eeden."
+      },
+      {
+        "page_index": 11,
+        "credit_text": "Illustration by Angie & Upesh, Brunda Anandarao, Dhiman Sarkar, Dixa Barooah, Eric Nii Addy, Jesse Breytenbach, Karen Vermeulen, Mary Anne Hampton, Melany Pietersen, Suvidha Mistry, Wesley van Eeden."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "The ice cream",
+    "paragraphs_en": [
+      "Maria is a girl that likes eating ice cream.",
+      "Her favorite ice cream flavor is vanilla.",
+      "She eats ice cream everyday.",
+      "But one day she ate more ice cream than usual.",
+      "One cup, Two Cups, Three Cups of ice cream !",
+      "Oh my goodness! , My stomach",
+      "My stomach hurts!",
+      "Maria's mother comes over and tell's Maria",
+      "\"Look Maria, I always tell you not to eat too much ice cream\"",
+      "Maria says ,\"Im sorry mom, but I love cream!\"",
+      "Mom says, \"Don't do this in the future!\"",
+      "Maria drinks tea and feels better. Maria decides never to eat that much ice cream again."
+    ],
+    "sentences": [
+      {
+        "text_en": "Maria is a girl that likes eating ice cream.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_131564/s_000.mp3",
+        "text_vi": "Maria là một cô bé thích ăn kem."
+      },
+      {
+        "text_en": "Her favorite ice cream flavor is vanilla.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_131564/s_001.mp3",
+        "text_vi": "Vị kem yêu thích của cô bé là vani."
+      },
+      {
+        "text_en": "She eats ice cream everyday.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_131564/s_002.mp3",
+        "text_vi": "Cô bé ăn kem mỗi ngày."
+      },
+      {
+        "text_en": "But one day she ate more ice cream than usual.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_131564/s_003.mp3",
+        "text_vi": "Nhưng một ngày nọ, cô bé ăn nhiều kem hơn bình thường."
+      },
+      {
+        "text_en": "One cup, Two Cups, Three Cups of ice cream !",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_131564/s_004.mp3",
+        "text_vi": "Một ly, hai ly, ba ly kem!"
+      },
+      {
+        "text_en": "Oh my goodness!",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_131564/s_005.mp3",
+        "text_vi": "Ôi trời ơi!"
+      },
+      {
+        "text_en": ", My stomach",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_131564/s_006.mp3",
+        "text_vi": "Bụng của tôi"
+      },
+      {
+        "text_en": "My stomach hurts!",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_131564/s_007.mp3",
+        "text_vi": "Bụng của tôi đau quá!"
+      },
+      {
+        "text_en": "Maria's mother comes over and tell's Maria",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_131564/s_008.mp3",
+        "text_vi": "Mẹ của Maria đến và nói với Maria"
+      },
+      {
+        "text_en": "\"Look Maria, I always tell you not to eat too much ice cream\"",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_131564/s_009.mp3",
+        "text_vi": "“Nhìn này Maria, mẹ luôn nói con đừng ăn quá nhiều kem.”"
+      },
+      {
+        "text_en": "Maria says ,\"Im sorry mom, but I love cream!\"",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_131564/s_010.mp3",
+        "text_vi": "Maria nói, “Con xin lỗi mẹ, nhưng con yêu kem!”"
+      },
+      {
+        "text_en": "Mom says, \"Don't do this in the future!\"",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_131564/s_011.mp3",
+        "text_vi": "Mẹ nói, “Đừng làm thế nữa trong tương lai!”"
+      },
+      {
+        "text_en": "Maria drinks tea and feels better.",
+        "paragraph_index": 11,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_131564/s_012.mp3",
+        "text_vi": "Maria uống trà và cảm thấy khỏe hơn."
+      },
+      {
+        "text_en": "Maria decides never to eat that much ice cream again.",
+        "paragraph_index": 11,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_131564/s_013.mp3",
+        "text_vi": "Maria quyết định sẽ không bao giờ ăn nhiều kem như vậy nữa."
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "Maria is a girl that likes eating ice cream.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_131564/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "Her favorite ice cream flavor is vanilla.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_131564/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "She eats ice cream everyday.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_131564/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "But one day she ate more ice cream than usual.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_131564/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "One cup, Two Cups, Three Cups of ice cream !",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_131564/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "Oh my goodness!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_131564/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": ", My stomach",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_131564/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "My stomach hurts!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_131564/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "Maria's mother comes over and tell's Maria",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_131564/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "\"Look Maria, I always tell you not to eat too much ice cream\"",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_131564/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "Maria says ,\"Im sorry mom, but I love cream!\"",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_131564/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "Mom says, \"Don't do this in the future!\"",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_131564/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "Maria drinks tea and feels better.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_131564/s_012.mp3"
+        },
+        {
+          "id": "ra_13",
+          "text_en": "Maria decides never to eat that much ice cream again.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_131564/s_013.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "What does Maria like?",
+          "options_en": [
+            "eating ice cream",
+            "vanilla",
+            "drinking tea"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "Who is Maria?",
+          "options_en": [
+            "a girl that likes eating ice cream",
+            "a girl that likes vanilla",
+            "a girl whose stomach hurts"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "What is her favorite ice cream flavor?",
+          "options_en": [
+            "vanilla",
+            "tea",
+            "one cup"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "Whose favorite ice cream flavor is vanilla?",
+          "options_en": [
+            "Maria",
+            "her mother",
+            "Maria's cup"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "What does she eat everyday?",
+          "options_en": [
+            "Ice cream",
+            "Tea",
+            "Vanilla ice cream"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "When does she eat ice cream?",
+          "options_en": [
+            "Everyday",
+            "One day",
+            "After eating three cups"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "What did she eat more of?",
+          "options_en": [
+            "ice cream",
+            "vanilla",
+            "tea"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "When did she eat more ice cream?",
+          "options_en": [
+            "one day",
+            "every day",
+            "after drinking tea"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "How many cups of ice cream are mentioned?",
+          "options_en": [
+            "Three cups",
+            "Vanilla",
+            "Tea"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "What is being counted in the sentence?",
+          "options_en": [
+            "Cups of ice cream",
+            "Maria's mother",
+            "Tea"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "What kind of sentence is this?",
+          "options_en": [
+            "An exclamation",
+            "Vanilla",
+            "Ice cream"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "How does the speaker sound?",
+          "options_en": [
+            "Surprised",
+            "Tea",
+            "Mother"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p5_s1_q1",
+          "type": "choice",
+          "question_en": "What word names a body part?",
+          "options_en": [
+            "stomach",
+            "vanilla",
+            "tea"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p5_s1_q2",
+          "type": "choice",
+          "question_en": "Whose stomach is mentioned?",
+          "options_en": [
+            "My",
+            "Maria's",
+            "Mom's"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "What hurts?",
+          "options_en": [
+            "My stomach",
+            "Ice cream",
+            "Tea"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "How does the speaker feel?",
+          "options_en": [
+            "They are in pain",
+            "They are happy",
+            "They love ice cream"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "Who comes over?",
+          "options_en": [
+            "Maria's mother",
+            "Maria",
+            "Maria's stomach"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "Who does Maria's mother tell?",
+          "options_en": [
+            "Maria",
+            "Her stomach",
+            "Maria's favorite flavor"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        }
+      ]
+    },
+    {
+      "paragraph_index": 8,
+      "questions": [
+        {
+          "id": "gl_p8_s0_q1",
+          "type": "choice",
+          "question_en": "Who is being addressed?",
+          "options_en": [
+            "Maria",
+            "Mom",
+            "Her friend"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p8_s0_q2",
+          "type": "choice",
+          "question_en": "What does the speaker tell Maria not to do?",
+          "options_en": [
+            "Eat too much ice cream",
+            "Eat ice cream every day",
+            "Eat three cups of ice cream"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        }
+      ]
+    },
+    {
+      "paragraph_index": 9,
+      "questions": [
+        {
+          "id": "gl_p9_s0_q1",
+          "type": "choice",
+          "question_en": "Who says, \"I'm sorry mom, but I love cream!\"?",
+          "options_en": [
+            "Maria",
+            "Her mom",
+            "The ice cream"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p9_s0_q2",
+          "type": "choice",
+          "question_en": "Who is Maria speaking to in the sentence?",
+          "options_en": [
+            "Mom",
+            "Her stomach",
+            "Tea"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        }
+      ]
+    },
+    {
+      "paragraph_index": 10,
+      "questions": [
+        {
+          "id": "gl_p10_s0_q1",
+          "type": "choice",
+          "question_en": "Who says, \"Don't do this in the future!\"?",
+          "options_en": [
+            "Mom",
+            "Maria",
+            "Ice cream"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p10_s0_q2",
+          "type": "choice",
+          "question_en": "What does Mom say?",
+          "options_en": [
+            "Don't do this in the future!",
+            "Look Maria, I always tell you not to eat too much ice cream",
+            "I'm sorry mom, but I love cream!"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        }
+      ]
+    },
+    {
+      "paragraph_index": 11,
+      "questions": [
+        {
+          "id": "gl_p11_s0_q1",
+          "type": "choice",
+          "question_en": "Who drinks tea?",
+          "options_en": [
+            "Maria",
+            "Maria's mother",
+            "a girl that likes eating ice cream"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p11_s0_q2",
+          "type": "choice",
+          "question_en": "How does Maria feel after drinking tea?",
+          "options_en": [
+            "Better",
+            "Her stomach hurts",
+            "Sorry"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p11_s1_q1",
+          "type": "choice",
+          "question_en": "What does Maria decide about eating ice cream?",
+          "options_en": [
+            "She decides never to eat that much ice cream again",
+            "She decides to eat more ice cream",
+            "She decides to tell her mom"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p11_s1_q2",
+          "type": "choice",
+          "question_en": "When does Maria decide not to eat that much ice cream?",
+          "options_en": [
+            "Never again",
+            "Every day",
+            "After her mother tells her"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'The ice cream'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "likes",
+      "meaning_vi": "thích",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "eating",
+      "meaning_vi": "ăn",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "favorite",
+      "meaning_vi": "yêu thích nhất",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "flavor",
+      "meaning_vi": "vị",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "everyday",
+      "meaning_vi": "mỗi ngày",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "usual",
+      "meaning_vi": "bình thường",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "than",
+      "meaning_vi": "hơn",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "cup",
+      "meaning_vi": "ly/cốc",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "goodness",
+      "meaning_vi": "trời ơi (khi ngạc nhiên)",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "stomach",
+      "meaning_vi": "bụng",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "hurts",
+      "meaning_vi": "đau",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "mother",
+      "meaning_vi": "mẹ",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "comes over",
+      "meaning_vi": "đến",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "always",
+      "meaning_vi": "luôn luôn",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "too much",
+      "meaning_vi": "quá nhiều",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "sorry",
+      "meaning_vi": "xin lỗi",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "love",
+      "meaning_vi": "yêu/thích",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "future",
+      "meaning_vi": "tương lai",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "drinks",
+      "meaning_vi": "uống",
+      "paragraph_index": 11
+    },
+    {
+      "word_en": "better",
+      "meaning_vi": "tốt hơn/khỏe hơn",
+      "paragraph_index": 11
+    },
+    {
+      "word_en": "decides",
+      "meaning_vi": "quyết định",
+      "paragraph_index": 11
+    },
+    {
+      "word_en": "never",
+      "meaning_vi": "không bao giờ",
+      "paragraph_index": 11
+    }
+  ]
+}

@@ -1,0 +1,1535 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L3",
+  "level_label": "Cấp 3",
+  "topic": "Becky and Buster",
+  "slug": "book_141088",
+  "audio_filename": "book_141088.mp3",
+  "book_slug": "book_141088",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_141088/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_141088/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_141088/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_141088/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_141088/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_141088/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_141088/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_141088/page_09.jpg",
+    "https://audio.felixbuilderhub.com/books/book_141088/page_10.jpg",
+    "https://audio.felixbuilderhub.com/books/book_141088/page_11.jpg",
+    "https://audio.felixbuilderhub.com/books/book_141088/page_12.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_141088/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_141088/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_141088/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_141088/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_141088/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_141088/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_141088/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_141088/page_09.mp3",
+    "https://audio.felixbuilderhub.com/books/book_141088/page_10.mp3",
+    "https://audio.felixbuilderhub.com/books/book_141088/page_11.mp3",
+    "https://audio.felixbuilderhub.com/books/book_141088/page_12.mp3"
+  ],
+  "book_attribution": {
+    "title": "Becky and Buster",
+    "creators": [
+      "Sara Dutt",
+      "Canato Jimo",
+      "Candace di Talamo",
+      "Rijuta Ghate",
+      "Santosh Pujari",
+      "Zainab Tambawalla"
+    ],
+    "publisher": "StoryWeaver Community",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: Becky and Buster is written by Sara Dutt . © Sara Dutt , 2020. Some rights reserved. Released under CC BY 4.0 license. Images Attributions: Cover page: Girl hugging a dog , by Candace di Talamo © Book Dash, 2014. Some rights reserved. Released under CC BY 4.0 license. Page 2: Girl peeping out of a window , by Zainab Tambawalla © Pratham Books, 2011. Some rights reserved. Released under CC BY 4.0 license. Page 3: A girl at the door , by Canato Jimo © Pratham Books, 2017. Some rights reserved. Released under CC BY 4.0 license. Page 4: Girl showing hands and dog showing tail , by Santosh Pujari © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license. Page 5: Girl hugging a dog , by Candace di Talamo © Book Dash, 2014. Some rights reserved. Released under CC BY 4.0 license. Page 6: Girl and dog dancing , by Santosh Pujari © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license. Page 7: A girl pretending to sleep , by Rijuta Ghate © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license. Page 8: Girl and dog , by Santosh Pujari © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license. Page 9: Girl and dog pointing at ears , by Santosh Pujari © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license. Page 10: Girl with dog , by Santosh Pujari © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license. Page 11: Girl and dog sticking out tongue , by Santosh Pujari © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/141088-becky-and-buster",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "Girl peeping out of a window , by Zainab Tambawalla © Pratham Books, 2011. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "A girl at the door , by Canato Jimo © Pratham Books, 2017. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "Girl showing hands and dog showing tail , by Santosh Pujari © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "Girl hugging a dog , by Candace di Talamo © Book Dash, 2014. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "Girl and dog dancing , by Santosh Pujari © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "A girl pretending to sleep , by Rijuta Ghate © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "Girl and dog , by Santosh Pujari © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "Girl and dog pointing at ears , by Santosh Pujari © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 8,
+        "credit_text": "Girl with dog , by Santosh Pujari © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 9,
+        "credit_text": "Girl and dog sticking out tongue , by Santosh Pujari © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 10,
+        "credit_text": "Illustration by Canato Jimo, Candace di Talamo, Rijuta Ghate, Santosh Pujari, Zainab Tambawalla."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "Becky and Buster",
+    "paragraphs_en": [
+      "One day Becky was playing in the living room when she saw from the window someone coming towards their house. She wondered \"Who it could be? \"When she looked carefully, she got excited to see her grandmother outside her house.",
+      "Becky was happy and excited as she loved her grandmother who always used to play with her. Becky ran towards the door to greet grandma. As she was about to open the door, Becky heard the sound of a dog.",
+      "Becky thought maybe grandma got her dog 'Ginger' along , but when she opened the door ........ Wow!!!!Becky saw a puppy in her grandmother's lap. Becky was excited as well as confused and eager to find out whose puppy was grandma carrying?",
+      "Becky asked, \" Grandma where did you get this puppy from?, \" Whose puppy is this?\" Grandma smiled and said, \" This is your puppy Becky, I got it for you.\" Becky was thrilled to hear this. She always wanted to have a puppy. Becky hugged grandma and took the puppy.",
+      "Becky played with grandma and the puppy all day. Grandma asked, \"Becky , what are you going to name the puppy?\" Becky thought for a while....hm..hm..hm... and then with excited tone replied,\" BUSTER\"!!.",
+      "It was night everyone had dinner and went off to sleep. Becky and Buster were sleeping in Becky's room. Whoosh.....Whooosh....., Becky heard a voice, she got up to see. She looked at Buster and said,\" Who was making this noise?\"",
+      "Buster sat next to Becky and said,\" I need your help.\" Becky was frightened and looked carefully. \"Yes , its Buster who is talking.....\" she got excited, now her puppy could talk.",
+      "Buster said sadly,\"I need your help, Becky, I love my mother and I am missing her, I want to go back to her.\" He looked upset and asked, \"Can you take me back to her, please?\"Becky was sad and told him she will definitely help him.",
+      "Next morning when grandma was going back Becky asked her Grandma ,\"Can me and Buster come along with you to spend sometime at your house?\" Grandma agreed and said, \"Yes, of course!\"Becky got thrilled to hear that.",
+      "When they reached grandma's house Becky saw Ginger sitting sadly in her kennel. As soon as Buster saw Ginger his mother.... he struggled to get down from Becky's lap and ran towards her. Grandma was shocked. Becky said, \"Grandma this is a magical dog who could talk to me,I don't want to keep him away from his mother. I want you to keephim here.\"",
+      "Grandma was touched to see how caring and thoughtful Becky was. She said, \"Alright dear, they will stay together but promise you will come over and meet him every Sunday.\" Becky was happy to hear this and hugged her grandmother. She said goodbye to Buster and Ginger and went back home smiling."
+    ],
+    "sentences": [
+      {
+        "text_en": "One day Becky was playing in the living room when she saw from the window someone coming towards their house.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141088/s_000.mp3",
+        "text_vi": "Một ngày nọ, Becky đang chơi trong phòng khách thì nhìn qua cửa sổ thấy có người đang đi về phía nhà mình."
+      },
+      {
+        "text_en": "She wondered \"Who it could be?",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141088/s_001.mp3",
+        "text_vi": "Cô bé tự hỏi: \"Ai vậy nhỉ?\""
+      },
+      {
+        "text_en": "\"When she looked carefully, she got excited to see her grandmother outside her house.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141088/s_002.mp3",
+        "text_vi": "Khi nhìn kĩ, cô bé rất vui mừng khi thấy bà ngoại đang đứng ngoài nhà."
+      },
+      {
+        "text_en": "Becky was happy and excited as she loved her grandmother who always used to play with her.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141088/s_003.mp3",
+        "text_vi": "Becky rất vui và hào hứng vì cô bé yêu bà ngoại, người luôn chơi đùa cùng cô bé."
+      },
+      {
+        "text_en": "Becky ran towards the door to greet grandma.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141088/s_004.mp3",
+        "text_vi": "Becky chạy về phía cửa để chào bà."
+      },
+      {
+        "text_en": "As she was about to open the door, Becky heard the sound of a dog.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141088/s_005.mp3",
+        "text_vi": "Khi cô bé sắp mở cửa, Becky nghe thấy tiếng chó sủa."
+      },
+      {
+        "text_en": "Becky thought maybe grandma got her dog 'Ginger' along , but when she opened the door ........",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141088/s_006.mp3",
+        "text_vi": "Becky nghĩ có lẽ bà mang theo chú chó Ginger của bà, nhưng khi cô bé mở cửa..."
+      },
+      {
+        "text_en": "Wow!!!!Becky saw a puppy in her grandmother's lap.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141088/s_007.mp3",
+        "text_vi": "Ôi chao! Becky thấy một chú chó con đang nằm trong lòng bà ngoại."
+      },
+      {
+        "text_en": "Becky was excited as well as confused and eager to find out whose puppy was grandma carrying?",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141088/s_008.mp3",
+        "text_vi": "Becky vừa hào hứng vừa bối rối và rất muốn biết chú chó con mà bà đang bế là của ai."
+      },
+      {
+        "text_en": "Becky asked, \" Grandma where did you get this puppy from?, \" Whose puppy is this?\" Grandma smiled and said, \" This is your puppy Becky, I got it for you.\" Becky was thrilled to hear this.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141088/s_009.mp3",
+        "text_vi": "Becky hỏi: \"Bà ơi, bà có chú chó con này từ đâu vậy ạ? Chú chó này của ai ạ?\" Bà mỉm cười và nói: \"Đây là chó con của cháu đó Becky, bà mua cho cháu đấy.\" Becky rất vui sướng khi nghe điều này."
+      },
+      {
+        "text_en": "She always wanted to have a puppy.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141088/s_010.mp3",
+        "text_vi": "Cô bé luôn muốn có một chú chó con."
+      },
+      {
+        "text_en": "Becky hugged grandma and took the puppy.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141088/s_011.mp3",
+        "text_vi": "Becky ôm bà và bế chú chó con."
+      },
+      {
+        "text_en": "Becky played with grandma and the puppy all day.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141088/s_012.mp3",
+        "text_vi": "Becky chơi với bà và chú chó con cả ngày."
+      },
+      {
+        "text_en": "Grandma asked, \"Becky , what are you going to name the puppy?\" Becky thought for a while....hm..hm..hm...",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141088/s_013.mp3",
+        "text_vi": "Bà hỏi: \"Becky, cháu sẽ đặt tên cho chú chó con là gì?\" Becky suy nghĩ một lúc... ừm... ừm... ừm..."
+      },
+      {
+        "text_en": "and then with excited tone replied,\" BUSTER\"!!.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141088/s_014.mp3",
+        "text_vi": "rồi với giọng hào hứng, cô bé trả lời: \"BUSTER\"!!"
+      },
+      {
+        "text_en": "It was night everyone had dinner and went off to sleep.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141088/s_015.mp3",
+        "text_vi": "Đã tối, mọi người ăn tối xong và đi ngủ."
+      },
+      {
+        "text_en": "Becky and Buster were sleeping in Becky's room.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141088/s_016.mp3",
+        "text_vi": "Becky và Buster đang ngủ trong phòng của Becky."
+      },
+      {
+        "text_en": "Whoosh.....Whooosh....., Becky heard a voice, she got up to see.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141088/s_017.mp3",
+        "text_vi": "Xoẹt... Xoẹt..., Becky nghe thấy một tiếng động, cô bé bật dậy nhìn."
+      },
+      {
+        "text_en": "She looked at Buster and said,\" Who was making this noise?\"",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141088/s_018.mp3",
+        "text_vi": "Cô bé nhìn Buster và nói: \"Ai đang gây ra tiếng động này vậy?\""
+      },
+      {
+        "text_en": "Buster sat next to Becky and said,\" I need your help.\" Becky was frightened and looked carefully.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141088/s_019.mp3",
+        "text_vi": "Buster ngồi cạnh Becky và nói: \"Mình cần bạn giúp.\" Becky sợ hãi và nhìn kĩ."
+      },
+      {
+        "text_en": "\"Yes , its Buster who is talking.....\" she got excited, now her puppy could talk.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141088/s_020.mp3",
+        "text_vi": "\"Đúng rồi, là Buster đang nói...\" cô bé hào hứng, giờ thì chú chó con của cô bé có thể nói chuyện được rồi."
+      },
+      {
+        "text_en": "Buster said sadly,\"I need your help, Becky, I love my mother and I am missing her, I want to go back to her.\" He looked upset and asked, \"Can you take me back to her, please?\"Becky was sad and told him she will definitely help him.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141088/s_021.mp3",
+        "text_vi": "Buster buồn bã nói: \"Mình cần bạn giúp, Becky, mình yêu mẹ mình và mình đang nhớ mẹ, mình muốn quay về với mẹ.\" Chú chó trông buồn bã và hỏi: \"Bạn có thể đưa mình về với mẹ không, làm ơn?\" Becky buồn và nói với chú chó rằng cô bé chắc chắn sẽ giúp."
+      },
+      {
+        "text_en": "Next morning when grandma was going back Becky asked her Grandma ,\"Can me and Buster come along with you to spend sometime at your house?\" Grandma agreed and said, \"Yes, of course!\"Becky got thrilled to hear that.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141088/s_022.mp3",
+        "text_vi": "Sáng hôm sau, khi bà ngoại chuẩn bị về, Becky hỏi bà: \"Bà ơi, cháu và Buster có thể đi cùng bà để ở nhà bà một thời gian được không ạ?\" Bà đồng ý và nói: \"Được chứ, tất nhiên rồi!\" Becky rất vui sướng khi nghe điều đó."
+      },
+      {
+        "text_en": "When they reached grandma's house Becky saw Ginger sitting sadly in her kennel.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141088/s_023.mp3",
+        "text_vi": "Khi đến nhà bà ngoại, Becky thấy Ginger đang ngồi buồn bã trong chuồng của nó."
+      },
+      {
+        "text_en": "As soon as Buster saw Ginger his mother....",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141088/s_024.mp3",
+        "text_vi": "Ngay khi Buster nhìn thấy Ginger, mẹ của nó..."
+      },
+      {
+        "text_en": "he struggled to get down from Becky's lap and ran towards her.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141088/s_025.mp3",
+        "text_vi": "nó cố gắng nhảy xuống khỏi lòng Becky và chạy về phía mẹ."
+      },
+      {
+        "text_en": "Grandma was shocked.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141088/s_026.mp3",
+        "text_vi": "Bà ngoại bị sốc."
+      },
+      {
+        "text_en": "Becky said, \"Grandma this is a magical dog who could talk to me,I don't want to keep him away from his mother.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141088/s_027.mp3",
+        "text_vi": "Becky nói: \"Bà ơi, đây là một chú chó thần kì có thể nói chuyện với cháu, cháu không muốn giữ nó xa mẹ nó."
+      },
+      {
+        "text_en": "I want you to keephim here.\"",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141088/s_028.mp3",
+        "text_vi": "Cháu muốn bà giữ nó ở đây.\""
+      },
+      {
+        "text_en": "Grandma was touched to see how caring and thoughtful Becky was.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141088/s_029.mp3",
+        "text_vi": "Bà ngoại cảm động khi thấy Becky chu đáo và biết quan tâm như thế nào."
+      },
+      {
+        "text_en": "She said, \"Alright dear, they will stay together but promise you will come over and meet him every Sunday.\" Becky was happy to hear this and hugged her grandmother.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141088/s_030.mp3",
+        "text_vi": "Bà nói: \"Được rồi con yêu, chúng sẽ ở cùng nhau nhưng hứa là cháu sẽ đến thăm chúng vào mỗi Chủ Nhật nhé.\" Becky vui vẻ nghe điều này và ôm bà ngoại."
+      },
+      {
+        "text_en": "She said goodbye to Buster and Ginger and went back home smiling.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_141088/s_031.mp3",
+        "text_vi": "Cô bé chào tạm biệt Buster và Ginger rồi về nhà với nụ cười trên môi."
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "One day Becky was playing in the living room when she saw from the window someone coming towards their house.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141088/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "She wondered \"Who it could be?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141088/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "\"When she looked carefully, she got excited to see her grandmother outside her house.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141088/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "Becky was happy and excited as she loved her grandmother who always used to play with her.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141088/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "Becky ran towards the door to greet grandma.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141088/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "As she was about to open the door, Becky heard the sound of a dog.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141088/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "Becky thought maybe grandma got her dog 'Ginger' along , but when she opened the door ........",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141088/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "Wow!!!!Becky saw a puppy in her grandmother's lap.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141088/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "Becky was excited as well as confused and eager to find out whose puppy was grandma carrying?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141088/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "Becky asked, \" Grandma where did you get this puppy from?, \" Whose puppy is this?\" Grandma smiled and said, \" This is your puppy Becky, I got it for you.\" Becky was thrilled to hear this.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141088/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "She always wanted to have a puppy.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141088/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "Becky hugged grandma and took the puppy.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141088/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "Becky played with grandma and the puppy all day.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141088/s_012.mp3"
+        },
+        {
+          "id": "ra_13",
+          "text_en": "Grandma asked, \"Becky , what are you going to name the puppy?\" Becky thought for a while....hm..hm..hm...",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141088/s_013.mp3"
+        },
+        {
+          "id": "ra_14",
+          "text_en": "and then with excited tone replied,\" BUSTER\"!!.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141088/s_014.mp3"
+        },
+        {
+          "id": "ra_15",
+          "text_en": "It was night everyone had dinner and went off to sleep.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141088/s_015.mp3"
+        },
+        {
+          "id": "ra_16",
+          "text_en": "Becky and Buster were sleeping in Becky's room.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141088/s_016.mp3"
+        },
+        {
+          "id": "ra_17",
+          "text_en": "Whoosh.....Whooosh....., Becky heard a voice, she got up to see.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141088/s_017.mp3"
+        },
+        {
+          "id": "ra_18",
+          "text_en": "She looked at Buster and said,\" Who was making this noise?\"",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141088/s_018.mp3"
+        },
+        {
+          "id": "ra_19",
+          "text_en": "Buster sat next to Becky and said,\" I need your help.\" Becky was frightened and looked carefully.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141088/s_019.mp3"
+        },
+        {
+          "id": "ra_20",
+          "text_en": "\"Yes , its Buster who is talking.....\" she got excited, now her puppy could talk.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141088/s_020.mp3"
+        },
+        {
+          "id": "ra_21",
+          "text_en": "Buster said sadly,\"I need your help, Becky, I love my mother and I am missing her, I want to go back to her.\" He looked upset and asked, \"Can you take me back to her, please?\"Becky was sad and told him she will definitely help him.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141088/s_021.mp3"
+        },
+        {
+          "id": "ra_22",
+          "text_en": "Next morning when grandma was going back Becky asked her Grandma ,\"Can me and Buster come along with you to spend sometime at your house?\" Grandma agreed and said, \"Yes, of course!\"Becky got thrilled to hear that.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141088/s_022.mp3"
+        },
+        {
+          "id": "ra_23",
+          "text_en": "When they reached grandma's house Becky saw Ginger sitting sadly in her kennel.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141088/s_023.mp3"
+        },
+        {
+          "id": "ra_24",
+          "text_en": "As soon as Buster saw Ginger his mother....",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141088/s_024.mp3"
+        },
+        {
+          "id": "ra_25",
+          "text_en": "he struggled to get down from Becky's lap and ran towards her.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141088/s_025.mp3"
+        },
+        {
+          "id": "ra_26",
+          "text_en": "Grandma was shocked.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141088/s_026.mp3"
+        },
+        {
+          "id": "ra_27",
+          "text_en": "Becky said, \"Grandma this is a magical dog who could talk to me,I don't want to keep him away from his mother.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141088/s_027.mp3"
+        },
+        {
+          "id": "ra_28",
+          "text_en": "I want you to keephim here.\"",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141088/s_028.mp3"
+        },
+        {
+          "id": "ra_29",
+          "text_en": "Grandma was touched to see how caring and thoughtful Becky was.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141088/s_029.mp3"
+        },
+        {
+          "id": "ra_30",
+          "text_en": "She said, \"Alright dear, they will stay together but promise you will come over and meet him every Sunday.\" Becky was happy to hear this and hugged her grandmother.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141088/s_030.mp3"
+        },
+        {
+          "id": "ra_31",
+          "text_en": "She said goodbye to Buster and Ginger and went back home smiling.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_141088/s_031.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "Who was playing in the living room?",
+          "options_en": [
+            "Becky",
+            "Grandma",
+            "Buster"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "Where was Becky playing?",
+          "options_en": [
+            "In the living room",
+            "At Grandma's house",
+            "In Becky's room"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s1_q1",
+          "type": "choice",
+          "question_en": "What did she wonder?",
+          "options_en": [
+            "Who it could be",
+            "Why the dog barked",
+            "Where to go"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s1_q2",
+          "type": "choice",
+          "question_en": "Who wondered \"Who it could be?\"",
+          "options_en": [
+            "She (Becky)",
+            "Grandma",
+            "Ginger"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s2_q1",
+          "type": "choice",
+          "question_en": "Who did she get excited to see?",
+          "options_en": [
+            "Her grandmother",
+            "A puppy",
+            "Ginger"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s2_q2",
+          "type": "choice",
+          "question_en": "Where was her grandmother when Becky saw her?",
+          "options_en": [
+            "Outside her house",
+            "In the living room",
+            "In the kennel"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "Who did Becky love?",
+          "options_en": [
+            "Her grandmother",
+            "Buster",
+            "Ginger"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "Why was Becky happy and excited?",
+          "options_en": [
+            "Because she loved her grandmother who used to play with her",
+            "Because she found a puppy",
+            "Because she saw someone at the window"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p1_s1_q1",
+          "type": "choice",
+          "question_en": "Where did Becky run to?",
+          "options_en": [
+            "Towards the door",
+            "To her grandmother's house",
+            "To the kennel"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p1_s1_q2",
+          "type": "choice",
+          "question_en": "Why did Becky run towards the door?",
+          "options_en": [
+            "To greet grandma",
+            "To catch Ginger",
+            "To open the window"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p1_s2_q1",
+          "type": "choice",
+          "question_en": "What did Becky hear as she was about to open the door?",
+          "options_en": [
+            "The sound of a dog",
+            "The voice of Buster",
+            "Ginger barking"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p1_s2_q2",
+          "type": "choice",
+          "question_en": "When did Becky hear the sound of a dog?",
+          "options_en": [
+            "As she was about to open the door",
+            "While playing in the living room",
+            "After she hugged grandma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "Who did Becky think might have come along with grandma?",
+          "options_en": [
+            "Ginger",
+            "Buster",
+            "Becky's grandmother"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "What did Becky open?",
+          "options_en": [
+            "The door",
+            "The window",
+            "The kennel"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p2_s1_q1",
+          "type": "choice",
+          "question_en": "What did Becky see in her grandmother's lap?",
+          "options_en": [
+            "A puppy",
+            "Ginger",
+            "Buster"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p2_s1_q2",
+          "type": "choice",
+          "question_en": "Where was the puppy when Becky saw it?",
+          "options_en": [
+            "In her grandmother's lap",
+            "In the kennel",
+            "In Becky's arms"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p2_s2_q1",
+          "type": "choice",
+          "question_en": "How did Becky feel when she saw the puppy?",
+          "options_en": [
+            "Excited and confused",
+            "Sad",
+            "Angry"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p2_s2_q2",
+          "type": "choice",
+          "question_en": "What was Becky eager to find out?",
+          "options_en": [
+            "Whose puppy grandma was carrying",
+            "What the puppy's name was",
+            "Where grandma had been"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "Who asked where the puppy came from?",
+          "options_en": [
+            "Becky",
+            "Grandma",
+            "Ginger"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "Whose puppy did Grandma say it was?",
+          "options_en": [
+            "Becky's",
+            "Grandma's",
+            "Ginger's"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p3_s1_q1",
+          "type": "choice",
+          "question_en": "Who always wanted to have a puppy?",
+          "options_en": [
+            "Becky",
+            "Grandma",
+            "Buster"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p3_s1_q2",
+          "type": "choice",
+          "question_en": "Why was she thrilled?",
+          "options_en": [
+            "Because she always wanted to have a puppy",
+            "Because her grandmother came to visit",
+            "Because it was dinner time"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p3_s2_q1",
+          "type": "choice",
+          "question_en": "Who did Becky hug?",
+          "options_en": [
+            "Grandma",
+            "Ginger",
+            "Buster"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p3_s2_q2",
+          "type": "choice",
+          "question_en": "What did Becky take?",
+          "options_en": [
+            "The puppy",
+            "The door",
+            "Ginger"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "Who played all day?",
+          "options_en": [
+            "Becky",
+            "Grandma",
+            "Ginger"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "What is the correct answer to this question: With whom did Becky play all day?",
+          "options_en": [
+            "Grandma and the puppy",
+            "Grandma and Ginger",
+            "Grandma and Buster"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p4_s1_q1",
+          "type": "choice",
+          "question_en": "Who asked Becky what she was going to name the puppy?",
+          "options_en": [
+            "Grandma",
+            "Buster",
+            "Becky"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p4_s1_q2",
+          "type": "choice",
+          "question_en": "What did Becky do for a while after the question?",
+          "options_en": [
+            "She thought",
+            "She played",
+            "She slept"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p4_s2_q1",
+          "type": "choice",
+          "question_en": "What name did Becky reply with?",
+          "options_en": [
+            "BUSTER",
+            "Ginger",
+            "Buster's mother"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p4_s2_q2",
+          "type": "choice",
+          "question_en": "How did Becky say the name?",
+          "options_en": [
+            "With an excited tone",
+            "Sadly",
+            "Quietly"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "When did everyone have dinner?",
+          "options_en": [
+            "At night",
+            "One day",
+            "In the afternoon"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "Who went off to sleep?",
+          "options_en": [
+            "Everyone",
+            "Becky and Buster",
+            "Grandma and Ginger"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p5_s1_q1",
+          "type": "choice",
+          "question_en": "Who were sleeping in Becky's room?",
+          "options_en": [
+            "Becky and Buster",
+            "Ginger and Grandma",
+            "Becky and Grandma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p5_s1_q2",
+          "type": "choice",
+          "question_en": "Where were Becky and Buster sleeping?",
+          "options_en": [
+            "In Becky's room",
+            "In Grandma's house",
+            "In the living room"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p5_s2_q1",
+          "type": "choice",
+          "question_en": "What did Becky hear?",
+          "options_en": [
+            "A voice",
+            "A dog barking",
+            "Grandma calling"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p5_s2_q2",
+          "type": "choice",
+          "question_en": "What did Becky do after she heard the sound?",
+          "options_en": [
+            "She got up to see",
+            "She hugged the puppy",
+            "She opened the door"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p5_s3_q1",
+          "type": "choice",
+          "question_en": "Who did she look at when she asked about the noise?",
+          "options_en": [
+            "Buster",
+            "Grandma",
+            "Ginger"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p5_s3_q2",
+          "type": "choice",
+          "question_en": "What question did she ask Buster?",
+          "options_en": [
+            "Who was making this noise?",
+            "Where is my grandma?",
+            "What will we name the puppy?"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "Who sat next to Becky?",
+          "options_en": [
+            "Buster",
+            "Grandma",
+            "Ginger"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "What did Buster say to Becky?",
+          "options_en": [
+            "\"I need your help.\"",
+            "\"I love my mother and I am missing her.\"",
+            "\"Can you take me back to her, please?\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p6_s1_q1",
+          "type": "choice",
+          "question_en": "Who is talking according to Becky?",
+          "options_en": [
+            "Buster",
+            "Ginger",
+            "Grandma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p6_s1_q2",
+          "type": "choice",
+          "question_en": "How did Becky feel when she realized her puppy could talk?",
+          "options_en": [
+            "Excited",
+            "Frightened",
+            "Sad"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "Who said they needed help?",
+          "options_en": [
+            "Buster",
+            "Becky",
+            "Grandma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "Why did he ask Becky for help?",
+          "options_en": [
+            "Because he was missing his mother and wanted to go back to her",
+            "Because he wanted to stay and play with Becky",
+            "Because he wanted to live with Grandma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        }
+      ]
+    },
+    {
+      "paragraph_index": 8,
+      "questions": [
+        {
+          "id": "gl_p8_s0_q1",
+          "type": "choice",
+          "question_en": "Who asked to go along with grandma?",
+          "options_en": [
+            "Becky",
+            "Grandma",
+            "Buster"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p8_s0_q2",
+          "type": "choice",
+          "question_en": "What did Grandma reply when Becky asked to come along?",
+          "options_en": [
+            "\"Yes, of course!\"",
+            "\"This is your puppy Becky\"",
+            "\"Alright dear, they will stay together\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        }
+      ]
+    },
+    {
+      "paragraph_index": 9,
+      "questions": [
+        {
+          "id": "gl_p9_s0_q1",
+          "type": "choice",
+          "question_en": "Who did Becky see sitting sadly?",
+          "options_en": [
+            "Ginger",
+            "Buster",
+            "Grandma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p9_s0_q2",
+          "type": "choice",
+          "question_en": "Where was Ginger sitting?",
+          "options_en": [
+            "In her kennel",
+            "On Becky's lap",
+            "At the door"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p9_s1_q1",
+          "type": "choice",
+          "question_en": "Who did Buster see?",
+          "options_en": [
+            "Ginger",
+            "Grandma",
+            "Becky"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p9_s1_q2",
+          "type": "choice",
+          "question_en": "How did Buster react when he saw Ginger?",
+          "options_en": [
+            "He struggled to get down from Becky's lap and ran towards her",
+            "He wagged his tail and stayed on Becky's lap",
+            "He barked loudly and ran away"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p9_s2_q1",
+          "type": "choice",
+          "question_en": "Where was he before he ran towards her?",
+          "options_en": [
+            "On Becky's lap",
+            "In the kennel",
+            "At Grandma's house door"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p9_s2_q2",
+          "type": "choice",
+          "question_en": "What did he do after getting down from Becky's lap?",
+          "options_en": [
+            "Ran towards her",
+            "Stayed with Becky",
+            "Hid under a chair"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p9_s3_q1",
+          "type": "choice",
+          "question_en": "Who was shocked?",
+          "options_en": [
+            "Grandma",
+            "Becky",
+            "Buster"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p9_s3_q2",
+          "type": "choice",
+          "question_en": "How did Grandma feel?",
+          "options_en": [
+            "Shocked",
+            "Happy",
+            "Sad"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p9_s4_q1",
+          "type": "choice",
+          "question_en": "What did Becky call the dog?",
+          "options_en": [
+            "A magical dog who could talk to me",
+            "A lost puppy",
+            "A neighbor's pet"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        },
+        {
+          "id": "gl_p9_s4_q2",
+          "type": "choice",
+          "question_en": "Why did Becky say she didn't want to keep him?",
+          "options_en": [
+            "She didn't want to keep him away from his mother",
+            "She wanted to keep him for herself",
+            "She thought Grandma would be angry"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        },
+        {
+          "id": "gl_p9_s5_q1",
+          "type": "choice",
+          "question_en": "What did Becky ask Grandma to do?",
+          "options_en": [
+            "Keep him here",
+            "Take him back to Becky's house",
+            "Give him to a neighbor"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        },
+        {
+          "id": "gl_p9_s5_q2",
+          "type": "choice",
+          "question_en": "Where did Becky want him to stay?",
+          "options_en": [
+            "Here (at Grandma's house)",
+            "At Becky's house",
+            "At the park"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        }
+      ]
+    },
+    {
+      "paragraph_index": 10,
+      "questions": [
+        {
+          "id": "gl_p10_s0_q1",
+          "type": "choice",
+          "question_en": "Who was touched to see how caring and thoughtful Becky was?",
+          "options_en": [
+            "Grandma",
+            "Buster",
+            "Ginger"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p10_s0_q2",
+          "type": "choice",
+          "question_en": "Why was someone touched in the sentence?",
+          "options_en": [
+            "Because Becky was caring and thoughtful",
+            "Because a puppy arrived",
+            "Because someone was singing"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p10_s1_q1",
+          "type": "choice",
+          "question_en": "What did Grandma ask Becky to promise?",
+          "options_en": [
+            "To come over and meet him every Sunday",
+            "To bring food for Ginger",
+            "To take Buster home with her"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        },
+        {
+          "id": "gl_p10_s1_q2",
+          "type": "choice",
+          "question_en": "How did Becky react when she heard Grandma's words?",
+          "options_en": [
+            "She was happy and hugged her grandmother",
+            "She ran out of the house",
+            "She started to cry"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        },
+        {
+          "id": "gl_p10_s2_q1",
+          "type": "choice",
+          "question_en": "Who did she say goodbye to before going back home?",
+          "options_en": [
+            "Buster and Ginger",
+            "Only Ginger",
+            "Only Buster"
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        },
+        {
+          "id": "gl_p10_s2_q2",
+          "type": "choice",
+          "question_en": "How did she go back home?",
+          "options_en": [
+            "Smiling",
+            "Crying",
+            "Running"
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'Becky and Buster'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "living room",
+      "meaning_vi": "phòng khách",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "towards",
+      "meaning_vi": "về phía",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "wondered",
+      "meaning_vi": "tự hỏi",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "excited",
+      "meaning_vi": "vui mừng, hào hứng",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "excited",
+      "meaning_vi": "hào hứng",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "loved",
+      "meaning_vi": "yêu quý",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "greet",
+      "meaning_vi": "chào đón",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "sound",
+      "meaning_vi": "âm thanh, tiếng",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "thought",
+      "meaning_vi": "đã nghĩ",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "puppy",
+      "meaning_vi": "chó con",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "lap",
+      "meaning_vi": "lòng (người)",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "confused",
+      "meaning_vi": "bối rối",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "smiled",
+      "meaning_vi": "mỉm cười",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "thrilled",
+      "meaning_vi": "vui sướng, phấn khích",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "wanted",
+      "meaning_vi": "muốn",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "hugged",
+      "meaning_vi": "ôm",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "name",
+      "meaning_vi": "đặt tên",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "thought",
+      "meaning_vi": "đã nghĩ, suy nghĩ",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "while",
+      "meaning_vi": "một lúc",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "replied",
+      "meaning_vi": "trả lời",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "dinner",
+      "meaning_vi": "bữa tối",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "went off to sleep",
+      "meaning_vi": "đi ngủ",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "heard",
+      "meaning_vi": "đã nghe",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "noise",
+      "meaning_vi": "tiếng ồn, tiếng động",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "frightened",
+      "meaning_vi": "sợ hãi",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "carefully",
+      "meaning_vi": "cẩn thận, kĩ lưỡng",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "talking",
+      "meaning_vi": "đang nói",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "could",
+      "meaning_vi": "có thể (trong quá khứ)",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "sadly",
+      "meaning_vi": "buồn bã",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "missing",
+      "meaning_vi": "nhớ (ai đó)",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "upset",
+      "meaning_vi": "buồn bã, khó chịu",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "definitely",
+      "meaning_vi": "chắc chắn",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "morning",
+      "meaning_vi": "buổi sáng",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "spend",
+      "meaning_vi": "dành (thời gian)",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "agreed",
+      "meaning_vi": "đồng ý",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "thrilled",
+      "meaning_vi": "vui sướng, phấn khích",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "reached",
+      "meaning_vi": "đã đến",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "kennel",
+      "meaning_vi": "chuồng chó",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "struggled",
+      "meaning_vi": "cố gắng, vật lộn",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "shocked",
+      "meaning_vi": "bị sốc, ngạc nhiên",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "touched",
+      "meaning_vi": "cảm động",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "caring",
+      "meaning_vi": "chu đáo, quan tâm",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "thoughtful",
+      "meaning_vi": "biết suy nghĩ, ân cần",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "promise",
+      "meaning_vi": "hứa",
+      "paragraph_index": 10
+    }
+  ]
+}

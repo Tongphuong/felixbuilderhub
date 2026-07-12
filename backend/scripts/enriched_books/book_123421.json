@@ -1,0 +1,815 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L1",
+  "level_label": "Cấp 1",
+  "topic": "Picture Conversations-Opposites",
+  "slug": "book_123421",
+  "audio_filename": "book_123421.mp3",
+  "book_slug": "book_123421",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_123421/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_123421/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_123421/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_123421/page_05.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_123421/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_123421/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_123421/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_123421/page_05.mp3"
+  ],
+  "book_attribution": {
+    "title": "Picture Conversations-Opposites",
+    "creators": [
+      "Aru",
+      "Herminder Ohri",
+      "Kishor Joshi",
+      "Niloufer Wadia",
+      "Rijuta Ghate"
+    ],
+    "publisher": "StoryWeaver Community",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: Picture Conversations-Opposites is written by Aru . © Aru , 2020. Some rights reserved. Released under CC BY 4.0 license. Images Attributions: Cover page: Boy and giraffe , by Herminder Ohri © Pratham Books, 2006. Some rights reserved. Released under CC BY 4.0 license. Page 2: Boy and giraffe , by Herminder Ohri © Pratham Books, 2006. Some rights reserved. Released under CC BY 4.0 license. Page 3: A boy and a girl reading , by Rijuta Ghate © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license. Page 4: A cat racing an elephant , by Kishor Joshi © Room to Read, 2007. Some rights reserved. Released under CC BY 4.0 license. Page 5: Children playing hide and seek , by Niloufer Wadia © Pratham Books, 2018. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/123421-picture-conversations-opposites",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "Boy and giraffe , by Herminder Ohri © Pratham Books, 2006. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "A boy and a girl reading , by Rijuta Ghate © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "A cat racing an elephant , by Kishor Joshi © Room to Read, 2007. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "Children playing hide and seek , by Niloufer Wadia © Pratham Books, 2018. Some rights reserved. Released under CC BY 4.0 license."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "Picture Conversations-Opposites",
+    "paragraphs_en": [
+      "The giraffe is tall . The boy is short . The giraffe is taller than the boy. Is there anyone taller than you in your class?",
+      "Devi and Raju were asked to read story books by their mother. Devi is happy reading story books. Raju is sad as he does not like reading books. When do you feel happy and when do you feel sad?",
+      "The cat runs fast . The elephant runs slow . Do you run fast or do you run slow?",
+      "We played hide and seek. It was fun. Raju closed his eyes and counted upto 10. When he opened his eyes, he could not find us. We were all hiding. Can we all play hide and seek? Who wants to close the eyes?"
+    ],
+    "sentences": [
+      {
+        "text_en": "The giraffe is tall .",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123421/s_000.mp3",
+        "text_vi": "Con hươu cao cổ cao."
+      },
+      {
+        "text_en": "The boy is short .",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123421/s_001.mp3",
+        "text_vi": "Cậu bé thấp."
+      },
+      {
+        "text_en": "The giraffe is taller than the boy.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123421/s_002.mp3",
+        "text_vi": "Con hươu cao cổ cao hơn cậu bé."
+      },
+      {
+        "text_en": "Is there anyone taller than you in your class?",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123421/s_003.mp3",
+        "text_vi": "Trong lớp con có ai cao hơn con không?"
+      },
+      {
+        "text_en": "Devi and Raju were asked to read story books by their mother.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123421/s_004.mp3",
+        "text_vi": "Devi và Raju được mẹ bảo đọc sách truyện."
+      },
+      {
+        "text_en": "Devi is happy reading story books.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123421/s_005.mp3",
+        "text_vi": "Devi vui vẻ đọc sách truyện."
+      },
+      {
+        "text_en": "Raju is sad as he does not like reading books.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123421/s_006.mp3",
+        "text_vi": "Raju buồn vì cậu ấy không thích đọc sách."
+      },
+      {
+        "text_en": "When do you feel happy and when do you feel sad?",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123421/s_007.mp3",
+        "text_vi": "Khi nào con cảm thấy vui và khi nào con cảm thấy buồn?"
+      },
+      {
+        "text_en": "The cat runs fast .",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123421/s_008.mp3",
+        "text_vi": "Con mèo chạy nhanh."
+      },
+      {
+        "text_en": "The elephant runs slow .",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123421/s_009.mp3",
+        "text_vi": "Con voi chạy chậm."
+      },
+      {
+        "text_en": "Do you run fast or do you run slow?",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123421/s_010.mp3",
+        "text_vi": "Con chạy nhanh hay chạy chậm?"
+      },
+      {
+        "text_en": "We played hide and seek.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123421/s_011.mp3",
+        "text_vi": "Chúng ta đã chơi trốn tìm."
+      },
+      {
+        "text_en": "It was fun.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123421/s_012.mp3",
+        "text_vi": "Trò đó vui lắm."
+      },
+      {
+        "text_en": "Raju closed his eyes and counted upto 10.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123421/s_013.mp3",
+        "text_vi": "Raju nhắm mắt lại và đếm đến 10."
+      },
+      {
+        "text_en": "When he opened his eyes, he could not find us.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123421/s_014.mp3",
+        "text_vi": "Khi cậu ấy mở mắt ra, cậu ấy không tìm thấy chúng ta."
+      },
+      {
+        "text_en": "We were all hiding.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123421/s_015.mp3",
+        "text_vi": "Chúng ta đều đang trốn."
+      },
+      {
+        "text_en": "Can we all play hide and seek?",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123421/s_016.mp3",
+        "text_vi": "Chúng ta cùng chơi trốn tìm được không?"
+      },
+      {
+        "text_en": "Who wants to close the eyes?",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_123421/s_017.mp3",
+        "text_vi": "Ai muốn nhắm mắt nào?"
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "The giraffe is tall .",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123421/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "The boy is short .",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123421/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "The giraffe is taller than the boy.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123421/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "Is there anyone taller than you in your class?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123421/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "Devi and Raju were asked to read story books by their mother.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123421/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "Devi is happy reading story books.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123421/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "Raju is sad as he does not like reading books.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123421/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "When do you feel happy and when do you feel sad?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123421/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "The cat runs fast .",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123421/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "The elephant runs slow .",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123421/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "Do you run fast or do you run slow?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123421/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "We played hide and seek.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123421/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "It was fun.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123421/s_012.mp3"
+        },
+        {
+          "id": "ra_13",
+          "text_en": "Raju closed his eyes and counted upto 10.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123421/s_013.mp3"
+        },
+        {
+          "id": "ra_14",
+          "text_en": "When he opened his eyes, he could not find us.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123421/s_014.mp3"
+        },
+        {
+          "id": "ra_15",
+          "text_en": "We were all hiding.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123421/s_015.mp3"
+        },
+        {
+          "id": "ra_16",
+          "text_en": "Can we all play hide and seek?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123421/s_016.mp3"
+        },
+        {
+          "id": "ra_17",
+          "text_en": "Who wants to close the eyes?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_123421/s_017.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "Who is tall?",
+          "options_en": [
+            "The giraffe",
+            "Devi",
+            "Raju"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "What is the giraffe described as?",
+          "options_en": [
+            "Tall",
+            "Sad",
+            "Short"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s1_q1",
+          "type": "choice",
+          "question_en": "Who is short?",
+          "options_en": [
+            "The boy",
+            "The elephant",
+            "Devi"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s1_q2",
+          "type": "choice",
+          "question_en": "How is the boy described?",
+          "options_en": [
+            "Short",
+            "Happy",
+            "Tall"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s2_q1",
+          "type": "choice",
+          "question_en": "Who is taller than the boy?",
+          "options_en": [
+            "The giraffe",
+            "Raju",
+            "The cat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s2_q2",
+          "type": "choice",
+          "question_en": "How is the giraffe compared to the boy?",
+          "options_en": [
+            "Taller than the boy",
+            "Sad like Raju",
+            "Slower than the elephant"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s3_q1",
+          "type": "choice",
+          "question_en": "What is the question asking about your class?",
+          "options_en": [
+            "If anyone in your class is taller than you",
+            "If Devi likes reading books",
+            "If we can play hide and seek"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p0_s3_q2",
+          "type": "choice",
+          "question_en": "Where does the question ask about someone taller than you?",
+          "options_en": [
+            "In your class",
+            "In the story book",
+            "In the hide and seek game"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "Who were asked to read story books?",
+          "options_en": [
+            "Devi and Raju",
+            "The giraffe and the boy",
+            "The cat and the elephant"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "Who asked them to read story books?",
+          "options_en": [
+            "Their mother",
+            "The boy",
+            "The teacher"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p1_s1_q1",
+          "type": "choice",
+          "question_en": "Who is happy reading story books?",
+          "options_en": [
+            "Devi",
+            "Raju",
+            "The boy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p1_s1_q2",
+          "type": "choice",
+          "question_en": "Why is Devi happy?",
+          "options_en": [
+            "She is reading story books",
+            "She is playing hide and seek",
+            "She sees a giraffe"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p1_s2_q1",
+          "type": "choice",
+          "question_en": "Who is sad as he does not like reading books?",
+          "options_en": [
+            "Raju",
+            "Devi",
+            "The cat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p1_s2_q2",
+          "type": "choice",
+          "question_en": "Why is Raju sad?",
+          "options_en": [
+            "Because he does not like reading books",
+            "Because he is hiding",
+            "Because the giraffe is tall"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p1_s3_q1",
+          "type": "choice",
+          "question_en": "What does the question ask about your feelings?",
+          "options_en": [
+            "When you feel happy and when you feel sad",
+            "Who is taller than you in your class",
+            "Do you run fast or do you run slow"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p1_s3_q2",
+          "type": "choice",
+          "question_en": "Who is being asked about their feelings in this sentence?",
+          "options_en": [
+            "You",
+            "Devi",
+            "Raju"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "Who runs fast?",
+          "options_en": [
+            "The cat",
+            "The elephant",
+            "The giraffe"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "How does the cat run?",
+          "options_en": [
+            "Fast",
+            "Slow",
+            "Tall"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p2_s1_q1",
+          "type": "choice",
+          "question_en": "Who runs slow?",
+          "options_en": [
+            "The elephant",
+            "The cat",
+            "Raju"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p2_s1_q2",
+          "type": "choice",
+          "question_en": "How does the elephant run?",
+          "options_en": [
+            "Slow",
+            "Fast",
+            "Happy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p2_s2_q1",
+          "type": "choice",
+          "question_en": "What two ways of running are asked about?",
+          "options_en": [
+            "Fast or slow",
+            "Tall or short",
+            "Happy or sad"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p2_s2_q2",
+          "type": "choice",
+          "question_en": "Who is being asked if they run fast or slow?",
+          "options_en": [
+            "You",
+            "The cat",
+            "Raju"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "Who played hide and seek?",
+          "options_en": [
+            "We",
+            "Devi and Raju",
+            "The giraffe and the boy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "What did we play?",
+          "options_en": [
+            "Hide and seek",
+            "Read story books",
+            "Run fast"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p3_s1_q1",
+          "type": "choice",
+          "question_en": "How was it?",
+          "options_en": [
+            "Fun",
+            "Tall",
+            "Sad"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p3_s1_q2",
+          "type": "choice",
+          "question_en": "What does the sentence say about the game?",
+          "options_en": [
+            "It was fun",
+            "It was taller",
+            "It was slow"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p3_s2_q1",
+          "type": "choice",
+          "question_en": "Who closed his eyes and counted up to 10?",
+          "options_en": [
+            "Raju",
+            "Devi",
+            "The giraffe"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p3_s2_q2",
+          "type": "choice",
+          "question_en": "What did Raju do?",
+          "options_en": [
+            "Closed his eyes and counted up to 10",
+            "Read story books",
+            "Ran fast"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p3_s3_q1",
+          "type": "choice",
+          "question_en": "When could he not find us?",
+          "options_en": [
+            "When he opened his eyes",
+            "When he read books",
+            "When he ran slow"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p3_s3_q2",
+          "type": "choice",
+          "question_en": "Who could not find us?",
+          "options_en": [
+            "He (Raju)",
+            "Devi",
+            "The elephant"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p3_s4_q1",
+          "type": "choice",
+          "question_en": "Where were we?",
+          "options_en": [
+            "Hiding",
+            "Reading story books",
+            "Running fast"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p3_s4_q2",
+          "type": "choice",
+          "question_en": "Who was hiding?",
+          "options_en": [
+            "We were all hiding",
+            "Raju was hiding alone",
+            "The giraffe was hiding"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p3_s5_q1",
+          "type": "choice",
+          "question_en": "What are they asking in this sentence?",
+          "options_en": [
+            "If they can all play hide and seek",
+            "If someone is taller",
+            "If Raju likes reading"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p3_s5_q2",
+          "type": "choice",
+          "question_en": "Who is being asked to play?",
+          "options_en": [
+            "All of us",
+            "The cat",
+            "The boy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p3_s6_q1",
+          "type": "choice",
+          "question_en": "What are they asking about who will do something?",
+          "options_en": [
+            "Who wants to close the eyes",
+            "Who is taller than you",
+            "Who runs fast"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p3_s6_q2",
+          "type": "choice",
+          "question_en": "What action do they ask someone to do?",
+          "options_en": [
+            "Close the eyes",
+            "Read story books",
+            "Run slow"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'Picture Conversations-Opposites'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "tall",
+      "meaning_vi": "cao",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "short",
+      "meaning_vi": "thấp",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "taller",
+      "meaning_vi": "cao hơn",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "class",
+      "meaning_vi": "lớp học",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "asked",
+      "meaning_vi": "được bảo, được yêu cầu",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "happy",
+      "meaning_vi": "vui vẻ",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "sad",
+      "meaning_vi": "buồn",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "feel",
+      "meaning_vi": "cảm thấy",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "runs",
+      "meaning_vi": "chạy",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "fast",
+      "meaning_vi": "nhanh",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "slow",
+      "meaning_vi": "chậm",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "played",
+      "meaning_vi": "đã chơi",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "hide and seek",
+      "meaning_vi": "trốn tìm",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "counted",
+      "meaning_vi": "đã đếm",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "hiding",
+      "meaning_vi": "đang trốn",
+      "paragraph_index": 3
+    }
+  ]
+}

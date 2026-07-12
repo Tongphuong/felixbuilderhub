@@ -1,0 +1,2738 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L4",
+  "level_label": "Cấp 4",
+  "topic": "The Chicken who Lost Her Temper",
+  "slug": "book_106425",
+  "audio_filename": "book_106425.mp3",
+  "book_slug": "book_106425",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_106425/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_106425/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_106425/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_106425/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_106425/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_106425/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_106425/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_106425/page_09.jpg",
+    "https://audio.felixbuilderhub.com/books/book_106425/page_10.jpg",
+    "https://audio.felixbuilderhub.com/books/book_106425/page_11.jpg",
+    "https://audio.felixbuilderhub.com/books/book_106425/page_12.jpg",
+    "https://audio.felixbuilderhub.com/books/book_106425/page_13.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_106425/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_106425/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_106425/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_106425/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_106425/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_106425/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_106425/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_106425/page_09.mp3",
+    "https://audio.felixbuilderhub.com/books/book_106425/page_10.mp3",
+    "https://audio.felixbuilderhub.com/books/book_106425/page_11.mp3",
+    "https://audio.felixbuilderhub.com/books/book_106425/page_12.mp3",
+    "https://audio.felixbuilderhub.com/books/book_106425/page_13.mp3"
+  ],
+  "book_attribution": {
+    "title": "The Chicken who Lost Her Temper",
+    "creators": [
+      "Right To Play",
+      "Magriet Brink"
+    ],
+    "publisher": "StoryWeaver Community",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: The Chicken who Lost Her Temper is re-levelled by Right To Play . The © for this re-level lies with Right To Play , 2020. Some rights reserved. Released under CC BY 4.0 license. Based on Original story: ' Chicken and Millipede ' , by Winny Asara . © African Storybook Initiative , 2014. Some rights reserved. Released under CC BY 4.0 license. Images Attributions: Cover page: Chicken and millipede , by Magriet Brink © African Storybook Initiative, 2014. Some rights reserved. Released under CC BY 4.0 license. Page 2: Animals walking , by Magriet Brink © African Storybook Initiative, 2014. Some rights reserved. Released under CC BY 4.0 license. Page 3: Animals playing football , by Magriet Brink © African Storybook Initiative, 2014. Some rights reserved. Released under CC BY 4.0 license. Page 4: Chicken as goalkeeper , by Magriet Brink © African Storybook Initiative, 2014. Some rights reserved. Released under CC BY 4.0 license. Page 5: Millipede goal , by Magriet Brink © African Storybook Initiative, 2014. Some rights reserved. Released under CC BY 4.0 license. Page 6: Angry rooster , by Magriet Brink © African Storybook Initiative, 2014. Some rights reserved. Released under CC BY 4.0 license. Page 7: Chicken and millipede fighting , by Magriet Brink © African Storybook Initiative, 2014. Some rights reserved. Released under CC BY 4.0 license. Page 8: Chicken angry with millipede , by Magriet Brink © African Storybook Initiative, 2014. Some rights reserved. Released under CC BY 4.0 license. Page 9: Chicken hiding the football , by Magriet Brink © African Storybook Initiative, 2014. Some rights reserved. Released under CC BY 4.0 license. Page 10: Tired rooster , by Magriet Brink © African Storybook Initiative, 2014. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/106425-the-chicken-who-lost-her-temper",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "Animals walking , by Magriet Brink © African Storybook Initiative, 2014. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "Animals playing football , by Magriet Brink © African Storybook Initiative, 2014. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "Chicken as goalkeeper , by Magriet Brink © African Storybook Initiative, 2014. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "Millipede goal , by Magriet Brink © African Storybook Initiative, 2014. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "Angry rooster , by Magriet Brink © African Storybook Initiative, 2014. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "Chicken and millipede fighting , by Magriet Brink © African Storybook Initiative, 2014. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "Chicken angry with millipede , by Magriet Brink © African Storybook Initiative, 2014. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "Chicken hiding the football , by Magriet Brink © African Storybook Initiative, 2014. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 8,
+        "credit_text": "Tired rooster , by Magriet Brink © African Storybook Initiative, 2014. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 9,
+        "credit_text": "Illustration by Magriet Brink."
+      },
+      {
+        "page_index": 10,
+        "credit_text": "Illustration by Magriet Brink."
+      },
+      {
+        "page_index": 11,
+        "credit_text": "Illustration by Magriet Brink."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "The Chicken who Lost Her Temper",
+    "paragraphs_en": [
+      "Chicken and Millipede were very close friends. In some ways they were very similar; they both loved sport and were very competitive. But in other ways they were very different. Millipede loved to joke around and make people laugh. She was able to do many things at once, juggling tasks with her many legs. Chicken was more serious. She was good at taking others under her wing and making them feel safe and cared for. But she also had a terrible temper!",
+      "One day they decided to play a friendly game of soccer. Chicken was a fast runner and an excellent dribbler. She also had a powerful kick and could score goals from far away. But Millipede had something Chicken could never compete with - hundreds of legs! Millipede ran circles around poor Chicken, scoring goal after goal. Chicken got angrier and angrier. Watch out, Millipede!",
+      "\"Let's have a penalty shoot-out,\" said Chicken, hoping that this would prevent Millipede from using her legs to dribble around her. \"Sure thing!\" said Millipede confidently. First Millipede was goal keeper. Chicken scored only one goal. Then it was Chicken's turn to defend the goal.",
+      "Millipede kicked the ball and scored. Millipede juggled the ball and scored. Millipede headed the ball and scored. Millipede tapped the ball and scored. Chicken grew angrier by the minute. \"This is unfair,\" she thought, \"Millipede should only be able to use two of her legs. She is cheating!\" While Chicken was busy thinking her angry thoughts, Millipede slyly kicked the ball around her and through the goalposts. Millipede scored five goals!",
+      "Chicken was furious that she had lost. \"I want a rematch,\" she demanded, \"and this time you can only use two of your legs!\" Millipede started laughing because her friend was making such a fuss. \"What a sore loser you are!\" she said, \"Why didn't you use your wings to flap the ball into the goal, or your feathers to blow it over my head? You lost fair and square, my friend!\"",
+      "\"You see,\" said Millipede, \"soccer is really all about strategy. You need to use your brain and have a plan.\" \"Are you telling me I don't have any brains?\" shrieked Chicken. \"How dare you!\" But before Millipede could answer, Chicken opened up her beak and swallowed her.",
+      "As Chicken was walking home, she met Mother Millipede. Usually Chicken loved to see her friend's mother. Mother Millipede told wonderful stories and baked the most delicious leaf cakes. But today Chicken marched right on, hoping Mother Millipede would not recognize her. \"Hello dear,\" Mother Millipede called, “Have you seen my child?” Chicken didn't say anything. Mother Millipede was worried. \"Chicken is acting very strangely!\" she thought.",
+      "Then Mother Millipede heard a tiny voice. “Help me, Mom!” cried the voice. Mother Millipede looked around and listened carefully. \"Where is that voice coming from?\" she asked. \"Have you got someone inside your stomach, Chicken?\" Chicken looked around sheepishly. She didn't know what to do. \"Who have you eaten?\" asked Mother Millipede. \"Don't tell me you've eaten my precious baby!\"",
+      "Mother Millipede shouted, “Use your special power my child!” Millipedes can make a bad smell and a terrible taste. Chicken began to feel ill. \"I don't feel so well,\" she moaned. \"I need to go home and lie in my bed.\"",
+      "Chicken burped. Then she swallowed and spat. Then she sneezed and coughed. Millipede tasted disgusting! Meanwhile, Mother Millipede stood beside her, cheering. \"Well done, my darling!\" she shouted, \"Keep on working that special magic! You'll be out in no time.\"",
+      "Chicken coughed and coughed until Millipede came out. \"Hooray!\" shouted Millipede, \"I'm free! I escaped!\" Mother Millipede was relieved to see her child alive and well. \"Come quickly,\" she whispered, and her and Millipede crawled quickly away. They climbed and climbed until they reached the top of a tall tree where they could hide.",
+      "From that time on, all chickens and millipedes have been enemies."
+    ],
+    "sentences": [
+      {
+        "text_en": "Chicken and Millipede were very close friends.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_000.mp3",
+        "text_vi": "Gà và Cuốn chiếu là đôi bạn rất thân."
+      },
+      {
+        "text_en": "In some ways they were very similar; they both loved sport and were very competitive.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_001.mp3",
+        "text_vi": "Có vài điểm họ rất giống nhau; cả hai đều thích thể thao và rất thích cạnh tranh."
+      },
+      {
+        "text_en": "But in other ways they were very different.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_002.mp3",
+        "text_vi": "Nhưng ở những điểm khác, họ lại rất khác biệt."
+      },
+      {
+        "text_en": "Millipede loved to joke around and make people laugh.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_003.mp3",
+        "text_vi": "Cuốn chiếu thích đùa giỡn và làm mọi người cười."
+      },
+      {
+        "text_en": "She was able to do many things at once, juggling tasks with her many legs.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_004.mp3",
+        "text_vi": "Cô ấy có thể làm nhiều việc cùng lúc, dùng nhiều chân để xoay sở các việc."
+      },
+      {
+        "text_en": "Chicken was more serious.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_005.mp3",
+        "text_vi": "Gà thì nghiêm túc hơn."
+      },
+      {
+        "text_en": "She was good at taking others under her wing and making them feel safe and cared for.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_006.mp3",
+        "text_vi": "Cô ấy giỏi che chở người khác, làm họ cảm thấy an toàn và được quan tâm."
+      },
+      {
+        "text_en": "But she also had a terrible temper!",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_007.mp3",
+        "text_vi": "Nhưng cô ấy cũng có một tính khí rất tệ!"
+      },
+      {
+        "text_en": "One day they decided to play a friendly game of soccer.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_008.mp3",
+        "text_vi": "Một ngày nọ, họ quyết định chơi một trận bóng đá giao hữu."
+      },
+      {
+        "text_en": "Chicken was a fast runner and an excellent dribbler.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_009.mp3",
+        "text_vi": "Gà chạy rất nhanh và rê bóng rất giỏi."
+      },
+      {
+        "text_en": "She also had a powerful kick and could score goals from far away.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_010.mp3",
+        "text_vi": "Cô ấy còn có cú sút mạnh và có thể ghi bàn từ xa."
+      },
+      {
+        "text_en": "But Millipede had something Chicken could never compete with - hundreds of legs!",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_011.mp3",
+        "text_vi": "Nhưng Cuốn chiếu có một thứ mà Gà không bao giờ có thể cạnh tranh được – hàng trăm cái chân!"
+      },
+      {
+        "text_en": "Millipede ran circles around poor Chicken, scoring goal after goal.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_012.mp3",
+        "text_vi": "Cuốn chiếu chạy vòng quanh Gà tội nghiệp, ghi hết bàn này đến bàn khác."
+      },
+      {
+        "text_en": "Chicken got angrier and angrier.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_013.mp3",
+        "text_vi": "Gà càng lúc càng tức giận."
+      },
+      {
+        "text_en": "Watch out, Millipede!",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_014.mp3",
+        "text_vi": "Coi chừng đó, Cuốn chiếu!"
+      },
+      {
+        "text_en": "\"Let's have a penalty shoot-out,\" said Chicken, hoping that this would prevent Millipede from using her legs to dribble around her.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_015.mp3",
+        "text_vi": "“Chúng ta hãy đá luân lưu đi,” Gà nói, hy vọng điều này sẽ ngăn Cuốn chiếu dùng chân để rê bóng quanh cô ấy."
+      },
+      {
+        "text_en": "\"Sure thing!\" said Millipede confidently.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_016.mp3",
+        "text_vi": "“Chắc chắn rồi!” Cuốn chiếu tự tin nói."
+      },
+      {
+        "text_en": "First Millipede was goal keeper.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_017.mp3",
+        "text_vi": "Đầu tiên, Cuốn chiếu làm thủ môn."
+      },
+      {
+        "text_en": "Chicken scored only one goal.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_018.mp3",
+        "text_vi": "Gà chỉ ghi được một bàn."
+      },
+      {
+        "text_en": "Then it was Chicken's turn to defend the goal.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_019.mp3",
+        "text_vi": "Sau đó đến lượt Gà bảo vệ khung thành."
+      },
+      {
+        "text_en": "Millipede kicked the ball and scored.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_020.mp3",
+        "text_vi": "Cuốn chiếu sút bóng và ghi bàn."
+      },
+      {
+        "text_en": "Millipede juggled the ball and scored.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_021.mp3",
+        "text_vi": "Cuốn chiếu tâng bóng và ghi bàn."
+      },
+      {
+        "text_en": "Millipede headed the ball and scored.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_022.mp3",
+        "text_vi": "Cuốn chiếu đánh đầu và ghi bàn."
+      },
+      {
+        "text_en": "Millipede tapped the ball and scored.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_023.mp3",
+        "text_vi": "Cuốn chiếu chạm nhẹ bóng và ghi bàn."
+      },
+      {
+        "text_en": "Chicken grew angrier by the minute.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_024.mp3",
+        "text_vi": "Gà càng lúc càng tức giận."
+      },
+      {
+        "text_en": "\"This is unfair,\" she thought, \"Millipede should only be able to use two of her legs.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_025.mp3",
+        "text_vi": "“Thật không công bằng,” cô ấy nghĩ, “Cuốn chiếu chỉ nên được dùng hai chân thôi."
+      },
+      {
+        "text_en": "She is cheating!\" While Chicken was busy thinking her angry thoughts, Millipede slyly kicked the ball around her and through the goalposts.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_026.mp3",
+        "text_vi": "Cô ấy đang gian lận!” Trong khi Gà đang bận suy nghĩ những điều tức giận, Cuốn chiếu lén lút sút bóng vòng qua cô ấy và vào khung thành."
+      },
+      {
+        "text_en": "Millipede scored five goals!",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_027.mp3",
+        "text_vi": "Cuốn chiếu ghi được năm bàn!"
+      },
+      {
+        "text_en": "Chicken was furious that she had lost.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_028.mp3",
+        "text_vi": "Gà tức giận vì đã thua."
+      },
+      {
+        "text_en": "\"I want a rematch,\" she demanded, \"and this time you can only use two of your legs!\" Millipede started laughing because her friend was making such a fuss.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_029.mp3",
+        "text_vi": "“Tôi muốn đấu lại,” cô ấy yêu cầu, “và lần này bạn chỉ được dùng hai chân thôi!” Cuốn chiếu bắt đầu cười vì bạn mình đang làm ầm ĩ."
+      },
+      {
+        "text_en": "\"What a sore loser you are!\" she said, \"Why didn't you use your wings to flap the ball into the goal, or your feathers to blow it over my head?",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_030.mp3",
+        "text_vi": "“Bạn đúng là người thua cuộc tồi tệ!” cô ấy nói, “Sao bạn không dùng cánh để vỗ bóng vào khung thành, hay dùng lông để thổi bóng qua đầu tôi?"
+      },
+      {
+        "text_en": "You lost fair and square, my friend!\"",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_031.mp3",
+        "text_vi": "Bạn thua một cách công bằng rồi, bạn của tôi!”"
+      },
+      {
+        "text_en": "\"You see,\" said Millipede, \"soccer is really all about strategy.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_032.mp3",
+        "text_vi": "“Bạn thấy đó,” Cuốn chiếu nói, “bóng đá thực sự là về chiến lược."
+      },
+      {
+        "text_en": "You need to use your brain and have a plan.\" \"Are you telling me I don't have any brains?\" shrieked Chicken.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_033.mp3",
+        "text_vi": "Bạn cần dùng trí óc và có một kế hoạch.” “Bạn đang nói tôi không có não à?” Gà hét lên."
+      },
+      {
+        "text_en": "\"How dare you!\" But before Millipede could answer, Chicken opened up her beak and swallowed her.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_034.mp3",
+        "text_vi": "“Sao bạn dám!” Nhưng trước khi Cuốn chiếu kịp trả lời, Gà mở mỏ và nuốt chửng cô ấy."
+      },
+      {
+        "text_en": "As Chicken was walking home, she met Mother Millipede.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_035.mp3",
+        "text_vi": "Khi Gà đang đi về nhà, cô ấy gặp Mẹ Cuốn chiếu."
+      },
+      {
+        "text_en": "Usually Chicken loved to see her friend's mother.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_036.mp3",
+        "text_vi": "Thường ngày Gà rất thích gặp mẹ của bạn mình."
+      },
+      {
+        "text_en": "Mother Millipede told wonderful stories and baked the most delicious leaf cakes.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_037.mp3",
+        "text_vi": "Mẹ Cuốn chiếu kể những câu chuyện tuyệt vời và nướng những chiếc bánh lá ngon nhất."
+      },
+      {
+        "text_en": "But today Chicken marched right on, hoping Mother Millipede would not recognize her.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_038.mp3",
+        "text_vi": "Nhưng hôm nay Gà cứ thế bước đi, hy vọng Mẹ Cuốn chiếu sẽ không nhận ra mình."
+      },
+      {
+        "text_en": "\"Hello dear,\" Mother Millipede called, “Have you seen my child?” Chicken didn't say anything.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_039.mp3",
+        "text_vi": "“Chào con yêu,” Mẹ Cuốn chiếu gọi, “Con có thấy con của mẹ không?” Gà không nói gì."
+      },
+      {
+        "text_en": "Mother Millipede was worried.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_040.mp3",
+        "text_vi": "Mẹ Cuốn chiếu lo lắng."
+      },
+      {
+        "text_en": "\"Chicken is acting very strangely!\" she thought.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_041.mp3",
+        "text_vi": "“Gà đang hành động rất lạ!” bà nghĩ."
+      },
+      {
+        "text_en": "Then Mother Millipede heard a tiny voice.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_042.mp3",
+        "text_vi": "Sau đó Mẹ Cuốn chiếu nghe thấy một giọng nói nhỏ xíu."
+      },
+      {
+        "text_en": "“Help me, Mom!” cried the voice.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_043.mp3",
+        "text_vi": "“Cứu con với, Mẹ ơi!” giọng nói kêu lên."
+      },
+      {
+        "text_en": "Mother Millipede looked around and listened carefully.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_044.mp3",
+        "text_vi": "Mẹ Cuốn chiếu nhìn quanh và lắng nghe cẩn thận."
+      },
+      {
+        "text_en": "\"Where is that voice coming from?\" she asked.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_045.mp3",
+        "text_vi": "“Giọng nói đó từ đâu ra vậy?” bà hỏi."
+      },
+      {
+        "text_en": "\"Have you got someone inside your stomach, Chicken?\" Chicken looked around sheepishly.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_046.mp3",
+        "text_vi": "“Con có ai đó trong bụng không, Gà?” Gà nhìn quanh một cách ngượng ngùng."
+      },
+      {
+        "text_en": "She didn't know what to do.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_047.mp3",
+        "text_vi": "Cô ấy không biết phải làm gì."
+      },
+      {
+        "text_en": "\"Who have you eaten?\" asked Mother Millipede.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_048.mp3",
+        "text_vi": "“Con đã ăn ai?” Mẹ Cuốn chiếu hỏi."
+      },
+      {
+        "text_en": "\"Don't tell me you've eaten my precious baby!\"",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_049.mp3",
+        "text_vi": "“Đừng nói với mẹ là con đã ăn đứa con quý giá của mẹ nhé!”"
+      },
+      {
+        "text_en": "Mother Millipede shouted, “Use your special power my child!” Millipedes can make a bad smell and a terrible taste.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_050.mp3",
+        "text_vi": "Mẹ Cuốn chiếu hét lên, “Dùng sức mạnh đặc biệt của con đi con yêu!” Cuốn chiếu có thể tạo ra mùi hôi và vị rất tệ."
+      },
+      {
+        "text_en": "Chicken began to feel ill.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_051.mp3",
+        "text_vi": "Gà bắt đầu cảm thấy khó chịu."
+      },
+      {
+        "text_en": "\"I don't feel so well,\" she moaned.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_052.mp3",
+        "text_vi": "“Tôi không khỏe chút nào,” cô ấy rên rỉ."
+      },
+      {
+        "text_en": "\"I need to go home and lie in my bed.\"",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_053.mp3",
+        "text_vi": "“Tôi cần về nhà nằm nghỉ trên giường.”"
+      },
+      {
+        "text_en": "Chicken burped. Then she swallowed and spat.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_054.mp3",
+        "text_vi": "Gà ợ hơi. Sau đó cô ấy nuốt và nhổ ra."
+      },
+      {
+        "text_en": "Then she sneezed and coughed.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_055.mp3",
+        "text_vi": "Rồi cô ấy hắt hơi và ho."
+      },
+      {
+        "text_en": "Millipede tasted disgusting!",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_056.mp3",
+        "text_vi": "Cuốn chiếu có vị thật kinh tởm!"
+      },
+      {
+        "text_en": "Meanwhile, Mother Millipede stood beside her, cheering.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_057.mp3",
+        "text_vi": "Trong khi đó, Mẹ Cuốn chiếu đứng bên cạnh, cổ vũ."
+      },
+      {
+        "text_en": "\"Well done, my darling!\" she shouted, \"Keep on working that special magic!",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_058.mp3",
+        "text_vi": "“Giỏi lắm, con yêu của mẹ!” bà hét lên, “Cứ tiếp tục phát huy phép thuật đặc biệt đó đi!"
+      },
+      {
+        "text_en": "You'll be out in no time.\"",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_059.mp3",
+        "text_vi": "Con sẽ ra ngoài ngay thôi.”"
+      },
+      {
+        "text_en": "Chicken coughed and coughed until Millipede came out.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_060.mp3",
+        "text_vi": "Gà ho mãi cho đến khi Cuốn chiếu chui ra."
+      },
+      {
+        "text_en": "\"Hooray!\" shouted Millipede, \"I'm free!",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_061.mp3",
+        "text_vi": "“Hoan hô!” Cuốn chiếu hét lên, “Con được tự do rồi!"
+      },
+      {
+        "text_en": "I escaped!\" Mother Millipede was relieved to see her child alive and well.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_062.mp3",
+        "text_vi": "Con đã thoát ra!” Mẹ Cuốn chiếu nhẹ nhõm khi thấy con mình còn sống và khỏe mạnh."
+      },
+      {
+        "text_en": "\"Come quickly,\" she whispered, and her and Millipede crawled quickly away.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_063.mp3",
+        "text_vi": "“Đi nhanh lên,” bà thì thầm, rồi bà và Cuốn chiếu nhanh chóng bò đi."
+      },
+      {
+        "text_en": "They climbed and climbed until they reached the top of a tall tree where they could hide.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_064.mp3",
+        "text_vi": "Họ trèo mãi, trèo mãi cho đến khi lên đến ngọn một cái cây cao nơi họ có thể ẩn nấp."
+      },
+      {
+        "text_en": "From that time on, all chickens and millipedes have been enemies.",
+        "paragraph_index": 11,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_065.mp3",
+        "text_vi": "Từ đó trở đi, tất cả gà và cuốn chiếu đều trở thành kẻ thù của nhau."
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "Chicken and Millipede were very close friends.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "In some ways they were very similar; they both loved sport and were very competitive.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "But in other ways they were very different.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "Millipede loved to joke around and make people laugh.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "She was able to do many things at once, juggling tasks with her many legs.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "Chicken was more serious.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "She was good at taking others under her wing and making them feel safe and cared for.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "But she also had a terrible temper!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "One day they decided to play a friendly game of soccer.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "Chicken was a fast runner and an excellent dribbler.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "She also had a powerful kick and could score goals from far away.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "But Millipede had something Chicken could never compete with - hundreds of legs!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "Millipede ran circles around poor Chicken, scoring goal after goal.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_012.mp3"
+        },
+        {
+          "id": "ra_13",
+          "text_en": "Chicken got angrier and angrier.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_013.mp3"
+        },
+        {
+          "id": "ra_14",
+          "text_en": "Watch out, Millipede!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_014.mp3"
+        },
+        {
+          "id": "ra_15",
+          "text_en": "\"Let's have a penalty shoot-out,\" said Chicken, hoping that this would prevent Millipede from using her legs to dribble around her.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_015.mp3"
+        },
+        {
+          "id": "ra_16",
+          "text_en": "\"Sure thing!\" said Millipede confidently.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_016.mp3"
+        },
+        {
+          "id": "ra_17",
+          "text_en": "First Millipede was goal keeper.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_017.mp3"
+        },
+        {
+          "id": "ra_18",
+          "text_en": "Chicken scored only one goal.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_018.mp3"
+        },
+        {
+          "id": "ra_19",
+          "text_en": "Then it was Chicken's turn to defend the goal.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_019.mp3"
+        },
+        {
+          "id": "ra_20",
+          "text_en": "Millipede kicked the ball and scored.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_020.mp3"
+        },
+        {
+          "id": "ra_21",
+          "text_en": "Millipede juggled the ball and scored.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_021.mp3"
+        },
+        {
+          "id": "ra_22",
+          "text_en": "Millipede headed the ball and scored.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_022.mp3"
+        },
+        {
+          "id": "ra_23",
+          "text_en": "Millipede tapped the ball and scored.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_023.mp3"
+        },
+        {
+          "id": "ra_24",
+          "text_en": "Chicken grew angrier by the minute.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_024.mp3"
+        },
+        {
+          "id": "ra_25",
+          "text_en": "\"This is unfair,\" she thought, \"Millipede should only be able to use two of her legs.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_025.mp3"
+        },
+        {
+          "id": "ra_26",
+          "text_en": "She is cheating!\" While Chicken was busy thinking her angry thoughts, Millipede slyly kicked the ball around her and through the goalposts.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_026.mp3"
+        },
+        {
+          "id": "ra_27",
+          "text_en": "Millipede scored five goals!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_027.mp3"
+        },
+        {
+          "id": "ra_28",
+          "text_en": "Chicken was furious that she had lost.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_028.mp3"
+        },
+        {
+          "id": "ra_29",
+          "text_en": "\"I want a rematch,\" she demanded, \"and this time you can only use two of your legs!\" Millipede started laughing because her friend was making such a fuss.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_029.mp3"
+        },
+        {
+          "id": "ra_30",
+          "text_en": "\"What a sore loser you are!\" she said, \"Why didn't you use your wings to flap the ball into the goal, or your feathers to blow it over my head?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_030.mp3"
+        },
+        {
+          "id": "ra_31",
+          "text_en": "You lost fair and square, my friend!\"",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_031.mp3"
+        },
+        {
+          "id": "ra_32",
+          "text_en": "\"You see,\" said Millipede, \"soccer is really all about strategy.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_032.mp3"
+        },
+        {
+          "id": "ra_33",
+          "text_en": "You need to use your brain and have a plan.\" \"Are you telling me I don't have any brains?\" shrieked Chicken.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_033.mp3"
+        },
+        {
+          "id": "ra_34",
+          "text_en": "\"How dare you!\" But before Millipede could answer, Chicken opened up her beak and swallowed her.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_034.mp3"
+        },
+        {
+          "id": "ra_35",
+          "text_en": "As Chicken was walking home, she met Mother Millipede.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_035.mp3"
+        },
+        {
+          "id": "ra_36",
+          "text_en": "Usually Chicken loved to see her friend's mother.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_036.mp3"
+        },
+        {
+          "id": "ra_37",
+          "text_en": "Mother Millipede told wonderful stories and baked the most delicious leaf cakes.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_037.mp3"
+        },
+        {
+          "id": "ra_38",
+          "text_en": "But today Chicken marched right on, hoping Mother Millipede would not recognize her.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_038.mp3"
+        },
+        {
+          "id": "ra_39",
+          "text_en": "\"Hello dear,\" Mother Millipede called, “Have you seen my child?” Chicken didn't say anything.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_039.mp3"
+        },
+        {
+          "id": "ra_40",
+          "text_en": "Mother Millipede was worried.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_040.mp3"
+        },
+        {
+          "id": "ra_41",
+          "text_en": "\"Chicken is acting very strangely!\" she thought.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_041.mp3"
+        },
+        {
+          "id": "ra_42",
+          "text_en": "Then Mother Millipede heard a tiny voice.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_042.mp3"
+        },
+        {
+          "id": "ra_43",
+          "text_en": "“Help me, Mom!” cried the voice.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_043.mp3"
+        },
+        {
+          "id": "ra_44",
+          "text_en": "Mother Millipede looked around and listened carefully.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_044.mp3"
+        },
+        {
+          "id": "ra_45",
+          "text_en": "\"Where is that voice coming from?\" she asked.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_045.mp3"
+        },
+        {
+          "id": "ra_46",
+          "text_en": "\"Have you got someone inside your stomach, Chicken?\" Chicken looked around sheepishly.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_046.mp3"
+        },
+        {
+          "id": "ra_47",
+          "text_en": "She didn't know what to do.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_047.mp3"
+        },
+        {
+          "id": "ra_48",
+          "text_en": "\"Who have you eaten?\" asked Mother Millipede.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_048.mp3"
+        },
+        {
+          "id": "ra_49",
+          "text_en": "\"Don't tell me you've eaten my precious baby!\"",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_049.mp3"
+        },
+        {
+          "id": "ra_50",
+          "text_en": "Mother Millipede shouted, “Use your special power my child!” Millipedes can make a bad smell and a terrible taste.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_050.mp3"
+        },
+        {
+          "id": "ra_51",
+          "text_en": "Chicken began to feel ill.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_051.mp3"
+        },
+        {
+          "id": "ra_52",
+          "text_en": "\"I don't feel so well,\" she moaned.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_052.mp3"
+        },
+        {
+          "id": "ra_53",
+          "text_en": "\"I need to go home and lie in my bed.\"",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_053.mp3"
+        },
+        {
+          "id": "ra_54",
+          "text_en": "Chicken burped. Then she swallowed and spat.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_054.mp3"
+        },
+        {
+          "id": "ra_55",
+          "text_en": "Then she sneezed and coughed.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_055.mp3"
+        },
+        {
+          "id": "ra_56",
+          "text_en": "Millipede tasted disgusting!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_056.mp3"
+        },
+        {
+          "id": "ra_57",
+          "text_en": "Meanwhile, Mother Millipede stood beside her, cheering.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_057.mp3"
+        },
+        {
+          "id": "ra_58",
+          "text_en": "\"Well done, my darling!\" she shouted, \"Keep on working that special magic!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_058.mp3"
+        },
+        {
+          "id": "ra_59",
+          "text_en": "You'll be out in no time.\"",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_059.mp3"
+        },
+        {
+          "id": "ra_60",
+          "text_en": "Chicken coughed and coughed until Millipede came out.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_060.mp3"
+        },
+        {
+          "id": "ra_61",
+          "text_en": "\"Hooray!\" shouted Millipede, \"I'm free!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_061.mp3"
+        },
+        {
+          "id": "ra_62",
+          "text_en": "I escaped!\" Mother Millipede was relieved to see her child alive and well.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_062.mp3"
+        },
+        {
+          "id": "ra_63",
+          "text_en": "\"Come quickly,\" she whispered, and her and Millipede crawled quickly away.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_063.mp3"
+        },
+        {
+          "id": "ra_64",
+          "text_en": "They climbed and climbed until they reached the top of a tall tree where they could hide.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_064.mp3"
+        },
+        {
+          "id": "ra_65",
+          "text_en": "From that time on, all chickens and millipedes have been enemies.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106425/s_065.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "Who were very close friends?",
+          "options_en": [
+            "Chicken and Millipede",
+            "Chicken and Mother Millipede",
+            "Chicken and the soccer ball"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "What was the relationship between Chicken and Millipede?",
+          "options_en": [
+            "They were very close friends",
+            "They were enemies",
+            "They were just acquaintances"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s1_q1",
+          "type": "choice",
+          "question_en": "What did they both love?",
+          "options_en": [
+            "Sport",
+            "Leaf cakes",
+            "Telling stories"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s1_q2",
+          "type": "choice",
+          "question_en": "How were they described in some ways?",
+          "options_en": [
+            "Very similar",
+            "Very different",
+            "Very shy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s2_q1",
+          "type": "choice",
+          "question_en": "How were they in other ways?",
+          "options_en": [
+            "Very different",
+            "Very competitive",
+            "Very playful"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s2_q2",
+          "type": "choice",
+          "question_en": "What does the sentence say about their differences?",
+          "options_en": [
+            "They were very different",
+            "They both loved joking",
+            "They both had many legs"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s3_q1",
+          "type": "choice",
+          "question_en": "What did Millipede love to do?",
+          "options_en": [
+            "Joke around and make people laugh",
+            "Bake leaf cakes",
+            "Use her wings to flap the ball"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p0_s3_q2",
+          "type": "choice",
+          "question_en": "Why did Millipede act the way she did?",
+          "options_en": [
+            "She loved to make people laugh",
+            "She wanted to guard the goal",
+            "She liked to bake"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p0_s4_q1",
+          "type": "choice",
+          "question_en": "How was she able to do many things at once?",
+          "options_en": [
+            "By juggling tasks with her many legs",
+            "By flapping her wings",
+            "By baking leaf cakes"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p0_s4_q2",
+          "type": "choice",
+          "question_en": "What helped her juggle tasks?",
+          "options_en": [
+            "Her many legs",
+            "Her beak",
+            "Her feathers"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p0_s5_q1",
+          "type": "choice",
+          "question_en": "How was Chicken described?",
+          "options_en": [
+            "More serious",
+            "More joking",
+            "More stubborn"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p0_s5_q2",
+          "type": "choice",
+          "question_en": "Who was more serious?",
+          "options_en": [
+            "Chicken",
+            "Millipede",
+            "Mother Millipede"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p0_s6_q1",
+          "type": "choice",
+          "question_en": "What was she good at doing?",
+          "options_en": [
+            "Taking others under her wing and making them feel safe and cared for",
+            "Juggling tasks with many legs",
+            "Scoring goals from far away"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p0_s6_q2",
+          "type": "choice",
+          "question_en": "How did she make others feel?",
+          "options_en": [
+            "Safe and cared for",
+            "Amused and laughing",
+            "Annoyed by a bad smell"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p0_s7_q1",
+          "type": "choice",
+          "question_en": "What else did she have?",
+          "options_en": [
+            "A terrible temper",
+            "Hundreds of legs",
+            "A special smell"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p0_s7_q2",
+          "type": "choice",
+          "question_en": "How is her temper described?",
+          "options_en": [
+            "Terrible",
+            "Calm",
+            "Playful"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "Who decided to play a friendly game of soccer?",
+          "options_en": [
+            "Chicken and Millipede",
+            "Mother Millipede",
+            "Chicken alone"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "When did they decide to play a friendly game of soccer?",
+          "options_en": [
+            "One day",
+            "At night",
+            "After breakfast"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p1_s1_q1",
+          "type": "choice",
+          "question_en": "What was Chicken good at?",
+          "options_en": [
+            "Being a fast runner and an excellent dribbler",
+            "Baking leaf cakes",
+            "Juggling tasks with many legs"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p1_s1_q2",
+          "type": "choice",
+          "question_en": "How was Chicken described as a runner?",
+          "options_en": [
+            "Fast",
+            "Slow",
+            "Tired"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p1_s2_q1",
+          "type": "choice",
+          "question_en": "What other skill did Chicken have?",
+          "options_en": [
+            "A powerful kick that could score goals from far away",
+            "The ability to make a bad smell",
+            "The skill to juggle many tasks"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p1_s2_q2",
+          "type": "choice",
+          "question_en": "Where could Chicken score goals from?",
+          "options_en": [
+            "Far away",
+            "Very close to the goal",
+            "From the goal keeper's hands"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p1_s3_q1",
+          "type": "choice",
+          "question_en": "What did Millipede have that Chicken could never compete with?",
+          "options_en": [
+            "Hundreds of legs",
+            "A beak",
+            "Many feathers"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p1_s3_q2",
+          "type": "choice",
+          "question_en": "How many legs did Millipede have?",
+          "options_en": [
+            "Hundreds",
+            "Two",
+            "Four"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p1_s4_q1",
+          "type": "choice",
+          "question_en": "What did Millipede do to Chicken during the game?",
+          "options_en": [
+            "Ran circles around her and scored goal after goal",
+            "Helped her tie her shoelaces",
+            "Baked her a leaf cake"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p1_s4_q2",
+          "type": "choice",
+          "question_en": "What was Millipede doing in the match?",
+          "options_en": [
+            "Scoring goal after goal",
+            "Sitting on the bench",
+            "Teaching a lesson"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p1_s5_q1",
+          "type": "choice",
+          "question_en": "How did Chicken feel as the game went on?",
+          "options_en": [
+            "Angrier and angrier",
+            "Happier and happier",
+            "Sleepier and sleepier"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p1_s5_q2",
+          "type": "choice",
+          "question_en": "What happened to Chicken's anger during the game?",
+          "options_en": [
+            "It increased",
+            "It disappeared",
+            "It stayed the same"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p1_s6_q1",
+          "type": "choice",
+          "question_en": "Who is being warned in this sentence?",
+          "options_en": [
+            "Millipede",
+            "Chicken",
+            "Mother Millipede"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p1_s6_q2",
+          "type": "choice",
+          "question_en": "What is the speaker telling Millipede to do?",
+          "options_en": [
+            "Watch out / be careful",
+            "Score more goals",
+            "Go home"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "Who suggested a penalty shoot-out?",
+          "options_en": [
+            "Chicken",
+            "Millipede",
+            "Mother Millipede"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "Why did Chicken suggest a penalty shoot-out?",
+          "options_en": [
+            "To prevent Millipede from using her legs to dribble around her",
+            "To make Mother Millipede laugh",
+            "To practise juggling with many legs"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p2_s1_q1",
+          "type": "choice",
+          "question_en": "Who agreed to the penalty shoot-out?",
+          "options_en": [
+            "Millipede",
+            "Chicken",
+            "Mother Millipede"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p2_s1_q2",
+          "type": "choice",
+          "question_en": "How did Millipede respond when asked about the shoot-out?",
+          "options_en": [
+            "Confidently",
+            "Angrily",
+            "Sadly"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p2_s2_q1",
+          "type": "choice",
+          "question_en": "Who was goalkeeper first?",
+          "options_en": [
+            "Millipede",
+            "Chicken",
+            "Mother Millipede"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p2_s2_q2",
+          "type": "choice",
+          "question_en": "Which player took the goalkeeping position at the start?",
+          "options_en": [
+            "Millipede",
+            "Chicken",
+            "Mother Millipede"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p2_s3_q1",
+          "type": "choice",
+          "question_en": "Who scored only one goal?",
+          "options_en": [
+            "Chicken",
+            "Millipede",
+            "Mother Millipede"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p2_s3_q2",
+          "type": "choice",
+          "question_en": "How many goals did Chicken score?",
+          "options_en": [
+            "One",
+            "Five",
+            "None"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p2_s4_q1",
+          "type": "choice",
+          "question_en": "Whose turn was it to defend the goal next?",
+          "options_en": [
+            "Chicken",
+            "Millipede",
+            "Mother Millipede"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p2_s4_q2",
+          "type": "choice",
+          "question_en": "What was Chicken's role after Millipede's turn?",
+          "options_en": [
+            "To defend the goal",
+            "To be the referee",
+            "To act as goalkeeper for Millipede"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "Who kicked the ball and scored?",
+          "options_en": [
+            "Millipede",
+            "Chicken",
+            "Mother Millipede"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "What did Millipede do in this sentence?",
+          "options_en": [
+            "Kicked the ball and scored",
+            "Swallowed Chicken",
+            "Juggled the ball and scored"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p3_s1_q1",
+          "type": "choice",
+          "question_en": "What did Millipede do with the ball?",
+          "options_en": [
+            "Juggled the ball and scored",
+            "Ran circles around Chicken",
+            "Used her wings"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p3_s1_q2",
+          "type": "choice",
+          "question_en": "Who juggled the ball and scored?",
+          "options_en": [
+            "Millipede",
+            "Chicken",
+            "Mother Millipede"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p3_s2_q1",
+          "type": "choice",
+          "question_en": "How did Millipede score in this sentence?",
+          "options_en": [
+            "She headed the ball and scored",
+            "She used her feathers",
+            "She spat the ball out"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p3_s2_q2",
+          "type": "choice",
+          "question_en": "Who headed the ball and scored?",
+          "options_en": [
+            "Millipede",
+            "Chicken",
+            "Mother Millipede"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p3_s3_q1",
+          "type": "choice",
+          "question_en": "What did Millipede do to score in this sentence?",
+          "options_en": [
+            "Tapped the ball and scored",
+            "Made a terrible smell",
+            "Climbed a tall tree"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p3_s3_q2",
+          "type": "choice",
+          "question_en": "Who tapped the ball and scored?",
+          "options_en": [
+            "Millipede",
+            "Chicken",
+            "Mother Millipede"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p3_s4_q1",
+          "type": "choice",
+          "question_en": "Who grew angrier by the minute?",
+          "options_en": [
+            "Chicken",
+            "Millipede",
+            "Mother Millipede"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p3_s4_q2",
+          "type": "choice",
+          "question_en": "How did Chicken feel in this sentence?",
+          "options_en": [
+            "She grew angrier by the minute",
+            "She felt relieved",
+            "She felt amused by jokes"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p3_s5_q1",
+          "type": "choice",
+          "question_en": "What did she think was unfair?",
+          "options_en": [
+            "That Millipede should only be able to use two of her legs",
+            "That Mother Millipede told stories",
+            "That Millipede climbed a tree"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p3_s5_q2",
+          "type": "choice",
+          "question_en": "What did she believe Millipede should only be able to use?",
+          "options_en": [
+            "Two of her legs",
+            "Her wings",
+            "Her hundreds of legs"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p3_s6_q1",
+          "type": "choice",
+          "question_en": "What was Chicken busy doing while Millipede acted?",
+          "options_en": [
+            "Thinking her angry thoughts",
+            "Baking leaf cakes",
+            "Telling stories"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p3_s6_q2",
+          "type": "choice",
+          "question_en": "Who slyly kicked the ball around her and through the goalposts?",
+          "options_en": [
+            "Millipede",
+            "Chicken",
+            "Mother Millipede"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p3_s7_q1",
+          "type": "choice",
+          "question_en": "How many goals did Millipede score?",
+          "options_en": [
+            "Five",
+            "One",
+            "Three"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        },
+        {
+          "id": "gl_p3_s7_q2",
+          "type": "choice",
+          "question_en": "Who scored five goals?",
+          "options_en": [
+            "Millipede",
+            "Chicken",
+            "Mother Millipede"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "Who was furious?",
+          "options_en": [
+            "Chicken",
+            "Millipede",
+            "Mother Millipede"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "Why was she furious?",
+          "options_en": [
+            "She had lost",
+            "Millipede laughed at her",
+            "She wanted leaf cakes"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        },
+        {
+          "id": "gl_p4_s1_q1",
+          "type": "choice",
+          "question_en": "What did she demand?",
+          "options_en": [
+            "A rematch",
+            "That Millipede stop joking",
+            "A leaf cake"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p4_s1_q2",
+          "type": "choice",
+          "question_en": "Why did Millipede start laughing?",
+          "options_en": [
+            "Because her friend was making such a fuss",
+            "Because Chicken scored a goal",
+            "Because Mother Millipede told a story"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p4_s2_q1",
+          "type": "choice",
+          "question_en": "Who called the other a sore loser?",
+          "options_en": [
+            "Millipede",
+            "Chicken",
+            "Mother Millipede"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        },
+        {
+          "id": "gl_p4_s2_q2",
+          "type": "choice",
+          "question_en": "What did Millipede say Chicken could have used?",
+          "options_en": [
+            "Her wings or her feathers to move the ball",
+            "Hundreds of legs to run around",
+            "A special bad smell"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        },
+        {
+          "id": "gl_p4_s3_q1",
+          "type": "choice",
+          "question_en": "How did Millipede describe the way Chicken lost?",
+          "options_en": [
+            "Fair and square",
+            "By cheating",
+            "Because of a terrible smell"
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        },
+        {
+          "id": "gl_p4_s3_q2",
+          "type": "choice",
+          "question_en": "Who did Millipede call 'my friend'?",
+          "options_en": [
+            "Chicken",
+            "Mother Millipede",
+            "Herself"
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "Who said soccer is really all about strategy?",
+          "options_en": [
+            "Millipede",
+            "Chicken",
+            "Mother Millipede"
+          ],
+          "correct_index": 0,
+          "sentence_index": 32
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "What did Millipede say soccer is all about?",
+          "options_en": [
+            "Strategy",
+            "Using hundreds of legs",
+            "Being a fast runner"
+          ],
+          "correct_index": 0,
+          "sentence_index": 32
+        },
+        {
+          "id": "gl_p5_s1_q1",
+          "type": "choice",
+          "question_en": "What did Millipede say you need to use?",
+          "options_en": [
+            "Your brain",
+            "Your wings",
+            "Your many legs"
+          ],
+          "correct_index": 0,
+          "sentence_index": 33
+        },
+        {
+          "id": "gl_p5_s1_q2",
+          "type": "choice",
+          "question_en": "Who shrieked \"Are you telling me I don't have any brains?\"",
+          "options_en": [
+            "Chicken",
+            "Millipede",
+            "Mother Millipede"
+          ],
+          "correct_index": 0,
+          "sentence_index": 33
+        },
+        {
+          "id": "gl_p5_s2_q1",
+          "type": "choice",
+          "question_en": "What did Chicken do before Millipede could answer?",
+          "options_en": [
+            "Opened her beak and swallowed her",
+            "Flapped her wings at her",
+            "Ran home angrily"
+          ],
+          "correct_index": 0,
+          "sentence_index": 34
+        },
+        {
+          "id": "gl_p5_s2_q2",
+          "type": "choice",
+          "question_en": "Why could Millipede not answer?",
+          "options_en": [
+            "Chicken had swallowed her",
+            "She was laughing",
+            "She was juggling the ball"
+          ],
+          "correct_index": 0,
+          "sentence_index": 34
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "Who was walking home?",
+          "options_en": [
+            "Chicken",
+            "Millipede (the child)",
+            "Mother Millipede"
+          ],
+          "correct_index": 0,
+          "sentence_index": 35
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "Who did Chicken meet?",
+          "options_en": [
+            "Mother Millipede",
+            "Her friend Millipede",
+            "Her neighbor"
+          ],
+          "correct_index": 0,
+          "sentence_index": 35
+        },
+        {
+          "id": "gl_p6_s1_q1",
+          "type": "choice",
+          "question_en": "Who did Chicken usually love to see?",
+          "options_en": [
+            "Her friend's mother",
+            "Her soccer coach",
+            "Her own mother"
+          ],
+          "correct_index": 0,
+          "sentence_index": 36
+        },
+        {
+          "id": "gl_p6_s1_q2",
+          "type": "choice",
+          "question_en": "How did Chicken usually feel about seeing her friend's mother?",
+          "options_en": [
+            "She loved to see her",
+            "She felt angry",
+            "She was bored"
+          ],
+          "correct_index": 0,
+          "sentence_index": 36
+        },
+        {
+          "id": "gl_p6_s2_q1",
+          "type": "choice",
+          "question_en": "What did Mother Millipede tell?",
+          "options_en": [
+            "Wonderful stories",
+            "Soccer strategies",
+            "Jokes only"
+          ],
+          "correct_index": 0,
+          "sentence_index": 37
+        },
+        {
+          "id": "gl_p6_s2_q2",
+          "type": "choice",
+          "question_en": "What did Mother Millipede bake?",
+          "options_en": [
+            "The most delicious leaf cakes",
+            "Soccer-shaped cakes",
+            "Plain cookies"
+          ],
+          "correct_index": 0,
+          "sentence_index": 37
+        },
+        {
+          "id": "gl_p6_s3_q1",
+          "type": "choice",
+          "question_en": "Why did Chicken march right on?",
+          "options_en": [
+            "Hoping Mother Millipede would not recognize her",
+            "To ask for a rematch",
+            "To get a leaf cake"
+          ],
+          "correct_index": 0,
+          "sentence_index": 38
+        },
+        {
+          "id": "gl_p6_s3_q2",
+          "type": "choice",
+          "question_en": "How did Chicken move past Mother Millipede?",
+          "options_en": [
+            "She marched right on",
+            "She stopped to talk",
+            "She ran away"
+          ],
+          "correct_index": 0,
+          "sentence_index": 38
+        },
+        {
+          "id": "gl_p6_s4_q1",
+          "type": "choice",
+          "question_en": "What did Mother Millipede ask Chicken?",
+          "options_en": [
+            "Have you seen my child?",
+            "Would you like a leaf cake?",
+            "Do you want a rematch?"
+          ],
+          "correct_index": 0,
+          "sentence_index": 39
+        },
+        {
+          "id": "gl_p6_s4_q2",
+          "type": "choice",
+          "question_en": "How did Chicken respond when Mother Millipede spoke?",
+          "options_en": [
+            "She didn't say anything",
+            "She answered about the child",
+            "She laughed"
+          ],
+          "correct_index": 0,
+          "sentence_index": 39
+        },
+        {
+          "id": "gl_p6_s5_q1",
+          "type": "choice",
+          "question_en": "Who was worried?",
+          "options_en": [
+            "Mother Millipede",
+            "Chicken",
+            "Millipede (the child)"
+          ],
+          "correct_index": 0,
+          "sentence_index": 40
+        },
+        {
+          "id": "gl_p6_s5_q2",
+          "type": "choice",
+          "question_en": "How was Mother Millipede feeling?",
+          "options_en": [
+            "Worried",
+            "Happy",
+            "Angry"
+          ],
+          "correct_index": 0,
+          "sentence_index": 40
+        },
+        {
+          "id": "gl_p6_s6_q1",
+          "type": "choice",
+          "question_en": "What did she think about Chicken's behavior?",
+          "options_en": [
+            "Chicken is acting very strangely",
+            "Chicken is very friendly",
+            "Chicken is playful"
+          ],
+          "correct_index": 0,
+          "sentence_index": 41
+        },
+        {
+          "id": "gl_p6_s6_q2",
+          "type": "choice",
+          "question_en": "Who thought that Chicken was acting very strangely?",
+          "options_en": [
+            "Mother Millipede",
+            "Chicken",
+            "Millipede (the child)"
+          ],
+          "correct_index": 0,
+          "sentence_index": 41
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "Who heard a tiny voice?",
+          "options_en": [
+            "Mother Millipede",
+            "Chicken",
+            "Millipede child"
+          ],
+          "correct_index": 0,
+          "sentence_index": 42
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "What did Mother Millipede hear?",
+          "options_en": [
+            "A tiny voice",
+            "A ball being kicked",
+            "A loud laugh"
+          ],
+          "correct_index": 0,
+          "sentence_index": 42
+        },
+        {
+          "id": "gl_p7_s1_q1",
+          "type": "choice",
+          "question_en": "Who cried, \"Help me, Mom!\"?",
+          "options_en": [
+            "The tiny voice",
+            "Chicken",
+            "Mother Millipede"
+          ],
+          "correct_index": 0,
+          "sentence_index": 43
+        },
+        {
+          "id": "gl_p7_s1_q2",
+          "type": "choice",
+          "question_en": "What did the voice cry?",
+          "options_en": [
+            "\"Help me, Mom!\"",
+            "\"Where are you?\"",
+            "\"Stop playing!\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 43
+        },
+        {
+          "id": "gl_p7_s2_q1",
+          "type": "choice",
+          "question_en": "What did Mother Millipede do when she heard the voice?",
+          "options_en": [
+            "Looked around and listened carefully",
+            "Swallowed Chicken",
+            "Climbed a tree"
+          ],
+          "correct_index": 0,
+          "sentence_index": 44
+        },
+        {
+          "id": "gl_p7_s2_q2",
+          "type": "choice",
+          "question_en": "How did Mother Millipede listen?",
+          "options_en": [
+            "Carefully",
+            "Angrily",
+            "Loudly"
+          ],
+          "correct_index": 0,
+          "sentence_index": 44
+        },
+        {
+          "id": "gl_p7_s3_q1",
+          "type": "choice",
+          "question_en": "What did she ask about the voice?",
+          "options_en": [
+            "Where it was coming from",
+            "Whether Chicken had won the game",
+            "If anyone was home"
+          ],
+          "correct_index": 0,
+          "sentence_index": 45
+        },
+        {
+          "id": "gl_p7_s3_q2",
+          "type": "choice",
+          "question_en": "Why did she ask, \"Where is that voice coming from?\"",
+          "options_en": [
+            "To find where the voice came from",
+            "To start a soccer match",
+            "To ask about leaf cakes"
+          ],
+          "correct_index": 0,
+          "sentence_index": 45
+        },
+        {
+          "id": "gl_p7_s4_q1",
+          "type": "choice",
+          "question_en": "Who was asked if they had someone inside their stomach?",
+          "options_en": [
+            "Chicken",
+            "Mother Millipede",
+            "Millipede child"
+          ],
+          "correct_index": 0,
+          "sentence_index": 46
+        },
+        {
+          "id": "gl_p7_s4_q2",
+          "type": "choice",
+          "question_en": "How did Chicken look when she was asked the question?",
+          "options_en": [
+            "Sheepishly",
+            "Furious",
+            "Relieved"
+          ],
+          "correct_index": 0,
+          "sentence_index": 46
+        },
+        {
+          "id": "gl_p7_s5_q1",
+          "type": "choice",
+          "question_en": "Who didn't know what to do?",
+          "options_en": [
+            "She (Chicken)",
+            "Mother Millipede",
+            "Millipede child"
+          ],
+          "correct_index": 0,
+          "sentence_index": 47
+        },
+        {
+          "id": "gl_p7_s5_q2",
+          "type": "choice",
+          "question_en": "What didn't she know?",
+          "options_en": [
+            "What to do",
+            "How to bake leaf cakes",
+            "How to climb a tree"
+          ],
+          "correct_index": 0,
+          "sentence_index": 47
+        },
+        {
+          "id": "gl_p7_s6_q1",
+          "type": "choice",
+          "question_en": "Who asked, \"Who have you eaten?\"",
+          "options_en": [
+            "Mother Millipede",
+            "Chicken",
+            "The tiny voice"
+          ],
+          "correct_index": 0,
+          "sentence_index": 48
+        },
+        {
+          "id": "gl_p7_s6_q2",
+          "type": "choice",
+          "question_en": "What was Mother Millipede asking about?",
+          "options_en": [
+            "Who Chicken had eaten",
+            "Where the ball was",
+            "What time it was"
+          ],
+          "correct_index": 0,
+          "sentence_index": 48
+        },
+        {
+          "id": "gl_p7_s7_q1",
+          "type": "choice",
+          "question_en": "Whose precious baby did Mother Millipede mention?",
+          "options_en": [
+            "Mother Millipede's",
+            "Chicken's",
+            "The friend's"
+          ],
+          "correct_index": 0,
+          "sentence_index": 49
+        },
+        {
+          "id": "gl_p7_s7_q2",
+          "type": "choice",
+          "question_en": "What did Mother Millipede fear Chicken had done?",
+          "options_en": [
+            "Eaten her precious baby",
+            "Stolen a ball",
+            "Run away"
+          ],
+          "correct_index": 0,
+          "sentence_index": 49
+        }
+      ]
+    },
+    {
+      "paragraph_index": 8,
+      "questions": [
+        {
+          "id": "gl_p8_s0_q1",
+          "type": "choice",
+          "question_en": "Who shouted?",
+          "options_en": [
+            "Mother Millipede",
+            "Chicken",
+            "Millipede"
+          ],
+          "correct_index": 0,
+          "sentence_index": 50
+        },
+        {
+          "id": "gl_p8_s0_q2",
+          "type": "choice",
+          "question_en": "What special ability do millipedes have in this sentence?",
+          "options_en": [
+            "They can make a bad smell and a terrible taste",
+            "They can juggle with many legs",
+            "They can tell funny jokes"
+          ],
+          "correct_index": 0,
+          "sentence_index": 50
+        },
+        {
+          "id": "gl_p8_s1_q1",
+          "type": "choice",
+          "question_en": "Who began to feel ill?",
+          "options_en": [
+            "Chicken",
+            "Mother Millipede",
+            "Millipede"
+          ],
+          "correct_index": 0,
+          "sentence_index": 51
+        },
+        {
+          "id": "gl_p8_s1_q2",
+          "type": "choice",
+          "question_en": "How did Chicken begin to feel?",
+          "options_en": [
+            "Ill",
+            "Angry",
+            "Well"
+          ],
+          "correct_index": 0,
+          "sentence_index": 51
+        },
+        {
+          "id": "gl_p8_s2_q1",
+          "type": "choice",
+          "question_en": "What did she say in this sentence?",
+          "options_en": [
+            "\"I don't feel so well,\"",
+            "\"Use your special power my child!\"",
+            "\"I'm free!\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 52
+        },
+        {
+          "id": "gl_p8_s2_q2",
+          "type": "choice",
+          "question_en": "How did she say it?",
+          "options_en": [
+            "She moaned",
+            "She shouted",
+            "She laughed"
+          ],
+          "correct_index": 0,
+          "sentence_index": 52
+        },
+        {
+          "id": "gl_p8_s3_q1",
+          "type": "choice",
+          "question_en": "Where did she say she needed to go?",
+          "options_en": [
+            "Home to lie in her bed",
+            "To the top of a tall tree",
+            "To play soccer"
+          ],
+          "correct_index": 0,
+          "sentence_index": 53
+        },
+        {
+          "id": "gl_p8_s3_q2",
+          "type": "choice",
+          "question_en": "What does she say she needs to do?",
+          "options_en": [
+            "Lie in her bed",
+            "Meet Mother Millipede",
+            "Use a special power"
+          ],
+          "correct_index": 0,
+          "sentence_index": 53
+        }
+      ]
+    },
+    {
+      "paragraph_index": 9,
+      "questions": [
+        {
+          "id": "gl_p9_s0_q1",
+          "type": "choice",
+          "question_en": "What did Chicken do first?",
+          "options_en": [
+            "She burped",
+            "She sneezed",
+            "She climbed a tree"
+          ],
+          "correct_index": 0,
+          "sentence_index": 54
+        },
+        {
+          "id": "gl_p9_s0_q2",
+          "type": "choice",
+          "question_en": "What did Chicken do after she burped?",
+          "options_en": [
+            "She swallowed and spat",
+            "She scored a goal",
+            "She baked leaf cakes"
+          ],
+          "correct_index": 0,
+          "sentence_index": 54
+        },
+        {
+          "id": "gl_p9_s1_q1",
+          "type": "choice",
+          "question_en": "What did Chicken do next in the sentence?",
+          "options_en": [
+            "She sneezed and coughed",
+            "She laughed with Millipede",
+            "She ran in a circle"
+          ],
+          "correct_index": 0,
+          "sentence_index": 55
+        },
+        {
+          "id": "gl_p9_s1_q2",
+          "type": "choice",
+          "question_en": "How did Chicken react physically in this sentence?",
+          "options_en": [
+            "She sneezed and coughed",
+            "She swallowed Millipede",
+            "She juggled the ball"
+          ],
+          "correct_index": 0,
+          "sentence_index": 55
+        },
+        {
+          "id": "gl_p9_s2_q1",
+          "type": "choice",
+          "question_en": "What tasted disgusting?",
+          "options_en": [
+            "Millipede",
+            "Leaf cakes",
+            "The soccer ball"
+          ],
+          "correct_index": 0,
+          "sentence_index": 56
+        },
+        {
+          "id": "gl_p9_s2_q2",
+          "type": "choice",
+          "question_en": "How was Millipede described in the sentence?",
+          "options_en": [
+            "Tasted disgusting",
+            "Very fast at soccer",
+            "Able to bake leaf cakes"
+          ],
+          "correct_index": 0,
+          "sentence_index": 56
+        },
+        {
+          "id": "gl_p9_s3_q1",
+          "type": "choice",
+          "question_en": "Who stood beside her, cheering?",
+          "options_en": [
+            "Mother Millipede",
+            "Chicken",
+            "Millipede"
+          ],
+          "correct_index": 0,
+          "sentence_index": 57
+        },
+        {
+          "id": "gl_p9_s3_q2",
+          "type": "choice",
+          "question_en": "What was Mother Millipede doing beside her?",
+          "options_en": [
+            "Cheering",
+            "Scoring goals",
+            "Juggling the ball"
+          ],
+          "correct_index": 0,
+          "sentence_index": 57
+        },
+        {
+          "id": "gl_p9_s4_q1",
+          "type": "choice",
+          "question_en": "Who shouted \"Well done, my darling!\"?",
+          "options_en": [
+            "Mother Millipede",
+            "Chicken",
+            "Millipede"
+          ],
+          "correct_index": 0,
+          "sentence_index": 58
+        },
+        {
+          "id": "gl_p9_s4_q2",
+          "type": "choice",
+          "question_en": "What did she tell her to keep on doing?",
+          "options_en": [
+            "Working that special magic",
+            "Playing soccer",
+            "Baking leaf cakes"
+          ],
+          "correct_index": 0,
+          "sentence_index": 58
+        },
+        {
+          "id": "gl_p9_s5_q1",
+          "type": "choice",
+          "question_en": "What did she say would happen soon?",
+          "options_en": [
+            "You'll be out in no time",
+            "You'll score a goal",
+            "You'll bake leaf cakes"
+          ],
+          "correct_index": 0,
+          "sentence_index": 59
+        },
+        {
+          "id": "gl_p9_s5_q2",
+          "type": "choice",
+          "question_en": "When did she say the other would be out?",
+          "options_en": [
+            "In no time",
+            "After the rematch",
+            "When they reached the top of the tree"
+          ],
+          "correct_index": 0,
+          "sentence_index": 59
+        }
+      ]
+    },
+    {
+      "paragraph_index": 10,
+      "questions": [
+        {
+          "id": "gl_p10_s0_q1",
+          "type": "choice",
+          "question_en": "Who coughed and coughed?",
+          "options_en": [
+            "Chicken",
+            "Mother Millipede",
+            "Millipede"
+          ],
+          "correct_index": 0,
+          "sentence_index": 60
+        },
+        {
+          "id": "gl_p10_s0_q2",
+          "type": "choice",
+          "question_en": "What happened after the coughing?",
+          "options_en": [
+            "Millipede came out",
+            "They climbed a tree",
+            "Chicken scored a goal"
+          ],
+          "correct_index": 0,
+          "sentence_index": 60
+        },
+        {
+          "id": "gl_p10_s1_q1",
+          "type": "choice",
+          "question_en": "Who shouted \"Hooray!\"?",
+          "options_en": [
+            "Millipede",
+            "Chicken",
+            "Mother Millipede"
+          ],
+          "correct_index": 0,
+          "sentence_index": 61
+        },
+        {
+          "id": "gl_p10_s1_q2",
+          "type": "choice",
+          "question_en": "What did Millipede say in the shout?",
+          "options_en": [
+            "\"I'm free!\"",
+            "\"Come quickly,\"",
+            "\"Use your special power\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 61
+        },
+        {
+          "id": "gl_p10_s2_q1",
+          "type": "choice",
+          "question_en": "Who was relieved to see her child alive and well?",
+          "options_en": [
+            "Mother Millipede",
+            "Chicken",
+            "Millipede"
+          ],
+          "correct_index": 0,
+          "sentence_index": 62
+        },
+        {
+          "id": "gl_p10_s2_q2",
+          "type": "choice",
+          "question_en": "What had happened that made her relieved?",
+          "options_en": [
+            "She saw her child alive and well",
+            "She won a game",
+            "She baked leaf cakes"
+          ],
+          "correct_index": 0,
+          "sentence_index": 62
+        },
+        {
+          "id": "gl_p10_s3_q1",
+          "type": "choice",
+          "question_en": "What did she whisper?",
+          "options_en": [
+            "\"Come quickly,\"",
+            "\"Hooray!\"",
+            "\"I'm free!\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 63
+        },
+        {
+          "id": "gl_p10_s3_q2",
+          "type": "choice",
+          "question_en": "How did she and Millipede move away?",
+          "options_en": [
+            "They crawled quickly away",
+            "They ran to the goal",
+            "They flew away"
+          ],
+          "correct_index": 0,
+          "sentence_index": 63
+        },
+        {
+          "id": "gl_p10_s4_q1",
+          "type": "choice",
+          "question_en": "Where did they reach after climbing?",
+          "options_en": [
+            "The top of a tall tree",
+            "The soccer goal",
+            "Chicken's bed"
+          ],
+          "correct_index": 0,
+          "sentence_index": 64
+        },
+        {
+          "id": "gl_p10_s4_q2",
+          "type": "choice",
+          "question_en": "Why did they climb to the top of the tall tree?",
+          "options_en": [
+            "So they could hide",
+            "To play another game",
+            "To eat leaf cakes"
+          ],
+          "correct_index": 0,
+          "sentence_index": 64
+        }
+      ]
+    },
+    {
+      "paragraph_index": 11,
+      "questions": [
+        {
+          "id": "gl_p11_s0_q1",
+          "type": "choice",
+          "question_en": "Who have been enemies?",
+          "options_en": [
+            "All chickens and millipedes",
+            "Chicken and Millipede",
+            "Mother Millipede and Chicken"
+          ],
+          "correct_index": 0,
+          "sentence_index": 65
+        },
+        {
+          "id": "gl_p11_s0_q2",
+          "type": "choice",
+          "question_en": "When did they become enemies?",
+          "options_en": [
+            "From that time on",
+            "After the soccer game",
+            "When Chicken swallowed Millipede"
+          ],
+          "correct_index": 0,
+          "sentence_index": 65
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'The Chicken who Lost Her Temper'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "similar",
+      "meaning_vi": "giống nhau",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "competitive",
+      "meaning_vi": "thích cạnh tranh",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "juggling tasks",
+      "meaning_vi": "xoay sở việc",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "temper",
+      "meaning_vi": "tính khí",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "decided",
+      "meaning_vi": "quyết định",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "dribbler",
+      "meaning_vi": "người rê bóng",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "compete",
+      "meaning_vi": "cạnh tranh",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "powerful",
+      "meaning_vi": "mạnh mẽ",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "penalty shoot-out",
+      "meaning_vi": "đá luân lưu",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "prevent",
+      "meaning_vi": "ngăn chặn",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "confidently",
+      "meaning_vi": "tự tin",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "defend",
+      "meaning_vi": "bảo vệ",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "juggled",
+      "meaning_vi": "tâng bóng",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "headed",
+      "meaning_vi": "đánh đầu",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "unfair",
+      "meaning_vi": "không công bằng",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "cheating",
+      "meaning_vi": "gian lận",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "furious",
+      "meaning_vi": "tức giận",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "rematch",
+      "meaning_vi": "đấu lại",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "demanded",
+      "meaning_vi": "yêu cầu",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "sore loser",
+      "meaning_vi": "người thua cuộc tồi tệ",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "strategy",
+      "meaning_vi": "chiến lược",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "shrieked",
+      "meaning_vi": "hét lên",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "beak",
+      "meaning_vi": "mỏ",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "swallowed",
+      "meaning_vi": "nuốt chửng",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "usually",
+      "meaning_vi": "thường ngày",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "delicious",
+      "meaning_vi": "ngon",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "recognize",
+      "meaning_vi": "nhận ra",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "strangely",
+      "meaning_vi": "lạ lùng",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "tiny",
+      "meaning_vi": "nhỏ xíu",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "carefully",
+      "meaning_vi": "cẩn thận",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "stomach",
+      "meaning_vi": "bụng",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "sheepishly",
+      "meaning_vi": "ngượng ngùng",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "shouted",
+      "meaning_vi": "hét lên",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "special power",
+      "meaning_vi": "sức mạnh đặc biệt",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "terrible",
+      "meaning_vi": "tệ",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "moaned",
+      "meaning_vi": "rên rỉ",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "burped",
+      "meaning_vi": "ợ hơi",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "spat",
+      "meaning_vi": "nhổ",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "disgusting",
+      "meaning_vi": "kinh tởm",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "cheering",
+      "meaning_vi": "cổ vũ",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "escaped",
+      "meaning_vi": "thoát ra",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "relieved",
+      "meaning_vi": "nhẹ nhõm",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "whispered",
+      "meaning_vi": "thì thầm",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "hide",
+      "meaning_vi": "ẩn nấp",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "enemies",
+      "meaning_vi": "kẻ thù",
+      "paragraph_index": 11
+    }
+  ]
+}

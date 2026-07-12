@@ -1,0 +1,760 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L1",
+  "level_label": "Cấp 1",
+  "topic": "I want a drum",
+  "slug": "book_104526",
+  "audio_filename": "book_104526.mp3",
+  "book_slug": "book_104526",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_104526/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_104526/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_104526/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_104526/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_104526/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_104526/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_104526/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_104526/page_09.jpg",
+    "https://audio.felixbuilderhub.com/books/book_104526/page_10.jpg",
+    "https://audio.felixbuilderhub.com/books/book_104526/page_11.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_104526/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_104526/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_104526/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_104526/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_104526/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_104526/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_104526/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_104526/page_09.mp3",
+    "https://audio.felixbuilderhub.com/books/book_104526/page_10.mp3",
+    "https://audio.felixbuilderhub.com/books/book_104526/page_11.mp3"
+  ],
+  "book_attribution": {
+    "title": "I want a drum",
+    "creators": [
+      "Zita Zachariah",
+      "Bindia Thapar",
+      "Rajiv Eipe"
+    ],
+    "publisher": "StoryWeaver Community",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: I want a drum is translated by Zita Zachariah . The © for this translation lies with Zita Zachariah , 2019. Some rights reserved. Released under CC BY 4.0 license. Based on Original story: ' ചെണ്ട വേണം ' , by Priya G . © Priya G , 2016. Some rights reserved. Released under CC BY 4.0 license. Images Attributions: Cover page: Woman speaking to a group of children who are dressing up , by Rajiv Eipe © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 2: Monkey on a tree, birds flying , by Bindia Thapar © Pratham Books, 2008. Some rights reserved. Released under CC BY 4.0 license. Page 3: People watching a smiling boy drum on wood , by Rajiv Eipe © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 4: Old man coughing from smoke, boy watching , by Rajiv Eipe © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 5: Boy handing over a piece of roti to a lady on the street , by Rajiv Eipe © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 6: Boy watching a man and woman argue furiously , by Rajiv Eipe © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 7: Boy in an an oversized shirt dancing as other children watch him , by Rajiv Eipe © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 8: Boy offering a shirt to a shivering man out in the street , by Rajiv Eipe © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 9: Boy leading a horse , by Rajiv Eipe © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 10: A worried groom at his wedding , by Rajiv Eipe © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/104526-i-want-a-drum",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "Monkey on a tree, birds flying , by Bindia Thapar © Pratham Books, 2008. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "People watching a smiling boy drum on wood , by Rajiv Eipe © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "Old man coughing from smoke, boy watching , by Rajiv Eipe © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "Boy handing over a piece of roti to a lady on the street , by Rajiv Eipe © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "Boy watching a man and woman argue furiously , by Rajiv Eipe © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "Boy in an an oversized shirt dancing as other children watch him , by Rajiv Eipe © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "Boy offering a shirt to a shivering man out in the street , by Rajiv Eipe © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "Boy leading a horse , by Rajiv Eipe © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 8,
+        "credit_text": "A worried groom at his wedding , by Rajiv Eipe © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 9,
+        "credit_text": "Illustration by Bindia Thapar, Rajiv Eipe."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "I want a drum",
+    "paragraphs_en": [
+      "Kunju asked his mother to get him a drum. His mother went to the store, but there were none there. Instead, she gave him a piece of wood. Hitting the wooden log Kunju sang.....",
+      "\"Asked for a drum, got a piece of wood, DUM DUM DUM\"",
+      "\"Exchanged the wood for a dosa, DUM DUM DUM\"",
+      "\"Exchanged the dosa for a clay pot, DUM DUM DUM\"",
+      "\"Exchanged the pot for a shirt, DUM DUM DUM\"",
+      "\"DUM DUM DUM\"",
+      "\"Exchanged the shirt for a horse, DUM DUM DUM\"",
+      "\"DUM DUM DUM\"",
+      "\"Exchanged the horse for a ... Drum, DUM DUM DUM\"",
+      "\"DUM DUM DUM DUM DUM DUM\""
+    ],
+    "sentences": [
+      {
+        "text_en": "Kunju asked his mother to get him a drum.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104526/s_000.mp3",
+        "text_vi": "Kunju xin mẹ mua cho một cái trống."
+      },
+      {
+        "text_en": "His mother went to the store, but there were none there.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104526/s_001.mp3",
+        "text_vi": "Mẹ cậu đi ra cửa hàng, nhưng không có cái trống nào cả."
+      },
+      {
+        "text_en": "Instead, she gave him a piece of wood.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104526/s_002.mp3",
+        "text_vi": "Thay vào đó, mẹ đưa cho cậu một khúc gỗ."
+      },
+      {
+        "text_en": "Hitting the wooden log Kunju sang.....",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104526/s_003.mp3",
+        "text_vi": "Vừa gõ khúc gỗ, Kunju vừa hát....."
+      },
+      {
+        "text_en": "\"Asked for a drum, got a piece of wood, DUM DUM DUM\"",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104526/s_004.mp3",
+        "text_vi": "\"Xin cái trống, được khúc gỗ, DÙM DÙM DÙM\""
+      },
+      {
+        "text_en": "\"Exchanged the wood for a dosa, DUM DUM DUM\"",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104526/s_005.mp3",
+        "text_vi": "\"Đổi khúc gỗ lấy bánh dosa, DÙM DÙM DÙM\""
+      },
+      {
+        "text_en": "\"Exchanged the dosa for a clay pot, DUM DUM DUM\"",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104526/s_006.mp3",
+        "text_vi": "\"Đổi bánh dosa lấy cái nồi đất, DÙM DÙM DÙM\""
+      },
+      {
+        "text_en": "\"Exchanged the pot for a shirt, DUM DUM DUM\"",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104526/s_007.mp3",
+        "text_vi": "\"Đổi cái nồi lấy cái áo, DÙM DÙM DÙM\""
+      },
+      {
+        "text_en": "\"DUM DUM DUM\"",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104526/s_008.mp3",
+        "text_vi": "\"DÙM DÙM DÙM\""
+      },
+      {
+        "text_en": "\"Exchanged the shirt for a horse, DUM DUM DUM\"",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104526/s_009.mp3",
+        "text_vi": "\"Đổi cái áo lấy con ngựa, DÙM DÙM DÙM\""
+      },
+      {
+        "text_en": "\"DUM DUM DUM\"",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104526/s_010.mp3",
+        "text_vi": "\"DÙM DÙM DÙM\""
+      },
+      {
+        "text_en": "\"Exchanged the horse for a ...",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104526/s_011.mp3",
+        "text_vi": "\"Đổi con ngựa lấy một cái..."
+      },
+      {
+        "text_en": "Drum, DUM DUM DUM\"",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104526/s_012.mp3",
+        "text_vi": "Trống, DÙM DÙM DÙM\""
+      },
+      {
+        "text_en": "\"DUM DUM DUM DUM DUM DUM\"",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_104526/s_013.mp3",
+        "text_vi": "\"DÙM DÙM DÙM DÙM DÙM DÙM\""
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "Kunju asked his mother to get him a drum.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104526/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "His mother went to the store, but there were none there.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104526/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "Instead, she gave him a piece of wood.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104526/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "Hitting the wooden log Kunju sang.....",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104526/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "\"Asked for a drum, got a piece of wood, DUM DUM DUM\"",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104526/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "\"Exchanged the wood for a dosa, DUM DUM DUM\"",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104526/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "\"Exchanged the dosa for a clay pot, DUM DUM DUM\"",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104526/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "\"Exchanged the pot for a shirt, DUM DUM DUM\"",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104526/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "\"DUM DUM DUM\"",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104526/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "\"Exchanged the shirt for a horse, DUM DUM DUM\"",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104526/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "\"DUM DUM DUM\"",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104526/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "\"Exchanged the horse for a ...",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104526/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "Drum, DUM DUM DUM\"",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104526/s_012.mp3"
+        },
+        {
+          "id": "ra_13",
+          "text_en": "\"DUM DUM DUM DUM DUM DUM\"",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_104526/s_013.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "Who asked his mother to get him a drum?",
+          "options_en": [
+            "Kunju",
+            "His mother",
+            "The store"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "What did Kunju ask his mother to get him?",
+          "options_en": [
+            "A drum",
+            "A piece of wood",
+            "A dosa"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s1_q1",
+          "type": "choice",
+          "question_en": "Where did his mother go?",
+          "options_en": [
+            "To the store",
+            "To buy a dosa",
+            "To get a shirt"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s1_q2",
+          "type": "choice",
+          "question_en": "What was not available at the store?",
+          "options_en": [
+            "Drums",
+            "A wooden log",
+            "A clay pot"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s2_q1",
+          "type": "choice",
+          "question_en": "What did his mother give him instead?",
+          "options_en": [
+            "A piece of wood",
+            "A drum",
+            "A dosa"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s2_q2",
+          "type": "choice",
+          "question_en": "Why did she give him a piece of wood?",
+          "options_en": [
+            "Because there were no drums at the store",
+            "To exchange it for a dosa",
+            "To trade it for a horse"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s3_q1",
+          "type": "choice",
+          "question_en": "What did Kunju do while hitting the wooden log?",
+          "options_en": [
+            "He sang",
+            "He exchanged it for a clay pot",
+            "He traded it for a shirt"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p0_s3_q2",
+          "type": "choice",
+          "question_en": "What was Kunju hitting?",
+          "options_en": [
+            "The wooden log",
+            "A clay pot",
+            "A shirt"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "What did they ask for?",
+          "options_en": [
+            "a drum",
+            "a dosa",
+            "a clay pot"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "What did they get instead?",
+          "options_en": [
+            "a piece of wood",
+            "a shirt",
+            "a horse"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "What was exchanged for a dosa?",
+          "options_en": [
+            "wood",
+            "a drum",
+            "a clay pot"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "What was received in exchange for the wood?",
+          "options_en": [
+            "a dosa",
+            "a shirt",
+            "a horse"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "What was exchanged for a clay pot?",
+          "options_en": [
+            "the dosa",
+            "a piece of wood",
+            "a shirt"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "Which item was received in exchange?",
+          "options_en": [
+            "a clay pot",
+            "a horse",
+            "a drum"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "What did they exchange the pot for?",
+          "options_en": [
+            "a shirt",
+            "a piece of wood",
+            "a dosa"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "What was exchanged for a shirt?",
+          "options_en": [
+            "a pot",
+            "a horse",
+            "a drum"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "What word is repeated?",
+          "options_en": [
+            "DUM",
+            "drum",
+            "piece of wood"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "How is the sound presented?",
+          "options_en": [
+            "Repeated three times",
+            "As a drum",
+            "As a dosa"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "What was exchanged for a horse?",
+          "options_en": [
+            "The shirt",
+            "The piece of wood",
+            "The dosa"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "What was received in exchange for the shirt?",
+          "options_en": [
+            "A horse",
+            "A clay pot",
+            "A drum"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "What sound is repeated in the sentence?",
+          "options_en": [
+            "DUM",
+            "a drum",
+            "a piece of wood"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "How many times does the sentence say \"DUM\"?",
+          "options_en": [
+            "Three",
+            "a drum",
+            "a dosa"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        }
+      ]
+    },
+    {
+      "paragraph_index": 8,
+      "questions": [
+        {
+          "id": "gl_p8_s0_q1",
+          "type": "choice",
+          "question_en": "What was exchanged?",
+          "options_en": [
+            "the horse",
+            "a piece of wood",
+            "a dosa"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p8_s0_q2",
+          "type": "choice",
+          "question_en": "What did they get in exchange?",
+          "options_en": [
+            "a drum",
+            "a clay pot",
+            "a shirt"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p8_s1_q1",
+          "type": "choice",
+          "question_en": "What word is repeated in the line?",
+          "options_en": [
+            "Drum",
+            "Horse",
+            "Shirt"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p8_s1_q2",
+          "type": "choice",
+          "question_en": "How does the line represent the sound?",
+          "options_en": [
+            "DUM DUM DUM",
+            "DUM DUM DUM DUM DUM DUM",
+            "a piece of wood"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        }
+      ]
+    },
+    {
+      "paragraph_index": 9,
+      "questions": [
+        {
+          "id": "gl_p9_s0_q1",
+          "type": "choice",
+          "question_en": "What sound is repeated in the sentence?",
+          "options_en": [
+            "DUM",
+            "drum",
+            "piece of wood"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p9_s0_q2",
+          "type": "choice",
+          "question_en": "How is the sentence composed?",
+          "options_en": [
+            "By repeating the word 'DUM' many times",
+            "As a list of exchanged items",
+            "As a line about Kunju's mother"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'I want a drum'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "asked",
+      "meaning_vi": "xin, yêu cầu",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "drum",
+      "meaning_vi": "cái trống",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "store",
+      "meaning_vi": "cửa hàng",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "instead",
+      "meaning_vi": "thay vào đó",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "asked for",
+      "meaning_vi": "xin, yêu cầu",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "got",
+      "meaning_vi": "được, nhận",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "piece",
+      "meaning_vi": "khúc, miếng",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "exchanged",
+      "meaning_vi": "đổi, trao đổi",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "dosa",
+      "meaning_vi": "một loại bánh mỏng của Ấn Độ",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "exchanged",
+      "meaning_vi": "đổi, trao đổi",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "clay",
+      "meaning_vi": "đất sét",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "pot",
+      "meaning_vi": "cái nồi, cái chậu",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "exchanged",
+      "meaning_vi": "đổi, trao đổi",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "shirt",
+      "meaning_vi": "cái áo",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "exchanged",
+      "meaning_vi": "đổi, trao đổi",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "horse",
+      "meaning_vi": "con ngựa",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "exchanged",
+      "meaning_vi": "đổi, trao đổi",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "drum",
+      "meaning_vi": "cái trống",
+      "paragraph_index": 8
+    }
+  ]
+}

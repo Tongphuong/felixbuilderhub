@@ -1,0 +1,764 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L1",
+  "level_label": "Cấp 1",
+  "topic": "I Know",
+  "slug": "book_103190",
+  "audio_filename": "book_103190.mp3",
+  "book_slug": "book_103190",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_103190/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103190/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103190/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103190/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103190/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103190/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103190/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103190/page_09.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103190/page_10.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103190/page_11.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103190/page_12.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103190/page_13.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_103190/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103190/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103190/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103190/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103190/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103190/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103190/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103190/page_09.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103190/page_10.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103190/page_11.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103190/page_12.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103190/page_13.mp3"
+  ],
+  "book_attribution": {
+    "title": "I Know",
+    "creators": [
+      "All Children Reading Cambodia",
+      "Imphir",
+      "San srei nou ch nou ch"
+    ],
+    "publisher": "The Asia Foundation",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: I Know is written by All Children Reading Cambodia . © Let's Read , 2019. Some rights reserved. Released under CC BY 4.0 license. Other Credits: This story 'I know' has been published on StoryWeaver by Asia Foundation. Images Attributions: Cover page: Happy Bunny , by San srei nou ch nou ch , Imphir © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 2: Bunny with a backpack , by San srei nou ch nou ch , Imphir © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 3: Bunny is reading a book , by San srei nou ch nou ch , Imphir © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 4: Bunny is writing , by San srei nou ch nou ch , Imphir © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 5: Pink bunny counting fingers , by San srei nou ch nou ch , Imphir © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 6: Happy writing , by San srei nou ch nou ch , Imphir © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 7: Learning subtraction with leaves , by San srei nou ch nou ch , Imphir © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 8: Pink bunny's purple book bag , by San srei nou ch nou ch , Imphir © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 9: Bunny and mouse play , by San srei nou ch nou ch , Imphir © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 10: Bunny reading a picture book , by San srei nou ch nou ch , Imphir © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 11: Colouring fruits , by San srei nou ch nou ch , Imphir © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/103190-i-know",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "Bunny with a backpack , by San srei nou ch nou ch , Imphir © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "Bunny is reading a book , by San srei nou ch nou ch , Imphir © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "Bunny is writing , by San srei nou ch nou ch , Imphir © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "Pink bunny counting fingers , by San srei nou ch nou ch , Imphir © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "Happy writing , by San srei nou ch nou ch , Imphir © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "Learning subtraction with leaves , by San srei nou ch nou ch , Imphir © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "Pink bunny's purple book bag , by San srei nou ch nou ch , Imphir © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "Bunny and mouse play , by San srei nou ch nou ch , Imphir © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 8,
+        "credit_text": "Bunny reading a picture book , by San srei nou ch nou ch , Imphir © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 9,
+        "credit_text": "Colouring fruits , by San srei nou ch nou ch , Imphir © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 10,
+        "credit_text": "Illustration by Imphir, San srei nou ch nou ch."
+      },
+      {
+        "page_index": 11,
+        "credit_text": "Illustration by Imphir, San srei nou ch nou ch."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "I Know",
+    "paragraphs_en": [
+      "I go to school in the first month.",
+      "I open a book in the second month.",
+      "I learn to write in the third month.",
+      "I learn to count in the fourth month.",
+      "I learn addition in the fifth month.",
+      "I learn subtraction in the sixth month.",
+      "I learn to pack my school bag in the seventh month.",
+      "I learn to play sports in the eighth month.",
+      "I learn to read a book in the ninth month.",
+      "I learn to color in the tenth month.",
+      "I learn to draw in the eleventh month.",
+      "I am at the top of the class in the twelfth month."
+    ],
+    "sentences": [
+      {
+        "text_en": "I go to school in the first month.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103190/s_000.mp3",
+        "text_vi": "Tôi đi học vào tháng đầu tiên."
+      },
+      {
+        "text_en": "I open a book in the second month.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103190/s_001.mp3",
+        "text_vi": "Tôi mở sách vào tháng thứ hai."
+      },
+      {
+        "text_en": "I learn to write in the third month.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103190/s_002.mp3",
+        "text_vi": "Tôi học viết vào tháng thứ ba."
+      },
+      {
+        "text_en": "I learn to count in the fourth month.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103190/s_003.mp3",
+        "text_vi": "Tôi học đếm vào tháng thứ tư."
+      },
+      {
+        "text_en": "I learn addition in the fifth month.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103190/s_004.mp3",
+        "text_vi": "Tôi học phép cộng vào tháng thứ năm."
+      },
+      {
+        "text_en": "I learn subtraction in the sixth month.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103190/s_005.mp3",
+        "text_vi": "Tôi học phép trừ vào tháng thứ sáu."
+      },
+      {
+        "text_en": "I learn to pack my school bag in the seventh month.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103190/s_006.mp3",
+        "text_vi": "Tôi học cách sắp xếp cặp sách vào tháng thứ bảy."
+      },
+      {
+        "text_en": "I learn to play sports in the eighth month.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103190/s_007.mp3",
+        "text_vi": "Tôi học chơi thể thao vào tháng thứ tám."
+      },
+      {
+        "text_en": "I learn to read a book in the ninth month.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103190/s_008.mp3",
+        "text_vi": "Tôi học đọc sách vào tháng thứ chín."
+      },
+      {
+        "text_en": "I learn to color in the tenth month.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103190/s_009.mp3",
+        "text_vi": "Tôi học tô màu vào tháng thứ mười."
+      },
+      {
+        "text_en": "I learn to draw in the eleventh month.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103190/s_010.mp3",
+        "text_vi": "Tôi học vẽ vào tháng thứ mười một."
+      },
+      {
+        "text_en": "I am at the top of the class in the twelfth month.",
+        "paragraph_index": 11,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103190/s_011.mp3",
+        "text_vi": "Tôi đứng đầu lớp vào tháng thứ mười hai."
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "I go to school in the first month.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103190/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "I open a book in the second month.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103190/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "I learn to write in the third month.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103190/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "I learn to count in the fourth month.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103190/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "I learn addition in the fifth month.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103190/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "I learn subtraction in the sixth month.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103190/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "I learn to pack my school bag in the seventh month.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103190/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "I learn to play sports in the eighth month.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103190/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "I learn to read a book in the ninth month.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103190/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "I learn to color in the tenth month.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103190/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "I learn to draw in the eleventh month.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103190/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "I am at the top of the class in the twelfth month.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103190/s_011.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "Who goes to school?",
+          "options_en": [
+            "I",
+            "I open a book",
+            "I learn to write"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "When do I go to school?",
+          "options_en": [
+            "In the first month",
+            "In the second month",
+            "In the third month"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "What do I open?",
+          "options_en": [
+            "a book",
+            "my school bag",
+            "school"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "When do I open a book?",
+          "options_en": [
+            "in the second month",
+            "in the first month",
+            "in the third month"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "What do I learn?",
+          "options_en": [
+            "to write",
+            "to read a book",
+            "to count"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "When do I learn to write?",
+          "options_en": [
+            "in the third month",
+            "in the second month",
+            "in the fifth month"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "What do I learn in the fourth month?",
+          "options_en": [
+            "to count",
+            "to write",
+            "to read a book"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "When do I learn to count?",
+          "options_en": [
+            "In the fourth month",
+            "In the second month",
+            "In the fifth month"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "What do I learn in the fifth month?",
+          "options_en": [
+            "Addition",
+            "Counting",
+            "Subtraction"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "When do I learn addition?",
+          "options_en": [
+            "In the fifth month",
+            "In the fourth month",
+            "In the sixth month"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "What do I learn in the sixth month?",
+          "options_en": [
+            "subtraction",
+            "addition",
+            "to count"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "When do I learn subtraction?",
+          "options_en": [
+            "in the sixth month",
+            "in the fifth month",
+            "in the seventh month"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "Who learns to pack the school bag?",
+          "options_en": [
+            "I",
+            "I go to school in the first month",
+            "I learn to play sports in the eighth month"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "When do I learn to pack my school bag?",
+          "options_en": [
+            "the seventh month",
+            "the first month",
+            "the fifth month"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "What do I learn in the eighth month?",
+          "options_en": [
+            "To play sports",
+            "To read a book",
+            "To pack my school bag"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "When do I learn to play sports?",
+          "options_en": [
+            "In the eighth month",
+            "In the ninth month",
+            "In the seventh month"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        }
+      ]
+    },
+    {
+      "paragraph_index": 8,
+      "questions": [
+        {
+          "id": "gl_p8_s0_q1",
+          "type": "choice",
+          "question_en": "What do I learn in the ninth month?",
+          "options_en": [
+            "to read a book",
+            "to write",
+            "to play sports"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p8_s0_q2",
+          "type": "choice",
+          "question_en": "When do I learn to read a book?",
+          "options_en": [
+            "in the ninth month",
+            "in the second month",
+            "in the tenth month"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        }
+      ]
+    },
+    {
+      "paragraph_index": 9,
+      "questions": [
+        {
+          "id": "gl_p9_s0_q1",
+          "type": "choice",
+          "question_en": "What does the speaker learn in the tenth month?",
+          "options_en": [
+            "To color",
+            "To draw",
+            "To read a book"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p9_s0_q2",
+          "type": "choice",
+          "question_en": "When does the speaker learn to color?",
+          "options_en": [
+            "In the tenth month",
+            "In the third month",
+            "In the eighth month"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        }
+      ]
+    },
+    {
+      "paragraph_index": 10,
+      "questions": [
+        {
+          "id": "gl_p10_s0_q1",
+          "type": "choice",
+          "question_en": "What do I learn in the eleventh month?",
+          "options_en": [
+            "To draw",
+            "To color",
+            "To read a book"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p10_s0_q2",
+          "type": "choice",
+          "question_en": "When do I learn to draw?",
+          "options_en": [
+            "In the eleventh month",
+            "In the tenth month",
+            "In the twelfth month"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        }
+      ]
+    },
+    {
+      "paragraph_index": 11,
+      "questions": [
+        {
+          "id": "gl_p11_s0_q1",
+          "type": "choice",
+          "question_en": "When am I at the top of the class?",
+          "options_en": [
+            "in the twelfth month",
+            "in the first month",
+            "in the eleventh month"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p11_s0_q2",
+          "type": "choice",
+          "question_en": "Where am I in the twelfth month?",
+          "options_en": [
+            "at the top of the class",
+            "at school",
+            "in my school bag"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'I Know'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "first",
+      "meaning_vi": "đầu tiên",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "month",
+      "meaning_vi": "tháng",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "open",
+      "meaning_vi": "mở ra",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "second",
+      "meaning_vi": "thứ hai",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "learn",
+      "meaning_vi": "học",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "write",
+      "meaning_vi": "viết",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "third",
+      "meaning_vi": "thứ ba",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "count",
+      "meaning_vi": "đếm số",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "fourth",
+      "meaning_vi": "thứ tư",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "addition",
+      "meaning_vi": "phép cộng",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "fifth",
+      "meaning_vi": "thứ năm",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "subtraction",
+      "meaning_vi": "phép trừ",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "sixth",
+      "meaning_vi": "thứ sáu",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "pack",
+      "meaning_vi": "sắp xếp đồ vào",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "school bag",
+      "meaning_vi": "cặp sách",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "seventh",
+      "meaning_vi": "thứ bảy",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "play",
+      "meaning_vi": "chơi",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "sports",
+      "meaning_vi": "thể thao",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "eighth",
+      "meaning_vi": "thứ tám",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "read",
+      "meaning_vi": "đọc",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "ninth",
+      "meaning_vi": "thứ chín",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "color",
+      "meaning_vi": "tô màu",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "tenth",
+      "meaning_vi": "thứ mười",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "draw",
+      "meaning_vi": "vẽ",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "eleventh",
+      "meaning_vi": "thứ mười một",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "top",
+      "meaning_vi": "đầu (nhất)",
+      "paragraph_index": 11
+    },
+    {
+      "word_en": "class",
+      "meaning_vi": "lớp học",
+      "paragraph_index": 11
+    },
+    {
+      "word_en": "twelfth",
+      "meaning_vi": "thứ mười hai",
+      "paragraph_index": 11
+    }
+  ]
+}

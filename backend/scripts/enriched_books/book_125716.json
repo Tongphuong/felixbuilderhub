@@ -1,0 +1,783 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L1",
+  "level_label": "Cấp 1",
+  "topic": "Picture Conversations-Describing words",
+  "slug": "book_125716",
+  "audio_filename": "book_125716.mp3",
+  "book_slug": "book_125716",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_125716/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_125716/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_125716/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_125716/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_125716/page_06.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_125716/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_125716/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_125716/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_125716/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_125716/page_06.mp3"
+  ],
+  "book_attribution": {
+    "title": "Picture Conversations-Describing words",
+    "creators": [
+      "Aru",
+      "Henu",
+      "Nicci Nathanson",
+      "Priya Kuriyan",
+      "Seat Sopheap",
+      "Tanaya Vyas"
+    ],
+    "publisher": "StoryWeaver Community",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: Picture Conversations-Describing words is written by Aru . © Aru , 2020. Some rights reserved. Released under CC BY 4.0 license. Images Attributions: Cover page: Women eating and drinking at the dining table, with girl standing , by Tanaya Vyas © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 2: Mother holding a yellow dress , by Nicci Nathanson © Book Dash, 2017. Some rights reserved. Released under CC BY 4.0 license. Page 3: Women eating and drinking at the dining table, with girl standing , by Tanaya Vyas © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 4: Girl writing and dog watching , by Henu © Pratham Books, 2010. Some rights reserved. Released under CC BY 4.0 license. Page 5: Girl sitting on grandmother's lap and reading while a black cat sleeps , by Priya Kuriyan © Pratham Books, 2012. Some rights reserved. Released under CC BY 4.0 license. Page 6: A boy reaching up to a shelf , by Seat Sopheap © Room to Read, 2015. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/125716-picture-conversations-describing-words",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "Mother holding a yellow dress , by Nicci Nathanson © Book Dash, 2017. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "Women eating and drinking at the dining table, with girl standing , by Tanaya Vyas © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "Girl writing and dog watching , by Henu © Pratham Books, 2010. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "Girl sitting on grandmother's lap and reading while a black cat sleeps , by Priya Kuriyan © Pratham Books, 2012. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "A boy reaching up to a shelf , by Seat Sopheap © Room to Read, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "Picture Conversations-Describing words",
+    "paragraphs_en": [
+      "I am Devi. I like to wear yellow dress. Which colour dress do you like to wear?",
+      "Mmm.Laddoos! I love to eat these sweet laddoos. Do you know any other sweet like laddoo?",
+      "I write with my pencil. I have two pencils in my box. How many pencils do you have in your box?",
+      "Devi was a happy girl. Her grandmother told her stories everyday. She felt happy listening to the stories. Can you tell me something that made you happy?",
+      "I am a short boy. I cannot reach the cap kept on top shelf. Are you short or are you tall? Is there anyone who is taller than you?"
+    ],
+    "sentences": [
+      {
+        "text_en": "I am Devi.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_125716/s_000.mp3",
+        "text_vi": "Tôi là Devi."
+      },
+      {
+        "text_en": "I like to wear yellow dress.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_125716/s_001.mp3",
+        "text_vi": "Tôi thích mặc váy màu vàng."
+      },
+      {
+        "text_en": "Which colour dress do you like to wear?",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_125716/s_002.mp3",
+        "text_vi": "Bạn thích mặc váy màu gì?"
+      },
+      {
+        "text_en": "Mmm.Laddoos! I love to eat these sweet laddoos.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_125716/s_003.mp3",
+        "text_vi": "Mmm. Bánh Laddoo! Mình rất thích ăn những chiếc bánh laddoo ngọt ngào này."
+      },
+      {
+        "text_en": "Do you know any other sweet like laddoo?",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_125716/s_004.mp3",
+        "text_vi": "Bạn có biết loại bánh ngọt nào khác giống bánh laddoo không?"
+      },
+      {
+        "text_en": "I write with my pencil.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_125716/s_005.mp3",
+        "text_vi": "Mình viết bằng bút chì."
+      },
+      {
+        "text_en": "I have two pencils in my box.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_125716/s_006.mp3",
+        "text_vi": "Mình có hai cây bút chì trong hộp."
+      },
+      {
+        "text_en": "How many pencils do you have in your box?",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_125716/s_007.mp3",
+        "text_vi": "Bạn có bao nhiêu cây bút chì trong hộp của bạn?"
+      },
+      {
+        "text_en": "Devi was a happy girl.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_125716/s_008.mp3",
+        "text_vi": "Devi là một cô bé vui vẻ."
+      },
+      {
+        "text_en": "Her grandmother told her stories everyday.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_125716/s_009.mp3",
+        "text_vi": "Bà của cô bé kể chuyện cho cô bé nghe mỗi ngày."
+      },
+      {
+        "text_en": "She felt happy listening to the stories.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_125716/s_010.mp3",
+        "text_vi": "Cô bé cảm thấy vui khi nghe những câu chuyện đó."
+      },
+      {
+        "text_en": "Can you tell me something that made you happy?",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_125716/s_011.mp3",
+        "text_vi": "Bạn có thể kể cho mình nghe điều gì đó làm bạn vui không?"
+      },
+      {
+        "text_en": "I am a short boy.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_125716/s_012.mp3",
+        "text_vi": "Mình là một cậu bé thấp."
+      },
+      {
+        "text_en": "I cannot reach the cap kept on top shelf.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_125716/s_013.mp3",
+        "text_vi": "Mình không thể với tới cái mũ để trên kệ cao nhất."
+      },
+      {
+        "text_en": "Are you short or are you tall?",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_125716/s_014.mp3",
+        "text_vi": "Bạn thấp hay bạn cao?"
+      },
+      {
+        "text_en": "Is there anyone who is taller than you?",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_125716/s_015.mp3",
+        "text_vi": "Có ai cao hơn bạn không?"
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "I am Devi.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_125716/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "I like to wear yellow dress.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_125716/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "Which colour dress do you like to wear?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_125716/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "Mmm.Laddoos! I love to eat these sweet laddoos.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_125716/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "Do you know any other sweet like laddoo?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_125716/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "I write with my pencil.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_125716/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "I have two pencils in my box.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_125716/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "How many pencils do you have in your box?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_125716/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "Devi was a happy girl.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_125716/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "Her grandmother told her stories everyday.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_125716/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "She felt happy listening to the stories.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_125716/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "Can you tell me something that made you happy?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_125716/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "I am a short boy.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_125716/s_012.mp3"
+        },
+        {
+          "id": "ra_13",
+          "text_en": "I cannot reach the cap kept on top shelf.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_125716/s_013.mp3"
+        },
+        {
+          "id": "ra_14",
+          "text_en": "Are you short or are you tall?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_125716/s_014.mp3"
+        },
+        {
+          "id": "ra_15",
+          "text_en": "Is there anyone who is taller than you?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_125716/s_015.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "Who says \"I am Devi\"?",
+          "options_en": [
+            "Devi",
+            "Her grandmother",
+            "A short boy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "What is the name given in the sentence?",
+          "options_en": [
+            "Devi",
+            "Laddoo",
+            "Grandmother"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s1_q1",
+          "type": "choice",
+          "question_en": "What colour dress does she like to wear?",
+          "options_en": [
+            "Yellow",
+            "Two pencils",
+            "Laddoos"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s1_q2",
+          "type": "choice",
+          "question_en": "Which item of clothing is mentioned?",
+          "options_en": [
+            "Dress",
+            "Pencil",
+            "Top shelf cap"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s2_q1",
+          "type": "choice",
+          "question_en": "Who is being asked about their dress colour?",
+          "options_en": [
+            "You",
+            "Devi",
+            "Her grandmother"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s2_q2",
+          "type": "choice",
+          "question_en": "What does the question ask about?",
+          "options_en": [
+            "Which colour dress you like to wear",
+            "How many pencils you have",
+            "What sweet you like"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "What does the speaker love to eat?",
+          "options_en": [
+            "Laddoos",
+            "Pencils",
+            "A yellow dress"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "How does the speaker feel about laddoos?",
+          "options_en": [
+            "They love to eat them",
+            "They write with a pencil",
+            "They are short"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p1_s1_q1",
+          "type": "choice",
+          "question_en": "What is the speaker asking about?",
+          "options_en": [
+            "If you know any other sweet like laddoo",
+            "Which colour dress you like",
+            "How many pencils you have"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p1_s1_q2",
+          "type": "choice",
+          "question_en": "Who is the speaker addressing with the question?",
+          "options_en": [
+            "You",
+            "Her grandmother",
+            "Devi"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "Who writes with the pencil?",
+          "options_en": [
+            "I",
+            "Devi",
+            "Her grandmother"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "What does the speaker write with?",
+          "options_en": [
+            "a pencil",
+            "a yellow dress",
+            "laddoos"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p2_s1_q1",
+          "type": "choice",
+          "question_en": "What does the speaker have two of in the box?",
+          "options_en": [
+            "pencils",
+            "laddoos",
+            "a yellow dress"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p2_s1_q2",
+          "type": "choice",
+          "question_en": "Where are the two pencils kept?",
+          "options_en": [
+            "in my box",
+            "on the top shelf",
+            "in the yellow dress"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p2_s2_q1",
+          "type": "choice",
+          "question_en": "Who is being asked about how many pencils they have?",
+          "options_en": [
+            "you",
+            "Devi",
+            "the grandmother"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p2_s2_q2",
+          "type": "choice",
+          "question_en": "What does the speaker ask the listener about?",
+          "options_en": [
+            "how many pencils are in your box",
+            "which colour dress you like",
+            "if you are short or tall"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "Who was a happy girl?",
+          "options_en": [
+            "Devi",
+            "I",
+            "a short boy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "How was Devi?",
+          "options_en": [
+            "Happy",
+            "Short",
+            "Tall"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p3_s1_q1",
+          "type": "choice",
+          "question_en": "Who told her stories?",
+          "options_en": [
+            "Her grandmother",
+            "Devi",
+            "A short boy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p3_s1_q2",
+          "type": "choice",
+          "question_en": "When did her grandmother tell her stories?",
+          "options_en": [
+            "Everyday",
+            "On the top shelf",
+            "When she wore a yellow dress"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p3_s2_q1",
+          "type": "choice",
+          "question_en": "Why did she feel happy?",
+          "options_en": [
+            "Because she was listening to the stories",
+            "Because she ate laddoos",
+            "Because she could reach the top shelf"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p3_s2_q2",
+          "type": "choice",
+          "question_en": "How did she feel while listening to the stories?",
+          "options_en": [
+            "Happy",
+            "Short",
+            "Sad"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p3_s3_q1",
+          "type": "choice",
+          "question_en": "What does the speaker ask you to tell?",
+          "options_en": [
+            "Something that made you happy",
+            "Which colour dress you like",
+            "How many pencils you have"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p3_s3_q2",
+          "type": "choice",
+          "question_en": "Who is being asked to tell something that made them happy?",
+          "options_en": [
+            "You",
+            "Devi",
+            "Her grandmother"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "Who is short?",
+          "options_en": [
+            "I",
+            "Devi",
+            "Her grandmother"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "How tall is the boy?",
+          "options_en": [
+            "Short",
+            "Tall",
+            "Happy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p4_s1_q1",
+          "type": "choice",
+          "question_en": "What cannot the boy reach?",
+          "options_en": [
+            "The cap",
+            "Laddoos",
+            "A pencil"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p4_s1_q2",
+          "type": "choice",
+          "question_en": "Where is the cap kept?",
+          "options_en": [
+            "On top shelf",
+            "In her box",
+            "In the yellow dress"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p4_s2_q1",
+          "type": "choice",
+          "question_en": "What is the question asking about?",
+          "options_en": [
+            "Your height",
+            "Your favourite colour",
+            "How many pencils you have"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p4_s2_q2",
+          "type": "choice",
+          "question_en": "Who is being asked about being short or tall?",
+          "options_en": [
+            "You",
+            "Devi",
+            "Her grandmother"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p4_s3_q1",
+          "type": "choice",
+          "question_en": "What does the sentence ask about other people?",
+          "options_en": [
+            "If anyone is taller than you",
+            "If anyone likes laddoos",
+            "If anyone heard stories"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p4_s3_q2",
+          "type": "choice",
+          "question_en": "Who might be taller according to the question?",
+          "options_en": [
+            "Anyone",
+            "Devi",
+            "The boy's grandmother"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'Picture Conversations-Describing words'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "wear",
+      "meaning_vi": "mặc",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "yellow",
+      "meaning_vi": "màu vàng",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "dress",
+      "meaning_vi": "váy",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "colour",
+      "meaning_vi": "màu sắc",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "love",
+      "meaning_vi": "rất thích, yêu",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "eat",
+      "meaning_vi": "ăn",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "sweet",
+      "meaning_vi": "ngọt",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "know",
+      "meaning_vi": "biết",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "write",
+      "meaning_vi": "viết",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "pencil",
+      "meaning_vi": "bút chì",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "box",
+      "meaning_vi": "hộp",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "many",
+      "meaning_vi": "nhiều, bao nhiêu",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "happy",
+      "meaning_vi": "vui vẻ",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "grandmother",
+      "meaning_vi": "bà",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "stories",
+      "meaning_vi": "những câu chuyện",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "listening",
+      "meaning_vi": "nghe",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "short",
+      "meaning_vi": "thấp",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "reach",
+      "meaning_vi": "với tới",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "shelf",
+      "meaning_vi": "kệ",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "tall",
+      "meaning_vi": "cao",
+      "paragraph_index": 4
+    }
+  ]
+}

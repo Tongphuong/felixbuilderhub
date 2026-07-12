@@ -1,0 +1,1326 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L1",
+  "level_label": "Cấp 1",
+  "topic": "Clean Cat",
+  "slug": "book_1057",
+  "audio_filename": "book_1057.mp3",
+  "book_slug": "book_1057",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_1057/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_1057/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_1057/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_1057/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_1057/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_1057/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_1057/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_1057/page_09.jpg",
+    "https://audio.felixbuilderhub.com/books/book_1057/page_10.jpg",
+    "https://audio.felixbuilderhub.com/books/book_1057/page_11.jpg",
+    "https://audio.felixbuilderhub.com/books/book_1057/page_12.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_1057/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_1057/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_1057/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_1057/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_1057/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_1057/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_1057/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_1057/page_09.mp3",
+    "https://audio.felixbuilderhub.com/books/book_1057/page_10.mp3",
+    "https://audio.felixbuilderhub.com/books/book_1057/page_11.mp3",
+    "https://audio.felixbuilderhub.com/books/book_1057/page_12.mp3"
+  ],
+  "book_attribution": {
+    "title": "Clean Cat",
+    "creators": [
+      "Kanchan Bannerjee",
+      "Deepa Balsavar"
+    ],
+    "publisher": "Pratham Books",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: Clean Cat is written by Kanchan Bannerjee . © Pratham Books , 2015. Some rights reserved. Released under CC BY 4.0 license. Other Credits: 'Clean Cat' has been published on StoryWeaver by Pratham Books.The development of the print version of this book has been supported by HDFC Asset Management Company Limited (A joint venture with Standard Life Investments). www.prathambooks.org Images Attributions: Cover page: Clean cat , by Deepa Balsavar © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 2: Boy drawing a cat, as a cat watches him , by Deepa Balsavar © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 3: Three children playing with a cat , by Deepa Balsavar © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 4: Children leaving home for school , by Deepa Balsavar © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 5: Cat licking itself clean, boy dragging a dog for a bath , by Deepa Balsavar © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 6: Cat watching a mouse quietly , by Deepa Balsavar © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 7: Mother scolding a child and a cat , by Deepa Balsavar © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 8: Cat jumping on to a wall , by Deepa Balsavar © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 9: Boy making faces at a brown cat , by Deepa Balsavar © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 10: Cat and a tiger , by Deepa Balsavar © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 11: Brown cat sleeping on a boy's bed, black cats out in the street , by Deepa Balsavar © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/1057-clean-cat",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "Boy drawing a cat, as a cat watches him , by Deepa Balsavar © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "Three children playing with a cat , by Deepa Balsavar © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "Children leaving home for school , by Deepa Balsavar © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "Cat licking itself clean, boy dragging a dog for a bath , by Deepa Balsavar © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "Cat watching a mouse quietly , by Deepa Balsavar © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "Mother scolding a child and a cat , by Deepa Balsavar © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "Cat jumping on to a wall , by Deepa Balsavar © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "Boy making faces at a brown cat , by Deepa Balsavar © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 8,
+        "credit_text": "Cat and a tiger , by Deepa Balsavar © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 9,
+        "credit_text": "Brown cat sleeping on a boy's bed, black cats out in the street , by Deepa Balsavar © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 10,
+        "credit_text": "Illustration by Deepa Balsavar."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "Clean Cat",
+    "paragraphs_en": [
+      "This is my house. Ma, Pa and Cheena also live here.",
+      "The best chair in the house is for me. But sitting on the lap is even better, isn’t it?",
+      "Cheena is my best friend. I wait for her to return from school.",
+      "I keep myself clean without water. I do not need a bath like Tommy.",
+      "Shhh... don’t tell anyone that I am hiding here. 1... 2... 3... Got you!",
+      "Ma shouts at me, when I bring some tasty food from the garden.",
+      "I can climb trees. I can jump. I know all the short cuts here.",
+      "Sanju lives nearby. He teases me. It makes me very angry.",
+      "Please tell Sanju that the tiger is from our cat family. We have sharp claws.",
+      "My friends sometimes make a lot of noise at night. By then I am quietly in bed.",
+      "Tails can speak! Did you know how animals and birds tell us something by using their tails? A dog wags its tail when it is happy. A cat puffs up its tail when it is angry. Often we say, “As clean as a cat”. This is because cats do not like water, yet they are always keeping themselves clean by licking themselves."
+    ],
+    "sentences": [
+      {
+        "text_en": "This is my house.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1057/s_000.mp3",
+        "text_vi": "Đây là nhà của tôi."
+      },
+      {
+        "text_en": "Ma, Pa and Cheena also live here.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1057/s_001.mp3",
+        "text_vi": "Mẹ, Ba và Cheena cũng sống ở đây."
+      },
+      {
+        "text_en": "The best chair in the house is for me.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1057/s_002.mp3",
+        "text_vi": "Cái ghế tốt nhất trong nhà là dành cho tôi."
+      },
+      {
+        "text_en": "But sitting on the lap is even better, isn’t it?",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1057/s_003.mp3",
+        "text_vi": "Nhưng ngồi trên lòng thì còn thích hơn nữa, phải không?"
+      },
+      {
+        "text_en": "Cheena is my best friend.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1057/s_004.mp3",
+        "text_vi": "Cheena là bạn thân nhất của tôi."
+      },
+      {
+        "text_en": "I wait for her to return from school.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1057/s_005.mp3",
+        "text_vi": "Tôi đợi cô ấy đi học về."
+      },
+      {
+        "text_en": "I keep myself clean without water.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1057/s_006.mp3",
+        "text_vi": "Tôi tự giữ mình sạch sẽ mà không cần nước."
+      },
+      {
+        "text_en": "I do not need a bath like Tommy.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1057/s_007.mp3",
+        "text_vi": "Tôi không cần tắm như Tommy."
+      },
+      {
+        "text_en": "Shhh... don’t tell anyone that I am hiding here.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1057/s_008.mp3",
+        "text_vi": "Suỵt... đừng nói với ai là tôi đang trốn ở đây nhé."
+      },
+      {
+        "text_en": "1... 2... 3... Got you!",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1057/s_009.mp3",
+        "text_vi": "1... 2... 3... Bắt được rồi!"
+      },
+      {
+        "text_en": "Ma shouts at me, when I bring some tasty food from the garden.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1057/s_010.mp3",
+        "text_vi": "Mẹ la tôi khi tôi mang đồ ăn ngon từ vườn về."
+      },
+      {
+        "text_en": "I can climb trees.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1057/s_011.mp3",
+        "text_vi": "Tôi có thể trèo cây."
+      },
+      {
+        "text_en": "I can jump.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1057/s_012.mp3",
+        "text_vi": "Tôi có thể nhảy."
+      },
+      {
+        "text_en": "I know all the short cuts here.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1057/s_013.mp3",
+        "text_vi": "Tôi biết tất cả các đường tắt ở đây."
+      },
+      {
+        "text_en": "Sanju lives nearby.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1057/s_014.mp3",
+        "text_vi": "Sanju sống ở gần đây."
+      },
+      {
+        "text_en": "He teases me.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1057/s_015.mp3",
+        "text_vi": "Cậu ấy hay trêu chọc tôi."
+      },
+      {
+        "text_en": "It makes me very angry.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1057/s_016.mp3",
+        "text_vi": "Điều đó làm tôi rất tức giận."
+      },
+      {
+        "text_en": "Please tell Sanju that the tiger is from our cat family.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1057/s_017.mp3",
+        "text_vi": "Làm ơn nói với Sanju rằng hổ là họ hàng với mèo nhà mình."
+      },
+      {
+        "text_en": "We have sharp claws.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1057/s_018.mp3",
+        "text_vi": "Chúng tôi có móng vuốt sắc nhọn."
+      },
+      {
+        "text_en": "My friends sometimes make a lot of noise at night.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1057/s_019.mp3",
+        "text_vi": "Bạn bè của tôi đôi khi làm ồn ào rất nhiều vào ban đêm."
+      },
+      {
+        "text_en": "By then I am quietly in bed.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1057/s_020.mp3",
+        "text_vi": "Lúc đó thì tôi đã yên lặng ở trên giường rồi."
+      },
+      {
+        "text_en": "Tails can speak!",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1057/s_021.mp3",
+        "text_vi": "Đuôi có thể nói chuyện!"
+      },
+      {
+        "text_en": "Did you know how animals and birds tell us something by using their tails?",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1057/s_022.mp3",
+        "text_vi": "Bạn có biết động vật và chim chóc nói cho chúng ta điều gì đó bằng cách dùng đuôi của chúng không?"
+      },
+      {
+        "text_en": "A dog wags its tail when it is happy.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1057/s_023.mp3",
+        "text_vi": "Một chú chó vẫy đuôi khi nó vui vẻ."
+      },
+      {
+        "text_en": "A cat puffs up its tail when it is angry.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1057/s_024.mp3",
+        "text_vi": "Một chú mèo xù đuôi lên khi nó tức giận."
+      },
+      {
+        "text_en": "Often we say, “As clean as a cat”.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1057/s_025.mp3",
+        "text_vi": "Chúng ta thường nói, “Sạch như mèo”."
+      },
+      {
+        "text_en": "This is because cats do not like water, yet they are always keeping themselves clean by licking themselves.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_1057/s_026.mp3",
+        "text_vi": "Điều này là vì mèo không thích nước, nhưng chúng luôn giữ mình sạch sẽ bằng cách tự liếm lông."
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "This is my house.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1057/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "Ma, Pa and Cheena also live here.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1057/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "The best chair in the house is for me.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1057/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "But sitting on the lap is even better, isn’t it?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1057/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "Cheena is my best friend.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1057/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "I wait for her to return from school.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1057/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "I keep myself clean without water.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1057/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "I do not need a bath like Tommy.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1057/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "Shhh... don’t tell anyone that I am hiding here.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1057/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "1... 2... 3... Got you!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1057/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "Ma shouts at me, when I bring some tasty food from the garden.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1057/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "I can climb trees.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1057/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "I can jump.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1057/s_012.mp3"
+        },
+        {
+          "id": "ra_13",
+          "text_en": "I know all the short cuts here.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1057/s_013.mp3"
+        },
+        {
+          "id": "ra_14",
+          "text_en": "Sanju lives nearby.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1057/s_014.mp3"
+        },
+        {
+          "id": "ra_15",
+          "text_en": "He teases me.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1057/s_015.mp3"
+        },
+        {
+          "id": "ra_16",
+          "text_en": "It makes me very angry.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1057/s_016.mp3"
+        },
+        {
+          "id": "ra_17",
+          "text_en": "Please tell Sanju that the tiger is from our cat family.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1057/s_017.mp3"
+        },
+        {
+          "id": "ra_18",
+          "text_en": "We have sharp claws.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1057/s_018.mp3"
+        },
+        {
+          "id": "ra_19",
+          "text_en": "My friends sometimes make a lot of noise at night.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1057/s_019.mp3"
+        },
+        {
+          "id": "ra_20",
+          "text_en": "By then I am quietly in bed.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1057/s_020.mp3"
+        },
+        {
+          "id": "ra_21",
+          "text_en": "Tails can speak!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1057/s_021.mp3"
+        },
+        {
+          "id": "ra_22",
+          "text_en": "Did you know how animals and birds tell us something by using their tails?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1057/s_022.mp3"
+        },
+        {
+          "id": "ra_23",
+          "text_en": "A dog wags its tail when it is happy.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1057/s_023.mp3"
+        },
+        {
+          "id": "ra_24",
+          "text_en": "A cat puffs up its tail when it is angry.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1057/s_024.mp3"
+        },
+        {
+          "id": "ra_25",
+          "text_en": "Often we say, “As clean as a cat”.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1057/s_025.mp3"
+        },
+        {
+          "id": "ra_26",
+          "text_en": "This is because cats do not like water, yet they are always keeping themselves clean by licking themselves.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_1057/s_026.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "Whose house is this?",
+          "options_en": [
+            "Mine",
+            "Sanju's",
+            "Tommy's"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "What is this?",
+          "options_en": [
+            "My house",
+            "A chair",
+            "A tree"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s1_q1",
+          "type": "choice",
+          "question_en": "Who also live here?",
+          "options_en": [
+            "Ma, Pa and Cheena",
+            "Sanju",
+            "Tommy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s1_q2",
+          "type": "choice",
+          "question_en": "Which child is named as living here?",
+          "options_en": [
+            "Cheena",
+            "Sanju",
+            "Tommy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "Who is the best chair in the house for?",
+          "options_en": [
+            "me",
+            "Ma",
+            "Cheena"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "Which chair is for me?",
+          "options_en": [
+            "the best chair in the house",
+            "Ma's chair",
+            "the lap"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p1_s1_q1",
+          "type": "choice",
+          "question_en": "What is even better?",
+          "options_en": [
+            "sitting on the lap",
+            "climbing trees",
+            "bringing tasty food from the garden"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p1_s1_q2",
+          "type": "choice",
+          "question_en": "How is sitting on the lap described?",
+          "options_en": [
+            "even better",
+            "clean",
+            "tasty"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "Who is my best friend?",
+          "options_en": [
+            "Cheena",
+            "Sanju",
+            "Tommy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "Whose best friend is Cheena?",
+          "options_en": [
+            "Mine",
+            "Ma's",
+            "Pa's"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p2_s1_q1",
+          "type": "choice",
+          "question_en": "When do I wait?",
+          "options_en": [
+            "When she returns from school",
+            "When Ma shouts at me",
+            "When Sanju teases me"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p2_s1_q2",
+          "type": "choice",
+          "question_en": "Who do I wait for to return from school?",
+          "options_en": [
+            "Her (Cheena)",
+            "Sanju",
+            "Tommy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "How does the speaker keep themself clean?",
+          "options_en": [
+            "Without water",
+            "By taking a bath like Tommy",
+            "By licking themselves"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "Who keeps themself clean without water?",
+          "options_en": [
+            "The speaker (I)",
+            "Tommy",
+            "Cheena"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p3_s1_q1",
+          "type": "choice",
+          "question_en": "Who does not need a bath?",
+          "options_en": [
+            "The speaker (I)",
+            "Tommy",
+            "Ma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p3_s1_q2",
+          "type": "choice",
+          "question_en": "Who is mentioned as someone who takes baths?",
+          "options_en": [
+            "Tommy",
+            "Cheena",
+            "Sanju"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "Where is the speaker hiding?",
+          "options_en": [
+            "here",
+            "on the lap",
+            "in the garden"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "Who must not be told about the hiding?",
+          "options_en": [
+            "anyone",
+            "Ma",
+            "Sanju"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p4_s1_q1",
+          "type": "choice",
+          "question_en": "What does the speaker say after counting?",
+          "options_en": [
+            "Got you!",
+            "Shhh... don’t tell anyone that I am hiding here.",
+            "I am hiding here."
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p4_s1_q2",
+          "type": "choice",
+          "question_en": "When does the speaker say \"Got you!\"?",
+          "options_en": [
+            "After counting 1... 2... 3...",
+            "When Ma shouts at me",
+            "When I bring tasty food from the garden"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "Who shouts at me?",
+          "options_en": [
+            "Ma",
+            "Pa",
+            "Cheena"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "When does Ma shout at me?",
+          "options_en": [
+            "When I bring some tasty food from the garden",
+            "When I sit on the lap",
+            "When I climb trees"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "Who can climb trees?",
+          "options_en": [
+            "I",
+            "Ma",
+            "Cheena"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "Where can I climb?",
+          "options_en": [
+            "Trees",
+            "The best chair",
+            "On the lap"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p6_s1_q1",
+          "type": "choice",
+          "question_en": "What can I do?",
+          "options_en": [
+            "Jump",
+            "Climb trees",
+            "Keep myself clean"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p6_s1_q2",
+          "type": "choice",
+          "question_en": "How can I move?",
+          "options_en": [
+            "By jumping",
+            "By climbing trees",
+            "By sitting on the lap"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p6_s2_q1",
+          "type": "choice",
+          "question_en": "What do I know here?",
+          "options_en": [
+            "All the short cuts",
+            "The best chair in the house",
+            "How to climb trees"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p6_s2_q2",
+          "type": "choice",
+          "question_en": "Where do I know all the short cuts?",
+          "options_en": [
+            "Here",
+            "At school",
+            "In the garden"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "Who lives nearby?",
+          "options_en": [
+            "Sanju",
+            "Cheena",
+            "Ma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "Where does Sanju live?",
+          "options_en": [
+            "Nearby",
+            "In the house",
+            "In the garden"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p7_s1_q1",
+          "type": "choice",
+          "question_en": "Who teases me?",
+          "options_en": [
+            "Sanju",
+            "Cheena",
+            "Tommy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p7_s1_q2",
+          "type": "choice",
+          "question_en": "What does he do to me?",
+          "options_en": [
+            "He teases me",
+            "He brings tasty food",
+            "He climbs trees"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p7_s2_q1",
+          "type": "choice",
+          "question_en": "How does it make me feel?",
+          "options_en": [
+            "Very angry",
+            "Happy",
+            "Sleepy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p7_s2_q2",
+          "type": "choice",
+          "question_en": "Why do I feel very angry?",
+          "options_en": [
+            "Because he teases me",
+            "Because I wait for Cheena to return from school",
+            "Because I bring tasty food from the garden"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        }
+      ]
+    },
+    {
+      "paragraph_index": 8,
+      "questions": [
+        {
+          "id": "gl_p8_s0_q1",
+          "type": "choice",
+          "question_en": "Who should be told that the tiger is from our cat family?",
+          "options_en": [
+            "Sanju",
+            "Cheena",
+            "Ma"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p8_s0_q2",
+          "type": "choice",
+          "question_en": "What is the tiger said to be from?",
+          "options_en": [
+            "our cat family",
+            "the garden",
+            "this house"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p8_s1_q1",
+          "type": "choice",
+          "question_en": "What do we have?",
+          "options_en": [
+            "sharp claws",
+            "best chair",
+            "tasty food"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p8_s1_q2",
+          "type": "choice",
+          "question_en": "Whose claws are sharp?",
+          "options_en": [
+            "We",
+            "Tommy",
+            "Sanju"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        }
+      ]
+    },
+    {
+      "paragraph_index": 9,
+      "questions": [
+        {
+          "id": "gl_p9_s0_q1",
+          "type": "choice",
+          "question_en": "Who sometimes make a lot of noise at night?",
+          "options_en": [
+            "My friends",
+            "Ma",
+            "Sanju"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p9_s0_q2",
+          "type": "choice",
+          "question_en": "When do my friends sometimes make a lot of noise?",
+          "options_en": [
+            "At night",
+            "When I climb trees",
+            "When Cheena returns from school"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p9_s1_q1",
+          "type": "choice",
+          "question_en": "Where am I by then?",
+          "options_en": [
+            "In bed",
+            "On the best chair",
+            "Sitting on the lap"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p9_s1_q2",
+          "type": "choice",
+          "question_en": "How am I by then?",
+          "options_en": [
+            "Quietly in bed",
+            "Very angry",
+            "Keeping myself clean"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        }
+      ]
+    },
+    {
+      "paragraph_index": 10,
+      "questions": [
+        {
+          "id": "gl_p10_s0_q1",
+          "type": "choice",
+          "question_en": "What can speak?",
+          "options_en": [
+            "Tails",
+            "The tiger",
+            "Cheena"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p10_s0_q2",
+          "type": "choice",
+          "question_en": "Who can speak?",
+          "options_en": [
+            "Tails",
+            "Ma",
+            "Sanju"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p10_s1_q1",
+          "type": "choice",
+          "question_en": "How do animals and birds tell us something?",
+          "options_en": [
+            "By using their tails",
+            "By licking themselves",
+            "By climbing trees"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p10_s1_q2",
+          "type": "choice",
+          "question_en": "Who tell us something by using their tails?",
+          "options_en": [
+            "Animals and birds",
+            "Cats",
+            "Dogs"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p10_s2_q1",
+          "type": "choice",
+          "question_en": "When does a dog wag its tail?",
+          "options_en": [
+            "When it is happy",
+            "When it is angry",
+            "When it is hiding"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p10_s2_q2",
+          "type": "choice",
+          "question_en": "What does a dog do with its tail when it is happy?",
+          "options_en": [
+            "Wags its tail",
+            "Puffs up its tail",
+            "Licks itself to keep clean"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p10_s3_q1",
+          "type": "choice",
+          "question_en": "When does a cat puff up its tail?",
+          "options_en": [
+            "When it is angry",
+            "When it is happy",
+            "When it is in bed"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p10_s3_q2",
+          "type": "choice",
+          "question_en": "What does a cat do with its tail when it is angry?",
+          "options_en": [
+            "Puffs up its tail",
+            "Wags its tail",
+            "Licks itself"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p10_s4_q1",
+          "type": "choice",
+          "question_en": "What phrase do we often say?",
+          "options_en": [
+            "As clean as a cat",
+            "Best chair in the house",
+            "I wait for her to return from school"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p10_s4_q2",
+          "type": "choice",
+          "question_en": "Which animal is used in the saying?",
+          "options_en": [
+            "Cat",
+            "Dog",
+            "Tiger"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p10_s5_q1",
+          "type": "choice",
+          "question_en": "Why are cats said to be clean?",
+          "options_en": [
+            "Because they keep themselves clean by licking",
+            "Because they climb trees",
+            "Because they hide in the garden"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p10_s5_q2",
+          "type": "choice",
+          "question_en": "How do cats keep themselves clean?",
+          "options_en": [
+            "By licking themselves",
+            "By taking a bath",
+            "By wagging their tail"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'Clean Cat'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "live",
+      "meaning_vi": "sống",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "also",
+      "meaning_vi": "cũng",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "best",
+      "meaning_vi": "tốt nhất",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "chair",
+      "meaning_vi": "ghế",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "lap",
+      "meaning_vi": "lòng (người)",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "even better",
+      "meaning_vi": "còn tốt hơn / còn thích hơn",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "friend",
+      "meaning_vi": "bạn bè",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "wait",
+      "meaning_vi": "chờ đợi",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "return",
+      "meaning_vi": "trở về / về",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "keep",
+      "meaning_vi": "giữ",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "clean",
+      "meaning_vi": "sạch sẽ",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "without",
+      "meaning_vi": "không có / không cần",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "bath",
+      "meaning_vi": "tắm",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "anyone",
+      "meaning_vi": "bất cứ ai",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "hiding",
+      "meaning_vi": "trốn",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "Got you",
+      "meaning_vi": "Bắt được rồi",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "shouts",
+      "meaning_vi": "la / hét",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "bring",
+      "meaning_vi": "mang / đem",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "tasty",
+      "meaning_vi": "ngon",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "garden",
+      "meaning_vi": "khu vườn",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "climb",
+      "meaning_vi": "trèo",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "jump",
+      "meaning_vi": "nhảy",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "short cuts",
+      "meaning_vi": "đường tắt",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "nearby",
+      "meaning_vi": "ở gần đây",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "teases",
+      "meaning_vi": "trêu chọc",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "angry",
+      "meaning_vi": "tức giận",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "please",
+      "meaning_vi": "làm ơn",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "tiger",
+      "meaning_vi": "con hổ",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "family",
+      "meaning_vi": "gia đình / họ hàng",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "claws",
+      "meaning_vi": "móng vuốt",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "sometimes",
+      "meaning_vi": "đôi khi",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "noise",
+      "meaning_vi": "tiếng ồn / ồn ào",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "night",
+      "meaning_vi": "ban đêm",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "quietly",
+      "meaning_vi": "yên lặng",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "tails",
+      "meaning_vi": "đuôi",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "wags",
+      "meaning_vi": "vẫy (đuôi)",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "puffs up",
+      "meaning_vi": "xù lên",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "licking",
+      "meaning_vi": "liếm",
+      "paragraph_index": 10
+    }
+  ]
+}

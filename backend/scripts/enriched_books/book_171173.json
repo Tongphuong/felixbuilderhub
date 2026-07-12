@@ -1,0 +1,823 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L2",
+  "level_label": "Cấp 2",
+  "topic": "Clever Cat",
+  "slug": "book_171173",
+  "audio_filename": "book_171173.mp3",
+  "book_slug": "book_171173",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_171173/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_171173/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_171173/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_171173/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_171173/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_171173/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_171173/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_171173/page_09.jpg",
+    "https://audio.felixbuilderhub.com/books/book_171173/page_10.jpg",
+    "https://audio.felixbuilderhub.com/books/book_171173/page_11.jpg",
+    "https://audio.felixbuilderhub.com/books/book_171173/page_12.jpg",
+    "https://audio.felixbuilderhub.com/books/book_171173/page_13.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_171173/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_171173/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_171173/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_171173/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_171173/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_171173/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_171173/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_171173/page_09.mp3",
+    "https://audio.felixbuilderhub.com/books/book_171173/page_10.mp3",
+    "https://audio.felixbuilderhub.com/books/book_171173/page_11.mp3",
+    "https://audio.felixbuilderhub.com/books/book_171173/page_12.mp3",
+    "https://audio.felixbuilderhub.com/books/book_171173/page_13.mp3"
+  ],
+  "book_attribution": {
+    "title": "Clever Cat",
+    "creators": [
+      "Ursula Nafula",
+      "Catherine Groenewald"
+    ],
+    "publisher": "African Storybook Initiative",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: Clever Cat is translated by Ursula Nafula . The © for this translation lies with African Storybook Initiative , 2020. Some rights reserved. Released under CC BY 4.0 license. Based on Original story: ' Paka mwerevu ' , by Ursula Nafula . © African Storybook Initiative , 2014. Some rights reserved. Released under CC BY 4.0 license. Other Credits: This story 'Clever Cat' has been published on StoryWeaver by African Storybook Initiative. Images Attributions: Cover page: Stretching cat , by Catherine Groenewald © African Storybook Initiative, 2014. Some rights reserved. Released under CC BY 4.0 license. Page 2: Man and cat , by Catherine Groenewald © African Storybook Initiative, 2014. Some rights reserved. Released under CC BY 4.0 license. Page 3: Cat near the door , by Catherine Groenewald © African Storybook Initiative, 2014. Some rights reserved. Released under CC BY 4.0 license. Page 4: Cat watching the door , by Catherine Groenewald © African Storybook Initiative, 2014. Some rights reserved. Released under CC BY 4.0 license. Page 5: Cat and dog , by Catherine Groenewald © African Storybook Initiative, 2014. Some rights reserved. Released under CC BY 4.0 license. Page 6: Dog , by Catherine Groenewald © African Storybook Initiative, 2014. Some rights reserved. Released under CC BY 4.0 license. Page 7: Woman and cat , by Catherine Groenewald © African Storybook Initiative, 2014. Some rights reserved. Released under CC BY 4.0 license. Page 8: Running woman , by Catherine Groenewald © African Storybook Initiative, 2014. Some rights reserved. Released under CC BY 4.0 license. Page 9: Cat behind the door , by Catherine Groenewald © African Storybook Initiative, 2014. Some rights reserved. Released under CC BY 4.0 license. Page 10: Cat eating food , by Catherine Groenewald © African Storybook Initiative, 2014. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/171173-clever-cat",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "Man and cat , by Catherine Groenewald © African Storybook Initiative, 2014. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "Cat near the door , by Catherine Groenewald © African Storybook Initiative, 2014. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "Cat watching the door , by Catherine Groenewald © African Storybook Initiative, 2014. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "Cat and dog , by Catherine Groenewald © African Storybook Initiative, 2014. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "Dog , by Catherine Groenewald © African Storybook Initiative, 2014. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "Woman and cat , by Catherine Groenewald © African Storybook Initiative, 2014. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "Running woman , by Catherine Groenewald © African Storybook Initiative, 2014. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "Cat behind the door , by Catherine Groenewald © African Storybook Initiative, 2014. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 8,
+        "credit_text": "Cat eating food , by Catherine Groenewald © African Storybook Initiative, 2014. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 9,
+        "credit_text": "Illustration by Catherine Groenewald."
+      },
+      {
+        "page_index": 10,
+        "credit_text": "Illustration by Catherine Groenewald."
+      },
+      {
+        "page_index": 11,
+        "credit_text": "Illustration by Catherine Groenewald."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "Clever Cat",
+    "paragraphs_en": [
+      "In my village, lives Mister Kio. Mister Kio has a cat called Safi.",
+      "When Mister Kio goes to work, he leaves the door open.",
+      "Safi sits in the doorway to watch over the house.",
+      "When the neighbour's dog comes close, Safi scares him away.",
+      "The dog runs away.",
+      "When a neighbour knocks at the door, Safi is ready to scratch.",
+      "The neighbour turns and runs away.",
+      "When Safi is hungry, she closes the door.",
+      "Safi eats her food.",
+      "Afterwards, Safi jumps onto the sofa and sleeps, \"Purr! Purr! Purr!\"",
+      "When Mister Kio returns, Safi stretches happily and welcomes him home.",
+      "Mister Kio and Safi sit down, and each of them reads the newspaper."
+    ],
+    "sentences": [
+      {
+        "text_en": "In my village, lives Mister Kio.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_171173/s_000.mp3",
+        "text_vi": "Trong làng của tôi, có chú Kio sống ở đó."
+      },
+      {
+        "text_en": "Mister Kio has a cat called Safi.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_171173/s_001.mp3",
+        "text_vi": "Chú Kio có một con mèo tên là Safi."
+      },
+      {
+        "text_en": "When Mister Kio goes to work, he leaves the door open.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_171173/s_002.mp3",
+        "text_vi": "Khi chú Kio đi làm, chú ấy để cửa mở."
+      },
+      {
+        "text_en": "Safi sits in the doorway to watch over the house.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_171173/s_003.mp3",
+        "text_vi": "Safi ngồi ở cửa để trông nhà."
+      },
+      {
+        "text_en": "When the neighbour's dog comes close, Safi scares him away.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_171173/s_004.mp3",
+        "text_vi": "Khi chó nhà hàng xóm đến gần, Safi dọa nó chạy đi."
+      },
+      {
+        "text_en": "The dog runs away.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_171173/s_005.mp3",
+        "text_vi": "Con chó chạy đi mất."
+      },
+      {
+        "text_en": "When a neighbour knocks at the door, Safi is ready to scratch.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_171173/s_006.mp3",
+        "text_vi": "Khi có hàng xóm gõ cửa, Safi sẵn sàng cào."
+      },
+      {
+        "text_en": "The neighbour turns and runs away.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_171173/s_007.mp3",
+        "text_vi": "Người hàng xóm quay lại và chạy đi."
+      },
+      {
+        "text_en": "When Safi is hungry, she closes the door.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_171173/s_008.mp3",
+        "text_vi": "Khi Safi đói, nó đóng cửa lại."
+      },
+      {
+        "text_en": "Safi eats her food.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_171173/s_009.mp3",
+        "text_vi": "Safi ăn thức ăn của nó."
+      },
+      {
+        "text_en": "Afterwards, Safi jumps onto the sofa and sleeps, \"Purr! Purr! Purr!\"",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_171173/s_010.mp3",
+        "text_vi": "Sau đó, Safi nhảy lên ghế sofa và ngủ, \"Gừ! Gừ! Gừ!\""
+      },
+      {
+        "text_en": "When Mister Kio returns, Safi stretches happily and welcomes him home.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_171173/s_011.mp3",
+        "text_vi": "Khi chú Kio về, Safi vươn vai vui vẻ và chào đón chú về nhà."
+      },
+      {
+        "text_en": "Mister Kio and Safi sit down, and each of them reads the newspaper.",
+        "paragraph_index": 11,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_171173/s_012.mp3",
+        "text_vi": "Chú Kio và Safi ngồi xuống, và mỗi người đọc báo."
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "In my village, lives Mister Kio.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_171173/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "Mister Kio has a cat called Safi.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_171173/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "When Mister Kio goes to work, he leaves the door open.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_171173/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "Safi sits in the doorway to watch over the house.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_171173/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "When the neighbour's dog comes close, Safi scares him away.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_171173/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "The dog runs away.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_171173/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "When a neighbour knocks at the door, Safi is ready to scratch.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_171173/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "The neighbour turns and runs away.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_171173/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "When Safi is hungry, she closes the door.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_171173/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "Safi eats her food.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_171173/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "Afterwards, Safi jumps onto the sofa and sleeps, \"Purr! Purr! Purr!\"",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_171173/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "When Mister Kio returns, Safi stretches happily and welcomes him home.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_171173/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "Mister Kio and Safi sit down, and each of them reads the newspaper.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_171173/s_012.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "Who lives in my village?",
+          "options_en": [
+            "Mister Kio",
+            "Safi",
+            "the neighbour"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "Where does Mister Kio live?",
+          "options_en": [
+            "In my village",
+            "In the doorway",
+            "In the house"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s1_q1",
+          "type": "choice",
+          "question_en": "Who has a cat?",
+          "options_en": [
+            "Mister Kio",
+            "Safi",
+            "the neighbour"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s1_q2",
+          "type": "choice",
+          "question_en": "What is the cat called?",
+          "options_en": [
+            "Safi",
+            "Mister Kio",
+            "the neighbour's dog"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "Who leaves the door open?",
+          "options_en": [
+            "Mister Kio",
+            "Safi",
+            "the neighbour"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "When does Mister Kio leave the door open?",
+          "options_en": [
+            "When he goes to work",
+            "When Mister Kio returns",
+            "When Safi is hungry"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "Who sits in the doorway?",
+          "options_en": [
+            "Safi",
+            "Mister Kio",
+            "the neighbour's dog"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "Why does Safi sit in the doorway?",
+          "options_en": [
+            "To watch over the house",
+            "To eat her food",
+            "To sleep on the sofa"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "Who scares the neighbour's dog away?",
+          "options_en": [
+            "Safi",
+            "Mister Kio",
+            "The neighbour"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "What does Safi do when the neighbour's dog comes close?",
+          "options_en": [
+            "She scares him away",
+            "She scratches the neighbour",
+            "She closes the door"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "Who runs away?",
+          "options_en": [
+            "The dog",
+            "Safi",
+            "Mister Kio"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "What does the dog do?",
+          "options_en": [
+            "Runs away",
+            "Eats its food",
+            "Jumps onto the sofa"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "Who is ready to scratch?",
+          "options_en": [
+            "Safi",
+            "Mister Kio",
+            "The neighbour's dog"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "When is Safi ready to scratch?",
+          "options_en": [
+            "When a neighbour knocks at the door",
+            "When Mister Kio returns",
+            "When Safi is hungry"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "Who turns and runs away?",
+          "options_en": [
+            "The neighbour",
+            "Mister Kio",
+            "Safi"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "How does the neighbour leave?",
+          "options_en": [
+            "Turns and runs away",
+            "Walks to work",
+            "Closes the door"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "When does Safi close the door?",
+          "options_en": [
+            "When she is hungry",
+            "When the neighbour knocks at the door",
+            "When Mister Kio returns"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "Who closes the door?",
+          "options_en": [
+            "Safi",
+            "Mister Kio",
+            "The neighbour"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        }
+      ]
+    },
+    {
+      "paragraph_index": 8,
+      "questions": [
+        {
+          "id": "gl_p8_s0_q1",
+          "type": "choice",
+          "question_en": "Who eats her food?",
+          "options_en": [
+            "Safi",
+            "Mister Kio",
+            "The neighbour's dog"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p8_s0_q2",
+          "type": "choice",
+          "question_en": "What does Safi do?",
+          "options_en": [
+            "Eats her food",
+            "Closes the door",
+            "Jumps onto the sofa"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        }
+      ]
+    },
+    {
+      "paragraph_index": 9,
+      "questions": [
+        {
+          "id": "gl_p9_s0_q1",
+          "type": "choice",
+          "question_en": "Who jumps onto the sofa?",
+          "options_en": [
+            "Safi",
+            "Mister Kio",
+            "the neighbour's dog"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p9_s0_q2",
+          "type": "choice",
+          "question_en": "What does Safi do after jumping onto the sofa?",
+          "options_en": [
+            "Sleeps",
+            "Eats her food",
+            "Sits in the doorway"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        }
+      ]
+    },
+    {
+      "paragraph_index": 10,
+      "questions": [
+        {
+          "id": "gl_p10_s0_q1",
+          "type": "choice",
+          "question_en": "Who stretches happily and welcomes him home?",
+          "options_en": [
+            "Safi",
+            "Mister Kio",
+            "The neighbour"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p10_s0_q2",
+          "type": "choice",
+          "question_en": "When does Safi stretch happily and welcome him home?",
+          "options_en": [
+            "When Mister Kio returns",
+            "When she is hungry",
+            "When the neighbour knocks at the door"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        }
+      ]
+    },
+    {
+      "paragraph_index": 11,
+      "questions": [
+        {
+          "id": "gl_p11_s0_q1",
+          "type": "choice",
+          "question_en": "Who sit down and read the newspaper?",
+          "options_en": [
+            "Mister Kio and Safi",
+            "the neighbour",
+            "the dog"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p11_s0_q2",
+          "type": "choice",
+          "question_en": "What do they read?",
+          "options_en": [
+            "the newspaper",
+            "their food",
+            "the sofa"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'Clever Cat'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "village",
+      "meaning_vi": "làng (một nơi có nhiều nhà ở nông thôn)",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "lives",
+      "meaning_vi": "sống (ở một nơi nào đó)",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "goes to work",
+      "meaning_vi": "đi làm (đi đến chỗ làm việc)",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "leaves",
+      "meaning_vi": "để lại (để cái gì ở một chỗ)",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "open",
+      "meaning_vi": "mở (không đóng)",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "doorway",
+      "meaning_vi": "lối vào cửa (chỗ ra vào của cánh cửa)",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "watch over",
+      "meaning_vi": "trông chừng (canh gác, bảo vệ)",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "house",
+      "meaning_vi": "nhà (nơi để ở)",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "neighbour's",
+      "meaning_vi": "của hàng xóm (thuộc về người sống gần nhà mình)",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "comes close",
+      "meaning_vi": "đến gần (di chuyển lại gần hơn)",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "scares away",
+      "meaning_vi": "dọa chạy đi (làm cho ai đó sợ và bỏ đi)",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "runs away",
+      "meaning_vi": "chạy đi mất (chạy khỏi một nơi nào đó)",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "knocks",
+      "meaning_vi": "gõ (dùng tay đập nhẹ vào cửa để gây chú ý)",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "ready",
+      "meaning_vi": "sẵn sàng (đã chuẩn bị xong)",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "scratch",
+      "meaning_vi": "cào (dùng móng vuốt hoặc móng tay làm xước)",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "turns",
+      "meaning_vi": "quay lại (thay đổi hướng)",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "runs away",
+      "meaning_vi": "chạy đi (rời khỏi một cách nhanh chóng)",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "hungry",
+      "meaning_vi": "đói bụng (cảm thấy cần ăn)",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "closes",
+      "meaning_vi": "đóng (làm cho cái gì đó không còn mở nữa)",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "eats",
+      "meaning_vi": "ăn (tiêu thụ thức ăn)",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "food",
+      "meaning_vi": "thức ăn (những thứ để ăn)",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "afterwards",
+      "meaning_vi": "sau đó (sau một sự việc nào đó)",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "jumps",
+      "meaning_vi": "nhảy (đẩy mình lên không trung)",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "sofa",
+      "meaning_vi": "ghế sofa (ghế dài có lưng tựa và tay vịn, thường dùng cho nhiều người ngồi)",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "sleeps",
+      "meaning_vi": "ngủ (nghỉ ngơi với mắt nhắm lại)",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "returns",
+      "meaning_vi": "trở về (quay lại nơi đã đi)",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "stretches",
+      "meaning_vi": "vươn vai (duỗi thẳng cơ thể hoặc chân tay)",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "happily",
+      "meaning_vi": "một cách vui vẻ (với niềm vui)",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "welcomes",
+      "meaning_vi": "chào đón (tiếp đón ai đó một cách thân thiện)",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "sit down",
+      "meaning_vi": "ngồi xuống (hạ mình xuống ghế hoặc sàn)",
+      "paragraph_index": 11
+    },
+    {
+      "word_en": "each of them",
+      "meaning_vi": "mỗi người (từng người một)",
+      "paragraph_index": 11
+    },
+    {
+      "word_en": "reads",
+      "meaning_vi": "đọc (nhìn và hiểu chữ viết)",
+      "paragraph_index": 11
+    },
+    {
+      "word_en": "newspaper",
+      "meaning_vi": "tờ báo (ấn phẩm in tin tức hàng ngày hoặc hàng tuần)",
+      "paragraph_index": 11
+    }
+  ]
+}

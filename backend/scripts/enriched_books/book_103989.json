@@ -1,0 +1,2469 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L2",
+  "level_label": "Cấp 2",
+  "topic": "A Camel for Kelam",
+  "slug": "book_103989",
+  "audio_filename": "book_103989.mp3",
+  "book_slug": "book_103989",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_103989/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103989/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103989/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103989/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103989/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103989/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103989/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103989/page_09.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103989/page_10.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103989/page_11.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103989/page_12.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103989/page_13.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103989/page_14.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103989/page_15.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103989/page_16.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103989/page_17.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103989/page_18.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103989/page_19.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103989/page_20.jpg",
+    "https://audio.felixbuilderhub.com/books/book_103989/page_21.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_103989/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103989/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103989/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103989/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103989/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103989/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103989/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103989/page_09.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103989/page_10.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103989/page_11.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103989/page_12.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103989/page_13.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103989/page_14.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103989/page_15.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103989/page_16.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103989/page_17.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103989/page_18.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103989/page_19.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103989/page_20.mp3",
+    "https://audio.felixbuilderhub.com/books/book_103989/page_21.mp3"
+  ],
+  "book_attribution": {
+    "title": "A Camel for Kelam",
+    "creators": [
+      "Anu Chowdhury-Sorabjee",
+      "Kalyan Joshi"
+    ],
+    "publisher": "Pratham Books",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: A Camel for Kelam is written by Anu Chowdhury-Sorabjee . © Pratham Books , 2019. Some rights reserved. Released under CC BY 4.0 license. Other Credits: 'A Camel for Kelam' has been originally published by Pratham Books. The development of this book has been supported by Parag, an initiative of Tata Trusts and EdelGive Foundation. www.prathambooks.org | Guest Editor: Shabnam Minwalla Images Attributions: Cover page: A man riding a horse and a woman with a camel , by Kalyan Joshi © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 2: A man holding a horse's rein , by Kalyan Joshi © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 3: A man and horse standing and galloping off , by Kalyan Joshi © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 4: A woman dreaming of a camel , by Kalyan Joshi © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 5: A woman talking to a man , by Kalyan Joshi © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 6: A man in a palace and one outside , by Kalyan Joshi © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 7: A man with a horse and a woman at a window , by Kalyan Joshi © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 8: A man galloping on a horse , by Kalyan Joshi © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 9: A man on a horse and at sea , by Kalyan Joshi © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 10: A man and a horse sailing , by Kalyan Joshi © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 11: A man leading a horse , by Kalyan Joshi © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/103989-a-camel-for-kelam",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "A man holding a horse's rein , by Kalyan Joshi © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "A man and horse standing and galloping off , by Kalyan Joshi © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "A woman dreaming of a camel , by Kalyan Joshi © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "A woman talking to a man , by Kalyan Joshi © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "A man in a palace and one outside , by Kalyan Joshi © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "A man with a horse and a woman at a window , by Kalyan Joshi © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "A man galloping on a horse , by Kalyan Joshi © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "A man on a horse and at sea , by Kalyan Joshi © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 8,
+        "credit_text": "A man and a horse sailing , by Kalyan Joshi © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 9,
+        "credit_text": "A man leading a horse , by Kalyan Joshi © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 10,
+        "credit_text": "Illustration by Kalyan Joshi."
+      },
+      {
+        "page_index": 11,
+        "credit_text": "Illustration by Kalyan Joshi."
+      },
+      {
+        "page_index": 12,
+        "credit_text": "Illustration by Kalyan Joshi."
+      },
+      {
+        "page_index": 13,
+        "credit_text": "Illustration by Kalyan Joshi."
+      },
+      {
+        "page_index": 14,
+        "credit_text": "Illustration by Kalyan Joshi."
+      },
+      {
+        "page_index": 15,
+        "credit_text": "Illustration by Kalyan Joshi."
+      },
+      {
+        "page_index": 16,
+        "credit_text": "Illustration by Kalyan Joshi."
+      },
+      {
+        "page_index": 17,
+        "credit_text": "Illustration by Kalyan Joshi."
+      },
+      {
+        "page_index": 18,
+        "credit_text": "Illustration by Kalyan Joshi."
+      },
+      {
+        "page_index": 19,
+        "credit_text": "Illustration by Kalyan Joshi."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "A Camel for Kelam",
+    "paragraphs_en": [
+      "Pabu loved to spend time with animals. He had a family of four dogs, five cats and a horse named Saffron. He loved Saffron the most.",
+      "Every morning, Pabu brushed Saffron’s mane and coat. Then he saddled Saffron and rode into the desert, far beyond his village in Rajasthan.",
+      "Pabu had a niece named Kelam. She too loved animals. “Pabu,” she said one day. “Bring me a camel for my birthday.”",
+      "“Where do I find a camel for Kelam?” Pabu wondered. “There are no camels in Rajasthan.”",
+      "People said camels came from Lanka. It was far, far away, across the big blue sea. Lanka was ruled by a grumpy king who did not share his camels.",
+      "Pabu loved to travel. He also wanted to see a smile on Kelam’s face. So he came up with a plan.",
+      "Pabu saddled Saffron. Then he rode into the desert. He rode all night and all day and all night again, till he saw the vast blue sea for the first time.",
+      "The sea looked endless and Lanka seemed so far that Pabu wasn’t sure if he wanted to go there any more. But he and Saffron boarded the next boat.",
+      "That night there was a storm, a storm so terrible that the winds crashed and the waves lashed. The boat was wrecked.",
+      "Pabu and Saffron came ashore in a strange place. There were no trees, no bees, no flowers and no rain, just sand.",
+      "Pabu and Saffron galloped away from the sea. Where were the green trees of Lanka? Where was the grumpy king? Where were the camels?",
+      "Pabu saw a grand tent in the distance. Then he saw camels—many, many camels. “Hooray,” he cried. “I’ve reached Lanka.”",
+      "Suddenly, Pabu was surrounded by men on camels. “Welcome,” said the leader of the camel riders. He looked like a king and he looked happy.",
+      "Pabu was not in Lanka. He had reached Arabia. He spent many days with the happy king in his grand tent.",
+      "He learnt how to groom camels. He learnt that the grumpy king of Lanka had stolen many of the happy king’s camels.",
+      "After some weeks, Pabu grew homesick. He wanted to go home with a camel for Kelam.",
+      "The happy king gave Pabu a baby camel. He told Pabu to ride across the sands towards the rising sun. Then Pabu, Saffron and the baby camel made their way home.",
+      "Pabu reached his village just in time for Kelam’s birthday. The village welcomed Pabu. Kelam welcomed the baby camel.",
+      "And that is how the first camel came to Rajasthan.",
+      "Phad is a folk art style practised by the Bhopa community of Rajasthan. The artist paints on a cloth scroll called phad. Phad art features stories of folk heroes, one of whom is Pabu."
+    ],
+    "sentences": [
+      {
+        "text_en": "Pabu loved to spend time with animals.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_000.mp3",
+        "text_vi": "Pabu rất thích dành thời gian bên các con vật."
+      },
+      {
+        "text_en": "He had a family of four dogs, five cats and a horse named Saffron.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_001.mp3",
+        "text_vi": "Cậu có một gia đình gồm bốn chú chó, năm chú mèo và một chú ngựa tên là Saffron."
+      },
+      {
+        "text_en": "He loved Saffron the most.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_002.mp3",
+        "text_vi": "Cậu yêu Saffron nhất."
+      },
+      {
+        "text_en": "Every morning, Pabu brushed Saffron’s mane and coat.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_003.mp3",
+        "text_vi": "Mỗi sáng, Pabu chải bờm và bộ lông của Saffron."
+      },
+      {
+        "text_en": "Then he saddled Saffron and rode into the desert, far beyond his village in Rajasthan.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_004.mp3",
+        "text_vi": "Sau đó, cậu đặt yên ngựa lên Saffron và cưỡi vào sa mạc, đi rất xa khỏi ngôi làng của mình ở Rajasthan."
+      },
+      {
+        "text_en": "Pabu had a niece named Kelam.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_005.mp3",
+        "text_vi": "Pabu có một người cháu gái tên là Kelam."
+      },
+      {
+        "text_en": "She too loved animals.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_006.mp3",
+        "text_vi": "Cô bé cũng rất yêu động vật."
+      },
+      {
+        "text_en": "“Pabu,” she said one day.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_007.mp3",
+        "text_vi": "Một ngày nọ, cô bé nói: “Pabu ơi,”"
+      },
+      {
+        "text_en": "“Bring me a camel for my birthday.”",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_008.mp3",
+        "text_vi": "“Hãy mang cho cháu một con lạc đà vào ngày sinh nhật của cháu nhé.”"
+      },
+      {
+        "text_en": "“Where do I find a camel for Kelam?” Pabu wondered.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_009.mp3",
+        "text_vi": "“Mình tìm lạc đà cho Kelam ở đâu bây giờ?” Pabu tự hỏi."
+      },
+      {
+        "text_en": "“There are no camels in Rajasthan.”",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_010.mp3",
+        "text_vi": "“Ở Rajasthan không có lạc đà.”"
+      },
+      {
+        "text_en": "People said camels came from Lanka.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_011.mp3",
+        "text_vi": "Mọi người nói lạc đà đến từ Lanka."
+      },
+      {
+        "text_en": "It was far, far away, across the big blue sea.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_012.mp3",
+        "text_vi": "Nơi đó rất xa, rất xa, qua biển xanh rộng lớn."
+      },
+      {
+        "text_en": "Lanka was ruled by a grumpy king who did not share his camels.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_013.mp3",
+        "text_vi": "Lanka được cai trị bởi một vị vua khó tính, người không chia sẻ lạc đà của mình."
+      },
+      {
+        "text_en": "Pabu loved to travel.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_014.mp3",
+        "text_vi": "Pabu rất thích đi du lịch."
+      },
+      {
+        "text_en": "He also wanted to see a smile on Kelam’s face.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_015.mp3",
+        "text_vi": "Cậu cũng muốn nhìn thấy nụ cười trên khuôn mặt Kelam."
+      },
+      {
+        "text_en": "So he came up with a plan.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_016.mp3",
+        "text_vi": "Vì vậy, cậu đã nghĩ ra một kế hoạch."
+      },
+      {
+        "text_en": "Pabu saddled Saffron.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_017.mp3",
+        "text_vi": "Pabu đặt yên ngựa lên Saffron."
+      },
+      {
+        "text_en": "Then he rode into the desert.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_018.mp3",
+        "text_vi": "Sau đó, cậu cưỡi ngựa vào sa mạc."
+      },
+      {
+        "text_en": "He rode all night and all day and all night again, till he saw the vast blue sea for the first time.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_019.mp3",
+        "text_vi": "Cậu cưỡi ngựa suốt đêm, suốt ngày rồi lại suốt đêm nữa, cho đến khi lần đầu tiên nhìn thấy biển xanh bao la."
+      },
+      {
+        "text_en": "The sea looked endless and Lanka seemed so far that Pabu wasn’t sure if he wanted to go there any more.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_020.mp3",
+        "text_vi": "Biển trông vô tận và Lanka dường như quá xa đến nỗi Pabu không chắc mình còn muốn đến đó nữa không."
+      },
+      {
+        "text_en": "But he and Saffron boarded the next boat.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_021.mp3",
+        "text_vi": "Nhưng cậu và Saffron vẫn lên chiếc thuyền tiếp theo."
+      },
+      {
+        "text_en": "That night there was a storm, a storm so terrible that the winds crashed and the waves lashed.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_022.mp3",
+        "text_vi": "Đêm đó có một cơn bão, một cơn bão kinh khủng đến nỗi gió gào thét và sóng đánh dữ dội."
+      },
+      {
+        "text_en": "The boat was wrecked.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_023.mp3",
+        "text_vi": "Chiếc thuyền bị đắm."
+      },
+      {
+        "text_en": "Pabu and Saffron came ashore in a strange place.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_024.mp3",
+        "text_vi": "Pabu và Saffron dạt vào bờ ở một nơi xa lạ."
+      },
+      {
+        "text_en": "There were no trees, no bees, no flowers and no rain, just sand.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_025.mp3",
+        "text_vi": "Ở đó không có cây cối, không có ong, không có hoa và không có mưa, chỉ toàn là cát."
+      },
+      {
+        "text_en": "Pabu and Saffron galloped away from the sea.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_026.mp3",
+        "text_vi": "Pabu và Saffron phi nước đại rời xa biển."
+      },
+      {
+        "text_en": "Where were the green trees of Lanka?",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_027.mp3",
+        "text_vi": "Những hàng cây xanh của Lanka đâu rồi?"
+      },
+      {
+        "text_en": "Where was the grumpy king?",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_028.mp3",
+        "text_vi": "Vị vua khó tính đâu rồi?"
+      },
+      {
+        "text_en": "Where were the camels?",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_029.mp3",
+        "text_vi": "Những con lạc đà đâu rồi?"
+      },
+      {
+        "text_en": "Pabu saw a grand tent in the distance.",
+        "paragraph_index": 11,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_030.mp3",
+        "text_vi": "Pabu nhìn thấy một cái lều lớn ở đằng xa."
+      },
+      {
+        "text_en": "Then he saw camels—many, many camels.",
+        "paragraph_index": 11,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_031.mp3",
+        "text_vi": "Sau đó, cậu thấy những con lạc đà—rất nhiều, rất nhiều lạc đà."
+      },
+      {
+        "text_en": "“Hooray,” he cried.",
+        "paragraph_index": 11,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_032.mp3",
+        "text_vi": "Cậu reo lên: “Hoan hô!”"
+      },
+      {
+        "text_en": "“I’ve reached Lanka.”",
+        "paragraph_index": 11,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_033.mp3",
+        "text_vi": "“Mình đã đến Lanka rồi!”"
+      },
+      {
+        "text_en": "Suddenly, Pabu was surrounded by men on camels.",
+        "paragraph_index": 12,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_034.mp3",
+        "text_vi": "Bỗng nhiên, Pabu bị bao vây bởi những người đàn ông cưỡi lạc đà."
+      },
+      {
+        "text_en": "“Welcome,” said the leader of the camel riders.",
+        "paragraph_index": 12,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_035.mp3",
+        "text_vi": "“Chào mừng,” người dẫn đầu đoàn cưỡi lạc đà nói."
+      },
+      {
+        "text_en": "He looked like a king and he looked happy.",
+        "paragraph_index": 12,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_036.mp3",
+        "text_vi": "Ông ấy trông giống một vị vua và ông ấy trông rất vui vẻ."
+      },
+      {
+        "text_en": "Pabu was not in Lanka.",
+        "paragraph_index": 13,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_037.mp3",
+        "text_vi": "Pabu không ở Lanka."
+      },
+      {
+        "text_en": "He had reached Arabia.",
+        "paragraph_index": 13,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_038.mp3",
+        "text_vi": "Cậu đã đến Arabia."
+      },
+      {
+        "text_en": "He spent many days with the happy king in his grand tent.",
+        "paragraph_index": 13,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_039.mp3",
+        "text_vi": "Cậu đã ở nhiều ngày với vị vua vui vẻ trong cái lều lớn của ông ấy."
+      },
+      {
+        "text_en": "He learnt how to groom camels.",
+        "paragraph_index": 14,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_040.mp3",
+        "text_vi": "Cậu học cách chải lông cho lạc đà."
+      },
+      {
+        "text_en": "He learnt that the grumpy king of Lanka had stolen many of the happy king’s camels.",
+        "paragraph_index": 14,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_041.mp3",
+        "text_vi": "Cậu biết rằng vị vua khó tính của Lanka đã trộm nhiều con lạc đà của vị vua vui vẻ."
+      },
+      {
+        "text_en": "After some weeks, Pabu grew homesick.",
+        "paragraph_index": 15,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_042.mp3",
+        "text_vi": "Sau vài tuần, Pabu bắt đầu nhớ nhà."
+      },
+      {
+        "text_en": "He wanted to go home with a camel for Kelam.",
+        "paragraph_index": 15,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_043.mp3",
+        "text_vi": "Cậu muốn về nhà cùng một con lạc đà cho Kelam."
+      },
+      {
+        "text_en": "The happy king gave Pabu a baby camel.",
+        "paragraph_index": 16,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_044.mp3",
+        "text_vi": "Vị vua vui vẻ tặng Pabu một con lạc đà con."
+      },
+      {
+        "text_en": "He told Pabu to ride across the sands towards the rising sun.",
+        "paragraph_index": 16,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_045.mp3",
+        "text_vi": "Ông ấy bảo Pabu cưỡi ngựa băng qua những bãi cát về phía mặt trời mọc."
+      },
+      {
+        "text_en": "Then Pabu, Saffron and the baby camel made their way home.",
+        "paragraph_index": 16,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_046.mp3",
+        "text_vi": "Sau đó, Pabu, Saffron và lạc đà con cùng nhau trở về nhà."
+      },
+      {
+        "text_en": "Pabu reached his village just in time for Kelam’s birthday.",
+        "paragraph_index": 17,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_047.mp3",
+        "text_vi": "Pabu về đến làng đúng lúc sinh nhật Kelam."
+      },
+      {
+        "text_en": "The village welcomed Pabu.",
+        "paragraph_index": 17,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_048.mp3",
+        "text_vi": "Cả làng chào đón Pabu."
+      },
+      {
+        "text_en": "Kelam welcomed the baby camel.",
+        "paragraph_index": 17,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_049.mp3",
+        "text_vi": "Kelam chào đón chú lạc đà con."
+      },
+      {
+        "text_en": "And that is how the first camel came to Rajasthan.",
+        "paragraph_index": 18,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_050.mp3",
+        "text_vi": "Và đó là cách con lạc đà đầu tiên đến Rajasthan."
+      },
+      {
+        "text_en": "Phad is a folk art style practised by the Bhopa community of Rajasthan.",
+        "paragraph_index": 19,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_051.mp3",
+        "text_vi": "Phad là một phong cách nghệ thuật dân gian được thực hành bởi cộng đồng Bhopa ở Rajasthan."
+      },
+      {
+        "text_en": "The artist paints on a cloth scroll called phad.",
+        "paragraph_index": 19,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_052.mp3",
+        "text_vi": "Người nghệ sĩ vẽ trên một cuộn vải gọi là phad."
+      },
+      {
+        "text_en": "Phad art features stories of folk heroes, one of whom is Pabu.",
+        "paragraph_index": 19,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_053.mp3",
+        "text_vi": "Nghệ thuật Phad kể về những câu chuyện của các anh hùng dân gian, một trong số đó là Pabu."
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "Pabu loved to spend time with animals.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "He had a family of four dogs, five cats and a horse named Saffron.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "He loved Saffron the most.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "Every morning, Pabu brushed Saffron’s mane and coat.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "Then he saddled Saffron and rode into the desert, far beyond his village in Rajasthan.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "Pabu had a niece named Kelam.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "She too loved animals.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "“Pabu,” she said one day.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "“Bring me a camel for my birthday.”",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "“Where do I find a camel for Kelam?” Pabu wondered.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "“There are no camels in Rajasthan.”",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "People said camels came from Lanka.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "It was far, far away, across the big blue sea.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_012.mp3"
+        },
+        {
+          "id": "ra_13",
+          "text_en": "Lanka was ruled by a grumpy king who did not share his camels.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_013.mp3"
+        },
+        {
+          "id": "ra_14",
+          "text_en": "Pabu loved to travel.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_014.mp3"
+        },
+        {
+          "id": "ra_15",
+          "text_en": "He also wanted to see a smile on Kelam’s face.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_015.mp3"
+        },
+        {
+          "id": "ra_16",
+          "text_en": "So he came up with a plan.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_016.mp3"
+        },
+        {
+          "id": "ra_17",
+          "text_en": "Pabu saddled Saffron.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_017.mp3"
+        },
+        {
+          "id": "ra_18",
+          "text_en": "Then he rode into the desert.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_018.mp3"
+        },
+        {
+          "id": "ra_19",
+          "text_en": "He rode all night and all day and all night again, till he saw the vast blue sea for the first time.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_019.mp3"
+        },
+        {
+          "id": "ra_20",
+          "text_en": "The sea looked endless and Lanka seemed so far that Pabu wasn’t sure if he wanted to go there any more.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_020.mp3"
+        },
+        {
+          "id": "ra_21",
+          "text_en": "But he and Saffron boarded the next boat.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_021.mp3"
+        },
+        {
+          "id": "ra_22",
+          "text_en": "That night there was a storm, a storm so terrible that the winds crashed and the waves lashed.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_022.mp3"
+        },
+        {
+          "id": "ra_23",
+          "text_en": "The boat was wrecked.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_023.mp3"
+        },
+        {
+          "id": "ra_24",
+          "text_en": "Pabu and Saffron came ashore in a strange place.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_024.mp3"
+        },
+        {
+          "id": "ra_25",
+          "text_en": "There were no trees, no bees, no flowers and no rain, just sand.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_025.mp3"
+        },
+        {
+          "id": "ra_26",
+          "text_en": "Pabu and Saffron galloped away from the sea.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_026.mp3"
+        },
+        {
+          "id": "ra_27",
+          "text_en": "Where were the green trees of Lanka?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_027.mp3"
+        },
+        {
+          "id": "ra_28",
+          "text_en": "Where was the grumpy king?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_028.mp3"
+        },
+        {
+          "id": "ra_29",
+          "text_en": "Where were the camels?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_029.mp3"
+        },
+        {
+          "id": "ra_30",
+          "text_en": "Pabu saw a grand tent in the distance.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_030.mp3"
+        },
+        {
+          "id": "ra_31",
+          "text_en": "Then he saw camels—many, many camels.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_031.mp3"
+        },
+        {
+          "id": "ra_32",
+          "text_en": "“Hooray,” he cried.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_032.mp3"
+        },
+        {
+          "id": "ra_33",
+          "text_en": "“I’ve reached Lanka.”",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_033.mp3"
+        },
+        {
+          "id": "ra_34",
+          "text_en": "Suddenly, Pabu was surrounded by men on camels.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_034.mp3"
+        },
+        {
+          "id": "ra_35",
+          "text_en": "“Welcome,” said the leader of the camel riders.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_035.mp3"
+        },
+        {
+          "id": "ra_36",
+          "text_en": "He looked like a king and he looked happy.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_036.mp3"
+        },
+        {
+          "id": "ra_37",
+          "text_en": "Pabu was not in Lanka.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_037.mp3"
+        },
+        {
+          "id": "ra_38",
+          "text_en": "He had reached Arabia.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_038.mp3"
+        },
+        {
+          "id": "ra_39",
+          "text_en": "He spent many days with the happy king in his grand tent.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_039.mp3"
+        },
+        {
+          "id": "ra_40",
+          "text_en": "He learnt how to groom camels.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_040.mp3"
+        },
+        {
+          "id": "ra_41",
+          "text_en": "He learnt that the grumpy king of Lanka had stolen many of the happy king’s camels.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_041.mp3"
+        },
+        {
+          "id": "ra_42",
+          "text_en": "After some weeks, Pabu grew homesick.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_042.mp3"
+        },
+        {
+          "id": "ra_43",
+          "text_en": "He wanted to go home with a camel for Kelam.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_043.mp3"
+        },
+        {
+          "id": "ra_44",
+          "text_en": "The happy king gave Pabu a baby camel.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_044.mp3"
+        },
+        {
+          "id": "ra_45",
+          "text_en": "He told Pabu to ride across the sands towards the rising sun.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_045.mp3"
+        },
+        {
+          "id": "ra_46",
+          "text_en": "Then Pabu, Saffron and the baby camel made their way home.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_046.mp3"
+        },
+        {
+          "id": "ra_47",
+          "text_en": "Pabu reached his village just in time for Kelam’s birthday.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_047.mp3"
+        },
+        {
+          "id": "ra_48",
+          "text_en": "The village welcomed Pabu.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_048.mp3"
+        },
+        {
+          "id": "ra_49",
+          "text_en": "Kelam welcomed the baby camel.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_049.mp3"
+        },
+        {
+          "id": "ra_50",
+          "text_en": "And that is how the first camel came to Rajasthan.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_050.mp3"
+        },
+        {
+          "id": "ra_51",
+          "text_en": "Phad is a folk art style practised by the Bhopa community of Rajasthan.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_051.mp3"
+        },
+        {
+          "id": "ra_52",
+          "text_en": "The artist paints on a cloth scroll called phad.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_052.mp3"
+        },
+        {
+          "id": "ra_53",
+          "text_en": "Phad art features stories of folk heroes, one of whom is Pabu.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_103989/s_053.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "Who loved to spend time with animals?",
+          "options_en": [
+            "Pabu",
+            "Kelam",
+            "Saffron"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "What did he love to spend time with?",
+          "options_en": [
+            "Animals",
+            "Camels",
+            "Trees"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s1_q1",
+          "type": "choice",
+          "question_en": "How many dogs did he have?",
+          "options_en": [
+            "Four",
+            "Five",
+            "One"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s1_q2",
+          "type": "choice",
+          "question_en": "Which horse did he have?",
+          "options_en": [
+            "Saffron",
+            "A baby camel",
+            "The happy king's camel"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s2_q1",
+          "type": "choice",
+          "question_en": "Who did he love the most?",
+          "options_en": [
+            "Saffron",
+            "Kelam",
+            "His dogs"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s2_q2",
+          "type": "choice",
+          "question_en": "Which animal did he love the most?",
+          "options_en": [
+            "Saffron the horse",
+            "A baby camel",
+            "Many cats"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "Who brushed Saffron’s mane and coat?",
+          "options_en": [
+            "Pabu",
+            "Kelam",
+            "The happy king"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "When did Pabu brush Saffron’s mane and coat?",
+          "options_en": [
+            "Every morning",
+            "On Kelam’s birthday",
+            "All night"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p1_s1_q1",
+          "type": "choice",
+          "question_en": "What did he saddle before riding?",
+          "options_en": [
+            "Saffron",
+            "A baby camel",
+            "One of his dogs"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p1_s1_q2",
+          "type": "choice",
+          "question_en": "Where did he ride after saddling Saffron?",
+          "options_en": [
+            "Into the desert",
+            "Across the big blue sea",
+            "To the grand tent"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "Who had a niece named Kelam?",
+          "options_en": [
+            "Pabu",
+            "Saffron",
+            "the happy king"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "Who was Kelam to Pabu?",
+          "options_en": [
+            "His niece",
+            "His horse",
+            "A camel rider"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p2_s1_q1",
+          "type": "choice",
+          "question_en": "What did she love?",
+          "options_en": [
+            "Animals",
+            "Camels",
+            "Grooming horses"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p2_s1_q2",
+          "type": "choice",
+          "question_en": "How did she feel about animals?",
+          "options_en": [
+            "She loved them",
+            "She ignored them",
+            "She traded them"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p2_s2_q1",
+          "type": "choice",
+          "question_en": "Who said \"Pabu\"?",
+          "options_en": [
+            "She (Kelam)",
+            "Saffron",
+            "The grumpy king"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p2_s2_q2",
+          "type": "choice",
+          "question_en": "When did she say \"Pabu\"?",
+          "options_en": [
+            "One day",
+            "Every morning",
+            "On the boat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p2_s3_q1",
+          "type": "choice",
+          "question_en": "What did she ask Pabu to bring her?",
+          "options_en": [
+            "A camel for her birthday",
+            "A horse named Saffron",
+            "A baby dog"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p2_s3_q2",
+          "type": "choice",
+          "question_en": "Why did she want a camel?",
+          "options_en": [
+            "For her birthday",
+            "To ride into the desert",
+            "To sell to the happy king"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "Who wondered about finding a camel for Kelam?",
+          "options_en": [
+            "Pabu",
+            "Saffron",
+            "Kelam"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "What did Pabu wonder?",
+          "options_en": [
+            "Where do I find a camel for Kelam?",
+            "How to groom Saffron",
+            "When is Kelam's birthday?"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p3_s1_q1",
+          "type": "choice",
+          "question_en": "What is not in Rajasthan?",
+          "options_en": [
+            "Camels",
+            "Bees",
+            "Trees"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p3_s1_q2",
+          "type": "choice",
+          "question_en": "Where are there no camels?",
+          "options_en": [
+            "Rajasthan",
+            "Lanka",
+            "Arabia"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "Where did people say camels came from?",
+          "options_en": [
+            "Lanka",
+            "Rajasthan",
+            "Arabia"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "What did people say about camels?",
+          "options_en": [
+            "They came from Lanka",
+            "Pabu loved Saffron",
+            "The happy king gave camels"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p4_s1_q1",
+          "type": "choice",
+          "question_en": "How far away was Lanka described as being?",
+          "options_en": [
+            "Far, far away across the big blue sea",
+            "Across the desert",
+            "Across the sands towards the rising sun"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p4_s1_q2",
+          "type": "choice",
+          "question_en": "What is the correct answer to this question: Across what was Lanka said to be?",
+          "options_en": [
+            "The big blue sea",
+            "The desert",
+            "The village"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p4_s2_q1",
+          "type": "choice",
+          "question_en": "Who ruled Lanka?",
+          "options_en": [
+            "A grumpy king",
+            "The happy king",
+            "Pabu"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p4_s2_q2",
+          "type": "choice",
+          "question_en": "What did the grumpy king not do?",
+          "options_en": [
+            "Share his camels",
+            "Groom the camels",
+            "Give a baby camel to Pabu"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "Who loved to travel?",
+          "options_en": [
+            "Pabu",
+            "Saffron",
+            "Kelam"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "What did Pabu love to do?",
+          "options_en": [
+            "Travel",
+            "Brush Saffron's mane",
+            "Spend time with animals"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p5_s1_q1",
+          "type": "choice",
+          "question_en": "Who did he want to see smile?",
+          "options_en": [
+            "Kelam",
+            "The happy king",
+            "Saffron"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p5_s1_q2",
+          "type": "choice",
+          "question_en": "What did he want to see on Kelam's face?",
+          "options_en": [
+            "A smile",
+            "A camel",
+            "A frown"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p5_s2_q1",
+          "type": "choice",
+          "question_en": "What did he come up with?",
+          "options_en": [
+            "A plan",
+            "A boat",
+            "A baby camel"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p5_s2_q2",
+          "type": "choice",
+          "question_en": "Why did he come up with a plan?",
+          "options_en": [
+            "He wanted to see a smile on Kelam’s face",
+            "He wanted to groom camels",
+            "He wanted to ride to Lanka"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "Who saddled Saffron?",
+          "options_en": [
+            "Pabu",
+            "Kelam",
+            "the happy king"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "What did Pabu do to Saffron?",
+          "options_en": [
+            "Saddled him",
+            "Brushed his mane",
+            "Gave him to Kelam"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p6_s1_q1",
+          "type": "choice",
+          "question_en": "Where did he ride?",
+          "options_en": [
+            "Into the desert",
+            "To Lanka",
+            "To his village"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p6_s1_q2",
+          "type": "choice",
+          "question_en": "Who rode into the desert?",
+          "options_en": [
+            "Pabu",
+            "Saffron",
+            "Kelam"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p6_s2_q1",
+          "type": "choice",
+          "question_en": "When did he see the vast blue sea?",
+          "options_en": [
+            "After riding all night and all day and all night again",
+            "When he arrived in his village",
+            "When he met the grumpy king"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p6_s2_q2",
+          "type": "choice",
+          "question_en": "What did he see for the first time?",
+          "options_en": [
+            "The vast blue sea",
+            "Many camels",
+            "A grand tent"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "How did the sea look?",
+          "options_en": [
+            "Endless",
+            "Vast blue",
+            "Like sand"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "Why wasn’t Pabu sure he wanted to go to Lanka any more?",
+          "options_en": [
+            "Because Lanka seemed so far",
+            "Because the king was grumpy",
+            "Because there were no camels in Rajasthan"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p7_s1_q1",
+          "type": "choice",
+          "question_en": "Who boarded the next boat?",
+          "options_en": [
+            "Pabu and Saffron",
+            "Pabu and Kelam",
+            "Pabu and the happy king"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p7_s1_q2",
+          "type": "choice",
+          "question_en": "What did Pabu and Saffron do next?",
+          "options_en": [
+            "Boarded the next boat",
+            "Rode into the desert",
+            "Groomed camels"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        }
+      ]
+    },
+    {
+      "paragraph_index": 8,
+      "questions": [
+        {
+          "id": "gl_p8_s0_q1",
+          "type": "choice",
+          "question_en": "When was there a storm?",
+          "options_en": [
+            "That night",
+            "Every morning",
+            "On Kelam's birthday"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p8_s0_q2",
+          "type": "choice",
+          "question_en": "What crashed during the storm?",
+          "options_en": [
+            "the winds",
+            "Saffron",
+            "the camels"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p8_s1_q1",
+          "type": "choice",
+          "question_en": "What was wrecked?",
+          "options_en": [
+            "the boat",
+            "the grand tent",
+            "the baby camel"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p8_s1_q2",
+          "type": "choice",
+          "question_en": "Why was the boat wrecked?",
+          "options_en": [
+            "Because of the terrible storm",
+            "To take Pabu to Lanka",
+            "So Pabu could groom camels"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        }
+      ]
+    },
+    {
+      "paragraph_index": 9,
+      "questions": [
+        {
+          "id": "gl_p9_s0_q1",
+          "type": "choice",
+          "question_en": "Who came ashore?",
+          "options_en": [
+            "Pabu and Saffron",
+            "Pabu and his dogs",
+            "Pabu and Kelam"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p9_s0_q2",
+          "type": "choice",
+          "question_en": "Where did they come ashore?",
+          "options_en": [
+            "In a strange place",
+            "In Lanka",
+            "In his village"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p9_s1_q1",
+          "type": "choice",
+          "question_en": "What was there instead?",
+          "options_en": [
+            "Just sand",
+            "Many trees",
+            "Camels"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p9_s1_q2",
+          "type": "choice",
+          "question_en": "Which of these was not there?",
+          "options_en": [
+            "Trees",
+            "Saffron",
+            "The sea"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        }
+      ]
+    },
+    {
+      "paragraph_index": 10,
+      "questions": [
+        {
+          "id": "gl_p10_s0_q1",
+          "type": "choice",
+          "question_en": "Who galloped away from the sea?",
+          "options_en": [
+            "Pabu and Saffron",
+            "Pabu and his dogs",
+            "Kelam and Pabu"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p10_s0_q2",
+          "type": "choice",
+          "question_en": "Where did they gallop away from?",
+          "options_en": [
+            "The sea",
+            "The desert",
+            "The village"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p10_s1_q1",
+          "type": "choice",
+          "question_en": "Which trees are mentioned in the question?",
+          "options_en": [
+            "The green trees of Lanka",
+            "The trees of the village",
+            "The trees by the sea"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        },
+        {
+          "id": "gl_p10_s1_q2",
+          "type": "choice",
+          "question_en": "Which place is named in the question about the trees?",
+          "options_en": [
+            "Lanka",
+            "Rajasthan",
+            "Arabia"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        },
+        {
+          "id": "gl_p10_s2_q1",
+          "type": "choice",
+          "question_en": "Who is being asked about in this sentence?",
+          "options_en": [
+            "The grumpy king",
+            "Pabu",
+            "Saffron"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        },
+        {
+          "id": "gl_p10_s2_q2",
+          "type": "choice",
+          "question_en": "Which adjective describes the king in this sentence?",
+          "options_en": [
+            "Grumpy",
+            "Happy",
+            "Grand"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        },
+        {
+          "id": "gl_p10_s3_q1",
+          "type": "choice",
+          "question_en": "What is the sentence asking about?",
+          "options_en": [
+            "The camels",
+            "The sea",
+            "The green trees"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p10_s3_q2",
+          "type": "choice",
+          "question_en": "Which animals are mentioned in this question?",
+          "options_en": [
+            "Camels",
+            "Dogs",
+            "Cats"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        }
+      ]
+    },
+    {
+      "paragraph_index": 11,
+      "questions": [
+        {
+          "id": "gl_p11_s0_q1",
+          "type": "choice",
+          "question_en": "What did Pabu see in the distance?",
+          "options_en": [
+            "a grand tent",
+            "many camels",
+            "the vast blue sea"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        },
+        {
+          "id": "gl_p11_s0_q2",
+          "type": "choice",
+          "question_en": "Where did Pabu see the grand tent?",
+          "options_en": [
+            "in the distance",
+            "near his village",
+            "in Lanka"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        },
+        {
+          "id": "gl_p11_s1_q1",
+          "type": "choice",
+          "question_en": "What did he see next?",
+          "options_en": [
+            "camels",
+            "a grand tent",
+            "a wrecked boat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        },
+        {
+          "id": "gl_p11_s1_q2",
+          "type": "choice",
+          "question_en": "How many camels did he see?",
+          "options_en": [
+            "many, many camels",
+            "only one camel",
+            "no camels"
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        },
+        {
+          "id": "gl_p11_s2_q1",
+          "type": "choice",
+          "question_en": "What did he cry?",
+          "options_en": [
+            "\"Hooray,\"",
+            "\"Welcome,\"",
+            "\"I've reached Lanka.\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 32
+        },
+        {
+          "id": "gl_p11_s2_q2",
+          "type": "choice",
+          "question_en": "How did he express himself in this sentence?",
+          "options_en": [
+            "he cried",
+            "he rode away",
+            "he greeted the king"
+          ],
+          "correct_index": 0,
+          "sentence_index": 32
+        },
+        {
+          "id": "gl_p11_s3_q1",
+          "type": "choice",
+          "question_en": "Where did he say he had reached?",
+          "options_en": [
+            "Lanka",
+            "Arabia",
+            "Rajasthan"
+          ],
+          "correct_index": 0,
+          "sentence_index": 33
+        },
+        {
+          "id": "gl_p11_s3_q2",
+          "type": "choice",
+          "question_en": "Who said, \"I've reached Lanka.\"?",
+          "options_en": [
+            "Pabu",
+            "the happy king",
+            "Kelam"
+          ],
+          "correct_index": 0,
+          "sentence_index": 33
+        }
+      ]
+    },
+    {
+      "paragraph_index": 12,
+      "questions": [
+        {
+          "id": "gl_p12_s0_q1",
+          "type": "choice",
+          "question_en": "Who was surrounded by men on camels?",
+          "options_en": [
+            "Pabu",
+            "Kelam",
+            "Saffron"
+          ],
+          "correct_index": 0,
+          "sentence_index": 34
+        },
+        {
+          "id": "gl_p12_s0_q2",
+          "type": "choice",
+          "question_en": "What was around Pabu suddenly?",
+          "options_en": [
+            "Men on camels",
+            "A grand tent",
+            "The vast blue sea"
+          ],
+          "correct_index": 0,
+          "sentence_index": 34
+        },
+        {
+          "id": "gl_p12_s1_q1",
+          "type": "choice",
+          "question_en": "Who said \"Welcome\"?",
+          "options_en": [
+            "The leader of the camel riders",
+            "The grumpy king",
+            "Kelam"
+          ],
+          "correct_index": 0,
+          "sentence_index": 35
+        },
+        {
+          "id": "gl_p12_s1_q2",
+          "type": "choice",
+          "question_en": "What did the leader of the camel riders say?",
+          "options_en": [
+            "\"Welcome\"",
+            "\"Hooray\"",
+            "\"Bring me a camel\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 35
+        },
+        {
+          "id": "gl_p12_s2_q1",
+          "type": "choice",
+          "question_en": "Who looked like a king and looked happy?",
+          "options_en": [
+            "He (the leader of the camel riders)",
+            "The grumpy king",
+            "Pabu"
+          ],
+          "correct_index": 0,
+          "sentence_index": 36
+        },
+        {
+          "id": "gl_p12_s2_q2",
+          "type": "choice",
+          "question_en": "How did he look?",
+          "options_en": [
+            "Like a king and happy",
+            "Grumpy and upset",
+            "Like a village man"
+          ],
+          "correct_index": 0,
+          "sentence_index": 36
+        }
+      ]
+    },
+    {
+      "paragraph_index": 13,
+      "questions": [
+        {
+          "id": "gl_p13_s0_q1",
+          "type": "choice",
+          "question_en": "Where was Pabu not?",
+          "options_en": [
+            "Lanka",
+            "Rajasthan",
+            "Arabia"
+          ],
+          "correct_index": 0,
+          "sentence_index": 37
+        },
+        {
+          "id": "gl_p13_s0_q2",
+          "type": "choice",
+          "question_en": "Who was not in Lanka?",
+          "options_en": [
+            "Pabu",
+            "Saffron",
+            "Kelam"
+          ],
+          "correct_index": 0,
+          "sentence_index": 37
+        },
+        {
+          "id": "gl_p13_s1_q1",
+          "type": "choice",
+          "question_en": "Where had he reached?",
+          "options_en": [
+            "Arabia",
+            "Lanka",
+            "Rajasthan"
+          ],
+          "correct_index": 0,
+          "sentence_index": 38
+        },
+        {
+          "id": "gl_p13_s1_q2",
+          "type": "choice",
+          "question_en": "Who had reached Arabia?",
+          "options_en": [
+            "Pabu",
+            "Saffron",
+            "The happy king"
+          ],
+          "correct_index": 0,
+          "sentence_index": 38
+        },
+        {
+          "id": "gl_p13_s2_q1",
+          "type": "choice",
+          "question_en": "Who did he spend many days with?",
+          "options_en": [
+            "the happy king",
+            "the grumpy king",
+            "Kelam"
+          ],
+          "correct_index": 0,
+          "sentence_index": 39
+        },
+        {
+          "id": "gl_p13_s2_q2",
+          "type": "choice",
+          "question_en": "Where did he spend many days?",
+          "options_en": [
+            "in his grand tent",
+            "in Lanka",
+            "in the village"
+          ],
+          "correct_index": 0,
+          "sentence_index": 39
+        }
+      ]
+    },
+    {
+      "paragraph_index": 14,
+      "questions": [
+        {
+          "id": "gl_p14_s0_q1",
+          "type": "choice",
+          "question_en": "What did he learn?",
+          "options_en": [
+            "How to groom camels",
+            "How to brush Saffron’s mane",
+            "How to ride a horse"
+          ],
+          "correct_index": 0,
+          "sentence_index": 40
+        },
+        {
+          "id": "gl_p14_s0_q2",
+          "type": "choice",
+          "question_en": "Who learnt how to groom camels?",
+          "options_en": [
+            "He",
+            "Saffron",
+            "The happy king"
+          ],
+          "correct_index": 0,
+          "sentence_index": 40
+        },
+        {
+          "id": "gl_p14_s1_q1",
+          "type": "choice",
+          "question_en": "What did he learn about the grumpy king of Lanka?",
+          "options_en": [
+            "He had stolen many of the happy king’s camels",
+            "He did not share his camels",
+            "He lived in Arabia"
+          ],
+          "correct_index": 0,
+          "sentence_index": 41
+        },
+        {
+          "id": "gl_p14_s1_q2",
+          "type": "choice",
+          "question_en": "Whose camels had been stolen?",
+          "options_en": [
+            "The happy king’s camels",
+            "Kelam’s camels",
+            "The grumpy king’s camels"
+          ],
+          "correct_index": 0,
+          "sentence_index": 41
+        }
+      ]
+    },
+    {
+      "paragraph_index": 15,
+      "questions": [
+        {
+          "id": "gl_p15_s0_q1",
+          "type": "choice",
+          "question_en": "When did Pabu grow homesick?",
+          "options_en": [
+            "After some weeks",
+            "After the storm",
+            "After he reached the sea"
+          ],
+          "correct_index": 0,
+          "sentence_index": 42
+        },
+        {
+          "id": "gl_p15_s0_q2",
+          "type": "choice",
+          "question_en": "Who grew homesick?",
+          "options_en": [
+            "Pabu",
+            "Saffron",
+            "Kelam"
+          ],
+          "correct_index": 0,
+          "sentence_index": 42
+        },
+        {
+          "id": "gl_p15_s1_q1",
+          "type": "choice",
+          "question_en": "What did he want to go home with for Kelam?",
+          "options_en": [
+            "A camel",
+            "Saffron the horse",
+            "Many camels"
+          ],
+          "correct_index": 0,
+          "sentence_index": 43
+        },
+        {
+          "id": "gl_p15_s1_q2",
+          "type": "choice",
+          "question_en": "Who was the camel meant for?",
+          "options_en": [
+            "Kelam",
+            "The happy king",
+            "Pabu himself"
+          ],
+          "correct_index": 0,
+          "sentence_index": 43
+        }
+      ]
+    },
+    {
+      "paragraph_index": 16,
+      "questions": [
+        {
+          "id": "gl_p16_s0_q1",
+          "type": "choice",
+          "question_en": "Who gave Pabu a baby camel?",
+          "options_en": [
+            "The happy king",
+            "The grumpy king",
+            "Kelam"
+          ],
+          "correct_index": 0,
+          "sentence_index": 44
+        },
+        {
+          "id": "gl_p16_s0_q2",
+          "type": "choice",
+          "question_en": "What did the happy king give Pabu?",
+          "options_en": [
+            "A baby camel",
+            "Saffron the horse",
+            "Many camels"
+          ],
+          "correct_index": 0,
+          "sentence_index": 44
+        },
+        {
+          "id": "gl_p16_s1_q1",
+          "type": "choice",
+          "question_en": "Who told Pabu to ride across the sands?",
+          "options_en": [
+            "He (the happy king)",
+            "The grumpy king",
+            "Saffron"
+          ],
+          "correct_index": 0,
+          "sentence_index": 45
+        },
+        {
+          "id": "gl_p16_s1_q2",
+          "type": "choice",
+          "question_en": "Where did he tell Pabu to ride?",
+          "options_en": [
+            "Across the sands towards the rising sun",
+            "Into the sea",
+            "To the grand tent"
+          ],
+          "correct_index": 0,
+          "sentence_index": 45
+        },
+        {
+          "id": "gl_p16_s2_q1",
+          "type": "choice",
+          "question_en": "Who made their way home?",
+          "options_en": [
+            "Pabu, Saffron and the baby camel",
+            "Pabu and Kelam",
+            "The happy king and his men"
+          ],
+          "correct_index": 0,
+          "sentence_index": 46
+        },
+        {
+          "id": "gl_p16_s2_q2",
+          "type": "choice",
+          "question_en": "Where did Pabu, Saffron and the baby camel go?",
+          "options_en": [
+            "Home",
+            "To Lanka",
+            "To the sea"
+          ],
+          "correct_index": 0,
+          "sentence_index": 46
+        }
+      ]
+    },
+    {
+      "paragraph_index": 17,
+      "questions": [
+        {
+          "id": "gl_p17_s0_q1",
+          "type": "choice",
+          "question_en": "When did Pabu reach his village?",
+          "options_en": [
+            "Just in time for Kelam’s birthday",
+            "After some weeks",
+            "After riding all night and day"
+          ],
+          "correct_index": 0,
+          "sentence_index": 47
+        },
+        {
+          "id": "gl_p17_s0_q2",
+          "type": "choice",
+          "question_en": "Whose birthday was it when Pabu arrived?",
+          "options_en": [
+            "Kelam’s",
+            "Pabu’s",
+            "Saffron’s"
+          ],
+          "correct_index": 0,
+          "sentence_index": 47
+        },
+        {
+          "id": "gl_p17_s1_q1",
+          "type": "choice",
+          "question_en": "Who welcomed Pabu?",
+          "options_en": [
+            "The village",
+            "Kelam",
+            "The happy king"
+          ],
+          "correct_index": 0,
+          "sentence_index": 48
+        },
+        {
+          "id": "gl_p17_s1_q2",
+          "type": "choice",
+          "question_en": "How did the village respond to Pabu?",
+          "options_en": [
+            "They welcomed him",
+            "They surrounded him with men on camels",
+            "They greeted him in a grand tent"
+          ],
+          "correct_index": 0,
+          "sentence_index": 48
+        },
+        {
+          "id": "gl_p17_s2_q1",
+          "type": "choice",
+          "question_en": "Who welcomed the baby camel?",
+          "options_en": [
+            "Kelam",
+            "The village",
+            "Pabu"
+          ],
+          "correct_index": 0,
+          "sentence_index": 49
+        },
+        {
+          "id": "gl_p17_s2_q2",
+          "type": "choice",
+          "question_en": "What did Kelam welcome?",
+          "options_en": [
+            "The baby camel",
+            "Saffron the horse",
+            "A grand tent"
+          ],
+          "correct_index": 0,
+          "sentence_index": 49
+        }
+      ]
+    },
+    {
+      "paragraph_index": 18,
+      "questions": [
+        {
+          "id": "gl_p18_s0_q1",
+          "type": "choice",
+          "question_en": "What came to Rajasthan?",
+          "options_en": [
+            "the first camel",
+            "a horse named Saffron",
+            "many camels"
+          ],
+          "correct_index": 0,
+          "sentence_index": 50
+        },
+        {
+          "id": "gl_p18_s0_q2",
+          "type": "choice",
+          "question_en": "Where did the first camel come to?",
+          "options_en": [
+            "Rajasthan",
+            "Lanka",
+            "Arabia"
+          ],
+          "correct_index": 0,
+          "sentence_index": 50
+        }
+      ]
+    },
+    {
+      "paragraph_index": 19,
+      "questions": [
+        {
+          "id": "gl_p19_s0_q1",
+          "type": "choice",
+          "question_en": "What is Phad?",
+          "options_en": [
+            "a folk art style",
+            "Saffron",
+            "a baby camel"
+          ],
+          "correct_index": 0,
+          "sentence_index": 51
+        },
+        {
+          "id": "gl_p19_s0_q2",
+          "type": "choice",
+          "question_en": "Who practises Phad?",
+          "options_en": [
+            "the Bhopa community of Rajasthan",
+            "Pabu",
+            "the happy king"
+          ],
+          "correct_index": 0,
+          "sentence_index": 51
+        },
+        {
+          "id": "gl_p19_s1_q1",
+          "type": "choice",
+          "question_en": "What does the artist paint on?",
+          "options_en": [
+            "a cloth scroll called phad",
+            "Saffron's mane",
+            "a grand tent"
+          ],
+          "correct_index": 0,
+          "sentence_index": 52
+        },
+        {
+          "id": "gl_p19_s1_q2",
+          "type": "choice",
+          "question_en": "Which item is called phad?",
+          "options_en": [
+            "a cloth scroll",
+            "a baby camel",
+            "a boat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 52
+        },
+        {
+          "id": "gl_p19_s2_q1",
+          "type": "choice",
+          "question_en": "What do Phad art pieces feature?",
+          "options_en": [
+            "stories of folk heroes",
+            "camels from Lanka",
+            "storms at sea"
+          ],
+          "correct_index": 0,
+          "sentence_index": 53
+        },
+        {
+          "id": "gl_p19_s2_q2",
+          "type": "choice",
+          "question_en": "Who is mentioned as one folk hero in Phad art?",
+          "options_en": [
+            "Pabu",
+            "Kelam",
+            "Saffron"
+          ],
+          "correct_index": 0,
+          "sentence_index": 53
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'A Camel for Kelam'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "loved",
+      "meaning_vi": "yêu thích",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "spend time",
+      "meaning_vi": "dành thời gian",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "animals",
+      "meaning_vi": "động vật, con vật",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "brushed",
+      "meaning_vi": "chải",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "mane",
+      "meaning_vi": "bờm (lông cổ ngựa)",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "coat",
+      "meaning_vi": "bộ lông (của con vật)",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "desert",
+      "meaning_vi": "sa mạc",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "niece",
+      "meaning_vi": "cháu gái",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "camel",
+      "meaning_vi": "lạc đà",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "birthday",
+      "meaning_vi": "sinh nhật",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "find",
+      "meaning_vi": "tìm",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "wondered",
+      "meaning_vi": "tự hỏi, băn khoăn",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "across",
+      "meaning_vi": "băng qua",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "ruled",
+      "meaning_vi": "cai trị",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "grumpy",
+      "meaning_vi": "khó tính",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "share",
+      "meaning_vi": "chia sẻ",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "travel",
+      "meaning_vi": "đi du lịch",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "smile",
+      "meaning_vi": "nụ cười",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "plan",
+      "meaning_vi": "kế hoạch",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "saddled",
+      "meaning_vi": "đặt yên ngựa",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "vast",
+      "meaning_vi": "bao la",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "first time",
+      "meaning_vi": "lần đầu tiên",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "endless",
+      "meaning_vi": "vô tận",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "sure",
+      "meaning_vi": "chắc chắn",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "boarded",
+      "meaning_vi": "lên (thuyền)",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "storm",
+      "meaning_vi": "bão",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "terrible",
+      "meaning_vi": "kinh khủng",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "wrecked",
+      "meaning_vi": "bị đắm",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "ashore",
+      "meaning_vi": "vào bờ",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "strange",
+      "meaning_vi": "xa lạ",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "sand",
+      "meaning_vi": "cát",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "galloped",
+      "meaning_vi": "phi nước đại (ngựa)",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "grand",
+      "meaning_vi": "lớn, hoành tráng",
+      "paragraph_index": 11
+    },
+    {
+      "word_en": "tent",
+      "meaning_vi": "cái lều",
+      "paragraph_index": 11
+    },
+    {
+      "word_en": "distance",
+      "meaning_vi": "đằng xa",
+      "paragraph_index": 11
+    },
+    {
+      "word_en": "reached",
+      "meaning_vi": "đã đến",
+      "paragraph_index": 11
+    },
+    {
+      "word_en": "Suddenly",
+      "meaning_vi": "đột nhiên",
+      "paragraph_index": 12
+    },
+    {
+      "word_en": "surrounded",
+      "meaning_vi": "bị bao vây",
+      "paragraph_index": 12
+    },
+    {
+      "word_en": "leader",
+      "meaning_vi": "người dẫn đầu",
+      "paragraph_index": 12
+    },
+    {
+      "word_en": "spent",
+      "meaning_vi": "đã dành (thời gian)",
+      "paragraph_index": 13
+    },
+    {
+      "word_en": "learnt",
+      "meaning_vi": "đã học",
+      "paragraph_index": 14
+    },
+    {
+      "word_en": "groom",
+      "meaning_vi": "chải lông (cho vật nuôi)",
+      "paragraph_index": 14
+    },
+    {
+      "word_en": "stolen",
+      "meaning_vi": "đã trộm",
+      "paragraph_index": 14
+    },
+    {
+      "word_en": "weeks",
+      "meaning_vi": "tuần",
+      "paragraph_index": 15
+    },
+    {
+      "word_en": "homesick",
+      "meaning_vi": "nhớ nhà",
+      "paragraph_index": 15
+    },
+    {
+      "word_en": "baby",
+      "meaning_vi": "con non",
+      "paragraph_index": 16
+    },
+    {
+      "word_en": "sands",
+      "meaning_vi": "bãi cát",
+      "paragraph_index": 16
+    },
+    {
+      "word_en": "towards",
+      "meaning_vi": "về phía",
+      "paragraph_index": 16
+    },
+    {
+      "word_en": "rising sun",
+      "meaning_vi": "mặt trời mọc",
+      "paragraph_index": 16
+    },
+    {
+      "word_en": "just in time",
+      "meaning_vi": "vừa kịp lúc",
+      "paragraph_index": 17
+    },
+    {
+      "word_en": "welcomed",
+      "meaning_vi": "chào đón",
+      "paragraph_index": 17
+    },
+    {
+      "word_en": "first",
+      "meaning_vi": "đầu tiên",
+      "paragraph_index": 18
+    },
+    {
+      "word_en": "folk art",
+      "meaning_vi": "nghệ thuật dân gian",
+      "paragraph_index": 19
+    },
+    {
+      "word_en": "community",
+      "meaning_vi": "cộng đồng",
+      "paragraph_index": 19
+    },
+    {
+      "word_en": "artist",
+      "meaning_vi": "nghệ sĩ",
+      "paragraph_index": 19
+    },
+    {
+      "word_en": "scroll",
+      "meaning_vi": "cuộn vải",
+      "paragraph_index": 19
+    }
+  ]
+}

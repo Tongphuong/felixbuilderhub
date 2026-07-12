@@ -1,0 +1,1581 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L1",
+  "level_label": "Cấp 1",
+  "topic": "How Lion got his Mane",
+  "slug": "book_12199",
+  "audio_filename": "book_12199.mp3",
+  "book_slug": "book_12199",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_12199/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_12199/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_12199/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_12199/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_12199/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_12199/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_12199/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_12199/page_09.jpg",
+    "https://audio.felixbuilderhub.com/books/book_12199/page_10.jpg",
+    "https://audio.felixbuilderhub.com/books/book_12199/page_11.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_12199/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_12199/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_12199/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_12199/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_12199/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_12199/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_12199/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_12199/page_09.mp3",
+    "https://audio.felixbuilderhub.com/books/book_12199/page_10.mp3",
+    "https://audio.felixbuilderhub.com/books/book_12199/page_11.mp3"
+  ],
+  "book_attribution": {
+    "title": "How Lion got his Mane",
+    "creators": [
+      "Shital Choudhary",
+      "Ajit Narayan",
+      "Alison Byrnes",
+      "Bindia Thapar",
+      "Kanika Nair",
+      "Ketan Raut",
+      "Padmanabh",
+      "Ruchi Shah",
+      "Rupa Prakash"
+    ],
+    "publisher": "StoryWeaver Community",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: How Lion got his Mane is written by Shital Choudhary . © Shital Choudhary , 2017. Some rights reserved. Released under CC BY 4.0 license. Images Attributions: Cover page: Two lions , by Rupa Prakash © Rupa Prakash, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 2: Wildcats and turtles , by Alison Byrnes © StoryWeaver Team, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 3: A lion cub in a forest , by Bindia Thapar © Pratham Books, 2008. Some rights reserved. Released under CC BY 4.0 license. Page 4: A lion cub in a forest , by Bindia Thapar © Pratham Books, 2008. Some rights reserved. Released under CC BY 4.0 license. Page 5: A tree with seeds from its fruits , by Ketan Raut © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license. Page 6: Hurt rabbit , by Ajit Narayan © Pratham Books, 2007. Some rights reserved. Released under CC BY 4.0 license. Page 7: Grass and shrubs in the corner , by Kanika Nair © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 8: Monkey with the face of a lion , by Ruchi Shah © Pratham Books, 2014. Some rights reserved. Released under CC BY 4.0 license. Page 9: Lion thinking of the Hare and the Tortoise , by Padmanabh © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license. Page 10: Lion making a gesture , by Padmanabh © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license. Page 11: Animal Kingdom , by Padmanabh © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/12199-how-lion-got-his-mane",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "Wildcats and turtles , by Alison Byrnes © StoryWeaver Team, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "A lion cub in a forest , by Bindia Thapar © Pratham Books, 2008. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "A lion cub in a forest , by Bindia Thapar © Pratham Books, 2008. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "A tree with seeds from its fruits , by Ketan Raut © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "Hurt rabbit , by Ajit Narayan © Pratham Books, 2007. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "Grass and shrubs in the corner , by Kanika Nair © Pratham Books, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "Monkey with the face of a lion , by Ruchi Shah © Pratham Books, 2014. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "Lion thinking of the Hare and the Tortoise , by Padmanabh © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 8,
+        "credit_text": "Lion making a gesture , by Padmanabh © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 9,
+        "credit_text": "Animal Kingdom , by Padmanabh © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "How Lion got his Mane",
+    "paragraphs_en": [
+      "Long ago Lions did not have mane. So, Lions and Lionesses looked alike.",
+      "One day, a lion was hungry. He looked for food everywhere but did not find any food that day. He was very tired. He sat under an olive tree to rest for a while.",
+      "It was a windy day and one of the olives dropped down from the tree. It fell 'plop' on the lion's head, split open and rolled down. Lion was too hungry, he saw the olive and ate it up.",
+      "Wind blew harder, Olives kept plopping on the lion's head, rolled down and into his mouth.",
+      "Suddenly the lion saw a rabbit. He was still quite hungry and chased the rabbit. Rabbit ran for its dear life.",
+      "There was a patch of dry grass land nearby. Rabbit dived into the patch and ran zig-zag. Lion followed it, keeping his head down to spot the rabbit. Rabbit found a hole and went in for safety.",
+      "Lion couldn't find rabbit and came out of the patch, feeling exhausted. But oh! oh!.... what was there on his head? Lion felt something stuck up there. What?",
+      "Yes! the dry grass! Remember, olives plopping onto lion's head? The olives are very sticky inside. As if a tiny round bottle of glue! Lion didn't realise the olive glue was spreading on his head while plopping on.",
+      "And of course! the dry grass got stuck all over his head. Lion went straight to a water hole and had a look. Awww Awww Awww! He liked his new look! How splendid!",
+      "He showed his new look to all his friends, they loved it. From that day onward lions started keeping the hairy head look. And after many many years, they really grew hair over their heads. This hair is what we call Lion's Mane."
+    ],
+    "sentences": [
+      {
+        "text_en": "Long ago Lions did not have mane.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_12199/s_000.mp3",
+        "text_vi": "Ngày xưa, sư tử không có bờm."
+      },
+      {
+        "text_en": "So, Lions and Lionesses looked alike.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_12199/s_001.mp3",
+        "text_vi": "Vì vậy, sư tử đực và sư tử cái trông giống hệt nhau."
+      },
+      {
+        "text_en": "One day, a lion was hungry.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_12199/s_002.mp3",
+        "text_vi": "Một ngày nọ, một con sư tử đói bụng."
+      },
+      {
+        "text_en": "He looked for food everywhere but did not find any food that day.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_12199/s_003.mp3",
+        "text_vi": "Nó tìm thức ăn khắp nơi nhưng không tìm thấy gì cả ngày hôm đó."
+      },
+      {
+        "text_en": "He was very tired.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_12199/s_004.mp3",
+        "text_vi": "Nó rất mệt."
+      },
+      {
+        "text_en": "He sat under an olive tree to rest for a while.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_12199/s_005.mp3",
+        "text_vi": "Nó ngồi dưới gốc cây ô liu để nghỉ một lát."
+      },
+      {
+        "text_en": "It was a windy day and one of the olives dropped down from the tree.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_12199/s_006.mp3",
+        "text_vi": "Hôm đó trời nhiều gió và một quả ô liu rơi xuống từ cây."
+      },
+      {
+        "text_en": "It fell 'plop' on the lion's head, split open and rolled down.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_12199/s_007.mp3",
+        "text_vi": "Nó rơi 'bộp' vào đầu sư tử, nứt ra và lăn xuống."
+      },
+      {
+        "text_en": "Lion was too hungry, he saw the olive and ate it up.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_12199/s_008.mp3",
+        "text_vi": "Sư tử quá đói, nó thấy quả ô liu và ăn ngay."
+      },
+      {
+        "text_en": "Wind blew harder, Olives kept plopping on the lion's head, rolled down and into his mouth.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_12199/s_009.mp3",
+        "text_vi": "Gió thổi mạnh hơn, những quả ô liu cứ rơi 'bộp bộp' vào đầu sư tử, lăn xuống và vào miệng nó."
+      },
+      {
+        "text_en": "Suddenly the lion saw a rabbit.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_12199/s_010.mp3",
+        "text_vi": "Bỗng nhiên, sư tử nhìn thấy một con thỏ."
+      },
+      {
+        "text_en": "He was still quite hungry and chased the rabbit.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_12199/s_011.mp3",
+        "text_vi": "Nó vẫn còn khá đói và đuổi theo con thỏ."
+      },
+      {
+        "text_en": "Rabbit ran for its dear life.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_12199/s_012.mp3",
+        "text_vi": "Thỏ chạy thục mạng để thoát thân."
+      },
+      {
+        "text_en": "There was a patch of dry grass land nearby.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_12199/s_013.mp3",
+        "text_vi": "Gần đó có một vạt cỏ khô."
+      },
+      {
+        "text_en": "Rabbit dived into the patch and ran zig-zag.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_12199/s_014.mp3",
+        "text_vi": "Thỏ lao vào vạt cỏ và chạy ngoằn ngoèo."
+      },
+      {
+        "text_en": "Lion followed it, keeping his head down to spot the rabbit.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_12199/s_015.mp3",
+        "text_vi": "Sư tử đuổi theo, cúi đầu xuống để tìm con thỏ."
+      },
+      {
+        "text_en": "Rabbit found a hole and went in for safety.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_12199/s_016.mp3",
+        "text_vi": "Thỏ tìm thấy một cái hang và chui vào để an toàn."
+      },
+      {
+        "text_en": "Lion couldn't find rabbit and came out of the patch, feeling exhausted.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_12199/s_017.mp3",
+        "text_vi": "Sư tử không tìm thấy thỏ và đi ra khỏi vạt cỏ, cảm thấy kiệt sức."
+      },
+      {
+        "text_en": "But oh! oh!....",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_12199/s_018.mp3",
+        "text_vi": "Nhưng ôi! ôi!...."
+      },
+      {
+        "text_en": "what was there on his head?",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_12199/s_019.mp3",
+        "text_vi": "Cái gì trên đầu nó thế?"
+      },
+      {
+        "text_en": "Lion felt something stuck up there. What?",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_12199/s_020.mp3",
+        "text_vi": "Sư tử cảm thấy có gì đó dính trên đầu. Cái gì vậy?"
+      },
+      {
+        "text_en": "Yes! the dry grass!",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_12199/s_021.mp3",
+        "text_vi": "Đúng rồi! Cỏ khô!"
+      },
+      {
+        "text_en": "Remember, olives plopping onto lion's head?",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_12199/s_022.mp3",
+        "text_vi": "Nhớ không, những quả ô liu rơi 'bộp bộp' vào đầu sư tử đó?"
+      },
+      {
+        "text_en": "The olives are very sticky inside.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_12199/s_023.mp3",
+        "text_vi": "Bên trong quả ô liu rất dính."
+      },
+      {
+        "text_en": "As if a tiny round bottle of glue!",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_12199/s_024.mp3",
+        "text_vi": "Cứ như một lọ keo tròn nhỏ xíu vậy!"
+      },
+      {
+        "text_en": "Lion didn't realise the olive glue was spreading on his head while plopping on.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_12199/s_025.mp3",
+        "text_vi": "Sư tử không nhận ra keo ô liu đang lan ra trên đầu nó khi những quả ô liu rơi xuống."
+      },
+      {
+        "text_en": "And of course!",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_12199/s_026.mp3",
+        "text_vi": "Và tất nhiên rồi!"
+      },
+      {
+        "text_en": "the dry grass got stuck all over his head.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_12199/s_027.mp3",
+        "text_vi": "Cỏ khô đã dính đầy trên đầu nó."
+      },
+      {
+        "text_en": "Lion went straight to a water hole and had a look.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_12199/s_028.mp3",
+        "text_vi": "Sư tử đi thẳng đến một vũng nước và nhìn vào."
+      },
+      {
+        "text_en": "Awww Awww Awww!",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_12199/s_029.mp3",
+        "text_vi": "Ôi chao! Ôi chao! Ôi chao!"
+      },
+      {
+        "text_en": "He liked his new look! How splendid!",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_12199/s_030.mp3",
+        "text_vi": "Nó thích vẻ ngoài mới của mình! Thật lộng lẫy!"
+      },
+      {
+        "text_en": "He showed his new look to all his friends, they loved it.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_12199/s_031.mp3",
+        "text_vi": "Nó khoe vẻ ngoài mới của mình với tất cả bạn bè, và họ rất thích."
+      },
+      {
+        "text_en": "From that day onward lions started keeping the hairy head look.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_12199/s_032.mp3",
+        "text_vi": "Từ ngày đó trở đi, sư tử bắt đầu giữ vẻ ngoài đầu đầy lông."
+      },
+      {
+        "text_en": "And after many many years, they really grew hair over their heads.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_12199/s_033.mp3",
+        "text_vi": "Và sau rất nhiều năm, chúng thực sự mọc lông trên đầu."
+      },
+      {
+        "text_en": "This hair is what we call Lion's Mane.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_12199/s_034.mp3",
+        "text_vi": "Lớp lông này chính là thứ chúng ta gọi là bờm sư tử."
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "Long ago Lions did not have mane.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_12199/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "So, Lions and Lionesses looked alike.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_12199/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "One day, a lion was hungry.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_12199/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "He looked for food everywhere but did not find any food that day.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_12199/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "He was very tired.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_12199/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "He sat under an olive tree to rest for a while.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_12199/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "It was a windy day and one of the olives dropped down from the tree.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_12199/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "It fell 'plop' on the lion's head, split open and rolled down.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_12199/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "Lion was too hungry, he saw the olive and ate it up.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_12199/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "Wind blew harder, Olives kept plopping on the lion's head, rolled down and into his mouth.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_12199/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "Suddenly the lion saw a rabbit.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_12199/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "He was still quite hungry and chased the rabbit.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_12199/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "Rabbit ran for its dear life.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_12199/s_012.mp3"
+        },
+        {
+          "id": "ra_13",
+          "text_en": "There was a patch of dry grass land nearby.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_12199/s_013.mp3"
+        },
+        {
+          "id": "ra_14",
+          "text_en": "Rabbit dived into the patch and ran zig-zag.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_12199/s_014.mp3"
+        },
+        {
+          "id": "ra_15",
+          "text_en": "Lion followed it, keeping his head down to spot the rabbit.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_12199/s_015.mp3"
+        },
+        {
+          "id": "ra_16",
+          "text_en": "Rabbit found a hole and went in for safety.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_12199/s_016.mp3"
+        },
+        {
+          "id": "ra_17",
+          "text_en": "Lion couldn't find rabbit and came out of the patch, feeling exhausted.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_12199/s_017.mp3"
+        },
+        {
+          "id": "ra_18",
+          "text_en": "But oh! oh!....",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_12199/s_018.mp3"
+        },
+        {
+          "id": "ra_19",
+          "text_en": "what was there on his head?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_12199/s_019.mp3"
+        },
+        {
+          "id": "ra_20",
+          "text_en": "Lion felt something stuck up there. What?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_12199/s_020.mp3"
+        },
+        {
+          "id": "ra_21",
+          "text_en": "Yes! the dry grass!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_12199/s_021.mp3"
+        },
+        {
+          "id": "ra_22",
+          "text_en": "Remember, olives plopping onto lion's head?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_12199/s_022.mp3"
+        },
+        {
+          "id": "ra_23",
+          "text_en": "The olives are very sticky inside.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_12199/s_023.mp3"
+        },
+        {
+          "id": "ra_24",
+          "text_en": "As if a tiny round bottle of glue!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_12199/s_024.mp3"
+        },
+        {
+          "id": "ra_25",
+          "text_en": "Lion didn't realise the olive glue was spreading on his head while plopping on.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_12199/s_025.mp3"
+        },
+        {
+          "id": "ra_26",
+          "text_en": "And of course!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_12199/s_026.mp3"
+        },
+        {
+          "id": "ra_27",
+          "text_en": "the dry grass got stuck all over his head.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_12199/s_027.mp3"
+        },
+        {
+          "id": "ra_28",
+          "text_en": "Lion went straight to a water hole and had a look.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_12199/s_028.mp3"
+        },
+        {
+          "id": "ra_29",
+          "text_en": "Awww Awww Awww!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_12199/s_029.mp3"
+        },
+        {
+          "id": "ra_30",
+          "text_en": "He liked his new look! How splendid!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_12199/s_030.mp3"
+        },
+        {
+          "id": "ra_31",
+          "text_en": "He showed his new look to all his friends, they loved it.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_12199/s_031.mp3"
+        },
+        {
+          "id": "ra_32",
+          "text_en": "From that day onward lions started keeping the hairy head look.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_12199/s_032.mp3"
+        },
+        {
+          "id": "ra_33",
+          "text_en": "And after many many years, they really grew hair over their heads.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_12199/s_033.mp3"
+        },
+        {
+          "id": "ra_34",
+          "text_en": "This hair is what we call Lion's Mane.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_12199/s_034.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "When did lions not have a mane?",
+          "options_en": [
+            "Long ago",
+            "One day",
+            "After many years"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "What did lions not have?",
+          "options_en": [
+            "A mane",
+            "Dry grass",
+            "Olives"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s1_q1",
+          "type": "choice",
+          "question_en": "Who looked alike?",
+          "options_en": [
+            "Lions and Lionesses",
+            "Lion and rabbit",
+            "Lions and their friends"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s1_q2",
+          "type": "choice",
+          "question_en": "Why did they look alike?",
+          "options_en": [
+            "Because lions did not have a mane",
+            "Because olives stuck to them",
+            "Because rabbits hid from them"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "Who was hungry?",
+          "options_en": [
+            "A lion",
+            "A lioness",
+            "A rabbit"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "When was the lion hungry?",
+          "options_en": [
+            "One day",
+            "Long ago",
+            "It was a windy day"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p1_s1_q1",
+          "type": "choice",
+          "question_en": "What did he look for everywhere?",
+          "options_en": [
+            "Food",
+            "Olives",
+            "A rabbit"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p1_s1_q2",
+          "type": "choice",
+          "question_en": "Why did he not find anything that day?",
+          "options_en": [
+            "He did not find any food that day",
+            "He was under an olive tree",
+            "He chased a rabbit"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p1_s2_q1",
+          "type": "choice",
+          "question_en": "How did he feel?",
+          "options_en": [
+            "Very tired",
+            "Hungry",
+            "Exhausted"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p1_s2_q2",
+          "type": "choice",
+          "question_en": "Who was very tired?",
+          "options_en": [
+            "He (the lion)",
+            "The rabbit",
+            "The olive tree"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p1_s3_q1",
+          "type": "choice",
+          "question_en": "Where did he sit to rest?",
+          "options_en": [
+            "Under an olive tree",
+            "In a patch of dry grass",
+            "At a water hole"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p1_s3_q2",
+          "type": "choice",
+          "question_en": "Why did he sit under the olive tree?",
+          "options_en": [
+            "To rest for a while",
+            "To eat olives",
+            "To look for a rabbit"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "What dropped down from the tree?",
+          "options_en": [
+            "An olive",
+            "A rabbit",
+            "A dry grass"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "When did the olive drop from the tree?",
+          "options_en": [
+            "On a windy day",
+            "One day",
+            "Long ago"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p2_s1_q1",
+          "type": "choice",
+          "question_en": "Where did the olive fall 'plop'?",
+          "options_en": [
+            "On the lion's head",
+            "Into his mouth",
+            "Under the tree"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p2_s1_q2",
+          "type": "choice",
+          "question_en": "What happened to the olive after it hit the lion's head?",
+          "options_en": [
+            "It split open and rolled down",
+            "It stuck on his head",
+            "It rolled into the water hole"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p2_s2_q1",
+          "type": "choice",
+          "question_en": "Why did the lion eat the olive?",
+          "options_en": [
+            "Because he was too hungry",
+            "To rest",
+            "To chase the rabbit"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p2_s2_q2",
+          "type": "choice",
+          "question_en": "Who ate the olive?",
+          "options_en": [
+            "The lion",
+            "The rabbit",
+            "A lioness"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "What kept plopping on the lion's head?",
+          "options_en": [
+            "Olives",
+            "Rabbit",
+            "Dry grass"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "Where did the olives roll down into?",
+          "options_en": [
+            "His mouth",
+            "The rabbit's hole",
+            "A water hole"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "Who did the lion see?",
+          "options_en": [
+            "a rabbit",
+            "an olive",
+            "a lioness"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "When did the lion see the rabbit?",
+          "options_en": [
+            "suddenly",
+            "after resting under the tree",
+            "when he reached the water hole"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p4_s1_q1",
+          "type": "choice",
+          "question_en": "Why did he chase the rabbit?",
+          "options_en": [
+            "he was still quite hungry",
+            "he wanted to show his new look",
+            "he had olives on his head"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p4_s1_q2",
+          "type": "choice",
+          "question_en": "Who chased the rabbit?",
+          "options_en": [
+            "the lion",
+            "the rabbit",
+            "a lioness"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p4_s2_q1",
+          "type": "choice",
+          "question_en": "How did the rabbit run?",
+          "options_en": [
+            "for its dear life",
+            "to the water hole",
+            "to eat olives"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p4_s2_q2",
+          "type": "choice",
+          "question_en": "Why did the rabbit run?",
+          "options_en": [
+            "to save its life",
+            "to get some olives",
+            "to show the lion his new look"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "What was nearby?",
+          "options_en": [
+            "A patch of dry grass land",
+            "An olive tree",
+            "A water hole"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "Where was the patch located?",
+          "options_en": [
+            "Nearby",
+            "Under the olive tree",
+            "At the water hole"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p5_s1_q1",
+          "type": "choice",
+          "question_en": "What did the rabbit do?",
+          "options_en": [
+            "Dived into the patch and ran zig-zag",
+            "Ate an olive",
+            "Sat under the olive tree"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p5_s1_q2",
+          "type": "choice",
+          "question_en": "How did the rabbit run?",
+          "options_en": [
+            "Zig-zag",
+            "In a straight line",
+            "Slowly"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p5_s2_q1",
+          "type": "choice",
+          "question_en": "Who followed the rabbit?",
+          "options_en": [
+            "Lion",
+            "Lioness",
+            "An olive"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p5_s2_q2",
+          "type": "choice",
+          "question_en": "Why did the lion keep his head down?",
+          "options_en": [
+            "To spot the rabbit",
+            "Because olives were falling",
+            "To drink from the water hole"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p5_s3_q1",
+          "type": "choice",
+          "question_en": "What did the rabbit find?",
+          "options_en": [
+            "A hole",
+            "An olive",
+            "A water hole"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p5_s3_q2",
+          "type": "choice",
+          "question_en": "Why did the rabbit go into the hole?",
+          "options_en": [
+            "For safety",
+            "To eat",
+            "To sleep under the olive tree"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "Who couldn't find the rabbit?",
+          "options_en": [
+            "Lion",
+            "Rabbit",
+            "Lioness"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "How did he feel when he came out of the patch?",
+          "options_en": [
+            "Exhausted",
+            "Hungry",
+            "Happy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p6_s1_q1",
+          "type": "choice",
+          "question_en": "What does the exclamation \"But oh! oh!....\" show?",
+          "options_en": [
+            "Surprise",
+            "Sadness",
+            "Boredom"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p6_s1_q2",
+          "type": "choice",
+          "question_en": "What word is repeated in the sentence?",
+          "options_en": [
+            "oh",
+            "plop",
+            "lion"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p6_s2_q1",
+          "type": "choice",
+          "question_en": "What is the sentence asking about?",
+          "options_en": [
+            "What was there on his head",
+            "Where the rabbit ran",
+            "Why he was hungry"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p6_s2_q2",
+          "type": "choice",
+          "question_en": "Whose head is mentioned in the question?",
+          "options_en": [
+            "His (the lion's)",
+            "The rabbit's",
+            "The olive tree's"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p6_s3_q1",
+          "type": "choice",
+          "question_en": "Who felt something stuck up there?",
+          "options_en": [
+            "Lion",
+            "Rabbit",
+            "Olive"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p6_s3_q2",
+          "type": "choice",
+          "question_en": "Where did Lion feel something stuck?",
+          "options_en": [
+            "Up on his head",
+            "In his mouth",
+            "On his paw"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "What is mentioned?",
+          "options_en": [
+            "the dry grass",
+            "an olive tree",
+            "a rabbit"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "What is being exclaimed?",
+          "options_en": [
+            "the dry grass",
+            "the lion's hunger",
+            "the olive tree"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p7_s1_q1",
+          "type": "choice",
+          "question_en": "What should you remember?",
+          "options_en": [
+            "olives plopping onto lion's head",
+            "the rabbit running into a hole",
+            "the lion sitting under a tree"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p7_s1_q2",
+          "type": "choice",
+          "question_en": "What is plopping onto the lion's head?",
+          "options_en": [
+            "olives",
+            "dry grass",
+            "leaves from the tree"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p7_s2_q1",
+          "type": "choice",
+          "question_en": "What is very sticky inside?",
+          "options_en": [
+            "the olives",
+            "the lion's mane",
+            "the dry grass"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p7_s2_q2",
+          "type": "choice",
+          "question_en": "How are the olives inside?",
+          "options_en": [
+            "very sticky",
+            "split open",
+            "hard and dry"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p7_s3_q1",
+          "type": "choice",
+          "question_en": "What are the olives compared to?",
+          "options_en": [
+            "a tiny round bottle of glue",
+            "an olive tree",
+            "a water hole"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p7_s3_q2",
+          "type": "choice",
+          "question_en": "Which object is used for comparison?",
+          "options_en": [
+            "a tiny round bottle of glue",
+            "a rabbit",
+            "dry grass"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p7_s4_q1",
+          "type": "choice",
+          "question_en": "What didn't the lion realise?",
+          "options_en": [
+            "the olive glue was spreading on his head",
+            "he had found food",
+            "a rabbit was near"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p7_s4_q2",
+          "type": "choice",
+          "question_en": "When was the olive glue spreading on his head?",
+          "options_en": [
+            "while plopping on",
+            "after he reached the water hole",
+            "when he was chasing the rabbit"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        }
+      ]
+    },
+    {
+      "paragraph_index": 8,
+      "questions": [
+        {
+          "id": "gl_p8_s0_q1",
+          "type": "choice",
+          "question_en": "How does the sentence show that the outcome was expected?",
+          "options_en": [
+            "And of course!",
+            "Olives kept plopping on his head",
+            "The rabbit ran away"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p8_s0_q2",
+          "type": "choice",
+          "question_en": "What phrase is used to express certainty in the sentence?",
+          "options_en": [
+            "And of course!",
+            "How splendid!",
+            "Awww Awww Awww!"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p8_s1_q1",
+          "type": "choice",
+          "question_en": "What got stuck all over his head?",
+          "options_en": [
+            "the dry grass",
+            "the olives",
+            "the rabbit"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        },
+        {
+          "id": "gl_p8_s1_q2",
+          "type": "choice",
+          "question_en": "Where did the dry grass get stuck?",
+          "options_en": [
+            "on his head",
+            "in the olive tree",
+            "in the rabbit hole"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        },
+        {
+          "id": "gl_p8_s2_q1",
+          "type": "choice",
+          "question_en": "Where did Lion go?",
+          "options_en": [
+            "to a water hole",
+            "to the olive tree",
+            "to the rabbit hole"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        },
+        {
+          "id": "gl_p8_s2_q2",
+          "type": "choice",
+          "question_en": "What did Lion do when he reached the water hole?",
+          "options_en": [
+            "had a look",
+            "ate an olive",
+            "chased the rabbit"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        },
+        {
+          "id": "gl_p8_s3_q1",
+          "type": "choice",
+          "question_en": "What sound is written in the sentence to show his reaction?",
+          "options_en": [
+            "Awww Awww Awww!",
+            "How splendid!",
+            "And of course!"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p8_s3_q2",
+          "type": "choice",
+          "question_en": "How does the sentence convey his feeling at that moment?",
+          "options_en": [
+            "by the exclamation 'Awww Awww Awww!'",
+            "by saying he showed his friends",
+            "by mentioning the olives"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p8_s4_q1",
+          "type": "choice",
+          "question_en": "What did he like?",
+          "options_en": [
+            "his new look",
+            "the olive glue",
+            "the rabbit"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        },
+        {
+          "id": "gl_p8_s4_q2",
+          "type": "choice",
+          "question_en": "How is his reaction described in the sentence?",
+          "options_en": [
+            "How splendid!",
+            "He went to the water hole",
+            "Olives kept plopping"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        }
+      ]
+    },
+    {
+      "paragraph_index": 9,
+      "questions": [
+        {
+          "id": "gl_p9_s0_q1",
+          "type": "choice",
+          "question_en": "Who did he show his new look to?",
+          "options_en": [
+            "All his friends",
+            "The rabbit",
+            "The olive tree"
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        },
+        {
+          "id": "gl_p9_s0_q2",
+          "type": "choice",
+          "question_en": "What did they feel about his new look?",
+          "options_en": [
+            "They loved it",
+            "They were hungry",
+            "They saw a rabbit"
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        },
+        {
+          "id": "gl_p9_s1_q1",
+          "type": "choice",
+          "question_en": "When did lions start keeping the hairy head look?",
+          "options_en": [
+            "From that day onward",
+            "After many many years",
+            "When olives dropped"
+          ],
+          "correct_index": 0,
+          "sentence_index": 32
+        },
+        {
+          "id": "gl_p9_s1_q2",
+          "type": "choice",
+          "question_en": "Who started keeping the hairy head look?",
+          "options_en": [
+            "Lions",
+            "The rabbit",
+            "Lionesses"
+          ],
+          "correct_index": 0,
+          "sentence_index": 32
+        },
+        {
+          "id": "gl_p9_s2_q1",
+          "type": "choice",
+          "question_en": "When did they really grow hair over their heads?",
+          "options_en": [
+            "After many many years",
+            "That day",
+            "When the rabbit hid"
+          ],
+          "correct_index": 0,
+          "sentence_index": 33
+        },
+        {
+          "id": "gl_p9_s2_q2",
+          "type": "choice",
+          "question_en": "Who really grew hair over their heads?",
+          "options_en": [
+            "Lions",
+            "The rabbit",
+            "The olive tree"
+          ],
+          "correct_index": 0,
+          "sentence_index": 33
+        },
+        {
+          "id": "gl_p9_s3_q1",
+          "type": "choice",
+          "question_en": "What is this hair called?",
+          "options_en": [
+            "Lion's Mane",
+            "Olive glue",
+            "Dry grass"
+          ],
+          "correct_index": 0,
+          "sentence_index": 34
+        },
+        {
+          "id": "gl_p9_s3_q2",
+          "type": "choice",
+          "question_en": "Which name do we use for this hair?",
+          "options_en": [
+            "Lion's Mane",
+            "Olive tree",
+            "Rabbit's fur"
+          ],
+          "correct_index": 0,
+          "sentence_index": 34
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'How Lion got his Mane'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "mane",
+      "meaning_vi": "bờm (lông trên cổ sư tử)",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "alike",
+      "meaning_vi": "giống nhau, giống hệt nhau",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "Lionesses",
+      "meaning_vi": "sư tử cái",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "hungry",
+      "meaning_vi": "đói bụng",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "everywhere",
+      "meaning_vi": "khắp nơi",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "tired",
+      "meaning_vi": "mệt mỏi",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "olive tree",
+      "meaning_vi": "cây ô liu",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "windy",
+      "meaning_vi": "nhiều gió",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "dropped down",
+      "meaning_vi": "rơi xuống",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "split open",
+      "meaning_vi": "nứt ra, vỡ ra",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "ate it up",
+      "meaning_vi": "ăn hết",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "blew harder",
+      "meaning_vi": "thổi mạnh hơn",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "kept plopping",
+      "meaning_vi": "cứ rơi 'bộp bộp' (tiếp tục rơi)",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "Suddenly",
+      "meaning_vi": "đột nhiên, bỗng nhiên",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "chased",
+      "meaning_vi": "đuổi theo",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "dear life",
+      "meaning_vi": "mạng sống quý giá (chạy thục mạng)",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "patch",
+      "meaning_vi": "vạt, mảng",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "dry grass",
+      "meaning_vi": "cỏ khô",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "dived into",
+      "meaning_vi": "lao vào, nhảy vào",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "zig-zag",
+      "meaning_vi": "ngoằn ngoèo",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "exhausted",
+      "meaning_vi": "kiệt sức, rất mệt",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "stuck up",
+      "meaning_vi": "bị dính, mắc kẹt",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "sticky",
+      "meaning_vi": "dính",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "glue",
+      "meaning_vi": "keo dán",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "realise",
+      "meaning_vi": "nhận ra",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "spreading",
+      "meaning_vi": "lan ra",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "of course",
+      "meaning_vi": "tất nhiên",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "stuck",
+      "meaning_vi": "dính",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "water hole",
+      "meaning_vi": "vũng nước",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "splendid",
+      "meaning_vi": "lộng lẫy, tuyệt vời",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "onward",
+      "meaning_vi": "trở đi, về sau",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "hairy",
+      "meaning_vi": "nhiều lông, đầy lông",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "grew",
+      "meaning_vi": "mọc (quá khứ của grow)",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "mane",
+      "meaning_vi": "bờm (lông trên cổ sư tử)",
+      "paragraph_index": 9
+    }
+  ]
+}

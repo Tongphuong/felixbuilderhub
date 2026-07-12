@@ -1,0 +1,806 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L3",
+  "level_label": "Cấp 3",
+  "topic": "The Dividing Lines",
+  "slug": "book_147382",
+  "audio_filename": "book_147382.mp3",
+  "book_slug": "book_147382",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_147382/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_147382/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_147382/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_147382/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_147382/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_147382/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_147382/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_147382/page_09.jpg",
+    "https://audio.felixbuilderhub.com/books/book_147382/page_10.jpg",
+    "https://audio.felixbuilderhub.com/books/book_147382/page_11.jpg",
+    "https://audio.felixbuilderhub.com/books/book_147382/page_12.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_147382/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_147382/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_147382/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_147382/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_147382/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_147382/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_147382/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_147382/page_09.mp3",
+    "https://audio.felixbuilderhub.com/books/book_147382/page_10.mp3",
+    "https://audio.felixbuilderhub.com/books/book_147382/page_11.mp3",
+    "https://audio.felixbuilderhub.com/books/book_147382/page_12.mp3"
+  ],
+  "book_attribution": {
+    "title": "The Dividing Lines",
+    "creators": [
+      "Rajesh Khar",
+      "Abhishek Choudhury"
+    ],
+    "publisher": "Pratham Books",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: The Dividing Lines is translated by Rajesh Khar . The © for this translation lies with Pratham Books , 2020. Some rights reserved. Released under CC BY 4.0 license. Based on Original story: ' लकीरें ' , by Kapil Pandey ‘Kislay’ . © Pratham Books , 2020. Some rights reserved. Released under CC BY 4.0 license. Other Credits: 'The Dividing Lines' has been published on StoryWeaver by Pratham Books. www.prathambooks.org. Images Attributions: Cover page: People sketches , by Abhishek Choudhury © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 2: Boy sleeping , by Abhishek Choudhury © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 3: Dream sketches , by Abhishek Choudhury © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 4: Sketches dream , by Abhishek Choudhury © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 5: Soldiers , by Abhishek Choudhury © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 6: two soldiers facing each other , by Abhishek Choudhury © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 7: Celebration , by Abhishek Choudhury © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 8: People group , by Abhishek Choudhury © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 9: Election meeting , by Abhishek Choudhury © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Page 10: Drawing line , by Abhishek Choudhury © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/147382-the-dividing-lines",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "Boy sleeping , by Abhishek Choudhury © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "Dream sketches , by Abhishek Choudhury © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "Sketches dream , by Abhishek Choudhury © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "Soldiers , by Abhishek Choudhury © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "two soldiers facing each other , by Abhishek Choudhury © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "Celebration , by Abhishek Choudhury © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "People group , by Abhishek Choudhury © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "Election meeting , by Abhishek Choudhury © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 8,
+        "credit_text": "Drawing line , by Abhishek Choudhury © Pratham Books, 2020. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 9,
+        "credit_text": "Illustration by Abhishek Choudhury."
+      },
+      {
+        "page_index": 10,
+        "credit_text": "Illustration by Abhishek Choudhury."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "The Dividing Lines",
+    "paragraphs_en": [
+      "Last night’s dream was quite remarkable what I saw was beyond the thinkable all those lines on the globe…",
+      "the dark lines, the black lines the thick lines, the long lines the deep lines and the dividing lines",
+      "the lines that… separate them and us just began to melt away lines disappeared without a fuss as if magically erased away",
+      "The soldiers carrying guns and mace standing stern face to face were stunned like a peculiar case",
+      "they threw their guns off and burst into loud laughter suddenly there was no enemy race",
+      "People burst out with joy happiness swept across the lands the lines had given way…",
+      "to festive celebrations on every side where bombs had once been the routine laughter erupted in directions unseen who belonged where was hard to decide ‘Kislaya Uncle’ no longer understood the divide",
+      "Some leaders were in a commotion others got going with agitation how wars could now be fought? how would they ever win an election?",
+      "In they brought a map again hastily and got a box of black ink quickly",
+      "They again started drawing the lines the dark lines, the black lines the thick lines, the long lines the deep lines and the dividing lines But hardly did they know what lay ahead love, when it touches the human kind harmony and friendship occupy the mind warm hugs can even move the dead",
+      "Nobody can draw the lines anymore colours will fade the ink quickly away and it will not hold its place therefore!"
+    ],
+    "sentences": [
+      {
+        "text_en": "Last night’s dream was quite remarkable what I saw was beyond the thinkable all those lines on the globe…",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_147382/s_000.mp3",
+        "text_vi": "Giấc mơ đêm qua thật là lạ, những gì con thấy thật không thể nghĩ ra được, tất cả những đường kẻ trên quả địa cầu…"
+      },
+      {
+        "text_en": "the dark lines, the black lines the thick lines, the long lines the deep lines and the dividing lines",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_147382/s_001.mp3",
+        "text_vi": "những đường kẻ tối, những đường kẻ đen, những đường kẻ dày, những đường kẻ dài, những đường kẻ sâu và những đường kẻ chia cắt"
+      },
+      {
+        "text_en": "the lines that… separate them and us just began to melt away lines disappeared without a fuss as if magically erased away",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_147382/s_002.mp3",
+        "text_vi": "những đường kẻ… chia cắt họ và chúng ta bắt đầu tan biến. Các đường kẻ biến mất thật nhẹ nhàng, như thể bị xóa đi bằng phép thuật vậy."
+      },
+      {
+        "text_en": "The soldiers carrying guns and mace standing stern face to face were stunned like a peculiar case",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_147382/s_003.mp3",
+        "text_vi": "Những người lính mang súng và dùi cui, đứng nghiêm nghị đối mặt nhau, đã sững sờ như một chuyện lạ."
+      },
+      {
+        "text_en": "they threw their guns off and burst into loud laughter suddenly there was no enemy race",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_147382/s_004.mp3",
+        "text_vi": "Họ vứt súng xuống và bật cười thật lớn. Bỗng nhiên, không còn kẻ thù nào nữa."
+      },
+      {
+        "text_en": "People burst out with joy happiness swept across the lands the lines had given way…",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_147382/s_005.mp3",
+        "text_vi": "Mọi người vỡ òa trong niềm vui. Hạnh phúc tràn ngập khắp nơi. Những đường kẻ đã biến mất…"
+      },
+      {
+        "text_en": "to festive celebrations on every side where bombs had once been the routine laughter erupted in directions unseen who belonged where was hard to decide ‘Kislaya Uncle’ no longer understood the divide",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_147382/s_006.mp3",
+        "text_vi": "thành những lễ hội tưng bừng khắp mọi nơi. Nơi từng có bom đạn, giờ tiếng cười vang lên khắp chốn. Ai thuộc về đâu thật khó mà biết. 'Chú Kislaya' không còn hiểu sự chia cắt nữa."
+      },
+      {
+        "text_en": "Some leaders were in a commotion others got going with agitation how wars could now be fought?",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_147382/s_007.mp3",
+        "text_vi": "Một số lãnh đạo thì đang hoảng loạn, những người khác thì bắt đầu lo lắng. Làm sao bây giờ có thể đánh nhau được nữa?"
+      },
+      {
+        "text_en": "how would they ever win an election?",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_147382/s_008.mp3",
+        "text_vi": "Làm sao họ có thể thắng cử được đây?"
+      },
+      {
+        "text_en": "In they brought a map again hastily and got a box of black ink quickly",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_147382/s_009.mp3",
+        "text_vi": "Họ lại vội vàng mang một tấm bản đồ vào và nhanh chóng lấy một hộp mực đen."
+      },
+      {
+        "text_en": "They again started drawing the lines the dark lines, the black lines the thick lines, the long lines the deep lines and the dividing lines But hardly did they know what lay ahead love, when it touches the human kind harmony and friendship occupy the mind warm hugs can even move the dead",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_147382/s_010.mp3",
+        "text_vi": "Họ lại bắt đầu vẽ những đường kẻ: những đường tối, những đường đen, những đường dày, những đường dài, những đường sâu và những đường chia cắt. Nhưng họ đâu biết điều gì đang chờ đợi phía trước. Tình yêu, khi chạm đến con người, sự hòa hợp và tình bạn sẽ chiếm lấy tâm trí. Những cái ôm ấm áp thậm chí có thể làm lay động cả những người đã khuất."
+      },
+      {
+        "text_en": "Nobody can draw the lines anymore colours will fade the ink quickly away and it will not hold its place therefore!",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_147382/s_011.mp3",
+        "text_vi": "Không ai có thể vẽ lại những đường kẻ đó nữa. Màu sắc sẽ phai, mực sẽ nhanh chóng biến mất và nó sẽ không còn ở đó nữa!"
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "Last night’s dream was quite remarkable what I saw was beyond the thinkable all those lines on the globe…",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_147382/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "the dark lines, the black lines the thick lines, the long lines the deep lines and the dividing lines",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_147382/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "the lines that… separate them and us just began to melt away lines disappeared without a fuss as if magically erased away",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_147382/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "The soldiers carrying guns and mace standing stern face to face were stunned like a peculiar case",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_147382/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "they threw their guns off and burst into loud laughter suddenly there was no enemy race",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_147382/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "People burst out with joy happiness swept across the lands the lines had given way…",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_147382/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "to festive celebrations on every side where bombs had once been the routine laughter erupted in directions unseen who belonged where was hard to decide ‘Kislaya Uncle’ no longer understood the divide",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_147382/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "Some leaders were in a commotion others got going with agitation how wars could now be fought?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_147382/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "how would they ever win an election?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_147382/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "In they brought a map again hastily and got a box of black ink quickly",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_147382/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "They again started drawing the lines the dark lines, the black lines the thick lines, the long lines the deep lines and the dividing lines But hardly did they know what lay ahead love, when it touches the human kind harmony and friendship occupy the mind warm hugs can even move the dead",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_147382/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "Nobody can draw the lines anymore colours will fade the ink quickly away and it will not hold its place therefore!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_147382/s_011.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "When did the remarkable dream happen?",
+          "options_en": [
+            "Last night",
+            "During the festive celebrations",
+            "When leaders brought a map"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "What was described as quite remarkable?",
+          "options_en": [
+            "Last night’s dream",
+            "The soldiers throwing their guns",
+            "The leaders drawing lines"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "What kind of lines are mentioned?",
+          "options_en": [
+            "the dark lines",
+            "the black lines",
+            "the long lines"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "Which lines are included in the list?",
+          "options_en": [
+            "the dividing lines",
+            "the deep lines",
+            "the thick lines"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "What began to melt away?",
+          "options_en": [
+            "the lines that separate them and us",
+            "the soldiers carrying guns",
+            "the map with black ink"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "How did the lines disappear?",
+          "options_en": [
+            "without a fuss, as if magically erased away",
+            "the soldiers threw their guns off",
+            "people burst into loud laughter"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "Who was carrying guns and mace?",
+          "options_en": [
+            "The soldiers",
+            "People",
+            "Some leaders"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "How were they standing?",
+          "options_en": [
+            "Standing stern face to face",
+            "Bursting into loud laughter",
+            "Drawing the lines with black ink"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "Who threw their guns off and burst into loud laughter?",
+          "options_en": [
+            "They",
+            "The leaders",
+            "The soldiers carrying guns and mace"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "Why did they burst into loud laughter?",
+          "options_en": [
+            "Because suddenly there was no enemy race",
+            "Because leaders were in a commotion",
+            "Because bombs had once been the routine"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "What did people burst out with?",
+          "options_en": [
+            "joy",
+            "loud laughter",
+            "guns"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "Where did happiness sweep across?",
+          "options_en": [
+            "the lands",
+            "the globe",
+            "every side"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "Who no longer understood the divide?",
+          "options_en": [
+            "‘Kislaya Uncle’",
+            "The soldiers",
+            "Some leaders"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "What erupted in directions unseen?",
+          "options_en": [
+            "laughter",
+            "bombs",
+            "festive celebrations"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "Who was in a commotion?",
+          "options_en": [
+            "Some leaders",
+            "The soldiers carrying guns",
+            "People who burst out with joy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "How did others get going?",
+          "options_en": [
+            "With agitation",
+            "By throwing their guns off",
+            "With festive celebrations"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p7_s1_q1",
+          "type": "choice",
+          "question_en": "Who wondered how they would ever win an election?",
+          "options_en": [
+            "They (the leaders)",
+            "Kislaya Uncle",
+            "Those celebrating"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p7_s1_q2",
+          "type": "choice",
+          "question_en": "What were they asking about?",
+          "options_en": [
+            "How they would ever win an election",
+            "How wars could now be fought",
+            "Where the lines disappeared"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        }
+      ]
+    },
+    {
+      "paragraph_index": 8,
+      "questions": [
+        {
+          "id": "gl_p8_s0_q1",
+          "type": "choice",
+          "question_en": "Who brought a map?",
+          "options_en": [
+            "They",
+            "The soldiers",
+            "The leaders"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p8_s0_q2",
+          "type": "choice",
+          "question_en": "What did they get quickly?",
+          "options_en": [
+            "A box of black ink",
+            "Guns",
+            "A map"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        }
+      ]
+    },
+    {
+      "paragraph_index": 9,
+      "questions": [
+        {
+          "id": "gl_p9_s0_q1",
+          "type": "choice",
+          "question_en": "Who again started drawing the lines?",
+          "options_en": [
+            "They",
+            "The soldiers carrying guns and mace",
+            "Some leaders"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p9_s0_q2",
+          "type": "choice",
+          "question_en": "What happens when love touches humankind according to the sentence?",
+          "options_en": [
+            "Harmony and friendship occupy the mind",
+            "Lines disappeared without a fuss",
+            "They got a box of black ink"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        }
+      ]
+    },
+    {
+      "paragraph_index": 10,
+      "questions": [
+        {
+          "id": "gl_p10_s0_q1",
+          "type": "choice",
+          "question_en": "Who cannot draw the lines anymore?",
+          "options_en": [
+            "Nobody",
+            "The soldiers",
+            "The leaders"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p10_s0_q2",
+          "type": "choice",
+          "question_en": "What will fade quickly away?",
+          "options_en": [
+            "Colours",
+            "Black ink",
+            "A map"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'The Dividing Lines'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "remarkable",
+      "meaning_vi": "rất đặc biệt",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "beyond the thinkable",
+      "meaning_vi": "không thể nghĩ ra được",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "globe",
+      "meaning_vi": "quả địa cầu",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "thick",
+      "meaning_vi": "dày",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "deep",
+      "meaning_vi": "sâu",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "dividing",
+      "meaning_vi": "chia ra",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "separate",
+      "meaning_vi": "chia ra",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "melt away",
+      "meaning_vi": "tan biến",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "disappeared",
+      "meaning_vi": "biến mất",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "magically",
+      "meaning_vi": "bằng phép thuật",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "soldiers",
+      "meaning_vi": "lính",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "mace",
+      "meaning_vi": "dùi cui",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "stern",
+      "meaning_vi": "nghiêm nghị",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "stunned",
+      "meaning_vi": "sững sờ",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "threw off",
+      "meaning_vi": "vứt bỏ",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "burst into laughter",
+      "meaning_vi": "bật cười",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "suddenly",
+      "meaning_vi": "bỗng nhiên",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "enemy",
+      "meaning_vi": "kẻ thù",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "burst out",
+      "meaning_vi": "vỡ òa",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "happiness",
+      "meaning_vi": "hạnh phúc",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "swept across",
+      "meaning_vi": "tràn ngập",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "given way",
+      "meaning_vi": "nhường chỗ",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "festive",
+      "meaning_vi": "tưng bừng",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "celebrations",
+      "meaning_vi": "lễ hội",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "routine",
+      "meaning_vi": "thường ngày",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "erupted",
+      "meaning_vi": "vang lên",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "leaders",
+      "meaning_vi": "lãnh đạo",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "commotion",
+      "meaning_vi": "hoảng loạn",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "agitation",
+      "meaning_vi": "lo lắng",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "election",
+      "meaning_vi": "bầu cử",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "hastily",
+      "meaning_vi": "vội vàng",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "ink",
+      "meaning_vi": "mực",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "hardly",
+      "meaning_vi": "hầu như không",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "harmony",
+      "meaning_vi": "hòa hợp",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "friendship",
+      "meaning_vi": "tình bạn",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "occupy",
+      "meaning_vi": "chiếm lấy",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "anymore",
+      "meaning_vi": "nữa",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "fade",
+      "meaning_vi": "phai màu",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "hold its place",
+      "meaning_vi": "giữ được chỗ",
+      "paragraph_index": 10
+    }
+  ]
+}

@@ -1,0 +1,853 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L1",
+  "level_label": "Cấp 1",
+  "topic": "Anand",
+  "slug": "book_131398",
+  "audio_filename": "book_131398.mp3",
+  "book_slug": "book_131398",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_131398/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_131398/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_131398/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_131398/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_131398/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_131398/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_131398/page_09.jpg",
+    "https://audio.felixbuilderhub.com/books/book_131398/page_10.jpg",
+    "https://audio.felixbuilderhub.com/books/book_131398/page_11.jpg",
+    "https://audio.felixbuilderhub.com/books/book_131398/page_12.jpg",
+    "https://audio.felixbuilderhub.com/books/book_131398/page_13.jpg",
+    "https://audio.felixbuilderhub.com/books/book_131398/page_14.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_131398/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_131398/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_131398/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_131398/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_131398/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_131398/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_131398/page_09.mp3",
+    "https://audio.felixbuilderhub.com/books/book_131398/page_10.mp3",
+    "https://audio.felixbuilderhub.com/books/book_131398/page_11.mp3",
+    "https://audio.felixbuilderhub.com/books/book_131398/page_12.mp3",
+    "https://audio.felixbuilderhub.com/books/book_131398/page_13.mp3",
+    "https://audio.felixbuilderhub.com/books/book_131398/page_14.mp3"
+  ],
+  "book_attribution": {
+    "title": "Anand",
+    "creators": [
+      "Hayanthika S.M",
+      "Rajiv Eipe"
+    ],
+    "publisher": "StoryWeaver Community",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: Anand is translated by Hayanthika S.M . The © for this translation lies with Hayanthika S.M , 2020. Some rights reserved. Released under CC BY 4.0 license. Derived from: ' ஆனந்த் ' , by Subhashini Annamalai . © Pratham Books , 2018. Some rights reserved. Released under CC BY 4.0 license. Based on Original story: ' Anand ' , by Rajiv Eipe . © Pratham Books , 2018. Some rights reserved. Released under CC BY 4.0 license. This story may have intermediate versions between the root and parent story. To see all versions, please visit the links. Images Attributions: Cover page: man driving a trash vehicle , by Rajiv Eipe © Pratham Books, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 2: Man checking himself out in the mirror , by Rajiv Eipe © Pratham Books, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 3: Man in a vehicle , by Rajiv Eipe © Pratham Books, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 4: man drives the trash vehicle , by Rajiv Eipe © Pratham Books, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 5: Old woman screaming at garbage collector , by Rajiv Eipe © Pratham Books, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 6: man pointing at banana peel on the floor , by Rajiv Eipe © Pratham Books, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 7: Woman covering her nose from the stench , by Rajiv Eipe © Pratham Books, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 8: Dog barks at garbage collector , by Rajiv Eipe © Pratham Books, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 9: man worried seeing the garbage , by Rajiv Eipe © Pratham Books, 2018. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/131398-anand",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "Man in a vehicle , by Rajiv Eipe © Pratham Books, 2018. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "man drives the trash vehicle , by Rajiv Eipe © Pratham Books, 2018. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "Old woman screaming at garbage collector , by Rajiv Eipe © Pratham Books, 2018. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "man pointing at banana peel on the floor , by Rajiv Eipe © Pratham Books, 2018. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "Woman covering her nose from the stench , by Rajiv Eipe © Pratham Books, 2018. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "Dog barks at garbage collector , by Rajiv Eipe © Pratham Books, 2018. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "man worried seeing the garbage , by Rajiv Eipe © Pratham Books, 2018. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "Illustration by Rajiv Eipe."
+      },
+      {
+        "page_index": 8,
+        "credit_text": "Illustration by Rajiv Eipe."
+      },
+      {
+        "page_index": 9,
+        "credit_text": "Illustration by Rajiv Eipe."
+      },
+      {
+        "page_index": 10,
+        "credit_text": "Illustration by Rajiv Eipe."
+      },
+      {
+        "page_index": 11,
+        "credit_text": "Illustration by Rajiv Eipe."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "Anand",
+    "paragraphs_en": [
+      "My name is Anand.",
+      "My duty is to collect garbage from the houses here.",
+      "If I go late, Mrs. Maskarenyas will be very angry.",
+      "Unni uncle will say to pick garbage without leaving a ﻿single one.",
+      "Anitha aunt cannot beare the smell.",
+      "In the 4th cross street, there is a new family who are kind. But their dog is not like them.",
+      "Alas! This takes time to clean.",
+      "I like to go to saleem's house.",
+      "Saleem and I are friends.",
+      "He likes to play drums. I like to dance.",
+      "It is time to go to school.",
+      "Tata"
+    ],
+    "sentences": [
+      {
+        "text_en": "My name is Anand.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_131398/s_000.mp3",
+        "text_vi": "Tên của cháu là Anand."
+      },
+      {
+        "text_en": "My duty is to collect garbage from the houses here.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_131398/s_001.mp3",
+        "text_vi": "Nhiệm vụ của cháu là thu gom rác từ các nhà ở đây."
+      },
+      {
+        "text_en": "If I go late, Mrs.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_131398/s_002.mp3",
+        "text_vi": "Nếu cháu đến muộn,"
+      },
+      {
+        "text_en": "Maskarenyas will be very angry.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_131398/s_003.mp3",
+        "text_vi": "cô Maskarenyas sẽ rất tức giận."
+      },
+      {
+        "text_en": "Unni uncle will say to pick garbage without leaving a ﻿single one.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_131398/s_004.mp3",
+        "text_vi": "Chú Unni sẽ bảo nhặt rác không được bỏ sót một cái nào."
+      },
+      {
+        "text_en": "Anitha aunt cannot beare the smell.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_131398/s_005.mp3",
+        "text_vi": "Dì Anitha không chịu được mùi này."
+      },
+      {
+        "text_en": "In the 4th cross street, there is a new family who are kind.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_131398/s_006.mp3",
+        "text_vi": "Ở con phố thứ 4, có một gia đình mới rất tốt bụng."
+      },
+      {
+        "text_en": "But their dog is not like them.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_131398/s_007.mp3",
+        "text_vi": "Nhưng con chó của họ thì không giống họ."
+      },
+      {
+        "text_en": "Alas! This takes time to clean.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_131398/s_008.mp3",
+        "text_vi": "Ôi! Việc này tốn thời gian để dọn dẹp."
+      },
+      {
+        "text_en": "I like to go to saleem's house.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_131398/s_009.mp3",
+        "text_vi": "Cháu thích đến nhà Saleem."
+      },
+      {
+        "text_en": "Saleem and I are friends.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_131398/s_010.mp3",
+        "text_vi": "Saleem và cháu là bạn bè."
+      },
+      {
+        "text_en": "He likes to play drums.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_131398/s_011.mp3",
+        "text_vi": "Cậu ấy thích chơi trống."
+      },
+      {
+        "text_en": "I like to dance.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_131398/s_012.mp3",
+        "text_vi": "Cháu thích nhảy múa."
+      },
+      {
+        "text_en": "It is time to go to school.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_131398/s_013.mp3",
+        "text_vi": "Đến giờ đi học rồi."
+      },
+      {
+        "text_en": "Tata",
+        "paragraph_index": 11,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_131398/s_014.mp3",
+        "text_vi": "Tạm biệt."
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "My name is Anand.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_131398/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "My duty is to collect garbage from the houses here.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_131398/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "If I go late, Mrs.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_131398/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "Maskarenyas will be very angry.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_131398/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "Unni uncle will say to pick garbage without leaving a ﻿single one.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_131398/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "Anitha aunt cannot beare the smell.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_131398/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "In the 4th cross street, there is a new family who are kind.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_131398/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "But their dog is not like them.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_131398/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "Alas! This takes time to clean.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_131398/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "I like to go to saleem's house.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_131398/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "Saleem and I are friends.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_131398/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "He likes to play drums.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_131398/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "I like to dance.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_131398/s_012.mp3"
+        },
+        {
+          "id": "ra_13",
+          "text_en": "It is time to go to school.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_131398/s_013.mp3"
+        },
+        {
+          "id": "ra_14",
+          "text_en": "Tata",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_131398/s_014.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "Who is the speaker?",
+          "options_en": [
+            "Anand",
+            "Saleem",
+            "Unni uncle"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "What is the speaker's name?",
+          "options_en": [
+            "Anand",
+            "Mrs. Maskarenyas",
+            "Anitha aunt"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "What is his duty?",
+          "options_en": [
+            "To collect garbage from the houses here",
+            "To pick garbage without leaving a single one",
+            "To go to school"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "Where does he collect garbage?",
+          "options_en": [
+            "From the houses here",
+            "In the 4th cross street",
+            "To Saleem's house"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "Who will be very angry if I go late?",
+          "options_en": [
+            "Mrs. Maskarenyas",
+            "Unni uncle",
+            "Anitha aunt"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "When will Mrs. Maskarenyas be angry?",
+          "options_en": [
+            "If I go late",
+            "When I play drums",
+            "When the dog causes trouble"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p2_s1_q1",
+          "type": "choice",
+          "question_en": "Who will be very angry?",
+          "options_en": [
+            "Mrs. Maskarenyas",
+            "Unni uncle",
+            "Anitha aunt"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p2_s1_q2",
+          "type": "choice",
+          "question_en": "How will Mrs. Maskarenyas feel?",
+          "options_en": [
+            "Very angry",
+            "Kind",
+            "Unable to bear the smell"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "Who will say to pick garbage without leaving a single one?",
+          "options_en": [
+            "Unni uncle",
+            "Mrs. Maskarenyas",
+            "Anitha aunt"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "What will Unni uncle say to do?",
+          "options_en": [
+            "Pick garbage without leaving a single one",
+            "Go to school",
+            "Play drums"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "Who cannot bear the smell?",
+          "options_en": [
+            "Anitha aunt",
+            "Anand",
+            "Unni uncle"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "What can't Anitha aunt bear?",
+          "options_en": [
+            "The smell",
+            "The garbage",
+            "The dog"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "Where is there a new family who are kind?",
+          "options_en": [
+            "In the 4th cross street",
+            "At Saleem's house",
+            "At Mrs. Maskarenyas's house"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "What is the new family like?",
+          "options_en": [
+            "Kind",
+            "Angry",
+            "They like to play drums"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p5_s1_q1",
+          "type": "choice",
+          "question_en": "What is not like the family?",
+          "options_en": [
+            "Their dog",
+            "The garbage",
+            "The drums"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p5_s1_q2",
+          "type": "choice",
+          "question_en": "How is the dog described in relation to the family?",
+          "options_en": [
+            "Not like them",
+            "Very kind",
+            "Very angry"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "What takes time to clean?",
+          "options_en": [
+            "This",
+            "The dog",
+            "The garbage"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "What does the speaker say about cleaning?",
+          "options_en": [
+            "It takes time",
+            "He must collect garbage",
+            "He likes to dance"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "Who likes to go to Saleem's house?",
+          "options_en": [
+            "I",
+            "Unni uncle",
+            "Mrs. Maskarenyas"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "Whose house does the speaker like to go to?",
+          "options_en": [
+            "Saleem's house",
+            "Anitha aunt's house",
+            "Mrs. Maskarenyas's house"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        }
+      ]
+    },
+    {
+      "paragraph_index": 8,
+      "questions": [
+        {
+          "id": "gl_p8_s0_q1",
+          "type": "choice",
+          "question_en": "Who are friends?",
+          "options_en": [
+            "Saleem and I",
+            "Saleem and his dog",
+            "Anand and Mrs. Maskarenyas"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p8_s0_q2",
+          "type": "choice",
+          "question_en": "What is the relationship between Saleem and I?",
+          "options_en": [
+            "They are friends",
+            "They like to play drums",
+            "They collect garbage"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        }
+      ]
+    },
+    {
+      "paragraph_index": 9,
+      "questions": [
+        {
+          "id": "gl_p9_s0_q1",
+          "type": "choice",
+          "question_en": "Who likes to play drums?",
+          "options_en": [
+            "He",
+            "Saleem",
+            "Anand"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p9_s0_q2",
+          "type": "choice",
+          "question_en": "What does he like to play?",
+          "options_en": [
+            "Drums",
+            "Garbage",
+            "Dog"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p9_s1_q1",
+          "type": "choice",
+          "question_en": "Who likes to dance?",
+          "options_en": [
+            "I",
+            "Anitha aunt",
+            "Unni uncle"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p9_s1_q2",
+          "type": "choice",
+          "question_en": "What does I like to do?",
+          "options_en": [
+            "Dance",
+            "Collect garbage",
+            "Play drums"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        }
+      ]
+    },
+    {
+      "paragraph_index": 10,
+      "questions": [
+        {
+          "id": "gl_p10_s0_q1",
+          "type": "choice",
+          "question_en": "When is it?",
+          "options_en": [
+            "It is time to go to school",
+            "It is time to collect garbage",
+            "It is time to play drums"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p10_s0_q2",
+          "type": "choice",
+          "question_en": "What is it time to do?",
+          "options_en": [
+            "Go to school",
+            "Visit Saleem's house",
+            "Pick garbage"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        }
+      ]
+    },
+    {
+      "paragraph_index": 11,
+      "questions": [
+        {
+          "id": "gl_p11_s0_q1",
+          "type": "choice",
+          "question_en": "What does the sentence say?",
+          "options_en": [
+            "Tata",
+            "I like to dance",
+            "It is time to go to school"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p11_s0_q2",
+          "type": "choice",
+          "question_en": "How does the paragraph end?",
+          "options_en": [
+            "With 'Tata'",
+            "With 'I like to dance'",
+            "With 'It is time to go to school'"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'Anand'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "duty",
+      "meaning_vi": "nhiệm vụ (việc phải làm)",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "collect",
+      "meaning_vi": "thu gom (nhặt lại, tập hợp lại)",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "garbage",
+      "meaning_vi": "rác (đồ bỏ đi)",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "late",
+      "meaning_vi": "muộn (không đúng giờ)",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "angry",
+      "meaning_vi": "tức giận (rất giận)",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "pick",
+      "meaning_vi": "nhặt (lấy lên)",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "leaving",
+      "meaning_vi": "bỏ sót (để lại, không lấy đi)",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "single",
+      "meaning_vi": "một (chỉ một)",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "cannot",
+      "meaning_vi": "không thể (không làm được)",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "bear",
+      "meaning_vi": "chịu đựng (chấp nhận được)",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "smell",
+      "meaning_vi": "mùi (hương thơm hoặc mùi khó chịu)",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "family",
+      "meaning_vi": "gia đình (những người sống cùng nhà)",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "kind",
+      "meaning_vi": "tốt bụng (hiền lành, giúp đỡ người khác)",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "like",
+      "meaning_vi": "giống (tương tự)",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "Alas!",
+      "meaning_vi": "Ôi! (tiếng than thở)",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "takes time",
+      "meaning_vi": "tốn thời gian (cần nhiều thời gian)",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "clean",
+      "meaning_vi": "dọn dẹp (làm cho sạch sẽ)",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "like",
+      "meaning_vi": "thích (yêu mến)",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "house",
+      "meaning_vi": "nhà (nơi ở)",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "friends",
+      "meaning_vi": "bạn bè (những người thân thiết)",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "play",
+      "meaning_vi": "chơi (thực hiện một trò chơi hoặc nhạc cụ)",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "drums",
+      "meaning_vi": "trống (nhạc cụ gõ)",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "dance",
+      "meaning_vi": "nhảy múa (di chuyển theo nhạc)",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "time",
+      "meaning_vi": "giờ (thời điểm)",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "school",
+      "meaning_vi": "trường học (nơi học tập)",
+      "paragraph_index": 10
+    }
+  ]
+}

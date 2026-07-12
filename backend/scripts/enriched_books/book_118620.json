@@ -1,0 +1,1997 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L4",
+  "level_label": "Cấp 4",
+  "topic": "Hiking",
+  "slug": "book_118620",
+  "audio_filename": "book_118620.mp3",
+  "book_slug": "book_118620",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_118620/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_118620/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_118620/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_118620/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_118620/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_118620/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_118620/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_118620/page_09.jpg",
+    "https://audio.felixbuilderhub.com/books/book_118620/page_10.jpg",
+    "https://audio.felixbuilderhub.com/books/book_118620/page_11.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_118620/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_118620/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_118620/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_118620/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_118620/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_118620/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_118620/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_118620/page_09.mp3",
+    "https://audio.felixbuilderhub.com/books/book_118620/page_10.mp3",
+    "https://audio.felixbuilderhub.com/books/book_118620/page_11.mp3"
+  ],
+  "book_attribution": {
+    "title": "Hiking",
+    "creators": [
+      "Curtis Lee",
+      "Herminder Ohri",
+      "Madhuvanti Anantharajan",
+      "Mayukh Gosh",
+      "Navanya Sharma",
+      "Nidhal Rashid",
+      "Pia Meenakshi",
+      "Sahitya Rani",
+      "Salim Kasamba",
+      "Seng Visal"
+    ],
+    "publisher": "StoryWeaver Community",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: Hiking is written by Curtis Lee . © Curtis Lee , 2020. Some rights reserved. Released under CC BY 4.0 license. Images Attributions: Cover page: Mountains , by Nidhal Rashid © Nidhal Rashid, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 2: Bright Sun in the Mountains , by Navanya Sharma © Navanya Sharma, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 3: Nature view from train window , by Sahitya Rani © Pratham Books, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 4: Buiding across a narrow stream , by Madhuvanti Anantharajan 2006. Released under Public Domain Mark by Pratham Books. Page 5: Lake reflection , by Nidhal Rashid © Nidhal Rashid, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 6: Splash of water , by Mayukh Gosh © Room to Read, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 7: A massive fish opens its mouth , by Seng Visal © Room to Read, 2012. Some rights reserved. Released under CC BY 4.0 license. Page 8: A cookie , by Herminder Ohri © Pratham Books, 2006. Some rights reserved. Released under CC BY 4.0 license. Page 9: Hiking , by Curtis Lee © Curtis Lee, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 10: Sunset at a sea shore , by Pia Meenakshi © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 11: Monkey eating a mango , by Salim Kasamba © African Storybook Initiative, 2016. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/ Some of the elements of this work have been identified as being free of known restrictions under copyright law, including all related and neighbouring rights. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. http://creativecommons.org/about/pdm",
+    "source_url": "https://storyweaver.org.in/stories/118620-hiking",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "Bright Sun in the Mountains , by Navanya Sharma © Navanya Sharma, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "Nature view from train window , by Sahitya Rani © Pratham Books, 2018. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "Buiding across a narrow stream , by Madhuvanti Anantharajan 2006. Released under Public Domain Mark by Pratham Books."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "Lake reflection , by Nidhal Rashid © Nidhal Rashid, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "Splash of water , by Mayukh Gosh © Room to Read, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "A massive fish opens its mouth , by Seng Visal © Room to Read, 2012. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "A cookie , by Herminder Ohri © Pratham Books, 2006. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "Hiking , by Curtis Lee © Curtis Lee, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 8,
+        "credit_text": "Sunset at a sea shore , by Pia Meenakshi © Pratham Books, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 9,
+        "credit_text": "Monkey eating a mango , by Salim Kasamba © African Storybook Initiative, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "Hiking",
+    "paragraphs_en": [
+      "Last Saturday, it was a bright and sunny day. Ronaldo, Messi and Alison decided to go hiking. After half an hour, they met each other at the entrance of the hiking trail. All three of them were ready and prepared, Alison even brought a drone with him! Soon after they took off. Messi said that he had been hiking on this mountain before and a monkey stole his mosquito repellent! So Messi reminded his friends to be careful about",
+      "monkey. They walked and walked staring at amazing sight; green trees covered mountain as a blanket, the branches swaying back and forth when the wind were blowing. There were also some green grass and wild flowers with different colour embellishing the mountain. Bees buzzing and birds chirping; they were enjoying the sight immensely.",
+      "Meanwhile, Ronaldo came to a stop. He saw a trail that leads down hill... “I want to explore!” Alison hesitated. “Let’s just keep going.” Ronaldo urged. Soon Alison and Ronaldo broke into an argument. Finally, Messi suggested:",
+      "“Let’s just go down and explore, it will be fun!” “Fine!” Grumbled Ronaldo as they hiked down the narrow path. Soon they discovered that there is a lake lying on the valley. Water in the lake were as clear as glass, water flowing smoothly and calmly across the beautiful lake.",
+      "Messi suggested they threw rocks and saw who could create the biggest splash... “ KABOOM!” Went Messi’s rock. Suddenly an ENORMOUS fish leaped out of the lake with its mouth wide open. The three friends dashed away as fast as a cheetah.",
+      "Soon they stopped out of breath. “Close one.” Alison said in relief. “I never see such thing,” Messi exclaimed in surprise. “I told you not to go down.” Ronaldo pointed out. Later on, three friends were back on trail.",
+      "After more hiking and exploring, they decided to take a rest. Messi brought out delicious looking box of home-made cookies. They ate and drunk and then kept walking. After an hour, They arrived a river with a log on it. “ Wow! How in the world are we gonna cross that?” Alison said. Ronaldo took a step on the log and then said:",
+      "“mmmm..., friends, I think we can cross the river by stepping carefully on the log.” When Messi walking on the log, he trembled with fear as sweat ran down his forehead, his heart beat faster and faster. The more he felt fear. The more he felt unbalanced. Alison was shivering as one of his foot fell into the water.",
+      "Ronaldo looked at them, and said: ”You guys may crouch down and crawl!” They listened to Ronald and done what Ronald said. Finally, They got to the other of shore safely. They continued their journey. After following the trial for a while, t hey saw some monkeys jumping on the tree, and the other people feeding the monkeys with apples. The",
+      "monkeys were lovely and friendly. So they decided to protect nature, while they were talking. Alison saw a sign up ahead, it read :END OF TRAIL. What a wonderful adventure!! THE END"
+    ],
+    "sentences": [
+      {
+        "text_en": "Last Saturday, it was a bright and sunny day.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_000.mp3",
+        "text_vi": "Thứ Bảy tuần trước, trời nắng đẹp và sáng trưng."
+      },
+      {
+        "text_en": "Ronaldo, Messi and Alison decided to go hiking.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_001.mp3",
+        "text_vi": "Ronaldo, Messi và Alison quyết định đi leo núi."
+      },
+      {
+        "text_en": "After half an hour, they met each other at the entrance of the hiking trail.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_002.mp3",
+        "text_vi": "Sau nửa tiếng, họ gặp nhau ở lối vào đường mòn leo núi."
+      },
+      {
+        "text_en": "All three of them were ready and prepared, Alison even brought a drone with him!",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_003.mp3",
+        "text_vi": "Cả ba người đều đã sẵn sàng và chuẩn bị kỹ càng, Alison còn mang theo cả một chiếc máy bay không người lái nữa!"
+      },
+      {
+        "text_en": "Soon after they took off.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_004.mp3",
+        "text_vi": "Ngay sau đó, họ bắt đầu đi."
+      },
+      {
+        "text_en": "Messi said that he had been hiking on this mountain before and a monkey stole his mosquito repellent!",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_005.mp3",
+        "text_vi": "Messi kể rằng cậu ấy đã từng leo ngọn núi này trước đây và một con khỉ đã lấy trộm thuốc chống muỗi của cậu ấy!"
+      },
+      {
+        "text_en": "So Messi reminded his friends to be careful about",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_006.mp3",
+        "text_vi": "Vì vậy Messi nhắc nhở bạn bè phải cẩn thận về"
+      },
+      {
+        "text_en": "monkey. They walked and walked staring at amazing sight; green trees covered mountain as a blanket, the branches swaying back and forth when the wind were blowing.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_007.mp3",
+        "text_vi": "khỉ. Họ cứ đi mãi, ngắm nhìn cảnh đẹp tuyệt vời; cây xanh phủ kín núi như một tấm chăn, cành cây đung đưa qua lại khi gió thổi."
+      },
+      {
+        "text_en": "There were also some green grass and wild flowers with different colour embellishing the mountain.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_008.mp3",
+        "text_vi": "Còn có cả những thảm cỏ xanh và hoa dại nhiều màu sắc tô điểm cho ngọn núi."
+      },
+      {
+        "text_en": "Bees buzzing and birds chirping; they were enjoying the sight immensely.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_009.mp3",
+        "text_vi": "Ong bay vo ve và chim hót líu lo; họ đang tận hưởng cảnh đẹp vô cùng."
+      },
+      {
+        "text_en": "Meanwhile, Ronaldo came to a stop.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_010.mp3",
+        "text_vi": "Trong lúc đó, Ronaldo dừng lại."
+      },
+      {
+        "text_en": "He saw a trail that leads down hill...",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_011.mp3",
+        "text_vi": "Cậu ấy thấy một con đường mòn dẫn xuống dốc..."
+      },
+      {
+        "text_en": "“I want to explore!” Alison hesitated.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_012.mp3",
+        "text_vi": "“Tớ muốn khám phá!” Alison ngập ngừng."
+      },
+      {
+        "text_en": "“Let’s just keep going.” Ronaldo urged.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_013.mp3",
+        "text_vi": "“Cứ đi tiếp thôi.” Ronaldo thúc giục."
+      },
+      {
+        "text_en": "Soon Alison and Ronaldo broke into an argument.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_014.mp3",
+        "text_vi": "Chẳng mấy chốc Alison và Ronaldo bắt đầu tranh cãi."
+      },
+      {
+        "text_en": "Finally, Messi suggested:",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_015.mp3",
+        "text_vi": "Cuối cùng, Messi đề nghị:"
+      },
+      {
+        "text_en": "“Let’s just go down and explore, it will be fun!” “Fine!” Grumbled Ronaldo as they hiked down the narrow path.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_016.mp3",
+        "text_vi": "“Cứ xuống đó khám phá đi, sẽ vui mà!” “Được thôi!” Ronaldo càu nhàu khi họ đi bộ xuống con đường hẹp."
+      },
+      {
+        "text_en": "Soon they discovered that there is a lake lying on the valley.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_017.mp3",
+        "text_vi": "Chẳng mấy chốc họ phát hiện ra có một cái hồ nằm trong thung lũng."
+      },
+      {
+        "text_en": "Water in the lake were as clear as glass, water flowing smoothly and calmly across the beautiful lake.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_018.mp3",
+        "text_vi": "Nước trong hồ trong vắt như gương, dòng nước chảy êm đềm và tĩnh lặng khắp mặt hồ xinh đẹp."
+      },
+      {
+        "text_en": "Messi suggested they threw rocks and saw who could create the biggest splash...",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_019.mp3",
+        "text_vi": "Messi gợi ý họ ném đá và xem ai có thể tạo ra tiếng té nước lớn nhất..."
+      },
+      {
+        "text_en": "“ KABOOM!” Went Messi’s rock.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_020.mp3",
+        "text_vi": "“KABOOM!” Hòn đá của Messi tạo ra tiếng động lớn."
+      },
+      {
+        "text_en": "Suddenly an ENORMOUS fish leaped out of the lake with its mouth wide open.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_021.mp3",
+        "text_vi": "Bỗng nhiên một con cá KHỔNG LỒ nhảy vọt ra khỏi hồ với cái miệng há to."
+      },
+      {
+        "text_en": "The three friends dashed away as fast as a cheetah.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_022.mp3",
+        "text_vi": "Ba người bạn vội vàng chạy đi nhanh như một con báo."
+      },
+      {
+        "text_en": "Soon they stopped out of breath.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_023.mp3",
+        "text_vi": "Chẳng mấy chốc họ dừng lại, thở hổn hển."
+      },
+      {
+        "text_en": "“Close one.” Alison said in relief.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_024.mp3",
+        "text_vi": "“May quá.” Alison nói nhẹ nhõm."
+      },
+      {
+        "text_en": "“I never see such thing,” Messi exclaimed in surprise.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_025.mp3",
+        "text_vi": "“Tớ chưa bao giờ thấy thứ như vậy,” Messi thốt lên đầy ngạc nhiên."
+      },
+      {
+        "text_en": "“I told you not to go down.” Ronaldo pointed out.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_026.mp3",
+        "text_vi": "“Tớ đã bảo cậu đừng đi xuống mà.” Ronaldo chỉ ra."
+      },
+      {
+        "text_en": "Later on, three friends were back on trail.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_027.mp3",
+        "text_vi": "Sau đó, ba người bạn quay trở lại đường mòn."
+      },
+      {
+        "text_en": "After more hiking and exploring, they decided to take a rest.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_028.mp3",
+        "text_vi": "Sau khi đi bộ và khám phá thêm, họ quyết định nghỉ ngơi."
+      },
+      {
+        "text_en": "Messi brought out delicious looking box of home-made cookies.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_029.mp3",
+        "text_vi": "Messi lấy ra một hộp bánh quy tự làm trông rất ngon."
+      },
+      {
+        "text_en": "They ate and drunk and then kept walking.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_030.mp3",
+        "text_vi": "Họ ăn uống xong rồi tiếp tục đi bộ."
+      },
+      {
+        "text_en": "After an hour, They arrived a river with a log on it.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_031.mp3",
+        "text_vi": "Sau một giờ, họ đến một con sông có một khúc gỗ bắc qua."
+      },
+      {
+        "text_en": "“ Wow! How in the world are we gonna cross that?” Alison said.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_032.mp3",
+        "text_vi": "“Chà! Làm sao chúng ta có thể qua được bên kia đây?” Alison nói."
+      },
+      {
+        "text_en": "Ronaldo took a step on the log and then said:",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_033.mp3",
+        "text_vi": "Ronaldo bước một bước lên khúc gỗ rồi nói:"
+      },
+      {
+        "text_en": "“mmmm..., friends, I think we can cross the river by stepping carefully on the log.” When Messi walking on the log, he trembled with fear as sweat ran down his forehead, his heart beat faster and faster.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_034.mp3",
+        "text_vi": "“Ưm..., các bạn ơi, tớ nghĩ chúng ta có thể băng qua sông bằng cách bước cẩn thận trên khúc gỗ.” Khi Messi đi trên khúc gỗ, cậu ấy run rẩy vì sợ hãi, mồ hôi chảy dài trên trán, tim cậu ấy đập nhanh hơn và nhanh hơn."
+      },
+      {
+        "text_en": "The more he felt fear.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_035.mp3",
+        "text_vi": "Cậu ấy càng sợ hãi."
+      },
+      {
+        "text_en": "The more he felt unbalanced.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_036.mp3",
+        "text_vi": "Cậu ấy càng cảm thấy mất thăng bằng."
+      },
+      {
+        "text_en": "Alison was shivering as one of his foot fell into the water.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_037.mp3",
+        "text_vi": "Alison đang run rẩy khi một chân cậu ấy rơi xuống nước."
+      },
+      {
+        "text_en": "Ronaldo looked at them, and said: ”You guys may crouch down and crawl!” They listened to Ronald and done what Ronald said.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_038.mp3",
+        "text_vi": "Ronaldo nhìn họ và nói: “Các cậu có thể cúi thấp người xuống và bò!” Họ nghe lời Ronaldo và làm theo những gì Ronaldo nói."
+      },
+      {
+        "text_en": "Finally, They got to the other of shore safely.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_039.mp3",
+        "text_vi": "Cuối cùng, họ đã đến bờ bên kia an toàn."
+      },
+      {
+        "text_en": "They continued their journey.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_040.mp3",
+        "text_vi": "Họ tiếp tục cuộc hành trình của mình."
+      },
+      {
+        "text_en": "After following the trial for a while, t hey saw some monkeys jumping on the tree, and the other people feeding the monkeys with apples. The",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_041.mp3",
+        "text_vi": "Sau khi đi theo đường mòn một lúc, họ thấy vài con khỉ đang nhảy trên cây, và những người khác đang cho khỉ ăn táo. Những"
+      },
+      {
+        "text_en": "monkeys were lovely and friendly.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_042.mp3",
+        "text_vi": "con khỉ thật đáng yêu và thân thiện."
+      },
+      {
+        "text_en": "So they decided to protect nature, while they were talking.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_043.mp3",
+        "text_vi": "Vì vậy họ quyết định bảo vệ thiên nhiên, trong lúc họ đang nói chuyện."
+      },
+      {
+        "text_en": "Alison saw a sign up ahead, it read :END OF TRAIL.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_044.mp3",
+        "text_vi": "Alison thấy một tấm biển phía trước, nó ghi: HẾT ĐƯỜNG MÒN."
+      },
+      {
+        "text_en": "What a wonderful adventure!! THE END",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_045.mp3",
+        "text_vi": "Thật là một cuộc phiêu lưu tuyệt vời!! HẾT TRUYỆN"
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "Last Saturday, it was a bright and sunny day.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "Ronaldo, Messi and Alison decided to go hiking.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "After half an hour, they met each other at the entrance of the hiking trail.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "All three of them were ready and prepared, Alison even brought a drone with him!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "Soon after they took off.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "Messi said that he had been hiking on this mountain before and a monkey stole his mosquito repellent!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "So Messi reminded his friends to be careful about",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "monkey. They walked and walked staring at amazing sight; green trees covered mountain as a blanket, the branches swaying back and forth when the wind were blowing.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "There were also some green grass and wild flowers with different colour embellishing the mountain.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "Bees buzzing and birds chirping; they were enjoying the sight immensely.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "Meanwhile, Ronaldo came to a stop.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "He saw a trail that leads down hill...",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "“I want to explore!” Alison hesitated.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_012.mp3"
+        },
+        {
+          "id": "ra_13",
+          "text_en": "“Let’s just keep going.” Ronaldo urged.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_013.mp3"
+        },
+        {
+          "id": "ra_14",
+          "text_en": "Soon Alison and Ronaldo broke into an argument.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_014.mp3"
+        },
+        {
+          "id": "ra_15",
+          "text_en": "Finally, Messi suggested:",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_015.mp3"
+        },
+        {
+          "id": "ra_16",
+          "text_en": "“Let’s just go down and explore, it will be fun!” “Fine!” Grumbled Ronaldo as they hiked down the narrow path.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_016.mp3"
+        },
+        {
+          "id": "ra_17",
+          "text_en": "Soon they discovered that there is a lake lying on the valley.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_017.mp3"
+        },
+        {
+          "id": "ra_18",
+          "text_en": "Water in the lake were as clear as glass, water flowing smoothly and calmly across the beautiful lake.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_018.mp3"
+        },
+        {
+          "id": "ra_19",
+          "text_en": "Messi suggested they threw rocks and saw who could create the biggest splash...",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_019.mp3"
+        },
+        {
+          "id": "ra_20",
+          "text_en": "“ KABOOM!” Went Messi’s rock.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_020.mp3"
+        },
+        {
+          "id": "ra_21",
+          "text_en": "Suddenly an ENORMOUS fish leaped out of the lake with its mouth wide open.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_021.mp3"
+        },
+        {
+          "id": "ra_22",
+          "text_en": "The three friends dashed away as fast as a cheetah.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_022.mp3"
+        },
+        {
+          "id": "ra_23",
+          "text_en": "Soon they stopped out of breath.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_023.mp3"
+        },
+        {
+          "id": "ra_24",
+          "text_en": "“Close one.” Alison said in relief.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_024.mp3"
+        },
+        {
+          "id": "ra_25",
+          "text_en": "“I never see such thing,” Messi exclaimed in surprise.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_025.mp3"
+        },
+        {
+          "id": "ra_26",
+          "text_en": "“I told you not to go down.” Ronaldo pointed out.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_026.mp3"
+        },
+        {
+          "id": "ra_27",
+          "text_en": "Later on, three friends were back on trail.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_027.mp3"
+        },
+        {
+          "id": "ra_28",
+          "text_en": "After more hiking and exploring, they decided to take a rest.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_028.mp3"
+        },
+        {
+          "id": "ra_29",
+          "text_en": "Messi brought out delicious looking box of home-made cookies.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_029.mp3"
+        },
+        {
+          "id": "ra_30",
+          "text_en": "They ate and drunk and then kept walking.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_030.mp3"
+        },
+        {
+          "id": "ra_31",
+          "text_en": "After an hour, They arrived a river with a log on it.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_031.mp3"
+        },
+        {
+          "id": "ra_32",
+          "text_en": "“ Wow! How in the world are we gonna cross that?” Alison said.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_032.mp3"
+        },
+        {
+          "id": "ra_33",
+          "text_en": "Ronaldo took a step on the log and then said:",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_033.mp3"
+        },
+        {
+          "id": "ra_34",
+          "text_en": "“mmmm..., friends, I think we can cross the river by stepping carefully on the log.” When Messi walking on the log, he trembled with fear as sweat ran down his forehead, his heart beat faster and faster.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_034.mp3"
+        },
+        {
+          "id": "ra_35",
+          "text_en": "The more he felt fear.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_035.mp3"
+        },
+        {
+          "id": "ra_36",
+          "text_en": "The more he felt unbalanced.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_036.mp3"
+        },
+        {
+          "id": "ra_37",
+          "text_en": "Alison was shivering as one of his foot fell into the water.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_037.mp3"
+        },
+        {
+          "id": "ra_38",
+          "text_en": "Ronaldo looked at them, and said: ”You guys may crouch down and crawl!” They listened to Ronald and done what Ronald said.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_038.mp3"
+        },
+        {
+          "id": "ra_39",
+          "text_en": "Finally, They got to the other of shore safely.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_039.mp3"
+        },
+        {
+          "id": "ra_40",
+          "text_en": "They continued their journey.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_040.mp3"
+        },
+        {
+          "id": "ra_41",
+          "text_en": "After following the trial for a while, t hey saw some monkeys jumping on the tree, and the other people feeding the monkeys with apples. The",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_041.mp3"
+        },
+        {
+          "id": "ra_42",
+          "text_en": "monkeys were lovely and friendly.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_042.mp3"
+        },
+        {
+          "id": "ra_43",
+          "text_en": "So they decided to protect nature, while they were talking.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_043.mp3"
+        },
+        {
+          "id": "ra_44",
+          "text_en": "Alison saw a sign up ahead, it read :END OF TRAIL.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_044.mp3"
+        },
+        {
+          "id": "ra_45",
+          "text_en": "What a wonderful adventure!! THE END",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_118620/s_045.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "When did this happen?",
+          "options_en": [
+            "Last Saturday",
+            "After half an hour",
+            "Soon after they took off"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "What was the weather like?",
+          "options_en": [
+            "Bright and sunny",
+            "Windy and rainy",
+            "Cloudy and cold"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s1_q1",
+          "type": "choice",
+          "question_en": "Who decided to go hiking?",
+          "options_en": [
+            "Ronaldo, Messi and Alison",
+            "Ronaldo and Messi",
+            "Alison"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s1_q2",
+          "type": "choice",
+          "question_en": "What did they decide to do?",
+          "options_en": [
+            "Go hiking",
+            "Bring a drone",
+            "Meet at the entrance"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s2_q1",
+          "type": "choice",
+          "question_en": "When did they meet each other?",
+          "options_en": [
+            "After half an hour",
+            "Last Saturday",
+            "When Messi suggested"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s2_q2",
+          "type": "choice",
+          "question_en": "Where did they meet?",
+          "options_en": [
+            "At the entrance of the hiking trail",
+            "By the lake",
+            "At the river"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s3_q1",
+          "type": "choice",
+          "question_en": "Who brought a drone?",
+          "options_en": [
+            "Alison",
+            "Ronaldo",
+            "Messi"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p0_s3_q2",
+          "type": "choice",
+          "question_en": "What were all three of them?",
+          "options_en": [
+            "Ready and prepared",
+            "Tired and thirsty",
+            "Arguing"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p0_s4_q1",
+          "type": "choice",
+          "question_en": "When did they take off?",
+          "options_en": [
+            "Soon after",
+            "After half an hour",
+            "At the entrance"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p0_s4_q2",
+          "type": "choice",
+          "question_en": "What did they do soon after?",
+          "options_en": [
+            "They took off",
+            "They met each other",
+            "They found a lake"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p0_s5_q1",
+          "type": "choice",
+          "question_en": "Who said he had been hiking on this mountain before?",
+          "options_en": [
+            "Messi",
+            "Ronaldo",
+            "Alison"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p0_s5_q2",
+          "type": "choice",
+          "question_en": "What did a monkey steal from him?",
+          "options_en": [
+            "His mosquito repellent",
+            "His drone",
+            "His homemade cookies"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p0_s6_q1",
+          "type": "choice",
+          "question_en": "Who reminded his friends to be careful?",
+          "options_en": [
+            "Messi",
+            "Ronaldo",
+            "Alison"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p0_s6_q2",
+          "type": "choice",
+          "question_en": "What did Messi do?",
+          "options_en": [
+            "Reminded his friends to be careful",
+            "Took out homemade cookies",
+            "Brought a drone"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "What covered the mountain like a blanket?",
+          "options_en": [
+            "Green trees",
+            "A lake",
+            "A box of cookies"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "How were the branches moving?",
+          "options_en": [
+            "Swaying back and forth",
+            "Trembling with fear",
+            "Jumping on the tree"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p1_s1_q1",
+          "type": "choice",
+          "question_en": "What else was on the mountain besides trees?",
+          "options_en": [
+            "Green grass and wild flowers",
+            "A clear lake",
+            "Apples for monkeys"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p1_s1_q2",
+          "type": "choice",
+          "question_en": "How did the wild flowers affect the mountain?",
+          "options_en": [
+            "They embellished the mountain",
+            "They made a big splash",
+            "They helped protect nature"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p1_s2_q1",
+          "type": "choice",
+          "question_en": "Which animals were making sounds?",
+          "options_en": [
+            "Bees and birds",
+            "Monkeys and fish",
+            "Cheetahs and drones"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p1_s2_q2",
+          "type": "choice",
+          "question_en": "How did they feel about the sight?",
+          "options_en": [
+            "They were enjoying it immensely",
+            "They were frightened by a fish",
+            "They were tired after crossing a log"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "Who came to a stop?",
+          "options_en": [
+            "Ronaldo",
+            "Messi",
+            "Alison"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "When did Ronaldo come to a stop?",
+          "options_en": [
+            "Meanwhile",
+            "After an hour",
+            "At the entrance"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p2_s1_q1",
+          "type": "choice",
+          "question_en": "What did he see?",
+          "options_en": [
+            "A trail that leads down hill",
+            "A lake",
+            "Some monkeys"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p2_s1_q2",
+          "type": "choice",
+          "question_en": "Where did the trail lead?",
+          "options_en": [
+            "Down hill",
+            "To the river",
+            "To the top of the mountain"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p2_s2_q1",
+          "type": "choice",
+          "question_en": "Who said \"I want to explore!\"?",
+          "options_en": [
+            "Alison",
+            "Ronaldo",
+            "Messi"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p2_s2_q2",
+          "type": "choice",
+          "question_en": "How did Alison respond when she spoke?",
+          "options_en": [
+            "Hesitated",
+            "Urged",
+            "Grumbled"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p2_s3_q1",
+          "type": "choice",
+          "question_en": "What did Ronaldo urge?",
+          "options_en": [
+            "\"Let's just keep going.\"",
+            "\"I want to explore!\"",
+            "\"Let's just go down and explore\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p2_s3_q2",
+          "type": "choice",
+          "question_en": "How did Ronaldo speak in this sentence?",
+          "options_en": [
+            "Urged",
+            "Grumbled",
+            "Suggested"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p2_s4_q1",
+          "type": "choice",
+          "question_en": "Who broke into an argument?",
+          "options_en": [
+            "Alison and Ronaldo",
+            "Ronaldo and Messi",
+            "Alison and Messi"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p2_s4_q2",
+          "type": "choice",
+          "question_en": "When did Alison and Ronaldo break into an argument?",
+          "options_en": [
+            "Soon",
+            "After an hour",
+            "At the entrance"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p2_s5_q1",
+          "type": "choice",
+          "question_en": "Who suggested finally?",
+          "options_en": [
+            "Messi",
+            "Ronaldo",
+            "Alison"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p2_s5_q2",
+          "type": "choice",
+          "question_en": "How is the timing of Messi's suggestion described?",
+          "options_en": [
+            "Finally",
+            "Suddenly",
+            "Later on"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "Who suggested going down to explore?",
+          "options_en": [
+            "Messi",
+            "Alison",
+            "Ronaldo"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "Where were they hiking when Ronaldo grumbled \"Fine\"?",
+          "options_en": [
+            "Down the narrow path",
+            "At the entrance of the hiking trail",
+            "On a log over a river"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p3_s1_q1",
+          "type": "choice",
+          "question_en": "What did they discover in the valley?",
+          "options_en": [
+            "A lake",
+            "Some monkeys",
+            "A river with a log"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p3_s1_q2",
+          "type": "choice",
+          "question_en": "Where was the lake located?",
+          "options_en": [
+            "On the valley",
+            "At the entrance of the hiking trail",
+            "On the mountain covered with trees"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p3_s2_q1",
+          "type": "choice",
+          "question_en": "What was the water in the lake compared to?",
+          "options_en": [
+            "Glass",
+            "A blanket",
+            "A log"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p3_s2_q2",
+          "type": "choice",
+          "question_en": "How was the water flowing across the lake?",
+          "options_en": [
+            "Smoothly and calmly",
+            "Creating big splashes",
+            "Trembling with fear"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "Who suggested they throw rocks to see who could make the biggest splash?",
+          "options_en": [
+            "Messi",
+            "Ronaldo",
+            "Alison"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "What did Messi suggest they do by the lake?",
+          "options_en": [
+            "Throw rocks to see who could create the biggest splash",
+            "Climb a tree to look around",
+            "Fly the drone to take pictures"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p4_s1_q1",
+          "type": "choice",
+          "question_en": "What sound did Messi's rock make?",
+          "options_en": [
+            "“KABOOM!”",
+            "A soft splash",
+            "Bees buzzing"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p4_s1_q2",
+          "type": "choice",
+          "question_en": "Whose rock made the loud sound?",
+          "options_en": [
+            "Messi's",
+            "Ronaldo's",
+            "Alison's"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p4_s2_q1",
+          "type": "choice",
+          "question_en": "What suddenly leaped out of the lake?",
+          "options_en": [
+            "An enormous fish",
+            "A monkey",
+            "A drone"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p4_s2_q2",
+          "type": "choice",
+          "question_en": "How did the fish come out of the water?",
+          "options_en": [
+            "It leaped out",
+            "It crawled onto the shore",
+            "It swam slowly near the surface"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p4_s3_q1",
+          "type": "choice",
+          "question_en": "Who dashed away as fast as a cheetah?",
+          "options_en": [
+            "The three friends",
+            "Messi alone",
+            "Ronaldo and Alison only"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p4_s3_q2",
+          "type": "choice",
+          "question_en": "How did the friends move when they left the lake area?",
+          "options_en": [
+            "They dashed away quickly",
+            "They walked slowly",
+            "They stood still"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "Who stopped out of breath?",
+          "options_en": [
+            "the three friends",
+            "Messi",
+            "Alison"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "Why did they stop?",
+          "options_en": [
+            "because they were out of breath",
+            "because a monkey appeared",
+            "because they saw the lake"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p5_s1_q1",
+          "type": "choice",
+          "question_en": "Who said \"Close one.\"?",
+          "options_en": [
+            "Alison",
+            "Ronaldo",
+            "Messi"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p5_s1_q2",
+          "type": "choice",
+          "question_en": "How did Alison speak when she said it?",
+          "options_en": [
+            "in relief",
+            "in surprise",
+            "grumbled"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p5_s2_q1",
+          "type": "choice",
+          "question_en": "Who exclaimed in surprise?",
+          "options_en": [
+            "Messi",
+            "Alison",
+            "Ronaldo"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p5_s2_q2",
+          "type": "choice",
+          "question_en": "What did Messi say?",
+          "options_en": [
+            "\"I never see such thing\"",
+            "\"I told you not to go down\"",
+            "\"A monkey stole my repellent\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p5_s3_q1",
+          "type": "choice",
+          "question_en": "Who pointed out that he had warned them?",
+          "options_en": [
+            "Ronaldo",
+            "Messi",
+            "Alison"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p5_s3_q2",
+          "type": "choice",
+          "question_en": "What did Ronaldo point out?",
+          "options_en": [
+            "that he told them not to go down",
+            "that they had found a lake",
+            "that they could cross on a log"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p5_s4_q1",
+          "type": "choice",
+          "question_en": "Where were the three friends later on?",
+          "options_en": [
+            "back on the trail",
+            "at the lake",
+            "at the river"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        },
+        {
+          "id": "gl_p5_s4_q2",
+          "type": "choice",
+          "question_en": "When were the three friends back on the trail?",
+          "options_en": [
+            "later on",
+            "after they met at the entrance",
+            "before they threw rocks"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "Who decided to take a rest?",
+          "options_en": [
+            "They (Ronaldo, Messi and Alison)",
+            "Ronaldo",
+            "Messi"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "When did they decide to take a rest?",
+          "options_en": [
+            "After more hiking and exploring",
+            "After an hour",
+            "After seeing the lake"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        },
+        {
+          "id": "gl_p6_s1_q1",
+          "type": "choice",
+          "question_en": "Who brought out a box of home-made cookies?",
+          "options_en": [
+            "Messi",
+            "Alison",
+            "Ronaldo"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p6_s1_q2",
+          "type": "choice",
+          "question_en": "What did Messi bring out?",
+          "options_en": [
+            "A delicious looking box of home-made cookies",
+            "A drone",
+            "Mosquito repellent"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p6_s2_q1",
+          "type": "choice",
+          "question_en": "What did they do before they kept walking?",
+          "options_en": [
+            "They ate and drank",
+            "They crossed the river",
+            "They fed the monkeys"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        },
+        {
+          "id": "gl_p6_s2_q2",
+          "type": "choice",
+          "question_en": "What did they do after eating and drinking?",
+          "options_en": [
+            "They kept walking",
+            "They went back to the trail entrance",
+            "They watched the monkeys"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        },
+        {
+          "id": "gl_p6_s3_q1",
+          "type": "choice",
+          "question_en": "When did they arrive at a river with a log on it?",
+          "options_en": [
+            "After an hour",
+            "After more hiking and exploring",
+            "After half an hour"
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        },
+        {
+          "id": "gl_p6_s3_q2",
+          "type": "choice",
+          "question_en": "Where did they arrive?",
+          "options_en": [
+            "At a river with a log on it",
+            "At the lake",
+            "At the trail entrance"
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        },
+        {
+          "id": "gl_p6_s4_q1",
+          "type": "choice",
+          "question_en": "Who asked how they were going to cross?",
+          "options_en": [
+            "Alison",
+            "Ronaldo",
+            "Messi"
+          ],
+          "correct_index": 0,
+          "sentence_index": 32
+        },
+        {
+          "id": "gl_p6_s4_q2",
+          "type": "choice",
+          "question_en": "What was Alison asking about?",
+          "options_en": [
+            "How they were going to cross that",
+            "Where to find monkeys",
+            "What to eat next"
+          ],
+          "correct_index": 0,
+          "sentence_index": 32
+        },
+        {
+          "id": "gl_p6_s5_q1",
+          "type": "choice",
+          "question_en": "Who took a step on the log?",
+          "options_en": [
+            "Ronaldo",
+            "Messi",
+            "Alison"
+          ],
+          "correct_index": 0,
+          "sentence_index": 33
+        },
+        {
+          "id": "gl_p6_s5_q2",
+          "type": "choice",
+          "question_en": "What did Ronaldo do before he spoke?",
+          "options_en": [
+            "He took a step on the log",
+            "He brought out cookies",
+            "He threw a rock"
+          ],
+          "correct_index": 0,
+          "sentence_index": 33
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "Who trembled with fear while walking on the log?",
+          "options_en": [
+            "Messi",
+            "Ronaldo",
+            "Alison"
+          ],
+          "correct_index": 0,
+          "sentence_index": 34
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "What happened to Messi as he walked on the log?",
+          "options_en": [
+            "Sweat ran down his forehead",
+            "He opened a box of cookies",
+            "He flew a drone"
+          ],
+          "correct_index": 0,
+          "sentence_index": 34
+        },
+        {
+          "id": "gl_p7_s1_q1",
+          "type": "choice",
+          "question_en": "Who felt more fear?",
+          "options_en": [
+            "Messi",
+            "Ronaldo",
+            "Alison"
+          ],
+          "correct_index": 0,
+          "sentence_index": 35
+        },
+        {
+          "id": "gl_p7_s1_q2",
+          "type": "choice",
+          "question_en": "How did his fear change?",
+          "options_en": [
+            "It increased",
+            "It went away",
+            "It stayed the same"
+          ],
+          "correct_index": 0,
+          "sentence_index": 35
+        },
+        {
+          "id": "gl_p7_s2_q1",
+          "type": "choice",
+          "question_en": "What did he feel more of in addition to fear?",
+          "options_en": [
+            "Unbalanced",
+            "Hungry",
+            "Happy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 36
+        },
+        {
+          "id": "gl_p7_s2_q2",
+          "type": "choice",
+          "question_en": "How was his physical state described?",
+          "options_en": [
+            "Unbalanced",
+            "Calm and steady",
+            "Excited to explore"
+          ],
+          "correct_index": 0,
+          "sentence_index": 36
+        },
+        {
+          "id": "gl_p7_s3_q1",
+          "type": "choice",
+          "question_en": "Who was shivering when a foot fell into the water?",
+          "options_en": [
+            "Alison",
+            "Messi",
+            "Ronaldo"
+          ],
+          "correct_index": 0,
+          "sentence_index": 37
+        },
+        {
+          "id": "gl_p7_s3_q2",
+          "type": "choice",
+          "question_en": "What happened to one of Alison's feet?",
+          "options_en": [
+            "It fell into the water",
+            "It touched a giant fish",
+            "It stepped on a log"
+          ],
+          "correct_index": 0,
+          "sentence_index": 37
+        }
+      ]
+    },
+    {
+      "paragraph_index": 8,
+      "questions": [
+        {
+          "id": "gl_p8_s0_q1",
+          "type": "choice",
+          "question_en": "Who told them to crouch down and crawl?",
+          "options_en": [
+            "Ronaldo",
+            "Messi",
+            "Alison"
+          ],
+          "correct_index": 0,
+          "sentence_index": 38
+        },
+        {
+          "id": "gl_p8_s0_q2",
+          "type": "choice",
+          "question_en": "What did they do after Ronaldo told them to crouch down and crawl?",
+          "options_en": [
+            "They listened and did what he said",
+            "They climbed a tree",
+            "They threw rocks into the lake"
+          ],
+          "correct_index": 0,
+          "sentence_index": 38
+        },
+        {
+          "id": "gl_p8_s1_q1",
+          "type": "choice",
+          "question_en": "Where did they get to finally?",
+          "options_en": [
+            "The other shore",
+            "The top of the mountain",
+            "The entrance of the trail"
+          ],
+          "correct_index": 0,
+          "sentence_index": 39
+        },
+        {
+          "id": "gl_p8_s1_q2",
+          "type": "choice",
+          "question_en": "How did they arrive at the other shore?",
+          "options_en": [
+            "Safely",
+            "With a big splash",
+            "After being chased by a fish"
+          ],
+          "correct_index": 0,
+          "sentence_index": 39
+        },
+        {
+          "id": "gl_p8_s2_q1",
+          "type": "choice",
+          "question_en": "What did they do after reaching the other shore?",
+          "options_en": [
+            "They continued their journey",
+            "They went back home",
+            "They stopped to fly a drone"
+          ],
+          "correct_index": 0,
+          "sentence_index": 40
+        },
+        {
+          "id": "gl_p8_s2_q2",
+          "type": "choice",
+          "question_en": "Which action describes their next step?",
+          "options_en": [
+            "Continue the journey",
+            "Feed the monkeys",
+            "Throw rocks into the lake"
+          ],
+          "correct_index": 0,
+          "sentence_index": 40
+        },
+        {
+          "id": "gl_p8_s3_q1",
+          "type": "choice",
+          "question_en": "What did they see after following the trail for a while?",
+          "options_en": [
+            "Monkeys jumping on the tree",
+            "A log on the river",
+            "An enormous fish in the lake"
+          ],
+          "correct_index": 0,
+          "sentence_index": 41
+        },
+        {
+          "id": "gl_p8_s3_q2",
+          "type": "choice",
+          "question_en": "Who was feeding the monkeys with apples?",
+          "options_en": [
+            "The other people",
+            "Ronaldo",
+            "Messi"
+          ],
+          "correct_index": 0,
+          "sentence_index": 41
+        }
+      ]
+    },
+    {
+      "paragraph_index": 9,
+      "questions": [
+        {
+          "id": "gl_p9_s0_q1",
+          "type": "choice",
+          "question_en": "Who were lovely and friendly?",
+          "options_en": [
+            "monkeys",
+            "Ronaldo",
+            "Alison"
+          ],
+          "correct_index": 0,
+          "sentence_index": 42
+        },
+        {
+          "id": "gl_p9_s0_q2",
+          "type": "choice",
+          "question_en": "How were the monkeys described?",
+          "options_en": [
+            "lovely and friendly",
+            "scary and loud",
+            "hungry and tired"
+          ],
+          "correct_index": 0,
+          "sentence_index": 42
+        },
+        {
+          "id": "gl_p9_s1_q1",
+          "type": "choice",
+          "question_en": "What did they decide to do?",
+          "options_en": [
+            "protect nature",
+            "feed the monkeys",
+            "throw rocks"
+          ],
+          "correct_index": 0,
+          "sentence_index": 43
+        },
+        {
+          "id": "gl_p9_s1_q2",
+          "type": "choice",
+          "question_en": "Why did they decide to protect nature?",
+          "options_en": [
+            "while they were talking",
+            "because of the fish",
+            "to cross the river"
+          ],
+          "correct_index": 0,
+          "sentence_index": 43
+        },
+        {
+          "id": "gl_p9_s2_q1",
+          "type": "choice",
+          "question_en": "What did the sign Alison saw read?",
+          "options_en": [
+            "END OF TRAIL",
+            "NO FEEDING",
+            "DANGER AHEAD"
+          ],
+          "correct_index": 0,
+          "sentence_index": 44
+        },
+        {
+          "id": "gl_p9_s2_q2",
+          "type": "choice",
+          "question_en": "Where did Alison see the sign?",
+          "options_en": [
+            "up ahead",
+            "by the lake",
+            "on the log"
+          ],
+          "correct_index": 0,
+          "sentence_index": 44
+        },
+        {
+          "id": "gl_p9_s3_q1",
+          "type": "choice",
+          "question_en": "What did the narrator say about the adventure?",
+          "options_en": [
+            "What a wonderful adventure!!",
+            "It was a scary adventure.",
+            "The adventure was boring."
+          ],
+          "correct_index": 0,
+          "sentence_index": 45
+        },
+        {
+          "id": "gl_p9_s3_q2",
+          "type": "choice",
+          "question_en": "How does the paragraph end?",
+          "options_en": [
+            "THE END",
+            "They went home",
+            "They met more monkeys"
+          ],
+          "correct_index": 0,
+          "sentence_index": 45
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'Hiking'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "bright",
+      "meaning_vi": "sáng sủa, rực rỡ",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "hiking",
+      "meaning_vi": "đi bộ đường dài, leo núi",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "entrance",
+      "meaning_vi": "lối vào, cổng vào",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "repellent",
+      "meaning_vi": "chất xua đuổi (ở đây là thuốc chống muỗi)",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "staring",
+      "meaning_vi": "nhìn chằm chằm, ngắm nhìn",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "swaying",
+      "meaning_vi": "đung đưa, lắc lư",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "embellishing",
+      "meaning_vi": "tô điểm, làm đẹp",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "immensely",
+      "meaning_vi": "vô cùng, rất nhiều",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "meanwhile",
+      "meaning_vi": "trong lúc đó, đồng thời",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "explore",
+      "meaning_vi": "khám phá, thám hiểm",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "hesitated",
+      "meaning_vi": "ngập ngừng, do dự",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "argument",
+      "meaning_vi": "cuộc tranh cãi, cãi vã",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "grumbled",
+      "meaning_vi": "càu nhàu, lầm bầm",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "discovered",
+      "meaning_vi": "khám phá ra, tìm thấy",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "valley",
+      "meaning_vi": "thung lũng",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "smoothly",
+      "meaning_vi": "êm đềm, trôi chảy",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "suggested",
+      "meaning_vi": "gợi ý, đề nghị",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "splash",
+      "meaning_vi": "tiếng té nước, bắn tung tóe",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "enormous",
+      "meaning_vi": "khổng lồ, to lớn",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "dashed",
+      "meaning_vi": "lao đi, chạy vọt đi",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "relief",
+      "meaning_vi": "nhẹ nhõm, an ủi",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "exclaimed",
+      "meaning_vi": "thốt lên, kêu lên",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "surprise",
+      "meaning_vi": "ngạc nhiên, bất ngờ",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "pointed out",
+      "meaning_vi": "chỉ ra, nói rõ",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "delicious",
+      "meaning_vi": "ngon, thơm ngon",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "home-made",
+      "meaning_vi": "tự làm, làm tại nhà",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "log",
+      "meaning_vi": "khúc gỗ, thân cây",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "cross",
+      "meaning_vi": "băng qua, vượt qua",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "carefully",
+      "meaning_vi": "cẩn thận, kỹ càng",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "trembled",
+      "meaning_vi": "run rẩy, run sợ",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "forehead",
+      "meaning_vi": "trán",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "unbalanced",
+      "meaning_vi": "mất thăng bằng, không cân bằng",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "crouch",
+      "meaning_vi": "cúi thấp người, khom người",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "crawl",
+      "meaning_vi": "bò",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "safely",
+      "meaning_vi": "an toàn",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "journey",
+      "meaning_vi": "cuộc hành trình, chuyến đi",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "lovely",
+      "meaning_vi": "đáng yêu, dễ thương",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "friendly",
+      "meaning_vi": "thân thiện",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "protect",
+      "meaning_vi": "bảo vệ",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "adventure",
+      "meaning_vi": "cuộc phiêu lưu, chuyến phiêu lưu",
+      "paragraph_index": 9
+    }
+  ]
+}

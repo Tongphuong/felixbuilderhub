@@ -1,0 +1,1814 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L2",
+  "level_label": "Cấp 2",
+  "topic": "Paper Play",
+  "slug": "book_156",
+  "audio_filename": "book_156.mp3",
+  "book_slug": "book_156",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_156/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_156/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_156/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_156/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_156/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_156/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_156/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_156/page_09.jpg",
+    "https://audio.felixbuilderhub.com/books/book_156/page_10.jpg",
+    "https://audio.felixbuilderhub.com/books/book_156/page_11.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_156/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_156/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_156/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_156/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_156/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_156/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_156/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_156/page_09.mp3",
+    "https://audio.felixbuilderhub.com/books/book_156/page_10.mp3",
+    "https://audio.felixbuilderhub.com/books/book_156/page_11.mp3"
+  ],
+  "book_attribution": {
+    "title": "Paper Play",
+    "creators": [
+      "Mala Kumar",
+      "Ruchi Shah"
+    ],
+    "publisher": "Pratham Books",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: Paper Play is written by Mala Kumar . © Pratham Books , 2011. Some rights reserved. Released under CC BY 4.0 license. Other Credits: 'Paper Play' has been published on StoryWeaver by Pratham Books. Pratham Books is a not-for-profit organization that publishes books in multiple Indian languages to promote reading among children. www.prathambooks.org Images Attributions: Cover page: Girl, boy and pony , by Ruchi Shah © Pratham Books, 2011. Some rights reserved. Released under CC BY 4.0 license. Page 2: Girl and boy drawing , by Ruchi Shah © Pratham Books, 2011. Some rights reserved. Released under CC BY 4.0 license. Page 3: Girl looking at ball of paper , by Ruchi Shah © Pratham Books, 2011. Some rights reserved. Released under CC BY 4.0 license. Page 4: Girl holding a paper lollipop , by Ruchi Shah © Pratham Books, 2011. Some rights reserved. Released under CC BY 4.0 license. Page 5: Boy holding a paper mike , by Ruchi Shah © Pratham Books, 2011. Some rights reserved. Released under CC BY 4.0 license. Page 6: Girl and boy singing , by Ruchi Shah © Pratham Books, 2011. Some rights reserved. Released under CC BY 4.0 license. Page 7: Boy playing with a paper boat , by Ruchi Shah © Pratham Books, 2011. Some rights reserved. Released under CC BY 4.0 license. Page 8: Boy cutting paper , by Ruchi Shah © Pratham Books, 2011. Some rights reserved. Released under CC BY 4.0 license. Page 9: Children smiling from a paper camera , by Ruchi Shah © Pratham Books, 2011. Some rights reserved. Released under CC BY 4.0 license. Page 10: Girl talking to boy with pony , by Ruchi Shah © Pratham Books, 2011. Some rights reserved. Released under CC BY 4.0 license. Page 11: Pony and paper , by Ruchi Shah © Pratham Books, 2011. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/156-paper-play",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "Girl and boy drawing , by Ruchi Shah © Pratham Books, 2011. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "Girl looking at ball of paper , by Ruchi Shah © Pratham Books, 2011. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "Girl holding a paper lollipop , by Ruchi Shah © Pratham Books, 2011. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "Boy holding a paper mike , by Ruchi Shah © Pratham Books, 2011. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "Girl and boy singing , by Ruchi Shah © Pratham Books, 2011. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "Boy playing with a paper boat , by Ruchi Shah © Pratham Books, 2011. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "Boy cutting paper , by Ruchi Shah © Pratham Books, 2011. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "Children smiling from a paper camera , by Ruchi Shah © Pratham Books, 2011. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 8,
+        "credit_text": "Girl talking to boy with pony , by Ruchi Shah © Pratham Books, 2011. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 9,
+        "credit_text": "Pony and paper , by Ruchi Shah © Pratham Books, 2011. Some rights reserved. Released under CC BY 4.0 license."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "Paper Play",
+    "paragraphs_en": [
+      "Swoosh came the wind. A sheet of paper floated in. Manju picked it up and sat down to draw the sun. \"Oh, this looks horrible! she said. Manju crumpled the paper and threw it out of the window. The paper fell on Wasim’s head. “Ah, a ball!” he said happily.",
+      "Wasim threw the crumpled paper ball up into the air and watched it come down. He threw it higher, and it came down faster. Wasim aimed the paper ball at Syeda, his sister. “Got you!” he shouted with glee.",
+      "Syeda picked up the crumpled paper. She stuck a pencil into it and said, “Would you like this lollipop? When I am big, I am going to sell many kinds of lollipops in my sweet shop.”",
+      "Just then, Bittu came in. “May I have the lollipop please?” he asked. He pretended to eat the sweet and then rolled up the crumpled paper. “Testing, testing, mike testing, one, two, three!” he said. “Now I am going to sing you a song.”",
+      "Bittu finished singing a film song very loudly. Manju took the crumpled paper from Bittus hands. She smoothened the paper and made a boat.",
+      "“Bittu, the famous singer will sail all around the world in this big ship!” “May I come with you too?” asked Wasim.",
+      "Wasim picked up the boat. Very carefully, he smoothened the paper. Then he folded it like a handkerchief. He cut out a corner. Then Wasim opened the paper.",
+      "“Look here, all of you! Smile please!” he said as he held up the paper with a hole in the centre. Syeda, Bittu and Manju smiled. Then they grinned. Soon they were giggling. Wasim crumpled his paper camera.",
+      "Just then, Anil came along with his donkey. He picked up Manju’s pencil and drew lines around the hole in the paper. “That’s the best sun I have ever seen!” said Manju.",
+      "Anil's donkey grabbed the paper sun from Manju's hand and gobbled it up fast. He burped loudly. Then the donkey had a very strange look on his face. Now who can tell if it was because he had eaten very fast without chewing well, or if it was because he had eaten up the sun?"
+    ],
+    "sentences": [
+      {
+        "text_en": "Swoosh came the wind.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_000.mp3",
+        "text_vi": "Gió thổi vù vù."
+      },
+      {
+        "text_en": "A sheet of paper floated in.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_001.mp3",
+        "text_vi": "Một tờ giấy bay lơ lửng vào."
+      },
+      {
+        "text_en": "Manju picked it up and sat down to draw the sun.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_002.mp3",
+        "text_vi": "Manju nhặt nó lên và ngồi xuống vẽ mặt trời."
+      },
+      {
+        "text_en": "\"Oh, this looks horrible!",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_003.mp3",
+        "text_vi": "\"Ôi, xấu quá!"
+      },
+      {
+        "text_en": "she said. Manju crumpled the paper and threw it out of the window.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_004.mp3",
+        "text_vi": "cô bé nói. Manju vò tờ giấy lại và ném nó ra ngoài cửa sổ."
+      },
+      {
+        "text_en": "The paper fell on Wasim’s head.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_005.mp3",
+        "text_vi": "Tờ giấy rơi trúng đầu Wasim."
+      },
+      {
+        "text_en": "“Ah, a ball!” he said happily.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_006.mp3",
+        "text_vi": "“À, một quả bóng!” cậu bé vui vẻ nói."
+      },
+      {
+        "text_en": "Wasim threw the crumpled paper ball up into the air and watched it come down.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_007.mp3",
+        "text_vi": "Wasim ném quả bóng giấy đã vò nát lên không trung và nhìn nó rơi xuống."
+      },
+      {
+        "text_en": "He threw it higher, and it came down faster.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_008.mp3",
+        "text_vi": "Cậu bé ném cao hơn, và nó rơi xuống nhanh hơn."
+      },
+      {
+        "text_en": "Wasim aimed the paper ball at Syeda, his sister.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_009.mp3",
+        "text_vi": "Wasim nhắm quả bóng giấy vào Syeda, chị gái cậu bé."
+      },
+      {
+        "text_en": "“Got you!” he shouted with glee.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_010.mp3",
+        "text_vi": "“Bắt được rồi!” cậu bé reo lên vui sướng."
+      },
+      {
+        "text_en": "Syeda picked up the crumpled paper.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_011.mp3",
+        "text_vi": "Syeda nhặt tờ giấy đã vò nát lên."
+      },
+      {
+        "text_en": "She stuck a pencil into it and said, “Would you like this lollipop?",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_012.mp3",
+        "text_vi": "Cô bé cắm một cây bút chì vào đó và nói, “Em có muốn cây kẹo mút này không?"
+      },
+      {
+        "text_en": "When I am big, I am going to sell many kinds of lollipops in my sweet shop.”",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_013.mp3",
+        "text_vi": "Khi lớn lên, chị sẽ bán nhiều loại kẹo mút ở cửa hàng kẹo ngọt của mình.”"
+      },
+      {
+        "text_en": "Just then, Bittu came in.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_014.mp3",
+        "text_vi": "Đúng lúc đó, Bittu bước vào."
+      },
+      {
+        "text_en": "“May I have the lollipop please?” he asked.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_015.mp3",
+        "text_vi": "“Cho tớ xin cây kẹo mút được không?” cậu bé hỏi."
+      },
+      {
+        "text_en": "He pretended to eat the sweet and then rolled up the crumpled paper.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_016.mp3",
+        "text_vi": "Cậu bé giả vờ ăn kẹo rồi cuộn tờ giấy đã vò nát lại."
+      },
+      {
+        "text_en": "“Testing, testing, mike testing, one, two, three!” he said.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_017.mp3",
+        "text_vi": "“Kiểm tra, kiểm tra, thử mic, một, hai, ba!” cậu bé nói."
+      },
+      {
+        "text_en": "“Now I am going to sing you a song.”",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_018.mp3",
+        "text_vi": "“Bây giờ tớ sẽ hát cho các bạn nghe một bài hát.”"
+      },
+      {
+        "text_en": "Bittu finished singing a film song very loudly.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_019.mp3",
+        "text_vi": "Bittu hát xong một bài hát trong phim rất to."
+      },
+      {
+        "text_en": "Manju took the crumpled paper from Bittus hands.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_020.mp3",
+        "text_vi": "Manju lấy tờ giấy đã vò nát từ tay Bittu."
+      },
+      {
+        "text_en": "She smoothened the paper and made a boat.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_021.mp3",
+        "text_vi": "Cô bé làm phẳng tờ giấy và gấp thành một chiếc thuyền."
+      },
+      {
+        "text_en": "“Bittu, the famous singer will sail all around the world in this big ship!” “May I come with you too?” asked Wasim.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_022.mp3",
+        "text_vi": "“Bittu, ca sĩ nổi tiếng sẽ đi thuyền vòng quanh thế giới trên con tàu lớn này!” “Tớ đi cùng cậu được không?” Wasim hỏi."
+      },
+      {
+        "text_en": "Wasim picked up the boat.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_023.mp3",
+        "text_vi": "Wasim nhặt chiếc thuyền lên."
+      },
+      {
+        "text_en": "Very carefully, he smoothened the paper.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_024.mp3",
+        "text_vi": "Rất cẩn thận, cậu bé làm phẳng tờ giấy."
+      },
+      {
+        "text_en": "Then he folded it like a handkerchief.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_025.mp3",
+        "text_vi": "Sau đó, cậu bé gấp nó lại như một chiếc khăn tay."
+      },
+      {
+        "text_en": "He cut out a corner.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_026.mp3",
+        "text_vi": "Cậu bé cắt một góc."
+      },
+      {
+        "text_en": "Then Wasim opened the paper.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_027.mp3",
+        "text_vi": "Sau đó Wasim mở tờ giấy ra."
+      },
+      {
+        "text_en": "“Look here, all of you!",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_028.mp3",
+        "text_vi": "“Nhìn đây này, tất cả các bạn!"
+      },
+      {
+        "text_en": "Smile please!” he said as he held up the paper with a hole in the centre.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_029.mp3",
+        "text_vi": "Cười lên nào!” cậu bé nói khi giơ tờ giấy có một lỗ ở giữa lên."
+      },
+      {
+        "text_en": "Syeda, Bittu and Manju smiled.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_030.mp3",
+        "text_vi": "Syeda, Bittu và Manju mỉm cười."
+      },
+      {
+        "text_en": "Then they grinned.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_031.mp3",
+        "text_vi": "Sau đó họ cười toe toét."
+      },
+      {
+        "text_en": "Soon they were giggling.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_032.mp3",
+        "text_vi": "Chẳng mấy chốc họ đã khúc khích cười."
+      },
+      {
+        "text_en": "Wasim crumpled his paper camera.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_033.mp3",
+        "text_vi": "Wasim vò nát chiếc máy ảnh giấy của mình."
+      },
+      {
+        "text_en": "Just then, Anil came along with his donkey.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_034.mp3",
+        "text_vi": "Đúng lúc đó, Anil đi cùng con lừa của mình đến."
+      },
+      {
+        "text_en": "He picked up Manju’s pencil and drew lines around the hole in the paper.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_035.mp3",
+        "text_vi": "Cậu bé nhặt bút chì của Manju lên và vẽ những đường xung quanh cái lỗ trên tờ giấy."
+      },
+      {
+        "text_en": "“That’s the best sun I have ever seen!” said Manju.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_036.mp3",
+        "text_vi": "“Đó là mặt trời đẹp nhất mà tớ từng thấy!” Manju nói."
+      },
+      {
+        "text_en": "Anil's donkey grabbed the paper sun from Manju's hand and gobbled it up fast.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_037.mp3",
+        "text_vi": "Con lừa của Anil giật lấy mặt trời giấy từ tay Manju và nuốt chửng rất nhanh."
+      },
+      {
+        "text_en": "He burped loudly.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_038.mp3",
+        "text_vi": "Nó ợ một tiếng thật to."
+      },
+      {
+        "text_en": "Then the donkey had a very strange look on his face.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_039.mp3",
+        "text_vi": "Sau đó, con lừa có một vẻ mặt rất lạ."
+      },
+      {
+        "text_en": "Now who can tell if it was because he had eaten very fast without chewing well, or if it was because he had eaten up the sun?",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_040.mp3",
+        "text_vi": "Giờ ai có thể nói được là nó như vậy vì đã ăn quá nhanh mà không nhai kỹ, hay vì nó đã ăn mất mặt trời?"
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "Swoosh came the wind.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "A sheet of paper floated in.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "Manju picked it up and sat down to draw the sun.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "\"Oh, this looks horrible!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "she said. Manju crumpled the paper and threw it out of the window.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "The paper fell on Wasim’s head.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "“Ah, a ball!” he said happily.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "Wasim threw the crumpled paper ball up into the air and watched it come down.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "He threw it higher, and it came down faster.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "Wasim aimed the paper ball at Syeda, his sister.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "“Got you!” he shouted with glee.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "Syeda picked up the crumpled paper.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "She stuck a pencil into it and said, “Would you like this lollipop?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_012.mp3"
+        },
+        {
+          "id": "ra_13",
+          "text_en": "When I am big, I am going to sell many kinds of lollipops in my sweet shop.”",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_013.mp3"
+        },
+        {
+          "id": "ra_14",
+          "text_en": "Just then, Bittu came in.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_014.mp3"
+        },
+        {
+          "id": "ra_15",
+          "text_en": "“May I have the lollipop please?” he asked.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_015.mp3"
+        },
+        {
+          "id": "ra_16",
+          "text_en": "He pretended to eat the sweet and then rolled up the crumpled paper.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_016.mp3"
+        },
+        {
+          "id": "ra_17",
+          "text_en": "“Testing, testing, mike testing, one, two, three!” he said.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_017.mp3"
+        },
+        {
+          "id": "ra_18",
+          "text_en": "“Now I am going to sing you a song.”",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_018.mp3"
+        },
+        {
+          "id": "ra_19",
+          "text_en": "Bittu finished singing a film song very loudly.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_019.mp3"
+        },
+        {
+          "id": "ra_20",
+          "text_en": "Manju took the crumpled paper from Bittus hands.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_020.mp3"
+        },
+        {
+          "id": "ra_21",
+          "text_en": "She smoothened the paper and made a boat.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_021.mp3"
+        },
+        {
+          "id": "ra_22",
+          "text_en": "“Bittu, the famous singer will sail all around the world in this big ship!” “May I come with you too?” asked Wasim.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_022.mp3"
+        },
+        {
+          "id": "ra_23",
+          "text_en": "Wasim picked up the boat.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_023.mp3"
+        },
+        {
+          "id": "ra_24",
+          "text_en": "Very carefully, he smoothened the paper.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_024.mp3"
+        },
+        {
+          "id": "ra_25",
+          "text_en": "Then he folded it like a handkerchief.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_025.mp3"
+        },
+        {
+          "id": "ra_26",
+          "text_en": "He cut out a corner.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_026.mp3"
+        },
+        {
+          "id": "ra_27",
+          "text_en": "Then Wasim opened the paper.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_027.mp3"
+        },
+        {
+          "id": "ra_28",
+          "text_en": "“Look here, all of you!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_028.mp3"
+        },
+        {
+          "id": "ra_29",
+          "text_en": "Smile please!” he said as he held up the paper with a hole in the centre.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_029.mp3"
+        },
+        {
+          "id": "ra_30",
+          "text_en": "Syeda, Bittu and Manju smiled.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_030.mp3"
+        },
+        {
+          "id": "ra_31",
+          "text_en": "Then they grinned.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_031.mp3"
+        },
+        {
+          "id": "ra_32",
+          "text_en": "Soon they were giggling.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_032.mp3"
+        },
+        {
+          "id": "ra_33",
+          "text_en": "Wasim crumpled his paper camera.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_033.mp3"
+        },
+        {
+          "id": "ra_34",
+          "text_en": "Just then, Anil came along with his donkey.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_034.mp3"
+        },
+        {
+          "id": "ra_35",
+          "text_en": "He picked up Manju’s pencil and drew lines around the hole in the paper.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_035.mp3"
+        },
+        {
+          "id": "ra_36",
+          "text_en": "“That’s the best sun I have ever seen!” said Manju.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_036.mp3"
+        },
+        {
+          "id": "ra_37",
+          "text_en": "Anil's donkey grabbed the paper sun from Manju's hand and gobbled it up fast.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_037.mp3"
+        },
+        {
+          "id": "ra_38",
+          "text_en": "He burped loudly.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_038.mp3"
+        },
+        {
+          "id": "ra_39",
+          "text_en": "Then the donkey had a very strange look on his face.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_039.mp3"
+        },
+        {
+          "id": "ra_40",
+          "text_en": "Now who can tell if it was because he had eaten very fast without chewing well, or if it was because he had eaten up the sun?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_156/s_040.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "What came?",
+          "options_en": [
+            "the wind",
+            "a sheet of paper",
+            "Anil's donkey"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "How did the wind come?",
+          "options_en": [
+            "Swoosh",
+            "quietly",
+            "singing"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s1_q1",
+          "type": "choice",
+          "question_en": "What floated in?",
+          "options_en": [
+            "a sheet of paper",
+            "a pencil",
+            "a crumpled ball"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s1_q2",
+          "type": "choice",
+          "question_en": "How did the sheet of paper come in?",
+          "options_en": [
+            "It floated in",
+            "It was thrown in",
+            "It was eaten"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s2_q1",
+          "type": "choice",
+          "question_en": "Who picked it up?",
+          "options_en": [
+            "Manju",
+            "Wasim",
+            "Syeda"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s2_q2",
+          "type": "choice",
+          "question_en": "What did Manju sit down to draw?",
+          "options_en": [
+            "the sun",
+            "a lollipop",
+            "a boat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s3_q1",
+          "type": "choice",
+          "question_en": "What did Manju say about it?",
+          "options_en": [
+            "It looks horrible",
+            "It looks beautiful",
+            "It looks like a ball"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p0_s3_q2",
+          "type": "choice",
+          "question_en": "How did Manju describe her work?",
+          "options_en": [
+            "horrible",
+            "the best sun",
+            "a lollipop"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p0_s4_q1",
+          "type": "choice",
+          "question_en": "What did Manju do to the paper?",
+          "options_en": [
+            "crumpled it",
+            "made a boat",
+            "stuck a pencil in it"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p0_s4_q2",
+          "type": "choice",
+          "question_en": "Where did Manju throw the paper?",
+          "options_en": [
+            "out of the window",
+            "into the air",
+            "into the donkey's mouth"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p0_s5_q1",
+          "type": "choice",
+          "question_en": "What fell on Wasim's head?",
+          "options_en": [
+            "the paper",
+            "the pencil",
+            "the boat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p0_s5_q2",
+          "type": "choice",
+          "question_en": "Whose head did the paper fall on?",
+          "options_en": [
+            "Wasim's",
+            "Manju's",
+            "Bittu's"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p0_s6_q1",
+          "type": "choice",
+          "question_en": "What did Wasim call the crumpled paper?",
+          "options_en": [
+            "a ball",
+            "a lollipop",
+            "a camera"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p0_s6_q2",
+          "type": "choice",
+          "question_en": "How did Wasim say it?",
+          "options_en": [
+            "happily",
+            "loudly",
+            "with glee"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "Who threw the crumpled paper ball up into the air?",
+          "options_en": [
+            "Wasim",
+            "Manju",
+            "Bittu"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "What did he do after throwing the crumpled paper ball up?",
+          "options_en": [
+            "He watched it come down",
+            "He made a paper boat",
+            "He stuck a pencil into it"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p1_s1_q1",
+          "type": "choice",
+          "question_en": "How did the paper ball come down when he threw it higher?",
+          "options_en": [
+            "It came down faster",
+            "It came down slower",
+            "It came down towards Syeda"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p1_s1_q2",
+          "type": "choice",
+          "question_en": "What action did he take that made the paper ball come down faster?",
+          "options_en": [
+            "He threw it higher",
+            "He smoothed the paper",
+            "He folded it like a handkerchief"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p1_s2_q1",
+          "type": "choice",
+          "question_en": "Who did Wasim aim the paper ball at?",
+          "options_en": [
+            "Syeda",
+            "Manju",
+            "Anil"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p1_s2_q2",
+          "type": "choice",
+          "question_en": "Whose sister is Syeda?",
+          "options_en": [
+            "Wasim's",
+            "Manju's",
+            "Bittu's"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p1_s3_q1",
+          "type": "choice",
+          "question_en": "What did he shout after aiming the paper ball?",
+          "options_en": [
+            "“Got you!”",
+            "“May I have the lollipop please?”",
+            "“Testing, testing, mike testing, one, two, three!”"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p1_s3_q2",
+          "type": "choice",
+          "question_en": "How did he shout when he said “Got you!”?",
+          "options_en": [
+            "With glee",
+            "Very loudly",
+            "Happily"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "Who picked up the crumpled paper?",
+          "options_en": [
+            "Syeda",
+            "Wasim",
+            "Manju"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "What did Syeda pick up?",
+          "options_en": [
+            "A crumpled paper",
+            "A pencil",
+            "A boat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p2_s1_q1",
+          "type": "choice",
+          "question_en": "What did she stick into it?",
+          "options_en": [
+            "A pencil",
+            "A paper sun",
+            "A microphone"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p2_s1_q2",
+          "type": "choice",
+          "question_en": "What did she offer when she spoke?",
+          "options_en": [
+            "This lollipop",
+            "A song",
+            "A boat ride"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p2_s2_q1",
+          "type": "choice",
+          "question_en": "When is she going to sell many kinds of lollipops?",
+          "options_en": [
+            "When she is big",
+            "Now",
+            "When the donkey comes"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p2_s2_q2",
+          "type": "choice",
+          "question_en": "Where does she say she will sell many kinds of lollipops?",
+          "options_en": [
+            "In her sweet shop",
+            "In this big ship",
+            "In Manju's hand"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "Who came in?",
+          "options_en": [
+            "Bittu",
+            "Wasim",
+            "Anil"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "When did Bittu come in?",
+          "options_en": [
+            "Just then",
+            "After Manju threw the paper",
+            "Later that day"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p3_s1_q1",
+          "type": "choice",
+          "question_en": "What did he ask for?",
+          "options_en": [
+            "The lollipop",
+            "A pencil",
+            "A paper boat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p3_s1_q2",
+          "type": "choice",
+          "question_en": "Who asked for the lollipop?",
+          "options_en": [
+            "Bittu",
+            "Syeda",
+            "Wasim"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p3_s2_q1",
+          "type": "choice",
+          "question_en": "What did he pretend to eat?",
+          "options_en": [
+            "The sweet",
+            "The paper sun",
+            "A pencil"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p3_s2_q2",
+          "type": "choice",
+          "question_en": "What did he do after pretending to eat?",
+          "options_en": [
+            "Rolled up the crumpled paper",
+            "Made a paper boat",
+            "Sang a song"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p3_s3_q1",
+          "type": "choice",
+          "question_en": "What did he say while speaking into the mike?",
+          "options_en": [
+            "\"Testing, testing, mike testing, one, two, three!\"",
+            "\"May I have the lollipop please?\"",
+            "\"Now I am going to sing you a song.\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p3_s3_q2",
+          "type": "choice",
+          "question_en": "What was he testing?",
+          "options_en": [
+            "The mike",
+            "The boat",
+            "The sun drawing"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p3_s4_q1",
+          "type": "choice",
+          "question_en": "What did he say he was going to do next?",
+          "options_en": [
+            "Sing a song",
+            "Make a boat",
+            "Draw the sun"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p3_s4_q2",
+          "type": "choice",
+          "question_en": "When did he say he would sing a song?",
+          "options_en": [
+            "Now",
+            "Later",
+            "After making the boat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "Who finished singing a film song very loudly?",
+          "options_en": [
+            "Bittu",
+            "Wasim",
+            "Manju"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "How did Bittu sing the film song?",
+          "options_en": [
+            "Very loudly",
+            "Happily",
+            "Carefully"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p4_s1_q1",
+          "type": "choice",
+          "question_en": "Who took the crumpled paper from Bittu's hands?",
+          "options_en": [
+            "Manju",
+            "Syeda",
+            "Wasim"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p4_s1_q2",
+          "type": "choice",
+          "question_en": "What is the correct answer to this question: From whose hands did Manju take the crumpled paper?",
+          "options_en": [
+            "Bittu's",
+            "Wasim's",
+            "Anil's"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p4_s2_q1",
+          "type": "choice",
+          "question_en": "What did she make from the paper?",
+          "options_en": [
+            "A boat",
+            "A lollipop",
+            "A sun"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p4_s2_q2",
+          "type": "choice",
+          "question_en": "What did she do to the paper before making the boat?",
+          "options_en": [
+            "She smoothened it",
+            "She crumpled it",
+            "She folded it"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "Who will sail all around the world in the big ship?",
+          "options_en": [
+            "Bittu",
+            "Wasim",
+            "Anil"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "What did Wasim ask?",
+          "options_en": [
+            "May I come with you too?",
+            "May I have the lollipop please?",
+            "Got you!"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "Who picked up the boat?",
+          "options_en": [
+            "Wasim",
+            "Manju",
+            "Bittu"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "What did Wasim pick up?",
+          "options_en": [
+            "The boat",
+            "The crumpled paper ball",
+            "The pencil"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p6_s1_q1",
+          "type": "choice",
+          "question_en": "How did he smoothened the paper?",
+          "options_en": [
+            "Very carefully",
+            "Roughly",
+            "Loudly"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p6_s1_q2",
+          "type": "choice",
+          "question_en": "What did he smoothen?",
+          "options_en": [
+            "The paper",
+            "The crumpled paper ball",
+            "The boat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p6_s2_q1",
+          "type": "choice",
+          "question_en": "How did he fold it?",
+          "options_en": [
+            "Like a handkerchief",
+            "Into a lollipop",
+            "Into a ship"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p6_s2_q2",
+          "type": "choice",
+          "question_en": "What did he fold?",
+          "options_en": [
+            "The paper",
+            "The boat",
+            "The crumpled paper ball"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p6_s3_q1",
+          "type": "choice",
+          "question_en": "What did he cut out?",
+          "options_en": [
+            "A corner",
+            "A hole",
+            "A circle"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p6_s3_q2",
+          "type": "choice",
+          "question_en": "What part did he cut from the paper?",
+          "options_en": [
+            "A corner",
+            "The sun",
+            "The pencil tip"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p6_s4_q1",
+          "type": "choice",
+          "question_en": "Who opened the paper?",
+          "options_en": [
+            "Wasim",
+            "Manju",
+            "Anil"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        },
+        {
+          "id": "gl_p6_s4_q2",
+          "type": "choice",
+          "question_en": "What did Wasim do next?",
+          "options_en": [
+            "Opened the paper",
+            "Crumpled the paper",
+            "Held up the paper with a hole"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "Who is being addressed when the speaker says \"Look here, all of you!\"?",
+          "options_en": [
+            "All of you",
+            "Wasim",
+            "Anil"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "What did the speaker say in this line?",
+          "options_en": [
+            "Look here, all of you!",
+            "Smile please!",
+            "That's the best sun I have ever seen!"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        },
+        {
+          "id": "gl_p7_s1_q1",
+          "type": "choice",
+          "question_en": "What did he say while holding up the paper with a hole in the centre?",
+          "options_en": [
+            "Smile please!",
+            "May I come with you too?",
+            "Would you like this lollipop?"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p7_s1_q2",
+          "type": "choice",
+          "question_en": "What was special about the paper he held up?",
+          "options_en": [
+            "It had a hole in the centre",
+            "It was crumpled into a ball",
+            "It was made into a boat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p7_s2_q1",
+          "type": "choice",
+          "question_en": "Who smiled in this sentence?",
+          "options_en": [
+            "Syeda, Bittu and Manju",
+            "Wasim and Anil",
+            "Anil and his donkey"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        },
+        {
+          "id": "gl_p7_s2_q2",
+          "type": "choice",
+          "question_en": "What did Syeda, Bittu and Manju do?",
+          "options_en": [
+            "Smiled",
+            "Sang a song",
+            "Made a boat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        },
+        {
+          "id": "gl_p7_s3_q1",
+          "type": "choice",
+          "question_en": "What did they do after smiling?",
+          "options_en": [
+            "They grinned",
+            "They made a lollipop",
+            "They drew the sun"
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        },
+        {
+          "id": "gl_p7_s3_q2",
+          "type": "choice",
+          "question_en": "Who grinned according to this sentence?",
+          "options_en": [
+            "They (Syeda, Bittu and Manju)",
+            "Anil",
+            "The donkey"
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        },
+        {
+          "id": "gl_p7_s4_q1",
+          "type": "choice",
+          "question_en": "What were they doing soon?",
+          "options_en": [
+            "Giggling",
+            "Testing the mike",
+            "Sailing around the world"
+          ],
+          "correct_index": 0,
+          "sentence_index": 32
+        },
+        {
+          "id": "gl_p7_s4_q2",
+          "type": "choice",
+          "question_en": "Who were giggling in this line?",
+          "options_en": [
+            "They (the children present)",
+            "Anil's donkey",
+            "Bittu alone"
+          ],
+          "correct_index": 0,
+          "sentence_index": 32
+        },
+        {
+          "id": "gl_p7_s5_q1",
+          "type": "choice",
+          "question_en": "Who crumpled his paper camera?",
+          "options_en": [
+            "Wasim",
+            "Manju",
+            "Bittu"
+          ],
+          "correct_index": 0,
+          "sentence_index": 33
+        },
+        {
+          "id": "gl_p7_s5_q2",
+          "type": "choice",
+          "question_en": "What did Wasim crumple?",
+          "options_en": [
+            "His paper camera",
+            "A paper boat",
+            "A paper lollipop"
+          ],
+          "correct_index": 0,
+          "sentence_index": 33
+        }
+      ]
+    },
+    {
+      "paragraph_index": 8,
+      "questions": [
+        {
+          "id": "gl_p8_s0_q1",
+          "type": "choice",
+          "question_en": "Who came along?",
+          "options_en": [
+            "Anil",
+            "Wasim",
+            "Bittu"
+          ],
+          "correct_index": 0,
+          "sentence_index": 34
+        },
+        {
+          "id": "gl_p8_s0_q2",
+          "type": "choice",
+          "question_en": "Who came with Anil?",
+          "options_en": [
+            "his donkey",
+            "Manju",
+            "Syeda"
+          ],
+          "correct_index": 0,
+          "sentence_index": 34
+        },
+        {
+          "id": "gl_p8_s1_q1",
+          "type": "choice",
+          "question_en": "What did he pick up?",
+          "options_en": [
+            "Manju’s pencil",
+            "the crumpled paper ball",
+            "the paper boat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 35
+        },
+        {
+          "id": "gl_p8_s1_q2",
+          "type": "choice",
+          "question_en": "What did he draw?",
+          "options_en": [
+            "lines around the hole in the paper",
+            "a lollipop",
+            "a ship"
+          ],
+          "correct_index": 0,
+          "sentence_index": 35
+        },
+        {
+          "id": "gl_p8_s2_q1",
+          "type": "choice",
+          "question_en": "Who said, “That’s the best sun I have ever seen!”?",
+          "options_en": [
+            "Manju",
+            "Anil",
+            "Wasim"
+          ],
+          "correct_index": 0,
+          "sentence_index": 36
+        },
+        {
+          "id": "gl_p8_s2_q2",
+          "type": "choice",
+          "question_en": "What did Manju call the picture?",
+          "options_en": [
+            "the best sun I have ever seen",
+            "a lollipop",
+            "a song"
+          ],
+          "correct_index": 0,
+          "sentence_index": 36
+        }
+      ]
+    },
+    {
+      "paragraph_index": 9,
+      "questions": [
+        {
+          "id": "gl_p9_s0_q1",
+          "type": "choice",
+          "question_en": "Who grabbed the paper sun from Manju's hand?",
+          "options_en": [
+            "Anil's donkey",
+            "Wasim",
+            "Bittu"
+          ],
+          "correct_index": 0,
+          "sentence_index": 37
+        },
+        {
+          "id": "gl_p9_s0_q2",
+          "type": "choice",
+          "question_en": "What did the donkey gobble up fast?",
+          "options_en": [
+            "The paper sun",
+            "A crumpled paper ball",
+            "Manju's pencil"
+          ],
+          "correct_index": 0,
+          "sentence_index": 37
+        },
+        {
+          "id": "gl_p9_s1_q1",
+          "type": "choice",
+          "question_en": "What did he do loudly?",
+          "options_en": [
+            "Burped loudly",
+            "Sang a song",
+            "Pretended to eat a lollipop"
+          ],
+          "correct_index": 0,
+          "sentence_index": 38
+        },
+        {
+          "id": "gl_p9_s1_q2",
+          "type": "choice",
+          "question_en": "How did he burp?",
+          "options_en": [
+            "Loudly",
+            "Happily",
+            "Quietly"
+          ],
+          "correct_index": 0,
+          "sentence_index": 38
+        },
+        {
+          "id": "gl_p9_s2_q1",
+          "type": "choice",
+          "question_en": "What did the donkey have on his face?",
+          "options_en": [
+            "A very strange look",
+            "A smile",
+            "A hole in the paper"
+          ],
+          "correct_index": 0,
+          "sentence_index": 39
+        },
+        {
+          "id": "gl_p9_s2_q2",
+          "type": "choice",
+          "question_en": "When did the donkey have a very strange look on his face?",
+          "options_en": [
+            "Then",
+            "After he sang a song",
+            "While sailing around the world"
+          ],
+          "correct_index": 0,
+          "sentence_index": 39
+        },
+        {
+          "id": "gl_p9_s3_q1",
+          "type": "choice",
+          "question_en": "Why might the donkey have had a strange look on his face?",
+          "options_en": [
+            "Because he had eaten very fast without chewing well",
+            "Because he was going to sell lollipops",
+            "Because Wasim held up the paper with a hole"
+          ],
+          "correct_index": 0,
+          "sentence_index": 40
+        },
+        {
+          "id": "gl_p9_s3_q2",
+          "type": "choice",
+          "question_en": "What two possible reasons does the sentence give for the donkey's strange look?",
+          "options_en": [
+            "He had eaten very fast without chewing well or he had eaten up the sun",
+            "He made a boat or he drew lines around the hole",
+            "He sang loudly or he rolled up the paper"
+          ],
+          "correct_index": 0,
+          "sentence_index": 40
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'Paper Play'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "Swoosh",
+      "meaning_vi": "tiếng vù vù (âm thanh gió thổi)",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "floated",
+      "meaning_vi": "bay lơ lửng (di chuyển nhẹ nhàng trong không khí)",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "horrible",
+      "meaning_vi": "rất xấu, kinh khủng (rất tệ, không đẹp)",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "crumpled",
+      "meaning_vi": "vò nát (làm cho giấy nhăn nhúm lại)",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "threw",
+      "meaning_vi": "ném (dùng tay đẩy vật gì đi xa)",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "aimed",
+      "meaning_vi": "nhắm vào (hướng một vật về phía mục tiêu)",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "shouted",
+      "meaning_vi": "hét lên (nói rất to)",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "glee",
+      "meaning_vi": "vui sướng (cảm giác rất vui và phấn khích)",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "stuck",
+      "meaning_vi": "cắm vào (đẩy một vật vào trong vật khác)",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "lollipop",
+      "meaning_vi": "kẹo mút (một loại kẹo cứng có que cầm)",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "sell",
+      "meaning_vi": "bán (đổi hàng lấy tiền)",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "kinds",
+      "meaning_vi": "loại (các kiểu, các dạng khác nhau)",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "pretended",
+      "meaning_vi": "giả vờ (làm như thật nhưng không phải)",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "rolled up",
+      "meaning_vi": "cuộn lại (làm cho vật gì thành hình tròn hoặc ống)",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "testing",
+      "meaning_vi": "kiểm tra (thử xem cái gì có hoạt động không)",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "mike",
+      "meaning_vi": "micrô (thiết bị giúp nói to hơn)",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "finished",
+      "meaning_vi": "xong (hoàn thành một việc gì đó)",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "loudly",
+      "meaning_vi": "rất to (với âm thanh lớn)",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "smoothened",
+      "meaning_vi": "làm phẳng (làm cho bề mặt trở nên mịn màng, không nhăn)",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "boat",
+      "meaning_vi": "thuyền (phương tiện đi lại trên mặt nước)",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "famous",
+      "meaning_vi": "nổi tiếng (được nhiều người biết đến)",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "singer",
+      "meaning_vi": "ca sĩ (người hát)",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "sail",
+      "meaning_vi": "đi thuyền (đi lại trên mặt nước bằng thuyền)",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "world",
+      "meaning_vi": "thế giới (tất cả các quốc gia và con người trên Trái Đất)",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "carefully",
+      "meaning_vi": "cẩn thận (làm việc gì đó rất kỹ lưỡng, chú ý)",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "folded",
+      "meaning_vi": "gấp lại (uốn cong một vật lên chính nó)",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "handkerchief",
+      "meaning_vi": "khăn tay (một mảnh vải nhỏ dùng để lau mặt, mũi)",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "corner",
+      "meaning_vi": "góc (chỗ hai cạnh gặp nhau)",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "hole",
+      "meaning_vi": "lỗ (một khoảng trống xuyên qua vật gì đó)",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "centre",
+      "meaning_vi": "giữa (phần ở chính giữa)",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "grinned",
+      "meaning_vi": "cười toe toét (cười rộng miệng, lộ răng)",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "giggling",
+      "meaning_vi": "khúc khích cười (cười nhỏ, liên tục, thường là vì ngượng hoặc vui)",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "donkey",
+      "meaning_vi": "con lừa (một loài vật giống ngựa nhỏ, tai dài)",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "drew",
+      "meaning_vi": "vẽ (tạo ra hình ảnh bằng bút hoặc chì)",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "lines",
+      "meaning_vi": "đường kẻ (những vệt dài, mảnh)",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "best",
+      "meaning_vi": "đẹp nhất (tốt nhất, tuyệt vời nhất)",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "grabbed",
+      "meaning_vi": "giật lấy (cầm lấy cái gì đó một cách bất ngờ)",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "gobbled up",
+      "meaning_vi": "nuốt chửng (ăn rất nhanh và nhiều)",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "burped",
+      "meaning_vi": "ợ hơi (đẩy khí từ dạ dày ra ngoài qua miệng)",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "strange",
+      "meaning_vi": "lạ lùng (khác thường, không quen thuộc)",
+      "paragraph_index": 9
+    }
+  ]
+}

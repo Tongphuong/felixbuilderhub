@@ -1,0 +1,899 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L1",
+  "level_label": "Cấp 1",
+  "topic": "Forever Friendship",
+  "slug": "book_106814",
+  "audio_filename": "book_106814.mp3",
+  "book_slug": "book_106814",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_106814/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_106814/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_106814/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_106814/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_106814/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_106814/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_106814/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_106814/page_09.jpg",
+    "https://audio.felixbuilderhub.com/books/book_106814/page_10.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_106814/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_106814/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_106814/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_106814/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_106814/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_106814/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_106814/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_106814/page_09.mp3",
+    "https://audio.felixbuilderhub.com/books/book_106814/page_10.mp3"
+  ],
+  "book_attribution": {
+    "title": "Forever Friendship",
+    "creators": [
+      "Falguni Mal (DVSN)",
+      "Horn Samon",
+      "Sain Thuokna",
+      "San srei nou ch nou ch"
+    ],
+    "publisher": "StoryWeaver Community",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: Forever Friendship is written by Falguni Mal (DVSN) . © Falguni Mal (DVSN) , 2019. Some rights reserved. Released under CC BY 4.0 license. Images Attributions: Cover page: All the animals in a group , by Horn Samon © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 2: The hornbill and the butterfly , by Sain Thuokna © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 3: All the birds in the sky , by Sain Thuokna © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 4: Hornbill and the owl , by Sain Thuokna © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 5: Lark and parrot , by Sain Thuokna © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 6: Lark and beetle , by Sain Thuokna © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 7: Hornbill and butterfly amidst nature , by Sain Thuokna © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 8: The owl and the parrot , by Sain Thuokna © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 9: Birds in the garden , by San srei nou ch nou ch © The Asia Foundation, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 10: Birds in the sky , by Horn Samon © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/106814-forever-friendship",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "The hornbill and the butterfly , by Sain Thuokna © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "All the birds in the sky , by Sain Thuokna © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "Hornbill and the owl , by Sain Thuokna © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "Lark and parrot , by Sain Thuokna © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "Lark and beetle , by Sain Thuokna © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "Hornbill and butterfly amidst nature , by Sain Thuokna © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "The owl and the parrot , by Sain Thuokna © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "Birds in the garden , by San srei nou ch nou ch © The Asia Foundation, 2018. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 8,
+        "credit_text": "Birds in the sky , by Horn Samon © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "Forever Friendship",
+    "paragraphs_en": [
+      "Once upon a time there was a parrot. His name was Roxy. He was very open minded.",
+      "One day Roxy met with an owl. His name was Roza. He was also very like minded.",
+      "Thy sat on a tree and started gossiping. They liked each other. After a while they became good friends.",
+      "After few months one day they misunderstood each other. They left the place and didn't meet for a long time.",
+      "Got to know that a butterfly thought an idea. He went to Roza and told about Roxy's false illness.",
+      "The same story about Roza was uttered by the butterfly to Roxy.",
+      "Very soon they met on that tree where their friendship started from.",
+      "After a moment they forgot all their misunderstandings and issues and again became forever friends.",
+      "Now the story of their friendship is popular in the whole animal world."
+    ],
+    "sentences": [
+      {
+        "text_en": "Once upon a time there was a parrot.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106814/s_000.mp3",
+        "text_vi": "Ngày xửa ngày xưa, có một chú vẹt."
+      },
+      {
+        "text_en": "His name was Roxy.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106814/s_001.mp3",
+        "text_vi": "Tên chú là Roxy."
+      },
+      {
+        "text_en": "He was very open minded.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106814/s_002.mp3",
+        "text_vi": "Chú ấy rất cởi mở."
+      },
+      {
+        "text_en": "One day Roxy met with an owl.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106814/s_003.mp3",
+        "text_vi": "Một ngày nọ, Roxy gặp một chú cú."
+      },
+      {
+        "text_en": "His name was Roza.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106814/s_004.mp3",
+        "text_vi": "Tên chú cú là Roza."
+      },
+      {
+        "text_en": "He was also very like minded.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106814/s_005.mp3",
+        "text_vi": "Chú ấy cũng rất hợp tính."
+      },
+      {
+        "text_en": "Thy sat on a tree and started gossiping.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106814/s_006.mp3",
+        "text_vi": "Hai bạn ấy ngồi trên cây và bắt đầu trò chuyện."
+      },
+      {
+        "text_en": "They liked each other.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106814/s_007.mp3",
+        "text_vi": "Hai bạn ấy rất thích nhau."
+      },
+      {
+        "text_en": "After a while they became good friends.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106814/s_008.mp3",
+        "text_vi": "Sau một lúc, họ trở thành bạn tốt của nhau."
+      },
+      {
+        "text_en": "After few months one day they misunderstood each other.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106814/s_009.mp3",
+        "text_vi": "Vài tháng sau, một ngày nọ, hai bạn ấy hiểu lầm nhau."
+      },
+      {
+        "text_en": "They left the place and didn't meet for a long time.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106814/s_010.mp3",
+        "text_vi": "Họ rời đi và không gặp nhau trong một thời gian dài."
+      },
+      {
+        "text_en": "Got to know that a butterfly thought an idea.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106814/s_011.mp3",
+        "text_vi": "Một chú bướm đã nghĩ ra một ý hay."
+      },
+      {
+        "text_en": "He went to Roza and told about Roxy's false illness.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106814/s_012.mp3",
+        "text_vi": "Chú bướm đến gặp Roza và kể về bệnh giả của Roxy."
+      },
+      {
+        "text_en": "The same story about Roza was uttered by the butterfly to Roxy.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106814/s_013.mp3",
+        "text_vi": "Chú bướm cũng kể câu chuyện tương tự về Roza cho Roxy nghe."
+      },
+      {
+        "text_en": "Very soon they met on that tree where their friendship started from.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106814/s_014.mp3",
+        "text_vi": "Rất nhanh sau đó, họ gặp lại nhau trên cái cây nơi tình bạn của họ bắt đầu."
+      },
+      {
+        "text_en": "After a moment they forgot all their misunderstandings and issues and again became forever friends.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106814/s_015.mp3",
+        "text_vi": "Sau một lúc, họ quên hết mọi hiểu lầm và vấn đề, rồi lại trở thành bạn thân mãi mãi."
+      },
+      {
+        "text_en": "Now the story of their friendship is popular in the whole animal world.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_106814/s_016.mp3",
+        "text_vi": "Giờ đây, câu chuyện tình bạn của họ nổi tiếng khắp thế giới động vật."
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "Once upon a time there was a parrot.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106814/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "His name was Roxy.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106814/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "He was very open minded.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106814/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "One day Roxy met with an owl.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106814/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "His name was Roza.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106814/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "He was also very like minded.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106814/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "Thy sat on a tree and started gossiping.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106814/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "They liked each other.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106814/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "After a while they became good friends.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106814/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "After few months one day they misunderstood each other.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106814/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "They left the place and didn't meet for a long time.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106814/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "Got to know that a butterfly thought an idea.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106814/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "He went to Roza and told about Roxy's false illness.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106814/s_012.mp3"
+        },
+        {
+          "id": "ra_13",
+          "text_en": "The same story about Roza was uttered by the butterfly to Roxy.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106814/s_013.mp3"
+        },
+        {
+          "id": "ra_14",
+          "text_en": "Very soon they met on that tree where their friendship started from.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106814/s_014.mp3"
+        },
+        {
+          "id": "ra_15",
+          "text_en": "After a moment they forgot all their misunderstandings and issues and again became forever friends.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106814/s_015.mp3"
+        },
+        {
+          "id": "ra_16",
+          "text_en": "Now the story of their friendship is popular in the whole animal world.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_106814/s_016.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "What animal was there?",
+          "options_en": [
+            "a parrot",
+            "an owl",
+            "a butterfly"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "When did this happen?",
+          "options_en": [
+            "Once upon a time",
+            "One day",
+            "After few months"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s1_q1",
+          "type": "choice",
+          "question_en": "What was his name?",
+          "options_en": [
+            "Roxy",
+            "Roza",
+            "the owl"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s1_q2",
+          "type": "choice",
+          "question_en": "Whose name was Roxy?",
+          "options_en": [
+            "the parrot",
+            "the owl",
+            "the butterfly"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s2_q1",
+          "type": "choice",
+          "question_en": "How was he described?",
+          "options_en": [
+            "very open minded",
+            "very like minded",
+            "good friends"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s2_q2",
+          "type": "choice",
+          "question_en": "What trait did he have?",
+          "options_en": [
+            "open minded",
+            "like minded",
+            "misunderstood"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "Who met with an owl?",
+          "options_en": [
+            "Roxy",
+            "Roza",
+            "the butterfly"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "When did Roxy meet with an owl?",
+          "options_en": [
+            "One day",
+            "After a while",
+            "After few months"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p1_s1_q1",
+          "type": "choice",
+          "question_en": "What was his name?",
+          "options_en": [
+            "Roza",
+            "Roxy",
+            "the butterfly"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p1_s1_q2",
+          "type": "choice",
+          "question_en": "Who was called Roza?",
+          "options_en": [
+            "The owl",
+            "The parrot",
+            "the butterfly"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p1_s2_q1",
+          "type": "choice",
+          "question_en": "How was he described?",
+          "options_en": [
+            "Very like minded",
+            "Very open minded",
+            "Very friendly"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p1_s2_q2",
+          "type": "choice",
+          "question_en": "What kind of mind did he have?",
+          "options_en": [
+            "A like minded one",
+            "An open minded one",
+            "A confused one"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "Who sat on a tree?",
+          "options_en": [
+            "Thy",
+            "Roxy",
+            "Roza"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "What did they start doing on the tree?",
+          "options_en": [
+            "Started gossiping",
+            "Liked each other",
+            "Became good friends"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p2_s1_q1",
+          "type": "choice",
+          "question_en": "Who liked each other?",
+          "options_en": [
+            "They",
+            "Roxy and Roza",
+            "The butterfly"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p2_s1_q2",
+          "type": "choice",
+          "question_en": "How did they feel about each other?",
+          "options_en": [
+            "They liked each other",
+            "They misunderstood each other",
+            "They left the place"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p2_s2_q1",
+          "type": "choice",
+          "question_en": "When did they become good friends?",
+          "options_en": [
+            "After a while",
+            "After few months",
+            "After a moment"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p2_s2_q2",
+          "type": "choice",
+          "question_en": "What happened after a while?",
+          "options_en": [
+            "They became good friends",
+            "They misunderstood each other",
+            "They left the place"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "When did they misunderstand each other?",
+          "options_en": [
+            "After few months one day",
+            "After a while",
+            "Very soon"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "What happened between them?",
+          "options_en": [
+            "They misunderstood each other",
+            "They became good friends",
+            "They forgot all their misunderstandings"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p3_s1_q1",
+          "type": "choice",
+          "question_en": "What did they do after that?",
+          "options_en": [
+            "They left the place",
+            "They started gossiping",
+            "They met on the tree"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p3_s1_q2",
+          "type": "choice",
+          "question_en": "How long did they not meet?",
+          "options_en": [
+            "For a long time",
+            "Very soon",
+            "After few months"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "Who thought an idea?",
+          "options_en": [
+            "A butterfly",
+            "Roxy",
+            "Roza"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "What happened according to the sentence?",
+          "options_en": [
+            "A butterfly thought an idea",
+            "Roxy met an owl",
+            "They became friends again"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p4_s1_q1",
+          "type": "choice",
+          "question_en": "Who went to Roza?",
+          "options_en": [
+            "He (the butterfly)",
+            "Roxy",
+            "The owl"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p4_s1_q2",
+          "type": "choice",
+          "question_en": "What did he tell Roza about?",
+          "options_en": [
+            "Roxy's false illness",
+            "Their misunderstanding",
+            "Their friendship"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "Who did the butterfly tell the story to?",
+          "options_en": [
+            "Roxy",
+            "Roza",
+            "the parrot"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "What did the butterfly utter?",
+          "options_en": [
+            "The same story about Roza",
+            "Roxy's false illness",
+            "Their friendship story"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "Where did they meet?",
+          "options_en": [
+            "On that tree where their friendship started",
+            "On the tree where they sat gossiping",
+            "At the place they left after misunderstanding"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "When did they meet?",
+          "options_en": [
+            "Very soon",
+            "After a while",
+            "After a long time"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "What did they forget?",
+          "options_en": [
+            "Their misunderstandings and issues",
+            "Roxy's false illness",
+            "The butterfly's idea"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "When did they forget all their misunderstandings?",
+          "options_en": [
+            "After a moment",
+            "After few months",
+            "When they met on the tree"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        }
+      ]
+    },
+    {
+      "paragraph_index": 8,
+      "questions": [
+        {
+          "id": "gl_p8_s0_q1",
+          "type": "choice",
+          "question_en": "What is popular in the whole animal world?",
+          "options_en": [
+            "The story of their friendship",
+            "Roxy the parrot",
+            "Roza the owl"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p8_s0_q2",
+          "type": "choice",
+          "question_en": "Where is the story of their friendship popular?",
+          "options_en": [
+            "In the whole animal world",
+            "On the tree where they met",
+            "Among the butterflies"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'Forever Friendship'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "parrot",
+      "meaning_vi": "con vẹt",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "open minded",
+      "meaning_vi": "sẵn sàng nghe ý kiến mới",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "owl",
+      "meaning_vi": "con cú",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "met",
+      "meaning_vi": "gặp gỡ ai đó",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "like minded",
+      "meaning_vi": "có suy nghĩ giống nhau",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "sat",
+      "meaning_vi": "ngồi xuống",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "gossiping",
+      "meaning_vi": "nói chuyện về người khác",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "became",
+      "meaning_vi": "biến đổi thành cái gì đó",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "misunderstood",
+      "meaning_vi": "hiểu sai ý của người khác",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "left",
+      "meaning_vi": "đi khỏi một nơi nào đó",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "long time",
+      "meaning_vi": "một khoảng thời gian rất lâu",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "butterfly",
+      "meaning_vi": "con bướm",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "thought",
+      "meaning_vi": "suy nghĩ, nghĩ ra",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "false",
+      "meaning_vi": "không thật",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "illness",
+      "meaning_vi": "sự ốm đau, bệnh tật",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "story",
+      "meaning_vi": "một câu chuyện kể",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "uttered",
+      "meaning_vi": "nói ra, kể ra",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "soon",
+      "meaning_vi": "trong một thời gian ngắn",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "friendship",
+      "meaning_vi": "mối quan hệ bạn bè",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "started",
+      "meaning_vi": "khởi đầu",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "moment",
+      "meaning_vi": "một thời gian rất ngắn",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "forgot",
+      "meaning_vi": "không nhớ nữa",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "issues",
+      "meaning_vi": "những điều rắc rối",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "forever",
+      "meaning_vi": "mãi mãi về sau",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "popular",
+      "meaning_vi": "được nhiều người biết đến và yêu thích",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "whole",
+      "meaning_vi": "tất cả, mọi thứ",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "animal world",
+      "meaning_vi": "nơi sống của các loài động vật",
+      "paragraph_index": 8
+    }
+  ]
+}

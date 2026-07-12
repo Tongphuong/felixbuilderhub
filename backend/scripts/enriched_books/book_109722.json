@@ -1,0 +1,938 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L2",
+  "level_label": "Cấp 2",
+  "topic": "The Great Tidy Up",
+  "slug": "book_109722",
+  "audio_filename": "book_109722.mp3",
+  "book_slug": "book_109722",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_109722/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_109722/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_109722/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_109722/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_109722/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_109722/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_109722/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_109722/page_09.jpg",
+    "https://audio.felixbuilderhub.com/books/book_109722/page_10.jpg",
+    "https://audio.felixbuilderhub.com/books/book_109722/page_11.jpg",
+    "https://audio.felixbuilderhub.com/books/book_109722/page_12.jpg",
+    "https://audio.felixbuilderhub.com/books/book_109722/page_13.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_109722/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_109722/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_109722/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_109722/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_109722/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_109722/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_109722/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_109722/page_09.mp3",
+    "https://audio.felixbuilderhub.com/books/book_109722/page_10.mp3",
+    "https://audio.felixbuilderhub.com/books/book_109722/page_11.mp3",
+    "https://audio.felixbuilderhub.com/books/book_109722/page_12.mp3",
+    "https://audio.felixbuilderhub.com/books/book_109722/page_13.mp3"
+  ],
+  "book_attribution": {
+    "title": "The Great Tidy Up",
+    "creators": [
+      "Corinne Lamoral-Rosmarin",
+      "Jess Jardim-Wedepohl"
+    ],
+    "publisher": "Book Dash",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: The Great Tidy Up is written by Corinne Lamoral-Rosmarin . © Book Dash , 2019. Some rights reserved. Released under CC BY 4.0 license. Other Credits: This story 'The Great Tidy Up' has been published on StoryWeaver by BookDash Images Attributions: Cover page: Girl, boy and cat skating across a room , by Jess Jardim-Wedepohl © Book Dash, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 2: Boy and girl talking while a cat sleeps on someone , by Jess Jardim-Wedepohl © Book Dash, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 3: An angry boy , by Jess Jardim-Wedepohl © Book Dash, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 4: Girl with a checklist , by Jess Jardim-Wedepohl © Book Dash, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 5: Boy and girl trying to keep things out of the house , by Jess Jardim-Wedepohl © Book Dash, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 6: Boy and girl sweeping the house , by Jess Jardim-Wedepohl © Book Dash, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 7: Girl and boy doing dishes , by Jess Jardim-Wedepohl © Book Dash, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 8: Girl and boy cleaning windows , by Jess Jardim-Wedepohl © Book Dash, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 9: Girl, boy and cat skating across a room while someone sleeps , by Jess Jardim-Wedepohl © Book Dash, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 10: Girl and boy doing laundry , by Jess Jardim-Wedepohl © Book Dash, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 11: Girl and boy hanging up laundry on a tree , by Jess Jardim-Wedepohl © Book Dash, 2019. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/109722-the-great-tidy-up",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "Boy and girl talking while a cat sleeps on someone , by Jess Jardim-Wedepohl © Book Dash, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "An angry boy , by Jess Jardim-Wedepohl © Book Dash, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "Girl with a checklist , by Jess Jardim-Wedepohl © Book Dash, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "Boy and girl trying to keep things out of the house , by Jess Jardim-Wedepohl © Book Dash, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "Boy and girl sweeping the house , by Jess Jardim-Wedepohl © Book Dash, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "Girl and boy doing dishes , by Jess Jardim-Wedepohl © Book Dash, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "Girl and boy cleaning windows , by Jess Jardim-Wedepohl © Book Dash, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "Girl, boy and cat skating across a room while someone sleeps , by Jess Jardim-Wedepohl © Book Dash, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 8,
+        "credit_text": "Girl and boy doing laundry , by Jess Jardim-Wedepohl © Book Dash, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 9,
+        "credit_text": "Girl and boy hanging up laundry on a tree , by Jess Jardim-Wedepohl © Book Dash, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 10,
+        "credit_text": "Illustration by Jess Jardim-Wedepohl."
+      },
+      {
+        "page_index": 11,
+        "credit_text": "Illustration by Jess Jardim-Wedepohl."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "The Great Tidy Up",
+    "paragraphs_en": [
+      "‘We are going to have so much fun while Gogo is having a nap,’ says big sister Khwezi. ‘Ooh yes!’ says little brother Mzamo. ‘What will we do?’",
+      "‘We will clean the house for Papa and Mama while they are out.’ ‘That’s no fun,’ says Mzamo. ‘Uh uh, no. Not me. I don’t want to clean up!’",
+      "‘But Papa and Mama will be so proud. Let me show you how much fun we will have!’ says Khwezi.",
+      "‘First we will put the toys away!’",
+      "‘Now we will sweep the stoep!’",
+      "‘Now we will wash the dishes!’",
+      "‘Now we will wash the windows!’",
+      "‘Now we will polish the floor!’",
+      "‘Now we will wash the clothes!’",
+      "‘Now we will hang the clothes up!’",
+      "“SURPRISE!”",
+      "‘I have been watching them the whole time and they have been little angels!’ says Gogo."
+    ],
+    "sentences": [
+      {
+        "text_en": "‘We are going to have so much fun while Gogo is having a nap,’ says big sister Khwezi.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_109722/s_000.mp3",
+        "text_vi": "Chúng mình sẽ vui lắm khi bà Gogo đang ngủ trưa,"
+      },
+      {
+        "text_en": "‘Ooh yes!’ says little brother Mzamo.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_109722/s_001.mp3",
+        "text_vi": "Ồ, vâng ạ!"
+      },
+      {
+        "text_en": "‘What will we do?’",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_109722/s_002.mp3",
+        "text_vi": "Chúng mình sẽ làm gì đây?"
+      },
+      {
+        "text_en": "‘We will clean the house for Papa and Mama while they are out.’ ‘That’s no fun,’ says Mzamo.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_109722/s_003.mp3",
+        "text_vi": "Chúng mình sẽ dọn nhà cho bố và mẹ khi họ đi vắng. Chẳng vui chút nào,"
+      },
+      {
+        "text_en": "‘Uh uh, no.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_109722/s_004.mp3",
+        "text_vi": "Không không, không đâu."
+      },
+      {
+        "text_en": "Not me. I don’t want to clean up!’",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_109722/s_005.mp3",
+        "text_vi": "Không phải con. Con không muốn dọn dẹp đâu!"
+      },
+      {
+        "text_en": "‘But Papa and Mama will be so proud.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_109722/s_006.mp3",
+        "text_vi": "Nhưng bố và mẹ sẽ rất tự hào đấy."
+      },
+      {
+        "text_en": "Let me show you how much fun we will have!’ says Khwezi.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_109722/s_007.mp3",
+        "text_vi": "Để chị cho em xem chúng mình sẽ vui thế nào nhé!"
+      },
+      {
+        "text_en": "‘First we will put the toys away!’",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_109722/s_008.mp3",
+        "text_vi": "Đầu tiên chúng mình sẽ cất đồ chơi đi!"
+      },
+      {
+        "text_en": "‘Now we will sweep the stoep!’",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_109722/s_009.mp3",
+        "text_vi": "Bây giờ chúng mình sẽ quét hiên nhà!"
+      },
+      {
+        "text_en": "‘Now we will wash the dishes!’",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_109722/s_010.mp3",
+        "text_vi": "Bây giờ chúng mình sẽ rửa bát đĩa!"
+      },
+      {
+        "text_en": "‘Now we will wash the windows!’",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_109722/s_011.mp3",
+        "text_vi": "Bây giờ chúng mình sẽ lau cửa sổ!"
+      },
+      {
+        "text_en": "‘Now we will polish the floor!’",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_109722/s_012.mp3",
+        "text_vi": "Bây giờ chúng mình sẽ đánh bóng sàn nhà!"
+      },
+      {
+        "text_en": "‘Now we will wash the clothes!’",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_109722/s_013.mp3",
+        "text_vi": "Bây giờ chúng mình sẽ giặt quần áo!"
+      },
+      {
+        "text_en": "‘Now we will hang the clothes up!’",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_109722/s_014.mp3",
+        "text_vi": "Bây giờ chúng mình sẽ phơi quần áo lên!"
+      },
+      {
+        "text_en": "“SURPRISE!”",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_109722/s_015.mp3",
+        "text_vi": "BẤT NGỜ!"
+      },
+      {
+        "text_en": "‘I have been watching them the whole time and they have been little angels!’ says Gogo.",
+        "paragraph_index": 11,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_109722/s_016.mp3",
+        "text_vi": "Bà đã theo dõi các cháu suốt thời gian qua và các cháu đúng là những thiên thần nhỏ!"
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "‘We are going to have so much fun while Gogo is having a nap,’ says big sister Khwezi.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_109722/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "‘Ooh yes!’ says little brother Mzamo.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_109722/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "‘What will we do?’",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_109722/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "‘We will clean the house for Papa and Mama while they are out.’ ‘That’s no fun,’ says Mzamo.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_109722/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "‘Uh uh, no.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_109722/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "Not me. I don’t want to clean up!’",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_109722/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "‘But Papa and Mama will be so proud.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_109722/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "Let me show you how much fun we will have!’ says Khwezi.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_109722/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "‘First we will put the toys away!’",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_109722/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "‘Now we will sweep the stoep!’",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_109722/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "‘Now we will wash the dishes!’",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_109722/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "‘Now we will wash the windows!’",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_109722/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "‘Now we will polish the floor!’",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_109722/s_012.mp3"
+        },
+        {
+          "id": "ra_13",
+          "text_en": "‘Now we will wash the clothes!’",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_109722/s_013.mp3"
+        },
+        {
+          "id": "ra_14",
+          "text_en": "‘Now we will hang the clothes up!’",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_109722/s_014.mp3"
+        },
+        {
+          "id": "ra_15",
+          "text_en": "“SURPRISE!”",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_109722/s_015.mp3"
+        },
+        {
+          "id": "ra_16",
+          "text_en": "‘I have been watching them the whole time and they have been little angels!’ says Gogo.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_109722/s_016.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "Who says they are going to have so much fun?",
+          "options_en": [
+            "big sister Khwezi",
+            "little brother Mzamo",
+            "Gogo"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "When will they have so much fun?",
+          "options_en": [
+            "while Gogo is having a nap",
+            "while Papa and Mama are out",
+            "after they clean the house"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s1_q1",
+          "type": "choice",
+          "question_en": "Who says \"Ooh yes!\"?",
+          "options_en": [
+            "little brother Mzamo",
+            "big sister Khwezi",
+            "Gogo"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s1_q2",
+          "type": "choice",
+          "question_en": "How does the little brother respond?",
+          "options_en": [
+            "He says \"Ooh yes!\"",
+            "He says \"Uh uh, no. Not me. I don't want to clean up!\"",
+            "He stays silent"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s2_q1",
+          "type": "choice",
+          "question_en": "What do they ask?",
+          "options_en": [
+            "\"What will we do?\"",
+            "\"Will we clean the house for Papa and Mama?\"",
+            "\"How will we wash the dishes?\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s2_q2",
+          "type": "choice",
+          "question_en": "How is the question expressed?",
+          "options_en": [
+            "Asking \"What will we do?\"",
+            "Saying \"Ooh yes!\"",
+            "Saying \"That's no fun\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "Who will they clean the house for?",
+          "options_en": [
+            "Papa and Mama",
+            "Gogo",
+            "Khwezi"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "Who says \"That's no fun\"?",
+          "options_en": [
+            "Mzamo",
+            "Khwezi",
+            "Gogo"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p1_s1_q1",
+          "type": "choice",
+          "question_en": "What does the speaker say in this sentence?",
+          "options_en": [
+            "\"Uh uh, no.\"",
+            "\"We will clean the house for Papa and Mama while they are out.\"",
+            "\"That's no fun.\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p1_s1_q2",
+          "type": "choice",
+          "question_en": "Why does the speaker say \"Uh uh, no\"?",
+          "options_en": [
+            "Because they don't want to clean up",
+            "Because they want to have fun while Gogo has a nap",
+            "Because Papa and Mama will be proud"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p1_s2_q1",
+          "type": "choice",
+          "question_en": "Who says \"Not me. I don't want to clean up!\"?",
+          "options_en": [
+            "Mzamo",
+            "Khwezi",
+            "Gogo"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p1_s2_q2",
+          "type": "choice",
+          "question_en": "What does the speaker say they don't want to do?",
+          "options_en": [
+            "Clean up",
+            "Wash the dishes",
+            "Sweep the stoep"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "Who will be so proud?",
+          "options_en": [
+            "Papa and Mama",
+            "Gogo",
+            "Khwezi"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "How will Papa and Mama feel?",
+          "options_en": [
+            "So proud",
+            "Surprised",
+            "Annoyed"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p2_s1_q1",
+          "type": "choice",
+          "question_en": "Who says, \"Let me show you how much fun we will have!\"?",
+          "options_en": [
+            "Khwezi",
+            "Mzamo",
+            "Gogo"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p2_s1_q2",
+          "type": "choice",
+          "question_en": "What does Khwezi want to show?",
+          "options_en": [
+            "How much fun we will have",
+            "How to wash the dishes",
+            "That Gogo is napping"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "Who will put the toys away?",
+          "options_en": [
+            "We",
+            "Gogo",
+            "Papa and Mama"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "What will they put away?",
+          "options_en": [
+            "The toys",
+            "The dishes",
+            "The clothes"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "What will they do?",
+          "options_en": [
+            "Sweep the stoep",
+            "Wash the dishes",
+            "Polish the floor"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "Where will they sweep?",
+          "options_en": [
+            "The stoep",
+            "The house",
+            "The windows"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "Who will wash the dishes?",
+          "options_en": [
+            "We",
+            "Khwezi",
+            "Gogo"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "What will they wash now?",
+          "options_en": [
+            "The dishes",
+            "The windows",
+            "The clothes"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "What will we wash?",
+          "options_en": [
+            "the windows",
+            "the dishes",
+            "the clothes"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "When will we wash the windows?",
+          "options_en": [
+            "Now",
+            "While Gogo is having a nap",
+            "When Papa and Mama are out"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "What will we polish?",
+          "options_en": [
+            "The floor",
+            "The windows",
+            "The dishes"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "Which part of the house will be polished?",
+          "options_en": [
+            "The floor",
+            "The toys",
+            "The clothes"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        }
+      ]
+    },
+    {
+      "paragraph_index": 8,
+      "questions": [
+        {
+          "id": "gl_p8_s0_q1",
+          "type": "choice",
+          "question_en": "What will we do?",
+          "options_en": [
+            "Wash the clothes",
+            "Wash the dishes",
+            "Sweep the stoep"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p8_s0_q2",
+          "type": "choice",
+          "question_en": "What will we wash?",
+          "options_en": [
+            "The clothes",
+            "The windows",
+            "The dishes"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        }
+      ]
+    },
+    {
+      "paragraph_index": 9,
+      "questions": [
+        {
+          "id": "gl_p9_s0_q1",
+          "type": "choice",
+          "question_en": "What will they hang up?",
+          "options_en": [
+            "the clothes",
+            "the toys",
+            "the dishes"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p9_s0_q2",
+          "type": "choice",
+          "question_en": "When will they hang the clothes up?",
+          "options_en": [
+            "now",
+            "while Gogo is having a nap",
+            "when Papa and Mama are out"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        }
+      ]
+    },
+    {
+      "paragraph_index": 10,
+      "questions": [
+        {
+          "id": "gl_p10_s0_q1",
+          "type": "choice",
+          "question_en": "What did someone say?",
+          "options_en": [
+            "SURPRISE!",
+            "We will clean the house for Papa and Mama while they are out.",
+            "I have been watching them the whole time and they have been little angels!"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p10_s0_q2",
+          "type": "choice",
+          "question_en": "Which word appears in the sentence?",
+          "options_en": [
+            "SURPRISE!",
+            "clean",
+            "wash"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        }
+      ]
+    },
+    {
+      "paragraph_index": 11,
+      "questions": [
+        {
+          "id": "gl_p11_s0_q1",
+          "type": "choice",
+          "question_en": "Who says this?",
+          "options_en": [
+            "Gogo",
+            "Khwezi",
+            "Mzamo"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p11_s0_q2",
+          "type": "choice",
+          "question_en": "What has Gogo been doing?",
+          "options_en": [
+            "Watching them the whole time",
+            "Cleaning the house",
+            "Hanging the clothes up"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'The Great Tidy Up'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "fun",
+      "meaning_vi": "vui vẻ",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "nap",
+      "meaning_vi": "ngủ trưa",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "big sister",
+      "meaning_vi": "chị cả",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "little brother",
+      "meaning_vi": "em trai",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "clean",
+      "meaning_vi": "dọn dẹp, làm sạch",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "house",
+      "meaning_vi": "nhà",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "out",
+      "meaning_vi": "đi vắng",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "want",
+      "meaning_vi": "muốn",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "proud",
+      "meaning_vi": "tự hào",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "show",
+      "meaning_vi": "chỉ cho xem",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "first",
+      "meaning_vi": "đầu tiên",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "toys",
+      "meaning_vi": "đồ chơi",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "put away",
+      "meaning_vi": "cất đi",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "now",
+      "meaning_vi": "bây giờ",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "sweep",
+      "meaning_vi": "quét",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "stoep",
+      "meaning_vi": "hiên nhà",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "wash",
+      "meaning_vi": "rửa",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "dishes",
+      "meaning_vi": "bát đĩa",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "windows",
+      "meaning_vi": "cửa sổ",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "polish",
+      "meaning_vi": "đánh bóng",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "floor",
+      "meaning_vi": "sàn nhà",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "clothes",
+      "meaning_vi": "quần áo",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "wash",
+      "meaning_vi": "giặt",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "hang up",
+      "meaning_vi": "phơi lên, treo lên",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "surprise",
+      "meaning_vi": "bất ngờ",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "watching",
+      "meaning_vi": "theo dõi, quan sát",
+      "paragraph_index": 11
+    },
+    {
+      "word_en": "whole time",
+      "meaning_vi": "suốt thời gian qua",
+      "paragraph_index": 11
+    },
+    {
+      "word_en": "angels",
+      "meaning_vi": "thiên thần",
+      "paragraph_index": 11
+    }
+  ]
+}

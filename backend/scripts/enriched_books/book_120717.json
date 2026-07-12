@@ -1,0 +1,2938 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L3",
+  "level_label": "Cấp 3",
+  "topic": "Lost in the Amusement Park",
+  "slug": "book_120717",
+  "audio_filename": "book_120717.mp3",
+  "book_slug": "book_120717",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_120717/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_120717/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_120717/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_120717/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_120717/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_120717/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_120717/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_120717/page_09.jpg",
+    "https://audio.felixbuilderhub.com/books/book_120717/page_10.jpg",
+    "https://audio.felixbuilderhub.com/books/book_120717/page_11.jpg",
+    "https://audio.felixbuilderhub.com/books/book_120717/page_12.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_120717/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_120717/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_120717/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_120717/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_120717/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_120717/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_120717/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_120717/page_09.mp3",
+    "https://audio.felixbuilderhub.com/books/book_120717/page_10.mp3",
+    "https://audio.felixbuilderhub.com/books/book_120717/page_11.mp3",
+    "https://audio.felixbuilderhub.com/books/book_120717/page_12.mp3"
+  ],
+  "book_attribution": {
+    "title": "Lost in the Amusement Park",
+    "creators": [
+      "Kasley Cheung",
+      "Adrien Folly Notsron",
+      "David Knight",
+      "Ouk Ratha",
+      "Phạm Thị Thu Trang",
+      "Rajeev Verma 'Banjara'",
+      "Ravi Gupta",
+      "Shamim Ahmed",
+      "Upamanyu Bhattacharyya"
+    ],
+    "publisher": "StoryWeaver Community",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: Lost in the Amusement Park is written by Kasley Cheung . © Kasley Cheung , 2020. Some rights reserved. Released under CC BY 4.0 license. Images Attributions: Cover page: A boy crying as a girl and dog look on , by Shamim Ahmed © Room to Read, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 2: Boy Jump Bed , by Kasley Cheung © Kasley Cheung, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 3: Rabbit and monkey on rollercoaster , by Adrien Folly Notsron © Book Dash, 2017. Some rights reserved. Released under CC BY 4.0 license. Page 4: Justin Eats Ice Cream , by Kasley Cheung © Kasley Cheung, 2026. Some rights reserved. Released under CC BY 4.0 license. Page 5: A clown juggling balls and dancing around , by David Knight © StoryWeaver Team, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 6: Boy lost in a crowded street filled with people , by Upamanyu Bhattacharyya © StoryWeaver Team, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 7: A boy crying as a girl and dog look on , by Shamim Ahmed © Room to Read, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 8: A woman talking to a boy who looks upset , by Ouk Ratha © Let's Read, 2016. Some rights reserved. Released under CC BY 4.0 license. Page 9: Man and a boy talking to each other , by Phạm Thị Thu Trang © Room to Read, 2015. Some rights reserved. Released under CC BY 4.0 license. Page 10: Woman talking , by Ravi Gupta © Pratham Books, 2018. Some rights reserved. Released under CC BY 4.0 license. Page 11: Loudspeaker , by Kasley Cheung © Kasley Cheung, 2026. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/120717-lost-in-the-amusement-park",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "Boy Jump Bed , by Kasley Cheung © Kasley Cheung, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "Rabbit and monkey on rollercoaster , by Adrien Folly Notsron © Book Dash, 2017. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "Justin Eats Ice Cream , by Kasley Cheung © Kasley Cheung, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "A clown juggling balls and dancing around , by David Knight © StoryWeaver Team, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "Boy lost in a crowded street filled with people , by Upamanyu Bhattacharyya © StoryWeaver Team, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "A boy crying as a girl and dog look on , by Shamim Ahmed © Room to Read, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "A woman talking to a boy who looks upset , by Ouk Ratha © Let's Read, 2016. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "Man and a boy talking to each other , by Phạm Thị Thu Trang © Room to Read, 2015. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 8,
+        "credit_text": "Woman talking , by Ravi Gupta © Pratham Books, 2018. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 9,
+        "credit_text": "Loudspeaker , by Kasley Cheung © Kasley Cheung, 2026. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 10,
+        "credit_text": "Illustration by Adrien Folly Notsron, David Knight, Kasley Cheung, Ouk Ratha, Phạm Thị Thu Trang, Rajeev Verma 'Banjara', Ravi Gupta, Shamim Ahmed, Upamanyu Bhattacharyya."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "Lost in the Amusement Park",
+    "paragraphs_en": [
+      "Boing! Boing! Boing! “Justin! Stop bouncing on the bed!” demanded Justin’s mum Annie, stomping her foot and putting her hands on her hips angrily. “But this is so fun!” giggled Justin playfully. Justin was very excited for his seven years old birthday celebration at the amusement park tomorrow. Merely thinking of it got him very, very hyped. This was going to be one long night for Justin.",
+      "“Time to go!” called Annie as she headed to the door. “Wait for me!” yelled Justin, holding up one arm and dashing towards the door like Superman. “Wheeeeeeee” cried Justin, screaming his head off. He went blue on his face, his mouth was all dry, it was like a giant hair dryer! And his eyes were stinging when he tried to open them. When Annie and Justin got off the roller coaster, Justin’s knees were still shaking!!!",
+      "“Mom, can I have a chocolate ice cream with sprinkles?” asked Justin. “What? It’s $100!” exclaimed Annie, still feeling a bit dizzy from the rollercoaster ride. “Silly mom, that’s just $10.” Justin said. “Ok, here you go,” replied Annie giving him $10. After the ice cream break, they had a lot of fun going on rides and playing games. Justin’s favorite ride was the Ferris wheel, and his favorite game was the ring toss.",
+      "“Mom, what’s next?” asked Justin. “Let’s go to the spinning cups,” answered Annie. Then they passed by a clown performance. “Mum, can we watch a bit?” asked Justin. Annie nodded. “Yipee!” exclaimed Justin, as they headed toward the show. “Ha! Ha! Ha! Ha!” Justin laughed loudly as he watched the clowns got into some silly fights when the show was over the whole audience couldn’t stop laughing!",
+      "Annie grabbed on Justin’s hand, and said, “Okay, let’s go Justin.” They were walking through a crowd and Annie was going too fast. Justin got squeezed and shoved that he couldn’t move forward along with his mom. “Mommy, you’re going too fast!” Justin cried. But it was too late. His hand slipped of mom’s and her hand fell onto another boy’s hand. When the crowd cleared up. The little boy was shrieked, “Where are you taking me?” “Oh! I am sorry!” answered Annie in puzzle and brought the frightened boy back to his mother. That’s when Annie realised that she had lost Justin!",
+      "As for Justin, he was feeling very miserable indeed. He started sniffling and calling, “Mommy where are you?” Tears began to well in his eyes, his lips started to wobble, and his forehead and hands started to sweat. “Waaaaaaaa!” he sobbed. Then suddenly, he saw the spinning cup ride. “Oh right! Mummy said something about the spinning cup!” he thought and he dashed right to the ride.",
+      "At the spinning cup ride, Justin couldn’t find his mum. Tears started rolling down his face. A kind ride operator kneeled down and asked, “Hello little boy, how can I help you? What happened?” After Justin told her exactly what happened, she stood up and said, “Follow me.” “But where are we going?” asked Justin.",
+      "“This is my boss,” introduced the kind ride operator whose name was Nancy. “Hello boss,” greeted Justin. “Don’t call me boss, call me Mark,” chuckled the boss. “But where is mummy?” mumbled Justin who was getting quieter and quieter. Then all of a sudden he started sniffling, and putting his hands on his face. “We are going to bring you to the loudspeaker, so you can call your mum,\" comforted Mark. “Mmmm, okay,” nodded Justin.",
+      "Annie couldn’t find Justin. Then suddenly she recalled what she said to Justin before the clown performance. Feeling very lucky, she sprinted to a teahouse called Spinning Cup. At the teahouse, Annie spun around and almost knocked over a waitress. “Madam, how can I help you?” said the kind waitress. But before Annie could reply, the announcement began.",
+      "“Good afternoon, All guests of Spinning Amusement Park. Today, a boy named Justin got lost. If you are his mother, please go to the fifth floor of the general office.” Then Mark gave the megaphone to Justin. But all Justin could say was a loud shrieking “WHAAAAA” “Oh! That’s Justin!” Annie shouted. And before she knew it, everyone in the restaurant was staring at her. Annie was very, very, truly embarrassed (even though she was really excited to hear Justin's voice). In seconds, she sprinted to the general office.",
+      "“Mama mama , I miss you!” sniffled Justin happily. Holding up his arms and running toward Annie, crying with joy, like he found his favorite teddy bear! After thanking Mark, Annie and Justin left. “Let’s go to the Spinning Cups now,” suggested Annie. “Ok!” laughed Justin and hugged his mom. He was happy to have a fun mum. On the way to the Spinning Cups, Justin said to Annie, “You know mummy, next time I’ll keep calm when I am lost. And think more clearly.” “I am glad to hear that!” answered Annie."
+    ],
+    "sentences": [
+      {
+        "text_en": "Boing! Boing! Boing!",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_000.mp3",
+        "text_vi": "Boing! Boing! Boing!"
+      },
+      {
+        "text_en": "“Justin! Stop bouncing on the bed!” demanded Justin’s mum Annie, stomping her foot and putting her hands on her hips angrily.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_001.mp3",
+        "text_vi": "\"Justin! Dừng nhảy tưng tưng trên giường ngay!\" mẹ của Justin là Annie quát, giậm chân và chống tay vào hông vẻ giận dữ."
+      },
+      {
+        "text_en": "“But this is so fun!” giggled Justin playfully.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_002.mp3",
+        "text_vi": "\"Nhưng mà vui lắm mẹ ơi!\" Justin khúc khích cười một cách tinh nghịch."
+      },
+      {
+        "text_en": "Justin was very excited for his seven years old birthday celebration at the amusement park tomorrow.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_003.mp3",
+        "text_vi": "Justin rất háo hức chờ buổi tiệc sinh nhật 7 tuổi của mình ở công viên giải trí vào ngày mai."
+      },
+      {
+        "text_en": "Merely thinking of it got him very, very hyped.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_004.mp3",
+        "text_vi": "Chỉ nghĩ đến thôi là cậu bé đã thấy rất, rất phấn khích rồi."
+      },
+      {
+        "text_en": "This was going to be one long night for Justin.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_005.mp3",
+        "text_vi": "Đêm nay sẽ là một đêm dài đối với Justin."
+      },
+      {
+        "text_en": "“Time to go!” called Annie as she headed to the door.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_006.mp3",
+        "text_vi": "\"Đến giờ đi rồi!\" Annie gọi khi cô đi về phía cửa."
+      },
+      {
+        "text_en": "“Wait for me!” yelled Justin, holding up one arm and dashing towards the door like Superman.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_007.mp3",
+        "text_vi": "\"Đợi con với!\" Justin hét lên, giơ một tay lên và lao nhanh về phía cửa như Siêu nhân."
+      },
+      {
+        "text_en": "“Wheeeeeeee” cried Justin, screaming his head off.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_008.mp3",
+        "text_vi": "\"Wheeeeeeee\" Justin kêu lên, la hét hết cỡ."
+      },
+      {
+        "text_en": "He went blue on his face, his mouth was all dry, it was like a giant hair dryer!",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_009.mp3",
+        "text_vi": "Mặt cậu bé tái xanh, miệng khô rang, cứ như một cái máy sấy tóc khổng lồ vậy!"
+      },
+      {
+        "text_en": "And his eyes were stinging when he tried to open them.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_010.mp3",
+        "text_vi": "Và mắt cậu bé cay xè khi cố mở ra."
+      },
+      {
+        "text_en": "When Annie and Justin got off the roller coaster, Justin’s knees were still shaking!!!",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_011.mp3",
+        "text_vi": "Khi Annie và Justin xuống khỏi tàu lượn siêu tốc, đầu gối của Justin vẫn còn run lẩy bẩy!!!"
+      },
+      {
+        "text_en": "“Mom, can I have a chocolate ice cream with sprinkles?” asked Justin.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_012.mp3",
+        "text_vi": "\"Mẹ ơi, con ăn kem sô cô la có rắc cốm được không ạ?\" Justin hỏi."
+      },
+      {
+        "text_en": "“What? It’s $100!” exclaimed Annie, still feeling a bit dizzy from the rollercoaster ride.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_013.mp3",
+        "text_vi": "\"Cái gì? 100 đô la á!\" Annie kêu lên, vẫn còn hơi chóng mặt sau chuyến tàu lượn siêu tốc."
+      },
+      {
+        "text_en": "“Silly mom, that’s just $10.” Justin said.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_014.mp3",
+        "text_vi": "\"Mẹ ngốc quá, có 10 đô la thôi mà.\" Justin nói."
+      },
+      {
+        "text_en": "“Ok, here you go,” replied Annie giving him $10.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_015.mp3",
+        "text_vi": "\"Được rồi, của con đây,\" Annie đáp lại và đưa cho cậu bé 10 đô la."
+      },
+      {
+        "text_en": "After the ice cream break, they had a lot of fun going on rides and playing games.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_016.mp3",
+        "text_vi": "Sau khi ăn kem xong, họ đã có rất nhiều niềm vui khi chơi các trò chơi và đi các vòng quay."
+      },
+      {
+        "text_en": "Justin’s favorite ride was the Ferris wheel, and his favorite game was the ring toss.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_017.mp3",
+        "text_vi": "Trò chơi yêu thích của Justin là vòng quay ngựa gỗ, và trò chơi ném vòng."
+      },
+      {
+        "text_en": "“Mom, what’s next?” asked Justin.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_018.mp3",
+        "text_vi": "\"Mẹ ơi, tiếp theo mình chơi gì ạ?\" Justin hỏi."
+      },
+      {
+        "text_en": "“Let’s go to the spinning cups,” answered Annie.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_019.mp3",
+        "text_vi": "\"Chúng ta đi chơi cốc xoay nhé,\" Annie trả lời."
+      },
+      {
+        "text_en": "Then they passed by a clown performance.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_020.mp3",
+        "text_vi": "Sau đó họ đi ngang qua một màn biểu diễn của chú hề."
+      },
+      {
+        "text_en": "“Mum, can we watch a bit?” asked Justin.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_021.mp3",
+        "text_vi": "\"Mẹ ơi, mình xem một chút được không ạ?\" Justin hỏi."
+      },
+      {
+        "text_en": "Annie nodded. “Yipee!” exclaimed Justin, as they headed toward the show.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_022.mp3",
+        "text_vi": "Annie gật đầu. \"Yipee!\" Justin reo lên, khi họ đi về phía buổi biểu diễn."
+      },
+      {
+        "text_en": "“Ha! Ha! Ha!",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_023.mp3",
+        "text_vi": "\"Ha! Ha! Ha!"
+      },
+      {
+        "text_en": "Ha!” Justin laughed loudly as he watched the clowns got into some silly fights when the show was over the whole audience couldn’t stop laughing!",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_024.mp3",
+        "text_vi": "Ha!\" Justin cười lớn khi xem các chú hề đánh nhau ngốc nghếch, khi buổi biểu diễn kết thúc, cả khán giả không thể ngừng cười!"
+      },
+      {
+        "text_en": "Annie grabbed on Justin’s hand, and said, “Okay, let’s go Justin.” They were walking through a crowd and Annie was going too fast.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_025.mp3",
+        "text_vi": "Annie nắm lấy tay Justin và nói, \"Được rồi, đi thôi Justin.\" Họ đang đi qua một đám đông và Annie đi quá nhanh."
+      },
+      {
+        "text_en": "Justin got squeezed and shoved that he couldn’t move forward along with his mom.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_026.mp3",
+        "text_vi": "Justin bị chen lấn và xô đẩy đến nỗi cậu bé không thể đi tiếp cùng mẹ."
+      },
+      {
+        "text_en": "“Mommy, you’re going too fast!” Justin cried.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_027.mp3",
+        "text_vi": "\"Mẹ ơi, mẹ đi nhanh quá!\" Justin kêu lên."
+      },
+      {
+        "text_en": "But it was too late.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_028.mp3",
+        "text_vi": "Nhưng đã quá muộn."
+      },
+      {
+        "text_en": "His hand slipped of mom’s and her hand fell onto another boy’s hand.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_029.mp3",
+        "text_vi": "Tay cậu bé tuột khỏi tay mẹ và tay mẹ lại nắm nhầm tay một cậu bé khác."
+      },
+      {
+        "text_en": "When the crowd cleared up.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_030.mp3",
+        "text_vi": "Khi đám đông thưa dần."
+      },
+      {
+        "text_en": "The little boy was shrieked, “Where are you taking me?” “Oh!",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_031.mp3",
+        "text_vi": "Cậu bé nhỏ hét lên, \"Cô đưa cháu đi đâu vậy?\" \"Ôi!"
+      },
+      {
+        "text_en": "I am sorry!” answered Annie in puzzle and brought the frightened boy back to his mother.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_032.mp3",
+        "text_vi": "Cô xin lỗi!\" Annie trả lời một cách bối rối và đưa cậu bé đang sợ hãi trở lại với mẹ của cậu."
+      },
+      {
+        "text_en": "That’s when Annie realised that she had lost Justin!",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_033.mp3",
+        "text_vi": "Đó là lúc Annie nhận ra rằng cô đã lạc mất Justin!"
+      },
+      {
+        "text_en": "As for Justin, he was feeling very miserable indeed.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_034.mp3",
+        "text_vi": "Về phần Justin, cậu bé cảm thấy rất khổ sở."
+      },
+      {
+        "text_en": "He started sniffling and calling, “Mommy where are you?” Tears began to well in his eyes, his lips started to wobble, and his forehead and hands started to sweat.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_035.mp3",
+        "text_vi": "Cậu bé bắt đầu sụt sịt và gọi, \"Mẹ ơi mẹ đâu rồi?\" Nước mắt bắt đầu trào ra, môi cậu bé bắt đầu run rẩy, và trán cùng tay cậu bé bắt đầu đổ mồ hôi."
+      },
+      {
+        "text_en": "“Waaaaaaaa!” he sobbed.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_036.mp3",
+        "text_vi": "\"Waaaaaaaa!\" cậu bé nức nở."
+      },
+      {
+        "text_en": "Then suddenly, he saw the spinning cup ride.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_037.mp3",
+        "text_vi": "Rồi đột nhiên, cậu bé nhìn thấy trò cốc xoay."
+      },
+      {
+        "text_en": "“Oh right! Mummy said something about the spinning cup!” he thought and he dashed right to the ride.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_038.mp3",
+        "text_vi": "\"À đúng rồi! Mẹ có nói gì đó về cốc xoay!\" cậu bé nghĩ và lao thẳng đến trò chơi."
+      },
+      {
+        "text_en": "At the spinning cup ride, Justin couldn’t find his mum.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_039.mp3",
+        "text_vi": "Ở trò cốc xoay, Justin không tìm thấy mẹ mình."
+      },
+      {
+        "text_en": "Tears started rolling down his face.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_040.mp3",
+        "text_vi": "Nước mắt bắt đầu lăn dài trên má cậu bé."
+      },
+      {
+        "text_en": "A kind ride operator kneeled down and asked, “Hello little boy, how can I help you?",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_041.mp3",
+        "text_vi": "Một người điều hành trò chơi tốt bụng đã quỳ xuống và hỏi, \"Chào cháu bé, cô có thể giúp gì cho cháu?"
+      },
+      {
+        "text_en": "What happened?” After Justin told her exactly what happened, she stood up and said, “Follow me.” “But where are we going?” asked Justin.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_042.mp3",
+        "text_vi": "Chuyện gì đã xảy ra vậy?\" Sau khi Justin kể chính xác những gì đã xảy ra, cô ấy đứng dậy và nói, \"Đi theo cô.\" \"Nhưng chúng ta đi đâu vậy ạ?\" Justin hỏi."
+      },
+      {
+        "text_en": "“This is my boss,” introduced the kind ride operator whose name was Nancy.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_043.mp3",
+        "text_vi": "\"Đây là sếp của tôi,\" người điều hành trò chơi tốt bụng tên Nancy giới thiệu."
+      },
+      {
+        "text_en": "“Hello boss,” greeted Justin.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_044.mp3",
+        "text_vi": "\"Chào sếp ạ,\" Justin chào."
+      },
+      {
+        "text_en": "“Don’t call me boss, call me Mark,” chuckled the boss.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_045.mp3",
+        "text_vi": "\"Đừng gọi tôi là sếp, cứ gọi tôi là Mark,\" ông sếp cười khúc khích."
+      },
+      {
+        "text_en": "“But where is mummy?” mumbled Justin who was getting quieter and quieter.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_046.mp3",
+        "text_vi": "\"Nhưng mẹ con đâu rồi ạ?\" Justin lẩm bẩm, giọng ngày càng nhỏ dần."
+      },
+      {
+        "text_en": "Then all of a sudden he started sniffling, and putting his hands on his face.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_047.mp3",
+        "text_vi": "Rồi đột nhiên cậu bé bắt đầu sụt sịt, và úp tay lên mặt."
+      },
+      {
+        "text_en": "“We are going to bring you to the loudspeaker, so you can call your mum,\" comforted Mark.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_048.mp3",
+        "text_vi": "\"Chúng ta sẽ đưa cháu đến loa phóng thanh để cháu có thể gọi mẹ,\" Mark an ủi."
+      },
+      {
+        "text_en": "“Mmmm, okay,” nodded Justin.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_049.mp3",
+        "text_vi": "\"Mmmm, vâng ạ,\" Justin gật đầu."
+      },
+      {
+        "text_en": "Annie couldn’t find Justin.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_050.mp3",
+        "text_vi": "Annie không tìm thấy Justin."
+      },
+      {
+        "text_en": "Then suddenly she recalled what she said to Justin before the clown performance.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_051.mp3",
+        "text_vi": "Rồi đột nhiên cô nhớ lại những gì mình đã nói với Justin trước buổi biểu diễn chú hề."
+      },
+      {
+        "text_en": "Feeling very lucky, she sprinted to a teahouse called Spinning Cup.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_052.mp3",
+        "text_vi": "Cảm thấy rất may mắn, cô chạy nhanh đến một quán trà tên là Cốc Xoay."
+      },
+      {
+        "text_en": "At the teahouse, Annie spun around and almost knocked over a waitress.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_053.mp3",
+        "text_vi": "Tại quán trà, Annie quay người lại và suýt nữa thì làm đổ một cô phục vụ."
+      },
+      {
+        "text_en": "“Madam, how can I help you?” said the kind waitress.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_054.mp3",
+        "text_vi": "\"Thưa cô, tôi có thể giúp gì ạ?\" cô phục vụ tốt bụng nói."
+      },
+      {
+        "text_en": "But before Annie could reply, the announcement began.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_055.mp3",
+        "text_vi": "Nhưng trước khi Annie kịp trả lời, thông báo đã bắt đầu."
+      },
+      {
+        "text_en": "“Good afternoon, All guests of Spinning Amusement Park.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_056.mp3",
+        "text_vi": "\"Chào buổi chiều, quý khách của Công viên giải trí Spinning."
+      },
+      {
+        "text_en": "Today, a boy named Justin got lost.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_057.mp3",
+        "text_vi": "Hôm nay, một cậu bé tên Justin đã bị lạc."
+      },
+      {
+        "text_en": "If you are his mother, please go to the fifth floor of the general office.” Then Mark gave the megaphone to Justin.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_058.mp3",
+        "text_vi": "Nếu quý vị là mẹ của cậu bé, xin vui lòng đến tầng năm của văn phòng tổng hợp.\" Sau đó Mark đưa cái loa phóng thanh cho Justin."
+      },
+      {
+        "text_en": "But all Justin could say was a loud shrieking “WHAAAAA” “Oh!",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_059.mp3",
+        "text_vi": "Nhưng tất cả những gì Justin có thể nói là một tiếng \"WHAAAAA\" la hét lớn. \"Ôi!"
+      },
+      {
+        "text_en": "That’s Justin!” Annie shouted.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_060.mp3",
+        "text_vi": "Đúng là Justin rồi!\" Annie hét lên."
+      },
+      {
+        "text_en": "And before she knew it, everyone in the restaurant was staring at her.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_061.mp3",
+        "text_vi": "Và trước khi cô kịp nhận ra, mọi người trong nhà hàng đều đang nhìn chằm chằm vào cô."
+      },
+      {
+        "text_en": "Annie was very, very, truly embarrassed (even though she was really excited to hear Justin's voice).",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_062.mp3",
+        "text_vi": "Annie rất, rất, thật sự xấu hổ (mặc dù cô rất vui khi nghe thấy giọng Justin)."
+      },
+      {
+        "text_en": "In seconds, she sprinted to the general office.",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_063.mp3",
+        "text_vi": "Trong vài giây, cô chạy nhanh đến văn phòng tổng hợp."
+      },
+      {
+        "text_en": "“Mama mama , I miss you!” sniffled Justin happily.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_064.mp3",
+        "text_vi": "\"Mẹ ơi mẹ ơi, con nhớ mẹ!\" Justin sụt sịt nói trong vui sướng."
+      },
+      {
+        "text_en": "Holding up his arms and running toward Annie, crying with joy, like he found his favorite teddy bear!",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_065.mp3",
+        "text_vi": "Giơ hai tay lên và chạy về phía Annie, khóc trong niềm vui sướng, như thể cậu bé tìm thấy con gấu bông yêu thích của mình!"
+      },
+      {
+        "text_en": "After thanking Mark, Annie and Justin left.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_066.mp3",
+        "text_vi": "Sau khi cảm ơn Mark, Annie và Justin rời đi."
+      },
+      {
+        "text_en": "“Let’s go to the Spinning Cups now,” suggested Annie.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_067.mp3",
+        "text_vi": "\"Bây giờ chúng ta đi chơi cốc xoay nhé,\" Annie gợi ý."
+      },
+      {
+        "text_en": "“Ok!” laughed Justin and hugged his mom.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_068.mp3",
+        "text_vi": "\"Vâng ạ!\" Justin cười và ôm mẹ."
+      },
+      {
+        "text_en": "He was happy to have a fun mum.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_069.mp3",
+        "text_vi": "Cậu bé vui vì có một người mẹ vui tính."
+      },
+      {
+        "text_en": "On the way to the Spinning Cups, Justin said to Annie, “You know mummy, next time I’ll keep calm when I am lost.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_070.mp3",
+        "text_vi": "Trên đường đến trò cốc xoay, Justin nói với Annie, \"Mẹ biết không mẹ, lần tới con sẽ giữ bình tĩnh khi bị lạc."
+      },
+      {
+        "text_en": "And think more clearly.” “I am glad to hear that!” answered Annie.",
+        "paragraph_index": 10,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_071.mp3",
+        "text_vi": "Và suy nghĩ rõ ràng hơn.\" \"Mẹ rất vui khi nghe con nói vậy!\" Annie trả lời."
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "Boing! Boing! Boing!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "“Justin! Stop bouncing on the bed!” demanded Justin’s mum Annie, stomping her foot and putting her hands on her hips angrily.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "“But this is so fun!” giggled Justin playfully.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "Justin was very excited for his seven years old birthday celebration at the amusement park tomorrow.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "Merely thinking of it got him very, very hyped.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "This was going to be one long night for Justin.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "“Time to go!” called Annie as she headed to the door.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "“Wait for me!” yelled Justin, holding up one arm and dashing towards the door like Superman.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "“Wheeeeeeee” cried Justin, screaming his head off.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "He went blue on his face, his mouth was all dry, it was like a giant hair dryer!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "And his eyes were stinging when he tried to open them.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "When Annie and Justin got off the roller coaster, Justin’s knees were still shaking!!!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "“Mom, can I have a chocolate ice cream with sprinkles?” asked Justin.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_012.mp3"
+        },
+        {
+          "id": "ra_13",
+          "text_en": "“What? It’s $100!” exclaimed Annie, still feeling a bit dizzy from the rollercoaster ride.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_013.mp3"
+        },
+        {
+          "id": "ra_14",
+          "text_en": "“Silly mom, that’s just $10.” Justin said.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_014.mp3"
+        },
+        {
+          "id": "ra_15",
+          "text_en": "“Ok, here you go,” replied Annie giving him $10.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_015.mp3"
+        },
+        {
+          "id": "ra_16",
+          "text_en": "After the ice cream break, they had a lot of fun going on rides and playing games.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_016.mp3"
+        },
+        {
+          "id": "ra_17",
+          "text_en": "Justin’s favorite ride was the Ferris wheel, and his favorite game was the ring toss.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_017.mp3"
+        },
+        {
+          "id": "ra_18",
+          "text_en": "“Mom, what’s next?” asked Justin.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_018.mp3"
+        },
+        {
+          "id": "ra_19",
+          "text_en": "“Let’s go to the spinning cups,” answered Annie.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_019.mp3"
+        },
+        {
+          "id": "ra_20",
+          "text_en": "Then they passed by a clown performance.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_020.mp3"
+        },
+        {
+          "id": "ra_21",
+          "text_en": "“Mum, can we watch a bit?” asked Justin.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_021.mp3"
+        },
+        {
+          "id": "ra_22",
+          "text_en": "Annie nodded. “Yipee!” exclaimed Justin, as they headed toward the show.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_022.mp3"
+        },
+        {
+          "id": "ra_23",
+          "text_en": "“Ha! Ha! Ha!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_023.mp3"
+        },
+        {
+          "id": "ra_24",
+          "text_en": "Ha!” Justin laughed loudly as he watched the clowns got into some silly fights when the show was over the whole audience couldn’t stop laughing!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_024.mp3"
+        },
+        {
+          "id": "ra_25",
+          "text_en": "Annie grabbed on Justin’s hand, and said, “Okay, let’s go Justin.” They were walking through a crowd and Annie was going too fast.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_025.mp3"
+        },
+        {
+          "id": "ra_26",
+          "text_en": "Justin got squeezed and shoved that he couldn’t move forward along with his mom.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_026.mp3"
+        },
+        {
+          "id": "ra_27",
+          "text_en": "“Mommy, you’re going too fast!” Justin cried.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_027.mp3"
+        },
+        {
+          "id": "ra_28",
+          "text_en": "But it was too late.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_028.mp3"
+        },
+        {
+          "id": "ra_29",
+          "text_en": "His hand slipped of mom’s and her hand fell onto another boy’s hand.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_029.mp3"
+        },
+        {
+          "id": "ra_30",
+          "text_en": "When the crowd cleared up.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_030.mp3"
+        },
+        {
+          "id": "ra_31",
+          "text_en": "The little boy was shrieked, “Where are you taking me?” “Oh!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_031.mp3"
+        },
+        {
+          "id": "ra_32",
+          "text_en": "I am sorry!” answered Annie in puzzle and brought the frightened boy back to his mother.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_032.mp3"
+        },
+        {
+          "id": "ra_33",
+          "text_en": "That’s when Annie realised that she had lost Justin!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_033.mp3"
+        },
+        {
+          "id": "ra_34",
+          "text_en": "As for Justin, he was feeling very miserable indeed.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_034.mp3"
+        },
+        {
+          "id": "ra_35",
+          "text_en": "He started sniffling and calling, “Mommy where are you?” Tears began to well in his eyes, his lips started to wobble, and his forehead and hands started to sweat.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_035.mp3"
+        },
+        {
+          "id": "ra_36",
+          "text_en": "“Waaaaaaaa!” he sobbed.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_036.mp3"
+        },
+        {
+          "id": "ra_37",
+          "text_en": "Then suddenly, he saw the spinning cup ride.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_037.mp3"
+        },
+        {
+          "id": "ra_38",
+          "text_en": "“Oh right! Mummy said something about the spinning cup!” he thought and he dashed right to the ride.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_038.mp3"
+        },
+        {
+          "id": "ra_39",
+          "text_en": "At the spinning cup ride, Justin couldn’t find his mum.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_039.mp3"
+        },
+        {
+          "id": "ra_40",
+          "text_en": "Tears started rolling down his face.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_040.mp3"
+        },
+        {
+          "id": "ra_41",
+          "text_en": "A kind ride operator kneeled down and asked, “Hello little boy, how can I help you?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_041.mp3"
+        },
+        {
+          "id": "ra_42",
+          "text_en": "What happened?” After Justin told her exactly what happened, she stood up and said, “Follow me.” “But where are we going?” asked Justin.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_042.mp3"
+        },
+        {
+          "id": "ra_43",
+          "text_en": "“This is my boss,” introduced the kind ride operator whose name was Nancy.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_043.mp3"
+        },
+        {
+          "id": "ra_44",
+          "text_en": "“Hello boss,” greeted Justin.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_044.mp3"
+        },
+        {
+          "id": "ra_45",
+          "text_en": "“Don’t call me boss, call me Mark,” chuckled the boss.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_045.mp3"
+        },
+        {
+          "id": "ra_46",
+          "text_en": "“But where is mummy?” mumbled Justin who was getting quieter and quieter.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_046.mp3"
+        },
+        {
+          "id": "ra_47",
+          "text_en": "Then all of a sudden he started sniffling, and putting his hands on his face.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_047.mp3"
+        },
+        {
+          "id": "ra_48",
+          "text_en": "“We are going to bring you to the loudspeaker, so you can call your mum,\" comforted Mark.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_048.mp3"
+        },
+        {
+          "id": "ra_49",
+          "text_en": "“Mmmm, okay,” nodded Justin.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_049.mp3"
+        },
+        {
+          "id": "ra_50",
+          "text_en": "Annie couldn’t find Justin.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_050.mp3"
+        },
+        {
+          "id": "ra_51",
+          "text_en": "Then suddenly she recalled what she said to Justin before the clown performance.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_051.mp3"
+        },
+        {
+          "id": "ra_52",
+          "text_en": "Feeling very lucky, she sprinted to a teahouse called Spinning Cup.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_052.mp3"
+        },
+        {
+          "id": "ra_53",
+          "text_en": "At the teahouse, Annie spun around and almost knocked over a waitress.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_053.mp3"
+        },
+        {
+          "id": "ra_54",
+          "text_en": "“Madam, how can I help you?” said the kind waitress.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_054.mp3"
+        },
+        {
+          "id": "ra_55",
+          "text_en": "But before Annie could reply, the announcement began.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_055.mp3"
+        },
+        {
+          "id": "ra_56",
+          "text_en": "“Good afternoon, All guests of Spinning Amusement Park.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_056.mp3"
+        },
+        {
+          "id": "ra_57",
+          "text_en": "Today, a boy named Justin got lost.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_057.mp3"
+        },
+        {
+          "id": "ra_58",
+          "text_en": "If you are his mother, please go to the fifth floor of the general office.” Then Mark gave the megaphone to Justin.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_058.mp3"
+        },
+        {
+          "id": "ra_59",
+          "text_en": "But all Justin could say was a loud shrieking “WHAAAAA” “Oh!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_059.mp3"
+        },
+        {
+          "id": "ra_60",
+          "text_en": "That’s Justin!” Annie shouted.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_060.mp3"
+        },
+        {
+          "id": "ra_61",
+          "text_en": "And before she knew it, everyone in the restaurant was staring at her.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_061.mp3"
+        },
+        {
+          "id": "ra_62",
+          "text_en": "Annie was very, very, truly embarrassed (even though she was really excited to hear Justin's voice).",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_062.mp3"
+        },
+        {
+          "id": "ra_63",
+          "text_en": "In seconds, she sprinted to the general office.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_063.mp3"
+        },
+        {
+          "id": "ra_64",
+          "text_en": "“Mama mama , I miss you!” sniffled Justin happily.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_064.mp3"
+        },
+        {
+          "id": "ra_65",
+          "text_en": "Holding up his arms and running toward Annie, crying with joy, like he found his favorite teddy bear!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_065.mp3"
+        },
+        {
+          "id": "ra_66",
+          "text_en": "After thanking Mark, Annie and Justin left.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_066.mp3"
+        },
+        {
+          "id": "ra_67",
+          "text_en": "“Let’s go to the Spinning Cups now,” suggested Annie.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_067.mp3"
+        },
+        {
+          "id": "ra_68",
+          "text_en": "“Ok!” laughed Justin and hugged his mom.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_068.mp3"
+        },
+        {
+          "id": "ra_69",
+          "text_en": "He was happy to have a fun mum.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_069.mp3"
+        },
+        {
+          "id": "ra_70",
+          "text_en": "On the way to the Spinning Cups, Justin said to Annie, “You know mummy, next time I’ll keep calm when I am lost.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_070.mp3"
+        },
+        {
+          "id": "ra_71",
+          "text_en": "And think more clearly.” “I am glad to hear that!” answered Annie.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_120717/s_071.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "What sound is heard?",
+          "options_en": [
+            "Boing!",
+            "Wheeeeeeee",
+            "Ha! Ha! Ha!"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "How many times is the sound repeated?",
+          "options_en": [
+            "Three times",
+            "Once",
+            "Many times during the clown show"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s1_q1",
+          "type": "choice",
+          "question_en": "Who told Justin to stop bouncing on the bed?",
+          "options_en": [
+            "His mum Annie",
+            "A ride operator",
+            "A clown"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s1_q2",
+          "type": "choice",
+          "question_en": "Where was Justin bouncing?",
+          "options_en": [
+            "On the bed",
+            "On the Ferris wheel",
+            "In the spinning cups"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s2_q1",
+          "type": "choice",
+          "question_en": "Who giggled playfully?",
+          "options_en": [
+            "Justin",
+            "Annie",
+            "Mark"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s2_q2",
+          "type": "choice",
+          "question_en": "How did Justin speak when he said it was fun?",
+          "options_en": [
+            "Playfully",
+            "Angrily",
+            "Loudly"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s3_q1",
+          "type": "choice",
+          "question_en": "What was Justin excited for?",
+          "options_en": [
+            "His seven years old birthday celebration",
+            "A lost-and-found announcement",
+            "The ring toss game"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p0_s3_q2",
+          "type": "choice",
+          "question_en": "Where would the celebration take place?",
+          "options_en": [
+            "At the amusement park",
+            "At the general office",
+            "At the teahouse called Spinning Cup"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p0_s4_q1",
+          "type": "choice",
+          "question_en": "What made him very, very hyped?",
+          "options_en": [
+            "Merely thinking of it",
+            "Losing his mum",
+            "Eating ice cream"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p0_s4_q2",
+          "type": "choice",
+          "question_en": "How did thinking of it make him feel?",
+          "options_en": [
+            "Very, very hyped",
+            "Very, very embarrassed",
+            "A bit dizzy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p0_s5_q1",
+          "type": "choice",
+          "question_en": "What was going to be one long night for Justin?",
+          "options_en": [
+            "This (the night before his celebration)",
+            "The ride on the Ferris wheel",
+            "The announcement over the loudspeaker"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p0_s5_q2",
+          "type": "choice",
+          "question_en": "When was it going to be one long night for Justin?",
+          "options_en": [
+            "That night",
+            "During the day",
+            "Tomorrow at the amusement park"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "Who called \"Time to go!\"?",
+          "options_en": [
+            "Annie",
+            "Justin",
+            "Mark"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "Where was Annie heading when she called that?",
+          "options_en": [
+            "To the door",
+            "To the roller coaster",
+            "To the Spinning Cups"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p1_s1_q1",
+          "type": "choice",
+          "question_en": "Who yelled \"Wait for me!\"?",
+          "options_en": [
+            "Justin",
+            "Annie",
+            "Nancy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p1_s1_q2",
+          "type": "choice",
+          "question_en": "How did Justin dash towards the door?",
+          "options_en": [
+            "Holding up one arm like Superman",
+            "Walking very slowly",
+            "Bouncing on the bed"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p1_s2_q1",
+          "type": "choice",
+          "question_en": "What did Justin cry as he rode?",
+          "options_en": [
+            "\"Wheeeeeeee\"",
+            "\"Mommy where are you?\"",
+            "\"Yipee!\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p1_s2_q2",
+          "type": "choice",
+          "question_en": "How was Justin screaming?",
+          "options_en": [
+            "Screaming his head off",
+            "Whispering softly",
+            "Laughing loudly"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p1_s3_q1",
+          "type": "choice",
+          "question_en": "What happened to his face?",
+          "options_en": [
+            "He went blue on his face",
+            "His knees were still shaking",
+            "His eyes were stinging"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p1_s3_q2",
+          "type": "choice",
+          "question_en": "What was his mouth like?",
+          "options_en": [
+            "All dry, like a giant hair dryer",
+            "Full of chocolate ice cream",
+            "Smiling happily"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p1_s4_q1",
+          "type": "choice",
+          "question_en": "What was happening to his eyes when he tried to open them?",
+          "options_en": [
+            "They were stinging",
+            "Tears were rolling down his face",
+            "They were laughing"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p1_s4_q2",
+          "type": "choice",
+          "question_en": "Why did he have trouble opening his eyes?",
+          "options_en": [
+            "Because his eyes were stinging",
+            "Because he had ice cream in his mouth",
+            "Because he was watching a clown show"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p1_s5_q1",
+          "type": "choice",
+          "question_en": "When were Justin's knees still shaking?",
+          "options_en": [
+            "When Annie and Justin got off the roller coaster",
+            "After they had ice cream",
+            "When he found the spinning cup ride"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p1_s5_q2",
+          "type": "choice",
+          "question_en": "Whose knees were still shaking?",
+          "options_en": [
+            "Justin's",
+            "Annie's",
+            "The little boy's"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "Who asked for a chocolate ice cream with sprinkles?",
+          "options_en": [
+            "Justin",
+            "Annie",
+            "Nancy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "What did Justin ask for?",
+          "options_en": [
+            "A chocolate ice cream with sprinkles",
+            "A Ferris wheel ticket",
+            "A ring toss prize"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p2_s1_q1",
+          "type": "choice",
+          "question_en": "Who exclaimed, \"What? It's $100!\"?",
+          "options_en": [
+            "Annie",
+            "Justin",
+            "Mark"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p2_s1_q2",
+          "type": "choice",
+          "question_en": "Why was Annie feeling a bit dizzy?",
+          "options_en": [
+            "Because of the rollercoaster ride",
+            "Because she lost Justin",
+            "Because she watched the clown performance"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p2_s2_q1",
+          "type": "choice",
+          "question_en": "Who said, \"Silly mom, that's just $10.\"?",
+          "options_en": [
+            "Justin",
+            "Annie",
+            "Nancy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p2_s2_q2",
+          "type": "choice",
+          "question_en": "How much did Justin say it cost?",
+          "options_en": [
+            "$10",
+            "$100",
+            "A Ferris wheel ticket"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p2_s3_q1",
+          "type": "choice",
+          "question_en": "What did Annie give him?",
+          "options_en": [
+            "$10",
+            "Ice cream",
+            "A ring toss token"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p2_s3_q2",
+          "type": "choice",
+          "question_en": "Who gave him $10?",
+          "options_en": [
+            "Annie",
+            "Mark",
+            "Nancy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p2_s4_q1",
+          "type": "choice",
+          "question_en": "What did they do after the ice cream break?",
+          "options_en": [
+            "They went on rides and played games",
+            "They watched the clown performance",
+            "They went to the general office"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p2_s4_q2",
+          "type": "choice",
+          "question_en": "How did they feel during the rides and games?",
+          "options_en": [
+            "They had a lot of fun",
+            "They felt dizzy",
+            "They felt miserable"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p2_s5_q1",
+          "type": "choice",
+          "question_en": "Which was Justin's favorite ride?",
+          "options_en": [
+            "The Ferris wheel",
+            "The rollercoaster",
+            "The spinning cups"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p2_s5_q2",
+          "type": "choice",
+          "question_en": "Which was Justin's favorite game?",
+          "options_en": [
+            "The ring toss",
+            "The clown performance",
+            "The spinning cups"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "Who asked \"What’s next?\"",
+          "options_en": [
+            "Justin",
+            "Annie",
+            "Mark"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "Who was being asked \"What’s next?\"",
+          "options_en": [
+            "Mom",
+            "Nancy",
+            "The ride operator"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p3_s1_q1",
+          "type": "choice",
+          "question_en": "Who answered \"Let’s go to the spinning cups\"?",
+          "options_en": [
+            "Annie",
+            "Justin",
+            "Nancy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p3_s1_q2",
+          "type": "choice",
+          "question_en": "Where did Annie suggest they go?",
+          "options_en": [
+            "To the spinning cups",
+            "To the Ferris wheel",
+            "To the clown show"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p3_s2_q1",
+          "type": "choice",
+          "question_en": "What did they pass by?",
+          "options_en": [
+            "A clown performance",
+            "The spinning cups",
+            "The ice cream stall"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p3_s2_q2",
+          "type": "choice",
+          "question_en": "Who passed by a clown performance?",
+          "options_en": [
+            "They (Justin and Annie)",
+            "Mark and Nancy",
+            "The clowns"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p3_s3_q1",
+          "type": "choice",
+          "question_en": "Who asked to watch the clown performance a bit?",
+          "options_en": [
+            "Justin",
+            "Annie",
+            "A ride operator"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p3_s3_q2",
+          "type": "choice",
+          "question_en": "What did Justin ask to do?",
+          "options_en": [
+            "Watch a bit of the show",
+            "Go to the spinning cups",
+            "Buy ice cream"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p3_s4_q1",
+          "type": "choice",
+          "question_en": "Who nodded before Justin exclaimed \"Yipee!\"?",
+          "options_en": [
+            "Annie",
+            "Justin",
+            "A waitress"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p3_s4_q2",
+          "type": "choice",
+          "question_en": "What did Justin exclaim as they headed toward the show?",
+          "options_en": [
+            "\"Yipee!\"",
+            "\"Wheeeee\"",
+            "\"Ha! Ha! Ha!\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p3_s5_q1",
+          "type": "choice",
+          "question_en": "How did Justin laugh at the clowns?",
+          "options_en": [
+            "Loudly",
+            "Quietly",
+            "Sadly"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p3_s5_q2",
+          "type": "choice",
+          "question_en": "What did Justin watch the clowns do?",
+          "options_en": [
+            "Get into some silly fights",
+            "Sell ice cream",
+            "Ride the Ferris wheel"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p3_s6_q1",
+          "type": "choice",
+          "question_en": "What couldn't the whole audience stop doing?",
+          "options_en": [
+            "Laughing",
+            "Clapping",
+            "Crying"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p3_s6_q2",
+          "type": "choice",
+          "question_en": "When couldn't the audience stop laughing?",
+          "options_en": [
+            "When the show was over",
+            "When they left the park",
+            "When they rode the spinning cups"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "Who grabbed Justin's hand?",
+          "options_en": [
+            "Annie",
+            "Justin",
+            "Mark"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "Where were they walking?",
+          "options_en": [
+            "Through a crowd",
+            "To the spinning cups",
+            "To the teahouse"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p4_s1_q1",
+          "type": "choice",
+          "question_en": "Who got squeezed and shoved?",
+          "options_en": [
+            "Justin",
+            "Annie",
+            "The little boy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p4_s1_q2",
+          "type": "choice",
+          "question_en": "Why couldn't Justin move forward?",
+          "options_en": [
+            "He was squeezed and shoved",
+            "He was tired from the ride",
+            "He was eating ice cream"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p4_s2_q1",
+          "type": "choice",
+          "question_en": "Who cried, 'Mommy, you're going too fast!'?",
+          "options_en": [
+            "Justin",
+            "Annie",
+            "Nancy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        },
+        {
+          "id": "gl_p4_s2_q2",
+          "type": "choice",
+          "question_en": "What did Justin tell his mom?",
+          "options_en": [
+            "You're going too fast",
+            "Let's get ice cream",
+            "Stop the ride"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        },
+        {
+          "id": "gl_p4_s3_q1",
+          "type": "choice",
+          "question_en": "What was it when Justin warned his mom?",
+          "options_en": [
+            "It was too late",
+            "It was time for ice cream",
+            "It was a good idea"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        },
+        {
+          "id": "gl_p4_s3_q2",
+          "type": "choice",
+          "question_en": "How did the sentence describe the timing?",
+          "options_en": [
+            "Too late",
+            "Very early",
+            "Right on time"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        },
+        {
+          "id": "gl_p4_s4_q1",
+          "type": "choice",
+          "question_en": "Whose hand slipped off mom's?",
+          "options_en": [
+            "His (Justin)",
+            "Annie's",
+            "Mark's"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p4_s4_q2",
+          "type": "choice",
+          "question_en": "What is the correct answer to this question: Onto whose hand did her hand fall?",
+          "options_en": [
+            "Another boy's hand",
+            "Nancy's hand",
+            "A ride operator's hand"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p4_s5_q1",
+          "type": "choice",
+          "question_en": "When did the next event happen?",
+          "options_en": [
+            "When the crowd cleared up",
+            "When the ride ended",
+            "When they bought ice cream"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        },
+        {
+          "id": "gl_p4_s5_q2",
+          "type": "choice",
+          "question_en": "How did the crowd change?",
+          "options_en": [
+            "It cleared up",
+            "It grew louder",
+            "It started to dance"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        },
+        {
+          "id": "gl_p4_s6_q1",
+          "type": "choice",
+          "question_en": "Who shrieked, 'Where are you taking me?'",
+          "options_en": [
+            "The little boy",
+            "Justin",
+            "Mark"
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        },
+        {
+          "id": "gl_p4_s6_q2",
+          "type": "choice",
+          "question_en": "What did the little boy ask?",
+          "options_en": [
+            "Where are you taking me?",
+            "Can I have ice cream?",
+            "Where is the spinning cup?"
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        },
+        {
+          "id": "gl_p4_s7_q1",
+          "type": "choice",
+          "question_en": "Who answered, 'I am sorry!'?",
+          "options_en": [
+            "Annie",
+            "Nancy",
+            "The waitress"
+          ],
+          "correct_index": 0,
+          "sentence_index": 32
+        },
+        {
+          "id": "gl_p4_s7_q2",
+          "type": "choice",
+          "question_en": "What did Annie do with the frightened boy?",
+          "options_en": [
+            "Brought him back to his mother",
+            "Took him to the spinning cups",
+            "Gave him ice cream"
+          ],
+          "correct_index": 0,
+          "sentence_index": 32
+        },
+        {
+          "id": "gl_p4_s8_q1",
+          "type": "choice",
+          "question_en": "Who realised she had lost Justin?",
+          "options_en": [
+            "Annie",
+            "Nancy",
+            "Mark"
+          ],
+          "correct_index": 0,
+          "sentence_index": 33
+        },
+        {
+          "id": "gl_p4_s8_q2",
+          "type": "choice",
+          "question_en": "What did Annie realise?",
+          "options_en": [
+            "That she had lost Justin",
+            "That she had a ticket",
+            "That she wanted ice cream"
+          ],
+          "correct_index": 0,
+          "sentence_index": 33
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "Who was feeling very miserable?",
+          "options_en": [
+            "Justin",
+            "Annie",
+            "Nancy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 34
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "How was Justin feeling?",
+          "options_en": [
+            "Very miserable",
+            "Very excited for his birthday",
+            "Very hungry"
+          ],
+          "correct_index": 0,
+          "sentence_index": 34
+        },
+        {
+          "id": "gl_p5_s1_q1",
+          "type": "choice",
+          "question_en": "What did he call out while sniffling?",
+          "options_en": [
+            "\"Mommy where are you?\"",
+            "\"Let's go to the spinning cups\"",
+            "\"Stop bouncing on the bed!\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 35
+        },
+        {
+          "id": "gl_p5_s1_q2",
+          "type": "choice",
+          "question_en": "Which body parts started to sweat?",
+          "options_en": [
+            "Forehead and hands",
+            "Knees and feet",
+            "Eyes and lips"
+          ],
+          "correct_index": 0,
+          "sentence_index": 35
+        },
+        {
+          "id": "gl_p5_s2_q1",
+          "type": "choice",
+          "question_en": "What sound did he make?",
+          "options_en": [
+            "\"Waaaaaaaa!\" (he sobbed)",
+            "\"Ha! Ha! Ha!\" (he laughed)",
+            "\"Wheeeee\" (he screamed)"
+          ],
+          "correct_index": 0,
+          "sentence_index": 36
+        },
+        {
+          "id": "gl_p5_s2_q2",
+          "type": "choice",
+          "question_en": "How did he express his sadness in this sentence?",
+          "options_en": [
+            "By sobbing",
+            "By laughing loudly",
+            "By asking for ice cream"
+          ],
+          "correct_index": 0,
+          "sentence_index": 36
+        },
+        {
+          "id": "gl_p5_s3_q1",
+          "type": "choice",
+          "question_en": "What did he see suddenly?",
+          "options_en": [
+            "The spinning cup ride",
+            "The Ferris wheel",
+            "A clown performance"
+          ],
+          "correct_index": 0,
+          "sentence_index": 37
+        },
+        {
+          "id": "gl_p5_s3_q2",
+          "type": "choice",
+          "question_en": "When did he see the spinning cup ride?",
+          "options_en": [
+            "Suddenly",
+            "After the announcement",
+            "Before the clown show"
+          ],
+          "correct_index": 0,
+          "sentence_index": 37
+        },
+        {
+          "id": "gl_p5_s4_q1",
+          "type": "choice",
+          "question_en": "What did he remember about his mummy?",
+          "options_en": [
+            "Mummy said something about the spinning cup",
+            "Mummy warned him about the roller coaster",
+            "Mummy bought him ice cream"
+          ],
+          "correct_index": 0,
+          "sentence_index": 38
+        },
+        {
+          "id": "gl_p5_s4_q2",
+          "type": "choice",
+          "question_en": "What did he do after he remembered?",
+          "options_en": [
+            "He dashed right to the ride",
+            "He sat down to rest",
+            "He watched the clowns"
+          ],
+          "correct_index": 0,
+          "sentence_index": 38
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "Who couldn’t find his mum?",
+          "options_en": [
+            "Justin",
+            "Annie",
+            "Mark"
+          ],
+          "correct_index": 0,
+          "sentence_index": 39
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "Where couldn’t Justin find his mum?",
+          "options_en": [
+            "At the spinning cup ride",
+            "On the roller coaster",
+            "At the Ferris wheel"
+          ],
+          "correct_index": 0,
+          "sentence_index": 39
+        },
+        {
+          "id": "gl_p6_s1_q1",
+          "type": "choice",
+          "question_en": "What started rolling down his face?",
+          "options_en": [
+            "Tears",
+            "Laughter",
+            "Sweat"
+          ],
+          "correct_index": 0,
+          "sentence_index": 40
+        },
+        {
+          "id": "gl_p6_s1_q2",
+          "type": "choice",
+          "question_en": "Why did tears start rolling down his face?",
+          "options_en": [
+            "Because he couldn’t find his mum",
+            "Because he ate ice cream",
+            "Because he was on the roller coaster"
+          ],
+          "correct_index": 0,
+          "sentence_index": 40
+        },
+        {
+          "id": "gl_p6_s2_q1",
+          "type": "choice",
+          "question_en": "Who kneeled down and asked the little boy how to help him?",
+          "options_en": [
+            "A kind ride operator",
+            "Annie",
+            "Mark"
+          ],
+          "correct_index": 0,
+          "sentence_index": 41
+        },
+        {
+          "id": "gl_p6_s2_q2",
+          "type": "choice",
+          "question_en": "What did the ride operator ask the little boy?",
+          "options_en": [
+            "How can I help you?",
+            "Where is your mum?",
+            "Do you want ice cream?"
+          ],
+          "correct_index": 0,
+          "sentence_index": 41
+        },
+        {
+          "id": "gl_p6_s3_q1",
+          "type": "choice",
+          "question_en": "What did she say after she stood up?",
+          "options_en": [
+            "Follow me",
+            "Call your mum",
+            "Take him to the loudspeaker"
+          ],
+          "correct_index": 0,
+          "sentence_index": 42
+        },
+        {
+          "id": "gl_p6_s3_q2",
+          "type": "choice",
+          "question_en": "Who asked, \"But where are we going?\"",
+          "options_en": [
+            "Justin",
+            "Nancy",
+            "Annie"
+          ],
+          "correct_index": 0,
+          "sentence_index": 42
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "Who introduced the boss?",
+          "options_en": [
+            "the kind ride operator",
+            "Annie",
+            "Mark"
+          ],
+          "correct_index": 0,
+          "sentence_index": 43
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "Whose name was Nancy?",
+          "options_en": [
+            "the ride operator",
+            "Justin",
+            "the boss"
+          ],
+          "correct_index": 0,
+          "sentence_index": 43
+        },
+        {
+          "id": "gl_p7_s1_q1",
+          "type": "choice",
+          "question_en": "Who greeted the boss?",
+          "options_en": [
+            "Justin",
+            "Nancy",
+            "Annie"
+          ],
+          "correct_index": 0,
+          "sentence_index": 44
+        },
+        {
+          "id": "gl_p7_s1_q2",
+          "type": "choice",
+          "question_en": "How did Justin greet the boss?",
+          "options_en": [
+            "He said \"Hello boss\"",
+            "He cried \"Waaaaa\"",
+            "He asked for ice cream"
+          ],
+          "correct_index": 0,
+          "sentence_index": 44
+        },
+        {
+          "id": "gl_p7_s2_q1",
+          "type": "choice",
+          "question_en": "What did the boss ask to be called?",
+          "options_en": [
+            "Mark",
+            "Nancy",
+            "Justin"
+          ],
+          "correct_index": 0,
+          "sentence_index": 45
+        },
+        {
+          "id": "gl_p7_s2_q2",
+          "type": "choice",
+          "question_en": "How did the boss speak when he corrected the name?",
+          "options_en": [
+            "chuckled",
+            "cried",
+            "whispered"
+          ],
+          "correct_index": 0,
+          "sentence_index": 45
+        },
+        {
+          "id": "gl_p7_s3_q1",
+          "type": "choice",
+          "question_en": "What did Justin ask?",
+          "options_en": [
+            "Where is mummy?",
+            "Can I have ice cream?",
+            "Hello boss"
+          ],
+          "correct_index": 0,
+          "sentence_index": 46
+        },
+        {
+          "id": "gl_p7_s3_q2",
+          "type": "choice",
+          "question_en": "How was Justin getting as he mumbled?",
+          "options_en": [
+            "quieter and quieter",
+            "louder and louder",
+            "happier"
+          ],
+          "correct_index": 0,
+          "sentence_index": 46
+        },
+        {
+          "id": "gl_p7_s4_q1",
+          "type": "choice",
+          "question_en": "What did he start doing all of a sudden?",
+          "options_en": [
+            "sniffling",
+            "laughing",
+            "jumping"
+          ],
+          "correct_index": 0,
+          "sentence_index": 47
+        },
+        {
+          "id": "gl_p7_s4_q2",
+          "type": "choice",
+          "question_en": "Where did he put his hands?",
+          "options_en": [
+            "on his face",
+            "on his hips",
+            "on the ride"
+          ],
+          "correct_index": 0,
+          "sentence_index": 47
+        },
+        {
+          "id": "gl_p7_s5_q1",
+          "type": "choice",
+          "question_en": "Where did Mark say they would bring Justin?",
+          "options_en": [
+            "to the loudspeaker",
+            "to the spinning cup",
+            "to the general office"
+          ],
+          "correct_index": 0,
+          "sentence_index": 48
+        },
+        {
+          "id": "gl_p7_s5_q2",
+          "type": "choice",
+          "question_en": "Why were they going to the loudspeaker?",
+          "options_en": [
+            "so he can call his mum",
+            "to buy ice cream",
+            "to watch the clown"
+          ],
+          "correct_index": 0,
+          "sentence_index": 48
+        },
+        {
+          "id": "gl_p7_s6_q1",
+          "type": "choice",
+          "question_en": "How did Justin respond to Mark's comfort?",
+          "options_en": [
+            "He nodded",
+            "He screamed",
+            "He shook his head"
+          ],
+          "correct_index": 0,
+          "sentence_index": 49
+        },
+        {
+          "id": "gl_p7_s6_q2",
+          "type": "choice",
+          "question_en": "What did Justin say as he nodded?",
+          "options_en": [
+            "\"Mmmm, okay\"",
+            "\"Hello boss\"",
+            "\"Where is mummy?\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 49
+        }
+      ]
+    },
+    {
+      "paragraph_index": 8,
+      "questions": [
+        {
+          "id": "gl_p8_s0_q1",
+          "type": "choice",
+          "question_en": "Who couldn't find Justin?",
+          "options_en": [
+            "Annie",
+            "Mark",
+            "Nancy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 50
+        },
+        {
+          "id": "gl_p8_s0_q2",
+          "type": "choice",
+          "question_en": "What couldn't Annie do?",
+          "options_en": [
+            "Find Justin",
+            "Operate the spinning cup ride",
+            "Talk to the waitress"
+          ],
+          "correct_index": 0,
+          "sentence_index": 50
+        },
+        {
+          "id": "gl_p8_s1_q1",
+          "type": "choice",
+          "question_en": "What did she suddenly recall?",
+          "options_en": [
+            "What she said to Justin",
+            "Where the general office was",
+            "That Justin liked ice cream"
+          ],
+          "correct_index": 0,
+          "sentence_index": 51
+        },
+        {
+          "id": "gl_p8_s1_q2",
+          "type": "choice",
+          "question_en": "When had she said it to Justin?",
+          "options_en": [
+            "Before the clown performance",
+            "At the spinning cup ride",
+            "After the announcement"
+          ],
+          "correct_index": 0,
+          "sentence_index": 51
+        },
+        {
+          "id": "gl_p8_s2_q1",
+          "type": "choice",
+          "question_en": "How was she feeling when she sprinted?",
+          "options_en": [
+            "Very lucky",
+            "Very angry",
+            "Very tired"
+          ],
+          "correct_index": 0,
+          "sentence_index": 52
+        },
+        {
+          "id": "gl_p8_s2_q2",
+          "type": "choice",
+          "question_en": "Where did she sprint to?",
+          "options_en": [
+            "A teahouse called Spinning Cup",
+            "The general office",
+            "The spinning cup ride"
+          ],
+          "correct_index": 0,
+          "sentence_index": 52
+        },
+        {
+          "id": "gl_p8_s3_q1",
+          "type": "choice",
+          "question_en": "What did Annie almost knock over at the teahouse?",
+          "options_en": [
+            "A waitress",
+            "A little boy",
+            "A ride operator"
+          ],
+          "correct_index": 0,
+          "sentence_index": 53
+        },
+        {
+          "id": "gl_p8_s3_q2",
+          "type": "choice",
+          "question_en": "What did Annie do at the teahouse?",
+          "options_en": [
+            "She spun around",
+            "She sat down to eat",
+            "She made an announcement"
+          ],
+          "correct_index": 0,
+          "sentence_index": 53
+        },
+        {
+          "id": "gl_p8_s4_q1",
+          "type": "choice",
+          "question_en": "Who said, \"Madam, how can I help you?\"",
+          "options_en": [
+            "The kind waitress",
+            "Mark",
+            "Annie"
+          ],
+          "correct_index": 0,
+          "sentence_index": 54
+        },
+        {
+          "id": "gl_p8_s4_q2",
+          "type": "choice",
+          "question_en": "What did the waitress ask Annie?",
+          "options_en": [
+            "How can I help you?",
+            "Where is Justin?",
+            "Do you want tea?"
+          ],
+          "correct_index": 0,
+          "sentence_index": 54
+        },
+        {
+          "id": "gl_p8_s5_q1",
+          "type": "choice",
+          "question_en": "What began before Annie could reply?",
+          "options_en": [
+            "The announcement",
+            "The clown performance",
+            "The spinning cup ride"
+          ],
+          "correct_index": 0,
+          "sentence_index": 55
+        },
+        {
+          "id": "gl_p8_s5_q2",
+          "type": "choice",
+          "question_en": "When did the announcement begin?",
+          "options_en": [
+            "Before Annie could reply",
+            "After Annie left the teahouse",
+            "During the roller coaster ride"
+          ],
+          "correct_index": 0,
+          "sentence_index": 55
+        }
+      ]
+    },
+    {
+      "paragraph_index": 9,
+      "questions": [
+        {
+          "id": "gl_p9_s0_q1",
+          "type": "choice",
+          "question_en": "Who is being greeted in the announcement?",
+          "options_en": [
+            "All guests of Spinning Amusement Park",
+            "Justin",
+            "Annie"
+          ],
+          "correct_index": 0,
+          "sentence_index": 56
+        },
+        {
+          "id": "gl_p9_s0_q2",
+          "type": "choice",
+          "question_en": "Where does the announcement say good afternoon?",
+          "options_en": [
+            "Spinning Amusement Park",
+            "Spinning Cup teahouse",
+            "the general office"
+          ],
+          "correct_index": 0,
+          "sentence_index": 56
+        },
+        {
+          "id": "gl_p9_s1_q1",
+          "type": "choice",
+          "question_en": "Who got lost today?",
+          "options_en": [
+            "A boy named Justin",
+            "Annie",
+            "Mark"
+          ],
+          "correct_index": 0,
+          "sentence_index": 57
+        },
+        {
+          "id": "gl_p9_s1_q2",
+          "type": "choice",
+          "question_en": "What happened to Justin today?",
+          "options_en": [
+            "He got lost",
+            "He ate ice cream",
+            "He rode the Ferris wheel"
+          ],
+          "correct_index": 0,
+          "sentence_index": 57
+        },
+        {
+          "id": "gl_p9_s2_q1",
+          "type": "choice",
+          "question_en": "Who should go to the fifth floor of the general office?",
+          "options_en": [
+            "His mother",
+            "Mark",
+            "Nancy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 58
+        },
+        {
+          "id": "gl_p9_s2_q2",
+          "type": "choice",
+          "question_en": "Who gave the megaphone to Justin?",
+          "options_en": [
+            "Mark",
+            "The kind ride operator",
+            "Annie"
+          ],
+          "correct_index": 0,
+          "sentence_index": 58
+        },
+        {
+          "id": "gl_p9_s3_q1",
+          "type": "choice",
+          "question_en": "What could Justin only do into the megaphone?",
+          "options_en": [
+            "Let out a loud shrieking “WHAAAAA”",
+            "Laugh loudly",
+            "Whisper quietly"
+          ],
+          "correct_index": 0,
+          "sentence_index": 59
+        },
+        {
+          "id": "gl_p9_s3_q2",
+          "type": "choice",
+          "question_en": "How did Justin sound when he used the megaphone?",
+          "options_en": [
+            "Loud and shrieking",
+            "Quiet and calm",
+            "Happy and laughing"
+          ],
+          "correct_index": 0,
+          "sentence_index": 59
+        },
+        {
+          "id": "gl_p9_s4_q1",
+          "type": "choice",
+          "question_en": "Who shouted \"That's Justin!\"?",
+          "options_en": [
+            "Annie",
+            "Mark",
+            "Nancy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 60
+        },
+        {
+          "id": "gl_p9_s4_q2",
+          "type": "choice",
+          "question_en": "What did Annie shout?",
+          "options_en": [
+            "\"That's Justin!\"",
+            "\"Stop bouncing on the bed!\"",
+            "\"Mommy where are you?\""
+          ],
+          "correct_index": 0,
+          "sentence_index": 60
+        },
+        {
+          "id": "gl_p9_s5_q1",
+          "type": "choice",
+          "question_en": "Who was staring at her?",
+          "options_en": [
+            "Everyone in the restaurant",
+            "Only Mark",
+            "Just Justin"
+          ],
+          "correct_index": 0,
+          "sentence_index": 61
+        },
+        {
+          "id": "gl_p9_s5_q2",
+          "type": "choice",
+          "question_en": "When did everyone in the restaurant start staring at her?",
+          "options_en": [
+            "Before she knew it",
+            "After she left",
+            "When she found Justin"
+          ],
+          "correct_index": 0,
+          "sentence_index": 61
+        },
+        {
+          "id": "gl_p9_s6_q1",
+          "type": "choice",
+          "question_en": "How did Annie feel?",
+          "options_en": [
+            "Very, very, truly embarrassed",
+            "Completely calm",
+            "Angry and upset"
+          ],
+          "correct_index": 0,
+          "sentence_index": 62
+        },
+        {
+          "id": "gl_p9_s6_q2",
+          "type": "choice",
+          "question_en": "What else was Annie, even though she was embarrassed?",
+          "options_en": [
+            "Really excited to hear Justin's voice",
+            "Hungry for ice cream",
+            "Ready to ride the Ferris wheel"
+          ],
+          "correct_index": 0,
+          "sentence_index": 62
+        },
+        {
+          "id": "gl_p9_s7_q1",
+          "type": "choice",
+          "question_en": "Where did she sprint to?",
+          "options_en": [
+            "The general office",
+            "The Spinning Cups ride",
+            "The teahouse called Spinning Cup"
+          ],
+          "correct_index": 0,
+          "sentence_index": 63
+        },
+        {
+          "id": "gl_p9_s7_q2",
+          "type": "choice",
+          "question_en": "How quickly did she run to the general office?",
+          "options_en": [
+            "In seconds",
+            "Slowly",
+            "After a long time"
+          ],
+          "correct_index": 0,
+          "sentence_index": 63
+        }
+      ]
+    },
+    {
+      "paragraph_index": 10,
+      "questions": [
+        {
+          "id": "gl_p10_s0_q1",
+          "type": "choice",
+          "question_en": "Who said \"Mama mama, I miss you!\"?",
+          "options_en": [
+            "Justin",
+            "Annie",
+            "Mark"
+          ],
+          "correct_index": 0,
+          "sentence_index": 64
+        },
+        {
+          "id": "gl_p10_s0_q2",
+          "type": "choice",
+          "question_en": "Why did he sniffle in this sentence?",
+          "options_en": [
+            "He missed his mum",
+            "He was angry at the clown",
+            "He wanted ice cream"
+          ],
+          "correct_index": 0,
+          "sentence_index": 64
+        },
+        {
+          "id": "gl_p10_s1_q1",
+          "type": "choice",
+          "question_en": "Who was he running toward?",
+          "options_en": [
+            "Annie",
+            "Mark",
+            "Nancy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 65
+        },
+        {
+          "id": "gl_p10_s1_q2",
+          "type": "choice",
+          "question_en": "How was he running in this sentence?",
+          "options_en": [
+            "Holding up his arms and crying with joy",
+            "Slowly and sadly",
+            "Running away frightened"
+          ],
+          "correct_index": 0,
+          "sentence_index": 65
+        },
+        {
+          "id": "gl_p10_s2_q1",
+          "type": "choice",
+          "question_en": "Who did they thank?",
+          "options_en": [
+            "Mark",
+            "The waitress",
+            "The ride operator"
+          ],
+          "correct_index": 0,
+          "sentence_index": 66
+        },
+        {
+          "id": "gl_p10_s2_q2",
+          "type": "choice",
+          "question_en": "What did Annie and Justin do after thanking Mark?",
+          "options_en": [
+            "They left",
+            "They sat down",
+            "They watched the clowns"
+          ],
+          "correct_index": 0,
+          "sentence_index": 66
+        },
+        {
+          "id": "gl_p10_s3_q1",
+          "type": "choice",
+          "question_en": "Who suggested going to the Spinning Cups?",
+          "options_en": [
+            "Annie",
+            "Justin",
+            "Mark"
+          ],
+          "correct_index": 0,
+          "sentence_index": 67
+        },
+        {
+          "id": "gl_p10_s3_q2",
+          "type": "choice",
+          "question_en": "Where did Annie suggest they go?",
+          "options_en": [
+            "The Spinning Cups",
+            "The Ferris wheel",
+            "The roller coaster"
+          ],
+          "correct_index": 0,
+          "sentence_index": 67
+        },
+        {
+          "id": "gl_p10_s4_q1",
+          "type": "choice",
+          "question_en": "How did Justin respond?",
+          "options_en": [
+            "He laughed and hugged his mom",
+            "He cried and waved",
+            "He ran away"
+          ],
+          "correct_index": 0,
+          "sentence_index": 68
+        },
+        {
+          "id": "gl_p10_s4_q2",
+          "type": "choice",
+          "question_en": "What is the correct answer to this question: Whom did Justin hug?",
+          "options_en": [
+            "His mom",
+            "Mark",
+            "Nancy"
+          ],
+          "correct_index": 0,
+          "sentence_index": 68
+        },
+        {
+          "id": "gl_p10_s5_q1",
+          "type": "choice",
+          "question_en": "Who was happy in this sentence?",
+          "options_en": [
+            "He (Justin)",
+            "Mark",
+            "The waitress"
+          ],
+          "correct_index": 0,
+          "sentence_index": 69
+        },
+        {
+          "id": "gl_p10_s5_q2",
+          "type": "choice",
+          "question_en": "Why was he happy?",
+          "options_en": [
+            "He was happy to have a fun mum",
+            "Because he won a prize",
+            "Because he was lost"
+          ],
+          "correct_index": 0,
+          "sentence_index": 69
+        },
+        {
+          "id": "gl_p10_s6_q1",
+          "type": "choice",
+          "question_en": "When did Justin say he would keep calm when lost?",
+          "options_en": [
+            "On the way to the Spinning Cups",
+            "Before the clown show",
+            "At the general office"
+          ],
+          "correct_index": 0,
+          "sentence_index": 70
+        },
+        {
+          "id": "gl_p10_s6_q2",
+          "type": "choice",
+          "question_en": "What did Justin promise to do next time he is lost?",
+          "options_en": [
+            "Keep calm",
+            "Run faster",
+            "Buy ice cream"
+          ],
+          "correct_index": 0,
+          "sentence_index": 70
+        },
+        {
+          "id": "gl_p10_s7_q1",
+          "type": "choice",
+          "question_en": "What else did Justin say he would do?",
+          "options_en": [
+            "Think more clearly",
+            "Scream loudly",
+            "Hold hands tightly"
+          ],
+          "correct_index": 0,
+          "sentence_index": 71
+        },
+        {
+          "id": "gl_p10_s7_q2",
+          "type": "choice",
+          "question_en": "How did Annie respond to Justin's promise?",
+          "options_en": [
+            "She said she was glad to hear that",
+            "She scolded him",
+            "She called Mark"
+          ],
+          "correct_index": 0,
+          "sentence_index": 71
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'Lost in the Amusement Park'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "bouncing",
+      "meaning_vi": "nhảy tưng tưng",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "demanded",
+      "meaning_vi": "yêu cầu mạnh mẽ, quát",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "amusement park",
+      "meaning_vi": "công viên giải trí",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "hyped",
+      "meaning_vi": "rất phấn khích",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "yelled",
+      "meaning_vi": "hét lớn",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "dashing",
+      "meaning_vi": "lao nhanh",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "screaming his head off",
+      "meaning_vi": "la hét hết cỡ",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "roller coaster",
+      "meaning_vi": "tàu lượn siêu tốc",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "sprinkles",
+      "meaning_vi": "cốm rắc",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "exclaimed",
+      "meaning_vi": "kêu lên",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "dizzy",
+      "meaning_vi": "chóng mặt",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "Ferris wheel",
+      "meaning_vi": "vòng quay ngựa gỗ",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "spinning cups",
+      "meaning_vi": "cốc xoay",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "clown performance",
+      "meaning_vi": "màn biểu diễn chú hề",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "nodded",
+      "meaning_vi": "gật đầu",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "audience",
+      "meaning_vi": "khán giả",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "crowd",
+      "meaning_vi": "đám đông",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "squeezed",
+      "meaning_vi": "bị chen lấn",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "shoved",
+      "meaning_vi": "bị xô đẩy",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "frightened",
+      "meaning_vi": "sợ hãi",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "miserable",
+      "meaning_vi": "khổ sở",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "sniffling",
+      "meaning_vi": "sụt sịt",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "wobble",
+      "meaning_vi": "run rẩy",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "sobbed",
+      "meaning_vi": "nức nở",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "rolling down",
+      "meaning_vi": "lăn dài",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "ride operator",
+      "meaning_vi": "người điều hành trò chơi",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "kneeled down",
+      "meaning_vi": "quỳ xuống",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "exactly",
+      "meaning_vi": "chính xác",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "introduced",
+      "meaning_vi": "giới thiệu",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "chuckled",
+      "meaning_vi": "cười khúc khích",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "mumbled",
+      "meaning_vi": "lẩm bẩm",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "loudspeaker",
+      "meaning_vi": "loa phóng thanh",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "recalled",
+      "meaning_vi": "nhớ lại",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "sprinted",
+      "meaning_vi": "chạy nhanh",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "waitress",
+      "meaning_vi": "cô phục vụ",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "announcement",
+      "meaning_vi": "thông báo",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "guests",
+      "meaning_vi": "quý khách",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "megaphone",
+      "meaning_vi": "loa phóng thanh",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "shrieking",
+      "meaning_vi": "la hét",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "embarrassed",
+      "meaning_vi": "xấu hổ",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "crying with joy",
+      "meaning_vi": "khóc trong niềm vui sướng",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "suggested",
+      "meaning_vi": "gợi ý",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "keep calm",
+      "meaning_vi": "giữ bình tĩnh",
+      "paragraph_index": 10
+    },
+    {
+      "word_en": "clearly",
+      "meaning_vi": "rõ ràng",
+      "paragraph_index": 10
+    }
+  ]
+}

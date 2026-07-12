@@ -1,0 +1,1559 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L2",
+  "level_label": "Cấp 2",
+  "topic": "Vayu, the Wind",
+  "slug": "book_16",
+  "audio_filename": "book_16.mp3",
+  "book_slug": "book_16",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_16/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_16/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_16/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_16/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_16/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_16/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_16/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_16/page_09.jpg",
+    "https://audio.felixbuilderhub.com/books/book_16/page_10.jpg",
+    "https://audio.felixbuilderhub.com/books/book_16/page_11.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_16/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_16/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_16/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_16/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_16/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_16/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_16/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_16/page_09.mp3",
+    "https://audio.felixbuilderhub.com/books/book_16/page_10.mp3",
+    "https://audio.felixbuilderhub.com/books/book_16/page_11.mp3"
+  ],
+  "book_attribution": {
+    "title": "Vayu, the Wind",
+    "creators": [
+      "Rohini Nilekani",
+      "Rijuta Ghate"
+    ],
+    "publisher": "Pratham Books",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: Vayu, the Wind is translated by Rohini Nilekani . The © for this translation lies with Pratham Books , 2004. Some rights reserved. Released under CC BY 4.0 license. Based on Original story: ' वारा ' , by Madhuri Pai . © Pratham Books , 2004. Some rights reserved. Released under CC BY 4.0 license. Other Credits: 'Vayu, the Wind' has been published on StoryWeaver by Pratham Books. The development of the print version of this book was supported by Dubai Creek Round Table, Dubai .U.A.E. www.prathambooks.org Images Attributions: Cover page: Smiling wind , by Rijuta Ghate © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license. Page 2: Boy showering and wind blowing , by Rijuta Ghate © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license. Page 3: Girl blowing on cup with wind , by Rijuta Ghate © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license. Page 4: Girl feeling the wind through an open window , by Rijuta Ghate © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license. Page 5: Wind amidst clouds and lightning bolt , by Rijuta Ghate © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license. Page 6: Wind blowing and tree swaying , by Rijuta Ghate © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license. Page 7: Wind and girl entering the house, racing towards sweets , by Rijuta Ghate © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license. Page 8: Girl and smiling wind looking at a broken tumbler , by Rijuta Ghate © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license. Page 9: Girl, boy and wind whistling , by Rijuta Ghate © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license. Page 10: Peaceful wind , by Rijuta Ghate © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/16-vayu-the-wind",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "Boy showering and wind blowing , by Rijuta Ghate © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "Girl blowing on cup with wind , by Rijuta Ghate © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "Girl feeling the wind through an open window , by Rijuta Ghate © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "Wind amidst clouds and lightning bolt , by Rijuta Ghate © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "Wind blowing and tree swaying , by Rijuta Ghate © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "Wind and girl entering the house, racing towards sweets , by Rijuta Ghate © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "Girl and smiling wind looking at a broken tumbler , by Rijuta Ghate © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "Girl, boy and wind whistling , by Rijuta Ghate © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 8,
+        "credit_text": "Peaceful wind , by Rijuta Ghate © Pratham Books, 2004. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 9,
+        "credit_text": "Illustration by Rijuta Ghate."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "Vayu, the Wind",
+    "paragraphs_en": [
+      "Everytime I finish my hot, hot bath, My wet body feels so cool, cool cool. Who makes that happen? Vayu the Wind!",
+      "The milk in my cup is too hot, too hot. But soon it is ready for me to gulp. Who makes that happen? Vayu the Wind!",
+      "The window curtains flutter And gently brush my face. Who makes it happen? Vayu, the Wind!",
+      "A bolt of lightning far away. Black clouds moving my way. Who makes that happen? Vayu, the Wind!",
+      "Branches sway and leaves tremble. Flowers gently fall. Who did it all? Vayu, the Wind!",
+      "Far from the house, we are playing, Yet, I can smell the sweets mother is preparing. Who makes it happen? Vayu, the Wind!",
+      "A glass tumbler on a window sill, Crashes on the ground. Thank God, I was not around. Who played this mischief? Of course, it was Vayu, the Wind!",
+      "A whistle blows. A train rolls in. I cannot see, but I hear its din. Who makes that happen? Vayu, the Wind!",
+      "Cannot be seen Cannot be heard Does all the work Without a word. Who can it be?",
+      "Of course! The wind! Vayu, the wind!"
+    ],
+    "sentences": [
+      {
+        "text_en": "Everytime I finish my hot, hot bath, My wet body feels so cool, cool cool.",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_16/s_000.mp3",
+        "text_vi": "Mỗi khi con tắm nước nóng xong, người con ướt nhẹp thấy mát ơi là mát."
+      },
+      {
+        "text_en": "Who makes that happen?",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_16/s_001.mp3",
+        "text_vi": "Ai làm điều đó xảy ra vậy?"
+      },
+      {
+        "text_en": "Vayu the Wind!",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_16/s_002.mp3",
+        "text_vi": "Vayu Thần Gió!"
+      },
+      {
+        "text_en": "The milk in my cup is too hot, too hot.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_16/s_003.mp3",
+        "text_vi": "Sữa trong cốc của con nóng quá là nóng."
+      },
+      {
+        "text_en": "But soon it is ready for me to gulp.",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_16/s_004.mp3",
+        "text_vi": "Nhưng chẳng mấy chốc nó đã sẵn sàng để con uống ực một hơi."
+      },
+      {
+        "text_en": "Who makes that happen?",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_16/s_005.mp3",
+        "text_vi": "Ai làm điều đó xảy ra vậy?"
+      },
+      {
+        "text_en": "Vayu the Wind!",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_16/s_006.mp3",
+        "text_vi": "Vayu Thần Gió!"
+      },
+      {
+        "text_en": "The window curtains flutter And gently brush my face.",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_16/s_007.mp3",
+        "text_vi": "Rèm cửa sổ bay phấp phới và nhẹ nhàng chạm vào mặt con."
+      },
+      {
+        "text_en": "Who makes it happen?",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_16/s_008.mp3",
+        "text_vi": "Ai làm điều đó xảy ra vậy?"
+      },
+      {
+        "text_en": "Vayu, the Wind!",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_16/s_009.mp3",
+        "text_vi": "Vayu, Thần Gió!"
+      },
+      {
+        "text_en": "A bolt of lightning far away.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_16/s_010.mp3",
+        "text_vi": "Một tia chớp lóe lên ở đằng xa."
+      },
+      {
+        "text_en": "Black clouds moving my way.",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_16/s_011.mp3",
+        "text_vi": "Những đám mây đen đang bay về phía con."
+      },
+      {
+        "text_en": "Who makes that happen?",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_16/s_012.mp3",
+        "text_vi": "Ai làm điều đó xảy ra vậy?"
+      },
+      {
+        "text_en": "Vayu, the Wind!",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_16/s_013.mp3",
+        "text_vi": "Vayu, Thần Gió!"
+      },
+      {
+        "text_en": "Branches sway and leaves tremble.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_16/s_014.mp3",
+        "text_vi": "Cành cây đung đưa và lá run rẩy."
+      },
+      {
+        "text_en": "Flowers gently fall.",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_16/s_015.mp3",
+        "text_vi": "Hoa nhẹ nhàng rơi xuống."
+      },
+      {
+        "text_en": "Who did it all?",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_16/s_016.mp3",
+        "text_vi": "Ai đã làm tất cả những điều này?"
+      },
+      {
+        "text_en": "Vayu, the Wind!",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_16/s_017.mp3",
+        "text_vi": "Vayu, Thần Gió!"
+      },
+      {
+        "text_en": "Far from the house, we are playing, Yet, I can smell the sweets mother is preparing.",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_16/s_018.mp3",
+        "text_vi": "Xa nhà, chúng con đang chơi, vậy mà con vẫn ngửi thấy mùi bánh kẹo mẹ đang chuẩn bị."
+      },
+      {
+        "text_en": "Who makes it happen?",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_16/s_019.mp3",
+        "text_vi": "Ai làm điều đó xảy ra vậy?"
+      },
+      {
+        "text_en": "Vayu, the Wind!",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_16/s_020.mp3",
+        "text_vi": "Vayu, Thần Gió!"
+      },
+      {
+        "text_en": "A glass tumbler on a window sill, Crashes on the ground.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_16/s_021.mp3",
+        "text_vi": "Một cái cốc thủy tinh trên bệ cửa sổ, rơi vỡ tan tành xuống đất."
+      },
+      {
+        "text_en": "Thank God, I was not around.",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_16/s_022.mp3",
+        "text_vi": "Ơn trời, con không ở gần đó."
+      },
+      {
+        "text_en": "Who played this mischief?",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_16/s_023.mp3",
+        "text_vi": "Ai đã gây ra trò nghịch ngợm này?"
+      },
+      {
+        "text_en": "Of course, it was Vayu, the Wind!",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_16/s_024.mp3",
+        "text_vi": "Chắc chắn rồi, đó là Vayu, Thần Gió!"
+      },
+      {
+        "text_en": "A whistle blows.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_16/s_025.mp3",
+        "text_vi": "Một tiếng còi thổi."
+      },
+      {
+        "text_en": "A train rolls in.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_16/s_026.mp3",
+        "text_vi": "Một đoàn tàu lăn bánh vào."
+      },
+      {
+        "text_en": "I cannot see, but I hear its din.",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_16/s_027.mp3",
+        "text_vi": "Con không nhìn thấy, nhưng con nghe thấy tiếng ồn của nó."
+      },
+      {
+        "text_en": "Who makes that happen?",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_16/s_028.mp3",
+        "text_vi": "Ai làm điều đó xảy ra vậy?"
+      },
+      {
+        "text_en": "Vayu, the Wind!",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_16/s_029.mp3",
+        "text_vi": "Vayu, Thần Gió!"
+      },
+      {
+        "text_en": "Cannot be seen Cannot be heard Does all the work Without a word.",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_16/s_030.mp3",
+        "text_vi": "Không thể nhìn thấy, không thể nghe thấy. Làm tất cả mọi việc mà không nói một lời nào."
+      },
+      {
+        "text_en": "Who can it be?",
+        "paragraph_index": 8,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_16/s_031.mp3",
+        "text_vi": "Đó là ai nhỉ?"
+      },
+      {
+        "text_en": "Of course! The wind!",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_16/s_032.mp3",
+        "text_vi": "Chắc chắn rồi! Gió!"
+      },
+      {
+        "text_en": "Vayu, the wind!",
+        "paragraph_index": 9,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_16/s_033.mp3",
+        "text_vi": "Vayu, Thần Gió!"
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "Everytime I finish my hot, hot bath, My wet body feels so cool, cool cool.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_16/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "Who makes that happen?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_16/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "Vayu the Wind!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_16/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "The milk in my cup is too hot, too hot.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_16/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "But soon it is ready for me to gulp.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_16/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "Who makes that happen?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_16/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "Vayu the Wind!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_16/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "The window curtains flutter And gently brush my face.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_16/s_007.mp3"
+        },
+        {
+          "id": "ra_8",
+          "text_en": "Who makes it happen?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_16/s_008.mp3"
+        },
+        {
+          "id": "ra_9",
+          "text_en": "Vayu, the Wind!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_16/s_009.mp3"
+        },
+        {
+          "id": "ra_10",
+          "text_en": "A bolt of lightning far away.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_16/s_010.mp3"
+        },
+        {
+          "id": "ra_11",
+          "text_en": "Black clouds moving my way.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_16/s_011.mp3"
+        },
+        {
+          "id": "ra_12",
+          "text_en": "Who makes that happen?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_16/s_012.mp3"
+        },
+        {
+          "id": "ra_13",
+          "text_en": "Vayu, the Wind!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_16/s_013.mp3"
+        },
+        {
+          "id": "ra_14",
+          "text_en": "Branches sway and leaves tremble.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_16/s_014.mp3"
+        },
+        {
+          "id": "ra_15",
+          "text_en": "Flowers gently fall.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_16/s_015.mp3"
+        },
+        {
+          "id": "ra_16",
+          "text_en": "Who did it all?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_16/s_016.mp3"
+        },
+        {
+          "id": "ra_17",
+          "text_en": "Vayu, the Wind!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_16/s_017.mp3"
+        },
+        {
+          "id": "ra_18",
+          "text_en": "Far from the house, we are playing, Yet, I can smell the sweets mother is preparing.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_16/s_018.mp3"
+        },
+        {
+          "id": "ra_19",
+          "text_en": "Who makes it happen?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_16/s_019.mp3"
+        },
+        {
+          "id": "ra_20",
+          "text_en": "Vayu, the Wind!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_16/s_020.mp3"
+        },
+        {
+          "id": "ra_21",
+          "text_en": "A glass tumbler on a window sill, Crashes on the ground.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_16/s_021.mp3"
+        },
+        {
+          "id": "ra_22",
+          "text_en": "Thank God, I was not around.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_16/s_022.mp3"
+        },
+        {
+          "id": "ra_23",
+          "text_en": "Who played this mischief?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_16/s_023.mp3"
+        },
+        {
+          "id": "ra_24",
+          "text_en": "Of course, it was Vayu, the Wind!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_16/s_024.mp3"
+        },
+        {
+          "id": "ra_25",
+          "text_en": "A whistle blows.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_16/s_025.mp3"
+        },
+        {
+          "id": "ra_26",
+          "text_en": "A train rolls in.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_16/s_026.mp3"
+        },
+        {
+          "id": "ra_27",
+          "text_en": "I cannot see, but I hear its din.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_16/s_027.mp3"
+        },
+        {
+          "id": "ra_28",
+          "text_en": "Who makes that happen?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_16/s_028.mp3"
+        },
+        {
+          "id": "ra_29",
+          "text_en": "Vayu, the Wind!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_16/s_029.mp3"
+        },
+        {
+          "id": "ra_30",
+          "text_en": "Cannot be seen Cannot be heard Does all the work Without a word.",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_16/s_030.mp3"
+        },
+        {
+          "id": "ra_31",
+          "text_en": "Who can it be?",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_16/s_031.mp3"
+        },
+        {
+          "id": "ra_32",
+          "text_en": "Of course! The wind!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_16/s_032.mp3"
+        },
+        {
+          "id": "ra_33",
+          "text_en": "Vayu, the wind!",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_16/s_033.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "When does the body feel cool?",
+          "options_en": [
+            "Every time I finish my hot, hot bath",
+            "When a whistle blows",
+            "When a train rolls in"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "How does the wet body feel after the bath?",
+          "options_en": [
+            "Cool, cool cool",
+            "Hot, hot",
+            "Too hot"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s1_q1",
+          "type": "choice",
+          "question_en": "Who is being asked about in this question?",
+          "options_en": [
+            "Vayu the Wind",
+            "Mother",
+            "A glass tumbler"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s1_q2",
+          "type": "choice",
+          "question_en": "What kind of question is being asked in this sentence?",
+          "options_en": [
+            "Who makes that happen?",
+            "Where is the wind?",
+            "When did it happen?"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p0_s2_q1",
+          "type": "choice",
+          "question_en": "Who makes the cooling happen?",
+          "options_en": [
+            "Vayu the Wind",
+            "Mother",
+            "A bolt of lightning"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p0_s2_q2",
+          "type": "choice",
+          "question_en": "What is Vayu described as?",
+          "options_en": [
+            "The Wind",
+            "The milk in my cup",
+            "A glass tumbler"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "What is too hot?",
+          "options_en": [
+            "The milk in my cup",
+            "My wet body after a bath",
+            "A glass tumbler on the window sill"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "Where is the hot milk?",
+          "options_en": [
+            "In my cup",
+            "On the window sill",
+            "Near the black clouds"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p1_s1_q1",
+          "type": "choice",
+          "question_en": "When will it be ready for the speaker to gulp?",
+          "options_en": [
+            "Soon",
+            "After the bath",
+            "When the train arrives"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p1_s1_q2",
+          "type": "choice",
+          "question_en": "What will the speaker do when it is ready?",
+          "options_en": [
+            "Gulp it",
+            "Play far from the house",
+            "Smell the sweets mother is preparing"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p1_s2_q1",
+          "type": "choice",
+          "question_en": "Who does the speaker ask about in this line?",
+          "options_en": [
+            "Who makes that happen?",
+            "Why the curtains flutter?",
+            "Where the sweets are being made?"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p1_s2_q2",
+          "type": "choice",
+          "question_en": "What kind of question is the speaker asking?",
+          "options_en": [
+            "A question asking who does something",
+            "A question about a crashing glass",
+            "A question about smelling sweets"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p1_s3_q1",
+          "type": "choice",
+          "question_en": "Who makes that happen?",
+          "options_en": [
+            "Vayu the Wind",
+            "Mother",
+            "The train"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p1_s3_q2",
+          "type": "choice",
+          "question_en": "What is Vayu described as here?",
+          "options_en": [
+            "The Wind",
+            "A glass tumbler",
+            "A bolt of lightning"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "What flutters and gently brushes the narrator's face?",
+          "options_en": [
+            "The window curtains",
+            "Branches and leaves",
+            "Flowers gently falling"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "How do the curtains touch the narrator's face?",
+          "options_en": [
+            "They gently brush the face",
+            "They crash like a glass tumbler",
+            "They smell like the sweets mother is preparing"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p2_s1_q1",
+          "type": "choice",
+          "question_en": "Who is being asked about in the question 'Who makes it happen?'",
+          "options_en": [
+            "The one who causes the fluttering",
+            "The mother who prepares sweets",
+            "The train that rolls in"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p2_s1_q2",
+          "type": "choice",
+          "question_en": "Why does the narrator ask 'Who makes it happen?'",
+          "options_en": [
+            "To find out who causes the curtains to flutter",
+            "To know who broke the glass tumbler",
+            "To learn who is preparing the sweets"
+          ],
+          "correct_index": 0,
+          "sentence_index": 8
+        },
+        {
+          "id": "gl_p2_s2_q1",
+          "type": "choice",
+          "question_en": "Who is named as the cause in the line 'Vayu, the Wind!'?",
+          "options_en": [
+            "Vayu, the Wind",
+            "A bolt of lightning",
+            "The milk in the cup"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        },
+        {
+          "id": "gl_p2_s2_q2",
+          "type": "choice",
+          "question_en": "What is Vayu identified as in this line?",
+          "options_en": [
+            "The Wind",
+            "A whistle blowing",
+            "A glass tumbler"
+          ],
+          "correct_index": 0,
+          "sentence_index": 9
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "What is far away?",
+          "options_en": [
+            "A bolt of lightning",
+            "Window curtains",
+            "A glass tumbler"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "Where is the bolt of lightning?",
+          "options_en": [
+            "Far away",
+            "On the window sill",
+            "Near the branches"
+          ],
+          "correct_index": 0,
+          "sentence_index": 10
+        },
+        {
+          "id": "gl_p3_s1_q1",
+          "type": "choice",
+          "question_en": "What is moving my way?",
+          "options_en": [
+            "Black clouds",
+            "The milk in my cup",
+            "Flowers"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p3_s1_q2",
+          "type": "choice",
+          "question_en": "Where are the black clouds moving?",
+          "options_en": [
+            "My way",
+            "Toward the window",
+            "Far from the house"
+          ],
+          "correct_index": 0,
+          "sentence_index": 11
+        },
+        {
+          "id": "gl_p3_s2_q1",
+          "type": "choice",
+          "question_en": "What question is being asked?",
+          "options_en": [
+            "Who makes that happen?",
+            "Who did it all?",
+            "Who can it be?"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p3_s2_q2",
+          "type": "choice",
+          "question_en": "Who is the speaker asking about?",
+          "options_en": [
+            "Who makes that happen?",
+            "A bolt of lightning",
+            "Black clouds"
+          ],
+          "correct_index": 0,
+          "sentence_index": 12
+        },
+        {
+          "id": "gl_p3_s3_q1",
+          "type": "choice",
+          "question_en": "Who makes that happen?",
+          "options_en": [
+            "Vayu, the Wind",
+            "Mother",
+            "The train"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        },
+        {
+          "id": "gl_p3_s3_q2",
+          "type": "choice",
+          "question_en": "What is Vayu identified as?",
+          "options_en": [
+            "The Wind",
+            "A whistle",
+            "A glass tumbler"
+          ],
+          "correct_index": 0,
+          "sentence_index": 13
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "What sways?",
+          "options_en": [
+            "Branches",
+            "Window curtains",
+            "A glass tumbler"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "What trembles?",
+          "options_en": [
+            "Leaves",
+            "Flowers",
+            "Black clouds"
+          ],
+          "correct_index": 0,
+          "sentence_index": 14
+        },
+        {
+          "id": "gl_p4_s1_q1",
+          "type": "choice",
+          "question_en": "What gently falls?",
+          "options_en": [
+            "Flowers",
+            "A glass tumbler",
+            "Sweets smell"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p4_s1_q2",
+          "type": "choice",
+          "question_en": "How do the flowers fall?",
+          "options_en": [
+            "Gently",
+            "Quickly",
+            "With a crash"
+          ],
+          "correct_index": 0,
+          "sentence_index": 15
+        },
+        {
+          "id": "gl_p4_s2_q1",
+          "type": "choice",
+          "question_en": "Who did it all?",
+          "options_en": [
+            "Vayu, the Wind",
+            "Mother",
+            "A train"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p4_s2_q2",
+          "type": "choice",
+          "question_en": "Why is the question asked in the sentence?",
+          "options_en": [
+            "To ask who caused the movements",
+            "To ask about a bath",
+            "To ask about cooking sweets"
+          ],
+          "correct_index": 0,
+          "sentence_index": 16
+        },
+        {
+          "id": "gl_p4_s3_q1",
+          "type": "choice",
+          "question_en": "Who is named in the last line?",
+          "options_en": [
+            "Vayu, the Wind",
+            "Black clouds",
+            "The mother"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        },
+        {
+          "id": "gl_p4_s3_q2",
+          "type": "choice",
+          "question_en": "What is Vayu identified as?",
+          "options_en": [
+            "The Wind",
+            "A glass tumbler",
+            "A train"
+          ],
+          "correct_index": 0,
+          "sentence_index": 17
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "Where are we playing?",
+          "options_en": [
+            "Far from the house",
+            "On a window sill",
+            "In my cup"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "What can the speaker smell?",
+          "options_en": [
+            "The sweets mother is preparing",
+            "The milk in my cup",
+            "The flowers gently fall"
+          ],
+          "correct_index": 0,
+          "sentence_index": 18
+        },
+        {
+          "id": "gl_p5_s1_q1",
+          "type": "choice",
+          "question_en": "Who is being asked about in the question?",
+          "options_en": [
+            "Vayu, the Wind",
+            "Mother",
+            "A glass tumbler"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p5_s1_q2",
+          "type": "choice",
+          "question_en": "What does the question 'Who makes it happen?' ask about?",
+          "options_en": [
+            "Who makes it happen",
+            "A bolt of lightning",
+            "Window curtains fluttering"
+          ],
+          "correct_index": 0,
+          "sentence_index": 19
+        },
+        {
+          "id": "gl_p5_s2_q1",
+          "type": "choice",
+          "question_en": "Who is named in the sentence?",
+          "options_en": [
+            "Vayu",
+            "Mother",
+            "The train"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        },
+        {
+          "id": "gl_p5_s2_q2",
+          "type": "choice",
+          "question_en": "What is Vayu identified as?",
+          "options_en": [
+            "The Wind",
+            "A bolt of lightning",
+            "A glass tumbler"
+          ],
+          "correct_index": 0,
+          "sentence_index": 20
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "What crashes on the ground?",
+          "options_en": [
+            "A glass tumbler",
+            "The window curtains flutter",
+            "A train rolls in"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "Where was the tumbler before it crashed?",
+          "options_en": [
+            "On a window sill",
+            "Far from the house",
+            "In my cup"
+          ],
+          "correct_index": 0,
+          "sentence_index": 21
+        },
+        {
+          "id": "gl_p6_s1_q1",
+          "type": "choice",
+          "question_en": "Who was not around?",
+          "options_en": [
+            "I",
+            "Vayu, the Wind",
+            "Mother"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p6_s1_q2",
+          "type": "choice",
+          "question_en": "Why does the speaker say \"Thank God\"?",
+          "options_en": [
+            "Because they were not around",
+            "Because the milk cooled",
+            "Because flowers gently fell"
+          ],
+          "correct_index": 0,
+          "sentence_index": 22
+        },
+        {
+          "id": "gl_p6_s2_q1",
+          "type": "choice",
+          "question_en": "What is the speaker asking in this sentence?",
+          "options_en": [
+            "Who played this mischief?",
+            "Who makes the milk cool?",
+            "Who makes the curtains flutter?"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p6_s2_q2",
+          "type": "choice",
+          "question_en": "Who is the speaker asking about?",
+          "options_en": [
+            "Who played this mischief?",
+            "Who makes the sweets?",
+            "Who makes the flowers fall?"
+          ],
+          "correct_index": 0,
+          "sentence_index": 23
+        },
+        {
+          "id": "gl_p6_s3_q1",
+          "type": "choice",
+          "question_en": "Who does the speaker say caused the mischief?",
+          "options_en": [
+            "Vayu, the Wind",
+            "A glass tumbler",
+            "A bolt of lightning"
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        },
+        {
+          "id": "gl_p6_s3_q2",
+          "type": "choice",
+          "question_en": "How does the speaker identify the culprit?",
+          "options_en": [
+            "Of course, it was Vayu, the Wind!",
+            "Thank God, I was not around.",
+            "The window curtains flutter."
+          ],
+          "correct_index": 0,
+          "sentence_index": 24
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "What makes a sound?",
+          "options_en": [
+            "A whistle",
+            "A train",
+            "The window curtains"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "What happens?",
+          "options_en": [
+            "A whistle blows",
+            "A glass tumbler crashes",
+            "Branches sway"
+          ],
+          "correct_index": 0,
+          "sentence_index": 25
+        },
+        {
+          "id": "gl_p7_s1_q1",
+          "type": "choice",
+          "question_en": "What rolls in?",
+          "options_en": [
+            "A train",
+            "A bolt of lightning",
+            "Flowers"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p7_s1_q2",
+          "type": "choice",
+          "question_en": "How does the train arrive?",
+          "options_en": [
+            "It rolls in",
+            "It crashes",
+            "It flutters"
+          ],
+          "correct_index": 0,
+          "sentence_index": 26
+        },
+        {
+          "id": "gl_p7_s2_q1",
+          "type": "choice",
+          "question_en": "What can the speaker not do?",
+          "options_en": [
+            "See",
+            "Smell the sweets",
+            "Feel cool after a bath"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        },
+        {
+          "id": "gl_p7_s2_q2",
+          "type": "choice",
+          "question_en": "What does the speaker hear?",
+          "options_en": [
+            "Its din",
+            "Curtains fluttering",
+            "A glass tumbler crashing"
+          ],
+          "correct_index": 0,
+          "sentence_index": 27
+        },
+        {
+          "id": "gl_p7_s3_q1",
+          "type": "choice",
+          "question_en": "Who makes that happen?",
+          "options_en": [
+            "Vayu, the Wind",
+            "Mother",
+            "God"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        },
+        {
+          "id": "gl_p7_s3_q2",
+          "type": "choice",
+          "question_en": "Who is being asked about in this question?",
+          "options_en": [
+            "Vayu, the Wind",
+            "The train",
+            "The curtains"
+          ],
+          "correct_index": 0,
+          "sentence_index": 28
+        },
+        {
+          "id": "gl_p7_s4_q1",
+          "type": "choice",
+          "question_en": "Who is named in this sentence?",
+          "options_en": [
+            "Vayu, the Wind",
+            "Mother",
+            "A glass tumbler"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        },
+        {
+          "id": "gl_p7_s4_q2",
+          "type": "choice",
+          "question_en": "What is Vayu identified as?",
+          "options_en": [
+            "The Wind",
+            "A bolt of lightning",
+            "A whistle"
+          ],
+          "correct_index": 0,
+          "sentence_index": 29
+        }
+      ]
+    },
+    {
+      "paragraph_index": 8,
+      "questions": [
+        {
+          "id": "gl_p8_s0_q1",
+          "type": "choice",
+          "question_en": "What does it do?",
+          "options_en": [
+            "Does all the work",
+            "The window curtains flutter",
+            "A glass tumbler crashes on the ground"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        },
+        {
+          "id": "gl_p8_s0_q2",
+          "type": "choice",
+          "question_en": "How does it do the work?",
+          "options_en": [
+            "Without a word",
+            "With a whistle",
+            "By making a din"
+          ],
+          "correct_index": 0,
+          "sentence_index": 30
+        },
+        {
+          "id": "gl_p8_s1_q1",
+          "type": "choice",
+          "question_en": "What question is being asked?",
+          "options_en": [
+            "Who can it be?",
+            "Who makes that happen?",
+            "Who did it all?"
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        },
+        {
+          "id": "gl_p8_s1_q2",
+          "type": "choice",
+          "question_en": "Which of these is the sentence shown?",
+          "options_en": [
+            "Who can it be?",
+            "Cannot be seen Cannot be heard Does all the work Without a word.",
+            "A whistle blows. A train rolls in."
+          ],
+          "correct_index": 0,
+          "sentence_index": 31
+        }
+      ]
+    },
+    {
+      "paragraph_index": 9,
+      "questions": [
+        {
+          "id": "gl_p9_s0_q1",
+          "type": "choice",
+          "question_en": "Who is being talked about?",
+          "options_en": [
+            "The wind",
+            "Mother",
+            "A glass tumbler"
+          ],
+          "correct_index": 0,
+          "sentence_index": 32
+        },
+        {
+          "id": "gl_p9_s0_q2",
+          "type": "choice",
+          "question_en": "What is said to be the cause or doer?",
+          "options_en": [
+            "The wind",
+            "The milk in the cup",
+            "A train"
+          ],
+          "correct_index": 0,
+          "sentence_index": 32
+        },
+        {
+          "id": "gl_p9_s1_q1",
+          "type": "choice",
+          "question_en": "Who is Vayu identified as?",
+          "options_en": [
+            "The wind",
+            "Mother",
+            "The whistle"
+          ],
+          "correct_index": 0,
+          "sentence_index": 33
+        },
+        {
+          "id": "gl_p9_s1_q2",
+          "type": "choice",
+          "question_en": "What name is given to the wind in the sentence?",
+          "options_en": [
+            "Vayu",
+            "A glass tumbler",
+            "A train"
+          ],
+          "correct_index": 0,
+          "sentence_index": 33
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'Vayu, the Wind'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "Everytime",
+      "meaning_vi": "Mỗi khi",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "finish",
+      "meaning_vi": "xong, hoàn thành",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "wet",
+      "meaning_vi": "ướt",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "cool",
+      "meaning_vi": "mát mẻ",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "cup",
+      "meaning_vi": "cốc, ly",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "soon",
+      "meaning_vi": "chẳng mấy chốc, sắp",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "ready",
+      "meaning_vi": "sẵn sàng",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "gulp",
+      "meaning_vi": "uống ực, nuốt",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "window",
+      "meaning_vi": "cửa sổ",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "curtains",
+      "meaning_vi": "rèm cửa",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "flutter",
+      "meaning_vi": "bay phấp phới",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "gently",
+      "meaning_vi": "nhẹ nhàng",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "bolt",
+      "meaning_vi": "tia, vệt",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "lightning",
+      "meaning_vi": "tia chớp",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "far away",
+      "meaning_vi": "ở đằng xa",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "clouds",
+      "meaning_vi": "mây",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "branches",
+      "meaning_vi": "cành cây",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "sway",
+      "meaning_vi": "đung đưa",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "tremble",
+      "meaning_vi": "run rẩy",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "fall",
+      "meaning_vi": "rơi xuống",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "far from",
+      "meaning_vi": "xa khỏi",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "smell",
+      "meaning_vi": "ngửi thấy",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "sweets",
+      "meaning_vi": "bánh kẹo",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "preparing",
+      "meaning_vi": "chuẩn bị",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "tumbler",
+      "meaning_vi": "cốc, ly",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "window sill",
+      "meaning_vi": "bệ cửa sổ",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "crashes",
+      "meaning_vi": "vỡ tan tành",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "mischief",
+      "meaning_vi": "trò nghịch ngợm",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "whistle",
+      "meaning_vi": "còi",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "blows",
+      "meaning_vi": "thổi",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "rolls in",
+      "meaning_vi": "lăn bánh vào",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "din",
+      "meaning_vi": "tiếng ồn ào",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "seen",
+      "meaning_vi": "được nhìn thấy",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "heard",
+      "meaning_vi": "được nghe thấy",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "without",
+      "meaning_vi": "mà không",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "word",
+      "meaning_vi": "lời nói",
+      "paragraph_index": 8
+    },
+    {
+      "word_en": "Of course",
+      "meaning_vi": "Chắc chắn rồi",
+      "paragraph_index": 9
+    },
+    {
+      "word_en": "wind",
+      "meaning_vi": "gió",
+      "paragraph_index": 9
+    }
+  ]
+}
