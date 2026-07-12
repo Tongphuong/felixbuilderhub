@@ -5,6 +5,7 @@ import {
   onRequestPost,
   parseBookLevels,
   selectUnreadBook,
+  bandForLevel,
 } from '../functions/api/generate-read2lead-pack.js';
 import { makeStoredBookPack, makeBrokenBookPack } from './helpers/book-pack-fixture.mjs';
 
@@ -332,3 +333,64 @@ test('inactive levels preserve backend configuration fallback before locking', a
   assert.equal(payload.error, 'backend_not_configured');
   assert.equal(fixture.puts.length, 0);
 });
+
+// --- R2L-PAGE-BANDS: a kid at each level gets a book from their page band ---
+
+test('bandForLevel normalizes untrusted levels and clamps L5', () => {
+  assert.equal(bandForLevel('L0'), 'L0');
+  assert.equal(bandForLevel('L4'), 'L4');
+  assert.equal(bandForLevel('L5'), 'L4');
+  assert.equal(bandForLevel(' l2 '), 'L2');
+  assert.equal(bandForLevel(''), 'L1');
+  assert.equal(bandForLevel(undefined), 'L1');
+  assert.equal(bandForLevel('garbage'), 'L1');
+});
+
+// For every kid level (including the L5 clamp and a lowercase profile value),
+// the book sits ONLY under book_index:<band>; assignment must find it there
+// and the assigned pack's page count must be inside the band.
+const BAND_CASES = [
+  ['L0', 'L0', 5],
+  ['L1', 'L1', 8],
+  ['L2', 'L2', 11],
+  ['L3', 'L3', 14],
+  ['L4', 'L4', 18],
+  ['L5', 'L4', 20],
+  // A malformed stored level (e.g. lowercase from an old admin edit) is
+  // sanitized by normalizeProgressState's safeLevel to START_LEVEL (L0), so
+  // the kid safely draws from the easiest shelf instead of crashing.
+  ['l2', 'L0', 5],
+];
+
+for (const [kidLevel, band, pages] of BAND_CASES) {
+  test(`kid at ${JSON.stringify(kidLevel)} draws from band ${band} (${pages}-page book)`, async () => {
+    const pack = makeStoredBookPack('book_42', { pages, sentencesPerPage: 2, questionsPerPage: 2 });
+    const fixture = makeKv({
+      [ACCESS_CODE]: codeData({}),
+      [PROGRESS_KEY]: {
+        ...progressAtL1(),
+        current_level: kidLevel,
+        unlocked_levels: ['L0', 'L1', 'L2', 'L3', 'L4', 'L5'],
+      },
+      [`book_index:${band}`]: ['book_42'],
+      'book:book_42': pack,
+    });
+    const originalFetch = globalThis.fetch;
+    globalThis.fetch = async () => { throw new Error('backend fetch must not run'); };
+    try {
+      const response = await generate({
+        READ2LEAD_CODES: fixture.kv,
+        READ2LEAD_BOOK_LEVELS: 'L0,L1,L2,L3,L4',
+        RNG: () => 0,
+      });
+      const payload = await response.json();
+      assert.equal(response.status, 200);
+      assert.equal(payload.ok, true);
+      const assigned = fixture.store.get(ACCESS_CODE).progress.current_pack.review_context;
+      assert.equal(assigned.book_slug, 'book_42');
+      assert.equal((assigned.book_images || []).length, pages);
+    } finally {
+      globalThis.fetch = originalFetch;
+    }
+  });
+}

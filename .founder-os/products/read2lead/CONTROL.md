@@ -22,6 +22,24 @@ stale until 2026-07-05.
 
 ## Current task
 
+- Status: active
+- Started: 2026-07-12
+- Task ID: R2L-PAGE-BANDS
+- Owner: Claude Lead (Elon) — generate-read2lead-pack.js (bandForLevel/normalizeKidLevel/drift warn) + migration script + assignment tests; Mark (bg worker) — publish-read2lead-book.js (bandForPageCount, banded publish, reindex_only) + tests; Buffet reviews combined diff.
+- Lane: product (book assignment by page-count band per SPEC_R2L_PAGE_BANDS.md; selection/health/reward logic untouched)
+- Problem: books were assigned by StoryWeaver text level; founder wants length-based bands matched to kid stamina (L0:3-6 … L4:16+ pages, chosen from the 432-book histogram so every band has ≥45 books).
+- Approach: re-bucket the five book_index:<L> KV lists (migration script with snapshot backup + verify); publish endpoint auto-bands future books; bandForLevel normalization + L5 clamp; book_band_mismatch drift warn.
+- Acceptance criteria: per-level integration tests prove a kid at each level L0-L5 draws an in-band book; bandForPageCount boundary table green; reindex_only auth/shape/overwrite tests green; migration dry-run verifies disjoint union preserved with expected counts before any write; post-apply live check: low-level code gets 3-6-page book, high-level gets 16+; full suite green; build clean.
+- Files owned: functions/api/publish-read2lead-book.js (Mark), functions/api/generate-read2lead-pack.js, scripts/reindex-books-by-pages.mjs, tests/read2lead-book-assignment.test.mjs, tests/read2lead-book-publish.test.mjs, CONTROL.md (Elon).
+- Non-goals: no change to selection randomness, health gate, quarantine semantics, rewards; config:book_levels activation is a separate explicit founder decision; text-difficulty guard inside bands is a logged follow-up only.
+- Stop condition: suite green + Buffet SHIP + founder gates PASS + Phương merge GO; migration runs only after merge, with backup file as rollback.
+- Cost ceiling: Claude team (Max plan, not metered); migration is KV reads + one reindex POST, $0.
+- Reuse survey: (1) in-repo book_index machinery — ADOPTED (re-bucketing the existing lists IS the feature; assignment path untouched); (2) sidecar book_index_pages:<band> store — REJECTED (two sources of truth); (3) assignment-time page filtering — REJECTED (extra KV reads on the hot path).
+- Design self-verification: N/A — backend assignment logic, no UI surface; verified by per-level integration tests + live low/high-level pack generation.
+- Founder handoff: pending — merge GO then migration report with band counts.
+
+## Previous task — R2L-PAGE-LOOP
+
 - Status: complete
 - Started: 2026-07-11
 - Completed: 2026-07-12 — merged to main 73c4d25 (Phương GO after preview
