@@ -89,7 +89,7 @@ assigns, commits, merges, deploys, or spends.
 
 ## Current task
 
-- Status: active
+- Status: complete
 - Task ID: speakup-v1-4-fixit-round
 - Owner: Steve (bg worker, packet scratchpad/fixit-steve-packet.md, sole
   owner of speak-up.astro + speakup-app.css + UI tests); Elon review +
@@ -120,7 +120,44 @@ assigns, commits, merges, deploys, or spends.
   speakup-app.css, tests/speakup-fixit-ui.test.mjs (+chips-ui if needed).
 - Stop condition: ANY functions/ diff — stop and report; any new
   kid-facing copy not in the mock — TODO(elon).
+- Acceptance criteria reconciliation:
+  1. PASS — skippable invitation, never blocks the step flow (test line
+     211 + Buffet structural trace: fix-it card never touches
+     #speaking-result/#speaking-actions visibility).
+  2. PASS — 3-rep hard cap unbypassable; failed submissions count toward
+     it (Buffet-traced: repsUsed increments before outcome evaluation;
+     catch path still calls fixitAfterRep).
+  3. PASS — reps score through the existing read-mode one-word Azure path
+     (check_mode read / expected_text word / practice_mode 1 / WAV); zero
+     functions/ diff (git-verified). Hear-yourself = local blob only.
+  4. PASS — mock states 3/4/5 implemented with verbatim copy; sandwich
+     screens 1-2 correctly deferred to V1.3; celebrate cutoff reuses the
+     shipped ≥70 convention.
+  5. PASS — 1113/1113 node --test; astro build clean; founder gates.
+  6. PASS (rule 20) — verified on DEPLOYED PRODUCTION d2a10a1 via the
+     routed-harness flow (stubbed context/check responses through the
+     real page code, fake mic): invitation state (3 words, Bắt đầu luyện
+     🎯 / Bỏ qua) and rep state (TỪ 1/3, big word, Nghe Minny, small
+     re-record) match the approved Set 2 mock; screenshots
+     _ops/speakup-v14-final-invite-390.png / -rep-390.png. CAUGHT by this
+     check: the mock's 🐨 koala placeholder had been copied verbatim —
+     replaced with the Minny red-robot assets per the standing founder
+     rule (d2a10a1), tests updated N/A (none asserted the emoji).
+  7. Post-mortem note: a false "Cloudflare stopped deploying" alarm was
+     raised (founder pulled the build log — build had succeeded). Root
+     cause: the deploy probe grepped a JS function name, which minification
+     renames; string-literal/class-name probes are the correct method
+     (used successfully all prior deploys). Logged for the reflection.
+- Design self-verification: rule-20 screenshots above vs the approved
+  mock; verdict MATCH (with the koala→robot correction applied).
+- Founder handoff: full plain-language report incl. the false-alarm
+  correction; nit backlog: 1400ms re-tap debounce (Buffet, cosmetic).
+- Verified commit: d2a10a1 (origin/main, production-verified live)
+- Actual cost: USD 0 runtime.
+- Review trail: Steve built (resumed across a rate-limit cut); Elon
+  review + koala fix; Buffet scoped SHIP.
 - Started: 2026-07-12
+- Completed: 2026-07-12
 
 ## Prior task (complete): speakup-word-level-feedback
 
