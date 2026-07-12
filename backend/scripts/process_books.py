@@ -530,13 +530,26 @@ class ProductionServices:
         self._tts = generate_story_audio
         self._guided = generate_guided_listening
         self._upload = upload_file
-        self._client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
+        # When OPENROUTER_API_KEY is set, route chat completions through
+        # OpenRouter (OpenAI-compatible; response_format JSON mode passes
+        # through to OpenAI-family models) — used when the direct OpenAI
+        # account has no credit. TTS is unaffected (never called in
+        # --enrich-published mode).
+        openrouter_key = os.getenv("OPENROUTER_API_KEY", "").strip()
+        if openrouter_key:
+            self._client = OpenAI(
+                api_key=openrouter_key, base_url="https://openrouter.ai/api/v1"
+            )
+            self._chat_model = os.getenv("READ2LEAD_ENRICH_MODEL", "openai/gpt-5-mini")
+        else:
+            self._client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
+            self._chat_model = os.getenv("READ2LEAD_ENRICH_MODEL", "gpt-5-mini")
         self._requests = requests
         self.public_url = os.environ["R2_PUBLIC_URL"].rstrip("/")
 
     def complete_json(self, system: str, prompt: str) -> dict[str, Any]:
         response = self._client.chat.completions.create(
-            model="gpt-5-mini",
+            model=self._chat_model,
             response_format={"type": "json_object"},
             messages=[
                 {"role": "system", "content": system},
@@ -838,11 +851,61 @@ def validate_enrichment_response(
     return text_vi_list, hard_words
 
 
+def build_book_enrichment_prompt(
+    pages: list[tuple[int, str, list[dict[str, Any]]]],
+) -> str:
+    """Whole-book variant of build_enrichment_prompt: every page in ONE call
+    (books are ~10 sentences), so the free-tier daily request quota covers the
+    full batch. `pages` = [(page_index, paragraph_text, page_sentences)].
+    """
+    blocks = []
+    for page_index, paragraph_text, page_sentences in pages:
+        numbered = "\n".join(
+            f"[{i}] {sentence['text_en']}" for i, sentence in enumerate(page_sentences)
+        )
+        blocks.append(f"PAGE {page_index}:\n{paragraph_text}\nSENTENCES:\n{numbered}")
+    pages_text = "\n\n".join(blocks)
+    return f"""Translate each English sentence below into simple, child-friendly
+Vietnamese for a child aged 6-12 who is learning English. Keep translations
+faithful to the English meaning and easy for a young child to understand —
+short, natural spoken Vietnamese, not a literal word-for-word translation.
+
+{pages_text}
+
+For EACH page also pick 2 to 4 genuinely hard English words for a Vietnamese
+child learning English (skip character and place names). For each, give a
+short, simple Vietnamese meaning.
+
+OUTPUT JSON ONLY:
+{{
+  "pages": [
+    {{
+      "page": 0,
+      "sentences": [{{"index": 0, "text_vi": "..."}}],
+      "hard_words": [{{"word_en": "...", "meaning_vi": "..."}}]
+    }}
+  ]
+}}
+
+RULES:
+- One entry in "pages" per PAGE above; "page" matches the PAGE number
+- Exactly one entry in each page's "sentences" per sentence; "index" matches the [N] number within that page
+- Every text_vi must be non-empty
+- hard_words per page: 0 to 4 entries, never more than 4; skip character/place names
+- No markdown, no prose — just the JSON object"""
+
+
 def enrich_pack(
-    pack: dict[str, Any], complete_json: Callable[[str, str], dict[str, Any]]
+    pack: dict[str, Any],
+    complete_json: Callable[[str, str], dict[str, Any]],
+    *,
+    whole_book: bool = False,
 ) -> dict[str, Any]:
     """Return a copy of `pack` with story.sentences[].text_vi and root
-    vocabulary filled in. One `complete_json` call per page. Does NOT touch
+    vocabulary filled in. Default: one `complete_json` call per page. With
+    `whole_book=True`: a single call for the entire book (free-tier quota
+    mode); each page's sub-object is validated with the SAME
+    validate_enrichment_response. Does NOT touch
     audio_url/book_images/book_page_audio — those are reused verbatim.
     """
     story = pack.get("story") or {}
@@ -855,24 +918,111 @@ def enrich_pack(
 
     updated_sentences = [dict(sentence) for sentence in sentences]
     vocabulary: list[dict[str, Any]] = []
-    for page_index, paragraph_text in enumerate(paragraphs):
-        page_sentences = sentences_by_page.get(page_index, [])
-        if not page_sentences:
-            continue
-        prompt = build_enrichment_prompt(
-            [sentence for _, sentence in page_sentences], paragraph_text
-        )
-        response = complete_json(BOOK_ENRICHMENT_SYSTEM_PROMPT, prompt)
+
+    def apply_page(page_index: int, page_sentences, response: Any) -> None:
         text_vi_list, hard_words = validate_enrichment_response(response, len(page_sentences))
         for (sentence_index, _), text_vi in zip(page_sentences, text_vi_list):
             updated_sentences[sentence_index]["text_vi"] = text_vi
         for hard_word in hard_words:
             vocabulary.append({**hard_word, "paragraph_index": page_index})
 
+    if whole_book:
+        pages = [
+            (page_index, paragraph_text, [s for _, s in sentences_by_page.get(page_index, [])])
+            for page_index, paragraph_text in enumerate(paragraphs)
+            if sentences_by_page.get(page_index)
+        ]
+        if pages:
+            response = complete_json(
+                BOOK_ENRICHMENT_SYSTEM_PROMPT, build_book_enrichment_prompt(pages)
+            )
+            page_objects = response.get("pages") if isinstance(response, dict) else None
+            if not isinstance(page_objects, list):
+                raise BookProcessingError("whole-book enrichment response missing pages list")
+            by_page = {
+                entry.get("page"): entry
+                for entry in page_objects
+                if isinstance(entry, dict)
+            }
+            for page_index, _, _ in pages:
+                if page_index not in by_page:
+                    raise BookProcessingError(
+                        f"whole-book enrichment response missing page {page_index}"
+                    )
+            for page_index, _, _ in pages:
+                apply_page(
+                    page_index,
+                    sentences_by_page[page_index],
+                    by_page[page_index],
+                )
+    else:
+        for page_index, paragraph_text in enumerate(paragraphs):
+            page_sentences = sentences_by_page.get(page_index, [])
+            if not page_sentences:
+                continue
+            prompt = build_enrichment_prompt(
+                [sentence for _, sentence in page_sentences], paragraph_text
+            )
+            response = complete_json(BOOK_ENRICHMENT_SYSTEM_PROMPT, prompt)
+            apply_page(page_index, page_sentences, response)
+
     enriched = dict(pack)
     enriched["story"] = {**story, "sentences": updated_sentences}
     enriched["vocabulary"] = vocabulary
     return enriched
+
+
+def complete_json_gemini(system: str, prompt: str) -> dict[str, Any]:
+    """JSON-mode chat call against the Gemini API free tier (GOOGLE_API_KEY).
+    Retries on 429/5xx with backoff — free-tier RPM limits are expected.
+    Model overridable via READ2LEAD_GEMINI_MODEL.
+    """
+    import requests as _requests
+
+    # gemini-2.0-flash was retired upstream (404 "no longer available");
+    # 2.5-flash is the current free-tier workhorse. Key goes in the
+    # x-goog-api-key HEADER, never the URL, so HTTP errors can't leak it.
+    model = os.getenv("READ2LEAD_GEMINI_MODEL", "gemini-2.5-flash")
+    key = os.environ["GOOGLE_API_KEY"]
+    url = (
+        "https://generativelanguage.googleapis.com/v1beta/models/"
+        f"{model}:generateContent"
+    )
+    body = {
+        "system_instruction": {"parts": [{"text": system}]},
+        "contents": [{"role": "user", "parts": [{"text": prompt}]}],
+        "generationConfig": {
+            "response_mime_type": "application/json",
+            "temperature": 0.2,
+        },
+    }
+    headers = {"x-goog-api-key": key, "Content-Type": "application/json"}
+    last_error = "unknown"
+    for attempt in range(5):
+        try:
+            response = _requests.post(url, json=body, headers=headers, timeout=180)
+            if response.status_code in (429, 500, 502, 503):
+                last_error = f"gemini HTTP {response.status_code}"
+                time.sleep(8 * (attempt + 1))
+                continue
+            if response.status_code != 200:
+                # Never re-raise requests' HTTPError — its message embeds the
+                # full request URL. Ours carries status + API error text only.
+                api_message = ""
+                try:
+                    api_message = str(response.json().get("error", {}).get("message", ""))[:200]
+                except Exception:
+                    pass
+                raise BookProcessingError(
+                    f"gemini HTTP {response.status_code}: {api_message}"
+                )
+            data = response.json()
+            text = data["candidates"][0]["content"]["parts"][0]["text"]
+            return json.loads(text.strip())
+        except (KeyError, IndexError, ValueError) as exc:
+            last_error = f"{type(exc).__name__}: {exc}"
+            time.sleep(4 * (attempt + 1))
+    raise BookProcessingError(f"gemini enrichment call failed: {last_error}")
 
 
 def _read2lead_publish_get(params: dict[str, str]) -> dict[str, Any]:
@@ -884,7 +1034,13 @@ def _read2lead_publish_get(params: dict[str, str]) -> dict[str, Any]:
     secret = os.environ["READ2LEAD_BACKEND_SECRET"]
     query = urlencode(params)
     request = Request(
-        f"{base_url}?{query}", headers={"X-Read2Lead-Secret": secret}
+        f"{base_url}?{query}",
+        headers={
+            "X-Read2Lead-Secret": secret,
+            # Cloudflare bot protection 403s urllib's default Python UA;
+            # identify honestly as the ops batch instead.
+            "User-Agent": "read2lead-enrich-batch/1.0",
+        },
     )
     try:
         with urlopen(request, timeout=30) as response:
@@ -953,7 +1109,22 @@ def enrich_and_publish_book(
         llm_calls += 1
         return services.complete_json(system, prompt)
 
-    enriched = enrich_pack(pack, counted_complete_json)
+    # Hybrid cost plan (founder-approved 2026-07-12): translations + vocabulary
+    # ride the Gemini FREE tier in one whole-book call when GOOGLE_API_KEY is
+    # set; question regeneration below stays on services.complete_json (the
+    # proven generator path, OpenRouter/OpenAI).
+    use_gemini = bool(os.getenv("GOOGLE_API_KEY", "").strip())
+
+    def counted_gemini(system: str, prompt: str) -> dict[str, Any]:
+        nonlocal llm_calls
+        llm_calls += 1
+        return complete_json_gemini(system, prompt)
+
+    enriched = enrich_pack(
+        pack,
+        counted_gemini if use_gemini else counted_complete_json,
+        whole_book=use_gemini,
+    )
     print(f"GENERATE guided questions (enrich) {slug}")
     enriched["guided_listening"] = services.generate_guided_for_paragraphs(
         enriched["story"]["paragraphs_en"], complete_json=counted_complete_json

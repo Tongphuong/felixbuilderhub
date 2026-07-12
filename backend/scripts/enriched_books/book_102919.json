@@ -1,0 +1,515 @@
+{
+  "schema_version": 2,
+  "student_name": "Student",
+  "level": "L0",
+  "level_label": "Cấp 0",
+  "topic": "Simple Counting",
+  "slug": "book_102919",
+  "audio_filename": "book_102919.mp3",
+  "book_slug": "book_102919",
+  "book_images": [
+    "https://audio.felixbuilderhub.com/books/book_102919/page_02.jpg",
+    "https://audio.felixbuilderhub.com/books/book_102919/page_03.jpg",
+    "https://audio.felixbuilderhub.com/books/book_102919/page_04.jpg",
+    "https://audio.felixbuilderhub.com/books/book_102919/page_05.jpg",
+    "https://audio.felixbuilderhub.com/books/book_102919/page_06.jpg",
+    "https://audio.felixbuilderhub.com/books/book_102919/page_07.jpg",
+    "https://audio.felixbuilderhub.com/books/book_102919/page_08.jpg",
+    "https://audio.felixbuilderhub.com/books/book_102919/page_09.jpg"
+  ],
+  "book_page_audio": [
+    "https://audio.felixbuilderhub.com/books/book_102919/page_02.mp3",
+    "https://audio.felixbuilderhub.com/books/book_102919/page_03.mp3",
+    "https://audio.felixbuilderhub.com/books/book_102919/page_04.mp3",
+    "https://audio.felixbuilderhub.com/books/book_102919/page_05.mp3",
+    "https://audio.felixbuilderhub.com/books/book_102919/page_06.mp3",
+    "https://audio.felixbuilderhub.com/books/book_102919/page_07.mp3",
+    "https://audio.felixbuilderhub.com/books/book_102919/page_08.mp3",
+    "https://audio.felixbuilderhub.com/books/book_102919/page_09.mp3"
+  ],
+  "book_attribution": {
+    "title": "Simple Counting",
+    "creators": [
+      "All Children Reading Cambodia",
+      "San srei nou ch nou ch"
+    ],
+    "publisher": "The Asia Foundation",
+    "credit_text": "This book was made possible by Pratham Books' StoryWeaver platform. Content under Creative Commons licenses can be downloaded, translated and can even be used to create new stories provided you give appropriate credit, and indicate if changes were made. To know more about this, and the full terms of use and attribution, please visit the following link . Story Attribution: This story: Simple Counting is written by All Children Reading Cambodia . © Let's Read , 2019. Some rights reserved. Released under CC BY 4.0 license. Other Credits: This story ' Simple Counting' has been published on StoryWeaver by Asia Foundation. Images Attributions: Cover page: Animals riding an elephant , by San srei nou ch nou ch © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 2: Climbing the tree trunk , by San srei nou ch nou ch © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 3: Fluttering butterflies , by San srei nou ch nou ch © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 4: Dukcs on the grass , by San srei nou ch nou ch © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 5: Otters in the water , by San srei nou ch nou ch © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 6: Horses in the field , by San srei nou ch nou ch © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 7: Grazing cows , by San srei nou ch nou ch © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 8: Lions having fun on the grass , by San srei nou ch nou ch © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 9: Elephant near the tree , by San srei nou ch nou ch © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license. Page 10: Miniature animals , by San srei nou ch nou ch © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license. Disclaimer: https://www.storyweaver.org.in/terms_and_conditions Some rights reserved. This book is CC-BY-4.0 licensed. You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. For full terms of use and attribution, http://creativecommons.org/licenses/by/4.0/",
+    "source_url": "https://storyweaver.org.in/stories/102919-simple-counting",
+    "image_credits": [
+      {
+        "page_index": 0,
+        "credit_text": "Climbing the tree trunk , by San srei nou ch nou ch © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 1,
+        "credit_text": "Fluttering butterflies , by San srei nou ch nou ch © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 2,
+        "credit_text": "Dukcs on the grass , by San srei nou ch nou ch © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 3,
+        "credit_text": "Otters in the water , by San srei nou ch nou ch © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 4,
+        "credit_text": "Horses in the field , by San srei nou ch nou ch © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 5,
+        "credit_text": "Grazing cows , by San srei nou ch nou ch © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 6,
+        "credit_text": "Lions having fun on the grass , by San srei nou ch nou ch © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      },
+      {
+        "page_index": 7,
+        "credit_text": "Elephant near the tree , by San srei nou ch nou ch © The Asia Foundation, 2019. Some rights reserved. Released under CC BY 4.0 license."
+      }
+    ],
+    "license": {
+      "name": "CC BY 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "story": {
+    "title": "Simple Counting",
+    "paragraphs_en": [
+      "8 Cicadas",
+      "7 Butterflies",
+      "6 Ducks",
+      "5 Otters",
+      "4 Horses",
+      "3 Cows",
+      "2 Lions",
+      "1 Elephant"
+    ],
+    "sentences": [
+      {
+        "text_en": "8 Cicadas",
+        "paragraph_index": 0,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_102919/s_000.mp3",
+        "text_vi": "8 con ve sầu"
+      },
+      {
+        "text_en": "7 Butterflies",
+        "paragraph_index": 1,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_102919/s_001.mp3",
+        "text_vi": "7 con bướm"
+      },
+      {
+        "text_en": "6 Ducks",
+        "paragraph_index": 2,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_102919/s_002.mp3",
+        "text_vi": "6 con vịt"
+      },
+      {
+        "text_en": "5 Otters",
+        "paragraph_index": 3,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_102919/s_003.mp3",
+        "text_vi": "5 con rái cá"
+      },
+      {
+        "text_en": "4 Horses",
+        "paragraph_index": 4,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_102919/s_004.mp3",
+        "text_vi": "4 con ngựa"
+      },
+      {
+        "text_en": "3 Cows",
+        "paragraph_index": 5,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_102919/s_005.mp3",
+        "text_vi": "3 con bò"
+      },
+      {
+        "text_en": "2 Lions",
+        "paragraph_index": 6,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_102919/s_006.mp3",
+        "text_vi": "2 con sư tử"
+      },
+      {
+        "text_en": "1 Elephant",
+        "paragraph_index": 7,
+        "audio_url": "https://audio.felixbuilderhub.com/books/book_102919/s_007.mp3",
+        "text_vi": "1 con voi"
+      }
+    ]
+  },
+  "activities": [
+    {
+      "type": "read_aloud",
+      "title_vi": "Đọc to",
+      "identity_vi": "Con đọc từng câu cho Minny nghe nhé!",
+      "instructions_vi": "Nghe lại câu mẫu rồi đọc to và rõ.",
+      "scoring_mode": "whisper_stt",
+      "items": [
+        {
+          "id": "ra_0",
+          "text_en": "8 Cicadas",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_102919/s_000.mp3"
+        },
+        {
+          "id": "ra_1",
+          "text_en": "7 Butterflies",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_102919/s_001.mp3"
+        },
+        {
+          "id": "ra_2",
+          "text_en": "6 Ducks",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_102919/s_002.mp3"
+        },
+        {
+          "id": "ra_3",
+          "text_en": "5 Otters",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_102919/s_003.mp3"
+        },
+        {
+          "id": "ra_4",
+          "text_en": "4 Horses",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_102919/s_004.mp3"
+        },
+        {
+          "id": "ra_5",
+          "text_en": "3 Cows",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_102919/s_005.mp3"
+        },
+        {
+          "id": "ra_6",
+          "text_en": "2 Lions",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_102919/s_006.mp3"
+        },
+        {
+          "id": "ra_7",
+          "text_en": "1 Elephant",
+          "audio_url": "https://audio.felixbuilderhub.com/books/book_102919/s_007.mp3"
+        }
+      ]
+    }
+  ],
+  "guided_listening": [
+    {
+      "paragraph_index": 0,
+      "questions": [
+        {
+          "id": "gl_p0_s0_q1",
+          "type": "choice",
+          "question_en": "How many cicadas are there?",
+          "options_en": [
+            "8 Cicadas",
+            "7 Butterflies",
+            "6 Ducks"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        },
+        {
+          "id": "gl_p0_s0_q2",
+          "type": "choice",
+          "question_en": "What is mentioned in the sentence?",
+          "options_en": [
+            "Cicadas",
+            "Butterflies",
+            "Elephant"
+          ],
+          "correct_index": 0,
+          "sentence_index": 0
+        }
+      ]
+    },
+    {
+      "paragraph_index": 1,
+      "questions": [
+        {
+          "id": "gl_p1_s0_q1",
+          "type": "choice",
+          "question_en": "How many butterflies are there?",
+          "options_en": [
+            "7 Butterflies",
+            "8 Cicadas",
+            "6 Ducks"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        },
+        {
+          "id": "gl_p1_s0_q2",
+          "type": "choice",
+          "question_en": "What kind of creature is listed?",
+          "options_en": [
+            "Butterflies",
+            "Cicadas",
+            "Ducks"
+          ],
+          "correct_index": 0,
+          "sentence_index": 1
+        }
+      ]
+    },
+    {
+      "paragraph_index": 2,
+      "questions": [
+        {
+          "id": "gl_p2_s0_q1",
+          "type": "choice",
+          "question_en": "How many ducks are there?",
+          "options_en": [
+            "6",
+            "8",
+            "7"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        },
+        {
+          "id": "gl_p2_s0_q2",
+          "type": "choice",
+          "question_en": "What animals are mentioned?",
+          "options_en": [
+            "Ducks",
+            "Cows",
+            "Elephant"
+          ],
+          "correct_index": 0,
+          "sentence_index": 2
+        }
+      ]
+    },
+    {
+      "paragraph_index": 3,
+      "questions": [
+        {
+          "id": "gl_p3_s0_q1",
+          "type": "choice",
+          "question_en": "What animals are shown?",
+          "options_en": [
+            "Otters",
+            "Ducks",
+            "Cows"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        },
+        {
+          "id": "gl_p3_s0_q2",
+          "type": "choice",
+          "question_en": "How many otters are there?",
+          "options_en": [
+            "5 Otters",
+            "6 Ducks",
+            "1 Elephant"
+          ],
+          "correct_index": 0,
+          "sentence_index": 3
+        }
+      ]
+    },
+    {
+      "paragraph_index": 4,
+      "questions": [
+        {
+          "id": "gl_p4_s0_q1",
+          "type": "choice",
+          "question_en": "How many horses are shown?",
+          "options_en": [
+            "4 Horses",
+            "3 Cows",
+            "5 Otters"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        },
+        {
+          "id": "gl_p4_s0_q2",
+          "type": "choice",
+          "question_en": "Which animals are named in this sentence?",
+          "options_en": [
+            "Horses",
+            "Ducks",
+            "Elephant"
+          ],
+          "correct_index": 0,
+          "sentence_index": 4
+        }
+      ]
+    },
+    {
+      "paragraph_index": 5,
+      "questions": [
+        {
+          "id": "gl_p5_s0_q1",
+          "type": "choice",
+          "question_en": "How many cows are there?",
+          "options_en": [
+            "3",
+            "2",
+            "1"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        },
+        {
+          "id": "gl_p5_s0_q2",
+          "type": "choice",
+          "question_en": "What animals are named?",
+          "options_en": [
+            "Cows",
+            "Horses",
+            "Ducks"
+          ],
+          "correct_index": 0,
+          "sentence_index": 5
+        }
+      ]
+    },
+    {
+      "paragraph_index": 6,
+      "questions": [
+        {
+          "id": "gl_p6_s0_q1",
+          "type": "choice",
+          "question_en": "How many animals are mentioned?",
+          "options_en": [
+            "Two lions",
+            "One elephant",
+            "Three cows"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        },
+        {
+          "id": "gl_p6_s0_q2",
+          "type": "choice",
+          "question_en": "What animal is mentioned?",
+          "options_en": [
+            "Lions",
+            "Elephant",
+            "Butterflies"
+          ],
+          "correct_index": 0,
+          "sentence_index": 6
+        }
+      ]
+    },
+    {
+      "paragraph_index": 7,
+      "questions": [
+        {
+          "id": "gl_p7_s0_q1",
+          "type": "choice",
+          "question_en": "What animal is mentioned?",
+          "options_en": [
+            "Elephant",
+            "Lions",
+            "Cows"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        },
+        {
+          "id": "gl_p7_s0_q2",
+          "type": "choice",
+          "question_en": "How many animals are there?",
+          "options_en": [
+            "One",
+            "Eight",
+            "Two"
+          ],
+          "correct_index": 0,
+          "sentence_index": 7
+        }
+      ]
+    }
+  ],
+  "rewards": {
+    "coins_on_complete": 15,
+    "xp_on_complete": 20,
+    "bonus_coins_per_activity_attempted": 2
+  },
+  "parent_note_vi": "Con vừa đọc xong truyện 'Simple Counting'. Ba mẹ hãy hỏi con kể lại câu chuyện bằng tiếng Anh nhé!",
+  "next_suggestion_vi": "Con tiếp tục đọc thêm truyện mới để luyện nghe và đọc hiểu nhé!",
+  "vocabulary": [
+    {
+      "word_en": "Cicadas",
+      "meaning_vi": "ve sầu",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "8",
+      "meaning_vi": "tám",
+      "paragraph_index": 0
+    },
+    {
+      "word_en": "Butterflies",
+      "meaning_vi": "những con bướm",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "7",
+      "meaning_vi": "bảy",
+      "paragraph_index": 1
+    },
+    {
+      "word_en": "Ducks",
+      "meaning_vi": "những con vịt",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "6",
+      "meaning_vi": "sáu",
+      "paragraph_index": 2
+    },
+    {
+      "word_en": "Otters",
+      "meaning_vi": "những con rái cá",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "5",
+      "meaning_vi": "năm",
+      "paragraph_index": 3
+    },
+    {
+      "word_en": "Horses",
+      "meaning_vi": "những con ngựa",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "4",
+      "meaning_vi": "bốn",
+      "paragraph_index": 4
+    },
+    {
+      "word_en": "Cows",
+      "meaning_vi": "những con bò",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "3",
+      "meaning_vi": "ba",
+      "paragraph_index": 5
+    },
+    {
+      "word_en": "Lions",
+      "meaning_vi": "những con sư tử",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "2",
+      "meaning_vi": "hai",
+      "paragraph_index": 6
+    },
+    {
+      "word_en": "Elephant",
+      "meaning_vi": "con voi",
+      "paragraph_index": 7
+    },
+    {
+      "word_en": "1",
+      "meaning_vi": "một",
+      "paragraph_index": 7
+    }
+  ]
+}
