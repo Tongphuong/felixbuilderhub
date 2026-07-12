@@ -1086,7 +1086,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       if (!el) return;
       el.innerHTML = `
         <div class="minny-fixit-invite">
-          <div class="minny-fixit-invite__avatar" aria-hidden="true">🐨</div>
+          <div class="minny-fixit-invite__avatar" aria-hidden="true"><img src="/assets/minny/minny_idle.png" alt="" width="64" height="64" style="width:64px;height:64px;object-fit:contain"/></div>
           <p class="minny-fixit-invite__title">Mình luyện lại ${words.length} từ này nhé!</p>
           <div class="minny-fixit-invite__words">${words.map(fixitWordChip).join('')}</div>
           <div class="minny-fixit-invite__actions">
@@ -1291,7 +1291,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       const count = fx?.words?.length || 0;
       el.innerHTML = `
         <div class="minny-fixit-celebrate">
-          <div class="minny-fixit-celebrate__avatar" aria-hidden="true">🐨</div>
+          <div class="minny-fixit-celebrate__avatar" aria-hidden="true"><img src="/assets/minny/minny_celebrate.png" alt="" width="64" height="64" style="width:64px;height:64px;object-fit:contain"/></div>
           <p class="minny-fixit-celebrate__title">Tuyệt vời! Con đã luyện xong ${count} từ rồi 🎉</p>
           <p class="minny-fixit-celebrate__sub">Thầy Phương sẽ thấy con tiến bộ nhiều lắm.</p>
         </div>
