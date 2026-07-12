@@ -165,6 +165,7 @@ export function buildV2LessonPayload({ accessCode, codeData, pack, v2Pack, env }
     },
     parent_note_vi: v2Pack.parent_note_vi || '',
     next_suggestion_vi: v2Pack.next_suggestion_vi || '',
+    vocabulary: Array.isArray(v2Pack.vocabulary) ? v2Pack.vocabulary : [],
     guided_listening: v2Pack.guided_listening || pack.guided_listening || [],
     status: pack.status,
     web_session_checkpoint: pack.web_session_checkpoint || null,

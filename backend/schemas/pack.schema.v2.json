@@ -107,7 +107,20 @@
       "maxItems": 24,
       "items": { "type": "string", "format": "uri", "pattern": "^https://.*\\.mp3(?:[?#].*)?$" }
     },
-    "book_attribution": { "$ref": "#/definitions/book_attribution" }
+    "book_attribution": { "$ref": "#/definitions/book_attribution" },
+    "vocabulary": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["word_en", "meaning_vi", "paragraph_index"],
+        "additionalProperties": false,
+        "properties": {
+          "word_en": { "type": "string", "minLength": 1 },
+          "meaning_vi": { "type": "string", "minLength": 1 },
+          "paragraph_index": { "type": "integer", "minimum": 0 }
+        }
+      }
+    }
   },
 
   "allOf": [

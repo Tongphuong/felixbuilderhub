@@ -88,7 +88,7 @@ def build_guided_listening_prompt(
     if story_context:
         context_text = " ".join(story_context)
         context_block = f"""
-FULL STORY CONTEXT (for plausible distractors):
+FULL STORY CONTEXT (for plausible distractors ONLY — never for question content):
 {context_text}
 """
 
@@ -107,14 +107,20 @@ TASK: For EACH sentence, generate exactly 2 WH- comprehension questions.
 - These are listening COMPREHENSION questions — they test whether the child understood what happened
 - Do NOT ask about individual words or vocabulary (no "What does X mean?" or "Which word means Y?")
 - No Vietnamese translations needed
+- Every question MUST be answerable using ONLY the sentence(s) of THIS paragraph — the
+  full story context above is for distractor plausibility ONLY, never for something the
+  question itself requires (never ask about an event, detail, or outcome that only
+  appears on a later page). Before answering, silently check each question against this
+  rule; if a question fails, REWRITE it so it can be answered from this paragraph alone
+  — do not explain the rewrite, just output the corrected question.
 
 OUTPUT JSON ONLY:
 {{
   "questions": [
-    {{"sentence_index": 0, "question_en": "Who goes to the park?", "options_en": ["Mai", "Her dad", "Her friend"], "correct_index": 0}},
-    {{"sentence_index": 0, "question_en": "Where does Mai go?", "options_en": ["To the park", "To school", "To the market"], "correct_index": 0}},
-    {{"sentence_index": 1, "question_en": "What is in the park?", "options_en": ["A big tree", "A small pond", "A red slide"], "correct_index": 0}},
-    {{"sentence_index": 1, "question_en": "Why is Mai excited?", "options_en": ["She sees a bird", "She has ice cream", "Mom is running"], "correct_index": 0}}
+    {{"sentence_index": 0, "question_en": "Who goes to the park?", "options_en": ["Mai", "Her dad", "Her friend"], "correct_index": 0, "answerable_from_sentence": true}},
+    {{"sentence_index": 0, "question_en": "Where does Mai go?", "options_en": ["To the park", "To school", "To the market"], "correct_index": 0, "answerable_from_sentence": true}},
+    {{"sentence_index": 1, "question_en": "What is in the park?", "options_en": ["A big tree", "A small pond", "A red slide"], "correct_index": 0, "answerable_from_sentence": true}},
+    {{"sentence_index": 1, "question_en": "Why is Mai excited?", "options_en": ["She sees a bird", "She has ice cream", "Mom is running"], "correct_index": 0, "answerable_from_sentence": true}}
   ]
 }}
 
@@ -125,6 +131,8 @@ RULES:
 - options_en: exactly 3 strings
 - correct_index: 0, 1, or 2 — the index of the correct answer
 - All options must be story-grounded
+- answerable_from_sentence: true on every question — this paragraph's own sentences must
+  be enough to answer it; the story context is for distractors only, never for content
 - No markdown, no prose — just the JSON object"""
 
 
@@ -217,6 +225,14 @@ def _v3_validation_error(
             return (
                 f"question {question_index} must start with "
                 "Who, Whose, What, Which, Where, When, Why, or How"
+            )
+        # Answerable-from-own-paragraph self-check (R2L-PAGE-LOOP fix round 2):
+        # the model must flag that its own question is answerable from this
+        # paragraph's sentences alone, not from later-page story context.
+        if q.get("answerable_from_sentence") is not True:
+            return (
+                f"question {question_index} missing answerable_from_sentence: true "
+                "(every question must be answerable from its own paragraph alone)"
             )
         # 3 options, correct_index 0-2
         options = q.get("options_en") or []
@@ -397,6 +413,15 @@ def generate_guided_listening(
                             if isinstance(global_index, int)
                             else -1
                         ),
+                        # Cached entries are already-packed output; packing
+                        # never carries answerable_from_sentence forward (see
+                        # _process_single_paragraph's explicit item shape), so
+                        # it is always absent here. Having been packed at all
+                        # means this exact self-check already passed when the
+                        # entry was first generated — synthesize it back so
+                        # re-validating a legitimate cached page doesn't force
+                        # an unnecessary re-generation.
+                        "answerable_from_sentence": True,
                     }
                 )
         if (

@@ -62,6 +62,7 @@ def _mock_llm_comprehension_questions(sentence_count: int) -> str:
                 "question_en": f"{wh_words[si % 3]} went to the park?",
                 "options_en": ["Mai", "Her mom", "A friend"],
                 "correct_index": 0,
+                "answerable_from_sentence": True,
             })
     return json.dumps({"questions": questions})
 
@@ -89,6 +90,18 @@ def test_build_guided_listening_prompt_includes_sentences():
     assert "Mai goes to the park" in prompt
     assert "WH-" in prompt or "Who" in prompt or "comprehension" in prompt.lower()
     assert "exact sentence_index sequence: 0, 0, 1, 1" in prompt
+
+
+def test_build_guided_listening_prompt_requires_answerable_from_sentence():
+    """R2L-PAGE-LOOP fix round 2: page-answerability self-check rule."""
+    prompt = build_guided_listening_prompt(
+        "Mai goes to the park. She sees a bird.",
+        ["Mai goes to the park.", "She sees a bird."],
+        story_context=["Mai goes to the park.", "She sees a bird.", "Later she wins a prize."],
+    )
+    assert "answerable_from_sentence" in prompt
+    assert "answerable using ONLY the sentence(s) of THIS paragraph" in prompt
+    assert "for plausible distractors ONLY — never for question content" in prompt
 
 
 def test_generate_guided_listening_counts():
@@ -490,8 +503,8 @@ def test_parse_llm_questions_handles_string():
 
 def test_valid_v3_questions_correct():
     questions = [
-        {"sentence_index": 0, "type": "choice", "type": "choice", "question_en": "Who goes there?", "options_en": ["A", "B", "C"], "correct_index": 0},
-        {"sentence_index": 0, "type": "choice", "type": "choice", "question_en": "What is it?", "options_en": ["A", "B", "C"], "correct_index": 1},
+        {"sentence_index": 0, "type": "choice", "type": "choice", "question_en": "Who goes there?", "options_en": ["A", "B", "C"], "correct_index": 0, "answerable_from_sentence": True},
+        {"sentence_index": 0, "type": "choice", "type": "choice", "question_en": "What is it?", "options_en": ["A", "B", "C"], "correct_index": 1, "answerable_from_sentence": True},
     ]
     assert _valid_v3_questions(questions, 1)
 
@@ -518,6 +531,65 @@ def test_valid_v3_questions_rejects_vietnamese():
         {"sentence_index": 0, "type": "choice", "question_en": "What?", "options_en": ["A", "B", "C"], "correct_index": 1},
     ]
     assert not _valid_v3_questions(questions, 1)
+
+
+# ── Answerable-from-own-paragraph self-check (R2L-PAGE-LOOP fix round 2) ───────
+
+
+def test_valid_v3_questions_rejects_missing_answerable_from_sentence():
+    questions = [
+        {"sentence_index": 0, "type": "choice", "question_en": "Who goes there?", "options_en": ["A", "B", "C"], "correct_index": 0},
+        {"sentence_index": 0, "type": "choice", "question_en": "What is it?", "options_en": ["A", "B", "C"], "correct_index": 1, "answerable_from_sentence": True},
+    ]
+    assert not _valid_v3_questions(questions, 1)
+
+
+def test_valid_v3_questions_rejects_answerable_from_sentence_false():
+    questions = [
+        {"sentence_index": 0, "type": "choice", "question_en": "Who goes there?", "options_en": ["A", "B", "C"], "correct_index": 0, "answerable_from_sentence": False},
+        {"sentence_index": 0, "type": "choice", "question_en": "What is it?", "options_en": ["A", "B", "C"], "correct_index": 1, "answerable_from_sentence": True},
+    ]
+    assert not _valid_v3_questions(questions, 1)
+
+
+def test_generate_guided_listening_reports_missing_answerable_from_sentence():
+    story = {
+        "paragraphs_en": ["Mai goes to the park with Mom."],
+        "sentences": [
+            {"text_en": "Mai goes to the park with Mom.", "paragraph_index": 0}
+        ],
+    }
+    invalid_response = json.dumps({
+        "questions": [
+            {
+                "sentence_index": 0,
+                "question_en": "Who goes to the park?",
+                "options_en": ["Mai", "Mom", "A friend"],
+                "correct_index": 0,
+                "answerable_from_sentence": True,
+            },
+            {
+                "sentence_index": 0,
+                "question_en": "Where does Mai go?",
+                "options_en": ["Park", "School", "Market"],
+                "correct_index": 0,
+                # missing answerable_from_sentence
+            },
+        ],
+    })
+
+    with pytest.raises(ValueError, match="missing answerable_from_sentence: true"):
+        generate_guided_listening(story, llm_fallback=lambda _prompt: invalid_response)
+
+
+def test_packed_guided_listening_questions_never_carry_answerable_from_sentence():
+    """The transient self-check field must not leak into persisted output —
+    downstream schema/consumers must see the same question shape as before
+    this rule was added."""
+    guided = generate_guided_listening(_simple_story(), llm_fallback=_mock_llm_fallback)
+    for entry in guided:
+        for question in entry["questions"]:
+            assert "answerable_from_sentence" not in question
 
 
 # ── Parallel processing tests ──────────────────────────────────────────────────

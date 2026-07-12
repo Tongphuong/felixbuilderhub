@@ -71,6 +71,41 @@ test('question selection distributes two short questions across sentences with t
   assert.equal(selected[0].correct_index, 1);
 });
 
+// R2L-PAGE-LOOP fix round 2: the current-page fallback pin was removed — a
+// question whose sentence_index is not a finite integer is dropped, never
+// adopted onto whichever page happened to be selecting.
+test('a question missing sentence_index is dropped, not pinned to the current page', () => {
+  const lesson = context();
+  const guidedListening = [{
+    paragraph_index: 0,
+    questions: [
+      { id: 'no_index', question_en: 'What is missing here?', options_en: ['A', 'B'], correct_index: 0 },
+      ...lesson.guided_listening[0].questions,
+    ],
+  }];
+  const selected = selectBookQuestions(guidedListening, lesson.story.sentences, 0, 10);
+  assert.ok(selected.every((question) => question.id !== 'no_index'));
+});
+
+test('a question with a non-finite sentence_index (string/NaN) is dropped, not pinned to the current page', () => {
+  const lesson = context();
+  const guidedListening = [{
+    paragraph_index: 0,
+    questions: [
+      {
+        id: 'bad_index',
+        sentence_index: 'not-a-number',
+        question_en: 'What has a bad index?',
+        options_en: ['A', 'B'],
+        correct_index: 0,
+      },
+      ...lesson.guided_listening[0].questions,
+    ],
+  }];
+  const selected = selectBookQuestions(guidedListening, lesson.story.sentences, 0, 10);
+  assert.ok(selected.every((question) => question.id !== 'bad_index'));
+});
+
 test('chunking covers ordinary sentences once in order within three-sentence and 24-word targets', () => {
   const lesson = context();
   const chunks = buildBookShadowChunks(lesson.story.sentences, 0);

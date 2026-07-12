@@ -206,6 +206,34 @@ test('mismatched page arrays do not expose book mode fields', () => {
   assert.equal('book_slug' in lesson, false);
 });
 
+test('vocabulary passes through to the lesson payload when present', () => {
+  const context = bookContext();
+  context.vocabulary = [
+    { word_en: 'kite', meaning_vi: 'con diều', paragraph_index: 1 },
+    { word_en: 'tall', meaning_vi: 'cao', paragraph_index: 2 },
+  ];
+  const lesson = buildV2LessonPayload({
+    accessCode: ACCESS_CODE,
+    codeData: {},
+    pack: { pack_id: PACK_ID, status: 'ready' },
+    v2Pack: context,
+    env: {},
+  });
+  assert.deepEqual(lesson.vocabulary, context.vocabulary);
+});
+
+test('vocabulary defaults to an empty array when absent from the pack', () => {
+  const context = bookContext();
+  const lesson = buildV2LessonPayload({
+    accessCode: ACCESS_CODE,
+    codeData: {},
+    pack: { pack_id: PACK_ID, status: 'ready' },
+    v2Pack: context,
+    env: {},
+  });
+  assert.deepEqual(lesson.vocabulary, []);
+});
+
 test('all passed chunks reward completion and append the book slug idempotently', async () => {
   const fixture = makeFixture(['book_999', 'book_123']);
   const response = await submit(bookReader(), fixture);

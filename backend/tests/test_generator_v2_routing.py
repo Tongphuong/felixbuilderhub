@@ -261,12 +261,12 @@ def test_two_call_adds_wh_comprehension_questions_per_sentence():
 
     gl_mock_response = json.dumps({
         "questions": [
-            {"type": "choice", "sentence_index": 0, "question_en": "Who goes to the park?", "options_en": ["Mia", "Her mom", "Her dad"], "correct_index": 0},
-            {"type": "choice", "sentence_index": 0, "question_en": "Where does Mia go?", "options_en": ["To the park", "To school", "To the market"], "correct_index": 0},
-            {"type": "choice", "sentence_index": 1, "question_en": "What does Mia see?", "options_en": ["A red bird", "A blue kite", "A big dog"], "correct_index": 0},
-            {"type": "choice", "sentence_index": 1, "question_en": "Where is the bird?", "options_en": ["In a tree", "On the ground", "In the sky"], "correct_index": 0},
-            {"type": "choice", "sentence_index": 2, "question_en": "What does Mia do?", "options_en": ["She claps", "She cries", "She runs"], "correct_index": 0},
-            {"type": "choice", "sentence_index": 2, "question_en": "How does Mia feel?", "options_en": ["Happy", "Sad", "Angry"], "correct_index": 0},
+            {"type": "choice", "sentence_index": 0, "question_en": "Who goes to the park?", "options_en": ["Mia", "Her mom", "Her dad"], "correct_index": 0, "answerable_from_sentence": True},
+            {"type": "choice", "sentence_index": 0, "question_en": "Where does Mia go?", "options_en": ["To the park", "To school", "To the market"], "correct_index": 0, "answerable_from_sentence": True},
+            {"type": "choice", "sentence_index": 1, "question_en": "What does Mia see?", "options_en": ["A red bird", "A blue kite", "A big dog"], "correct_index": 0, "answerable_from_sentence": True},
+            {"type": "choice", "sentence_index": 1, "question_en": "Where is the bird?", "options_en": ["In a tree", "On the ground", "In the sky"], "correct_index": 0, "answerable_from_sentence": True},
+            {"type": "choice", "sentence_index": 2, "question_en": "What does Mia do?", "options_en": ["She claps", "She cries", "She runs"], "correct_index": 0, "answerable_from_sentence": True},
+            {"type": "choice", "sentence_index": 2, "question_en": "How does Mia feel?", "options_en": ["Happy", "Sad", "Angry"], "correct_index": 0, "answerable_from_sentence": True},
         ]
     })
 

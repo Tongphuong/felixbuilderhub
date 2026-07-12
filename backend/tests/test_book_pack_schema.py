@@ -144,6 +144,50 @@ def test_invalid_book_contract_is_rejected(mutation, expected_fragment):
     assert any(expected_fragment in error for error in errors)
 
 
+def test_book_pack_accepts_vocabulary():
+    pack = book_pack()
+    pack["vocabulary"] = [
+        {"word_en": "kite", "meaning_vi": "con diều", "paragraph_index": 0},
+        {"word_en": "tall", "meaning_vi": "cao", "paragraph_index": 1},
+    ]
+    assert schema_errors(pack) == []
+
+
+def test_legacy_pack_accepts_vocabulary_too():
+    """vocabulary is a root property, not book-only — the standard (non-book)
+    pack shape must accept it as well."""
+    pack = minimal_l1_pack_v2()
+    pack["vocabulary"] = [{"word_en": "bird", "meaning_vi": "con chim", "paragraph_index": 1}]
+    assert schema_errors(pack) == []
+
+
+def test_pack_without_vocabulary_remains_valid():
+    """vocabulary is optional — omitting it entirely must not break anything."""
+    assert "vocabulary" not in minimal_l1_pack_v2()
+    assert schema_errors(minimal_l1_pack_v2()) == []
+
+
+@pytest.mark.parametrize(
+    ("vocabulary_item", "expected_fragment"),
+    [
+        ({"word_en": "", "meaning_vi": "x", "paragraph_index": 0}, "should be non-empty"),
+        ({"word_en": "x", "meaning_vi": "", "paragraph_index": 0}, "should be non-empty"),
+        ({"word_en": "x", "meaning_vi": "y", "paragraph_index": -1}, "less than the minimum"),
+        ({"word_en": "x", "meaning_vi": "y"}, "is a required property"),
+        (
+            {"word_en": "x", "meaning_vi": "y", "paragraph_index": 0, "extra": 1},
+            "Additional properties are not allowed",
+        ),
+    ],
+)
+def test_book_pack_rejects_invalid_vocabulary_shapes(vocabulary_item, expected_fragment):
+    pack = book_pack()
+    pack["vocabulary"] = [vocabulary_item]
+    errors = schema_errors(pack)
+    assert errors
+    assert any(expected_fragment in error for error in errors)
+
+
 def test_book_pack_rejects_more_than_24_pages():
     pack = book_pack()
     paragraph = pack["story"]["paragraphs_en"][0]

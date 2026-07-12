@@ -13,7 +13,9 @@ import sys
 import tempfile
 import time
 from typing import Any, Callable
-from urllib.parse import quote
+from urllib.error import HTTPError, URLError
+from urllib.parse import quote, urlencode
+from urllib.request import Request, urlopen
 
 LEVEL_MAP = {
     "1": {"level": "L1", "level_label": "Cấp 1"},
@@ -21,6 +23,11 @@ LEVEL_MAP = {
     "3": {"level": "L3", "level_label": "Cấp 3"},
     "4": {"level": "L4", "level_label": "Cấp 4"},
 }
+# Levels the enrichment batch (--enrich-published) enumerates via the publish
+# endpoint's book_index. Matches VALID_LEVELS in
+# functions/api/publish-read2lead-book.js (L0 Emergent Reader through L4;
+# no L5 book index exists on that endpoint).
+ENRICH_LEVELS = ("L0", "L1", "L2", "L3", "L4")
 DEFAULT_REPOS_ROOT = Path.home() / "work" / "repos"
 MAX_ATTEMPTS = 3
 LICENSE_NAME = "CC BY 4.0"
@@ -556,6 +563,28 @@ class ProductionServices:
     def generate_ab(self, source: BookSource) -> list[dict[str, Any]]:
         return validate_ab_activities(build_deterministic_ab(source), source)
 
+    def generate_guided_for_paragraphs(
+        self,
+        paragraphs: list[str],
+        *,
+        complete_json: Callable[[str, str], dict[str, Any]] | None = None,
+    ) -> list[dict[str, Any]]:
+        """Same LLM path as generate_guided(), for a raw paragraph list.
+
+        Used by the enrichment batch (--enrich-published), which starts from
+        an already-published pack rather than a freshly preflighted
+        BookSource. `complete_json` defaults to self.complete_json but can be
+        overridden by a caller that wants to count/wrap LLM calls.
+        """
+        complete = complete_json or self.complete_json
+        story = {"paragraphs_en": paragraphs}
+        return self._guided(
+            story,
+            llm_fallback=lambda prompt: complete(
+                "Return only validated listening-question JSON.", prompt
+            ),
+        )
+
     def tts(self, text: str, output_path: Path) -> None:
         self._tts(text, output_path)
 
@@ -716,6 +745,287 @@ def process_book(source: BookSource, services: Any, *, schema_path: Path) -> dic
         return pack
 
 
+# --- Book enrichment (--enrich-published): translations + vocabulary ---------
+#
+# Adds Vietnamese sentence translations and a root vocabulary list to an
+# ALREADY-PUBLISHED book pack, without regenerating TTS audio or images —
+# existing sentences/audio_urls are reused verbatim. Loads the pack over HTTP
+# from the publish endpoint's machine-secret read side (no direct Cloudflare
+# KV credentials needed) and regenerates guided_listening from the pack's own
+# paragraphs via the same generate_qa.generate_guided_listening path used at
+# build time.
+
+BOOK_ENRICHMENT_SYSTEM_PROMPT = (
+    "You translate one page of a children's English story into Vietnamese and "
+    "pick hard words for a Vietnamese child learning English. Return JSON only."
+)
+
+
+def build_enrichment_prompt(page_sentences: list[dict[str, Any]], paragraph_text: str) -> str:
+    numbered = "\n".join(
+        f"[{i}] {sentence['text_en']}" for i, sentence in enumerate(page_sentences)
+    )
+    return f"""Translate each English sentence below into simple, child-friendly
+Vietnamese for a child aged 6-12 who is learning English. Keep translations
+faithful to the English meaning and easy for a young child to understand —
+short, natural spoken Vietnamese, not a literal word-for-word translation.
+
+PAGE TEXT:
+{paragraph_text}
+
+SENTENCES:
+{numbered}
+
+Also pick 2 to 4 genuinely hard English words from this page for a Vietnamese
+child learning English (skip character and place names). For each, give a
+short, simple Vietnamese meaning.
+
+OUTPUT JSON ONLY:
+{{
+  "sentences": [
+    {{"index": 0, "text_vi": "..."}},
+    {{"index": 1, "text_vi": "..."}}
+  ],
+  "hard_words": [
+    {{"word_en": "...", "meaning_vi": "..."}}
+  ]
+}}
+
+RULES:
+- Exactly one entry in "sentences" per sentence above; "index" matches the [N] number
+- Every text_vi must be non-empty
+- hard_words: 0 to 4 entries, never more than 4; skip character/place names
+- No markdown, no prose — just the JSON object"""
+
+
+def validate_enrichment_response(
+    response: Any, page_sentence_count: int
+) -> tuple[list[str], list[dict[str, str]]]:
+    """Validate one page's enrichment JSON. Returns (text_vi_list, hard_words)."""
+    if not isinstance(response, dict):
+        raise BookProcessingError("enrichment response is not a JSON object")
+    sentences = response.get("sentences")
+    if not isinstance(sentences, list) or len(sentences) != page_sentence_count:
+        got = len(sentences) if isinstance(sentences, list) else "no"
+        raise BookProcessingError(
+            f"enrichment response has {got} sentences; expected {page_sentence_count}"
+        )
+    by_index: dict[int, str] = {}
+    for entry in sentences:
+        if not isinstance(entry, dict):
+            raise BookProcessingError("enrichment sentence entry is not an object")
+        index = entry.get("index")
+        text_vi = clean_text(entry.get("text_vi"))
+        if not isinstance(index, int) or not text_vi:
+            raise BookProcessingError("enrichment sentence missing index or text_vi")
+        by_index[index] = text_vi
+    if set(by_index) != set(range(page_sentence_count)):
+        raise BookProcessingError("enrichment response sentence indexes do not cover the page")
+    text_vi_list = [by_index[i] for i in range(page_sentence_count)]
+
+    hard_words_raw = response.get("hard_words") if response.get("hard_words") is not None else []
+    if not isinstance(hard_words_raw, list) or len(hard_words_raw) > 4:
+        raise BookProcessingError("enrichment hard_words must be a list of at most 4 entries")
+    hard_words: list[dict[str, str]] = []
+    for entry in hard_words_raw:
+        if not isinstance(entry, dict):
+            raise BookProcessingError("enrichment hard_word entry is not an object")
+        word_en = clean_text(entry.get("word_en"))
+        meaning_vi = clean_text(entry.get("meaning_vi"))
+        if not word_en or not meaning_vi:
+            raise BookProcessingError("enrichment hard_word missing word_en or meaning_vi")
+        hard_words.append({"word_en": word_en, "meaning_vi": meaning_vi})
+    return text_vi_list, hard_words
+
+
+def enrich_pack(
+    pack: dict[str, Any], complete_json: Callable[[str, str], dict[str, Any]]
+) -> dict[str, Any]:
+    """Return a copy of `pack` with story.sentences[].text_vi and root
+    vocabulary filled in. One `complete_json` call per page. Does NOT touch
+    audio_url/book_images/book_page_audio — those are reused verbatim.
+    """
+    story = pack.get("story") or {}
+    sentences = story.get("sentences") or []
+    paragraphs = story.get("paragraphs_en") or []
+    sentences_by_page: dict[int, list[tuple[int, dict[str, Any]]]] = {}
+    for index, sentence in enumerate(sentences):
+        page = int(sentence.get("paragraph_index") or 0)
+        sentences_by_page.setdefault(page, []).append((index, sentence))
+
+    updated_sentences = [dict(sentence) for sentence in sentences]
+    vocabulary: list[dict[str, Any]] = []
+    for page_index, paragraph_text in enumerate(paragraphs):
+        page_sentences = sentences_by_page.get(page_index, [])
+        if not page_sentences:
+            continue
+        prompt = build_enrichment_prompt(
+            [sentence for _, sentence in page_sentences], paragraph_text
+        )
+        response = complete_json(BOOK_ENRICHMENT_SYSTEM_PROMPT, prompt)
+        text_vi_list, hard_words = validate_enrichment_response(response, len(page_sentences))
+        for (sentence_index, _), text_vi in zip(page_sentences, text_vi_list):
+            updated_sentences[sentence_index]["text_vi"] = text_vi
+        for hard_word in hard_words:
+            vocabulary.append({**hard_word, "paragraph_index": page_index})
+
+    enriched = dict(pack)
+    enriched["story"] = {**story, "sentences": updated_sentences}
+    enriched["vocabulary"] = vocabulary
+    return enriched
+
+
+def _read2lead_publish_get(params: dict[str, str]) -> dict[str, Any]:
+    """GET the publish endpoint's machine-secret read side (plain urllib, no
+    `requests` dependency). Same base URL + secret as the existing publish
+    POST flow: READ2LEAD_PUBLISH_URL + READ2LEAD_BACKEND_SECRET.
+    """
+    base_url = os.environ["READ2LEAD_PUBLISH_URL"].rstrip("/")
+    secret = os.environ["READ2LEAD_BACKEND_SECRET"]
+    query = urlencode(params)
+    request = Request(
+        f"{base_url}?{query}", headers={"X-Read2Lead-Secret": secret}
+    )
+    try:
+        with urlopen(request, timeout=30) as response:
+            return json.loads(response.read().decode("utf-8"))
+    except HTTPError as exc:
+        raise BookProcessingError(f"published book fetch failed: HTTP {exc.code}") from exc
+    except URLError as exc:
+        raise BookProcessingError(f"published book fetch failed: {exc.reason}") from exc
+
+
+def fetch_published_index(level: str) -> list[str]:
+    data = _read2lead_publish_get({"index": level})
+    if not data.get("ok"):
+        raise BookProcessingError(
+            f"published index fetch failed for {level}: {data.get('error', 'unknown')}"
+        )
+    return [str(slug) for slug in data.get("slugs") or []]
+
+
+def fetch_published_pack(slug: str) -> dict[str, Any]:
+    data = _read2lead_publish_get({"slug": slug})
+    if not data.get("ok"):
+        raise BookProcessingError(
+            f"published pack fetch failed for {slug}: {data.get('error', 'unknown')}"
+        )
+    pack = data.get("pack")
+    if not isinstance(pack, dict):
+        raise BookProcessingError(f"published pack fetch returned no pack for {slug}")
+    return pack
+
+
+def discover_published_slugs(
+    *, only_slug: str | None = None, limit: int | None = None
+) -> list[str]:
+    if only_slug:
+        return [only_slug]
+    slugs: list[str] = []
+    seen: set[str] = set()
+    for level in ENRICH_LEVELS:
+        for slug in fetch_published_index(level):
+            if slug not in seen:
+                seen.add(slug)
+                slugs.append(slug)
+    if limit is not None:
+        slugs = slugs[:limit]
+    return slugs
+
+
+def enrich_and_publish_book(
+    slug: str,
+    services: Any,
+    *,
+    schema_path: Path,
+    out_dir: Path,
+    publish: bool,
+) -> dict[str, Any]:
+    """Enrich one already-published pack and write it locally (one JSON per
+    slug); optionally publish it back. Returns {"slug", "llm_calls"} so the
+    caller can print a per-book cost-relevant stat.
+    """
+    pack = fetch_published_pack(slug)
+    llm_calls = 0
+
+    def counted_complete_json(system: str, prompt: str) -> dict[str, Any]:
+        nonlocal llm_calls
+        llm_calls += 1
+        return services.complete_json(system, prompt)
+
+    enriched = enrich_pack(pack, counted_complete_json)
+    print(f"GENERATE guided questions (enrich) {slug}")
+    enriched["guided_listening"] = services.generate_guided_for_paragraphs(
+        enriched["story"]["paragraphs_en"], complete_json=counted_complete_json
+    )
+
+    print(f"VALIDATE enriched pack {slug}")
+    validate_pack(enriched, schema_path)
+
+    out_dir.mkdir(parents=True, exist_ok=True)
+    (out_dir / f"{slug}.json").write_text(
+        json.dumps(enriched, ensure_ascii=False, indent=2), encoding="utf-8"
+    )
+    print(f"ENRICH {slug}: {llm_calls} LLM call(s)")
+
+    if publish:
+        level = str(enriched.get("level") or "")
+        if level not in ENRICH_LEVELS:
+            raise BookProcessingError(f"enriched pack {slug} has invalid level {level!r}")
+        retry_call(lambda: services.publish_book(level, enriched))
+        print(f"PUBLISHED {slug}")
+
+    return {"slug": slug, "llm_calls": llm_calls}
+
+
+def required_enrich_env_missing() -> list[str]:
+    required = ["OPENAI_API_KEY", "R2_PUBLIC_URL", "READ2LEAD_PUBLISH_URL", "READ2LEAD_BACKEND_SECRET"]
+    return [name for name in required if not os.getenv(name)]
+
+
+def main_enrich(args: argparse.Namespace) -> int:
+    missing = required_enrich_env_missing()
+    if missing:
+        print(
+            f"Missing required environment variables: {', '.join(missing)}",
+            file=sys.stderr,
+        )
+        return 2
+    try:
+        slugs = discover_published_slugs(only_slug=args.slug, limit=args.limit)
+    except BookProcessingError as exc:
+        print(f"Error: {exc}", file=sys.stderr)
+        return 2
+    if not slugs:
+        print("No published books found to enrich.", file=sys.stderr)
+        return 2
+
+    services = ProductionServices()
+    schema_path = services.backend_root / "schemas" / "pack.schema.v2.json"
+    out_dir = args.out_dir or (Path(__file__).resolve().parent / "enriched_books")
+
+    failures = 0
+    total_calls = 0
+    for slug in slugs:
+        try:
+            result = enrich_and_publish_book(
+                slug, services, schema_path=schema_path, out_dir=out_dir, publish=args.publish
+            )
+            total_calls += result["llm_calls"]
+        except BookProcessingError as exc:
+            failures += 1
+            print(f"ERROR {slug}: {exc}", file=sys.stderr)
+        except Exception as exc:
+            failures += 1
+            print(f"ERROR {slug}: {type(exc).__name__}: {exc}", file=sys.stderr)
+
+    print(
+        f"ENRICH TOTAL: {len(slugs) - failures}/{len(slugs)} book(s) enriched, "
+        f"{total_calls} LLM call(s)"
+    )
+    return 1 if failures else 0
+
+
 def checkpoint_path(level_number: str) -> Path:
     return Path(__file__).resolve().parent / f".book_checkpoint_{level_number}.txt"
 
@@ -783,21 +1093,53 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Build validated StoryWeaver Read2Lead packs"
     )
-    parser.add_argument("--level", required=True, choices=sorted(LEVEL_MAP))
+    parser.add_argument("--level", choices=sorted(LEVEL_MAP), help="Required unless --enrich-published")
     parser.add_argument("--book", help="Only process a StoryWeaver ID or directory slug")
     parser.add_argument("--max", type=int, dest="max_books", help="Maximum books")
     parser.add_argument("--resume", action="store_true", help="Skip checkpointed books")
     parser.add_argument(
         "--dry-run", action="store_true", help="Parse/preflight only; no external calls"
     )
+    parser.add_argument(
+        "--enrich-published",
+        action="store_true",
+        help=(
+            "Enrich already-published packs with Vietnamese sentence "
+            "translations + vocabulary and regenerate guided_listening, "
+            "reusing existing TTS audio/images verbatim (no re-generation)"
+        ),
+    )
+    parser.add_argument(
+        "--slug", help="With --enrich-published: only this one book_slug (single-book dry run)"
+    )
+    parser.add_argument(
+        "--limit", type=int, help="With --enrich-published: maximum books to enrich"
+    )
+    parser.add_argument(
+        "--publish",
+        action="store_true",
+        help="With --enrich-published: POST enriched packs back to the publish endpoint",
+    )
+    parser.add_argument(
+        "--out-dir",
+        type=Path,
+        help="With --enrich-published: local directory for enriched pack JSON "
+        "(default: scripts/enriched_books)",
+    )
     args = parser.parse_args(argv)
     if args.max_books is not None and args.max_books < 1:
         parser.error("--max must be at least 1")
+    if args.limit is not None and args.limit < 1:
+        parser.error("--limit must be at least 1")
+    if not args.enrich_published and not args.level:
+        parser.error("--level is required unless --enrich-published is set")
     return args
 
 
 def main(argv: list[str] | None = None) -> int:
     args = parse_args(argv)
+    if args.enrich_published:
+        return main_enrich(args)
     try:
         books = discover_books(args.level, args.book)
     except BookProcessingError as exc:

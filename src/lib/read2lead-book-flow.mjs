@@ -23,19 +23,16 @@ function sentenceEntriesForPage(sentences, pageIndex) {
     ));
 }
 
-function normalizedQuestion(question, fallbackSentenceIndex) {
+function normalizedQuestion(question) {
   const options = Array.isArray(question?.options_en)
     ? question.options_en.map((option) => String(option || '').trim())
     : [];
   const correctIndex = Number(question?.correct_index);
   const sentenceIndex = Number(question?.sentence_index);
-  const resolvedSentenceIndex = Number.isFinite(sentenceIndex)
-    ? sentenceIndex
-    : fallbackSentenceIndex;
   if (
     !String(question?.id || '').trim()
     || !String(question?.question_en || '').trim()
-    || !Number.isInteger(resolvedSentenceIndex)
+    || !Number.isInteger(sentenceIndex)
     || options.length < 2
     || !Number.isInteger(correctIndex)
     || correctIndex < 0
@@ -49,7 +46,7 @@ function normalizedQuestion(question, fallbackSentenceIndex) {
   return {
     id: String(question.id),
     question_en: String(question.question_en).trim(),
-    sentence_index: resolvedSentenceIndex,
+    sentence_index: sentenceIndex,
     options_en: optionIndexes.map((index) => options[index]),
     correct_index: optionIndexes.indexOf(correctIndex),
   };
@@ -60,12 +57,8 @@ export function selectBookQuestions(guidedListening, sentences, pageIndex, limit
   const pageSentenceIndexes = new Set(pageEntries.map((entry) => entry.sentenceIndex));
   const paragraph = (Array.isArray(guidedListening) ? guidedListening : [])
     .find((entry) => (Number(entry?.paragraph_index) || 0) === pageIndex);
-  const fallbackIndexes = pageEntries.map((entry) => entry.sentenceIndex);
   const candidates = (Array.isArray(paragraph?.questions) ? paragraph.questions : [])
-    .map((question, index) => normalizedQuestion(
-      question,
-      fallbackIndexes[index % Math.max(1, fallbackIndexes.length)],
-    ))
+    .map((question) => normalizedQuestion(question))
     .filter((question) => question && pageSentenceIndexes.has(question.sentence_index));
 
   const bySentence = new Map();
