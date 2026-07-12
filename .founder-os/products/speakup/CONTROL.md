@@ -89,6 +89,46 @@ assigns, commits, merges, deploys, or spends.
 
 ## Current task
 
+- Status: active
+- Task ID: speakup-v1-3-feedback-sandwich
+- Owner: Elon authors the feedback prompt verbatim (safety-adjacent);
+  Mark (bg, packet scratchpad/v13-mark-packet.md) builds the module +
+  minimal PROTECTED call site; Steve builds the panel to the approved
+  Wave D Set 2 mock (screens 1–2) after the backend lands; Buffet
+  red-teams grounding + the PROTECTED diff.
+- FOUNDER GATE (spec §V1.3 requirement): **GIVEN — Phương, 2026-07-12,
+  AskUserQuestion: "Yes, build it"** — the zero-LLM homework rule (V0
+  D1/D8b) is relaxed in exactly this one fenced place per V1-D1.
+- Lane: `claude/speakup-v1-1` → `main` per phase cadence (pilot is live —
+  extra care: silent-omission fallback is the hard requirement).
+- Problem: founder test — kids get "just a percentage"; no teacher-voice
+  feedback exists; high scorers get numbers only.
+- Spec deviation (flagged): grounding context = raw homework content
+  (sentences/stems/note_vi from the code record) this round; the V1-D6
+  teacher-confirmed brief plugs in as V1.3b next.
+- Reuse survey: N/A external — OpenRouter JSON-mode pattern reused from
+  minny-conversation.js (adopted V1-D4); guardrail stack reused; no new
+  vendor/capability.
+- Cost ceiling: Claude team (Max plan); runtime ≤ $0.002/homework set.
+- Acceptance criteria: spec §V1.3 verbatim — feedback JSON {praise_vi,
+  focus_word, model_sentence_en, tiny_challenge_vi, recast_en?};
+  deterministic grounding validator (quotes ⊆ transcript, focus_word ∈
+  allowed word set, length caps, no digits in VI text); output
+  guardrail-screened; ANY failure → silent omission (deep-equal test);
+  deterministic panel always renders first; adversarial red-team zero
+  ungrounded survivors; warm Vietnamese; live prod verify; rule-20 vs
+  Set 2 mock; baseline 1149 none dropped; founder gates.
+- Files owned: Mark — NEW functions/api/_homework-feedback.js,
+  functions/api/read2lead-speaking-check.js (PROTECTED, one call site),
+  tests/homework-feedback.test.mjs; Steve — src/pages/speak-up.astro,
+  src/styles/speakup-app.css, tests/speakup-feedback-ui.test.mjs.
+- Stop condition: feedback replacing/altering any deterministic field;
+  any second LLM call per result; any path where LLM failure surfaces to
+  the kid — stop.
+- Started: 2026-07-12
+
+## Prior task (complete): speakup-pilot-start
+
 - Status: complete
 - Task ID: speakup-pilot-start
 - Owner: Elon (docs-only; the decision is Phương's, recorded verbatim).

@@ -1743,6 +1743,68 @@
 }
 
 /* ============================================================================
+   V1.3 homework feedback sandwich (Wave D Set 2, screens 1-2) — values
+   copied verbatim from the approved mock's <style> block
+   (design_handoff_speakup_v1/SpeakUp V1 Homework Feedback v2.dc.html).
+   Rendered by speak-up.astro's renderCoachSandwich() into the tail of
+   #speaking-result, directly under the existing score/rubric/smile-chip
+   panel and above #speaking-actions/#fixit-round — never reorders them.
+   .minny-feedback-sandwich__model-vi and __praise q are kept from the mock
+   for a future model_sentence_vi/quoted-fragment field (see PR notes —
+   result.coach today carries no field for either, so nothing renders them
+   yet; TODO(elon) flagged in the dispatch report). */
+
+.minny-feedback-sandwich {
+  border-radius: 20px;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border: 1px solid var(--border-subtle);
+  background: rgba(23, 53, 74, 0.45);
+}
+
+.minny-feedback-sandwich.is-celebrate {
+  border-color: rgba(200, 143, 56, 0.35);
+  background: linear-gradient(180deg, rgba(200, 143, 56, 0.1), rgba(23, 53, 74, 0.45));
+}
+
+.minny-feedback-sandwich.is-encourage { border-color: rgba(200, 143, 56, 0.25); }
+
+.minny-feedback-sandwich__eyebrow {
+  font-family: 'Manrope', 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--gold-light);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.minny-feedback-sandwich__row { display: flex; gap: 10px; align-items: flex-start; }
+.minny-feedback-sandwich__row .ico { flex-shrink: 0; font-size: 16px; line-height: 1.4; }
+
+.minny-feedback-sandwich__praise { margin: 0; font-size: 14.5px; color: var(--cream); line-height: 1.55; }
+.minny-feedback-sandwich__praise q { color: var(--gold-light); font-weight: 700; font-style: normal; }
+
+.minny-feedback-sandwich__focus-label { margin: 0 0 4px; font-size: 12px; color: var(--cream-dim); }
+
+/* Modifier only — combines with the existing .minny-word (+ .minny-word
+   --close) base rule below, which already carries min-height: 44px and the
+   tap-to-hear button reset, so the focus chip meets the touch-target floor
+   for free. */
+.minny-word--focus { font-size: 16px; padding: 6px 14px; border-radius: 10px; }
+
+.minny-feedback-sandwich__model { margin: 0; }
+.minny-feedback-sandwich__model-en { font-size: 15px; color: var(--cream); font-weight: 700; margin: 0; }
+.minny-feedback-sandwich__model-vi { font-size: 12.5px; color: var(--cream-dim); margin: 2px 0 0; font-style: italic; }
+
+.minny-feedback-sandwich__challenge { margin: 0; font-size: 13px; color: var(--cream-muted); line-height: 1.55; }
+
+/* ============================================================================
    V1.4 fix-it round (Wave D Set 2, screens 3-5) — values copied verbatim from
    the approved mock's <style> block (design_handoff_speakup_v1/SpeakUp V1
    Homework Feedback v2.dc.html). Existing --gold/--cream/--navy/--success/
