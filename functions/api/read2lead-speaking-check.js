@@ -12,6 +12,10 @@ import {
   AZURE_PA_EST_SECONDS_PER_CALL,
   AZURE_PA_UNSCRIPTED_MAX_WAV_BYTES,
 } from './_azure-pronunciation.js';
+// V1.3 homework feedback sandwich (2026-07-12) — see that file's header for
+// the two-way-import note (it imports normalizePracticeWord from here).
+import { buildFeedbackContext, generateHomeworkFeedback } from './_homework-feedback.js';
+import { validateReplyShape, detectCharacterBreak, scanBannedTopics, screenWithLlamaGuard } from './_minny-guardrails.js';
 
 export const SKIP_WORDS = new Set([
   'a', 'an', 'the', 'is', 'are', 'was', 'were', 'to', 'of', 'in', 'on', 'at',
@@ -754,8 +758,12 @@ export async function onRequestPost(context) {
     // this attempt's practice words so minny-voice's `word` branch can allow
     // a tap-to-hear request for exactly these words and nothing else. Never
     // blocks the response — a KV hiccup here must not fail a scored attempt.
+    // Hoisted to an outer `let` (V1.3 fix round, 2026-07-12) so the coach
+    // feedback step below can merge its own focus_word into the same
+    // in-memory list instead of re-fetching the record it just wrote.
+    let flaggedWords = [];
     try {
-      const flaggedWords = collectFlaggedWords(result);
+      flaggedWords = collectFlaggedWords(result);
       if (flaggedWords.length) {
         await env.READ2LEAD_CODES.put(
           `flagged-words:${accessCode}`,
@@ -765,6 +773,84 @@ export async function onRequestPost(context) {
       }
     } catch {
       /* best-effort; must never block the response */
+    }
+
+    // V1.3 homework feedback sandwich (2026-07-12, founder gate: Phương ack
+    // via AskUserQuestion). Best-effort, additive only — every step below is
+    // wrapped so ANY failure (no key, not a homework attempt, LLM
+    // error/timeout/parse, ungrounded claim, guardrail flag) leaves `result`
+    // exactly as computed above; only a clean pass ever adds `result.coach`.
+    try {
+      const feedbackEligible = codeData.homework && (
+        result.check_mode === 'read'
+        || result.check_mode === 'frame'
+        || (result.check_mode === 'open' && expectedText === 'photo_talk')
+      );
+      if (env.OPENROUTER_API_KEY && feedbackEligible) {
+        const azure = result.pronunciation && typeof result.pronunciation === 'object'
+          ? result.pronunciation
+          : (typeof result.accuracy_percent === 'number'
+            ? { accuracy_percent: result.accuracy_percent, fluency_percent: result.fluency_percent }
+            : null);
+        const context = buildFeedbackContext({
+          checkMode: result.check_mode,
+          result,
+          transcript: result.transcript || '',
+          homework: codeData.homework,
+          azure,
+          skipWords: SKIP_WORDS,
+        });
+        const feedback = await generateHomeworkFeedback({ env, context, skipWords: SKIP_WORDS });
+        if (feedback) {
+          // Screen every string of the feedback through the same guardrail
+          // stack minny-conversation.js runs on the kid-visible surface
+          // (surfaceExtras pattern): deterministic shape/character/topic
+          // checks first, then the Llama Guard ML backstop on the
+          // concatenated text. Fail-open only on guard `degraded`
+          // (infra outage — the deterministic gate already passed); reject
+          // on a genuine `flagged` verdict.
+          const feedbackStrings = [
+            feedback.praise_vi, feedback.focus_word, feedback.model_sentence_en,
+            feedback.tiny_challenge_vi, ...(feedback.recast_en ? [feedback.recast_en] : []),
+          ];
+          const shapeFlag = feedbackStrings.map((s) => validateReplyShape(s)).find((r) => r.flagged);
+          const feedbackText = feedbackStrings.join('\n');
+          const characterFlag = detectCharacterBreak(feedbackText);
+          const topicFlag = scanBannedTopics(feedbackText);
+          const deterministicFlag = Boolean(shapeFlag) || characterFlag.flagged || topicFlag.flagged;
+          if (!deterministicFlag) {
+            const guardResult = await screenWithLlamaGuard(workersAi, feedbackText, result.transcript || '');
+            if (!guardResult.flagged) {
+              result.coach = feedback;
+
+              // V1.3 fix round (2026-07-12, Steve's UI review): focus_word
+              // gets the same tap-to-hear treatment as any other practice
+              // chip, but minny-voice's `word` branch only allows words
+              // present in the flagged-words:<code> record. On the
+              // kid-did-great path, allowed_focus_words fell back to
+              // homework content words instead of anything actually
+              // flagged, so focus_word was never written above — merge it
+              // in now. Safe to allow: focus_word is only ever set from the
+              // SAME allowed_focus_words set validateFeedbackGrounding just
+              // enforced membership against, never an arbitrary word.
+              try {
+                const normalizedFocus = normalizePracticeWord(feedback.focus_word);
+                if (normalizedFocus && !flaggedWords.includes(normalizedFocus)) {
+                  await env.READ2LEAD_CODES.put(
+                    `flagged-words:${accessCode}`,
+                    JSON.stringify({ words: [...flaggedWords, normalizedFocus], at: Date.now() }),
+                    { expirationTtl: 3600 },
+                  );
+                }
+              } catch {
+                /* best-effort; must never block the response */
+              }
+            }
+          }
+        }
+      }
+    } catch {
+      /* best-effort; must never block or alter the deterministic response */
     }
 
     return json(result);

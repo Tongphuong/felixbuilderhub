@@ -924,6 +924,57 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
       return `<p style="margin:10px 0 0;font-size:14px;color:var(--cream-muted)"><strong>Từ cần luyện:</strong> ${wordChips(words.map((w) => w.word), 'miss')}</p>`;
     }
 
+    // V1.3 homework feedback sandwich (2026-07-12, design_handoff_speakup_v1
+    // /SpeakUp V1 Homework Feedback v2.dc.html screens 1-2, approved
+    // 2026-07-10; founder gate: Phương ack via AskUserQuestion). Pure,
+    // DOM-free (see tests/speakup-feedback-ui.test.mjs). result.coach is
+    // server-side best-effort — read2lead-speaking-check.js's onRequestPost
+    // only ever sets it after the grounding validator + guardrail stack both
+    // pass — so any missing/malformed required field here returns '',
+    // leaving the panel byte-identical to the pre-V1.3 shape. Fixed part
+    // order (eyebrow -> praise -> focus word -> model sentence -> tiny
+    // challenge) per the mock's "sandwich" naming: never reorder.
+    // `celebrateMood` is passed in rather than recomputed here so it always
+    // matches the exact cutoff the caller already used for its own score
+    // card (matchPct>=70 for frame, score_percent>=50 for read/open).
+    // recast_en (optional in the contract) has no slot in the approved mock
+    // and is intentionally not rendered here — see TODO(elon) in the
+    // dispatch report. Same for a Vietnamese translation under
+    // model_sentence_en: the mock's __model-vi line has no backing field in
+    // result.coach today, so it is omitted rather than invented.
+    function renderCoachSandwich(result, celebrateMood) {
+      const coach = result?.coach;
+      if (!coach || typeof coach !== 'object') return '';
+      const { praise_vi, focus_word, model_sentence_en, tiny_challenge_vi } = coach;
+      if (!praise_vi || !focus_word || !model_sentence_en || !tiny_challenge_vi) return '';
+      return `
+        <div class="minny-feedback-sandwich ${celebrateMood ? 'is-celebrate' : 'is-encourage'}">
+          <p class="minny-feedback-sandwich__eyebrow">💬 Minny nói thêm</p>
+          <div class="minny-feedback-sandwich__row">
+            <span class="ico" aria-hidden="true">🌟</span>
+            <p class="minny-feedback-sandwich__praise">${escapeHtml(praise_vi)}</p>
+          </div>
+          <div class="minny-feedback-sandwich__row">
+            <span class="ico" aria-hidden="true">🎯</span>
+            <div>
+              <p class="minny-feedback-sandwich__focus-label">Từ để luyện thêm</p>
+              <button type="button" class="minny-word minny-word--close minny-word--focus" data-word="${escapeHtml(focus_word)}">${escapeHtml(focus_word)}</button>
+            </div>
+          </div>
+          <div class="minny-feedback-sandwich__row">
+            <span class="ico" aria-hidden="true">📘</span>
+            <div class="minny-feedback-sandwich__model">
+              <p class="minny-feedback-sandwich__model-en">"${escapeHtml(model_sentence_en)}"</p>
+            </div>
+          </div>
+          <div class="minny-feedback-sandwich__row">
+            <span class="ico" aria-hidden="true">✨</span>
+            <p class="minny-feedback-sandwich__challenge">${escapeHtml(tiny_challenge_vi)}</p>
+          </div>
+        </div>
+      `;
+    }
+
     function renderFrameResult(result) {
       const resultEl = document.getElementById('speaking-result');
       const actionsEl = document.getElementById('speaking-actions');
@@ -959,6 +1010,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
             <span style="font-size:14px;color:var(--cream-muted)">Con nhớ cười thật tươi khi quay video gửi thầy Phương nhé!</span>
           </span>
         </div>
+        ${renderCoachSandwich(result, celebrate)}
       `;
 
       actionsEl.classList.remove('hidden');
@@ -1020,6 +1072,7 @@ const r2lRecorderSrc = r2lRecorderScriptSrc();
           ${close}
           ${missed}
         </div>
+        ${renderCoachSandwich(result, passed)}
       `;
       actionsEl.classList.remove('hidden');
       actionsEl.classList.toggle('is-encourage', !passed);
