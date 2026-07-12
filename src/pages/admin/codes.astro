@@ -90,6 +90,7 @@ import EditCodeModal from '../../components/admin/EditCodeModal.astro';
         <div class="flex flex-wrap gap-2">
           <button id="sync-bot-presets" type="button" class="rounded-lg border border-purple-400/40 px-3 py-1.5 text-sm text-purple-200 transition hover:bg-purple-500/10">🤖 Sync bot (Pilot + Ong)</button>
           <button id="reset-levels" type="button" class="rounded-lg border border-red-500/40 px-3 py-1.5 text-sm text-red-300 transition hover:bg-red-500/10">Reset tất cả về L1</button>
+          <button id="clear-open-books" type="button" class="rounded-lg border border-amber-500/40 px-3 py-1.5 text-sm text-amber-200 transition hover:bg-amber-500/10">🛑 Đổi truyện mới cho tất cả</button>
           <button id="refresh-list" type="button" class="rounded-lg border border-cream-dim/30 px-3 py-1.5 text-sm text-cream transition hover:border-accent hover:text-accent">↻ Tải lại</button>
         </div>
       </div>
@@ -136,6 +137,7 @@ import EditCodeModal from '../../components/admin/EditCodeModal.astro';
     const copyStatus = document.getElementById('copy-status');
     const refreshBtn = document.getElementById('refresh-list');
     const resetLevelsBtn = document.getElementById('reset-levels');
+    const clearOpenBooksBtn = document.getElementById('clear-open-books');
     const syncBotPresetsBtn = document.getElementById('sync-bot-presets');
     const listEl = document.getElementById('codes-list');
     const listStatus = document.getElementById('list-status');
@@ -653,6 +655,48 @@ import EditCodeModal from '../../components/admin/EditCodeModal.astro';
       } finally {
         syncBotPresetsBtn.disabled = false;
         syncBotPresetsBtn.textContent = '🤖 Sync bot (Pilot + Ong)';
+      }
+    });
+
+    clearOpenBooksBtn.addEventListener('click', async () => {
+      // Stop every in-progress book (a kid actively reading = awaiting_review,
+      // a stuck generation = generation_in_progress) so each child re-enters
+      // and gets a fresh book under the page-count band rule. Touches ONLY the
+      // current book — never XP/rank/level — and refunds the use for a book
+      // that was mid-read. Dry-run first so the count is shown before any write.
+      const STATUSES = ['generation_in_progress', 'awaiting_review'];
+      const original = '🛑 Đổi truyện mới cho tất cả';
+      clearOpenBooksBtn.disabled = true;
+      clearOpenBooksBtn.textContent = 'Đang kiểm tra...';
+      try {
+        const dryRes = await fetch('/api/admin/codes/clear-open-lessons', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ dry_run: true, statuses: STATUSES }),
+        });
+        const dry = await dryRes.json();
+        if (!dryRes.ok || !dry.ok) throw new Error(dry.error || 'kiểm tra thất bại');
+        const n = dry.cleared_count || 0;
+        if (n === 0) {
+          alert('Không có bài nào đang mở. Mọi mã đã sẵn sàng nhận truyện mới rồi.');
+          return;
+        }
+        if (!confirm(`Sẽ dừng ${n} bài đang mở để các con nhận truyện mới theo số trang.\n\nĐiểm, cấp độ và huy hiệu của con được GIỮ NGUYÊN. Bài đang đọc dở sẽ được hoàn lại 1 lượt.\n\nTiếp tục?`)) return;
+        clearOpenBooksBtn.textContent = 'Đang đổi...';
+        const res = await fetch('/api/admin/codes/clear-open-lessons', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ dry_run: false, statuses: STATUSES }),
+        });
+        const result = await res.json();
+        if (!res.ok || !result.ok) throw new Error(result.error || 'đổi thất bại');
+        alert(`✓ Xong! Đã dừng ${result.cleared_count} bài và hoàn ${result.refunded_use_count} lượt.\nCon vào lại sẽ nhận truyện mới theo số trang.`);
+        await loadList();
+      } catch (err) {
+        alert('Lỗi: ' + err.message);
+      } finally {
+        clearOpenBooksBtn.disabled = false;
+        clearOpenBooksBtn.textContent = original;
       }
     });
 
